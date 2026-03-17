@@ -1,33 +1,35 @@
-const fetch = require('node-fetch');
+const axios = require('axios');
 const cheerio = require('cheerio');
 
 exports.handler = async (event, context) => {
-  try {
-    // 1. Fetch the Millersville Calendar HTML
-    const response = await fetch('https://www.millersville.edu/calendar/events/list');
-    const html = await response.text();
-    
-    // 2. Load the HTML into Cheerio
-    const $ = cheerio.load(html);
-    const events = [];
+    try {
+        const url = 'https://www.millersville.edu/calendar/events/list';
+        const { data } = await axios.get(url);
+        const $ = cheerio.load(data);
+        
+        const events = [];
 
-    // 3. Find each event listing (based on the MU site structure)
-    $('.calendar-list-item').each((i, el) => {
-      const name = $(el).find('.event-title').text().trim();
-      const time = $(el).find('.event-time').text().trim();
-      const loc = $(el).find('.event-location').text().trim();
-      const category = $(el).find('.event-category').text().trim();
+        // Selecting each event block
+        $('.calendar-list-item').each((i, el) => {
+            const name = $(el).find('h4').text().trim();
+            const dateStr = $(el).find('.event-date').text().trim(); // e.g., "Mar 18"
+            const timeLoc = $(el).find('.event-details').text().trim(); 
+            const category = $(el).find('.event-category').text().trim();
 
-      events.push({ name, time, loc, category });
-    });
+            events.push({
+                name,
+                date: dateStr,
+                details: timeLoc,
+                category: category
+            });
+        });
 
-    // 4. Return the data to your web app
-    return {
-      statusCode: 200,
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(events)
-    };
-  } catch (error) {
-    return { statusCode: 500, body: error.toString() };
-  }
+        return {
+            statusCode: 200,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(events.slice(0, 15)) // Sending top 15 results
+        };
+    } catch (error) {
+        return { statusCode: 500, body: "Error scraping data" };
+    }
 };

@@ -1,8 +1,208 @@
-<div class="mode-footer">
-  <span>Student</span>
-  <label class="switch">
-    <input type="checkbox" id="roleToggle" onclick="toggleRole()">
-    <span class="slider round"></span>
-  </label>
-  <span>Townie</span>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Millersville One-Stop</title>
+    <style>
+        /* --- CSS VARIABLES & THEMING --- */
+        :root {
+            --primary: #FFD100; /* Marauder Gold */
+            --secondary: #000000;
+            --bg: #ffffff;
+            --card-bg: #f9f9f9;
+            --role-label: "Student Perspective";
+        }
+
+        body.townie-mode {
+            --primary: #004a99; /* Borough Blue */
+            --secondary: #2e7d32; /* Park Green */
+            --bg: #f4f7f6;
+            --card-bg: #ffffff;
+            --role-label: "Townie Perspective";
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s ease;
+            padding-bottom: 100px; /* Space for the bottom switch */
+        }
+
+        header {
+            background-color: var(--secondary);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 8px solid var(--primary);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        /* --- CONTENT CARDS --- */
+        .section-title {
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #ddd;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-left: 5px solid var(--primary);
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .price-tag {
+            float: right;
+            font-weight: bold;
+            color: var(--secondary);
+            background: var(--primary);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        /* --- THE SWITCH UI --- */
+        .footer-switch {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: #222;
+            color: white;
+            padding: 15px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.3);
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input { opacity: 0; width: 0; height: 0; }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #FFD100;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px; width: 26px;
+            left: 4px; bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider { background-color: #004a99; }
+        input:checked + .slider:before { transform: translateX(26px); }
+
+        .role-indicator {
+            font-weight: bold;
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Millersville One-Stop</h1>
+    <div class="role-indicator" id="roleText">STUDENT MODE</div>
+</header>
+
+<div class="container">
+    <h2 class="section-title">Upcoming Events (March 2026)</h2>
+    
+    <div class="card">
+        <span class="price-tag" id="price-event-1">FREE</span>
+        <h3>Mornin' Mingle</h3>
+        <p><strong>Time:</strong> March 17, 9:00 AM</p>
+        <p><strong>Location:</strong> SMC Atrium</p>
+    </div>
+
+    <div class="card">
+        <span class="price-tag" id="price-event-2">FREE</span>
+        <h3>Jazz at Lincoln Center</h3>
+        <p><strong>Time:</strong> March 21, 7:30 PM</p>
+        <p><strong>Location:</strong> Ware Center</p>
+    </div>
+
+    <h2 class="section-title">Local Housing & Specials</h2>
+    <div class="card">
+        <h3>College Manor Apartments</h3>
+        <p>2BR Units available for Fall 2026.</p>
+        <p id="housing-info">Status: Student Priority</p>
+    </div>
+
+    <div class="card">
+        <h3>University Store Special</h3>
+        <p>Spring 2026 Crewnecks on Sale!</p>
+        <p><strong>Price:</strong> $22.00</p>
+    </div>
 </div>
+
+<div class="footer-switch">
+    <span>STUDENT</span>
+    <label class="switch">
+        <input type="checkbox" id="roleToggle" onchange="updateUI()">
+        <span class="slider"></span>
+    </label>
+    <span>TOWNIE</span>
+</div>
+
+<script>
+    function updateUI() {
+        const isTownie = document.getElementById('roleToggle').checked;
+        const body = document.body;
+        const roleText = document.getElementById('roleText');
+        
+        // Price/Detail Elements
+        const price1 = document.getElementById('price-event-1');
+        const price2 = document.getElementById('price-event-2');
+        const housing = document.getElementById('housing-info');
+
+        if (isTownie) {
+            body.classList.add('townie-mode');
+            roleText.innerText = "TOWNIE MODE";
+            
+            // Update Data for Townies
+            price1.innerText = "OPEN TO PUBLIC";
+            price2.innerText = "$15.00";
+            housing.innerText = "Status: Residential Market";
+        } else {
+            body.classList.remove('townie-mode');
+            roleText.innerText = "STUDENT MODE";
+            
+            // Update Data for Students
+            price1.innerText = "FREE";
+            price2.innerText = "FREE W/ ID";
+            housing.innerText = "Status: Student Priority";
+        }
+    }
+</script>
+
+</body>
+</html>

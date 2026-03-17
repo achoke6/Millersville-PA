@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Millersville One-Stop</title>
     <style>
-        /* --- CSS VARIABLES & THEMING --- */
+        /* --- CSS THEME VARIABLES --- */
         :root {
             --primary: #FFD100; /* Marauder Gold */
             --secondary: #000000;
             --bg: #ffffff;
             --card-bg: #f9f9f9;
-            --role-label: "Student Perspective";
+            --accent: #FFD100;
         }
 
         body.townie-mode {
@@ -19,23 +19,23 @@
             --secondary: #2e7d32; /* Park Green */
             --bg: #f4f7f6;
             --card-bg: #ffffff;
-            --role-label: "Townie Perspective";
+            --accent: #004a99;
         }
 
+        /* --- LAYOUT --- */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
             background-color: var(--bg);
             color: #333;
             margin: 0;
-            padding: 0;
-            transition: all 0.3s ease;
-            padding-bottom: 100px; /* Space for the bottom switch */
+            padding-bottom: 120px; /* Space for footer */
+            transition: background 0.3s ease;
         }
 
         header {
             background-color: var(--secondary);
             color: white;
-            padding: 2rem;
+            padding: 2.5rem 1rem;
             text-align: center;
             border-bottom: 8px solid var(--primary);
         }
@@ -46,53 +46,59 @@
             padding: 20px;
         }
 
-        /* --- CONTENT CARDS --- */
-        .section-title {
+        h2.section-title {
             color: var(--primary);
+            font-size: 1.2rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            border-bottom: 2px solid #ddd;
-            margin-top: 30px;
+            border-bottom: 2px solid #eee;
+            margin-top: 40px;
+            padding-bottom: 5px;
         }
 
+        /* --- CARDS --- */
         .card {
             background: var(--card-bg);
-            border-left: 5px solid var(--primary);
+            border-left: 6px solid var(--primary);
             margin: 15px 0;
             padding: 20px;
-            border-radius: 4px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            position: relative;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
         }
+
+        .card:hover { transform: translateY(-3px); }
 
         .price-tag {
             float: right;
-            font-weight: bold;
-            color: var(--secondary);
+            font-weight: 800;
+            font-size: 0.85rem;
             background: var(--primary);
-            padding: 2px 8px;
-            border-radius: 4px;
+            color: var(--secondary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
         }
 
-        /* --- THE SWITCH UI --- */
+        /* --- THE TOGGLE FOOTER --- */
         .footer-switch {
             position: fixed;
             bottom: 0;
             width: 100%;
-            background: #222;
+            background: #1a1a1a;
             color: white;
-            padding: 15px 0;
+            padding: 20px 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 20px;
-            box-shadow: 0 -5px 15px rgba(0,0,0,0.3);
+            gap: 15px;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.4);
+            z-index: 1000;
         }
 
         .switch {
             position: relative;
             display: inline-block;
-            width: 60px;
+            width: 64px;
             height: 34px;
         }
 
@@ -118,89 +124,113 @@
         }
 
         input:checked + .slider { background-color: #004a99; }
-        input:checked + .slider:before { transform: translateX(26px); }
+        input:checked + .slider:before { transform: translateX(30px); }
 
-        .role-indicator {
-            font-weight: bold;
-            color: var(--primary);
-        }
+        .mode-label { font-weight: bold; letter-spacing: 1px; }
+
+        .loading-text { text-align: center; color: #888; padding: 20px; }
     </style>
 </head>
-<body>
+<body onload="fetchEvents()">
 
 <header>
     <h1>Millersville One-Stop</h1>
-    <div class="role-indicator" id="roleText">STUDENT MODE</div>
+    <p id="sub-header">Student View: Campus Events & Deals</p>
 </header>
 
 <div class="container">
-    <h2 class="section-title">Upcoming Events (March 2026)</h2>
-    
-    <div class="card">
-        <span class="price-tag" id="price-event-1">FREE</span>
-        <h3>Mornin' Mingle</h3>
-        <p><strong>Time:</strong> March 17, 9:00 AM</p>
-        <p><strong>Location:</strong> SMC Atrium</p>
+    <h2 class="section-title">Live Events Calendar</h2>
+    <div id="events-container">
+        <p class="loading-text">Fetching live data from Millersville.edu...</p>
     </div>
 
-    <div class="card">
-        <span class="price-tag" id="price-event-2">FREE</span>
-        <h3>Jazz at Lincoln Center</h3>
-        <p><strong>Time:</strong> March 21, 7:30 PM</p>
-        <p><strong>Location:</strong> Ware Center</p>
-    </div>
-
-    <h2 class="section-title">Local Housing & Specials</h2>
-    <div class="card">
-        <h3>College Manor Apartments</h3>
-        <p>2BR Units available for Fall 2026.</p>
-        <p id="housing-info">Status: Student Priority</p>
-    </div>
-
-    <div class="card">
-        <h3>University Store Special</h3>
-        <p>Spring 2026 Crewnecks on Sale!</p>
-        <p><strong>Price:</strong> $22.00</p>
-    </div>
+    <h2 class="section-title">Local Living & Deals</h2>
+    <div id="extra-content">
+        </div>
 </div>
 
 <div class="footer-switch">
-    <span>STUDENT</span>
+    <span class="mode-label">STUDENT</span>
     <label class="switch">
-        <input type="checkbox" id="roleToggle" onchange="updateUI()">
+        <input type="checkbox" id="roleToggle" onchange="toggleAppMode()">
         <span class="slider"></span>
     </label>
-    <span>TOWNIE</span>
+    <span class="mode-label">TOWNIE</span>
 </div>
 
 <script>
-    function updateUI() {
-        const isTownie = document.getElementById('roleToggle').checked;
-        const body = document.body;
-        const roleText = document.getElementById('roleText');
-        
-        // Price/Detail Elements
-        const price1 = document.getElementById('price-event-1');
-        const price2 = document.getElementById('price-event-2');
-        const housing = document.getElementById('housing-info');
+    let currentEvents = [];
 
-        if (isTownie) {
-            body.classList.add('townie-mode');
-            roleText.innerText = "TOWNIE MODE";
-            
-            // Update Data for Townies
-            price1.innerText = "OPEN TO PUBLIC";
-            price2.innerText = "$15.00";
-            housing.innerText = "Status: Residential Market";
-        } else {
-            body.classList.remove('townie-mode');
-            roleText.innerText = "STUDENT MODE";
-            
-            // Update Data for Students
-            price1.innerText = "FREE";
-            price2.innerText = "FREE W/ ID";
-            housing.innerText = "Status: Student Priority";
+    // 1. Fetch data from your Netlify Function
+    async function fetchEvents() {
+        const container = document.getElementById('events-container');
+        try {
+            const response = await fetch('/.netlify/functions/get-events');
+            currentEvents = await response.json();
+            renderUI();
+        } catch (err) {
+            container.innerHTML = `<p class="loading-text">Could not load live events. Verify Netlify Functions are deployed.</p>`;
+            console.error(err);
         }
+    }
+
+    // 2. Toggle Mode Logic
+    function toggleAppMode() {
+        const isTownie = document.getElementById('roleToggle').checked;
+        document.body.classList.toggle('townie-mode', isTownie);
+        document.getElementById('sub-header').innerText = isTownie ? 
+            "Townie View: Borough Events & Local Info" : 
+            "Student View: Campus Events & Deals";
+        renderUI();
+    }
+
+    // 3. Render everything based on the current mode
+    function renderUI() {
+        const isTownie = document.getElementById('roleToggle').checked;
+        const eventContainer = document.getElementById('events-container');
+        const extraContainer = document.getElementById('extra-content');
+
+        // Render Events
+        if (currentEvents.length === 0) {
+            eventContainer.innerHTML = "<p class='loading-text'>No upcoming events found.</p>";
+        } else {
+            eventContainer.innerHTML = currentEvents.map(event => {
+                // Logic: Student Events are often restricted or free for students only
+                let price = "FREE";
+                if (isTownie && event.category === "Student Event") price = "STUDENTS ONLY";
+                if (event.name.toLowerCase().includes("concert") || event.name.toLowerCase().includes("jazz")) {
+                    price = isTownie ? "$15-$25" : "STUDENT DISC.";
+                }
+
+                return `
+                    <div class="card">
+                        <span class="price-tag">${price}</span>
+                        <h3>${event.name}</h3>
+                        <p><strong>🕒 Time:</strong> ${event.time}</p>
+                        <p><strong>📍 Location:</strong> ${event.loc}</p>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Render Housing & Store Specials
+        const housingStatus = isTownie ? "Available for Families/Public" : "Student Priority Housing";
+        const storeDeal = isTownie ? "MU Legacy Gear Sale: 20% Off" : "$22 Spring 2026 Crewnecks (Sale)";
+
+        extraContainer.innerHTML = `
+            <div class="card">
+                <span class="price-tag">LIVING</span>
+                <h3>College Manor Apartments</h3>
+                <p>Status: ${housingStatus}</p>
+                <p>Proximity: 0.2 miles from campus.</p>
+            </div>
+            <div class="card">
+                <span class="price-tag">DEAL</span>
+                <h3>University Store</h3>
+                <p>${storeDeal}</p>
+                <p>Location: SMC Ground Floor</p>
+            </div>
+        `;
     }
 </script>
 

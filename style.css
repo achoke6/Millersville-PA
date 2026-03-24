@@ -41,7 +41,11 @@ header {
     cursor: pointer;
     font-weight: bold;
 }
-.filter-btn.active { background: var(--primary); color: white; }
+.filter-btn.active {
+    background-color: var(--primary) !important;
+    color: var(--secondary) !important;
+    border-color: var(--secondary);
+}
 
 /* Cards */
 .card {

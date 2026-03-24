@@ -32,17 +32,59 @@
 </div>
 
 <script>
-    let currentEvents = [];
+let currentEvents = [];
     let currentFilter = 'All';
     let currentPage = 1;
-    const itemsPerPage = 5;
+    const itemsPerPage = 6; // Show 6 modern cards per page
 
     async function initApp() {
         try {
+            // Fetch the raw API JSON from your GitHub Action
             const res = await fetch('events.json?v=' + Date.now());
-            currentEvents = await res.json();
+            const rawApiData = await res.json();
+            
+            // Map the API's array format into our app's format
+            if (rawApiData && rawApiData.data) {
+                currentEvents = rawApiData.data.map(item => {
+                    return {
+                        name: item[1] || "Unnamed Event",
+                        time: formatTime(item[3], item[4]),
+                        // Combine Building Code (Index 5) with Room Details (Index 7)
+                        loc: cleanLocation(item[5], item[7]),
+                        category: item[9] || "Public Event"
+                    };
+                });
+            }
+
+            // Setup filter button listeners
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => setFilter(e.target.getAttribute('data-cat')));
+            });
+
             renderUI();
-        } catch (e) { console.error("Data load failed"); }
+        } catch (e) { 
+            console.error("Data load failed:", e); 
+            document.getElementById('events-container').innerHTML = "<p>Loading events...</p>";
+        }
+    }
+
+    // Helper: Turn "2026-03-24T10:00:00" into "10:00 AM"
+    function formatTime(startStr, endStr) {
+        if (!startStr) return "TBA";
+        const options = { hour: 'numeric', minute: '2-digit', hour12: true };
+        const start = new Date(startStr).toLocaleTimeString([], options);
+        
+        if (!endStr) return start;
+        const end = new Date(endStr).toLocaleTimeString([], options);
+        return `${start} - ${end}`;
+    }
+
+    // Helper: Clean up messy database location strings
+    function cleanLocation(building, room) {
+        let loc = "";
+        if (building) loc += building;
+        if (room && room !== building) loc += (loc ? " - " : "") + room.split('|')[0].trim(); 
+        return loc || "Millersville Campus";
     }
 
     function toggleMode() {
@@ -56,7 +98,9 @@
     function setFilter(cat) {
         currentFilter = cat;
         currentPage = 1;
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.innerText.includes(cat) || (cat==='All' && b.innerText==='All')));
+        document.querySelectorAll('.filter-btn').forEach(b => {
+            b.classList.toggle('active', b.getAttribute('data-cat') === cat);
+        });
         renderUI();
     }
 
@@ -64,20 +108,34 @@
         const isTownie = document.getElementById('roleToggle').checked;
         const container = document.getElementById('events-container');
 
+        // Filter the events
         const filtered = currentEvents.filter(e => {
             if (isTownie && e.category === "Student Event") return false;
             if (currentFilter !== 'All' && e.category !== currentFilter) return false;
             return true;
         });
 
+        // Paginate the events
         const start = (currentPage - 1) * itemsPerPage;
         const paginated = filtered.slice(start, start + itemsPerPage);
 
+        if (paginated.length === 0) {
+            container.innerHTML = `<p style="text-align:center; width:100%; color:var(--text-muted);">No events found for this filter.</p>`;
+            document.getElementById('pagination').innerHTML = '';
+            return;
+        }
+
+        // Output the Modern UI Cards
         container.innerHTML = paginated.map(e => `
             <div class="card">
-                <span class="price-tag">${e.category}</span>
+                <div class="card-header">
+                    <span class="price-tag">${e.category}</span>
+                </div>
                 <h3>${e.name}</h3>
-                <p>🕒 ${e.time} | 📍 ${e.loc}</p>
+                <div class="card-details">
+                    <p>🕒 ${e.time}</p>
+                    <p>📍 ${e.loc}</p>
+                </div>
             </div>
         `).join('');
 
@@ -88,12 +146,19 @@
         const pages = Math.ceil(total / itemsPerPage);
         const nav = document.getElementById('pagination');
         nav.innerHTML = '';
+        if (pages <= 1) return; // Hide pagination if only 1 page
+
         for (let i = 1; i <= pages; i++) {
-            nav.innerHTML += `<button class="page-btn ${i===currentPage?'active':''}" onclick="goToPage(${i})">${i}</button>`;
+            const activeClass = i === currentPage ? 'active' : '';
+            nav.innerHTML += `<button class="page-btn ${activeClass}" onclick="goToPage(${i})">${i}</button>`;
         }
     }
 
-    function goToPage(p) { currentPage = p; renderUI(); window.scrollTo(0,0); }
+    function goToPage(p) { 
+        currentPage = p; 
+        renderUI(); 
+        window.scrollTo({ top: 0, behavior: 'smooth' }); 
+    }
 </script>
 </body>
 </html>

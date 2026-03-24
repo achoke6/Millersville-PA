@@ -1,44 +1,46 @@
-const { chromium } = require('playwright');
 const fs = require('fs');
 
-async function runScrape() {
-    const browser = await chromium.launch({ headless: true });
-    const page = await browser.newPage();
-    
+async function pullAPI() {
+    // 1. Calculate today and 30 days from now dynamically
+    const today = new Date();
+    const nextMonth = new Date(today);
+    nextMonth.setDate(today.getDate() + 30);
+
+    const startDate = today.toISOString().split('T')[0]; // Formats to YYYY-MM-DD
+    const endDate = nextMonth.toISOString().split('T')[0];
+
+    console.log(`Pulling Millersville events from ${startDate} to ${endDate}...`);
+
     try {
-        await page.goto('https://www.millersville.edu/calendar/events/list', { waitUntil: 'networkidle' });
-        await page.waitForTimeout(5000); 
-
-        const events = await page.evaluate(() => {
-            const results = [];
-            document.querySelectorAll('.calendar-list-item').forEach(el => {
-                const fullText = el.innerText;
-                const name = el.querySelector('h4')?.innerText.trim();
-                
-                // Use a Regular Expression to find the time pattern (e.g., 11:30 am - 1:30 pm)
-                const timeMatch = fullText.match(/\d{1,2}:\d{2}\s?(?:am|pm)\s?-\s?\d{1,2}:\d{2}\s?(?:am|pm)/i);
-                const time = timeMatch ? timeMatch[0] : "See Details";
-
-                // Grab Location (usually the text after the second comma or in a specific span)
-                const loc = el.querySelector('.event-location')?.innerText.trim() || "Millersville, PA";
-
-                // Map Categories
-                const cats = ["Arts Concert / Performance", "Athletic Competitions", "Public Event", "Student Event"];
-                const category = cats.find(c => fullText.includes(c)) || "Public Event";
-
-                if (name) {
-                    results.push({ name, time, loc, category });
-                }
-            });
-            return results;
+        // 2. Build the exact payload you found
+        const params = new URLSearchParams({
+            getEvents: 'true',
+            startDate: startDate,
+            endDate: endDate
         });
 
-        fs.writeFileSync('./events.json', JSON.stringify(events, null, 2));
-        console.log(`Success! Found ${events.length} events.`);
+        // 3. Send a direct POST request to the PHP backend
+        const response = await fetch('https://www.millersville.edu/calendar/app/api/index.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' // Play nice with their server
+            },
+            body: params.toString()
+        });
+
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        
+        const data = await response.json();
+
+        // 4. Save the raw API output
+        fs.writeFileSync('./events.json', JSON.stringify(data, null, 2));
+        console.log(`Success! API connection established. Raw data saved.`);
+
     } catch (err) {
-        console.error("Scrape failed:", err.message);
-    } finally {
-        await browser.close();
+        console.error("API Pull failed:", err.message);
+        process.exit(1);
     }
 }
-runScrape();
+
+pullAPI();

@@ -6,35 +6,46 @@ async function runScrape() {
     const page = await browser.newPage();
     
     try {
+        console.log("Navigating to Millersville Calendar...");
         await page.goto('https://www.millersville.edu/calendar/events/list', { waitUntil: 'networkidle' });
         await page.waitForTimeout(5000); 
 
         const events = await page.evaluate(() => {
             const results = [];
-            // Target the specific article/list structure
-            document.querySelectorAll('.calendar-list-item, article.event, .event-listing').forEach(el => {
-                const title = el.querySelector('h3, h4, .event-title')?.innerText.trim();
-                // The calendar usually bundles time/loc in a sub-element or specific class
-                const detailsText = el.querySelector('.event-details, .time-location, p')?.innerText.trim() || "";
-                const category = el.querySelector('.event-category, .category')?.innerText.trim() || "Public Event";
+            // Target the specific list items used in the 2026 calendar
+            const items = document.querySelectorAll('.calendar-list-item');
+            
+            items.forEach(el => {
+                // 1. Get Title
+                const name = el.querySelector('h4')?.innerText.trim();
+                
+                // 2. Get the Meta String (usually: "03/24/26, 10:00 am - 5:00 pm. Location...")
+                const metaInfo = el.innerText; 
+                
+                // 3. Extract Category (Arts, Athletic, Public, Student)
+                const categories = ["Arts Concert / Performance", "Athletic Competitions", "Public Event", "Student Event"];
+                const category = categories.find(c => metaInfo.includes(c)) || "Public Event";
 
-                if (title) {
-                    results.push({
-                        name: title,
-                        // Splitting details if they are in one string, or grabbing specific tags
-                        time: el.querySelector('.event-time, .time')?.innerText.trim() || "See Details",
-                        loc: el.querySelector('.event-location, .location')?.innerText.trim() || "Millersville, PA",
-                        category: category
-                    });
+                // 4. Extract Time & Location using specific detail classes
+                // The calendar often uses .event-details or just raw text after the date
+                const time = el.querySelector('.event-time')?.innerText.trim() || "See Details";
+                const loc = el.querySelector('.event-location')?.innerText.trim() || "Millersville, PA";
+
+                if (name) {
+                    results.push({ name, time, loc, category });
                 }
             });
             return results;
         });
 
-        fs.writeFileSync('./events.json', JSON.stringify(events, null, 2));
-        console.log(`Scraped ${events.length} events.`);
+        if (events.length > 0) {
+            fs.writeFileSync('./events.json', JSON.stringify(events, null, 2));
+            console.log(`Successfully scraped ${events.length} events.`);
+        } else {
+            console.log("No events found. Check if .calendar-list-item class still exists.");
+        }
     } catch (err) {
-        console.error("Scrape failed:", err.message);
+        console.error("SCRAPE ERROR:", err.message);
     } finally {
         await browser.close();
     }

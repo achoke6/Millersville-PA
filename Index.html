@@ -22,62 +22,47 @@
 <div class="pagination" id="pagination"></div>
 
 <script>
-    let currentFilter = 'All';
-    let currentPage = 1;
-    const itemsPerPage = 5;
+let currentFilter = 'All';
+let currentPage = 1;
+const itemsPerPage = 6;
 
-    function setFilter(cat) {
-        currentFilter = cat;
-        currentPage = 1;
-        renderUI();
-        // Update active class on buttons
-        document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.innerText.includes(cat) || (cat === 'All' && btn.innerText === 'All'));
-        });
-    }
+function renderUI() {
+    const isTownie = document.getElementById('roleToggle').checked;
+    const container = document.getElementById('events-container');
 
-    function renderUI() {
-        const isTownie = document.getElementById('roleToggle').checked;
-        const container = document.getElementById('events-container');
+    // 1. Filter Logic
+    let filtered = currentEvents.filter(event => {
+        // TOWNIE RULE: Filter out "Student Event" category
+        if (isTownie && event.category === "Student Event") return false;
         
-        // 1. Filter Logic
-        let filtered = currentEvents.filter(event => {
-            // Rule: Townies never see Student Events
-            if (isTownie && event.category === "Student Event") return false;
-            // Category Filter
-            if (currentFilter !== 'All' && event.category !== currentFilter) return false;
-            return true;
-        });
+        // BUTTON FILTER: Filter by selected category
+        if (currentFilter !== 'All' && event.category !== currentFilter) return false;
+        
+        return true;
+    });
 
-        // 2. Pagination Logic
-        const start = (currentPage - 1) * itemsPerPage;
-        const paginatedItems = filtered.slice(start, start + itemsPerPage);
+    // 2. Pagination Calculation
+    const totalPages = Math.ceil(filtered.length / itemsPerPage);
+    const start = (currentPage - 1) * itemsPerPage;
+    const paginated = filtered.slice(start, start + itemsPerPage);
 
-        // 3. Generate HTML
-        container.innerHTML = paginatedItems.map(event => `
-            <div class="card">
-                <span class="price-tag">${event.category}</span>
-                <h3>${event.name}</h3>
-                <p><strong>🕒 Time:</strong> ${event.time}</p>
-                <p><strong>📍 Location:</strong> ${event.loc}</p>
-            </div>
-        `).join('');
+    // 3. Render Events
+    container.innerHTML = paginated.map(event => `
+        <div class="card">
+            <span class="price-tag">${event.category}</span>
+            <h3>${event.name}</h3>
+            <p><strong>🕒 Time:</strong> ${event.time}</p>
+            <p><strong>📍 Location:</strong> ${event.loc}</p>
+        </div>
+    `).join('');
 
-        renderPagination(filtered.length);
-    }
+    // 4. Render Pagination Buttons
+    renderPagination(totalPages);
+}
 
-    function renderPagination(totalItems) {
-        const totalPages = Math.ceil(totalItems / itemsPerPage);
-        const nav = document.getElementById('pagination');
-        nav.innerHTML = '';
-        for (let i = 1; i <= totalPages; i++) {
-            nav.innerHTML += `<span class="page-link" onclick="goToPage(${i})">${i}</span>`;
-        }
-    }
-
-    function goToPage(p) {
-        currentPage = p;
-        renderUI();
-        window.scrollTo(0,0);
-    }
+function setFilter(category) {
+    currentFilter = category;
+    currentPage = 1; // Reset to page 1 on filter change
+    renderUI();
+}
 </script>

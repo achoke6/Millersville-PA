@@ -5,25 +5,27 @@ on:
     - cron: '0 0 * * *'
   workflow_dispatch:
 
-env: # This line silences the warning
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # This fixes Exit Code 128
+      contents: write
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4 # This was the error; setup-node is the correct action
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
 
       - name: Install Dependencies
-        run: npm install axios cheerio
+        run: |
+          npm install playwright
+          npx playwright install chromium --with-deps
 
       - name: Run Scraper
         run: node scripts/scrape.js

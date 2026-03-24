@@ -7,32 +7,35 @@ async function runScrape() {
     
     try {
         console.log("Navigating to Millersville Calendar...");
-        await page.goto('https://www.millersville.edu/calendar/events/list', { waitUntil: 'networkidle' });
+        await page.goto('https://www.millersville.edu/calendar/events/list', { 
+            waitUntil: 'networkidle',
+            timeout: 60000 
+        });
+
         await page.waitForTimeout(5000); 
 
         const events = await page.evaluate(() => {
             const results = [];
-            // Target the specific list items used in the 2026 calendar
-            const items = document.querySelectorAll('.calendar-list-item');
+            // Target the specific list items and articles
+            const items = document.querySelectorAll('.calendar-list-item, article.event, .event-item');
             
             items.forEach(el => {
-                // 1. Get Title
-                const name = el.querySelector('h4')?.innerText.trim();
+                const title = el.querySelector('h4, h3, .event-title')?.innerText.trim();
                 
-                // 2. Get the Meta String (usually: "03/24/26, 10:00 am - 5:00 pm. Location...")
-                const metaInfo = el.innerText; 
+                // If the site uses a generic details block, we grab it all
+                const details = el.innerText;
                 
-                // 3. Extract Category (Arts, Athletic, Public, Student)
-                const categories = ["Arts Concert / Performance", "Athletic Competitions", "Public Event", "Student Event"];
-                const category = categories.find(c => metaInfo.includes(c)) || "Public Event";
+                // Logic to find category from the text
+                const cats = ["Arts Concert / Performance", "Athletic Competitions", "Public Event", "Student Event"];
+                const category = cats.find(c => details.includes(c)) || "Public Event";
 
-                // 4. Extract Time & Location using specific detail classes
-                // The calendar often uses .event-details or just raw text after the date
-                const time = el.querySelector('.event-time')?.innerText.trim() || "See Details";
-                const loc = el.querySelector('.event-location')?.innerText.trim() || "Millersville, PA";
-
-                if (name) {
-                    results.push({ name, time, loc, category });
+                if (title) {
+                    results.push({
+                        name: title,
+                        time: el.querySelector('.event-time, .time')?.innerText.trim() || "See Details",
+                        loc: el.querySelector('.event-location, .location')?.innerText.trim() || "Millersville, PA",
+                        category: category
+                    });
                 }
             });
             return results;
@@ -40,12 +43,13 @@ async function runScrape() {
 
         if (events.length > 0) {
             fs.writeFileSync('./events.json', JSON.stringify(events, null, 2));
-            console.log(`Successfully scraped ${events.length} events.`);
+            console.log(`Success: Found ${events.length} events.`);
         } else {
-            console.log("No events found. Check if .calendar-list-item class still exists.");
+            // Fallback for debugging
+            fs.writeFileSync('./events.json', JSON.stringify([{name: "No events found - Check selectors", category: "System"}], null, 2));
         }
     } catch (err) {
-        console.error("SCRAPE ERROR:", err.message);
+        console.error("Scrape failed:", err.message);
     } finally {
         await browser.close();
     }

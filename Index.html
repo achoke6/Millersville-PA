@@ -1,68 +1,99 @@
-<style>
-    .filter-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
-    .filter-btn { 
-        padding: 8px 12px; border: 2px solid var(--primary); 
-        background: transparent; color: var(--secondary); 
-        cursor: pointer; border-radius: 20px; font-weight: bold;
-    }
-    .filter-btn.active { background: var(--primary); color: white; }
-    .pagination { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
-    .page-link { cursor: pointer; color: var(--primary); font-weight: bold; text-decoration: underline; }
-</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Millersville One-Stop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="initApp()">
 
-<div class="filter-bar" id="filterBar">
-    <button class="filter-btn active" onclick="setFilter('All')">All</button>
-    <button class="filter-btn" onclick="setFilter('Arts Concert / Performance')">Arts</button>
-    <button class="filter-btn" onclick="setFilter('Athletic Competitions')">Sports</button>
-    <button class="filter-btn" onclick="setFilter('Public Event')">Public</button>
-    <button class="filter-btn" onclick="setFilter('Student Event')">Students</button>
+<header>
+    <h1>Millersville One-Stop</h1>
+    <p id="sub-header">Student View: Campus Events & Deals</p>
+</header>
+
+<div class="container">
+    <div class="filter-bar" id="filterBar">
+        <button class="filter-btn active" onclick="setFilter('All')">All</button>
+        <button class="filter-btn" onclick="setFilter('Arts Concert / Performance')">Arts</button>
+        <button class="filter-btn" onclick="setFilter('Athletic Competitions')">Sports</button>
+        <button class="filter-btn" onclick="setFilter('Public Event')">Public</button>
+        <button class="filter-btn" onclick="setFilter('Student Event')">Students</button>
+    </div>
+
+    <div id="events-container"></div>
+    <div class="pagination" id="pagination"></div>
 </div>
 
-<div id="events-container"></div>
-<div class="pagination" id="pagination"></div>
+<div class="footer-switch">
+    <span>STUDENT</span>
+    <input type="checkbox" id="roleToggle" onchange="toggleMode()">
+    <span>TOWNIE</span>
+</div>
 
 <script>
-let currentFilter = 'All';
-let currentPage = 1;
-const itemsPerPage = 6;
+    let currentEvents = [];
+    let currentFilter = 'All';
+    let currentPage = 1;
+    const itemsPerPage = 5;
 
-function renderUI() {
-    const isTownie = document.getElementById('roleToggle').checked;
-    const container = document.getElementById('events-container');
+    async function initApp() {
+        try {
+            const res = await fetch('events.json?v=' + Date.now());
+            currentEvents = await res.json();
+            renderUI();
+        } catch (e) { console.error("Data load failed"); }
+    }
 
-    // 1. Filter Logic
-    let filtered = currentEvents.filter(event => {
-        // TOWNIE RULE: Filter out "Student Event" category
-        if (isTownie && event.category === "Student Event") return false;
-        
-        // BUTTON FILTER: Filter by selected category
-        if (currentFilter !== 'All' && event.category !== currentFilter) return false;
-        
-        return true;
-    });
+    function toggleMode() {
+        const isTownie = document.getElementById('roleToggle').checked;
+        document.body.classList.toggle('townie-mode', isTownie);
+        document.getElementById('sub-header').innerText = isTownie ? "Townie View" : "Student View";
+        currentPage = 1;
+        renderUI();
+    }
 
-    // 2. Pagination Calculation
-    const totalPages = Math.ceil(filtered.length / itemsPerPage);
-    const start = (currentPage - 1) * itemsPerPage;
-    const paginated = filtered.slice(start, start + itemsPerPage);
+    function setFilter(cat) {
+        currentFilter = cat;
+        currentPage = 1;
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.innerText.includes(cat) || (cat==='All' && b.innerText==='All')));
+        renderUI();
+    }
 
-    // 3. Render Events
-    container.innerHTML = paginated.map(event => `
-        <div class="card">
-            <span class="price-tag">${event.category}</span>
-            <h3>${event.name}</h3>
-            <p><strong>🕒 Time:</strong> ${event.time}</p>
-            <p><strong>📍 Location:</strong> ${event.loc}</p>
-        </div>
-    `).join('');
+    function renderUI() {
+        const isTownie = document.getElementById('roleToggle').checked;
+        const container = document.getElementById('events-container');
 
-    // 4. Render Pagination Buttons
-    renderPagination(totalPages);
-}
+        const filtered = currentEvents.filter(e => {
+            if (isTownie && e.category === "Student Event") return false;
+            if (currentFilter !== 'All' && e.category !== currentFilter) return false;
+            return true;
+        });
 
-function setFilter(category) {
-    currentFilter = category;
-    currentPage = 1; // Reset to page 1 on filter change
-    renderUI();
-}
+        const start = (currentPage - 1) * itemsPerPage;
+        const paginated = filtered.slice(start, start + itemsPerPage);
+
+        container.innerHTML = paginated.map(e => `
+            <div class="card">
+                <span class="price-tag">${e.category}</span>
+                <h3>${e.name}</h3>
+                <p>🕒 ${e.time} | 📍 ${e.loc}</p>
+            </div>
+        `).join('');
+
+        renderPagination(filtered.length);
+    }
+
+    function renderPagination(total) {
+        const pages = Math.ceil(total / itemsPerPage);
+        const nav = document.getElementById('pagination');
+        nav.innerHTML = '';
+        for (let i = 1; i <= pages; i++) {
+            nav.innerHTML += `<button class="page-btn ${i===currentPage?'active':''}" onclick="goToPage(${i})">${i}</button>`;
+        }
+    }
+
+    function goToPage(p) { currentPage = p; renderUI(); window.scrollTo(0,0); }
 </script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+:root {
+    --primary: #FFD100;
+    --secondary: #000000;
+    --bg: #ffffff;
+    --card-bg: #f9f9f9;
+}
+
+body.townie-mode {
+    --primary: #004a99;
+    --secondary: #2e7d32;
+    --bg: #f4f7f6;
+    --card-bg: #ffffff;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg);
+    margin: 0;
+    padding-bottom: 100px;
+    transition: all 0.3s ease;
+}
+
+header {
+    background: var(--secondary);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+    border-bottom: 6px solid var(--primary);
+}
+
+.container { max-width: 800px; margin: auto; padding: 20px; }
+
+/* Filter Buttons */
+.filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 25px; }
+.filter-btn {
+    padding: 8px 16px;
+    border: 2px solid var(--primary);
+    background: transparent;
+    color: var(--secondary);
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.filter-btn.active { background: var(--primary); color: white; }
+
+/* Cards */
+.card {
+    background: var(--card-bg);
+    border-left: 5px solid var(--primary);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.price-tag {
+    float: right;
+    font-size: 0.7rem;
+    background: var(--primary);
+    padding: 3px 8px;
+    border-radius: 10px;
+}
+
+/* Pagination */
+.pagination { display: flex; justify-content: center; gap: 10px; margin-top: 30px; }
+.page-btn { cursor: pointer; padding: 5px 10px; border: 1px solid #ccc; border-radius: 4px; }
+.page-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+/* Switch Footer */
+.footer-switch {
+    position: fixed; bottom: 0; width: 100%;
+    background: #111; color: white; padding: 15px;
+    display: flex; justify-content: center; align-items: center; gap: 15px;
+}

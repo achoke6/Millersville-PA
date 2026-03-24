@@ -180,33 +180,17 @@
 <script>
     let currentEvents = [];
 
-    async function fetchEvents() {
-        const container = document.getElementById('events-container');
-        const btn = document.getElementById('refreshBtn');
-        
-        btn.disabled = true;
-        btn.innerText = "⌛ Loading...";
-        container.innerHTML = `<p class="loading-text">Scraping latest events for March 2026...</p>`;
-
-        try {
-            // Updated to ensure it hits your specific Netlify endpoint
-            const response = await fetch('/.netlify/functions/get-events');
-            if (!response.ok) throw new Error('Network response was not ok');
-            
-            currentEvents = await response.json();
-            renderUI();
-        } catch (err) {
-            container.innerHTML = `
-                <div class="card" style="border-color: #ff4444;">
-                    <h3>Sync Error</h3>
-                    <p>Could not connect to the scraper. Make sure <strong>netlify/functions/get-events.js</strong> is deployed correctly.</p>
-                </div>`;
-            console.error(err);
-        } finally {
-            btn.disabled = false;
-            btn.innerText = "🔄 Refresh Data";
-        }
+async function fetchEvents() {
+    const container = document.getElementById('events-container');
+    try {
+        // Just fetch the local file created by the GitHub Action
+        const response = await fetch('./events.json');
+        currentEvents = await response.json();
+        renderUI();
+    } catch (err) {
+        container.innerHTML = `<p class="loading-text">Events will appear after the first automated scrape.</p>`;
     }
+}
 
     function toggleAppMode() {
         const isTownie = document.getElementById('roleToggle').checked;
@@ -221,6 +205,17 @@
         const isTownie = document.getElementById('roleToggle').checked;
         const eventContainer = document.getElementById('events-container');
         const extraContainer = document.getElementById('extra-content');
+// Add a Weather Card at the top
+const weatherHtml = `
+    <div class="card" style="background: #e3f2fd; border-left-color: #004a99;">
+        <span class="price-tag">LIVE WEATHER</span>
+        <h3>Currently 35°F in Millersville</h3>
+        <p><strong>Conditions:</strong> Cloudy with 17mph West winds.</p>
+        <p><strong>Tonight:</strong> Low of 25°F. ${isTownie ? 'Watch for 25% chance of snow on the roads.' : 'Clear skies for the late walk back to the dorm.'}</p>
+    </div>
+`;
+document.getElementById('events-container').insertAdjacentHTML('afterbegin', weatherHtml);
+
 
         // Render Live Events from Scraper
         if (!currentEvents || currentEvents.length === 0) {

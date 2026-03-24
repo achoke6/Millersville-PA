@@ -87,20 +87,39 @@ let currentEvents = [];
         return loc || "Millersville Campus";
     }
 
-    function toggleMode() {
+function toggleMode() {
         const isTownie = document.getElementById('roleToggle').checked;
         document.body.classList.toggle('townie-mode', isTownie);
         document.getElementById('sub-header').innerText = isTownie ? "Townie View" : "Student View";
-        currentPage = 1;
-        renderUI();
+        
+        // Hide the Students button for Townies using its new ID
+        const studentBtn = document.getElementById('btn-student');
+        if (studentBtn) {
+            studentBtn.style.display = isTownie ? 'none' : 'inline-block';
+        }
+
+        // If they toggle to Townie while "Students" is selected, force it back to "All"
+        if (isTownie && currentFilter === 'Student') {
+            const allBtn = document.querySelector('.filter-btn'); // Grabs the first button (All)
+            setFilter('All', allBtn);
+        } else {
+            currentPage = 1;
+            renderUI();
+        }
     }
 
-    function setFilter(cat) {
-        currentFilter = cat;
+    function setFilter(keyword, clickedBtn) {
+        currentFilter = keyword;
         currentPage = 1;
-        document.querySelectorAll('.filter-btn').forEach(b => {
-            b.classList.toggle('active', b.getAttribute('data-cat') === cat);
-        });
+        
+        // 1. Strip the 'active' class from EVERY button
+        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+        
+        // 2. Add the 'active' class ONLY to the exact button you clicked
+        if (clickedBtn) {
+            clickedBtn.classList.add('active');
+        }
+        
         renderUI();
     }
 
@@ -108,24 +127,33 @@ let currentEvents = [];
         const isTownie = document.getElementById('roleToggle').checked;
         const container = document.getElementById('events-container');
 
-        // Filter the events
+        // Filter the events using fuzzy matching (.includes)
         const filtered = currentEvents.filter(e => {
-            if (isTownie && e.category === "Student Event") return false;
-            if (currentFilter !== 'All' && e.category !== currentFilter) return false;
+            const catLower = e.category.toLowerCase();
+            
+            // Townie Rule: Drop it if category contains "student"
+            if (isTownie && catLower.includes("student")) return false;
+            
+            // Button Filter: Check if the category contains our keyword (like "arts" or "athletic")
+            if (currentFilter !== 'All') {
+                if (!catLower.includes(currentFilter.toLowerCase())) return false;
+            }
+            
             return true;
         });
 
-        // Paginate the events
+        // Pagination setup
         const start = (currentPage - 1) * itemsPerPage;
         const paginated = filtered.slice(start, start + itemsPerPage);
 
+        // Handle empty results cleanly
         if (paginated.length === 0) {
-            container.innerHTML = `<p style="text-align:center; width:100%; color:var(--text-muted);">No events found for this filter.</p>`;
+            container.innerHTML = `<p style="text-align:center; width:100%; color:var(--text-muted); padding: 2rem;">No events found for this category.</p>`;
             document.getElementById('pagination').innerHTML = '';
             return;
         }
 
-        // Output the Modern UI Cards
+        // Draw the cards
         container.innerHTML = paginated.map(e => `
             <div class="card">
                 <div class="card-header">

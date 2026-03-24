@@ -184,7 +184,7 @@ async function fetchEvents() {
     const container = document.getElementById('events-container');
     try {
         // Just fetch the local file created by the GitHub Action
-        const response = await fetch('./events.json');
+const response = await fetch('events.json?v=' + new Date().getTime());
         currentEvents = await response.json();
         renderUI();
     } catch (err) {

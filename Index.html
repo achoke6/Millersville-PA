@@ -58,7 +58,7 @@
             const rawApiData = await res.json();
             
             // Map the raw database array to our clean card format
-            if (rawApiData && rawApiData.data) {
+if (rawApiData && rawApiData.data) {
                 currentEvents = rawApiData.data.map(item => {
                     return {
                         name: item[1] || "Unnamed Event",
@@ -66,7 +66,9 @@
                         rawDate: item[3] ? item[3].split('T')[0] : "", 
                         time: formatTime(item[3], item[4]),
                         loc: cleanLocation(item[5], item[7]),
-                        category: item[9] || "Public Event"
+                        category: item[9] || "Public Event",
+                        // item[11] is the description field. We pass it to our new scanner!
+                        price: extractPrice(item[11]) 
                     };
                 });
             }
@@ -99,6 +101,16 @@
         if (building) loc += building;
         if (room && room !== building) loc += (loc ? " - " : "") + room.split('|')[0].trim(); 
         return loc || "Millersville Campus";
+    }
+
+function extractPrice(description) {
+        if (!description) return "Free";
+        
+        // Hunts for a '$' followed by numbers (e.g., $5, $15.50)
+        const match = description.match(/\$[0-9]+(\.[0-9]{2})?/);
+        
+        // If it finds a price, return it. If not, assume it's free!
+        return match ? match[0] : "Free";
     }
 
     // --- INTERACTION LOGIC ---
@@ -174,7 +186,7 @@
             return;
         }
 
-        // Draw the Event Cards
+// Draw the Event Cards
         container.innerHTML = paginated.map(e => `
             <div class="card">
                 <div class="card-header">
@@ -185,6 +197,7 @@
                     <p>📅 ${e.date}</p>
                     <p>🕒 ${e.time}</p>
                     <p>📍 ${e.loc}</p>
+                    <div><span class="cost-badge">${e.price}</span></div>
                 </div>
             </div>
         `).join('');

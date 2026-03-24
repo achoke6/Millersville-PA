@@ -6,10 +6,52 @@
 }
 
 body.townie-mode {
-    --primary: #004a99;
-    --secondary: #2e7d32;
-    --bg: #f4f7f6;
-    --card-bg: #ffffff;
+    --primary: #0284c7; /* Clean, bright Borough Blue */
+    --primary-hover: #0369a1;
+    --secondary: #0f172a; /* Dark slate (almost black) for highly readable text */
+    --bg-color: #f0f4f8;
+}
+
+/* Add these new styles for our calendar picker at the bottom of the file */
+.date-filter-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 2rem;
+}
+
+.date-picker {
+    padding: 10px 15px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    color: var(--text-main);
+    background: var(--card-bg);
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.date-picker:focus {
+    border-color: var(--primary);
+}
+
+.clear-date-btn {
+    padding: 10px 15px;
+    background: #e5e7eb;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--text-muted);
+    transition: 0.2s;
+}
+
+.clear-date-btn:hover {
+    background: #d1d5db;
+    color: var(--secondary);
 }
 
 body {

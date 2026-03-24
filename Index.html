@@ -13,13 +13,13 @@
 </header>
 
 <div class="container">
-    <div class="filter-bar" id="filterBar">
-        <button class="filter-btn active" onclick="setFilter('All')">All</button>
-        <button class="filter-btn" onclick="setFilter('Arts Concert / Performance')">Arts</button>
-        <button class="filter-btn" onclick="setFilter('Athletic Competitions')">Sports</button>
-        <button class="filter-btn" onclick="setFilter('Public Event')">Public</button>
-        <button class="filter-btn" onclick="setFilter('Student Event')">Students</button>
-    </div>
+<div class="filter-bar" id="filterBar">
+    <button class="filter-btn active" onclick="setFilter('All', this)">All</button>
+    <button class="filter-btn" onclick="setFilter('Arts', this)">Arts</button>
+    <button class="filter-btn" onclick="setFilter('Athletic', this)">Sports</button>
+    <button class="filter-btn" onclick="setFilter('Public', this)">Public</button>
+    <button class="filter-btn" id="btn-student" onclick="setFilter('Student', this)">Students</button>
+</div>
 
     <div id="events-container"></div>
     <div class="pagination" id="pagination"></div>

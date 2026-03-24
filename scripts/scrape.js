@@ -6,45 +6,35 @@ async function runScrape() {
     const page = await browser.newPage();
     
     try {
-        console.log("Navigating to Millersville Calendar...");
-        await page.goto('https://www.millersville.edu/calendar/events/list', { 
-            waitUntil: 'networkidle',
-            timeout: 60000 
-        });
-
-        // Give the JavaScript extra time to populate the list
+        await page.goto('https://www.millersville.edu/calendar/events/list', { waitUntil: 'networkidle' });
         await page.waitForTimeout(5000); 
 
         const events = await page.evaluate(() => {
             const results = [];
-            // Looking for any container that looks like an event
-            const elements = document.querySelectorAll('.calendar-list-item, article, .event-item');
-            
-            elements.forEach(el => {
+            // Target the specific article/list structure
+            document.querySelectorAll('.calendar-list-item, article.event, .event-listing').forEach(el => {
                 const title = el.querySelector('h3, h4, .event-title')?.innerText.trim();
+                // The calendar usually bundles time/loc in a sub-element or specific class
+                const detailsText = el.querySelector('.event-details, .time-location, p')?.innerText.trim() || "";
+                const category = el.querySelector('.event-category, .category')?.innerText.trim() || "Public Event";
+
                 if (title) {
                     results.push({
                         name: title,
-                        time: el.querySelector('.event-time, .time')?.innerText.trim() || "See Site",
-                        loc: el.querySelector('.event-location, .location')?.innerText.trim() || "Campus",
-                        category: el.querySelector('.event-category, .category')?.innerText.trim() || "General"
+                        // Splitting details if they are in one string, or grabbing specific tags
+                        time: el.querySelector('.event-time, .time')?.innerText.trim() || "See Details",
+                        loc: el.querySelector('.event-location, .location')?.innerText.trim() || "Millersville, PA",
+                        category: category
                     });
                 }
             });
             return results;
         });
 
-        if (events.length > 0) {
-            fs.writeFileSync('./events.json', JSON.stringify(events, null, 2));
-            console.log(`Successfully scraped ${events.length} events.`);
-        } else {
-            // Write this so we know the script reached this point
-            fs.writeFileSync('./events.json', JSON.stringify([{name: "No events found in HTML", date: new Date().toISOString()}], null, 2));
-            console.log("No events found. HTML might have changed.");
-        }
-
+        fs.writeFileSync('./events.json', JSON.stringify(events, null, 2));
+        console.log(`Scraped ${events.length} events.`);
     } catch (err) {
-        console.error("SCRAPE ERROR:", err.message);
+        console.error("Scrape failed:", err.message);
     } finally {
         await browser.close();
     }

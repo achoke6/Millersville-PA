@@ -1,267 +1,83 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Millersville One-Stop</title>
-    <style>
-        /* --- CSS THEME VARIABLES --- */
-        :root {
-            --primary: #FFD100; /* Marauder Gold */
-            --secondary: #000000;
-            --bg: #ffffff;
-            --card-bg: #f9f9f9;
-            --btn-hover: #e6bc00;
-        }
+<style>
+    .filter-bar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+    .filter-btn { 
+        padding: 8px 12px; border: 2px solid var(--primary); 
+        background: transparent; color: var(--secondary); 
+        cursor: pointer; border-radius: 20px; font-weight: bold;
+    }
+    .filter-btn.active { background: var(--primary); color: white; }
+    .pagination { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
+    .page-link { cursor: pointer; color: var(--primary); font-weight: bold; text-decoration: underline; }
+</style>
 
-        body.townie-mode {
-            --primary: #004a99; /* Borough Blue */
-            --secondary: #2e7d32; /* Park Green */
-            --bg: #f4f7f6;
-            --card-bg: #ffffff;
-            --btn-hover: #003a7a;
-        }
-
-        /* --- LAYOUT --- */
-        body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background-color: var(--bg);
-            color: #333;
-            margin: 0;
-            padding-bottom: 120px;
-            transition: background 0.3s ease;
-        }
-
-        header {
-            background-color: var(--secondary);
-            color: white;
-            padding: 2.5rem 1rem;
-            text-align: center;
-            border-bottom: 8px solid var(--primary);
-        }
-
-        .container {
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-        }
-
-        /* --- CONTROLS --- */
-        .controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        h2.section-title {
-            color: var(--primary);
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            margin: 0;
-        }
-
-        .refresh-btn {
-            background-color: var(--primary);
-            color: var(--secondary);
-            border: none;
-            padding: 8px 16px;
-            border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .refresh-btn:hover { background-color: var(--btn-hover); }
-        .refresh-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        /* --- CARDS --- */
-        .card {
-            background: var(--card-bg);
-            border-left: 6px solid var(--primary);
-            margin: 15px 0;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            position: relative;
-        }
-
-        .price-tag {
-            float: right;
-            font-weight: 800;
-            font-size: 0.75rem;
-            background: var(--primary);
-            color: var(--secondary);
-            padding: 4px 10px;
-            border-radius: 20px;
-            text-transform: uppercase;
-        }
-
-        /* --- TOGGLE FOOTER --- */
-        .footer-switch {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            background: #1a1a1a;
-            color: white;
-            padding: 20px 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 -5px 20px rgba(0,0,0,0.4);
-            z-index: 1000;
-        }
-
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 64px;
-            height: 34px;
-        }
-
-        .switch input { opacity: 0; width: 0; height: 0; }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #FFD100;
-            transition: .4s;
-            border-radius: 34px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 26px; width: 26px;
-            left: 4px; bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .slider { background-color: #004a99; }
-        input:checked + .slider:before { transform: translateX(30px); }
-
-        .loading-text { text-align: center; color: #888; padding: 40px; font-style: italic; }
-    </style>
-</head>
-<body onload="fetchEvents()">
-
-<header>
-    <h1>Millersville One-Stop</h1>
-    <p id="sub-header">Student View: Campus Events & Deals</p>
-</header>
-
-<div class="container">
-    <div class="controls">
-        <h2 class="section-title">Live Events</h2>
-        <button class="refresh-btn" id="refreshBtn" onclick="fetchEvents()">🔄 Refresh Data</button>
-    </div>
-    
-    <div id="events-container">
-        <p class="loading-text">Connecting to Millersville.edu...</p>
-    </div>
-
-    <h2 class="section-title" style="margin-top: 40px;">Local Living & Specials</h2>
-    <div id="extra-content"></div>
+<div class="filter-bar" id="filterBar">
+    <button class="filter-btn active" onclick="setFilter('All')">All</button>
+    <button class="filter-btn" onclick="setFilter('Arts Concert / Performance')">Arts</button>
+    <button class="filter-btn" onclick="setFilter('Athletic Competitions')">Sports</button>
+    <button class="filter-btn" onclick="setFilter('Public Event')">Public</button>
+    <button class="filter-btn" onclick="setFilter('Student Event')">Students</button>
 </div>
 
-<div class="footer-switch">
-    <span>STUDENT</span>
-    <label class="switch">
-        <input type="checkbox" id="roleToggle" onchange="toggleAppMode()">
-        <span class="slider"></span>
-    </label>
-    <span>TOWNIE</span>
-</div>
+<div id="events-container"></div>
+<div class="pagination" id="pagination"></div>
 
 <script>
-    let currentEvents = [];
+    let currentFilter = 'All';
+    let currentPage = 1;
+    const itemsPerPage = 5;
 
-async function fetchEvents() {
-    const container = document.getElementById('events-container');
-    try {
-        // Just fetch the local file created by the GitHub Action
-const response = await fetch('events.json?v=' + new Date().getTime());
-        currentEvents = await response.json();
+    function setFilter(cat) {
+        currentFilter = cat;
+        currentPage = 1;
         renderUI();
-    } catch (err) {
-        container.innerHTML = `<p class="loading-text">Events will appear after the first automated scrape.</p>`;
-    }
-}
-
-    function toggleAppMode() {
-        const isTownie = document.getElementById('roleToggle').checked;
-        document.body.classList.toggle('townie-mode', isTownie);
-        document.getElementById('sub-header').innerText = isTownie ? 
-            "Townie View: Borough Events & Local Info" : 
-            "Student View: Campus Events & Deals";
-        renderUI();
+        // Update active class on buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.innerText.includes(cat) || (cat === 'All' && btn.innerText === 'All'));
+        });
     }
 
     function renderUI() {
         const isTownie = document.getElementById('roleToggle').checked;
-        const eventContainer = document.getElementById('events-container');
-        const extraContainer = document.getElementById('extra-content');
-// Add a Weather Card at the top
-const weatherHtml = `
-    <div class="card" style="background: #e3f2fd; border-left-color: #004a99;">
-        <span class="price-tag">LIVE WEATHER</span>
-        <h3>Currently 35°F in Millersville</h3>
-        <p><strong>Conditions:</strong> Cloudy with 17mph West winds.</p>
-        <p><strong>Tonight:</strong> Low of 25°F. ${isTownie ? 'Watch for 25% chance of snow on the roads.' : 'Clear skies for the late walk back to the dorm.'}</p>
-    </div>
-`;
-document.getElementById('events-container').insertAdjacentHTML('afterbegin', weatherHtml);
+        const container = document.getElementById('events-container');
+        
+        // 1. Filter Logic
+        let filtered = currentEvents.filter(event => {
+            // Rule: Townies never see Student Events
+            if (isTownie && event.category === "Student Event") return false;
+            // Category Filter
+            if (currentFilter !== 'All' && event.category !== currentFilter) return false;
+            return true;
+        });
 
+        // 2. Pagination Logic
+        const start = (currentPage - 1) * itemsPerPage;
+        const paginatedItems = filtered.slice(start, start + itemsPerPage);
 
-        // Render Live Events from Scraper
-        if (!currentEvents || currentEvents.length === 0) {
-            eventContainer.innerHTML = "<p class='loading-text'>No active events found on the calendar right now.</p>";
-        } else {
-            eventContainer.innerHTML = currentEvents.map(event => {
-                let priceLabel = "FREE";
-                
-                // Logic based on today's (March 17) context
-                if (isTownie && event.category?.includes("Student")) {
-                    priceLabel = "STUDENTS ONLY";
-                } else if (event.name.toLowerCase().includes("concert") || event.name.toLowerCase().includes("jazz")) {
-                    priceLabel = isTownie ? "$15.00" : "STUDENT ID";
-                }
+        // 3. Generate HTML
+        container.innerHTML = paginatedItems.map(event => `
+            <div class="card">
+                <span class="price-tag">${event.category}</span>
+                <h3>${event.name}</h3>
+                <p><strong>🕒 Time:</strong> ${event.time}</p>
+                <p><strong>📍 Location:</strong> ${event.loc}</p>
+            </div>
+        `).join('');
 
-                return `
-                    <div class="card">
-                        <span class="price-tag">${priceLabel}</span>
-                        <h3>${event.name}</h3>
-                        <p><strong>🕒 Time:</strong> ${event.time || 'Check Website'}</p>
-                        <p><strong>📍 Location:</strong> ${event.loc || 'Campus Main'}</p>
-                    </div>
-                `;
-            }).join('');
+        renderPagination(filtered.length);
+    }
+
+    function renderPagination(totalItems) {
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        const nav = document.getElementById('pagination');
+        nav.innerHTML = '';
+        for (let i = 1; i <= totalPages; i++) {
+            nav.innerHTML += `<span class="page-link" onclick="goToPage(${i})">${i}</span>`;
         }
+    }
 
-        // Render Static Perspective Items
-        const housingStatus = isTownie ? "Available for General Lease" : "Student Priority (60+ Credits)";
-        const storeDeal = isTownie ? "MU Alumni Gear: 15% Discount" : "Flash Sale: $22 Spring 2026 Crewnecks";
-
-        extraContainer.innerHTML = `
-            <div class="card">
-                <span class="price-tag">HOUSING</span>
-                <h3>College Manor Apartments</h3>
-                <p>Status: ${housingStatus}</p>
-                <p>Current Rates: $1,395 - $1,640/mo</p>
-            </div>
-            <div class="card">
-                <span class="price-tag">M-STORE</span>
-                <h3>University Store Specials</h3>
-                <p>${storeDeal}</p>
-                <p>Location: SMC Ground Level</p>
-            </div>
-        `;
+    function goToPage(p) {
+        currentPage = p;
+        renderUI();
+        window.scrollTo(0,0);
     }
 </script>
-
-</body>
-</html>

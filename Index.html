@@ -14,11 +14,11 @@
 
 <div class="container">
 <div class="filter-bar" id="filterBar">
-    <button class="filter-btn active" onclick="setFilter('All', this)">All</button>
-    <button class="filter-btn" onclick="setFilter('Arts', this)">Arts</button>
-    <button class="filter-btn" onclick="setFilter('Athletic', this)">Sports</button>
-    <button class="filter-btn" onclick="setFilter('Public', this)">Public</button>
-    <button class="filter-btn" id="btn-student" onclick="setFilter('Student', this)">Students</button>
+    <button class="filter-btn active" data-cat="All" onclick="setFilter('All')">All</button>
+    <button class="filter-btn" data-cat="Arts" onclick="setFilter('Arts')">Arts</button>
+    <button class="filter-btn" data-cat="Athletic" onclick="setFilter('Athletic')">Sports</button>
+    <button class="filter-btn" data-cat="Public" onclick="setFilter('Public')">Public</button>
+    <button class="filter-btn" id="btn-student" data-cat="Student" onclick="setFilter('Student')">Students</button>
 </div>
 
     <div id="events-container"></div>
@@ -26,9 +26,14 @@
 </div>
 
 <div class="footer-switch">
-    <span>STUDENT</span>
-    <input type="checkbox" id="roleToggle" onchange="toggleMode()">
-    <span>TOWNIE</span>
+    <span class="mode-label">STUDENT</span>
+    
+    <label class="toggle-container">
+        <input type="checkbox" id="roleToggle" onchange="toggleMode()">
+        <span class="toggle-slider"></span>
+    </label>
+    
+    <span class="mode-label">TOWNIE</span>
 </div>
 
 <script>
@@ -55,7 +60,6 @@ let currentEvents = [];
                     };
                 });
             }
-
             // Setup filter button listeners
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => setFilter(e.target.getAttribute('data-cat')));
@@ -108,16 +112,19 @@ function toggleMode() {
         }
     }
 
-    function setFilter(keyword, clickedBtn) {
+function setFilter(keyword) {
         currentFilter = keyword;
         currentPage = 1;
         
         // 1. Strip the 'active' class from EVERY button
-        document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
         
-        // 2. Add the 'active' class ONLY to the exact button you clicked
-        if (clickedBtn) {
-            clickedBtn.classList.add('active');
+        // 2. Find the exact button matching our keyword and highlight it
+        const activeBtn = document.querySelector(`.filter-btn[data-cat="${keyword}"]`);
+        if (activeBtn) {
+            activeBtn.classList.add('active');
         }
         
         renderUI();

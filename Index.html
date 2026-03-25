@@ -12,13 +12,13 @@
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
     </style>
 </head>
-<body>
+<body class="townie-mode">
 
 <header>
     <div class="header-container">
         <div class="logo-block">
             <h1>Millersville, PA</h1>
-            <p id="sub-header">MU Student View: Campus App</p>
+            <p id="sub-header">Townie View: Community App</p>
             <p class="disclaimer">Independent community resource. Not affiliated with MU or the Borough.</p>
         </div>
         <nav class="main-nav" id="top-nav">
@@ -34,7 +34,7 @@
         <div class="header-toggle">
             <span class="mode-label">MU STUDENT</span>
             <label class="toggle-container">
-                <input type="checkbox" id="roleToggle" onchange="toggleMode()">
+                <input type="checkbox" id="roleToggle" onchange="toggleMode()" checked>
                 <span class="toggle-slider"></span>
             </label>
             <span class="mode-label">TOWNIE</span>
@@ -64,6 +64,7 @@
         <div class="filter-bar">
             <button class="filter-btn active" onclick="setFilter('All', this)">All</button>
             <button class="filter-btn" onclick="setFilter('MU', this)">MU</button>
+            <button class="filter-btn" id="btn-pm" onclick="setFilter('Penn Manor', this)">Penn Manor</button>
             <button class="filter-btn" onclick="setFilter('Other', this)">Other</button>
         </div>
         <div id="events-container" class="events-grid"></div>
@@ -153,6 +154,16 @@
         const isTownie = document.getElementById('roleToggle').checked;
         document.body.classList.toggle('townie-mode', isTownie);
         document.getElementById('sub-header').innerText = isTownie ? "Townie View: Community App" : "MU Student View: Campus App";
+        document.getElementById('btn-pm').style.display = isTownie ? 'inline-block' : 'none';
+        
+        // Reset filter to All if turning off Townie mode while on the Penn Manor tab
+        if (!isTownie && currentFilter === 'Penn Manor') {
+            currentFilter = 'All';
+            const filterContainer = document.getElementById('btn-pm').parentElement;
+            filterContainer.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            filterContainer.querySelector('.filter-btn').classList.add('active'); // Sets 'All' back to active
+        }
+        
         currentPage = 1;
         renderEventsUI();
         renderHomeUI();
@@ -199,13 +210,12 @@
         container.innerHTML = '';
         
         let filtered = currentEvents.filter(e => {
-            // Explicitly hide Penn Manor from MU Students
-            if (!isTownie && (e.title.includes('PMHS') || e.title.includes('Penn Manor'))) return false; 
+            if (!isTownie && e.category === 'Penn Manor') return false; 
             return currentFilter === 'All' || e.category === currentFilter;
         });
 
         if (filtered.length === 0) {
-            container.innerHTML = '<p style="padding:20px; color:var(--text-muted);">No events found.</p>';
+            container.innerHTML = '<p style="padding:20px; color:var(--text-muted);">No events found for this filter.</p>';
             return;
         }
 
@@ -247,7 +257,7 @@
         homeEvents.innerHTML = '';
 
         let todaysEvents = currentEvents.filter(e => {
-            if (!isTownie && (e.title.includes('PMHS') || e.title.includes('Penn Manor'))) return false;
+            if (!isTownie && e.category === 'Penn Manor') return false;
             return true;
         });
 
@@ -308,7 +318,6 @@
         renderEventsUI(); 
     };
 
-    // Include loadDining, loadHousing, loadServices from before...
     async function loadDining() {
         try {
             const res = await fetch('restaurants.json');

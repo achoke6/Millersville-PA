@@ -6,22 +6,18 @@ const dns = require('dns');
 dns.setDefaultResultOrder('ipv4first');
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-// Fully disguised browser headers
-const fetchHeaders = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    'Accept': 'application/json, text/javascript, */*; q=0.01',
-    'X-Requested-With': 'XMLHttpRequest',
-    'Origin': 'https://www.millersville.edu',
-    'Referer': 'https://www.millersville.edu/calendar/'
+// Standard browser header
+const baseHeaders = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 };
 
 async function runScraper() {
     console.log("🚀 Starting Millersville Pro Scraper...");
 
-    // 1. WEATHER 
+    // 1. WEATHER (Working Perfectly)
     try {
         console.log("Fetching Weather XML...");
-        const res = await fetch('https://snowball.millersville.edu/~cws/current.xml', { headers: fetchHeaders });
+        const res = await fetch('https://snowball.millersville.edu/~cws/current.xml', { headers: baseHeaders });
         const xml = await res.text();
         
         const tempMatch = xml.match(/<(?:temp_f|temperature|temp)[^>]*>\s*([-\d.]+)/i);
@@ -44,20 +40,44 @@ async function runScraper() {
         fs.writeFileSync(path.join(__dirname, '../weather.json'), JSON.stringify(fallback, null, 2));
     }
 
-    // 2. EVENTS (Forced Pivot Logic)
+    // 2. EVENTS (Cookie Handshake + Clean Fallback)
     try {
         console.log("Fetching Events...");
         let sourceEvents = [];
         
-        // ATTEMPT 1: The primary index.php API
+        // ATTEMPT 1: The Cookie Handshake
         try {
+            console.log("Initiating Cookie Handshake with MU Calendar...");
+            // Visit the main page first to establish a PHP Session
+            const pageRes = await fetch('https://www.millersville.edu/calendar/', { headers: baseHeaders });
+            const rawCookies = pageRes.headers.get('set-cookie');
+            
+            // Extract the session cookies safely
+            let cookieHeader = '';
+            if (rawCookies) {
+                cookieHeader = rawCookies.split(', ').map(c => c.split(';')[0]).join('; ');
+            }
+
             const today = new Date();
             const startDay = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().split('T')[0];
             const endDay = new Date(today.getFullYear(), today.getMonth() + 1, 0).toISOString().split('T')[0];
 
+            console.log("Fetching primary API with session token...");
+            const apiHeaders = {
+                ...baseHeaders,
+                'Accept': 'application/json, text/javascript, */*; q=0.01',
+                'X-Requested-With': 'XMLHttpRequest',
+                'Origin': 'https://www.millersville.edu',
+                'Referer': 'https://www.millersville.edu/calendar/',
+                'Content-Type': 'application/json'
+            };
+            
+            // Inject the stolen cookie to prove we aren't a bot
+            if (cookieHeader) apiHeaders['Cookie'] = cookieHeader;
+
             const res = await fetch('https://www.millersville.edu/calendar/app/api/index.php', { 
                 method: 'POST',
-                headers: { ...fetchHeaders, 'Content-Type': 'application/json' },
+                headers: apiHeaders,
                 body: JSON.stringify({ getEvents: true, startDate: startDay, endDate: endDay })
             });
 
@@ -67,26 +87,23 @@ async function runScraper() {
             const data = JSON.parse(rawText);
             sourceEvents = Array.isArray(data) ? data : (data.events || []);
             
-            // THE FIX: If the server gives us 0 events, manually trigger the backup API
-            if (sourceEvents.length === 0) {
-                console.log("⚠️ Primary calendar API returned 0 events. Pivoting to secondary API...");
-                throw new Error("Zero events returned");
-            } else {
-                console.log(`✅ Pulled ${sourceEvents.length} events from primary index.php calendar.`);
-            }
+            if (sourceEvents.length === 0) throw new Error("Zero events returned");
+            console.log(`✅ Pulled ${sourceEvents.length} events from primary index.php calendar.`);
             
         } catch (apiError1) {
-            // ATTEMPT 2: The reliable map.millersville.edu backup
+            console.log("⚠️ Primary calendar API blocked or empty. Pivoting to secondary API...");
+            
+            // ATTEMPT 2: The Map API (With Clean Headers to avoid CORS blocks)
             try {
-                console.log("Fetching from secondary map API...");
-                const res2 = await fetch('https://map.millersville.edu/api/public/events', { headers: fetchHeaders });
+                const cleanHeaders = { 'User-Agent': baseHeaders['User-Agent'] };
+                const res2 = await fetch('https://map.millersville.edu/api/public/events', { headers: cleanHeaders });
                 const data2 = await res2.json();
                 sourceEvents = Array.isArray(data2) ? data2 : (data2.events || []);
                 
                 if (sourceEvents.length > 0) {
                     console.log(`✅ Pulled ${sourceEvents.length} events from secondary map API.`);
                 } else {
-                    console.log("⚠️ Secondary API also returned 0 events. The MU calendar might actually be empty right now!");
+                    console.log("⚠️ Secondary API also returned 0 events.");
                 }
             } catch (apiError2) {
                 console.log("⚠️ Both APIs failed or are returning blank data.");
@@ -120,7 +137,7 @@ async function runScraper() {
         let news = [];
         
         try {
-            const res = await fetch('https://blogs.millersville.edu/news/feed/', { headers: fetchHeaders });
+            const res = await fetch('https://blogs.millersville.edu/news/feed/', { headers: baseHeaders });
             const xml = await res.text();
             const items = xml.match(/<item>([\s\S]*?)<\/item>/g) || [];
             

@@ -156,12 +156,11 @@
         document.getElementById('sub-header').innerText = isTownie ? "Townie View: Community App" : "MU Student View: Campus App";
         document.getElementById('btn-pm').style.display = isTownie ? 'inline-block' : 'none';
         
-        // Reset filter to All if turning off Townie mode while on the Penn Manor tab
         if (!isTownie && currentFilter === 'Penn Manor') {
             currentFilter = 'All';
             const filterContainer = document.getElementById('btn-pm').parentElement;
             filterContainer.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            filterContainer.querySelector('.filter-btn').classList.add('active'); // Sets 'All' back to active
+            filterContainer.querySelector('.filter-btn').classList.add('active'); 
         }
         
         currentPage = 1;
@@ -226,11 +225,22 @@
         pageItems.forEach(e => {
             const d = new Date(e.date);
             const priceText = e.price ? e.price.toString() : "Free";
-            const isFree = priceText.toLowerCase().includes('free');
+            const isFree = priceText.toLowerCase() === 'free' || priceText.toLowerCase() === 'free entry';
+            const hasLink = e.ticketLink && e.ticketLink.trim() !== "";
             
             let displayPrice = priceText;
             if (priceText.includes("Student") && !isTownie) displayPrice = `Student: <b>${priceText.split('/')[0]}</b>`;
             if (priceText.includes("Public") && isTownie) displayPrice = `Public: <b>${priceText.split('/')[1] || priceText}</b>`;
+
+            // THE TICKET LOGIC FIX
+            let actionButton = '';
+            if (isFree) {
+                actionButton = `<span style="background:var(--borough-blue); color:var(--gold); padding:6px 12px; border-radius:6px; font-weight:bold; font-size:0.8rem;">Free Entry</span>`;
+            } else if (hasLink) {
+                actionButton = `<a href="${e.ticketLink}" target="_blank" style="background:var(--accent-fresh); color:white; padding:6px 12px; border-radius:6px; text-decoration:none; font-weight:bold; font-size:0.85rem;">🎟️ Buy Tickets</a>`;
+            } else {
+                actionButton = `<span style="background:var(--bg-main); border: 1px solid var(--border); color:var(--text-dark); padding:6px 12px; border-radius:6px; font-weight:bold; font-size:0.85rem;">🚪 Pay at Door</span>`;
+            }
 
             container.innerHTML += `
                 <div class="app-card">
@@ -242,10 +252,7 @@
                     </div>
                     <div style="margin-top:16px; border-top:1px solid var(--border); padding-top:12px; display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-size:0.9rem;">${isFree ? '' : displayPrice}</span>
-                        ${isFree ? 
-                            `<span style="background:var(--borough-blue); color:var(--gold); padding:6px 12px; border-radius:6px; font-weight:bold; font-size:0.8rem;">Free Entry</span>` : 
-                            `<a href="${e.ticketLink}" target="_blank" style="background:var(--accent-fresh); color:white; padding:6px 12px; border-radius:6px; text-decoration:none; font-weight:bold; font-size:0.85rem;">🎟️ Buy Tickets</a>`
-                        }
+                        ${actionButton}
                     </div>
                 </div>`;
         });

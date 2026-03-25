@@ -18,7 +18,7 @@ const fetchHeaders = {
 async function runScraper() {
     console.log("🚀 Starting Millersville Pro Scraper...");
 
-    // 1. WEATHER (Working Perfectly)
+    // 1. WEATHER 
     try {
         console.log("Fetching Weather XML...");
         const res = await fetch('https://snowball.millersville.edu/~cws/current.xml', { headers: fetchHeaders });
@@ -44,12 +44,12 @@ async function runScraper() {
         fs.writeFileSync(path.join(__dirname, '../weather.json'), JSON.stringify(fallback, null, 2));
     }
 
-    // 2. EVENTS (Triple-Threat Strategy)
+    // 2. EVENTS (Forced Pivot Logic)
     try {
         console.log("Fetching Events...");
         let sourceEvents = [];
         
-        // ATTEMPT 1: The preferred index.php API
+        // ATTEMPT 1: The primary index.php API
         try {
             const today = new Date();
             const startDay = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().split('T')[0];
@@ -66,19 +66,30 @@ async function runScraper() {
             
             const data = JSON.parse(rawText);
             sourceEvents = Array.isArray(data) ? data : (data.events || []);
-            if (sourceEvents.length > 0) console.log("✅ Successfully pulled from primary index.php calendar.");
+            
+            // THE FIX: If the server gives us 0 events, manually trigger the backup API
+            if (sourceEvents.length === 0) {
+                console.log("⚠️ Primary calendar API returned 0 events. Pivoting to secondary API...");
+                throw new Error("Zero events returned");
+            } else {
+                console.log(`✅ Pulled ${sourceEvents.length} events from primary index.php calendar.`);
+            }
             
         } catch (apiError1) {
-            console.log("⚠️ Primary calendar API blocked by firewall. Pivoting to secondary API...");
-            
             // ATTEMPT 2: The reliable map.millersville.edu backup
             try {
+                console.log("Fetching from secondary map API...");
                 const res2 = await fetch('https://map.millersville.edu/api/public/events', { headers: fetchHeaders });
                 const data2 = await res2.json();
                 sourceEvents = Array.isArray(data2) ? data2 : (data2.events || []);
-                if (sourceEvents.length > 0) console.log("✅ Successfully pulled from secondary map API.");
+                
+                if (sourceEvents.length > 0) {
+                    console.log(`✅ Pulled ${sourceEvents.length} events from secondary map API.`);
+                } else {
+                    console.log("⚠️ Secondary API also returned 0 events. The MU calendar might actually be empty right now!");
+                }
             } catch (apiError2) {
-                console.log("⚠️ Secondary API also unavailable.");
+                console.log("⚠️ Both APIs failed or are returning blank data.");
             }
         }
 
@@ -99,7 +110,7 @@ async function runScraper() {
         );
 
         fs.writeFileSync(path.join(__dirname, '../events.json'), JSON.stringify(events, null, 2));
-        console.log(`✅ Events Written (${events.length} items)`);
+        console.log(`✅ Events Written (${events.length} items total)`);
 
     } catch (e) { console.error("❌ Events Request Error:", e.message); }
 

@@ -1,26 +1,5 @@
 {
   "dependencies": {
-	"axios": "^1.6.0",
-    "cheerio": "^1.0.0-rc.12"
-    "node-fetch": "^2.6.7"
-  },
-  "name": "millersville-pa",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/achoke6/Millersville-PA.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/achoke6/Millersville-PA/issues"
-  },
-  "homepage": "https://github.com/achoke6/Millersville-PA#readme"
+    "node-fetch": "^2.7.0"
+  }
 }

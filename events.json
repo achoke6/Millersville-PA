@@ -1,5 +1,6 @@
 [
   {
+    "id": 1,
     "title": "Jazz Ensemble Concert",
     "date": "2026-04-10T19:30:00",
     "location": "Ware Center",
@@ -8,18 +9,29 @@
     "ticketLink": "https://www.etix.com/ticket/p/jazz"
   },
   {
+    "id": 2,
     "title": "Live at Phantom Power",
     "date": "2026-05-08T19:00:00",
     "location": "Phantom Power",
     "category": "Arts",
-    "price": "$8 Student / $15 Public",
+    "price": "$10 Student / $15 Public",
     "ticketLink": "https://www.phantompower.net/tickets"
   },
   {
+    "id": 3,
     "title": "PMHS Varsity Baseball",
     "date": "2026-03-28T16:00:00",
     "location": "Comet Field",
     "category": "Penn Manor",
+    "price": "Free",
+    "ticketLink": ""
+  },
+  {
+    "id": 4,
+    "title": "SGA Townhall",
+    "date": "2026-03-26T18:00:00",
+    "location": "SMC",
+    "category": "Student",
     "price": "Free",
     "ticketLink": ""
   }

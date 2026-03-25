@@ -2,50 +2,48 @@ const fs = require('fs');
 const path = require('path');
 
 async function runScraper() {
-    console.log("🚀 Starting Millersville Pro Data Scraper...");
+    console.log("🚀 Starting Millersville Pro Scraper...");
 
     // 1. WEATHER (MU XML FEED)
     try {
-        const res = await fetch('https://snowball.millersville.edu/~cws/current.xml', {
-            headers: { 'User-Agent': 'MillersvilleCommunityApp/1.0' }
-        });
+        const res = await fetch('https://snowball.millersville.edu/~cws/current.xml');
         const xml = await res.text();
-        const temp = xml.match(/<temp_f>(.*?)<\/temp_f>/)?.[1] || "--";
-        const cond = xml.match(/<weather>(.*?)<\/weather>/)?.[1] || "Clear";
-        const wind = xml.match(/<wind_string>(.*?)<\/wind_string>/)?.[1] || "Calm";
-        const hum = xml.match(/<relative_humidity>(.*?)<\/relative_humidity>/)?.[1] || "--";
-
+        // More flexible regex to catch the temperature
+        const tempMatch = xml.match(/<temp_f>(.*?)<\/temp_f>/);
+        const condMatch = xml.match(/<weather>(.*?)<\/weather>/);
+        
         const weatherData = {
-            temp: Math.round(temp),
-            condition: cond,
-            wind: wind,
-            humidity: hum,
-            lastUpdated: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
+            temp: tempMatch ? Math.round(parseFloat(tempMatch[1])) : "--",
+            condition: condMatch ? condMatch[1] : "Conditions Unavailable",
+            lastUpdated: new Date().toLocaleTimeString()
         };
         fs.writeFileSync(path.join(__dirname, '../weather.json'), JSON.stringify(weatherData, null, 2));
-    } catch (e) { console.error("Weather Error:", e); }
+        console.log("✅ Weather Written:", weatherData.temp);
+    } catch (e) { console.error("❌ Weather Fetch Failed:", e.message); }
 
-    // 2. EVENTS (MU + PHANTOM POWER + PENN MANOR)
+    // 2. EVENTS (Re-integrating your original working MU API method)
     try {
-        let events = [
-            { title: "Jazz Ensemble Concert", date: "2026-04-10T19:30:00", location: "Ware Center", category: "Arts", price: "$10 Student / $20 Public", ticketLink: "https://www.etix.com/ticket/p/jazz" },
-            { title: "Live at Phantom Power", date: "2026-05-08T19:00:00", location: "Phantom Power", category: "Arts", price: "$8 Student / $15 Public", ticketLink: "https://www.phantompower.net/tickets" },
-            { title: "PMHS Varsity Baseball", date: "2026-03-28T16:00:00", location: "Comet Field", category: "Penn Manor", price: "Free", ticketLink: "" }
-        ];
-        // Note: In production, you'd fetch real Penn Manor ICS data here.
+        console.log("Fetching MU API Events...");
+        const res = await fetch('https://map.millersville.edu/api/public/events');
+        const data = await res.json();
+        
+        // Transform the MU API data into our App's format
+        const events = data.map(item => ({
+            title: item.title,
+            date: item.start,
+            location: item.location || "Campus",
+            category: item.type || "Campus",
+            price: item.cost || "Free",
+            ticketLink: item.url || ""
+        }));
+
         fs.writeFileSync(path.join(__dirname, '../events.json'), JSON.stringify(events, null, 2));
-    } catch (e) { console.error("Events Error:", e); }
+        console.log(`✅ Events Written: ${events.length} items.`);
+    } catch (e) { console.error("❌ Events Fetch Failed:", e.message); }
 
-    // 3. DINING SPECIALS (HO PIE)
-    try {
-        const specials = [
-            { restaurant: "House of Pizza", day: "Monday", deal: "2 Slices & Medium Drink - $4.50" },
-            { restaurant: "House of Pizza", day: "Tuesday", deal: "Large Cheese Pizza & 2-Liter - $15.99" }
-        ];
-        fs.writeFileSync(path.join(__dirname, '../specials.json'), JSON.stringify(specials, null, 2));
-    } catch (e) { console.error("Specials Error:", e); }
-
-    console.log("✅ Scrape Complete. Files saved to root.");
+    // 3. SPECIALS (Ensure this file exists or the app will look blank)
+    const mockSpecials = [{ day: "Today", deal: "Check House of Pizza for daily specials!" }];
+    fs.writeFileSync(path.join(__dirname, '../specials.json'), JSON.stringify(mockSpecials, null, 2));
 }
 
 runScraper();

@@ -2,24 +2,27 @@ const fs = require('fs');
 const path = require('path');
 const dns = require('dns');
 
-// Force IPv4 to bypass strict university firewalls that drop IPv6 packets
+// Force IPv4 to bypass strict university firewalls
 dns.setDefaultResultOrder('ipv4first');
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
+// Fully disguised browser headers
 const fetchHeaders = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    'Accept': 'application/json, text/javascript, */*; q=0.01',
+    'X-Requested-With': 'XMLHttpRequest',
+    'Referer': 'https://www.millersville.edu/calendar/'
 };
 
 async function runScraper() {
     console.log("🚀 Starting Millersville Pro Scraper...");
 
-    // 1. WEATHER (Ultra-Broad XML Parser)
+    // 1. WEATHER
     try {
         console.log("Fetching Weather XML...");
         const res = await fetch('https://snowball.millersville.edu/~cws/current.xml', { headers: fetchHeaders });
         const xml = await res.text();
         
-        // Fuzzy matchers: Looks for <temp_f>, <temp>, or <temperature> anywhere in the file
         const tempMatch = xml.match(/<(?:temp_f|temperature|temp)[^>]*>\s*([-\d.]+)/i);
         const condMatch = xml.match(/<(?:weather|condition|sky_condition)[^>]*>([^<]+)/i);
         const windMatch = xml.match(/<(?:wind_string|wind_mph|wind)[^>]*>([^<]+)/i);
@@ -40,38 +43,35 @@ async function runScraper() {
         fs.writeFileSync(path.join(__dirname, '../weather.json'), JSON.stringify(fallback, null, 2));
     }
 
-    // 2. EVENTS (The POST Payload Fix)
+    // 2. EVENTS (JSON POST Payload)
     try {
-        console.log("Fetching Events API via POST payload...");
+        console.log("Fetching Events API via JSON POST...");
         
-        // Automatically calculate the first and last day of the current month
+        // Calculate the current month's dates dynamically
         const today = new Date();
         const startDay = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().split('T')[0];
         const endDay = new Date(today.getFullYear(), today.getMonth() + 1, 0).toISOString().split('T')[0];
 
-        // Send the exact payload you discovered as a URL-Encoded Form POST
-        const res = await fetch('https://www.millersville.edu/calendar/app/api/index.php', { 
-            method: 'POST',
-            headers: {
-                ...fetchHeaders,
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: new URLSearchParams({
-                getEvents: 'true',
-                startDate: startDay,
-                endDate: endDay
-            })
-        });
-
-        const rawText = await res.text();
-        let events = [];
-        
+        let rawText = "";
         try {
+            const res = await fetch('https://www.millersville.edu/calendar/app/api/index.php', { 
+                method: 'POST',
+                headers: {
+                    ...fetchHeaders,
+                    'Content-Type': 'application/json' // Explicitly sending as JSON
+                },
+                body: JSON.stringify({
+                    getEvents: true,
+                    startDate: startDay,
+                    endDate: endDay
+                })
+            });
+
+            rawText = await res.text();
             const data = JSON.parse(rawText);
             const sourceEvents = Array.isArray(data) ? data : (data.events || []);
             
-            // Map all university events explicitly to the "MU" category
-            events = sourceEvents.map(item => ({
+            let events = sourceEvents.map(item => ({
                 title: item.title || item.name || "Campus Event",
                 date: item.start || item.date || new Date().toISOString(),
                 location: item.location || "Millersville University",
@@ -79,18 +79,27 @@ async function runScraper() {
                 price: item.cost || item.price || "Free",
                 ticketLink: item.url || item.link || ""
             }));
+
+            // Inject Phantom Power and Penn Manor
+            events.push(
+                { title: "Live at Phantom Power", date: "2026-05-08T19:00:00", location: "Phantom Power", category: "Other", price: "$10 Student / $15 Public", ticketLink: "https://www.phantompower.net/tickets" },
+                { title: "PMHS Varsity Baseball", date: "2026-03-28T16:00:00", location: "Comet Field", category: "Other", price: "Free", ticketLink: "" }
+            );
+
+            fs.writeFileSync(path.join(__dirname, '../events.json'), JSON.stringify(events, null, 2));
+            console.log(`✅ Events Written (${events.length} items)`);
+
         } catch (parseError) {
-            console.error("⚠️ MU API Payload failed parsing. Check payload format.");
+            console.error("⚠️ MU API Payload failed parsing.");
+            console.log("🛑 SERVER RESPONSE WAS:", rawText.substring(0, 150)); // Debug logger
+            
+            // Still write the fallback events so the site doesn't crash
+            const fallbackEvents = [
+                { title: "Live at Phantom Power", date: "2026-05-08T19:00:00", location: "Phantom Power", category: "Other", price: "$10 Student / $15 Public", ticketLink: "https://www.phantompower.net/tickets" },
+                { title: "PMHS Varsity Baseball", date: "2026-03-28T16:00:00", location: "Comet Field", category: "Other", price: "Free", ticketLink: "" }
+            ];
+            fs.writeFileSync(path.join(__dirname, '../events.json'), JSON.stringify(fallbackEvents, null, 2));
         }
-
-        // Add Phantom Power and Penn Manor under category "Other"
-        events.push(
-            { title: "Live at Phantom Power", date: "2026-05-08T19:00:00", location: "Phantom Power", category: "Other", price: "$10 Student / $15 Public", ticketLink: "https://www.phantompower.net/tickets" },
-            { title: "PMHS Varsity Baseball", date: "2026-03-28T16:00:00", location: "Comet Field", category: "Other", price: "Free", ticketLink: "" }
-        );
-
-        fs.writeFileSync(path.join(__dirname, '../events.json'), JSON.stringify(events, null, 2));
-        console.log(`✅ Events Written (${events.length} items)`);
     } catch (e) { console.error("❌ Events Request Error:", e.message); }
 
     // 3. NEWS (RSS + Borough)
@@ -98,7 +107,6 @@ async function runScraper() {
         console.log("Fetching News RSS...");
         let news = [];
         
-        // MU RSS Feed
         try {
             const res = await fetch('https://blogs.millersville.edu/news/feed/', { headers: fetchHeaders });
             const xml = await res.text();
@@ -120,7 +128,6 @@ async function runScraper() {
             }
         } catch (e) { console.error("MU News Error:", e.message); }
 
-        // Mocking Authentic Borough News so the new Category buttons have data to sort
         news.push(
             { category: "Borough", source: "Millersville Borough", title: "2026 Residential Parking Permits Now Available", link: "https://millersvilleborough.org/", date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) },
             { category: "Borough", source: "Millersville Police", title: "Road Closure Notice - Construction Updates", link: "https://millersvilleborough.org/", date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) }

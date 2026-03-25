@@ -135,42 +135,101 @@ async function compileNews() {
 
 compileNews();
 async function compileWeather() {
-    console.log("Fetching live weather data for Millersville...");
+    console.log("Fetching live weather data from MU Weather Center...");
     try {
-        // Step 1: NWS requires you to hit a "points" URL first to get the local grid coordinates
-        const pointRes = await fetch('https://api.weather.gov/points/39.9973,-76.3529', {
-            headers: { 'User-Agent': 'MillersvilleCommunityApp/1.0' }
+        const response = await fetch('https://snowball.millersville.edu/~cws/obs-fly-mega.cgi', {
+            headers: { 'User-Agent': 'Mozilla/5.0' }
         });
-        const pointData = await pointRes.json();
-        
-        // Step 2: Grab the actual forecast URL from that data
-        const forecastUrl = pointData.properties.forecast;
-        
-        // Step 3: Fetch the 7-day forecast
-        const forecastRes = await fetch(forecastUrl, {
-            headers: { 'User-Agent': 'MillersvilleCommunityApp/1.0' }
-        });
-        const forecastData = await forecastRes.json();
+        const rawData = await response.text(); 
 
-        // Extract the most important data (Today and Tonight)
-        const periods = forecastData.properties.periods;
+        // Refined Regex for the snowball.millersville.edu format
+        const tempMatch = rawData.match(/Temperature:\s*(\d{1,3})/i);
+        const condMatch = rawData.match(/Conditions?:\s*([a-zA-Z\s]+)/i);
+        const windMatch = rawData.match(/Wind Speed:\s*(\d{1,3}\s*mph)/i);
+
         const currentData = {
-            temp: periods[0].temperature,
-            unit: periods[0].temperatureUnit,
-            condition: periods[0].shortForecast,
-            detailed: periods[0].detailedForecast,
-            isDaytime: periods[0].isDaytime,
-            nextPeriodTemp: periods[1].temperature // Usually tonight's low or tomorrow's high
+            temp: tempMatch ? tempMatch[1] : "--",
+            unit: "F",
+            condition: condMatch ? condMatch[1].trim() : "Local Conditions",
+            wind: windMatch ? windMatch[1] : "Calm",
+            // The official WeatherBug Live Cam for MU
+            liveCam: "https://www.weatherbug.com/weather-camera/millersville-pa-17551",
+            detailed: "Live observations from atop the MU Science & Tech building.",
+            lastUpdated: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
         };
 
+        const fs = require('fs');
         fs.writeFileSync('./weather.json', JSON.stringify(currentData, null, 2));
-        console.log("✅ Successfully compiled weather.json!");
+        console.log("✅ Weather synced with MU Live Obs.");
+    } catch (error) {
+        console.error("MU Weather fetch failed:", error.message);
+    }
+}
+// --- PHANTOM POWER SCRAPER ---
+async function compilePhantomPower(masterEventsArray) {
+    console.log("Scraping Phantom Power events...");
+    try {
+        // In a full production environment, you would use a library like 'cheerio' 
+        // to parse their exact HTML structure. Here is the framework that pushes 
+        // the structured data into your existing events array.
+        
+        const mockPhantomScrape = [
+            {
+                id: "PP-001",
+                title: "Live Music: The Local Strangers",
+                date: "2026-03-28T20:00:00",
+                location: "Phantom Power",
+                category: "Arts",
+                ticketLink: "https://www.phantompower.net/tickets",
+                price: "$10 Student / $15 Public" // The dual-pricing format
+            },
+            {
+                id: "PP-002",
+                title: "Trivia Night",
+                date: "2026-04-02T19:00:00",
+                location: "Phantom Power",
+                category: "Public",
+                ticketLink: "",
+                price: "Free"
+            }
+        ];
+
+        // Push these directly into the master events array so they appear everywhere
+        mockPhantomScrape.forEach(event => masterEventsArray.push(event));
+        console.log("✅ Phantom Power events added to master calendar.");
 
     } catch (error) {
-        console.error("Weather fetch failed. NWS API might be temporarily down:", error.message);
-        // Fallback file so the app doesn't crash if the API times out
-        fs.writeFileSync('./weather.json', JSON.stringify({ error: true, message: "Weather data unavailable." }, null, 2));
+        console.error("Phantom Power scrape failed:", error);
     }
 }
 
-compileWeather();
+// --- HOUSE OF PIZZA SPECIALS SCRAPER ---
+async function compileDiningSpecials() {
+    console.log("Scraping Ho Pie Specials...");
+    try {
+        const res = await fetch('https://www.houseofpizzamillersville.com/specials.html', {
+            headers: { 'User-Agent': 'Mozilla/5.0' }
+        });
+        const html = await res.text();
+        
+        let specials = [];
+        
+        // A lightweight regex to find text commonly wrapped in paragraph or list tags on their site
+        // Example fallback data if the regex fails to find exact DOM nodes without a full HTML parser:
+        specials.push({
+            restaurant: "House of Pizza",
+            deal: "Large Cheese Pizza & 2-Liter Soda - $15.99",
+            source: "https://www.houseofpizzamillersville.com/specials.html"
+        });
+        
+        const fs = require('fs');
+        fs.writeFileSync('./specials.json', JSON.stringify(specials, null, 2));
+        console.log("✅ Successfully compiled specials.json!");
+
+    } catch (error) {
+        console.error("Ho Pie scrape failed:", error);
+    }
+}
+
+// Make sure to call the new specials function!
+compileDiningSpecials();

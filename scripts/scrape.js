@@ -11,33 +11,44 @@ const baseHeaders = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 };
 
-// --- NEW: Smart Pricing Extractor ---
-function extractPricing(desc) {
-    if (!desc) return { price: "Free", link: "" };
-    
-    let price = "Free";
+// --- UPDATED: Smart Pricing & eTix Router ---
+function extractPricing(desc, title = "", location = "") {
+    let price = "Free"; 
     let link = "";
     
-    // 1. Find Ticket Links in the description
-    const linkMatch = desc.match(/(https?:\/\/[^\s"'<]+)/gi);
-    if (linkMatch) {
-        const ticketLink = linkMatch.find(l => l.toLowerCase().includes('ticket') || l.toLowerCase().includes('etix'));
-        if (ticketLink) link = ticketLink;
-    }
-    
-    // 2. Fallback default MU ticket links if mentioned in text
-    if (!link && desc.toLowerCase().includes('muticketsonline.com')) link = "https://muticketsonline.com/";
-    if (!link && desc.toLowerCase().includes('universitytickets.com')) link = "https://millersville.universitytickets.com/";
+    if (desc) {
+        // Look for any raw links in the description
+        const linkMatch = desc.match(/(https?:\/\/[^\s"'<]+)/gi);
+        if (linkMatch) {
+            const ticketLink = linkMatch.find(l => l.toLowerCase().includes('ticket') || l.toLowerCase().includes('etix'));
+            if (ticketLink) link = ticketLink;
+        }
 
-    // 3. Find Prices (e.g., "$5", "$10.00", "$5 Student", "$10 Public")
-    const priceRegex = /\$\d+(?:\.\d{2})?(?:\s+(?:student|public|general|admission|door|advance|mu|adult|child)s?)?/gi;
-    const prices = desc.match(priceRegex);
-    
-    if (prices) {
-        // Deduplicate and combine (e.g., "$5 Student / $10 Public")
-        price = [...new Set(prices)].join(' / ');
-    } else if (desc.toLowerCase().includes('ticket')) {
-        price = "Ticket Required"; 
+        // Find Prices (e.g., "$5", "$10.00", "$5 Student", "$10 Public")
+        const priceRegex = /\$\d+(?:\.\d{2})?(?:\s+(?:student|public|general|admission|door|advance|mu|adult|child)s?)?/gi;
+        const prices = desc.match(priceRegex);
+        
+        if (prices) {
+            price = [...new Set(prices)].join(' / ');
+        } else if (desc.toLowerCase().includes('ticket') || desc.toLowerCase().includes('admission') || desc.toLowerCase().includes('cover charge')) {
+            price = "Ticket Required"; 
+        }
+    }
+
+    // --- eTix Fallback Routing ---
+    // If the event isn't free, but the description forgot to include a link, guess the venue hub
+    if (!link && price !== "Free") {
+        const lowerTitle = title.toLowerCase();
+        const lowerLoc = location.toLowerCase();
+
+        // Music / Arts / Winter Center
+        if (lowerLoc.includes('winter') || lowerLoc.includes('lyte') || lowerTitle.includes('concert') || lowerTitle.includes('recital') || lowerTitle.includes('theatre')) {
+            link = "https://www.etix.com/ticket/v/23659/";
+        }
+        // Athletics / Sports
+        else if (lowerLoc.includes('pucillo') || lowerLoc.includes('biemesderfer') || lowerTitle.includes('game') || lowerTitle.includes('match') || lowerTitle.includes('tournament')) {
+            link = "https://www.etix.com/ticket/v/23684/";
+        }
     }
     
     return { price, link };
@@ -72,15 +83,18 @@ async function runScraper() {
         console.log("Fetching Events...");
         let sourceEvents = [];
         
+        // --- Rolling 30-Day Window Setup ---
+        const today = new Date();
+        const startDay = today.toISOString().split('T')[0];
+        const thirtyDaysOut = new Date(today);
+        thirtyDaysOut.setDate(today.getDate() + 29);
+        const endDay = thirtyDaysOut.toISOString().split('T')[0];
+
         try {
             const pageRes = await fetch('https://www.millersville.edu/calendar/', { headers: baseHeaders });
             const rawCookies = pageRes.headers.get('set-cookie');
             let cookieHeader = '';
             if (rawCookies) cookieHeader = rawCookies.split(', ').map(c => c.split(';')[0]).join('; ');
-
-            const today = new Date();
-            const startDay = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().split('T')[0];
-            const endDay = new Date(today.getFullYear(), today.getMonth() + 1, 0).toISOString().split('T')[0];
 
             const apiHeaders = {
                 ...baseHeaders,
@@ -109,15 +123,19 @@ async function runScraper() {
                 const startIdx = fields.indexOf('StartDateTime');
                 const bldgIdx = fields.indexOf('BuildingCode');
                 const roomIdx = fields.indexOf('RoomName');
-                const descIdx = fields.indexOf('EventMeetingByActivityId.Event.Description'); // The magic description field
+                const descIdx = fields.indexOf('EventMeetingByActivityId.Event.Description'); 
 
                 sourceEvents = data.data.map(row => {
+                    const eventTitle = row[nameIdx] || "Campus Event";
+                    const eventLoc = `${row[bldgIdx] || ''} ${row[roomIdx] || ''}`.trim() || "Campus";
                     const descText = row[descIdx] || "";
-                    const pricing = extractPricing(descText);
+                    
+                    const pricing = extractPricing(descText, eventTitle, eventLoc);
+                    
                     return { 
-                        title: row[nameIdx], 
+                        title: eventTitle, 
                         date: row[startIdx], 
-                        location: `${row[bldgIdx] || ''} ${row[roomIdx] || ''}`.trim() || "Campus",
+                        location: eventLoc,
                         price: pricing.price,
                         ticketLink: pricing.link
                     };
@@ -125,11 +143,15 @@ async function runScraper() {
             } else {
                 const items = Array.isArray(data) ? data : (data.events || data.data || []);
                 sourceEvents = items.map(item => {
-                    const pricing = extractPricing(item.description || "");
+                    const eventTitle = item.title || item.name || item.ActivityName || "Campus Event";
+                    const eventLoc = item.location || item.BuildingCode || "Campus";
+                    
+                    const pricing = extractPricing(item.description || "", eventTitle, eventLoc);
+                    
                     return {
-                        title: item.title || item.name || item.ActivityName,
+                        title: eventTitle,
                         date: item.start || item.date || item.StartDateTime,
-                        location: item.location || item.BuildingCode,
+                        location: eventLoc,
                         price: pricing.price !== "Free" ? pricing.price : (item.cost || item.price || "Free"),
                         ticketLink: pricing.link || item.url || item.link || ""
                     };
@@ -153,7 +175,7 @@ async function runScraper() {
             ticketLink: item.ticketLink || ""
         }));
 
-        // Penn Manor LIVE iCal Feed
+        // --- Penn Manor LIVE iCal Feed ---
         try {
             const pmRes = await fetch('https://www.pennmanor.net/?post_type=tribe_events&ical=1&eventDisplay=list', { headers: baseHeaders });
             const pmIcs = await pmRes.text();
@@ -188,14 +210,15 @@ async function runScraper() {
                     }
                     
                     const eventDate = new Date(isoDate);
-                    if (eventDate >= now && eventDate < new Date(now.getTime() + 60 * 24 * 60 * 60 * 1000)) {
+                    // Match the same rolling 30-day window
+                    if (eventDate >= now && eventDate < thirtyDaysOut) {
                         events.push({
                             title: title,
                             date: eventDate.toISOString(),
                             location: locationMatch ? locationMatch[1].trim().replace(/\\,/g, ',') : "Penn Manor School District",
                             category: "Penn Manor", 
-                            price: "Check Website",
-                            ticketLink: "https://www.pennmanor.net/calendar/"
+                            price: "Free", // Prevent UI pricing logic
+                            ticketLink: "" // Prevent online sales button
                         });
                     }
                 }

@@ -135,32 +135,33 @@ async function compileNews() {
 
 compileNews();
 async function compileWeather() {
-    console.log("Fetching live weather data from MU Weather Center...");
+    console.log("Fetching live weather from MU XML feed...");
     try {
-        const response = await fetch('https://snowball.millersville.edu/~cws/obs-fly-mega.cgi', {
+        const response = await fetch('https://snowball.millersville.edu/~cws/current.xml', {
             headers: { 'User-Agent': 'Mozilla/5.0' }
         });
-        const rawData = await response.text(); 
+        const xmlText = await response.text();
 
-        // Refined Regex for the snowball.millersville.edu format
-        const tempMatch = rawData.match(/Temperature:\s*(\d{1,3})/i);
-        const condMatch = rawData.match(/Conditions?:\s*([a-zA-Z\s]+)/i);
-        const windMatch = rawData.match(/Wind Speed:\s*(\d{1,3}\s*mph)/i);
+        // Regex to pull data from XML tags like <temp_f>42</temp_f>
+        const tempMatch = xmlText.match(/<temp_f>(.*?)<\/temp_f>/);
+        const condMatch = xmlText.match(/<weather>(.*?)<\/weather>/);
+        const windMatch = xmlText.match(/<wind_string>(.*?)<\/wind_string>/);
+        const humMatch = xmlText.match(/<relative_humidity>(.*?)<\/relative_humidity>/);
 
         const currentData = {
-            temp: tempMatch ? tempMatch[1] : "--",
-            unit: "F",
-            condition: condMatch ? condMatch[1].trim() : "Local Conditions",
+            temp: tempMatch ? Math.round(tempMatch[1]) : "--",
+            condition: condMatch ? condMatch[1] : "Clear",
             wind: windMatch ? windMatch[1] : "Calm",
-            // The official WeatherBug Live Cam for MU
-            liveCam: "https://www.weatherbug.com/weather-camera/millersville-pa-17551",
-            detailed: "Live observations from atop the MU Science & Tech building.",
+            humidity: humMatch ? humMatch[1] : "--",
+            // The image source remains the same
+            liveCam: "https://snowball.millersville.edu/~cws/wxcam/latest.jpeg",
+            source: "Millersville Weather Information Center",
             lastUpdated: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
         };
 
         const fs = require('fs');
         fs.writeFileSync('./weather.json', JSON.stringify(currentData, null, 2));
-        console.log("✅ Weather synced with MU Live Obs.");
+        console.log("✅ Weather synced with MU XML.");
     } catch (error) {
         console.error("MU Weather fetch failed:", error.message);
     }

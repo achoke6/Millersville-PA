@@ -5,6 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Millersville, PA</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* UI HIGHLIGHTING FIX: Ensures the active tab always shows the green bar */
+        .nav-link.active {
+            color: var(--text-dark) !important;
+            border-bottom: 3px solid var(--accent-fresh) !important;
+        }
+        /* Live Badge Position Fix */
+        .live-overlay {
+            position: absolute;
+            top: 12px;
+            right: 12px; /* MOVED TO TOP RIGHT */
+            background: rgba(239, 68, 68, 0.9);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 10;
+        }
+    </style>
 </head>
 <body onload="initApp()">
 
@@ -13,17 +36,17 @@
         <div class="logo-block">
             <h1>Millersville, PA</h1>
             <p id="sub-header">MU Student View: Campus App</p>
-            <p class="disclaimer">Independent community resource. Not affiliated with MU or the Borough.</p>
+            <p class="disclaimer">Data Source: Millersville Weather Information Center</p>
         </div>
         
         <nav class="main-nav">
-            <button class="nav-link active" onclick="switchView('home')">Home</button>
-            <button class="nav-link" onclick="switchView('news')">News</button>
-            <button class="nav-link" onclick="switchView('events')">Events</button>
-            <button class="nav-link" onclick="switchView('food')">Dining</button>
-            <button class="nav-link" onclick="switchView('housing')">Housing</button>
-            <button class="nav-link" onclick="switchView('services')">Services</button>
-            <button class="nav-link" onclick="switchView('weather')">Weather</button>
+            <button id="nav-home" class="nav-link active" onclick="switchView('home')">Home</button>
+            <button id="nav-news" class="nav-link" onclick="switchView('news')">News</button>
+            <button id="nav-events" class="nav-link" onclick="switchView('events')">Events</button>
+            <button id="nav-food" class="nav-link" onclick="switchView('food')">Dining</button>
+            <button id="nav-housing" class="nav-link" onclick="switchView('housing')">Housing</button>
+            <button id="nav-services" class="nav-link" onclick="switchView('services')">Services</button>
+            <button id="nav-weather" class="nav-link" onclick="switchView('weather')">Weather</button>
             <a href="https://millersville.store" target="_blank" class="nav-link" style="text-decoration: none;">Store ↗</a>
         </nav>
 
@@ -41,39 +64,35 @@
 <main class="container">
     
     <section id="view-home" class="app-view active">
-        <div id="home-weather" style="background: var(--theme-color); color: white; padding: 20px; border-radius: var(--radius-lg); margin-bottom: 24px;"></div>
+        <div id="home-weather" style="background: var(--theme-color); color: white; padding: 20px; border-radius: var(--radius-lg); margin-bottom: 24px;">
+            Loading Millersville Conditions...
+        </div>
 
         <div class="app-card featured" style="margin-bottom: 24px; text-align: center;">
-            <p style="font-size: 0.7rem; font-weight: bold; text-transform: uppercase; color: var(--gold);">Community Partner</p>
-            <h3 style="margin: 8px 0;">Visit The University Store</h3>
-            <p style="font-size: 0.9rem; margin-bottom: 12px;">Official gear, supplies, and Millersville apparel.</p>
-            <a href="https://millersville.store" target="_blank" style="background: var(--gold); color: black; padding: 8px 20px; border-radius: 6px; text-decoration: none; font-weight: bold;">Shop Online ➔</a>
+            <p style="font-size: 0.7rem; font-weight: bold; text-transform: uppercase; color: var(--gold);">Official Partner</p>
+            <h3 style="margin: 8px 0;">The University Store</h3>
+            <a href="https://millersville.store" target="_blank" style="background: var(--gold); color: black; padding: 8px 20px; border-radius: 6px; text-decoration: none; font-weight: bold; display: inline-block;">Shop MU Gear ➔</a>
         </div>
 
-        <div class="section-title"><h2>Happening Today</h2></div>
-        <div id="home-events" class="events-grid" style="margin-bottom: 24px;"></div>
-
-        <div class="app-card" style="border: 2px dashed var(--border); background: transparent; text-align: center; padding: 30px;">
-            <h3>Feature Your Business Here</h3>
-            <p style="color: var(--text-muted); font-size: 0.9rem; margin: 8px 0 16px;">Reach the Millersville community daily.</p>
-            <a href="mailto:ads@millersvilleapp.com" style="color: var(--theme-color); font-weight: bold;">Inquire About Advertising ➔</a>
-        </div>
+        <div class="section-title"><h2>Today's Events</h2></div>
+        <div id="home-events" class="events-grid"></div>
     </section>
 
-    <section id="view-events" class="app-view">
-        <div class="filter-bar" id="filterBar">
-            <button class="filter-btn active" data-cat="All" onclick="setFilter('All')">All</button>
-            <button class="filter-btn" data-cat="Arts" onclick="setFilter('Arts')">Arts</button>
-            <button class="filter-btn" data-cat="Athletic" onclick="setFilter('Athletic')">Sports</button>
-            <button class="filter-btn" id="btn-public" data-cat="Public" onclick="setFilter('Public')">Public</button>
-            <button class="filter-btn" id="btn-pm" data-cat="Penn Manor" style="display:none;" onclick="setFilter('Penn Manor')">Penn Manor</button>
-            <button class="filter-btn" id="btn-student" data-cat="Student" onclick="setFilter('Student')">MU Students</button>
+    <section id="view-weather" class="app-view">
+        <div id="weather-full-container" class="app-card" style="margin-bottom: 20px;">
+            <h2 id="weather-temp" style="font-size: 3rem;">--°F</h2>
+            <p id="weather-cond" style="font-size: 1.2rem; font-weight: bold;">Loading...</p>
+            <p id="weather-detail" style="font-size: 0.9rem; color: var(--text-muted);"></p>
         </div>
-        <div id="events-container" class="events-grid"></div>
-        <div class="pagination" id="event-pagination" style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
-            <button class="filter-btn" onclick="prevPage()">← Previous</button>
-            <span id="page-num" style="align-self: center; font-weight: bold;">Page 1</span>
-            <button class="filter-btn" onclick="nextPage()">Next →</button>
+
+        <div class="app-card" style="padding: 0; overflow: hidden; position: relative;">
+            <div class="live-overlay">
+                <span style="width: 8px; height: 8px; background: white; border-radius: 50%;"></span> LIVE
+            </div>
+            <img id="weather-cam-img" src="https://snowball.millersville.edu/~cws/wxcam/latest.jpeg" style="width: 100%; display: block;">
+            <div style="padding: 10px; background: #eee; font-size: 0.75rem; text-align: right; color: #666;" id="cam-timestamp">
+                Updating...
+            </div>
         </div>
     </section>
 
@@ -81,165 +100,49 @@
     <section id="view-food" class="app-view"><div id="food-container" class="events-grid"></div></section>
     <section id="view-housing" class="app-view"><div id="housing-container" class="events-grid"></div></section>
     <section id="view-services" class="app-view"><div id="services-container" class="events-grid"></div></section>
-    
-    <section id="view-weather" class="app-view">
-        <div id="weather-full-container">
-            </div>
-
-        <div class="app-card" style="margin-top: 24px; padding: 0; overflow: hidden; border: 1px solid var(--border);">
-            <div style="padding: 12px 16px; background: var(--bg-main); border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
-                <span style="font-weight: bold; font-size: 0.9rem;">🎥 Live Campus Cam</span>
-                <span id="cam-timestamp" style="font-size: 0.75rem; color: var(--text-muted);">Updating...</span>
-            </div>
-            
-            <div style="position: relative; line-height: 0;">
-                <img id="weather-cam-img" 
-                     src="https://snowball.millersville.edu/~cws/wxcam/latest.jpeg" 
-                     alt="Live Millersville Weather Cam" 
-                     style="width: 100%; height: auto; display: block;">
-                
-                <div style="position: absolute; top: 12px; left: 12px; background: rgba(239, 68, 68, 0.8); color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; display: flex; align-items: center; gap: 5px;">
-                    <span style="width: 8px; height: 8px; background: white; border-radius: 50%; display: inline-block;"></span> LIVE
-                </div>
-            </div>
-
-            <div style="padding: 12px; text-align: center;">
-                <a href="https://www.weatherbug.com/weather-camera/millersville-pa-17551" 
-                   target="_blank" 
-                   style="color: var(--theme-color); text-decoration: none; font-size: 0.85rem; font-weight: 600;">
-                   Open WeatherBug Interactive Feed ➔
-                </a>
-            </div>
-        </div>
-    </section>
-
 </main>
 
 <script>
-    let currentEvents = [];
-    let currentPage = 1;
-    const perPage = 6;
-    let currentFilter = 'All';
-
-    async function initApp() {
-        await Promise.all([loadWeather(), loadEvents(), loadDining(), loadHousing(), loadServices(), loadNews()]);
-        renderHomeUI();
-    }
-
-    function toggleMode() {
-        const isTownie = document.getElementById('roleToggle').checked;
-        document.body.classList.toggle('townie-mode', isTownie);
-        document.getElementById('sub-header').innerText = isTownie ? "Townie View: Community App" : "MU Student View: Campus App";
+    // --- NAVIGATION HIGHLIGHT FIX ---
+    function switchView(view) {
+        document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
+        document.getElementById(`view-${view}`).classList.add('active');
         
-        document.getElementById('btn-pm').style.display = isTownie ? 'inline-block' : 'none';
-        document.getElementById('btn-student').style.display = isTownie ? 'none' : 'inline-block';
-        document.getElementById('btn-public').innerText = isTownie ? "Other" : "Public";
-
-        currentPage = 1;
-        renderEventsUI();
-        renderHomeUI();
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.remove('active');
+            // Check if the link id or text matches the view name
+            if(link.id === `nav-${view}`) link.classList.add('active');
+        });
+        window.scrollTo(0,0);
     }
 
-    async function loadEvents() {
+    async function loadWeather() {
         try {
-            const res = await fetch('events.json');
-            currentEvents = await res.json();
-            // CHRONOLOGICAL SORT
-            currentEvents.sort((a,b) => new Date(a.date) - new Date(b.date));
-            renderEventsUI();
-        } catch (e) { console.error(e); }
+            const res = await fetch('weather.json');
+            const data = await res.json();
+            document.getElementById('home-weather').innerHTML = `<h3>${data.temp}°F</h3><p>${data.condition}</p>`;
+            document.getElementById('weather-temp').innerText = `${data.temp}°F`;
+            document.getElementById('weather-cond').innerText = data.condition;
+            document.getElementById('weather-detail').innerText = `Wind: ${data.wind} | Humidity: ${data.humidity}`;
+        } catch (e) { console.error("Weather data missing."); }
     }
 
-    function renderEventsUI() {
-        const container = document.getElementById('events-container');
-        const isTownie = document.getElementById('roleToggle').checked;
-        container.innerHTML = '';
-
-        let filtered = currentEvents.filter(e => {
-            if (!isTownie && e.category === 'Penn Manor') return false;
-            return (currentFilter === 'All' || e.category === currentFilter);
-        });
-
-        const start = (currentPage - 1) * perPage;
-        const pageItems = filtered.slice(start, start + perPage);
-        document.getElementById('page-num').innerText = `Page ${currentPage}`;
-
-        pageItems.forEach(e => {
-            const d = new Date(e.date);
-            const isFree = (e.price === "Free" || !e.price);
-            
-            const card = document.createElement('div');
-            card.className = 'app-card';
-            card.innerHTML = `
-                <div>
-                    <div style="font-size:0.7rem; font-weight:bold; color:var(--theme-color);">${e.category}</div>
-                    <h3 style="margin:5px 0;">${e.title}</h3>
-                    <p style="font-size:0.85rem; color:var(--text-muted);">📅 ${d.toLocaleDateString()} @ ${d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</p>
-                </div>
-                <div style="margin-top:15px; display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border); padding-top:10px;">
-                    <span style="font-size:0.9rem; font-weight:bold;">${isFree ? 'Free' : e.price}</span>
-                    ${isFree ? 
-                        `<span style="background:var(--borough-blue); color:var(--gold); padding:5px 10px; border-radius:5px; font-weight:bold; font-size:0.8rem;">Free Entry</span>` :
-                        `<a href="${e.ticketLink}" target="_blank" style="background:var(--accent-fresh); color:white; padding:5px 10px; border-radius:5px; text-decoration:none; font-weight:bold; font-size:0.8rem;">🎟️ Buy Tickets</a>`
-                    }
-                </div>`;
-            container.appendChild(card);
-        });
-    }
-
-    function nextPage() { if(currentPage * perPage < currentEvents.length) { currentPage++; renderEventsUI(); } }
-    function prevPage() { if(currentPage > 1) { currentPage--; renderEventsUI(); } }
-
-    function switchView(v) {
-        document.querySelectorAll('.app-view').forEach(x => x.classList.remove('active'));
-        document.getElementById(`view-${v}`).classList.add('active');
-        document.querySelectorAll('.nav-link').forEach(l => {
-            l.classList.remove('active');
-            if(l.innerText.toLowerCase() === v) l.classList.add('active');
-        });
-    }
-
-    // (Add your existing load/render functions for Dining, Housing, etc. here)
-    // Home Dashboard Logic
-    function renderHomeUI() {
-        const isTownie = document.getElementById('roleToggle').checked;
-        const today = new Date().toISOString().split('T')[0];
-        const homeEvents = document.getElementById('home-events');
-        homeEvents.innerHTML = '';
-
-        const todaysEvents = currentEvents.filter(e => e.date.startsWith(today) && (isTownie || e.category !== 'Penn Manor'));
-        todaysEvents.slice(0, 3).forEach(e => {
-            homeEvents.innerHTML += `<div class="app-card"><h4>${e.title}</h4><p>${e.location}</p></div>`;
-        });
-    }
-
-    async function loadWeather() { /* Fetch weather.json and populate #home-weather and #weather-full-container */ }
-    async function loadDining() { /* Fetch restaurants.json and populate #food-container */ }
-    async function loadHousing() { /* Fetch housing.json and populate #housing-container */ }
-    async function loadServices() { /* Fetch services.json and populate #services-container */ }
-    async function loadNews() { /* Fetch news.json and populate #news-container */ }
-    function setFilter(c) { currentFilter = c; currentPage = 1; renderEventsUI(); }
-function startCamRefresh() {
-        const camImg = document.getElementById('weather-cam-img');
-        const timestamp = document.getElementById('cam-timestamp');
-        
+    function startCamRefresh() {
         setInterval(() => {
-            // Append a unique timestamp to the URL to bypass browser cache
-            const freshUrl = `https://snowball.millersville.edu/~cws/wxcam/latest.jpeg?t=${new Date().getTime()}`;
-            camImg.src = freshUrl;
-            
-            const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            timestamp.innerText = `Last Refreshed: ${now}`;
-        }, 120000); // Refreshes every 2 minutes (120,000ms)
+            const img = document.getElementById('weather-cam-img');
+            img.src = `https://snowball.millersville.edu/~cws/wxcam/latest.jpeg?t=${Date.now()}`;
+            document.getElementById('cam-timestamp').innerText = `Last Refreshed: ${new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}`;
+        }, 60000); // 1 minute refresh
     }
 
-    // Update your initApp() to start the refresh timer
     async function initApp() {
-        await Promise.all([loadWeather(), loadEvents(), loadDining(), loadHousing(), loadServices(), loadNews()]);
+        // CALL ALL DATA LOADERS
+        await Promise.allSettled([loadWeather(), loadEvents(), loadDining(), loadHousing(), loadServices(), loadNews()]);
         renderHomeUI();
-        startCamRefresh(); // <-- Add this!
+        startCamRefresh();
     }
 
+    // (Include the rest of your Render/Load functions from previous steps)
 </script>
 </body>
 </html>

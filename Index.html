@@ -116,7 +116,7 @@
 
     async function initApp() {
         console.log("Initializing App...");
-        // Use Promise.allSettled so if one file is missing, the others still load
+        // Fetch all data sources robustly
         await Promise.allSettled([
             loadWeather(),
             loadSpecials(),
@@ -128,7 +128,7 @@
         ]);
         renderHomeUI();
         setInterval(refreshCam, 60000);
-        refreshCam(); // Run once immediately
+        refreshCam(); 
     }
 
     // --- NAVIGATION HIGHLIGHT FIX ---
@@ -160,10 +160,8 @@
             if(!res.ok) return;
             const data = await res.json();
             
-            // Populate Home Widget
             document.getElementById('home-weather').innerHTML = `<div style="display:flex; justify-content:space-between; align-items:center;"><div><p style="font-size:0.8rem; font-weight:bold; text-transform:uppercase;">Current Conditions</p><h2 style="font-size:2.5rem; margin:4px 0;">${data.temp}°F</h2><p>${data.condition}</p></div><div style="font-size:3rem;">🌤️</div></div>`;
             
-            // Populate Weather Tab
             document.getElementById('w-temp').innerText = `${data.temp}°F`;
             document.getElementById('w-cond').innerText = data.condition;
             document.getElementById('w-details').innerText = `Wind: ${data.wind} | Humidity: ${data.humidity}`;
@@ -197,8 +195,8 @@
         container.innerHTML = '';
         
         let filtered = currentEvents.filter(e => {
-            if (!isTownie && e.category === 'Penn Manor') return false; // Hide from students
-            if (isTownie && e.category === 'Student') return false; // Hide from townies
+            if (!isTownie && e.category === 'Penn Manor') return false; 
+            if (isTownie && e.category === 'Student') return false; 
             return currentFilter === 'All' || e.category === currentFilter;
         });
 
@@ -213,12 +211,12 @@
 
         pageItems.forEach(e => {
             const d = new Date(e.date);
-            const isFree = e.price.toLowerCase().includes('free');
+            const priceText = e.price ? e.price.toString() : "Free";
+            const isFree = priceText.toLowerCase().includes('free');
             
-            // Re-integrated Price Display Logic
-            let displayPrice = e.price;
-            if (e.price.includes("Student") && !isTownie) displayPrice = `Student: <b>${e.price.split('/')[0]}</b>`;
-            if (e.price.includes("Public") && isTownie) displayPrice = `Public: <b>${e.price.split('/')[1] || e.price}</b>`;
+            let displayPrice = priceText;
+            if (priceText.includes("Student") && !isTownie) displayPrice = `Student: <b>${priceText.split('/')[0]}</b>`;
+            if (priceText.includes("Public") && isTownie) displayPrice = `Public: <b>${priceText.split('/')[1] || priceText}</b>`;
 
             container.innerHTML += `
                 <div class="app-card">
@@ -247,7 +245,7 @@
         let todaysEvents = currentEvents.filter(e => {
             if (!isTownie && e.category === 'Penn Manor') return false;
             if (isTownie && e.category === 'Student') return false;
-            return true; // You can add logic here to filter by today's date
+            return true;
         });
 
         todaysEvents.slice(0, 3).forEach(e => {
@@ -256,7 +254,8 @@
         });
     }
 
-    // THE RESTORED RENDER FUNCTIONS
+    // --- RESTORED TABS ---
+    
     async function loadDining() {
         try {
             const res = await fetch('restaurants.json');
@@ -271,8 +270,8 @@
                     // Restored Dual iOS/Android Buttons
                     buttons = `
                         <div style="display: flex; gap: 8px;">
-                            <a href="${place.iosLink}" target="_blank" style="flex:1; text-align:center; background:var(--bg-main); border:1px solid var(--border); padding:8px; border-radius:6px; text-decoration:none; color:var(--text-dark); font-size:0.8rem; font-weight:bold;"> iOS</a>
-                            <a href="${place.link}" target="_blank" style="flex:1; text-align:center; background:var(--bg-main); border:1px solid var(--border); padding:8px; border-radius:6px; text-decoration:none; color:var(--text-dark); font-size:0.8rem; font-weight:bold;">Android</a>
+                            <a href="${place.iosLink || '#'}" target="_blank" style="flex:1; text-align:center; background:var(--bg-main); border:1px solid var(--border); padding:8px; border-radius:6px; text-decoration:none; color:var(--text-dark); font-size:0.8rem; font-weight:bold;"> iOS App</a>
+                            <a href="${place.link || '#'}" target="_blank" style="flex:1; text-align:center; background:var(--bg-main); border:1px solid var(--border); padding:8px; border-radius:6px; text-decoration:none; color:var(--text-dark); font-size:0.8rem; font-weight:bold;">Android App</a>
                         </div>`;
                 } else if (place.status === 'Order Online') {
                     buttons = `<a href="${place.link}" target="_blank" style="display:block; text-align:center; background:var(--accent-fresh); color:white; padding:8px; border-radius:6px; text-decoration:none; font-weight:bold; font-size:0.9rem;">🛒 Order Online</a>`;
@@ -328,52 +327,4 @@
                         <div style="font-size:0.75rem; color:var(--text-muted); font-weight:bold; text-transform:uppercase; margin-bottom:4px;">${s.category}</div>
                         <h3 style="margin-bottom:4px;">${s.name}</h3>
                         <p style="font-size:0.9rem; margin-bottom:8px;">📍 ${s.address}</p>
-                        <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:16px;">${s.description}</p>
-                        <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border); padding-top:12px; margin-top:auto;">
-                            <span style="font-weight:bold; font-size:0.9rem;">📞 ${s.phone || 'N/A'}</span>
-                            ${link}
-                        </div>
-                    </div>`;
-            });
-        } catch(e) { document.getElementById('services-container').innerHTML = "<p>Services data not available.</p>"; }
-    }
-
-    async function loadNews() {
-        try {
-            const res = await fetch('news.json');
-            if(!res.ok) return;
-            const data = await res.json();
-            const container = document.getElementById('news-container');
-            container.innerHTML = '';
-            data.forEach(n => {
-                container.innerHTML += `
-                    <div class="app-card">
-                        <div style="font-size:0.75rem; color:var(--theme-color); font-weight:bold; text-transform:uppercase; margin-bottom:4px;">${n.source}</div>
-                        <h3 style="margin-bottom:12px;">${n.title}</h3>
-                        <a href="${n.link}" target="_blank" style="display:inline-block; background:var(--bg-main); border:1px solid var(--border); padding:8px 12px; border-radius:6px; text-decoration:none; color:var(--text-dark); font-weight:bold; font-size:0.85rem;">Read ➔</a>
-                    </div>`;
-            });
-        } catch(e) { document.getElementById('news-container').innerHTML = "<p>No recent news found.</p>"; }
-    }
-
-    function refreshCam() {
-        document.getElementById('cam-img').src = `https://snowball.millersville.edu/~cws/wxcam/latest.jpeg?t=${Date.now()}`;
-        document.getElementById('cam-time').innerText = `Updated: ${new Date().toLocaleTimeString()}`;
-    }
-
-    function setFilter(c, btn) {
-        currentFilter = c;
-        currentPage = 1;
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        renderEventsUI();
-    }
-
-    function changePage(dir) { 
-        currentPage += dir; 
-        if(currentPage < 1) currentPage = 1; 
-        renderEventsUI(); 
-    }
-</script>
-</body>
-</html>
+                        <p style="font-size:0.9rem; color:

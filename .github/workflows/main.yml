@@ -1,7 +1,7 @@
 name: Millersville Data Update
 on:
   schedule:
-    - cron: '0 * * * *' # Every Hour
+    - cron: '0 * * * *'
   push:
     branches: [ main ]
   workflow_dispatch:
@@ -16,9 +16,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - run: npm install node-fetch@2 || true
       - run: node scripts/scrape.js
       - name: Commit and Push
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Pro-update: Syncing Community Data"
+          commit_message: "System: Auto-syncing Community Data"
           file_pattern: "*.json"

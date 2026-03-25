@@ -12,7 +12,7 @@
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
     </style>
 </head>
-<body onload="initApp()">
+<body>
 
 <header>
     <div class="header-container">
@@ -112,11 +112,16 @@
 </main>
 
 <script>
+    // --- STATE VARIABLES ---
     let currentEvents = [], currentFilter = 'All', currentPage = 1, perPage = 6;
 
+    // --- INITIALIZATION (Fixed Race Condition) ---
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log("DOM loaded. Initializing App...");
+        initApp();
+    });
+
     async function initApp() {
-        console.log("Initializing App...");
-        // Fetch all data sources robustly
         await Promise.allSettled([
             loadWeather(),
             loadSpecials(),
@@ -131,8 +136,8 @@
         refreshCam(); 
     }
 
-    // --- NAVIGATION HIGHLIGHT FIX ---
-    function switchView(view) {
+    // --- NAVIGATION ---
+    window.switchView = function(view) {
         document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
         document.getElementById(`view-${view}`).classList.add('active');
         
@@ -140,9 +145,9 @@
         const activeBtn = document.getElementById(`nav-${view}`);
         if(activeBtn) activeBtn.classList.add('active');
         window.scrollTo(0,0);
-    }
+    };
 
-    function toggleMode() {
+    window.toggleMode = function() {
         const isTownie = document.getElementById('roleToggle').checked;
         document.body.classList.toggle('townie-mode', isTownie);
         document.getElementById('sub-header').innerText = isTownie ? "Townie View: Community App" : "MU Student View: Campus App";
@@ -150,7 +155,7 @@
         currentPage = 1;
         renderEventsUI();
         renderHomeUI();
-    }
+    };
 
     // --- DATA FETCHERS & RENDERERS ---
 
@@ -161,11 +166,10 @@
             const data = await res.json();
             
             document.getElementById('home-weather').innerHTML = `<div style="display:flex; justify-content:space-between; align-items:center;"><div><p style="font-size:0.8rem; font-weight:bold; text-transform:uppercase;">Current Conditions</p><h2 style="font-size:2.5rem; margin:4px 0;">${data.temp}°F</h2><p>${data.condition}</p></div><div style="font-size:3rem;">🌤️</div></div>`;
-            
             document.getElementById('w-temp').innerText = `${data.temp}°F`;
             document.getElementById('w-cond').innerText = data.condition;
             document.getElementById('w-details').innerText = `Wind: ${data.wind} | Humidity: ${data.humidity}`;
-        } catch(e) { console.log("Weather JSON not found."); }
+        } catch(e) { console.log("Weather JSON error.", e); }
     }
 
     async function loadSpecials() {
@@ -176,7 +180,7 @@
             const list = document.getElementById('specials-list');
             list.innerHTML = '';
             data.forEach(s => list.innerHTML += `<div style="padding: 6px 0; border-bottom: 1px solid var(--border);"><strong>${s.restaurant} (${s.day}):</strong> ${s.deal}</div>`);
-        } catch(e) { console.log("Specials JSON not found."); }
+        } catch(e) { console.log("Specials JSON error.", e); }
     }
 
     async function loadEvents() {
@@ -186,7 +190,7 @@
             currentEvents = await res.json();
             currentEvents.sort((a,b) => new Date(a.date) - new Date(b.date));
             renderEventsUI();
-        } catch(e) { console.log("Events JSON not found."); }
+        } catch(e) { console.log("Events JSON error.", e); }
     }
 
     function renderEventsUI() {
@@ -253,8 +257,6 @@
             homeEvents.innerHTML += `<div class="app-card" style="padding:12px; margin-bottom:12px;"><div style="font-size:0.7rem; font-weight:bold; color:var(--theme-color);">${e.category}</div><h4 style="margin:4px 0;">${e.title}</h4><p style="font-size:0.8rem; color:var(--text-muted);">🕒 ${d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})} • 📍 ${e.location}</p></div>`;
         });
     }
-
-    // --- RESTORED TABS ---
     
     async function loadDining() {
         try {
@@ -267,7 +269,6 @@
             data.forEach(place => {
                 let buttons = '';
                 if (place.status === 'App Required') {
-                    // Restored Dual iOS/Android Buttons
                     buttons = `
                         <div style="display: flex; gap: 8px;">
                             <a href="${place.iosLink || '#'}" target="_blank" style="flex:1; text-align:center; background:var(--bg-main); border:1px solid var(--border); padding:8px; border-radius:6px; text-decoration:none; color:var(--text-dark); font-size:0.8rem; font-weight:bold;"> iOS App</a>
@@ -327,4 +328,52 @@
                         <div style="font-size:0.75rem; color:var(--text-muted); font-weight:bold; text-transform:uppercase; margin-bottom:4px;">${s.category}</div>
                         <h3 style="margin-bottom:4px;">${s.name}</h3>
                         <p style="font-size:0.9rem; margin-bottom:8px;">📍 ${s.address}</p>
-                        <p style="font-size:0.9rem; color:
+                        <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:16px;">${s.description}</p>
+                        <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border); padding-top:12px; margin-top:auto;">
+                            <span style="font-weight:bold; font-size:0.9rem;">📞 ${s.phone || 'N/A'}</span>
+                            ${link}
+                        </div>
+                    </div>`;
+            });
+        } catch(e) { document.getElementById('services-container').innerHTML = "<p>Services data not available.</p>"; }
+    }
+
+    async function loadNews() {
+        try {
+            const res = await fetch('news.json');
+            if(!res.ok) return;
+            const data = await res.json();
+            const container = document.getElementById('news-container');
+            container.innerHTML = '';
+            data.forEach(n => {
+                container.innerHTML += `
+                    <div class="app-card">
+                        <div style="font-size:0.75rem; color:var(--theme-color); font-weight:bold; text-transform:uppercase; margin-bottom:4px;">${n.source} • ${n.date}</div>
+                        <h3 style="margin-bottom:12px;">${n.title}</h3>
+                        <a href="${n.link}" target="_blank" style="display:inline-block; background:var(--bg-main); border:1px solid var(--border); padding:8px 12px; border-radius:6px; text-decoration:none; color:var(--text-dark); font-weight:bold; font-size:0.85rem;">Read ➔</a>
+                    </div>`;
+            });
+        } catch(e) { document.getElementById('news-container').innerHTML = "<p>No recent news found.</p>"; }
+    }
+
+    window.refreshCam = function() {
+        document.getElementById('cam-img').src = `https://snowball.millersville.edu/~cws/wxcam/latest.jpeg?t=${Date.now()}`;
+        document.getElementById('cam-time').innerText = `Updated: ${new Date().toLocaleTimeString()}`;
+    };
+
+    window.setFilter = function(c, btn) {
+        currentFilter = c;
+        currentPage = 1;
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderEventsUI();
+    };
+
+    window.changePage = function(dir) { 
+        currentPage += dir; 
+        if(currentPage < 1) currentPage = 1; 
+        renderEventsUI(); 
+    };
+</script>
+</body>
+</html>

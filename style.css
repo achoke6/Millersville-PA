@@ -1,276 +1,155 @@
-/* --- MODERN CSS VARIABLES --- */
+/* =========================================================
+   1. BASE & VARIABLES
+   ========================================================= */
 :root {
-    --primary: #FFB81C; /* Millersville Gold */
-    --primary-hover: #e5a519;
-    --secondary: #222222;
-    --bg-color: #f4f5f7;
-    --card-bg: #ffffff;
-    --text-main: #1f2937;
+    --bg-main: #f4f6f8;
+    --surface: #ffffff;
+    --text-dark: #111827;
     --text-muted: #6b7280;
-    --radius: 16px;
-    --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+    --border: #e5e7eb;
+    
+    --gold: #eaab00; 
+    --borough-blue: #1e3a8a; 
+    --accent-fresh: #10b981; 
+    
+    --radius-lg: 16px;
+    --radius-sm: 8px;
+    --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    --shadow-float: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+    
+    --theme-color: var(--gold);
 }
 
 body.townie-mode {
-    --primary: #0284c7; /* Clean, bright Borough Blue */
-    --primary-hover: #0369a1;
-    --secondary: #0f172a; /* Dark slate (almost black) for highly readable text */
-    --bg-color: #f0f4f8;
+    --theme-color: var(--borough-blue);
 }
 
-/* --- GLOBAL STYLES --- */
-* { box-sizing: border-box; }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-tap-highlight-color: transparent; 
+}
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-main);
-    margin: 0;
-    padding-bottom: 120px; /* Space for the floating footer */
-    transition: background-color 0.4s ease;
-    -webkit-font-smoothing: antialiased;
+    background-color: var(--bg-main);
+    color: var(--text-dark);
+    line-height: 1.5;
+    padding-bottom: 80px; 
 }
 
-/* --- HEADER --- */
+/* =========================================================
+   2. THE HEADER
+   ========================================================= */
 header {
-    background: var(--card-bg);
-    padding: 3rem 1rem 2rem;
-    text-align: center;
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
-    border-bottom: 4px solid var(--primary);
-    margin-bottom: 2rem;
-    transition: border-color 0.4s ease;
+    background-color: var(--surface);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: var(--shadow-soft);
+    padding: 16px 0 0 0;
 }
 
-header h1 {
-    margin: 0;
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: var(--secondary);
-    letter-spacing: -0.5px;
-}
-
-header p {
-    color: var(--text-muted);
-    font-size: 1.1rem;
-    margin-top: 0.5rem;
-    font-weight: 500;
-}
-
-.container {
-    max-width: 900px;
+.header-container {
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* --- MODERN FILTER BAR --- */
-.filter-bar {
     display: flex;
+    flex-direction: column;
     gap: 12px;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: 1.5rem;
 }
 
-.filter-btn {
-    padding: 10px 20px;
-    border: none;
-    background: var(--card-bg);
-    color: var(--text-muted);
-    border-radius: 30px;
-    cursor: pointer;
+.logo-block {
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.logo-block h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--text-dark);
+}
+
+#sub-header {
+    font-size: 0.85rem;
     font-weight: 600;
+    color: var(--theme-color);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: color 0.3s ease;
+}
+
+.disclaimer {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    opacity: 0.7;
+    margin-top: 4px;
+    font-style: italic;
+    line-height: 1.2;
+}
+
+/* =========================================================
+   3. NAVIGATION
+   ========================================================= */
+.main-nav {
+    display: flex;
+    overflow-x: auto; 
+    scrollbar-width: none; 
+    padding: 0 20px 4px 20px;
+    gap: 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.main-nav::-webkit-scrollbar {
+    display: none; 
+}
+
+.nav-link {
+    background: none;
+    border: none;
     font-size: 0.95rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+    font-weight: 600;
+    color: var(--text-muted);
+    padding: 8px 4px;
+    white-space: nowrap; 
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
     transition: all 0.2s ease;
 }
 
-.filter-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+.nav-link.active {
+    color: var(--text-dark);
+    border-bottom: 3px solid var(--accent-fresh); 
 }
 
-.filter-btn.active {
-    background: var(--primary);
-    color: #ffffff !important; /* Forces the text to be pure white for readability */
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-/* --- DATE PICKER --- */
-.date-filter-container {
+/* =========================================================
+   4. TOGGLE SWITCH
+   ========================================================= */
+.header-toggle {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 2rem;
-}
-
-.date-picker {
-    padding: 10px 15px;
-    border: 2px solid #e5e7eb;
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 1rem;
-    color: var(--text-main);
-    background: var(--card-bg);
-    outline: none;
-    cursor: pointer;
-    transition: border-color 0.2s;
-}
-
-.date-picker:focus {
-    border-color: var(--primary);
-}
-
-.clear-date-btn {
-    padding: 10px 15px;
-    background: #e5e7eb;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    color: var(--text-muted);
-    transition: 0.2s;
-}
-
-.clear-date-btn:hover {
-    background: #d1d5db;
-    color: var(--secondary);
-}
-
-/* --- EVENT CARDS (GRID LAYOUT) --- */
-#events-container {
-    display: grid;
-    /* Mobile-friendly grid that shrinks to fit small screens */
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
-    gap: 20px;
-}
-
-.card {
-    background: var(--card-bg);
-    padding: 24px;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid rgba(0,0,0,0.03);
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 12px;
-}
-
-.price-tag {
-    font-size: 0.75rem;
-    background: rgba(0, 0, 0, 0.05);
-    color: var(--text-muted);
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-.card h3 {
-    margin: 0 0 16px 0;
-    font-size: 1.25rem;
-    line-height: 1.4;
-    color: var(--secondary);
-}
-
-.card-details {
-    margin-top: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    font-size: 0.95rem;
-    color: var(--text-muted);
-}
-
-.card-details p { 
-    margin: 0; 
-    display: flex; 
-    align-items: flex-start; 
-    gap: 8px; 
-}
-
-/* --- PRICE BADGE --- */
-.cost-badge {
-    display: inline-block;
-    background: #10b981; /* A nice, trustworthy green */
-    color: #ffffff;
-    padding: 4px 12px;
-    border-radius: 12px;
-    font-size: 0.8rem;
-    font-weight: 800;
-    margin-top: 12px;
-    letter-spacing: 0.5px;
-}
-
-/* --- PAGINATION --- */
-.pagination {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 3rem;
-}
-
-.page-btn {
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    border: none;
-    background: var(--card-bg);
-    border-radius: 50%;
-    font-weight: 600;
-    color: var(--text-muted);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    transition: all 0.2s;
-}
-
-.page-btn:hover { background: #e5e7eb; }
-.page-btn.active { background: var(--secondary); color: white; }
-
-/* --- MODERN TOGGLE SWITCH --- */
-.footer-switch {
-    position: fixed;
-    bottom: 25px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(30, 30, 30, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    color: white;
-    padding: 12px 28px;
-    border-radius: 40px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-    z-index: 1000;
+    gap: 12px;
+    padding: 12px 20px;
+    background-color: var(--bg-main);
 }
 
 .mode-label {
-    font-size: 0.9rem;
-    font-weight: 800;
-    letter-spacing: 1px;
-    opacity: 0.9;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
 }
 
 .toggle-container {
     position: relative;
     display: inline-block;
-    width: 60px;
-    height: 32px;
+    width: 52px;
+    height: 28px;
 }
 
 .toggle-container input {
@@ -283,58 +162,149 @@ header p {
     position: absolute;
     cursor: pointer;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-color: var(--primary);
-    transition: 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+    background-color: var(--gold);
+    transition: .4s;
     border-radius: 34px;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
 }
 
 .toggle-slider:before {
     position: absolute;
     content: "";
-    height: 24px;
-    width: 24px;
+    height: 20px;
+    width: 20px;
     left: 4px;
     bottom: 4px;
     background-color: white;
-    transition: 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+    transition: .4s;
     border-radius: 50%;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+input:checked + .toggle-slider {
+    background-color: var(--borough-blue);
 }
 
 input:checked + .toggle-slider:before {
-    transform: translateX(28px);
+    transform: translateX(24px);
 }
 
-/* --- MOBILE RESPONSIVENESS --- */
-@media (max-width: 600px) {
-    header {
-        padding: 2rem 1rem 1.5rem;
-    }
-    
-    header h1 {
-        font-size: 1.8rem; /* Shrinks the giant text */
-    }
+/* =========================================================
+   5. APP VIEWS & GRID
+   ========================================================= */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
 
-    .filter-btn {
-        padding: 8px 14px;
-        font-size: 0.85rem;
-        flex: 1 1 calc(33% - 10px); /* Makes buttons wrap neatly on small screens */
-    }
+.app-view {
+    display: none;
+    animation: fadeIn 0.4s ease-out;
+}
 
-    .date-filter-container {
-        flex-direction: column; /* Stacks the calendar and clear button */
-        width: 100%;
-    }
+.app-view.active {
+    display: block;
+}
 
-    .date-picker, .clear-date-btn {
-        width: 100%;
-    }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
-    .footer-switch {
-        width: 90%; /* Stops the toggle from hitting the edges of the phone */
-        padding: 10px 20px;
-        gap: 10px;
-        justify-content: center;
+.section-title h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--text-dark);
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: 1fr; 
+    gap: 16px;
+}
+
+@media (min-width: 768px) {
+    .events-grid {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+        gap: 24px;
     }
+}
+
+/* =========================================================
+   6. FILTER BARS
+   ========================================================= */
+.filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.filter-btn {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.filter-btn.active {
+    background-color: var(--text-dark);
+    color: var(--surface);
+    border-color: var(--text-dark);
+}
+
+.date-filter-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.date-picker {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    color: var(--text-dark);
+    flex-grow: 1;
+    max-width: 200px;
+}
+
+.clear-date-btn {
+    background-color: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    border-radius: var(--radius-sm);
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+/* =========================================================
+   7. UNIVERSAL APP CARDS
+   ========================================================= */
+.app-card {
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--border);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.app-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-float);
+}
+
+.app-card.featured {
+    border: 2px solid var(--theme-color);
+    background: linear-gradient(to bottom right, #ffffff, #fafafa);
 }

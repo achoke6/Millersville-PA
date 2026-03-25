@@ -3,224 +3,497 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Millersville One-Stop</title>
+    <title>MU One-Stop</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body onload="initApp()">
 
 <header>
-    <h1>Millersville One-Stop</h1>
-    <p id="sub-header">Student View: Campus Events</p>
+    <div class="header-container">
+        <div class="logo-block">
+            <h1>MU One-Stop</h1>
+            <p id="sub-header">MU Student View: Campus App</p>
+            <p class="disclaimer">An independent community resource. Not affiliated with Millersville University or Millersville Borough.</p>
+        </div>
+        
+        <nav class="main-nav">
+            <button class="nav-link active" onclick="switchView('home')">Home</button>
+            <button class="nav-link" onclick="switchView('news')">News</button>
+            <button class="nav-link" onclick="switchView('events')">Events</button>
+            <button class="nav-link" onclick="switchView('food')">Dining</button>
+            <button class="nav-link" onclick="switchView('housing')">Housing</button>
+            <button class="nav-link" onclick="switchView('services')">Services</button>
+            <button class="nav-link" onclick="switchView('weather')">Weather</button>
+            <a href="https://millersville.store" target="_blank" class="nav-link" style="text-decoration: none;">Store ↗</a>
+        </nav>
+
+        <div class="header-toggle">
+            <span class="mode-label">MU STUDENT</span>
+            <label class="toggle-container">
+                <input type="checkbox" id="roleToggle" onchange="toggleMode()">
+                <span class="toggle-slider"></span>
+            </label>
+            <span class="mode-label">TOWNIE</span>
+        </div>
+    </div>
 </header>
 
-<div class="container">
-    <div class="filter-bar" id="filterBar">
-        <button class="filter-btn active" data-cat="All" onclick="setFilter('All')">All</button>
-        <button class="filter-btn" data-cat="Arts" onclick="setFilter('Arts')">Arts</button>
-        <button class="filter-btn" data-cat="Athletic" onclick="setFilter('Athletic')">Sports</button>
-        <button class="filter-btn" data-cat="Public" onclick="setFilter('Public')">Public</button>
-        <button class="filter-btn" id="btn-student" data-cat="Student" onclick="setFilter('Student')">Students</button>
-    </div>
+<main class="container">
+    
+    <section id="view-home" class="app-view active">
+        <div id="home-weather-widget" style="background: var(--theme-color); color: white; padding: 16px; border-radius: var(--radius-lg); margin-bottom: 24px; display: none;">
+            </div>
 
-    <div class="date-filter-container">
-        <input type="date" id="datePicker" class="date-picker" onchange="filterByDate()">
-        <button class="clear-date-btn" onclick="clearDateFilter()">Clear Date</button>
-    </div>
+        <div id="home-news-widget" style="margin-bottom: 24px;"></div>
 
-    <div id="events-container">
-        <p style="text-align:center; color:var(--text-muted);">Loading events from API...</p>
-    </div>
-    <div class="pagination" id="pagination"></div>
-</div>
+        <div class="section-title">
+            <h2>Happening Today</h2>
+        </div>
+        <div id="home-events-container" class="events-grid" style="margin-bottom: 24px;">
+            <p style="color:var(--text-muted);">Loading today's schedule...</p>
+        </div>
+        
+        <button onclick="switchView('events')" style="width: 100%; background: var(--bg-main); border: 1px solid var(--border); padding: 12px; border-radius: var(--radius-sm); font-weight: bold; cursor: pointer; color: var(--text-dark);">
+            View Full Calendar ➔
+        </button>
+    </section>
 
-<div class="footer-switch">
-    <span class="mode-label">STUDENT</span>
-    <label class="toggle-container">
-        <input type="checkbox" id="roleToggle" onchange="toggleMode()">
-        <span class="toggle-slider"></span>
-    </label>
-    <span class="mode-label">TOWNIE</span>
-</div>
+    <section id="view-news" class="app-view">
+        <div class="section-title"><h2>Local News & Alerts</h2></div>
+        <div id="news-container" class="events-grid">
+            <p style="color:var(--text-muted);">Loading news feeds...</p>
+        </div>
+    </section>
+
+    <section id="view-events" class="app-view">
+        <div class="filter-bar" id="filterBar">
+            <button class="filter-btn active" data-cat="All" onclick="setFilter('All')">All</button>
+            <button class="filter-btn" data-cat="Arts" onclick="setFilter('Arts')">Arts</button>
+            <button class="filter-btn" data-cat="Athletic" onclick="setFilter('Athletic')">Sports</button>
+            <button class="filter-btn" id="btn-public" data-cat="Public" onclick="setFilter('Public')">Public</button>
+            <button class="filter-btn" id="btn-student" data-cat="Student" onclick="setFilter('Student')">MU Students</button>
+        </div>
+
+        <div class="date-filter-container">
+            <input type="date" id="datePicker" class="date-picker" onchange="filterByDate()">
+            <button class="clear-date-btn" onclick="clearDateFilter()">Clear Date</button>
+        </div>
+
+        <div id="events-container" class="events-grid">
+            <p style="color:var(--text-muted);">Loading calendar data...</p>
+        </div>
+    </section>
+
+    <section id="view-food" class="app-view">
+        <div class="section-title"><h2>Local Dining & Menus</h2></div>
+        <div id="food-container" class="events-grid">
+            <p style="color:var(--text-muted);">Loading restaurant directory...</p>
+        </div>
+    </section>
+
+    <section id="view-housing" class="app-view">
+        <div class="section-title"><h2>Student Lodging & Rentals</h2></div>
+        <div id="housing-container" class="events-grid">
+            <p style="color:var(--text-muted);">Loading housing directory...</p>
+        </div>
+    </section>
+
+    <section id="view-services" class="app-view">
+        
+        <div style="display: grid; gap: 16px; margin-bottom: 24px;">
+            <div class="app-card" style="border-left: 4px solid #ef4444;">
+                <h3 style="margin-bottom: 8px;">🛡️ Community Safety</h3>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <a href="https://millersville.omnilert.net/" target="_blank" style="text-decoration: none; color: var(--text-dark); font-weight: 600;">⚠️ Sign Up for MU | Alert</a>
+                    <a href="https://millersvilleborough.org/police/" target="_blank" style="text-decoration: none; color: var(--text-dark); font-weight: 600;">🚓 Millersville Borough Police</a>
+                </div>
+            </div>
+            <div class="app-card" style="border-left: 4px solid var(--borough-blue);">
+                <h3 style="margin-bottom: 8px;">🚌 Get Around & Parking</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px;"><strong>RRTA Route 16</strong> is FREE with MU ID. Campus white-lined spots are free after 4PM and weekends.</p>
+                <a href="https://www.redrosetransit.com/schedules-maps" target="_blank" style="text-decoration: none; color: var(--borough-blue); font-weight: bold;">View Bus Schedule ↗</a>
+            </div>
+        </div>
+
+        <div class="section-title"><h2>Auto, Fuel & Local Services</h2></div>
+        <div id="services-container" class="events-grid">
+            <p style="color:var(--text-muted);">Loading service directory...</p>
+        </div>
+    </section>
+
+    <section id="view-weather" class="app-view">
+        <div class="weather-header" style="margin-bottom: 16px;">
+            <h2>Millersville Weather Center</h2>
+        </div>
+        <div id="weather-container" class="events-grid">
+            <p style="color:var(--text-muted);">Fetching the latest meteorologist report...</p>
+        </div>
+    </section>
+
+</main>
 
 <script>
-    // --- APP STATE ---
+    // --- STATE VARIABLES ---
     let currentEvents = [];
+    let currentDining = [];
+    let currentHousing = [];
+    let currentServices = [];
+    let currentNews = [];
+    let currentWeather = null;
     let currentFilter = 'All';
     let currentDateFilter = '';
-    let currentPage = 1;
-    const itemsPerPage = 6;
 
     // --- INITIALIZATION ---
     async function initApp() {
-        try {
-            // Fetch the JSON generated by your GitHub Action
-            const res = await fetch('events.json?v=' + Date.now());
-            const rawApiData = await res.json();
-            
-            // Map the raw database array to our clean card format
-if (rawApiData && rawApiData.data) {
-                currentEvents = rawApiData.data.map(item => {
-                    return {
-                        name: item[1] || "Unnamed Event",
-                        date: formatDate(item[3]),
-                        rawDate: item[3] ? item[3].split('T')[0] : "", 
-                        time: formatTime(item[3], item[4]),
-                        loc: cleanLocation(item[5], item[7]),
-                        category: item[9] || "Public Event",
-                        // item[11] is the description field. We pass it to our new scanner!
-                        price: extractPrice(item[11]) 
-                    };
-                });
-            }
-            renderUI();
-        } catch (e) { 
-            console.error("Data load failed:", e); 
-            document.getElementById('events-container').innerHTML = `<p style="text-align:center; padding:2rem;">Waiting for GitHub Action to pull data...</p>`;
-        }
-    }
-
-    // --- FORMATTING HELPERS ---
-    function formatDate(dateStr) {
-        if (!dateStr) return "TBA";
-        const options = { weekday: 'short', month: 'short', day: 'numeric' };
-        return new Date(dateStr.split('T')[0] + "T00:00:00").toLocaleDateString(undefined, options);
-    }
-
-    function formatTime(startStr, endStr) {
-        if (!startStr) return "TBA";
-        const options = { hour: 'numeric', minute: '2-digit', hour12: true };
-        const start = new Date(startStr).toLocaleTimeString([], options);
+        console.log("App Initializing...");
         
-        if (!endStr) return start;
-        const end = new Date(endStr).toLocaleTimeString([], options);
-        return `${start} - ${end}`;
+        // Fetch all databases in parallel for speed
+        await Promise.allSettled([
+            loadWeather(),
+            loadNews(),
+            loadEvents(),
+            loadDining(),
+            loadHousing(),
+            loadServices()
+        ]);
+
+        // Render the Home dashboard after data is loaded
+        renderHomeUI();
     }
 
-    function cleanLocation(building, room) {
-        let loc = "";
-        if (building) loc += building;
-        if (room && room !== building) loc += (loc ? " - " : "") + room.split('|')[0].trim(); 
-        return loc || "Millersville Campus";
+    // --- ROUTER & NAVIGATION ---
+    function switchView(viewName) {
+        document.querySelectorAll('.app-view').forEach(view => view.classList.remove('active'));
+        document.getElementById(`view-${viewName}`).classList.add('active');
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.classList.remove('active');
+            if(link.innerText.toLowerCase() === viewName) link.classList.add('active');
+        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-function extractPrice(description) {
-        if (!description) return "Free";
-        
-        // Hunts for a '$' followed by numbers (e.g., $5, $15.50)
-        const match = description.match(/\$[0-9]+(\.[0-9]{2})?/);
-        
-        // If it finds a price, return it. If not, assume it's free!
-        return match ? match[0] : "Free";
-    }
-
-    // --- INTERACTION LOGIC ---
+    // --- THEME TOGGLE LOGIC ---
     function toggleMode() {
         const isTownie = document.getElementById('roleToggle').checked;
         document.body.classList.toggle('townie-mode', isTownie);
-        document.getElementById('sub-header').innerText = isTownie ? "Townie View: Local Events" : "Student View: Campus Events";
         
-        // Hide the Student button from Townies
+        document.getElementById('sub-header').innerText = isTownie ? "Townie View: Community App" : "MU Student View: Campus App";
+        
         const studentBtn = document.getElementById('btn-student');
-        if (studentBtn) {
-            studentBtn.style.display = isTownie ? 'none' : 'inline-block';
-        }
+        if (studentBtn) studentBtn.style.display = isTownie ? 'none' : 'inline-block';
 
-        // Reset filter if Townie hides the active Student tab
+        const publicBtn = document.getElementById('btn-public');
+        if (publicBtn) publicBtn.innerText = isTownie ? "Other" : "Public";
+
         if (isTownie && currentFilter === 'Student') {
             setFilter('All');
         } else {
-            currentPage = 1;
-            renderUI();
+            renderEventsUI(); 
+            renderHomeUI();
         }
     }
 
+    // --- EVENT FILTERS ---
     function setFilter(keyword) {
         currentFilter = keyword;
-        currentPage = 1;
-        
-        // Remove active class from all buttons, add to the selected one
         document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
         const activeBtn = document.querySelector(`.filter-btn[data-cat="${keyword}"]`);
         if (activeBtn) activeBtn.classList.add('active');
-        
-        renderUI();
+        renderEventsUI();
     }
 
     function filterByDate() {
         currentDateFilter = document.getElementById('datePicker').value; 
-        currentPage = 1;
-        renderUI();
+        renderEventsUI();
     }
 
     function clearDateFilter() {
         currentDateFilter = '';
         document.getElementById('datePicker').value = '';
-        currentPage = 1;
-        renderUI();
+        renderEventsUI();
     }
 
-    // --- RENDER LOGIC ---
-    function renderUI() {
-        const isTownie = document.getElementById('roleToggle').checked;
-        const container = document.getElementById('events-container');
+    // --- DATA FETCHERS ---
+    async function loadEvents() {
+        try {
+            const res = await fetch('events.json'); 
+            currentEvents = await res.json();
+            renderEventsUI();
+        } catch (e) { console.log("Events missing or failed."); }
+    }
+    
+    async function loadDining() {
+        try {
+            const res = await fetch('restaurants.json');
+            currentDining = await res.json();
+            renderDiningUI();
+        } catch (e) { console.log("Dining missing or failed."); }
+    }
 
-        // Apply all filters (Townie, Date, and Category)
-        const filtered = currentEvents.filter(e => {
-            const catLower = e.category.toLowerCase();
-            
-            if (currentDateFilter !== '' && e.rawDate !== currentDateFilter) return false;
-            if (isTownie && catLower.includes("student")) return false;
-            if (currentFilter !== 'All' && !catLower.includes(currentFilter.toLowerCase())) return false;
-            
-            return true;
+    async function loadHousing() {
+        try {
+            const res = await fetch('housing.json');
+            currentHousing = await res.json();
+            renderHousingUI();
+        } catch (e) { console.log("Housing missing or failed."); }
+    }
+
+    async function loadServices() {
+        try {
+            const res = await fetch('services.json');
+            currentServices = await res.json();
+            renderServicesUI();
+        } catch (e) { console.log("Services missing or failed."); }
+    }
+
+    async function loadNews() {
+        try {
+            const res = await fetch('news.json');
+            currentNews = await res.json();
+            renderNewsUI();
+        } catch (e) { console.log("News missing or failed."); }
+    }
+
+    async function loadWeather() {
+        try {
+            const res = await fetch('weather.json');
+            currentWeather = await res.json();
+            renderWeatherUI();
+        } catch (e) { console.log("Weather missing or failed."); }
+    }
+
+    // --- UI RENDERERS ---
+
+    // 1. Home Dashboard
+    function renderHomeUI() {
+        const isTownie = document.getElementById('roleToggle').checked;
+
+        // Populate Weather Widget
+        if (currentWeather && !currentWeather.error) {
+            const weatherDiv = document.getElementById('home-weather-widget');
+            weatherDiv.style.display = 'block';
+            weatherDiv.innerHTML = `
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div>
+                        <p style="font-size: 0.8rem; font-weight: bold; text-transform: uppercase; opacity: 0.9;">Current Weather</p>
+                        <h2 style="font-size: 2rem; margin: 4px 0;">${currentWeather.temp}°${currentWeather.unit}</h2>
+                        <p>${currentWeather.condition}</p>
+                    </div>
+                    <div style="font-size: 2.5rem;">🌤️</div>
+                </div>
+            `;
+        }
+
+        // Populate Latest News Alert
+        if (currentNews.length > 0) {
+            const latest = currentNews[0];
+            document.getElementById('home-news-widget').innerHTML = `
+                <div class="app-card" style="padding: 12px 16px; border-left: 4px solid var(--theme-color);">
+                    <p style="font-size: 0.75rem; color: var(--text-muted); font-weight: bold; text-transform: uppercase;">Latest Update • ${latest.source}</p>
+                    <a href="${latest.link}" target="_blank" style="text-decoration: none; color: var(--text-dark); font-weight: 600; display: block; margin-top: 4px;">${latest.title} ↗</a>
+                </div>
+            `;
+        }
+
+        // Populate Today's Events
+        const eventsContainer = document.getElementById('home-events-container');
+        eventsContainer.innerHTML = '';
+        
+        // Get today's date in YYYY-MM-DD format based on local time
+        const todayStr = new Date().toLocaleDateString('en-CA'); 
+        
+        let todaysEvents = currentEvents.filter(event => {
+            if (isTownie && event.category === 'Student') return false;
+            return event.date && event.date.startsWith(todayStr);
         });
 
-        // Slice for pagination
-        const start = (currentPage - 1) * itemsPerPage;
-        const paginated = filtered.slice(start, start + itemsPerPage);
+        if (todaysEvents.length === 0) {
+            eventsContainer.innerHTML = `<div class="app-card"><p style="color: var(--text-muted); text-align: center;">No scheduled events today. Enjoy the downtime!</p></div>`;
+        } else {
+            // Limit to top 3 events for the homepage
+            todaysEvents.slice(0, 3).forEach(event => {
+                const d = new Date(event.date);
+                const timeString = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+                eventsContainer.innerHTML += `
+                    <div class="app-card" style="padding: 12px;">
+                        <div style="font-size: 0.7rem; color: var(--theme-color); font-weight: bold; text-transform: uppercase;">${event.category}</div>
+                        <h4 style="margin: 4px 0;">${event.title}</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">🕒 ${timeString} • 📍 ${event.location}</p>
+                    </div>
+                `;
+            });
+        }
+    }
 
-        // Empty state handling
-        if (paginated.length === 0) {
-            container.innerHTML = `<p style="text-align:center; width:100%; color:var(--text-muted); padding: 2rem;">No events found for this selection.</p>`;
-            document.getElementById('pagination').innerHTML = '';
+    // 2. Events List
+    function renderEventsUI() {
+        const container = document.getElementById('events-container');
+        container.innerHTML = ''; 
+        const isTownie = document.getElementById('roleToggle').checked;
+
+        let filtered = currentEvents.filter(event => {
+            let catMatch = (currentFilter === 'All') || (event.category === currentFilter);
+            if (isTownie && event.category === 'Student') return false; 
+            
+            let dateMatch = true;
+            if (currentDateFilter) {
+                const eventDate = event.date.split('T')[0];
+                dateMatch = (eventDate === currentDateFilter);
+            }
+            return catMatch && dateMatch;
+        });
+
+        if (filtered.length === 0) {
+            container.innerHTML = `<p style="color:var(--text-muted); padding: 20px;">No events found.</p>`;
             return;
         }
 
-// Draw the Event Cards
-        container.innerHTML = paginated.map(e => `
-            <div class="card">
-                <div class="card-header">
-                    <span class="price-tag">${e.category}</span>
+        filtered.forEach(event => {
+            const card = document.createElement('div');
+            card.className = 'app-card';
+
+            const d = new Date(event.date);
+            const dateString = d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+            const timeString = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+
+            let displayPrice = `<span style="color: var(--accent-fresh); font-weight: bold;">Free</span>`;
+            if (event.price && event.price !== "Free") {
+                if (event.price.includes("Student") && !isTownie) {
+                    displayPrice = `Student Price: <b>${event.price.split('/')[0]}</b>`;
+                } else if (event.price.includes("Public") && isTownie) {
+                    displayPrice = `Public Price: <b>${event.price.split('/')[1] || event.price}</b>`;
+                } else {
+                    displayPrice = `<b>${event.price}</b>`;
+                }
+            }
+
+            card.innerHTML = `
+                <div>
+                    <div style="font-size: 0.8rem; color: var(--theme-color); font-weight: 700; text-transform: uppercase; margin-bottom: 4px;">${event.category}</div>
+                    <h3 style="font-size: 1.1rem; margin-bottom: 8px;">${event.title}</h3>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 4px;">📅 ${dateString} @ ${timeString}</p>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px;">📍 ${event.location}</p>
                 </div>
-                <h3>${e.name}</h3>
-                <div class="card-details">
-                    <p>📅 ${e.date}</p>
-                    <p>🕒 ${e.time}</p>
-                    <p>📍 ${e.loc}</p>
-                    <div><span class="cost-badge">${e.price}</span></div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);">
+                    <div style="font-size: 0.9rem;">${displayPrice}</div>
+                    ${event.ticketLink ? 
+                        `<a href="${event.ticketLink}" target="_blank" style="background: var(--accent-fresh); color: white; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.85rem;">🎟️ Buy Tickets</a>` : 
+                        `<button style="background: var(--bg-main); border: 1px solid var(--border); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem;">More Info</button>`
+                    }
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    // 3. Dining
+    function renderDiningUI() {
+        const container = document.getElementById('food-container');
+        if(!container) return;
+        container.innerHTML = '';
+        currentDining.forEach(place => {
+            const card = document.createElement('div');
+            card.className = 'app-card';
+            let actionButtons = '';
+            if (place.status === 'App Required') {
+                actionButtons = `
+                    <div style="display: flex; gap: 8px;">
+                        <a href="${place.iosLink}" target="_blank" style="flex: 1; text-align: center; background: var(--bg-main); border: 1px solid var(--border); padding: 6px; border-radius: 6px; text-decoration: none; color: var(--text-dark); font-size: 0.8rem; font-weight: 600;"> iOS</a>
+                        <a href="${place.link}" target="_blank" style="flex: 1; text-align: center; background: var(--bg-main); border: 1px solid var(--border); padding: 6px; border-radius: 6px; text-decoration: none; color: var(--text-dark); font-size: 0.8rem; font-weight: 600;">Android</a>
+                    </div>`;
+            } else if (place.status === 'Order Online' || place.status === 'Pickup Only (No Delivery)') {
+                actionButtons = `<a href="${place.link}" target="_blank" style="display: block; text-align: center; background: var(--accent-fresh); color: white; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">🛒 ${place.status}</a>`;
+            } else {
+                actionButtons = `<a href="${place.link}" target="_blank" style="display: block; text-align: center; background: var(--bg-main); border: 1px solid var(--border); color: var(--text-dark); padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">📄 ${place.status}</a>`;
+            }
+            card.innerHTML = `
+                <div><h3 style="font-size: 1.2rem; margin-bottom: 4px;">${place.name}</h3><p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px;">🍴 ${place.cuisine}</p></div>
+                <div style="margin-top: auto;">${actionButtons}</div>`;
+            container.appendChild(card);
+        });
+    }
+
+    // 4. Housing
+    function renderHousingUI() {
+        const container = document.getElementById('housing-container');
+        if(!container) return;
+        container.innerHTML = '';
+        currentHousing.sort((a, b) => (b.featured === true) - (a.featured === true));
+        currentHousing.forEach(property => {
+            const card = document.createElement('div');
+            card.className = property.featured ? 'app-card featured' : 'app-card';
+            let badge = property.featured ? `<span style="background: var(--theme-color); color: white; padding: 3px 8px; border-radius: 12px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; display: inline-block;">Premium</span>` : '';
+            card.innerHTML = `
+                <div>${badge}<h3 style="font-size: 1.2rem; margin-bottom: 4px;">${property.name}</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 8px;">Managed by: ${property.landlord}</p>
+                <p style="font-size: 0.95rem; margin-bottom: 16px;">${property.description}</p></div>
+                <div style="margin-top: auto; padding-top: 12px; border-top: 1px solid var(--border);">
+                <a href="${property.link}" target="_blank" style="display: block; text-align: center; background: ${property.featured ? 'var(--text-dark)' : 'var(--bg-main)'}; color: ${property.featured ? 'var(--surface)' : 'var(--text-dark)'}; border: ${property.featured ? 'none' : '1px solid var(--border)'}; padding: 8px 12px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 0.9rem;">View Property</a></div>`;
+            container.appendChild(card);
+        });
+    }
+
+    // 5. Services
+    function renderServicesUI() {
+        const container = document.getElementById('services-container');
+        if(!container) return;
+        container.innerHTML = '';
+        currentServices.forEach(service => {
+            const card = document.createElement('div');
+            card.className = 'app-card';
+            let buttonLink = service.gasLink ? `<a href="${service.gasLink}" target="_blank" style="color:var(--accent-fresh); text-decoration:none; font-weight:bold;">⛽ View Prices</a>` 
+                : service.link ? `<a href="${service.link}" target="_blank" style="color:var(--theme-color); text-decoration:none; font-weight:bold;">🌐 Website</a>` : '';
+            card.innerHTML = `
+                <div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: bold; text-transform: uppercase; margin-bottom: 4px;">${service.category}</div>
+                    <h3 style="font-size: 1.1rem; margin-bottom: 4px;">${service.name}</h3>
+                    <p style="font-size: 0.9rem; margin-bottom: 8px;">📍 ${service.address}</p>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px;">${service.description}</p>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 12px; margin-top: auto;">
+                    <span style="font-weight: 600; font-size: 0.9rem;">📞 ${service.phone}</span>
+                    ${buttonLink}
+                </div>`;
+            container.appendChild(card);
+        });
+    }
+
+    // 6. News
+    function renderNewsUI() {
+        const container = document.getElementById('news-container');
+        if(!container) return;
+        container.innerHTML = '';
+        currentNews.forEach(news => {
+            const card = document.createElement('div');
+            card.className = 'app-card';
+            card.innerHTML = `
+                <div style="font-size: 0.75rem; color: var(--theme-color); font-weight: bold; text-transform: uppercase; margin-bottom: 4px;">${news.source} • ${news.date}</div>
+                <h3 style="font-size: 1.1rem; margin-bottom: 12px;">${news.title}</h3>
+                <a href="${news.link}" target="_blank" style="display: inline-block; background: var(--bg-main); border: 1px solid var(--border); padding: 8px 12px; border-radius: 6px; text-decoration: none; color: var(--text-dark); font-weight: 600; font-size: 0.85rem;">Read Article ➔</a>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    // 7. Weather
+    function renderWeatherUI() {
+        const container = document.getElementById('weather-container');
+        if(!container) return;
+        if (!currentWeather || currentWeather.error) {
+            container.innerHTML = `<p style="padding: 20px;">Weather data currently unavailable. Please check back later.</p>`;
+            return;
+        }
+        container.innerHTML = `
+            <div class="app-card" style="text-align: center; padding: 32px 20px;">
+                <h3 style="font-size: 1.5rem; margin-bottom: 8px;">Millersville, PA</h3>
+                <div style="font-size: 3rem; font-weight: 800; color: var(--theme-color); margin-bottom: 8px;">${currentWeather.temp}°${currentWeather.unit}</div>
+                <p style="font-size: 1.2rem; font-weight: 600; margin-bottom: 16px;">${currentWeather.condition}</p>
+                <div style="text-align: left; background: var(--bg-main); padding: 16px; border-radius: var(--radius-sm); font-size: 0.95rem; line-height: 1.6;">
+                    <strong>Detailed Forecast:</strong><br>${currentWeather.detailed}
                 </div>
             </div>
-        `).join('');
-
-        renderPagination(filtered.length);
-    }
-
-    function renderPagination(total) {
-        const pages = Math.ceil(total / itemsPerPage);
-        const nav = document.getElementById('pagination');
-        nav.innerHTML = '';
-        if (pages <= 1) return; 
-
-        for (let i = 1; i <= pages; i++) {
-            const activeClass = i === currentPage ? 'active' : '';
-            nav.innerHTML += `<button class="page-btn ${activeClass}" onclick="goToPage(${i})">${i}</button>`;
-        }
-    }
-
-    function goToPage(p) { 
-        currentPage = p; 
-        renderUI(); 
-        window.scrollTo({ top: 0, behavior: 'smooth' }); 
+        `;
     }
 </script>
 </body>

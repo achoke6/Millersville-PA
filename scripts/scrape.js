@@ -122,9 +122,8 @@ async function runScraper() {
             const pmRes = await fetch('https://www.pennmanor.net/?post_type=tribe_events&ical=1&eventDisplay=list', { headers: baseHeaders });
             const pmIcs = await pmRes.text();
             
-            // Split the raw file into individual event blocks
             const vEvents = pmIcs.split('BEGIN:VEVENT');
-            vEvents.shift(); // Remove the header chunk
+            vEvents.shift(); 
             
             const now = new Date();
             let pmCount = 0;
@@ -135,13 +134,16 @@ async function runScraper() {
                 const locationMatch = block.match(/LOCATION:(.*)/);
                 
                 if (summaryMatch && dtstartMatch) {
-                    // Clean up formatting artifacts
                     let title = summaryMatch[1].trim().replace(/\\,/g, ',').replace(/\\;/g, ';');
+                    let lowerTitle = title.toLowerCase();
                     
-                    // THE FILTER: Skip anything with "Cycle Day"
-                    if (title.toLowerCase().includes('cycle day')) continue;
+                    // THE NEW FILTERS: Drop Cycle Days, Start of, and End of
+                    if (lowerTitle.includes('cycle day') || 
+                        lowerTitle.startsWith('start of') || 
+                        lowerTitle.startsWith('end of')) {
+                        continue;
+                    }
                     
-                    // Parse the tricky iCal date format (YYYYMMDDTHHMMSS)
                     let dtStr = dtstartMatch[1].trim();
                     let isoDate = "";
                     if (dtStr.length >= 8) {
@@ -159,13 +161,12 @@ async function runScraper() {
                     
                     const eventDate = new Date(isoDate);
                     
-                    // Keep upcoming events within the next 60 days
                     if (eventDate >= now && eventDate < new Date(now.getTime() + 60 * 24 * 60 * 60 * 1000)) {
                         events.push({
                             title: title,
                             date: eventDate.toISOString(),
                             location: locationMatch ? locationMatch[1].trim().replace(/\\,/g, ',') : "Penn Manor School District",
-                            category: "Other",
+                            category: "Penn Manor", // Correctly labeled now
                             price: "Check Website",
                             ticketLink: "https://www.pennmanor.net/calendar/"
                         });
@@ -178,7 +179,7 @@ async function runScraper() {
             console.error("❌ Penn Manor Error:", pmError.message);
         }
 
-        // --- ATTEMPT 4: Phantom Power (Hardcoded for now) ---
+        // --- ATTEMPT 4: Phantom Power (Stays as "Other") ---
         events.push(
             { title: "Live at Phantom Power", date: "2026-05-08T19:00:00", location: "Phantom Power", category: "Other", price: "$10 Student / $15 Public", ticketLink: "https://www.phantompower.net/tickets" }
         );

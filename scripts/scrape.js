@@ -43,14 +43,19 @@ async function runScraper() {
         fs.writeFileSync(path.join(__dirname, '../weather.json'), JSON.stringify(fallback, null, 2));
     }
 
-    // 2. EVENTS (JSON POST Payload)
+    // 2. EVENTS (Fixed PHP Form Data Payload)
     try {
-        console.log("Fetching Events API via JSON POST...");
+        console.log("Fetching Events API via Form Data POST...");
         
-        // Calculate the current month's dates dynamically
         const today = new Date();
         const startDay = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().split('T')[0];
         const endDay = new Date(today.getFullYear(), today.getMonth() + 1, 0).toISOString().split('T')[0];
+
+        // Format as URL Encoded Form Data for PHP
+        const params = new URLSearchParams();
+        params.append('getEvents', 'true');
+        params.append('startDate', startDay);
+        params.append('endDate', endDay);
 
         let rawText = "";
         try {
@@ -58,19 +63,19 @@ async function runScraper() {
                 method: 'POST',
                 headers: {
                     ...fetchHeaders,
-                    'Content-Type': 'application/json' // Explicitly sending as JSON
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' // Crucial for PHP
                 },
-                body: JSON.stringify({
-                    getEvents: true,
-                    startDate: startDay,
-                    endDate: endDay
-                })
+                body: params
             });
 
             rawText = await res.text();
             const data = JSON.parse(rawText);
             const sourceEvents = Array.isArray(data) ? data : (data.events || []);
             
+            if (sourceEvents.length === 0) {
+                console.log("⚠️ API responded, but returned 0 events for this date range.");
+            }
+
             let events = sourceEvents.map(item => ({
                 title: item.title || item.name || "Campus Event",
                 date: item.start || item.date || new Date().toISOString(),
@@ -90,10 +95,9 @@ async function runScraper() {
             console.log(`✅ Events Written (${events.length} items)`);
 
         } catch (parseError) {
-            console.error("⚠️ MU API Payload failed parsing.");
-            console.log("🛑 SERVER RESPONSE WAS:", rawText.substring(0, 150)); // Debug logger
+            console.error("⚠️ MU API Payload failed parsing. Server blocked the Form Data request.");
+            console.log("🛑 SERVER RESPONSE WAS:", rawText.substring(0, 150));
             
-            // Still write the fallback events so the site doesn't crash
             const fallbackEvents = [
                 { title: "Live at Phantom Power", date: "2026-05-08T19:00:00", location: "Phantom Power", category: "Other", price: "$10 Student / $15 Public", ticketLink: "https://www.phantompower.net/tickets" },
                 { title: "PMHS Varsity Baseball", date: "2026-03-28T16:00:00", location: "Comet Field", category: "Other", price: "Free", ticketLink: "" }
@@ -102,7 +106,7 @@ async function runScraper() {
         }
     } catch (e) { console.error("❌ Events Request Error:", e.message); }
 
-    // 3. NEWS (RSS + Borough)
+    // 3. NEWS
     try {
         console.log("Fetching News RSS...");
         let news = [];

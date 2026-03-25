@@ -11,27 +11,72 @@ const baseHeaders = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 };
 
-// --- UPDATED: Smart Pricing & eTix Router ---
-function extractPricing(desc, title = "", location = "") {
+// --- SUPERCHARGED: Anchor-Aware Ticket Extractor ---
+function extractPricing(desc, title = "", location = "", apiLink = "") {
     let price = "Free"; 
-    let link = "";
+    let link = apiLink || "";
     
     if (desc) {
-        // Look for any raw links in the description
-        const linkMatch = desc.match(/(https?:\/\/[^\s"'<]+)/gi);
-        if (linkMatch) {
-            const ticketLink = linkMatch.find(l => l.toLowerCase().includes('ticket') || l.toLowerCase().includes('etix'));
-            if (ticketLink) link = ticketLink;
-        }
-
-        // Find Prices (e.g., "$5", "$10.00", "$5 Student", "$10 Public")
+        // 1. Find Prices (e.g., "$5", "$10.00", "$5 Student", "$10 Public")
         const priceRegex = /\$\d+(?:\.\d{2})?(?:\s+(?:student|public|general|admission|door|advance|mu|adult|child)s?)?/gi;
         const prices = desc.match(priceRegex);
         
         if (prices) {
             price = [...new Set(prices)].join(' / ');
-        } else if (desc.toLowerCase().includes('ticket') || desc.toLowerCase().includes('admission') || desc.toLowerCase().includes('cover charge')) {
+        } else if (desc.toLowerCase().includes('ticket') || desc.toLowerCase().includes('admission') || desc.toLowerCase().includes('cover charge') || desc.toLowerCase().includes('cost:')) {
             price = "Ticket Required"; 
+        }
+
+        // 2. Smart HTML Anchor Extraction (Prioritize Context)
+        if (!link) {
+            const anchorRegex = /<a[^>]*href=["'](https?:\/\/[^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi;
+            let match;
+            let bestLink = null;
+            let highestScore = 0;
+
+            while ((match = anchorRegex.exec(desc)) !== null) {
+                const url = match[1];
+                const anchorText = match[2].toLowerCase();
+                const lowerUrl = url.toLowerCase();
+                let score = 0;
+
+                // INSTANT REJECT: Ignore social media and generic org homepages
+                if (lowerUrl.includes('instagram.com') || lowerUrl.includes('facebook.com') || lowerUrl.includes('twitter.com') || lowerUrl.includes('youtube.com') || lowerUrl.includes('campusgroups.com/organization')) {
+                    continue;
+                }
+
+                // SCORE 3: Verified Ticketing Platforms
+                if (lowerUrl.includes('etix.com') || lowerUrl.includes('universitytickets.com') || lowerUrl.includes('muticketsonline.com') || lowerUrl.includes('eventbrite.com')) {
+                    score = 3;
+                }
+                // SCORE 2: Explicit Action Words in the clickable text
+                else if (anchorText.includes('ticket') || anchorText.includes('register') || anchorText.includes('buy') || anchorText.includes('rsvp') || anchorText.includes('purchase')) {
+                    score = 2;
+                }
+                // SCORE 1: Keywords in the URL path itself
+                else if (lowerUrl.includes('ticket') || lowerUrl.includes('register') || lowerUrl.includes('rsvp')) {
+                    score = 1;
+                }
+
+                if (score > highestScore) {
+                    highestScore = score;
+                    bestLink = url;
+                }
+            }
+
+            // If we didn't find a valid HTML anchor, check raw text URLs as a last resort
+            if (!bestLink) {
+                const rawMatch = desc.match(/(https?:\/\/[^\s"'<]+)/gi);
+                if (rawMatch) {
+                    const ticketRaw = rawMatch.find(l => {
+                        const lu = l.toLowerCase();
+                        return lu.includes('etix.com') || lu.includes('universitytickets') || lu.includes('eventbrite');
+                    });
+                    if (ticketRaw) bestLink = ticketRaw;
+                }
+            }
+
+            if (bestLink) link = bestLink;
         }
     }
 
@@ -124,13 +169,15 @@ async function runScraper() {
                 const bldgIdx = fields.indexOf('BuildingCode');
                 const roomIdx = fields.indexOf('RoomName');
                 const descIdx = fields.indexOf('EventMeetingByActivityId.Event.Description'); 
+                const linkIdx = fields.findIndex(f => f.toLowerCase().includes('url') || f.toLowerCase().includes('link'));
 
                 sourceEvents = data.data.map(row => {
                     const eventTitle = row[nameIdx] || "Campus Event";
                     const eventLoc = `${row[bldgIdx] || ''} ${row[roomIdx] || ''}`.trim() || "Campus";
                     const descText = row[descIdx] || "";
+                    const apiLink = linkIdx !== -1 ? (row[linkIdx] || "") : "";
                     
-                    const pricing = extractPricing(descText, eventTitle, eventLoc);
+                    const pricing = extractPricing(descText, eventTitle, eventLoc, apiLink);
                     
                     return { 
                         title: eventTitle, 
@@ -145,15 +192,16 @@ async function runScraper() {
                 sourceEvents = items.map(item => {
                     const eventTitle = item.title || item.name || item.ActivityName || "Campus Event";
                     const eventLoc = item.location || item.BuildingCode || "Campus";
+                    const apiLink = item.url || item.link || item.TicketUrl || "";
                     
-                    const pricing = extractPricing(item.description || "", eventTitle, eventLoc);
+                    const pricing = extractPricing(item.description || "", eventTitle, eventLoc, apiLink);
                     
                     return {
                         title: eventTitle,
                         date: item.start || item.date || item.StartDateTime,
                         location: eventLoc,
                         price: pricing.price !== "Free" ? pricing.price : (item.cost || item.price || "Free"),
-                        ticketLink: pricing.link || item.url || item.link || ""
+                        ticketLink: pricing.link
                     };
                 });
             }
@@ -210,15 +258,14 @@ async function runScraper() {
                     }
                     
                     const eventDate = new Date(isoDate);
-                    // Match the same rolling 30-day window
                     if (eventDate >= now && eventDate < thirtyDaysOut) {
                         events.push({
                             title: title,
                             date: eventDate.toISOString(),
                             location: locationMatch ? locationMatch[1].trim().replace(/\\,/g, ',') : "Penn Manor School District",
                             category: "Penn Manor", 
-                            price: "Free", // Prevent UI pricing logic
-                            ticketLink: "" // Prevent online sales button
+                            price: "Free", 
+                            ticketLink: "" 
                         });
                     }
                 }

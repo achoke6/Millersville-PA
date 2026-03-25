@@ -2,13 +2,13 @@ const fs = require('fs');
 const path = require('path');
 const dns = require('dns');
 
-// Force IPv4 for the Weather Feed
+// Force IPv4 to bypass strict university firewalls
 dns.setDefaultResultOrder('ipv4first');
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-const fetchHeaders = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
-    'Content-Type': 'application/json'
+// Standard browser header
+const baseHeaders = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 };
 
 async function runScraper() {
@@ -17,7 +17,7 @@ async function runScraper() {
     // 1. WEATHER
     try {
         console.log("Fetching Weather XML...");
-        const res = await fetch('https://snowball.millersville.edu/~cws/current.xml', { headers: fetchHeaders });
+        const res = await fetch('https://snowball.millersville.edu/~cws/current.xml', { headers: baseHeaders });
         const xml = await res.text();
         
         const tempMatch = xml.match(/<(?:temp_f|temperature|temp)[^>]*>\s*([-\d.]+)/i);
@@ -36,77 +36,155 @@ async function runScraper() {
         console.log(`✅ Weather Written (Temp: ${weatherData.temp}°F)`);
     } catch (e) { console.error("❌ Weather Error:", e.message); }
 
-    // 2. EVENTS (The EMS Translator Fix)
+    // 2. EVENTS (MU + Penn Manor + Phantom Power)
     try {
-        console.log("Fetching Events API...");
+        console.log("Fetching Events...");
+        let sourceEvents = [];
         
-        const today = new Date();
-        const startDay = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().split('T')[0];
-        const endDay = new Date(today.getFullYear(), today.getMonth() + 1, 0).toISOString().split('T')[0];
+        // --- ATTEMPT 1: The Cookie Handshake (MU Primary API) ---
+        try {
+            const pageRes = await fetch('https://www.millersville.edu/calendar/', { headers: baseHeaders });
+            const rawCookies = pageRes.headers.get('set-cookie');
+            let cookieHeader = '';
+            if (rawCookies) cookieHeader = rawCookies.split(', ').map(c => c.split(';')[0]).join('; ');
 
-        const res = await fetch('https://www.millersville.edu/calendar/app/api/index.php', { 
-            method: 'POST',
-            headers: fetchHeaders,
-            body: JSON.stringify({ getEvents: true, startDate: startDay, endDate: endDay })
-        });
+            const today = new Date();
+            const startDay = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().split('T')[0];
+            const endDay = new Date(today.getFullYear(), today.getMonth() + 1, 0).toISOString().split('T')[0];
 
-        const rawText = await res.text();
-        const data = JSON.parse(rawText);
-        
-        let parsedEvents = [];
+            const apiHeaders = {
+                ...baseHeaders,
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'Origin': 'https://www.millersville.edu',
+                'Referer': 'https://www.millersville.edu/calendar/',
+                'Content-Type': 'application/json'
+            };
+            if (cookieHeader) apiHeaders['Cookie'] = cookieHeader;
 
-        // THE FIX: Translating the proprietary EMS "fields & data" structure
-        if (data.fields && Array.isArray(data.data)) {
-            const fields = data.fields.split(',');
-            const nameIdx = fields.indexOf('ActivityName');
-            const startIdx = fields.indexOf('StartDateTime');
-            const bldgIdx = fields.indexOf('BuildingCode');
-            const roomIdx = fields.indexOf('RoomName');
-
-            parsedEvents = data.data.map(row => {
-                // The API sends an array of arrays
-                if (Array.isArray(row)) {
-                    return {
-                        title: row[nameIdx] || "Campus Event",
-                        date: row[startIdx] || new Date().toISOString(),
-                        location: `${row[bldgIdx] || ''} ${row[roomIdx] || ''}`.trim() || "Millersville University",
-                        category: "MU",
-                        price: "Free", // EMS doesn't standardly output cost here
-                        ticketLink: ""
-                    };
-                } else {
-                    // Fallback if it sends an array of objects
-                    return {
-                        title: row.ActivityName || row.title || "Campus Event",
-                        date: row.StartDateTime || row.start || new Date().toISOString(),
-                        location: `${row.BuildingCode || ''} ${row.RoomName || ''}`.trim() || "Millersville University",
-                        category: "MU",
-                        price: "Free",
-                        ticketLink: ""
-                    };
-                }
+            const res = await fetch('https://www.millersville.edu/calendar/app/api/index.php', { 
+                method: 'POST',
+                headers: apiHeaders,
+                body: JSON.stringify({ getEvents: true, startDate: startDay, endDate: endDay })
             });
-        } else {
-            // Standard JSON Fallback
-            const items = Array.isArray(data) ? data : (data.events || data.data || []);
-            parsedEvents = items.map(item => ({
-                title: item.title || item.name || item.ActivityName || "Campus Event",
-                date: item.start || item.date || item.StartDateTime || new Date().toISOString(),
-                location: item.location || item.BuildingCode || "Campus",
-                category: "MU",
-                price: item.cost || item.price || "Free",
-                ticketLink: item.url || item.link || ""
-            }));
+
+            const rawText = await res.text();
+            if (rawText.trim() === "") throw new Error("Blank Response");
+            
+            const data = JSON.parse(rawText);
+            
+            // EMS Translator
+            if (data.fields && Array.isArray(data.data)) {
+                const fields = data.fields.split(',');
+                const nameIdx = fields.indexOf('ActivityName');
+                const startIdx = fields.indexOf('StartDateTime');
+                const bldgIdx = fields.indexOf('BuildingCode');
+                const roomIdx = fields.indexOf('RoomName');
+
+                sourceEvents = data.data.map(row => {
+                    if (Array.isArray(row)) {
+                        return { title: row[nameIdx], date: row[startIdx], location: `${row[bldgIdx] || ''} ${row[roomIdx] || ''}`.trim() };
+                    } else {
+                        return { title: row.ActivityName, date: row.StartDateTime, location: `${row.BuildingCode || ''} ${row.RoomName || ''}`.trim() };
+                    }
+                });
+            } else {
+                const items = Array.isArray(data) ? data : (data.events || data.data || []);
+                sourceEvents = items.map(item => ({
+                    title: item.title || item.name || item.ActivityName,
+                    date: item.start || item.date || item.StartDateTime,
+                    location: item.location || item.BuildingCode
+                }));
+            }
+            if (sourceEvents.length === 0) throw new Error("Zero events returned");
+        } catch (apiError1) {
+            // --- ATTEMPT 2: MU Map Backup API ---
+            try {
+                const res2 = await fetch('https://map.millersville.edu/api/public/events', { headers: { 'User-Agent': baseHeaders['User-Agent'] } });
+                const data2 = await res2.json();
+                sourceEvents = Array.isArray(data2) ? data2 : (data2.events || []);
+            } catch (apiError2) {}
         }
 
-        // Inject Phantom Power and Penn Manor
-        parsedEvents.push(
-            { title: "Live at Phantom Power", date: "2026-05-08T19:00:00", location: "Phantom Power", category: "Other", price: "$10 Student / $15 Public", ticketLink: "https://www.phantompower.net/tickets" },
-            { title: "PMHS Varsity Baseball", date: "2026-03-28T16:00:00", location: "Comet Field", category: "Other", price: "Free", ticketLink: "" }
+        // Standardize MU events
+        let events = sourceEvents.map(item => ({
+            title: item.title || "Campus Event",
+            date: item.date || new Date().toISOString(),
+            location: item.location || "Millersville University",
+            category: "MU", 
+            price: item.price || item.cost || "Free",
+            ticketLink: item.url || item.link || ""
+        }));
+
+        // --- ATTEMPT 3: Penn Manor LIVE iCal Feed ---
+        try {
+            console.log("Fetching live Penn Manor Calendar...");
+            const pmRes = await fetch('https://www.pennmanor.net/?post_type=tribe_events&ical=1&eventDisplay=list', { headers: baseHeaders });
+            const pmIcs = await pmRes.text();
+            
+            // Split the raw file into individual event blocks
+            const vEvents = pmIcs.split('BEGIN:VEVENT');
+            vEvents.shift(); // Remove the header chunk
+            
+            const now = new Date();
+            let pmCount = 0;
+
+            for (const block of vEvents) {
+                const summaryMatch = block.match(/SUMMARY:(.*)/);
+                const dtstartMatch = block.match(/DTSTART.*?:([0-9T]+Z?)/);
+                const locationMatch = block.match(/LOCATION:(.*)/);
+                
+                if (summaryMatch && dtstartMatch) {
+                    // Clean up formatting artifacts
+                    let title = summaryMatch[1].trim().replace(/\\,/g, ',').replace(/\\;/g, ';');
+                    
+                    // THE FILTER: Skip anything with "Cycle Day"
+                    if (title.toLowerCase().includes('cycle day')) continue;
+                    
+                    // Parse the tricky iCal date format (YYYYMMDDTHHMMSS)
+                    let dtStr = dtstartMatch[1].trim();
+                    let isoDate = "";
+                    if (dtStr.length >= 8) {
+                        const y = dtStr.substring(0,4);
+                        const m = dtStr.substring(4,6);
+                        const d = dtStr.substring(6,8);
+                        let h = "00", min = "00", s = "00";
+                        if (dtStr.includes('T') && dtStr.length >= 15) {
+                            h = dtStr.substring(9,11);
+                            min = dtStr.substring(11,13);
+                            s = dtStr.substring(13,15);
+                        }
+                        isoDate = `${y}-${m}-${d}T${h}:${min}:${s}`;
+                    }
+                    
+                    const eventDate = new Date(isoDate);
+                    
+                    // Keep upcoming events within the next 60 days
+                    if (eventDate >= now && eventDate < new Date(now.getTime() + 60 * 24 * 60 * 60 * 1000)) {
+                        events.push({
+                            title: title,
+                            date: eventDate.toISOString(),
+                            location: locationMatch ? locationMatch[1].trim().replace(/\\,/g, ',') : "Penn Manor School District",
+                            category: "Other",
+                            price: "Check Website",
+                            ticketLink: "https://www.pennmanor.net/calendar/"
+                        });
+                        pmCount++;
+                    }
+                }
+            }
+            console.log(`✅ Penn Manor Events Written (${pmCount} valid upcoming items)`);
+        } catch (pmError) {
+            console.error("❌ Penn Manor Error:", pmError.message);
+        }
+
+        // --- ATTEMPT 4: Phantom Power (Hardcoded for now) ---
+        events.push(
+            { title: "Live at Phantom Power", date: "2026-05-08T19:00:00", location: "Phantom Power", category: "Other", price: "$10 Student / $15 Public", ticketLink: "https://www.phantompower.net/tickets" }
         );
 
-        fs.writeFileSync(path.join(__dirname, '../events.json'), JSON.stringify(parsedEvents, null, 2));
-        console.log(`✅ Events Written (${parsedEvents.length} items total)`);
+        fs.writeFileSync(path.join(__dirname, '../events.json'), JSON.stringify(events, null, 2));
+        console.log(`✅ Total Events Written (${events.length} items combined)`);
 
     } catch (e) { console.error("❌ Events Request Error:", e.message); }
 
@@ -116,7 +194,7 @@ async function runScraper() {
         let news = [];
         
         try {
-            const res = await fetch('https://blogs.millersville.edu/news/feed/', { headers: fetchHeaders });
+            const res = await fetch('https://blogs.millersville.edu/news/feed/', { headers: baseHeaders });
             const xml = await res.text();
             const items = xml.match(/<item>([\s\S]*?)<\/item>/g) || [];
             

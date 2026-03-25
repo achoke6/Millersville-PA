@@ -2,50 +2,8 @@
   "fields": "ActivityId,ActivityName,EventMeetingByActivityId.Event.Description,StartDateTime,EndDateTime,BuildingCode,RoomNumber,RoomName,Customer:EventMeetingByActivityId.Event.Customer.Name,MeetingType:EventMeetingByActivityId.EventMeetingType.Name,EventMeetingByActivityId.Event.Id,Description",
   "pos": 0,
   "start": 0,
-  "totalRecords": 122,
+  "totalRecords": 119,
   "data": [
-    [
-      "ddf5bda4-f7df-11f0-801d-05606f169864",
-      "Bake Sale",
-      "Bake sale",
-      "2026-03-24T10:00:00",
-      "2026-03-24T17:00:00",
-      "SMC",
-      "Table 2 (All Aboard Corner)",
-      "Table 2 (All Aboard Corner) | SMC - Table 1 (All Aboard Corner), Table 1 (All Aboard Corner)",
-      "Mixed Martial Arts Club",
-      "Student Event",
-      "ddf5bda1-f7df-11f0-801d-05606f169864",
-      null
-    ],
-    [
-      "13c829ca-06b7-11f1-af6c-5f62e110089c",
-      "SGA/Psych Club Collaboration",
-      "Wellness Kits - Recruitment",
-      "2026-03-24T11:30:00",
-      "2026-03-24T15:00:00",
-      "SMC",
-      "Atrium",
-      "Robert Slabinski",
-      "Student Government Association",
-      "Student Event",
-      "13c829c1-06b7-11f1-af6c-5f62e110089c",
-      null
-    ],
-    [
-      "9e831e36-c554-11f0-933e-635d21a28d63",
-      "MU Women's Tennis vs. West Chester ",
-      null,
-      "2026-03-24T15:00:00",
-      "2026-03-24T18:00:00",
-      "FIELDS",
-      "McComsey Tennis Courts",
-      "McComsey Tennis Courts",
-      "Athletics",
-      "Athletic Competitions",
-      "9e831e35-c554-11f0-933e-635d21a28d63",
-      null
-    ],
     [
       "a95d8237-c64d-11f0-855f-11e9e5186ad9",
       "Career Crafting Corner Series",
@@ -1598,6 +1556,20 @@
       "Office of the Provost",
       "Student Event",
       "768203e0-1715-11f1-82c0-ff3250882160",
+      null
+    ],
+    [
+      "246147b4-fbf1-11f0-8a31-e967679a2c11",
+      "Splash a DZ",
+      "Water balloons will be thrown at sisters of DZ to raise money!\n",
+      "2026-04-24T13:30:00",
+      "2026-04-24T16:30:00",
+      "SMC",
+      "Promenade (Front/Back)",
+      "Promenade (Front/Back)",
+      "Delta Zeta",
+      "Student Event",
+      "246147b1-fbf1-11f0-8a31-e967679a2c11",
       null
     ]
   ]

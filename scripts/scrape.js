@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const dns = require('dns');
+const ical = require('node-ical'); // Added our new parser!
 
 dns.setDefaultResultOrder('ipv4first');
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -215,39 +216,33 @@ async function runScraper() {
                         if (isHGameFacility(item.location, item.name)) tags.push("Home Game Mode");
                     }
 
+                    // ADDED: Logic to categorize into "Other" if it doesn't fit the main 4 buckets
+                    const isMainCategory = tags.includes('Residence Halls') || tags.includes('Greek Life') || tags.includes('Fundraising') || tags.includes('Club Sports');
+                    if (!isMainCategory) {
+                        tags.push('Other');
+                    }
+
                     events.push({ title: item.name || "Student Event", date: eventDate.toISOString(), location: item.location || "Campus", tags: [...new Set(tags)], price: "Free", ticketLink: `https://getinvolved.millersville.edu/event/${item.id}`, sourceLink: `https://getinvolved.millersville.edu/event/${item.id}` });
                 }
             });
         } catch (giError) {}
 
-        // --- Penn Manor iCal (Fixed Date Range) ---
+        // --- Penn Manor iCal (Updated to node-ical!) ---
         try {
-            // Explicitly requesting the 60 day window from Penn Manor's server
+            // Using the URL from your script, ensuring it grabs the correct data window
             const pmUrl = `https://www.pennmanor.net/?post_type=tribe_events&ical=1&eventDisplay=list&start_date=${startDay}&end_date=${endDay}`;
-            const pmIcs = await (await fetch(pmUrl, { headers: baseHeaders })).text();
-            const vEvents = pmIcs.split('BEGIN:VEVENT');
-            vEvents.shift(); 
+            const pmEventsData = await ical.async.fromURL(pmUrl, { headers: baseHeaders });
 
-            for (const block of vEvents) {
-                const summaryMatch = block.match(/SUMMARY:(.*)/);
-                const dtstartMatch = block.match(/DTSTART.*?:([0-9T]+Z?)/);
-                const locationMatch = block.match(/LOCATION:(.*)/);
-                
-                if (summaryMatch && dtstartMatch) {
-                    let title = summaryMatch[1].trim().replace(/\\,/g, ',').replace(/\\;/g, ';');
-                    let lowerTitle = title.toLowerCase();
-                    if (lowerTitle.includes('cycle day') || lowerTitle.startsWith('start of') || lowerTitle.startsWith('end of')) continue;
+            for (const event of Object.values(pmEventsData)) {
+                if (event.type === 'VEVENT') {
+                    const eventDate = new Date(event.start);
                     
-                    let dtStr = dtstartMatch[1].trim(), isoDate = "";
-                    if (dtStr.length >= 8) {
-                        const y = dtStr.substring(0,4), m = dtStr.substring(4,6), d = dtStr.substring(6,8);
-                        let h = "00", min = "00", s = "00";
-                        if (dtStr.includes('T') && dtStr.length >= 15) { h = dtStr.substring(9,11); min = dtStr.substring(11,13); s = dtStr.substring(13,15); }
-                        isoDate = `${y}-${m}-${d}T${h}:${min}:${s}`;
-                    }
-                    
-                    const eventDate = new Date(isoDate);
                     if (eventDate >= today && eventDate < sixtyDaysOut) {
+                        let title = event.summary || "Penn Manor Event";
+                        let lowerTitle = title.toLowerCase();
+
+                        if (lowerTitle.includes('cycle day') || lowerTitle.startsWith('start of') || lowerTitle.startsWith('end of')) continue;
+
                         let tags = ["PM"]; 
                         
                         if (lowerTitle.includes('board')) tags.push('Board Meetings');
@@ -268,17 +263,21 @@ async function runScraper() {
                             } 
                         });
 
+                        const location = event.location || "Penn Manor School District";
+
                         if (isAthletic) {
                             if (lowerTitle.includes("men's") || lowerTitle.includes("mens") || lowerTitle.includes("boys")) tags.push("Boys");
                             if (lowerTitle.includes("women's") || lowerTitle.includes("womens") || lowerTitle.includes("girls")) tags.push("Girls");
-                            if (isHGameFacility(locationMatch ? locationMatch[1] : "", title)) tags.push("Home Game Mode");
+                            if (isHGameFacility(location, title)) tags.push("Home Game Mode");
                         }
 
-                        events.push({ title: title, date: eventDate.toISOString(), location: locationMatch ? locationMatch[1].trim().replace(/\\,/g, ',') : "Penn Manor School District", tags: [...new Set(tags)], price: "Free", ticketLink: "", sourceLink: "https://www.pennmanor.net/calendar/" });
+                        events.push({ title: title, date: eventDate.toISOString(), location: location, tags: [...new Set(tags)], price: "Free", ticketLink: "", sourceLink: "https://www.pennmanor.net/calendar/" });
                     }
                 }
             }
-        } catch (pmError) {}
+        } catch (pmError) {
+            console.error("Penn Manor iCal Error:", pmError);
+        }
 
         // --- Other (Eventbrite) ---
         try {

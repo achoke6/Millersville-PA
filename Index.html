@@ -5,80 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Millersville.APP</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* --- HEADER & MOBILE MENU STYLES --- */
-        .header-container { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: var(--bg-main); border-bottom: 1px solid var(--border); }
-        .logo-block { display: flex; align-items: center; }
-        .logo-block h1 { margin: 0; padding: 0; font-size: 1.5rem; color: var(--text-dark); line-height: 1; cursor: pointer; }
-        
-        .hamburger-menu { display: none; background: none; border: none; cursor: pointer; padding: 0; margin-left: auto; align-items: center; }
-        .close-menu { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; align-self: flex-end; margin-bottom: 20px; color: var(--text-dark); }
-        .menu-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 99; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
-
-        .main-nav { display: flex; gap: 15px; align-items: center; }
-        .nav-link.active { border-bottom: 3px solid var(--accent-fresh) !important; color: var(--text-dark) !important; font-weight: bold; }
-        
-        @media (max-width: 768px) {
-            .main-nav { display: none; } 
-            .menu-overlay.open { display: block; opacity: 1; pointer-events: auto; }
-            .main-nav.open { display: flex; position: fixed; top: 0; right: 0; width: 250px; height: 100vh; background: var(--bg-main); flex-direction: column; padding: 20px; box-shadow: -2px 0 5px rgba(0,0,0,0.1); z-index: 100; align-items: flex-start; border-left: 1px solid var(--border); }
-            .close-menu { display: block; }
-            .nav-link { width: 100%; text-align: left; padding: 12px 0; border-bottom: 1px solid var(--border) !important; border-radius: 0; background: none; font-size: 1.1rem; }
-            .nav-link.active { border-bottom: 3px solid var(--theme-color) !important; }
-        }
-        @media (min-width: 769px) {
-            .hamburger-menu { display: none !important; }
-        }
-
-        /* --- PAGE TITLES & DATE RANGE --- */
-        .page-title { margin: 0 0 20px 0; font-size: 1.8rem; font-weight: bold; color: var(--text-dark); }
-        .events-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
-        .events-header-row .page-title { margin-bottom: 0; }
-        .date-range-container { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; flex: 1; }
-        .date-picker { padding: 8px; border-radius: 6px; border: 1px solid var(--border); font-family: inherit; font-size: 0.9rem; flex: 1; text-align: center;}
-        
-        /* NEW HOME GAME TOGGLE SWITCH */
-        .home-game-toggle { display: flex; align-items: center; gap: 8px; background: var(--bg-main); border: 1px solid var(--border); padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; color: var(--text-dark); cursor: pointer; transition: 0.2s; user-select: none; }
-        .home-game-toggle.active { background: var(--gold, #ffc107); border-color: var(--gold, #ffc107); color: #000; }
-
-        @media (max-width: 768px) {
-            .events-header-row { flex-direction: column; align-items: flex-start; }
-            .date-range-container { width: 100%; justify-content: space-between; }
-            .home-game-toggle { width: 100%; justify-content: center; padding: 10px; }
-        }
-
-        /* --- FOOTER STYLES --- */
-        .site-footer { text-align: center; padding: 30px 20px; margin-top: 40px; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
-        .site-footer p { margin: 4px 0; }
-
-        /* --- EXISTING STYLES --- */
-        .live-badge { position: absolute; top: 12px; right: 12px; background: rgba(239, 68, 68, 0.9); color: white; padding: 4px 10px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; z-index: 10; display: flex; align-items: center; gap: 5px; }
-        .live-dot { width: 8px; height: 8px; background: white; border-radius: 50%; display: inline-block; animation: blink 1.5s infinite; }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
-        
-        .clear-btn { background: #fee2e2; color: #dc2626; border: none; padding: 8px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; cursor: pointer; display: none; margin-bottom: 12px;}
-        
-        .top-tier-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-        .source-btn { background: var(--bg-main); border: 2px solid var(--border); color: var(--text-dark); padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; }
-        .source-btn:hover { border-color: var(--theme-color); }
-        .source-btn.active { background: var(--theme-color); color: white; border-color: var(--theme-color); }
-
-        .source-btn.featured-source { background-color: rgba(255, 193, 7, 0.15); border-color: rgba(255, 193, 7, 0.4); }
-
-        .sub-tier-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dashed var(--border); display: none; }
-        .sub-tier-filters.active { display: flex; }
-        .sub-cat-btn { background: var(--bg-main); border: 1px solid var(--border); color: var(--text-dark); padding: 6px 14px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; cursor: pointer; transition: 0.2s; }
-        .sub-cat-btn:hover { border-color: var(--theme-color); }
-        .sub-cat-btn.active { background: var(--borough-blue); color: var(--gold); border-color: var(--borough-blue); }
-
-        .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
-        .tag-pill { background: var(--bg-main); border: 1px solid var(--border); color: var(--text-dark); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; transition: 0.2s; user-select: none; }
-        .tag-pill:hover { border-color: var(--theme-color); }
-        .tag-pill.active { background: var(--theme-color); color: white; border-color: var(--theme-color); font-weight: bold; }
-        
-        .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
-        .card-tag-pill { font-size: 0.65rem; background: var(--bg-main); border: 1px solid var(--border); padding: 3px 8px; border-radius: 12px; font-weight: bold; color: var(--text-muted); text-transform: uppercase; }
-    </style>
 </head>
 <body>
 
@@ -149,22 +75,24 @@
         </div>
 
         <div class="top-tier-filters">
-            <button class="source-btn active" id="src-all" onclick="setSource('All', this)">All</button>
-            <button class="source-btn" id="src-mu" onclick="setSource('MU', this)">🏴‍☠️ MU</button>
-            <button class="source-btn" id="src-gi" onclick="setSource('Clubs/Orgs', this)">🎓 Clubs/Orgs</button>
-            <button class="source-btn" id="src-pm" onclick="setSource('PM', this)">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" style="margin-right: 4px; vertical-align: middle;">
-                    <path d="M22 2 L12 12 M20 6 L10 16 M18 2 L8 12" stroke="var(--borough-blue, #1d4ed8)" stroke-width="2" stroke-linecap="round"/>
-                    <circle cx="6" cy="18" r="4" fill="var(--gold, #fbbf24)" />
-                </svg> PM
-            </button>
-            <button class="source-btn" id="src-other" onclick="setSource('Other', this)">🎸 Other</button>
+            <div class="source-btn-group">
+                <button class="source-btn active" id="src-all" onclick="setSource('All', this)">All</button>
+                <button class="source-btn" id="src-mu" onclick="setSource('MU', this)">🏴‍☠️ MU</button>
+                <button class="source-btn" id="src-gi" onclick="setSource('Clubs/Orgs', this)">🎓 Clubs/Orgs</button>
+                <button class="source-btn" id="src-pm" onclick="setSource('PM', this)">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" style="margin-right: 4px; vertical-align: middle;">
+                        <path d="M22 2 L12 12 M20 6 L10 16 M18 2 L8 12" stroke="var(--borough-blue, #1d4ed8)" stroke-width="2" stroke-linecap="round"/>
+                        <circle cx="6" cy="18" r="4" fill="var(--gold, #fbbf24)" />
+                    </svg> PM
+                </button>
+                <button class="source-btn" id="src-other" onclick="setSource('Other', this)">🎸 Other</button>
+            </div>
+            <button id="clear-tags-btn" class="clear-btn" onclick="clearFilters()" style="white-space: nowrap;">Clear Filter ✖</button>
         </div>
 
         <div id="sub-tier-container" class="sub-tier-filters"></div>
         
-        <button id="clear-tags-btn" class="clear-btn" onclick="clearTags()">Clear Filters ✖</button>
-        <div id="dynamic-tags" class="tag-cloud"></div>
+        <div id="dynamic-tags" class="tag-cloud" style="display: none;"></div>
         
         <div id="events-container" class="events-grid"></div>
         
@@ -343,13 +271,18 @@
     window.toggleTag = function(tag) {
         if (selectedTags.has(tag)) selectedTags.delete(tag);
         else selectedTags.add(tag);
+        
+        // Update styling of sub-cat buttons in case a main category tag was clicked from a card
+        document.querySelectorAll('.sub-cat-btn').forEach(b => b.classList.toggle('active', selectedTags.has(b.innerText)));
         applyFilters();
     }
 
-    window.clearTags = function() {
+    // UPDATED: Now clears everything, resets to "All" category, and turns off Home Game Mode
+    window.clearFilters = function() {
         selectedTags.clear();
-        document.querySelectorAll('.sub-cat-btn').forEach(b => b.classList.remove('active'));
-        applyFilters();
+        isHomeGameMode = false;
+        document.getElementById('hgame-toggle-container').classList.remove('active');
+        setSource('All', document.getElementById('src-all')); // setSource automatically calls applyFilters()
     }
 
     window.applyFilters = function() {
@@ -361,6 +294,14 @@
         const startDate = document.getElementById('start-date').value;
         const endDate = document.getElementById('end-date').value;
         
+        // Show/Hide Clear Filter button based on if ANY filter is active
+        const clearBtn = document.getElementById('clear-tags-btn');
+        if (currentSource !== 'All' || selectedTags.size > 0 || isHomeGameMode) {
+            clearBtn.style.display = 'block';
+        } else {
+            clearBtn.style.display = 'none';
+        }
+
         // Reset featured highlights
         document.querySelectorAll('.source-btn').forEach(b => b.classList.remove('featured-source'));
 
@@ -409,35 +350,6 @@
             return Array.from(selectedTags).every(t => eventTags.includes(t));
         });
 
-        let availableTags = new Set();
-        const activeSubCats = subCategoriesMap[currentSource] || [];
-        
-        fullyFiltered.forEach(e => {
-            (e.tags || []).forEach(t => {
-                if (!topLevelSources.includes(t) && !activeSubCats.includes(t) && t !== 'MU Calendar' && t !== 'Penn Manor' && t !== 'MU GetInvolved' && t !== 'Phantom Power') availableTags.add(t);
-            });
-        });
-        
-        selectedTags.forEach(t => { if (!activeSubCats.includes(t)) availableTags.add(t); });
-
-        // Clean up visual redundancies
-        availableTags.delete('Athletic Competitions');
-        availableTags.delete('Athletics');
-        availableTags.delete('H Games');
-        availableTags.delete('Home Game Mode');
-
-        const tagContainer = document.getElementById('dynamic-tags');
-        tagContainer.innerHTML = '';
-        Array.from(availableTags).sort().forEach(tag => {
-            const btn = document.createElement('button');
-            btn.className = 'tag-pill ' + (selectedTags.has(tag) ? 'active' : '');
-            btn.innerText = tag;
-            btn.onclick = () => toggleTag(tag);
-            tagContainer.appendChild(btn);
-        });
-
-        document.getElementById('clear-tags-btn').style.display = selectedTags.size > 0 ? 'block' : 'none';
-
         const container = document.getElementById('events-container');
         container.innerHTML = '';
 
@@ -474,7 +386,13 @@
             }
 
             let displayTags = (e.tags || []).filter(t => !topLevelSources.includes(t) && t !== 'Athletic Competitions' && t !== 'Athletics' && t !== 'MU Calendar' && t !== 'Penn Manor' && t !== 'MU GetInvolved' && t !== 'Phantom Power' && t !== 'H Games' && t !== 'Home Game Mode');
-            let tagsHtml = displayTags.map(t => `<span class="card-tag-pill">${t}</span>`).join('');
+            
+            // Added onClick capability directly to the tags rendering on the cards!
+            let tagsHtml = displayTags.map(t => {
+                const escapedTag = t.replace(/'/g, "\\'");
+                const isActive = selectedTags.has(t) ? 'background: var(--theme-color); color: white; border-color: var(--theme-color);' : '';
+                return `<span class="card-tag-pill" style="${isActive}" onclick="toggleTag('${escapedTag}')">${t}</span>`;
+            }).join('');
 
             container.innerHTML += `
                 <div class="app-card">

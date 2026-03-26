@@ -40,31 +40,29 @@ body {
 }
 
 /* =========================================================
-   2. THE HEADER
+   2. THE HEADER & MOBILE MENU
    ========================================================= */
 header {
     background-color: var(--surface);
     position: sticky;
     top: 0;
     z-index: 100;
-    box-shadow: var(--shadow-soft);
-    padding: 16px 0 0 0;
 }
 
 .header-container {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
-    flex-direction: column;
-    gap: 12px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
 }
 
 .logo-block {
-    padding: 0 20px;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    text-align: center;
 }
 
 .logo-block h1 {
@@ -72,40 +70,21 @@ header {
     font-weight: 800;
     letter-spacing: -0.5px;
     color: var(--text-dark);
+    line-height: 1;
 }
 
-#sub-header {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--theme-color);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    transition: color 0.3s ease;
-}
-
-.disclaimer {
-    font-size: 0.65rem;
-    color: var(--text-muted);
-    opacity: 0.7;
-    margin-top: 4px;
-    font-style: italic;
-    line-height: 1.2;
-}
+/* Hamburger & Overlay */
+.hamburger-menu { display: flex; background: none; border: none; cursor: pointer; padding: 0; margin-left: auto; align-items: center; }
+.close-menu { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; align-self: flex-end; margin-bottom: 20px; color: var(--text-dark); }
+.menu-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 99; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
 
 /* =========================================================
    3. NAVIGATION
    ========================================================= */
 .main-nav {
     display: flex;
-    overflow-x: auto; 
-    scrollbar-width: none; 
-    padding: 0 20px 4px 20px;
-    gap: 16px;
-    border-bottom: 1px solid var(--border);
-}
-
-.main-nav::-webkit-scrollbar {
-    display: none; 
+    gap: 15px;
+    align-items: center;
 }
 
 .nav-link {
@@ -122,74 +101,30 @@ header {
 }
 
 .nav-link.active {
-    color: var(--text-dark);
-    border-bottom: 3px solid var(--accent-fresh); 
+    color: var(--text-dark) !important;
+    border-bottom: 3px solid var(--accent-fresh) !important; 
+}
+
+/* Mobile Nav Overrides */
+@media (max-width: 768px) {
+    .main-nav { display: none; } 
+    .menu-overlay.open { display: block; opacity: 1; pointer-events: auto; }
+    .main-nav.open { 
+        display: flex; position: fixed; top: 0; right: 0; width: 250px; height: 100vh; 
+        background: var(--surface); flex-direction: column; padding: 20px; 
+        box-shadow: -2px 0 5px rgba(0,0,0,0.1); z-index: 100; align-items: flex-start; 
+        border-left: 1px solid var(--border); 
+    }
+    .close-menu { display: block; }
+    .nav-link { width: 100%; text-align: left; padding: 12px 0; border-bottom: 1px solid var(--border) !important; border-radius: 0; font-size: 1.1rem; }
+    .nav-link.active { border-bottom: 3px solid var(--theme-color) !important; }
+}
+@media (min-width: 769px) {
+    .hamburger-menu { display: none !important; }
 }
 
 /* =========================================================
-   4. TOGGLE SWITCH
-   ========================================================= */
-.header-toggle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 20px;
-    background-color: var(--bg-main);
-}
-
-.mode-label {
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--text-muted);
-    letter-spacing: 0.5px;
-}
-
-.toggle-container {
-    position: relative;
-    display: inline-block;
-    width: 52px;
-    height: 28px;
-}
-
-.toggle-container input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.toggle-slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: var(--gold);
-    transition: .4s;
-    border-radius: 34px;
-}
-
-.toggle-slider:before {
-    position: absolute;
-    content: "";
-    height: 20px;
-    width: 20px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-input:checked + .toggle-slider {
-    background-color: var(--borough-blue);
-}
-
-input:checked + .toggle-slider:before {
-    transform: translateX(24px);
-}
-
-/* =========================================================
-   5. APP VIEWS & GRID
+   4. APP VIEWS & GRID
    ========================================================= */
 .container {
     max-width: 1200px;
@@ -211,10 +146,10 @@ input:checked + .toggle-slider:before {
     to { opacity: 1; transform: translateY(0); }
 }
 
-.section-title h2 {
-    font-size: 1.25rem;
-    font-weight: 700;
-    margin-bottom: 16px;
+.page-title {
+    margin: 0 0 20px 0;
+    font-size: 1.8rem;
+    font-weight: bold;
     color: var(--text-dark);
 }
 
@@ -232,60 +167,45 @@ input:checked + .toggle-slider:before {
 }
 
 /* =========================================================
-   6. FILTER BARS
+   5. FILTERING, TAGS & DATES
    ========================================================= */
-.filter-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 16px;
+.events-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
+.events-header-row .page-title { margin-bottom: 0; }
+.date-range-container { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; flex: 1; }
+.date-picker { padding: 8px; border-radius: 6px; border: 1px solid var(--border); font-family: inherit; font-size: 0.9rem; flex: 1; text-align: center;}
+
+.home-game-toggle { display: flex; align-items: center; gap: 8px; background: var(--bg-main); border: 1px solid var(--border); padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; color: var(--text-dark); cursor: pointer; transition: 0.2s; user-select: none; }
+.home-game-toggle.active { background: var(--gold); border-color: var(--gold); color: #000; }
+
+@media (max-width: 768px) {
+    .events-header-row { flex-direction: column; align-items: flex-start; }
+    .date-range-container { width: 100%; justify-content: space-between; }
+    .home-game-toggle { width: 100%; justify-content: center; padding: 10px; }
 }
 
-.filter-btn {
-    background-color: var(--surface);
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
+.top-tier-filters { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border); width: 100%; }
+.source-btn-group { display: flex; flex-wrap: wrap; gap: 8px; }
 
-.filter-btn.active {
-    background-color: var(--text-dark);
-    color: var(--surface);
-    border-color: var(--text-dark);
-}
+.source-btn { background: var(--bg-main); border: 2px solid var(--border); color: var(--text-dark); padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; }
+.source-btn:hover { border-color: var(--theme-color); }
+.source-btn.active { background: var(--theme-color); color: white; border-color: var(--theme-color); }
+.source-btn.featured-source { background-color: rgba(255, 193, 7, 0.15); border-color: rgba(255, 193, 7, 0.4); }
 
-.date-filter-container {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
-}
+.clear-btn { background: #fee2e2; color: #dc2626; border: none; padding: 8px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; cursor: pointer; display: none; margin-bottom: 0;}
 
-.date-picker {
-    padding: 8px 12px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    font-family: inherit;
-    color: var(--text-dark);
-    flex-grow: 1;
-    max-width: 200px;
-}
+.sub-tier-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dashed var(--border); display: none; }
+.sub-tier-filters.active { display: flex; }
+.sub-cat-btn { background: var(--bg-main); border: 1px solid var(--border); color: var(--text-dark); padding: 6px 14px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; cursor: pointer; transition: 0.2s; }
+.sub-cat-btn:hover { border-color: var(--theme-color); }
+.sub-cat-btn.active { background: var(--borough-blue); color: var(--gold); border-color: var(--borough-blue); }
 
-.clear-date-btn {
-    background-color: transparent;
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-    border-radius: var(--radius-sm);
-    padding: 8px 12px;
-    cursor: pointer;
-}
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+.tag-pill { background: var(--bg-main); border: 1px solid var(--border); color: var(--text-dark); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; transition: 0.2s; user-select: none; }
+.tag-pill:hover { border-color: var(--theme-color); }
+.tag-pill.active { background: var(--theme-color); color: white; border-color: var(--theme-color); font-weight: bold; }
 
 /* =========================================================
-   7. UNIVERSAL APP CARDS
+   6. UNIVERSAL APP CARDS & CARD TAGS
    ========================================================= */
 .app-card {
     background: var(--surface);
@@ -308,3 +228,27 @@ input:checked + .toggle-slider:before {
     border: 2px solid var(--theme-color);
     background: linear-gradient(to bottom right, #ffffff, #fafafa);
 }
+
+.card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.card-tag-pill { font-size: 0.65rem; background: var(--bg-main); border: 1px solid var(--border); padding: 3px 8px; border-radius: 12px; font-weight: bold; color: var(--text-muted); text-transform: uppercase; cursor: pointer; transition: 0.2s; }
+.card-tag-pill:hover { background: var(--theme-color); color: white; border-color: var(--theme-color); }
+
+/* =========================================================
+   7. WEATHER LIVE BADGE & FOOTER
+   ========================================================= */
+.live-badge { position: absolute; top: 12px; right: 12px; background: rgba(239, 68, 68, 0.9); color: white; padding: 4px 10px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; z-index: 10; display: flex; align-items: center; gap: 5px; }
+.live-dot { width: 8px; height: 8px; background: white; border-radius: 50%; display: inline-block; animation: blink 1.5s infinite; }
+@keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+
+.site-footer { text-align: center; padding: 30px 20px; margin-top: 40px; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+.site-footer p { margin: 4px 0; }
+
+/* LEGACY TOWNIE TOGGLE (Kept for compatibility if used elsewhere) */
+.header-toggle { display: flex; justify-content: center; align-items: center; gap: 12px; padding: 12px 20px; background-color: var(--bg-main); }
+.mode-label { font-size: 0.75rem; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px; }
+.toggle-container { position: relative; display: inline-block; width: 52px; height: 28px; }
+.toggle-container input { opacity: 0; width: 0; height: 0; }
+.toggle-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--gold); transition: .4s; border-radius: 34px; }
+.toggle-slider:before { position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+input:checked + .toggle-slider { background-color: var(--borough-blue); }
+input:checked + .toggle-slider:before { transform: translateX(24px); }

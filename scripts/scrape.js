@@ -123,13 +123,41 @@ async function runScraper() {
             
             if (data.fields && Array.isArray(data.data)) {
                 const fields = data.fields.split(',');
-                const nameIdx = fields.indexOf('ActivityName'), startIdx = fields.indexOf('StartDateTime'), bldgIdx = fields.indexOf('BuildingCode'), roomIdx = fields.indexOf('RoomName'), descIdx = fields.indexOf('EventMeetingByActivityId.Event.Description'), linkIdx = fields.findIndex(f => f.toLowerCase().includes('url') || f.toLowerCase().includes('link'));
+                
+                // Column Mapping
+                const nameIdx = fields.indexOf('ActivityName');
+                const startIdx = fields.indexOf('StartDateTime');
+                const bldgIdx = fields.indexOf('BuildingCode');
+                const roomIdx = fields.indexOf('RoomName');
+                const descIdx = fields.indexOf('EventMeetingByActivityId.Event.Description');
+                const linkIdx = fields.findIndex(f => f.toLowerCase().includes('url') || f.toLowerCase().includes('link'));
+                const idIdx = fields.indexOf('ActivityId');
+                const typeIdx = fields.indexOf('MeetingType:EventMeetingByActivityId.EventMeetingType.Name');
+                const customerIdx = fields.indexOf('Customer:EventMeetingByActivityId.Event.Customer.Name');
 
                 data.data.forEach(row => {
                     const eventTitle = row[nameIdx] || "Campus Event";
                     const eventLoc = `${row[bldgIdx] || ''} ${row[roomIdx] || ''}`.trim() || "Campus";
                     const pricing = extractPricing(row[descIdx] || "", eventTitle, eventLoc, linkIdx !== -1 ? (row[linkIdx] || "") : "");
-                    events.push({ title: eventTitle, date: row[startIdx], location: eventLoc, tags: ["MU Calendar"], price: pricing.price, ticketLink: pricing.link, sourceLink: "https://www.millersville.edu/calendar/" });
+                    
+                    // Build Dynamic Tags
+                    let tags = ["MU Calendar"];
+                    if (typeIdx !== -1 && row[typeIdx]) tags.push(row[typeIdx].trim());
+                    if (customerIdx !== -1 && row[customerIdx]) tags.push(row[customerIdx].trim());
+
+                    // Build Exact Source Link
+                    const eventId = idIdx !== -1 ? row[idIdx] : "";
+                    const sourceLink = eventId ? `https://www.millersville.edu/calendar/events/${eventId}` : "https://www.millersville.edu/calendar/";
+
+                    events.push({ 
+                        title: eventTitle, 
+                        date: row[startIdx], 
+                        location: eventLoc, 
+                        tags: [...new Set(tags)], 
+                        price: pricing.price, 
+                        ticketLink: pricing.link, 
+                        sourceLink: sourceLink 
+                    });
                 });
             }
         } catch (apiError1) {}

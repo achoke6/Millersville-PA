@@ -16,13 +16,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          
-      # Run the stable main scraper
       - run: node scripts/scrape.js
-      
-      # Run the isolated MU Calendar deep-dive test
-      - run: node scripts/mu-test.js
-      
       - name: Commit and Push
         uses: stefanzweifel/git-auto-commit-action@v5
         with:

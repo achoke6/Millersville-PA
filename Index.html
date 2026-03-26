@@ -275,6 +275,8 @@
             const isFree = priceText.toLowerCase() === 'free' || priceText.toLowerCase() === 'free entry';
             const hasLink = e.ticketLink && e.ticketLink.trim() !== "";
             
+            let detailsButton = `<a href="${e.sourceLink}" target="_blank" style="background:var(--bg-main); border: 1px solid var(--border); color:var(--text-dark); padding:6px 12px; border-radius:6px; text-decoration:none; font-weight:bold; font-size:0.85rem; margin-right: 8px;">ℹ️ Details</a>`;
+
             let actionButton = '';
             if (isFree) {
                 actionButton = `<span style="background:var(--borough-blue); color:var(--gold); padding:6px 12px; border-radius:6px; font-weight:bold; font-size:0.8rem;">Free Entry</span>`;
@@ -300,7 +302,10 @@
                     </div>
                     <div style="margin-top:16px; border-top:1px solid var(--border); padding-top:12px; display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-size:0.9rem;">${isFree ? '' : priceText}</span>
-                        ${actionButton}
+                        <div>
+                            ${detailsButton}
+                            ${actionButton}
+                        </div>
                     </div>
                 </div>`;
         });

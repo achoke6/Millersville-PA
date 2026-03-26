@@ -11,26 +11,37 @@ const baseHeaders = {
 
 const sportsList = ['Baseball', 'Softball', 'Track', 'Soccer', 'Lacrosse', 'Tennis', 'Volleyball', 'Wrestling', 'Basketball', 'Football', 'Field Hockey', 'Golf', 'Cross Country', 'Cheerleading', 'Swimming', 'Rugby', 'Fencing', 'Esports', 'Archery'];
 
-function isHomeGame(loc, title) {
+// Explicit list of permitted club sports for H Games
+const hGameClubSports = [
+    'baseball', 'bowling', 'equestrian', 'fencing', 'ice hockey', 'mma',
+    "men's basketball", "men's ice hockey", "men's lacrosse", "men's rugby",
+    "men's soccer", "men's volleyball", 'dance team', 'running', 'softball',
+    'tennis', 'ultimate frisbee', "women's basketball", "women's rugby",
+    "women's soccer", "women's volleyball"
+];
+
+function isHGameFacility(loc, title) {
     const l = (loc || "").toLowerCase();
     const t = (title || "").toLowerCase();
     
-    // If it says "at [Somewhere Else]", it's an away game
+    // Catch explicit away games first
     const awayMatch = t.match(/ at ([a-z0-9 ]+)/i);
     if (awayMatch) {
         const dest = awayMatch[1].toLowerCase();
         if (!dest.includes('millersville') && !dest.includes('penn manor') && !dest.includes('comet') && !dest.includes('pucillo')) return false;
     }
     
-    // Check for home location keywords or "vs."
-    const homeWords = ['millersville', 'pucillo', 'biemesderfer', 'comet', 'penn manor', 'pmhs', 'campus', 'smc', 'gym', 'marauder', 'anttonen', 'seaber', 'student memorial'];
+    // Check specific MU facilities and PM identifiers
+    const homeWords = [
+        'pucillo', 'chryst', 'biemesderfer', 'cooper park', 'seaber', 
+        'mccomsey', 'anttonen', 'millersville', 'comet', 'penn manor', 'pmhs'
+    ];
     return homeWords.some(k => l.includes(k)) || t.includes(' vs ') || t.includes(' vs. ') || t.includes('home');
 }
 
 function extractPricing(desc, title = "", location = "", apiLink = "") {
     let price = "Free"; 
     let link = apiLink || "";
-    
     if (desc) {
         const priceRegex = /\$\d+(?:\.\d{2})?(?:\s+(?:student|public|general|admission|door|advance|mu|adult|child)s?)?/gi;
         const prices = desc.match(priceRegex);
@@ -40,13 +51,10 @@ function extractPricing(desc, title = "", location = "", apiLink = "") {
         if (!link) {
             const anchorRegex = /<a[^>]*href=["'](https?:\/\/[^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi;
             let match, bestLink = null, highestScore = 0;
-
             while ((match = anchorRegex.exec(desc)) !== null) {
                 const url = match[1], anchorText = match[2].toLowerCase(), lowerUrl = url.toLowerCase();
                 let score = 0;
-
                 if (lowerUrl.includes('instagram.com') || lowerUrl.includes('facebook.com') || lowerUrl.includes('twitter.com') || lowerUrl.includes('campusgroups.com/organization')) continue;
-
                 if (lowerUrl.includes('etix.com') || lowerUrl.includes('universitytickets.com') || lowerUrl.includes('muticketsonline.com') || lowerUrl.includes('eventbrite.com')) score = 3;
                 else if (anchorText.includes('ticket') || anchorText.includes('register') || anchorText.includes('buy') || anchorText.includes('rsvp') || anchorText.includes('purchase')) score = 2;
                 else if (lowerUrl.includes('ticket') || lowerUrl.includes('register') || lowerUrl.includes('rsvp')) score = 1;
@@ -63,7 +71,6 @@ function extractPricing(desc, title = "", location = "", apiLink = "") {
             if (bestLink) link = bestLink;
         }
     }
-
     if (!link && price !== "Free") {
         const lowerTitle = title.toLowerCase(), lowerLoc = location.toLowerCase();
         if (lowerLoc.includes('winter') || lowerLoc.includes('lyte') || lowerTitle.includes('concert') || lowerTitle.includes('recital') || lowerTitle.includes('theatre')) link = "https://www.etix.com/ticket/v/23659/";
@@ -83,13 +90,7 @@ function extractEventbriteEvents(ldData, eventsArray, now, futureLimit) {
                 if (ldData.name.toLowerCase().includes('slick rick')) eventPrice = "$35 ADV";
 
                 eventsArray.push({
-                    title: ldData.name,
-                    date: eventDate.toISOString(),
-                    location: "Phantom Power",
-                    tags: ["Phantom Power", "Live Music"],
-                    price: eventPrice,
-                    ticketLink: ldData.url || "https://www.eventbrite.com/o/phantom-power-29187724817",
-                    sourceLink: ldData.url || "https://www.phantompower.net/"
+                    title: ldData.name, date: eventDate.toISOString(), location: "Phantom Power", tags: ["Phantom Power", "Live Music"], price: eventPrice, ticketLink: ldData.url || "https://www.eventbrite.com/o/phantom-power-29187724817", sourceLink: ldData.url || "https://www.phantompower.net/"
                 });
             }
         } else {
@@ -101,7 +102,6 @@ function extractEventbriteEvents(ldData, eventsArray, now, futureLimit) {
 async function runScraper() {
     console.log("🚀 Starting Millersville Pro Scraper (60-Day Horizon)...");
 
-    // 1. WEATHER
     try {
         const res = await fetch('https://snowball.millersville.edu/~cws/current.xml', { headers: baseHeaders });
         const xml = await res.text();
@@ -110,15 +110,10 @@ async function runScraper() {
         const windMatch = xml.match(/<(?:wind_string|wind_mph|wind)[^>]*>([^<]+)/i);
         const humMatch = xml.match(/<(?:relative_humidity|humidity)[^>]*>\s*([-\d.]+)/i);
         fs.writeFileSync(path.join(__dirname, '../weather.json'), JSON.stringify({
-            temp: tempMatch ? Math.round(parseFloat(tempMatch[1])) : "--",
-            condition: condMatch ? condMatch[1].trim() : "Data Unavailable",
-            wind: windMatch ? windMatch[1].trim() : "Calm",
-            humidity: humMatch ? humMatch[1].trim() + "%" : "--",
-            lastUpdated: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
+            temp: tempMatch ? Math.round(parseFloat(tempMatch[1])) : "--", condition: condMatch ? condMatch[1].trim() : "Data Unavailable", wind: windMatch ? windMatch[1].trim() : "Calm", humidity: humMatch ? humMatch[1].trim() + "%" : "--", lastUpdated: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
         }, null, 2));
     } catch (e) {}
 
-    // 2. EVENTS MASTER COMPILE
     try {
         let events = [];
         const today = new Date();
@@ -148,10 +143,9 @@ async function runScraper() {
                     const eventLoc = `${row[bldgIdx] || ''} ${row[roomIdx] || ''}`.trim() || "Campus";
                     const pricing = extractPricing(row[descIdx] || "", eventTitle, eventLoc, linkIdx !== -1 ? (row[linkIdx] || "") : "");
                     
-                    let tags = ["MU Calendar"];
+                    let tags = ["MU"]; 
                     const lowerTitle = eventTitle.toLowerCase();
 
-                    // Process Meeting Type & Athletic Logic
                     if (typeIdx !== -1 && row[typeIdx]) {
                         const tName = row[typeIdx].trim();
                         tags.push(tName);
@@ -161,7 +155,7 @@ async function runScraper() {
                             if (lowerTitle.includes("women's") || lowerTitle.includes("womens") || lowerTitle.includes(" women ")) tags.push("Women's");
                             sportsList.forEach(s => { if (lowerTitle.includes(s.toLowerCase())) tags.push(s); });
                             
-                            if (isHomeGame(eventLoc, eventTitle)) tags.push("Local Sports");
+                            if (isHGameFacility(eventLoc, eventTitle)) tags.push("H Games");
                         }
                     }
 
@@ -196,7 +190,6 @@ async function runScraper() {
 
                     rawTags.forEach(t => {
                         const lowerT = t.toLowerCase();
-                        // Purge redundant athletic tags natively from this source
                         if (lowerT.includes('athletics') || lowerT === 'competition' || lowerT === 'competitions') return; 
 
                         if (lowerT.includes('fundrais')) {
@@ -211,14 +204,19 @@ async function runScraper() {
                     if (orgName.includes('housing and residential') || orgName.includes('residence hall')) tags.push('Residence Halls');
                     if (orgName.includes('greek council') || greekRegex.test(orgName) || greekRegex.test(name)) tags.push('Greek Life');
                     
-                    // Club Sports Logic
-                    if (tags.some(t => t.toLowerCase().includes('club sport')) || name.includes('club rugby') || name.includes('club soccer') || orgName.includes('club')) {
+                    // Verify Explicit Club Sports for H Games
+                    let isPermittedSport = false;
+                    hGameClubSports.forEach(s => {
+                        if (name.includes(s) || orgName.includes(s)) isPermittedSport = true;
+                    });
+
+                    if (isPermittedSport || tags.some(t => t.toLowerCase().includes('club sport'))) {
                         tags.push("Club Sports");
                         if (name.includes("men's") || name.includes("mens")) tags.push("Men's");
                         if (name.includes("women's") || name.includes("womens")) tags.push("Women's");
                         sportsList.forEach(s => { if (name.includes(s.toLowerCase())) tags.push(s); });
                         
-                        if (isHomeGame(item.location, item.name)) tags.push("Local Sports");
+                        if (isHGameFacility(item.location, item.name)) tags.push("H Games");
                     }
 
                     events.push({ title: item.name || "Student Event", date: eventDate.toISOString(), location: item.location || "Campus", tags: [...new Set(tags)], price: "Free", ticketLink: `https://getinvolved.millersville.edu/event/${item.id}`, sourceLink: `https://getinvolved.millersville.edu/event/${item.id}` });
@@ -252,7 +250,7 @@ async function runScraper() {
                     
                     const eventDate = new Date(isoDate);
                     if (eventDate >= today && eventDate < sixtyDaysOut) {
-                        let tags = ["Penn Manor"];
+                        let tags = ["PM"]; 
                         
                         if (lowerTitle.includes('board')) tags.push('Board Meetings');
                         if (lowerTitle.includes('pto')) tags.push('PTO');
@@ -275,7 +273,7 @@ async function runScraper() {
                         if (isAthletic) {
                             if (lowerTitle.includes("men's") || lowerTitle.includes("mens") || lowerTitle.includes("boys")) tags.push("Boys");
                             if (lowerTitle.includes("women's") || lowerTitle.includes("womens") || lowerTitle.includes("girls")) tags.push("Girls");
-                            if (isHomeGame(locationMatch ? locationMatch[1] : "", title)) tags.push("Local Sports");
+                            if (isHGameFacility(locationMatch ? locationMatch[1] : "", title)) tags.push("H Games");
                         }
 
                         events.push({ title: title, date: eventDate.toISOString(), location: locationMatch ? locationMatch[1].trim().replace(/\\,/g, ',') : "Penn Manor School District", tags: [...new Set(tags)], price: "Free", ticketLink: "", sourceLink: "https://www.pennmanor.net/calendar/" });
@@ -296,7 +294,7 @@ async function runScraper() {
         } catch (ebError) {}
 
         fs.writeFileSync(path.join(__dirname, '../events.json'), JSON.stringify(events, null, 2));
-    } catch (e) { console.error("❌ Events Request Error:", e.message); }
+    } catch (e) {}
 
     // 3. NEWS & 4. DINING (Unchanged)
     try {

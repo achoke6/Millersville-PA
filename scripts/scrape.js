@@ -11,7 +11,6 @@ const baseHeaders = {
 
 const sportsList = ['Baseball', 'Softball', 'Track', 'Soccer', 'Lacrosse', 'Tennis', 'Volleyball', 'Wrestling', 'Basketball', 'Football', 'Field Hockey', 'Golf', 'Cross Country', 'Cheerleading', 'Swimming', 'Rugby', 'Fencing', 'Esports', 'Archery'];
 
-// Explicit list of permitted club sports for H Games
 const hGameClubSports = [
     'baseball', 'bowling', 'equestrian', 'fencing', 'ice hockey', 'mma',
     "men's basketball", "men's ice hockey", "men's lacrosse", "men's rugby",
@@ -24,14 +23,12 @@ function isHGameFacility(loc, title) {
     const l = (loc || "").toLowerCase();
     const t = (title || "").toLowerCase();
     
-    // Catch explicit away games first
     const awayMatch = t.match(/ at ([a-z0-9 ]+)/i);
     if (awayMatch) {
         const dest = awayMatch[1].toLowerCase();
         if (!dest.includes('millersville') && !dest.includes('penn manor') && !dest.includes('comet') && !dest.includes('pucillo')) return false;
     }
     
-    // Check specific MU facilities and PM identifiers
     const homeWords = [
         'pucillo', 'chryst', 'biemesderfer', 'cooper park', 'seaber', 
         'mccomsey', 'anttonen', 'millersville', 'comet', 'penn manor', 'pmhs'
@@ -43,7 +40,7 @@ function extractPricing(desc, title = "", location = "", apiLink = "") {
     let price = "Free"; 
     let link = apiLink || "";
     if (desc) {
-        const priceRegex = /\$\d+(?:\.\d{2})?(?:\s+(?:student|public|general|admission|door|advance|mu|adult|child)s?)?/gi;
+        const priceRegex = /\$\d+(?:\.\d{2})?(?:\s+(student|public|general|admission|door|advance|mu|adult|child)s?)?/gi;
         const prices = desc.match(priceRegex);
         if (prices) price = [...new Set(prices)].join(' / ');
         else if (desc.toLowerCase().includes('ticket') || desc.toLowerCase().includes('admission') || desc.toLowerCase().includes('cover charge') || desc.toLowerCase().includes('cost:')) price = "Ticket Required"; 
@@ -90,7 +87,7 @@ function extractEventbriteEvents(ldData, eventsArray, now, futureLimit) {
                 if (ldData.name.toLowerCase().includes('slick rick')) eventPrice = "$35 ADV";
 
                 eventsArray.push({
-                    title: ldData.name, date: eventDate.toISOString(), location: "Phantom Power", tags: ["Phantom Power", "Live Music"], price: eventPrice, ticketLink: ldData.url || "https://www.eventbrite.com/o/phantom-power-29187724817", sourceLink: ldData.url || "https://www.phantompower.net/"
+                    title: ldData.name, date: eventDate.toISOString(), location: "Phantom Power", tags: ["Other", "Live Music"], price: eventPrice, ticketLink: ldData.url || "https://www.eventbrite.com/o/phantom-power-29187724817", sourceLink: ldData.url || "https://www.phantompower.net/"
                 });
             }
         } else {
@@ -169,7 +166,7 @@ async function runScraper() {
             }
         } catch (apiError1) {}
 
-        // --- GetInvolved (Anthology API) ---
+        // --- Clubs/Orgs (Anthology API) ---
         try {
             const giUrl = `https://getinvolved.millersville.edu/api/discovery/event/search?endsAfter=${startDay}T00:00:00-04:00&orderByField=endsOn&orderByDirection=ascending&status=Approved&take=200`;
             const giData = await (await fetch(giUrl, { headers: baseHeaders })).json();
@@ -177,7 +174,7 @@ async function runScraper() {
             (giData.value || []).forEach(item => {
                 const eventDate = new Date(item.startsOn);
                 if (eventDate >= today && eventDate < sixtyDaysOut) {
-                    let tags = ["MU GetInvolved"];
+                    let tags = ["Clubs/Orgs"];
                     let rawTags = [];
                     
                     if (item.organizationName) rawTags.push(item.organizationName.trim());
@@ -204,7 +201,6 @@ async function runScraper() {
                     if (orgName.includes('housing and residential') || orgName.includes('residence hall')) tags.push('Residence Halls');
                     if (orgName.includes('greek council') || greekRegex.test(orgName) || greekRegex.test(name)) tags.push('Greek Life');
                     
-                    // Verify Explicit Club Sports for H Games
                     let isPermittedSport = false;
                     hGameClubSports.forEach(s => {
                         if (name.includes(s) || orgName.includes(s)) isPermittedSport = true;
@@ -282,7 +278,7 @@ async function runScraper() {
             }
         } catch (pmError) {}
 
-        // --- Phantom Power (Eventbrite) ---
+        // --- Other (Eventbrite) ---
         try {
             const ebText = await (await fetch('https://www.eventbrite.com/o/phantom-power-29187724817', { headers: baseHeaders })).text();
             const ldMatches = ebText.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi);

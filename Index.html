@@ -6,12 +6,12 @@
     <title>Millersville.APP</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* --- HEADER & MOBILE MENU STYLES (Tightened for Mobile) --- */
-        .header-container { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: var(--bg-main); border-bottom: 1px solid var(--border); }
+        /* --- HEADER & MOBILE MENU STYLES --- */
+        .header-container { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; }
         .logo-block { display: flex; align-items: center; }
         .logo-block h1 { margin: 0; padding: 0; font-size: 1.5rem; color: var(--text-dark); line-height: 1; }
         
-        .hamburger-menu { display: none; background: none; border: none; cursor: pointer; padding: 0; margin-left: auto; display: flex; align-items: center; }
+        .hamburger-menu { display: none; background: none; border: none; cursor: pointer; padding: 0; margin-left: auto; align-items: center; }
         .close-menu { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; align-self: flex-end; margin-bottom: 20px; color: var(--text-dark); }
         .menu-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 99; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
 
@@ -19,19 +19,22 @@
         .nav-link.active { border-bottom: 3px solid var(--accent-fresh) !important; color: var(--text-dark) !important; font-weight: bold; }
         
         @media (max-width: 768px) {
-            .main-nav { display: none; } /* Hide desktop nav by default on mobile */
+            .hamburger-menu { display: flex; }
             .menu-overlay.open { display: block; opacity: 1; pointer-events: auto; }
-            .main-nav.open { display: flex; position: fixed; top: 0; right: 0; width: 250px; height: 100vh; background: var(--bg-main); flex-direction: column; padding: 20px; box-shadow: -2px 0 5px rgba(0,0,0,0.1); z-index: 100; align-items: flex-start; border-left: 1px solid var(--border); }
+            
+            /* Slide-in menu relies on absolute positioning, NEVER display: none */
+            .main-nav { position: fixed; top: 0; right: -250px; width: 250px; height: 100vh; background: var(--bg-main); flex-direction: column; padding: 20px; box-shadow: -2px 0 5px rgba(0,0,0,0.1); transition: right 0.3s ease; z-index: 100; align-items: flex-start; border-left: 1px solid var(--border); }
+            .main-nav.open { right: 0; }
+            
             .close-menu { display: block; }
-            .nav-link { width: 100%; text-align: left; padding: 12px 0; border-bottom: 1px solid var(--border) !important; border-radius: 0; background: none; border:none; font-size: 1.1rem;}
+            .nav-link { width: 100%; text-align: left; padding: 12px 0; border-bottom: 1px solid var(--border) !important; border-radius: 0; background: none; font-size: 1.1rem; }
             .nav-link.active { border-bottom: 3px solid var(--theme-color) !important; }
         }
-        @media (min-width: 769px) {
-            .hamburger-menu { display: none !important; }
-        }
 
-        /* --- DATE RANGE ROW STYLES --- */
+        /* --- PAGE TITLES & DATE RANGE --- */
+        .page-title { margin: 0 0 20px 0; font-size: 1.8rem; font-weight: bold; color: var(--text-dark); }
         .events-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .events-header-row .page-title { margin-bottom: 0; }
         .date-range-container { display: flex; align-items: center; gap: 8px; margin: 0 auto; }
         .date-picker { padding: 8px; border-radius: 6px; border: 1px solid var(--border); font-family: inherit; font-size: 0.9rem; }
         
@@ -72,7 +75,8 @@
         
         .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
         .card-tag-pill { font-size: 0.65rem; background: var(--bg-main); border: 1px solid var(--border); padding: 3px 8px; border-radius: 12px; font-weight: bold; color: var(--text-muted); text-transform: uppercase; }
-        .page-title { margin: 0; font-size: 1.8rem; }
+        .source-link { color: inherit; text-decoration: none; transition: color 0.2s; }
+        .source-link:hover { color: var(--theme-color); text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -80,7 +84,7 @@
 <header>
     <div class="header-container">
         <div class="logo-block">
-            <h1>Millersville.APP</h1>
+            <h1 style="cursor: pointer;" onclick="switchView('home')">Millersville.APP</h1>
         </div>
         
         <button class="hamburger-menu" id="hamburger-menu" onclick="toggleMobileMenu()">
@@ -116,7 +120,7 @@
             <h3 style="margin-bottom:10px;">The University Store</h3>
             <a href="https://millersville.store" target="_blank" style="background:var(--gold); color:black; padding:8px 16px; border-radius:6px; text-decoration:none; font-weight:bold; display: inline-block;">Shop Official Gear ➔</a>
         </div>
-        <div class="section-title"><h2>Today's Highlights</h2></div>
+        <div class="section-title"><h2 class="page-title">Today's Highlights</h2></div>
         <div id="home-events" class="events-grid"></div>
         <div id="home-specials" class="app-card" style="margin-top:20px;">
             <h4>Dining Specials</h4>
@@ -125,7 +129,6 @@
     </section>
 
     <section id="view-events" class="app-view">
-        
         <div class="events-header-row">
             <h2 class="page-title">Events</h2>
             <div class="date-range-container">
@@ -139,19 +142,20 @@
         <div class="top-tier-filters">
             <button class="source-btn active" id="src-all" onclick="setSource('All', this)">All</button>
             <button class="source-btn" id="src-mu" onclick="setSource('MU', this)">🏴‍☠️ MU</button>
-            <button class="source-btn" id="src-gi" onclick="setSource('MU GetInvolved', this)">🎓 MU GetInvolved</button>
+            <button class="source-btn" id="src-gi" onclick="setSource('Clubs/Orgs', this)">🎓 Clubs/Orgs</button>
             <button class="source-btn" id="src-pm" onclick="setSource('PM', this)">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" style="margin-right: 4px; vertical-align: middle;">
                     <path d="M22 2 L12 12 M20 6 L10 16 M18 2 L8 12" stroke="var(--borough-blue, #1d4ed8)" stroke-width="2" stroke-linecap="round"/>
                     <circle cx="6" cy="18" r="4" fill="var(--gold, #fbbf24)" />
                 </svg> PM
             </button>
-            <button class="source-btn" id="src-phantom" onclick="setSource('Phantom Power', this)">🎸 Phantom Power</button>
+            <button class="source-btn" id="src-other" onclick="setSource('Other', this)">🎸 Other</button>
             
             <button class="source-btn" id="src-hgames" onclick="setSource('H Games', this)">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" style="margin-right: 4px; vertical-align: middle;">
-                    <path d="M14.5 4H8v4h2v2H6a4 4 0 0 0-4 4v4a4 4 0 0 0 4 4h8a8 8 0 0 0 8-8v-2h-3l-4.5-8z" fill="currentColor"/>
-                    <circle cx="16" cy="16" r="2" fill="var(--bg-main)"/>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" style="margin-right: 4px; vertical-align: middle;">
+                    <path d="M6 14 C6 9 9 5 12 5 C15 5 18 9 18 14 Z" fill="currentColor" />
+                    <path d="M4 14 Q12 13 22 14 A1 1 0 0 1 22 16 H4 A1 1 0 0 1 4 14 Z" fill="currentColor" />
+                    <circle cx="12" cy="4" r="1.5" fill="currentColor"/>
                 </svg> H Games
             </button>
         </div>
@@ -171,22 +175,22 @@
     </section>
 
     <section id="view-food" class="app-view">
-        <div class="section-title"><h2 class="page-title">Dining</h2></div>
+        <h2 class="page-title" style="margin-bottom: 20px;">Dining</h2>
         <div id="food-container" class="events-grid"></div>
     </section>
     
     <section id="view-housing" class="app-view">
-        <div class="section-title"><h2 class="page-title">Housing</h2></div>
+        <h2 class="page-title" style="margin-bottom: 20px;">Housing</h2>
         <div id="housing-container" class="events-grid"></div>
     </section>
     
     <section id="view-services" class="app-view">
-        <div class="section-title"><h2 class="page-title">Services</h2></div>
+        <h2 class="page-title" style="margin-bottom: 20px;">Services</h2>
         <div id="services-container" class="events-grid"></div>
     </section>
     
     <section id="view-news" class="app-view">
-        <div class="section-title"><h2 class="page-title">News</h2></div>
+        <h2 class="page-title" style="margin-bottom: 20px;">News</h2>
         <div class="tag-cloud" style="margin-bottom: 15px;">
             <button class="tag-pill active" onclick="setNewsFilter('All', this)">All</button>
             <button class="tag-pill" onclick="setNewsFilter('MU', this)">MU News</button>
@@ -196,9 +200,9 @@
     </section>
     
     <section id="view-weather" class="app-view">
-        <div class="section-title" style="text-align: center; margin-bottom: 20px;">
-            <h2 class="page-title" style="margin-bottom: 6px; font-size: 1.5rem;">Millersville Weather Information Center</h2>
-            <a href="https://snowball.millersville.edu/~cws/" target="_blank" style="font-size: 0.9rem; color: var(--theme-color); font-weight: bold; text-decoration: none;">More Info ↗</a>
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+            <h2 class="page-title" style="margin-bottom: 0;">Millersville Weather Information Center</h2>
+            <a href="https://snowball.millersville.edu/~cws/" target="_blank" style="font-size: 0.9rem; color: var(--theme-color); font-weight: bold; text-decoration: none; white-space: nowrap;">More Info ↗</a>
         </div>
         <div class="app-card" style="margin-bottom:20px; text-align:center; padding: 30px 20px;">
             <h2 id="w-temp" style="font-size:3.5rem; color: var(--theme-color); margin-bottom: 8px;">--°F</h2><p id="w-cond" style="font-size:1.2rem; font-weight:bold;"></p><p id="w-details" style="font-size:0.9rem; color:var(--text-muted); margin-top: 10px;"></p>
@@ -221,18 +225,17 @@
     let currentSource = 'All';
     let selectedTags = new Set();
     let currentNews = [], currentNewsFilter = 'All';
-    let activeHSources = new Set(['MU', 'PM', 'MU GetInvolved']);
+    let activeHSources = new Set(['MU', 'PM', 'Clubs/Orgs']);
 
-    const topLevelSources = ['H Games', 'MU', 'MU GetInvolved', 'PM', 'Phantom Power'];
+    const topLevelSources = ['H Games', 'MU', 'Clubs/Orgs', 'PM', 'Other'];
     const subCategoriesMap = {
         'H Games': [], 
         'MU': ['Public Event', 'Student Event', 'Athletic Competitions', 'Arts Concert / Performance'],
-        'MU GetInvolved': ['Residence Halls', 'Greek Life', 'Fundraising', 'Club Sports'],
+        'Clubs/Orgs': ['Residence Halls', 'Greek Life', 'Fundraising', 'Club Sports'],
         'PM': ['Athletics', 'Music/Arts', 'Board Meetings', 'PTO', 'Staff']
     };
 
     document.addEventListener("DOMContentLoaded", () => {
-        // Initialize Default Date Range (Today through 60 Days)
         const today = new Date();
         const startStr = today.toISOString().split('T')[0];
         
@@ -243,7 +246,6 @@
         document.getElementById('start-date').value = startStr;
         document.getElementById('end-date').value = endStr;
         
-        // Style the desktop spacer if viewport is wide enough
         if(window.innerWidth > 600) { document.querySelector('.desktop-spacer').style.display = 'block'; }
 
         initApp();
@@ -259,19 +261,8 @@
     window.toggleMobileMenu = function() {
         const nav = document.getElementById('top-nav');
         const overlay = document.getElementById('menu-overlay');
-        
-        if (nav.classList.contains('open')) {
-            nav.classList.remove('open');
-            overlay.classList.remove('open');
-            // Slight delay before hiding completely for clean animation
-            setTimeout(() => { if(!nav.classList.contains('open')) nav.style.display = 'none'; }, 300);
-        } else {
-            nav.style.display = 'flex';
-            // Force reflow before adding classes to ensure animation triggers
-            void nav.offsetWidth; 
-            nav.classList.add('open');
-            overlay.classList.add('open');
-        }
+        nav.classList.toggle('open');
+        overlay.classList.toggle('open');
     };
 
     window.switchView = function(view) {
@@ -294,7 +285,7 @@
     }
 
     window.setSource = function(src, btn) {
-        if (currentSource === 'H Games' && ['MU', 'PM', 'MU GetInvolved'].includes(src)) {
+        if (currentSource === 'H Games' && ['MU', 'PM', 'Clubs/Orgs'].includes(src)) {
             if (activeHSources.has(src)) {
                 activeHSources.delete(src);
                 btn.classList.remove('featured-source');
@@ -319,7 +310,7 @@
         btn.classList.add('active');
 
         if (src === 'H Games') {
-            activeHSources = new Set(['MU', 'PM', 'MU GetInvolved']);
+            activeHSources = new Set(['MU', 'PM', 'Clubs/Orgs']);
             document.getElementById('src-mu').classList.add('featured-source');
             document.getElementById('src-pm').classList.add('featured-source');
             document.getElementById('src-gi').classList.add('featured-source');
@@ -385,12 +376,16 @@
                 let matchesActiveSource = false;
                 if (activeHSources.has('MU') && (eTags.includes('MU') || eTags.includes('MU Calendar'))) matchesActiveSource = true;
                 if (activeHSources.has('PM') && (eTags.includes('PM') || eTags.includes('Penn Manor'))) matchesActiveSource = true;
-                if (activeHSources.has('MU GetInvolved') && eTags.includes('MU GetInvolved')) matchesActiveSource = true;
+                if (activeHSources.has('Clubs/Orgs') && (eTags.includes('Clubs/Orgs') || eTags.includes('MU GetInvolved'))) matchesActiveSource = true;
                 if (!matchesActiveSource) return false;
             } else if (currentSource === 'MU') {
                 if (!eTags.includes('MU') && !eTags.includes('MU Calendar')) return false;
             } else if (currentSource === 'PM') {
                 if (!eTags.includes('PM') && !eTags.includes('Penn Manor')) return false;
+            } else if (currentSource === 'Other') {
+                if (!eTags.includes('Other') && !eTags.includes('Phantom Power')) return false;
+            } else if (currentSource === 'Clubs/Orgs') {
+                if (!eTags.includes('Clubs/Orgs') && !eTags.includes('MU GetInvolved')) return false;
             } else if (currentSource !== 'All') {
                 if (!eTags.includes(currentSource)) return false;
             }
@@ -407,14 +402,12 @@
         
         fullyFiltered.forEach(e => {
             (e.tags || []).forEach(t => {
-                // Ensure duplicate sources NEVER generate a pill tag when redundant.
-                if (!topLevelSources.includes(t) && !activeSubCats.includes(t) && t !== 'MU Calendar' && t !== 'Penn Manor' && t !== 'MU GetInvolved') availableTags.add(t);
+                if (!topLevelSources.includes(t) && !activeSubCats.includes(t) && t !== 'MU Calendar' && t !== 'Penn Manor' && t !== 'MU GetInvolved' && t !== 'Phantom Power') availableTags.add(t);
             });
         });
         
         selectedTags.forEach(t => { if (!activeSubCats.includes(t)) availableTags.add(t); });
 
-        // Clean up visual redundancies
         availableTags.delete('Athletic Competitions');
         availableTags.delete('Athletics');
         availableTags.delete('H Games');
@@ -466,18 +459,14 @@
                 actionButton = `<span style="background:var(--bg-main); border: 1px solid var(--border); color:var(--text-dark); padding:6px 12px; border-radius:6px; font-weight:bold; font-size:0.85rem;">🚪 At Door</span>`;
             }
 
-            // Exclude source names from inner card pills
-            let displayTags = (e.tags || []).filter(t => !topLevelSources.includes(t) && t !== 'Athletic Competitions' && t !== 'Athletics' && t !== 'MU Calendar' && t !== 'Penn Manor' && t !== 'MU GetInvolved');
+            let displayTags = (e.tags || []).filter(t => !topLevelSources.includes(t) && t !== 'Athletic Competitions' && t !== 'Athletics' && t !== 'MU Calendar' && t !== 'Penn Manor' && t !== 'MU GetInvolved' && t !== 'Phantom Power');
             let tagsHtml = displayTags.map(t => `<span class="card-tag-pill">${t}</span>`).join('');
-            
-            // TITLES NO LONGER CLICKABLE
-            let titleHtml = e.title;
 
             container.innerHTML += `
                 <div class="app-card">
                     <div>
                         <div class="card-tags">${tagsHtml}</div>
-                        <h3 style="margin:6px 0;">${titleHtml}</h3>
+                        <h3 style="margin:6px 0;">${e.title}</h3>
                         <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:4px;">📅 ${d.toLocaleDateString()} @ ${d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}</p>
                         <p style="font-size:0.85rem; color:var(--text-muted);">📍 ${e.location}</p>
                     </div>

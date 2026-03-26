@@ -2,32 +2,23 @@ const fs = require('fs');
 const path = require('path');
 const dns = require('dns');
 
-// Force IPv4 to bypass strict university firewalls
 dns.setDefaultResultOrder('ipv4first');
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-// Standard browser header
 const baseHeaders = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 };
 
-// --- SUPERCHARGED: Anchor-Aware Ticket Extractor ---
 function extractPricing(desc, title = "", location = "", apiLink = "") {
     let price = "Free"; 
     let link = apiLink || "";
     
     if (desc) {
-        // 1. Find Prices (e.g., "$5", "$10.00", "$5 Student", "$10 Public")
         const priceRegex = /\$\d+(?:\.\d{2})?(?:\s+(?:student|public|general|admission|door|advance|mu|adult|child)s?)?/gi;
         const prices = desc.match(priceRegex);
-        
-        if (prices) {
-            price = [...new Set(prices)].join(' / ');
-        } else if (desc.toLowerCase().includes('ticket') || desc.toLowerCase().includes('admission') || desc.toLowerCase().includes('cover charge') || desc.toLowerCase().includes('cost:')) {
-            price = "Ticket Required"; 
-        }
+        if (prices) price = [...new Set(prices)].join(' / ');
+        else if (desc.toLowerCase().includes('ticket') || desc.toLowerCase().includes('admission') || desc.toLowerCase().includes('cover charge') || desc.toLowerCase().includes('cost:')) price = "Ticket Required"; 
 
-        // 2. Smart HTML Anchor Extraction (Prioritize Context)
         if (!link) {
             const anchorRegex = /<a[^>]*href=["'](https?:\/\/[^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi;
             let match;
@@ -40,63 +31,65 @@ function extractPricing(desc, title = "", location = "", apiLink = "") {
                 const lowerUrl = url.toLowerCase();
                 let score = 0;
 
-                // INSTANT REJECT: Ignore social media and generic org homepages
-                if (lowerUrl.includes('instagram.com') || lowerUrl.includes('facebook.com') || lowerUrl.includes('twitter.com') || lowerUrl.includes('youtube.com') || lowerUrl.includes('campusgroups.com/organization')) {
-                    continue;
-                }
+                if (lowerUrl.includes('instagram.com') || lowerUrl.includes('facebook.com') || lowerUrl.includes('twitter.com') || lowerUrl.includes('youtube.com') || lowerUrl.includes('campusgroups.com/organization')) continue;
 
-                // SCORE 3: Verified Ticketing Platforms
-                if (lowerUrl.includes('etix.com') || lowerUrl.includes('universitytickets.com') || lowerUrl.includes('muticketsonline.com') || lowerUrl.includes('eventbrite.com')) {
-                    score = 3;
-                }
-                // SCORE 2: Explicit Action Words in the clickable text
-                else if (anchorText.includes('ticket') || anchorText.includes('register') || anchorText.includes('buy') || anchorText.includes('rsvp') || anchorText.includes('purchase')) {
-                    score = 2;
-                }
-                // SCORE 1: Keywords in the URL path itself
-                else if (lowerUrl.includes('ticket') || lowerUrl.includes('register') || lowerUrl.includes('rsvp')) {
-                    score = 1;
-                }
+                if (lowerUrl.includes('etix.com') || lowerUrl.includes('universitytickets.com') || lowerUrl.includes('muticketsonline.com') || lowerUrl.includes('eventbrite.com')) score = 3;
+                else if (anchorText.includes('ticket') || anchorText.includes('register') || anchorText.includes('buy') || anchorText.includes('rsvp') || anchorText.includes('purchase')) score = 2;
+                else if (lowerUrl.includes('ticket') || lowerUrl.includes('register') || lowerUrl.includes('rsvp')) score = 1;
 
                 if (score > highestScore) {
                     highestScore = score;
                     bestLink = url;
                 }
             }
-
-            // If we didn't find a valid HTML anchor, check raw text URLs as a last resort
             if (!bestLink) {
                 const rawMatch = desc.match(/(https?:\/\/[^\s"'<]+)/gi);
                 if (rawMatch) {
-                    const ticketRaw = rawMatch.find(l => {
-                        const lu = l.toLowerCase();
-                        return lu.includes('etix.com') || lu.includes('universitytickets') || lu.includes('eventbrite');
-                    });
+                    const ticketRaw = rawMatch.find(l => { const lu = l.toLowerCase(); return lu.includes('etix.com') || lu.includes('universitytickets') || lu.includes('eventbrite'); });
                     if (ticketRaw) bestLink = ticketRaw;
                 }
             }
-
             if (bestLink) link = bestLink;
         }
     }
 
-    // --- eTix Fallback Routing ---
-    // If the event isn't free, but the description forgot to include a link, guess the venue hub
     if (!link && price !== "Free") {
         const lowerTitle = title.toLowerCase();
         const lowerLoc = location.toLowerCase();
+        if (lowerLoc.includes('winter') || lowerLoc.includes('lyte') || lowerTitle.includes('concert') || lowerTitle.includes('recital') || lowerTitle.includes('theatre')) link = "https://www.etix.com/ticket/v/23659/";
+        else if (lowerLoc.includes('pucillo') || lowerLoc.includes('biemesderfer') || lowerTitle.includes('game') || lowerTitle.includes('match') || lowerTitle.includes('tournament')) link = "https://www.etix.com/ticket/v/23684/";
+    }
+    return { price, link };
+}
 
-        // Music / Arts / Winter Center
-        if (lowerLoc.includes('winter') || lowerLoc.includes('lyte') || lowerTitle.includes('concert') || lowerTitle.includes('recital') || lowerTitle.includes('theatre')) {
-            link = "https://www.etix.com/ticket/v/23659/";
-        }
-        // Athletics / Sports
-        else if (lowerLoc.includes('pucillo') || lowerLoc.includes('biemesderfer') || lowerTitle.includes('game') || lowerTitle.includes('match') || lowerTitle.includes('tournament')) {
-            link = "https://www.etix.com/ticket/v/23684/";
+// Safely traverses Eventbrite JSON-LD to find events
+function extractEventbriteEvents(ldData, eventsArray, now, thirtyDaysOut) {
+    if (Array.isArray(ldData)) {
+        ldData.forEach(item => extractEventbriteEvents(item, eventsArray, now, thirtyDaysOut));
+    } else if (ldData && typeof ldData === 'object') {
+        if (ldData['@type'] === 'Event' && ldData.name && ldData.startDate) {
+            const eventDate = new Date(ldData.startDate);
+            if (eventDate >= now && eventDate < thirtyDaysOut) {
+                
+                // Slick Rick specific pricing logic based on your event data
+                let eventPrice = "Ticket Required";
+                if (ldData.name.toLowerCase().includes('slick rick')) {
+                    eventPrice = "$35 ADV";
+                }
+
+                eventsArray.push({
+                    title: ldData.name,
+                    date: eventDate.toISOString(),
+                    location: "Phantom Power",
+                    category: "Other",
+                    price: eventPrice,
+                    ticketLink: ldData.url || "https://www.eventbrite.com/o/phantom-power-29187724817"
+                });
+            }
+        } else {
+            for (let key in ldData) if (typeof ldData[key] === 'object') extractEventbriteEvents(ldData[key], eventsArray, now, thirtyDaysOut);
         }
     }
-    
-    return { price, link };
 }
 
 async function runScraper() {
@@ -107,12 +100,10 @@ async function runScraper() {
         console.log("Fetching Weather XML...");
         const res = await fetch('https://snowball.millersville.edu/~cws/current.xml', { headers: baseHeaders });
         const xml = await res.text();
-        
         const tempMatch = xml.match(/<(?:temp_f|temperature|temp)[^>]*>\s*([-\d.]+)/i);
         const condMatch = xml.match(/<(?:weather|condition|sky_condition)[^>]*>([^<]+)/i);
         const windMatch = xml.match(/<(?:wind_string|wind_mph|wind)[^>]*>([^<]+)/i);
         const humMatch = xml.match(/<(?:relative_humidity|humidity)[^>]*>\s*([-\d.]+)/i);
-
         const weatherData = {
             temp: tempMatch ? Math.round(parseFloat(tempMatch[1])) : "--",
             condition: condMatch ? condMatch[1].trim() : "Data Unavailable",
@@ -123,45 +114,31 @@ async function runScraper() {
         fs.writeFileSync(path.join(__dirname, '../weather.json'), JSON.stringify(weatherData, null, 2));
     } catch (e) { console.error("❌ Weather Error:", e.message); }
 
-    // 2. EVENTS
+    // 2. EVENTS MASTER COMPILE
     try {
-        console.log("Fetching Events...");
-        let sourceEvents = [];
-        
-        // --- Rolling 30-Day Window Setup ---
+        console.log("Fetching All Events...");
+        let events = [];
         const today = new Date();
         const startDay = today.toISOString().split('T')[0];
         const thirtyDaysOut = new Date(today);
         thirtyDaysOut.setDate(today.getDate() + 29);
         const endDay = thirtyDaysOut.toISOString().split('T')[0];
 
+        // --- ATTEMPT 1: MU Primary API ---
         try {
             const pageRes = await fetch('https://www.millersville.edu/calendar/', { headers: baseHeaders });
             const rawCookies = pageRes.headers.get('set-cookie');
             let cookieHeader = '';
             if (rawCookies) cookieHeader = rawCookies.split(', ').map(c => c.split(';')[0]).join('; ');
 
-            const apiHeaders = {
-                ...baseHeaders,
-                'Accept': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'Origin': 'https://www.millersville.edu',
-                'Referer': 'https://www.millersville.edu/calendar/',
-                'Content-Type': 'application/json'
-            };
+            const apiHeaders = { ...baseHeaders, 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest', 'Origin': 'https://www.millersville.edu', 'Referer': 'https://www.millersville.edu/calendar/', 'Content-Type': 'application/json' };
             if (cookieHeader) apiHeaders['Cookie'] = cookieHeader;
 
-            const res = await fetch('https://www.millersville.edu/calendar/app/api/index.php', { 
-                method: 'POST',
-                headers: apiHeaders,
-                body: JSON.stringify({ getEvents: true, startDate: startDay, endDate: endDay })
-            });
-
+            const res = await fetch('https://www.millersville.edu/calendar/app/api/index.php', { method: 'POST', headers: apiHeaders, body: JSON.stringify({ getEvents: true, startDate: startDay, endDate: endDay }) });
             const rawText = await res.text();
-            if (rawText.trim() === "") throw new Error("Blank Response");
-            
             const data = JSON.parse(rawText);
             
+            let sourceEvents = [];
             if (data.fields && Array.isArray(data.data)) {
                 const fields = data.fields.split(',');
                 const nameIdx = fields.indexOf('ActivityName');
@@ -174,62 +151,59 @@ async function runScraper() {
                 sourceEvents = data.data.map(row => {
                     const eventTitle = row[nameIdx] || "Campus Event";
                     const eventLoc = `${row[bldgIdx] || ''} ${row[roomIdx] || ''}`.trim() || "Campus";
-                    const descText = row[descIdx] || "";
-                    const apiLink = linkIdx !== -1 ? (row[linkIdx] || "") : "";
-                    
-                    const pricing = extractPricing(descText, eventTitle, eventLoc, apiLink);
-                    
-                    return { 
-                        title: eventTitle, 
-                        date: row[startIdx], 
-                        location: eventLoc,
-                        price: pricing.price,
-                        ticketLink: pricing.link
-                    };
-                });
-            } else {
-                const items = Array.isArray(data) ? data : (data.events || data.data || []);
-                sourceEvents = items.map(item => {
-                    const eventTitle = item.title || item.name || item.ActivityName || "Campus Event";
-                    const eventLoc = item.location || item.BuildingCode || "Campus";
-                    const apiLink = item.url || item.link || item.TicketUrl || "";
-                    
-                    const pricing = extractPricing(item.description || "", eventTitle, eventLoc, apiLink);
-                    
-                    return {
-                        title: eventTitle,
-                        date: item.start || item.date || item.StartDateTime,
-                        location: eventLoc,
-                        price: pricing.price !== "Free" ? pricing.price : (item.cost || item.price || "Free"),
-                        ticketLink: pricing.link
-                    };
+                    const pricing = extractPricing(row[descIdx] || "", eventTitle, eventLoc, linkIdx !== -1 ? (row[linkIdx] || "") : "");
+                    return { title: eventTitle, date: row[startIdx], location: eventLoc, price: pricing.price, ticketLink: pricing.link };
                 });
             }
-            if (sourceEvents.length === 0) throw new Error("Zero events returned");
-        } catch (apiError1) {
-            try {
-                const res2 = await fetch('https://map.millersville.edu/api/public/events', { headers: { 'User-Agent': baseHeaders['User-Agent'] } });
-                const data2 = await res2.json();
-                sourceEvents = Array.isArray(data2) ? data2 : (data2.events || []);
-            } catch (apiError2) {}
-        }
+            
+            sourceEvents.forEach(item => events.push({
+                title: item.title, date: item.date, location: item.location, category: "MU", price: item.price || "Free", ticketLink: item.ticketLink || ""
+            }));
+            console.log(`✅ MU Main Calendar: ${sourceEvents.length} items`);
+        } catch (apiError1) {}
 
-        let events = sourceEvents.map(item => ({
-            title: item.title || "Campus Event",
-            date: item.date || new Date().toISOString(),
-            location: item.location || "Millersville University",
-            category: "MU", 
-            price: item.price || "Free",
-            ticketLink: item.ticketLink || ""
-        }));
+        // --- ATTEMPT 2: GetInvolved (Anthology API) ---
+        try {
+            const giUrl = `https://getinvolved.millersville.edu/api/discovery/event/search?endsAfter=${startDay}T00:00:00-04:00&orderByField=endsOn&orderByDirection=ascending&status=Approved&take=100`;
+            const giRes = await fetch(giUrl, { headers: baseHeaders });
+            const giData = await giRes.json();
+            
+            const giEvents = giData.value || [];
+            let giCount = 0;
 
-        // --- Penn Manor LIVE iCal Feed ---
+            for (const item of giEvents) {
+                const eventDate = new Date(item.startsOn);
+                if (eventDate >= today && eventDate < thirtyDaysOut) {
+                    let cat = "Student Org";
+                    const categories = (item.categoryNames || []).map(c => c.toLowerCase());
+                    const theme = (item.theme || "").toLowerCase();
+                    const name = (item.name || "").toLowerCase();
+
+                    if (categories.some(c => c.includes('club sport')) || name.includes('club rugby') || name.includes('club soccer')) cat = "Club Sports";
+                    else if (categories.some(c => c.includes('fundrais')) || theme.includes('fundraising')) cat = "Fundraisers";
+                    else if (item.theme) cat = `Org: ${item.theme}`;
+
+                    events.push({
+                        title: item.name || "Student Event",
+                        date: eventDate.toISOString(),
+                        location: item.location || "Campus",
+                        category: cat,
+                        price: "Free", 
+                        ticketLink: `https://getinvolved.millersville.edu/event/${item.id}`
+                    });
+                    giCount++;
+                }
+            }
+            console.log(`✅ GetInvolved: ${giCount} items`);
+        } catch (giError) { console.error("❌ GetInvolved Error:", giError.message); }
+
+        // --- ATTEMPT 3: Penn Manor iCal ---
         try {
             const pmRes = await fetch('https://www.pennmanor.net/?post_type=tribe_events&ical=1&eventDisplay=list', { headers: baseHeaders });
             const pmIcs = await pmRes.text();
             const vEvents = pmIcs.split('BEGIN:VEVENT');
             vEvents.shift(); 
-            const now = new Date();
+            let pmCount = 0;
 
             for (const block of vEvents) {
                 const summaryMatch = block.match(/SUMMARY:(.*)/);
@@ -258,7 +232,7 @@ async function runScraper() {
                     }
                     
                     const eventDate = new Date(isoDate);
-                    if (eventDate >= now && eventDate < thirtyDaysOut) {
+                    if (eventDate >= today && eventDate < thirtyDaysOut) {
                         events.push({
                             title: title,
                             date: eventDate.toISOString(),
@@ -267,16 +241,34 @@ async function runScraper() {
                             price: "Free", 
                             ticketLink: "" 
                         });
+                        pmCount++;
                     }
                 }
             }
+            console.log(`✅ Penn Manor: ${pmCount} items`);
         } catch (pmError) { console.error("❌ Penn Manor Error:", pmError.message); }
 
-        events.push(
-            { title: "Live at Phantom Power", date: "2026-05-08T19:00:00", location: "Phantom Power", category: "Other", price: "$10 Student / $15 Public", ticketLink: "https://www.phantompower.net/tickets" }
-        );
+        // --- ATTEMPT 4: Phantom Power (Eventbrite JSON-LD) ---
+        try {
+            const ebUrl = 'https://www.eventbrite.com/o/phantom-power-29187724817';
+            const ebRes = await fetch(ebUrl, { headers: baseHeaders });
+            const ebText = await ebRes.text();
+            
+            const ldMatches = ebText.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi);
+            if (ldMatches) {
+                let initialCount = events.length;
+                ldMatches.forEach(block => {
+                    try {
+                        const jsonStr = block.replace(/<script type="application\/ld\+json">|<\/script>/gi, '');
+                        extractEventbriteEvents(JSON.parse(jsonStr), events, today, thirtyDaysOut);
+                    } catch(e) {}
+                });
+                console.log(`✅ Phantom Power: ${events.length - initialCount} items`);
+            }
+        } catch (ebError) { console.error("❌ Phantom Power Error:", ebError.message); }
 
         fs.writeFileSync(path.join(__dirname, '../events.json'), JSON.stringify(events, null, 2));
+        console.log(`✅ Total Events Written (${events.length} items combined)`);
     } catch (e) { console.error("❌ Events Request Error:", e.message); }
 
     // 3. NEWS

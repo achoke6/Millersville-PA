@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const dns = require('dns');
-const ical = require('node-ical'); // Added our new parser!
+const ical = require('node-ical');
 
 dns.setDefaultResultOrder('ipv4first');
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -216,10 +216,10 @@ async function runScraper() {
                         if (isHGameFacility(item.location, item.name)) tags.push("Home Game Mode");
                     }
 
-                    // ADDED: Logic to categorize into "Other" if it doesn't fit the main 4 buckets
+                    // ADDED: Logic to categorize into "Other Org" if it doesn't fit the main 4 buckets
                     const isMainCategory = tags.includes('Residence Halls') || tags.includes('Greek Life') || tags.includes('Fundraising') || tags.includes('Club Sports');
                     if (!isMainCategory) {
-                        tags.push('Other');
+                        tags.push('Other Org');
                     }
 
                     events.push({ title: item.name || "Student Event", date: eventDate.toISOString(), location: item.location || "Campus", tags: [...new Set(tags)], price: "Free", ticketLink: `https://getinvolved.millersville.edu/event/${item.id}`, sourceLink: `https://getinvolved.millersville.edu/event/${item.id}` });
@@ -227,9 +227,8 @@ async function runScraper() {
             });
         } catch (giError) {}
 
-        // --- Penn Manor iCal (Updated to node-ical!) ---
+        // --- Penn Manor iCal ---
         try {
-            // Using the URL from your script, ensuring it grabs the correct data window
             const pmUrl = `https://www.pennmanor.net/?post_type=tribe_events&ical=1&eventDisplay=list&start_date=${startDay}&end_date=${endDay}`;
             const pmEventsData = await ical.async.fromURL(pmUrl, { headers: baseHeaders });
 
@@ -293,7 +292,7 @@ async function runScraper() {
         fs.writeFileSync(path.join(__dirname, '../events.json'), JSON.stringify(events, null, 2));
     } catch (e) {}
 
-    // 3. NEWS & 4. DINING (Unchanged)
+    // 3. NEWS & 4. DINING
     try {
         let news = [];
         try {

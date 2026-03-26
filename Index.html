@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Millersville.APP</title>
     <link rel="stylesheet" href="style.css">
-</head>
+    </head>
 <body>
 
 <header>
@@ -155,13 +155,12 @@
     let selectedTags = new Set();
     let currentNews = [], currentNewsFilter = 'All';
     
-    // NEW INDEPENDENT STATE FOR HOME GAME MODE
     let isHomeGameMode = false;
 
     const topLevelSources = ['MU', 'Clubs/Orgs', 'PM', 'Other'];
     const subCategoriesMap = {
         'MU': ['Public Event', 'Student Event', 'Athletic Competitions', 'Arts Concert / Performance'],
-        'Clubs/Orgs': ['Residence Halls', 'Greek Life', 'Fundraising', 'Club Sports'],
+        'Clubs/Orgs': ['Residence Halls', 'Greek Life', 'Fundraising', 'Club Sports', 'Other Org'], // Now correctly catching the overflow
         'PM': ['Athletics', 'Music/Arts', 'Board Meetings', 'PTO', 'Staff']
     };
 
@@ -186,12 +185,16 @@
     }
 
     window.toggleMobileMenu = function() {
+        if (window.innerWidth > 768) return; // Immediately stop if on desktop view
+
         const nav = document.getElementById('top-nav');
         const overlay = document.getElementById('menu-overlay');
+        
         if (nav.classList.contains('open')) {
             nav.classList.remove('open');
             overlay.classList.remove('open');
-            setTimeout(() => { if(!nav.classList.contains('open')) nav.style.display = 'none'; }, 300);
+            // Changed from 'none' to '' so it falls back to CSS rules
+            setTimeout(() => { if(!nav.classList.contains('open')) nav.style.display = ''; }, 300);
         } else {
             nav.style.display = 'flex';
             void nav.offsetWidth; 
@@ -219,7 +222,6 @@
         } catch(e) {}
     }
 
-    // NEW TOGGLE FUNCTION
     window.toggleHomeGameMode = function() {
         isHomeGameMode = !isHomeGameMode;
         const toggleBtn = document.getElementById('hgame-toggle-container');
@@ -237,9 +239,8 @@
         
         btn.classList.add('active');
 
-        // Hide Home Game Toggle if "Other" is selected
         document.getElementById('hgame-toggle-container').style.display = (src === 'Other') ? 'none' : 'flex';
-        if (src === 'Other') isHomeGameMode = false; // Reset if they navigate away
+        if (src === 'Other') isHomeGameMode = false;
 
         const subContainer = document.getElementById('sub-tier-container');
         subContainer.innerHTML = '';
@@ -272,17 +273,15 @@
         if (selectedTags.has(tag)) selectedTags.delete(tag);
         else selectedTags.add(tag);
         
-        // Update styling of sub-cat buttons in case a main category tag was clicked from a card
         document.querySelectorAll('.sub-cat-btn').forEach(b => b.classList.toggle('active', selectedTags.has(b.innerText)));
         applyFilters();
     }
 
-    // UPDATED: Now clears everything, resets to "All" category, and turns off Home Game Mode
     window.clearFilters = function() {
         selectedTags.clear();
         isHomeGameMode = false;
         document.getElementById('hgame-toggle-container').classList.remove('active');
-        setSource('All', document.getElementById('src-all')); // setSource automatically calls applyFilters()
+        setSource('All', document.getElementById('src-all'));
     }
 
     window.applyFilters = function() {
@@ -294,7 +293,6 @@
         const startDate = document.getElementById('start-date').value;
         const endDate = document.getElementById('end-date').value;
         
-        // Show/Hide Clear Filter button based on if ANY filter is active
         const clearBtn = document.getElementById('clear-tags-btn');
         if (currentSource !== 'All' || selectedTags.size > 0 || isHomeGameMode) {
             clearBtn.style.display = 'block';
@@ -302,7 +300,6 @@
             clearBtn.style.display = 'none';
         }
 
-        // Reset featured highlights
         document.querySelectorAll('.source-btn').forEach(b => b.classList.remove('featured-source'));
 
         let baseEvents = currentEvents.filter(e => {
@@ -312,7 +309,6 @@
             
             const eTags = e.tags || [];
 
-            // FILTER: Source Mode
             let matchesSource = false;
             if (currentSource === 'All') matchesSource = true;
             else if (currentSource === 'MU' && (eTags.includes('MU') || eTags.includes('MU Calendar'))) matchesSource = true;
@@ -322,7 +318,6 @@
             
             if (!matchesSource) return false;
 
-            // FILTER: Home Game Toggle Logic
             if (isHomeGameMode) {
                 if (!eTags.includes('Home Game Mode') && !eTags.includes('H Games')) return false;
             }
@@ -330,7 +325,6 @@
             return true;
         });
 
-        // Apply dynamic highlights to top-tier buttons to show *what* is feeding the Home Game list right now
         if (isHomeGameMode) {
             let activeProviders = new Set();
             baseEvents.forEach(e => {
@@ -387,7 +381,6 @@
 
             let displayTags = (e.tags || []).filter(t => !topLevelSources.includes(t) && t !== 'Athletic Competitions' && t !== 'Athletics' && t !== 'MU Calendar' && t !== 'Penn Manor' && t !== 'MU GetInvolved' && t !== 'Phantom Power' && t !== 'H Games' && t !== 'Home Game Mode');
             
-            // Added onClick capability directly to the tags rendering on the cards!
             let tagsHtml = displayTags.map(t => {
                 const escapedTag = t.replace(/'/g, "\\'");
                 const isActive = selectedTags.has(t) ? 'background: var(--theme-color); color: white; border-color: var(--theme-color);' : '';

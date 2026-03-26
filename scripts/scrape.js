@@ -27,7 +27,7 @@ function extractPricing(desc, title = "", location = "", apiLink = "") {
                 const url = match[1], anchorText = match[2].toLowerCase(), lowerUrl = url.toLowerCase();
                 let score = 0;
 
-                if (lowerUrl.includes('instagram.com') || lowerUrl.includes('facebook.com') || lowerUrl.includes('twitter.com') || lowerUrl.includes('youtube.com') || lowerUrl.includes('campusgroups.com/organization')) continue;
+                if (lowerUrl.includes('instagram.com') || lowerUrl.includes('facebook.com') || lowerUrl.includes('twitter.com') || lowerUrl.includes('campusgroups.com/organization')) continue;
 
                 if (lowerUrl.includes('etix.com') || lowerUrl.includes('universitytickets.com') || lowerUrl.includes('muticketsonline.com') || lowerUrl.includes('eventbrite.com')) score = 3;
                 else if (anchorText.includes('ticket') || anchorText.includes('register') || anchorText.includes('buy') || anchorText.includes('rsvp') || anchorText.includes('purchase')) score = 2;
@@ -102,7 +102,6 @@ async function runScraper() {
 
     // 2. EVENTS MASTER COMPILE
     try {
-        console.log("Fetching All Events...");
         let events = [];
         const today = new Date();
         const startDay = today.toISOString().split('T')[0];
@@ -122,22 +121,17 @@ async function runScraper() {
             const res = await fetch('https://www.millersville.edu/calendar/app/api/index.php', { method: 'POST', headers: apiHeaders, body: JSON.stringify({ getEvents: true, startDate: startDay, endDate: endDay }) });
             const data = JSON.parse(await res.text());
             
-            let sourceEvents = [];
             if (data.fields && Array.isArray(data.data)) {
                 const fields = data.fields.split(',');
                 const nameIdx = fields.indexOf('ActivityName'), startIdx = fields.indexOf('StartDateTime'), bldgIdx = fields.indexOf('BuildingCode'), roomIdx = fields.indexOf('RoomName'), descIdx = fields.indexOf('EventMeetingByActivityId.Event.Description'), linkIdx = fields.findIndex(f => f.toLowerCase().includes('url') || f.toLowerCase().includes('link'));
 
-                sourceEvents = data.data.map(row => {
+                data.data.forEach(row => {
                     const eventTitle = row[nameIdx] || "Campus Event";
                     const eventLoc = `${row[bldgIdx] || ''} ${row[roomIdx] || ''}`.trim() || "Campus";
                     const pricing = extractPricing(row[descIdx] || "", eventTitle, eventLoc, linkIdx !== -1 ? (row[linkIdx] || "") : "");
-                    return { title: eventTitle, date: row[startIdx], location: eventLoc, price: pricing.price, ticketLink: pricing.link, sourceLink: "https://www.millersville.edu/calendar/" };
+                    events.push({ title: eventTitle, date: row[startIdx], location: eventLoc, tags: ["MU Calendar"], price: pricing.price, ticketLink: pricing.link, sourceLink: "https://www.millersville.edu/calendar/" });
                 });
             }
-            
-            sourceEvents.forEach(item => events.push({
-                title: item.title, date: item.date, location: item.location, tags: ["MU Event Calendar"], price: item.price || "Free", ticketLink: item.ticketLink || "", sourceLink: item.sourceLink
-            }));
         } catch (apiError1) {}
 
         // --- GetInvolved (Anthology API) ---
@@ -148,7 +142,7 @@ async function runScraper() {
             (giData.value || []).forEach(item => {
                 const eventDate = new Date(item.startsOn);
                 if (eventDate >= today && eventDate < thirtyDaysOut) {
-                    let tags = ["GetInvolved"];
+                    let tags = ["MU GetInvolved"];
                     if (item.organizationName) tags.push(item.organizationName.trim());
                     if (item.theme && item.theme !== "Not Applicable") tags.push(item.theme.trim());
                     (item.categoryNames || []).forEach(c => tags.push(c.trim()));
@@ -160,7 +154,7 @@ async function runScraper() {
                         title: item.name || "Student Event",
                         date: eventDate.toISOString(),
                         location: item.location || "Campus",
-                        tags: [...new Set(tags)], // Remove duplicates
+                        tags: [...new Set(tags)], 
                         price: "Free", 
                         ticketLink: `https://getinvolved.millersville.edu/event/${item.id}`,
                         sourceLink: `https://getinvolved.millersville.edu/event/${item.id}`
@@ -196,8 +190,7 @@ async function runScraper() {
                     
                     const eventDate = new Date(isoDate);
                     if (eventDate >= today && eventDate < thirtyDaysOut) {
-                        // Dynamic PM Tags
-                        let tags = ["PM Event Calendar"];
+                        let tags = ["Penn Manor"];
                         if (lowerTitle.includes('varsity')) tags.push('Varsity');
                         if (lowerTitle.includes('jv') || lowerTitle.includes('j.v.')) tags.push('JV');
                         if (lowerTitle.includes('junior high') || lowerTitle.includes('jr high')) tags.push('Jr High');
@@ -235,7 +228,7 @@ async function runScraper() {
         fs.writeFileSync(path.join(__dirname, '../events.json'), JSON.stringify(events, null, 2));
     } catch (e) { console.error("❌ Events Request Error:", e.message); }
 
-    // 3. NEWS & 4. DINING (Unchanged to save space in code block)
+    // 3. NEWS & 4. DINING
     try {
         let news = [];
         try {

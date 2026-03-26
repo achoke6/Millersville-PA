@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Millersville, PA</title>
+    <title>Millersville.APP</title>
     <link rel="stylesheet" href="style.css">
     <style>
         .nav-link.active { border-bottom: 3px solid var(--accent-fresh) !important; color: var(--text-dark) !important; font-weight: bold; }
@@ -11,10 +11,16 @@
         .live-dot { width: 8px; height: 8px; background: white; border-radius: 50%; display: inline-block; animation: blink 1.5s infinite; }
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
         
-        /* New Tag UI Styles */
+        /* New Top-Tier and Sub-Tag Styles */
         .controls-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 10px; flex-wrap: wrap; }
         .date-picker { padding: 8px; border-radius: 6px; border: 1px solid var(--border); font-family: inherit; font-size: 0.9rem; }
         .clear-btn { background: #fee2e2; color: #dc2626; border: none; padding: 8px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; cursor: pointer; display: none; }
+        
+        .top-tier-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+        .source-btn { background: var(--bg-main); border: 2px solid var(--border); color: var(--text-dark); padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; }
+        .source-btn:hover { border-color: var(--theme-color); }
+        .source-btn.active { background: var(--theme-color); color: white; border-color: var(--theme-color); }
+
         .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
         .tag-pill { background: var(--bg-main); border: 1px solid var(--border); color: var(--text-dark); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; transition: 0.2s; user-select: none; }
         .tag-pill:hover { border-color: var(--theme-color); }
@@ -26,14 +32,14 @@
         .source-link:hover { color: var(--theme-color); text-decoration: underline; }
     </style>
 </head>
-<body class="townie-mode">
+<body>
 
 <header>
     <div class="header-container">
         <div class="logo-block">
-            <h1>Millersville, PA</h1>
-            <p id="sub-header">Townie View: Community App</p>
-            <p class="disclaimer">Independent community resource. Not affiliated with MU or the Borough.</p>
+            <h1>Millersville.APP</h1>
+            <p id="sub-header">Web sourced resource.</p>
+            <p class="disclaimer">Not affiliated with, endorsed by, or officially connected to any state university, public school district, private venue, or entity listed herein.</p>
         </div>
         <nav class="main-nav" id="top-nav">
             <button id="nav-home" class="nav-link active" onclick="switchView('home')">Home</button>
@@ -45,14 +51,6 @@
             <button id="nav-weather" class="nav-link" onclick="switchView('weather')">Weather</button>
             <a href="https://millersville.store" target="_blank" class="nav-link" style="text-decoration: none;">Store ↗</a>
         </nav>
-        <div class="header-toggle">
-            <span class="mode-label">MU STUDENT</span>
-            <label class="toggle-container">
-                <input type="checkbox" id="roleToggle" onchange="toggleMode()" checked>
-                <span class="toggle-slider"></span>
-            </label>
-            <span class="mode-label">TOWNIE</span>
-        </div>
     </div>
 </header>
 
@@ -75,10 +73,20 @@
     </section>
 
     <section id="view-events" class="app-view">
+        
+        <div class="top-tier-filters">
+            <button class="source-btn active" onclick="setSource('All', this)">All</button>
+            <button class="source-btn" onclick="setSource('MU Calendar', this)">🏫 MU Calendar</button>
+            <button class="source-btn" onclick="setSource('MU GetInvolved', this)">🎓 MU GetInvolved</button>
+            <button class="source-btn" onclick="setSource('Penn Manor', this)">☄️ Penn Manor</button>
+            <button class="source-btn" onclick="setSource('Phantom Power', this)">🎸 Phantom Power</button>
+        </div>
+
         <div class="controls-header">
             <input type="date" id="event-date-picker" class="date-picker" onchange="applyFilters()">
             <button id="clear-tags-btn" class="clear-btn" onclick="clearTags()">Clear Filters ✖</button>
         </div>
+        
         <div id="dynamic-tags" class="tag-cloud"></div>
         
         <div id="events-container" class="events-grid"></div>
@@ -133,11 +141,12 @@
 <script>
     // --- STATE VARIABLES ---
     let currentEvents = [], currentPage = 1, perPage = 10, totalPages = 1;
+    let currentSource = 'All';
     let selectedTags = new Set();
     let currentNews = [], currentNewsFilter = 'All';
+    const topLevelSources = ['MU Calendar', 'MU GetInvolved', 'Penn Manor', 'Phantom Power'];
 
     document.addEventListener("DOMContentLoaded", () => {
-        // Set date picker to today
         document.getElementById('event-date-picker').value = new Date().toISOString().split('T')[0];
         initApp();
     });
@@ -161,28 +170,13 @@
     window.switchView = function(view) {
         document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
         document.getElementById(`view-${view}`).classList.add('active');
-        
         document.querySelectorAll('.nav-link').forEach(btn => btn.classList.remove('active'));
         const activeBtn = document.getElementById(`nav-${view}`);
         if(activeBtn) activeBtn.classList.add('active');
         window.scrollTo(0,0);
     };
 
-    window.toggleMode = function() {
-        const isTownie = document.getElementById('roleToggle').checked;
-        document.body.classList.toggle('townie-mode', isTownie);
-        document.getElementById('sub-header').innerText = isTownie ? "Townie View: Community App" : "MU Student View: Campus App";
-        
-        // If switching to Student View, ensure PM filter is removed if it was selected
-        if (!isTownie && selectedTags.has('PM Event Calendar')) {
-            selectedTags.delete('PM Event Calendar');
-        }
-        
-        applyFilters();
-        renderHomeUI();
-    };
-
-    // --- EVENTS LOGIC (The New Faceted Search) ---
+    // --- EVENTS LOGIC (Two-Tier Faceted Search) ---
     async function loadEvents() {
         try {
             const res = await fetch('events.json');
@@ -193,12 +187,17 @@
         } catch(e) {}
     }
 
+    window.setSource = function(src, btn) {
+        currentSource = src;
+        selectedTags.clear(); // Wipe sub-tags when changing main source
+        document.querySelectorAll('.source-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        applyFilters();
+    };
+
     window.toggleTag = function(tag) {
-        if (selectedTags.has(tag)) {
-            selectedTags.delete(tag);
-        } else {
-            selectedTags.add(tag);
-        }
+        if (selectedTags.has(tag)) selectedTags.delete(tag);
+        else selectedTags.add(tag);
         applyFilters();
     }
 
@@ -213,28 +212,31 @@
     }
 
     function updateEventsUI() {
-        const isTownie = document.getElementById('roleToggle').checked;
         const selectedDate = document.getElementById('event-date-picker').value;
         
-        // Step 1: Base Filter (Role and Date)
+        // Base Filter: Source and Date
         let baseEvents = currentEvents.filter(e => {
-            if (!isTownie && (e.tags || []).includes('PM Event Calendar')) return false; 
             if (selectedDate && e.date.substring(0,10) < selectedDate) return false;
+            if (currentSource !== 'All' && !(e.tags || []).includes(currentSource)) return false;
             return true;
         });
 
-        // Step 2: Apply Tags (Event must contain ALL selected tags)
+        // Tag Filter: Event must have ALL selected sub-tags
         let fullyFiltered = baseEvents.filter(e => {
             const eventTags = e.tags || [];
             return Array.from(selectedTags).every(t => eventTags.includes(t));
         });
 
-        // Step 3: Determine available tags to prevent dead-ends
+        // Determine available tags to prevent dead-ends (excluding the top-level sources)
         let availableTags = new Set();
-        fullyFiltered.forEach(e => (e.tags || []).forEach(t => availableTags.add(t)));
-        selectedTags.forEach(t => availableTags.add(t)); // Keep currently selected visible
+        fullyFiltered.forEach(e => {
+            (e.tags || []).forEach(t => {
+                if (!topLevelSources.includes(t)) availableTags.add(t);
+            });
+        });
+        selectedTags.forEach(t => availableTags.add(t)); // Keep selected visible
 
-        // Render the Tag Cloud
+        // Render Tag Cloud
         const tagContainer = document.getElementById('dynamic-tags');
         tagContainer.innerHTML = '';
         Array.from(availableTags).sort().forEach(tag => {
@@ -248,7 +250,7 @@
         // Toggle Clear Button
         document.getElementById('clear-tags-btn').style.display = selectedTags.size > 0 ? 'block' : 'none';
 
-        // Step 4: Pagination & Rendering
+        // Pagination & Render
         const container = document.getElementById('events-container');
         container.innerHTML = '';
 
@@ -273,23 +275,19 @@
             const isFree = priceText.toLowerCase() === 'free' || priceText.toLowerCase() === 'free entry';
             const hasLink = e.ticketLink && e.ticketLink.trim() !== "";
             
-            let displayPrice = priceText;
-            if (priceText.includes("Student") && !isTownie) displayPrice = `Student: <b>${priceText.split('/')[0]}</b>`;
-            if (priceText.includes("Public") && isTownie) displayPrice = `Public: <b>${priceText.split('/')[1] || priceText}</b>`;
-
             let actionButton = '';
             if (isFree) {
                 actionButton = `<span style="background:var(--borough-blue); color:var(--gold); padding:6px 12px; border-radius:6px; font-weight:bold; font-size:0.8rem;">Free Entry</span>`;
             } else if (hasLink) {
-                actionButton = `<a href="${e.ticketLink}" target="_blank" style="background:var(--accent-fresh); color:white; padding:6px 12px; border-radius:6px; text-decoration:none; font-weight:bold; font-size:0.85rem;">🎟️ Buy Tickets</a>`;
+                actionButton = `<a href="${e.ticketLink}" target="_blank" style="background:var(--accent-fresh); color:white; padding:6px 12px; border-radius:6px; text-decoration:none; font-weight:bold; font-size:0.85rem;">🎟️ Tickets</a>`;
             } else {
-                actionButton = `<span style="background:var(--bg-main); border: 1px solid var(--border); color:var(--text-dark); padding:6px 12px; border-radius:6px; font-weight:bold; font-size:0.85rem;">🚪 Pay at Door</span>`;
+                actionButton = `<span style="background:var(--bg-main); border: 1px solid var(--border); color:var(--text-dark); padding:6px 12px; border-radius:6px; font-weight:bold; font-size:0.85rem;">🚪 At Door</span>`;
             }
 
-            // Render tags as UI pills inside the card
-            let tagsHtml = (e.tags || []).map(t => `<span class="card-tag-pill">${t}</span>`).join('');
+            // Exclude top level sources from card display tags for cleaner UI
+            let displayTags = (e.tags || []).filter(t => !topLevelSources.includes(t));
+            let tagsHtml = displayTags.map(t => `<span class="card-tag-pill">${t}</span>`).join('');
             
-            // Link the title to the source
             let titleHtml = e.sourceLink ? `<a href="${e.sourceLink}" target="_blank" class="source-link">${e.title} ↗</a>` : e.title;
 
             container.innerHTML += `
@@ -301,7 +299,7 @@
                         <p style="font-size:0.85rem; color:var(--text-muted);">📍 ${e.location}</p>
                     </div>
                     <div style="margin-top:16px; border-top:1px solid var(--border); padding-top:12px; display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-size:0.9rem;">${isFree ? '' : displayPrice}</span>
+                        <span style="font-size:0.9rem;">${isFree ? '' : priceText}</span>
                         ${actionButton}
                     </div>
                 </div>`;
@@ -318,13 +316,9 @@
 
     function renderHomeUI() {
         const homeEvents = document.getElementById('home-events');
-        const isTownie = document.getElementById('roleToggle').checked;
         homeEvents.innerHTML = '';
 
-        let todaysEvents = currentEvents.filter(e => {
-            if (!isTownie && (e.tags || []).includes('PM Event Calendar')) return false;
-            return new Date(e.date) >= new Date();
-        });
+        let todaysEvents = currentEvents.filter(e => new Date(e.date) >= new Date());
 
         todaysEvents.slice(0, 3).forEach(e => {
             const d = new Date(e.date);
@@ -370,10 +364,7 @@
         const container = document.getElementById('news-container');
         container.innerHTML = '';
         let filtered = currentNews.filter(n => currentNewsFilter === 'All' || n.category === currentNewsFilter);
-        if (filtered.length === 0) {
-            container.innerHTML = '<p style="padding:20px; color:var(--text-muted);">No news found for this filter.</p>';
-            return;
-        }
+        if (filtered.length === 0) return;
         filtered.forEach(n => {
             container.innerHTML += `<div class="app-card"><div style="font-size:0.75rem; color:var(--theme-color); font-weight:bold; text-transform:uppercase; margin-bottom:4px;">${n.source} • ${n.date}</div><h3 style="margin:6px 0;">${n.title}</h3><a href="${n.link}" target="_blank" style="display:inline-block; background:var(--bg-main); border:1px solid var(--border); padding:8px 12px; border-radius:6px; text-decoration:none; color:var(--text-dark); font-weight:bold; font-size:0.85rem;">Read ➔</a></div>`;
         });
@@ -392,10 +383,9 @@
             const container = document.getElementById('food-container');
             container.innerHTML = '';
             data.forEach(place => {
-                let buttons = '';
-                if (place.status === 'App Required') buttons = `<div style="display: flex; gap: 8px;"><a href="${place.iosLink || '#'}" target="_blank" style="flex:1; text-align:center; background:var(--bg-main); border:1px solid var(--border); padding:8px; border-radius:6px; text-decoration:none; color:var(--text-dark); font-size:0.8rem; font-weight:bold;"> iOS App</a><a href="${place.link || '#'}" target="_blank" style="flex:1; text-align:center; background:var(--bg-main); border:1px solid var(--border); padding:8px; border-radius:6px; text-decoration:none; color:var(--text-dark); font-size:0.8rem; font-weight:bold;">Android App</a></div>`;
-                else if (place.status === 'Order Online') buttons = `<a href="${place.link}" target="_blank" style="display:block; text-align:center; background:var(--accent-fresh); color:white; padding:8px; border-radius:6px; text-decoration:none; font-weight:bold; font-size:0.9rem;">🛒 Order Online</a>`;
-                else buttons = `<a href="${place.link}" target="_blank" style="display:block; text-align:center; background:var(--bg-main); border:1px solid var(--border); color:var(--text-dark); padding:8px; border-radius:6px; text-decoration:none; font-weight:bold; font-size:0.9rem;">📄 ${place.status}</a>`;
+                let buttons = place.status === 'App Required' ? `<div style="display: flex; gap: 8px;"><a href="${place.iosLink || '#'}" target="_blank" style="flex:1; text-align:center; background:var(--bg-main); border:1px solid var(--border); padding:8px; border-radius:6px; text-decoration:none; color:var(--text-dark); font-size:0.8rem; font-weight:bold;"> iOS App</a><a href="${place.link || '#'}" target="_blank" style="flex:1; text-align:center; background:var(--bg-main); border:1px solid var(--border); padding:8px; border-radius:6px; text-decoration:none; color:var(--text-dark); font-size:0.8rem; font-weight:bold;">Android App</a></div>` :
+                (place.status === 'Order Online' ? `<a href="${place.link}" target="_blank" style="display:block; text-align:center; background:var(--accent-fresh); color:white; padding:8px; border-radius:6px; text-decoration:none; font-weight:bold; font-size:0.9rem;">🛒 Order Online</a>` :
+                `<a href="${place.link}" target="_blank" style="display:block; text-align:center; background:var(--bg-main); border:1px solid var(--border); color:var(--text-dark); padding:8px; border-radius:6px; text-decoration:none; font-weight:bold; font-size:0.9rem;">📄 ${place.status}</a>`);
                 container.innerHTML += `<div class="app-card"><h3 style="margin-bottom:4px;">${place.name}</h3><p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:16px;">🍴 ${place.cuisine}</p><div style="margin-top:auto;">${buttons}</div></div>`;
             });
         } catch(e) {}
@@ -406,8 +396,7 @@
             const data = await (await fetch('housing.json')).json();
             const container = document.getElementById('housing-container');
             container.innerHTML = '';
-            data.sort((a,b) => (b.featured === true) - (a.featured === true));
-            data.forEach(p => {
+            data.sort((a,b) => (b.featured === true) - (a.featured === true)).forEach(p => {
                 const badge = p.featured ? `<span style="background:var(--theme-color); color:white; padding:3px 8px; border-radius:12px; font-size:0.7rem; font-weight:bold; text-transform:uppercase; margin-bottom:8px; display:inline-block;">Premium</span>` : '';
                 container.innerHTML += `<div class="app-card ${p.featured ? 'featured' : ''}">${badge}<h3 style="margin-bottom:4px;">${p.name}</h3><p style="font-size:0.85rem; color:var(--text-muted); font-weight:bold; text-transform:uppercase; margin-bottom:8px;">${p.landlord}</p><p style="font-size:0.95rem; margin-bottom:16px;">${p.description}</p><div style="margin-top:auto; padding-top:12px; border-top:1px solid var(--border);"><a href="${p.link}" target="_blank" style="display:block; text-align:center; background:${p.featured ? 'var(--text-dark)' : 'var(--bg-main)'}; color:${p.featured ? 'white' : 'var(--text-dark)'}; padding:8px; border-radius:6px; text-decoration:none; font-weight:bold;">View Property</a></div></div>`;
             });

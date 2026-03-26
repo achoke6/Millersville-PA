@@ -6,30 +6,54 @@
     <title>Millersville.APP</title>
     <link rel="stylesheet" href="style.css">
     <style>
+        /* --- HEADER & MOBILE MENU STYLES --- */
+        .header-container { display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; }
+        .logo-block h1 { margin: 0; font-size: 1.5rem; color: var(--text-dark); line-height: 1; }
+        
+        .hamburger-menu { display: none; background: none; border: none; cursor: pointer; padding: 5px; margin-left: auto; }
+        .close-menu { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; align-self: flex-end; margin-bottom: 20px; color: var(--text-dark); }
+        .menu-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 99; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+        .menu-overlay.open { display: block; opacity: 1; pointer-events: auto; }
+
+        .main-nav { display: flex; gap: 15px; align-items: center; }
         .nav-link.active { border-bottom: 3px solid var(--accent-fresh) !important; color: var(--text-dark) !important; font-weight: bold; }
+        
+        @media (max-width: 768px) {
+            .hamburger-menu { display: block; }
+            .main-nav { position: fixed; top: 0; right: -250px; width: 250px; height: 100vh; background: var(--bg-main); flex-direction: column; padding: 20px; box-shadow: -2px 0 5px rgba(0,0,0,0.1); transition: right 0.3s ease; z-index: 100; align-items: flex-start; }
+            .main-nav.open { right: 0; }
+            .close-menu { display: block; }
+            .nav-link { width: 100%; text-align: left; padding: 12px 0; border-bottom: 1px solid var(--border) !important; border-radius: 0; }
+            .nav-link.active { border-bottom: 3px solid var(--theme-color) !important; }
+        }
+
+        /* --- FOOTER STYLES --- */
+        .site-footer { text-align: center; padding: 30px 20px; margin-top: 40px; border-top: 1px solid var(--border); font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+        .site-footer p { margin: 4px 0; }
+
+        /* --- EXISTING STYLES --- */
         .live-badge { position: absolute; top: 12px; right: 12px; background: rgba(239, 68, 68, 0.9); color: white; padding: 4px 10px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; z-index: 10; display: flex; align-items: center; gap: 5px; }
         .live-dot { width: 8px; height: 8px; background: white; border-radius: 50%; display: inline-block; animation: blink 1.5s infinite; }
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
         
-        /* 3-Tier Navigation Styles */
         .controls-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 10px; flex-wrap: wrap; }
         .date-picker { padding: 8px; border-radius: 6px; border: 1px solid var(--border); font-family: inherit; font-size: 0.9rem; }
         .clear-btn { background: #fee2e2; color: #dc2626; border: none; padding: 8px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; cursor: pointer; display: none; }
         
-        /* Tier 1: Main Source */
         .top-tier-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
         .source-btn { background: var(--bg-main); border: 2px solid var(--border); color: var(--text-dark); padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; }
         .source-btn:hover { border-color: var(--theme-color); }
         .source-btn.active { background: var(--theme-color); color: white; border-color: var(--theme-color); }
 
-        /* Tier 2: Static Sub-Categories */
+        /* Dynamic Highlighted Source Buttons */
+        .source-btn.featured-source { background-color: rgba(255, 193, 7, 0.15); border-color: rgba(255, 193, 7, 0.4); }
+
         .sub-tier-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dashed var(--border); display: none; }
         .sub-tier-filters.active { display: flex; }
         .sub-cat-btn { background: var(--bg-main); border: 1px solid var(--border); color: var(--text-dark); padding: 6px 14px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; cursor: pointer; transition: 0.2s; }
         .sub-cat-btn:hover { border-color: var(--theme-color); }
         .sub-cat-btn.active { background: var(--borough-blue); color: var(--gold); border-color: var(--borough-blue); }
 
-        /* Tier 3: Dynamic Tag Cloud */
         .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
         .tag-pill { background: var(--bg-main); border: 1px solid var(--border); color: var(--text-dark); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; transition: 0.2s; user-select: none; }
         .tag-pill:hover { border-color: var(--theme-color); }
@@ -47,19 +71,27 @@
     <div class="header-container">
         <div class="logo-block">
             <h1>Millersville.APP</h1>
-            <p id="sub-header">Web sourced community resource.</p>
-            <p class="disclaimer">Independent aggregator. Not affiliated with, or endorsed by, any featured institutions, schools, or venues.</p>
         </div>
+        
+        <button class="hamburger-menu" id="hamburger-menu" onclick="toggleMobileMenu()">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="var(--text-dark)">
+                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+            </svg>
+        </button>
+
         <nav class="main-nav" id="top-nav">
-            <button id="nav-home" class="nav-link active" onclick="switchView('home')">Home</button>
-            <button id="nav-news" class="nav-link" onclick="switchView('news')">News</button>
-            <button id="nav-events" class="nav-link" onclick="switchView('events')">Events</button>
-            <button id="nav-food" class="nav-link" onclick="switchView('food')">Dining</button>
-            <button id="nav-housing" class="nav-link" onclick="switchView('housing')">Housing</button>
-            <button id="nav-services" class="nav-link" onclick="switchView('services')">Services</button>
-            <button id="nav-weather" class="nav-link" onclick="switchView('weather')">Weather</button>
-            <a href="https://millersville.store" target="_blank" class="nav-link" style="text-decoration: none;">Store ↗</a>
+            <button class="close-menu" onclick="toggleMobileMenu()">✖</button>
+            <button id="nav-home" class="nav-link active" onclick="switchView('home'); toggleMobileMenu();">Home</button>
+            <button id="nav-news" class="nav-link" onclick="switchView('news'); toggleMobileMenu();">News</button>
+            <button id="nav-events" class="nav-link" onclick="switchView('events'); toggleMobileMenu();">Events</button>
+            <button id="nav-food" class="nav-link" onclick="switchView('food'); toggleMobileMenu();">Dining</button>
+            <button id="nav-housing" class="nav-link" onclick="switchView('housing'); toggleMobileMenu();">Housing</button>
+            <button id="nav-services" class="nav-link" onclick="switchView('services'); toggleMobileMenu();">Services</button>
+            <button id="nav-weather" class="nav-link" onclick="switchView('weather'); toggleMobileMenu();">Weather</button>
+            <a href="https://millersville.store" target="_blank" class="nav-link" style="text-decoration: none;" onclick="toggleMobileMenu();">Store ↗</a>
         </nav>
+
+        <div class="menu-overlay" id="menu-overlay" onclick="toggleMobileMenu()"></div>
     </div>
 </header>
 
@@ -84,11 +116,17 @@
     <section id="view-events" class="app-view">
         
         <div class="top-tier-filters">
-            <button class="source-btn active" onclick="setSource('All', this)">All</button>
-            <button class="source-btn" onclick="setSource('MU Calendar', this)">🏫 MU Calendar</button>
-            <button class="source-btn" onclick="setSource('MU GetInvolved', this)">🎓 MU GetInvolved</button>
-            <button class="source-btn" onclick="setSource('Penn Manor', this)">☄️ Penn Manor</button>
-            <button class="source-btn" onclick="setSource('Phantom Power', this)">🎸 Phantom Power</button>
+            <button class="source-btn active" id="src-all" onclick="setSource('All', this)">All</button>
+            <button class="source-btn" id="src-sports" onclick="setSource('Local Sports', this)">🏀 Local Sports</button>
+            <button class="source-btn" id="src-mu" onclick="setSource('MU', this)">🏴‍☠️ MU</button>
+            <button class="source-btn" id="src-gi" onclick="setSource('MU GetInvolved', this)">🎓 MU GetInvolved</button>
+            <button class="source-btn" id="src-pm" onclick="setSource('PM', this)">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" style="margin-right: 4px; vertical-align: middle;">
+                    <path d="M22 2 L12 12 M20 6 L10 16 M18 2 L8 12" stroke="var(--borough-blue, #1d4ed8)" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="6" cy="18" r="4" fill="var(--gold, #fbbf24)" />
+                </svg> PM
+            </button>
+            <button class="source-btn" id="src-phantom" onclick="setSource('Phantom Power', this)">🎸 Phantom Power</button>
         </div>
 
         <div id="sub-tier-container" class="sub-tier-filters"></div>
@@ -99,7 +137,6 @@
         </div>
         
         <div id="dynamic-tags" class="tag-cloud"></div>
-        
         <div id="events-container" class="events-grid"></div>
         
         <div style="display:flex; justify-content:center; gap:20px; margin-top:20px;">
@@ -109,21 +146,9 @@
         </div>
     </section>
 
-    <section id="view-food" class="app-view">
-        <div class="section-title"><h2>Local Dining & Menus</h2></div>
-        <div id="food-container" class="events-grid"></div>
-    </section>
-
-    <section id="view-housing" class="app-view">
-        <div class="section-title"><h2>Student Lodging & Rentals</h2></div>
-        <div id="housing-container" class="events-grid"></div>
-    </section>
-
-    <section id="view-services" class="app-view">
-        <div class="section-title"><h2>Auto, Fuel & Local Services</h2></div>
-        <div id="services-container" class="events-grid"></div>
-    </section>
-
+    <section id="view-food" class="app-view"><div class="section-title"><h2>Local Dining & Menus</h2></div><div id="food-container" class="events-grid"></div></section>
+    <section id="view-housing" class="app-view"><div class="section-title"><h2>Student Lodging & Rentals</h2></div><div id="housing-container" class="events-grid"></div></section>
+    <section id="view-services" class="app-view"><div class="section-title"><h2>Auto, Fuel & Local Services</h2></div><div id="services-container" class="events-grid"></div></section>
     <section id="view-news" class="app-view">
         <div class="tag-cloud" style="margin-bottom: 15px;">
             <button class="tag-pill active" onclick="setNewsFilter('All', this)">All</button>
@@ -132,36 +157,35 @@
         </div>
         <div id="news-container" class="events-grid"></div>
     </section>
-
     <section id="view-weather" class="app-view">
         <div class="app-card" style="margin-bottom:20px; text-align:center; padding: 30px 20px;">
-            <h2 id="w-temp" style="font-size:3.5rem; color: var(--theme-color); margin-bottom: 8px;">--°F</h2>
-            <p id="w-cond" style="font-size:1.2rem; font-weight:bold;"></p>
-            <p id="w-details" style="font-size:0.9rem; color:var(--text-muted); margin-top: 10px;"></p>
+            <h2 id="w-temp" style="font-size:3.5rem; color: var(--theme-color); margin-bottom: 8px;">--°F</h2><p id="w-cond" style="font-size:1.2rem; font-weight:bold;"></p><p id="w-details" style="font-size:0.9rem; color:var(--text-muted); margin-top: 10px;"></p>
         </div>
         <div style="position: relative; border-radius: 16px; overflow: hidden; background: #000;">
             <div class="live-badge"><span class="live-dot"></span> LIVE</div>
             <img id="cam-img" src="https://snowball.millersville.edu/~cws/wxcam/latest.jpeg" style="width: 100%; display: block;" alt="Millersville Weather Cam">
             <div id="cam-time" style="padding: 10px; color: #fff; font-size: 0.7rem; text-align: right;">Updating...</div>
         </div>
-        <p style="font-size:0.75rem; text-align:center; margin-top:12px; color:var(--text-muted);">Source: Millersville Weather Information Center</p>
     </section>
-
 </main>
 
+<footer class="site-footer">
+    <p>Web sourced community resource</p>
+    <p>Independent aggregator. Not affiliated with, or endorsed by, any featured institutions, schools, or venues.</p>
+</footer>
+
 <script>
-    // --- STATE VARIABLES ---
     let currentEvents = [], currentPage = 1, perPage = 10, totalPages = 1;
     let currentSource = 'All';
     let selectedTags = new Set();
     let currentNews = [], currentNewsFilter = 'All';
 
-    // Tier 2 Mapping
-    const topLevelSources = ['MU Calendar', 'MU GetInvolved', 'Penn Manor', 'Phantom Power'];
+    const topLevelSources = ['Local Sports', 'MU', 'MU GetInvolved', 'PM', 'Phantom Power'];
     const subCategoriesMap = {
-        'MU Calendar': ['Public Event', 'Student Event', 'Athletic Competitions', 'Arts Concert / Performance'],
+        'Local Sports': ['MU', 'MU GetInvolved', 'PM'],
+        'MU': ['Public Event', 'Student Event', 'Athletic Competitions', 'Arts Concert / Performance'],
         'MU GetInvolved': ['Residence Halls', 'Greek Life', 'Fundraising', 'Club Sports'],
-        'Penn Manor': ['Athletics', 'Music/Arts', 'Board Meetings', 'PTO', 'Staff']
+        'PM': ['Athletics', 'Music/Arts', 'Board Meetings', 'PTO', 'Staff']
     };
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -170,13 +194,19 @@
     });
 
     async function initApp() {
-        await Promise.allSettled([
-            loadWeather(), loadSpecials(), loadEvents(), loadDining(), loadHousing(), loadServices(), loadNews()
-        ]);
+        await Promise.allSettled([loadWeather(), loadSpecials(), loadEvents(), loadDining(), loadHousing(), loadServices(), loadNews()]);
         renderHomeUI();
         setInterval(refreshCam, 60000);
         refreshCam(); 
     }
+
+    // Mobile Menu Toggle
+    window.toggleMobileMenu = function() {
+        const nav = document.getElementById('top-nav');
+        const overlay = document.getElementById('menu-overlay');
+        nav.classList.toggle('open');
+        overlay.classList.toggle('open');
+    };
 
     window.switchView = function(view) {
         document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
@@ -201,8 +231,20 @@
         currentSource = src;
         selectedTags.clear(); 
         
-        document.querySelectorAll('.source-btn').forEach(b => b.classList.remove('active'));
+        // Reset all top-tier buttons to standard layout
+        document.querySelectorAll('.source-btn').forEach(b => {
+            b.classList.remove('active');
+            b.classList.remove('featured-source');
+        });
+        
+        // Make the clicked button active
         btn.classList.add('active');
+
+        // DYNAMIC LOGIC: If "Local Sports" is picked, highlight the MU and PM buttons with muted gold
+        if (src === 'Local Sports') {
+            document.getElementById('src-mu').classList.add('featured-source');
+            document.getElementById('src-pm').classList.add('featured-source');
+        }
 
         const subContainer = document.getElementById('sub-tier-container');
         subContainer.innerHTML = '';
@@ -213,19 +255,14 @@
                 const subBtn = document.createElement('button');
                 subBtn.className = 'sub-cat-btn';
                 subBtn.innerText = tag;
-                
-                // SINGLE-SELECT LOGIC FOR TIER 2
                 subBtn.onclick = () => {
                     if (selectedTags.has(tag)) {
                         selectedTags.delete(tag);
                     } else {
-                        subCategoriesMap[src].forEach(t => selectedTags.delete(t)); // Clear siblings
+                        subCategoriesMap[src].forEach(t => selectedTags.delete(t)); 
                         selectedTags.add(tag);
                     }
-                    
-                    document.querySelectorAll('.sub-cat-btn').forEach(b => {
-                        b.classList.toggle('active', selectedTags.has(b.innerText));
-                    });
+                    document.querySelectorAll('.sub-cat-btn').forEach(b => b.classList.toggle('active', selectedTags.has(b.innerText)));
                     applyFilters();
                 };
                 subContainer.appendChild(subBtn);
@@ -233,7 +270,6 @@
         } else {
             subContainer.classList.remove('active');
         }
-
         applyFilters();
     };
 
@@ -277,9 +313,10 @@
             });
         });
         
-        selectedTags.forEach(t => {
-            if (!activeSubCats.includes(t)) availableTags.add(t);
-        });
+        selectedTags.forEach(t => { if (!activeSubCats.includes(t)) availableTags.add(t); });
+
+        availableTags.delete('Athletic Competitions');
+        availableTags.delete('Athletics');
 
         const tagContainer = document.getElementById('dynamic-tags');
         tagContainer.innerHTML = '';
@@ -328,7 +365,7 @@
                 actionButton = `<span style="background:var(--bg-main); border: 1px solid var(--border); color:var(--text-dark); padding:6px 12px; border-radius:6px; font-weight:bold; font-size:0.85rem;">🚪 At Door</span>`;
             }
 
-            let displayTags = (e.tags || []).filter(t => !topLevelSources.includes(t));
+            let displayTags = (e.tags || []).filter(t => !topLevelSources.includes(t) && t !== 'Athletic Competitions' && t !== 'Athletics');
             let tagsHtml = displayTags.map(t => `<span class="card-tag-pill">${t}</span>`).join('');
             let titleHtml = e.sourceLink ? `<a href="${e.sourceLink}" target="_blank" class="source-link">${e.title} ↗</a>` : e.title;
 
@@ -362,9 +399,7 @@
     function renderHomeUI() {
         const homeEvents = document.getElementById('home-events');
         homeEvents.innerHTML = '';
-
         let todaysEvents = currentEvents.filter(e => new Date(e.date) >= new Date());
-
         todaysEvents.slice(0, 3).forEach(e => {
             const d = new Date(e.date);
             const sourceTag = (e.tags && e.tags[0]) ? e.tags[0] : "Event";
@@ -372,12 +407,9 @@
         });
     }
 
-    // --- OTHER FETCHERS ---
     async function loadWeather() {
         try {
-            const res = await fetch('weather.json');
-            if(!res.ok) return;
-            const data = await res.json();
+            const data = await (await fetch('weather.json')).json();
             document.getElementById('home-weather').innerHTML = `<div style="display:flex; justify-content:space-between; align-items:center;"><div><p style="font-size:0.8rem; font-weight:bold; text-transform:uppercase;">Current Conditions</p><h2 style="font-size:2.5rem; margin:4px 0;">${data.temp}°F</h2><p>${data.condition}</p></div><div style="font-size:3rem;">🌤️</div></div>`;
             document.getElementById('w-temp').innerText = `${data.temp}°F`;
             document.getElementById('w-cond').innerText = data.condition;
@@ -387,9 +419,7 @@
 
     async function loadSpecials() {
         try {
-            const res = await fetch('specials.json');
-            if(!res.ok) return;
-            const data = await res.json();
+            const data = await (await fetch('specials.json')).json();
             const list = document.getElementById('specials-list');
             list.innerHTML = '';
             data.forEach(s => list.innerHTML += `<div style="padding: 6px 0; border-bottom: 1px solid var(--border);"><strong>${s.restaurant} (${s.day}):</strong> ${s.deal}</div>`);
@@ -398,9 +428,7 @@
 
     async function loadNews() {
         try {
-            const res = await fetch('news.json');
-            if(!res.ok) return;
-            currentNews = await res.json();
+            currentNews = await (await fetch('news.json')).json();
             renderNewsUI();
         } catch(e) {}
     }

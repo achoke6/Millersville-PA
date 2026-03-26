@@ -9,6 +9,24 @@ const baseHeaders = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
 };
 
+const sportsList = ['Baseball', 'Softball', 'Track', 'Soccer', 'Lacrosse', 'Tennis', 'Volleyball', 'Wrestling', 'Basketball', 'Football', 'Field Hockey', 'Golf', 'Cross Country', 'Cheerleading', 'Swimming', 'Rugby', 'Fencing', 'Esports', 'Archery'];
+
+function isHomeGame(loc, title) {
+    const l = (loc || "").toLowerCase();
+    const t = (title || "").toLowerCase();
+    
+    // If it says "at [Somewhere Else]", it's an away game
+    const awayMatch = t.match(/ at ([a-z0-9 ]+)/i);
+    if (awayMatch) {
+        const dest = awayMatch[1].toLowerCase();
+        if (!dest.includes('millersville') && !dest.includes('penn manor') && !dest.includes('comet') && !dest.includes('pucillo')) return false;
+    }
+    
+    // Check for home location keywords or "vs."
+    const homeWords = ['millersville', 'pucillo', 'biemesderfer', 'comet', 'penn manor', 'pmhs', 'campus', 'smc', 'gym', 'marauder', 'anttonen', 'seaber', 'student memorial'];
+    return homeWords.some(k => l.includes(k)) || t.includes(' vs ') || t.includes(' vs. ') || t.includes('home');
+}
+
 function extractPricing(desc, title = "", location = "", apiLink = "") {
     let price = "Free"; 
     let link = apiLink || "";
@@ -105,8 +123,6 @@ async function runScraper() {
         let events = [];
         const today = new Date();
         const startDay = today.toISOString().split('T')[0];
-        
-        // Expanded to 60 Days
         const sixtyDaysOut = new Date(today);
         sixtyDaysOut.setDate(today.getDate() + 60);
         const endDay = sixtyDaysOut.toISOString().split('T')[0];
@@ -133,22 +149,35 @@ async function runScraper() {
                     const pricing = extractPricing(row[descIdx] || "", eventTitle, eventLoc, linkIdx !== -1 ? (row[linkIdx] || "") : "");
                     
                     let tags = ["MU Calendar"];
-                    if (typeIdx !== -1 && row[typeIdx]) tags.push(row[typeIdx].trim());
+                    const lowerTitle = eventTitle.toLowerCase();
+
+                    // Process Meeting Type & Athletic Logic
+                    if (typeIdx !== -1 && row[typeIdx]) {
+                        const tName = row[typeIdx].trim();
+                        tags.push(tName);
+                        
+                        if (tName === "Athletic Competitions") {
+                            if (lowerTitle.includes("men's") || lowerTitle.includes("mens") || lowerTitle.includes(" men ")) tags.push("Men's");
+                            if (lowerTitle.includes("women's") || lowerTitle.includes("womens") || lowerTitle.includes(" women ")) tags.push("Women's");
+                            sportsList.forEach(s => { if (lowerTitle.includes(s.toLowerCase())) tags.push(s); });
+                            
+                            if (isHomeGame(eventLoc, eventTitle)) tags.push("Local Sports");
+                        }
+                    }
+
                     if (customerIdx !== -1 && row[customerIdx]) tags.push(row[customerIdx].trim());
 
                     const eventId = idIdx !== -1 ? row[idIdx] : "";
                     const sourceLink = eventId ? `https://www.millersville.edu/calendar/events/${eventId}` : "https://www.millersville.edu/calendar/";
 
-                    events.push({ 
-                        title: eventTitle, date: row[startIdx], location: eventLoc, tags: [...new Set(tags)], price: pricing.price, ticketLink: pricing.link, sourceLink: sourceLink 
-                    });
+                    events.push({ title: eventTitle, date: row[startIdx], location: eventLoc, tags: [...new Set(tags)], price: pricing.price, ticketLink: pricing.link, sourceLink: sourceLink });
                 });
             }
         } catch (apiError1) {}
 
         // --- GetInvolved (Anthology API) ---
         try {
-            const giUrl = `https://getinvolved.millersville.edu/api/discovery/event/search?endsAfter=${startDay}T00:00:00-04:00&orderByField=endsOn&orderByDirection=ascending&status=Approved&take=200`; // Increased to 200 items just in case 60 days has a lot
+            const giUrl = `https://getinvolved.millersville.edu/api/discovery/event/search?endsAfter=${startDay}T00:00:00-04:00&orderByField=endsOn&orderByDirection=ascending&status=Approved&take=200`;
             const giData = await (await fetch(giUrl, { headers: baseHeaders })).json();
             
             (giData.value || []).forEach(item => {
@@ -163,12 +192,13 @@ async function runScraper() {
                     
                     const name = (item.name || "").toLowerCase();
                     const orgName = (item.organizationName || "").toLowerCase();
-
-                    // The explicit Greek Regex (Excludes "mu " to avoid "MU Chess Club", uses \b to ensure it's a full word)
                     const greekRegex = /^(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega)\b/i;
 
                     rawTags.forEach(t => {
                         const lowerT = t.toLowerCase();
+                        // Purge redundant athletic tags natively from this source
+                        if (lowerT.includes('athletics') || lowerT === 'competition' || lowerT === 'competitions') return; 
+
                         if (lowerT.includes('fundrais')) {
                             if (!tags.includes('Fundraising')) tags.push('Fundraising');
                         } else if (lowerT.includes('fraternity') || lowerT.includes('sorority') || lowerT.includes('greek')) {
@@ -178,20 +208,20 @@ async function runScraper() {
                         }
                     });
 
-                    // Explicit Group Injections & Greek Letter check
                     if (orgName.includes('housing and residential') || orgName.includes('residence hall')) tags.push('Residence Halls');
                     if (orgName.includes('greek council') || greekRegex.test(orgName) || greekRegex.test(name)) tags.push('Greek Life');
-                    if (tags.some(t => t.toLowerCase().includes('club sport')) || name.includes('club rugby') || name.includes('club soccer')) tags.push("Club Sports");
+                    
+                    // Club Sports Logic
+                    if (tags.some(t => t.toLowerCase().includes('club sport')) || name.includes('club rugby') || name.includes('club soccer') || orgName.includes('club')) {
+                        tags.push("Club Sports");
+                        if (name.includes("men's") || name.includes("mens")) tags.push("Men's");
+                        if (name.includes("women's") || name.includes("womens")) tags.push("Women's");
+                        sportsList.forEach(s => { if (name.includes(s.toLowerCase())) tags.push(s); });
+                        
+                        if (isHomeGame(item.location, item.name)) tags.push("Local Sports");
+                    }
 
-                    events.push({
-                        title: item.name || "Student Event",
-                        date: eventDate.toISOString(),
-                        location: item.location || "Campus",
-                        tags: [...new Set(tags)], 
-                        price: "Free", 
-                        ticketLink: `https://getinvolved.millersville.edu/event/${item.id}`,
-                        sourceLink: `https://getinvolved.millersville.edu/event/${item.id}`
-                    });
+                    events.push({ title: item.name || "Student Event", date: eventDate.toISOString(), location: item.location || "Campus", tags: [...new Set(tags)], price: "Free", ticketLink: `https://getinvolved.millersville.edu/event/${item.id}`, sourceLink: `https://getinvolved.millersville.edu/event/${item.id}` });
                 }
             });
         } catch (giError) {}
@@ -210,7 +240,6 @@ async function runScraper() {
                 if (summaryMatch && dtstartMatch) {
                     let title = summaryMatch[1].trim().replace(/\\,/g, ',').replace(/\\;/g, ';');
                     let lowerTitle = title.toLowerCase();
-                    
                     if (lowerTitle.includes('cycle day') || lowerTitle.startsWith('start of') || lowerTitle.startsWith('end of')) continue;
                     
                     let dtStr = dtstartMatch[1].trim(), isoDate = "";
@@ -225,25 +254,31 @@ async function runScraper() {
                     if (eventDate >= today && eventDate < sixtyDaysOut) {
                         let tags = ["Penn Manor"];
                         
-                        // New PM Top-Level Categories
                         if (lowerTitle.includes('board')) tags.push('Board Meetings');
                         if (lowerTitle.includes('pto')) tags.push('PTO');
                         if (lowerTitle.includes('staff') || lowerTitle.includes('in-service') || lowerTitle.includes('act 80') || lowerTitle.includes('faculty')) tags.push('Staff');
                         if (lowerTitle.includes('concert') || lowerTitle.includes('band') || lowerTitle.includes('chorus') || lowerTitle.includes('choir') || lowerTitle.includes('orchestra') || lowerTitle.includes('musical') || lowerTitle.includes('theater') || lowerTitle.includes('play')) tags.push('Music/Arts');
 
-                        // Sub-tags for athletics
                         if (lowerTitle.includes('varsity')) tags.push('Varsity');
                         if (lowerTitle.includes('jv') || lowerTitle.includes('j.v.')) tags.push('JV');
                         if (lowerTitle.includes('junior high') || lowerTitle.includes('jr high')) tags.push('Jr High');
-                        if (lowerTitle.includes('boys')) tags.push('Boys');
-                        if (lowerTitle.includes('girls')) tags.push('Girls');
                         
-                        const sports = ['Baseball', 'Softball', 'Track', 'Soccer', 'Lacrosse', 'Tennis', 'Volleyball', 'Wrestling', 'Basketball', 'Football', 'Field Hockey', 'Golf', 'Cross Country', 'Cheerleading'];
-                        sports.forEach(s => { if (lowerTitle.includes(s.toLowerCase())) { tags.push(s); tags.push('Athletics'); } });
-
-                        events.push({
-                            title: title, date: eventDate.toISOString(), location: locationMatch ? locationMatch[1].trim().replace(/\\,/g, ',') : "Penn Manor School District", tags: [...new Set(tags)], price: "Free", ticketLink: "", sourceLink: "https://www.pennmanor.net/calendar/"
+                        let isAthletic = false;
+                        sportsList.forEach(s => { 
+                            if (lowerTitle.includes(s.toLowerCase())) { 
+                                tags.push(s); 
+                                isAthletic = true; 
+                                tags.push('Athletics'); 
+                            } 
                         });
+
+                        if (isAthletic) {
+                            if (lowerTitle.includes("men's") || lowerTitle.includes("mens") || lowerTitle.includes("boys")) tags.push("Boys");
+                            if (lowerTitle.includes("women's") || lowerTitle.includes("womens") || lowerTitle.includes("girls")) tags.push("Girls");
+                            if (isHomeGame(locationMatch ? locationMatch[1] : "", title)) tags.push("Local Sports");
+                        }
+
+                        events.push({ title: title, date: eventDate.toISOString(), location: locationMatch ? locationMatch[1].trim().replace(/\\,/g, ',') : "Penn Manor School District", tags: [...new Set(tags)], price: "Free", ticketLink: "", sourceLink: "https://www.pennmanor.net/calendar/" });
                     }
                 }
             }
@@ -263,7 +298,7 @@ async function runScraper() {
         fs.writeFileSync(path.join(__dirname, '../events.json'), JSON.stringify(events, null, 2));
     } catch (e) { console.error("❌ Events Request Error:", e.message); }
 
-    // 3. NEWS & 4. DINING
+    // 3. NEWS & 4. DINING (Unchanged)
     try {
         let news = [];
         try {

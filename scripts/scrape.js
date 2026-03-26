@@ -54,13 +54,13 @@ function extractPricing(desc, title = "", location = "", apiLink = "") {
     return { price, link };
 }
 
-function extractEventbriteEvents(ldData, eventsArray, now, thirtyDaysOut) {
+function extractEventbriteEvents(ldData, eventsArray, now, futureLimit) {
     if (Array.isArray(ldData)) {
-        ldData.forEach(item => extractEventbriteEvents(item, eventsArray, now, thirtyDaysOut));
+        ldData.forEach(item => extractEventbriteEvents(item, eventsArray, now, futureLimit));
     } else if (ldData && typeof ldData === 'object') {
         if (ldData['@type'] === 'Event' && ldData.name && ldData.startDate) {
             const eventDate = new Date(ldData.startDate);
-            if (eventDate >= now && eventDate < thirtyDaysOut) {
+            if (eventDate >= now && eventDate < futureLimit) {
                 let eventPrice = "Ticket Required";
                 if (ldData.name.toLowerCase().includes('slick rick')) eventPrice = "$35 ADV";
 
@@ -75,13 +75,13 @@ function extractEventbriteEvents(ldData, eventsArray, now, thirtyDaysOut) {
                 });
             }
         } else {
-            for (let key in ldData) if (typeof ldData[key] === 'object') extractEventbriteEvents(ldData[key], eventsArray, now, thirtyDaysOut);
+            for (let key in ldData) if (typeof ldData[key] === 'object') extractEventbriteEvents(ldData[key], eventsArray, now, futureLimit);
         }
     }
 }
 
 async function runScraper() {
-    console.log("🚀 Starting Millersville Pro Scraper...");
+    console.log("🚀 Starting Millersville Pro Scraper (60-Day Horizon)...");
 
     // 1. WEATHER
     try {
@@ -105,9 +105,11 @@ async function runScraper() {
         let events = [];
         const today = new Date();
         const startDay = today.toISOString().split('T')[0];
-        const thirtyDaysOut = new Date(today);
-        thirtyDaysOut.setDate(today.getDate() + 29);
-        const endDay = thirtyDaysOut.toISOString().split('T')[0];
+        
+        // Expanded to 60 Days
+        const sixtyDaysOut = new Date(today);
+        sixtyDaysOut.setDate(today.getDate() + 60);
+        const endDay = sixtyDaysOut.toISOString().split('T')[0];
 
         // --- MU Primary API ---
         try {
@@ -146,12 +148,12 @@ async function runScraper() {
 
         // --- GetInvolved (Anthology API) ---
         try {
-            const giUrl = `https://getinvolved.millersville.edu/api/discovery/event/search?endsAfter=${startDay}T00:00:00-04:00&orderByField=endsOn&orderByDirection=ascending&status=Approved&take=100`;
+            const giUrl = `https://getinvolved.millersville.edu/api/discovery/event/search?endsAfter=${startDay}T00:00:00-04:00&orderByField=endsOn&orderByDirection=ascending&status=Approved&take=200`; // Increased to 200 items just in case 60 days has a lot
             const giData = await (await fetch(giUrl, { headers: baseHeaders })).json();
             
             (giData.value || []).forEach(item => {
                 const eventDate = new Date(item.startsOn);
-                if (eventDate >= today && eventDate < thirtyDaysOut) {
+                if (eventDate >= today && eventDate < sixtyDaysOut) {
                     let tags = ["MU GetInvolved"];
                     let rawTags = [];
                     
@@ -162,7 +164,9 @@ async function runScraper() {
                     const name = (item.name || "").toLowerCase();
                     const orgName = (item.organizationName || "").toLowerCase();
 
-                    // Cleanup, Consolidate, and Organize Tags
+                    // The explicit Greek Regex (Excludes "mu " to avoid "MU Chess Club", uses \b to ensure it's a full word)
+                    const greekRegex = /^(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega)\b/i;
+
                     rawTags.forEach(t => {
                         const lowerT = t.toLowerCase();
                         if (lowerT.includes('fundrais')) {
@@ -174,9 +178,9 @@ async function runScraper() {
                         }
                     });
 
-                    // Explicit Group Injections
+                    // Explicit Group Injections & Greek Letter check
                     if (orgName.includes('housing and residential') || orgName.includes('residence hall')) tags.push('Residence Halls');
-                    if (orgName.includes('greek council')) tags.push('Greek Life');
+                    if (orgName.includes('greek council') || greekRegex.test(orgName) || greekRegex.test(name)) tags.push('Greek Life');
                     if (tags.some(t => t.toLowerCase().includes('club sport')) || name.includes('club rugby') || name.includes('club soccer')) tags.push("Club Sports");
 
                     events.push({
@@ -218,8 +222,16 @@ async function runScraper() {
                     }
                     
                     const eventDate = new Date(isoDate);
-                    if (eventDate >= today && eventDate < thirtyDaysOut) {
+                    if (eventDate >= today && eventDate < sixtyDaysOut) {
                         let tags = ["Penn Manor"];
+                        
+                        // New PM Top-Level Categories
+                        if (lowerTitle.includes('board')) tags.push('Board Meetings');
+                        if (lowerTitle.includes('pto')) tags.push('PTO');
+                        if (lowerTitle.includes('staff') || lowerTitle.includes('in-service') || lowerTitle.includes('act 80') || lowerTitle.includes('faculty')) tags.push('Staff');
+                        if (lowerTitle.includes('concert') || lowerTitle.includes('band') || lowerTitle.includes('chorus') || lowerTitle.includes('choir') || lowerTitle.includes('orchestra') || lowerTitle.includes('musical') || lowerTitle.includes('theater') || lowerTitle.includes('play')) tags.push('Music/Arts');
+
+                        // Sub-tags for athletics
                         if (lowerTitle.includes('varsity')) tags.push('Varsity');
                         if (lowerTitle.includes('jv') || lowerTitle.includes('j.v.')) tags.push('JV');
                         if (lowerTitle.includes('junior high') || lowerTitle.includes('jr high')) tags.push('Jr High');
@@ -243,7 +255,7 @@ async function runScraper() {
             const ldMatches = ebText.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi);
             if (ldMatches) {
                 ldMatches.forEach(block => {
-                    try { extractEventbriteEvents(JSON.parse(block.replace(/<script type="application\/ld\+json">|<\/script>/gi, '')), events, today, thirtyDaysOut); } catch(e) {}
+                    try { extractEventbriteEvents(JSON.parse(block.replace(/<script type="application\/ld\+json">|<\/script>/gi, '')), events, today, sixtyDaysOut); } catch(e) {}
                 });
             }
         } catch (ebError) {}

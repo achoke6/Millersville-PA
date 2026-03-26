@@ -156,12 +156,12 @@
     let selectedTags = new Set();
     let currentNews = [], currentNewsFilter = 'All';
 
-    // The Configuration Map for Tier-2 Static Categories
+    // Tier 2 Mapping
     const topLevelSources = ['MU Calendar', 'MU GetInvolved', 'Penn Manor', 'Phantom Power'];
     const subCategoriesMap = {
         'MU Calendar': ['Public Event', 'Student Event', 'Athletic Competitions', 'Arts Concert / Performance'],
         'MU GetInvolved': ['Residence Halls', 'Greek Life', 'Fundraising', 'Club Sports'],
-        'Penn Manor': ['Varsity', 'JV', 'Athletics', 'Boys', 'Girls']
+        'Penn Manor': ['Athletics', 'Music/Arts', 'Board Meetings', 'PTO', 'Staff']
     };
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -187,7 +187,6 @@
         window.scrollTo(0,0);
     };
 
-    // --- EVENTS LOGIC (Three-Tier Faceted Search) ---
     async function loadEvents() {
         try {
             const res = await fetch('events.json');
@@ -205,7 +204,6 @@
         document.querySelectorAll('.source-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
-        // Render Tier 2 (Static Sub-Categories)
         const subContainer = document.getElementById('sub-tier-container');
         subContainer.innerHTML = '';
         
@@ -215,9 +213,20 @@
                 const subBtn = document.createElement('button');
                 subBtn.className = 'sub-cat-btn';
                 subBtn.innerText = tag;
+                
+                // SINGLE-SELECT LOGIC FOR TIER 2
                 subBtn.onclick = () => {
-                    toggleTag(tag);
-                    subBtn.classList.toggle('active', selectedTags.has(tag));
+                    if (selectedTags.has(tag)) {
+                        selectedTags.delete(tag);
+                    } else {
+                        subCategoriesMap[src].forEach(t => selectedTags.delete(t)); // Clear siblings
+                        selectedTags.add(tag);
+                    }
+                    
+                    document.querySelectorAll('.sub-cat-btn').forEach(b => {
+                        b.classList.toggle('active', selectedTags.has(b.innerText));
+                    });
+                    applyFilters();
                 };
                 subContainer.appendChild(subBtn);
             });
@@ -259,7 +268,6 @@
             return Array.from(selectedTags).every(t => eventTags.includes(t));
         });
 
-        // Determine available tags (Exclude Top-Tier and current Sub-Tier options so they don't duplicate)
         let availableTags = new Set();
         const activeSubCats = subCategoriesMap[currentSource] || [];
         
@@ -269,12 +277,10 @@
             });
         });
         
-        // Ensure any selected tags that aren't in the sub-tier remain visible in the cloud
         selectedTags.forEach(t => {
             if (!activeSubCats.includes(t)) availableTags.add(t);
         });
 
-        // Render Tier 3 (Dynamic Tag Cloud)
         const tagContainer = document.getElementById('dynamic-tags');
         tagContainer.innerHTML = '';
         Array.from(availableTags).sort().forEach(tag => {
@@ -287,7 +293,6 @@
 
         document.getElementById('clear-tags-btn').style.display = selectedTags.size > 0 ? 'block' : 'none';
 
-        // Render Cards
         const container = document.getElementById('events-container');
         container.innerHTML = '';
 
@@ -323,7 +328,6 @@
                 actionButton = `<span style="background:var(--bg-main); border: 1px solid var(--border); color:var(--text-dark); padding:6px 12px; border-radius:6px; font-weight:bold; font-size:0.85rem;">🚪 At Door</span>`;
             }
 
-            // Clean up card tags for display
             let displayTags = (e.tags || []).filter(t => !topLevelSources.includes(t));
             let tagsHtml = displayTags.map(t => `<span class="card-tag-pill">${t}</span>`).join('');
             let titleHtml = e.sourceLink ? `<a href="${e.sourceLink}" target="_blank" class="source-link">${e.title} ↗</a>` : e.title;

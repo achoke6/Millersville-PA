@@ -16,16 +16,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          
-      # Run the stable main scraper
       - run: node scripts/scrape.js
-      
-      # Run the isolated Phantom Power test
-      - run: node scripts/phantom-test.js
-
-      # Run the isolated GetInvolved test
-      - run: node scripts/getinvolved-test.js
-      
       - name: Commit and Push
         uses: stefanzweifel/git-auto-commit-action@v5
         with:

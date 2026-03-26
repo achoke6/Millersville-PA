@@ -7,9 +7,9 @@
     <link rel="stylesheet" href="style.css">
     <style>
         /* --- HEADER & MOBILE MENU STYLES --- */
-        .header-container { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; }
+        .header-container { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: var(--bg-main); border-bottom: 1px solid var(--border); }
         .logo-block { display: flex; align-items: center; }
-        .logo-block h1 { margin: 0; padding: 0; font-size: 1.5rem; color: var(--text-dark); line-height: 1; }
+        .logo-block h1 { margin: 0; padding: 0; font-size: 1.5rem; color: var(--text-dark); line-height: 1; cursor: pointer; }
         
         .hamburger-menu { display: none; background: none; border: none; cursor: pointer; padding: 0; margin-left: auto; align-items: center; }
         .close-menu { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; align-self: flex-end; margin-bottom: 20px; color: var(--text-dark); }
@@ -19,29 +19,32 @@
         .nav-link.active { border-bottom: 3px solid var(--accent-fresh) !important; color: var(--text-dark) !important; font-weight: bold; }
         
         @media (max-width: 768px) {
-            .hamburger-menu { display: flex; }
+            .main-nav { display: none; } 
             .menu-overlay.open { display: block; opacity: 1; pointer-events: auto; }
-            
-            /* Slide-in menu relies on absolute positioning, NEVER display: none */
-            .main-nav { position: fixed; top: 0; right: -250px; width: 250px; height: 100vh; background: var(--bg-main); flex-direction: column; padding: 20px; box-shadow: -2px 0 5px rgba(0,0,0,0.1); transition: right 0.3s ease; z-index: 100; align-items: flex-start; border-left: 1px solid var(--border); }
-            .main-nav.open { right: 0; }
-            
+            .main-nav.open { display: flex; position: fixed; top: 0; right: 0; width: 250px; height: 100vh; background: var(--bg-main); flex-direction: column; padding: 20px; box-shadow: -2px 0 5px rgba(0,0,0,0.1); z-index: 100; align-items: flex-start; border-left: 1px solid var(--border); }
             .close-menu { display: block; }
             .nav-link { width: 100%; text-align: left; padding: 12px 0; border-bottom: 1px solid var(--border) !important; border-radius: 0; background: none; font-size: 1.1rem; }
             .nav-link.active { border-bottom: 3px solid var(--theme-color) !important; }
         }
+        @media (min-width: 769px) {
+            .hamburger-menu { display: none !important; }
+        }
 
         /* --- PAGE TITLES & DATE RANGE --- */
         .page-title { margin: 0 0 20px 0; font-size: 1.8rem; font-weight: bold; color: var(--text-dark); }
-        .events-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .events-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
         .events-header-row .page-title { margin-bottom: 0; }
-        .date-range-container { display: flex; align-items: center; gap: 8px; margin: 0 auto; }
-        .date-picker { padding: 8px; border-radius: 6px; border: 1px solid var(--border); font-family: inherit; font-size: 0.9rem; }
+        .date-range-container { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; flex: 1; }
+        .date-picker { padding: 8px; border-radius: 6px; border: 1px solid var(--border); font-family: inherit; font-size: 0.9rem; flex: 1; text-align: center;}
         
-        @media (max-width: 600px) {
-            .events-header-row { flex-direction: column; align-items: flex-start; gap: 12px; }
-            .date-range-container { width: 100%; justify-content: space-between; margin: 0; }
-            .date-picker { flex: 1; text-align: center; }
+        /* NEW HOME GAME TOGGLE SWITCH */
+        .home-game-toggle { display: flex; align-items: center; gap: 8px; background: var(--bg-main); border: 1px solid var(--border); padding: 6px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; color: var(--text-dark); cursor: pointer; transition: 0.2s; user-select: none; }
+        .home-game-toggle.active { background: var(--gold, #ffc107); border-color: var(--gold, #ffc107); color: #000; }
+
+        @media (max-width: 768px) {
+            .events-header-row { flex-direction: column; align-items: flex-start; }
+            .date-range-container { width: 100%; justify-content: space-between; }
+            .home-game-toggle { width: 100%; justify-content: center; padding: 10px; }
         }
 
         /* --- FOOTER STYLES --- */
@@ -75,8 +78,6 @@
         
         .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
         .card-tag-pill { font-size: 0.65rem; background: var(--bg-main); border: 1px solid var(--border); padding: 3px 8px; border-radius: 12px; font-weight: bold; color: var(--text-muted); text-transform: uppercase; }
-        .source-link { color: inherit; text-decoration: none; transition: color 0.2s; }
-        .source-link:hover { color: var(--theme-color); text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -120,7 +121,7 @@
             <h3 style="margin-bottom:10px;">The University Store</h3>
             <a href="https://millersville.store" target="_blank" style="background:var(--gold); color:black; padding:8px 16px; border-radius:6px; text-decoration:none; font-weight:bold; display: inline-block;">Shop Official Gear ➔</a>
         </div>
-        <div class="section-title"><h2 class="page-title">Today's Highlights</h2></div>
+        <h2 class="page-title">Today's Highlights</h2>
         <div id="home-events" class="events-grid"></div>
         <div id="home-specials" class="app-card" style="margin-top:20px;">
             <h4>Dining Specials</h4>
@@ -129,6 +130,7 @@
     </section>
 
     <section id="view-events" class="app-view">
+        
         <div class="events-header-row">
             <h2 class="page-title">Events</h2>
             <div class="date-range-container">
@@ -136,7 +138,14 @@
                 <span style="font-weight:bold; color:var(--text-muted);">to</span>
                 <input type="date" id="end-date" class="date-picker" onchange="applyFilters()">
             </div>
-            <div style="width: 80px; display: none;" class="desktop-spacer"></div>
+            
+            <div id="hgame-toggle-container" class="home-game-toggle" onclick="toggleHomeGameMode()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16">
+                    <path d="M12 4c-4.4 0-8 3.6-8 8s3.6 8 8 8s8-3.6 8-8s-3.6-8-8-8zm0 14c-3.3 0-6-2.7-6-6s2.7-6 6-6s6 2.7 6 6s-2.7 6-6 6z" fill="currentColor"/>
+                    <circle cx="12" cy="12" r="4" fill="currentColor"/>
+                </svg>
+                <span>Home Game Mode</span>
+            </div>
         </div>
 
         <div class="top-tier-filters">
@@ -150,14 +159,6 @@
                 </svg> PM
             </button>
             <button class="source-btn" id="src-other" onclick="setSource('Other', this)">🎸 Other</button>
-            
-            <button class="source-btn" id="src-hgames" onclick="setSource('H Games', this)">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" style="margin-right: 4px; vertical-align: middle;">
-                    <path d="M6 14 C6 9 9 5 12 5 C15 5 18 9 18 14 Z" fill="currentColor" />
-                    <path d="M4 14 Q12 13 22 14 A1 1 0 0 1 22 16 H4 A1 1 0 0 1 4 14 Z" fill="currentColor" />
-                    <circle cx="12" cy="4" r="1.5" fill="currentColor"/>
-                </svg> H Games
-            </button>
         </div>
 
         <div id="sub-tier-container" class="sub-tier-filters"></div>
@@ -175,22 +176,22 @@
     </section>
 
     <section id="view-food" class="app-view">
-        <h2 class="page-title" style="margin-bottom: 20px;">Dining</h2>
+        <h2 class="page-title">Dining</h2>
         <div id="food-container" class="events-grid"></div>
     </section>
     
     <section id="view-housing" class="app-view">
-        <h2 class="page-title" style="margin-bottom: 20px;">Housing</h2>
+        <h2 class="page-title">Housing</h2>
         <div id="housing-container" class="events-grid"></div>
     </section>
     
     <section id="view-services" class="app-view">
-        <h2 class="page-title" style="margin-bottom: 20px;">Services</h2>
+        <h2 class="page-title">Services</h2>
         <div id="services-container" class="events-grid"></div>
     </section>
     
     <section id="view-news" class="app-view">
-        <h2 class="page-title" style="margin-bottom: 20px;">News</h2>
+        <h2 class="page-title">News</h2>
         <div class="tag-cloud" style="margin-bottom: 15px;">
             <button class="tag-pill active" onclick="setNewsFilter('All', this)">All</button>
             <button class="tag-pill" onclick="setNewsFilter('MU', this)">MU News</button>
@@ -225,11 +226,12 @@
     let currentSource = 'All';
     let selectedTags = new Set();
     let currentNews = [], currentNewsFilter = 'All';
-    let activeHSources = new Set(['MU', 'PM', 'Clubs/Orgs']);
+    
+    // NEW INDEPENDENT STATE FOR HOME GAME MODE
+    let isHomeGameMode = false;
 
-    const topLevelSources = ['H Games', 'MU', 'Clubs/Orgs', 'PM', 'Other'];
+    const topLevelSources = ['MU', 'Clubs/Orgs', 'PM', 'Other'];
     const subCategoriesMap = {
-        'H Games': [], 
         'MU': ['Public Event', 'Student Event', 'Athletic Competitions', 'Arts Concert / Performance'],
         'Clubs/Orgs': ['Residence Halls', 'Greek Life', 'Fundraising', 'Club Sports'],
         'PM': ['Athletics', 'Music/Arts', 'Board Meetings', 'PTO', 'Staff']
@@ -238,7 +240,6 @@
     document.addEventListener("DOMContentLoaded", () => {
         const today = new Date();
         const startStr = today.toISOString().split('T')[0];
-        
         const future = new Date(today);
         future.setDate(future.getDate() + 60);
         const endStr = future.toISOString().split('T')[0];
@@ -246,8 +247,6 @@
         document.getElementById('start-date').value = startStr;
         document.getElementById('end-date').value = endStr;
         
-        if(window.innerWidth > 600) { document.querySelector('.desktop-spacer').style.display = 'block'; }
-
         initApp();
     });
 
@@ -261,8 +260,16 @@
     window.toggleMobileMenu = function() {
         const nav = document.getElementById('top-nav');
         const overlay = document.getElementById('menu-overlay');
-        nav.classList.toggle('open');
-        overlay.classList.toggle('open');
+        if (nav.classList.contains('open')) {
+            nav.classList.remove('open');
+            overlay.classList.remove('open');
+            setTimeout(() => { if(!nav.classList.contains('open')) nav.style.display = 'none'; }, 300);
+        } else {
+            nav.style.display = 'flex';
+            void nav.offsetWidth; 
+            nav.classList.add('open');
+            overlay.classList.add('open');
+        }
     };
 
     window.switchView = function(view) {
@@ -284,37 +291,27 @@
         } catch(e) {}
     }
 
-    window.setSource = function(src, btn) {
-        if (currentSource === 'H Games' && ['MU', 'PM', 'Clubs/Orgs'].includes(src)) {
-            if (activeHSources.has(src)) {
-                activeHSources.delete(src);
-                btn.classList.remove('featured-source');
-                btn.style.opacity = '0.4'; 
-            } else {
-                activeHSources.add(src);
-                btn.classList.add('featured-source');
-                btn.style.opacity = '1';
-            }
-            applyFilters();
-            return;
-        }
+    // NEW TOGGLE FUNCTION
+    window.toggleHomeGameMode = function() {
+        isHomeGameMode = !isHomeGameMode;
+        const toggleBtn = document.getElementById('hgame-toggle-container');
+        toggleBtn.classList.toggle('active', isHomeGameMode);
+        applyFilters();
+    };
 
+    window.setSource = function(src, btn) {
         currentSource = src;
         selectedTags.clear(); 
         
         document.querySelectorAll('.source-btn').forEach(b => {
             b.classList.remove('active', 'featured-source');
-            b.style.opacity = '1';
         });
         
         btn.classList.add('active');
 
-        if (src === 'H Games') {
-            activeHSources = new Set(['MU', 'PM', 'Clubs/Orgs']);
-            document.getElementById('src-mu').classList.add('featured-source');
-            document.getElementById('src-pm').classList.add('featured-source');
-            document.getElementById('src-gi').classList.add('featured-source');
-        }
+        // Hide Home Game Toggle if "Other" is selected
+        document.getElementById('hgame-toggle-container').style.display = (src === 'Other') ? 'none' : 'flex';
+        if (src === 'Other') isHomeGameMode = false; // Reset if they navigate away
 
         const subContainer = document.getElementById('sub-tier-container');
         subContainer.innerHTML = '';
@@ -364,6 +361,9 @@
         const startDate = document.getElementById('start-date').value;
         const endDate = document.getElementById('end-date').value;
         
+        // Reset featured highlights
+        document.querySelectorAll('.source-btn').forEach(b => b.classList.remove('featured-source'));
+
         let baseEvents = currentEvents.filter(e => {
             const eDate = e.date.substring(0,10);
             if (startDate && eDate < startDate) return false;
@@ -371,26 +371,38 @@
             
             const eTags = e.tags || [];
 
-            if (currentSource === 'H Games') {
-                if (!eTags.includes('H Games')) return false; 
-                let matchesActiveSource = false;
-                if (activeHSources.has('MU') && (eTags.includes('MU') || eTags.includes('MU Calendar'))) matchesActiveSource = true;
-                if (activeHSources.has('PM') && (eTags.includes('PM') || eTags.includes('Penn Manor'))) matchesActiveSource = true;
-                if (activeHSources.has('Clubs/Orgs') && (eTags.includes('Clubs/Orgs') || eTags.includes('MU GetInvolved'))) matchesActiveSource = true;
-                if (!matchesActiveSource) return false;
-            } else if (currentSource === 'MU') {
-                if (!eTags.includes('MU') && !eTags.includes('MU Calendar')) return false;
-            } else if (currentSource === 'PM') {
-                if (!eTags.includes('PM') && !eTags.includes('Penn Manor')) return false;
-            } else if (currentSource === 'Other') {
-                if (!eTags.includes('Other') && !eTags.includes('Phantom Power')) return false;
-            } else if (currentSource === 'Clubs/Orgs') {
-                if (!eTags.includes('Clubs/Orgs') && !eTags.includes('MU GetInvolved')) return false;
-            } else if (currentSource !== 'All') {
-                if (!eTags.includes(currentSource)) return false;
+            // FILTER: Source Mode
+            let matchesSource = false;
+            if (currentSource === 'All') matchesSource = true;
+            else if (currentSource === 'MU' && (eTags.includes('MU') || eTags.includes('MU Calendar'))) matchesSource = true;
+            else if (currentSource === 'PM' && (eTags.includes('PM') || eTags.includes('Penn Manor'))) matchesSource = true;
+            else if (currentSource === 'Clubs/Orgs' && (eTags.includes('Clubs/Orgs') || eTags.includes('MU GetInvolved'))) matchesSource = true;
+            else if (currentSource === 'Other' && (eTags.includes('Other') || eTags.includes('Phantom Power'))) matchesSource = true;
+            
+            if (!matchesSource) return false;
+
+            // FILTER: Home Game Toggle Logic
+            if (isHomeGameMode) {
+                if (!eTags.includes('Home Game Mode') && !eTags.includes('H Games')) return false;
             }
+
             return true;
         });
+
+        // Apply dynamic highlights to top-tier buttons to show *what* is feeding the Home Game list right now
+        if (isHomeGameMode) {
+            let activeProviders = new Set();
+            baseEvents.forEach(e => {
+                if ((e.tags || []).includes('MU') || (e.tags || []).includes('MU Calendar')) activeProviders.add('MU');
+                if ((e.tags || []).includes('PM') || (e.tags || []).includes('Penn Manor')) activeProviders.add('PM');
+                if ((e.tags || []).includes('Clubs/Orgs') || (e.tags || []).includes('MU GetInvolved')) activeProviders.add('Clubs/Orgs');
+            });
+            if (currentSource === 'All') {
+                if (activeProviders.has('MU')) document.getElementById('src-mu').classList.add('featured-source');
+                if (activeProviders.has('PM')) document.getElementById('src-pm').classList.add('featured-source');
+                if (activeProviders.has('Clubs/Orgs')) document.getElementById('src-gi').classList.add('featured-source');
+            }
+        }
 
         let fullyFiltered = baseEvents.filter(e => {
             const eventTags = e.tags || [];
@@ -408,9 +420,11 @@
         
         selectedTags.forEach(t => { if (!activeSubCats.includes(t)) availableTags.add(t); });
 
+        // Clean up visual redundancies
         availableTags.delete('Athletic Competitions');
         availableTags.delete('Athletics');
         availableTags.delete('H Games');
+        availableTags.delete('Home Game Mode');
 
         const tagContainer = document.getElementById('dynamic-tags');
         tagContainer.innerHTML = '';
@@ -459,7 +473,7 @@
                 actionButton = `<span style="background:var(--bg-main); border: 1px solid var(--border); color:var(--text-dark); padding:6px 12px; border-radius:6px; font-weight:bold; font-size:0.85rem;">🚪 At Door</span>`;
             }
 
-            let displayTags = (e.tags || []).filter(t => !topLevelSources.includes(t) && t !== 'Athletic Competitions' && t !== 'Athletics' && t !== 'MU Calendar' && t !== 'Penn Manor' && t !== 'MU GetInvolved' && t !== 'Phantom Power');
+            let displayTags = (e.tags || []).filter(t => !topLevelSources.includes(t) && t !== 'Athletic Competitions' && t !== 'Athletics' && t !== 'MU Calendar' && t !== 'Penn Manor' && t !== 'MU GetInvolved' && t !== 'Phantom Power' && t !== 'H Games' && t !== 'Home Game Mode');
             let tagsHtml = displayTags.map(t => `<span class="card-tag-pill">${t}</span>`).join('');
 
             container.innerHTML += `

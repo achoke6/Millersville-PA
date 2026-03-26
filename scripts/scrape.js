@@ -152,7 +152,7 @@ async function runScraper() {
                             if (lowerTitle.includes("women's") || lowerTitle.includes("womens") || lowerTitle.includes(" women ")) tags.push("Women's");
                             sportsList.forEach(s => { if (lowerTitle.includes(s.toLowerCase())) tags.push(s); });
                             
-                            if (isHGameFacility(eventLoc, eventTitle)) tags.push("H Games");
+                            if (isHGameFacility(eventLoc, eventTitle)) tags.push("Home Game Mode");
                         }
                     }
 
@@ -212,7 +212,7 @@ async function runScraper() {
                         if (name.includes("women's") || name.includes("womens")) tags.push("Women's");
                         sportsList.forEach(s => { if (name.includes(s.toLowerCase())) tags.push(s); });
                         
-                        if (isHGameFacility(item.location, item.name)) tags.push("H Games");
+                        if (isHGameFacility(item.location, item.name)) tags.push("Home Game Mode");
                     }
 
                     events.push({ title: item.name || "Student Event", date: eventDate.toISOString(), location: item.location || "Campus", tags: [...new Set(tags)], price: "Free", ticketLink: `https://getinvolved.millersville.edu/event/${item.id}`, sourceLink: `https://getinvolved.millersville.edu/event/${item.id}` });
@@ -220,9 +220,11 @@ async function runScraper() {
             });
         } catch (giError) {}
 
-        // --- Penn Manor iCal ---
+        // --- Penn Manor iCal (Fixed Date Range) ---
         try {
-            const pmIcs = await (await fetch('https://www.pennmanor.net/?post_type=tribe_events&ical=1&eventDisplay=list', { headers: baseHeaders })).text();
+            // Explicitly requesting the 60 day window from Penn Manor's server
+            const pmUrl = `https://www.pennmanor.net/?post_type=tribe_events&ical=1&eventDisplay=list&start_date=${startDay}&end_date=${endDay}`;
+            const pmIcs = await (await fetch(pmUrl, { headers: baseHeaders })).text();
             const vEvents = pmIcs.split('BEGIN:VEVENT');
             vEvents.shift(); 
 
@@ -269,7 +271,7 @@ async function runScraper() {
                         if (isAthletic) {
                             if (lowerTitle.includes("men's") || lowerTitle.includes("mens") || lowerTitle.includes("boys")) tags.push("Boys");
                             if (lowerTitle.includes("women's") || lowerTitle.includes("womens") || lowerTitle.includes("girls")) tags.push("Girls");
-                            if (isHGameFacility(locationMatch ? locationMatch[1] : "", title)) tags.push("H Games");
+                            if (isHGameFacility(locationMatch ? locationMatch[1] : "", title)) tags.push("Home Game Mode");
                         }
 
                         events.push({ title: title, date: eventDate.toISOString(), location: locationMatch ? locationMatch[1].trim().replace(/\\,/g, ',') : "Penn Manor School District", tags: [...new Set(tags)], price: "Free", ticketLink: "", sourceLink: "https://www.pennmanor.net/calendar/" });

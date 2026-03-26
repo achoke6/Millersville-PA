@@ -123,40 +123,22 @@ async function runScraper() {
             
             if (data.fields && Array.isArray(data.data)) {
                 const fields = data.fields.split(',');
-                
-                // Column Mapping
-                const nameIdx = fields.indexOf('ActivityName');
-                const startIdx = fields.indexOf('StartDateTime');
-                const bldgIdx = fields.indexOf('BuildingCode');
-                const roomIdx = fields.indexOf('RoomName');
-                const descIdx = fields.indexOf('EventMeetingByActivityId.Event.Description');
-                const linkIdx = fields.findIndex(f => f.toLowerCase().includes('url') || f.toLowerCase().includes('link'));
-                const idIdx = fields.indexOf('ActivityId');
-                const typeIdx = fields.indexOf('MeetingType:EventMeetingByActivityId.EventMeetingType.Name');
-                const customerIdx = fields.indexOf('Customer:EventMeetingByActivityId.Event.Customer.Name');
+                const nameIdx = fields.indexOf('ActivityName'), startIdx = fields.indexOf('StartDateTime'), bldgIdx = fields.indexOf('BuildingCode'), roomIdx = fields.indexOf('RoomName'), descIdx = fields.indexOf('EventMeetingByActivityId.Event.Description'), linkIdx = fields.findIndex(f => f.toLowerCase().includes('url') || f.toLowerCase().includes('link')), idIdx = fields.indexOf('ActivityId'), typeIdx = fields.indexOf('MeetingType:EventMeetingByActivityId.EventMeetingType.Name'), customerIdx = fields.indexOf('Customer:EventMeetingByActivityId.Event.Customer.Name');
 
                 data.data.forEach(row => {
                     const eventTitle = row[nameIdx] || "Campus Event";
                     const eventLoc = `${row[bldgIdx] || ''} ${row[roomIdx] || ''}`.trim() || "Campus";
                     const pricing = extractPricing(row[descIdx] || "", eventTitle, eventLoc, linkIdx !== -1 ? (row[linkIdx] || "") : "");
                     
-                    // Build Dynamic Tags
                     let tags = ["MU Calendar"];
                     if (typeIdx !== -1 && row[typeIdx]) tags.push(row[typeIdx].trim());
                     if (customerIdx !== -1 && row[customerIdx]) tags.push(row[customerIdx].trim());
 
-                    // Build Exact Source Link
                     const eventId = idIdx !== -1 ? row[idIdx] : "";
                     const sourceLink = eventId ? `https://www.millersville.edu/calendar/events/${eventId}` : "https://www.millersville.edu/calendar/";
 
                     events.push({ 
-                        title: eventTitle, 
-                        date: row[startIdx], 
-                        location: eventLoc, 
-                        tags: [...new Set(tags)], 
-                        price: pricing.price, 
-                        ticketLink: pricing.link, 
-                        sourceLink: sourceLink 
+                        title: eventTitle, date: row[startIdx], location: eventLoc, tags: [...new Set(tags)], price: pricing.price, ticketLink: pricing.link, sourceLink: sourceLink 
                     });
                 });
             }
@@ -171,11 +153,30 @@ async function runScraper() {
                 const eventDate = new Date(item.startsOn);
                 if (eventDate >= today && eventDate < thirtyDaysOut) {
                     let tags = ["MU GetInvolved"];
-                    if (item.organizationName) tags.push(item.organizationName.trim());
-                    if (item.theme && item.theme !== "Not Applicable") tags.push(item.theme.trim());
-                    (item.categoryNames || []).forEach(c => tags.push(c.trim()));
+                    let rawTags = [];
+                    
+                    if (item.organizationName) rawTags.push(item.organizationName.trim());
+                    if (item.theme && item.theme !== "Not Applicable") rawTags.push(item.theme.trim());
+                    (item.categoryNames || []).forEach(c => rawTags.push(c.trim()));
                     
                     const name = (item.name || "").toLowerCase();
+                    const orgName = (item.organizationName || "").toLowerCase();
+
+                    // Cleanup, Consolidate, and Organize Tags
+                    rawTags.forEach(t => {
+                        const lowerT = t.toLowerCase();
+                        if (lowerT.includes('fundrais')) {
+                            if (!tags.includes('Fundraising')) tags.push('Fundraising');
+                        } else if (lowerT.includes('fraternity') || lowerT.includes('sorority') || lowerT.includes('greek')) {
+                            if (!tags.includes('Greek Life')) tags.push('Greek Life');
+                        } else {
+                            tags.push(t);
+                        }
+                    });
+
+                    // Explicit Group Injections
+                    if (orgName.includes('housing and residential') || orgName.includes('residence hall')) tags.push('Residence Halls');
+                    if (orgName.includes('greek council')) tags.push('Greek Life');
                     if (tags.some(t => t.toLowerCase().includes('club sport')) || name.includes('club rugby') || name.includes('club soccer')) tags.push("Club Sports");
 
                     events.push({
@@ -229,13 +230,7 @@ async function runScraper() {
                         sports.forEach(s => { if (lowerTitle.includes(s.toLowerCase())) { tags.push(s); tags.push('Athletics'); } });
 
                         events.push({
-                            title: title,
-                            date: eventDate.toISOString(),
-                            location: locationMatch ? locationMatch[1].trim().replace(/\\,/g, ',') : "Penn Manor School District",
-                            tags: [...new Set(tags)], 
-                            price: "Free", 
-                            ticketLink: "",
-                            sourceLink: "https://www.pennmanor.net/calendar/"
+                            title: title, date: eventDate.toISOString(), location: locationMatch ? locationMatch[1].trim().replace(/\\,/g, ',') : "Penn Manor School District", tags: [...new Set(tags)], price: "Free", ticketLink: "", sourceLink: "https://www.pennmanor.net/calendar/"
                         });
                     }
                 }

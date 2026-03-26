@@ -11,16 +11,25 @@
         .live-dot { width: 8px; height: 8px; background: white; border-radius: 50%; display: inline-block; animation: blink 1.5s infinite; }
         @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
         
-        /* New Top-Tier and Sub-Tag Styles */
+        /* 3-Tier Navigation Styles */
         .controls-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 10px; flex-wrap: wrap; }
         .date-picker { padding: 8px; border-radius: 6px; border: 1px solid var(--border); font-family: inherit; font-size: 0.9rem; }
         .clear-btn { background: #fee2e2; color: #dc2626; border: none; padding: 8px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; cursor: pointer; display: none; }
         
+        /* Tier 1: Main Source */
         .top-tier-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
         .source-btn { background: var(--bg-main); border: 2px solid var(--border); color: var(--text-dark); padding: 8px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; }
         .source-btn:hover { border-color: var(--theme-color); }
         .source-btn.active { background: var(--theme-color); color: white; border-color: var(--theme-color); }
 
+        /* Tier 2: Static Sub-Categories */
+        .sub-tier-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dashed var(--border); display: none; }
+        .sub-tier-filters.active { display: flex; }
+        .sub-cat-btn { background: var(--bg-main); border: 1px solid var(--border); color: var(--text-dark); padding: 6px 14px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; cursor: pointer; transition: 0.2s; }
+        .sub-cat-btn:hover { border-color: var(--theme-color); }
+        .sub-cat-btn.active { background: var(--borough-blue); color: var(--gold); border-color: var(--borough-blue); }
+
+        /* Tier 3: Dynamic Tag Cloud */
         .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
         .tag-pill { background: var(--bg-main); border: 1px solid var(--border); color: var(--text-dark); padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; transition: 0.2s; user-select: none; }
         .tag-pill:hover { border-color: var(--theme-color); }
@@ -36,7 +45,7 @@
 
 <header>
     <div class="header-container">
-		<div class="logo-block">
+        <div class="logo-block">
             <h1>Millersville.APP</h1>
             <p id="sub-header">Web sourced community resource.</p>
             <p class="disclaimer">Independent aggregator. Not affiliated with, or endorsed by, any featured institutions, schools, or venues.</p>
@@ -81,6 +90,8 @@
             <button class="source-btn" onclick="setSource('Penn Manor', this)">☄️ Penn Manor</button>
             <button class="source-btn" onclick="setSource('Phantom Power', this)">🎸 Phantom Power</button>
         </div>
+
+        <div id="sub-tier-container" class="sub-tier-filters"></div>
 
         <div class="controls-header">
             <input type="date" id="event-date-picker" class="date-picker" onchange="applyFilters()">
@@ -144,7 +155,14 @@
     let currentSource = 'All';
     let selectedTags = new Set();
     let currentNews = [], currentNewsFilter = 'All';
+
+    // The Configuration Map for Tier-2 Static Categories
     const topLevelSources = ['MU Calendar', 'MU GetInvolved', 'Penn Manor', 'Phantom Power'];
+    const subCategoriesMap = {
+        'MU Calendar': ['Public Event', 'Student Event', 'Athletic Competitions', 'Arts Concert / Performance'],
+        'MU GetInvolved': ['Residence Halls', 'Greek Life', 'Fundraising', 'Club Sports'],
+        'Penn Manor': ['Varsity', 'JV', 'Athletics', 'Boys', 'Girls']
+    };
 
     document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('event-date-picker').value = new Date().toISOString().split('T')[0];
@@ -153,20 +171,13 @@
 
     async function initApp() {
         await Promise.allSettled([
-            loadWeather(),
-            loadSpecials(),
-            loadEvents(),
-            loadDining(),
-            loadHousing(),
-            loadServices(),
-            loadNews()
+            loadWeather(), loadSpecials(), loadEvents(), loadDining(), loadHousing(), loadServices(), loadNews()
         ]);
         renderHomeUI();
         setInterval(refreshCam, 60000);
         refreshCam(); 
     }
 
-    // --- NAVIGATION ---
     window.switchView = function(view) {
         document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
         document.getElementById(`view-${view}`).classList.add('active');
@@ -176,7 +187,7 @@
         window.scrollTo(0,0);
     };
 
-    // --- EVENTS LOGIC (Two-Tier Faceted Search) ---
+    // --- EVENTS LOGIC (Three-Tier Faceted Search) ---
     async function loadEvents() {
         try {
             const res = await fetch('events.json');
@@ -189,9 +200,31 @@
 
     window.setSource = function(src, btn) {
         currentSource = src;
-        selectedTags.clear(); // Wipe sub-tags when changing main source
+        selectedTags.clear(); 
+        
         document.querySelectorAll('.source-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+
+        // Render Tier 2 (Static Sub-Categories)
+        const subContainer = document.getElementById('sub-tier-container');
+        subContainer.innerHTML = '';
+        
+        if (subCategoriesMap[src]) {
+            subContainer.classList.add('active');
+            subCategoriesMap[src].forEach(tag => {
+                const subBtn = document.createElement('button');
+                subBtn.className = 'sub-cat-btn';
+                subBtn.innerText = tag;
+                subBtn.onclick = () => {
+                    toggleTag(tag);
+                    subBtn.classList.toggle('active', selectedTags.has(tag));
+                };
+                subContainer.appendChild(subBtn);
+            });
+        } else {
+            subContainer.classList.remove('active');
+        }
+
         applyFilters();
     };
 
@@ -203,6 +236,7 @@
 
     window.clearTags = function() {
         selectedTags.clear();
+        document.querySelectorAll('.sub-cat-btn').forEach(b => b.classList.remove('active'));
         applyFilters();
     }
 
@@ -214,29 +248,33 @@
     function updateEventsUI() {
         const selectedDate = document.getElementById('event-date-picker').value;
         
-        // Base Filter: Source and Date
         let baseEvents = currentEvents.filter(e => {
             if (selectedDate && e.date.substring(0,10) < selectedDate) return false;
             if (currentSource !== 'All' && !(e.tags || []).includes(currentSource)) return false;
             return true;
         });
 
-        // Tag Filter: Event must have ALL selected sub-tags
         let fullyFiltered = baseEvents.filter(e => {
             const eventTags = e.tags || [];
             return Array.from(selectedTags).every(t => eventTags.includes(t));
         });
 
-        // Determine available tags to prevent dead-ends (excluding the top-level sources)
+        // Determine available tags (Exclude Top-Tier and current Sub-Tier options so they don't duplicate)
         let availableTags = new Set();
+        const activeSubCats = subCategoriesMap[currentSource] || [];
+        
         fullyFiltered.forEach(e => {
             (e.tags || []).forEach(t => {
-                if (!topLevelSources.includes(t)) availableTags.add(t);
+                if (!topLevelSources.includes(t) && !activeSubCats.includes(t)) availableTags.add(t);
             });
         });
-        selectedTags.forEach(t => availableTags.add(t)); // Keep selected visible
+        
+        // Ensure any selected tags that aren't in the sub-tier remain visible in the cloud
+        selectedTags.forEach(t => {
+            if (!activeSubCats.includes(t)) availableTags.add(t);
+        });
 
-        // Render Tag Cloud
+        // Render Tier 3 (Dynamic Tag Cloud)
         const tagContainer = document.getElementById('dynamic-tags');
         tagContainer.innerHTML = '';
         Array.from(availableTags).sort().forEach(tag => {
@@ -247,10 +285,9 @@
             tagContainer.appendChild(btn);
         });
 
-        // Toggle Clear Button
         document.getElementById('clear-tags-btn').style.display = selectedTags.size > 0 ? 'block' : 'none';
 
-        // Pagination & Render
+        // Render Cards
         const container = document.getElementById('events-container');
         container.innerHTML = '';
 
@@ -286,10 +323,9 @@
                 actionButton = `<span style="background:var(--bg-main); border: 1px solid var(--border); color:var(--text-dark); padding:6px 12px; border-radius:6px; font-weight:bold; font-size:0.85rem;">🚪 At Door</span>`;
             }
 
-            // Exclude top level sources from card display tags for cleaner UI
+            // Clean up card tags for display
             let displayTags = (e.tags || []).filter(t => !topLevelSources.includes(t));
             let tagsHtml = displayTags.map(t => `<span class="card-tag-pill">${t}</span>`).join('');
-            
             let titleHtml = e.sourceLink ? `<a href="${e.sourceLink}" target="_blank" class="source-link">${e.title} ↗</a>` : e.title;
 
             container.innerHTML += `

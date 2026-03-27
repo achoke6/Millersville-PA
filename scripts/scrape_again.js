@@ -314,22 +314,12 @@ async function runScraper() {
                 });
                 pmAthCount++;
             } else {
-                // Non-athletic PM event — categorize by title keywords
+                // Non-athletic PM event
                 let tags = ["PM"];
-                const lt = lowerTitle;
-
-                if (/board/i.test(lt)) tags.push('Board/PTO');
-                else if (/pto/i.test(lt)) tags.push('Board/PTO');
-                else if (/staff|in-service|act 80|faculty/i.test(lt)) tags.push('Staff');
-                else if (/concert|band|chorus|choir|orchestra|musical|theater|play|string ensemble|showcase/i.test(lt)) tags.push('Music/Arts');
-                else if (/no school|snow day|spring break|weather make|school now in session|vacation/i.test(lt)) tags.push('No School/Closings');
-                else if (/pssa|grades?\s+(due|posted|are)|report card|marking period/i.test(lt)) tags.push('Testing/Grades');
-                else if (/spirit day|dress down|reward day|talent show|pm cares/i.test(lt)) tags.push('Spirit/Fun Days');
-                else if (/field trip|downtown trip|trip to/i.test(lt)) tags.push('Field Trips');
-                else if (/gotr|girls on the run|heart & sole|physicals|health/i.test(lt)) tags.push('Health/Wellness');
-                else if (/book fair|food fair|picture|assembly|appreciation|librarian/i.test(lt)) tags.push('School Events');
-                else if (/sap meeting|team leader|lunch\s*&?\s*learn|house meeting/i.test(lt)) tags.push('Meetings');
-                else tags.push('Other');
+                if (/board/i.test(lowerTitle)) tags.push('Board Meetings');
+                if (/pto/i.test(lowerTitle)) tags.push('PTO');
+                if (/staff|in-service|act 80|faculty/i.test(lowerTitle)) tags.push('Staff');
+                if (/concert|band|chorus|choir|orchestra|musical|theater|play/i.test(lowerTitle)) tags.push('Music/Arts');
 
                 events.push({
                     title, date: eventDate.toISOString(), location: loc,

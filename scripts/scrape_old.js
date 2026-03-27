@@ -186,49 +186,32 @@ async function runScraper() {
         console.log(`✅ MU Athletics: ${muAthCount} events`);
     } catch (e) { console.error("❌ MU Athletics error:", e.message); }
 
-    // ===== 2. PENN MANOR iCAL (PAGINATED — 30 events per page) =====
+    // ===== 2. PENN MANOR iCAL (ALL EVENTS — ATHLETICS + NON-ATHLETICS) =====
     try {
-        console.log("📡 Fetching Penn Manor iCal (paginated)...");
-        const pmBaseUrl = 'https://www.pennmanor.net/events/list/?ical=1&tribe_event_display=list&tribe_paged=';
-        let allPMEvents = {};
-        let page = 1;
-        const maxPages = 5; // Safety cap: 5 pages × 30 = 150 events max
+        console.log("📡 Fetching Penn Manor iCal...");
+        const pmUrls = [
+            'https://www.pennmanor.net/events/list/?ical=1&tribe_event_display=list',
+            'https://www.pennmanor.net/?post_type=tribe_events&ical=1&eventDisplay=list',
+            'https://www.pennmanor.net/?post_type=tribe_events&ical=1'
+        ];
 
-        while (page <= maxPages) {
+        let pmData = null;
+        for (const url of pmUrls) {
             try {
-                const url = pmBaseUrl + page;
-                console.log(`  Fetching page ${page}...`);
-                const pageData = await ical.async.fromURL(url, { headers: baseHeaders });
-                const pageEvents = Object.values(pageData).filter(e => e.type === 'VEVENT');
-                console.log(`  → Page ${page}: ${pageEvents.length} VEVENTs`);
-
-                if (pageEvents.length === 0) break; // No more pages
-
-                // Merge into allPMEvents (keyed by UID to dedupe across pages)
-                for (const [key, val] of Object.entries(pageData)) {
-                    if (val.type === 'VEVENT') allPMEvents[val.uid || key] = val;
-                }
-
-                // If we got fewer than 30, this is the last page
-                if (pageEvents.length < 30) break;
-                page++;
-            } catch (err) {
-                console.log(`  → Page ${page} failed: ${err.message}`);
-                break;
-            }
+                console.log(`  Trying: ${url.substring(0, 70)}...`);
+                pmData = await ical.async.fromURL(url, { headers: baseHeaders });
+                const count = Object.values(pmData).filter(e => e.type === 'VEVENT').length;
+                console.log(`  → Got ${count} VEVENTs`);
+                if (count > 0) break;
+            } catch (err) { console.log(`  → Failed: ${err.message}`); }
         }
 
-        const totalPMRaw = Object.keys(allPMEvents).length;
-        console.log(`  Total unique PM VEVENTs across ${page} page(s): ${totalPMRaw}`);
-
-        if (totalPMRaw === 0) throw new Error('Penn Manor returned no events');
-
-        // Now pmData is our merged object
-        const pmData = allPMEvents;
+        if (!pmData) throw new Error('All Penn Manor URLs failed');
 
         let pmAthCount = 0, pmGenCount = 0;
 
         for (const ev of Object.values(pmData)) {
+            if (ev.type !== 'VEVENT') continue;
             const eventDate = new Date(ev.start);
             if (isNaN(eventDate.getTime()) || eventDate < today || eventDate >= futureDate) continue;
 

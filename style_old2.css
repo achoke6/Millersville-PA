@@ -131,8 +131,6 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .src-btn { background: var(--surface); border: 1.5px solid var(--border); color: var(--text); padding: 7px 14px; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: var(--transition); font-family: inherit; display: flex; align-items: center; gap: 4px; }
 .src-btn:hover { border-color: var(--gold); }
 .src-btn.active { background: var(--gold); color: #000; border-color: var(--gold); }
-.src-btn.active-muted { background: var(--gold-soft); color: var(--text); border-color: var(--gold); }
-.btn-icon { vertical-align: middle; margin-right: 2px; flex-shrink: 0; }
 
 /* Clear button: sits in toolbar-row, right-aligned, hidden by default */
 .clear-btn {

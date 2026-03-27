@@ -16,7 +16,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: node scripts/scrape.js
+      - run: node scripts/pm_test.js
       - name: Commit and Push
         uses: stefanzweifel/git-auto-commit-action@v5
         with:

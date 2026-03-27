@@ -113,6 +113,7 @@
             </button>
         </div>
         <div id="sp-no-source" class="empty-state" style="display:none;">Select a source (PM, MU, or MU Clubs) to view games.</div>
+        <div id="sp-sub-container" class="sub-filter-bar"></div>
         <div id="sp-sport-tags" class="sport-tag-row"></div>
         <div id="sp-events-container" class="card-grid"></div>
         <div class="pagination">
@@ -164,7 +165,7 @@ let allEvents=[], currentNews=[], currentNewsFilter='All';
 let evSource='All', evTags=new Set(), evPage=1, evPerPage=12;
 
 // Sports page state — Home Game Mode ON by default, PM+MU active
-let spActiveSources=new Set(['PM','MU']), spSportTag=null, spPage=1, spPerPage=12, spHomeOnly=true;
+let spActiveSources=new Set(['PM','MU']), spTags=new Set(), spSportTag=null, spPage=1, spPerPage=12, spHomeOnly=true;
 
 const sportsList=['Baseball','Softball','Track','Soccer','Lacrosse','Tennis','Volleyball','Wrestling','Basketball','Football','Field Hockey','Golf','Cross Country','Cheerleading','Swimming','Rugby','Fencing','Esports','Archery'];
 const topSources=['MU','Clubs/Orgs','PM','Other'];
@@ -297,20 +298,43 @@ window.changeEvPage=function(dir){evPage+=dir;if(evPage<1)evPage=1;renderEvents(
 window.toggleSportsSource=function(src){
     if(spActiveSources.has(src)) spActiveSources.delete(src);
     else spActiveSources.add(src);
-    spSportTag=null;
+    spTags.clear(); spSportTag=null;
+    renderSpSubFilters();
     updateSportsUI();
     applySportsFilters();
 };
 
 function updateSportsUI(){
+    // Update source button states
     ['PM','MU','Clubs'].forEach(src=>{
         const btn=document.getElementById('sp-src-'+src.toLowerCase());
         if(btn) btn.classList.toggle('active', spActiveSources.has(src));
     });
+    // Update home toggle
     document.getElementById('hgame-toggle').classList.toggle('active', spHomeOnly);
+    // Show/hide "no source" message
     document.getElementById('sp-no-source').style.display = spActiveSources.size===0 ? 'block' : 'none';
-    const isDefault = spHomeOnly && spActiveSources.size===2 && spActiveSources.has('PM') && spActiveSources.has('MU') && !spActiveSources.has('Clubs') && !spSportTag;
+    // Clear button: show if anything differs from default (home ON, PM+MU selected, Clubs off, no tags, no sport)
+    const isDefault = spHomeOnly && spActiveSources.size===2 && spActiveSources.has('PM') && spActiveSources.has('MU') && !spActiveSources.has('Clubs') && spTags.size===0 && !spSportTag;
     document.getElementById('sp-clear-btn').style.display = isDefault ? 'none' : 'flex';
+}
+
+function renderSpSubFilters(){
+    const c=document.getElementById('sp-sub-container'); c.innerHTML='';
+    if(spActiveSources.size!==1){c.classList.remove('active');return;}
+    const src=Array.from(spActiveSources)[0];
+    const subs=spSubMap[src];
+    if(!subs){c.classList.remove('active');return;}
+    c.classList.add('active');
+    subs.forEach(tag=>{
+        const b=document.createElement('button'); b.className='sub-btn'; b.textContent=tag;
+        b.onclick=()=>{
+            if(spTags.has(tag)) spTags.delete(tag);
+            else{subs.forEach(t=>spTags.delete(t)); spTags.add(tag);}
+            c.querySelectorAll('.sub-btn').forEach(x=>x.classList.toggle('active',spTags.has(x.textContent)));
+            applySportsFilters();
+        }; c.appendChild(b);
+    });
 }
 
 window.toggleHomeGameMode=function(){
@@ -318,9 +342,11 @@ window.toggleHomeGameMode=function(){
     updateSportsUI();
     applySportsFilters();
 };
+
 window.clearSportsFilters=function(){
-    spSportTag=null; spHomeOnly=true;
+    spTags.clear(); spSportTag=null; spHomeOnly=true;
     spActiveSources=new Set(['PM','MU']);
+    renderSpSubFilters();
     updateSportsUI();
     applySportsFilters();
 };
@@ -347,6 +373,7 @@ function renderSports(){
         const matchesAny=Array.from(spActiveSources).some(src=>matchesSportSource(tags,src));
         if(!matchesAny) return false;
         if(spHomeOnly&&!tags.includes('Home Game Mode')&&!tags.includes('H Games')) return false;
+        if(spTags.size>0&&!Array.from(spTags).every(t=>tags.includes(t))) return false;
         return true;
     });
 

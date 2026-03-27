@@ -186,14 +186,13 @@ async function runScraper() {
         console.log(`✅ MU Athletics: ${muAthCount} events`);
     } catch (e) { console.error("❌ MU Athletics error:", e.message); }
 
-    // ===== 2. PENN MANOR iCAL (PAGINATED — fetch until we cover the full date range) =====
+    // ===== 2. PENN MANOR iCAL (PAGINATED — 30 events per page) =====
     try {
-        console.log("📡 Fetching Penn Manor iCal (paginated until " + endDay + ")...");
+        console.log("📡 Fetching Penn Manor iCal (paginated)...");
         const pmBaseUrl = 'https://www.pennmanor.net/events/list/?ical=1&tribe_event_display=list&tribe_paged=';
         let allPMEvents = {};
         let page = 1;
-        const maxPages = 20; // Hard safety cap
-        let latestEventDate = null;
+        const maxPages = 10; // Safety cap: 10 pages × 30 = 300 events max
 
         while (page <= maxPages) {
             try {
@@ -203,48 +202,15 @@ async function runScraper() {
                 const pageEvents = Object.values(pageData).filter(e => e.type === 'VEVENT');
                 console.log(`  → Page ${page}: ${pageEvents.length} VEVENTs`);
 
-                if (pageEvents.length === 0) {
-                    console.log(`  → Empty page, stopping.`);
-                    break;
-                }
+                if (pageEvents.length === 0) break; // No more pages
 
-                // Merge into allPMEvents, count truly new ones
-                let newCount = 0;
+                // Merge into allPMEvents (keyed by UID to dedupe across pages)
                 for (const [key, val] of Object.entries(pageData)) {
-                    if (val.type === 'VEVENT') {
-                        const uid = val.uid || key;
-                        if (!allPMEvents[uid]) newCount++;
-                        allPMEvents[uid] = val;
-                    }
+                    if (val.type === 'VEVENT') allPMEvents[val.uid || key] = val;
                 }
 
-                // Find latest event date on this page
-                let pageLatest = null;
-                pageEvents.forEach(ev => {
-                    const d = new Date(ev.start);
-                    if (!isNaN(d.getTime()) && (!pageLatest || d > pageLatest)) pageLatest = d;
-                });
-                if (pageLatest) {
-                    latestEventDate = pageLatest;
-                    console.log(`  → Latest: ${pageLatest.toISOString().split('T')[0]} | New unique: ${newCount}`);
-                }
-
-                // Stop if we've reached the end of our date range
-                if (latestEventDate && latestEventDate >= futureDate) {
-                    console.log(`  → Covered full range through ${endDay}, stopping.`);
-                    break;
-                }
-                // Stop if partial page (no more data)
-                if (pageEvents.length < 30) {
-                    console.log(`  → Partial page (${pageEvents.length} < 30), likely last page.`);
-                    break;
-                }
-                // Stop if no new unique events (all dupes)
-                if (newCount === 0) {
-                    console.log(`  → No new unique events, stopping.`);
-                    break;
-                }
-
+                // If we got fewer than 30, this is the last page
+                if (pageEvents.length < 30) break;
                 page++;
             } catch (err) {
                 console.log(`  → Page ${page} failed: ${err.message}`);
@@ -253,11 +219,11 @@ async function runScraper() {
         }
 
         const totalPMRaw = Object.keys(allPMEvents).length;
-        const coverageEnd = latestEventDate ? latestEventDate.toISOString().split('T')[0] : 'unknown';
-        console.log(`  Total unique: ${totalPMRaw} across ${page} page(s), coverage through ${coverageEnd}`);
+        console.log(`  Total unique PM VEVENTs across ${page} page(s): ${totalPMRaw}`);
 
         if (totalPMRaw === 0) throw new Error('Penn Manor returned no events');
 
+        // Now pmData is our merged object
         const pmData = allPMEvents;
 
         let pmAthCount = 0, pmGenCount = 0;

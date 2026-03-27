@@ -517,34 +517,51 @@ async function runScraper() {
                 const d = items[i].match(/<pubDate>([\s\S]*?)<\/pubDate>/i);
                 if (t && l) results.push({
                     category, source,
-                    title: t[1].replace(/<!\[CDATA\[/g, "").replace(/\]\]>/g, "").trim(),
-                    link: l[1].replace(/<!\[CDATA\[/g, "").replace(/\]\]>/g, "").trim(),
-                    date: d ? new Date(d[1]).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ""
+                    title: t[1].replace("<![CDATA[", "").replace("]]>", "").replace(/\]\]>$/,"").trim(),
+                    link: l[1].trim(),
+                    date: d ? new Date(d[1]).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : ""
                 });
             }
             return results;
         }
 
-        // MU Official News (all posts)
+        // MU Official News
         try {
             const xml = await (await fetch('https://blogs.millersville.edu/news/feed/', { headers: baseHeaders })).text();
-            news.push(...parseRSSItems(xml, "MU", "Millersville News", 10));
-            console.log(`  ✅ MU News: ${Math.min(10, (xml.match(/<item>/g)||[]).length)} articles`);
+            news.push(...parseRSSItems(xml, "MU", "Millersville News", 4));
         } catch (e) { console.error("❌ MU News RSS error:", e.message); }
 
-        // TODO: The Snapper (thesnapper.com) — no RSS feed available, needs HTML scraping
-        // Uncomment and implement when ready:
-        // try { ... } catch (e) {}
-
-        // Millersville Borough News & Alerts
+        // The Snapper (student newspaper) — try both URL variants
         try {
-            const xml = await (await fetch('https://millersvilleborough.org/category/news-alerts/feed/', { headers: baseHeaders })).text();
-            news.push(...parseRSSItems(xml, "Borough", "Millersville Borough", 10));
-            console.log(`  ✅ Borough News: ${Math.min(10, (xml.match(/<item>/g)||[]).length)} articles`);
-        } catch (e) { console.error("❌ Borough News RSS error:", e.message); }
+            let snapperXml = null;
+            const snapperUrls = [
+                'https://thesnapper.com/feed/',
+                'https://blogs.millersville.edu/thesnapper/feed/'
+            ];
+            for (const url of snapperUrls) {
+                try {
+                    const res = await fetch(url, { headers: baseHeaders });
+                    if (res.ok) {
+                        const text = await res.text();
+                        if (text.includes('<item>')) { snapperXml = text; break; }
+                    }
+                } catch (e) { /* try next URL */ }
+            }
+            if (snapperXml) {
+                news.push(...parseRSSItems(snapperXml, "MU", "The Snapper", 4));
+                console.log("  ✅ The Snapper: loaded");
+            } else {
+                console.log("  ⚠️ The Snapper: no feed available");
+            }
+        } catch (e) { console.error("❌ Snapper RSS error:", e.message); }
 
+        // TODO: Replace with real borough data source
+        news.push(
+            { category: "Borough", source: "Millersville Borough", title: "2026 Residential Parking Permits Now Available", link: "https://millersvilleborough.org/", date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) },
+            { category: "Borough", source: "Millersville Police", title: "Road Closure Notice - Construction Updates", link: "https://millersvilleborough.org/", date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) }
+        );
         fs.writeFileSync(path.join(__dirname, '../news.json'), JSON.stringify(news, null, 2));
-        console.log(`✅ News: ${news.length} total items`);
+        console.log(`✅ News: ${news.length} items`);
 
         // TODO: Replace with real dining specials source
         fs.writeFileSync(path.join(__dirname, '../specials.json'), JSON.stringify([

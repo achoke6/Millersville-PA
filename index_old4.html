@@ -102,18 +102,18 @@
             <span class="date-sep">to</span>
             <input type="date" id="sp-end-date" class="date-input" onchange="applySportsFilters()">
         </div>
-        <div class="filter-bar sp-source-row">
+        <div class="filter-bar" id="sp-filter-bar">
             <div class="filter-group" id="sp-source-group">
-                <button class="src-btn active" id="sp-src-pm" onclick="toggleSportsSource('PM')"><svg class="btn-icon" width="14" height="14"><use href="#icon-comet"/></svg> PM</button>
-                <button class="src-btn active" id="sp-src-mu" onclick="toggleSportsSource('MU')">🏴‍☠️ MU</button>
+                <button class="src-btn" id="sp-src-pm" onclick="toggleSportsSource('PM')"><svg class="btn-icon" width="14" height="14"><use href="#icon-comet"/></svg> PM</button>
+                <button class="src-btn" id="sp-src-mu" onclick="toggleSportsSource('MU')">🏴‍☠️ MU</button>
                 <button class="src-btn" id="sp-src-clubs" onclick="toggleSportsSource('Clubs')">🎓 MU Clubs</button>
             </div>
-            <button class="home-toggle active" id="hgame-toggle" onclick="toggleHomeGameMode()" title="Home Games Only">
-                <svg width="20" height="20"><use href="#icon-house"/></svg>
-            </button>
         </div>
-        <div id="sp-no-source" class="empty-state" style="display:none;">Select a source (PM, MU, or MU Clubs) to view games.</div>
         <div id="sp-sub-container" class="sub-filter-bar"></div>
+        <div class="hgame-toggle active" id="hgame-toggle" onclick="toggleHomeGameMode()">
+            <svg class="btn-icon" width="18" height="18"><use href="#icon-house"/></svg>
+            <span>Home Games Only</span>
+        </div>
         <div id="sp-sport-tags" class="sport-tag-row"></div>
         <div id="sp-events-container" class="card-grid"></div>
         <div class="pagination">
@@ -294,33 +294,45 @@ window.changeEvPage=function(dir){evPage+=dir;if(evPage<1)evPage=1;renderEvents(
 
 /* ==================== SPORTS PAGE ==================== */
 
-// Toggle a source on/off
+// Toggle a source on/off (multi-select in home game mode, exclusive otherwise)
 window.toggleSportsSource=function(src){
-    if(spActiveSources.has(src)) spActiveSources.delete(src);
-    else spActiveSources.add(src);
+    if(spHomeOnly){
+        // Multi-select toggle: click to add/remove
+        if(spActiveSources.has(src)) spActiveSources.delete(src);
+        else spActiveSources.add(src);
+        // Must have at least one source
+        if(spActiveSources.size===0) spActiveSources.add(src);
+    } else {
+        // Exclusive mode: click selects only this one, click again selects all
+        if(spActiveSources.size===1 && spActiveSources.has(src)){
+            spActiveSources=new Set(['PM','MU','Clubs']); // back to all
+        } else {
+            spActiveSources=new Set([src]);
+        }
+    }
     spTags.clear(); spSportTag=null;
     renderSpSubFilters();
-    updateSportsUI();
+    updateSportsSourceButtons();
     applySportsFilters();
 };
 
-function updateSportsUI(){
-    // Update source button states
-    ['PM','MU','Clubs'].forEach(src=>{
+function updateSportsSourceButtons(){
+    const allSrcs=['PM','MU','Clubs'];
+    const allActive = allSrcs.every(s=>spActiveSources.has(s));
+    
+    allSrcs.forEach(src=>{
         const btn=document.getElementById('sp-src-'+src.toLowerCase());
-        if(btn) btn.classList.toggle('active', spActiveSources.has(src));
+        if(!btn) return;
+        btn.classList.remove('active','active-muted');
+        if(spActiveSources.has(src)){
+            btn.classList.add(spHomeOnly ? 'active-muted' : 'active');
+        }
     });
-    // Update home toggle
-    document.getElementById('hgame-toggle').classList.toggle('active', spHomeOnly);
-    // Show/hide "no source" message
-    document.getElementById('sp-no-source').style.display = spActiveSources.size===0 ? 'block' : 'none';
-    // Clear button: show if anything differs from default (home ON, PM+MU selected, Clubs off, no tags, no sport)
-    const isDefault = spHomeOnly && spActiveSources.size===2 && spActiveSources.has('PM') && spActiveSources.has('MU') && !spActiveSources.has('Clubs') && spTags.size===0 && !spSportTag;
-    document.getElementById('sp-clear-btn').style.display = isDefault ? 'none' : 'flex';
 }
 
 function renderSpSubFilters(){
     const c=document.getElementById('sp-sub-container'); c.innerHTML='';
+    // Only show sub-filters if exactly one source is active
     if(spActiveSources.size!==1){c.classList.remove('active');return;}
     const src=Array.from(spActiveSources)[0];
     const subs=spSubMap[src];
@@ -339,45 +351,56 @@ function renderSpSubFilters(){
 
 window.toggleHomeGameMode=function(){
     spHomeOnly=!spHomeOnly;
-    updateSportsUI();
+    document.getElementById('hgame-toggle').classList.toggle('active',spHomeOnly);
+    if(spHomeOnly){
+        // Reset to default home game sources: PM + MU
+        spActiveSources=new Set(['PM','MU']);
+    } else {
+        // Show all sources
+        spActiveSources=new Set(['PM','MU','Clubs']);
+    }
+    spTags.clear(); spSportTag=null;
+    renderSpSubFilters();
+    updateSportsSourceButtons();
     applySportsFilters();
 };
 
 window.clearSportsFilters=function(){
     spTags.clear(); spSportTag=null; spHomeOnly=true;
     spActiveSources=new Set(['PM','MU']);
+    document.getElementById('hgame-toggle').classList.add('active');
     renderSpSubFilters();
-    updateSportsUI();
+    updateSportsSourceButtons();
     applySportsFilters();
 };
 
 window.applySportsFilters=function(){spPage=1;renderSports();};
 
 function renderSports(){
-    if(spActiveSources.size===0){
-        document.getElementById('sp-events-container').innerHTML='';
-        document.getElementById('sp-sport-tags').innerHTML='';
-        document.getElementById('sp-page-info').textContent='Page 1 of 1';
-        updateSportsUI();
-        return;
-    }
-
     const start=document.getElementById('sp-start-date').value, end=document.getElementById('sp-end-date').value;
-    updateSportsUI();
+    // Show clear if anything differs from default (home mode ON, PM+MU, no tags, no sport)
+    const isDefault = spHomeOnly && spActiveSources.size===2 && spActiveSources.has('PM') && spActiveSources.has('MU') && spTags.size===0 && !spSportTag;
+    document.getElementById('sp-clear-btn').style.display=isDefault?'none':'flex';
 
     let baseFiltered=allEvents.filter(e=>{
         if(!isSportEvent(e)) return false;
         const d=e.date.substring(0,10);
         if(start&&d<start) return false; if(end&&d>end) return false;
         const tags=e.tags||[];
-        const matchesAny=Array.from(spActiveSources).some(src=>matchesSportSource(tags,src));
+
+        // Source filter: event must match at least one active source
+        const matchesAny = Array.from(spActiveSources).some(src=>matchesSportSource(tags,src));
         if(!matchesAny) return false;
+
+        // Home game filter
         if(spHomeOnly&&!tags.includes('Home Game Mode')&&!tags.includes('H Games')) return false;
+        // Sub-filters (gender/level)
         if(spTags.size>0&&!Array.from(spTags).every(t=>tags.includes(t))) return false;
         return true;
     });
 
     renderSportTypeTags(baseFiltered);
+
     let filtered=spSportTag?baseFiltered.filter(e=>(e.tags||[]).includes(spSportTag)):baseFiltered;
 
     const container=document.getElementById('sp-events-container');

@@ -192,7 +192,7 @@ async function runScraper() {
         const pmBaseUrl = 'https://www.pennmanor.net/events/list/?ical=1&tribe_event_display=list&tribe_paged=';
         let allPMEvents = {};
         let page = 1;
-        const maxPages = 10; // Safety cap: 10 pages × 30 = 300 events max
+        const maxPages = 5; // Safety cap: 5 pages × 30 = 150 events max
 
         while (page <= maxPages) {
             try {

@@ -506,54 +506,21 @@ async function runScraper() {
     // ===== NEWS =====
     try {
         let news = [];
-
-        // Helper to parse RSS items
-        function parseRSSItems(xml, category, source, maxItems) {
+        try {
+            const xml = await (await fetch('https://blogs.millersville.edu/news/feed/', { headers: baseHeaders })).text();
             const items = xml.match(/<item>([\s\S]*?)<\/item>/g) || [];
-            const results = [];
-            for (let i = 0; i < Math.min(maxItems, items.length); i++) {
+            for (let i = 0; i < Math.min(4, items.length); i++) {
                 const t = items[i].match(/<title>([\s\S]*?)<\/title>/i);
                 const l = items[i].match(/<link>([\s\S]*?)<\/link>/i);
                 const d = items[i].match(/<pubDate>([\s\S]*?)<\/pubDate>/i);
-                if (t && l) results.push({
-                    category, source,
-                    title: t[1].replace("<![CDATA[", "").replace("]]>", "").replace(/\]\]>$/,"").trim(),
+                if (t && l) news.push({
+                    category: "MU", source: "Millersville News",
+                    title: t[1].replace("<![CDATA[", "").replace("]]>", "").trim(),
                     link: l[1].trim(),
                     date: d ? new Date(d[1]).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : ""
                 });
             }
-            return results;
-        }
-
-        // MU Official News
-        try {
-            const xml = await (await fetch('https://blogs.millersville.edu/news/feed/', { headers: baseHeaders })).text();
-            news.push(...parseRSSItems(xml, "MU", "Millersville News", 4));
-        } catch (e) { console.error("❌ MU News RSS error:", e.message); }
-
-        // The Snapper (student newspaper) — try both URL variants
-        try {
-            let snapperXml = null;
-            const snapperUrls = [
-                'https://thesnapper.com/feed/',
-                'https://blogs.millersville.edu/thesnapper/feed/'
-            ];
-            for (const url of snapperUrls) {
-                try {
-                    const res = await fetch(url, { headers: baseHeaders });
-                    if (res.ok) {
-                        const text = await res.text();
-                        if (text.includes('<item>')) { snapperXml = text; break; }
-                    }
-                } catch (e) { /* try next URL */ }
-            }
-            if (snapperXml) {
-                news.push(...parseRSSItems(snapperXml, "MU", "The Snapper", 4));
-                console.log("  ✅ The Snapper: loaded");
-            } else {
-                console.log("  ⚠️ The Snapper: no feed available");
-            }
-        } catch (e) { console.error("❌ Snapper RSS error:", e.message); }
+        } catch (e) { console.error("❌ News RSS error:", e.message); }
 
         // TODO: Replace with real borough data source
         news.push(

@@ -86,17 +86,12 @@ function extractEventbriteEvents(ldData, eventsArray, now, futureLimit) {
 // ===== MAIN SCRAPER =====
 
 async function runScraper() {
-    const PAST_DAYS = 30;
-    const FUTURE_DAYS = 60;
-    console.log(`🚀 Starting Millersville Scraper (${PAST_DAYS}d back + ${FUTURE_DAYS}d forward)...`);
+    console.log(`🚀 Starting Millersville Scraper (${SCRAPE_HORIZON_DAYS}-Day Horizon)...`);
 
-    const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()); // midnight today
-    const pastDate = new Date(today);
-    pastDate.setDate(today.getDate() - PAST_DAYS);
+    const today = new Date();
+    const startDay = today.toISOString().split('T')[0];
     const futureDate = new Date(today);
-    futureDate.setDate(today.getDate() + FUTURE_DAYS);
-    const startDay = pastDate.toISOString().split('T')[0];
+    futureDate.setDate(today.getDate() + SCRAPE_HORIZON_DAYS);
     const endDay = futureDate.toISOString().split('T')[0];
 
     // ===== WEATHER =====
@@ -129,7 +124,7 @@ async function runScraper() {
         for (const ev of Object.values(muAthData)) {
             if (ev.type !== 'VEVENT') continue;
             const eventDate = new Date(ev.start);
-            if (isNaN(eventDate.getTime()) || eventDate < pastDate || eventDate >= futureDate) continue;
+            if (isNaN(eventDate.getTime()) || eventDate < today || eventDate >= futureDate) continue;
 
             const summary = ev.summary || '';
             const desc = ev.description || '';
@@ -189,7 +184,7 @@ async function runScraper() {
 
             // Check if game is live (happening right now)
             const eventEnd = ev.end ? new Date(ev.end) : new Date(eventDate.getTime() + 3*60*60*1000);
-            const isLive = now >= eventDate && now <= eventEnd && !gameResult;
+            const isLive = today >= eventDate && today <= eventEnd && !gameResult;
 
             const sourceUrl = ev.url ? ev.url.replace(/&amp;/g, '&') : 'https://millersvilleathletics.com/calendar';
 
@@ -289,7 +284,7 @@ async function runScraper() {
 
         for (const ev of Object.values(pmData)) {
             const eventDate = new Date(ev.start);
-            if (isNaN(eventDate.getTime()) || eventDate < pastDate || eventDate >= futureDate) continue;
+            if (isNaN(eventDate.getTime()) || eventDate < today || eventDate >= futureDate) continue;
 
             const title = ev.summary || 'Penn Manor Event';
             const lowerTitle = title.toLowerCase();
@@ -334,7 +329,7 @@ async function runScraper() {
 
                 // Check if game is live
                 const eventEnd = ev.end ? new Date(ev.end) : new Date(eventDate.getTime() + 2*60*60*1000);
-                const pmIsLive = now >= eventDate && now <= eventEnd;
+                const pmIsLive = today >= eventDate && today <= eventEnd;
 
                 events.push({
                     title, date: eventDate.toISOString(), location: loc,
@@ -449,7 +444,7 @@ async function runScraper() {
 
         (giData.value || []).forEach(item => {
             const eventDate = new Date(item.startsOn);
-            if (eventDate < pastDate || eventDate >= futureDate) return;
+            if (eventDate < today || eventDate >= futureDate) return;
 
             let tags = ["Clubs/Orgs"];
             let rawTags = [];
@@ -519,7 +514,7 @@ async function runScraper() {
         console.log(`✅ Eventbrite: ${ebCount} events`);
     } catch (e) { console.error("❌ Eventbrite error:", e.message); }
 
-    // ===== 6. MILLERSVILLE BOROUGH (Google Calendar iCal — with recurring event expansion) =====
+    // ===== 6. MILLERSVILLE BOROUGH (Google Calendar iCal) =====
     try {
         console.log("📡 Fetching Borough Calendar...");
         const boroughData = await ical.async.fromURL(
@@ -527,78 +522,28 @@ async function runScraper() {
             { headers: baseHeaders }
         );
         let boroughCount = 0;
-        let boroughRecurring = 0;
-
         for (const ev of Object.values(boroughData)) {
             if (ev.type !== 'VEVENT') continue;
+            const eventDate = new Date(ev.start);
+            if (isNaN(eventDate.getTime()) || eventDate < today || eventDate >= futureDate) continue;
 
             const title = ev.summary || 'Borough Event';
             const loc = ev.location || 'Millersville Borough';
+            const desc = ev.description || '';
 
-            // Handle recurring events (RRULE)
-            if (ev.rrule) {
-                try {
-                    const occurrences = ev.rrule.between(pastDate, futureDate);
-                    for (const occ of occurrences) {
-                        // Check for exceptions/modifications (EXDATE)
-                        const occKey = occ.toISOString().split('T')[0];
-                        if (ev.exdate) {
-                            const exdates = Object.values(ev.exdate).map(d => new Date(d).toISOString().split('T')[0]);
-                            if (exdates.includes(occKey)) continue;
-                        }
-
-                        // Preserve original time from start
-                        const origStart = new Date(ev.start);
-                        const eventDate = new Date(occ);
-                        eventDate.setHours(origStart.getHours(), origStart.getMinutes(), origStart.getSeconds());
-
-                        // Check if this occurrence has been modified (RECURRENCE-ID)
-                        if (ev.recurrences && ev.recurrences[occKey]) {
-                            const mod = ev.recurrences[occKey];
-                            events.push({
-                                title: mod.summary || title,
-                                date: new Date(mod.start).toISOString(),
-                                location: mod.location || loc,
-                                tags: ['Borough'],
-                                price: 'Free', ticketLink: '',
-                                sourceLink: 'https://millersvilleborough.org/resident-info/calendar/',
-                                gameResult: '', gameScore: '', streamLink: '', isLive: false
-                            });
-                        } else {
-                            events.push({
-                                title,
-                                date: eventDate.toISOString(),
-                                location: loc,
-                                tags: ['Borough'],
-                                price: 'Free', ticketLink: '',
-                                sourceLink: 'https://millersvilleborough.org/resident-info/calendar/',
-                                gameResult: '', gameScore: '', streamLink: '', isLive: false
-                            });
-                        }
-                        boroughCount++;
-                        boroughRecurring++;
-                    }
-                } catch (rrErr) {
-                    console.log(`  ⚠️ RRULE expansion failed for "${title}": ${rrErr.message}`);
-                }
-            } else {
-                // Single (non-recurring) event
-                const eventDate = new Date(ev.start);
-                if (isNaN(eventDate.getTime()) || eventDate < pastDate || eventDate >= futureDate) continue;
-
-                events.push({
-                    title,
-                    date: eventDate.toISOString(),
-                    location: loc,
-                    tags: ['Borough'],
-                    price: 'Free', ticketLink: '',
-                    sourceLink: ev.url || 'https://millersvilleborough.org/resident-info/calendar/',
-                    gameResult: '', gameScore: '', streamLink: '', isLive: false
-                });
-                boroughCount++;
-            }
+            events.push({
+                title,
+                date: eventDate.toISOString(),
+                location: loc,
+                tags: ['Borough'],
+                price: 'Free',
+                ticketLink: '',
+                sourceLink: ev.url || 'https://millersvilleborough.org/resident-info/calendar/',
+                gameResult: '', gameScore: '', streamLink: '', isLive: false
+            });
+            boroughCount++;
         }
-        console.log(`✅ Borough Calendar: ${boroughCount} events (${boroughRecurring} from recurring)`);
+        console.log(`✅ Borough Calendar: ${boroughCount} events`);
     } catch (e) { console.error("❌ Borough Calendar error:", e.message); }
 
     // ===== DEDUPLICATION & SAVE =====

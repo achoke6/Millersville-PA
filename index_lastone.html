@@ -66,18 +66,12 @@
     <section id="view-events" class="app-view">
         <div class="toolbar-row">
             <h2 class="section-title">Events</h2>
-            <span id="ev-date-label" class="date-label"></span>
             <button id="ev-clear-btn" class="clear-btn" onclick="clearEventFilters()">Clear ✖</button>
         </div>
-        <div class="view-mode-bar">
-            <button class="nav-arrow" id="ev-prev" onclick="evNavPrev()" style="display:none;">←</button>
-            <div class="view-mode-group">
-                <button class="mode-btn" id="ev-mode-past" onclick="setEvMode('past')">Past</button>
-                <button class="mode-btn active" id="ev-mode-upcoming" onclick="setEvMode('upcoming')">Upcoming</button>
-                <button class="mode-btn" id="ev-mode-day" onclick="setEvMode('day')">Day</button>
-                <button class="mode-btn" id="ev-mode-week" onclick="setEvMode('week')">Week</button>
-            </div>
-            <button class="nav-arrow" id="ev-next" onclick="evNavNext()" style="display:none;">→</button>
+        <div class="date-range-row" style="margin-bottom:12px;">
+            <input type="date" id="ev-start-date" class="date-input" onchange="applyEventFilters()">
+            <span class="date-sep">to</span>
+            <input type="date" id="ev-end-date" class="date-input" onchange="applyEventFilters()">
         </div>
         <div class="filter-bar">
             <div class="filter-group">
@@ -91,24 +85,23 @@
         </div>
         <div id="ev-sub-container" class="sub-filter-bar"></div>
         <div id="ev-events-container" class="card-grid"></div>
+        <div class="pagination">
+            <button class="page-btn" onclick="changeEvPage(-1)">← Prev</button>
+            <span id="ev-page-info" class="page-info">Page 1 of 1</span>
+            <button class="page-btn" onclick="changeEvPage(1)">Next →</button>
+        </div>
     </section>
 
     <!-- SPORTS -->
     <section id="view-sports" class="app-view">
         <div class="toolbar-row">
             <h2 class="section-title">Sports</h2>
-            <span id="sp-date-label" class="date-label"></span>
             <button id="sp-clear-btn" class="clear-btn" onclick="clearSportsFilters()">Clear ✖</button>
         </div>
-        <div class="view-mode-bar">
-            <button class="nav-arrow" id="sp-prev" onclick="spNavPrev()" style="display:none;">←</button>
-            <div class="view-mode-group">
-                <button class="mode-btn" id="sp-mode-past" onclick="setSpMode('past')">Past</button>
-                <button class="mode-btn active" id="sp-mode-upcoming" onclick="setSpMode('upcoming')">Upcoming</button>
-                <button class="mode-btn" id="sp-mode-day" onclick="setSpMode('day')">Day</button>
-                <button class="mode-btn" id="sp-mode-week" onclick="setSpMode('week')">Week</button>
-            </div>
-            <button class="nav-arrow" id="sp-next" onclick="spNavNext()" style="display:none;">→</button>
+        <div class="date-range-row" style="margin-bottom:12px;">
+            <input type="date" id="sp-start-date" class="date-input" onchange="applySportsFilters()">
+            <span class="date-sep">to</span>
+            <input type="date" id="sp-end-date" class="date-input" onchange="applySportsFilters()">
         </div>
         <div class="filter-bar sp-source-row">
             <div class="filter-group" id="sp-source-group">
@@ -123,6 +116,11 @@
         <div id="sp-no-source" class="empty-state" style="display:none;">Select a source (PM, MU, or MU Clubs) to view games.</div>
         <div id="sp-sport-tags" class="sport-tag-row"></div>
         <div id="sp-events-container" class="card-grid"></div>
+        <div class="pagination">
+            <button class="page-btn" onclick="changeSpPage(-1)">← Prev</button>
+            <span id="sp-page-info" class="page-info">Page 1 of 1</span>
+            <button class="page-btn" onclick="changeSpPage(1)">Next →</button>
+        </div>
     </section>
 
     <!-- FOOD/DRINK --><section id="view-food" class="app-view"><h2 class="section-title">Food/Drink</h2><div id="food-container" class="card-grid"></div></section>
@@ -171,14 +169,10 @@
 
 <script>
 let allEvents=[], currentNews=[];
-let evSource='All', evTags=new Set();
+let evSource='All', evTags=new Set(), evPage=1, evPerPage=12;
 
-// View mode state for Events page
-let evMode='upcoming', evAnchorDate=new Date();
-
-// Sports page state
-let spActiveSources=new Set(['PM','MU']), spSportTag=null, spHomeOnly=true;
-let spMode='upcoming', spAnchorDate=new Date();
+// Sports page state — Home Game Mode ON by default, PM+MU active
+let spActiveSources=new Set(['PM','MU']), spSportTag=null, spPage=1, spPerPage=12, spHomeOnly=true;
 
 const sportsList=['Baseball','Softball','Track','Soccer','Lacrosse','Tennis','Volleyball','Wrestling','Basketball','Football','Field Hockey','Golf','Cross Country','Cheerleading','Swimming','Rugby','Fencing','Esports','Archery'];
 const topSources=['MU','Clubs/Orgs','PM','Borough','Other'];
@@ -189,41 +183,11 @@ const evSubMap={
     'Clubs/Orgs':['Residence Halls','Greek Life','Fundraising','Other Org'],
     'PM':['No School/Closings','Music/Arts','School Events','Testing/Grades','Spirit/Fun Days','Board/PTO','Staff','Health/Wellness','Field Trips','Meetings','Other']
 };
-
-// Date helpers
-function toDateStr(d){return d.toISOString().split('T')[0];}
-function todayMidnight(){const d=new Date();return new Date(d.getFullYear(),d.getMonth(),d.getDate());}
-function getMonday(d){const day=d.getDay(),diff=d.getDate()-day+(day===0?-6:1);return new Date(d.getFullYear(),d.getMonth(),diff);}
-function addDays(d,n){const r=new Date(d);r.setDate(r.getDate()+n);return r;}
-function fmtDateLabel(d){const t=todayMidnight();if(toDateStr(d)===toDateStr(t))return 'Today, '+d.toLocaleDateString('en-US',{month:'short',day:'numeric'});return d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});}
-function fmtWeekLabel(mon){const sun=addDays(mon,6);return mon.toLocaleDateString('en-US',{month:'short',day:'numeric'})+' – '+sun.toLocaleDateString('en-US',{month:'short',day:'numeric'});}
-
-function getDateRange(mode,anchor){
-    const today=todayMidnight();
-    if(mode==='upcoming') return {start:toDateStr(today),end:'9999-12-31'};
-    if(mode==='past') return {start:'0000-01-01',end:toDateStr(addDays(today,-1))};
-    if(mode==='day') return {start:toDateStr(anchor),end:toDateStr(anchor)};
-    if(mode==='week'){const mon=getMonday(anchor);return {start:toDateStr(mon),end:toDateStr(addDays(mon,6))};}
-    return {start:'0000-01-01',end:'9999-12-31'};
-}
-
-function updateModeUI(prefix,mode,anchor){
-    ['past','upcoming','day','week'].forEach(m=>{
-        const btn=document.getElementById(prefix+'-mode-'+m);
-        if(btn) btn.classList.toggle('active',m===mode);
-    });
-    const prevBtn=document.getElementById(prefix+'-prev');
-    const nextBtn=document.getElementById(prefix+'-next');
-    const label=document.getElementById(prefix+'-date-label');
-    const showArrows=(mode==='day'||mode==='week');
-    if(prevBtn) prevBtn.style.display=showArrows?'flex':'none';
-    if(nextBtn) nextBtn.style.display=showArrows?'flex':'none';
-    if(label){
-        if(mode==='day') label.textContent=fmtDateLabel(anchor);
-        else if(mode==='week') label.textContent=fmtWeekLabel(getMonday(anchor));
-        else label.textContent='';
-    }
-}
+const spSubMap={
+    'MU':["Men's","Women's"],
+    'Clubs':["Men's","Women's"],
+    'PM':['Varsity','JV','Jr High','Boys','Girls']
+};
 
 function isSportEvent(e){
     const t=e.tags||[];
@@ -256,6 +220,11 @@ function matchesSportSource(tags, src) {
 }
 
 document.addEventListener("DOMContentLoaded",()=>{
+    const today=new Date(), startStr=today.toISOString().split('T')[0];
+    const future=new Date(today); future.setDate(future.getDate()+60);
+    const endStr=future.toISOString().split('T')[0];
+    ['ev-start-date','sp-start-date'].forEach(id=>document.getElementById(id).value=startStr);
+    ['ev-end-date','sp-end-date'].forEach(id=>document.getElementById(id).value=endStr);
     initApp();
 });
 
@@ -290,7 +259,7 @@ async function loadEvents(){
 window.setEventSource=function(src,btn){
     evSource=src; evTags.clear();
     btn.closest('.filter-group').querySelectorAll('.src-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active'); renderEvSubFilters(); renderEvents();
+    btn.classList.add('active'); renderEvSubFilters(); applyEventFilters();
 };
 function renderEvSubFilters(){
     const c=document.getElementById('ev-sub-container'); c.innerHTML='';
@@ -302,58 +271,44 @@ function renderEvSubFilters(){
             if(evTags.has(tag)) evTags.delete(tag);
             else{subs.forEach(t=>evTags.delete(t)); evTags.add(tag);}
             c.querySelectorAll('.sub-btn').forEach(x=>x.classList.toggle('active',evTags.has(x.textContent)));
-            renderEvents();
+            applyEventFilters();
         }; c.appendChild(b);
     });
 }
-window.setEvMode=function(mode){
-    evMode=mode;
-    if(mode==='day'||mode==='week') evAnchorDate=todayMidnight();
-    updateModeUI('ev',evMode,evAnchorDate);
-    renderEvents();
-};
-window.evNavPrev=function(){
-    if(evMode==='day') evAnchorDate=addDays(evAnchorDate,-1);
-    else if(evMode==='week') evAnchorDate=addDays(evAnchorDate,-7);
-    updateModeUI('ev',evMode,evAnchorDate);
-    renderEvents();
-};
-window.evNavNext=function(){
-    if(evMode==='day') evAnchorDate=addDays(evAnchorDate,1);
-    else if(evMode==='week') evAnchorDate=addDays(evAnchorDate,7);
-    updateModeUI('ev',evMode,evAnchorDate);
-    renderEvents();
-};
-window.clearEventFilters=function(){evTags.clear();evSource='All';evMode='upcoming';evAnchorDate=todayMidnight();document.getElementById('ev-src-all').click();updateModeUI('ev',evMode,evAnchorDate);};
+window.clearEventFilters=function(){evTags.clear();evSource='All';document.getElementById('ev-src-all').click();};
+window.applyEventFilters=function(){evPage=1;renderEvents();};
 
 function renderEvents(){
-    const range=getDateRange(evMode,evAnchorDate);
-    updateModeUI('ev',evMode,evAnchorDate);
-    document.getElementById('ev-clear-btn').style.display=(evSource!=='All'||evTags.size>0||evMode!=='upcoming')?'flex':'none';
+    const start=document.getElementById('ev-start-date').value, end=document.getElementById('ev-end-date').value;
+    document.getElementById('ev-clear-btn').style.display=(evSource!=='All'||evTags.size>0)?'flex':'none';
     let filtered=allEvents.filter(e=>{
         if(isSportEvent(e)) return false;
         if(isPMSportByTitle(e)) return false;
         const d=e.date.substring(0,10);
-        if(d<range.start||d>range.end) return false;
+        if(start&&d<start) return false; if(end&&d>end) return false;
         if(!matchesSource(e.tags||[],evSource)) return false;
         if(evTags.size>0&&!Array.from(evTags).every(t=>(e.tags||[]).includes(t))) return false;
         return true;
     });
-    // Past mode: sort most recent first
-    if(evMode==='past') filtered.sort((a,b)=>new Date(b.date)-new Date(a.date));
     const container=document.getElementById('ev-events-container');
-    if(filtered.length===0){container.innerHTML='<p class="empty-state">No events found for this view.</p>';return;}
-    container.innerHTML=filtered.map(e=>buildEventCard(e,false)).join('');
+    const totalPages=Math.max(1,Math.ceil(filtered.length/evPerPage));
+    if(evPage>totalPages) evPage=totalPages;
+    document.getElementById('ev-page-info').textContent=`Page ${evPage} of ${totalPages}`;
+    if(filtered.length===0){container.innerHTML='<p class="empty-state">No events found for this filter.</p>';return;}
+    const page=filtered.slice((evPage-1)*evPerPage,evPage*evPerPage);
+    container.innerHTML=page.map(e=>buildEventCard(e,false)).join('');
 }
+window.changeEvPage=function(dir){evPage+=dir;if(evPage<1)evPage=1;renderEvents();window.scrollTo(0,0);};
 
 /* ==================== SPORTS PAGE ==================== */
 
+// Toggle a source on/off
 window.toggleSportsSource=function(src){
     if(spActiveSources.has(src)) spActiveSources.delete(src);
     else spActiveSources.add(src);
     spSportTag=null;
     updateSportsUI();
-    renderSports();
+    applySportsFilters();
 };
 
 function updateSportsUI(){
@@ -363,59 +318,42 @@ function updateSportsUI(){
     });
     document.getElementById('hgame-toggle').classList.toggle('active', spHomeOnly);
     document.getElementById('sp-no-source').style.display = spActiveSources.size===0 ? 'block' : 'none';
+    // Show Clear if home mode is on, or not all sources selected, or sport filter active
     const allSourcesOn = spActiveSources.size===3 && spActiveSources.has('PM') && spActiveSources.has('MU') && spActiveSources.has('Clubs');
-    const isClean = !spHomeOnly && allSourcesOn && !spSportTag && spMode==='upcoming';
+    const isClean = !spHomeOnly && allSourcesOn && !spSportTag;
     document.getElementById('sp-clear-btn').style.display = isClean ? 'none' : 'flex';
-    updateModeUI('sp',spMode,spAnchorDate);
 }
-
-window.setSpMode=function(mode){
-    spMode=mode;
-    if(mode==='day'||mode==='week') spAnchorDate=todayMidnight();
-    updateSportsUI();
-    renderSports();
-};
-window.spNavPrev=function(){
-    if(spMode==='day') spAnchorDate=addDays(spAnchorDate,-1);
-    else if(spMode==='week') spAnchorDate=addDays(spAnchorDate,-7);
-    updateSportsUI();
-    renderSports();
-};
-window.spNavNext=function(){
-    if(spMode==='day') spAnchorDate=addDays(spAnchorDate,1);
-    else if(spMode==='week') spAnchorDate=addDays(spAnchorDate,7);
-    updateSportsUI();
-    renderSports();
-};
 
 window.toggleHomeGameMode=function(){
     spHomeOnly=!spHomeOnly;
     updateSportsUI();
-    renderSports();
+    applySportsFilters();
 };
 window.clearSportsFilters=function(){
     spSportTag=null; spHomeOnly=false;
     spActiveSources=new Set(['PM','MU','Clubs']);
-    spMode='upcoming'; spAnchorDate=todayMidnight();
     updateSportsUI();
-    renderSports();
+    applySportsFilters();
 };
+
+window.applySportsFilters=function(){spPage=1;renderSports();};
 
 function renderSports(){
     if(spActiveSources.size===0){
         document.getElementById('sp-events-container').innerHTML='';
         document.getElementById('sp-sport-tags').innerHTML='';
+        document.getElementById('sp-page-info').textContent='Page 1 of 1';
         updateSportsUI();
         return;
     }
 
-    const range=getDateRange(spMode,spAnchorDate);
+    const start=document.getElementById('sp-start-date').value, end=document.getElementById('sp-end-date').value;
     updateSportsUI();
 
     let baseFiltered=allEvents.filter(e=>{
         if(!isSportEvent(e)) return false;
         const d=e.date.substring(0,10);
-        if(d<range.start||d>range.end) return false;
+        if(start&&d<start) return false; if(end&&d>end) return false;
         const tags=e.tags||[];
         const matchesAny=Array.from(spActiveSources).some(src=>matchesSportSource(tags,src));
         if(!matchesAny) return false;
@@ -426,12 +364,13 @@ function renderSports(){
     renderSportTypeTags(baseFiltered);
     let filtered=spSportTag?baseFiltered.filter(e=>(e.tags||[]).includes(spSportTag)):baseFiltered;
 
-    // Past mode: sort most recent first
-    if(spMode==='past') filtered.sort((a,b)=>new Date(b.date)-new Date(a.date));
-
     const container=document.getElementById('sp-events-container');
-    if(filtered.length===0){container.innerHTML='<p class="empty-state">No sports events found for this view.</p>';return;}
-    container.innerHTML=filtered.map(e=>buildEventCard(e,true)).join('');
+    const totalPages=Math.max(1,Math.ceil(filtered.length/spPerPage));
+    if(spPage>totalPages) spPage=totalPages;
+    document.getElementById('sp-page-info').textContent=`Page ${spPage} of ${totalPages}`;
+    if(filtered.length===0){container.innerHTML='<p class="empty-state">No sports events found for this filter.</p>';return;}
+    const page=filtered.slice((spPage-1)*spPerPage,spPage*spPerPage);
+    container.innerHTML=page.map(e=>buildEventCard(e,true)).join('');
 }
 
 function renderSportTypeTags(baseEvents){
@@ -447,8 +386,9 @@ function renderSportTypeTags(baseEvents){
 }
 window.setSportType=function(sport){
     spSportTag=(spSportTag===sport)?null:sport;
-    renderSports();
+    spPage=1; renderSports();
 };
+window.changeSpPage=function(dir){spPage+=dir;if(spPage<1)spPage=1;renderSports();window.scrollTo(0,0);};
 
 /* ==================== CARD BUILDER ==================== */
 function buildEventCard(e,isSportsPage){

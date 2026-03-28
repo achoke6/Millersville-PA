@@ -1,45 +1,86 @@
 [
   {
-    "name": "Sugar Bowl",
-    "cuisine": "Pizza & Subs",
-    "status": "Order Online",
-    "link": "https://orderonlinemenu.com/SugarBowlMillersville"
-  },
-  {
-    "name": "House of Pizza (Ho' Pie)",
-    "cuisine": "Pizza & Subs",
-    "status": "View Menu Only",
-    "link": "https://www.houseofpizzamillersville.com/menu.html"
-  },
-  {
-    "name": "Two Cousins",
-    "cuisine": "Pizza",
-    "status": "Order Online",
-    "link": "https://order.toasttab.com/online/two-cousins-pizza-millersville-115-manor-avenue-ogxls"
-  },
-  {
-    "name": "Nino's",
-    "cuisine": "Italian & Pizza",
-    "status": "Pickup Only (No Delivery)",
-    "link": "https://www.ninospizzamillersville.com/order"
-  },
-  {
     "name": "Koshary Station",
-    "cuisine": "Egyptian / Middle Eastern",
-    "status": "View Menu Only",
-    "link": "https://www.grubhub.com/restaurant/koshary-station-4-s-prince-st-millersville/7220392"
+    "cuisine": "Egyptian cuisine",
+    "description": "Authentic Egyptian dishes and flavors",
+    "status": "View Menu",
+    "link": "https://www.google.com/maps/search/Koshary+Station+Millersville+PA"
   },
   {
-    "name": "Chick-fil-A",
-    "cuisine": "Fast Food",
-    "status": "App Required",
-    "link": "https://play.google.com/store/apps/details?id=com.blackboard.mobileorder",
-    "iosLink": "https://apps.apple.com/us/app/transact-mobile-ordering/id1494719529"
+    "name": "Cactus Café",
+    "cuisine": "Popular local cafe",
+    "description": "Community favorite café with a warm atmosphere",
+    "status": "View Menu",
+    "link": "https://www.google.com/maps/search/Cactus+Cafe+Millersville+PA"
   },
   {
-    "name": "Raney Cellars Brewing Company",
-    "cuisine": "Brewery & Craft Beer",
-    "status": "Dine-In / Pickup",
-    "link": "https://raneycellarsbrewing.com"
+    "name": "Jack's Family Tavern & Restaurant",
+    "cuisine": "American tavern",
+    "description": "Family-friendly American tavern with classic fare",
+    "status": "View Menu",
+    "link": "https://www.google.com/maps/search/Jacks+Family+Tavern+Millersville+PA"
+  },
+  {
+    "name": "Sugar Bowl Millersville",
+    "cuisine": "American, Stromboli",
+    "description": "Known for stromboli and a large menu",
+    "status": "View Menu",
+    "link": "https://www.google.com/maps/search/Sugar+Bowl+Millersville+PA"
+  },
+  {
+    "name": "Poke Bowl Station",
+    "cuisine": "Poke bowls",
+    "description": "Fresh poke bowls with customizable toppings",
+    "status": "View Menu",
+    "link": "https://www.google.com/maps/search/Poke+Bowl+Station+Millersville+PA"
+  },
+  {
+    "name": "House of Pizza",
+    "cuisine": "Pizza, Italian",
+    "description": "Local pizza shop offering slices",
+    "status": "Order Online",
+    "link": "https://www.houseofpizzamillersville.com/"
+  },
+  {
+    "name": "Two Cousins Pizza Millersville",
+    "cuisine": "Italian, Pizza",
+    "description": "Casual Italian and pizza",
+    "status": "Order Online",
+    "link": "https://order.online/business/two-cousins-pizza-11339584"
+  },
+  {
+    "name": "Nino's New York Style Pizza",
+    "cuisine": "New York-style pizza",
+    "description": "Specialty pies and classic NY-style slices",
+    "status": "View Menu",
+    "link": "https://www.google.com/maps/search/Ninos+New+York+Style+Pizza+Millersville+PA"
+  },
+  {
+    "name": "Wayback Burgers",
+    "cuisine": "Burgers",
+    "description": "Nostalgic-style hamburger chain",
+    "status": "Order Online",
+    "link": "https://order.waybackburgers.com/"
+  },
+  {
+    "name": "China Wok Chinese Restaurant",
+    "cuisine": "Chinese",
+    "description": "Standard Chinese takeout and dine-in",
+    "status": "View Menu",
+    "link": "https://www.google.com/maps/search/China+Wok+Millersville+PA"
+  },
+  {
+    "name": "The Bunker at Crossgates",
+    "cuisine": "Bar & grill",
+    "description": "Bar and grill located at the golf course",
+    "status": "View Menu",
+    "link": "https://www.google.com/maps/search/The+Bunker+Crossgates+Millersville+PA"
+  },
+  {
+    "name": "Evergreen Cafe",
+    "cuisine": "Coffee shop",
+    "description": "Coffee shop located on MU campus",
+    "status": "View Menu",
+    "link": "https://www.millersville.edu/dining/"
   }
 ]

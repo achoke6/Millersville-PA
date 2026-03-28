@@ -548,21 +548,15 @@ async function runScraper() {
 
     // ===== DEDUPLICATION & SAVE =====
     const seen = new Set();
-    const dupeList = [];
     const deduped = events.filter(e => {
         const key = `${e.title.trim().toLowerCase()}-${e.date}-${(e.location || '').trim().toLowerCase()}`;
-        if (seen.has(key)) {
-            dupeList.push({ title: e.title, date: e.date.substring(0,10), source: (e.tags||[])[0] || 'Unknown' });
-            return false;
-        }
+        if (seen.has(key)) return false;
         seen.add(key);
         return true;
     });
 
-    if (dupeList.length > 0) {
-        console.log(`⚠️ Removed ${dupeList.length} duplicates:`);
-        dupeList.forEach(d => console.log(`   ✕ [${d.source}] ${d.title} (${d.date})`));
-    }
+    const dupes = events.length - deduped.length;
+    if (dupes > 0) console.log(`⚠️ Removed ${dupes} duplicates`);
 
     deduped.sort((a, b) => new Date(a.date) - new Date(b.date));
     fs.writeFileSync(path.join(__dirname, '../events.json'), JSON.stringify(deduped, null, 2));

@@ -170,22 +170,6 @@ async function runScraper() {
             // Handle Golf
             if (/golf/i.test(sportName) && !tags.includes('Golf')) tags.push('Golf');
 
-            // Extract game result and score from summary prefix and description
-            // Past games: "[W] Title" with "W 16-7" or "L 4-6" in description
-            // Upcoming: no prefix
-            let gameResult = '';  // 'W', 'L', 'N', or '' for upcoming
-            let gameScore = '';
-            const resultPrefix = summary.match(/^\[([WLN])\]/);
-            if (resultPrefix) {
-                gameResult = resultPrefix[1];
-                const scoreMatch = desc.match(/^[WLN]\s+(\d+-\d+)/m);
-                if (scoreMatch) gameScore = scoreMatch[1];
-            }
-
-            // Check if game is live (happening right now)
-            const eventEnd = ev.end ? new Date(ev.end) : new Date(eventDate.getTime() + 3*60*60*1000);
-            const isLive = today >= eventDate && today <= eventEnd && !gameResult;
-
             const sourceUrl = ev.url ? ev.url.replace(/&amp;/g, '&') : 'https://millersvilleathletics.com/calendar';
 
             events.push({
@@ -195,11 +179,7 @@ async function runScraper() {
                 tags: [...new Set(tags)],
                 price: ticketLink ? "Ticket Required" : "Free",
                 ticketLink: ticketLink,
-                sourceLink: sourceUrl,
-                gameResult,
-                gameScore,
-                streamLink,
-                isLive
+                sourceLink: sourceUrl
             });
             muAthCount++;
         }
@@ -327,17 +307,10 @@ async function runScraper() {
                 if (/track\s*&?\s*field/i.test(desc) && !tags.includes('Track')) tags.push('Track');
                 if (/bocce/i.test(lowerTitle)) tags.push('Athletics'); // Bocce not in list but keep tagged
 
-                // Check if game is live
-                const eventEnd = ev.end ? new Date(ev.end) : new Date(eventDate.getTime() + 2*60*60*1000);
-                const pmIsLive = today >= eventDate && today <= eventEnd;
-
                 events.push({
                     title, date: eventDate.toISOString(), location: loc,
                     tags: [...new Set(tags)], price: "Free", ticketLink: "",
-                    sourceLink: ev.url || "https://www.pennmanor.net/calendar/",
-                    gameResult: '', gameScore: '',
-                    streamLink: 'https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video',
-                    isLive: pmIsLive
+                    sourceLink: ev.url || "https://www.pennmanor.net/calendar/"
                 });
                 pmAthCount++;
             } else {
@@ -534,26 +507,16 @@ async function runScraper() {
     try {
         let news = [];
 
-        // Helper to parse RSS items WITH category extraction
-        function parseRSSItems(xml, sourceCategory, source, maxItems) {
+        // Helper to parse RSS items
+        function parseRSSItems(xml, category, source, maxItems) {
             const items = xml.match(/<item>([\s\S]*?)<\/item>/g) || [];
             const results = [];
             for (let i = 0; i < Math.min(maxItems, items.length); i++) {
                 const t = items[i].match(/<title>([\s\S]*?)<\/title>/i);
                 const l = items[i].match(/<link>([\s\S]*?)<\/link>/i);
                 const d = items[i].match(/<pubDate>([\s\S]*?)<\/pubDate>/i);
-                // Extract RSS <category> tags for sub-categories
-                const cats = [];
-                const catRegex = /<category[^>]*>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/category>/gi;
-                let cm;
-                while ((cm = catRegex.exec(items[i])) !== null) {
-                    const cat = cm[1].trim();
-                    if (cat && !cats.includes(cat)) cats.push(cat);
-                }
                 if (t && l) results.push({
-                    category: sourceCategory, source,
-                    subCategory: cats.length > 0 ? cats[0] : '',
-                    tags: cats,
+                    category, source,
                     title: t[1].replace(/<!\[CDATA\[/g, "").replace(/\]\]>/g, "").trim(),
                     link: l[1].replace(/<!\[CDATA\[/g, "").replace(/\]\]>/g, "").trim(),
                     date: d ? new Date(d[1]).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ""
@@ -565,52 +528,13 @@ async function runScraper() {
         // MU Official News (all posts)
         try {
             const xml = await (await fetch('https://blogs.millersville.edu/news/feed/', { headers: baseHeaders })).text();
-            news.push(...parseRSSItems(xml, "MU", "Millersville News", 15));
-            console.log(`  ✅ MU News: ${Math.min(15, (xml.match(/<item>/g)||[]).length)} articles`);
+            news.push(...parseRSSItems(xml, "MU", "Millersville News", 10));
+            console.log(`  ✅ MU News: ${Math.min(10, (xml.match(/<item>/g)||[]).length)} articles`);
         } catch (e) { console.error("❌ MU News RSS error:", e.message); }
 
-        // The Snapper — scrape each section page for proper categorization
-        try {
-            const snapperSections = [
-                { url: 'https://thesnapper.com/news/', sub: 'News' },
-                { url: 'https://thesnapper.com/opinion/', sub: 'Opinion' },
-                { url: 'https://thesnapper.com/features/', sub: 'Features' },
-                { url: 'https://thesnapper.com/arts-and-culture/', sub: 'Arts & Culture' },
-                { url: 'https://thesnapper.com/sports/', sub: 'Sports' }
-            ];
-            let snapperTotal = 0;
-            for (const section of snapperSections) {
-                try {
-                    const html = await (await fetch(section.url, { headers: baseHeaders })).text();
-                    const articleRegex = /<h[23][^>]*>\s*<a\s+class="primary-link"\s+href="(https:\/\/thesnapper\.com\/[^"]+)">([^<]+)<\/a>/g;
-                    const dateRegex = /<div[^>]*class="[^"]*publish-info[^"]*"[^>]*>[\s\S]*?<\/p>\s*<span[^>]*>[\s\S]*?<\/span>\s*<p>([^<]+)<\/p>/g;
-
-                    const articles = [];
-                    let match;
-                    while ((match = articleRegex.exec(html)) !== null) {
-                        const url = match[1], title = match[2].trim();
-                        if (url.includes('/author/') || url.includes('/tag/') || title === 'View All') continue;
-                        articles.push({ url, title });
-                    }
-                    const dates = [];
-                    while ((match = dateRegex.exec(html)) !== null) dates.push(match[1].trim());
-
-                    const max = Math.min(5, articles.length);
-                    for (let i = 0; i < max; i++) {
-                        news.push({
-                            category: "MU", source: "The Snapper",
-                            subCategory: section.sub,
-                            tags: [section.sub],
-                            title: articles[i].title,
-                            link: articles[i].url,
-                            date: dates[i] || ""
-                        });
-                        snapperTotal++;
-                    }
-                } catch (e) { /* section failed, continue */ }
-            }
-            console.log(`  ✅ The Snapper: ${snapperTotal} articles across ${snapperSections.length} sections`);
-        } catch (e) { console.error("❌ Snapper scrape error:", e.message); }
+        // TODO: The Snapper (thesnapper.com) — no RSS feed available, needs HTML scraping
+        // Uncomment and implement when ready:
+        // try { ... } catch (e) {}
 
         // Millersville Borough News & Alerts
         try {
@@ -618,35 +542,6 @@ async function runScraper() {
             news.push(...parseRSSItems(xml, "Borough", "Millersville Borough", 10));
             console.log(`  ✅ Borough News: ${Math.min(10, (xml.match(/<item>/g)||[]).length)} articles`);
         } catch (e) { console.error("❌ Borough News RSS error:", e.message); }
-
-        // Penn Manor School District News
-        try {
-            const xml = await (await fetch('https://www.pennmanor.net/blog/feed/', { headers: baseHeaders })).text();
-            news.push(...parseRSSItems(xml, "PM", "Penn Manor News", 10));
-            console.log(`  ✅ PM News: ${Math.min(10, (xml.match(/<item>/g)||[]).length)} articles`);
-        } catch (e) { console.error("❌ PM News RSS error:", e.message); }
-
-        // MU Athletics News (Sidearm RSS)
-        try {
-            const xml = await (await fetch('https://millersvilleathletics.com/rss', { headers: baseHeaders })).text();
-            news.push(...parseRSSItems(xml, "MU", "MU Athletics", 15));
-            console.log(`  ✅ MU Athletics: ${Math.min(15, (xml.match(/<item>/g)||[]).length)} articles`);
-        } catch (e) { console.error("❌ MU Athletics News RSS error:", e.message); }
-
-        // MU The Review (magazine)
-        try {
-            const xml = await (await fetch('https://blogs.millersville.edu/news/category/the-review/feed/', { headers: baseHeaders })).text();
-            news.push(...parseRSSItems(xml, "MU", "The Review", 10));
-            console.log(`  ✅ The Review: ${Math.min(10, (xml.match(/<item>/g)||[]).length)} articles`);
-        } catch (e) { console.error("❌ The Review RSS error:", e.message); }
-
-        // Deduplicate news by link
-        const seenLinks = new Set();
-        news = news.filter(n => {
-            if (seenLinks.has(n.link)) return false;
-            seenLinks.add(n.link);
-            return true;
-        });
 
         fs.writeFileSync(path.join(__dirname, '../news.json'), JSON.stringify(news, null, 2));
         console.log(`✅ News: ${news.length} total items`);

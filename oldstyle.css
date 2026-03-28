@@ -123,16 +123,6 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .home-indicator { background: var(--green-soft); color: var(--green); }
 .away-indicator { background: var(--navy-soft); color: var(--navy); }
 
-/* Score & Live badges */
-.badge-win { background: #dcfce7; color: #166534; margin-left: 8px; font-size: 0.7rem; }
-.badge-loss { background: #fef2f2; color: #991b1b; margin-left: 8px; font-size: 0.7rem; }
-.badge-neutral { background: var(--bg); color: var(--text-muted); margin-left: 8px; font-size: 0.7rem; }
-.badge-live { background: #dc2626; color: white; font-size: 0.65rem; text-decoration: none; animation: pulse-live 2s infinite; }
-.btn-live { background: #dc2626; color: white; }
-.btn-live:hover { opacity: 0.9; }
-.card-live { border-left: 3px solid #dc2626; }
-@keyframes pulse-live { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
-
 /* =========================================================
    8. FILTERS
    ========================================================= */

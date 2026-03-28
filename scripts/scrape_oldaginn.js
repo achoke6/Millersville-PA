@@ -514,38 +514,6 @@ async function runScraper() {
         console.log(`✅ Eventbrite: ${ebCount} events`);
     } catch (e) { console.error("❌ Eventbrite error:", e.message); }
 
-    // ===== 6. MILLERSVILLE BOROUGH (Google Calendar iCal) =====
-    try {
-        console.log("📡 Fetching Borough Calendar...");
-        const boroughData = await ical.async.fromURL(
-            'https://calendar.google.com/calendar/ical/millersville%40millersvilleborough.org/public/basic.ics',
-            { headers: baseHeaders }
-        );
-        let boroughCount = 0;
-        for (const ev of Object.values(boroughData)) {
-            if (ev.type !== 'VEVENT') continue;
-            const eventDate = new Date(ev.start);
-            if (isNaN(eventDate.getTime()) || eventDate < today || eventDate >= futureDate) continue;
-
-            const title = ev.summary || 'Borough Event';
-            const loc = ev.location || 'Millersville Borough';
-            const desc = ev.description || '';
-
-            events.push({
-                title,
-                date: eventDate.toISOString(),
-                location: loc,
-                tags: ['Borough'],
-                price: 'Free',
-                ticketLink: '',
-                sourceLink: ev.url || 'https://millersvilleborough.org/resident-info/calendar/',
-                gameResult: '', gameScore: '', streamLink: '', isLive: false
-            });
-            boroughCount++;
-        }
-        console.log(`✅ Borough Calendar: ${boroughCount} events`);
-    } catch (e) { console.error("❌ Borough Calendar error:", e.message); }
-
     // ===== DEDUPLICATION & SAVE =====
     const seen = new Set();
     const deduped = events.filter(e => {
@@ -566,24 +534,21 @@ async function runScraper() {
     try {
         let news = [];
 
-        // Helper to parse RSS items WITH optional category extraction
-        function parseRSSItems(xml, sourceCategory, source, maxItems, options = {}) {
+        // Helper to parse RSS items WITH category extraction
+        function parseRSSItems(xml, sourceCategory, source, maxItems) {
             const items = xml.match(/<item>([\s\S]*?)<\/item>/g) || [];
             const results = [];
-            const skipCats = options.skipCategories || false;
             for (let i = 0; i < Math.min(maxItems, items.length); i++) {
                 const t = items[i].match(/<title>([\s\S]*?)<\/title>/i);
                 const l = items[i].match(/<link>([\s\S]*?)<\/link>/i);
                 const d = items[i].match(/<pubDate>([\s\S]*?)<\/pubDate>/i);
                 // Extract RSS <category> tags for sub-categories
-                let cats = [];
-                if (!skipCats) {
-                    const catRegex = /<category[^>]*>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/category>/gi;
-                    let cm;
-                    while ((cm = catRegex.exec(items[i])) !== null) {
-                        const cat = cm[1].trim();
-                        if (cat && !cats.includes(cat)) cats.push(cat);
-                    }
+                const cats = [];
+                const catRegex = /<category[^>]*>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/category>/gi;
+                let cm;
+                while ((cm = catRegex.exec(items[i])) !== null) {
+                    const cat = cm[1].trim();
+                    if (cat && !cats.includes(cat)) cats.push(cat);
                 }
                 if (t && l) results.push({
                     category: sourceCategory, source,
@@ -597,10 +562,10 @@ async function runScraper() {
             return results;
         }
 
-        // MU Official News (all posts — no sub-categories, too granular)
+        // MU Official News (all posts)
         try {
             const xml = await (await fetch('https://blogs.millersville.edu/news/feed/', { headers: baseHeaders })).text();
-            news.push(...parseRSSItems(xml, "MU", "Millersville News", 15, { skipCategories: true }));
+            news.push(...parseRSSItems(xml, "MU", "Millersville News", 15));
             console.log(`  ✅ MU News: ${Math.min(15, (xml.match(/<item>/g)||[]).length)} articles`);
         } catch (e) { console.error("❌ MU News RSS error:", e.message); }
 
@@ -671,8 +636,8 @@ async function runScraper() {
         // MU The Review (magazine)
         try {
             const xml = await (await fetch('https://blogs.millersville.edu/news/category/the-review/feed/', { headers: baseHeaders })).text();
-            news.push(...parseRSSItems(xml, "MU", "MU Review", 10, { skipCategories: true }));
-            console.log(`  ✅ MU Review: ${Math.min(10, (xml.match(/<item>/g)||[]).length)} articles`);
+            news.push(...parseRSSItems(xml, "MU", "The Review", 10));
+            console.log(`  ✅ The Review: ${Math.min(10, (xml.match(/<item>/g)||[]).length)} articles`);
         } catch (e) { console.error("❌ The Review RSS error:", e.message); }
 
         // Deduplicate news by link

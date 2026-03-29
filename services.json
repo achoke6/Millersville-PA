@@ -1,61 +1,235 @@
 [
   {
-    "name": "S & H Auto Repair",
-    "category": "Mechanic",
-    "address": "154 W Frederick St, Millersville",
-    "phone": "(717) 872-8192",
-    "rating": "4.6",
-    "description": "Full-service auto repair shop known for solid diagnostics and honest pricing.",
-    "link": "https://www.sandhautomotive.com/"
+    "name": "Millersville Post Office",
+    "category": "Government",
+    "address": "431 N George St, Millersville",
+    "phone": "(717) 872-5011",
+    "description": "USPS mail, packages, PO boxes, and passport services",
+    "link": "https://tools.usps.com/locations/details/1373168"
   },
   {
-    "name": "Singh Automotive",
-    "category": "Mechanic",
-    "address": "36 Manor Ave, Millersville",
-    "phone": "(717) 872-7167",
-    "rating": "4.8",
-    "description": "Highly rated local garage offering comprehensive vehicle maintenance and repairs.",
-    "link": "https://www.singhautomotive.com/"
+    "name": "Millersville Borough Hall",
+    "category": "Government",
+    "address": "100 Municipal Dr, Millersville",
+    "phone": "(717) 872-4637",
+    "description": "Borough offices, permits, codes, and public services",
+    "link": "https://millersvilleborough.org/"
   },
   {
-    "name": "Hess Auto Care LLC",
-    "category": "Mechanic",
-    "address": "237 Manor Ave, Millersville",
-    "phone": "(717) 584-3513",
-    "rating": "4.5",
-    "description": "Family-owned shop offering reliable service right off Manor Ave.",
-    "link": "https://www.hessrepair.com/HessAutoCareLLC.html"
+    "name": "Penn Manor School District Office",
+    "category": "Government",
+    "address": "2950 Charlestown Rd, Lancaster",
+    "phone": "(717) 872-9500",
+    "description": "District administration and enrollment",
+    "link": "https://www.pennmanor.net/"
   },
   {
-    "name": "Getty Mart",
-    "category": "Gas Station",
-    "address": "1100 Millersville Pike, Lancaster",
-    "phone": "(717) 299-1055",
-    "description": "Convenience store and gas station just off the pike.",
-    "gasLink": "https://www.gasbuddy.com/station/getty-lancaster"
+    "name": "Millersville Police Department",
+    "category": "Government",
+    "address": "100 Municipal Dr, Millersville",
+    "phone": "(717) 872-9111",
+    "description": "Borough police, non-emergency line",
+    "link": "https://millersvilleborough.org/police/"
   },
   {
-    "name": "Turkey Hill",
-    "category": "Gas Station",
-    "address": "26 Manor Ave, Millersville",
-    "phone": "(717) 872-0606",
-    "description": "Local favorite for grab-&-go food, drinks, ice cream, and fuel.",
-    "gasLink": "https://www.gasbuddy.com/station/turkey-hill-millersville"
+    "name": "Barley's Barber Salon & Skin Studio",
+    "category": "Beauty/Grooming",
+    "address": "192 Blue Rock Rd, Millersville",
+    "phone": "(717) 872-8242",
+    "description": "Classic barbering and advanced skincare since 1969",
+    "link": "https://www.barleysbarbersalon.com/"
   },
   {
-    "name": "Sheetz",
-    "category": "Gas Station",
-    "address": "1790 Millersville Rd, Lancaster",
-    "phone": "(223) 271-0044",
-    "description": "24/7 convenience store with fast-food and fuel.",
-    "gasLink": "https://www.gasbuddy.com/station/sheetz-lancaster"
+    "name": "The Reset Barbershop",
+    "category": "Beauty/Grooming",
+    "address": "109 W Frederick St, Millersville",
+    "phone": "(717) 584-3139",
+    "description": "Modern barbershop — precision fades, cuts, and facials",
+    "link": "https://www.theresetbarbershop.com/"
   },
   {
-    "name": "Blink Charging Station",
-    "category": "EV Charging",
-    "address": "45 James St, Millersville",
-    "phone": "(888) 998-2546",
-    "description": "Public Level 2 J1772 charging station right near the campus.",
-    "link": "http://www.blinkcharging.com/"
+    "name": "Sport Clips",
+    "category": "Beauty/Grooming",
+    "address": "301 Crossings Blvd, Millersville",
+    "phone": "(717) 584-8550",
+    "description": "Men's and boys' haircuts with sports-themed atmosphere",
+    "link": "https://sportclips.com/"
+  },
+  {
+    "name": "Q Nails",
+    "category": "Beauty/Grooming",
+    "address": "363 Comet Dr, Millersville",
+    "phone": "(717) 872-0799",
+    "description": "Full-service nail spa — manicures, pedicures, waxing",
+    "link": "https://www.qnailsmillersvillepa.com/"
+  },
+  {
+    "name": "Visible Nails",
+    "category": "Beauty/Grooming",
+    "address": "509 Leaman Ave, Millersville",
+    "phone": "",
+    "description": "Nail salon with acrylic, gel, and dip powder services",
+    "link": "https://www.fresha.com/lvp/visible-nails-leaman-avenue-millersville-Kk5jME"
+  },
+  {
+    "name": "Billie Jean's Hair & Nail Studio",
+    "category": "Beauty/Grooming",
+    "address": "Millersville",
+    "phone": "",
+    "description": "Hair and nail studio serving Millersville for 40+ years",
+    "link": "https://www.google.com/maps/search/Billie+Jeans+Hair+Nail+Millersville+PA"
+  },
+  {
+    "name": "Turkey Hill Minit Market",
+    "category": "Shopping",
+    "address": "120 N George St, Millersville",
+    "phone": "",
+    "description": "Convenience store, gas, drinks, snacks, and ice cream",
+    "link": "https://www.turkeyhill.com/stores"
+  },
+  {
+    "name": "Millersville Gas & Grocery",
+    "category": "Shopping",
+    "address": "352 N George St, Millersville",
+    "phone": "",
+    "description": "Local convenience store and fuel station",
+    "link": "https://www.google.com/maps/search/Millersville+Gas+Grocery+PA"
+  },
+  {
+    "name": "CVS Pharmacy",
+    "category": "Health",
+    "address": "311 Crossings Blvd, Millersville",
+    "phone": "(717) 872-0373",
+    "description": "Pharmacy, prescriptions, vaccinations, and health essentials",
+    "link": "https://www.cvs.com/"
+  },
+  {
+    "name": "MU Student Health Services",
+    "category": "Health",
+    "address": "Millersville University Campus",
+    "phone": "(717) 871-4141",
+    "description": "On-campus health clinic for MU students",
+    "link": "https://www.millersville.edu/healthservices/"
+  },
+  {
+    "name": "MU Counseling & Human Development Center",
+    "category": "Health",
+    "address": "Millersville University Campus",
+    "phone": "(717) 871-7821",
+    "description": "Free confidential counseling for MU students",
+    "link": "https://www.millersville.edu/counseling/"
+  },
+  {
+    "name": "Crossgates Golf Course",
+    "category": "Recreation",
+    "address": "1 Crossland Pass, Millersville",
+    "phone": "(717) 872-4500",
+    "description": "18-hole public golf course with bar and grill",
+    "link": "https://www.google.com/maps/search/Crossgates+Golf+Course+Millersville+PA"
+  },
+  {
+    "name": "Freedom Memorial Park",
+    "category": "Recreation",
+    "address": "Municipal Dr, Millersville",
+    "phone": "",
+    "description": "Borough park with pavilions, playground, and walking paths",
+    "link": "https://millersvilleborough.org/"
+  },
+  {
+    "name": "MU Student Recreation Center",
+    "category": "Recreation",
+    "address": "Millersville University Campus",
+    "phone": "(717) 871-7555",
+    "description": "Fitness center, gym, pool, and intramural sports for MU students",
+    "link": "https://www.millersville.edu/recreation/"
+  },
+  {
+    "name": "RRTA Bus Service",
+    "category": "Transport",
+    "address": "Millersville University Campus",
+    "phone": "(717) 397-4246",
+    "description": "Free bus service for MU students — Red Rose Transit Authority",
+    "link": "https://www.redrosetransit.com/"
+  },
+  {
+    "name": "Turkey Hill Fuel Station",
+    "category": "Transport",
+    "address": "120 N George St, Millersville",
+    "phone": "",
+    "description": "Gas station with competitive fuel prices",
+    "link": "https://www.turkeyhill.com/stores",
+    "gasLink": "https://www.gasbuddy.com/station/22753"
+  },
+  {
+    "name": "MU Parking Services",
+    "category": "Transport",
+    "address": "Millersville University Campus",
+    "phone": "(717) 871-7630",
+    "description": "Campus parking permits, maps, and regulations",
+    "link": "https://www.millersville.edu/parking/"
+  },
+  {
+    "name": "Fulton Bank",
+    "category": "Finance",
+    "address": "100 Crossings Blvd, Millersville",
+    "phone": "(717) 291-2411",
+    "description": "Full-service bank with checking, savings, and ATM",
+    "link": "https://www.fultonbank.com/"
+  },
+  {
+    "name": "Members 1st Federal Credit Union",
+    "category": "Finance",
+    "address": "Millersville area",
+    "phone": "(800) 237-7288",
+    "description": "Credit union with student-friendly accounts and ATMs",
+    "link": "https://www.members1st.org/"
+  },
+  {
+    "name": "UPS Store",
+    "category": "Shipping",
+    "address": "301 Crossings Blvd, Millersville",
+    "phone": "(717) 872-1093",
+    "description": "Shipping, printing, mailbox rentals, and packing services",
+    "link": "https://www.theupsstore.com/"
+  },
+  {
+    "name": "Phantom Power",
+    "category": "Entertainment",
+    "address": "121 W Frederick St, Millersville",
+    "phone": "",
+    "description": "Live music venue and event space",
+    "link": "https://www.phantompower.live/"
+  },
+  {
+    "name": "Millersville Area Historical Society",
+    "category": "Entertainment",
+    "address": "Millersville",
+    "phone": "",
+    "description": "Local history museum and community events",
+    "link": "https://www.google.com/maps/search/Millersville+Area+Historical+Society+PA"
+  },
+  {
+    "name": "Millersville University Library",
+    "category": "Education",
+    "address": "Millersville University Campus",
+    "phone": "(717) 871-7111",
+    "description": "McNairy Library — study spaces, research, and technology",
+    "link": "https://www.millersville.edu/library/"
+  },
+  {
+    "name": "MU Tutoring Center",
+    "category": "Education",
+    "address": "Millersville University Campus",
+    "phone": "(717) 871-7222",
+    "description": "Free academic tutoring for MU students",
+    "link": "https://www.millersville.edu/learningcenter/"
+  },
+  {
+    "name": "Millersville University Bookstore",
+    "category": "Education",
+    "address": "Millersville University Campus",
+    "phone": "",
+    "description": "Textbooks, MU gear, school supplies, and snacks",
+    "link": "https://millersville.store"
   }
 ]

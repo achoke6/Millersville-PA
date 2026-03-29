@@ -86,28 +86,85 @@ function extractEventbriteEvents(ldData, eventsArray, now, futureLimit) {
 // ===== MAIN SCRAPER =====
 
 async function runScraper() {
-    console.log(`🚀 Starting Millersville Scraper (${SCRAPE_HORIZON_DAYS}-Day Horizon)...`);
+    const PAST_DAYS = 30;
+    const FUTURE_DAYS = 60;
+    console.log(`🚀 Starting Millersville Scraper (${PAST_DAYS}d back + ${FUTURE_DAYS}d forward)...`);
 
-    const today = new Date();
-    const startDay = today.toISOString().split('T')[0];
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()); // midnight today
+    const pastDate = new Date(today);
+    pastDate.setDate(today.getDate() - PAST_DAYS);
     const futureDate = new Date(today);
-    futureDate.setDate(today.getDate() + SCRAPE_HORIZON_DAYS);
+    futureDate.setDate(today.getDate() + FUTURE_DAYS);
+    const startDay = pastDate.toISOString().split('T')[0];
     const endDay = futureDate.toISOString().split('T')[0];
 
-    // ===== WEATHER =====
+    // ===== WEATHER (MU Station + Open-Meteo combined) =====
     try {
-        const res = await fetch('https://snowball.millersville.edu/~cws/current.xml', { headers: baseHeaders });
-        if (!res.ok) throw new Error(`Weather returned ${res.status}`);
-        const xml = await res.text();
-        const g = (regex) => { const m = xml.match(regex); return m ? m[1].trim() : null; };
+        // Source 1: MU Weather Information Center — hyper-local station data
+        let muTemp = null, muHumidity = null, muWindDir = null, muWindSpeed = null, muUpdate = null;
+        try {
+            const muRes = await fetch('https://snowball.millersville.edu/~cws/current.xml', { headers: baseHeaders });
+            if (muRes.ok) {
+                const muXml = await muRes.text();
+                const gx = (tag) => { const m = muXml.match(new RegExp(`<${tag}>([^<]+)</${tag}>`, 'i')); return m ? m[1].trim() : null; };
+                muTemp = gx('temp');
+                muHumidity = gx('humidity');
+                muWindDir = gx('wind_direction');
+                muWindSpeed = gx('wind_speed');
+                muUpdate = gx('update');
+                console.log(`  ✅ MU Station: ${muTemp}°F, Wind ${muWindSpeed} mph ${muWindDir}, Humidity ${muHumidity}%`);
+            }
+        } catch (e) { console.log(`  ⚠️ MU Station unavailable: ${e.message}`); }
+
+        // Source 2: Open-Meteo — condition text, icon, feels-like (free, no API key)
+        let condition = 'Unknown', icon = '🌡️', feelsLike = null;
+        try {
+            const omUrl = 'https://api.open-meteo.com/v1/forecast?latitude=39.9982&longitude=-76.3541&current=weather_code,apparent_temperature,temperature_2m,wind_speed_10m,relative_humidity_2m&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America%2FNew_York';
+            const omRes = await fetch(omUrl);
+            if (omRes.ok) {
+                const omData = await omRes.json();
+                const c = omData.current;
+                const wmoMap = {
+                    0:{cond:'Clear sky',icon:'☀️'},1:{cond:'Mainly clear',icon:'🌤️'},2:{cond:'Partly cloudy',icon:'⛅'},3:{cond:'Overcast',icon:'☁️'},
+                    45:{cond:'Fog',icon:'🌫️'},48:{cond:'Rime fog',icon:'🌫️'},
+                    51:{cond:'Light drizzle',icon:'🌦️'},53:{cond:'Drizzle',icon:'🌦️'},55:{cond:'Dense drizzle',icon:'🌧️'},
+                    61:{cond:'Slight rain',icon:'🌦️'},63:{cond:'Rain',icon:'🌧️'},65:{cond:'Heavy rain',icon:'🌧️'},
+                    66:{cond:'Freezing rain',icon:'🌧️'},67:{cond:'Heavy freezing rain',icon:'🌧️'},
+                    71:{cond:'Light snow',icon:'🌨️'},73:{cond:'Snow',icon:'❄️'},75:{cond:'Heavy snow',icon:'❄️'},77:{cond:'Snow grains',icon:'❄️'},
+                    80:{cond:'Light showers',icon:'🌦️'},81:{cond:'Rain showers',icon:'🌧️'},82:{cond:'Heavy showers',icon:'⛈️'},
+                    85:{cond:'Snow showers',icon:'🌨️'},86:{cond:'Heavy snow showers',icon:'❄️'},
+                    95:{cond:'Thunderstorm',icon:'⛈️'},96:{cond:'Thunderstorm w/ hail',icon:'⛈️'},99:{cond:'Severe thunderstorm',icon:'⛈️'}
+                };
+                const wmo = wmoMap[c.weather_code] || {cond:'Unknown',icon:'🌡️'};
+                condition = wmo.cond;
+                icon = wmo.icon;
+                feelsLike = Math.round(c.apparent_temperature);
+                // Use Open-Meteo as fallback if MU station is down
+                if (muTemp === null) {
+                    muTemp = Math.round(c.temperature_2m);
+                    muHumidity = Math.round(c.relative_humidity_2m);
+                    const dirs = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
+                    muWindDir = dirs[Math.round(c.wind_direction_10m / 22.5) % 16];
+                    muWindSpeed = Math.round(c.wind_speed_10m);
+                    console.log(`  ⚠️ Using Open-Meteo as fallback for readings`);
+                }
+                console.log(`  ✅ Open-Meteo: ${condition} ${icon}, Feels like ${feelsLike}°F`);
+            }
+        } catch (e) { console.log(`  ⚠️ Open-Meteo unavailable: ${e.message}`); }
+
         fs.writeFileSync(path.join(__dirname, '../weather.json'), JSON.stringify({
-            temp: g(/<(?:temp_f|temperature|temp)[^>]*>\s*([-\d.]+)/i) ? Math.round(parseFloat(g(/<(?:temp_f|temperature|temp)[^>]*>\s*([-\d.]+)/i))) : "--",
-            condition: g(/<(?:weather|condition|sky_condition)[^>]*>([^<]+)/i) || "Data Unavailable",
-            wind: g(/<(?:wind_string|wind_mph|wind)[^>]*>([^<]+)/i) || "Calm",
-            humidity: g(/<(?:relative_humidity|humidity)[^>]*>\s*([-\d.]+)/i) ? g(/<(?:relative_humidity|humidity)[^>]*>\s*([-\d.]+)/i) + "%" : "--",
-            lastUpdated: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
+            temp: muTemp ? parseInt(muTemp) : '--',
+            feelsLike: feelsLike || (muTemp ? parseInt(muTemp) : '--'),
+            condition,
+            icon,
+            wind: muWindSpeed ? `${muWindSpeed} mph ${muWindDir || ''}`.trim() : 'Calm',
+            humidity: muHumidity ? muHumidity + '%' : '--',
+            stationUpdate: muUpdate || '',
+            lastUpdated: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: 'America/New_York' }),
+            source: muTemp ? 'MU Weather Station + Open-Meteo' : 'Open-Meteo'
         }, null, 2));
-        console.log("✅ Weather saved");
+        console.log(`✅ Weather saved: ${muTemp || '--'}°F, ${condition}`);
     } catch (e) { console.error("❌ Weather error:", e.message); }
 
     let events = [];
@@ -124,7 +181,7 @@ async function runScraper() {
         for (const ev of Object.values(muAthData)) {
             if (ev.type !== 'VEVENT') continue;
             const eventDate = new Date(ev.start);
-            if (isNaN(eventDate.getTime()) || eventDate < today || eventDate >= futureDate) continue;
+            if (isNaN(eventDate.getTime()) || eventDate < pastDate || eventDate >= futureDate) continue;
 
             const summary = ev.summary || '';
             const desc = ev.description || '';
@@ -184,7 +241,7 @@ async function runScraper() {
 
             // Check if game is live (happening right now)
             const eventEnd = ev.end ? new Date(ev.end) : new Date(eventDate.getTime() + 3*60*60*1000);
-            const isLive = today >= eventDate && today <= eventEnd && !gameResult;
+            const isLive = now >= eventDate && now <= eventEnd && !gameResult;
 
             const sourceUrl = ev.url ? ev.url.replace(/&amp;/g, '&') : 'https://millersvilleathletics.com/calendar';
 
@@ -284,7 +341,7 @@ async function runScraper() {
 
         for (const ev of Object.values(pmData)) {
             const eventDate = new Date(ev.start);
-            if (isNaN(eventDate.getTime()) || eventDate < today || eventDate >= futureDate) continue;
+            if (isNaN(eventDate.getTime()) || eventDate < pastDate || eventDate >= futureDate) continue;
 
             const title = ev.summary || 'Penn Manor Event';
             const lowerTitle = title.toLowerCase();
@@ -329,7 +386,7 @@ async function runScraper() {
 
                 // Check if game is live
                 const eventEnd = ev.end ? new Date(ev.end) : new Date(eventDate.getTime() + 2*60*60*1000);
-                const pmIsLive = today >= eventDate && today <= eventEnd;
+                const pmIsLive = now >= eventDate && now <= eventEnd;
 
                 events.push({
                     title, date: eventDate.toISOString(), location: loc,
@@ -444,7 +501,7 @@ async function runScraper() {
 
         (giData.value || []).forEach(item => {
             const eventDate = new Date(item.startsOn);
-            if (eventDate < today || eventDate >= futureDate) return;
+            if (eventDate < pastDate || eventDate >= futureDate) return;
 
             let tags = ["Clubs/Orgs"];
             let rawTags = [];
@@ -514,17 +571,105 @@ async function runScraper() {
         console.log(`✅ Eventbrite: ${ebCount} events`);
     } catch (e) { console.error("❌ Eventbrite error:", e.message); }
 
+    // ===== 6. MILLERSVILLE BOROUGH (Google Calendar iCal — with recurring event expansion) =====
+    try {
+        console.log("📡 Fetching Borough Calendar...");
+        const boroughData = await ical.async.fromURL(
+            'https://calendar.google.com/calendar/ical/millersville%40millersvilleborough.org/public/basic.ics',
+            { headers: baseHeaders }
+        );
+        let boroughCount = 0;
+        let boroughRecurring = 0;
+
+        for (const ev of Object.values(boroughData)) {
+            if (ev.type !== 'VEVENT') continue;
+
+            const title = ev.summary || 'Borough Event';
+            const loc = ev.location || 'Millersville Borough';
+
+            // Handle recurring events (RRULE)
+            if (ev.rrule) {
+                try {
+                    const occurrences = ev.rrule.between(pastDate, futureDate);
+                    for (const occ of occurrences) {
+                        // Check for exceptions/modifications (EXDATE)
+                        const occKey = occ.toISOString().split('T')[0];
+                        if (ev.exdate) {
+                            const exdates = Object.values(ev.exdate).map(d => new Date(d).toISOString().split('T')[0]);
+                            if (exdates.includes(occKey)) continue;
+                        }
+
+                        // Preserve original time from start
+                        const origStart = new Date(ev.start);
+                        const eventDate = new Date(occ);
+                        eventDate.setHours(origStart.getHours(), origStart.getMinutes(), origStart.getSeconds());
+
+                        // Check if this occurrence has been modified (RECURRENCE-ID)
+                        if (ev.recurrences && ev.recurrences[occKey]) {
+                            const mod = ev.recurrences[occKey];
+                            events.push({
+                                title: mod.summary || title,
+                                date: new Date(mod.start).toISOString(),
+                                location: mod.location || loc,
+                                tags: ['Borough'],
+                                price: 'Free', ticketLink: '',
+                                sourceLink: 'https://millersvilleborough.org/resident-info/calendar/',
+                                gameResult: '', gameScore: '', streamLink: '', isLive: false
+                            });
+                        } else {
+                            events.push({
+                                title,
+                                date: eventDate.toISOString(),
+                                location: loc,
+                                tags: ['Borough'],
+                                price: 'Free', ticketLink: '',
+                                sourceLink: 'https://millersvilleborough.org/resident-info/calendar/',
+                                gameResult: '', gameScore: '', streamLink: '', isLive: false
+                            });
+                        }
+                        boroughCount++;
+                        boroughRecurring++;
+                    }
+                } catch (rrErr) {
+                    console.log(`  ⚠️ RRULE expansion failed for "${title}": ${rrErr.message}`);
+                }
+            } else {
+                // Single (non-recurring) event
+                const eventDate = new Date(ev.start);
+                if (isNaN(eventDate.getTime()) || eventDate < pastDate || eventDate >= futureDate) continue;
+
+                events.push({
+                    title,
+                    date: eventDate.toISOString(),
+                    location: loc,
+                    tags: ['Borough'],
+                    price: 'Free', ticketLink: '',
+                    sourceLink: ev.url || 'https://millersvilleborough.org/resident-info/calendar/',
+                    gameResult: '', gameScore: '', streamLink: '', isLive: false
+                });
+                boroughCount++;
+            }
+        }
+        console.log(`✅ Borough Calendar: ${boroughCount} events (${boroughRecurring} from recurring)`);
+    } catch (e) { console.error("❌ Borough Calendar error:", e.message); }
+
     // ===== DEDUPLICATION & SAVE =====
     const seen = new Set();
+    const dupeList = [];
     const deduped = events.filter(e => {
         const key = `${e.title.trim().toLowerCase()}-${e.date}-${(e.location || '').trim().toLowerCase()}`;
-        if (seen.has(key)) return false;
+        if (seen.has(key)) {
+            dupeList.push({ title: e.title, date: e.date.substring(0,10), source: (e.tags||[])[0] || 'Unknown' });
+            return false;
+        }
         seen.add(key);
         return true;
     });
 
-    const dupes = events.length - deduped.length;
-    if (dupes > 0) console.log(`⚠️ Removed ${dupes} duplicates`);
+    if (dupeList.length > 0) {
+        console.log(`⚠️ Removed ${dupeList.length} duplicates:`);
+        dupeList.forEach(d => console.log(`   ✕ [${d.source}] ${d.title} (${d.date})`));
+    }
 
     deduped.sort((a, b) => new Date(a.date) - new Date(b.date));
     fs.writeFileSync(path.join(__dirname, '../events.json'), JSON.stringify(deduped, null, 2));
@@ -534,21 +679,24 @@ async function runScraper() {
     try {
         let news = [];
 
-        // Helper to parse RSS items WITH category extraction
-        function parseRSSItems(xml, sourceCategory, source, maxItems) {
+        // Helper to parse RSS items WITH optional category extraction
+        function parseRSSItems(xml, sourceCategory, source, maxItems, options = {}) {
             const items = xml.match(/<item>([\s\S]*?)<\/item>/g) || [];
             const results = [];
+            const skipCats = options.skipCategories || false;
             for (let i = 0; i < Math.min(maxItems, items.length); i++) {
                 const t = items[i].match(/<title>([\s\S]*?)<\/title>/i);
                 const l = items[i].match(/<link>([\s\S]*?)<\/link>/i);
                 const d = items[i].match(/<pubDate>([\s\S]*?)<\/pubDate>/i);
                 // Extract RSS <category> tags for sub-categories
-                const cats = [];
-                const catRegex = /<category[^>]*>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/category>/gi;
-                let cm;
-                while ((cm = catRegex.exec(items[i])) !== null) {
-                    const cat = cm[1].trim();
-                    if (cat && !cats.includes(cat)) cats.push(cat);
+                let cats = [];
+                if (!skipCats) {
+                    const catRegex = /<category[^>]*>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/category>/gi;
+                    let cm;
+                    while ((cm = catRegex.exec(items[i])) !== null) {
+                        const cat = cm[1].trim();
+                        if (cat && !cats.includes(cat)) cats.push(cat);
+                    }
                 }
                 if (t && l) results.push({
                     category: sourceCategory, source,
@@ -562,10 +710,10 @@ async function runScraper() {
             return results;
         }
 
-        // MU Official News (all posts)
+        // MU Official News (all posts — no sub-categories, too granular)
         try {
             const xml = await (await fetch('https://blogs.millersville.edu/news/feed/', { headers: baseHeaders })).text();
-            news.push(...parseRSSItems(xml, "MU", "Millersville News", 15));
+            news.push(...parseRSSItems(xml, "MU", "Millersville News", 15, { skipCategories: true }));
             console.log(`  ✅ MU News: ${Math.min(15, (xml.match(/<item>/g)||[]).length)} articles`);
         } catch (e) { console.error("❌ MU News RSS error:", e.message); }
 
@@ -636,8 +784,8 @@ async function runScraper() {
         // MU The Review (magazine)
         try {
             const xml = await (await fetch('https://blogs.millersville.edu/news/category/the-review/feed/', { headers: baseHeaders })).text();
-            news.push(...parseRSSItems(xml, "MU", "The Review", 10));
-            console.log(`  ✅ The Review: ${Math.min(10, (xml.match(/<item>/g)||[]).length)} articles`);
+            news.push(...parseRSSItems(xml, "MU", "MU Review", 10, { skipCategories: true }));
+            console.log(`  ✅ MU Review: ${Math.min(10, (xml.match(/<item>/g)||[]).length)} articles`);
         } catch (e) { console.error("❌ The Review RSS error:", e.message); }
 
         // Deduplicate news by link

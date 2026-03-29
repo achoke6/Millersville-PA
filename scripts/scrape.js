@@ -99,20 +99,72 @@ async function runScraper() {
     const startDay = pastDate.toISOString().split('T')[0];
     const endDay = futureDate.toISOString().split('T')[0];
 
-    // ===== WEATHER =====
+    // ===== WEATHER (MU Station + Open-Meteo combined) =====
     try {
-        const res = await fetch('https://snowball.millersville.edu/~cws/current.xml', { headers: baseHeaders });
-        if (!res.ok) throw new Error(`Weather returned ${res.status}`);
-        const xml = await res.text();
-        const g = (regex) => { const m = xml.match(regex); return m ? m[1].trim() : null; };
+        // Source 1: MU Weather Information Center — hyper-local station data
+        let muTemp = null, muHumidity = null, muWindDir = null, muWindSpeed = null, muUpdate = null;
+        try {
+            const muRes = await fetch('https://snowball.millersville.edu/~cws/current.xml', { headers: baseHeaders });
+            if (muRes.ok) {
+                const muXml = await muRes.text();
+                const gx = (tag) => { const m = muXml.match(new RegExp(`<${tag}>([^<]+)</${tag}>`, 'i')); return m ? m[1].trim() : null; };
+                muTemp = gx('temp');
+                muHumidity = gx('humidity');
+                muWindDir = gx('wind_direction');
+                muWindSpeed = gx('wind_speed');
+                muUpdate = gx('update');
+                console.log(`  ✅ MU Station: ${muTemp}°F, Wind ${muWindSpeed} mph ${muWindDir}, Humidity ${muHumidity}%`);
+            }
+        } catch (e) { console.log(`  ⚠️ MU Station unavailable: ${e.message}`); }
+
+        // Source 2: Open-Meteo — condition text, icon, feels-like (free, no API key)
+        let condition = 'Unknown', icon = '🌡️', feelsLike = null;
+        try {
+            const omUrl = 'https://api.open-meteo.com/v1/forecast?latitude=39.9982&longitude=-76.3541&current=weather_code,apparent_temperature,temperature_2m,wind_speed_10m,relative_humidity_2m&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America%2FNew_York';
+            const omRes = await fetch(omUrl);
+            if (omRes.ok) {
+                const omData = await omRes.json();
+                const c = omData.current;
+                const wmoMap = {
+                    0:{cond:'Clear sky',icon:'☀️'},1:{cond:'Mainly clear',icon:'🌤️'},2:{cond:'Partly cloudy',icon:'⛅'},3:{cond:'Overcast',icon:'☁️'},
+                    45:{cond:'Fog',icon:'🌫️'},48:{cond:'Rime fog',icon:'🌫️'},
+                    51:{cond:'Light drizzle',icon:'🌦️'},53:{cond:'Drizzle',icon:'🌦️'},55:{cond:'Dense drizzle',icon:'🌧️'},
+                    61:{cond:'Slight rain',icon:'🌦️'},63:{cond:'Rain',icon:'🌧️'},65:{cond:'Heavy rain',icon:'🌧️'},
+                    66:{cond:'Freezing rain',icon:'🌧️'},67:{cond:'Heavy freezing rain',icon:'🌧️'},
+                    71:{cond:'Light snow',icon:'🌨️'},73:{cond:'Snow',icon:'❄️'},75:{cond:'Heavy snow',icon:'❄️'},77:{cond:'Snow grains',icon:'❄️'},
+                    80:{cond:'Light showers',icon:'🌦️'},81:{cond:'Rain showers',icon:'🌧️'},82:{cond:'Heavy showers',icon:'⛈️'},
+                    85:{cond:'Snow showers',icon:'🌨️'},86:{cond:'Heavy snow showers',icon:'❄️'},
+                    95:{cond:'Thunderstorm',icon:'⛈️'},96:{cond:'Thunderstorm w/ hail',icon:'⛈️'},99:{cond:'Severe thunderstorm',icon:'⛈️'}
+                };
+                const wmo = wmoMap[c.weather_code] || {cond:'Unknown',icon:'🌡️'};
+                condition = wmo.cond;
+                icon = wmo.icon;
+                feelsLike = Math.round(c.apparent_temperature);
+                // Use Open-Meteo as fallback if MU station is down
+                if (muTemp === null) {
+                    muTemp = Math.round(c.temperature_2m);
+                    muHumidity = Math.round(c.relative_humidity_2m);
+                    const dirs = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
+                    muWindDir = dirs[Math.round(c.wind_direction_10m / 22.5) % 16];
+                    muWindSpeed = Math.round(c.wind_speed_10m);
+                    console.log(`  ⚠️ Using Open-Meteo as fallback for readings`);
+                }
+                console.log(`  ✅ Open-Meteo: ${condition} ${icon}, Feels like ${feelsLike}°F`);
+            }
+        } catch (e) { console.log(`  ⚠️ Open-Meteo unavailable: ${e.message}`); }
+
         fs.writeFileSync(path.join(__dirname, '../weather.json'), JSON.stringify({
-            temp: g(/<(?:temp_f|temperature|temp)[^>]*>\s*([-\d.]+)/i) ? Math.round(parseFloat(g(/<(?:temp_f|temperature|temp)[^>]*>\s*([-\d.]+)/i))) : "--",
-            condition: g(/<(?:weather|condition|sky_condition)[^>]*>([^<]+)/i) || "Data Unavailable",
-            wind: g(/<(?:wind_string|wind_mph|wind)[^>]*>([^<]+)/i) || "Calm",
-            humidity: g(/<(?:relative_humidity|humidity)[^>]*>\s*([-\d.]+)/i) ? g(/<(?:relative_humidity|humidity)[^>]*>\s*([-\d.]+)/i) + "%" : "--",
-            lastUpdated: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
+            temp: muTemp ? parseInt(muTemp) : '--',
+            feelsLike: feelsLike || (muTemp ? parseInt(muTemp) : '--'),
+            condition,
+            icon,
+            wind: muWindSpeed ? `${muWindSpeed} mph ${muWindDir || ''}`.trim() : 'Calm',
+            humidity: muHumidity ? muHumidity + '%' : '--',
+            stationUpdate: muUpdate || '',
+            lastUpdated: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: 'America/New_York' }),
+            source: muTemp ? 'MU Weather Station + Open-Meteo' : 'Open-Meteo'
         }, null, 2));
-        console.log("✅ Weather saved");
+        console.log(`✅ Weather saved: ${muTemp || '--'}°F, ${condition}`);
     } catch (e) { console.error("❌ Weather error:", e.message); }
 
     let events = [];

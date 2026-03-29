@@ -86,12 +86,17 @@ function extractEventbriteEvents(ldData, eventsArray, now, futureLimit) {
 // ===== MAIN SCRAPER =====
 
 async function runScraper() {
-    console.log(`🚀 Starting Millersville Scraper (${SCRAPE_HORIZON_DAYS}-Day Horizon)...`);
+    const PAST_DAYS = 30;
+    const FUTURE_DAYS = 60;
+    console.log(`🚀 Starting Millersville Scraper (${PAST_DAYS}d back + ${FUTURE_DAYS}d forward)...`);
 
-    const today = new Date();
-    const startDay = today.toISOString().split('T')[0];
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()); // midnight today
+    const pastDate = new Date(today);
+    pastDate.setDate(today.getDate() - PAST_DAYS);
     const futureDate = new Date(today);
-    futureDate.setDate(today.getDate() + SCRAPE_HORIZON_DAYS);
+    futureDate.setDate(today.getDate() + FUTURE_DAYS);
+    const startDay = pastDate.toISOString().split('T')[0];
     const endDay = futureDate.toISOString().split('T')[0];
 
     // ===== WEATHER =====
@@ -124,7 +129,7 @@ async function runScraper() {
         for (const ev of Object.values(muAthData)) {
             if (ev.type !== 'VEVENT') continue;
             const eventDate = new Date(ev.start);
-            if (isNaN(eventDate.getTime()) || eventDate < today || eventDate >= futureDate) continue;
+            if (isNaN(eventDate.getTime()) || eventDate < pastDate || eventDate >= futureDate) continue;
 
             const summary = ev.summary || '';
             const desc = ev.description || '';
@@ -170,6 +175,22 @@ async function runScraper() {
             // Handle Golf
             if (/golf/i.test(sportName) && !tags.includes('Golf')) tags.push('Golf');
 
+            // Extract game result and score from summary prefix and description
+            // Past games: "[W] Title" with "W 16-7" or "L 4-6" in description
+            // Upcoming: no prefix
+            let gameResult = '';  // 'W', 'L', 'N', or '' for upcoming
+            let gameScore = '';
+            const resultPrefix = summary.match(/^\[([WLN])\]/);
+            if (resultPrefix) {
+                gameResult = resultPrefix[1];
+                const scoreMatch = desc.match(/^[WLN]\s+(\d+-\d+)/m);
+                if (scoreMatch) gameScore = scoreMatch[1];
+            }
+
+            // Check if game is live (happening right now)
+            const eventEnd = ev.end ? new Date(ev.end) : new Date(eventDate.getTime() + 3*60*60*1000);
+            const isLive = now >= eventDate && now <= eventEnd && !gameResult;
+
             const sourceUrl = ev.url ? ev.url.replace(/&amp;/g, '&') : 'https://millersvilleathletics.com/calendar';
 
             events.push({
@@ -179,7 +200,11 @@ async function runScraper() {
                 tags: [...new Set(tags)],
                 price: ticketLink ? "Ticket Required" : "Free",
                 ticketLink: ticketLink,
-                sourceLink: sourceUrl
+                sourceLink: sourceUrl,
+                gameResult,
+                gameScore,
+                streamLink,
+                isLive
             });
             muAthCount++;
         }
@@ -264,7 +289,7 @@ async function runScraper() {
 
         for (const ev of Object.values(pmData)) {
             const eventDate = new Date(ev.start);
-            if (isNaN(eventDate.getTime()) || eventDate < today || eventDate >= futureDate) continue;
+            if (isNaN(eventDate.getTime()) || eventDate < pastDate || eventDate >= futureDate) continue;
 
             const title = ev.summary || 'Penn Manor Event';
             const lowerTitle = title.toLowerCase();
@@ -307,19 +332,36 @@ async function runScraper() {
                 if (/track\s*&?\s*field/i.test(desc) && !tags.includes('Track')) tags.push('Track');
                 if (/bocce/i.test(lowerTitle)) tags.push('Athletics'); // Bocce not in list but keep tagged
 
+                // Check if game is live
+                const eventEnd = ev.end ? new Date(ev.end) : new Date(eventDate.getTime() + 2*60*60*1000);
+                const pmIsLive = now >= eventDate && now <= eventEnd;
+
                 events.push({
                     title, date: eventDate.toISOString(), location: loc,
                     tags: [...new Set(tags)], price: "Free", ticketLink: "",
-                    sourceLink: ev.url || "https://www.pennmanor.net/calendar/"
+                    sourceLink: ev.url || "https://www.pennmanor.net/calendar/",
+                    gameResult: '', gameScore: '',
+                    streamLink: 'https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video',
+                    isLive: pmIsLive
                 });
                 pmAthCount++;
             } else {
-                // Non-athletic PM event
+                // Non-athletic PM event — categorize by title keywords
                 let tags = ["PM"];
-                if (/board/i.test(lowerTitle)) tags.push('Board Meetings');
-                if (/pto/i.test(lowerTitle)) tags.push('PTO');
-                if (/staff|in-service|act 80|faculty/i.test(lowerTitle)) tags.push('Staff');
-                if (/concert|band|chorus|choir|orchestra|musical|theater|play/i.test(lowerTitle)) tags.push('Music/Arts');
+                const lt = lowerTitle;
+
+                if (/board/i.test(lt)) tags.push('Board/PTO');
+                else if (/pto/i.test(lt)) tags.push('Board/PTO');
+                else if (/staff|in-service|act 80|faculty/i.test(lt)) tags.push('Staff');
+                else if (/concert|band|chorus|choir|orchestra|musical|theater|play|string ensemble|showcase/i.test(lt)) tags.push('Music/Arts');
+                else if (/no school|snow day|spring break|weather make|school now in session|vacation/i.test(lt)) tags.push('No School/Closings');
+                else if (/pssa|grades?\s+(due|posted|are)|report card|marking period/i.test(lt)) tags.push('Testing/Grades');
+                else if (/spirit day|dress down|reward day|talent show|pm cares/i.test(lt)) tags.push('Spirit/Fun Days');
+                else if (/field trip|downtown trip|trip to/i.test(lt)) tags.push('Field Trips');
+                else if (/gotr|girls on the run|heart & sole|physicals|health/i.test(lt)) tags.push('Health/Wellness');
+                else if (/book fair|food fair|picture|assembly|appreciation|librarian/i.test(lt)) tags.push('School Events');
+                else if (/sap meeting|team leader|lunch\s*&?\s*learn|house meeting/i.test(lt)) tags.push('Meetings');
+                else tags.push('Other');
 
                 events.push({
                     title, date: eventDate.toISOString(), location: loc,
@@ -407,7 +449,7 @@ async function runScraper() {
 
         (giData.value || []).forEach(item => {
             const eventDate = new Date(item.startsOn);
-            if (eventDate < today || eventDate >= futureDate) return;
+            if (eventDate < pastDate || eventDate >= futureDate) return;
 
             let tags = ["Clubs/Orgs"];
             let rawTags = [];
@@ -477,17 +519,105 @@ async function runScraper() {
         console.log(`✅ Eventbrite: ${ebCount} events`);
     } catch (e) { console.error("❌ Eventbrite error:", e.message); }
 
+    // ===== 6. MILLERSVILLE BOROUGH (Google Calendar iCal — with recurring event expansion) =====
+    try {
+        console.log("📡 Fetching Borough Calendar...");
+        const boroughData = await ical.async.fromURL(
+            'https://calendar.google.com/calendar/ical/millersville%40millersvilleborough.org/public/basic.ics',
+            { headers: baseHeaders }
+        );
+        let boroughCount = 0;
+        let boroughRecurring = 0;
+
+        for (const ev of Object.values(boroughData)) {
+            if (ev.type !== 'VEVENT') continue;
+
+            const title = ev.summary || 'Borough Event';
+            const loc = ev.location || 'Millersville Borough';
+
+            // Handle recurring events (RRULE)
+            if (ev.rrule) {
+                try {
+                    const occurrences = ev.rrule.between(pastDate, futureDate);
+                    for (const occ of occurrences) {
+                        // Check for exceptions/modifications (EXDATE)
+                        const occKey = occ.toISOString().split('T')[0];
+                        if (ev.exdate) {
+                            const exdates = Object.values(ev.exdate).map(d => new Date(d).toISOString().split('T')[0]);
+                            if (exdates.includes(occKey)) continue;
+                        }
+
+                        // Preserve original time from start
+                        const origStart = new Date(ev.start);
+                        const eventDate = new Date(occ);
+                        eventDate.setHours(origStart.getHours(), origStart.getMinutes(), origStart.getSeconds());
+
+                        // Check if this occurrence has been modified (RECURRENCE-ID)
+                        if (ev.recurrences && ev.recurrences[occKey]) {
+                            const mod = ev.recurrences[occKey];
+                            events.push({
+                                title: mod.summary || title,
+                                date: new Date(mod.start).toISOString(),
+                                location: mod.location || loc,
+                                tags: ['Borough'],
+                                price: 'Free', ticketLink: '',
+                                sourceLink: 'https://millersvilleborough.org/resident-info/calendar/',
+                                gameResult: '', gameScore: '', streamLink: '', isLive: false
+                            });
+                        } else {
+                            events.push({
+                                title,
+                                date: eventDate.toISOString(),
+                                location: loc,
+                                tags: ['Borough'],
+                                price: 'Free', ticketLink: '',
+                                sourceLink: 'https://millersvilleborough.org/resident-info/calendar/',
+                                gameResult: '', gameScore: '', streamLink: '', isLive: false
+                            });
+                        }
+                        boroughCount++;
+                        boroughRecurring++;
+                    }
+                } catch (rrErr) {
+                    console.log(`  ⚠️ RRULE expansion failed for "${title}": ${rrErr.message}`);
+                }
+            } else {
+                // Single (non-recurring) event
+                const eventDate = new Date(ev.start);
+                if (isNaN(eventDate.getTime()) || eventDate < pastDate || eventDate >= futureDate) continue;
+
+                events.push({
+                    title,
+                    date: eventDate.toISOString(),
+                    location: loc,
+                    tags: ['Borough'],
+                    price: 'Free', ticketLink: '',
+                    sourceLink: ev.url || 'https://millersvilleborough.org/resident-info/calendar/',
+                    gameResult: '', gameScore: '', streamLink: '', isLive: false
+                });
+                boroughCount++;
+            }
+        }
+        console.log(`✅ Borough Calendar: ${boroughCount} events (${boroughRecurring} from recurring)`);
+    } catch (e) { console.error("❌ Borough Calendar error:", e.message); }
+
     // ===== DEDUPLICATION & SAVE =====
     const seen = new Set();
+    const dupeList = [];
     const deduped = events.filter(e => {
         const key = `${e.title.trim().toLowerCase()}-${e.date}-${(e.location || '').trim().toLowerCase()}`;
-        if (seen.has(key)) return false;
+        if (seen.has(key)) {
+            dupeList.push({ title: e.title, date: e.date.substring(0,10), source: (e.tags||[])[0] || 'Unknown' });
+            return false;
+        }
         seen.add(key);
         return true;
     });
 
-    const dupes = events.length - deduped.length;
-    if (dupes > 0) console.log(`⚠️ Removed ${dupes} duplicates`);
+    if (dupeList.length > 0) {
+        console.log(`⚠️ Removed ${dupeList.length} duplicates:`);
+        dupeList.forEach(d => console.log(`   ✕ [${d.source}] ${d.title} (${d.date})`));
+    }
 
     deduped.sort((a, b) => new Date(a.date) - new Date(b.date));
     fs.writeFileSync(path.join(__dirname, '../events.json'), JSON.stringify(deduped, null, 2));
@@ -496,29 +626,126 @@ async function runScraper() {
     // ===== NEWS =====
     try {
         let news = [];
-        try {
-            const xml = await (await fetch('https://blogs.millersville.edu/news/feed/', { headers: baseHeaders })).text();
+
+        // Helper to parse RSS items WITH optional category extraction
+        function parseRSSItems(xml, sourceCategory, source, maxItems, options = {}) {
             const items = xml.match(/<item>([\s\S]*?)<\/item>/g) || [];
-            for (let i = 0; i < Math.min(4, items.length); i++) {
+            const results = [];
+            const skipCats = options.skipCategories || false;
+            for (let i = 0; i < Math.min(maxItems, items.length); i++) {
                 const t = items[i].match(/<title>([\s\S]*?)<\/title>/i);
                 const l = items[i].match(/<link>([\s\S]*?)<\/link>/i);
                 const d = items[i].match(/<pubDate>([\s\S]*?)<\/pubDate>/i);
-                if (t && l) news.push({
-                    category: "MU", source: "Millersville News",
-                    title: t[1].replace("<![CDATA[", "").replace("]]>", "").trim(),
-                    link: l[1].trim(),
-                    date: d ? new Date(d[1]).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : ""
+                // Extract RSS <category> tags for sub-categories
+                let cats = [];
+                if (!skipCats) {
+                    const catRegex = /<category[^>]*>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/category>/gi;
+                    let cm;
+                    while ((cm = catRegex.exec(items[i])) !== null) {
+                        const cat = cm[1].trim();
+                        if (cat && !cats.includes(cat)) cats.push(cat);
+                    }
+                }
+                if (t && l) results.push({
+                    category: sourceCategory, source,
+                    subCategory: cats.length > 0 ? cats[0] : '',
+                    tags: cats,
+                    title: t[1].replace(/<!\[CDATA\[/g, "").replace(/\]\]>/g, "").trim(),
+                    link: l[1].replace(/<!\[CDATA\[/g, "").replace(/\]\]>/g, "").trim(),
+                    date: d ? new Date(d[1]).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ""
                 });
             }
-        } catch (e) { console.error("❌ News RSS error:", e.message); }
+            return results;
+        }
 
-        // TODO: Replace with real borough data source
-        news.push(
-            { category: "Borough", source: "Millersville Borough", title: "2026 Residential Parking Permits Now Available", link: "https://millersvilleborough.org/", date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) },
-            { category: "Borough", source: "Millersville Police", title: "Road Closure Notice - Construction Updates", link: "https://millersvilleborough.org/", date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) }
-        );
+        // MU Official News (all posts — no sub-categories, too granular)
+        try {
+            const xml = await (await fetch('https://blogs.millersville.edu/news/feed/', { headers: baseHeaders })).text();
+            news.push(...parseRSSItems(xml, "MU", "Millersville News", 15, { skipCategories: true }));
+            console.log(`  ✅ MU News: ${Math.min(15, (xml.match(/<item>/g)||[]).length)} articles`);
+        } catch (e) { console.error("❌ MU News RSS error:", e.message); }
+
+        // The Snapper — scrape each section page for proper categorization
+        try {
+            const snapperSections = [
+                { url: 'https://thesnapper.com/news/', sub: 'News' },
+                { url: 'https://thesnapper.com/opinion/', sub: 'Opinion' },
+                { url: 'https://thesnapper.com/features/', sub: 'Features' },
+                { url: 'https://thesnapper.com/arts-and-culture/', sub: 'Arts & Culture' },
+                { url: 'https://thesnapper.com/sports/', sub: 'Sports' }
+            ];
+            let snapperTotal = 0;
+            for (const section of snapperSections) {
+                try {
+                    const html = await (await fetch(section.url, { headers: baseHeaders })).text();
+                    const articleRegex = /<h[23][^>]*>\s*<a\s+class="primary-link"\s+href="(https:\/\/thesnapper\.com\/[^"]+)">([^<]+)<\/a>/g;
+                    const dateRegex = /<div[^>]*class="[^"]*publish-info[^"]*"[^>]*>[\s\S]*?<\/p>\s*<span[^>]*>[\s\S]*?<\/span>\s*<p>([^<]+)<\/p>/g;
+
+                    const articles = [];
+                    let match;
+                    while ((match = articleRegex.exec(html)) !== null) {
+                        const url = match[1], title = match[2].trim();
+                        if (url.includes('/author/') || url.includes('/tag/') || title === 'View All') continue;
+                        articles.push({ url, title });
+                    }
+                    const dates = [];
+                    while ((match = dateRegex.exec(html)) !== null) dates.push(match[1].trim());
+
+                    const max = Math.min(5, articles.length);
+                    for (let i = 0; i < max; i++) {
+                        news.push({
+                            category: "MU", source: "The Snapper",
+                            subCategory: section.sub,
+                            tags: [section.sub],
+                            title: articles[i].title,
+                            link: articles[i].url,
+                            date: dates[i] || ""
+                        });
+                        snapperTotal++;
+                    }
+                } catch (e) { /* section failed, continue */ }
+            }
+            console.log(`  ✅ The Snapper: ${snapperTotal} articles across ${snapperSections.length} sections`);
+        } catch (e) { console.error("❌ Snapper scrape error:", e.message); }
+
+        // Millersville Borough News & Alerts
+        try {
+            const xml = await (await fetch('https://millersvilleborough.org/category/news-alerts/feed/', { headers: baseHeaders })).text();
+            news.push(...parseRSSItems(xml, "Borough", "Millersville Borough", 10));
+            console.log(`  ✅ Borough News: ${Math.min(10, (xml.match(/<item>/g)||[]).length)} articles`);
+        } catch (e) { console.error("❌ Borough News RSS error:", e.message); }
+
+        // Penn Manor School District News
+        try {
+            const xml = await (await fetch('https://www.pennmanor.net/blog/feed/', { headers: baseHeaders })).text();
+            news.push(...parseRSSItems(xml, "PM", "Penn Manor News", 10));
+            console.log(`  ✅ PM News: ${Math.min(10, (xml.match(/<item>/g)||[]).length)} articles`);
+        } catch (e) { console.error("❌ PM News RSS error:", e.message); }
+
+        // MU Athletics News (Sidearm RSS)
+        try {
+            const xml = await (await fetch('https://millersvilleathletics.com/rss', { headers: baseHeaders })).text();
+            news.push(...parseRSSItems(xml, "MU", "MU Athletics", 15));
+            console.log(`  ✅ MU Athletics: ${Math.min(15, (xml.match(/<item>/g)||[]).length)} articles`);
+        } catch (e) { console.error("❌ MU Athletics News RSS error:", e.message); }
+
+        // MU The Review (magazine)
+        try {
+            const xml = await (await fetch('https://blogs.millersville.edu/news/category/the-review/feed/', { headers: baseHeaders })).text();
+            news.push(...parseRSSItems(xml, "MU", "MU Review", 10, { skipCategories: true }));
+            console.log(`  ✅ MU Review: ${Math.min(10, (xml.match(/<item>/g)||[]).length)} articles`);
+        } catch (e) { console.error("❌ The Review RSS error:", e.message); }
+
+        // Deduplicate news by link
+        const seenLinks = new Set();
+        news = news.filter(n => {
+            if (seenLinks.has(n.link)) return false;
+            seenLinks.add(n.link);
+            return true;
+        });
+
         fs.writeFileSync(path.join(__dirname, '../news.json'), JSON.stringify(news, null, 2));
-        console.log(`✅ News: ${news.length} items`);
+        console.log(`✅ News: ${news.length} total items`);
 
         // TODO: Replace with real dining specials source
         fs.writeFileSync(path.join(__dirname, '../specials.json'), JSON.stringify([

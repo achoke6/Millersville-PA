@@ -123,15 +123,79 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .home-indicator { background: var(--green-soft); color: var(--green); }
 .away-indicator { background: var(--navy-soft); color: var(--navy); }
 
+/* Score & Live badges */
+.badge-win { background: #dcfce7; color: #166534; margin-left: 8px; font-size: 0.7rem; }
+.badge-loss { background: #fef2f2; color: #991b1b; margin-left: 8px; font-size: 0.7rem; }
+.badge-neutral { background: var(--bg); color: var(--text-muted); margin-left: 8px; font-size: 0.7rem; }
+.badge-live { background: #dc2626; color: white; font-size: 0.65rem; text-decoration: none; animation: pulse-live 2s infinite; }
+.btn-live { background: #dc2626; color: white; }
+.btn-live:hover { opacity: 0.9; }
+.card-live { border-left: 3px solid #dc2626; }
+@keyframes pulse-live { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
+
 /* =========================================================
    8. FILTERS
    ========================================================= */
+/* View mode bar */
+.view-mode-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+.view-mode-group {
+    display: flex;
+    gap: 0;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+}
+.mode-btn {
+    background: var(--surface);
+    border: none;
+    border-right: 1px solid var(--border);
+    color: var(--text);
+    padding: 7px 14px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: inherit;
+}
+.mode-btn:last-child { border-right: none; }
+.mode-btn:hover { background: var(--gold-soft); }
+.mode-btn.active { background: var(--gold); color: #000; }
+.nav-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: inherit;
+    color: var(--text);
+    flex-shrink: 0;
+}
+.nav-arrow:hover { border-color: var(--gold); background: var(--gold-soft); }
+.date-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-left: 8px;
+}
+
 .filter-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
 .filter-group { display: flex; flex-wrap: wrap; gap: 6px; }
 .src-btn { background: var(--surface); border: 1.5px solid var(--border); color: var(--text); padding: 7px 14px; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: var(--transition); font-family: inherit; display: flex; align-items: center; gap: 4px; }
 .src-btn:hover { border-color: var(--gold); }
 .src-btn.active { background: var(--gold); color: #000; border-color: var(--gold); }
-.src-btn.active-muted { background: var(--gold-soft); color: var(--text); border-color: var(--gold); }
 .btn-icon { vertical-align: middle; margin-right: 2px; flex-shrink: 0; }
 
 /* Clear button: sits in toolbar-row, right-aligned, hidden by default */
@@ -168,24 +232,30 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 /* =========================================================
    9. SPORTS-SPECIFIC
    ========================================================= */
-.hgame-toggle {
-    display: inline-flex;
+.sp-source-row {
     align-items: center;
-    gap: 6px;
+}
+
+.home-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
     background: var(--surface);
     border: 1.5px solid var(--border);
-    padding: 6px 14px;
-    border-radius: var(--radius-pill);
-    font-size: 0.82rem;
-    font-weight: 700;
-    color: var(--text);
+    border-radius: var(--radius-sm);
     cursor: pointer;
     transition: var(--transition);
-    user-select: none;
-    margin-bottom: 12px;
+    color: var(--text-muted);
+    flex-shrink: 0;
 }
-.hgame-toggle:hover { border-color: var(--gold); }
-.hgame-toggle.active { background: var(--gold); border-color: var(--gold); color: #000; }
+.home-toggle:hover { border-color: #059669; color: #059669; }
+.home-toggle.active {
+    background: #059669;
+    border-color: #059669;
+    color: white;
+}
 
 .sport-tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
 .sport-pill { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 5px 12px; border-radius: var(--radius-pill); font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: var(--transition); font-family: inherit; }

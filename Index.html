@@ -151,11 +151,11 @@
         <div class="filter-bar">
             <div class="filter-group" id="news-source-group">
                 <button class="src-btn active" onclick="setNewsSource('All', this)">All</button>
-                <button class="src-btn" onclick="setNewsSource('Millersville News', this)">MU News</button>
+                <button class="src-btn" onclick="setNewsSource('Millersville News', this)">MU</button>
                 <button class="src-btn" onclick="setNewsSource('MU Athletics', this)">🏅 MU Athletics</button>
                 <button class="src-btn" onclick="setNewsSource('The Snapper', this)">📰 MU Snapper</button>
                 <button class="src-btn" onclick="setNewsSource('MU Review', this)">📖 MU Review</button>
-                <button class="src-btn" onclick="setNewsSource('Penn Manor News', this)"><svg class="btn-icon" width="12" height="12"><use href="#icon-comet"/></svg> PM</button>
+                <button class="src-btn" onclick="setNewsSource('Penn Manor News', this)"><svg class="btn-icon" width="12" height="12"><use href="#icon-comet"/></svg> Penn Manor</button>
                 <button class="src-btn" onclick="setNewsSource('Millersville Borough', this)">🌳 Millersville Borough</button>
             </div>
         </div>
@@ -325,7 +325,7 @@ window.toggleMobileMenu=function(){
     if(nav.classList.contains('open')){nav.classList.remove('open');overlay.classList.remove('open');setTimeout(()=>{if(!nav.classList.contains('open'))nav.style.display='';},300);}
     else{nav.style.display='flex';void nav.offsetWidth;nav.classList.add('open');overlay.classList.add('open');}
 };
-const viewLabels={home:'',news:'/News',events:'/Events',sports:'/Sports',food:'/Food',housing:'/Housing',services:'/Services',weather:'/Weather'};
+const viewLabels={home:'',news:'/ News',events:'/ Events',sports:'/ Sports',food:'/ Food',housing:'/ Housing',services:'/ Services',weather:'/ Weather'};
 
 window.switchView=function(view,skipPush){
     document.querySelectorAll('.app-view').forEach(v=>v.classList.remove('active'));
@@ -652,8 +652,10 @@ function renderNewsUI(){
         return true;
     });
     c.innerHTML=f.length?f.map(n=>{
+        // Map source names for display bubbles
+        const sourceDisplay={'Millersville News':'MU','The Snapper':'MU Snapper'};
         let tags=[];
-        if(n.source) tags.push(n.source);
+        if(n.source) tags.push(sourceDisplay[n.source]||n.source);
         if(n.subCategory && !tags.includes(n.subCategory)) tags.push(n.subCategory);
         if(n.tags) n.tags.forEach(t=>{if(!tags.includes(t)) tags.push(t);});
         const tagHtml=tags.length?`<div class="card-tags">${tags.map(t=>`<span class="card-tag">${t}</span>`).join('')}</div>`:'';

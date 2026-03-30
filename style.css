@@ -36,8 +36,9 @@ body {
 header { background: var(--surface); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); }
 .header-container { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; }
 .logo-block h1 { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.5px; color: var(--text); line-height: 1; user-select: none; display: flex; align-items: baseline; }
+.logo-link { cursor: pointer; }
 .logo-dot { color: var(--gold); }
-.header-page-title { font-size: 1.1rem; font-weight: 600; color: var(--text-muted); margin-left: 2px; pointer-events: none; }
+.header-page-title { font-size: 1.15rem; font-weight: 600; color: var(--text-muted); margin-left: 2px; pointer-events: none; cursor: default; }
 
 /* =========================================================
    3. NAVIGATION
@@ -79,8 +80,19 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     align-items: center;
     margin-bottom: 12px;
     position: relative;
+    min-height: 32px;
 }
 .toolbar-row .clear-btn { position: absolute; right: 0; }
+.toolbar-row .date-label { text-align: center; }
+
+/* Three-item toolbar: left label, center date, right clear */
+.toolbar-three { justify-content: center; }
+.toolbar-three .game-label { position: absolute; left: 0; }
+.game-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text);
+}
 .toolbar-row .section-title { margin-bottom: 0; }
 
 /* =========================================================

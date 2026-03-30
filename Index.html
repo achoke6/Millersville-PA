@@ -11,7 +11,7 @@
 <header>
     <div class="header-container">
         <div class="logo-block">
-            <h1 style="cursor: pointer;" onclick="switchView('home')">Millersville<span class="logo-dot">.APP</span><span id="header-page-title" class="header-page-title"></span></h1>
+            <h1><span class="logo-link" onclick="switchView('home')">Millersville<span class="logo-dot">.APP</span></span><span id="header-page-title" class="header-page-title"></span></h1>
         </div>
         <button class="hamburger-menu" id="hamburger-menu" onclick="toggleMobileMenu()">
             <svg viewBox="0 0 24 24" width="28" height="28" fill="var(--text-dark)"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
@@ -94,7 +94,8 @@
 
     <!-- SPORTS -->
     <section id="view-sports" class="app-view">
-        <div class="toolbar-row">
+        <div class="toolbar-row toolbar-three">
+            <span id="sp-game-label" class="game-label">Home Games:</span>
             <span id="sp-date-label" class="date-label"></span>
             <button id="sp-clear-btn" class="clear-btn" onclick="clearSportsFilters()">Clear ✖</button>
         </div>
@@ -427,6 +428,9 @@ function updateSportsUI(){
     });
     document.getElementById('hgame-toggle').classList.toggle('active', spHomeOnly);
     document.getElementById('sp-no-source').style.display = spActiveSources.size===0 ? 'block' : 'none';
+    // Game label
+    const gameLabel=document.getElementById('sp-game-label');
+    if(gameLabel) gameLabel.textContent=spHomeOnly?'Home Games:':'All Games:';
     const allSourcesOn = spActiveSources.size===3 && spActiveSources.has('PM') && spActiveSources.has('MU') && spActiveSources.has('Clubs');
     const isClean = !spHomeOnly && allSourcesOn && !spSportTag && spMode==='upcoming';
     document.getElementById('sp-clear-btn').style.display = isClean ? 'none' : 'flex';
@@ -613,17 +617,14 @@ window.setNewsSource=function(src,btn){
 
 function renderNewsSubFilters(){
     const c=document.getElementById('news-sub-container'); c.innerHTML='';
-    // Get all unique sub-categories for the selected source
-    let filtered=currentNews;
-    if(newsSource!=='All'){
-        filtered=currentNews.filter(n=>n.source===newsSource);
-    }
+    // Only show sub-category filters when a specific source is selected (not All)
+    if(newsSource==='All'){c.classList.remove('active');return;}
+    let filtered=currentNews.filter(n=>n.source===newsSource);
     const subs=new Set();
     filtered.forEach(n=>{
         if(n.subCategory) subs.add(n.subCategory);
         if(n.tags) n.tags.forEach(t=>subs.add(t));
     });
-    // Remove duplicates of subCategory already in tags
     const uniqueSubs=[...subs].sort();
     if(uniqueSubs.length<=1){c.classList.remove('active');return;}
     c.classList.add('active');
@@ -651,15 +652,11 @@ function renderNewsUI(){
         return true;
     });
     c.innerHTML=f.length?f.map(n=>{
-        const isAll=(newsSource==='All');
-        let tagHtml='';
-        if(!isAll){
-            let tags=[];
-            if(n.source) tags.push(n.source);
-            if(n.subCategory && !tags.includes(n.subCategory)) tags.push(n.subCategory);
-            if(n.tags) n.tags.forEach(t=>{if(!tags.includes(t)) tags.push(t);});
-            tagHtml=`<div class="card-tags">${tags.map(t=>`<span class="card-tag">${t}</span>`).join('')}</div>`;
-        }
+        let tags=[];
+        if(n.source) tags.push(n.source);
+        if(n.subCategory && !tags.includes(n.subCategory)) tags.push(n.subCategory);
+        if(n.tags) n.tags.forEach(t=>{if(!tags.includes(t)) tags.push(t);});
+        const tagHtml=tags.length?`<div class="card-tags">${tags.map(t=>`<span class="card-tag">${t}</span>`).join('')}</div>`:'';
         return `<div class="app-card">${tagHtml}<p class="card-meta">${n.date}</p><h3 class="card-title">${n.title}</h3><a href="${n.link}" target="_blank" class="btn btn-sm btn-outline" style="margin-top:12px;">Read ➔</a></div>`;
     }).join(''):'<p class="empty-state">No news articles found.</p>';
 }

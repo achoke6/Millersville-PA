@@ -1,0 +1,10 @@
+RewriteEngine On
+RewriteBase /
+
+# If the request is for an existing file (JS, CSS, JSON, images), serve it directly
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# For everything else, serve index.html (SPA routing)
+RewriteRule ^ index.html [L]

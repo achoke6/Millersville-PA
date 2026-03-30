@@ -1,25 +1,47 @@
-name: Millersville Data Update
+name: Millersville Data Update & Deploy
 on:
   schedule:
     - cron: '0 * * * *'
   push:
     branches: [ main ]
   workflow_dispatch:
-
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm install    
+
+      - run: npm install
+
       - run: node scripts/scrape.js
-      - name: Commit and Push
+
+      - name: Commit updated data
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "System: Auto-syncing Community Data"
           file_pattern: "*.json"
+
+      - name: Deploy to DreamHost
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.DREAMHOST_SERVER }}
+          username: ${{ secrets.DREAMHOST_USERNAME }}
+          password: ${{ secrets.DREAMHOST_PASSWORD }}
+          protocol: sftp
+          local-dir: ./
+          server-dir: ${{ secrets.DREAMHOST_DIR }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            .github/**
+            scripts/**
+            package*.json
+            index_old.html
+            style_old.css

@@ -21,27 +21,31 @@ jobs:
 
       - run: node scripts/scrape.js
 
+      - name: Pull latest changes
+        run: git pull --rebase origin main
+
       - name: Commit updated data
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "System: Auto-syncing Community Data"
           file_pattern: "*.json"
 
-      - name: Deploy to DreamHost
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.DREAMHOST_SERVER }}
-          username: ${{ secrets.DREAMHOST_USERNAME }}
-          password: ${{ secrets.DREAMHOST_PASSWORD }}
-          protocol: sftp
-          local-dir: ./
-          server-dir: ${{ secrets.DREAMHOST_DIR }}
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            .github/**
-            scripts/**
-            package*.json
-            index_old.html
-            style_old.css
+      - name: Deploy to DreamHost via SFTP
+        run: |
+          sudo apt-get install -y lftp
+          lftp -c "
+            set sftp:auto-confirm yes;
+            set net:max-retries 3;
+            open -u ${{ secrets.DREAMHOST_USERNAME }},${{ secrets.DREAMHOST_PASSWORD }} sftp://${{ secrets.DREAMHOST_SERVER }};
+            mirror --reverse --delete --verbose \
+              --exclude .git/ \
+              --exclude .github/ \
+              --exclude node_modules/ \
+              --exclude scripts/ \
+              --exclude package.json \
+              --exclude package-lock.json \
+              --exclude index_old.html \
+              --exclude style_old.css \
+              ./ ${{ secrets.DREAMHOST_DIR }};
+            quit;
+          "

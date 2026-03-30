@@ -243,35 +243,7 @@ async function runScraper() {
             const eventEnd = ev.end ? new Date(ev.end) : new Date(eventDate.getTime() + 3*60*60*1000);
             const isLive = now >= eventDate && now <= eventEnd && !gameResult;
 
-            // Build source URL: prefer the event's own URL (links to specific game on schedule),
-            // fall back to sport schedule page, then composite calendar
-            const scheduleSlugMap = {
-                'baseball': 'baseball', 'softball': 'softball', 'football': 'football',
-                'wrestling': 'wrestling', 'volleyball': 'womens-volleyball',
-                'field hockey': 'field-hockey', 'swimming': 'womens-swimming',
-                "women's basketball": 'womens-basketball', "men's basketball": 'mens-basketball',
-                "women's soccer": 'womens-soccer', "men's soccer": 'mens-soccer',
-                "women's lacrosse": 'womens-lacrosse',
-                "women's tennis": 'womens-tennis', "men's tennis": 'mens-tennis',
-                "women's golf": 'womens-golf', "men's golf": 'mens-golf',
-                "women's cross country": 'womens-cross-country', "men's cross country": 'mens-cross-country',
-                "women's indoor track & field": 'womens-indoor-track-and-field',
-                "women's outdoor track & field": 'womens-outdoor-track-and-field',
-                "men's track and field": 'mens-track-and-field',
-                "women's track and field": 'womens-track-and-field'
-            };
-            const sportLower = sportName.toLowerCase();
-            let scheduleSlug = scheduleSlugMap[sportLower];
-            if (!scheduleSlug) {
-                for (const [key, slug] of Object.entries(scheduleSlugMap)) {
-                    if (sportLower.includes(key) || key.includes(sportLower)) { scheduleSlug = slug; break; }
-                }
-            }
-            const scheduleUrl = scheduleSlug
-                ? `https://millersvilleathletics.com/sports/${scheduleSlug}/schedule`
-                : 'https://millersvilleathletics.com/calendar';
-            // ev.url from iCal points to the specific game entry on the schedule
-            const sourceUrl = ev.url ? ev.url.replace(/&amp;/g, '&') : scheduleUrl;
+            const sourceUrl = ev.url ? ev.url.replace(/&amp;/g, '&') : 'https://millersvilleathletics.com/calendar';
 
             events.push({
                 title: cleanTitle,
@@ -726,18 +698,14 @@ async function runScraper() {
                         if (cat && !cats.includes(cat)) cats.push(cat);
                     }
                 }
-                if (t && l) {
-                    const pubDate = d ? new Date(d[1]) : null;
-                    results.push({
-                        category: sourceCategory, source,
-                        subCategory: cats.length > 0 ? cats[0] : '',
-                        tags: cats,
-                        title: t[1].replace(/<!\[CDATA\[/g, "").replace(/\]\]>/g, "").trim(),
-                        link: l[1].replace(/<!\[CDATA\[/g, "").replace(/\]\]>/g, "").trim(),
-                        date: pubDate ? pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : "",
-                        sortDate: pubDate ? pubDate.toISOString() : "1970-01-01T00:00:00.000Z"
-                    });
-                }
+                if (t && l) results.push({
+                    category: sourceCategory, source,
+                    subCategory: cats.length > 0 ? cats[0] : '',
+                    tags: cats,
+                    title: t[1].replace(/<!\[CDATA\[/g, "").replace(/\]\]>/g, "").trim(),
+                    link: l[1].replace(/<!\[CDATA\[/g, "").replace(/\]\]>/g, "").trim(),
+                    date: d ? new Date(d[1]).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : ""
+                });
             }
             return results;
         }
@@ -777,16 +745,13 @@ async function runScraper() {
 
                     const max = Math.min(5, articles.length);
                     for (let i = 0; i < max; i++) {
-                        const dateStr = dates[i] || '';
-                        const parsed = dateStr ? new Date(dateStr) : null;
                         news.push({
                             category: "MU", source: "The Snapper",
                             subCategory: section.sub,
                             tags: [section.sub],
                             title: articles[i].title,
                             link: articles[i].url,
-                            date: dateStr,
-                            sortDate: parsed && !isNaN(parsed.getTime()) ? parsed.toISOString() : "1970-01-01T00:00:00.000Z"
+                            date: dates[i] || ""
                         });
                         snapperTotal++;
                     }
@@ -830,9 +795,6 @@ async function runScraper() {
             seenLinks.add(n.link);
             return true;
         });
-
-        // Sort by date, most recent first
-        news.sort((a, b) => new Date(b.sortDate || 0) - new Date(a.sortDate || 0));
 
         fs.writeFileSync(path.join(__dirname, '../news.json'), JSON.stringify(news, null, 2));
         console.log(`✅ News: ${news.length} total items`);

@@ -40,14 +40,16 @@ jobs:
             set net:max-retries 3;
             open -u ${{ secrets.DREAMHOST_USERNAME }},${{ secrets.DREAMHOST_PASSWORD }} sftp://${{ secrets.DREAMHOST_SERVER }};
             mirror --reverse --delete --verbose \
-              --exclude .git/ \
-              --exclude .github/ \
-              --exclude node_modules/ \
-              --exclude scripts/ \
-              --exclude package.json \
-              --exclude package-lock.json \
-              --exclude index_old.html \
-              --exclude style_old.css \
+              --exclude ^\.git/ \
+              --exclude ^\.github/ \
+              --exclude ^node_modules/ \
+              --exclude ^scripts/ \
+              --exclude ^package\.json$ \
+              --exclude ^package-lock\.json$ \
+              --exclude ^index_old\.html$ \
+              --exclude ^style_old\.css$ \
+              --exclude ^404\.html$ \
               ./ ${{ secrets.DREAMHOST_DIR }};
+            put -O ${{ secrets.DREAMHOST_DIR }} .htaccess;
             quit;
           "

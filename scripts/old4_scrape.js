@@ -435,7 +435,7 @@ async function runScraper() {
 
                 if (/board/i.test(lt)) tags.push('Board/PTO');
                 else if (/pto/i.test(lt)) tags.push('Board/PTO');
-                else if (/staff|in-service|act 80|faculty/i.test(lt)) continue; // Skip Staff events
+                else if (/staff|in-service|act 80|faculty/i.test(lt)) tags.push('Staff');
                 else if (/concert|band|chorus|choir|orchestra|musical|theater|play|string ensemble|showcase/i.test(lt)) tags.push('Music/Arts');
                 else if (/pssa|grades?\s+(due|posted|are)|report card|marking period/i.test(lt)) continue; // Skip Testing/Grades events
                 else if (/spirit day|dress down|reward day|talent show|pm cares/i.test(lt)) tags.push('Spirit/Fun Days');
@@ -683,117 +683,6 @@ async function runScraper() {
         console.log(`✅ Borough Calendar: ${boroughCount} events (${boroughRecurring} from recurring)`);
     } catch (e) { console.error("❌ Borough Calendar error:", e.message); }
 
-    // ===== 7. VFW POST 7294 EVENTS (extracted from blog RSS) =====
-    try {
-        console.log("📡 Fetching VFW Post 7294 blog for events...");
-        const vfwXml = await (await fetch('https://www.vfwpost7294.org/feed/', { headers: baseHeaders })).text();
-        const vfwItems = vfwXml.match(/<item>([\s\S]*?)<\/item>/g) || [];
-        let vfwEventCount = 0;
-
-        const months = { january:0, february:1, march:2, april:3, may:4, june:5, july:6, august:7, september:8, october:9, november:10, december:11 };
-        const monthPattern = Object.keys(months).join('|');
-
-        for (const item of vfwItems) {
-            const titleMatch = item.match(/<title>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/title>/i);
-            const linkMatch = item.match(/<link>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/link>/i);
-            const pubMatch = item.match(/<pubDate>([\s\S]*?)<\/pubDate>/i);
-            const descMatch = item.match(/<description>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/description>/i);
-            const contentMatch = item.match(/<content:encoded>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/content:encoded>/i);
-
-            if (!titleMatch || !linkMatch) continue;
-
-            const postTitle = titleMatch[1].trim();
-            const postLink = linkMatch[1].trim();
-            const pubDate = pubMatch ? new Date(pubMatch[1]) : new Date();
-            const body = (descMatch ? descMatch[1] : '') + ' ' + (contentMatch ? contentMatch[1] : '');
-            // Strip HTML tags for text analysis
-            const text = body.replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/&nbsp;/g, ' ').replace(/&#\d+;/g, ' ');
-            const fullText = postTitle + ' ' + text;
-
-            // Extract dates from the text
-            // Patterns: "Friday February 6th", "Sunday February 15th", "Date: February 16, 2025"
-            const dateRegex = new RegExp(
-                `(?:(?:monday|tuesday|wednesday|thursday|friday|saturday|sunday)[,\\s]+)?(${monthPattern})\\s+(\\d{1,2})(?:st|nd|rd|th)?(?:[,\\s]+(\\d{4}))?`,
-                'gi'
-            );
-
-            let dateMatch;
-            const foundEvents = [];
-            while ((dateMatch = dateRegex.exec(fullText)) !== null) {
-                const monthName = dateMatch[1].toLowerCase();
-                const day = parseInt(dateMatch[2]);
-                let year = dateMatch[3] ? parseInt(dateMatch[3]) : pubDate.getFullYear();
-
-                // If month is before pub month and no year specified, it might be next year
-                const monthNum = months[monthName];
-                if (monthNum < pubDate.getMonth() && !dateMatch[3]) {
-                    year = pubDate.getFullYear() + 1;
-                }
-
-                const eventDate = new Date(year, monthNum, day);
-                if (isNaN(eventDate.getTime())) continue;
-                if (eventDate < pastDate || eventDate >= futureDate) continue;
-
-                // Extract time near this date mention
-                const surrounding = fullText.substring(Math.max(0, dateMatch.index - 100), dateMatch.index + dateMatch[0].length + 200);
-                const timeMatch = surrounding.match(/(?:at\s+|from\s+|begins?\s+(?:at\s+)?|starting\s+(?:at\s+)?|doors?\s+(?:open\s+)?(?:at\s+)?)(\d{1,2}(?::\d{2})?\s*(?:am|pm|AM|PM))/i);
-                if (timeMatch) {
-                    const timeParts = timeMatch[1].match(/(\d{1,2})(?::(\d{2}))?\s*(am|pm)/i);
-                    if (timeParts) {
-                        let hours = parseInt(timeParts[1]);
-                        const mins = timeParts[2] ? parseInt(timeParts[2]) : 0;
-                        const ampm = timeParts[3].toLowerCase();
-                        if (ampm === 'pm' && hours < 12) hours += 12;
-                        if (ampm === 'am' && hours === 12) hours = 0;
-                        eventDate.setHours(hours, mins, 0);
-                    }
-                }
-
-                // Try to extract event name from surrounding context
-                let eventName = '';
-                // Look for "we have {EVENT}" or "join us for {EVENT}" or "{EVENT} will take place"
-                const namePatterns = [
-                    /(?:we have|join us for|come (?:out )?(?:to|for)|presenting|hosting)\s+(?:our\s+)?([^.!?]+?)(?:\s+(?:in|at|on|from|this|every|beginning|starting))/i,
-                    /([A-Z][A-Za-z\s']+(?:Bingo|Night|Trivia|Cornhole|Dance|Party|Carnival|Dinner|Breakfast|Fundraiser|Concert|Show|Tournament))/,
-                ];
-                for (const pattern of namePatterns) {
-                    const nm = surrounding.match(pattern);
-                    if (nm) {
-                        eventName = nm[1].trim().replace(/^(our|the|a)\s+/i, '').trim();
-                        // Capitalize first letter
-                        eventName = eventName.charAt(0).toUpperCase() + eventName.slice(1);
-                        break;
-                    }
-                }
-
-                // Fallback: use post title as event name
-                if (!eventName || eventName.length < 3 || eventName.length > 80) {
-                    eventName = postTitle.replace(/[!]+$/, '').trim();
-                }
-
-                // Avoid duplicate dates within same post
-                const dateKey = eventDate.toISOString().substring(0, 10);
-                if (foundEvents.includes(dateKey)) continue;
-                foundEvents.push(dateKey);
-
-                events.push({
-                    title: eventName,
-                    date: eventDate.toISOString(),
-                    location: 'VFW Post 7294, 219 Walnut Hill Rd',
-                    tags: ['Other', 'VFW'],
-                    price: 'Free',
-                    ticketLink: '',
-                    sourceLink: postLink,
-                    gameResult: '', gameScore: '', streamLink: '', isLive: false,
-                    kidFriendly: false
-                });
-                vfwEventCount++;
-                console.log(`    📌 VFW Event: "${eventName}" on ${dateKey}${timeMatch ? ' at ' + timeMatch[1] : ''}`);
-            }
-        }
-        console.log(`✅ VFW Post 7294: ${vfwEventCount} events extracted from blog`);
-    } catch (e) { console.error("❌ VFW Events error:", e.message); }
-
     // ===== FAMILY-FRIENDLY TAGGING =====
     const familyKeywords = /\bfamily\b|families|\bkids?\b|\bchild(ren)?\b|\byouth\b|\ball ages\b|\bopen house\b|\bparade\b|\bfestival\b|\bfair\b|\bfun run\b|\begg hunt\b|\btrick.or.treat\b|\bstory ?time\b/i;
     const notFamilyKeywords = /\brehersal\b|\brehearsal\b|\bpractice\b|\btraining\b|\bsap meeting\b|\bstaff\b|\bfaculty\b|\bin-service\b|\bboard\b|\bpto\b/i;
@@ -820,7 +709,7 @@ async function runScraper() {
         // PM events — selective
         else if (src === 'PM') {
             // NOT family friendly: Board/PTO, Staff, Meetings, rehearsals, practice
-            if (tags.includes('Board/PTO') || tags.includes('Meetings')) {
+            if (tags.includes('Board/PTO') || tags.includes('Staff') || tags.includes('Meetings')) {
                 isFamilyFriendly = false;
             }
             // NOT family friendly: rehearsals/practice in title
@@ -974,13 +863,6 @@ async function runScraper() {
             news.push(...parseRSSItems(xml, "Borough", "Millersville Borough", 10));
             console.log(`  ✅ Borough News: ${Math.min(10, (xml.match(/<item>/g)||[]).length)} articles`);
         } catch (e) { console.error("❌ Borough News RSS error:", e.message); }
-
-        // VFW Post 7294 Blog
-        try {
-            const xml = await (await fetch('https://www.vfwpost7294.org/feed/', { headers: baseHeaders })).text();
-            news.push(...parseRSSItems(xml, "Community", "VFW Post 7294", 10, { skipCategories: true }));
-            console.log(`  ✅ VFW Post 7294: ${Math.min(10, (xml.match(/<item>/g)||[]).length)} articles`);
-        } catch (e) { console.error("❌ VFW RSS error:", e.message); }
 
         // Penn Manor School District News
         try {

@@ -88,8 +88,11 @@
                 <button class="src-btn" id="ev-src-other" onclick="setEventSource('Other', this)">🎸 Other</button>
             </div>
             <button class="family-toggle" id="ev-kid-toggle" onclick="toggleKidFriendly()" title="Family Friendly Events">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <circle cx="10" cy="4.5" r="2.5"/>
+                    <circle cx="16" cy="3.5" r="3"/>
+                    <path d="M16 8c-1.5 0-2.8.8-3.5 2h-1c-.7-1.2-2-2-3.5-2-2.2 0-4 1.8-4 4v6h4v-4h2v4h2v-4h2v4h4v-6c0-2.2-1.8-4-4-4z"/>
+                    <circle cx="11" cy="14" r="2.5"/>
                 </svg>
             </button>
         </div>
@@ -162,7 +165,6 @@
                 <button class="src-btn" onclick="setNewsSource('MU Review', this)">📖 MU Review</button>
                 <button class="src-btn" onclick="setNewsSource('Penn Manor News', this)"><svg class="btn-icon" width="12" height="12"><use href="#icon-comet"/></svg> Penn Manor</button>
                 <button class="src-btn" onclick="setNewsSource('Millersville Borough', this)">🌳 Millersville Borough</button>
-                <button class="src-btn" onclick="setNewsSource('VFW Post 7294', this)">🎖️ VFW</button>
             </div>
         </div>
         <div id="news-sub-container" class="sub-filter-bar"></div>
@@ -219,7 +221,7 @@ const sportMetaTags=['Athletic Competitions','Athletics','Club Sports','Home Gam
 const evSubMap={
     'MU':['Public Event','Student Event','Arts Concert / Performance'],
     'Clubs/Orgs':['Residence Halls','Greek Life','Fundraising','Other Org'],
-    'PM':['Music/Arts','School Events','Spirit/Fun Days','Board/PTO','Health/Wellness','Field Trips','Meetings','Other']
+    'PM':['Music/Arts','School Events','Spirit/Fun Days','Board/PTO','Staff','Health/Wellness','Field Trips','Meetings','Other']
 };
 
 // Date helpers

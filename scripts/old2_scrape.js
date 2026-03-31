@@ -434,7 +434,7 @@ async function runScraper() {
                 else if (/pto/i.test(lt)) tags.push('Board/PTO');
                 else if (/staff|in-service|act 80|faculty/i.test(lt)) tags.push('Staff');
                 else if (/concert|band|chorus|choir|orchestra|musical|theater|play|string ensemble|showcase/i.test(lt)) tags.push('Music/Arts');
-                else if (/no school|snow day|spring break|weather make|school now in session|vacation/i.test(lt)) continue; // Skip No School/Closings events
+                else if (/no school|snow day|spring break|weather make|school now in session|vacation/i.test(lt)) tags.push('No School/Closings');
                 else if (/pssa|grades?\s+(due|posted|are)|report card|marking period/i.test(lt)) tags.push('Testing/Grades');
                 else if (/spirit day|dress down|reward day|talent show|pm cares/i.test(lt)) tags.push('Spirit/Fun Days');
                 else if (/field trip|downtown trip|trip to/i.test(lt)) tags.push('Field Trips');
@@ -681,65 +681,34 @@ async function runScraper() {
         console.log(`✅ Borough Calendar: ${boroughCount} events (${boroughRecurring} from recurring)`);
     } catch (e) { console.error("❌ Borough Calendar error:", e.message); }
 
-    // ===== FAMILY-FRIENDLY TAGGING =====
-    const familyKeywords = /\bfamily\b|families|\bkids?\b|\bchild(ren)?\b|\byouth\b|\ball ages\b|\bopen house\b|\bparade\b|\bfestival\b|\bfair\b|\bfun run\b|\begg hunt\b|\btrick.or.treat\b|\bstory ?time\b/i;
-    const notFamilyKeywords = /\brehersal\b|\brehearsal\b|\bpractice\b|\btraining\b|\bsap meeting\b|\bstaff\b|\bfaculty\b|\bin-service\b|\bboard\b|\bpto\b/i;
-    const familyPMKeywords = /\bconcert\b|\bensemble\b|\bshowcase\b|\bspring show\b|\bmusical\b|\bplay\b|\btalent show\b|\bassembly\b|\bbook fair\b|\bfood fair\b|\bpicture\b|\bspirit day\b|\breward day\b|\bfield trip\b|\bfield day\b/i;
-    let famCount = 0;
+    // ===== KID-FRIENDLY TAGGING =====
+    const kidFriendlyKeywords = /\bfamily\b|families|\bkids?\b|\bchild(ren)?\b|\byouth\b|\ball ages\b|\bopen house\b|\bcommunity\b|\bparade\b|\bfestival\b|\bfair\b|\bfun run\b|\begg hunt\b|\btrick.or.treat\b|\bstory ?time\b/i;
+    let kidCount = 0;
     events.forEach(e => {
         const tags = e.tags || [];
         const src = tags[0] || '';
-        const title = e.title || '';
-        const titleLower = title.toLowerCase();
+        const title = (e.title || '').toLowerCase();
+        const loc = (e.location || '').toLowerCase();
 
-        let isFamilyFriendly = false;
+        let isKidFriendly = false;
 
-        // Skip all sporting events (they're on the Sports page, not Events)
-        if (tags.includes('Athletic Competitions') || tags.includes('Athletics') || tags.includes('Club Sports')) {
-            e.kidFriendly = false;
-            return;
-        }
+        // PM events (school district) → all kid-friendly
+        if (src === 'PM') isKidFriendly = true;
+        // Borough events → all kid-friendly
+        else if (src === 'Borough') isKidFriendly = true;
+        // MU Athletic events → kid-friendly (family sporting events)
+        else if (tags.includes('Athletic Competitions') || tags.includes('Athletics')) isKidFriendly = true;
+        // Club Sports → kid-friendly
+        else if (tags.includes('Club Sports')) isKidFriendly = true;
+        // Keyword match in title
+        else if (kidFriendlyKeywords.test(e.title || '')) isKidFriendly = true;
+        // Phantom Power / bar events → NOT kid-friendly
+        else if (tags.includes('Other') && tags.includes('Live Music')) isKidFriendly = false;
 
-        // Borough events → NOT family friendly (trash collection, meetings, etc.)
-        if (src === 'Borough') {
-            isFamilyFriendly = false;
-        }
-        // PM events — selective
-        else if (src === 'PM') {
-            // NOT family friendly: Board/PTO, Staff, Meetings, rehearsals, practice
-            if (tags.includes('Board/PTO') || tags.includes('Staff') || tags.includes('Meetings')) {
-                isFamilyFriendly = false;
-            }
-            // NOT family friendly: rehearsals/practice in title
-            else if (notFamilyKeywords.test(titleLower)) {
-                isFamilyFriendly = false;
-            }
-            // YES family friendly: concerts, showcases, assemblies, book fairs, spirit days, etc.
-            else if (familyPMKeywords.test(titleLower)) {
-                isFamilyFriendly = true;
-            }
-            // PM school events, field trips, no school days → family relevant
-            else if (tags.includes('School Events') || tags.includes('Spirit/Fun Days')) {
-                isFamilyFriendly = true;
-            }
-            // Default PM: not family friendly (testing, grades, health/wellness internal)
-            else {
-                isFamilyFriendly = false;
-            }
-        }
-        // Phantom Power / bar events → NOT family friendly
-        else if (tags.includes('Other') && tags.includes('Live Music')) {
-            isFamilyFriendly = false;
-        }
-        // MU and Clubs/Orgs — keyword match
-        else if (familyKeywords.test(title)) {
-            isFamilyFriendly = true;
-        }
-
-        e.kidFriendly = isFamilyFriendly;
-        if (isFamilyFriendly) famCount++;
+        e.kidFriendly = isKidFriendly;
+        if (isKidFriendly) kidCount++;
     });
-    console.log(`👨‍👩‍👧 Family-friendly tagged: ${famCount} of ${events.length} events`);
+    console.log(`👨‍👩‍👧 Kid-friendly tagged: ${kidCount} of ${events.length} events`);
 
     // ===== DEDUPLICATION & SAVE =====
     const seen = new Set();

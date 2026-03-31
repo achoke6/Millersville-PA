@@ -5644,7 +5644,7 @@
     "gameResult": "",
     "gameScore": "",
     "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
-    "isLive": false,
+    "isLive": true,
     "kidFriendly": false
   },
   {
@@ -5663,7 +5663,7 @@
     "gameResult": "",
     "gameScore": "",
     "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
-    "isLive": false,
+    "isLive": true,
     "kidFriendly": false
   },
   {
@@ -7273,7 +7273,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-04-06T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -7289,7 +7289,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-04-06T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -7576,19 +7576,6 @@
     "kidFriendly": false
   },
   {
-    "title": "Grades Due",
-    "date": "2026-04-07T04:00:00.000Z",
-    "location": "Penn Manor School District",
-    "tags": [
-      "PM",
-      "Testing/Grades"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://www.pennmanor.net/event/grades-due-3/",
-    "kidFriendly": false
-  },
-  {
     "title": "ESH Band Rehearsal",
     "date": "2026-04-07T04:00:00.000Z",
     "location": "Penn Manor School District",
@@ -7726,19 +7713,6 @@
     "gameScore": "",
     "streamLink": "",
     "isLive": false,
-    "kidFriendly": false
-  },
-  {
-    "title": "Grades are due",
-    "date": "2026-04-07T19:00:00.000Z",
-    "location": "Penn Manor School District",
-    "tags": [
-      "PM",
-      "Testing/Grades"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://www.pennmanor.net/event/grades-are-due-2/",
     "kidFriendly": false
   },
   {
@@ -8423,19 +8397,6 @@
     "kidFriendly": false
   },
   {
-    "title": "ESH PSSA training",
-    "date": "2026-04-09T12:00:00.000Z",
-    "location": "Penn Manor School District",
-    "tags": [
-      "PM",
-      "Testing/Grades"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://www.pennmanor.net/event/esh-pssa-training/",
-    "kidFriendly": false
-  },
-  {
     "title": "6th Grade MS Field Trip",
     "date": "2026-04-09T15:15:00.000Z",
     "location": "Penn Manor School District",
@@ -8631,45 +8592,6 @@
     "gameScore": "",
     "streamLink": "",
     "isLive": false,
-    "kidFriendly": false
-  },
-  {
-    "title": "Report Cards posted - 3:00PM",
-    "date": "2026-04-10T04:00:00.000Z",
-    "location": "Penn Manor School District",
-    "tags": [
-      "PM",
-      "Testing/Grades"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://www.pennmanor.net/event/report-cards-posted-300pm-3/",
-    "kidFriendly": false
-  },
-  {
-    "title": "Grades posted to Sapphire",
-    "date": "2026-04-10T04:00:00.000Z",
-    "location": "Penn Manor School District",
-    "tags": [
-      "PM",
-      "Testing/Grades"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://www.pennmanor.net/event/grades-posted-to-sapphire-3/",
-    "kidFriendly": false
-  },
-  {
-    "title": "3rd Marking Period Grades Posted",
-    "date": "2026-04-10T04:00:00.000Z",
-    "location": "PA",
-    "tags": [
-      "PM",
-      "Testing/Grades"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://www.pennmanor.net/event/3rd-marking-period-grades-posted/",
     "kidFriendly": false
   },
   {
@@ -9355,38 +9277,6 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
-    "date": "2026-04-13T00:00:00.000Z",
-    "location": "Millersville Borough",
-    "tags": [
-      "Borough"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
-    "gameResult": "",
-    "gameScore": "",
-    "streamLink": "",
-    "isLive": false,
-    "kidFriendly": false
-  },
-  {
-    "title": "Appliance/Tire Collection",
-    "date": "2026-04-13T00:00:00.000Z",
-    "location": "Millersville Borough",
-    "tags": [
-      "Borough"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
-    "gameResult": "",
-    "gameScore": "",
-    "streamLink": "",
-    "isLive": false,
-    "kidFriendly": false
-  },
-  {
     "title": "Woody Yard Waste Collection",
     "date": "2026-04-13T00:00:00.000Z",
     "location": "Millersville Borough",
@@ -9403,7 +9293,39 @@
     "kidFriendly": false
   },
   {
+    "title": "Regular Trash & Recycling Collection ",
+    "date": "2026-04-13T00:00:00.000Z",
+    "location": "Millersville Borough",
+    "tags": [
+      "Borough"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
     "title": "Historic Commission",
+    "date": "2026-04-13T00:00:00.000Z",
+    "location": "Millersville Borough",
+    "tags": [
+      "Borough"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Appliance/Tire Collection",
     "date": "2026-04-13T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -11352,7 +11274,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-04-20T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -11368,7 +11290,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-04-20T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -11669,19 +11591,6 @@
     "gameScore": "",
     "streamLink": "",
     "isLive": false,
-    "kidFriendly": false
-  },
-  {
-    "title": "Conestoga PSSA testing ELA",
-    "date": "2026-04-21T04:00:00.000Z",
-    "location": "Penn Manor School District",
-    "tags": [
-      "PM",
-      "Testing/Grades"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://www.pennmanor.net/event/conestoga-pssa-testing-ela-3/",
     "kidFriendly": false
   },
   {
@@ -12298,7 +12207,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-04-27T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -12314,7 +12223,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-04-27T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -12897,7 +12806,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-05-04T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -12913,7 +12822,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-05-04T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -13142,7 +13051,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-05-11T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -13158,7 +13067,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-05-11T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -13240,7 +13149,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-05-18T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -13256,7 +13165,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-05-18T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -13288,7 +13197,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Office Closed",
+    "title": "Election Day",
     "date": "2026-05-19T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -13304,7 +13213,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Election Day",
+    "title": "Office Closed",
     "date": "2026-05-19T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -13406,7 +13315,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-05-26T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -13422,7 +13331,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-05-26T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [

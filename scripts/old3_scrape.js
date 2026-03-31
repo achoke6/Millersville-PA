@@ -380,9 +380,6 @@ async function runScraper() {
             // Skip noise
             if (/cycle day|^start of|^end of/i.test(lowerTitle)) continue;
 
-            // Skip No School/Closings events entirely — not scraped
-            if (/no school|snow day|spring break|weather make|school now in session|vacation|closing|closed/i.test(lowerTitle)) continue;
-
             const isAthletic = categories.toLowerCase().includes('athletics') || desc.toLowerCase().includes('sport:');
 
             if (isAthletic) {
@@ -437,7 +434,8 @@ async function runScraper() {
                 else if (/pto/i.test(lt)) tags.push('Board/PTO');
                 else if (/staff|in-service|act 80|faculty/i.test(lt)) tags.push('Staff');
                 else if (/concert|band|chorus|choir|orchestra|musical|theater|play|string ensemble|showcase/i.test(lt)) tags.push('Music/Arts');
-                else if (/pssa|grades?\s+(due|posted|are)|report card|marking period/i.test(lt)) continue; // Skip Testing/Grades events
+                else if (/no school|snow day|spring break|weather make|school now in session|vacation/i.test(lt)) continue; // Skip No School/Closings events
+                else if (/pssa|grades?\s+(due|posted|are)|report card|marking period/i.test(lt)) tags.push('Testing/Grades');
                 else if (/spirit day|dress down|reward day|talent show|pm cares/i.test(lt)) tags.push('Spirit/Fun Days');
                 else if (/field trip|downtown trip|trip to/i.test(lt)) tags.push('Field Trips');
                 else if (/gotr|girls on the run|heart & sole|physicals|health/i.test(lt)) tags.push('Health/Wellness');

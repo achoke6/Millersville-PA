@@ -271,27 +271,6 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     color: white;
 }
 
-.family-toggle {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: var(--transition);
-    color: var(--text-muted);
-    flex-shrink: 0;
-}
-.family-toggle:hover { border-color: #059669; color: #059669; }
-.family-toggle.active {
-    background: #059669;
-    border-color: #059669;
-    color: white;
-}
-
 .sport-tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
 .sport-pill { background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 5px 12px; border-radius: var(--radius-pill); font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: var(--transition); font-family: inherit; }
 .sport-pill:hover { border-color: var(--gold); }

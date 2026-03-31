@@ -681,6 +681,35 @@ async function runScraper() {
         console.log(`✅ Borough Calendar: ${boroughCount} events (${boroughRecurring} from recurring)`);
     } catch (e) { console.error("❌ Borough Calendar error:", e.message); }
 
+    // ===== KID-FRIENDLY TAGGING =====
+    const kidFriendlyKeywords = /\bfamily\b|families|\bkids?\b|\bchild(ren)?\b|\byouth\b|\ball ages\b|\bopen house\b|\bcommunity\b|\bparade\b|\bfestival\b|\bfair\b|\bfun run\b|\begg hunt\b|\btrick.or.treat\b|\bstory ?time\b/i;
+    let kidCount = 0;
+    events.forEach(e => {
+        const tags = e.tags || [];
+        const src = tags[0] || '';
+        const title = (e.title || '').toLowerCase();
+        const loc = (e.location || '').toLowerCase();
+
+        let isKidFriendly = false;
+
+        // PM events (school district) → all kid-friendly
+        if (src === 'PM') isKidFriendly = true;
+        // Borough events → all kid-friendly
+        else if (src === 'Borough') isKidFriendly = true;
+        // MU Athletic events → kid-friendly (family sporting events)
+        else if (tags.includes('Athletic Competitions') || tags.includes('Athletics')) isKidFriendly = true;
+        // Club Sports → kid-friendly
+        else if (tags.includes('Club Sports')) isKidFriendly = true;
+        // Keyword match in title
+        else if (kidFriendlyKeywords.test(e.title || '')) isKidFriendly = true;
+        // Phantom Power / bar events → NOT kid-friendly
+        else if (tags.includes('Other') && tags.includes('Live Music')) isKidFriendly = false;
+
+        e.kidFriendly = isKidFriendly;
+        if (isKidFriendly) kidCount++;
+    });
+    console.log(`👨‍👩‍👧 Kid-friendly tagged: ${kidCount} of ${events.length} events`);
+
     // ===== DEDUPLICATION & SAVE =====
     const seen = new Set();
     const dupeList = [];

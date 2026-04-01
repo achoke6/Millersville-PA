@@ -20,17 +20,19 @@ jobs:
       - run: npm install
 
       - run: node scripts/scrape.js
+        env:
+          GOOGLE_VISION_API_KEY: ${{ secrets.GOOGLE_VISION_API_KEY }}
 
       - name: Commit and push updated data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add *.json
+          git add *.json vfw-cache.json
           git diff --staged --quiet && echo "No changes to commit" || {
             git stash --include-untracked
             git pull --rebase origin main
             git stash pop
-            git add *.json
+            git add *.json vfw-cache.json
             git commit -m "System: Auto-syncing Community Data"
             git push origin main
           }
@@ -52,6 +54,7 @@ jobs:
               --exclude ^index_old\.html$ \
               --exclude ^style_old\.css$ \
               --exclude ^404\.html$ \
+              --exclude ^vfw-cache\.json$ \
               ./ ${{ secrets.DREAMHOST_DIR }};
             put -O ${{ secrets.DREAMHOST_DIR }} .htaccess;
             quit;

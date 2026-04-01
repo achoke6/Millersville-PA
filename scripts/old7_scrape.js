@@ -686,24 +686,19 @@ async function runScraper() {
         console.log(`✅ Borough Calendar: ${boroughCount} events (${boroughRecurring} from recurring)`);
     } catch (e) { console.error("❌ Borough Calendar error:", e.message); }
 
-    // ===== 7. VFW POST 7294 EVENTS (Google Cloud Vision OCR + cache) =====
+    // ===== 7. VFW POST 7294 EVENTS (OCR from blog post images) =====
     try {
         console.log("📡 Fetching VFW Post 7294 blog images for OCR...");
-        const VISION_API_KEY = process.env.GOOGLE_VISION_API_KEY;
-        if (!VISION_API_KEY) throw new Error('GOOGLE_VISION_API_KEY not set');
-
-        // Load cache of previously OCR'd images
-        const cachePath = path.join(__dirname, '../vfw-cache.json');
-        let vfwCache = {};
-        try { vfwCache = JSON.parse(fs.readFileSync(cachePath, 'utf8')); } catch (e) { /* no cache yet */ }
-
+        const { createWorker } = require('tesseract.js');
         const vfwXml = await (await fetch('https://www.vfwpost7294.org/feed/', { headers: baseHeaders })).text();
         const vfwItems = vfwXml.match(/<item>([\s\S]*?)<\/item>/g) || [];
         let vfwEventCount = 0;
-        let vfwApiCalls = 0;
 
         const months = { january:0, february:1, march:2, april:3, may:4, june:5, july:6, august:7, september:8, october:9, november:10, december:11 };
         const monthPattern = Object.keys(months).join('|');
+
+        // Initialize Tesseract worker once
+        const worker = await createWorker('eng');
 
         for (const item of vfwItems) {
           try {
@@ -715,7 +710,7 @@ async function runScraper() {
 
             if (!titleMatch || !linkMatch) continue;
 
-            const postTitle = titleMatch[1].replace(/&#\d+;/g, '').replace(/&amp;/g, '&').trim();
+            const postTitle = titleMatch[1].trim();
             const postLink = linkMatch[1].trim();
             const pubDate = pubMatch ? new Date(pubMatch[1]) : new Date();
             const htmlContent = (contentMatch ? contentMatch[1] : '') || (descMatch ? descMatch[1] : '');
@@ -726,6 +721,7 @@ async function runScraper() {
             const imageUrls = [];
             while ((imgMatch = imgRegex.exec(htmlContent)) !== null) {
                 const url = imgMatch[1].replace(/&amp;/g, '&');
+                // Skip tiny images, icons, tracking pixels
                 const widthMatch = imgMatch[0].match(/width=["']?(\d+)/i);
                 const w = widthMatch ? parseInt(widthMatch[1]) : 999;
                 if (w < 100) continue;
@@ -734,142 +730,66 @@ async function runScraper() {
             }
 
             if (imageUrls.length === 0) continue;
+
             console.log(`  📰 Post: "${postTitle}" — ${imageUrls.length} image(s)`);
 
-            // Combine OCR text from all images
+            // OCR each image and combine text
             let allOcrText = postTitle + '\n';
-            // Also grab body text
+            // Also grab text from the HTML body
             const bodyText = htmlContent.replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/&nbsp;/g, ' ').replace(/&#\d+;/g, ' ').replace(/\s+/g, ' ').trim();
             allOcrText += bodyText + '\n';
 
             for (const imgUrl of imageUrls) {
                 try {
-                    // Check cache first
-                    if (vfwCache[imgUrl]) {
-                        console.log(`    📋 Cached OCR (${vfwCache[imgUrl].length} chars)`);
-                        allOcrText += '\n' + vfwCache[imgUrl];
-                        continue;
-                    }
-
                     // Download image
-                    const imgRes = await fetch(imgUrl, { headers: baseHeaders, signal: AbortSignal.timeout(15000) });
+                    const imgRes = await fetch(imgUrl, { headers: baseHeaders, signal: AbortSignal.timeout(10000) });
                     if (!imgRes.ok) continue;
                     const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
 
-                    // Validate image
-                    if (imgBuffer.length < 1000) { console.log(`    ⚠️ Skipping tiny image`); continue; }
-                    const hdr = imgBuffer.slice(0, 4);
-                    const isImg = (hdr[0]===0xFF&&hdr[1]===0xD8) || (hdr[0]===0x89&&hdr[1]===0x50) || (hdr[0]===0x47&&hdr[1]===0x49) || (hdr[0]===0x52&&hdr[1]===0x49);
-                    if (!isImg) { console.log(`    ⚠️ Skipping non-image file`); continue; }
-
-                    // Google Cloud Vision API call
-                    const base64Img = imgBuffer.toString('base64');
-                    const visionRes = await fetch(`https://vision.googleapis.com/v1/images:annotate?key=${VISION_API_KEY}`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            requests: [{
-                                image: { content: base64Img },
-                                features: [{ type: 'TEXT_DETECTION', maxResults: 1 }]
-                            }]
-                        })
-                    });
-
-                    if (!visionRes.ok) {
-                        console.log(`    ⚠️ Vision API error: ${visionRes.status}`);
+                    // Validate: skip tiny files (likely broken) and non-image data
+                    if (imgBuffer.length < 1000) {
+                        console.log(`    ⚠️ Skipping tiny image (${imgBuffer.length} bytes)`);
                         continue;
                     }
 
-                    const visionData = await visionRes.json();
-                    const ocrText = visionData.responses?.[0]?.fullTextAnnotation?.text || '';
-                    vfwApiCalls++;
+                    // Check for valid image headers (JPEG, PNG, GIF, WebP)
+                    const header = imgBuffer.slice(0, 4);
+                    const isJPEG = header[0] === 0xFF && header[1] === 0xD8;
+                    const isPNG = header[0] === 0x89 && header[1] === 0x50;
+                    const isGIF = header[0] === 0x47 && header[1] === 0x49;
+                    const isWebP = header[0] === 0x52 && header[1] === 0x49;
+                    if (!isJPEG && !isPNG && !isGIF && !isWebP) {
+                        console.log(`    ⚠️ Skipping non-image file`);
+                        continue;
+                    }
 
+                    // OCR the image with timeout
+                    const ocrResult = await Promise.race([
+                        worker.recognize(imgBuffer),
+                        new Promise((_, reject) => setTimeout(() => reject(new Error('OCR timeout')), 30000))
+                    ]);
+                    const ocrText = ocrResult?.data?.text || '';
                     if (ocrText.trim().length > 10) {
-                        console.log(`    🔍 Vision OCR (${ocrText.trim().length} chars): ${ocrText.trim().substring(0, 100)}...`);
+                        console.log(`    🔍 OCR (${ocrText.trim().length} chars): ${ocrText.trim().substring(0, 80)}...`);
                         allOcrText += '\n' + ocrText;
-                        // Cache the result
-                        vfwCache[imgUrl] = ocrText;
-                    } else {
-                        console.log(`    ⚠️ No text detected in image`);
-                        vfwCache[imgUrl] = ''; // Cache empty result too
                     }
                 } catch (imgErr) {
                     console.log(`    ⚠️ Image failed: ${imgErr.message}`);
                 }
             }
 
-            // ===== Extract events from combined OCR + body text =====
+            // Now extract events from combined OCR text + body text
             const dateRegex = new RegExp(
                 `(?:(?:monday|tuesday|wednesday|thursday|friday|saturday|sunday)[,\\s]*)?` +
                 `(${monthPattern})[\\s.,]*(\\d{1,2})(?:st|nd|rd|th)?[,\\s]*(\\d{4})?`,
                 'gi'
             );
+            // Also try MM/DD/YYYY or MM/DD/YY patterns
             const slashDateRegex = /(\d{1,2})\/(\d{1,2})\/(\d{2,4})/g;
-            // Also match "March 24-28" style date ranges
-            const rangeRegex = new RegExp(
-                `(${monthPattern})\\s+(\\d{1,2})(?:st|nd|rd|th)?\\s*[-–through]+\\s*(?:(${monthPattern})\\s+)?(\\d{1,2})(?:st|nd|rd|th)?[,\\s]*(\\d{4})?`,
-                'gi'
-            );
 
             const foundEvents = new Set();
 
-            // Extract date ranges first (e.g., "March 24 through Saturday, March 28")
-            let rm;
-            while ((rm = rangeRegex.exec(allOcrText)) !== null) {
-                const startMonth = months[rm[1].toLowerCase()];
-                const startDay = parseInt(rm[2]);
-                const endMonth = rm[3] ? months[rm[3].toLowerCase()] : startMonth;
-                const endDay = parseInt(rm[4]);
-                let year = rm[5] ? parseInt(rm[5]) : pubDate.getFullYear();
-                if (startMonth < pubDate.getMonth() && !rm[5]) year++;
-
-                // Create events for each day in the range
-                for (let d = startDay; d <= endDay; d++) {
-                    const eventDate = new Date(year, endMonth !== undefined ? endMonth : startMonth, d);
-                    if (isNaN(eventDate.getTime())) continue;
-                    if (eventDate < pastDate || eventDate >= futureDate) continue;
-                    const dateKey = eventDate.toISOString().substring(0, 10);
-                    if (foundEvents.has(dateKey)) continue;
-
-                    // Look for what's happening on this day of the week
-                    const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-                    const dayName = dayNames[eventDate.getDay()];
-
-                    // Search OCR text for events associated with this day
-                    const dayRegex = new RegExp(`${dayName}[\\s\\S]{0,100}?([A-Z][A-Za-z\\s&']+(?:Night|Bingo|Trivia|Party|Meeting|Hunt|Paint|Special|Cornhole|Dance|Concert|Show))`, 'i');
-                    const dayMatch = allOcrText.match(dayRegex);
-
-                    let eventName = dayMatch ? dayMatch[1].trim() : postTitle;
-                    let price = 'Free';
-                    const ctx = allOcrText.substring(Math.max(0, rm.index - 200), rm.index + rm[0].length + 500);
-                    const priceMatch = ctx.match(/\$(\d+(?:\.\d{2})?)/);
-                    if (priceMatch) price = `$${priceMatch[1]}`;
-
-                    // Extract time
-                    const timeMatch = ctx.match(/(?:at\s+|from\s+|begins?\s+(?:at\s+)?|starting\s+(?:at\s+)?|doors?\s+(?:open\s+)?(?:at\s+)?|@\s*)(\d{1,2}(?::\d{2})?\s*(?:am|pm|AM|PM))/i);
-                    if (timeMatch) {
-                        const tp = timeMatch[1].replace(/\./g,'').match(/(\d{1,2})(?::(\d{2}))?\s*(am|pm)/i);
-                        if (tp) {
-                            let h = parseInt(tp[1]); const mi = tp[2]?parseInt(tp[2]):0;
-                            if(tp[3].toLowerCase()==='pm'&&h<12) h+=12;
-                            if(tp[3].toLowerCase()==='am'&&h===12) h=0;
-                            eventDate.setHours(h,mi,0);
-                        }
-                    }
-
-                    foundEvents.add(dateKey);
-                    events.push({
-                        title: eventName, date: eventDate.toISOString(),
-                        location: 'VFW Post 7294, 219 Walnut Hill Rd',
-                        tags: ['Other', 'VFW'], price, ticketLink: '', sourceLink: postLink,
-                        gameResult: '', gameScore: '', streamLink: '', isLive: false, kidFriendly: false
-                    });
-                    vfwEventCount++;
-                    console.log(`    📌 VFW Event: "${eventName}" on ${dateKey} [${price}]`);
-                }
-            }
-
-            // Extract single dates (written format)
+            // Extract from written date patterns
             let dm;
             while ((dm = dateRegex.exec(allOcrText)) !== null) {
                 const monthName = dm[1].toLowerCase();
@@ -877,7 +797,11 @@ async function runScraper() {
                 let year = dm[3] ? parseInt(dm[3]) : pubDate.getFullYear();
                 const monthNum = months[monthName];
                 if (monthNum === undefined) continue;
-                if (monthNum < pubDate.getMonth() && !dm[3]) year++;
+
+                // If month already passed and no year specified, might be next year
+                if (monthNum < pubDate.getMonth() && !dm[3]) {
+                    year = pubDate.getFullYear() + 1;
+                }
 
                 const eventDate = new Date(year, monthNum, day);
                 if (isNaN(eventDate.getTime())) continue;
@@ -886,22 +810,26 @@ async function runScraper() {
                 const dateKey = eventDate.toISOString().substring(0, 10);
                 if (foundEvents.has(dateKey)) continue;
 
+                // Extract time near this date mention
                 const ctx = allOcrText.substring(Math.max(0, dm.index - 150), dm.index + dm[0].length + 300);
                 const timeMatch = ctx.match(/(?:at\s+|from\s+|begins?\s+(?:at\s+)?|starting\s+(?:at\s+)?|doors?\s+(?:open\s+)?(?:at\s+)?|@\s*)(\d{1,2}(?::\d{2})?\s*(?:am|pm|AM|PM|a\.m\.|p\.m\.))/i);
                 if (timeMatch) {
-                    const tp = timeMatch[1].replace(/\./g,'').match(/(\d{1,2})(?::(\d{2}))?\s*(am|pm)/i);
+                    const tp = timeMatch[1].replace(/\./g, '').match(/(\d{1,2})(?::(\d{2}))?\s*(am|pm)/i);
                     if (tp) {
-                        let h=parseInt(tp[1]); const m=tp[2]?parseInt(tp[2]):0;
-                        if(tp[3].toLowerCase()==='pm'&&h<12) h+=12;
-                        if(tp[3].toLowerCase()==='am'&&h===12) h=0;
-                        eventDate.setHours(h,m,0);
+                        let h = parseInt(tp[1]);
+                        const m = tp[2] ? parseInt(tp[2]) : 0;
+                        if (tp[3].toLowerCase() === 'pm' && h < 12) h += 12;
+                        if (tp[3].toLowerCase() === 'am' && h === 12) h = 0;
+                        eventDate.setHours(h, m, 0);
                     }
                 }
 
+                // Extract event name from context
                 let eventName = '';
                 const namePatterns = [
                     /(?:we have|join us for|come (?:out )?(?:to|for)|presenting|hosting|it'?s|our)\s+(?:our\s+)?([A-Z][^.!?\n]{3,60}?)(?:\s+(?:in|at|on|from|this|beginning|starting|!|\.))/i,
-                    /([A-Z][A-Za-z\s'&]+(?:Bingo|Night|Trivia|Cornhole|Dance|Party|Carnival|Dinner|Breakfast|Fundraiser|Concert|Show|Tournament|Cook.?off|BBQ|Cookout|Picnic|Hunt))/,
+                    /([A-Z][A-Za-z\s'&]+(?:Bingo|Night|Trivia|Cornhole|Dance|Party|Carnival|Dinner|Breakfast|Fundraiser|Concert|Show|Tournament|Cook.?off|BBQ|Cookout|Picnic))/,
+                    /([A-Z][A-Z\s'&]{4,40}(?:BINGO|NIGHT|TRIVIA|CORNHOLE|DANCE|PARTY|CARNIVAL|DINNER|FUNDRAISER|CONCERT|SHOW))/i,
                 ];
                 for (const pattern of namePatterns) {
                     const nm = ctx.match(pattern);
@@ -912,95 +840,93 @@ async function runScraper() {
                         eventName = '';
                     }
                 }
-                if (!eventName) eventName = postTitle.replace(/[!]+$/, '').replace(/&#\d+;/g, '').trim();
 
+                // Fallback: use post title
+                if (!eventName) {
+                    eventName = postTitle.replace(/[!]+$/, '').trim();
+                    if (eventName.length > 60) eventName = eventName.substring(0, 60).trim();
+                }
+
+                // Extract price if mentioned
                 let price = 'Free';
                 const priceMatch = ctx.match(/\$(\d+(?:\.\d{2})?)/);
                 if (priceMatch) price = `$${priceMatch[1]}`;
 
                 foundEvents.add(dateKey);
+
                 events.push({
-                    title: eventName, date: eventDate.toISOString(),
+                    title: eventName,
+                    date: eventDate.toISOString(),
                     location: 'VFW Post 7294, 219 Walnut Hill Rd',
-                    tags: ['Other', 'VFW'], price, ticketLink: '', sourceLink: postLink,
-                    gameResult: '', gameScore: '', streamLink: '', isLive: false, kidFriendly: false
+                    tags: ['Other', 'VFW'],
+                    price,
+                    ticketLink: '',
+                    sourceLink: postLink,
+                    gameResult: '', gameScore: '', streamLink: '', isLive: false,
+                    kidFriendly: false
                 });
                 vfwEventCount++;
                 console.log(`    📌 VFW Event: "${eventName}" on ${dateKey}${timeMatch ? ' at ' + timeMatch[1] : ''} [${price}]`);
             }
 
-            // Slash dates (MM/DD/YYYY)
+            // Also try slash date format (MM/DD/YYYY)
             let sdm;
             while ((sdm = slashDateRegex.exec(allOcrText)) !== null) {
-                const m = parseInt(sdm[1]) - 1, d = parseInt(sdm[2]);
-                let y = parseInt(sdm[3]); if (y < 100) y += 2000;
+                const m = parseInt(sdm[1]) - 1;
+                const d = parseInt(sdm[2]);
+                let y = parseInt(sdm[3]);
+                if (y < 100) y += 2000;
                 if (m < 0 || m > 11 || d < 1 || d > 31) continue;
+
                 const eventDate = new Date(y, m, d);
                 if (isNaN(eventDate.getTime())) continue;
                 if (eventDate < pastDate || eventDate >= futureDate) continue;
+
                 const dateKey = eventDate.toISOString().substring(0, 10);
                 if (foundEvents.has(dateKey)) continue;
 
+                // Time extraction from surrounding text
                 const ctx = allOcrText.substring(Math.max(0, sdm.index - 150), sdm.index + sdm[0].length + 300);
+                const timeMatch = ctx.match(/(?:at\s+|from\s+|doors?\s+(?:open\s+)?(?:at\s+)?|@\s*)(\d{1,2}(?::\d{2})?\s*(?:am|pm|AM|PM))/i);
+                if (timeMatch) {
+                    const tp = timeMatch[1].replace(/\./g, '').match(/(\d{1,2})(?::(\d{2}))?\s*(am|pm)/i);
+                    if (tp) {
+                        let h = parseInt(tp[1]);
+                        const mm = tp[2] ? parseInt(tp[2]) : 0;
+                        if (tp[3].toLowerCase() === 'pm' && h < 12) h += 12;
+                        if (tp[3].toLowerCase() === 'am' && h === 12) h = 0;
+                        eventDate.setHours(h, mm, 0);
+                    }
+                }
+
                 let price = 'Free';
                 const priceMatch = ctx.match(/\$(\d+(?:\.\d{2})?)/);
                 if (priceMatch) price = `$${priceMatch[1]}`;
 
                 foundEvents.add(dateKey);
+                const eventName = postTitle.replace(/[!]+$/, '').trim();
+
                 events.push({
-                    title: postTitle.replace(/[!]+$/, '').replace(/&#\d+;/g, '').trim(),
+                    title: eventName,
                     date: eventDate.toISOString(),
                     location: 'VFW Post 7294, 219 Walnut Hill Rd',
-                    tags: ['Other', 'VFW'], price, ticketLink: '', sourceLink: postLink,
-                    gameResult: '', gameScore: '', streamLink: '', isLive: false, kidFriendly: false
+                    tags: ['Other', 'VFW'],
+                    price,
+                    ticketLink: '',
+                    sourceLink: postLink,
+                    gameResult: '', gameScore: '', streamLink: '', isLive: false,
+                    kidFriendly: false
                 });
                 vfwEventCount++;
-                console.log(`    📌 VFW Event: "${postTitle}" on ${dateKey} [${price}]`);
-            }
-
-            // ===== Calendar image: extract events by day number + content =====
-            // Look for calendar grid pattern: day numbers followed by event names
-            const calendarDayRegex = /\b(\d{1,2})\s*\n+\s*([A-Z][A-Za-z\s&']+(?:Night|Bingo|Trivia|Party|Meeting|Hunt|Paint|Special|Steak|Catfish|Alfredo|Meatloaf|Burger|Wing|Taco|Shrimp|Cornhole|Dance|Concert|Easter|Meat Tray))/g;
-            let calMatch;
-            while ((calMatch = calendarDayRegex.exec(allOcrText)) !== null) {
-                const dayNum = parseInt(calMatch[1]);
-                if (dayNum < 1 || dayNum > 31) continue;
-                const eventName = calMatch[2].trim();
-
-                // Determine month from post title or OCR text
-                const monthInText = allOcrText.match(new RegExp(`(${monthPattern})`, 'i'));
-                if (!monthInText) continue;
-                const calMonth = months[monthInText[1].toLowerCase()];
-                let calYear = pubDate.getFullYear();
-                if (calMonth < pubDate.getMonth()) calYear++;
-
-                const eventDate = new Date(calYear, calMonth, dayNum);
-                if (isNaN(eventDate.getTime())) continue;
-                if (eventDate < pastDate || eventDate >= futureDate) continue;
-                const dateKey = eventDate.toISOString().substring(0, 10);
-                if (foundEvents.has(dateKey)) continue;
-
-                // Skip regular weekly food specials, only grab special events
-                if (/wing night|taco night|burger night|shrimp night/i.test(eventName)) continue;
-
-                foundEvents.add(dateKey);
-                events.push({
-                    title: eventName, date: eventDate.toISOString(),
-                    location: 'VFW Post 7294, 219 Walnut Hill Rd',
-                    tags: ['Other', 'VFW'], price: 'Free', ticketLink: '', sourceLink: postLink,
-                    gameResult: '', gameScore: '', streamLink: '', isLive: false, kidFriendly: false
-                });
-                vfwEventCount++;
-                console.log(`    📌 VFW Calendar Event: "${eventName}" on ${dateKey}`);
+                console.log(`    📌 VFW Event: "${eventName}" on ${dateKey}${timeMatch ? ' at ' + timeMatch[1] : ''} [${price}]`);
             }
           } catch (postErr) {
             console.log(`    ⚠️ Post processing failed: ${postErr.message}`);
           }
         }
 
-        // Save cache
-        fs.writeFileSync(cachePath, JSON.stringify(vfwCache, null, 2));
-        console.log(`✅ VFW Post 7294: ${vfwEventCount} events extracted (${vfwApiCalls} API calls, ${Object.keys(vfwCache).length} cached)`);
+        await worker.terminate();
+        console.log(`✅ VFW Post 7294: ${vfwEventCount} events extracted via OCR`);
     } catch (e) { console.error("❌ VFW Events error:", e.message); }
 
     // ===== FAMILY-FRIENDLY TAGGING =====

@@ -695,16 +695,7 @@ async function runScraper() {
         // Load cache of previously OCR'd images
         const cachePath = path.join(__dirname, '../vfw-cache.json');
         let vfwCache = {};
-        try {
-            vfwCache = JSON.parse(fs.readFileSync(cachePath, 'utf8'));
-            // Remove empty cache entries (from failed API calls)
-            const beforeCount = Object.keys(vfwCache).length;
-            for (const [key, val] of Object.entries(vfwCache)) {
-                if (!val || val.trim().length === 0) delete vfwCache[key];
-            }
-            const cleared = beforeCount - Object.keys(vfwCache).length;
-            if (cleared > 0) console.log(`  🗑️ Cleared ${cleared} empty cache entries`);
-        } catch (e) { /* no cache yet */ }
+        try { vfwCache = JSON.parse(fs.readFileSync(cachePath, 'utf8')); } catch (e) { /* no cache yet */ }
 
         const vfwXml = await (await fetch('https://www.vfwpost7294.org/feed/', { headers: baseHeaders })).text();
         const vfwItems = vfwXml.match(/<item>([\s\S]*?)<\/item>/g) || [];
@@ -755,12 +746,7 @@ async function runScraper() {
                 try {
                     // Check cache first
                     if (vfwCache[imgUrl]) {
-                        console.log(`    📋 Cached OCR (${vfwCache[imgUrl].length} chars):`);
-                        console.log(`    ────────────────────────────────`);
-                        vfwCache[imgUrl].trim().split('\n').forEach(line => {
-                            if (line.trim()) console.log(`    │ ${line.trim()}`);
-                        });
-                        console.log(`    ────────────────────────────────`);
+                        console.log(`    📋 Cached OCR (${vfwCache[imgUrl].length} chars)`);
                         allOcrText += '\n' + vfwCache[imgUrl];
                         continue;
                     }
@@ -800,12 +786,7 @@ async function runScraper() {
                     vfwApiCalls++;
 
                     if (ocrText.trim().length > 10) {
-                        console.log(`    🔍 Vision OCR (${ocrText.trim().length} chars):`);
-                        console.log(`    ────────────────────────────────`);
-                        ocrText.trim().split('\n').forEach(line => {
-                            if (line.trim()) console.log(`    │ ${line.trim()}`);
-                        });
-                        console.log(`    ────────────────────────────────`);
+                        console.log(`    🔍 Vision OCR (${ocrText.trim().length} chars): ${ocrText.trim().substring(0, 100)}...`);
                         allOcrText += '\n' + ocrText;
                         // Cache the result
                         vfwCache[imgUrl] = ocrText;

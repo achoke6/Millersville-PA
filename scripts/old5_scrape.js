@@ -445,9 +445,6 @@ async function runScraper() {
                 else if (/sap meeting|team leader|lunch\s*&?\s*learn|house meeting/i.test(lt)) tags.push('Meetings');
                 else tags.push('Other');
 
-                // Skip PM-Other events (uncategorized, not useful)
-                if (tags.includes('Other')) continue;
-
                 events.push({
                     title, date: eventDate.toISOString(), location: loc,
                     tags: [...new Set(tags)], price: "Free", ticketLink: "",
@@ -686,10 +683,9 @@ async function runScraper() {
         console.log(`✅ Borough Calendar: ${boroughCount} events (${boroughRecurring} from recurring)`);
     } catch (e) { console.error("❌ Borough Calendar error:", e.message); }
 
-    // ===== 7. VFW POST 7294 EVENTS (OCR from blog post images) =====
+    // ===== 7. VFW POST 7294 EVENTS (extracted from blog RSS) =====
     try {
-        console.log("📡 Fetching VFW Post 7294 blog images for OCR...");
-        const { createWorker } = require('tesseract.js');
+        console.log("📡 Fetching VFW Post 7294 blog for events...");
         const vfwXml = await (await fetch('https://www.vfwpost7294.org/feed/', { headers: baseHeaders })).text();
         const vfwItems = vfwXml.match(/<item>([\s\S]*?)<\/item>/g) || [];
         let vfwEventCount = 0;
@@ -697,87 +693,40 @@ async function runScraper() {
         const months = { january:0, february:1, march:2, april:3, may:4, june:5, july:6, august:7, september:8, october:9, november:10, december:11 };
         const monthPattern = Object.keys(months).join('|');
 
-        // Initialize Tesseract worker once
-        const worker = await createWorker('eng');
-
         for (const item of vfwItems) {
             const titleMatch = item.match(/<title>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/title>/i);
             const linkMatch = item.match(/<link>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/link>/i);
             const pubMatch = item.match(/<pubDate>([\s\S]*?)<\/pubDate>/i);
-            const contentMatch = item.match(/<content:encoded>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/content:encoded>/i);
             const descMatch = item.match(/<description>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/description>/i);
+            const contentMatch = item.match(/<content:encoded>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/content:encoded>/i);
 
             if (!titleMatch || !linkMatch) continue;
 
             const postTitle = titleMatch[1].trim();
             const postLink = linkMatch[1].trim();
             const pubDate = pubMatch ? new Date(pubMatch[1]) : new Date();
-            const htmlContent = (contentMatch ? contentMatch[1] : '') || (descMatch ? descMatch[1] : '');
+            const body = (descMatch ? descMatch[1] : '') + ' ' + (contentMatch ? contentMatch[1] : '');
+            // Strip HTML tags for text analysis
+            const text = body.replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/&nbsp;/g, ' ').replace(/&#\d+;/g, ' ');
+            const fullText = postTitle + ' ' + text;
 
-            // Extract image URLs from the post content
-            const imgRegex = /<img[^>]+src=["']([^"']+)["'][^>]*>/gi;
-            let imgMatch;
-            const imageUrls = [];
-            while ((imgMatch = imgRegex.exec(htmlContent)) !== null) {
-                const url = imgMatch[1].replace(/&amp;/g, '&');
-                // Skip tiny images, icons, tracking pixels
-                const widthMatch = imgMatch[0].match(/width=["']?(\d+)/i);
-                const w = widthMatch ? parseInt(widthMatch[1]) : 999;
-                if (w < 100) continue;
-                if (/gravatar|emoji|smilies|wp-includes|pixel|tracking/i.test(url)) continue;
-                imageUrls.push(url);
-            }
-
-            if (imageUrls.length === 0) continue;
-
-            console.log(`  📰 Post: "${postTitle}" — ${imageUrls.length} image(s)`);
-
-            // OCR each image and combine text
-            let allOcrText = postTitle + '\n';
-            // Also grab text from the HTML body
-            const bodyText = htmlContent.replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/&nbsp;/g, ' ').replace(/&#\d+;/g, ' ').replace(/\s+/g, ' ').trim();
-            allOcrText += bodyText + '\n';
-
-            for (const imgUrl of imageUrls) {
-                try {
-                    // Download image
-                    const imgRes = await fetch(imgUrl, { headers: baseHeaders });
-                    if (!imgRes.ok) continue;
-                    const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
-
-                    // OCR the image
-                    const { data: { text: ocrText } } = await worker.recognize(imgBuffer);
-                    if (ocrText && ocrText.trim().length > 10) {
-                        console.log(`    🔍 OCR (${ocrText.trim().length} chars): ${ocrText.trim().substring(0, 80)}...`);
-                        allOcrText += '\n' + ocrText;
-                    }
-                } catch (imgErr) {
-                    console.log(`    ⚠️ Image failed: ${imgErr.message}`);
-                }
-            }
-
-            // Now extract events from combined OCR text + body text
+            // Extract dates from the text
+            // Patterns: "Friday February 6th", "Sunday February 15th", "Date: February 16, 2025"
             const dateRegex = new RegExp(
-                `(?:(?:monday|tuesday|wednesday|thursday|friday|saturday|sunday)[,\\s]*)?` +
-                `(${monthPattern})[\\s.,]*(\\d{1,2})(?:st|nd|rd|th)?[,\\s]*(\\d{4})?`,
+                `(?:(?:monday|tuesday|wednesday|thursday|friday|saturday|sunday)[,\\s]+)?(${monthPattern})\\s+(\\d{1,2})(?:st|nd|rd|th)?(?:[,\\s]+(\\d{4}))?`,
                 'gi'
             );
-            // Also try MM/DD/YYYY or MM/DD/YY patterns
-            const slashDateRegex = /(\d{1,2})\/(\d{1,2})\/(\d{2,4})/g;
 
-            const foundEvents = new Set();
+            let dateMatch;
+            const foundEvents = [];
+            while ((dateMatch = dateRegex.exec(fullText)) !== null) {
+                const monthName = dateMatch[1].toLowerCase();
+                const day = parseInt(dateMatch[2]);
+                let year = dateMatch[3] ? parseInt(dateMatch[3]) : pubDate.getFullYear();
 
-            // Extract from written date patterns
-            let dm;
-            while ((dm = dateRegex.exec(allOcrText)) !== null) {
-                const monthName = dm[1].toLowerCase();
-                const day = parseInt(dm[2]);
-                let year = dm[3] ? parseInt(dm[3]) : pubDate.getFullYear();
+                // If month is before pub month and no year specified, it might be next year
                 const monthNum = months[monthName];
-                if (monthNum === undefined) continue;
-
-                // If month already passed and no year specified, might be next year
-                if (monthNum < pubDate.getMonth() && !dm[3]) {
+                if (monthNum < pubDate.getMonth() && !dateMatch[3]) {
                     year = pubDate.getFullYear() + 1;
                 }
 
@@ -785,130 +734,70 @@ async function runScraper() {
                 if (isNaN(eventDate.getTime())) continue;
                 if (eventDate < pastDate || eventDate >= futureDate) continue;
 
-                const dateKey = eventDate.toISOString().substring(0, 10);
-                if (foundEvents.has(dateKey)) continue;
-
                 // Extract time near this date mention
-                const ctx = allOcrText.substring(Math.max(0, dm.index - 150), dm.index + dm[0].length + 300);
-                const timeMatch = ctx.match(/(?:at\s+|from\s+|begins?\s+(?:at\s+)?|starting\s+(?:at\s+)?|doors?\s+(?:open\s+)?(?:at\s+)?|@\s*)(\d{1,2}(?::\d{2})?\s*(?:am|pm|AM|PM|a\.m\.|p\.m\.))/i);
+                const surrounding = fullText.substring(Math.max(0, dateMatch.index - 100), dateMatch.index + dateMatch[0].length + 200);
+                const timeMatch = surrounding.match(/(?:at\s+|from\s+|begins?\s+(?:at\s+)?|starting\s+(?:at\s+)?|doors?\s+(?:open\s+)?(?:at\s+)?)(\d{1,2}(?::\d{2})?\s*(?:am|pm|AM|PM))/i);
                 if (timeMatch) {
-                    const tp = timeMatch[1].replace(/\./g, '').match(/(\d{1,2})(?::(\d{2}))?\s*(am|pm)/i);
-                    if (tp) {
-                        let h = parseInt(tp[1]);
-                        const m = tp[2] ? parseInt(tp[2]) : 0;
-                        if (tp[3].toLowerCase() === 'pm' && h < 12) h += 12;
-                        if (tp[3].toLowerCase() === 'am' && h === 12) h = 0;
-                        eventDate.setHours(h, m, 0);
+                    const timeParts = timeMatch[1].match(/(\d{1,2})(?::(\d{2}))?\s*(am|pm)/i);
+                    if (timeParts) {
+                        let hours = parseInt(timeParts[1]);
+                        const mins = timeParts[2] ? parseInt(timeParts[2]) : 0;
+                        const ampm = timeParts[3].toLowerCase();
+                        if (ampm === 'pm' && hours < 12) hours += 12;
+                        if (ampm === 'am' && hours === 12) hours = 0;
+                        eventDate.setHours(hours, mins, 0);
                     }
                 }
 
-                // Extract event name from context
+                // Try to extract event name from surrounding context
                 let eventName = '';
+                // Look for "we have {EVENT}" or "join us for {EVENT}" or "{EVENT} will take place"
                 const namePatterns = [
-                    /(?:we have|join us for|come (?:out )?(?:to|for)|presenting|hosting|it'?s|our)\s+(?:our\s+)?([A-Z][^.!?\n]{3,60}?)(?:\s+(?:in|at|on|from|this|beginning|starting|!|\.))/i,
-                    /([A-Z][A-Za-z\s'&]+(?:Bingo|Night|Trivia|Cornhole|Dance|Party|Carnival|Dinner|Breakfast|Fundraiser|Concert|Show|Tournament|Cook.?off|BBQ|Cookout|Picnic))/,
-                    /([A-Z][A-Z\s'&]{4,40}(?:BINGO|NIGHT|TRIVIA|CORNHOLE|DANCE|PARTY|CARNIVAL|DINNER|FUNDRAISER|CONCERT|SHOW))/i,
+                    /(?:we have|join us for|come (?:out )?(?:to|for)|presenting|hosting)\s+(?:our\s+)?([^.!?]+?)(?:\s+(?:in|at|on|from|this|every|beginning|starting))/i,
+                    /([A-Z][A-Za-z\s']+(?:Bingo|Night|Trivia|Cornhole|Dance|Party|Carnival|Dinner|Breakfast|Fundraiser|Concert|Show|Tournament))/,
                 ];
                 for (const pattern of namePatterns) {
-                    const nm = ctx.match(pattern);
+                    const nm = surrounding.match(pattern);
                     if (nm) {
                         eventName = nm[1].trim().replace(/^(our|the|a)\s+/i, '').trim();
+                        // Capitalize first letter
                         eventName = eventName.charAt(0).toUpperCase() + eventName.slice(1);
-                        if (eventName.length >= 3 && eventName.length <= 80) break;
-                        eventName = '';
+                        break;
                     }
                 }
 
-                // Fallback: use post title
-                if (!eventName) {
+                // Fallback: use post title as event name
+                if (!eventName || eventName.length < 3 || eventName.length > 80) {
                     eventName = postTitle.replace(/[!]+$/, '').trim();
-                    if (eventName.length > 60) eventName = eventName.substring(0, 60).trim();
                 }
 
-                // Extract price if mentioned
-                let price = 'Free';
-                const priceMatch = ctx.match(/\$(\d+(?:\.\d{2})?)/);
-                if (priceMatch) price = `$${priceMatch[1]}`;
-
-                foundEvents.add(dateKey);
-
-                events.push({
-                    title: eventName,
-                    date: eventDate.toISOString(),
-                    location: 'VFW Post 7294, 219 Walnut Hill Rd',
-                    tags: ['Other', 'VFW'],
-                    price,
-                    ticketLink: '',
-                    sourceLink: postLink,
-                    gameResult: '', gameScore: '', streamLink: '', isLive: false,
-                    kidFriendly: false
-                });
-                vfwEventCount++;
-                console.log(`    📌 VFW Event: "${eventName}" on ${dateKey}${timeMatch ? ' at ' + timeMatch[1] : ''} [${price}]`);
-            }
-
-            // Also try slash date format (MM/DD/YYYY)
-            let sdm;
-            while ((sdm = slashDateRegex.exec(allOcrText)) !== null) {
-                const m = parseInt(sdm[1]) - 1;
-                const d = parseInt(sdm[2]);
-                let y = parseInt(sdm[3]);
-                if (y < 100) y += 2000;
-                if (m < 0 || m > 11 || d < 1 || d > 31) continue;
-
-                const eventDate = new Date(y, m, d);
-                if (isNaN(eventDate.getTime())) continue;
-                if (eventDate < pastDate || eventDate >= futureDate) continue;
-
+                // Avoid duplicate dates within same post
                 const dateKey = eventDate.toISOString().substring(0, 10);
-                if (foundEvents.has(dateKey)) continue;
-
-                // Time extraction from surrounding text
-                const ctx = allOcrText.substring(Math.max(0, sdm.index - 150), sdm.index + sdm[0].length + 300);
-                const timeMatch = ctx.match(/(?:at\s+|from\s+|doors?\s+(?:open\s+)?(?:at\s+)?|@\s*)(\d{1,2}(?::\d{2})?\s*(?:am|pm|AM|PM))/i);
-                if (timeMatch) {
-                    const tp = timeMatch[1].replace(/\./g, '').match(/(\d{1,2})(?::(\d{2}))?\s*(am|pm)/i);
-                    if (tp) {
-                        let h = parseInt(tp[1]);
-                        const mm = tp[2] ? parseInt(tp[2]) : 0;
-                        if (tp[3].toLowerCase() === 'pm' && h < 12) h += 12;
-                        if (tp[3].toLowerCase() === 'am' && h === 12) h = 0;
-                        eventDate.setHours(h, mm, 0);
-                    }
-                }
-
-                let price = 'Free';
-                const priceMatch = ctx.match(/\$(\d+(?:\.\d{2})?)/);
-                if (priceMatch) price = `$${priceMatch[1]}`;
-
-                foundEvents.add(dateKey);
-                const eventName = postTitle.replace(/[!]+$/, '').trim();
+                if (foundEvents.includes(dateKey)) continue;
+                foundEvents.push(dateKey);
 
                 events.push({
                     title: eventName,
                     date: eventDate.toISOString(),
                     location: 'VFW Post 7294, 219 Walnut Hill Rd',
                     tags: ['Other', 'VFW'],
-                    price,
+                    price: 'Free',
                     ticketLink: '',
                     sourceLink: postLink,
                     gameResult: '', gameScore: '', streamLink: '', isLive: false,
                     kidFriendly: false
                 });
                 vfwEventCount++;
-                console.log(`    📌 VFW Event: "${eventName}" on ${dateKey}${timeMatch ? ' at ' + timeMatch[1] : ''} [${price}]`);
+                console.log(`    📌 VFW Event: "${eventName}" on ${dateKey}${timeMatch ? ' at ' + timeMatch[1] : ''}`);
             }
         }
-
-        await worker.terminate();
-        console.log(`✅ VFW Post 7294: ${vfwEventCount} events extracted via OCR`);
+        console.log(`✅ VFW Post 7294: ${vfwEventCount} events extracted from blog`);
     } catch (e) { console.error("❌ VFW Events error:", e.message); }
 
     // ===== FAMILY-FRIENDLY TAGGING =====
-    const familyKeywords = /\bfamily\b|families|\bkids?\b|\bchild(ren)?\b|\byouth\b|\ball ages\b|\bopen house\b|\bparade\b|\bfestival\b|\bfun run\b|\begg hunt\b|\btrick.or.treat\b|\bstory ?time\b/i;
+    const familyKeywords = /\bfamily\b|families|\bkids?\b|\bchild(ren)?\b|\byouth\b|\ball ages\b|\bopen house\b|\bparade\b|\bfestival\b|\bfair\b|\bfun run\b|\begg hunt\b|\btrick.or.treat\b|\bstory ?time\b/i;
     const notFamilyKeywords = /\brehersal\b|\brehearsal\b|\bpractice\b|\btraining\b|\bsap meeting\b|\bstaff\b|\bfaculty\b|\bin-service\b|\bboard\b|\bpto\b/i;
-    const notFamilyMUKeywords = /\bjob\b|\binternship\b|\bcareer fair\b|\bemployment\b|\brecruitment\b|\bhiring\b|\bresume\b/i;
-    const familyPMKeywords = /\bconcert\b|\bensemble\b|\bshowcase\b|\bspring show\b|\bmusical\b|\bplay\b|\btalent show\b|\bassembly\b|\bbook fair\b|\bfood fair\b|\bpicture\b|\bspirit day\b|\breward day\b|\bfield day\b/i;
+    const familyPMKeywords = /\bconcert\b|\bensemble\b|\bshowcase\b|\bspring show\b|\bmusical\b|\bplay\b|\btalent show\b|\bassembly\b|\bbook fair\b|\bfood fair\b|\bpicture\b|\bspirit day\b|\breward day\b|\bfield trip\b|\bfield day\b/i;
     let famCount = 0;
     events.forEach(e => {
         const tags = e.tags || [];
@@ -924,20 +813,14 @@ async function runScraper() {
             return;
         }
 
-        // All Clubs/Orgs events → NOT family friendly
-        if (src === 'Clubs/Orgs' || tags.includes('Clubs/Orgs')) {
-            e.kidFriendly = false;
-            return;
-        }
-
         // Borough events → NOT family friendly (trash collection, meetings, etc.)
         if (src === 'Borough') {
             isFamilyFriendly = false;
         }
         // PM events — selective
         else if (src === 'PM') {
-            // NOT family friendly: Board/PTO, Meetings, School Events, Field Trips
-            if (tags.includes('Board/PTO') || tags.includes('Meetings') || tags.includes('School Events') || tags.includes('Field Trips')) {
+            // NOT family friendly: Board/PTO, Staff, Meetings, rehearsals, practice
+            if (tags.includes('Board/PTO') || tags.includes('Meetings')) {
                 isFamilyFriendly = false;
             }
             // NOT family friendly: rehearsals/practice in title
@@ -948,11 +831,11 @@ async function runScraper() {
             else if (familyPMKeywords.test(titleLower)) {
                 isFamilyFriendly = true;
             }
-            // PM Spirit/Fun Days → family friendly
-            else if (tags.includes('Spirit/Fun Days')) {
+            // PM school events, field trips, no school days → family relevant
+            else if (tags.includes('School Events') || tags.includes('Spirit/Fun Days')) {
                 isFamilyFriendly = true;
             }
-            // Default PM: not family friendly
+            // Default PM: not family friendly (testing, grades, health/wellness internal)
             else {
                 isFamilyFriendly = false;
             }
@@ -961,15 +844,7 @@ async function runScraper() {
         else if (tags.includes('Other') && tags.includes('Live Music')) {
             isFamilyFriendly = false;
         }
-        // MU events — keyword match, but exclude job/internship fairs
-        else if (src === 'MU') {
-            if (notFamilyMUKeywords.test(titleLower)) {
-                isFamilyFriendly = false;
-            } else if (familyKeywords.test(title)) {
-                isFamilyFriendly = true;
-            }
-        }
-        // Other sources — keyword match
+        // MU and Clubs/Orgs — keyword match
         else if (familyKeywords.test(title)) {
             isFamilyFriendly = true;
         }

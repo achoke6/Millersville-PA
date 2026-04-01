@@ -1,5 +1,12 @@
 {
+  "name": "millersville-pa",
+  "version": "1.0.0",
+  "description": "Millersville PA Community Event Aggregator",
+  "scripts": {
+    "scrape": "node scripts/scrape.js"
+  },
   "dependencies": {
-    "node-ical": "^0.25.6"
+    "node-ical": "^0.20.1",
+    "tesseract.js": "^5.1.1"
   }
 }

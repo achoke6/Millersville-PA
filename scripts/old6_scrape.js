@@ -701,7 +701,6 @@ async function runScraper() {
         const worker = await createWorker('eng');
 
         for (const item of vfwItems) {
-          try {
             const titleMatch = item.match(/<title>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/title>/i);
             const linkMatch = item.match(/<link>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/link>/i);
             const pubMatch = item.match(/<pubDate>([\s\S]*?)<\/pubDate>/i);
@@ -742,34 +741,13 @@ async function runScraper() {
             for (const imgUrl of imageUrls) {
                 try {
                     // Download image
-                    const imgRes = await fetch(imgUrl, { headers: baseHeaders, signal: AbortSignal.timeout(10000) });
+                    const imgRes = await fetch(imgUrl, { headers: baseHeaders });
                     if (!imgRes.ok) continue;
                     const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
 
-                    // Validate: skip tiny files (likely broken) and non-image data
-                    if (imgBuffer.length < 1000) {
-                        console.log(`    ⚠️ Skipping tiny image (${imgBuffer.length} bytes)`);
-                        continue;
-                    }
-
-                    // Check for valid image headers (JPEG, PNG, GIF, WebP)
-                    const header = imgBuffer.slice(0, 4);
-                    const isJPEG = header[0] === 0xFF && header[1] === 0xD8;
-                    const isPNG = header[0] === 0x89 && header[1] === 0x50;
-                    const isGIF = header[0] === 0x47 && header[1] === 0x49;
-                    const isWebP = header[0] === 0x52 && header[1] === 0x49;
-                    if (!isJPEG && !isPNG && !isGIF && !isWebP) {
-                        console.log(`    ⚠️ Skipping non-image file`);
-                        continue;
-                    }
-
-                    // OCR the image with timeout
-                    const ocrResult = await Promise.race([
-                        worker.recognize(imgBuffer),
-                        new Promise((_, reject) => setTimeout(() => reject(new Error('OCR timeout')), 30000))
-                    ]);
-                    const ocrText = ocrResult?.data?.text || '';
-                    if (ocrText.trim().length > 10) {
+                    // OCR the image
+                    const { data: { text: ocrText } } = await worker.recognize(imgBuffer);
+                    if (ocrText && ocrText.trim().length > 10) {
                         console.log(`    🔍 OCR (${ocrText.trim().length} chars): ${ocrText.trim().substring(0, 80)}...`);
                         allOcrText += '\n' + ocrText;
                     }
@@ -920,9 +898,6 @@ async function runScraper() {
                 vfwEventCount++;
                 console.log(`    📌 VFW Event: "${eventName}" on ${dateKey}${timeMatch ? ' at ' + timeMatch[1] : ''} [${price}]`);
             }
-          } catch (postErr) {
-            console.log(`    ⚠️ Post processing failed: ${postErr.message}`);
-          }
         }
 
         await worker.terminate();

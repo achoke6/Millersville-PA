@@ -776,8 +776,7 @@ async function runScraper() {
                     });
 
                     if (!visionRes.ok) {
-                        const errBody = await visionRes.text();
-                        console.log(`    ⚠️ Vision API error ${visionRes.status}: ${errBody.substring(0, 200)}`);
+                        console.log(`    ⚠️ Vision API error: ${visionRes.status}`);
                         continue;
                     }
 

@@ -1192,34 +1192,7 @@ async function runScraper() {
                         console.log(`    🍽️ Special: ${name} – ${price}${isFridayOnly ? ' (Friday only)' : ''}`);
                     }
 
-                    if (weeklySpecials.length > 0 && dateRange) {
-                        // Parse date range to check if specials are current
-                        const rangeMonths = {january:0,february:1,march:2,april:3,may:4,june:5,july:6,august:7,september:8,october:9,november:10,december:11};
-                        const startMatch = dateRange.match(/(\w+)\s+(\d{1,2})\s+through/i);
-                        const endMatch = dateRange.match(/through\s+\w+,?\s*(?:(\w+)\s+)?(\d{1,2})/i);
-                        if (startMatch && endMatch) {
-                            const sMonth = rangeMonths[startMatch[1].toLowerCase()];
-                            const sDay = parseInt(startMatch[2]);
-                            const eMonthName = endMatch[1] || startMatch[1];
-                            const eMonth = rangeMonths[eMonthName.toLowerCase()];
-                            const eDay = parseInt(endMatch[2]);
-                            const yr = today.getFullYear();
-                            const rangeStart = new Date(yr, sMonth, sDay);
-                            const rangeEnd = new Date(yr, eMonth, eDay, 23, 59, 59);
-
-                            if (today >= rangeStart && today <= rangeEnd) {
-                                vfwWeeklySpecials = weeklySpecials;
-                                vfwSpecialsDateRange = dateRange;
-                                console.log(`    ✅ Specials are current (${dateRange})`);
-                            } else {
-                                console.log(`    ⏭️ Specials expired (${dateRange}) — not showing`);
-                            }
-                        } else {
-                            // Can't parse date range, show them anyway
-                            vfwWeeklySpecials = weeklySpecials;
-                            vfwSpecialsDateRange = dateRange;
-                        }
-                    } else if (weeklySpecials.length > 0) {
+                    if (weeklySpecials.length > 0) {
                         vfwWeeklySpecials = weeklySpecials;
                         vfwSpecialsDateRange = dateRange;
                     }

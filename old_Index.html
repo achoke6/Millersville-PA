@@ -48,50 +48,17 @@
 
     <!-- HOME -->
     <section id="view-home" class="app-view active">
-        <!-- Weather Hero -->
-        <div id="home-weather" class="home-weather-hero"><p>Loading weather...</p></div>
-
-        <!-- Today's Events -->
-        <div class="home-section">
-            <div class="home-section-header">
-                <h3 class="home-section-title">📅 Today's Events</h3>
-                <a href="#" onclick="event.preventDefault();switchView('events');" class="home-more-link">View All →</a>
-            </div>
-            <div id="home-today-events" class="home-scroll-row"></div>
-        </div>
-
-        <!-- Today's Games -->
-        <div class="home-section">
-            <div class="home-section-header">
-                <h3 class="home-section-title">🏆 Today's Games</h3>
-                <a href="#" onclick="event.preventDefault();switchView('sports');" class="home-more-link">View All →</a>
-            </div>
-            <div id="home-today-games" class="home-scroll-row"></div>
-        </div>
-
-        <!-- Food Specials -->
-        <div class="home-section">
-            <div class="home-section-header">
-                <h3 class="home-section-title">🍴 Today's Specials</h3>
-                <a href="#" onclick="event.preventDefault();switchView('food');" class="home-more-link">View All →</a>
-            </div>
-            <div id="home-specials" class="home-scroll-row"></div>
-        </div>
-
-        <!-- Latest News -->
-        <div class="home-section">
-            <div class="home-section-header">
-                <h3 class="home-section-title">📰 Latest News</h3>
-                <a href="#" onclick="event.preventDefault();switchView('news');" class="home-more-link">View All →</a>
-            </div>
-            <div id="home-news" class="home-scroll-row"></div>
-        </div>
-
-        <!-- Partner -->
-        <div class="app-card partner-card" style="margin-top:8px;">
+        <div id="home-weather" class="home-weather-card"><p>Loading Millersville Conditions...</p></div>
+        <div class="app-card partner-card">
             <p class="partner-label">Official Partner</p>
             <h3>The University Store</h3>
             <a href="https://millersville.store" target="_blank" class="btn btn-gold">Shop Official Gear ➔</a>
+        </div>
+        <h2 class="section-title">Upcoming Highlights</h2>
+        <div id="home-events" class="card-grid"></div>
+        <div class="app-card" style="margin-top:20px;">
+            <h4 class="card-heading">Today's Food Specials</h4>
+            <div id="specials-list"></div>
         </div>
     </section>
 
@@ -102,14 +69,14 @@
             <button id="ev-clear-btn" class="clear-btn" onclick="clearEventFilters()">Clear ✖</button>
         </div>
         <div class="view-mode-bar">
-            <button class="nav-arrow" id="ev-prev" onclick="evNavPrev()">←</button>
+            <button class="nav-arrow" id="ev-prev" onclick="evNavPrev()" style="display:none;">←</button>
             <div class="view-mode-group">
                 <button class="mode-btn" id="ev-mode-past" onclick="setEvMode('past')">Past</button>
-                <button class="mode-btn" id="ev-mode-upcoming" onclick="setEvMode('upcoming')">Upcoming</button>
-                <button class="mode-btn active" id="ev-mode-day" onclick="setEvMode('day')">Day</button>
+                <button class="mode-btn active" id="ev-mode-upcoming" onclick="setEvMode('upcoming')">Upcoming</button>
+                <button class="mode-btn" id="ev-mode-day" onclick="setEvMode('day')">Day</button>
                 <button class="mode-btn" id="ev-mode-week" onclick="setEvMode('week')">Week</button>
             </div>
-            <button class="nav-arrow" id="ev-next" onclick="evNavNext()">→</button>
+            <button class="nav-arrow" id="ev-next" onclick="evNavNext()" style="display:none;">→</button>
         </div>
         <div class="filter-bar">
             <div class="filter-group">
@@ -138,14 +105,14 @@
             <button id="sp-clear-btn" class="clear-btn" onclick="clearSportsFilters()">Clear ✖</button>
         </div>
         <div class="view-mode-bar">
-            <button class="nav-arrow" id="sp-prev" onclick="spNavPrev()">←</button>
+            <button class="nav-arrow" id="sp-prev" onclick="spNavPrev()" style="display:none;">←</button>
             <div class="view-mode-group">
                 <button class="mode-btn" id="sp-mode-past" onclick="setSpMode('past')">Past</button>
-                <button class="mode-btn" id="sp-mode-upcoming" onclick="setSpMode('upcoming')">Upcoming</button>
-                <button class="mode-btn active" id="sp-mode-day" onclick="setSpMode('day')">Day</button>
+                <button class="mode-btn active" id="sp-mode-upcoming" onclick="setSpMode('upcoming')">Upcoming</button>
+                <button class="mode-btn" id="sp-mode-day" onclick="setSpMode('day')">Day</button>
                 <button class="mode-btn" id="sp-mode-week" onclick="setSpMode('week')">Week</button>
             </div>
-            <button class="nav-arrow" id="sp-next" onclick="spNavNext()">→</button>
+            <button class="nav-arrow" id="sp-next" onclick="spNavNext()" style="display:none;">→</button>
         </div>
         <div class="filter-bar sp-source-row">
             <div class="filter-group" id="sp-source-group">
@@ -239,11 +206,11 @@ let evSource='All', evTags=new Set();
 let evKidMode=false;
 
 // View mode state for Events page
-let evMode='day', evAnchorDate=new Date();
+let evMode='upcoming', evAnchorDate=new Date();
 
 // Sports page state
 let spActiveSources=new Set(['PM','MU']), spSportTag=null, spHomeOnly=true;
-let spMode='day', spAnchorDate=new Date();
+let spMode='upcoming', spAnchorDate=new Date();
 
 const sportsList=['Baseball','Softball','Track','Soccer','Lacrosse','Tennis','Volleyball','Wrestling','Basketball','Football','Field Hockey','Golf','Cross Country','Cheerleading','Swimming','Rugby','Fencing','Esports','Archery'];
 const topSources=['MU','Clubs/Orgs','PM','Borough','Other'];
@@ -636,106 +603,19 @@ function buildEventCard(e,isSportsPage){
 
 /* ==================== HOME ==================== */
 function renderHomeUI(){
-    const now = new Date();
-    const todayStr = toDateStr(todayMidnight());
-
-    // Today's Events (non-sport)
-    const todayEvents = allEvents.filter(e => {
-        if(isSportEvent(e) || isPMSportByTitle(e)) return false;
-        return e.date.substring(0,10) === todayStr;
-    }).slice(0, 8);
-    const evContainer = document.getElementById('home-today-events');
-    if(todayEvents.length === 0){
-        evContainer.innerHTML = '<p class="home-empty">No events scheduled today</p>';
-    } else {
-        evContainer.innerHTML = todayEvents.map(e => {
-            const d = new Date(e.date);
-            const src = e.tags?.includes('VFW') ? 'VFW' : e.tags?.includes('Borough') ? 'Borough' : e.tags?.includes('PM') ? 'PM' : e.tags?.includes('Clubs/Orgs') ? 'MU Clubs' : e.tags?.includes('MU') ? 'MU' : 'Event';
-            const isNoon = d.getHours()===12 && d.getMinutes()===0;
-            const timeStr = isNoon ? '' : `<span class="home-card-time">${formatTime(d)}</span>`;
-            return `<div class="home-mini-card" onclick="switchView('events')"><span class="home-mini-tag">${src}</span><h4 class="home-mini-title">${e.title}</h4>${timeStr}<p class="home-mini-loc">📍 ${e.location}</p></div>`;
-        }).join('');
-    }
-
-    // Today's Games (sport events)
-    const todayGames = allEvents.filter(e => {
-        if(!isSportEvent(e) && !isPMSportByTitle(e)) return false;
-        return e.date.substring(0,10) === todayStr;
-    }).slice(0, 8);
-    const gameContainer = document.getElementById('home-today-games');
-    if(todayGames.length === 0){
-        gameContainer.innerHTML = '<p class="home-empty">No games scheduled today</p>';
-    } else {
-        gameContainer.innerHTML = todayGames.map(e => {
-            const d = new Date(e.date);
-            const src = e.tags?.includes('PM') ? 'PM' : e.tags?.includes('Clubs/Orgs') ? 'MU Clubs' : 'MU';
-            const isHome = e.tags?.includes('Home Game Mode');
-            const homeTag = isHome ? ' 🏠' : '';
-            let scoreBadge = '';
-            if(e.gameResult && e.gameScore){
-                const cls = e.gameResult==='W' ? 'badge-win' : e.gameResult==='L' ? 'badge-loss' : 'badge-neutral';
-                scoreBadge = `<span class="badge ${cls}" style="font-size:0.7rem;">${e.gameResult} ${e.gameScore}</span>`;
-            }
-            const liveBadge = e.isLive ? '<span class="badge badge-live" style="font-size:0.65rem;">🔴 LIVE</span>' : '';
-            return `<div class="home-mini-card" onclick="switchView('sports')"><span class="home-mini-tag">${src}${homeTag}</span>${liveBadge}${scoreBadge}<h4 class="home-mini-title">${e.title}</h4><span class="home-card-time">${formatTime(d)}</span><p class="home-mini-loc">📍 ${e.location}</p></div>`;
-        }).join('');
-    }
-
-    // Latest News
-    const newsContainer = document.getElementById('home-news');
-    const latestNews = (currentNews || []).slice(0, 6);
-    if(latestNews.length === 0){
-        newsContainer.innerHTML = '<p class="home-empty">No news available</p>';
-    } else {
-        const sourceDisplay = {'Millersville News':'MU','The Snapper':'MU Snapper'};
-        newsContainer.innerHTML = latestNews.map(n => {
-            const displaySrc = sourceDisplay[n.source] || n.source;
-            return `<div class="home-mini-card" onclick="window.open('${n.link}','_blank')"><span class="home-mini-tag">${displaySrc}</span><h4 class="home-mini-title">${n.title}</h4><p class="home-mini-date">${n.date}</p></div>`;
-        }).join('');
-    }
-}
-
-/* ==================== HOME SPECIALS ==================== */
-async function loadHomeSpecials(){
-    try {
-        const specials = await fetch('specials.json').then(r=>r.json());
-        const dayName = new Date().toLocaleDateString('en-US',{weekday:'long'});
-        const container = document.getElementById('home-specials');
-        let cards = [];
-
-        for (const [restaurant, sp] of Object.entries(specials)) {
-            let items = [];
-            if(sp.daily && sp.daily[dayName]) items = sp.daily[dayName];
-            if(sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
-            if(sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
-
-            if(items.length > 0){
-                const note = sp.note || '';
-                cards.push(`<div class="home-special-card"><h4 class="home-special-name">${restaurant}</h4><p class="home-special-note">${note}</p>${items.map(i=>`<p class="home-special-item">• ${i}</p>`).join('')}</div>`);
-            }
-        }
-        container.innerHTML = cards.length > 0 ? cards.join('') : '<p class="home-empty">No specials today</p>';
-    } catch(e) { document.getElementById('home-specials').innerHTML = '<p class="home-empty">No specials today</p>'; }
+    const c=document.getElementById('home-events'); c.innerHTML='';
+    allEvents.filter(e=>new Date(e.date)>=new Date()).slice(0,4).forEach(e=>{
+        const d=new Date(e.date), src=(e.tags&&e.tags[0])||"Event";
+        c.innerHTML+=`<div class="app-card app-card-compact"><span class="card-tag">${src}</span><h4 class="card-title-sm">${e.title}</h4><p class="card-meta">🕒 ${formatTime(d)} · 📍 ${e.location}</p></div>`;
+    });
 }
 
 /* ==================== WEATHER ==================== */
 async function loadWeather(){
     try{const data=await(await fetch('weather.json')).json();
     const icon=data.icon||'🌡️';
-    // Home page weather hero
-    document.getElementById('home-weather').innerHTML=`<div class="weather-hero-home">
-        <div class="weather-hero-main">
-            <span class="weather-hero-home-icon">${icon}</span>
-            <div>
-                <h2 class="weather-hero-home-temp">${data.temp}°F</h2>
-                <p class="weather-hero-home-feels">Feels like ${data.feelsLike||data.temp}°F</p>
-            </div>
-        </div>
-        <div class="weather-hero-details">
-            <p class="weather-hero-home-cond">${data.condition}</p>
-            <p class="weather-hero-home-wind">💨 ${data.wind} · 💧 ${data.humidity}</p>
-        </div>
-    </div>`;
+    // Home page weather card
+    document.getElementById('home-weather').innerHTML=`<div class="weather-inline"><div><p class="weather-label">Current Conditions</p><h2 class="weather-temp">${data.temp}°F</h2><p class="weather-desc">${data.condition}</p></div><div class="weather-icon">${icon}</div></div>`;
     // Weather page
     document.getElementById('w-icon').textContent=icon;
     document.getElementById('w-temp').textContent=`${data.temp}°F`;
@@ -748,7 +628,7 @@ async function loadWeather(){
     if(sourceEl) sourceEl.textContent=data.source?`Source: ${data.source}`:'';
     }catch(e){console.error('Weather load error:',e);}
 }
-async function loadSpecials(){ await loadHomeSpecials(); }
+async function loadSpecials(){try{const data=await(await fetch('specials.json')).json();document.getElementById('specials-list').innerHTML=data.map(s=>`<div class="special-item"><strong>${s.restaurant}</strong> <span class="special-day">${s.day}</span> — ${s.deal}</div>`).join('');}catch(e){}}
 async function loadNews(){try{currentNews=await(await fetch('news.json')).json();renderNewsSubFilters();renderNewsUI();}catch(e){}}
 
 let newsSource='All', newsSubFilter=null;

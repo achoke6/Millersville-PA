@@ -1147,23 +1147,36 @@ async function runScraper() {
                     }
 
                     // Extract food items from first image OCR only
-                    const lines = specialsText.split('\n').map(l => l.trim()).filter(l => l);
+                    // First, strip known logo noise from the OCR text so it doesn't interfere
+                    let cleanedText = specialsText
+                        .replace(/W+EW\n/gi, '')
+                        .replace(/\d{3,4}\n/g, '')  // Remove standalone numbers like "125", "1899"
+                        .replace(/Years?\s+of\s+Service[^\n]*/gi, '')
+                        .replace(/1899[-\s]*2024[1]?/gi, '')
+                        .replace(/MILLERSVILLE[-\s]*MANOR\s+VFW\s+POST\s+7294/gi, '')
+                        .replace(/WEEKLY\s+SPECIALS/gi, '');
+
+                    const lines = cleanedText.split('\n').map(l => l.trim()).filter(l => l.length > 2);
                     const weeklySpecials = [];
-                    // Skip these — not food items
                     const noiseWords = /^(MILLERSVILLE|MANOR|VFW|POST|WEEKLY|SPECIALS|FOOD|WEW|WWEW|YEARS|SERVICE|FROM|FRIDAY ONLY|EASTER|VOLUNTEERS|NEEDED|PAINTING|LUNCH|JUST SHOW)/i;
 
+                    // Collect all ALL-CAPS names and find their associated prices
                     for (let i = 0; i < lines.length; i++) {
                         const line = lines[i];
-                        // Is this an all-caps food name? (at least 3 chars, mostly uppercase)
+                        // Is this an all-caps food name?
                         const isUpperName = /^[A-Z][A-Z\s&'–-]{2,50}$/.test(line) && !noiseWords.test(line);
                         if (!isUpperName) continue;
 
-                        // Skip if no price found in the next few lines (real food specials always have prices)
-                        const lookAhead = lines.slice(i, Math.min(i + 6, lines.length)).join(' ');
-                        const priceMatch = lookAhead.match(/\$(\d+\.\d{2})/);
-                        if (!priceMatch) continue; // No price = not a food special
-
-                        const price = `$${priceMatch[1]}`;
+                        // Search forward through ALL remaining lines for the next price
+                        // (logo noise has been stripped, so the price should be reachable)
+                        let price = '';
+                        for (let j = i + 1; j < Math.min(i + 10, lines.length); j++) {
+                            const pm = lines[j].match(/\$(\d+\.\d{2})/);
+                            if (pm) { price = `$${pm[1]}`; break; }
+                            // Stop if we hit another ALL-CAPS name (next food item)
+                            if (/^[A-Z][A-Z\s&'–-]{2,50}$/.test(lines[j]) && !noiseWords.test(lines[j])) break;
+                        }
+                        if (!price) continue; // No price = not a food special
 
                         // Check if previous line says "FRIDAY ONLY"
                         let isFridayOnly = false;
@@ -1174,7 +1187,6 @@ async function runScraper() {
                         name = name.replace(/\s*[-–]\s*$/, '').trim();
 
                         if (name.length < 4) continue;
-                        if (/^\d|^125$|^1899/i.test(name)) continue;
 
                         weeklySpecials.push({ name, price, fridayOnly: isFridayOnly, dateRange });
                         console.log(`    🍽️ Special: ${name} – ${price}${isFridayOnly ? ' (Friday only)' : ''}`);

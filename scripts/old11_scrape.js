@@ -841,7 +841,7 @@ async function runScraper() {
                 (/sunday/i.test(allOcrText) && /monday|tuesday/i.test(allOcrText) && /wednesday/i.test(allOcrText) && /\b\d{1,2}\n/m.test(allOcrText));
 
             if (isCalendarPost) {
-                console.log(`    📅 Calendar post detected — extracting events by grid position`);
+                console.log(`    📅 Calendar post detected — extracting events by day`);
 
                 // Determine which month this calendar is for
                 const calMonthMatch = allOcrText.match(new RegExp(`\\b(${monthPattern})\\b`, 'i'));
@@ -850,136 +850,66 @@ async function runScraper() {
                 let calYear = pubDate.getFullYear();
                 if (calMonth < pubDate.getMonth() - 1) calYear++;
 
-                // Build the actual calendar grid for this month
-                // Figure out what day of week the 1st falls on (0=Sun, 6=Sat)
-                const firstDayOfWeek = new Date(calYear, calMonth, 1).getDay();
-                const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
-
-                // Build weeks array: each week is [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
-                const weeks = [];
-                let week = new Array(7).fill(0);
-                for (let d = 1; d <= daysInMonth; d++) {
-                    const dow = new Date(calYear, calMonth, d).getDay();
-                    week[dow] = d;
-                    if (dow === 6 || d === daysInMonth) {
-                        weeks.push([...week]);
-                        week = new Array(7).fill(0);
-                    }
-                }
-
-                // Column order: Sun=0, Mon=1(closed/specials), Tue=2, Wed=3, Thu=4, Fri=5, Sat=6
-                // OCR reads row by row: day numbers first, then events in column order
-
-                // Parse OCR into row blocks — each block starts with a sequence of day numbers
+                // Parse the OCR line by line — look for day numbers followed by event names
                 const lines = allOcrText.split('\n').map(l => l.trim()).filter(l => l);
-                let currentWeekIdx = -1;
-                let eventLines = []; // events for current week
+                let currentDay = null;
 
-                // Track which week we're in by finding day number sequences
-                const processWeekEvents = (weekIdx, eventItems) => {
-                    if (weekIdx < 0 || weekIdx >= weeks.length) return;
-                    const weekDays = weeks[weekIdx];
-                    // Events appear in column order: Sun, (Mon/Weekly Specials), Tue, Wed, Thu, Fri, Sat
-                    // Map each event to its column based on known patterns
-                    const dayColumnMap = {
-                        // Sunday events
-                        'meat tray bingo': 0, 'aux easter egg hunt': 0,
-                        // Tuesday events (Weekly Specials column = Mon/Tue food)
-                        // Wednesday events
-                        'auxiliary meeting': 3, 'wing night': 3, 'trivia': 3, 'post meeting': 3,
-                        // Thursday events
-                        'taco night': 4,
-                        // Friday events
-                        'music bingo': 5, 'fried catfish': 5, 'shrimp alfredo': 5,
-                        'tuna steak': 5, 'vfw easter party': 5,
-                        // Saturday events
-                        'burger night': 6, 'banquet hall paint': 6,
-                    };
+                for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i];
 
-                    for (const eventName of eventItems) {
-                        const lower = eventName.toLowerCase();
-                        let col = dayColumnMap[lower];
+                    // Is this a day number? (1-31, standalone or at start of line)
+                    const dayMatch = line.match(/^(\d{1,2})$/);
+                    if (dayMatch) {
+                        const d = parseInt(dayMatch[1]);
+                        if (d >= 1 && d <= 31) { currentDay = d; continue; }
+                    }
 
-                        // If not in map, try to guess by event type
-                        if (col === undefined) {
-                            if (/bingo/i.test(eventName) && !/music/i.test(eventName)) col = 0; // Sunday bingo
-                            else if (/meeting/i.test(eventName)) col = 3; // Wednesday meetings
-                            else if (/trivia|cornhole/i.test(eventName)) col = 3; // Wednesday entertainment
-                            else if (/hunt|egg/i.test(eventName)) col = 0; // Sunday
-                            else continue; // Unknown — skip
-                        }
+                    // Skip noise
+                    if (ocrNoise.test(line)) continue;
+                    if (line.length < 3 || line.length > 80) continue;
+                    // Skip day-of-week headers
+                    if (/^(sunday|monday|tuesday|wednesday|thursday|friday|saturday|weekly specials?)$/i.test(line)) continue;
+                    // Skip single letter OCR artifacts
+                    if (/^[a-z]$/i.test(line) || /^m$/i.test(line)) continue;
 
-                        const dayNum = weekDays[col];
-                        if (!dayNum) continue; // No day in this column for this week
-
-                        const eventDate = new Date(calYear, calMonth, dayNum);
+                    // This line might be an event name associated with currentDay
+                    if (currentDay) {
+                        const eventDate = new Date(calYear, calMonth, currentDay);
                         if (isNaN(eventDate.getTime())) continue;
                         if (eventDate < pastDate || eventDate >= futureDate) continue;
-                        if (eventDate.getDay() === 1) continue; // Monday = closed
+                        // VFW is closed on Mondays
+                        if (eventDate.getDay() === 1) continue;
 
                         const dateKey = eventDate.toISOString().substring(0, 10);
+                        const eventName = line.trim();
 
                         // Skip regular recurring food nights
                         if (recurringFoodNights.test(eventName)) continue;
+                        // Skip food items that aren't events
                         if (foodItems.test(eventName)) continue;
+                        // Skip generic food descriptions
+                        if (/^\$\d/.test(eventName)) continue;
 
-                        const looksLikeEvent = specialEvents.test(eventName) || recurringEvents.test(eventName) ||
-                            /bingo|trivia|party|meeting|hunt|paint|dance|cornhole|concert|show|karaoke|volunteer/i.test(eventName);
-                        if (!looksLikeEvent) continue;
+                        // Only add if it looks like a real event, not just a food special
+                        const isSpecial = specialEvents.test(eventName) || recurringEvents.test(eventName);
+                        const looksLikeEvent = /bingo|trivia|party|meeting|hunt|paint|dance|cornhole|concert|show|karaoke|volunteer|holiday|memorial/i.test(eventName);
 
-                        if (foundEvents.has(dateKey + eventName)) continue;
-                        foundEvents.add(dateKey + eventName);
+                        if (isSpecial || looksLikeEvent) {
+                            if (foundEvents.has(dateKey + eventName)) continue;
+                            foundEvents.add(dateKey + eventName);
 
-                        events.push({
-                            title: eventName, date: eventDate.toISOString(),
-                            location: 'VFW Post 7294, 219 Walnut Hill Rd',
-                            tags: ['Other', 'VFW'], price: 'Free', ticketLink: '', sourceLink: postLink,
-                            gameResult: '', gameScore: '', streamLink: '', isLive: false, kidFriendly: false
-                        });
-                        vfwEventCount++;
-                        console.log(`    📌 VFW Event: "${eventName}" on ${dateKey} (week ${weekIdx+1}, col ${col})`);
-                    }
-                };
-
-                let pendingNumbers = [];
-                let pendingEvents = [];
-
-                for (const line of lines) {
-                    // Skip noise
-                    if (ocrNoise.test(line)) continue;
-                    if (/^[a-z]$/i.test(line) || /^m$/i.test(line)) continue;
-                    if (/^(sunday|monday|tuesday|wednesday|thursday|friday|saturday|weekly specials?)$/i.test(line)) continue;
-                    if (line.length < 2) continue;
-
-                    const isNumber = /^\d{1,2}$/.test(line) && parseInt(line) >= 1 && parseInt(line) <= 31;
-
-                    if (isNumber) {
-                        // If we were collecting events for a previous week, process them
-                        if (pendingEvents.length > 0 && currentWeekIdx >= 0) {
-                            processWeekEvents(currentWeekIdx, pendingEvents);
-                            pendingEvents = [];
-                        }
-
-                        const num = parseInt(line);
-                        // Find which week this number belongs to
-                        for (let w = 0; w < weeks.length; w++) {
-                            if (weeks[w].includes(num)) {
-                                if (currentWeekIdx !== w) {
-                                    currentWeekIdx = w;
-                                }
-                                break;
-                            }
-                        }
-                    } else {
-                        // This is an event name for the current week
-                        if (line.length >= 3 && line.length <= 80) {
-                            pendingEvents.push(line);
+                            events.push({
+                                title: eventName, date: eventDate.toISOString(),
+                                location: 'VFW Post 7294, 219 Walnut Hill Rd',
+                                tags: ['Other', 'VFW'], price: 'Free', ticketLink: '', sourceLink: postLink,
+                                gameResult: '', gameScore: '', streamLink: '', isLive: false, kidFriendly: false
+                            });
+                            vfwEventCount++;
+                            console.log(`    📌 VFW Event: "${eventName}" on ${dateKey}`);
+                        } else {
+                            console.log(`    ⏭️ Skipped: "${eventName}" on ${dateKey} (food/recurring)`);
                         }
                     }
-                }
-                // Process last batch
-                if (pendingEvents.length > 0 && currentWeekIdx >= 0) {
-                    processWeekEvents(currentWeekIdx, pendingEvents);
                 }
             } else if (!isWeeklySpecials) {
                 // NON-calendar, NON-weekly-specials posts — extract events from body text

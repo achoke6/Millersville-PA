@@ -797,6 +797,8 @@ async function runScraper() {
 
             // Combine OCR text from all images
             let allOcrText = postTitle + '\n';
+            let firstImageOcrText = ''; // Only first image OCR for food specials extraction
+            let imageIndex = 0;
             // Also grab body text
             const bodyText = htmlContent.replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/&nbsp;/g, ' ').replace(/&#\d+;/g, ' ').replace(/\s+/g, ' ').trim();
             allOcrText += bodyText + '\n';
@@ -812,6 +814,8 @@ async function runScraper() {
                         });
                         console.log(`    ────────────────────────────────`);
                         allOcrText += '\n' + vfwCache[imgUrl];
+                        if (imageIndex === 0) firstImageOcrText = vfwCache[imgUrl];
+                        imageIndex++;
                         continue;
                     }
 
@@ -857,6 +861,8 @@ async function runScraper() {
                         });
                         console.log(`    ────────────────────────────────`);
                         allOcrText += '\n' + ocrText;
+                        if (imageIndex === 0) firstImageOcrText = ocrText;
+                        imageIndex++;
                         // Cache the result
                         vfwCache[imgUrl] = ocrText;
                     } else {
@@ -1129,49 +1135,49 @@ async function runScraper() {
                 } else {
                     console.log(`    🍽️ Extracting food specials from weekly specials post`);
 
+                    // Use ONLY the first image OCR text (the food flyer), not other images
+                    const specialsText = firstImageOcrText || allOcrText;
+
                     // Extract date range: "From Tuesday, March 24 through Saturday, March 28"
-                    const rangeMatch = allOcrText.match(/from\s+\w+,?\s*((?:january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{1,2})\s*(?:through|thru|-|–)\s*\w*,?\s*((?:january|february|march|april|may|june|july|august|september|october|november|december)?\s*\d{1,2})/i);
+                    const rangeMatch = specialsText.match(/from\s+\w+,?\s*((?:january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{1,2})\s*(?:through|thru|-|–)\s*\w*,?\s*((?:january|february|march|april|may|june|july|august|september|october|november|december)?\s*\d{1,2})/i);
                     let dateRange = '';
                     if (rangeMatch) {
                         dateRange = rangeMatch[0].replace(/^from\s+/i, '').trim();
                         console.log(`    📅 Date range: ${dateRange}`);
                     }
 
-                    // Extract food items from OCR text
-                    // Strategy: find lines that are ALL CAPS (food names), then find the price in nearby text
-                    const lines = allOcrText.split('\n').map(l => l.trim()).filter(l => l);
+                    // Extract food items from first image OCR only
+                    const lines = specialsText.split('\n').map(l => l.trim()).filter(l => l);
                     const weeklySpecials = [];
-                    const noiseWords = /^(MILLERSVILLE|MANOR|VFW|POST|WEEKLY|SPECIALS|FOOD|WEW|WWEW|YEARS|SERVICE|FROM|FRIDAY ONLY|EASTER)/i;
+                    // Skip these — not food items
+                    const noiseWords = /^(MILLERSVILLE|MANOR|VFW|POST|WEEKLY|SPECIALS|FOOD|WEW|WWEW|YEARS|SERVICE|FROM|FRIDAY ONLY|EASTER|VOLUNTEERS|NEEDED|PAINTING|LUNCH|JUST SHOW)/i;
 
                     for (let i = 0; i < lines.length; i++) {
                         const line = lines[i];
-                        // Is this an all-caps food name? (at least 3 chars, mostly uppercase letters)
+                        // Is this an all-caps food name? (at least 3 chars, mostly uppercase)
                         const isUpperName = /^[A-Z][A-Z\s&'–-]{2,50}$/.test(line) && !noiseWords.test(line);
                         if (!isUpperName) continue;
 
-                        // Look ahead for a price in the next few lines
-                        let price = '';
-                        let isFridayOnly = false;
-                        const lookAhead = lines.slice(i, Math.min(i + 5, lines.length)).join(' ');
+                        // Skip if no price found in the next few lines (real food specials always have prices)
+                        const lookAhead = lines.slice(i, Math.min(i + 6, lines.length)).join(' ');
                         const priceMatch = lookAhead.match(/\$(\d+\.\d{2})/);
-                        if (priceMatch) price = `$${priceMatch[1]}`;
+                        if (!priceMatch) continue; // No price = not a food special
+
+                        const price = `$${priceMatch[1]}`;
 
                         // Check if previous line says "FRIDAY ONLY"
+                        let isFridayOnly = false;
                         if (i > 0 && /friday only/i.test(lines[i - 1])) isFridayOnly = true;
-                        // Or if this line contains "FRIDAY ONLY"
-                        if (/friday only/i.test(line)) continue; // Skip "FRIDAY ONLY" itself as a name
 
                         // Clean up name: title case
                         let name = line.replace(/\s+/g, ' ').split(' ').map(w => w.charAt(0) + w.slice(1).toLowerCase()).join(' ');
-                        // Remove trailing dash or special chars
                         name = name.replace(/\s*[-–]\s*$/, '').trim();
 
                         if (name.length < 4) continue;
-                        // Skip if it's a known noise pattern
                         if (/^\d|^125$|^1899/i.test(name)) continue;
 
                         weeklySpecials.push({ name, price, fridayOnly: isFridayOnly, dateRange });
-                        console.log(`    🍽️ Special: ${name} ${price}${isFridayOnly ? ' (Friday only)' : ''}`);
+                        console.log(`    🍽️ Special: ${name} – ${price}${isFridayOnly ? ' (Friday only)' : ''}`);
                     }
 
                     if (weeklySpecials.length > 0) {

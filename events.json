@@ -311,7 +311,7 @@
       "Other",
       "VFW"
     ],
-    "price": "Free",
+    "price": "Members Only",
     "ticketLink": "",
     "sourceLink": "https://www.vfwpost7294.org/march-calendar/",
     "gameResult": "",
@@ -706,7 +706,7 @@
       "Other",
       "VFW"
     ],
-    "price": "Free",
+    "price": "Members Only",
     "ticketLink": "",
     "sourceLink": "https://www.vfwpost7294.org/march-calendar/",
     "gameResult": "",
@@ -2290,7 +2290,7 @@
       "Other",
       "VFW"
     ],
-    "price": "Free",
+    "price": "Members Only",
     "ticketLink": "",
     "sourceLink": "https://www.vfwpost7294.org/march-calendar/",
     "gameResult": "",
@@ -3149,7 +3149,7 @@
       "Other",
       "VFW"
     ],
-    "price": "Free",
+    "price": "Members Only",
     "ticketLink": "",
     "sourceLink": "https://www.vfwpost7294.org/march-calendar/",
     "gameResult": "",
@@ -3756,7 +3756,7 @@
       "Other",
       "VFW"
     ],
-    "price": "Free",
+    "price": "Members Only",
     "ticketLink": "",
     "sourceLink": "https://www.vfwpost7294.org/march-calendar/",
     "gameResult": "",
@@ -4085,6 +4085,142 @@
     "kidFriendly": false
   },
   {
+    "title": "ESH Girls on the Run (GOTR)",
+    "date": "2026-03-26T19:30:00.000Z",
+    "location": "PA",
+    "tags": [
+      "PM",
+      "Health/Wellness"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/esh-girls-on-the-run-gotr-6/",
+    "kidFriendly": false
+  },
+  {
+    "title": "Boys Varsity Tennis @ Wilson High School",
+    "date": "2026-03-26T20:00:00.000Z",
+    "location": "2601 Grandview Blvd, Reading, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Varsity",
+      "Boys",
+      "Tennis"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/boys-varsity-tennis-wilson-high-school/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Boys Varsity Baseball @ Governor Mifflin Senior High School",
+    "date": "2026-03-26T20:00:00.000Z",
+    "location": "601 Philadelphia Ave., Reading, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Varsity",
+      "Boys",
+      "Baseball"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/boys-varsity-baseball-governor-mifflin-senior-high-school/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Boys JV Baseball vs Governor Mifflin Senior High School",
+    "date": "2026-03-26T20:15:00.000Z",
+    "location": "1800 Millersville Rd., Lancaster, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Home Game Mode",
+      "JV",
+      "Boys",
+      "Baseball"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/boys-jv-baseball-vs-governor-mifflin-senior-high-school-2/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Girls Varsity Softball @ Twin Valley High School",
+    "date": "2026-03-26T20:15:00.000Z",
+    "location": "4897 N. Twin Valley Road, Elverson, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Varsity",
+      "Girls",
+      "Softball"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/girls-varsity-softball-twin-valley-high-school-2/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Boys JV Lacrosse - Boys vs Muhlenberg High School",
+    "date": "2026-03-26T21:30:00.000Z",
+    "location": "1800 Millersville Rd., Lancaster, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Home Game Mode",
+      "JV",
+      "Boys",
+      "Lacrosse"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/boys-jv-lacrosse-boys-vs-muhlenberg-high-school/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Boys JV Volleyball vs Wilson High School",
+    "date": "2026-03-26T22:00:00.000Z",
+    "location": "100 E. Cottage Ave, Millersville, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Home Game Mode",
+      "JV",
+      "Boys",
+      "Volleyball"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/boys-jv-volleyball-vs-wilson-high-school/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
     "title": "Healthy Shamrock Shakes",
     "date": "2026-03-26T22:00:00.000Z",
     "location": "South Village Great Room",
@@ -4112,6 +4248,48 @@
     "gameResult": "",
     "gameScore": "",
     "streamLink": "",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Boys Varsity Volleyball vs Wilson High School",
+    "date": "2026-03-26T23:00:00.000Z",
+    "location": "100 E. Cottage Ave, Millersville, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Home Game Mode",
+      "Varsity",
+      "Boys",
+      "Volleyball"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/boys-varsity-volleyball-vs-wilson-high-school/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Boys Varsity Lacrosse - Boys vs Muhlenberg High School",
+    "date": "2026-03-26T23:00:00.000Z",
+    "location": "1800 Millersville Rd., Lancaster, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Home Game Mode",
+      "Varsity",
+      "Boys",
+      "Lacrosse"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/boys-varsity-lacrosse-boys-vs-muhlenberg-high-school/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
     "isLive": false,
     "kidFriendly": false
   },
@@ -4217,6 +4395,32 @@
     "kidFriendly": false
   },
   {
+    "title": "ESH String Ensemble",
+    "date": "2026-03-27T04:00:00.000Z",
+    "location": "PA",
+    "tags": [
+      "PM",
+      "Music/Arts"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/esh-string-ensemble-15/",
+    "kidFriendly": true
+  },
+  {
+    "title": "ESH Chorus Rehearsal",
+    "date": "2026-03-27T04:00:00.000Z",
+    "location": "PA",
+    "tags": [
+      "PM",
+      "Music/Arts"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/esh-chorus-rehearsal-10/",
+    "kidFriendly": false
+  },
+  {
     "title": "Pie a DZ",
     "date": "2026-03-27T12:30:00",
     "location": "SMC Promenade (Front/Back)",
@@ -4252,7 +4456,7 @@
       "Other",
       "VFW"
     ],
-    "price": "Free",
+    "price": "Members Only",
     "ticketLink": "",
     "sourceLink": "https://www.vfwpost7294.org/march-calendar/",
     "gameResult": "",
@@ -4397,6 +4601,48 @@
     "kidFriendly": false
   },
   {
+    "title": "Boys JV Baseball vs Daniel Boone Area",
+    "date": "2026-03-27T20:15:00.000Z",
+    "location": "1800 Millersville Rd., Lancaster, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Home Game Mode",
+      "JV",
+      "Boys",
+      "Baseball"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/boys-jv-baseball-vs-daniel-boone-area-high-school/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Boys Varsity Baseball vs Daniel Boone Area",
+    "date": "2026-03-27T20:15:00.000Z",
+    "location": "1800 Millersville Rd., Lancaster, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Home Game Mode",
+      "Varsity",
+      "Boys",
+      "Baseball"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/boys-varsity-baseball-vs-daniel-boone-area-high-school/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
     "title": "Pots 'n Pastries",
     "date": "2026-03-27T21:00:00.000Z",
     "location": "South Village Great Room",
@@ -4409,6 +4655,26 @@
     "price": "Free",
     "ticketLink": "https://getinvolved.millersville.edu/event/12341626",
     "sourceLink": "https://getinvolved.millersville.edu/event/12341626",
+    "kidFriendly": false
+  },
+  {
+    "title": "Girls JV Lacrosse - Girls @ New Oxford High School",
+    "date": "2026-03-27T21:30:00.000Z",
+    "location": "130 Berlin Road, New Oxford, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "JV",
+      "Girls",
+      "Lacrosse"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/girls-jv-lacrosse-girls-new-oxford-high-school/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
     "kidFriendly": false
   },
   {
@@ -4426,6 +4692,26 @@
     "price": "Free",
     "ticketLink": "https://getinvolved.millersville.edu/event/12032646",
     "sourceLink": "https://getinvolved.millersville.edu/event/12032646",
+    "kidFriendly": false
+  },
+  {
+    "title": "Girls Varsity Lacrosse - Girls @ New Oxford High School",
+    "date": "2026-03-27T23:00:00.000Z",
+    "location": "130 Berlin Road, New Oxford, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Varsity",
+      "Girls",
+      "Lacrosse"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/girls-varsity-lacrosse-girls-new-oxford-high-school/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
     "kidFriendly": false
   },
   {
@@ -4513,6 +4799,46 @@
     "price": "Free",
     "ticketLink": "https://getinvolved.millersville.edu/event/12277034",
     "sourceLink": "https://getinvolved.millersville.edu/event/12277034",
+    "kidFriendly": false
+  },
+  {
+    "title": "Boys Varsity Track & Field - Outdoor @ Chambersburg Area Senior High School",
+    "date": "2026-03-28T12:00:00.000Z",
+    "location": "511 S 6th St, Chambersburg, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Varsity",
+      "Boys",
+      "Track"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/boys-varsity-track-field-outdoor-chambersburg-area-senior-high-school/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Girls Varsity Track & Field - Outdoor @ Chambersburg Area Senior High School",
+    "date": "2026-03-28T12:00:00.000Z",
+    "location": "511 S 6th St, Chambersburg, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Varsity",
+      "Girls",
+      "Track"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/girls-varsity-track-field-outdoor-chambersburg-area-senior-high-school/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
     "kidFriendly": false
   },
   {
@@ -4743,7 +5069,7 @@
       "Other",
       "VFW"
     ],
-    "price": "Free",
+    "price": "Members Only",
     "ticketLink": "",
     "sourceLink": "https://www.vfwpost7294.org/march-calendar/",
     "gameResult": "",
@@ -4878,6 +5204,45 @@
     "kidFriendly": false
   },
   {
+    "title": "ESH Chorus Rehearsal",
+    "date": "2026-03-30T04:00:00.000Z",
+    "location": "PA",
+    "tags": [
+      "PM",
+      "Music/Arts"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/esh-chorus-rehearsal-13/",
+    "kidFriendly": false
+  },
+  {
+    "title": "Spirit Day Student (Wear blue/gold)",
+    "date": "2026-03-30T04:00:00.000Z",
+    "location": "PA",
+    "tags": [
+      "PM",
+      "Spirit/Fun Days"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/spirit-day-student-wear-blue-gold/",
+    "kidFriendly": true
+  },
+  {
+    "title": "Spring Pictures (Gym)",
+    "date": "2026-03-30T04:00:00.000Z",
+    "location": "PA",
+    "tags": [
+      "PM",
+      "School Events"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/spring-pictures/",
+    "kidFriendly": false
+  },
+  {
     "title": "Lead the 'Ville ",
     "date": "2026-03-30T11:30:00",
     "location": "SMC Meeting Room",
@@ -4907,6 +5272,19 @@
     "kidFriendly": false
   },
   {
+    "title": "Letort Pride All School Assembly",
+    "date": "2026-03-30T17:30:00.000Z",
+    "location": "Penn Manor School District",
+    "tags": [
+      "PM",
+      "School Events"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/letort-pride-all-school-assembly-4/",
+    "kidFriendly": false
+  },
+  {
     "title": "Millersville University Softball at Bloomsburg",
     "date": "2026-03-30T18:00:00.000Z",
     "location": "Bloomsburg, PA",
@@ -4926,6 +5304,45 @@
     "kidFriendly": false
   },
   {
+    "title": "SAP Meeting held in the Library",
+    "date": "2026-03-30T18:40:00.000Z",
+    "location": "Library",
+    "tags": [
+      "PM",
+      "Meetings"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/sap-meeting-held-in-the-library-134/",
+    "kidFriendly": false
+  },
+  {
+    "title": "ESH Girls on the Run (GOTR)",
+    "date": "2026-03-30T19:30:00.000Z",
+    "location": "Penn Manor School District",
+    "tags": [
+      "PM",
+      "Health/Wellness"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/esh-girls-on-the-run-gotr-7/",
+    "kidFriendly": false
+  },
+  {
+    "title": "HB GOTR Practice",
+    "date": "2026-03-30T19:30:00.000Z",
+    "location": "Penn Manor School District",
+    "tags": [
+      "PM",
+      "Health/Wellness"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/hb-gotr-practice-7/",
+    "kidFriendly": false
+  },
+  {
     "title": "Millersville University Softball at Bloomsburg",
     "date": "2026-03-30T20:00:00.000Z",
     "location": "Bloomsburg, PA",
@@ -4941,6 +5358,69 @@
     "gameResult": "L",
     "gameScore": "6-10",
     "streamLink": "https://psacsportsdigitalnetwork.com/?B=3886631",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Girls Varsity Track & Field - Outdoor vs Hempfield Senior High School",
+    "date": "2026-03-30T20:00:00.000Z",
+    "location": "100 E. Cottage Ave, Millersville, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Home Game Mode",
+      "Varsity",
+      "Girls",
+      "Track"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/girls-varsity-track-outdoor-vs-hempfield-senior-high-school-2/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Boys Varsity Track & Field - Outdoor vs Hempfield Senior High School",
+    "date": "2026-03-30T20:00:00.000Z",
+    "location": "100 E. Cottage Ave, Millersville, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Home Game Mode",
+      "Varsity",
+      "Boys",
+      "Track"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/boys-varsity-track-outdoor-vs-hempfield-senior-high-school-2/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Boys Varsity Tennis vs Lebanon High School",
+    "date": "2026-03-30T20:00:00.000Z",
+    "location": "2950 Charlestown Rd, Lancaster, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Home Game Mode",
+      "Varsity",
+      "Boys",
+      "Tennis"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/boys-varsity-tennis-vs-lebanon-high-school/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
     "isLive": false,
     "kidFriendly": false
   },
@@ -4990,6 +5470,19 @@
     "ticketLink": "https://getinvolved.millersville.edu/event/12361212",
     "sourceLink": "https://getinvolved.millersville.edu/event/12361212",
     "kidFriendly": false
+  },
+  {
+    "title": "Spring Concert - ALL 4th graders, 5th and 6th grade band and string ensemble",
+    "date": "2026-03-30T22:00:00.000Z",
+    "location": "Penn Manor School District",
+    "tags": [
+      "PM",
+      "Music/Arts"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/spring-concert-all-4th-graders-5th-and-6th-grade-band-and-string-ensemble/",
+    "kidFriendly": true
   },
   {
     "title": "BYOP (Bring Your Own Project) Meeting ",
@@ -5127,6 +5620,45 @@
     "price": "Free",
     "ticketLink": "https://getinvolved.millersville.edu/event/12026150",
     "sourceLink": "https://getinvolved.millersville.edu/event/12026150",
+    "kidFriendly": false
+  },
+  {
+    "title": "Spirit Day Student (Wear pink/red)",
+    "date": "2026-03-31T04:00:00.000Z",
+    "location": "Penn Manor School District",
+    "tags": [
+      "PM",
+      "Spirit/Fun Days"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/spirit-day-student-wear-pink-red/",
+    "kidFriendly": true
+  },
+  {
+    "title": "PEQ Spring Picture Day",
+    "date": "2026-03-31T04:00:00.000Z",
+    "location": "Penn Manor School District",
+    "tags": [
+      "PM",
+      "School Events"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/spring-picture-day-3/",
+    "kidFriendly": false
+  },
+  {
+    "title": "Board Breakfast",
+    "date": "2026-03-31T04:00:00.000Z",
+    "location": "Penn Manor School District",
+    "tags": [
+      "PM",
+      "Board/PTO"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/board-breakfast-2/",
     "kidFriendly": false
   },
   {
@@ -5337,6 +5869,57 @@
     "kidFriendly": false
   },
   {
+    "title": "Heart & Sole (GOTR)",
+    "date": "2026-03-31T19:30:00.000Z",
+    "location": "Penn Manor School District",
+    "tags": [
+      "PM",
+      "Health/Wellness"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/girls-on-the-run-gotr-4/",
+    "kidFriendly": false
+  },
+  {
+    "title": "Girls 7/8/9th Track & Field - Outdoor @ Hempfield Senior High School",
+    "date": "2026-03-31T20:00:00.000Z",
+    "location": "200 Stanley Ave, Landisville, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Girls",
+      "Track"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/girls-7-8-9th-track-outdoor-hempfield-senior-high-school-5/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Boys 7/8/9th Track & Field - Outdoor @ Hempfield Senior High School",
+    "date": "2026-03-31T20:00:00.000Z",
+    "location": "200 Stanley Ave, Landisville, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Boys",
+      "Track"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/boys-7-8-9th-track-outdoor-hempfield-senior-high-school-5/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
     "title": "Build-A-Bag! Wellness Kit Building Event",
     "date": "2026-03-31T20:00:00.000Z",
     "location": "SMC Table (All Aboard) 1",
@@ -5365,6 +5948,26 @@
     "price": "Free",
     "ticketLink": "https://getinvolved.millersville.edu/event/12149040",
     "sourceLink": "https://getinvolved.millersville.edu/event/12149040",
+    "kidFriendly": false
+  },
+  {
+    "title": "Girls Varsity Lacrosse - Girls @ Conestoga Valley Senior High School",
+    "date": "2026-03-31T20:15:00.000Z",
+    "location": "2110 Horseshoe Road, Lancaster, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Varsity",
+      "Girls",
+      "Lacrosse"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/girls-varsity-lacrosse-girls-conestoga-valley-senior-high-school-3/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
     "kidFriendly": false
   },
   {
@@ -5399,6 +6002,67 @@
     "kidFriendly": false
   },
   {
+    "title": "Boys JV Lacrosse - Boys vs Conestoga Valley Senior High School",
+    "date": "2026-03-31T21:30:00.000Z",
+    "location": "1800 Millersville Rd., Lancaster, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Home Game Mode",
+      "JV",
+      "Boys",
+      "Lacrosse"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/boys-jv-lacrosse-boys-vs-conestoga-valley-senior-high-school-3/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Girls JV Lacrosse - Girls @ Conestoga Valley Senior High School",
+    "date": "2026-03-31T21:45:00.000Z",
+    "location": "2110 Horseshoe Road, Lancaster, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "JV",
+      "Girls",
+      "Lacrosse"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/girls-jv-lacrosse-girls-conestoga-valley-senior-high-school-3/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Boys JV Volleyball @ Cedar Crest High School",
+    "date": "2026-03-31T22:00:00.000Z",
+    "location": "115 E Evergreen Rd, Lebanon, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "JV",
+      "Boys",
+      "Volleyball"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/boys-jv-volleyball-cedar-crest-high-school-3/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
     "title": "Pizookies in the Great Room",
     "date": "2026-03-31T22:00:00.000Z",
     "location": "South Village Great Room",
@@ -5427,6 +6091,47 @@
     "price": "Free",
     "ticketLink": "https://getinvolved.millersville.edu/event/12026193",
     "sourceLink": "https://getinvolved.millersville.edu/event/12026193",
+    "kidFriendly": false
+  },
+  {
+    "title": "Boys Varsity Volleyball @ Cedar Crest High School",
+    "date": "2026-03-31T23:00:00.000Z",
+    "location": "115 E Evergreen Rd, Lebanon, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Varsity",
+      "Boys",
+      "Volleyball"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/boys-varsity-volleyball-cedar-crest-high-school-3/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Boys Varsity Lacrosse - Boys vs Conestoga Valley Senior High School",
+    "date": "2026-03-31T23:00:00.000Z",
+    "location": "1800 Millersville Rd., Lancaster, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Home Game Mode",
+      "Varsity",
+      "Boys",
+      "Lacrosse"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/boys-varsity-lacrosse-boys-vs-conestoga-valley-senior-high-school-3/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
     "kidFriendly": false
   },
   {
@@ -5488,6 +6193,19 @@
     "price": "Free",
     "ticketLink": "https://getinvolved.millersville.edu/event/12356889",
     "sourceLink": "https://getinvolved.millersville.edu/event/12356889",
+    "kidFriendly": false
+  },
+  {
+    "title": "Paraprofessional Appreciation Day",
+    "date": "2026-04-01T04:00:00.000Z",
+    "location": "Penn Manor School District",
+    "tags": [
+      "PM",
+      "School Events"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/paraprofessional-appreciation-day/",
     "kidFriendly": false
   },
   {
@@ -5563,6 +6281,19 @@
     "kidFriendly": false
   },
   {
+    "title": "ESH House Meeting (2nd grade Special)",
+    "date": "2026-04-01T17:55:00.000Z",
+    "location": "Penn Manor School District",
+    "tags": [
+      "PM",
+      "Meetings"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/house-meeting-3/",
+    "kidFriendly": false
+  },
+  {
     "title": "Millersville University Women's Lacrosse at Bloomsburg",
     "date": "2026-04-01T18:00:00.000Z",
     "location": "Bloomsburg, PA",
@@ -5596,6 +6327,81 @@
     "price": "Free",
     "ticketLink": "https://getinvolved.millersville.edu/event/11369958",
     "sourceLink": "https://getinvolved.millersville.edu/event/11369958",
+    "kidFriendly": false
+  },
+  {
+    "title": "HB GOTR Practice",
+    "date": "2026-04-01T19:30:00.000Z",
+    "location": "Penn Manor School District",
+    "tags": [
+      "PM",
+      "Health/Wellness"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/hb-gotr-practice-8/",
+    "kidFriendly": false
+  },
+  {
+    "title": "Boys Varsity Tennis vs Hempfield Senior High School",
+    "date": "2026-04-01T20:00:00.000Z",
+    "location": "2950 Charlestown Rd, Lancaster, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Home Game Mode",
+      "Varsity",
+      "Boys",
+      "Tennis"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/boys-varsity-tennis-vs-hempfield-senior-high-school-2/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Girls Varsity Lacrosse - Girls vs Palmyra Area Senior High School",
+    "date": "2026-04-01T20:00:00.000Z",
+    "location": "1800 Millersville Rd., Lancaster, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Home Game Mode",
+      "Varsity",
+      "Girls",
+      "Lacrosse"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/girls-varsity-lacrosse-girls-vs-palmyra-area-senior-high-school/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Boys Varsity Lacrosse - Boys @ Palmyra Area Senior High School",
+    "date": "2026-04-01T20:00:00.000Z",
+    "location": "1125 Park Drive, Palmyra, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Varsity",
+      "Boys",
+      "Lacrosse"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/boys-varsity-lacrosse-boys-palmyra-area-senior-high-school-2/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
     "kidFriendly": false
   },
   {
@@ -5642,6 +6448,88 @@
     "kidFriendly": false
   },
   {
+    "title": "Boys JV Baseball vs Cedar Crest High School",
+    "date": "2026-04-01T20:15:00.000Z",
+    "location": "1800 Millersville Rd., Lancaster, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Home Game Mode",
+      "JV",
+      "Boys",
+      "Baseball"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/boys-jv-baseball-vs-cedar-crest-high-school-3/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Girls Varsity Softball @ Cedar Crest High School",
+    "date": "2026-04-01T20:15:00.000Z",
+    "location": "115 E Evergreen Rd, Lebanon, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Varsity",
+      "Girls",
+      "Softball"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/girls-varsity-softball-cedar-crest-high-school-3/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Girls JV Softball @ Cedar Crest High School",
+    "date": "2026-04-01T20:15:00.000Z",
+    "location": "115 E Evergreen Rd, Lebanon, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "JV",
+      "Girls",
+      "Softball"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/girls-jv-softball-cedar-crest-high-school-3/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Boys Varsity Baseball vs Cedar Crest High School",
+    "date": "2026-04-01T20:15:00.000Z",
+    "location": "1800 Millersville Rd., Lancaster, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Home Game Mode",
+      "Varsity",
+      "Boys",
+      "Baseball"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/boys-varsity-baseball-vs-cedar-crest-high-school-3/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
     "title": "Flower Planting",
     "date": "2026-04-01T21:00:00.000Z",
     "location": "WVB 1st Floor Lobby",
@@ -5669,6 +6557,47 @@
     "price": "Free",
     "ticketLink": "https://getinvolved.millersville.edu/event/12349828",
     "sourceLink": "https://getinvolved.millersville.edu/event/12349828",
+    "kidFriendly": false
+  },
+  {
+    "title": "Boys JV Lacrosse - Boys @ Palmyra Area Senior High School",
+    "date": "2026-04-01T21:15:00.000Z",
+    "location": "1125 Park Drive, Palmyra, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "JV",
+      "Boys",
+      "Lacrosse"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/boys-jv-lacrosse-boys-palmyra-area-senior-high-school/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Girls JV Lacrosse - Girls vs Palmyra Area Senior High School",
+    "date": "2026-04-01T21:30:00.000Z",
+    "location": "1800 Millersville Rd., Lancaster, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Home Game Mode",
+      "JV",
+      "Girls",
+      "Lacrosse"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/girls-jv-lacrosse-girls-vs-palmyra-area-senior-high-school/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "isLive": false,
     "kidFriendly": false
   },
   {
@@ -5930,26 +6859,6 @@
     "kidFriendly": false
   },
   {
-    "title": "Boys Varsity Baseball @ Kennard-Dale High School",
-    "date": "2026-04-02T20:15:00.000Z",
-    "location": "393 Main Street, Fawn Grove, PA, United States",
-    "tags": [
-      "PM",
-      "Athletics",
-      "Varsity",
-      "Boys",
-      "Baseball"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://www.pennmanor.net/event/boys-varsity-baseball-kennard-dale-high-school/",
-    "gameResult": "",
-    "gameScore": "",
-    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
-    "isLive": false,
-    "kidFriendly": false
-  },
-  {
     "title": "Boys JV Baseball vs Kennard-Dale High School",
     "date": "2026-04-02T20:15:00.000Z",
     "location": "1800 Millersville Rd., Lancaster, PA, United States",
@@ -5966,7 +6875,7 @@
     "sourceLink": "https://www.pennmanor.net/event/boys-jv-baseball-vs-kennard-dale-high-school/",
     "gameResult": "",
     "gameScore": "",
-    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
     "isLive": false,
     "kidFriendly": false
   },
@@ -6610,7 +7519,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-04-06T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -6626,7 +7535,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-04-06T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -6707,7 +7616,7 @@
   {
     "title": "HB GOTR Practice",
     "date": "2026-04-06T19:30:00.000Z",
-    "location": "PA",
+    "location": "Penn Manor School District",
     "tags": [
       "PM",
       "Health/Wellness"
@@ -6822,7 +7731,7 @@
     "sourceLink": "https://www.pennmanor.net/event/boys-jv-baseball-vs-jp-mccaskey-high-school-campus-4/",
     "gameResult": "",
     "gameScore": "",
-    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
     "isLive": false,
     "kidFriendly": false
   },
@@ -6843,7 +7752,7 @@
     "sourceLink": "https://www.pennmanor.net/event/boys-varsity-baseball-vs-jp-mccaskey-high-school-campus-4/",
     "gameResult": "",
     "gameScore": "",
-    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
     "isLive": false,
     "kidFriendly": false
   },
@@ -7011,7 +7920,7 @@
   {
     "title": "ESH Lunch & Learn",
     "date": "2026-04-07T15:30:00.000Z",
-    "location": "Penn Manor School District",
+    "location": "PA",
     "tags": [
       "PM",
       "Meetings"
@@ -7737,7 +8646,7 @@
     "sourceLink": "https://www.pennmanor.net/event/boys-jv-baseball-hempfield-senior-high-school-4/",
     "gameResult": "",
     "gameScore": "",
-    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
     "isLive": false,
     "kidFriendly": false
   },
@@ -7757,7 +8666,7 @@
     "sourceLink": "https://www.pennmanor.net/event/boys-varsity-baseball-hempfield-senior-high-school-4/",
     "gameResult": "",
     "gameScore": "",
-    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
     "isLive": false,
     "kidFriendly": false
   },
@@ -7878,7 +8787,7 @@
   {
     "title": "6th Grade MS Field Trip",
     "date": "2026-04-09T15:15:00.000Z",
-    "location": "PA",
+    "location": "Penn Manor School District",
     "tags": [
       "PM",
       "Field Trips"
@@ -7959,6 +8868,26 @@
     "price": "Free",
     "ticketLink": "",
     "sourceLink": "https://www.pennmanor.net/event/pto-meeting-32/",
+    "kidFriendly": false
+  },
+  {
+    "title": "Boys Varsity Baseball @ Kennard-Dale High School",
+    "date": "2026-04-09T20:15:00.000Z",
+    "location": "393 Main Street, Fawn Grove, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Varsity",
+      "Boys",
+      "Baseball"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/boys-varsity-baseball-kennard-dale-high-school/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
+    "isLive": false,
     "kidFriendly": false
   },
   {
@@ -8561,7 +9490,7 @@
     "sourceLink": "https://www.pennmanor.net/event/boys-jv-baseball-central-dauphin-high-school-2/",
     "gameResult": "",
     "gameScore": "",
-    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
     "isLive": false,
     "kidFriendly": false
   },
@@ -8581,7 +9510,7 @@
     "sourceLink": "https://www.pennmanor.net/event/boys-varsity-baseball-central-dauphin-high-school-2/",
     "gameResult": "",
     "gameScore": "",
-    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
     "isLive": false,
     "kidFriendly": false
   },
@@ -8743,7 +9672,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Appliance/Tire Collection",
     "date": "2026-04-13T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -8775,7 +9704,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Historic Commission",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-04-13T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -8791,7 +9720,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Appliance/Tire Collection",
+    "title": "Historic Commission",
     "date": "2026-04-13T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -9025,7 +9954,7 @@
     "sourceLink": "https://www.pennmanor.net/event/boys-varsity-baseball-manheim-township-high-school-3/",
     "gameResult": "",
     "gameScore": "",
-    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
     "isLive": false,
     "kidFriendly": false
   },
@@ -9045,7 +9974,7 @@
     "sourceLink": "https://www.pennmanor.net/event/boys-jv-baseball-manheim-township-high-school-3/",
     "gameResult": "",
     "gameScore": "",
-    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
     "isLive": false,
     "kidFriendly": false
   },
@@ -9593,7 +10522,7 @@
     "sourceLink": "https://www.pennmanor.net/event/boys-jv-baseball-vs-ephrata-high-school-2/",
     "gameResult": "",
     "gameScore": "",
-    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
     "isLive": false,
     "kidFriendly": false
   },
@@ -9614,7 +10543,7 @@
     "sourceLink": "https://www.pennmanor.net/event/boys-varsity-baseball-vs-ephrata-high-school-2/",
     "gameResult": "",
     "gameScore": "",
-    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
     "isLive": false,
     "kidFriendly": false
   },
@@ -9820,7 +10749,7 @@
     "sourceLink": "https://www.pennmanor.net/event/boys-varsity-baseball-central-york-high-school/",
     "gameResult": "",
     "gameScore": "",
-    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
     "isLive": false,
     "kidFriendly": false
   },
@@ -9841,7 +10770,7 @@
     "sourceLink": "https://www.pennmanor.net/event/boys-jv-baseball-vs-central-york-high-school/",
     "gameResult": "",
     "gameScore": "",
-    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
     "isLive": false,
     "kidFriendly": false
   },
@@ -10662,7 +11591,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-04-20T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -10678,7 +11607,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-04-20T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -10825,7 +11754,7 @@
     "sourceLink": "https://www.pennmanor.net/event/boys-varsity-baseball-cedar-crest-high-school-4/",
     "gameResult": "",
     "gameScore": "",
-    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
     "isLive": false,
     "kidFriendly": false
   },
@@ -10866,7 +11795,7 @@
     "sourceLink": "https://www.pennmanor.net/event/boys-jv-baseball-cedar-crest-high-school-4/",
     "gameResult": "",
     "gameScore": "",
-    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
     "isLive": false,
     "kidFriendly": false
   },
@@ -11378,7 +12307,7 @@
     "sourceLink": "https://www.pennmanor.net/event/boys-jv-baseball-jp-mccaskey-high-school-campus-3/",
     "gameResult": "",
     "gameScore": "",
-    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
     "isLive": false,
     "kidFriendly": false
   },
@@ -11398,7 +12327,7 @@
     "sourceLink": "https://www.pennmanor.net/event/boys-varsity-baseball-jp-mccaskey-high-school-campus-3/",
     "gameResult": "",
     "gameScore": "",
-    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
     "isLive": false,
     "kidFriendly": false
   },
@@ -11739,7 +12668,7 @@
     "sourceLink": "https://www.pennmanor.net/event/boys-jv-baseball-vs-muhlenberg-high-school-2/",
     "gameResult": "",
     "gameScore": "",
-    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
     "isLive": false,
     "kidFriendly": false
   },
@@ -11760,7 +12689,7 @@
     "sourceLink": "https://www.pennmanor.net/event/boys-varsity-baseball-vs-muhlenberg-high-school/",
     "gameResult": "",
     "gameScore": "",
-    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video",
+    "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/569426/Mens-Varsity-Baseball",
     "isLive": false,
     "kidFriendly": false
   },
@@ -12029,7 +12958,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-04-27T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -12045,7 +12974,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-04-27T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -12628,7 +13557,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-05-04T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -12644,7 +13573,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-05-04T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -12873,7 +13802,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-05-11T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -12889,7 +13818,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-05-11T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -12971,7 +13900,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-05-18T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -12987,7 +13916,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-05-18T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -13019,7 +13948,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Election Day",
+    "title": "Office Closed",
     "date": "2026-05-19T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -13035,7 +13964,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Office Closed",
+    "title": "Election Day",
     "date": "2026-05-19T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -13137,7 +14066,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-05-26T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -13153,7 +14082,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-05-26T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [

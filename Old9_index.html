@@ -22,7 +22,7 @@
             <button id="nav-news" class="nav-link" onclick="switchView('news'); toggleMobileMenu();">News</button>
             <button id="nav-events" class="nav-link" onclick="switchView('events'); toggleMobileMenu();">Events</button>
             <button id="nav-sports" class="nav-link" onclick="switchView('sports'); toggleMobileMenu();">Sports</button>
-            <button id="nav-food" class="nav-link" onclick="switchView('food'); toggleMobileMenu();">Food</button>
+            <button id="nav-food" class="nav-link" onclick="switchView('food'); toggleMobileMenu();">Food/Drink</button>
             <button id="nav-housing" class="nav-link" onclick="switchView('housing'); toggleMobileMenu();">Housing</button>
             <button id="nav-services" class="nav-link" onclick="switchView('services'); toggleMobileMenu();">Services</button>
             <button id="nav-weather" class="nav-link" onclick="switchView('weather'); toggleMobileMenu();">Weather</button>
@@ -57,7 +57,7 @@
         <h2 class="section-title">Upcoming Highlights</h2>
         <div id="home-events" class="card-grid"></div>
         <div class="app-card" style="margin-top:20px;">
-            <h4 class="card-heading">Today's Food Specials</h4>
+            <h4 class="card-heading">Today's Food/Drink Specials</h4>
             <div id="specials-list"></div>
         </div>
     </section>
@@ -585,9 +585,11 @@ function buildEventCard(e,isSportsPage){
         actionHtml=`<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-live">📺 Watch</a>`;
     } else if(isPast && e.streamLink){
         actionHtml=`<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-outline">📺 Replay</a>`;
+    } else if(isFree){
+        actionHtml=`<span class="badge badge-free">Free</span>`;
     } else if(hasLink){
         actionHtml=`<a href="${e.ticketLink}" target="_blank" class="btn btn-sm btn-ticket">🎟 Tickets</a>`;
-    } else if(!isFree){
+    } else {
         actionHtml=`<span class="badge badge-door">${priceText}</span>`;
     }
 
@@ -688,7 +690,7 @@ function renderNewsUI(){
         return `<div class="app-card">${tagHtml}<p class="card-meta">${n.date}</p><h3 class="card-title">${n.title}</h3><a href="${n.link}" target="_blank" class="btn btn-sm btn-outline" style="margin-top:12px;">Read ➔</a></div>`;
     }).join(''):'<p class="empty-state">No news articles found.</p>';
 }
-async function loadDining(){try{const data=await(await fetch('restaurants.json')).json();const c=document.getElementById('food-container');c.innerHTML=data.map(p=>{let b='';if(p.status==='App Required')b=`<div style="display:flex;gap:8px;"><a href="${p.iosLink||'#'}" target="_blank" class="btn btn-sm btn-outline" style="flex:1;text-align:center;">🍎 iOS</a><a href="${p.link||'#'}" target="_blank" class="btn btn-sm btn-outline" style="flex:1;text-align:center;">🤖 Android</a></div>`;else if(p.status==='Order Online')b=`<a href="${p.link}" target="_blank" class="btn btn-sm btn-ticket" style="display:block;text-align:center;">🛒 Order Online</a>`;else if(p.status==='Members Only')b=`<a href="${p.link}" target="_blank" class="btn btn-sm btn-outline" style="display:block;text-align:center;">🎖️ Members Only</a>`;else b=`<a href="${p.link}" target="_blank" class="btn btn-sm btn-outline" style="display:block;text-align:center;">📄 ${p.status}</a>`;const addr=p.address?`<p class="card-meta" style="margin-bottom:4px;">📍 ${p.address}</p>`:'';return `<div class="app-card"><h3 class="card-title">${p.name}</h3><p class="card-meta" style="margin-bottom:4px;">🍴 ${p.cuisine}</p>${addr}<p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:16px;">${p.description||''}</p><div style="margin-top:auto;">${b}</div></div>`;}).join('');}catch(e){}}
+async function loadDining(){try{const data=await(await fetch('restaurants.json')).json();const c=document.getElementById('food-container');c.innerHTML=data.map(p=>{let b='';if(p.status==='App Required')b=`<div style="display:flex;gap:8px;"><a href="${p.iosLink||'#'}" target="_blank" class="btn btn-sm btn-outline" style="flex:1;text-align:center;">iOS</a><a href="${p.link||'#'}" target="_blank" class="btn btn-sm btn-outline" style="flex:1;text-align:center;">Android</a></div>`;else if(p.status==='Order Online')b=`<a href="${p.link}" target="_blank" class="btn btn-sm btn-ticket" style="display:block;text-align:center;">🛒 Order Online</a>`;else b=`<a href="${p.link}" target="_blank" class="btn btn-sm btn-outline" style="display:block;text-align:center;">📄 ${p.status}</a>`;return `<div class="app-card"><h3 class="card-title">${p.name}</h3><p class="card-meta" style="margin-bottom:4px;">🍴 ${p.cuisine}</p><p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:16px;">${p.description||''}</p><div style="margin-top:auto;">${b}</div></div>`;}).join('');}catch(e){}}
 async function loadHousing(){try{const data=await(await fetch('housing.json')).json();const c=document.getElementById('housing-container');data.sort((a,b)=>(b.featured===true)-(a.featured===true));c.innerHTML=data.map(p=>{const badge=p.featured?'<span class="badge badge-premium">Premium</span>':'';return `<div class="app-card ${p.featured?'card-featured':''}">${badge}<h3 class="card-title">${p.name}</h3><p class="card-meta" style="font-weight:bold;text-transform:uppercase;margin-bottom:8px;">${p.landlord}</p><p style="font-size:0.9rem;margin-bottom:16px;">${p.description}</p><div class="card-footer"><a href="${p.link}" target="_blank" class="btn btn-sm ${p.featured?'btn-dark':'btn-outline'}" style="display:block;text-align:center;">View Property</a></div></div>`;}).join('');}catch(e){}}
 let allServices=[], svcFilter='All';
 async function loadServices(){try{allServices=await(await fetch('services.json')).json();renderServices();}catch(e){}}

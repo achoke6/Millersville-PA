@@ -291,20 +291,18 @@ async function runScraper() {
         console.log(`✅ MU Athletics: ${muAthCount} events`);
     } catch (e) { console.error("❌ MU Athletics error:", e.message); }
 
-    // ===== 2. PENN MANOR iCAL (PAGINATED — fetch past + future events) =====
+    // ===== 2. PENN MANOR iCAL (PAGINATED — fetch until we cover the full date range) =====
     try {
         console.log("📡 Fetching Penn Manor iCal (paginated until " + endDay + ")...");
+        const pmBaseUrl = 'https://www.pennmanor.net/events/list/?ical=1&tribe_event_display=list&tribe_paged=';
         let allPMEvents = {};
-
-        // Fetch UPCOMING events (paginated forward)
-        const pmFutureUrl = 'https://www.pennmanor.net/events/list/?ical=1&tribe_event_display=list&tribe_paged=';
         let page = 1;
-        const maxPages = 20;
+        const maxPages = 20; // Hard safety cap
         let latestEventDate = null;
 
         while (page <= maxPages) {
             try {
-                const url = pmFutureUrl + page;
+                const url = pmBaseUrl + page;
                 console.log(`  Fetching page ${page}...`);
                 const pageData = await ical.async.fromURL(url, { headers: baseHeaders });
                 const pageEvents = Object.values(pageData).filter(e => e.type === 'VEVENT');
@@ -359,33 +357,9 @@ async function runScraper() {
             }
         }
 
-        const totalFutureRaw = Object.keys(allPMEvents).length;
-        const coverageEnd = latestEventDate ? latestEventDate.toISOString().split('T')[0] : 'unknown';
-        console.log(`  Future: ${totalFutureRaw} unique across ${page} page(s), coverage through ${coverageEnd}`);
-
-        // Fetch PAST events (paginated backward, up to 5 pages for ~30 days back)
-        const pmPastUrl = 'https://www.pennmanor.net/events/list/?ical=1&tribe_event_display=past&tribe_paged=';
-        const maxPastPages = 5;
-        for (let pp = 1; pp <= maxPastPages; pp++) {
-            try {
-                const pastPageData = await ical.async.fromURL(pmPastUrl + pp, { headers: baseHeaders });
-                const pastPageEvents = Object.values(pastPageData).filter(e => e.type === 'VEVENT');
-                if (pastPageEvents.length === 0) break;
-                let newPast = 0;
-                for (const [key, val] of Object.entries(pastPageData)) {
-                    if (val.type === 'VEVENT') {
-                        const uid = val.uid || key;
-                        if (!allPMEvents[uid]) newPast++;
-                        allPMEvents[uid] = val;
-                    }
-                }
-                console.log(`  Past page ${pp}: ${pastPageEvents.length} VEVENTs, ${newPast} new`);
-                if (newPast === 0) break;
-            } catch (err) { console.log(`  Past page ${pp} failed: ${err.message}`); break; }
-        }
-
         const totalPMRaw = Object.keys(allPMEvents).length;
-        console.log(`  Total unique (past+future): ${totalPMRaw}`);
+        const coverageEnd = latestEventDate ? latestEventDate.toISOString().split('T')[0] : 'unknown';
+        console.log(`  Total unique: ${totalPMRaw} across ${page} page(s), coverage through ${coverageEnd}`);
 
         if (totalPMRaw === 0) throw new Error('Penn Manor returned no events');
 
@@ -441,28 +415,6 @@ async function runScraper() {
                 if (/track\s*&?\s*field/i.test(desc) && !tags.includes('Track')) tags.push('Track');
                 if (/bocce/i.test(lowerTitle)) tags.push('Athletics'); // Bocce not in list but keep tagged
 
-                // PM Hudl team links by sport + gender
-                const pmHudlBase = 'https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/';
-                const pmHudlTeams = {
-                    'boys-football': '17195/boys-varsity-football',
-                    'boys-football-freshman': '17199/boys-freshman-football',
-                    'boys-basketball': '71274/boys-varsity-basketball',
-                    'girls-basketball': '71273/girls-varsity-basketball',
-                    'boys-baseball': '569426/Mens-Varsity-Baseball',
-                    'girls-soccer': '346666/girls-varsity-soccer',
-                    'girls-field hockey': '497810/Penn-Manor-Field-Hockey-',
-                    'field hockey': '497810/Penn-Manor-Field-Hockey-',
-                };
-                // Build lookup key from gender + sport
-                const gender = tags.includes('Boys') ? 'boys' : tags.includes('Girls') ? 'girls' : '';
-                const sportTag = sportsList.find(s => tags.includes(s));
-                const hudlKey1 = gender && sportTag ? `${gender}-${sportTag.toLowerCase()}` : '';
-                const hudlKey2 = sportTag ? sportTag.toLowerCase() : '';
-                const hudlTeam = pmHudlTeams[hudlKey1] || pmHudlTeams[hudlKey2] || null;
-                const pmStreamLink = hudlTeam
-                    ? pmHudlBase + hudlTeam
-                    : 'https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video';
-
                 // Check if game is live
                 const eventEnd = ev.end ? new Date(ev.end) : new Date(eventDate.getTime() + 2*60*60*1000);
                 const pmIsLive = now >= eventDate && now <= eventEnd;
@@ -472,7 +424,7 @@ async function runScraper() {
                     tags: [...new Set(tags)], price: "Free", ticketLink: "",
                     sourceLink: ev.url || "https://www.pennmanor.net/calendar/",
                     gameResult: '', gameScore: '',
-                    streamLink: pmStreamLink,
+                    streamLink: 'https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video',
                     isLive: pmIsLive
                 });
                 pmAthCount++;
@@ -983,7 +935,7 @@ async function runScraper() {
                         events.push({
                             title: eventName, date: eventDate.toISOString(),
                             location: 'VFW Post 7294, 219 Walnut Hill Rd',
-                            tags: ['Other', 'VFW'], price: 'Members Only', ticketLink: '', sourceLink: postLink,
+                            tags: ['Other', 'VFW'], price: 'Free', ticketLink: '', sourceLink: postLink,
                             gameResult: '', gameScore: '', streamLink: '', isLive: false, kidFriendly: false
                         });
                         vfwEventCount++;
@@ -1114,7 +1066,7 @@ async function runScraper() {
                     events.push({
                         title: eventName, date: eventDate.toISOString(),
                         location: 'VFW Post 7294, 219 Walnut Hill Rd',
-                        tags: ['Other', 'VFW'], price: 'Members Only', ticketLink: '', sourceLink: postLink,
+                        tags: ['Other', 'VFW'], price, ticketLink: '', sourceLink: postLink,
                         gameResult: '', gameScore: '', streamLink: '', isLive: false, kidFriendly: false
                     });
                     vfwEventCount++;

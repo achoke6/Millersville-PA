@@ -585,11 +585,7 @@ function buildEventCard(e,isSportsPage){
     const homeInd=isSportsPage&&isHome?'<span class="home-indicator">🏠 Home</span>':'';
     const awayInd=isSportsPage&&!isHome?'<span class="away-indicator">📍 Away</span>':'';
 
-    // Hide time if it's exactly noon (placeholder for events with no specific time)
-    const isNoonPlaceholder = d.getHours()===12 && d.getMinutes()===0;
-    const timeStr = isNoonPlaceholder ? '' : ` @ ${formatTime(d)}`;
-
-    return `<div class="app-card${e.isLive?' card-live':''}"><div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${e.title}${scoreBadge}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${e.location} ${homeInd}${awayInd}</p></div><div class="card-footer"><div class="card-actions"><a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
+    return `<div class="app-card${e.isLive?' card-live':''}"><div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${e.title}${scoreBadge}</h3><p class="card-meta">📅 ${formatDate(d)} @ ${formatTime(d)}</p><p class="card-meta">📍 ${e.location} ${homeInd}${awayInd}</p></div><div class="card-footer"><div class="card-actions"><a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
 }
 
 /* ==================== HOME ==================== */

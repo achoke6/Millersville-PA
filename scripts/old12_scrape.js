@@ -912,9 +912,7 @@ async function runScraper() {
                         const dayNum = weekDays[col];
                         if (!dayNum) continue; // No day in this column for this week
 
-                        // Use noon Eastern (16:00 UTC or 17:00 UTC depending on DST) to prevent date shift
-                        // Setting to 12:00 noon UTC-4 = 16:00 UTC ensures the date displays correctly in Eastern
-                        const eventDate = new Date(Date.UTC(calYear, calMonth, dayNum, 16, 0, 0));
+                        const eventDate = new Date(calYear, calMonth, dayNum);
                         if (isNaN(eventDate.getTime())) continue;
                         if (eventDate < pastDate || eventDate >= futureDate) continue;
                         if (eventDate.getDay() === 1) continue; // Monday = closed
@@ -943,8 +941,8 @@ async function runScraper() {
                     }
                 };
 
+                let pendingNumbers = [];
                 let pendingEvents = [];
-                let seenFirstNumber = false;
 
                 for (const line of lines) {
                     // Skip noise
@@ -956,31 +954,22 @@ async function runScraper() {
                     const isNumber = /^\d{1,2}$/.test(line) && parseInt(line) >= 1 && parseInt(line) <= 31;
 
                     if (isNumber) {
-                        const num = parseInt(line);
-                        // Find which week this number belongs to
-                        let numWeekIdx = -1;
-                        for (let w = 0; w < weeks.length; w++) {
-                            if (weeks[w].includes(num)) { numWeekIdx = w; break; }
-                        }
-
-                        // If we had events collected before seeing any number, those belong to week containing day 1
-                        if (!seenFirstNumber && pendingEvents.length > 0) {
-                            const week1Idx = weeks.findIndex(w => w.includes(1));
-                            if (week1Idx >= 0) {
-                                console.log(`    📅 Pre-number events assigned to week 1 (${pendingEvents.length} items)`);
-                                processWeekEvents(week1Idx, pendingEvents);
-                            }
-                            pendingEvents = [];
-                        }
-                        seenFirstNumber = true;
-
-                        // If switching to a different week, process pending events for the CURRENT week first
-                        if (pendingEvents.length > 0 && currentWeekIdx >= 0 && numWeekIdx !== currentWeekIdx) {
+                        // If we were collecting events for a previous week, process them
+                        if (pendingEvents.length > 0 && currentWeekIdx >= 0) {
                             processWeekEvents(currentWeekIdx, pendingEvents);
                             pendingEvents = [];
                         }
 
-                        currentWeekIdx = numWeekIdx;
+                        const num = parseInt(line);
+                        // Find which week this number belongs to
+                        for (let w = 0; w < weeks.length; w++) {
+                            if (weeks[w].includes(num)) {
+                                if (currentWeekIdx !== w) {
+                                    currentWeekIdx = w;
+                                }
+                                break;
+                            }
+                        }
                     } else {
                         // This is an event name for the current week
                         if (line.length >= 3 && line.length <= 80) {
@@ -1010,7 +999,7 @@ async function runScraper() {
                     if (monthNum === undefined) continue;
                     if (monthNum < pubDate.getMonth() - 1 && !dm[3]) year++;
 
-                    const eventDate = new Date(Date.UTC(year, monthNum, day, 16, 0, 0));
+                    const eventDate = new Date(year, monthNum, day);
                     if (isNaN(eventDate.getTime())) continue;
                     if (eventDate < pastDate || eventDate >= futureDate) continue;
                     // VFW closed on Mondays

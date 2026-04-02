@@ -117,6 +117,7 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .card-meta { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
 .card-heading { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
 .card-footer { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+.specials-section { background: var(--gold-soft); border-radius: var(--radius-sm); padding: 10px 12px; margin-bottom: 12px; border-left: 3px solid var(--gold); }
 .card-actions { display: flex; justify-content: flex-end; align-items: center; gap: 8px; }
 
 /* =========================================================

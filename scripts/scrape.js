@@ -758,6 +758,8 @@ async function runScraper() {
         const vfwItems = vfwXml.match(/<item>([\s\S]*?)<\/item>/g) || [];
         let vfwEventCount = 0;
         let vfwApiCalls = 0;
+        let vfwWeeklySpecials = [];
+        let vfwSpecialsDateRange = '';
 
         const months = { january:0, february:1, march:2, april:3, may:4, june:5, july:6, august:7, september:8, october:9, november:10, december:11 };
         const monthPattern = Object.keys(months).join('|');
@@ -1120,8 +1122,51 @@ async function runScraper() {
                     vfwEventCount++;
                     console.log(`    📌 VFW Event: "${eventName}" on ${dateKey}${timeMatch ? ' at ' + timeMatch[1] : ''} [${price}]`);
                 }
-            } else {
-                console.log(`    ⏭️ Skipping weekly specials post (menu, not events)`);
+            } else if (isWeeklySpecials) {
+                // Extract VFW food specials from weekly specials posts
+                console.log(`    🍽️ Extracting food specials from weekly specials post`);
+
+                // Extract date range: "From Tuesday, March 24 through Saturday, March 28"
+                const rangeMatch = allOcrText.match(/from\s+\w+,?\s*((?:january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{1,2})\s*(?:through|thru|-|–)\s*\w*,?\s*((?:january|february|march|april|may|june|july|august|september|october|november|december)?\s*\d{1,2})/i);
+                let dateRange = '';
+                if (rangeMatch) {
+                    dateRange = rangeMatch[0].replace(/^from\s+/i, '').trim();
+                    console.log(`    📅 Date range: ${dateRange}`);
+                }
+
+                // Extract food items: UPPERCASE NAME followed by description and price
+                const foodRegex = /([A-Z][A-Z\s&'–-]{4,50})\n([\s\S]*?\$\d+\.\d{2})/g;
+                let fm;
+                const weeklySpecials = [];
+                while ((fm = foodRegex.exec(allOcrText)) !== null) {
+                    let name = fm[1].trim();
+                    const desc = fm[2].trim();
+                    // Skip noise
+                    if (/WEEKLY|MILLERSVILLE|MANOR|VFW POST|YEARS OF SERVICE/i.test(name)) continue;
+                    // Extract price
+                    const priceMatch = desc.match(/\$(\d+\.\d{2})/);
+                    const price = priceMatch ? `$${priceMatch[1]}` : '';
+
+                    // Check if Friday only
+                    const isFridayOnly = /friday only/i.test(allOcrText.substring(Math.max(0, fm.index - 50), fm.index + 10));
+
+                    // Clean up name: title case
+                    name = name.replace(/\s+/g, ' ').split(' ').map(w => w.charAt(0) + w.slice(1).toLowerCase()).join(' ');
+
+                    weeklySpecials.push({
+                        name,
+                        price,
+                        fridayOnly: isFridayOnly,
+                        dateRange
+                    });
+                    console.log(`    🍽️ Special: ${name} ${price}${isFridayOnly ? ' (Friday only)' : ''}`);
+                }
+
+                // Store for later writing to specials.json
+                if (weeklySpecials.length > 0) {
+                    vfwWeeklySpecials = weeklySpecials;
+                    vfwSpecialsDateRange = dateRange;
+                }
             }
           } catch (postErr) {
             console.log(`    ⚠️ Post processing failed: ${postErr.message}`);
@@ -1131,6 +1176,39 @@ async function runScraper() {
         // Save cache
         fs.writeFileSync(cachePath, JSON.stringify(vfwCache, null, 2));
         console.log(`✅ VFW Post 7294: ${vfwEventCount} events extracted (${vfwApiCalls} API calls, ${Object.keys(vfwCache).length} cached)`);
+
+        // Write specials.json with VFW weekly specials + House of Pizza static specials
+        const specials = {
+            "House of Pizza": {
+                note: "Dine-in & Carryout Only · Mon-Fri till 2 PM · Not for Delivery",
+                daily: {
+                    "Monday": ["2 Slices & MD Drink – $4.50", "Soup & Sandwich – $5.99", "Turkey Sub – $5.25"],
+                    "Tuesday": ["2 Slices & MD Drink – $4.50", "Ham Sub – $5.00", "Pork BBQ Sandwich w/Fries – $5.99"],
+                    "Wednesday": ["2 Slices & MD Drink – $4.50", "Soup & Sandwich – $5.99", "Italian Sub – $5.25"],
+                    "Thursday": ["2 Slices & MD Drink – $4.50", "Soup & Sandwich – $5.99", "¼ Lb. Cheeseburger & Fries – $4.50", "🍺 Miller Lite Draft (Pint) – $1.50 (all day till midnight)"],
+                    "Friday": ["2 Slices & MD Drink – $4.50", "Meatball Sub – $5.50", "Shrimp Basket & Fries – $5.75"]
+                }
+            },
+            "VFW Post 7294": {
+                note: "Members & Guests · Weekly specials change each week",
+                weekly: vfwWeeklySpecials.map(s => {
+                    let label = s.name;
+                    if (s.price) label += ` – ${s.price}`;
+                    if (s.fridayOnly) label += ' (Friday only)';
+                    return label;
+                }),
+                weeklyDateRange: vfwSpecialsDateRange,
+                recurring: {
+                    "Tuesday": "Shrimp Night",
+                    "Wednesday": "Wing Night",
+                    "Thursday": "Taco Night",
+                    "Friday": "Special (varies weekly)",
+                    "Saturday": "Burger Night"
+                }
+            }
+        };
+        fs.writeFileSync(path.join(__dirname, '../specials.json'), JSON.stringify(specials, null, 2));
+        console.log(`✅ Specials saved (VFW: ${vfwWeeklySpecials.length} weekly items)`);
     } catch (e) { console.error("❌ VFW Events error:", e.message); }
 
     // ===== FAMILY-FRIENDLY TAGGING =====

@@ -1,17 +1,23 @@
-[
-  {
-    "restaurant": "House of Pizza",
-    "day": "Monday",
-    "deal": "2 Slices & Medium Drink - $4.50"
+{
+  "House of Pizza": {
+    "note": "Dine-in & Carryout Only · Mon-Fri till 2 PM · Not Available for Delivery",
+    "daily": {
+      "Monday": ["2 Slices & MD Drink – $4.50", "Soup & Sandwich – $5.99", "Turkey Sub – $5.25"],
+      "Tuesday": ["2 Slices & MD Drink – $4.50", "Ham Sub – $5.00", "Pork BBQ Sandwich w/Fries – $5.99"],
+      "Wednesday": ["2 Slices & MD Drink – $4.50", "Soup & Sandwich – $5.99", "Italian Sub – $5.25"],
+      "Thursday": ["2 Slices & MD Drink – $4.50", "Soup & Sandwich – $5.99", "¼ Lb. Cheeseburger & Fries – $4.50", "🍺 Miller Lite Draft (Pint) – $1.50 (all day till midnight)"],
+      "Friday": ["2 Slices & MD Drink – $4.50", "Meatball Sub – $5.50", "Shrimp Basket & Fries – $5.75"]
+    }
   },
-  {
-    "restaurant": "House of Pizza",
-    "day": "Tuesday",
-    "deal": "Large Cheese Pizza & 2-Liter - $15.99"
-  },
-  {
-    "restaurant": "Two Cousins",
-    "day": "Wednesday",
-    "deal": "$2 Off Any Large Stromboli"
+  "VFW Post 7294": {
+    "note": "Members & Guests · Weekly specials change each week",
+    "weekly": [],
+    "recurring": {
+      "Tuesday": "Shrimp Night",
+      "Wednesday": "Wing Night",
+      "Thursday": "Taco Night",
+      "Friday": "Special (varies weekly)",
+      "Saturday": "Burger Night"
+    }
   }
-]
+}

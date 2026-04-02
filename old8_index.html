@@ -548,20 +548,9 @@ function buildEventCard(e,isSportsPage){
     const isFree=priceText.toLowerCase()==='free'||priceText.toLowerCase()==='free entry';
     const hasLink=e.ticketLink&&e.ticketLink.trim()!=="";
     const isHome=tags.includes('Home Game Mode')||tags.includes('H Games');
-
-    // Determine main source label
-    let sourceLabel='';
-    if(tags.includes('VFW')) sourceLabel='VFW';
-    else if(tags.includes('Other')&&tags.includes('Live Music')) sourceLabel='Phantom Power';
-    else if(tags.includes('Borough')) sourceLabel='Borough';
-    else if(tags.includes('PM')) sourceLabel='PM';
-    else if(tags.includes('Clubs/Orgs')) sourceLabel='MU Clubs';
-    else if(tags.includes('MU')) sourceLabel='MU';
-
-    const hiddenTags=[...topSources,...sportMetaTags,'MU Calendar','Penn Manor','MU GetInvolved','Phantom Power','VFW','Live Music','Other'];
+    const hiddenTags=[...topSources,...sportMetaTags,'MU Calendar','Penn Manor','MU GetInvolved','Phantom Power'];
     const displayTags=tags.filter(t=>!hiddenTags.includes(t));
-    let tagHtml=sourceLabel?`<span class="card-tag">${sourceLabel}</span>`:'';
-    tagHtml+=displayTags.map(t=>`<span class="card-tag">${t}</span>`).join('');
+    let tagHtml=displayTags.map(t=>`<span class="card-tag">${t}</span>`).join('');
 
     // Score badge for completed games
     let scoreBadge='';

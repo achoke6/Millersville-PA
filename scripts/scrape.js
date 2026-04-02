@@ -1123,49 +1123,61 @@ async function runScraper() {
                     console.log(`    📌 VFW Event: "${eventName}" on ${dateKey}${timeMatch ? ' at ' + timeMatch[1] : ''} [${price}]`);
                 }
             } else if (isWeeklySpecials) {
-                // Extract VFW food specials from weekly specials posts
-                console.log(`    🍽️ Extracting food specials from weekly specials post`);
+                // Only extract from the MOST RECENT weekly specials post (first one in RSS = newest)
+                if (vfwWeeklySpecials.length > 0) {
+                    console.log(`    ⏭️ Skipping older weekly specials post (already have newer)`);
+                } else {
+                    console.log(`    🍽️ Extracting food specials from weekly specials post`);
 
-                // Extract date range: "From Tuesday, March 24 through Saturday, March 28"
-                const rangeMatch = allOcrText.match(/from\s+\w+,?\s*((?:january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{1,2})\s*(?:through|thru|-|–)\s*\w*,?\s*((?:january|february|march|april|may|june|july|august|september|october|november|december)?\s*\d{1,2})/i);
-                let dateRange = '';
-                if (rangeMatch) {
-                    dateRange = rangeMatch[0].replace(/^from\s+/i, '').trim();
-                    console.log(`    📅 Date range: ${dateRange}`);
-                }
+                    // Extract date range: "From Tuesday, March 24 through Saturday, March 28"
+                    const rangeMatch = allOcrText.match(/from\s+\w+,?\s*((?:january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{1,2})\s*(?:through|thru|-|–)\s*\w*,?\s*((?:january|february|march|april|may|june|july|august|september|october|november|december)?\s*\d{1,2})/i);
+                    let dateRange = '';
+                    if (rangeMatch) {
+                        dateRange = rangeMatch[0].replace(/^from\s+/i, '').trim();
+                        console.log(`    📅 Date range: ${dateRange}`);
+                    }
 
-                // Extract food items: UPPERCASE NAME followed by description and price
-                const foodRegex = /([A-Z][A-Z\s&'–-]{4,50})\n([\s\S]*?\$\d+\.\d{2})/g;
-                let fm;
-                const weeklySpecials = [];
-                while ((fm = foodRegex.exec(allOcrText)) !== null) {
-                    let name = fm[1].trim();
-                    const desc = fm[2].trim();
-                    // Skip noise
-                    if (/WEEKLY|MILLERSVILLE|MANOR|VFW POST|YEARS OF SERVICE/i.test(name)) continue;
-                    // Extract price
-                    const priceMatch = desc.match(/\$(\d+\.\d{2})/);
-                    const price = priceMatch ? `$${priceMatch[1]}` : '';
+                    // Extract food items from OCR text
+                    // Strategy: find lines that are ALL CAPS (food names), then find the price in nearby text
+                    const lines = allOcrText.split('\n').map(l => l.trim()).filter(l => l);
+                    const weeklySpecials = [];
+                    const noiseWords = /^(MILLERSVILLE|MANOR|VFW|POST|WEEKLY|SPECIALS|FOOD|WEW|WWEW|YEARS|SERVICE|FROM|FRIDAY ONLY|EASTER)/i;
 
-                    // Check if Friday only
-                    const isFridayOnly = /friday only/i.test(allOcrText.substring(Math.max(0, fm.index - 50), fm.index + 10));
+                    for (let i = 0; i < lines.length; i++) {
+                        const line = lines[i];
+                        // Is this an all-caps food name? (at least 3 chars, mostly uppercase letters)
+                        const isUpperName = /^[A-Z][A-Z\s&'–-]{2,50}$/.test(line) && !noiseWords.test(line);
+                        if (!isUpperName) continue;
 
-                    // Clean up name: title case
-                    name = name.replace(/\s+/g, ' ').split(' ').map(w => w.charAt(0) + w.slice(1).toLowerCase()).join(' ');
+                        // Look ahead for a price in the next few lines
+                        let price = '';
+                        let isFridayOnly = false;
+                        const lookAhead = lines.slice(i, Math.min(i + 5, lines.length)).join(' ');
+                        const priceMatch = lookAhead.match(/\$(\d+\.\d{2})/);
+                        if (priceMatch) price = `$${priceMatch[1]}`;
 
-                    weeklySpecials.push({
-                        name,
-                        price,
-                        fridayOnly: isFridayOnly,
-                        dateRange
-                    });
-                    console.log(`    🍽️ Special: ${name} ${price}${isFridayOnly ? ' (Friday only)' : ''}`);
-                }
+                        // Check if previous line says "FRIDAY ONLY"
+                        if (i > 0 && /friday only/i.test(lines[i - 1])) isFridayOnly = true;
+                        // Or if this line contains "FRIDAY ONLY"
+                        if (/friday only/i.test(line)) continue; // Skip "FRIDAY ONLY" itself as a name
 
-                // Store for later writing to specials.json
-                if (weeklySpecials.length > 0) {
-                    vfwWeeklySpecials = weeklySpecials;
-                    vfwSpecialsDateRange = dateRange;
+                        // Clean up name: title case
+                        let name = line.replace(/\s+/g, ' ').split(' ').map(w => w.charAt(0) + w.slice(1).toLowerCase()).join(' ');
+                        // Remove trailing dash or special chars
+                        name = name.replace(/\s*[-–]\s*$/, '').trim();
+
+                        if (name.length < 4) continue;
+                        // Skip if it's a known noise pattern
+                        if (/^\d|^125$|^1899/i.test(name)) continue;
+
+                        weeklySpecials.push({ name, price, fridayOnly: isFridayOnly, dateRange });
+                        console.log(`    🍽️ Special: ${name} ${price}${isFridayOnly ? ' (Friday only)' : ''}`);
+                    }
+
+                    if (weeklySpecials.length > 0) {
+                        vfwWeeklySpecials = weeklySpecials;
+                        vfwSpecialsDateRange = dateRange;
+                    }
                 }
             }
           } catch (postErr) {

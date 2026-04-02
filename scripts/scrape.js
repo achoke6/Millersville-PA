@@ -1448,13 +1448,6 @@ async function runScraper() {
 
         fs.writeFileSync(path.join(__dirname, '../news.json'), JSON.stringify(news, null, 2));
         console.log(`✅ News: ${news.length} total items`);
-
-        // TODO: Replace with real dining specials source
-        fs.writeFileSync(path.join(__dirname, '../specials.json'), JSON.stringify([
-            { restaurant: "House of Pizza", day: "Monday", deal: "2 Slices & Medium Drink - $4.50" },
-            { restaurant: "House of Pizza", day: "Tuesday", deal: "Large Cheese Pizza & 2-Liter - $15.99" },
-            { restaurant: "Two Cousins", day: "Wednesday", deal: "$2 Off Any Large Stromboli" }
-        ], null, 2));
     } catch (e) { console.error("❌ News/specials error:", e.message); }
 
     console.log("✅ All data compilations complete.");

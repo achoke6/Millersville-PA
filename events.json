@@ -2673,26 +2673,6 @@
     "kidFriendly": false
   },
   {
-    "title": "Millersville University Men's Golf at Lone Pine Invitational",
-    "date": "2026-03-23T00:00:00.000Z",
-    "location": "Washington, PA, Lone Pine Country Club",
-    "tags": [
-      "MU",
-      "Athletic Competitions",
-      "Athletics",
-      "Men's",
-      "Golf"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10568&sport_id=7",
-    "gameResult": "N",
-    "gameScore": "",
-    "streamLink": "",
-    "isLive": false,
-    "kidFriendly": false
-  },
-  {
     "title": "Millersville University Women's Golf at Lone Pine Invitational",
     "date": "2026-03-23T00:00:00.000Z",
     "location": "Washington, PA, Lone Pine Country Club",
@@ -2706,6 +2686,26 @@
     "price": "Free",
     "ticketLink": "",
     "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10540&sport_id=21",
+    "gameResult": "N",
+    "gameScore": "",
+    "streamLink": "",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Millersville University Men's Golf at Lone Pine Invitational",
+    "date": "2026-03-23T00:00:00.000Z",
+    "location": "Washington, PA, Lone Pine Country Club",
+    "tags": [
+      "MU",
+      "Athletic Competitions",
+      "Athletics",
+      "Men's",
+      "Golf"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10568&sport_id=7",
     "gameResult": "N",
     "gameScore": "",
     "streamLink": "",
@@ -6089,25 +6089,6 @@
     "kidFriendly": false
   },
   {
-    "title": "Millersville University Baseball at Shippensburg",
-    "date": "2026-04-03T17:00:00.000Z",
-    "location": "Shippensburg, PA",
-    "tags": [
-      "MU",
-      "Athletic Competitions",
-      "Athletics",
-      "Baseball"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10452&sport_id=1",
-    "gameResult": "L",
-    "gameScore": "2-8",
-    "streamLink": "https://psacsportsdigitalnetwork.com/shipraiders/?B=3544866",
-    "isLive": false,
-    "kidFriendly": false
-  },
-  {
     "title": "Millersville University Women's Outdoor Track and Field vs Millersville Metrics",
     "date": "2026-04-03T17:00:00.000Z",
     "location": "Biemesderfer Stadium",
@@ -6125,6 +6106,25 @@
     "gameResult": "",
     "gameScore": "",
     "streamLink": "https://psacsportsdigitalnetwork.com/millersvilleathletics/?B=3894038",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Millersville University Baseball at Shippensburg",
+    "date": "2026-04-03T17:00:00.000Z",
+    "location": "Shippensburg, PA",
+    "tags": [
+      "MU",
+      "Athletic Competitions",
+      "Athletics",
+      "Baseball"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10452&sport_id=1",
+    "gameResult": "L",
+    "gameScore": "2-8",
+    "streamLink": "https://psacsportsdigitalnetwork.com/shipraiders/?B=3544866",
     "isLive": false,
     "kidFriendly": false
   },
@@ -6422,8 +6422,8 @@
     "price": "Free",
     "ticketLink": "",
     "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10507&sport_id=11",
-    "gameResult": "",
-    "gameScore": "",
+    "gameResult": "L",
+    "gameScore": "0-4",
     "streamLink": "https://psacsportsdigitalnetwork.com/?B=3657634",
     "isLive": false,
     "kidFriendly": false
@@ -6442,8 +6442,8 @@
     "price": "Ticket Required",
     "ticketLink": "https://www.etix.com/ticket/p/31338102/",
     "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10454&sport_id=1",
-    "gameResult": "",
-    "gameScore": "",
+    "gameResult": "W",
+    "gameScore": "6-5",
     "streamLink": "https://psacsportsdigitalnetwork.com/millersvilleathletics/",
     "isLive": false,
     "kidFriendly": false
@@ -6504,7 +6504,7 @@
     "gameResult": "",
     "gameScore": "",
     "streamLink": "https://psacsportsdigitalnetwork.com/?B=3657643",
-    "isLive": true,
+    "isLive": false,
     "kidFriendly": false
   },
   {
@@ -6555,7 +6555,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-04-06T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -6571,7 +6571,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-04-06T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -9001,22 +9001,6 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
-    "date": "2026-04-13T00:00:00.000Z",
-    "location": "Millersville Borough",
-    "tags": [
-      "Borough"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
-    "gameResult": "",
-    "gameScore": "",
-    "streamLink": "",
-    "isLive": false,
-    "kidFriendly": false
-  },
-  {
     "title": "Historic Commission",
     "date": "2026-04-13T00:00:00.000Z",
     "location": "Millersville Borough",
@@ -9034,6 +9018,22 @@
   },
   {
     "title": "Woody Yard Waste Collection",
+    "date": "2026-04-13T00:00:00.000Z",
+    "location": "Millersville Borough",
+    "tags": [
+      "Borough"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-04-13T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -10920,7 +10920,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-04-20T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -10936,7 +10936,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-04-20T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -12300,7 +12300,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-04-27T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -12316,7 +12316,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-04-27T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -12657,26 +12657,6 @@
     "kidFriendly": false
   },
   {
-    "title": "Millersville University Women's Lacrosse at PSAC Quarterfinals",
-    "date": "2026-04-28T00:00:00.000Z",
-    "location": "TBA",
-    "tags": [
-      "MU",
-      "Athletic Competitions",
-      "Athletics",
-      "Women's",
-      "Lacrosse"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10406&sport_id=14",
-    "gameResult": "",
-    "gameScore": "",
-    "streamLink": "",
-    "isLive": false,
-    "kidFriendly": false
-  },
-  {
     "title": "Millersville University Women's Tennis vs PSAC Quarterfinals",
     "date": "2026-04-28T00:00:00.000Z",
     "location": "TBD",
@@ -12691,6 +12671,26 @@
     "price": "Free",
     "ticketLink": "",
     "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10363&sport_id=17",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Millersville University Women's Lacrosse at PSAC Quarterfinals",
+    "date": "2026-04-28T00:00:00.000Z",
+    "location": "TBA",
+    "tags": [
+      "MU",
+      "Athletic Competitions",
+      "Athletics",
+      "Women's",
+      "Lacrosse"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10406&sport_id=14",
     "gameResult": "",
     "gameScore": "",
     "streamLink": "",
@@ -13015,6 +13015,27 @@
     "kidFriendly": false
   },
   {
+    "title": "Millersville University Women's Tennis vs PSAC Semifinals",
+    "date": "2026-05-01T00:00:00.000Z",
+    "location": "TBD",
+    "tags": [
+      "MU",
+      "Athletic Competitions",
+      "Athletics",
+      "Home Game Mode",
+      "Women's",
+      "Tennis"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10364&sport_id=17",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
     "title": "Millersville University Women's Lacrosse at PSAC Semifinals",
     "date": "2026-05-01T00:00:00.000Z",
     "location": "TBA",
@@ -13056,23 +13077,21 @@
     "kidFriendly": false
   },
   {
-    "title": "Millersville University Women's Tennis vs PSAC Semifinals",
-    "date": "2026-05-01T00:00:00.000Z",
-    "location": "TBD",
+    "title": "Millersville University Baseball at West Chester",
+    "date": "2026-05-01T17:00:00.000Z",
+    "location": "West Chester, PA",
     "tags": [
       "MU",
       "Athletic Competitions",
       "Athletics",
-      "Home Game Mode",
-      "Women's",
-      "Tennis"
+      "Baseball"
     ],
     "price": "Free",
     "ticketLink": "",
-    "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10364&sport_id=17",
+    "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10473&sport_id=1",
     "gameResult": "",
     "gameScore": "",
-    "streamLink": "",
+    "streamLink": "https://psacsportsdigitalnetwork.com/wcupagoldenrams/",
     "isLive": false,
     "kidFriendly": false
   },
@@ -13096,25 +13115,6 @@
     "kidFriendly": false
   },
   {
-    "title": "Millersville University Baseball at West Chester",
-    "date": "2026-05-01T17:00:00.000Z",
-    "location": "West Chester, PA",
-    "tags": [
-      "MU",
-      "Athletic Competitions",
-      "Athletics",
-      "Baseball"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10473&sport_id=1",
-    "gameResult": "",
-    "gameScore": "",
-    "streamLink": "https://psacsportsdigitalnetwork.com/wcupagoldenrams/",
-    "isLive": false,
-    "kidFriendly": false
-  },
-  {
     "title": "Kenston Curtis Lafleur: The Light in the Dark",
     "date": "2026-05-01T17:00:00",
     "location": "WARE Regitz Gallery",
@@ -13126,25 +13126,6 @@
     "price": "Free",
     "ticketLink": "",
     "sourceLink": "https://www.millersville.edu/calendar/events/265b3ec1-7852-11f0-af8c-fda2568c4d0c",
-    "kidFriendly": false
-  },
-  {
-    "title": "Millersville University Baseball at West Chester",
-    "date": "2026-05-01T19:00:00.000Z",
-    "location": "West Chester, PA",
-    "tags": [
-      "MU",
-      "Athletic Competitions",
-      "Athletics",
-      "Baseball"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10474&sport_id=1",
-    "gameResult": "",
-    "gameScore": "",
-    "streamLink": "https://psacsportsdigitalnetwork.com/wcupagoldenrams/",
-    "isLive": false,
     "kidFriendly": false
   },
   {
@@ -13163,6 +13144,25 @@
     "gameResult": "",
     "gameScore": "",
     "streamLink": "",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Millersville University Baseball at West Chester",
+    "date": "2026-05-01T19:00:00.000Z",
+    "location": "West Chester, PA",
+    "tags": [
+      "MU",
+      "Athletic Competitions",
+      "Athletics",
+      "Baseball"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10474&sport_id=1",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://psacsportsdigitalnetwork.com/wcupagoldenrams/",
     "isLive": false,
     "kidFriendly": false
   },
@@ -13310,7 +13310,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-05-04T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -13326,7 +13326,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-05-04T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -13555,22 +13555,6 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
-    "date": "2026-05-11T00:00:00.000Z",
-    "location": "Millersville Borough",
-    "tags": [
-      "Borough"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
-    "gameResult": "",
-    "gameScore": "",
-    "streamLink": "",
-    "isLive": false,
-    "kidFriendly": false
-  },
-  {
     "title": "Historic Commission",
     "date": "2026-05-11T00:00:00.000Z",
     "location": "Millersville Borough",
@@ -13588,6 +13572,22 @@
   },
   {
     "title": "Woody Yard Waste Collection",
+    "date": "2026-05-11T00:00:00.000Z",
+    "location": "Millersville Borough",
+    "tags": [
+      "Borough"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-05-11T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -13653,7 +13653,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-05-18T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -13669,7 +13669,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-05-18T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -13819,7 +13819,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-05-26T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -13835,7 +13835,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-05-26T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -13903,7 +13903,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-06-01T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -13919,7 +13919,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-06-01T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [

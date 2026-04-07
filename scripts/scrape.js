@@ -985,18 +985,6 @@ async function runScraper() {
                 const firstDayOfWeek = new Date(calYear, calMonth, 1).getDay();
                 const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
 
-                // Build weeks array: each week is [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
-                const weeks = [];
-                let week = new Array(7).fill(0);
-                for (let d = 1; d <= daysInMonth; d++) {
-                    const dow = new Date(calYear, calMonth, d).getDay();
-                    week[dow] = d;
-                    if (dow === 6 || d === daysInMonth) {
-                        weeks.push([...week]);
-                        week = new Array(7).fill(0);
-                    }
-                }
-
                 // Detect column order from OCR header
                 // Old format (March): Sunday, Weekly Specials, Tuesday, Wednesday, Thursday, Friday, Saturday
                 //   columns: [Sun=0, Mon/Specials=1, Tue=2, Wed=3, Thu=4, Fri=5, Sat=6]

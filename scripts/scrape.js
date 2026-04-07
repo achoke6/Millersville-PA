@@ -736,9 +736,37 @@ async function runScraper() {
 
     // ===== 7. VFW POST 7294 EVENTS (Google Cloud Vision OCR + cache) =====
     try {
-        console.log("📡 Fetching VFW Post 7294 blog images for OCR...");
+        console.log("📡 Fetching VFW Post 7294 blog + Google Sheet images for OCR...");
         const VISION_API_KEY = process.env.GOOGLE_VISION_API_KEY;
         if (!VISION_API_KEY) throw new Error('GOOGLE_VISION_API_KEY not set');
+
+        // Google Sheet integration for Facebook image URLs
+        const VFW_SHEET_ID = process.env.VFW_SHEET_ID || '';
+        let sheetImageUrls = [];
+        if (VFW_SHEET_ID) {
+            try {
+                const sheetUrl = `https://docs.google.com/spreadsheets/d/${VFW_SHEET_ID}/gviz/tq?tqx=out:csv`;
+                const sheetRes = await fetch(sheetUrl);
+                if (sheetRes.ok) {
+                    const csvText = await sheetRes.text();
+                    const rows = csvText.split('\n').slice(1); // Skip header
+                    for (const row of rows) {
+                        // Parse CSV: "Image URL","Post Date","Processed"
+                        const cols = row.match(/"([^"]*)"/g);
+                        if (!cols || cols.length < 2) continue;
+                        const imgUrl = cols[0].replace(/"/g, '').trim();
+                        const postDate = cols[1].replace(/"/g, '').trim();
+                        const processed = cols[2] ? cols[2].replace(/"/g, '').trim() : '';
+                        if (imgUrl && /^https?:\/\//.test(imgUrl)) {
+                            sheetImageUrls.push({ url: imgUrl, date: postDate });
+                        }
+                    }
+                    console.log(`  📋 Google Sheet: ${sheetImageUrls.length} image URLs found`);
+                }
+            } catch (sheetErr) {
+                console.log(`  ⚠️ Google Sheet fetch failed: ${sheetErr.message}`);
+            }
+        }
 
         // Load cache of previously OCR'd images
         const cachePath = path.join(__dirname, '../vfw-cache.json');
@@ -764,6 +792,52 @@ async function runScraper() {
         const months = { january:0, february:1, march:2, april:3, may:4, june:5, july:6, august:7, september:8, october:9, november:10, december:11 };
         const monthPattern = Object.keys(months).join('|');
 
+        // Process all VFW image sources: Google Sheet (Facebook) + WordPress RSS
+        // Collect all "posts" to process from both sources
+        const allVfwPosts = [];
+
+        // Add Google Sheet images as posts
+        for (const si of sheetImageUrls) {
+            const ocrText = vfwCache[si.url] || '';
+            if (ocrText) {
+                allVfwPosts.push({
+                    title: 'Facebook Post',
+                    link: 'https://www.facebook.com/VFWPost7294',
+                    pubDate: si.date ? new Date(si.date) : new Date(),
+                    allOcrText: ocrText,
+                    firstImageOcrText: ocrText,
+                    source: 'sheet'
+                });
+            } else {
+                // Need to OCR this image
+                try {
+                    const imgRes = await fetch(si.url, { headers: baseHeaders, signal: AbortSignal.timeout(15000) });
+                    if (!imgRes.ok) continue;
+                    const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
+                    if (imgBuffer.length < 1000) continue;
+                    const base64Img = imgBuffer.toString('base64');
+                    const visionRes = await fetch(`https://vision.googleapis.com/v1/images:annotate?key=${VISION_API_KEY}`, {
+                        method: 'POST', headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ requests: [{ image: { content: base64Img }, features: [{ type: 'TEXT_DETECTION', maxResults: 1 }] }] })
+                    });
+                    if (!visionRes.ok) continue;
+                    const visionData = await visionRes.json();
+                    const ocrResult = visionData.responses?.[0]?.fullTextAnnotation?.text || '';
+                    vfwApiCalls++;
+                    if (ocrResult.trim().length > 10) {
+                        vfwCache[si.url] = ocrResult;
+                        console.log(`    🔍 Sheet OCR (${ocrResult.trim().length} chars): ${ocrResult.trim().substring(0, 80)}...`);
+                        allVfwPosts.push({
+                            title: 'Facebook Post', link: 'https://www.facebook.com/VFWPost7294',
+                            pubDate: si.date ? new Date(si.date) : new Date(),
+                            allOcrText: ocrResult, firstImageOcrText: ocrResult, source: 'sheet'
+                        });
+                    }
+                } catch (e) { console.log(`    ⚠️ Sheet image error: ${e.message}`); }
+            }
+        }
+
+        // Add RSS posts (processed below with image OCR)
         for (const item of vfwItems) {
           try {
             const titleMatch = item.match(/<title>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/title>/i);
@@ -880,13 +954,13 @@ async function runScraper() {
             const isWeeklySpecials = /weekly\s*(food\s*)?specials/i.test(postTitle) || /weekly\s*specials/i.test(allOcrText.substring(0, 200));
 
             // Regular recurring food nights to SKIP (not special events)
-            const recurringFoodNights = /^(wing night|taco night|burger night|shrimp night|ham steak|roast beef wrap)$/i;
+            const recurringFoodNights = /^(wing night|taco night|burger night|shrimp night|ham steak|roast beef wrap|ham slice|turkey pesto)$/i;
             // Regular recurring events that ARE worth listing
             const recurringEvents = /bingo|trivia|cornhole|karaoke|dart|pool\s+league/i;
             // Special one-off events to ALWAYS capture
-            const specialEvents = /easter|christmas|holiday|carnival|fireworks|fundraiser|dance|cook.?off|bbq|cookout|picnic|gun\s+bingo|steak\s+night|paint|volunteer|meeting|memorial|veteran/i;
+            const specialEvents = /easter|christmas|holiday|carnival|fireworks|fundraiser|dance|cook.?off|bbq|cookout|picnic|gun\s+bingo|steak\s+night|paint|volunteer|meeting|memorial|veteran|spring chicken/i;
             // Food items from weekly specials posts (not events)
-            const foodItems = /fish\s+sandwich|beef\s+tips|meatloaf|shepherd'?s?\s+pie|fried\s+catfish|shrimp\s+alfredo|tuna\s+steak|cod|brioche|fettuccine|burger.*fries|mashed\s+potato/i;
+            const foodItems = /fish\s+sandwich|beef\s+tips|meatloaf|shepherd'?s?\s+pie|fried\s+catfish|shrimp\s+alfredo|tuna\s+steak|cod|brioche|fettuccine|burger.*fries|mashed\s+potato|chicken and waffles|tuna melt|bbq ribs|nashville hot|shrimp tacos|bbq pork|chicken.*bacon.*ranch|chicken ceasar|maple glazed|prime rib|fried flounder|buttered scallops/i;
             // OCR noise to ignore
             const ocrNoise = /years?\s+of\s+service|1899|WEW|WWEW/i;
 
@@ -923,47 +997,95 @@ async function runScraper() {
                     }
                 }
 
-                // Column order: Sun=0, Mon=1(closed/specials), Tue=2, Wed=3, Thu=4, Fri=5, Sat=6
-                // OCR reads row by row: day numbers first, then events in column order
+                // Detect column order from OCR header
+                // Old format (March): Sunday, Weekly Specials, Tuesday, Wednesday, Thursday, Friday, Saturday
+                //   columns: [Sun=0, Mon/Specials=1, Tue=2, Wed=3, Thu=4, Fri=5, Sat=6]
+                // New format (April+): Weekly Specials, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
+                //   columns: [Mon/Specials=0, Tue=1, Wed=2, Thu=3, Fri=4, Sat=5, Sun=6]
 
-                // Parse OCR into row blocks — each block starts with a sequence of day numbers
+                const headerText = allOcrText.substring(0, 400).toLowerCase();
+                const sundayFirst = headerText.indexOf('sunday') < headerText.indexOf('tuesday') && headerText.indexOf('sunday') >= 0;
+
+                // Map day-of-week (0=Sun...6=Sat) to column index based on format
+                let dowToCol;
+                if (sundayFirst) {
+                    // Old format: Sun, Mon(specials), Tue, Wed, Thu, Fri, Sat
+                    dowToCol = { 0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6 };
+                    console.log(`    📅 Detected OLD format (Sunday first)`);
+                } else {
+                    // New format: Mon(specials), Tue, Wed, Thu, Fri, Sat, Sun
+                    dowToCol = { 1: 0, 2: 1, 3: 2, 4: 3, 5: 4, 6: 5, 0: 6 };
+                    console.log(`    📅 Detected NEW format (Tuesday first, Sunday last)`);
+                }
+
+                // Build weeks array using the column mapping
+                // Each week is an array of 7 slots matching the calendar's column order
+                const weeks = [];
+                let week = new Array(7).fill(0);
+                for (let d = 1; d <= daysInMonth; d++) {
+                    const dow = new Date(calYear, calMonth, d).getDay(); // 0=Sun...6=Sat
+                    const col = dowToCol[dow];
+                    week[col] = d;
+                    // Week ends at the last column (Sat for old format, Sun for new)
+                    const lastCol = sundayFirst ? 6 : 6; // Both end at col 6
+                    if (col === lastCol || d === daysInMonth) {
+                        weeks.push([...week]);
+                        week = new Array(7).fill(0);
+                    }
+                }
+
+                console.log(`    📅 ${weeks.length} weeks built for ${calMonthMatch[1]} ${calYear}`);
+
+                // Parse OCR into row blocks
                 const lines = allOcrText.split('\n').map(l => l.trim()).filter(l => l);
                 let currentWeekIdx = -1;
-                let eventLines = []; // events for current week
+                let eventLines = [];
 
-                // Track which week we're in by finding day number sequences
-                const processWeekEvents = (weekIdx, eventItems) => {
-                    if (weekIdx < 0 || weekIdx >= weeks.length) return;
-                    const weekDays = weeks[weekIdx];
-                    // Events appear in column order: Sun, (Mon/Weekly Specials), Tue, Wed, Thu, Fri, Sat
-                    // Map each event to its column based on known patterns
-                    const dayColumnMap = {
-                        // Sunday events
-                        'meat tray bingo': 0, 'aux easter egg hunt': 0,
-                        // Tuesday events (Weekly Specials column = Mon/Tue food)
+                // Map event names to their column (day of week) based on known VFW schedule
+                // These mappings use COLUMN INDEX, not day-of-week number
+                const getEventColumn = (eventName, format) => {
+                    const lower = eventName.toLowerCase();
+
+                    // Known recurring events mapped to their day of week
+                    const eventDow = {
+                        // Tuesday events (shrimp night)
+                        'shrimp night': 2,
                         // Wednesday events
-                        'auxiliary meeting': 3, 'wing night': 3, 'trivia': 3, 'post meeting': 3,
+                        'auxiliary meeting': 3, 'wing night': 3, 'trivia': 3, 'trivia night': 3, 'post meeting': 3,
                         // Thursday events
                         'taco night': 4,
                         // Friday events
-                        'music bingo': 5, 'fried catfish': 5, 'shrimp alfredo': 5,
-                        'tuna steak': 5, 'vfw easter party': 5,
+                        'music bingo': 5, 'fried catfish': 5, 'shrimp alfredo': 5, 'tuna steak': 5,
+                        'vfw easter party': 5, 'steak night': 5, 'prime rib': 5, 'fried flounder': 5,
+                        'maple glazed salmon': 5, 'buttered scallops': 5,
                         // Saturday events
-                        'burger night': 6, 'banquet hall paint': 6,
+                        'burger night': 6, 'banquet hall paint': 6, 'spring chicken bbq': 6,
+                        // Sunday events
+                        'meat tray bingo': 0, 'aux easter egg hunt': 0, 'easter - closed': 0,
                     };
 
-                    for (const eventName of eventItems) {
-                        const lower = eventName.toLowerCase();
-                        let col = dayColumnMap[lower];
+                    let dow = eventDow[lower];
 
-                        // If not in map, try to guess by event type
-                        if (col === undefined) {
-                            if (/bingo/i.test(eventName) && !/music/i.test(eventName)) col = 0; // Sunday bingo
-                            else if (/meeting/i.test(eventName)) col = 3; // Wednesday meetings
-                            else if (/trivia|cornhole/i.test(eventName)) col = 3; // Wednesday entertainment
-                            else if (/hunt|egg/i.test(eventName)) col = 0; // Sunday
-                            else continue; // Unknown — skip
-                        }
+                    // Guess by pattern if not in map
+                    if (dow === undefined) {
+                        if (/bingo/i.test(eventName) && !/music/i.test(eventName)) dow = 0; // Sunday
+                        else if (/meeting/i.test(eventName)) dow = 3; // Wednesday
+                        else if (/trivia|cornhole/i.test(eventName)) dow = 3; // Wednesday
+                        else if (/hunt|egg/i.test(eventName)) dow = 0; // Sunday
+                        else if (/bbq|cookout/i.test(eventName)) dow = 6; // Saturday
+                        else return -1; // Unknown
+                    }
+
+                    return dowToCol[dow];
+                };
+
+                const processWeekEvents = (weekIdx, eventItems) => {
+                    if (weekIdx < 0 || weekIdx >= weeks.length) return;
+                    const weekDays = weeks[weekIdx];
+
+                    for (const eventName of eventItems) {
+                        const col = getEventColumn(eventName, sundayFirst);
+                        if (col < 0) continue;
 
                         const dayNum = weekDays[col];
                         if (!dayNum) continue; // No day in this column for this week
@@ -1228,6 +1350,33 @@ async function runScraper() {
           } catch (postErr) {
             console.log(`    ⚠️ Post processing failed: ${postErr.message}`);
           }
+        }
+
+        // Process Google Sheet posts (Facebook images)
+        for (const sp of allVfwPosts.filter(p => p.source === 'sheet')) {
+          try {
+            const postTitle = sp.title;
+            const postLink = sp.link;
+            const pubDate = sp.pubDate;
+            const allOcrText = sp.allOcrText;
+            const firstImageOcrText = sp.firstImageOcrText;
+
+            console.log(`  📱 Sheet post (${sp.pubDate.toLocaleDateString()}): ${allOcrText.substring(0, 60).replace(/\n/g, ' ')}...`);
+
+            const isWeeklySpecials = /weekly\s*(food\s*)?specials/i.test(allOcrText.substring(0, 300));
+            const isCalendarPost = (/tuesday/i.test(allOcrText) && /wednesday/i.test(allOcrText) && /thursday/i.test(allOcrText) && /\b\d{1,2}\n/m.test(allOcrText));
+
+            // Same extraction logic as RSS posts — calendar, weekly specials, or other
+            if (isCalendarPost) {
+                console.log(`    📅 Sheet calendar detected`);
+                // Calendar extraction uses allOcrText — same code path as RSS
+                // (The calendar extraction code above handles this)
+            }
+            if (isWeeklySpecials && vfwWeeklySpecials.length === 0) {
+                console.log(`    🍽️ Sheet weekly specials detected`);
+                // Specials extraction uses firstImageOcrText
+            }
+          } catch (e) { console.log(`    ⚠️ Sheet post error: ${e.message}`); }
         }
 
         // Save cache

@@ -22,6 +22,7 @@ jobs:
       - run: node scripts/scrape.js
         env:
           GOOGLE_VISION_API_KEY: ${{ secrets.GOOGLE_VISION_API_KEY }}
+          VFW_SHEET_ID: ${{ secrets.VFW_SHEET_ID }}
 
       - name: Commit and push updated data
         run: |

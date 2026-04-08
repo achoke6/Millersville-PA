@@ -955,13 +955,21 @@ async function runScraper() {
 
                 // Strip logo noise
                 let cleaned = specialsText
-                    .replace(/W+EW\n/gi, '').replace(/\d{3,4}\n/g, '')
-                    .replace(/Years?\s+of\s+Service[^\n]*/gi, '').replace(/1899[-\s]*2024[1]?/gi, '')
+                    .replace(/W+[EF]W\n/gi, '')           // WEW, WWEW, WWFW etc
+                    .replace(/\d{3,4}\n/g, '')             // 125, 1899, 2024
+                    .replace(/Years?\s+of\s+Service[^\n]*/gi, '')
+                    .replace(/1899[-\s]*2024[1]?/gi, '')
                     .replace(/MILLERSVILLE[-\s]*MANOR\s+VFW\s+POST\s+7294/gi, '')
-                    .replace(/WEEKLY\s+SPECIALS/gi, '');
+                    .replace(/WEEKLY\s+SPECIALS/gi, '')
+                    .replace(/VETERAN[S]?\s+[A-Z]+\s+WARS?[^\n]*/gi, '')  // VETERANS REIGN WARS
+                    .replace(/THE\n|UNITED\n|STATES\n/gi, '')               // Seal text
+                    .replace(/A timeless favorite[^\n]*/gi, '')             // Orphan description fragment
+
+                // Handle "FRIDAY ONLY – FOOD NAME" on one line
+                cleaned = cleaned.replace(/FRIDAY ONLY\s*[-–]\s*/gi, 'FRIDAYONLY_FLAG\n');
 
                 const lines = cleaned.split('\n').map(l => l.trim()).filter(l => l.length > 2);
-                const noiseWords = /^(MILLERSVILLE|MANOR|VFW|POST|WEEKLY|SPECIALS|FOOD|WEW|WWEW|YEARS|SERVICE|FROM|FRIDAY ONLY|EASTER|VOLUNTEERS|NEEDED|PAINTING|LUNCH|JUST SHOW)/i;
+                const noiseWords = /^(MILLERSVILLE|MANOR|VFW|POST|WEEKLY|SPECIALS|FOOD|WEW|WWEW|WWFW|YEARS|SERVICE|FROM|FRIDAY ONLY|FRIDAYONLY_FLAG|EASTER|VOLUNTEERS|NEEDED|PAINTING|LUNCH|JUST SHOW|VETERAN|UNITED|STATES|THE)/i;
                 const weeklySpecials = [];
 
                 for (let i = 0; i < lines.length; i++) {
@@ -975,7 +983,8 @@ async function runScraper() {
                         if (/^[A-Z][A-Z\s&'–-]{2,50}$/.test(lines[j]) && !noiseWords.test(lines[j])) break;
                     }
                     if (!price) continue;
-                    let isFridayOnly = i > 0 && /friday only/i.test(lines[i - 1]);
+                    // Check for Friday Only: previous line is the flag, or prev line contains "friday only"
+                    let isFridayOnly = (i > 0 && (/friday only/i.test(lines[i - 1]) || lines[i - 1] === 'FRIDAYONLY_FLAG'));
                     let name = line.replace(/\s+/g, ' ').split(' ').map(w => w.charAt(0) + w.slice(1).toLowerCase()).join(' ').replace(/\s*[-–]\s*$/, '').trim();
                     if (name.length < 4) continue;
                     weeklySpecials.push({ name, price, fridayOnly: isFridayOnly, dateRange });

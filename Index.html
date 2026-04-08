@@ -88,11 +88,29 @@
             <div id="home-news" class="home-scroll-row"></div>
         </div>
 
-        <!-- Partner -->
-        <div class="app-card partner-card" style="margin-top:8px;">
-            <p class="partner-label">Official Partner</p>
-            <h3>The University Store</h3>
-            <a href="https://millersville.store" target="_blank" class="btn btn-gold">Shop Official Gear ➔</a>
+        <!-- Sponsors Banner -->
+        <div class="home-section" style="margin-top:8px;">
+            <div class="home-section-header">
+                <h3 class="home-section-title">⭐ Our Sponsors</h3>
+                <a href="#" onclick="event.preventDefault();switchView('advertise');" class="home-more-link">Become a Sponsor →</a>
+            </div>
+            <div class="sponsors-banner">
+                <a href="https://millersville.store" target="_blank" class="sponsor-card sponsor-homepage">
+                    <span class="sponsor-tier">Homepage Sponsor</span>
+                    <h4 class="sponsor-name">The University Store</h4>
+                    <span class="sponsor-cta">Shop Official Gear ➔</span>
+                </a>
+                <div class="sponsor-card sponsor-featured" onclick="switchView('food')">
+                    <span class="sponsor-tier">Featured Restaurant</span>
+                    <h4 class="sponsor-name">Chick-Fil-A</h4>
+                    <span class="sponsor-cta">View on Food Page ➔</span>
+                </div>
+                <a href="https://www.studentlodginginc.com" target="_blank" class="sponsor-card sponsor-featured">
+                    <span class="sponsor-tier">Featured Housing</span>
+                    <h4 class="sponsor-name">Student Lodging, Inc.</h4>
+                    <span class="sponsor-cta">Brookwood · Healthy Living · College View</span>
+                </a>
+            </div>
         </div>
     </section>
 
@@ -231,99 +249,115 @@
     <section id="view-advertise" class="app-view">
         <div class="adv-hero">
             <h2 class="adv-hero-title">Grow Your Business in Millersville</h2>
-            <p class="adv-hero-sub">Millersville.APP reaches students, families, and residents every day. Put your business in front of the people who matter most.</p>
+            <p class="adv-hero-sub">Reach students, families, and residents where they already look — the community's #1 local hub.</p>
+            <div class="adv-stats">
+                <div class="adv-stat"><span class="adv-stat-num">8</span><span class="adv-stat-label">Sources</span></div>
+                <div class="adv-stat"><span class="adv-stat-num">24/7</span><span class="adv-stat-label">Updated</span></div>
+                <div class="adv-stat"><span class="adv-stat-num">1</span><span class="adv-stat-label">Hub</span></div>
+            </div>
         </div>
 
-        <div class="adv-stats">
-            <div class="adv-stat"><span class="adv-stat-num">8</span><span class="adv-stat-label">Data Sources</span></div>
-            <div class="adv-stat"><span class="adv-stat-num">24/7</span><span class="adv-stat-label">Updated Hourly</span></div>
-            <div class="adv-stat"><span class="adv-stat-num">1</span><span class="adv-stat-label">Community Hub</span></div>
-        </div>
-
-        <h3 class="adv-section-title">Advertising Options</h3>
-
-        <div class="adv-tiers">
-            <div class="adv-tier">
-                <div class="adv-tier-badge">Popular</div>
-                <h4 class="adv-tier-name">🍴 Featured Restaurant</h4>
-                <p class="adv-tier-desc">Stand out on the Food page with a highlighted card, your logo, description, online ordering link, and daily specials section. Pushed to the top of the listing.</p>
-                <ul class="adv-tier-perks">
-                    <li>Gold-highlighted card</li>
-                    <li>Custom description & ordering links</li>
-                    <li>Daily specials displayed automatically</li>
-                    <li>Top placement on Food page</li>
-                </ul>
-            </div>
-
-            <div class="adv-tier">
-                <h4 class="adv-tier-name">📢 Event Promotion</h4>
-                <p class="adv-tier-desc">Promote your event to the entire Millersville community. Your event appears on the Events page and the homepage with your branding.</p>
-                <ul class="adv-tier-perks">
-                    <li>Event card on Events page</li>
-                    <li>Featured on homepage</li>
-                    <li>Link to your ticket/registration page</li>
-                </ul>
-            </div>
-
-            <div class="adv-tier">
-                <h4 class="adv-tier-name">🏠 Featured Housing</h4>
-                <p class="adv-tier-desc">Reach students and families looking for housing near Millersville. Premium placement with full property details.</p>
-                <ul class="adv-tier-perks">
-                    <li>Premium highlighted listing</li>
-                    <li>Property description & photos</li>
-                    <li>Direct link to your listing</li>
-                    <li>Top placement on Housing page</li>
-                </ul>
-            </div>
-
-            <div class="adv-tier">
-                <h4 class="adv-tier-name">🛠️ Featured Service</h4>
-                <p class="adv-tier-desc">Local services — tutoring, auto repair, salons, fitness, and more. Get found by residents who need you.</p>
-                <ul class="adv-tier-perks">
-                    <li>Highlighted card on Services page</li>
-                    <li>Custom description & contact info</li>
-                    <li>Category placement</li>
-                </ul>
-            </div>
-
+        <!-- Two-column tier grid -->
+        <h3 class="adv-section-title">Choose Your Placement</h3>
+        <div class="adv-grid">
             <div class="adv-tier adv-tier-premium">
                 <div class="adv-tier-badge">Premium</div>
-                <h4 class="adv-tier-name">⭐ Homepage Sponsor</h4>
-                <p class="adv-tier-desc">Maximum visibility. Your branded card appears on the homepage — the first thing every visitor sees.</p>
-                <ul class="adv-tier-perks">
-                    <li>Branded card on homepage</li>
-                    <li>Seen by every visitor</li>
-                    <li>Custom call-to-action button</li>
-                    <li>Priority support</li>
-                </ul>
+                <div class="adv-tier-icon">⭐</div>
+                <h4 class="adv-tier-name">Homepage Sponsor</h4>
+                <p class="adv-tier-desc">Your branded card on the homepage — seen by every single visitor.</p>
+                <div class="adv-tier-perks">
+                    <span>✓ Branded homepage card</span>
+                    <span>✓ Custom call-to-action</span>
+                    <span>✓ Maximum visibility</span>
+                    <span>✓ Priority support</span>
+                </div>
+            </div>
+            <div class="adv-tier">
+                <div class="adv-tier-badge" style="background:var(--green);color:white;">Popular</div>
+                <div class="adv-tier-icon">🍴</div>
+                <h4 class="adv-tier-name">Featured Restaurant</h4>
+                <p class="adv-tier-desc">Gold-highlighted card at the top of the Food page with ordering links and daily specials.</p>
+                <div class="adv-tier-perks">
+                    <span>✓ Top placement on Food page</span>
+                    <span>✓ Gold-highlighted card</span>
+                    <span>✓ Ordering links & specials</span>
+                    <span>✓ Sponsor banner on homepage</span>
+                </div>
+            </div>
+            <div class="adv-tier">
+                <div class="adv-tier-icon">🏠</div>
+                <h4 class="adv-tier-name">Featured Housing</h4>
+                <p class="adv-tier-desc">Premium placement on the Housing page reaching students and families actively looking.</p>
+                <div class="adv-tier-perks">
+                    <span>✓ Top placement on Housing page</span>
+                    <span>✓ Premium highlighted listing</span>
+                    <span>✓ Direct link to your property</span>
+                    <span>✓ Sponsor banner on homepage</span>
+                </div>
+            </div>
+            <div class="adv-tier">
+                <div class="adv-tier-icon">📢</div>
+                <h4 class="adv-tier-name">Event Promotion</h4>
+                <p class="adv-tier-desc">Your event featured on the Events page and homepage for the entire community to see.</p>
+                <div class="adv-tier-perks">
+                    <span>✓ Event card on Events page</span>
+                    <span>✓ Featured on homepage</span>
+                    <span>✓ Ticket/registration link</span>
+                </div>
+            </div>
+            <div class="adv-tier">
+                <div class="adv-tier-icon">🛠️</div>
+                <h4 class="adv-tier-name">Featured Service</h4>
+                <p class="adv-tier-desc">Get found by locals who need you — tutoring, auto repair, salons, fitness, and more.</p>
+                <div class="adv-tier-perks">
+                    <span>✓ Highlighted Services listing</span>
+                    <span>✓ Custom description</span>
+                    <span>✓ Category placement</span>
+                </div>
+            </div>
+            <div class="adv-tier adv-tier-cta-card">
+                <div class="adv-tier-icon">💬</div>
+                <h4 class="adv-tier-name">Not sure what fits?</h4>
+                <p class="adv-tier-desc">We'll help you find the right placement for your business and budget.</p>
+                <a href="mailto:advertise@millersville.app" class="btn btn-gold" style="margin-top:12px;display:block;text-align:center;">Let's Talk →</a>
             </div>
         </div>
 
+        <!-- CTA -->
         <div class="adv-cta">
             <h3 class="adv-cta-title">Ready to get started?</h3>
             <p class="adv-cta-sub">Tell us about your business and we'll get back to you within 24 hours.</p>
             <a href="https://forms.gle/YOUR_FORM_ID_HERE" target="_blank" class="btn btn-gold btn-lg">Submit Your Business →</a>
-            <p class="adv-cta-note">Or email us directly at <a href="mailto:advertise@millersville.app">advertise@millersville.app</a></p>
+            <p class="adv-cta-note">Or email us at <a href="mailto:advertise@millersville.app">advertise@millersville.app</a></p>
         </div>
 
-        <div class="adv-faq">
-            <h3 class="adv-section-title">Common Questions</h3>
-            <div class="adv-faq-item">
-                <h4>How does pricing work?</h4>
-                <p>We offer flexible monthly plans tailored to your business size and goals. Contact us for a custom quote.</p>
-            </div>
-            <div class="adv-faq-item">
-                <h4>Can I submit a free event?</h4>
-                <p>Community events from established organizations are included at no cost. Business promotions and commercial events are part of our paid options.</p>
-            </div>
-            <div class="adv-faq-item">
-                <h4>How quickly will my listing go live?</h4>
-                <p>Most listings go live within 24 hours of approval. Featured placements update automatically every hour.</p>
-            </div>
-            <div class="adv-faq-item">
-                <h4>I run a restaurant in Millersville but I'm not listed. Can I be added?</h4>
-                <p>Absolutely! Submit your business details and we'll add you to the Food page. Featured placement with specials and ordering links is available as an upgrade.</p>
-            </div>
+        <!-- FAQ Accordions -->
+        <h3 class="adv-section-title">Common Questions</h3>
+        <div class="adv-accordions">
+            <details class="adv-accordion">
+                <summary>How does pricing work?</summary>
+                <p>We offer flexible monthly plans tailored to your business size and goals. Contact us for a custom quote — no commitment required.</p>
+            </details>
+            <details class="adv-accordion">
+                <summary>Can I submit a free community event?</summary>
+                <p>Yes! Community events from established local organizations are included at no cost. Business promotions and commercial events are part of our paid options.</p>
+            </details>
+            <details class="adv-accordion">
+                <summary>How quickly will my listing go live?</summary>
+                <p>Most listings go live within 24 hours of approval. Featured placements update automatically every hour through our data pipeline.</p>
+            </details>
+            <details class="adv-accordion">
+                <summary>I'm a restaurant but I'm not listed yet. Can I be added?</summary>
+                <p>Absolutely! Submit your details and we'll add you to the Food page. Upgrade to Featured for gold-highlighted placement with ordering links and daily specials.</p>
+            </details>
+            <details class="adv-accordion">
+                <summary>What makes this different from Facebook or Google ads?</summary>
+                <p>Your listing lives where Millersville residents already go for local info — events, games, food, and news. It's hyper-local, always visible, and not buried in a social media feed.</p>
+            </details>
+            <details class="adv-accordion">
+                <summary>Can I update my listing or specials myself?</summary>
+                <p>We handle all updates for you. Just send us the changes and we'll have them live within hours. Restaurant specials can be updated weekly.</p>
+            </details>
         </div>
     </section>
 </main>
@@ -919,14 +953,19 @@ async function loadDining(){try{
     const c=document.getElementById('food-container');
     const dayName = new Date().toLocaleDateString('en-US',{weekday:'long'});
 
+    // Sort featured restaurants to top
+    data.sort((a,b) => (b.featured===true) - (a.featured===true));
+
     c.innerHTML=data.map(p=>{
         let b='';
-        if(p.status==='App Required')b=`<div style="display:flex;gap:8px;"><a href="${p.iosLink||'#'}" target="_blank" class="btn btn-sm btn-outline" style="flex:1;text-align:center;">🍎 iOS</a><a href="${p.link||'#'}" target="_blank" class="btn btn-sm btn-outline" style="flex:1;text-align:center;">🤖 Android</a></div>`;
+        if(p.status==='App Required')b=`<div style="display:flex;gap:8px;"><a href="${p.iosLink||'#'}" target="_blank" class="btn btn-sm ${p.featured?'btn-dark':'btn-outline'}" style="flex:1;text-align:center;">🍎 iOS</a><a href="${p.link||'#'}" target="_blank" class="btn btn-sm ${p.featured?'btn-dark':'btn-outline'}" style="flex:1;text-align:center;">🤖 Android</a></div>`;
         else if(p.status==='Order Online')b=`<a href="${p.link}" target="_blank" class="btn btn-sm btn-ticket" style="display:block;text-align:center;">🛒 Order Online</a>`;
         else b=`<a href="${p.link}" target="_blank" class="btn btn-sm btn-outline" style="display:block;text-align:center;">📄 View Menu</a>`;
 
         // Members Only badge for VFW
         const membersBadge = p.status==='Members Only' ? '<span class="badge-members-only">Members Only</span>' : '';
+        // Featured badge
+        const featuredBadge = p.featured ? '<span class="badge badge-premium">Featured</span>' : '';
 
         const addr=p.address?`<p class="card-meta" style="margin-bottom:4px;">📍 ${p.address}</p>`:'';
 
@@ -935,19 +974,9 @@ async function loadDining(){try{
         const sp = specials[p.name];
         if(sp){
             let items=[];
-
-            // Daily specials (House of Pizza style)
-            if(sp.daily && sp.daily[dayName]){
-                items = sp.daily[dayName];
-            }
-
-            // VFW: weekly specials + today's recurring
-            if(sp.weekly && sp.weekly.length > 0){
-                items = [...sp.weekly];
-            }
-            if(sp.recurring && sp.recurring[dayName]){
-                items.push(`🔁 ${sp.recurring[dayName]}`);
-            }
+            if(sp.daily && sp.daily[dayName]) items = sp.daily[dayName];
+            if(sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
+            if(sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
 
             if(items.length > 0){
                 const note = sp.note ? `<p style="font-size:0.7rem;color:var(--text-muted);margin-bottom:4px;font-style:italic;">${sp.note}</p>` : '';
@@ -956,7 +985,7 @@ async function loadDining(){try{
             }
         }
 
-        return `<div class="app-card" style="position:relative;">${membersBadge}<h3 class="card-title">${p.name}</h3><p class="card-meta" style="margin-bottom:4px;">🍴 ${p.cuisine}</p>${addr}<p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:8px;">${p.description||''}</p>${specialsHtml}<div style="margin-top:auto;">${b}</div></div>`;
+        return `<div class="app-card ${p.featured?'card-featured':''}" style="position:relative;">${membersBadge}${featuredBadge}<h3 class="card-title">${p.name}</h3><p class="card-meta" style="margin-bottom:4px;">🍴 ${p.cuisine}</p>${addr}<p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:8px;">${p.description||''}</p>${specialsHtml}<div style="margin-top:auto;">${b}</div></div>`;
     }).join('');
 }catch(e){console.error('Dining error:',e);}}
 async function loadHousing(){try{const data=await(await fetch('housing.json')).json();const c=document.getElementById('housing-container');data.sort((a,b)=>(b.featured===true)-(a.featured===true));c.innerHTML=data.map(p=>{const badge=p.featured?'<span class="badge badge-premium">Premium</span>':'';return `<div class="app-card ${p.featured?'card-featured':''}">${badge}<h3 class="card-title">${p.name}</h3><p class="card-meta" style="font-weight:bold;text-transform:uppercase;margin-bottom:8px;">${p.landlord}</p><p style="font-size:0.9rem;margin-bottom:16px;">${p.description}</p><div class="card-footer"><a href="${p.link}" target="_blank" class="btn btn-sm ${p.featured?'btn-dark':'btn-outline'}" style="display:block;text-align:center;">View Property</a></div></div>`;}).join('');}catch(e){}}

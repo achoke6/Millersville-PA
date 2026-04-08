@@ -1087,7 +1087,7 @@ async function runScraper() {
     const familyKeywords = /\bfamily\b|families|\bkids?\b|\bchild(ren)?\b|\byouth\b|\ball ages\b|\bopen house\b|\bparade\b|\bfestival\b|\bfun run\b|\begg hunt\b|\btrick.or.treat\b|\bstory ?time\b/i;
     const notFamilyKeywords = /\brehersal\b|\brehearsal\b|\bpractice\b|\btraining\b|\bsap meeting\b|\bstaff\b|\bfaculty\b|\bin-service\b|\bboard\b|\bpto\b/i;
     const notFamilyMUKeywords = /\bjob\b|\binternship\b|\bcareer fair\b|\bemployment\b|\brecruitment\b|\bhiring\b|\bresume\b/i;
-    const familyPMKeywords = /\bconcert\b|\bensemble\b|\bshowcase\b|\bspring show\b|\bmusical\b|\bplay\b|\btalent show\b|\bassembly\b|\bbook fair\b|\bfood fair\b|\bpicture\b|\bspirit day\b|\breward day\b|\bfield day\b/i;
+    const familyPMKeywords = /\bconcert\b|\bensemble\b|\bshowcase\b|\bspring show\b|\bmusical\b|\bplay\b|\btalent show\b|\bassembly\b|\bbook fair\b|\bfood fair\b|\bpicture\b/i;
     let famCount = 0;
     events.forEach(e => {
         const tags = e.tags || [];
@@ -1127,9 +1127,9 @@ async function runScraper() {
             else if (familyPMKeywords.test(titleLower)) {
                 isFamilyFriendly = true;
             }
-            // PM Spirit/Fun Days → family friendly
+            // PM Spirit/Fun Days → NOT family friendly (student-only events)
             else if (tags.includes('Spirit/Fun Days')) {
-                isFamilyFriendly = true;
+                isFamilyFriendly = false;
             }
             // Default PM: not family friendly
             else {

@@ -12,6 +12,8 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -28,13 +30,16 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add *.json vfw-cache.json
+          git add *.json vfw-cache.json 2>/dev/null || true
           git diff --staged --quiet && echo "No changes to commit" || {
-            git stash --include-untracked
-            git pull --rebase origin main
-            git stash pop
-            git add *.json vfw-cache.json
             git commit -m "System: Auto-syncing Community Data"
+            git pull --rebase origin main --strategy-option theirs || {
+              echo "Rebase conflict — resolving with ours (freshly scraped data wins)"
+              git rebase --abort 2>/dev/null || true
+              git pull origin main --no-rebase --strategy-option theirs
+              git add *.json vfw-cache.json 2>/dev/null || true
+              git commit -m "System: Auto-syncing Community Data (merge)" --allow-empty
+            }
             git push origin main
           }
 

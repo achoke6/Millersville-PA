@@ -734,644 +734,313 @@ async function runScraper() {
         console.log(`✅ Borough Calendar: ${boroughCount} events (${boroughRecurring} from recurring)`);
     } catch (e) { console.error("❌ Borough Calendar error:", e.message); }
 
-    // ===== 7. VFW POST 7294 EVENTS (Google Cloud Vision OCR + cache) =====
+
+    // ===== 7. VFW POST 7294 (Google Sheet + Vision OCR) =====
     try {
-        console.log("📡 Fetching VFW Post 7294 blog + Google Sheet images for OCR...");
+        console.log("📡 Fetching VFW Post 7294 images from Google Sheet...");
         const VISION_API_KEY = process.env.GOOGLE_VISION_API_KEY;
         if (!VISION_API_KEY) throw new Error('GOOGLE_VISION_API_KEY not set');
 
-        // Google Sheet integration for Facebook image URLs
         const VFW_SHEET_ID = process.env.VFW_SHEET_ID || '';
-        let sheetImageUrls = [];
+        const cachePath = path.join(__dirname, '../vfw-cache.json');
+        let vfwCache = {};
+        try {
+            vfwCache = JSON.parse(fs.readFileSync(cachePath, 'utf8'));
+            // Remove empty cache entries from failed API calls
+            for (const [key, val] of Object.entries(vfwCache)) {
+                if (!val || val.trim().length === 0) delete vfwCache[key];
+            }
+        } catch (e) { /* no cache yet */ }
+
+        let vfwEventCount = 0, vfwApiCalls = 0;
+        let vfwWeeklySpecials = [], vfwSpecialsDateRange = '';
+
+        const months = {january:0,february:1,march:2,april:3,may:4,june:5,july:6,august:7,september:8,october:9,november:10,december:11};
+        const monthPattern = Object.keys(months).join('|');
+
+        // Fetch image URLs from Google Sheet
+        let sheetImages = [];
         if (VFW_SHEET_ID) {
             try {
                 const sheetUrl = `https://docs.google.com/spreadsheets/d/${VFW_SHEET_ID}/gviz/tq?tqx=out:csv`;
                 const sheetRes = await fetch(sheetUrl);
                 if (sheetRes.ok) {
                     const csvText = await sheetRes.text();
-                    const rows = csvText.split('\n').slice(1); // Skip header
-                    for (const row of rows) {
-                        // Parse CSV: "Image URL","Post Date","Processed"
+                    for (const row of csvText.split('\n').slice(1)) {
                         const cols = row.match(/"([^"]*)"/g);
-                        if (!cols || cols.length < 2) continue;
+                        if (!cols || cols.length < 1) continue;
                         const imgUrl = cols[0].replace(/"/g, '').trim();
-                        const postDate = cols[1].replace(/"/g, '').trim();
-                        const processed = cols[2] ? cols[2].replace(/"/g, '').trim() : '';
+                        const postDate = cols[1] ? cols[1].replace(/"/g, '').trim() : '';
                         if (imgUrl && /^https?:\/\//.test(imgUrl)) {
-                            sheetImageUrls.push({ url: imgUrl, date: postDate });
+                            sheetImages.push({ url: imgUrl, date: postDate });
                         }
                     }
-                    console.log(`  📋 Google Sheet: ${sheetImageUrls.length} image URLs found`);
+                    console.log(`  📋 Google Sheet: ${sheetImages.length} image(s)`);
                 }
-            } catch (sheetErr) {
-                console.log(`  ⚠️ Google Sheet fetch failed: ${sheetErr.message}`);
-            }
+            } catch (e) { console.log(`  ⚠️ Sheet error: ${e.message}`); }
+        } else {
+            console.log(`  ⚠️ VFW_SHEET_ID not set — skipping`);
         }
 
-        // Load cache of previously OCR'd images
-        const cachePath = path.join(__dirname, '../vfw-cache.json');
-        let vfwCache = {};
-        try {
-            vfwCache = JSON.parse(fs.readFileSync(cachePath, 'utf8'));
-            // Remove empty cache entries (from failed API calls)
-            const beforeCount = Object.keys(vfwCache).length;
-            for (const [key, val] of Object.entries(vfwCache)) {
-                if (!val || val.trim().length === 0) delete vfwCache[key];
-            }
-            const cleared = beforeCount - Object.keys(vfwCache).length;
-            if (cleared > 0) console.log(`  🗑️ Cleared ${cleared} empty cache entries`);
-        } catch (e) { /* no cache yet */ }
-
-        const vfwXml = await (await fetch('https://www.vfwpost7294.org/feed/', { headers: baseHeaders })).text();
-        const vfwItems = vfwXml.match(/<item>([\s\S]*?)<\/item>/g) || [];
-        let vfwEventCount = 0;
-        let vfwApiCalls = 0;
-        let vfwWeeklySpecials = [];
-        let vfwSpecialsDateRange = '';
-
-        const months = { january:0, february:1, march:2, april:3, may:4, june:5, july:6, august:7, september:8, october:9, november:10, december:11 };
-        const monthPattern = Object.keys(months).join('|');
-
-        // Process all VFW image sources: Google Sheet (Facebook) + WordPress RSS
-        // Collect all "posts" to process from both sources
-        const allVfwPosts = [];
-
-        // Add Google Sheet images as posts
-        for (const si of sheetImageUrls) {
-            const ocrText = vfwCache[si.url] || '';
-            if (ocrText) {
-                allVfwPosts.push({
-                    title: 'Facebook Post',
-                    link: 'https://www.facebook.com/VFWPost7294',
-                    pubDate: si.date ? new Date(si.date) : new Date(),
-                    allOcrText: ocrText,
-                    firstImageOcrText: ocrText,
-                    source: 'sheet'
-                });
-            } else {
-                // Need to OCR this image
-                try {
-                    const imgRes = await fetch(si.url, { headers: baseHeaders, signal: AbortSignal.timeout(15000) });
-                    if (!imgRes.ok) continue;
-                    const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
-                    if (imgBuffer.length < 1000) continue;
-                    const base64Img = imgBuffer.toString('base64');
-                    const visionRes = await fetch(`https://vision.googleapis.com/v1/images:annotate?key=${VISION_API_KEY}`, {
-                        method: 'POST', headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ requests: [{ image: { content: base64Img }, features: [{ type: 'TEXT_DETECTION', maxResults: 1 }] }] })
-                    });
-                    if (!visionRes.ok) continue;
-                    const visionData = await visionRes.json();
-                    const ocrResult = visionData.responses?.[0]?.fullTextAnnotation?.text || '';
-                    vfwApiCalls++;
-                    if (ocrResult.trim().length > 10) {
-                        vfwCache[si.url] = ocrResult;
-                        console.log(`    🔍 Sheet OCR (${ocrResult.trim().length} chars): ${ocrResult.trim().substring(0, 80)}...`);
-                        allVfwPosts.push({
-                            title: 'Facebook Post', link: 'https://www.facebook.com/VFWPost7294',
-                            pubDate: si.date ? new Date(si.date) : new Date(),
-                            allOcrText: ocrResult, firstImageOcrText: ocrResult, source: 'sheet'
-                        });
-                    }
-                } catch (e) { console.log(`    ⚠️ Sheet image error: ${e.message}`); }
-            }
-        }
-
-        // Add RSS posts (processed below with image OCR)
-        for (const item of vfwItems) {
+        // OCR each image and extract events/specials
+        for (const si of sheetImages) {
           try {
-            const titleMatch = item.match(/<title>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/title>/i);
-            const linkMatch = item.match(/<link>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/link>/i);
-            const pubMatch = item.match(/<pubDate>([\s\S]*?)<\/pubDate>/i);
-            const contentMatch = item.match(/<content:encoded>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/content:encoded>/i);
-            const descMatch = item.match(/<description>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/description>/i);
+            // Get OCR text (from cache or Vision API)
+            let ocrText = vfwCache[si.url] || '';
+            if (!ocrText) {
+                const imgRes = await fetch(si.url, { headers: baseHeaders, signal: AbortSignal.timeout(15000) });
+                if (!imgRes.ok) { console.log(`    ⚠️ Download failed: ${imgRes.status}`); continue; }
+                const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
+                if (imgBuffer.length < 1000) { console.log(`    ⚠️ Tiny image, skipping`); continue; }
 
-            if (!titleMatch || !linkMatch) continue;
-
-            const postTitle = titleMatch[1].replace(/&#\d+;/g, '').replace(/&amp;/g, '&').trim();
-            const postLink = linkMatch[1].trim();
-            const pubDate = pubMatch ? new Date(pubMatch[1]) : new Date();
-            const htmlContent = (contentMatch ? contentMatch[1] : '') || (descMatch ? descMatch[1] : '');
-
-            // Extract image URLs from the post content
-            const imgRegex = /<img[^>]+src=["']([^"']+)["'][^>]*>/gi;
-            let imgMatch;
-            const imageUrls = [];
-            while ((imgMatch = imgRegex.exec(htmlContent)) !== null) {
-                const url = imgMatch[1].replace(/&amp;/g, '&');
-                const widthMatch = imgMatch[0].match(/width=["']?(\d+)/i);
-                const w = widthMatch ? parseInt(widthMatch[1]) : 999;
-                if (w < 100) continue;
-                if (/gravatar|emoji|smilies|wp-includes|pixel|tracking/i.test(url)) continue;
-                imageUrls.push(url);
+                const visionRes = await fetch(`https://vision.googleapis.com/v1/images:annotate?key=${VISION_API_KEY}`, {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ requests: [{ image: { content: imgBuffer.toString('base64') }, features: [{ type: 'TEXT_DETECTION', maxResults: 1 }] }] })
+                });
+                if (!visionRes.ok) { const err = await visionRes.text(); console.log(`    ⚠️ Vision error: ${err.substring(0, 120)}`); continue; }
+                ocrText = (await visionRes.json()).responses?.[0]?.fullTextAnnotation?.text || '';
+                vfwApiCalls++;
+                if (ocrText.trim().length > 10) {
+                    vfwCache[si.url] = ocrText;
+                } else { console.log(`    ⚠️ No text detected`); continue; }
             }
 
-            if (imageUrls.length === 0) continue;
-            console.log(`  📰 Post: "${postTitle}" — ${imageUrls.length} image(s)`);
+            // Log OCR
+            console.log(`  📱 Image (${si.date || 'no date'}): ${ocrText.trim().length} chars`);
+            console.log(`    ────────────────────────────────`);
+            ocrText.trim().split('\n').forEach(l => { if (l.trim()) console.log(`    │ ${l.trim()}`); });
+            console.log(`    ────────────────────────────────`);
 
-            // Combine OCR text from all images
-            let allOcrText = postTitle + '\n';
-            let firstImageOcrText = ''; // Only first image OCR for food specials extraction
-            let imageIndex = 0;
-            // Also grab body text
-            const bodyText = htmlContent.replace(/<[^>]+>/g, ' ').replace(/&amp;/g, '&').replace(/&nbsp;/g, ' ').replace(/&#\d+;/g, ' ').replace(/\s+/g, ' ').trim();
-            allOcrText += bodyText + '\n';
+            const allOcrText = ocrText;
+            const pubDate = si.date ? new Date(si.date) : new Date();
+            const postLink = 'https://www.facebook.com/VFWPost7294';
 
-            for (const imgUrl of imageUrls) {
-                try {
-                    // Check cache first
-                    if (vfwCache[imgUrl]) {
-                        console.log(`    📋 Cached OCR (${vfwCache[imgUrl].length} chars):`);
-                        console.log(`    ────────────────────────────────`);
-                        vfwCache[imgUrl].trim().split('\n').forEach(line => {
-                            if (line.trim()) console.log(`    │ ${line.trim()}`);
-                        });
-                        console.log(`    ────────────────────────────────`);
-                        allOcrText += '\n' + vfwCache[imgUrl];
-                        if (imageIndex === 0) firstImageOcrText = vfwCache[imgUrl];
-                        imageIndex++;
-                        continue;
-                    }
-
-                    // Download image
-                    const imgRes = await fetch(imgUrl, { headers: baseHeaders, signal: AbortSignal.timeout(15000) });
-                    if (!imgRes.ok) continue;
-                    const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
-
-                    // Validate image
-                    if (imgBuffer.length < 1000) { console.log(`    ⚠️ Skipping tiny image`); continue; }
-                    const hdr = imgBuffer.slice(0, 4);
-                    const isImg = (hdr[0]===0xFF&&hdr[1]===0xD8) || (hdr[0]===0x89&&hdr[1]===0x50) || (hdr[0]===0x47&&hdr[1]===0x49) || (hdr[0]===0x52&&hdr[1]===0x49);
-                    if (!isImg) { console.log(`    ⚠️ Skipping non-image file`); continue; }
-
-                    // Google Cloud Vision API call
-                    const base64Img = imgBuffer.toString('base64');
-                    const visionRes = await fetch(`https://vision.googleapis.com/v1/images:annotate?key=${VISION_API_KEY}`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            requests: [{
-                                image: { content: base64Img },
-                                features: [{ type: 'TEXT_DETECTION', maxResults: 1 }]
-                            }]
-                        })
-                    });
-
-                    if (!visionRes.ok) {
-                        const errBody = await visionRes.text();
-                        console.log(`    ⚠️ Vision API error ${visionRes.status}: ${errBody.substring(0, 200)}`);
-                        continue;
-                    }
-
-                    const visionData = await visionRes.json();
-                    const ocrText = visionData.responses?.[0]?.fullTextAnnotation?.text || '';
-                    vfwApiCalls++;
-
-                    if (ocrText.trim().length > 10) {
-                        console.log(`    🔍 Vision OCR (${ocrText.trim().length} chars):`);
-                        console.log(`    ────────────────────────────────`);
-                        ocrText.trim().split('\n').forEach(line => {
-                            if (line.trim()) console.log(`    │ ${line.trim()}`);
-                        });
-                        console.log(`    ────────────────────────────────`);
-                        allOcrText += '\n' + ocrText;
-                        if (imageIndex === 0) firstImageOcrText = ocrText;
-                        imageIndex++;
-                        // Cache the result
-                        vfwCache[imgUrl] = ocrText;
-                    } else {
-                        console.log(`    ⚠️ No text detected in image`);
-                        vfwCache[imgUrl] = ''; // Cache empty result too
-                    }
-                } catch (imgErr) {
-                    console.log(`    ⚠️ Image failed: ${imgErr.message}`);
-                }
-            }
-
-            // ===== Extract events from combined OCR + body text =====
-
-            // Skip "WEEKLY FOOD SPECIALS" and "WEEKLY SPECIALS" posts — these are menus, not events
-            const isWeeklySpecials = /weekly\s*(food\s*)?specials/i.test(postTitle) || /weekly\s*specials/i.test(allOcrText.substring(0, 200));
-
-            // Regular recurring food nights to SKIP (not special events)
-            const recurringFoodNights = /^(wing night|taco night|burger night|shrimp night|ham steak|roast beef wrap|ham slice|turkey pesto)$/i;
-            // Regular recurring events that ARE worth listing
-            const recurringEvents = /bingo|trivia|cornhole|karaoke|dart|pool\s+league/i;
-            // Special one-off events to ALWAYS capture
+            // Classification helpers
+            const recurringFoodNights = /^(wing night|taco night|burger night|shrimp night|ham slice|turkey pesto)$/i;
             const specialEvents = /easter|christmas|holiday|carnival|fireworks|fundraiser|dance|cook.?off|bbq|cookout|picnic|gun\s+bingo|steak\s+night|paint|volunteer|meeting|memorial|veteran|spring chicken/i;
-            // Food items from weekly specials posts (not events)
-            const foodItems = /fish\s+sandwich|beef\s+tips|meatloaf|shepherd'?s?\s+pie|fried\s+catfish|shrimp\s+alfredo|tuna\s+steak|cod|brioche|fettuccine|burger.*fries|mashed\s+potato|chicken and waffles|tuna melt|bbq ribs|nashville hot|shrimp tacos|bbq pork|chicken.*bacon.*ranch|chicken ceasar|maple glazed|prime rib|fried flounder|buttered scallops/i;
-            // OCR noise to ignore
+            const recurringEvents = /bingo|trivia|cornhole|karaoke/i;
+            const foodItems = /fish\s+sandwich|beef\s+tips|meatloaf|shepherd|fried\s+catfish|shrimp\s+alfredo|tuna\s+steak|brioche|fettuccine|mashed\s+potato|chicken and waffles|tuna melt|bbq ribs|nashville hot|shrimp tacos|bbq pork|chicken.*bacon.*ranch|chicken ceasar|maple glazed|prime rib|fried flounder|buttered scallops|pork sandwich/i;
             const ocrNoise = /years?\s+of\s+service|1899|WEW|WWEW/i;
-
             const foundEvents = new Set();
 
-            // Detect if this is a CALENDAR post (has day-of-week headers + day numbers)
-            const isCalendarPost = /\bcalendar\b/i.test(postTitle) ||
-                (/sunday/i.test(allOcrText) && /monday|tuesday/i.test(allOcrText) && /wednesday/i.test(allOcrText) && /\b\d{1,2}\n/m.test(allOcrText));
+            // ===== DETECT POST TYPE =====
+            const isCalendar = (/tuesday/i.test(allOcrText) && /wednesday/i.test(allOcrText) && /thursday/i.test(allOcrText) && /\b\d{1,2}\n/m.test(allOcrText));
+            const isWeeklySpecials = /weekly\s*(food\s*)?specials/i.test(allOcrText.substring(0, 300));
 
-            if (isCalendarPost) {
-                console.log(`    📅 Calendar post detected — extracting events by grid position`);
-
-                // Determine which month this calendar is for
+            // ===== CALENDAR POST =====
+            if (isCalendar) {
+                console.log(`    📅 Calendar image detected`);
                 const calMonthMatch = allOcrText.match(new RegExp(`\\b(${monthPattern})\\b`, 'i'));
-                if (!calMonthMatch) { console.log(`    ⚠️ Could not determine month`); continue; }
+                if (!calMonthMatch) { console.log(`    ⚠️ No month found`); continue; }
                 const calMonth = months[calMonthMatch[1].toLowerCase()];
                 let calYear = pubDate.getFullYear();
                 if (calMonth < pubDate.getMonth() - 1) calYear++;
-
-                // Build the actual calendar grid for this month
-                // Figure out what day of week the 1st falls on (0=Sun, 6=Sat)
-                const firstDayOfWeek = new Date(calYear, calMonth, 1).getDay();
                 const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
 
-                // Detect column order from OCR header
-                // Old format (March): Sunday, Weekly Specials, Tuesday, Wednesday, Thursday, Friday, Saturday
-                //   columns: [Sun=0, Mon/Specials=1, Tue=2, Wed=3, Thu=4, Fri=5, Sat=6]
-                // New format (April+): Weekly Specials, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
-                //   columns: [Mon/Specials=0, Tue=1, Wed=2, Thu=3, Fri=4, Sat=5, Sun=6]
+                // Detect format: old (Sunday first) vs new (Tuesday first)
+                const hdr = allOcrText.substring(0, 400).toLowerCase();
+                const sundayFirst = hdr.indexOf('sunday') >= 0 && hdr.indexOf('sunday') < hdr.indexOf('tuesday');
+                const dowToCol = sundayFirst
+                    ? { 0:0, 1:1, 2:2, 3:3, 4:4, 5:5, 6:6 }
+                    : { 1:0, 2:1, 3:2, 4:3, 5:4, 6:5, 0:6 };
+                console.log(`    📅 Format: ${sundayFirst ? 'OLD (Sun first)' : 'NEW (Tue first, Sun last)'}`);
 
-                const headerText = allOcrText.substring(0, 400).toLowerCase();
-                const sundayFirst = headerText.indexOf('sunday') < headerText.indexOf('tuesday') && headerText.indexOf('sunday') >= 0;
-
-                // Map day-of-week (0=Sun...6=Sat) to column index based on format
-                let dowToCol;
-                if (sundayFirst) {
-                    // Old format: Sun, Mon(specials), Tue, Wed, Thu, Fri, Sat
-                    dowToCol = { 0: 0, 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6 };
-                    console.log(`    📅 Detected OLD format (Sunday first)`);
-                } else {
-                    // New format: Mon(specials), Tue, Wed, Thu, Fri, Sat, Sun
-                    dowToCol = { 1: 0, 2: 1, 3: 2, 4: 3, 5: 4, 6: 5, 0: 6 };
-                    console.log(`    📅 Detected NEW format (Tuesday first, Sunday last)`);
-                }
-
-                // Build weeks array using the column mapping
-                // Each week is an array of 7 slots matching the calendar's column order
+                // Build weeks
                 const weeks = [];
                 let week = new Array(7).fill(0);
                 for (let d = 1; d <= daysInMonth; d++) {
-                    const dow = new Date(calYear, calMonth, d).getDay(); // 0=Sun...6=Sat
-                    const col = dowToCol[dow];
-                    week[col] = d;
-                    // Week ends at the last column (Sat for old format, Sun for new)
-                    const lastCol = sundayFirst ? 6 : 6; // Both end at col 6
-                    if (col === lastCol || d === daysInMonth) {
+                    const dow = new Date(calYear, calMonth, d).getDay();
+                    week[dowToCol[dow]] = d;
+                    if (dowToCol[dow] === 6 || d === daysInMonth) {
                         weeks.push([...week]);
                         week = new Array(7).fill(0);
                     }
                 }
 
-                console.log(`    📅 ${weeks.length} weeks built for ${calMonthMatch[1]} ${calYear}`);
-
-                // Parse OCR into row blocks
-                const lines = allOcrText.split('\n').map(l => l.trim()).filter(l => l);
-                let currentWeekIdx = -1;
-                let eventLines = [];
-
-                // Map event names to their column (day of week) based on known VFW schedule
-                // These mappings use COLUMN INDEX, not day-of-week number
-                const getEventColumn = (eventName, format) => {
-                    const lower = eventName.toLowerCase();
-
-                    // Known recurring events mapped to their day of week
-                    const eventDow = {
-                        // Tuesday events (shrimp night)
-                        'shrimp night': 2,
-                        // Wednesday events
-                        'auxiliary meeting': 3, 'wing night': 3, 'trivia': 3, 'trivia night': 3, 'post meeting': 3,
-                        // Thursday events
-                        'taco night': 4,
-                        // Friday events
-                        'music bingo': 5, 'fried catfish': 5, 'shrimp alfredo': 5, 'tuna steak': 5,
-                        'vfw easter party': 5, 'steak night': 5, 'prime rib': 5, 'fried flounder': 5,
-                        'maple glazed salmon': 5, 'buttered scallops': 5,
-                        // Saturday events
-                        'burger night': 6, 'banquet hall paint': 6, 'spring chicken bbq': 6,
-                        // Sunday events
-                        'meat tray bingo': 0, 'aux easter egg hunt': 0, 'easter - closed': 0,
-                    };
-
+                // Event-to-day-of-week mapping
+                const eventDow = {
+                    'shrimp night':2, 'auxiliary meeting':3, 'wing night':3, 'trivia':3,
+                    'trivia night':3, 'post meeting':3, 'taco night':4,
+                    'music bingo':5, 'fried catfish':5, 'shrimp alfredo':5, 'tuna steak':5,
+                    'vfw easter party':5, 'steak night':5, 'prime rib':5, 'fried flounder':5,
+                    'maple glazed salmon':5, 'buttered scallops':5,
+                    'burger night':6, 'banquet hall paint':6, 'spring chicken bbq':6,
+                    'meat tray bingo':0, 'aux easter egg hunt':0, 'easter - closed':0,
+                };
+                const guessCol = (name) => {
+                    const lower = name.toLowerCase();
                     let dow = eventDow[lower];
-
-                    // Guess by pattern if not in map
                     if (dow === undefined) {
-                        if (/bingo/i.test(eventName) && !/music/i.test(eventName)) dow = 0; // Sunday
-                        else if (/meeting/i.test(eventName)) dow = 3; // Wednesday
-                        else if (/trivia|cornhole/i.test(eventName)) dow = 3; // Wednesday
-                        else if (/hunt|egg/i.test(eventName)) dow = 0; // Sunday
-                        else if (/bbq|cookout/i.test(eventName)) dow = 6; // Saturday
-                        else return -1; // Unknown
+                        if (/bingo/i.test(name) && !/music/i.test(name)) dow = 0;
+                        else if (/meeting/i.test(name)) dow = 3;
+                        else if (/trivia|cornhole/i.test(name)) dow = 3;
+                        else if (/hunt|egg/i.test(name)) dow = 0;
+                        else if (/bbq|cookout/i.test(name)) dow = 6;
+                        else return -1;
                     }
-
                     return dowToCol[dow];
                 };
 
-                const processWeekEvents = (weekIdx, eventItems) => {
-                    if (weekIdx < 0 || weekIdx >= weeks.length) return;
-                    const weekDays = weeks[weekIdx];
+                // Parse OCR lines into week blocks
+                const lines = allOcrText.split('\n').map(l => l.trim()).filter(l => l);
+                let curWeek = -1;
+                let pending = [];
+                let seenNum = false;
 
-                    for (const eventName of eventItems) {
-                        const col = getEventColumn(eventName, sundayFirst);
+                const processWeek = (wIdx, items) => {
+                    if (wIdx < 0 || wIdx >= weeks.length) return;
+                    for (const evName of items) {
+                        const col = guessCol(evName);
                         if (col < 0) continue;
-
-                        const dayNum = weekDays[col];
-                        if (!dayNum) continue; // No day in this column for this week
-
-                        // Use noon Eastern (16:00 UTC or 17:00 UTC depending on DST) to prevent date shift
-                        // Setting to 12:00 noon UTC-4 = 16:00 UTC ensures the date displays correctly in Eastern
-                        const eventDate = new Date(Date.UTC(calYear, calMonth, dayNum, 16, 0, 0));
-                        if (isNaN(eventDate.getTime())) continue;
-                        if (eventDate < pastDate || eventDate >= futureDate) continue;
-                        if (eventDate.getDay() === 1) continue; // Monday = closed
-
-                        const dateKey = eventDate.toISOString().substring(0, 10);
-
-                        // Skip regular recurring food nights
-                        if (recurringFoodNights.test(eventName)) continue;
-                        if (foodItems.test(eventName)) continue;
-
-                        const looksLikeEvent = specialEvents.test(eventName) || recurringEvents.test(eventName) ||
-                            /bingo|trivia|party|meeting|hunt|paint|dance|cornhole|concert|show|karaoke|volunteer/i.test(eventName);
-                        if (!looksLikeEvent) continue;
-
-                        if (foundEvents.has(dateKey + eventName)) continue;
-                        foundEvents.add(dateKey + eventName);
-
+                        const dayNum = weeks[wIdx][col];
+                        if (!dayNum) continue;
+                        const evDate = new Date(Date.UTC(calYear, calMonth, dayNum, 16, 0, 0));
+                        if (isNaN(evDate.getTime()) || evDate < pastDate || evDate >= futureDate) continue;
+                        if (evDate.getDay() === 1) continue; // Monday closed
+                        const dk = evDate.toISOString().substring(0, 10);
+                        if (recurringFoodNights.test(evName)) continue;
+                        if (foodItems.test(evName)) continue;
+                        if (!specialEvents.test(evName) && !recurringEvents.test(evName) &&
+                            !/bingo|trivia|party|meeting|hunt|paint|dance|cornhole|concert|show|karaoke|volunteer|bbq/i.test(evName)) continue;
+                        if (foundEvents.has(dk + evName)) continue;
+                        foundEvents.add(dk + evName);
                         events.push({
-                            title: eventName, date: eventDate.toISOString(),
+                            title: evName, date: evDate.toISOString(),
                             location: 'VFW Post 7294, 219 Walnut Hill Rd',
                             tags: ['Other', 'VFW'], price: 'Members Only', ticketLink: '', sourceLink: postLink,
                             gameResult: '', gameScore: '', streamLink: '', isLive: false, kidFriendly: false
                         });
                         vfwEventCount++;
-                        console.log(`    📌 VFW Event: "${eventName}" on ${dateKey} (week ${weekIdx+1}, col ${col})`);
+                        console.log(`    📌 Event: "${evName}" on ${dk} (wk${wIdx+1}, col${col})`);
                     }
                 };
 
-                let pendingEvents = [];
-                let seenFirstNumber = false;
-
                 for (const line of lines) {
-                    // Skip noise
-                    if (ocrNoise.test(line)) continue;
-                    if (/^[a-z]$/i.test(line) || /^m$/i.test(line)) continue;
+                    if (ocrNoise.test(line) || /^[a-z]$/i.test(line) || /^m$/i.test(line)) continue;
                     if (/^(sunday|monday|tuesday|wednesday|thursday|friday|saturday|weekly specials?)$/i.test(line)) continue;
                     if (line.length < 2) continue;
 
-                    const isNumber = /^\d{1,2}$/.test(line) && parseInt(line) >= 1 && parseInt(line) <= 31;
-
-                    if (isNumber) {
+                    const isNum = /^\d{1,2}$/.test(line) && parseInt(line) >= 1 && parseInt(line) <= 31;
+                    if (isNum) {
                         const num = parseInt(line);
-                        // Find which week this number belongs to
-                        let numWeekIdx = -1;
+                        let numWeek = -1;
                         for (let w = 0; w < weeks.length; w++) {
-                            if (weeks[w].includes(num)) { numWeekIdx = w; break; }
+                            if (weeks[w].includes(num)) { numWeek = w; break; }
                         }
-
-                        // If we had events collected before seeing any number, those belong to week containing day 1
-                        if (!seenFirstNumber && pendingEvents.length > 0) {
-                            const week1Idx = weeks.findIndex(w => w.includes(1));
-                            if (week1Idx >= 0) {
-                                console.log(`    📅 Pre-number events assigned to week 1 (${pendingEvents.length} items)`);
-                                processWeekEvents(week1Idx, pendingEvents);
-                            }
-                            pendingEvents = [];
+                        if (!seenNum && pending.length > 0) {
+                            const w1 = weeks.findIndex(w => w.includes(1));
+                            if (w1 >= 0) processWeek(w1, pending);
+                            pending = [];
                         }
-                        seenFirstNumber = true;
-
-                        // If switching to a different week, process pending events for the CURRENT week first
-                        if (pendingEvents.length > 0 && currentWeekIdx >= 0 && numWeekIdx !== currentWeekIdx) {
-                            processWeekEvents(currentWeekIdx, pendingEvents);
-                            pendingEvents = [];
+                        seenNum = true;
+                        if (pending.length > 0 && curWeek >= 0 && numWeek !== curWeek) {
+                            processWeek(curWeek, pending);
+                            pending = [];
                         }
-
-                        currentWeekIdx = numWeekIdx;
-                    } else {
-                        // This is an event name for the current week
-                        if (line.length >= 3 && line.length <= 80) {
-                            pendingEvents.push(line);
-                        }
+                        curWeek = numWeek;
+                    } else if (line.length >= 3 && line.length <= 80) {
+                        pending.push(line);
                     }
                 }
-                // Process last batch
-                if (pendingEvents.length > 0 && currentWeekIdx >= 0) {
-                    processWeekEvents(currentWeekIdx, pendingEvents);
-                }
-            } else if (!isWeeklySpecials) {
-                // NON-calendar, NON-weekly-specials posts — extract events from body text
-                // Look for specific event mentions with dates
-                const dateRegex = new RegExp(
-                    `(?:(?:monday|tuesday|wednesday|thursday|friday|saturday|sunday)[,\\s]*)?` +
-                    `(${monthPattern})[\\s.,]*(\\d{1,2})(?:st|nd|rd|th)?[,\\s]*(\\d{4})?`,
-                    'gi'
-                );
+                if (pending.length > 0 && curWeek >= 0) processWeek(curWeek, pending);
 
+            // ===== WEEKLY SPECIALS POST =====
+            } else if (isWeeklySpecials && vfwWeeklySpecials.length === 0) {
+                console.log(`    🍽️ Weekly specials image`);
+
+                const specialsText = allOcrText;
+                const rangeMatch = specialsText.match(/from\s+\w+,?\s*((?:january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{1,2})\s*(?:through|thru|-|–)\s*\w*,?\s*((?:january|february|march|april|may|june|july|august|september|october|november|december)?\s*\d{1,2})/i);
+                let dateRange = rangeMatch ? rangeMatch[0].replace(/^from\s+/i, '').trim() : '';
+                if (dateRange) console.log(`    📅 Range: ${dateRange}`);
+
+                // Strip logo noise
+                let cleaned = specialsText
+                    .replace(/W+EW\n/gi, '').replace(/\d{3,4}\n/g, '')
+                    .replace(/Years?\s+of\s+Service[^\n]*/gi, '').replace(/1899[-\s]*2024[1]?/gi, '')
+                    .replace(/MILLERSVILLE[-\s]*MANOR\s+VFW\s+POST\s+7294/gi, '')
+                    .replace(/WEEKLY\s+SPECIALS/gi, '');
+
+                const lines = cleaned.split('\n').map(l => l.trim()).filter(l => l.length > 2);
+                const noiseWords = /^(MILLERSVILLE|MANOR|VFW|POST|WEEKLY|SPECIALS|FOOD|WEW|WWEW|YEARS|SERVICE|FROM|FRIDAY ONLY|EASTER|VOLUNTEERS|NEEDED|PAINTING|LUNCH|JUST SHOW)/i;
+                const weeklySpecials = [];
+
+                for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i];
+                    if (!/^[A-Z][A-Z\s&'–-]{2,50}$/.test(line) || noiseWords.test(line)) continue;
+                    // Find price in next lines
+                    let price = '';
+                    for (let j = i + 1; j < Math.min(i + 10, lines.length); j++) {
+                        const pm = lines[j].match(/\$(\d+\.\d{2})/);
+                        if (pm) { price = `$${pm[1]}`; break; }
+                        if (/^[A-Z][A-Z\s&'–-]{2,50}$/.test(lines[j]) && !noiseWords.test(lines[j])) break;
+                    }
+                    if (!price) continue;
+                    let isFridayOnly = i > 0 && /friday only/i.test(lines[i - 1]);
+                    let name = line.replace(/\s+/g, ' ').split(' ').map(w => w.charAt(0) + w.slice(1).toLowerCase()).join(' ').replace(/\s*[-–]\s*$/, '').trim();
+                    if (name.length < 4) continue;
+                    weeklySpecials.push({ name, price, fridayOnly: isFridayOnly, dateRange });
+                    console.log(`    🍽️ Special: ${name} – ${price}${isFridayOnly ? ' (Fri only)' : ''}`);
+                }
+
+                // Only show if current
+                if (weeklySpecials.length > 0 && dateRange) {
+                    const sm = dateRange.match(/(\w+)\s+(\d{1,2})\s+through/i);
+                    const em = dateRange.match(/through\s+\w+,?\s*(?:(\w+)\s+)?(\d{1,2})/i);
+                    if (sm && em) {
+                        const sM = months[sm[1].toLowerCase()], sD = parseInt(sm[2]);
+                        const eM = months[(em[1] || sm[1]).toLowerCase()], eD = parseInt(em[2]);
+                        const yr = today.getFullYear();
+                        if (today >= new Date(yr, sM, sD) && today <= new Date(yr, eM, eD, 23, 59, 59)) {
+                            vfwWeeklySpecials = weeklySpecials; vfwSpecialsDateRange = dateRange;
+                            console.log(`    ✅ Current week specials`);
+                        } else { console.log(`    ⏭️ Expired (${dateRange})`); }
+                    } else { vfwWeeklySpecials = weeklySpecials; vfwSpecialsDateRange = dateRange; }
+                } else if (weeklySpecials.length > 0) {
+                    vfwWeeklySpecials = weeklySpecials; vfwSpecialsDateRange = dateRange;
+                }
+
+            // ===== OTHER POST (event announcements) =====
+            } else if (!isWeeklySpecials) {
+                const dateRegex = new RegExp(`(?:(?:monday|tuesday|wednesday|thursday|friday|saturday|sunday)[,\\s]*)?(${monthPattern})[\\s.,]*(\\d{1,2})(?:st|nd|rd|th)?[,\\s]*(\\d{4})?`, 'gi');
                 let dm;
                 while ((dm = dateRegex.exec(allOcrText)) !== null) {
-                    const monthName = dm[1].toLowerCase();
-                    const day = parseInt(dm[2]);
-                    let year = dm[3] ? parseInt(dm[3]) : pubDate.getFullYear();
-                    const monthNum = months[monthName];
-                    if (monthNum === undefined) continue;
-                    if (monthNum < pubDate.getMonth() - 1 && !dm[3]) year++;
-
-                    const eventDate = new Date(Date.UTC(year, monthNum, day, 16, 0, 0));
-                    if (isNaN(eventDate.getTime())) continue;
-                    if (eventDate < pastDate || eventDate >= futureDate) continue;
-                    // VFW closed on Mondays
-                    if (eventDate.getDay() === 1) continue;
-
-                    const dateKey = eventDate.toISOString().substring(0, 10);
-                    if (foundEvents.has(dateKey)) continue;
-
+                    const mName = dm[1].toLowerCase(), day = parseInt(dm[2]);
+                    let yr = dm[3] ? parseInt(dm[3]) : pubDate.getFullYear();
+                    const mNum = months[mName]; if (mNum === undefined) continue;
+                    if (mNum < pubDate.getMonth() - 1 && !dm[3]) yr++;
+                    const evDate = new Date(Date.UTC(yr, mNum, day, 16, 0, 0));
+                    if (isNaN(evDate.getTime()) || evDate < pastDate || evDate >= futureDate) continue;
+                    if (evDate.getDay() === 1) continue;
+                    const dk = evDate.toISOString().substring(0, 10);
+                    if (foundEvents.has(dk)) continue;
                     const ctx = allOcrText.substring(Math.max(0, dm.index - 200), dm.index + dm[0].length + 400);
-
-                    // Skip if this is just a food description context
                     if (foodItems.test(ctx) && !specialEvents.test(ctx) && !recurringEvents.test(ctx)) continue;
-
-                    // Extract time
-                    const timeMatch = ctx.match(/(?:at\s+|from\s+|begins?\s+(?:at\s+)?|starting\s+(?:at\s+)?|doors?\s+(?:open\s+)?(?:at\s+)?|@\s*)(\d{1,2}(?::\d{2})?\s*(?:am|pm|AM|PM))/i);
-                    if (timeMatch) {
-                        const tp = timeMatch[1].replace(/\./g,'').match(/(\d{1,2})(?::(\d{2}))?\s*(am|pm)/i);
-                        if (tp) {
-                            let h = parseInt(tp[1]); const mi = tp[2]?parseInt(tp[2]):0;
-                            if(tp[3].toLowerCase()==='pm'&&h<12) h+=12;
-                            if(tp[3].toLowerCase()==='am'&&h===12) h=0;
-                            eventDate.setHours(h,mi,0);
-                        }
-                    }
-
-                    // Extract event name
-                    let eventName = '';
-                    const namePatterns = [
-                        /(?:we have|join us for|come (?:out )?(?:to|for)|presenting|hosting|it'?s)\s+(?:our\s+)?([A-Z][^.!?\n]{3,60}?)(?:\s+(?:in|at|on|from|this|beginning|starting|!|\.))/i,
-                        /([A-Z][A-Za-z\s'&]+(?:Bingo|Trivia|Cornhole|Dance|Party|Carnival|Fundraiser|Concert|Show|Tournament|Cook.?off|BBQ|Cookout|Picnic|Hunt))/,
-                    ];
-                    for (const pattern of namePatterns) {
-                        const nm = ctx.match(pattern);
-                        if (nm) {
-                            eventName = nm[1].trim().replace(/^(our|the|a)\s+/i, '').trim();
-                            eventName = eventName.charAt(0).toUpperCase() + eventName.slice(1);
-                            if (eventName.length >= 3 && eventName.length <= 80) break;
-                            eventName = '';
-                        }
-                    }
-                    if (!eventName) eventName = postTitle.replace(/[!]+$/, '').replace(/&#\d+;/g, '').trim();
-
-                    // Skip if event name is just a food item
-                    if (foodItems.test(eventName)) continue;
-
-                    let price = 'Free';
-                    const priceMatch = ctx.match(/\$(\d+(?:\.\d{2})?)/);
-                    if (priceMatch && !foodItems.test(ctx.substring(ctx.indexOf(priceMatch[0]) - 80, ctx.indexOf(priceMatch[0])))) {
-                        price = `$${priceMatch[1]}`;
-                    }
-
-                    foundEvents.add(dateKey);
+                    let evName = '';
+                    const nm = ctx.match(/([A-Z][A-Za-z\s'&]+(?:Bingo|Trivia|Cornhole|Dance|Party|Carnival|Fundraiser|Concert|Show|Tournament|BBQ|Cookout|Picnic|Hunt))/);
+                    if (nm) evName = nm[1].trim();
+                    if (!evName) evName = 'VFW Event';
+                    if (foodItems.test(evName)) continue;
+                    foundEvents.add(dk);
                     events.push({
-                        title: eventName, date: eventDate.toISOString(),
+                        title: evName, date: evDate.toISOString(),
                         location: 'VFW Post 7294, 219 Walnut Hill Rd',
                         tags: ['Other', 'VFW'], price: 'Members Only', ticketLink: '', sourceLink: postLink,
                         gameResult: '', gameScore: '', streamLink: '', isLive: false, kidFriendly: false
                     });
                     vfwEventCount++;
-                    console.log(`    📌 VFW Event: "${eventName}" on ${dateKey}${timeMatch ? ' at ' + timeMatch[1] : ''} [${price}]`);
+                    console.log(`    📌 Event: "${evName}" on ${dk}`);
                 }
-            } else if (isWeeklySpecials) {
-                // Only extract from the MOST RECENT weekly specials post (first one in RSS = newest)
-                if (vfwWeeklySpecials.length > 0) {
-                    console.log(`    ⏭️ Skipping older weekly specials post (already have newer)`);
-                } else {
-                    console.log(`    🍽️ Extracting food specials from weekly specials post`);
-
-                    // Use ONLY the first image OCR text (the food flyer), not other images
-                    const specialsText = firstImageOcrText || allOcrText;
-
-                    // Extract date range: "From Tuesday, March 24 through Saturday, March 28"
-                    const rangeMatch = specialsText.match(/from\s+\w+,?\s*((?:january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{1,2})\s*(?:through|thru|-|–)\s*\w*,?\s*((?:january|february|march|april|may|june|july|august|september|october|november|december)?\s*\d{1,2})/i);
-                    let dateRange = '';
-                    if (rangeMatch) {
-                        dateRange = rangeMatch[0].replace(/^from\s+/i, '').trim();
-                        console.log(`    📅 Date range: ${dateRange}`);
-                    }
-
-                    // Extract food items from first image OCR only
-                    // First, strip known logo noise from the OCR text so it doesn't interfere
-                    let cleanedText = specialsText
-                        .replace(/W+EW\n/gi, '')
-                        .replace(/\d{3,4}\n/g, '')  // Remove standalone numbers like "125", "1899"
-                        .replace(/Years?\s+of\s+Service[^\n]*/gi, '')
-                        .replace(/1899[-\s]*2024[1]?/gi, '')
-                        .replace(/MILLERSVILLE[-\s]*MANOR\s+VFW\s+POST\s+7294/gi, '')
-                        .replace(/WEEKLY\s+SPECIALS/gi, '');
-
-                    const lines = cleanedText.split('\n').map(l => l.trim()).filter(l => l.length > 2);
-                    const weeklySpecials = [];
-                    const noiseWords = /^(MILLERSVILLE|MANOR|VFW|POST|WEEKLY|SPECIALS|FOOD|WEW|WWEW|YEARS|SERVICE|FROM|FRIDAY ONLY|EASTER|VOLUNTEERS|NEEDED|PAINTING|LUNCH|JUST SHOW)/i;
-
-                    // Collect all ALL-CAPS names and find their associated prices
-                    for (let i = 0; i < lines.length; i++) {
-                        const line = lines[i];
-                        // Is this an all-caps food name?
-                        const isUpperName = /^[A-Z][A-Z\s&'–-]{2,50}$/.test(line) && !noiseWords.test(line);
-                        if (!isUpperName) continue;
-
-                        // Search forward through ALL remaining lines for the next price
-                        // (logo noise has been stripped, so the price should be reachable)
-                        let price = '';
-                        for (let j = i + 1; j < Math.min(i + 10, lines.length); j++) {
-                            const pm = lines[j].match(/\$(\d+\.\d{2})/);
-                            if (pm) { price = `$${pm[1]}`; break; }
-                            // Stop if we hit another ALL-CAPS name (next food item)
-                            if (/^[A-Z][A-Z\s&'–-]{2,50}$/.test(lines[j]) && !noiseWords.test(lines[j])) break;
-                        }
-                        if (!price) continue; // No price = not a food special
-
-                        // Check if previous line says "FRIDAY ONLY"
-                        let isFridayOnly = false;
-                        if (i > 0 && /friday only/i.test(lines[i - 1])) isFridayOnly = true;
-
-                        // Clean up name: title case
-                        let name = line.replace(/\s+/g, ' ').split(' ').map(w => w.charAt(0) + w.slice(1).toLowerCase()).join(' ');
-                        name = name.replace(/\s*[-–]\s*$/, '').trim();
-
-                        if (name.length < 4) continue;
-
-                        weeklySpecials.push({ name, price, fridayOnly: isFridayOnly, dateRange });
-                        console.log(`    🍽️ Special: ${name} – ${price}${isFridayOnly ? ' (Friday only)' : ''}`);
-                    }
-
-                    if (weeklySpecials.length > 0 && dateRange) {
-                        // Parse date range to check if specials are current
-                        const rangeMonths = {january:0,february:1,march:2,april:3,may:4,june:5,july:6,august:7,september:8,october:9,november:10,december:11};
-                        const startMatch = dateRange.match(/(\w+)\s+(\d{1,2})\s+through/i);
-                        const endMatch = dateRange.match(/through\s+\w+,?\s*(?:(\w+)\s+)?(\d{1,2})/i);
-                        if (startMatch && endMatch) {
-                            const sMonth = rangeMonths[startMatch[1].toLowerCase()];
-                            const sDay = parseInt(startMatch[2]);
-                            const eMonthName = endMatch[1] || startMatch[1];
-                            const eMonth = rangeMonths[eMonthName.toLowerCase()];
-                            const eDay = parseInt(endMatch[2]);
-                            const yr = today.getFullYear();
-                            const rangeStart = new Date(yr, sMonth, sDay);
-                            const rangeEnd = new Date(yr, eMonth, eDay, 23, 59, 59);
-
-                            if (today >= rangeStart && today <= rangeEnd) {
-                                vfwWeeklySpecials = weeklySpecials;
-                                vfwSpecialsDateRange = dateRange;
-                                console.log(`    ✅ Specials are current (${dateRange})`);
-                            } else {
-                                console.log(`    ⏭️ Specials expired (${dateRange}) — not showing`);
-                            }
-                        } else {
-                            // Can't parse date range, show them anyway
-                            vfwWeeklySpecials = weeklySpecials;
-                            vfwSpecialsDateRange = dateRange;
-                        }
-                    } else if (weeklySpecials.length > 0) {
-                        vfwWeeklySpecials = weeklySpecials;
-                        vfwSpecialsDateRange = dateRange;
-                    }
-                }
+            } else {
+                console.log(`    ⏭️ Older specials, skipping`);
             }
-          } catch (postErr) {
-            console.log(`    ⚠️ Post processing failed: ${postErr.message}`);
-          }
+
+          } catch (err) { console.log(`    ⚠️ Error: ${err.message}`); }
         }
 
-        // Process Google Sheet posts (Facebook images)
-        for (const sp of allVfwPosts.filter(p => p.source === 'sheet')) {
-          try {
-            const postTitle = sp.title;
-            const postLink = sp.link;
-            const pubDate = sp.pubDate;
-            const allOcrText = sp.allOcrText;
-            const firstImageOcrText = sp.firstImageOcrText;
-
-            console.log(`  📱 Sheet post (${sp.pubDate.toLocaleDateString()}): ${allOcrText.substring(0, 60).replace(/\n/g, ' ')}...`);
-
-            const isWeeklySpecials = /weekly\s*(food\s*)?specials/i.test(allOcrText.substring(0, 300));
-            const isCalendarPost = (/tuesday/i.test(allOcrText) && /wednesday/i.test(allOcrText) && /thursday/i.test(allOcrText) && /\b\d{1,2}\n/m.test(allOcrText));
-
-            // Same extraction logic as RSS posts — calendar, weekly specials, or other
-            if (isCalendarPost) {
-                console.log(`    📅 Sheet calendar detected`);
-                // Calendar extraction uses allOcrText — same code path as RSS
-                // (The calendar extraction code above handles this)
-            }
-            if (isWeeklySpecials && vfwWeeklySpecials.length === 0) {
-                console.log(`    🍽️ Sheet weekly specials detected`);
-                // Specials extraction uses firstImageOcrText
-            }
-          } catch (e) { console.log(`    ⚠️ Sheet post error: ${e.message}`); }
-        }
-
-        // Save cache
+        // Save cache + specials
         fs.writeFileSync(cachePath, JSON.stringify(vfwCache, null, 2));
-        console.log(`✅ VFW Post 7294: ${vfwEventCount} events extracted (${vfwApiCalls} API calls, ${Object.keys(vfwCache).length} cached)`);
+        console.log(`✅ VFW: ${vfwEventCount} events (${vfwApiCalls} API calls, ${Object.keys(vfwCache).length} cached)`);
 
-        // Write specials.json with VFW weekly specials + House of Pizza static specials
         const specials = {
             "House of Pizza": {
                 note: "Dine-in & Carryout Only · Mon-Fri till 2 PM · Not for Delivery",
@@ -1403,7 +1072,7 @@ async function runScraper() {
         };
         fs.writeFileSync(path.join(__dirname, '../specials.json'), JSON.stringify(specials, null, 2));
         console.log(`✅ Specials saved (VFW: ${vfwWeeklySpecials.length} weekly items)`);
-    } catch (e) { console.error("❌ VFW Events error:", e.message); }
+    } catch (e) { console.error("❌ VFW error:", e.message); }
 
     // ===== FAMILY-FRIENDLY TAGGING =====
     const familyKeywords = /\bfamily\b|families|\bkids?\b|\bchild(ren)?\b|\byouth\b|\ball ages\b|\bopen house\b|\bparade\b|\bfestival\b|\bfun run\b|\begg hunt\b|\btrick.or.treat\b|\bstory ?time\b/i;
@@ -1600,13 +1269,6 @@ async function runScraper() {
             news.push(...parseRSSItems(xml, "Borough", "Millersville Borough", 10));
             console.log(`  ✅ Borough News: ${Math.min(10, (xml.match(/<item>/g)||[]).length)} articles`);
         } catch (e) { console.error("❌ Borough News RSS error:", e.message); }
-
-        // VFW Post 7294 Blog
-        try {
-            const xml = await (await fetch('https://www.vfwpost7294.org/feed/', { headers: baseHeaders })).text();
-            news.push(...parseRSSItems(xml, "Community", "VFW Post 7294", 10, { skipCategories: true }));
-            console.log(`  ✅ VFW Post 7294: ${Math.min(10, (xml.match(/<item>/g)||[]).length)} articles`);
-        } catch (e) { console.error("❌ VFW RSS error:", e.message); }
 
         // Penn Manor School District News
         try {

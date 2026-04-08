@@ -554,38 +554,28 @@ function loadEcwidStore(){
 }
 
 function injectEcwidCSS(){
-    // Override inline styles via JS since Ecwid sets width/height inline
     function resizeCategoryCards(){
         document.querySelectorAll('.grid-category').forEach(el => {
             el.style.maxWidth = '90px';
             el.style.flexBasis = '90px';
         });
-        document.querySelectorAll('.grid-category__image, .grid-category__bg, .grid-category__picture, .grid-category__image-wrap').forEach(el => {
-            el.style.width = '90px';
-            el.style.height = '60px';
-            el.style.maxWidth = '90px';
-            el.style.minWidth = '90px';
-        });
-        document.querySelectorAll('.grid-category__picture-img').forEach(el => {
-            el.style.width = '90px';
-            el.style.height = '60px';
-            el.style.objectFit = 'cover';
-        });
-        document.querySelectorAll('.grid-category__image-spacer, .grid-category__image-spacer-inner').forEach(el => {
+        // Let images fill naturally inside the constrained card (matches source site)
+        document.querySelectorAll('.grid-category__image-spacer').forEach(el => {
             el.style.paddingBottom = '0';
             el.style.height = '60px';
+        });
+        document.querySelectorAll('.grid-category__image-spacer-inner').forEach(el => {
+            el.style.paddingBottom = '0';
         });
         document.querySelectorAll('.grid-category__shadow-inner').forEach(el => {
             el.style.fontSize = '0.7rem';
         });
     }
-    // Run immediately and again after a delay (Ecwid renders async)
     resizeCategoryCards();
     setTimeout(resizeCategoryCards, 1000);
     setTimeout(resizeCategoryCards, 3000);
     setTimeout(resizeCategoryCards, 5000);
 
-    // Watch for DOM changes and re-apply
     const storeEl = document.getElementById('my-store-128927005');
     if(storeEl){
         const observer = new MutationObserver(function(){ resizeCategoryCards(); });

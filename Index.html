@@ -26,8 +26,8 @@
             <button id="nav-housing" class="nav-link" onclick="switchView('housing'); toggleMobileMenu();">Housing</button>
             <button id="nav-services" class="nav-link" onclick="switchView('services'); toggleMobileMenu();">Services</button>
             <button id="nav-weather" class="nav-link" onclick="switchView('weather'); toggleMobileMenu();">Weather</button>
+            <button id="nav-store" class="nav-link" onclick="switchView('store'); toggleMobileMenu();">Store</button>
             <button id="nav-advertise" class="nav-link nav-advertise" onclick="switchView('advertise'); toggleMobileMenu();">Advertise</button>
-            <a href="https://millersville.store" target="_blank" class="nav-link nav-external" onclick="toggleMobileMenu();">Store ↗</a>
         </nav>
         <div class="menu-overlay" id="menu-overlay" onclick="toggleMobileMenu()"></div>
     </div>
@@ -95,7 +95,7 @@
                 <a href="#" onclick="event.preventDefault();switchView('advertise');" class="home-more-link">Become a Sponsor →</a>
             </div>
             <div class="sponsors-banner">
-                <a href="https://millersville.store" target="_blank" class="sponsor-card sponsor-homepage">
+                <a href="#" onclick="event.preventDefault();switchView('store');" class="sponsor-card sponsor-homepage">
                     <span class="sponsor-tier">Homepage Sponsor</span>
                     <h4 class="sponsor-name">The University Store</h4>
                     <span class="sponsor-cta">Shop Official Gear ➔</span>
@@ -245,6 +245,29 @@
         </div>
     </section>
 
+    <!-- STORE -->
+    <section id="view-store" class="app-view">
+        <div class="store-header">
+            <div class="store-brand">
+                <h2 class="store-title">The University Store</h2>
+                <p class="store-sub">Official Millersville University gear and merchandise</p>
+            </div>
+            <div class="store-tools">
+                <div id="store-search-wrap" class="store-search-wrap">
+                    <div id="my-search-128927005"></div>
+                </div>
+                <div class="ec-cart-widget"></div>
+            </div>
+        </div>
+        <div id="store-categories-wrap" class="store-categories">
+            <div id="my-categories-128927005"></div>
+        </div>
+        <div id="store-products-wrap" class="store-products">
+            <div id="my-store-128927005"></div>
+        </div>
+        <p class="store-powered">Powered by <a href="https://millersville.store" target="_blank">millersville.store</a></p>
+    </section>
+
     <!-- ADVERTISE -->
     <section id="view-advertise" class="app-view">
         <div class="adv-hero">
@@ -327,8 +350,8 @@
         <div class="adv-cta">
             <h3 class="adv-cta-title">Ready to get started?</h3>
             <p class="adv-cta-sub">Tell us about your business and we'll get back to you within 24 hours.</p>
-            <a href="https://forms.gle/195Urr5JPANNuJwUolVx-1tQH6r1c_bgGDw0xXuqCXPE" target="_blank" class="btn btn-gold btn-lg">Submit Your Business →</a>
-            <p class="adv-cta-note">Or email us at <a href="mailto:admin@millersville.app">admin@millersville.app</a></p>
+            <a href="https://forms.gle/YOUR_FORM_ID_HERE" target="_blank" class="btn btn-gold btn-lg">Submit Your Business →</a>
+            <p class="adv-cta-note">Or email us at <a href="mailto:advertise@millersville.app">advertise@millersville.app</a></p>
         </div>
 
         <!-- FAQ Accordions -->
@@ -463,7 +486,7 @@ function matchesSportSource(tags, src) {
     return false;
 }
 
-const viewPaths={home:'/',news:'/news',events:'/events',sports:'/sports',food:'/food',housing:'/housing',services:'/services',weather:'/weather'};
+const viewPaths={home:'/',news:'/news',events:'/events',sports:'/sports',food:'/food',housing:'/housing',services:'/services',weather:'/weather',store:'/store',advertise:'/advertise'};
 const pathToView=Object.fromEntries(Object.entries(viewPaths).map(([k,v])=>[v,k]));
 
 document.addEventListener("DOMContentLoaded",()=>{
@@ -499,14 +522,38 @@ window.toggleMobileMenu=function(){
     if(nav.classList.contains('open')){nav.classList.remove('open');overlay.classList.remove('open');setTimeout(()=>{if(!nav.classList.contains('open'))nav.style.display='';},300);}
     else{nav.style.display='flex';void nav.offsetWidth;nav.classList.add('open');overlay.classList.add('open');}
 };
-const viewLabels={home:'',news:'/ News',events:'/ Events',sports:'/ Sports',food:'/ Food',housing:'/ Housing',services:'/ Services',weather:'/ Weather',advertise:'/ Advertise'};
+const viewLabels={home:'',news:'/ News',events:'/ Events',sports:'/ Sports',food:'/ Food',housing:'/ Housing',services:'/ Services',weather:'/ Weather',store:'/ Store',advertise:'/ Advertise'};
+
+let ecwidLoaded = false;
+function loadEcwidStore(){
+    if(ecwidLoaded) return;
+    ecwidLoaded = true;
+    const s = document.createElement('script');
+    s.setAttribute('data-cfasync','false');
+    s.src = 'https://app.shopsettings.com/script.js?128927005&data_platform=code&data_date=2026-04-08';
+    s.charset = 'utf-8';
+    s.onload = function(){
+        if(typeof xProductBrowser === 'function'){
+            xProductBrowser("categoriesPerRow=3","views=grid(20,3) list(60) table(60)","categoryView=grid","searchView=list","id=my-store-128927005");
+        }
+        if(typeof xCategoriesV2 === 'function'){
+            xCategoriesV2("id=my-categories-128927005");
+        }
+        if(typeof xSearch === 'function'){
+            xSearch("id=my-search-128927005");
+        }
+        if(typeof Ecwid !== 'undefined'){
+            Ecwid.init();
+        }
+    };
+    document.body.appendChild(s);
+}
 
 window.switchView=function(view,skipPush){
     document.querySelectorAll('.app-view').forEach(v=>v.classList.remove('active'));
     document.getElementById(`view-${view}`).classList.add('active');
     document.querySelectorAll('.nav-link').forEach(b=>b.classList.remove('active'));
     const btn=document.getElementById(`nav-${view}`); if(btn) btn.classList.add('active');
-    // Update header page title
     const titleEl=document.getElementById('header-page-title');
     if(titleEl) titleEl.textContent=viewLabels[view]||'';
     window.scrollTo(0,0);
@@ -514,6 +561,8 @@ window.switchView=function(view,skipPush){
     if(!skipPush && window.location.pathname.replace(/\/$/,'')!==path){
         history.pushState({view},'',path);
     }
+    // Lazy-load Ecwid when store is first visited
+    if(view==='store') loadEcwidStore();
 };
 
 async function loadEvents(){

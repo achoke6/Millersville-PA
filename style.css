@@ -400,7 +400,27 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .site-footer p { margin: 2px 0; }
 
 /* =========================================================
-   15. ADVERTISE PAGE
+   15. STORE PAGE
+   ========================================================= */
+.store-header { background: linear-gradient(135deg, var(--navy) 0%, #1e3a5f 100%); color: white; padding: 20px; border-radius: var(--radius); margin-bottom: 16px; }
+.store-brand { margin-bottom: 14px; }
+.store-title { font-size: 1.3rem; font-weight: 800; margin: 0; }
+.store-sub { font-size: 0.82rem; opacity: 0.75; margin: 4px 0 0 0; }
+.store-tools { display: flex; align-items: center; gap: 12px; }
+.store-search-wrap { flex: 1; }
+.store-search-wrap input { border-radius: var(--radius) !important; }
+.ec-cart-widget { flex-shrink: 0; }
+
+.store-categories { margin-bottom: 16px; padding: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow-x: auto; }
+.store-products { min-height: 400px; }
+.store-powered { text-align: center; font-size: 0.75rem; color: var(--text-muted); margin-top: 20px; }
+.store-powered a { color: var(--navy); font-weight: 600; }
+
+/* Ecwid overrides to match app theme */
+.ecwid .ecwid-productBrowser { font-family: inherit !important; }
+
+/* =========================================================
+   16. ADVERTISE PAGE
    ========================================================= */
 .nav-advertise { color: var(--gold) !important; font-weight: 700; }
 

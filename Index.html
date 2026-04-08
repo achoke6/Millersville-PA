@@ -13,9 +13,12 @@
         <div class="logo-block">
             <h1><span class="logo-link" onclick="switchView('home')">Millersville<span class="logo-dot">.APP</span></span><span id="header-page-title" class="header-page-title"></span></h1>
         </div>
-        <button class="hamburger-menu" id="hamburger-menu" onclick="toggleMobileMenu()">
-            <svg viewBox="0 0 24 24" width="28" height="28" fill="var(--text-dark)"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
-        </button>
+        <div class="header-actions">
+            <div class="ec-cart-widget header-cart"></div>
+            <button class="hamburger-menu" id="hamburger-menu" onclick="toggleMobileMenu()">
+                <svg viewBox="0 0 24 24" width="28" height="28" fill="var(--text-dark)"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+            </button>
+        </div>
         <nav class="main-nav" id="top-nav">
             <button class="close-menu" onclick="toggleMobileMenu()">✖</button>
             <button id="nav-home" class="nav-link active" onclick="switchView('home'); toggleMobileMenu();">Home</button>
@@ -247,18 +250,6 @@
 
     <!-- STORE -->
     <section id="view-store" class="app-view">
-        <div class="store-header">
-            <div class="store-brand">
-                <h2 class="store-title">The University Store</h2>
-                <p class="store-sub">Official Millersville University gear and merchandise</p>
-            </div>
-            <div class="store-tools">
-                <div id="store-search-wrap" class="store-search-wrap">
-                    <div id="my-search-128927005"></div>
-                </div>
-                <div class="ec-cart-widget"></div>
-            </div>
-        </div>
         <div id="store-products-wrap" class="store-products">
             <div id="my-store-128927005"></div>
         </div>
@@ -493,6 +484,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 async function initApp(){
     await Promise.allSettled([loadWeather(),loadSpecials(),loadEvents(),loadDining(),loadHousing(),loadServices(),loadNews()]);
     renderHomeUI();
+    loadEcwidStore(); // Load Ecwid early so cart widget renders in header
     setInterval(refreshCam,60000); refreshCam();
     // Route to correct view based on URL
     let p=window.location.pathname.replace(/\/$/,'');
@@ -532,9 +524,6 @@ function loadEcwidStore(){
     s.onload = function(){
         if(typeof xProductBrowser === 'function'){
             xProductBrowser("categoriesPerRow=3","views=grid(20,3) list(60) table(60)","categoryView=grid","searchView=list","id=my-store-128927005");
-        }
-        if(typeof xSearch === 'function'){
-            xSearch("id=my-search-128927005");
         }
         if(typeof Ecwid !== 'undefined'){
             Ecwid.init();

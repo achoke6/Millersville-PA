@@ -419,6 +419,12 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 /* Header cart widget */
 .header-actions { display: flex; align-items: center; gap: 8px; }
 .header-cart { cursor: pointer; }
+.header-cart-mobile { display: block; }
+.nav-cart-widget { display: none; padding: 4px 12px; }
+@media (min-width: 768px) {
+    .header-cart-mobile { display: none; }
+    .nav-cart-widget { display: flex; align-items: center; }
+}
 
 /* Ecwid overrides to match app theme */
 .ecwid .ecwid-productBrowser { font-family: inherit !important; }

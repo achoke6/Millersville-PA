@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Millersville.APP</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QM4BWQ7QF2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-QM4BWQ7QF2');
+    </script>
 </head>
 <body>
 
@@ -528,9 +536,17 @@ function loadEcwidStore(){
         }
         if(typeof Ecwid !== 'undefined'){
             Ecwid.init();
-            // Inject custom CSS after Ecwid renders
             Ecwid.OnPageLoaded.add(function(){
                 injectEcwidCSS();
+            });
+            // Make cart widgets navigate to store page when clicked outside store
+            document.querySelectorAll('.ec-cart-widget').forEach(function(w){
+                w.addEventListener('click', function(){
+                    const currentView = document.querySelector('.app-view.active');
+                    if(currentView && currentView.id !== 'view-store'){
+                        switchView('store');
+                    }
+                });
             });
         }
     };
@@ -578,6 +594,10 @@ window.switchView=function(view,skipPush){
     const path=viewPaths[view]||'/';
     if(!skipPush && window.location.pathname.replace(/\/$/,'')!==path){
         history.pushState({view},'',path);
+    }
+    // Track SPA page view in Google Analytics
+    if(typeof gtag === 'function'){
+        gtag('event', 'page_view', { page_path: path, page_title: 'Millersville.APP ' + (viewLabels[view]||'') });
     }
     // Lazy-load Ecwid when store is first visited
     if(view==='store') loadEcwidStore();

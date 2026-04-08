@@ -559,26 +559,37 @@ function injectEcwidCSS(){
         const style = document.createElement('style');
         style.id = 'ecwid-custom-css';
         style.textContent = `
-            /* Category card sizing */
-            .ec-size .ec-store .grid__categories .grid-category {
+            .grid__categories .grid-category {
                 max-width: 90px !important;
                 flex-basis: 90px !important;
             }
-            .ec-size .ec-store .grid-category__image,
-            .ec-size .ec-store .grid-category__image-img,
-            .ec-size .ec-store .grid-category__image-bg {
+            .grid-category__image,
+            .grid-category__bg,
+            .grid-category__picture,
+            .grid-category__image-wrap {
                 width: 90px !important;
                 height: 60px !important;
                 max-width: 90px !important;
                 min-width: 90px !important;
             }
-            .ec-size .ec-store .grid-category__image-spacer {
+            .grid-category__picture-img {
+                width: 90px !important;
+                height: 60px !important;
+                object-fit: cover !important;
+            }
+            .grid-category__image-spacer,
+            .grid-category__image-spacer-inner {
                 padding-bottom: 0 !important;
                 height: 60px !important;
             }
-            /* Match app theme */
-            .ec-size .ec-store .grid-product__title {
-                font-family: inherit !important;
+            .grid__categories {
+                display: flex !important;
+                gap: 12px !important;
+                justify-content: center !important;
+                flex-wrap: wrap !important;
+            }
+            .grid-category__shadow-inner {
+                font-size: 0.7rem !important;
             }
         `;
         document.head.appendChild(style);

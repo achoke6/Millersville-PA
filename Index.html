@@ -544,9 +544,60 @@ function loadEcwidStore(){
         }
         if(typeof Ecwid !== 'undefined'){
             Ecwid.init();
+            // Inject custom CSS after Ecwid renders
+            Ecwid.OnPageLoaded.add(function(){
+                injectEcwidCSS();
+            });
         }
     };
     document.body.appendChild(s);
+}
+
+function injectEcwidCSS(){
+    // Inject into main document
+    if(!document.getElementById('ecwid-custom-css')){
+        const style = document.createElement('style');
+        style.id = 'ecwid-custom-css';
+        style.textContent = `
+            /* Category card sizing */
+            .ec-size .ec-store .grid__categories .grid-category {
+                max-width: 90px !important;
+                flex-basis: 90px !important;
+            }
+            .ec-size .ec-store .grid-category__image,
+            .ec-size .ec-store .grid-category__image-img,
+            .ec-size .ec-store .grid-category__image-bg {
+                width: 90px !important;
+                height: 60px !important;
+                max-width: 90px !important;
+                min-width: 90px !important;
+            }
+            .ec-size .ec-store .grid-category__image-spacer {
+                padding-bottom: 0 !important;
+                height: 60px !important;
+            }
+            /* Match app theme */
+            .ec-size .ec-store .grid-product__title {
+                font-family: inherit !important;
+            }
+        `;
+        document.head.appendChild(style);
+    }
+
+    // Also inject into any Ecwid iframes/shadow roots
+    setTimeout(function(){
+        document.querySelectorAll('iframe[id*="ecwid"]').forEach(function(iframe){
+            try {
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                if(iframeDoc && !iframeDoc.getElementById('ecwid-custom-css')){
+                    const iStyle = iframeDoc.createElement('style');
+                    iStyle.id = 'ecwid-custom-css';
+                    iStyle.textContent = document.getElementById('ecwid-custom-css').textContent;
+                    iframeDoc.head.appendChild(iStyle);
+                }
+            } catch(e){}
+        });
+    }, 2000);
 }
 
 window.switchView=function(view,skipPush){

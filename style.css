@@ -419,6 +419,24 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 /* Ecwid overrides to match app theme */
 .ecwid .ecwid-productBrowser { font-family: inherit !important; }
 
+/* Category card sizing */
+.ec-size .ec-store .grid__categories .grid-category {
+    max-width: 90px !important;
+    flex-basis: 90px !important;
+}
+.ec-size .ec-store .grid-category__image,
+.ec-size .ec-store .grid-category__image-img,
+.ec-size .ec-store .grid-category__image-bg {
+    width: 90px !important;
+    height: 60px !important;
+    max-width: 90px !important;
+    min-width: 90px !important;
+}
+.ec-size .ec-store .grid-category__image-spacer {
+    padding-bottom: 0 !important;
+    height: 60px !important;
+}
+
 /* =========================================================
    16. ADVERTISE PAGE
    ========================================================= */

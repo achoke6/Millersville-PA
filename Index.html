@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Millersville.APP</title>
+    <link rel="icon" type="image/png" href="/Mapp.png">
+    <link rel="apple-touch-icon" href="/Mapp.png">
     <link rel="stylesheet" href="style.css">
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-QM4BWQ7QF2"></script>
@@ -541,21 +543,26 @@ function loadEcwidStore(){
             Ecwid.init();
             Ecwid.OnPageLoaded.add(function(){
                 injectEcwidCSS();
-                // Kill Mailchimp/newsletter popups
+                // Kill Mailchimp/newsletter popups (they use Shadow DOM so we must remove the wrapper)
                 function killPopups(){
-                    document.querySelectorAll('[id*="PopupSignup"], [class*="mailchimp"], [class*="mc-banner"], [class*="mc-modal"], .mc-closeModal, #el_CCNksnr79, #el_s3QV0O9EQs, #el_-vCaQgHwnm').forEach(el => el.remove());
-                    // Kill any full-page overlay with z-index > 700000000 (Mailchimp pattern)
-                    document.querySelectorAll('div[style*="z-index: 700000"]').forEach(el => el.remove());
-                    // Kill elements containing "newsletter" or "newletter" text with high z-index
-                    document.querySelectorAll('div[style*="z-index"][style*="70000"]').forEach(el => {
-                        if(el.textContent && (el.textContent.includes('newsletter') || el.textContent.includes('newletter') || el.textContent.includes('10% off'))) el.remove();
-                    });
+                    document.querySelectorAll('.mcforms-wrapper, [id^="mcforms-"], [id*="PopupSignup"], [class*="mailchimp"], [class*="mc-banner"], [class*="mc-modal"]').forEach(el => el.remove());
                 }
                 killPopups();
-                setTimeout(killPopups, 1000);
-                setTimeout(killPopups, 2000);
-                setTimeout(killPopups, 4000);
-                setTimeout(killPopups, 8000);
+                setTimeout(killPopups, 500);
+                setTimeout(killPopups, 1500);
+                setTimeout(killPopups, 3000);
+                setTimeout(killPopups, 6000);
+                setTimeout(killPopups, 10000);
+                // Persistent watcher in case they inject late
+                new MutationObserver(function(mutations){
+                    for(const m of mutations){
+                        for(const n of m.addedNodes){
+                            if(n.nodeType===1 && (n.classList?.contains('mcforms-wrapper') || n.id?.startsWith('mcforms-'))){
+                                n.remove();
+                            }
+                        }
+                    }
+                }).observe(document.body, { childList: true, subtree: true });
             });
             // Make cart widgets navigate to store page when clicked outside store
             document.querySelectorAll('.ec-cart-widget').forEach(function(w){

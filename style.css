@@ -443,18 +443,24 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .ecwid .ecwid-productBrowser { font-family: inherit !important; }
 
 /* Hide Mailchimp/Ecwid newsletter popups */
+.mcforms-wrapper,
+[id^="mcforms-"],
 #PopupSignupForm_0, #PopupSignupForm_1,
 .mc-banner, .mc-modal, .mc-closeModal,
 [class*="mailchimp"], [id*="mailchimp"],
 [class*="popup-signup"], [id*="PopupSignup"],
 .ec-store__popup, .ec-modal,
-[class*="newsletter-popup"], [class*="email-popup"],
-#el_CCNksnr79, #el_s3QV0O9EQs, #el_-vCaQgHwnm,
-[id^="el_CCN"], [id^="el_s3Q"], [id^="el_-vC"], [id^="el_3Im"] {
+[class*="newsletter-popup"], [class*="email-popup"] {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
     pointer-events: none !important;
+    height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
+    position: fixed !important;
+    top: -9999px !important;
+    left: -9999px !important;
 }
 
 /* Category card sizing — match source site */

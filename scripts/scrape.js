@@ -732,22 +732,23 @@ async function runScraper() {
                 try {
                     const occurrences = ev.rrule.between(pastDate, futureDate);
                     for (const occ of occurrences) {
-                        // rrule.between() returns UTC dates — shift to match the original event's local time
-                        // The occurrence date from rrule is the "local" date but treated as UTC
-                        // We need to use the date portion and combine with the original time
                         const origStart = new Date(ev.start);
                         
-                        // Get the date from the occurrence (year, month, day in UTC = intended local date)
+                        // Get the date from the occurrence (UTC components = intended local date)
                         const occYear = occ.getUTCFullYear();
                         const occMonth = occ.getUTCMonth();
                         const occDay = occ.getUTCDate();
                         
-                        // Get time from original event
-                        const origHour = origStart.getUTCHours();
-                        const origMin = origStart.getUTCMinutes();
+                        // Detect all-day events: they have midnight UTC start or the ical 'datetype' is 'date-time' vs 'date'
+                        const isAllDay = (origStart.getUTCHours() === 0 && origStart.getUTCMinutes() === 0) ||
+                                         (ev.start && ev.start.dateOnly) ||
+                                         (ev.datetype === 'date');
                         
-                        // Build the correct date in Eastern time
-                        // Create as UTC with the intended local date+time, then it stores correctly
+                        // For all-day events, use noon UTC so the date stays correct in Eastern time
+                        // For timed events, use the original UTC time
+                        const origHour = isAllDay ? 12 : origStart.getUTCHours();
+                        const origMin = isAllDay ? 0 : origStart.getUTCMinutes();
+                        
                         const eventDate = new Date(Date.UTC(occYear, occMonth, occDay, origHour, origMin, 0));
 
                         // Check for exceptions/modifications (EXDATE)
@@ -794,8 +795,15 @@ async function runScraper() {
                 }
             } else {
                 // Single (non-recurring) event
-                const eventDate = new Date(ev.start);
+                let eventDate = new Date(ev.start);
                 if (isNaN(eventDate.getTime()) || eventDate < pastDate || eventDate >= futureDate) continue;
+
+                // Fix all-day events: midnight UTC → noon UTC so date stays correct in Eastern
+                const singleIsAllDay = (eventDate.getUTCHours() === 0 && eventDate.getUTCMinutes() === 0) ||
+                                       (ev.start && ev.start.dateOnly) || (ev.datetype === 'date');
+                if (singleIsAllDay) {
+                    eventDate = new Date(Date.UTC(eventDate.getUTCFullYear(), eventDate.getUTCMonth(), eventDate.getUTCDate(), 12, 0, 0));
+                }
 
                 events.push({
                     title,

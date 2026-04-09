@@ -168,14 +168,14 @@
             <button id="sp-clear-btn" class="clear-btn" onclick="clearSportsFilters()">Clear ✖</button>
         </div>
         <div class="view-mode-bar">
-            <button class="nav-arrow" id="sp-prev" onclick="spNavPrev()">←</button>
+            <button class="nav-arrow" id="sp-prev" onclick="spNavPrev()" style="display:none;">←</button>
             <div class="view-mode-group">
                 <button class="mode-btn" id="sp-mode-past" onclick="setSpMode('past')">Past</button>
-                <button class="mode-btn" id="sp-mode-upcoming" onclick="setSpMode('upcoming')">Upcoming</button>
-                <button class="mode-btn active" id="sp-mode-day" onclick="setSpMode('day')">Day</button>
+                <button class="mode-btn active" id="sp-mode-upcoming" onclick="setSpMode('upcoming')">Upcoming</button>
+                <button class="mode-btn" id="sp-mode-day" onclick="setSpMode('day')">Day</button>
                 <button class="mode-btn" id="sp-mode-week" onclick="setSpMode('week')">Week</button>
             </div>
-            <button class="nav-arrow" id="sp-next" onclick="spNavNext()">→</button>
+            <button class="nav-arrow" id="sp-next" onclick="spNavNext()" style="display:none;">→</button>
         </div>
         <div class="filter-bar sp-source-row">
             <div class="filter-group" id="sp-source-group">
@@ -183,7 +183,7 @@
                 <button class="src-btn active" id="sp-src-mu" onclick="toggleSportsSource('MU')">🏴‍☠️ MU</button>
                 <button class="src-btn" id="sp-src-clubs" onclick="toggleSportsSource('Clubs')">🎓 MU Clubs</button>
             </div>
-            <button class="home-toggle active" id="hgame-toggle" onclick="toggleHomeGameMode()" title="Home Games Only">
+            <button class="home-toggle" id="hgame-toggle" onclick="toggleHomeGameMode()" title="Home Games Only">
                 <svg width="20" height="20"><use href="#icon-house"/></svg>
             </button>
         </div>
@@ -396,8 +396,8 @@ let evKidMode=false;
 let evMode='day', evAnchorDate=new Date();
 
 // Sports page state
-let spActiveSources=new Set(['PM','MU']), spSportTag=null, spHomeOnly=true;
-let spMode='day', spAnchorDate=new Date();
+let spActiveSources=new Set(['PM','MU']), spSportTag=null, spHomeOnly=false;
+let spMode='upcoming', spAnchorDate=new Date();
 
 const sportsList=['Baseball','Softball','Track','Soccer','Lacrosse','Tennis','Volleyball','Wrestling','Basketball','Football','Field Hockey','Golf','Cross Country','Cheerleading','Swimming','Rugby','Fencing','Esports','Archery'];
 const topSources=['MU','Clubs/Orgs','PM','Borough','Other'];
@@ -541,6 +541,21 @@ function loadEcwidStore(){
             Ecwid.init();
             Ecwid.OnPageLoaded.add(function(){
                 injectEcwidCSS();
+                // Kill Mailchimp/newsletter popups
+                function killPopups(){
+                    document.querySelectorAll('[id*="PopupSignup"], [class*="mailchimp"], [class*="mc-banner"], [class*="mc-modal"], .mc-closeModal, #el_CCNksnr79, #el_s3QV0O9EQs, #el_-vCaQgHwnm').forEach(el => el.remove());
+                    // Kill any full-page overlay with z-index > 700000000 (Mailchimp pattern)
+                    document.querySelectorAll('div[style*="z-index: 700000"]').forEach(el => el.remove());
+                    // Kill elements containing "newsletter" or "newletter" text with high z-index
+                    document.querySelectorAll('div[style*="z-index"][style*="70000"]').forEach(el => {
+                        if(el.textContent && (el.textContent.includes('newsletter') || el.textContent.includes('newletter') || el.textContent.includes('10% off'))) el.remove();
+                    });
+                }
+                killPopups();
+                setTimeout(killPopups, 1000);
+                setTimeout(killPopups, 2000);
+                setTimeout(killPopups, 4000);
+                setTimeout(killPopups, 8000);
             });
             // Make cart widgets navigate to store page when clicked outside store
             document.querySelectorAll('.ec-cart-widget').forEach(function(w){

@@ -442,6 +442,21 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 /* Ecwid overrides to match app theme */
 .ecwid .ecwid-productBrowser { font-family: inherit !important; }
 
+/* Hide Mailchimp/Ecwid newsletter popups */
+#PopupSignupForm_0, #PopupSignupForm_1,
+.mc-banner, .mc-modal, .mc-closeModal,
+[class*="mailchimp"], [id*="mailchimp"],
+[class*="popup-signup"], [id*="PopupSignup"],
+.ec-store__popup, .ec-modal,
+[class*="newsletter-popup"], [class*="email-popup"],
+#el_CCNksnr79, #el_s3QV0O9EQs, #el_-vCaQgHwnm,
+[id^="el_CCN"], [id^="el_s3Q"], [id^="el_-vC"], [id^="el_3Im"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
 /* Category card sizing — match source site */
 .grid__categories .grid-category {
     max-width: 90px !important;

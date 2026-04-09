@@ -25,6 +25,25 @@ const hGameClubSports = [
 // ===== UTILITY FUNCTIONS =====
 
 function extractPricing(desc, title = "", location = "", apiLink = "") {
+    // Etix direct ticket links for known MU events
+    const etixEvents = [
+        { match: /shawan rice/i, url: 'https://www.etix.com/ticket/p/52838436/shawan-rice-the-quiet-riders-lancaster-ware-center-for-the-arts', price: '$15' },
+        { match: /making of life on our planet/i, url: 'https://www.etix.com/ticket/p/44575281/the-making-of-life-on-our-planet-lancaster-ware-center-for-the-arts', price: '$8 - $10' },
+        { match: /kids.?\s*salsa/i, url: 'https://www.etix.com/ticket/p/34862669/kidssalsa-5-lancaster-ware-center-for-the-arts', price: '$15' },
+        { match: /family fun fest.*doodle/i, url: 'https://www.etix.com/ticket/p/55340777/family-fun-fest-doodle-pop-lancaster-ware-center-for-the-arts', price: '$10 - $15' },
+        { match: /commercial lab band/i, url: 'https://www.etix.com/ticket/p/69670740/commercial-lab-band-millersville-winter-visual-performing-arts-center', price: '$10' },
+        { match: /commercial music ensemble/i, url: 'https://www.etix.com/ticket/p/36061167/commercial-music-ensemble-millersville-winter-visual-performing-arts-center', price: '$10' },
+        { match: /xun pan|gabriel chamber/i, url: 'https://www.etix.com/ticket/p/77977956/xun-pan-gabriel-chamber-ensemble-millersville-winter-visual-performing-arts-center', price: 'Tickets Available' },
+        { match: /orchestral masterworks/i, url: 'https://www.etix.com/ticket/p/71235627/orchestral-masterworks-millersville-winter-visual-performing-arts-center', price: '$10' },
+        { match: /jazz ensembles|jazz.*java/i, url: 'https://www.etix.com/ticket/p/71762678/jazz-ensemblesjazz-java-with-alumni-band-millersville-winter-visual-performing-arts-center', price: '$18' },
+        { match: /concert band.*wind ensemble|wind ensemble.*concert band/i, url: 'https://www.etix.com/ticket/p/74152110/concert-band-wind-ensemble-millersville-winter-visual-performing-arts-center', price: '$10' },
+        { match: /spring choral concert/i, url: 'https://www.etix.com/ticket/p/42106815/spring-choral-concert-millersville-winter-visual-performing-arts-center', price: '$10' },
+    ];
+
+    // Check for direct etix match first
+    const etixMatch = etixEvents.find(e => e.match.test(title));
+    if (etixMatch) return { price: etixMatch.price, link: etixMatch.url };
+
     let price = "Free";
     let link = apiLink || "";
     if (desc) {
@@ -59,6 +78,23 @@ function extractPricing(desc, title = "", location = "", apiLink = "") {
         const lt = title.toLowerCase(), ll = location.toLowerCase();
         if (/winter|lyte/.test(ll) || /concert|recital|theatre/.test(lt)) link = "https://www.etix.com/ticket/v/23659/";
         else if (/pucillo|biemesderfer/.test(ll) || /game|match|tournament/.test(lt)) link = "https://www.etix.com/ticket/v/23684/";
+    }
+    // Ware Center / Steinman Hall events with admission → etix
+    if (!link) {
+        const lt = title.toLowerCase(), ll = location.toLowerCase();
+        if (/ware|steinman/.test(ll)) {
+            if (price !== "Free" || /concert|ensemble|recital|performance|theatre|theater|film|screening|opera|symphony|jazz|music|dance|ballet|on screen|in person/.test(lt)) {
+                link = "https://www.etix.com/ticket/v/23659/";
+                if (price === "Free") price = "Tickets Available";
+            }
+        }
+        // Winter Center / Lyte events
+        if (/winter|lyte/.test(ll) && price === "Free") {
+            if (/concert|ensemble|recital|performance|theatre|theater|musical|show/.test(lt)) {
+                link = "https://www.etix.com/ticket/v/23659/";
+                price = "Tickets Available";
+            }
+        }
     }
     return { price, link };
 }
@@ -649,7 +685,7 @@ async function runScraper() {
                 title: item.name || "Student Event", date: eventDate.toISOString(),
                 location: item.location || "Campus", tags: [...new Set(tags)],
                 price: "Free",
-                ticketLink: `https://getinvolved.millersville.edu/event/${item.id}`,
+                ticketLink: "",
                 sourceLink: `https://getinvolved.millersville.edu/event/${item.id}`
             });
             clubCount++;

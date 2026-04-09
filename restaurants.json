@@ -1,71 +1,91 @@
 [
   {
+    "name": "Chick-Fil-A",
+    "cuisine": "Chicken",
+    "description": "Classic chicken sandwiches and nuggets",
+    "address": "21 S George St, Millersville, PA 17551",
+    "status": "App Required",
+    "link": "https://play.google.com/store/apps/details?id=com.blackboard.mobileorder&hl=en_US",
+    "iosLink": "https://apps.apple.com/us/app/transact-mobile-ordering/id1494719529",
+    "featured": true
+  },
+  {
     "name": "Koshary Station",
-    "cuisine": "Egyptian cuisine",
-    "description": "Authentic Egyptian dishes and flavors",
+    "cuisine": "Egyptian",
+    "description": "Authentic Egyptian dishes — falafel, shawarma, koshary & more",
+    "address": "4 S Prince St, Millersville, PA 17551",
     "status": "View Menu",
-    "link": "https://www.google.com/maps/search/Koshary+Station+Millersville+PA"
+    "link": "https://www.kosharystation.com"
   },
   {
     "name": "Cactus Café",
-    "cuisine": "Popular local cafe",
+    "cuisine": "Café",
     "description": "Community favorite café with a warm atmosphere",
+    "address": "12 S George St, Millersville, PA 17551",
     "status": "View Menu",
-    "link": "https://www.google.com/maps/search/Cactus+Cafe+Millersville+PA"
+    "link": "https://www.cactuscafemillersville.com/"
   },
   {
     "name": "Jack's Family Tavern & Restaurant",
     "cuisine": "American tavern",
-    "description": "Family-friendly American tavern with classic fare",
+    "description": "Family-friendly American tavern with classic fare and great fries",
+    "address": "20 S George St, Millersville, PA 17551",
     "status": "View Menu",
-    "link": "https://www.google.com/maps/search/Jacks+Family+Tavern+Millersville+PA"
+    "link": "https://www.jacksfamilytavern.com/"
   },
   {
     "name": "Sugar Bowl Millersville",
     "cuisine": "American, Stromboli",
-    "description": "Known for stromboli and a large menu",
-    "status": "View Menu",
-    "link": "https://www.google.com/maps/search/Sugar+Bowl+Millersville+PA"
+    "description": "Known for their stromboli and large menu",
+    "address": "2 E Frederick St, Millersville, PA 17551",
+    "status": "Order Online",
+    "link": "https://orderonlinemenu.com/SugarBowlMillersville"
   },
   {
     "name": "Poke Bowl Station",
     "cuisine": "Poke bowls",
     "description": "Fresh poke bowls with customizable toppings",
+    "address": "4 S George St, Millersville, PA 17551",
     "status": "View Menu",
-    "link": "https://www.google.com/maps/search/Poke+Bowl+Station+Millersville+PA"
+    "link": "https://www.pokebowlstationmillersville.com/"
   },
   {
     "name": "House of Pizza",
     "cuisine": "Pizza, Italian",
-    "description": "Local pizza shop offering slices",
-    "status": "Order Online",
-    "link": "https://www.houseofpizzamillersville.com/"
+    "description": "Local pizza shop serving slices and pies",
+    "address": "242 N George St, Millersville, PA 17551",
+    "status": "View Menu",
+    "link": "https://www.houseofpizzamillersville.com/menu.html"
   },
   {
     "name": "Two Cousins Pizza Millersville",
     "cuisine": "Italian, Pizza",
-    "description": "Casual Italian and pizza",
+    "description": "Casual Italian dining and pizza",
+    "address": "115 Manor Ave, Millersville, PA 17551",
     "status": "Order Online",
-    "link": "https://order.online/business/two-cousins-pizza-11339584"
+    "link": "https://order.toasttab.com/online/two-cousins-pizza-millersville-115-manor-avenue-ogxls"
   },
   {
     "name": "Nino's New York Style Pizza",
     "cuisine": "New York-style pizza",
     "description": "Specialty pies and classic NY-style slices",
-    "status": "View Menu",
-    "link": "https://www.google.com/maps/search/Ninos+New+York+Style+Pizza+Millersville+PA"
+    "address": "14 S George St, Millersville, PA 17551",
+    "status": "Order Online",
+    "link": "https://www.ninospizzamillersville.com/order"
   },
   {
     "name": "Wayback Burgers",
     "cuisine": "Burgers",
-    "description": "Nostalgic-style hamburger chain",
+    "description": "Classic and specialty burgers",
+    "address": "120 Crossgates Dr, Millersville, PA 17551",
     "status": "Order Online",
-    "link": "https://order.waybackburgers.com/"
+    "link": "https://order.waybackburgers.com/menu/millersville"
   },
   {
     "name": "China Wok Chinese Restaurant",
     "cuisine": "Chinese",
-    "description": "Standard Chinese takeout and dine-in",
+    "description": "Chinese takeout and dine-in",
+    "address": "230 N George St, Millersville, PA 17551",
     "status": "View Menu",
     "link": "https://www.google.com/maps/search/China+Wok+Millersville+PA"
   },
@@ -73,20 +93,30 @@
     "name": "The Bunker at Crossgates",
     "cuisine": "Bar & grill",
     "description": "Bar and grill located at the golf course",
+    "address": "1 Crossland Pass, Millersville, PA 17551",
     "status": "View Menu",
-    "link": "https://www.google.com/maps/search/The+Bunker+Crossgates+Millersville+PA"
+    "link": "https://www.crossgatesgolf.com/"
   },
   {
     "name": "Evergreen Cafe",
     "cuisine": "Coffee shop",
     "description": "Coffee shop located on MU campus",
+    "address": "Millersville University Campus",
     "status": "View Menu",
     "link": "https://www.millersville.edu/dining/"
   },
   {
+    "name": "VFW Post 7294",
+    "cuisine": "American, Bar food",
+    "description": "Weekly food specials and events. Members Only.",
+    "address": "219 Walnut Hill Rd, Millersville, PA 17551",
+    "status": "Members Only",
+    "link": "https://www.vfwpost7294.org/"
+  },
+  {
     "name": "John Herr's Village Market",
     "cuisine": "Grocery & Deli",
-    "address": "20 Crossgates Dr, Millersville, PA",
+    "address": "20 Crossgates Dr, Millersville, PA 17551",
     "description": "Local grocery store with a full deli, bakery, and weekly deals",
     "status": "View Menu",
     "link": "https://www.johnherrsvillagemarket.com/weekly-ad"

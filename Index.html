@@ -130,6 +130,7 @@
     <!-- EVENTS (No Sports) -->
     <section id="view-events" class="app-view">
         <div class="toolbar-row">
+            <span id="ev-event-label" class="game-label">All Events:</span>
             <span id="ev-date-label" class="date-label"></span>
             <button id="ev-clear-btn" class="clear-btn" onclick="clearEventFilters()">Clear ✖</button>
         </div>
@@ -683,9 +684,11 @@ window.evNavNext=function(){
 window.toggleKidFriendly=function(){
     evKidMode=!evKidMode;
     document.getElementById('ev-kid-toggle').classList.toggle('active',evKidMode);
+    const evLabel=document.getElementById('ev-event-label');
+    if(evLabel) evLabel.textContent=evKidMode?'Family Friendly:':'All Events:';
     renderEvents();
 };
-window.clearEventFilters=function(){evTags.clear();evSource='All';evMode='upcoming';evKidMode=false;evAnchorDate=todayMidnight();document.getElementById('ev-kid-toggle').classList.remove('active');document.getElementById('ev-src-all').click();updateModeUI('ev',evMode,evAnchorDate);};
+window.clearEventFilters=function(){evTags.clear();evSource='All';evMode='upcoming';evKidMode=false;evAnchorDate=todayMidnight();document.getElementById('ev-kid-toggle').classList.remove('active');const evl=document.getElementById('ev-event-label');if(evl)evl.textContent='All Events:';document.getElementById('ev-src-all').click();updateModeUI('ev',evMode,evAnchorDate);};
 
 function renderEvents(){
     const range=getDateRange(evMode,evAnchorDate);

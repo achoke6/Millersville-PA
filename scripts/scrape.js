@@ -588,11 +588,22 @@ async function runScraper() {
     // ===== 4. CLUBS/ORGS (ANTHOLOGY / GETINVOLVED API) =====
     try {
         console.log("📡 Fetching Clubs/Orgs...");
-        const giUrl = `https://getinvolved.millersville.edu/api/discovery/event/search?endsAfter=${startDay}T00:00:00-04:00&orderByField=endsOn&orderByDirection=ascending&status=Approved&take=200`;
-        const giData = await (await fetch(giUrl, { headers: baseHeaders })).json();
+        // Fetch future events (from today forward) and past events separately
+        const giUrlFuture = `https://getinvolved.millersville.edu/api/discovery/event/search?endsAfter=${today.toISOString().split('T')[0]}T00:00:00-04:00&orderByField=endsOn&orderByDirection=ascending&status=Approved&take=200`;
+        const giUrlPast = `https://getinvolved.millersville.edu/api/discovery/event/search?endsAfter=${startDay}T00:00:00-04:00&endsBefore=${today.toISOString().split('T')[0]}T00:00:00-04:00&orderByField=endsOn&orderByDirection=descending&status=Approved&take=100`;
+        
+        const [giFuture, giPast] = await Promise.allSettled([
+            fetch(giUrlFuture, { headers: baseHeaders }).then(r => r.json()),
+            fetch(giUrlPast, { headers: baseHeaders }).then(r => r.json())
+        ]);
+        
+        const giItems = [
+            ...((giFuture.status === 'fulfilled' ? giFuture.value.value : []) || []),
+            ...((giPast.status === 'fulfilled' ? giPast.value.value : []) || [])
+        ];
         let clubCount = 0;
 
-        (giData.value || []).forEach(item => {
+        giItems.forEach(item => {
             const eventDate = new Date(item.startsOn);
             if (eventDate < pastDate || eventDate >= futureDate) return;
 

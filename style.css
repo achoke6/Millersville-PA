@@ -150,6 +150,19 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .card-live { border-left: 3px solid #dc2626; }
 @keyframes pulse-live { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
 
+/* Game result card tinting */
+.card-win { background: linear-gradient(135deg, #f0fdf4 0%, var(--surface) 40%); border-left: 3px solid #16a34a; }
+.card-loss { background: linear-gradient(135deg, #fef2f2 0%, var(--surface) 40%); border-left: 3px solid #dc2626; }
+.card-tie { background: linear-gradient(135deg, #fefce8 0%, var(--surface) 40%); border-left: 3px solid #ca8a04; }
+
+/* Score corner — top right of game card */
+.score-corner { position: absolute; top: 0; right: 0; padding: 8px 12px; border-radius: 0 var(--radius) 0 var(--radius); text-align: center; line-height: 1; }
+.score-win { background: #16a34a; color: white; }
+.score-loss { background: #dc2626; color: white; }
+.score-tie { background: #ca8a04; color: white; }
+.score-result { display: block; font-size: 0.7rem; font-weight: 800; letter-spacing: 1px; opacity: 0.85; }
+.score-value { display: block; font-size: 1.1rem; font-weight: 800; margin-top: 2px; }
+
 /* =========================================================
    8. FILTERS
    ========================================================= */

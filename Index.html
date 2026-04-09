@@ -34,7 +34,6 @@
             <button id="nav-events" class="nav-link" onclick="switchView('events'); toggleMobileMenu();">Events</button>
             <button id="nav-sports" class="nav-link" onclick="switchView('sports'); toggleMobileMenu();">Sports</button>
             <button id="nav-food" class="nav-link" onclick="switchView('food'); toggleMobileMenu();">Food</button>
-            <button id="nav-housing" class="nav-link" onclick="switchView('housing'); toggleMobileMenu();">Housing</button>
             <button id="nav-services" class="nav-link" onclick="switchView('services'); toggleMobileMenu();">Services</button>
             <button id="nav-weather" class="nav-link" onclick="switchView('weather'); toggleMobileMenu();">Weather</button>
             <button id="nav-store" class="nav-link" onclick="switchView('store'); toggleMobileMenu();">Store</button>
@@ -62,7 +61,7 @@
     <!-- HOME -->
     <section id="view-home" class="app-view active">
         <!-- Weather Hero -->
-        <div id="home-weather" class="home-weather-hero"><p>Loading weather...</p></div>
+        <div id="home-weather" class="home-weather-hero" onclick="switchView('weather')" style="cursor:pointer;"><p>Loading weather...</p></div>
 
         <!-- Today's Events -->
         <div class="home-section">
@@ -193,13 +192,13 @@
         <div id="sp-events-container" class="card-grid"></div>
     </section>
 
-    <!-- FOOD/DRINK --><section id="view-food" class="app-view"><div id="food-container" class="card-grid"></div></section>
-    <!-- HOUSING --><section id="view-housing" class="app-view"><div id="housing-container" class="card-grid"></div></section>
+    <!-- FOOD --><section id="view-food" class="app-view"><div id="food-container" class="card-grid"></div></section>
     <!-- SERVICES -->
     <section id="view-services" class="app-view">
         <div class="filter-bar">
             <div class="filter-group" id="svc-filter-group">
                 <button class="src-btn active" onclick="setSvcFilter('All', this)">All</button>
+                <button class="src-btn" onclick="setSvcFilter('Housing', this)">🏠 Housing</button>
                 <button class="src-btn" onclick="setSvcFilter('Government', this)">🏛 Government</button>
                 <button class="src-btn" onclick="setSvcFilter('Health', this)">🏥 Health</button>
                 <button class="src-btn" onclick="setSvcFilter('Beauty/Grooming', this)">💈 Beauty</button>
@@ -212,6 +211,7 @@
                 <button class="src-btn" onclick="setSvcFilter('Education', this)">📚 Education</button>
             </div>
         </div>
+        <div id="housing-container" class="card-grid"></div>
         <div id="services-container" class="card-grid"></div>
     </section>
 
@@ -483,7 +483,7 @@ function matchesSportSource(tags, src) {
     return false;
 }
 
-const viewPaths={home:'/',news:'/news',events:'/events',sports:'/sports',food:'/food',housing:'/housing',services:'/services',weather:'/weather',store:'/store',advertise:'/advertise'};
+const viewPaths={home:'/',news:'/news',events:'/events',sports:'/sports',food:'/food',services:'/services',weather:'/weather',store:'/store',advertise:'/advertise'};
 const pathToView=Object.fromEntries(Object.entries(viewPaths).map(([k,v])=>[v,k]));
 
 document.addEventListener("DOMContentLoaded",()=>{
@@ -503,8 +503,11 @@ async function initApp(){
         p=params.get('p').replace(/\/$/,'');
         history.replaceState(null,'',p);
     }
-    const view=pathToView[p]||'home';
+    let view=pathToView[p]||'home';
+    // Redirect old /housing URL to services with Housing filter
+    if(p==='/housing'){ view='services'; history.replaceState(null,'','/services'); }
     switchView(view,true);
+    if(p==='/housing'){ setTimeout(()=>{ const btn=document.querySelector('#svc-filter-group .src-btn:nth-child(2)'); if(btn) btn.click(); },500); }
 }
 
 // Handle browser back/forward
@@ -520,7 +523,7 @@ window.toggleMobileMenu=function(){
     if(nav.classList.contains('open')){nav.classList.remove('open');overlay.classList.remove('open');setTimeout(()=>{if(!nav.classList.contains('open'))nav.style.display='';},300);}
     else{nav.style.display='flex';void nav.offsetWidth;nav.classList.add('open');overlay.classList.add('open');}
 };
-const viewLabels={home:'',news:'/ News',events:'/ Events',sports:'/ Sports',food:'/ Food',housing:'/ Housing',services:'/ Services',weather:'/ Weather',store:'/ Store',advertise:'/ Advertise'};
+const viewLabels={home:'',news:'/ News',events:'/ Events',sports:'/ Sports',food:'/ Food',services:'/ Services',weather:'/ Weather',store:'/ Store',advertise:'/ Advertise'};
 
 let ecwidLoaded = false;
 function loadEcwidStore(){
@@ -817,12 +820,14 @@ function buildEventCard(e,isSportsPage){
     let tagHtml=sourceLabel?`<span class="card-tag">${sourceLabel}</span>`:'';
     tagHtml+=displayTags.map(t=>`<span class="card-tag">${t}</span>`).join('');
 
-    // Score badge for completed games
+    // Score badge for completed games — large, top-right corner
     let scoreBadge='';
+    let cardResultClass='';
     if(isSportsPage && e.gameResult && e.gameScore){
         const isWin = e.gameResult==='W';
         const isLoss = e.gameResult==='L';
-        scoreBadge=`<span class="badge ${isWin?'badge-win':isLoss?'badge-loss':'badge-neutral'}">${e.gameResult} ${e.gameScore}</span>`;
+        cardResultClass = isWin ? 'card-win' : isLoss ? 'card-loss' : 'card-tie';
+        scoreBadge=`<div class="score-corner ${isWin?'score-win':isLoss?'score-loss':'score-tie'}"><span class="score-result">${e.gameResult}</span><span class="score-value">${e.gameScore}</span></div>`;
     }
 
     // Live badge
@@ -852,7 +857,7 @@ function buildEventCard(e,isSportsPage){
     const isNoonPlaceholder = d.getHours()===12 && d.getMinutes()===0;
     const timeStr = isNoonPlaceholder ? '' : ` @ ${formatTime(d)}`;
 
-    return `<div class="app-card${e.isLive?' card-live':''}"><div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${e.title}${scoreBadge}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${e.location} ${homeInd}${awayInd}</p></div><div class="card-footer"><div class="card-actions"><a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
+    return `<div class="app-card${e.isLive?' card-live':''} ${cardResultClass}" style="position:relative;">${scoreBadge}<div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${e.title}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${e.location} ${homeInd}${awayInd}</p></div><div class="card-footer"><div class="card-actions"><a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
 }
 
 /* ==================== HOME ==================== */
@@ -1075,7 +1080,7 @@ async function loadDining(){try{
         return `<div class="app-card ${p.featured?'card-featured':''}" style="position:relative;">${membersBadge}${featuredBadge}<h3 class="card-title">${p.name}</h3><p class="card-meta" style="margin-bottom:4px;">🍴 ${p.cuisine}</p>${addr}<p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:8px;">${p.description||''}</p>${specialsHtml}<div style="margin-top:auto;">${b}</div></div>`;
     }).join('');
 }catch(e){console.error('Dining error:',e);}}
-async function loadHousing(){try{const data=await(await fetch('housing.json')).json();const c=document.getElementById('housing-container');data.sort((a,b)=>(b.featured===true)-(a.featured===true));c.innerHTML=data.map(p=>{const badge=p.featured?'<span class="badge badge-premium">Premium</span>':'';return `<div class="app-card ${p.featured?'card-featured':''}">${badge}<h3 class="card-title">${p.name}</h3><p class="card-meta" style="font-weight:bold;text-transform:uppercase;margin-bottom:8px;">${p.landlord}</p><p style="font-size:0.9rem;margin-bottom:16px;">${p.description}</p><div class="card-footer"><a href="${p.link}" target="_blank" class="btn btn-sm ${p.featured?'btn-dark':'btn-outline'}" style="display:block;text-align:center;">View Property</a></div></div>`;}).join('');}catch(e){}}
+async function loadHousing(){try{const data=await(await fetch('housing.json')).json();const c=document.getElementById('housing-container');data.sort((a,b)=>(b.featured===true)-(a.featured===true));c.innerHTML=data.map(p=>{const badge=p.featured?'<span class="badge badge-premium">Featured</span>':'';return `<div class="app-card ${p.featured?'card-featured':''}">${badge}<h3 class="card-title">${p.name}</h3><p class="card-meta" style="font-weight:bold;text-transform:uppercase;margin-bottom:8px;">${p.landlord}</p><p style="font-size:0.9rem;margin-bottom:16px;">${p.description}</p><div class="card-footer"><a href="${p.link}" target="_blank" class="btn btn-sm ${p.featured?'btn-dark':'btn-outline'}" style="display:block;text-align:center;">View Property</a></div></div>`;}).join('');}catch(e){}}
 let allServices=[], svcFilter='All';
 async function loadServices(){try{allServices=await(await fetch('services.json')).json();renderServices();}catch(e){}}
 window.setSvcFilter=function(cat,btn){
@@ -1085,13 +1090,26 @@ window.setSvcFilter=function(cat,btn){
     renderServices();
 };
 function renderServices(){
-    const c=document.getElementById('services-container');
-    const f=svcFilter==='All'?allServices:allServices.filter(s=>s.category===svcFilter);
-    c.innerHTML=f.length?f.map(s=>{
-        const link=s.gasLink?`<a href="${s.gasLink}" target="_blank" class="ext-link">⛽ Prices</a>`:`<a href="${s.link}" target="_blank" class="ext-link">🌐 Site</a>`;
-        const phone=s.phone?`<span style="font-weight:600;font-size:0.9rem;">📞 ${s.phone}</span>`:'';
-        return `<div class="app-card"><span class="card-tag">${s.category}</span><h3 class="card-title">${s.name}</h3><p class="card-meta">📍 ${s.address}</p><p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:16px;">${s.description}</p><div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;">${phone}${link}</div></div>`;
-    }).join(''):'<p class="empty-state">No services found.</p>';
+    const hc=document.getElementById('housing-container');
+    const sc=document.getElementById('services-container');
+    // Show housing for All or Housing filter
+    if(svcFilter==='All' || svcFilter==='Housing'){
+        hc.style.display='';
+    } else {
+        hc.style.display='none';
+    }
+    // Show services for All or non-Housing filter
+    if(svcFilter==='Housing'){
+        sc.style.display='none';
+    } else {
+        sc.style.display='';
+        const f=svcFilter==='All'?allServices:allServices.filter(s=>s.category===svcFilter);
+        sc.innerHTML=f.length?f.map(s=>{
+            const link=s.gasLink?`<a href="${s.gasLink}" target="_blank" class="ext-link">⛽ Prices</a>`:`<a href="${s.link}" target="_blank" class="ext-link">🌐 Site</a>`;
+            const phone=s.phone?`<span style="font-weight:600;font-size:0.9rem;">📞 ${s.phone}</span>`:'';
+            return `<div class="app-card"><span class="card-tag">${s.category}</span><h3 class="card-title">${s.name}</h3><p class="card-meta">📍 ${s.address}</p><p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:16px;">${s.description}</p><div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;">${phone}${link}</div></div>`;
+        }).join(''):'<p class="empty-state">No services found.</p>';
+    }
 }
 window.refreshCam=function(){const cam=document.getElementById('cam-img');if(cam)cam.src=`https://snowball.millersville.edu/~cws/wxcam/latest.jpeg?t=${Date.now()}`;const t=document.getElementById('cam-time');if(t)t.textContent=`Updated: ${new Date().toLocaleTimeString()}`;};
 </script>

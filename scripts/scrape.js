@@ -1158,6 +1158,126 @@ async function runScraper() {
     });
     console.log(`👨‍👩‍👧 Family-friendly tagged: ${famCount} of ${events.length} events`);
 
+    // ===== PENN MANOR SCORES FROM MAXPREPS =====
+    try {
+        console.log("📡 Fetching Penn Manor scores from MaxPreps...");
+        const maxPrepsSports = [
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/baseball/schedule/', sport: 'Baseball', gender: 'Boys' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/softball/schedule/', sport: 'Softball', gender: 'Girls' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/lacrosse/schedule/', sport: 'Lacrosse', gender: 'Boys' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/lacrosse/girls/schedule/', sport: 'Lacrosse', gender: 'Girls' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/volleyball/boys/schedule/', sport: 'Volleyball', gender: 'Boys' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/tennis/schedule/', sport: 'Tennis', gender: 'Boys' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/tennis/girls/schedule/', sport: 'Tennis', gender: 'Girls' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/track-field/schedule/', sport: 'Track', gender: 'Boys' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/track-field/girls/schedule/', sport: 'Track', gender: 'Girls' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/soccer/girls/schedule/', sport: 'Soccer', gender: 'Girls' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/football/schedule/', sport: 'Football', gender: 'Boys' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/basketball/schedule/', sport: 'Basketball', gender: 'Boys' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/basketball/girls/schedule/', sport: 'Basketball', gender: 'Girls' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/field-hockey/schedule/', sport: 'Field Hockey', gender: 'Girls' },
+        ];
+
+        let pmScoreCount = 0;
+        const pmScores = []; // {date, sport, gender, result, score}
+
+        for (const mp of maxPrepsSports) {
+            try {
+                const res = await fetch(mp.url, { headers: baseHeaders, signal: AbortSignal.timeout(10000) });
+                if (!res.ok) continue;
+                const html = await res.text();
+
+                // Parse schedule table rows — look for W or L results
+                // Format in HTML: <td>date</td><td>opponent</td><td>W 3-0</td> or <td>L 1-3</td>
+                const rowRegex = /(\d{1,2}\/\d{1,2})[^]*?(?:@|vs)([^<]+)[^]*?([WLT])\s+([\d]+-[\d]+)/g;
+                let match;
+                
+                // Simpler approach: find all result cells with W/L pattern
+                const resultRegex = /(\d{1,2})\/(\d{1,2})\b[^]*?<[^>]*>\s*\[?([WLT])\s+([\d]+-[\d]+)\]?\s*</g;
+                
+                // Most reliable: scan the full HTML for the pattern
+                // MaxPreps format: "3/20" ... "L 3-0" or "[W 3-0]"
+                const lines = html.split('\n');
+                let currentDate = null;
+                
+                for (const line of lines) {
+                    // Find date markers like "3/20" or "4/2"
+                    const dateMatch = line.match(/(\d{1,2})\/(\d{1,2})/);
+                    if (dateMatch && !line.includes('http') && !line.includes('gendersport')) {
+                        const m = parseInt(dateMatch[1]);
+                        const d = parseInt(dateMatch[2]);
+                        if (m >= 1 && m <= 12 && d >= 1 && d <= 31) {
+                            currentDate = { month: m, day: d };
+                        }
+                    }
+                    
+                    // Find result: "W 3-0", "L 1-3", "[W 3-0]", "W 3-1"
+                    const scoreMatch = line.match(/[>\[\s]([WLT])\s+(\d+-\d+)/);
+                    if (scoreMatch && currentDate) {
+                        const result = scoreMatch[1];
+                        const score = scoreMatch[2];
+                        const yr = today.getFullYear();
+                        // Determine year: if month is in fall and we're in spring, it was last year
+                        let gameYear = yr;
+                        if (currentDate.month >= 8 && today.getMonth() < 6) gameYear = yr - 1;
+                        
+                        const gameDate = `${gameYear}-${String(currentDate.month).padStart(2,'0')}-${String(currentDate.day).padStart(2,'0')}`;
+                        
+                        pmScores.push({
+                            date: gameDate,
+                            sport: mp.sport,
+                            gender: mp.gender,
+                            result: result,
+                            score: score
+                        });
+                        currentDate = null; // Reset to avoid double-matching
+                    }
+                }
+                
+                const sportScores = pmScores.filter(s => s.sport === mp.sport && s.gender === mp.gender);
+                if (sportScores.length > 0) {
+                    console.log(`  ✅ ${mp.gender} ${mp.sport}: ${sportScores.length} results`);
+                }
+            } catch (e) {
+                // Silent fail per sport — don't break the whole scraper
+            }
+        }
+
+        // Match scores to PM events
+        if (pmScores.length > 0) {
+            for (const ev of events) {
+                const tags = ev.tags || [];
+                if (!tags.includes('PM') || !tags.includes('Athletics')) continue;
+                if (ev.gameResult) continue; // Already has a score (MU athletics)
+                
+                const evDate = ev.date.substring(0, 10);
+                const evTitle = (ev.title || '').toLowerCase();
+                
+                // Try to match by date + sport
+                for (const sc of pmScores) {
+                    if (sc.date !== evDate) continue;
+                    
+                    // Check if sport matches
+                    const sportLower = sc.sport.toLowerCase();
+                    if (evTitle.includes(sportLower) || tags.some(t => t.toLowerCase() === sportLower)) {
+                        // Check gender match
+                        const genderMatch = (sc.gender === 'Boys' && (tags.includes('Boys') || evTitle.includes('boys'))) ||
+                                           (sc.gender === 'Girls' && (tags.includes('Girls') || evTitle.includes('girls'))) ||
+                                           (!tags.includes('Boys') && !tags.includes('Girls')); // No gender tag = match either
+                        
+                        if (genderMatch) {
+                            ev.gameResult = sc.result;
+                            ev.gameScore = sc.score;
+                            pmScoreCount++;
+                            break;
+                        }
+                    }
+                }
+            }
+            console.log(`🏆 PM scores matched: ${pmScoreCount} games updated`);
+        }
+    } catch (e) { console.error("❌ MaxPreps scores error:", e.message); }
+
     // ===== DEDUPLICATION & SAVE =====
     const seen = new Set();
     const dupeList = [];

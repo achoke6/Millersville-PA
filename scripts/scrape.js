@@ -1050,7 +1050,9 @@ Respond with ONLY the JSON object.`;
                                 role: 'user',
                                 content: [
                                     { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: pdfBuffer.toString('base64') } },
-                                    { type: 'text', text: `Analyze this grocery store weekly circular for John Herr's Village Market. Extract the TOP 10-15 best deals — items with the biggest savings, lowest prices, or best value (BOGO, buy-one-get-one, manager's specials, etc).
+                                    { type: 'text', text: `Analyze this grocery store weekly circular for John Herr's Village Market. Extract the TOP 15-20 best deals — items with the biggest savings, lowest prices, or best value (BOGO, buy-one-get-one, manager's specials, etc).
+
+IMPORTANT: Order the deals from BEST to worst. The first 5 should be the absolute best deals in the circular — the ones a savvy shopper would be most excited about.
 
 For each deal, provide the item name, sale price, and original/regular price if shown.
 
@@ -1122,12 +1124,17 @@ Focus on the most impressive deals a shopper would want to know about. Include m
             },
             "John Herr's Village Market": {
                 note: "Weekly deals · Wed–Tue · 20 Crossgates Dr",
-                weekly: groceryDeals.map(d => {
+                weekly: groceryDeals.slice(0, 5).map(d => {
                     let label = `${d.item} – ${d.salePrice}`;
                     if (d.savings) label += ` (${d.savings})`;
                     return label;
                 }),
-                weeklyDateRange: groceryDeals.length > 0 ? groceryDeals[0].dateRange : ''
+                weeklyDateRange: groceryDeals.length > 0 ? groceryDeals[0].dateRange : '',
+                rawDeals: groceryDeals.map(d => ({
+                    item: d.item, salePrice: d.salePrice,
+                    regularPrice: d.regularPrice || '', savings: d.savings || '',
+                    dateRange: d.dateRange || ''
+                }))
             }
         };
         fs.writeFileSync(path.join(__dirname, '../specials.json'), JSON.stringify(specials, null, 2));

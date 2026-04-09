@@ -732,31 +732,50 @@ async function runScraper() {
                 try {
                     const occurrences = ev.rrule.between(pastDate, futureDate);
                     for (const occ of occurrences) {
+                        // rrule.between() returns UTC dates — shift to match the original event's local time
+                        // The occurrence date from rrule is the "local" date but treated as UTC
+                        // We need to use the date portion and combine with the original time
+                        const origStart = new Date(ev.start);
+                        
+                        // Get the date from the occurrence (year, month, day in UTC = intended local date)
+                        const occYear = occ.getUTCFullYear();
+                        const occMonth = occ.getUTCMonth();
+                        const occDay = occ.getUTCDate();
+                        
+                        // Get time from original event
+                        const origHour = origStart.getUTCHours();
+                        const origMin = origStart.getUTCMinutes();
+                        
+                        // Build the correct date in Eastern time
+                        // Create as UTC with the intended local date+time, then it stores correctly
+                        const eventDate = new Date(Date.UTC(occYear, occMonth, occDay, origHour, origMin, 0));
+
                         // Check for exceptions/modifications (EXDATE)
-                        const occKey = occ.toISOString().split('T')[0];
+                        const occKey = `${occYear}-${String(occMonth+1).padStart(2,'0')}-${String(occDay).padStart(2,'0')}`;
                         if (ev.exdate) {
-                            const exdates = Object.values(ev.exdate).map(d => new Date(d).toISOString().split('T')[0]);
+                            const exdates = Object.values(ev.exdate).map(d => {
+                                const ed = new Date(d);
+                                return `${ed.getUTCFullYear()}-${String(ed.getUTCMonth()+1).padStart(2,'0')}-${String(ed.getUTCDate()).padStart(2,'0')}`;
+                            });
                             if (exdates.includes(occKey)) continue;
                         }
-
-                        // Preserve original time from start
-                        const origStart = new Date(ev.start);
-                        const eventDate = new Date(occ);
-                        eventDate.setHours(origStart.getHours(), origStart.getMinutes(), origStart.getSeconds());
 
                         // Check if this occurrence has been modified (RECURRENCE-ID)
                         if (ev.recurrences && ev.recurrences[occKey]) {
                             const mod = ev.recurrences[occKey];
+                            const modTitle = mod.summary || title;
+                            const boroughStream = /council/i.test(modTitle) ? 'https://www.youtube.com/@MillersvilleBorough/streams' : '';
                             events.push({
-                                title: mod.summary || title,
+                                title: modTitle,
                                 date: new Date(mod.start).toISOString(),
                                 location: mod.location || loc,
                                 tags: ['Borough'],
                                 price: 'Free', ticketLink: '',
                                 sourceLink: 'https://millersvilleborough.org/resident-info/calendar/',
-                                gameResult: '', gameScore: '', streamLink: '', isLive: false
+                                gameResult: '', gameScore: '', streamLink: boroughStream, isLive: false
                             });
                         } else {
+                            const boroughStream = /council/i.test(title) ? 'https://www.youtube.com/@MillersvilleBorough/streams' : '';
                             events.push({
                                 title,
                                 date: eventDate.toISOString(),
@@ -764,7 +783,7 @@ async function runScraper() {
                                 tags: ['Borough'],
                                 price: 'Free', ticketLink: '',
                                 sourceLink: 'https://millersvilleborough.org/resident-info/calendar/',
-                                gameResult: '', gameScore: '', streamLink: '', isLive: false
+                                gameResult: '', gameScore: '', streamLink: boroughStream, isLive: false
                             });
                         }
                         boroughCount++;
@@ -785,7 +804,9 @@ async function runScraper() {
                     tags: ['Borough'],
                     price: 'Free', ticketLink: '',
                     sourceLink: ev.url || 'https://millersvilleborough.org/resident-info/calendar/',
-                    gameResult: '', gameScore: '', streamLink: '', isLive: false
+                    gameResult: '', gameScore: '',
+                    streamLink: /council/i.test(title) ? 'https://www.youtube.com/@MillersvilleBorough/streams' : '',
+                    isLive: false
                 });
                 boroughCount++;
             }

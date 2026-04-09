@@ -823,28 +823,24 @@ async function runScraper() {
     } catch (e) { console.error("❌ Borough Calendar error:", e.message); }
 
 
-    // ===== 7. VFW POST 7294 (Google Sheet + Vision OCR) =====
+    // ===== 7. VFW POST 7294 (Google Sheet + Anthropic Claude Vision) =====
     try {
         console.log("📡 Fetching VFW Post 7294 images from Google Sheet...");
-        const VISION_API_KEY = process.env.GOOGLE_VISION_API_KEY;
-        if (!VISION_API_KEY) throw new Error('GOOGLE_VISION_API_KEY not set');
+        const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY;
+        if (!ANTHROPIC_KEY) throw new Error('ANTHROPIC_API_KEY not set');
 
         const VFW_SHEET_ID = process.env.VFW_SHEET_ID || '';
         const cachePath = path.join(__dirname, '../vfw-cache.json');
         let vfwCache = {};
         try {
             vfwCache = JSON.parse(fs.readFileSync(cachePath, 'utf8'));
-            // Remove empty cache entries from failed API calls
             for (const [key, val] of Object.entries(vfwCache)) {
-                if (!val || val.trim().length === 0) delete vfwCache[key];
+                if (!val || (typeof val === 'string' && val.trim().length === 0)) delete vfwCache[key];
             }
         } catch (e) { /* no cache yet */ }
 
         let vfwEventCount = 0, vfwApiCalls = 0;
         let vfwWeeklySpecials = [], vfwSpecialsDateRange = '';
-
-        const months = {january:0,february:1,march:2,april:3,may:4,june:5,july:6,august:7,september:8,october:9,november:10,december:11};
-        const monthPattern = Object.keys(months).join('|');
 
         // Fetch image URLs from Google Sheet
         let sheetImages = [];
@@ -870,265 +866,153 @@ async function runScraper() {
             console.log(`  ⚠️ VFW_SHEET_ID not set — skipping`);
         }
 
-        // OCR each image and extract events/specials
+        // Process each image with Claude Vision
         for (const si of sheetImages) {
           try {
-            // Get OCR text (from cache or Vision API)
-            let ocrText = vfwCache[si.url] || '';
-            if (!ocrText) {
+            // Check cache first
+            let parsed = vfwCache[si.url];
+            if (parsed && typeof parsed === 'object' && parsed.type) {
+                console.log(`  📱 Image (${si.date || 'no date'}): cached as ${parsed.type}`);
+            } else {
+                // Download image
                 const imgRes = await fetch(si.url, { headers: baseHeaders, signal: AbortSignal.timeout(15000) });
                 if (!imgRes.ok) { console.log(`    ⚠️ Download failed: ${imgRes.status}`); continue; }
                 const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
                 if (imgBuffer.length < 1000) { console.log(`    ⚠️ Tiny image, skipping`); continue; }
 
-                const visionRes = await fetch(`https://vision.googleapis.com/v1/images:annotate?key=${VISION_API_KEY}`, {
-                    method: 'POST', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ requests: [{ image: { content: imgBuffer.toString('base64') }, features: [{ type: 'TEXT_DETECTION', maxResults: 1 }] }] })
+                // Detect media type
+                const isJpeg = imgBuffer[0] === 0xFF && imgBuffer[1] === 0xD8;
+                const isPng = imgBuffer[0] === 0x89 && imgBuffer[1] === 0x50;
+                const mediaType = isPng ? 'image/png' : isJpeg ? 'image/jpeg' : 'image/jpeg';
+
+                // Send to Claude Vision API
+                const prompt = `Analyze this VFW Post 7294 image. Today is ${today.toISOString().split('T')[0]}. Determine the type and extract structured data.
+
+Respond ONLY with valid JSON (no markdown, no backticks), using one of these formats:
+
+If it's a MONTHLY CALENDAR with events:
+{"type":"calendar","month":"April","year":2026,"events":[{"name":"Music Bingo","date":"2026-04-10"},{"name":"Trivia Night","date":"2026-04-15"}]}
+Only include special events like Bingo, Trivia, Meetings, Parties, BBQ, Paint nights, Concerts. Do NOT include recurring food nights (Shrimp Night, Wing Night, Taco Night, Burger Night) or daily food specials.
+
+If it's a WEEKLY SPECIALS flyer:
+{"type":"specials","dateRange":"Tuesday, April 7 through Saturday, April 11","items":[{"name":"Tuna Melt","price":"$12.95","fridayOnly":false},{"name":"Prime Rib","price":"$17.95","fridayOnly":true}]}
+Extract food item names, prices, and whether they are Friday-only.
+
+If it's an EVENT FLYER/ANNOUNCEMENT:
+{"type":"event","name":"Meat Tray Bingo","date":"2026-05-03","time":"1:00 PM","details":"Doors open 12:00 PM, Starter Packs $25","openToPublic":true}
+
+Respond with ONLY the JSON object.`;
+
+                const claudeRes = await fetch('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': ANTHROPIC_KEY,
+                        'anthropic-version': '2023-06-01'
+                    },
+                    body: JSON.stringify({
+                        model: 'claude-sonnet-4-20250514',
+                        max_tokens: 1024,
+                        messages: [{
+                            role: 'user',
+                            content: [
+                                { type: 'image', source: { type: 'base64', media_type: mediaType, data: imgBuffer.toString('base64') } },
+                                { type: 'text', text: prompt }
+                            ]
+                        }]
+                    })
                 });
-                if (!visionRes.ok) { const err = await visionRes.text(); console.log(`    ⚠️ Vision error: ${err.substring(0, 120)}`); continue; }
-                ocrText = (await visionRes.json()).responses?.[0]?.fullTextAnnotation?.text || '';
+
+                if (!claudeRes.ok) {
+                    const err = await claudeRes.text();
+                    console.log(`    ⚠️ Claude API error: ${err.substring(0, 200)}`);
+                    continue;
+                }
+
+                const claudeData = await claudeRes.json();
+                const responseText = claudeData.content?.[0]?.text || '';
                 vfwApiCalls++;
-                if (ocrText.trim().length > 10) {
-                    vfwCache[si.url] = ocrText;
-                } else { console.log(`    ⚠️ No text detected`); continue; }
+
+                try {
+                    // Strip any markdown fences if present
+                    const cleanJson = responseText.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+                    parsed = JSON.parse(cleanJson);
+                    vfwCache[si.url] = parsed;
+                    console.log(`  📱 Image (${si.date || 'no date'}): ${parsed.type}`);
+                } catch (jsonErr) {
+                    console.log(`    ⚠️ Failed to parse Claude response: ${responseText.substring(0, 200)}`);
+                    continue;
+                }
             }
 
-            // Log OCR
-            console.log(`  📱 Image (${si.date || 'no date'}): ${ocrText.trim().length} chars`);
-            console.log(`    ────────────────────────────────`);
-            ocrText.trim().split('\n').forEach(l => { if (l.trim()) console.log(`    │ ${l.trim()}`); });
-            console.log(`    ────────────────────────────────`);
-
-            const allOcrText = ocrText;
-            const pubDate = si.date ? new Date(si.date) : new Date();
             const postLink = 'https://www.facebook.com/VFWPost7294';
 
-            // Classification helpers
-            const recurringFoodNights = /^(wing night|taco night|burger night|shrimp night|ham slice|turkey pesto)$/i;
-            const specialEvents = /easter|christmas|holiday|carnival|fireworks|fundraiser|dance|cook.?off|bbq|cookout|picnic|gun\s+bingo|steak\s+night|paint|volunteer|meeting|memorial|veteran|spring chicken/i;
-            const recurringEvents = /bingo|trivia|cornhole|karaoke/i;
-            const foodItems = /fish\s+sandwich|beef\s+tips|meatloaf|shepherd|fried\s+catfish|shrimp\s+alfredo|tuna\s+steak|brioche|fettuccine|mashed\s+potato|chicken and waffles|tuna melt|bbq ribs|nashville hot|shrimp tacos|bbq pork|chicken.*bacon.*ranch|chicken ceasar|maple glazed|prime rib|fried flounder|buttered scallops|pork sandwich/i;
-            const ocrNoise = /years?\s+of\s+service|1899|WEW|WWEW/i;
-            const foundEvents = new Set();
-
-            // ===== DETECT POST TYPE =====
-            const isCalendar = (/tuesday/i.test(allOcrText) && /wednesday/i.test(allOcrText) && /thursday/i.test(allOcrText) && /\b\d{1,2}\n/m.test(allOcrText));
-            const isWeeklySpecials = /weekly\s*(food\s*)?specials/i.test(allOcrText.substring(0, 300));
-
-            // ===== CALENDAR POST =====
-            if (isCalendar) {
-                console.log(`    📅 Calendar image detected`);
-                const calMonthMatch = allOcrText.match(new RegExp(`\\b(${monthPattern})\\b`, 'i'));
-                if (!calMonthMatch) { console.log(`    ⚠️ No month found`); continue; }
-                const calMonth = months[calMonthMatch[1].toLowerCase()];
-                let calYear = pubDate.getFullYear();
-                if (calMonth < pubDate.getMonth() - 1) calYear++;
-                const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
-
-                // Detect format: old (Sunday first) vs new (Tuesday first)
-                const hdr = allOcrText.substring(0, 400).toLowerCase();
-                const sundayFirst = hdr.indexOf('sunday') >= 0 && hdr.indexOf('sunday') < hdr.indexOf('tuesday');
-                const dowToCol = sundayFirst
-                    ? { 0:0, 1:1, 2:2, 3:3, 4:4, 5:5, 6:6 }
-                    : { 1:0, 2:1, 3:2, 4:3, 5:4, 6:5, 0:6 };
-                console.log(`    📅 Format: ${sundayFirst ? 'OLD (Sun first)' : 'NEW (Tue first, Sun last)'}`);
-
-                // Build weeks
-                const weeks = [];
-                let week = new Array(7).fill(0);
-                for (let d = 1; d <= daysInMonth; d++) {
-                    const dow = new Date(calYear, calMonth, d).getDay();
-                    week[dowToCol[dow]] = d;
-                    if (dowToCol[dow] === 6 || d === daysInMonth) {
-                        weeks.push([...week]);
-                        week = new Array(7).fill(0);
-                    }
-                }
-
-                // Event-to-day-of-week mapping
-                const eventDow = {
-                    'shrimp night':2, 'auxiliary meeting':3, 'wing night':3, 'trivia':3,
-                    'trivia night':3, 'post meeting':3, 'taco night':4,
-                    'music bingo':5, 'fried catfish':5, 'shrimp alfredo':5, 'tuna steak':5,
-                    'vfw easter party':5, 'steak night':5, 'prime rib':5, 'fried flounder':5,
-                    'maple glazed salmon':5, 'buttered scallops':5,
-                    'burger night':6, 'banquet hall paint':6, 'spring chicken bbq':6,
-                    'meat tray bingo':0, 'aux easter egg hunt':0, 'easter - closed':0,
-                };
-                const guessCol = (name) => {
-                    const lower = name.toLowerCase();
-                    let dow = eventDow[lower];
-                    if (dow === undefined) {
-                        if (/bingo/i.test(name) && !/music/i.test(name)) dow = 0;
-                        else if (/meeting/i.test(name)) dow = 3;
-                        else if (/trivia|cornhole/i.test(name)) dow = 3;
-                        else if (/hunt|egg/i.test(name)) dow = 0;
-                        else if (/bbq|cookout/i.test(name)) dow = 6;
-                        else return -1;
-                    }
-                    return dowToCol[dow];
-                };
-
-                // Parse OCR lines into week blocks
-                const lines = allOcrText.split('\n').map(l => l.trim()).filter(l => l);
-                let curWeek = -1;
-                let pending = [];
-                let seenNum = false;
-
-                const processWeek = (wIdx, items) => {
-                    if (wIdx < 0 || wIdx >= weeks.length) return;
-                    for (const evName of items) {
-                        const col = guessCol(evName);
-                        if (col < 0) continue;
-                        const dayNum = weeks[wIdx][col];
-                        if (!dayNum) continue;
-                        const evDate = new Date(Date.UTC(calYear, calMonth, dayNum, 16, 0, 0));
-                        if (isNaN(evDate.getTime()) || evDate < pastDate || evDate >= futureDate) continue;
-                        if (evDate.getDay() === 1) continue; // Monday closed
-                        const dk = evDate.toISOString().substring(0, 10);
-                        if (recurringFoodNights.test(evName)) continue;
-                        if (foodItems.test(evName)) continue;
-                        if (!specialEvents.test(evName) && !recurringEvents.test(evName) &&
-                            !/bingo|trivia|party|meeting|hunt|paint|dance|cornhole|concert|show|karaoke|volunteer|bbq/i.test(evName)) continue;
-                        if (foundEvents.has(dk + evName)) continue;
-                        foundEvents.add(dk + evName);
-                        events.push({
-                            title: evName, date: evDate.toISOString(),
-                            location: 'VFW Post 7294, 219 Walnut Hill Rd',
-                            tags: ['Other', 'VFW'], price: 'Members Only', ticketLink: '', sourceLink: postLink,
-                            gameResult: '', gameScore: '', streamLink: '', isLive: false, kidFriendly: false
-                        });
-                        vfwEventCount++;
-                        console.log(`    📌 Event: "${evName}" on ${dk} (wk${wIdx+1}, col${col})`);
-                    }
-                };
-
-                for (const line of lines) {
-                    if (ocrNoise.test(line) || /^[a-z]$/i.test(line) || /^m$/i.test(line)) continue;
-                    if (/^(sunday|monday|tuesday|wednesday|thursday|friday|saturday|weekly specials?)$/i.test(line)) continue;
-                    if (line.length < 2) continue;
-
-                    const isNum = /^\d{1,2}$/.test(line) && parseInt(line) >= 1 && parseInt(line) <= 31;
-                    if (isNum) {
-                        const num = parseInt(line);
-                        let numWeek = -1;
-                        for (let w = 0; w < weeks.length; w++) {
-                            if (weeks[w].includes(num)) { numWeek = w; break; }
-                        }
-                        if (!seenNum && pending.length > 0) {
-                            const w1 = weeks.findIndex(w => w.includes(1));
-                            if (w1 >= 0) processWeek(w1, pending);
-                            pending = [];
-                        }
-                        seenNum = true;
-                        if (pending.length > 0 && curWeek >= 0 && numWeek !== curWeek) {
-                            processWeek(curWeek, pending);
-                            pending = [];
-                        }
-                        curWeek = numWeek;
-                    } else if (line.length >= 3 && line.length <= 80) {
-                        pending.push(line);
-                    }
-                }
-                if (pending.length > 0 && curWeek >= 0) processWeek(curWeek, pending);
-
-            // ===== WEEKLY SPECIALS POST =====
-            } else if (isWeeklySpecials && vfwWeeklySpecials.length === 0) {
-                console.log(`    🍽️ Weekly specials image`);
-
-                const specialsText = allOcrText;
-                const rangeMatch = specialsText.match(/from\s+\w+,?\s*((?:january|february|march|april|may|june|july|august|september|october|november|december)\s+\d{1,2})\s*(?:through|thru|-|–)\s*\w*,?\s*((?:january|february|march|april|may|june|july|august|september|october|november|december)?\s*\d{1,2})/i);
-                let dateRange = rangeMatch ? rangeMatch[0].replace(/^from\s+/i, '').trim() : '';
-                if (dateRange) console.log(`    📅 Range: ${dateRange}`);
-
-                // Strip logo noise
-                let cleaned = specialsText
-                    .replace(/W+[EF]W\n/gi, '')           // WEW, WWEW, WWFW etc
-                    .replace(/\d{3,4}\n/g, '')             // 125, 1899, 2024
-                    .replace(/Years?\s+of\s+Service[^\n]*/gi, '')
-                    .replace(/1899[-\s]*2024[1]?/gi, '')
-                    .replace(/MILLERSVILLE[-\s]*MANOR\s+VFW\s+POST\s+7294/gi, '')
-                    .replace(/WEEKLY\s+SPECIALS/gi, '')
-                    .replace(/VETERAN[S]?\s+[A-Z]+\s+WARS?[^\n]*/gi, '')  // VETERANS REIGN WARS
-                    .replace(/THE\n|UNITED\n|STATES\n/gi, '')               // Seal text
-                    .replace(/A timeless favorite[^\n]*/gi, '')             // Orphan description fragment
-
-                // Handle "FRIDAY ONLY – FOOD NAME" on one line
-                cleaned = cleaned.replace(/FRIDAY ONLY\s*[-–]\s*/gi, 'FRIDAYONLY_FLAG\n');
-
-                const lines = cleaned.split('\n').map(l => l.trim()).filter(l => l.length > 2);
-                const noiseWords = /^(MILLERSVILLE|MANOR|VFW|POST|WEEKLY|SPECIALS|FOOD|WEW|WWEW|WWFW|YEARS|SERVICE|FROM|FRIDAY ONLY|FRIDAYONLY_FLAG|EASTER|VOLUNTEERS|NEEDED|PAINTING|LUNCH|JUST SHOW|VETERAN|UNITED|STATES|THE)/i;
-                const weeklySpecials = [];
-
-                for (let i = 0; i < lines.length; i++) {
-                    const line = lines[i];
-                    if (!/^[A-Z][A-Z\s&'–-]{2,50}$/.test(line) || noiseWords.test(line)) continue;
-                    // Find price in next lines
-                    let price = '';
-                    for (let j = i + 1; j < Math.min(i + 10, lines.length); j++) {
-                        const pm = lines[j].match(/\$(\d+\.\d{2})/);
-                        if (pm) { price = `$${pm[1]}`; break; }
-                        if (/^[A-Z][A-Z\s&'–-]{2,50}$/.test(lines[j]) && !noiseWords.test(lines[j])) break;
-                    }
-                    if (!price) continue;
-                    // Check for Friday Only: previous line is the flag, or prev line contains "friday only"
-                    let isFridayOnly = (i > 0 && (/friday only/i.test(lines[i - 1]) || lines[i - 1] === 'FRIDAYONLY_FLAG'));
-                    let name = line.replace(/\s+/g, ' ').split(' ').map(w => w.charAt(0) + w.slice(1).toLowerCase()).join(' ').replace(/\s*[-–]\s*$/, '').trim();
-                    if (name.length < 4) continue;
-                    weeklySpecials.push({ name, price, fridayOnly: isFridayOnly, dateRange });
-                    console.log(`    🍽️ Special: ${name} – ${price}${isFridayOnly ? ' (Fri only)' : ''}`);
-                }
-
-                // Only show if current
-                if (weeklySpecials.length > 0 && dateRange) {
-                    const sm = dateRange.match(/(\w+)\s+(\d{1,2})\s+through/i);
-                    const em = dateRange.match(/through\s+\w+,?\s*(?:(\w+)\s+)?(\d{1,2})/i);
-                    if (sm && em) {
-                        const sM = months[sm[1].toLowerCase()], sD = parseInt(sm[2]);
-                        const eM = months[(em[1] || sm[1]).toLowerCase()], eD = parseInt(em[2]);
-                        const yr = today.getFullYear();
-                        if (today >= new Date(yr, sM, sD) && today <= new Date(yr, eM, eD, 23, 59, 59)) {
-                            vfwWeeklySpecials = weeklySpecials; vfwSpecialsDateRange = dateRange;
-                            console.log(`    ✅ Current week specials`);
-                        } else { console.log(`    ⏭️ Expired (${dateRange})`); }
-                    } else { vfwWeeklySpecials = weeklySpecials; vfwSpecialsDateRange = dateRange; }
-                } else if (weeklySpecials.length > 0) {
-                    vfwWeeklySpecials = weeklySpecials; vfwSpecialsDateRange = dateRange;
-                }
-
-            // ===== OTHER POST (event announcements) =====
-            } else if (!isWeeklySpecials) {
-                const dateRegex = new RegExp(`(?:(?:monday|tuesday|wednesday|thursday|friday|saturday|sunday)[,\\s]*)?(${monthPattern})[\\s.,]*(\\d{1,2})(?:st|nd|rd|th)?[,\\s]*(\\d{4})?`, 'gi');
-                let dm;
-                while ((dm = dateRegex.exec(allOcrText)) !== null) {
-                    const mName = dm[1].toLowerCase(), day = parseInt(dm[2]);
-                    let yr = dm[3] ? parseInt(dm[3]) : pubDate.getFullYear();
-                    const mNum = months[mName]; if (mNum === undefined) continue;
-                    if (mNum < pubDate.getMonth() - 1 && !dm[3]) yr++;
-                    const evDate = new Date(Date.UTC(yr, mNum, day, 16, 0, 0));
+            // ===== CALENDAR =====
+            if (parsed.type === 'calendar' && parsed.events) {
+                console.log(`    📅 Calendar: ${parsed.month} ${parsed.year}, ${parsed.events.length} events`);
+                for (const evt of parsed.events) {
+                    if (!evt.date || !evt.name) continue;
+                    const evDate = new Date(evt.date + 'T16:00:00Z');
                     if (isNaN(evDate.getTime()) || evDate < pastDate || evDate >= futureDate) continue;
-                    if (evDate.getDay() === 1) continue;
-                    const dk = evDate.toISOString().substring(0, 10);
-                    if (foundEvents.has(dk)) continue;
-                    const ctx = allOcrText.substring(Math.max(0, dm.index - 200), dm.index + dm[0].length + 400);
-                    if (foodItems.test(ctx) && !specialEvents.test(ctx) && !recurringEvents.test(ctx)) continue;
-                    let evName = '';
-                    const nm = ctx.match(/([A-Z][A-Za-z\s'&]+(?:Bingo|Trivia|Cornhole|Dance|Party|Carnival|Fundraiser|Concert|Show|Tournament|BBQ|Cookout|Picnic|Hunt))/);
-                    if (nm) evName = nm[1].trim();
-                    if (!evName) evName = 'VFW Event';
-                    if (foodItems.test(evName)) continue;
-                    foundEvents.add(dk);
+                    // Skip recurring food nights
+                    if (/^(wing night|taco night|burger night|shrimp night)$/i.test(evt.name)) continue;
                     events.push({
-                        title: evName, date: evDate.toISOString(),
+                        title: evt.name, date: evDate.toISOString(),
                         location: 'VFW Post 7294, 219 Walnut Hill Rd',
                         tags: ['Other', 'VFW'], price: 'Members Only', ticketLink: '', sourceLink: postLink,
                         gameResult: '', gameScore: '', streamLink: '', isLive: false, kidFriendly: false
                     });
                     vfwEventCount++;
-                    console.log(`    📌 Event: "${evName}" on ${dk}`);
+                    console.log(`    📌 Event: "${evt.name}" on ${evt.date}`);
                 }
-            } else {
-                console.log(`    ⏭️ Older specials, skipping`);
+
+            // ===== WEEKLY SPECIALS =====
+            } else if (parsed.type === 'specials' && parsed.items && vfwWeeklySpecials.length === 0) {
+                console.log(`    🍽️ Weekly specials: ${parsed.items.length} items`);
+                if (parsed.dateRange) console.log(`    📅 Range: ${parsed.dateRange}`);
+
+                // Check if current week
+                let isCurrent = true;
+                if (parsed.dateRange) {
+                    const months = {january:0,february:1,march:2,april:3,may:4,june:5,july:6,august:7,september:8,october:9,november:10,december:11};
+                    const sm = parsed.dateRange.match(/(january|february|march|april|may|june|july|august|september|october|november|december)\s+(\d{1,2})/i);
+                    const em = parsed.dateRange.match(/through\s+\w+,?\s*(?:(january|february|march|april|may|june|july|august|september|october|november|december)\s+)?(\d{1,2})/i);
+                    if (sm && em) {
+                        const yr = today.getFullYear();
+                        const sM = months[sm[1].toLowerCase()], sD = parseInt(sm[2]);
+                        const eM = months[(em[1] || sm[1]).toLowerCase()], eD = parseInt(em[2]);
+                        if (today < new Date(yr, sM, sD) || today > new Date(yr, eM, eD, 23, 59, 59)) {
+                            isCurrent = false;
+                            console.log(`    ⏭️ Expired (${parsed.dateRange})`);
+                        }
+                    }
+                }
+
+                if (isCurrent) {
+                    vfwWeeklySpecials = parsed.items.map(s => ({
+                        name: s.name, price: s.price || '', fridayOnly: s.fridayOnly || false,
+                        dateRange: parsed.dateRange || ''
+                    }));
+                    vfwSpecialsDateRange = parsed.dateRange || '';
+                    parsed.items.forEach(s => console.log(`    🍽️ ${s.name} – ${s.price}${s.fridayOnly ? ' (Fri only)' : ''}`));
+                    console.log(`    ✅ Current week specials`);
+                }
+
+            // ===== EVENT FLYER =====
+            } else if (parsed.type === 'event' && parsed.name) {
+                const evDateStr = parsed.date || '';
+                const evDate = evDateStr ? new Date(evDateStr + 'T16:00:00Z') : null;
+                if (evDate && !isNaN(evDate.getTime()) && evDate >= pastDate && evDate < futureDate) {
+                    const priceTag = parsed.openToPublic ? 'Open to Public' : 'Members Only';
+                    events.push({
+                        title: parsed.name, date: evDate.toISOString(),
+                        location: 'VFW Post 7294, 219 Walnut Hill Rd',
+                        tags: ['Other', 'VFW'], price: priceTag, ticketLink: '', sourceLink: postLink,
+                        gameResult: '', gameScore: '', streamLink: '', isLive: false, kidFriendly: false
+                    });
+                    vfwEventCount++;
+                    console.log(`    📌 Event: "${parsed.name}" on ${evDateStr}${parsed.time ? ' at ' + parsed.time : ''}`);
+                }
             }
 
           } catch (err) { console.log(`    ⚠️ Error: ${err.message}`); }

@@ -871,6 +871,8 @@ function buildEventCard(e,isSportsPage){
         actionHtml=`<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-live">📺 Watch</a>`;
     } else if(isPast && e.streamLink){
         actionHtml=`<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-outline">📺 Replay</a>`;
+    } else if(!isSportsPage && e.streamLink){
+        actionHtml=`<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-outline">📺 Watch Live</a>`;
     } else if(hasLink){
         actionHtml=`<a href="${e.ticketLink}" target="_blank" class="btn btn-sm btn-ticket">🎟 Tickets</a>`;
     } else if(!isFree){
@@ -1100,7 +1102,9 @@ async function loadDining(){try{
             if(items.length > 0){
                 const note = sp.note ? `<p style="font-size:0.7rem;color:var(--text-muted);margin-bottom:4px;font-style:italic;">${sp.note}</p>` : '';
                 const dateRange = sp.weeklyDateRange ? `<p style="font-size:0.7rem;color:var(--gold);font-weight:600;margin-bottom:4px;">${sp.weeklyDateRange}</p>` : '';
-                specialsHtml=`<div class="specials-section">${note}${dateRange}<p style="font-size:0.8rem;font-weight:700;margin-bottom:4px;">Today's Specials (${dayName}):</p>${items.map(i=>`<p style="font-size:0.8rem;color:var(--text);margin:2px 0;">• ${i}</p>`).join('')}</div>`;
+                const isGrocery = p.name === "John Herr's Village Market";
+                const heading = isGrocery ? '🏷️ Top Weekly Deals:' : `Today's Specials (${dayName}):`;
+                specialsHtml=`<div class="specials-section">${note}${dateRange}<p style="font-size:0.8rem;font-weight:700;margin-bottom:4px;">${heading}</p>${items.map(i=>`<p style="font-size:0.8rem;color:var(--text);margin:2px 0;">• ${i}</p>`).join('')}</div>`;
             }
         }
 

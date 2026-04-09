@@ -1,116 +1,94 @@
 [
   {
-    "name": "Chick-Fil-A",
-    "cuisine": "Chicken",
-    "description": "Classic chicken sandwiches and nuggets",
-    "address": "21 S George St, Millersville, PA 17551",
-    "status": "App Required",
-    "featured": true,
-    "link": "https://play.google.com/store/apps/details?id=com.blackboard.mobileorder&hl=en_US",
-    "iosLink": "https://apps.apple.com/us/app/transact-mobile-ordering/id1494719529"
-  },
-  {
     "name": "Koshary Station",
-    "cuisine": "Egyptian",
-    "description": "Authentic Egyptian dishes — falafel, shawarma, koshary & more",
-    "address": "4 S Prince St, Millersville, PA 17551",
+    "cuisine": "Egyptian cuisine",
+    "description": "Authentic Egyptian dishes and flavors",
     "status": "View Menu",
-    "link": "https://www.kosharystation.com"
+    "link": "https://www.google.com/maps/search/Koshary+Station+Millersville+PA"
   },
   {
     "name": "Cactus Café",
-    "cuisine": "Café",
+    "cuisine": "Popular local cafe",
     "description": "Community favorite café with a warm atmosphere",
-    "address": "12 S George St, Millersville, PA 17551",
     "status": "View Menu",
-    "link": "https://cactuscafe.wixsite.com/cactuscafemillersvil/menu"
+    "link": "https://www.google.com/maps/search/Cactus+Cafe+Millersville+PA"
   },
   {
     "name": "Jack's Family Tavern & Restaurant",
     "cuisine": "American tavern",
-    "description": "Family-friendly American tavern with classic fare and great fries",
-    "address": "20 S George St, Millersville, PA 17551",
+    "description": "Family-friendly American tavern with classic fare",
     "status": "View Menu",
-    "link": "https://www.jacksfamilytavern.com/"
+    "link": "https://www.google.com/maps/search/Jacks+Family+Tavern+Millersville+PA"
   },
   {
     "name": "Sugar Bowl Millersville",
     "cuisine": "American, Stromboli",
-    "description": "Known for their stromboli and large menu",
-    "address": "2 E Frederick St, Millersville, PA 17551",
-    "status": "Order Online",
-    "link": "https://orderonlinemenu.com/SugarBowlMillersville"
+    "description": "Known for stromboli and a large menu",
+    "status": "View Menu",
+    "link": "https://www.google.com/maps/search/Sugar+Bowl+Millersville+PA"
   },
   {
     "name": "Poke Bowl Station",
     "cuisine": "Poke bowls",
     "description": "Fresh poke bowls with customizable toppings",
-    "address": "4 S George St, Millersville, PA 17551",
-    "status": "Order Online",
-    "link": "https://millersville.pokebowlstationpa.com/"
+    "status": "View Menu",
+    "link": "https://www.google.com/maps/search/Poke+Bowl+Station+Millersville+PA"
   },
   {
     "name": "House of Pizza",
     "cuisine": "Pizza, Italian",
-    "description": "Local pizza shop serving slices and pies",
-    "address": "101 W Frederick St, Millersville, PA 17551",
-    "status": "View Menu",
-    "link": "https://www.houseofpizzamillersville.com/menu.html"
+    "description": "Local pizza shop offering slices",
+    "status": "Order Online",
+    "link": "https://www.houseofpizzamillersville.com/"
   },
   {
     "name": "Two Cousins Pizza Millersville",
     "cuisine": "Italian, Pizza",
-    "description": "Casual Italian dining and pizza",
-    "address": "115 Manor Ave, Millersville, PA 17551",
+    "description": "Casual Italian and pizza",
     "status": "Order Online",
-    "link": "https://order.toasttab.com/online/two-cousins-pizza-millersville-115-manor-avenue-ogxls"
+    "link": "https://order.online/business/two-cousins-pizza-11339584"
   },
   {
     "name": "Nino's New York Style Pizza",
     "cuisine": "New York-style pizza",
     "description": "Specialty pies and classic NY-style slices",
-    "address": "14 S George St, Millersville, PA 17551",
-    "status": "Order Online",
-    "link": "https://www.ninospizzamillersville.com/order"
+    "status": "View Menu",
+    "link": "https://www.google.com/maps/search/Ninos+New+York+Style+Pizza+Millersville+PA"
   },
   {
     "name": "Wayback Burgers",
     "cuisine": "Burgers",
-    "description": "Classic and specialty burgers",
-    "address": "120 Crossgates Dr, Millersville, PA 17551",
+    "description": "Nostalgic-style hamburger chain",
     "status": "Order Online",
-    "link": "https://order.waybackburgers.com/menu/millersville"
+    "link": "https://order.waybackburgers.com/"
   },
   {
     "name": "China Wok Chinese Restaurant",
     "cuisine": "Chinese",
-    "description": "Chinese takeout and dine-in",
-    "address": "230 N George St, Millersville, PA 17551",
-    "status": "Order Online",
-    "link": "https://order.mealkeyway.com/customer/release/index?mid=58667a6665426b534a6253536d542f414d57573052513d3d#/main"
+    "description": "Standard Chinese takeout and dine-in",
+    "status": "View Menu",
+    "link": "https://www.google.com/maps/search/China+Wok+Millersville+PA"
   },
   {
     "name": "The Bunker at Crossgates",
     "cuisine": "Bar & grill",
-    "description": "Full menu + weekend brunch (Sat & Sun 9am-1pm)",
-    "address": "1 Crossland Pass, Millersville, PA 17551",
+    "description": "Bar and grill located at the golf course",
     "status": "View Menu",
-    "link": "https://www.crossgatesgolf.com/"
+    "link": "https://www.google.com/maps/search/The+Bunker+Crossgates+Millersville+PA"
   },
   {
     "name": "Evergreen Cafe",
     "cuisine": "Coffee shop",
     "description": "Coffee shop located on MU campus",
-    "address": "Millersville University Campus",
     "status": "View Menu",
     "link": "https://www.millersville.edu/dining/"
   },
   {
-    "name": "VFW Post 7294",
-    "cuisine": "American, Bar food",
-    "description": "Weekly food specials and events",
-    "address": "219 Walnut Hill Rd, Millersville, PA 17551",
-    "status": "Members Only",
-    "link": "https://www.vfwpost7294.org/wp-content/uploads/2025/08/VFW-Menu-August-1-2025.pdf"
+    "name": "John Herr's Village Market",
+    "cuisine": "Grocery & Deli",
+    "address": "20 Crossgates Dr, Millersville, PA",
+    "description": "Local grocery store with a full deli, bakery, and weekly deals",
+    "status": "View Menu",
+    "link": "https://www.johnherrsvillagemarket.com/weekly-ad"
   }
 ]

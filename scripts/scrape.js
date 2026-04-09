@@ -86,7 +86,7 @@ function extractEventbriteEvents(ldData, eventsArray, now, futureLimit) {
 // ===== MAIN SCRAPER =====
 
 async function runScraper() {
-    const PAST_DAYS = 30;
+    const PAST_DAYS = 90;
     const FUTURE_DAYS = 60;
     console.log(`🚀 Starting Millersville Scraper (${PAST_DAYS}d back + ${FUTURE_DAYS}d forward)...`);
 

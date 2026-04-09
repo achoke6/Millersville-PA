@@ -87,7 +87,7 @@ function extractEventbriteEvents(ldData, eventsArray, now, futureLimit) {
 
 async function runScraper() {
     const PAST_DAYS = 90;
-    const FUTURE_DAYS = 60;
+    const FUTURE_DAYS = 365;
     console.log(`🚀 Starting Millersville Scraper (${PAST_DAYS}d back + ${FUTURE_DAYS}d forward)...`);
 
     const now = new Date();
@@ -445,13 +445,23 @@ async function runScraper() {
                 const pmHudlBase = 'https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/';
                 const pmHudlTeams = {
                     'boys-football': '17195/boys-varsity-football',
-                    'boys-football-freshman': '17199/boys-freshman-football',
                     'boys-basketball': '71274/boys-varsity-basketball',
                     'girls-basketball': '71273/girls-varsity-basketball',
                     'boys-baseball': '569426/Mens-Varsity-Baseball',
+                    'boys-volleyball': '569433/boys-varsity-volleyball',
                     'girls-soccer': '346666/girls-varsity-soccer',
                     'girls-field hockey': '497810/Penn-Manor-Field-Hockey-',
                     'field hockey': '497810/Penn-Manor-Field-Hockey-',
+                    'boys-lacrosse': '420912/boys-varsity-lacrosse',
+                    'girls-lacrosse': '569435/girls-varsity-lacrosse',
+                    'girls-softball': '569427/girls-varsity-softball',
+                    'softball': '569427/girls-varsity-softball',
+                    'boys-tennis': '594872/boys-varsity-tennis',
+                    'girls-tennis': '594873/girls-varsity-tennis',
+                    'boys-track': '569430/boys-varsity-track',
+                    'girls-track': '569432/girls-varsity-track',
+                    'boys-wrestling': '569431/boys-varsity-wrestling',
+                    'wrestling': '569431/boys-varsity-wrestling',
                 };
                 // Build lookup key from gender + sport
                 const gender = tags.includes('Boys') ? 'boys' : tags.includes('Girls') ? 'girls' : '';
@@ -459,9 +469,11 @@ async function runScraper() {
                 const hudlKey1 = gender && sportTag ? `${gender}-${sportTag.toLowerCase()}` : '';
                 const hudlKey2 = sportTag ? sportTag.toLowerCase() : '';
                 const hudlTeam = pmHudlTeams[hudlKey1] || pmHudlTeams[hudlKey2] || null;
+                // Build date-specific schedule URL so link goes directly to that day's games/video
+                const hudlDate = eventDate.toISOString().split('.')[0] + '.000Z';
                 const pmStreamLink = hudlTeam
-                    ? pmHudlBase + hudlTeam
-                    : 'https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/video';
+                    ? pmHudlBase + hudlTeam + '/schedule?date=' + encodeURIComponent(hudlDate) + '&range=Day'
+                    : 'https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/schedule?date=' + encodeURIComponent(hudlDate) + '&range=Day';
 
                 // Check if game is live
                 const eventEnd = ev.end ? new Date(ev.end) : new Date(eventDate.getTime() + 2*60*60*1000);
@@ -486,7 +498,7 @@ async function runScraper() {
                 else if (/staff|in-service|act 80|faculty/i.test(lt)) continue; // Skip Staff events
                 else if (/concert|band|chorus|choir|orchestra|musical|theater|play|string ensemble|showcase/i.test(lt)) tags.push('Music/Arts');
                 else if (/pssa|grades?\s+(due|posted|are)|report card|marking period/i.test(lt)) continue; // Skip Testing/Grades events
-                else if (/spirit day|dress down|reward day|talent show|pm cares/i.test(lt)) tags.push('Spirit/Fun Days');
+                else if (/spirit day|dress down|reward day|talent show|pm cares/i.test(lt)) continue; // Skip Spirit/Fun Days
                 else if (/field trip|downtown trip|trip to/i.test(lt)) tags.push('Field Trips');
                 else if (/gotr|girls on the run|heart & sole|physicals|health/i.test(lt)) tags.push('Health/Wellness');
                 else if (/book fair|food fair|picture|assembly|appreciation|librarian/i.test(lt)) tags.push('School Events');
@@ -1126,10 +1138,6 @@ async function runScraper() {
             // YES family friendly: concerts, showcases, assemblies, book fairs, spirit days, etc.
             else if (familyPMKeywords.test(titleLower)) {
                 isFamilyFriendly = true;
-            }
-            // PM Spirit/Fun Days → NOT family friendly (student-only events)
-            else if (tags.includes('Spirit/Fun Days')) {
-                isFamilyFriendly = false;
             }
             // Default PM: not family friendly
             else {

@@ -46,22 +46,30 @@ jobs:
       - name: Deploy to DreamHost via SFTP
         run: |
           sudo apt-get install -y lftp
-          lftp -c "
-            set sftp:auto-confirm yes;
-            set net:max-retries 3;
-            open -u ${{ secrets.DREAMHOST_USERNAME }},${{ secrets.DREAMHOST_PASSWORD }} sftp://${{ secrets.DREAMHOST_SERVER }};
-            mirror --reverse --delete --verbose \
-              --exclude ^\.git/ \
-              --exclude ^\.github/ \
-              --exclude ^node_modules/ \
-              --exclude ^scripts/ \
-              --exclude ^package\.json$ \
-              --exclude ^package-lock\.json$ \
-              --exclude ^index_old\.html$ \
-              --exclude ^style_old\.css$ \
-              --exclude ^404\.html$ \
-              --exclude ^vfw-cache\.json$ \
-              ./ ${{ secrets.DREAMHOST_DIR }};
-            put -O ${{ secrets.DREAMHOST_DIR }} .htaccess;
-            quit;
-          "
+          for attempt in 1 2 3; do
+            echo "Deploy attempt $attempt..."
+            lftp -c "
+              set sftp:auto-confirm yes;
+              set net:max-retries 3;
+              set net:timeout 30;
+              set net:reconnect-interval-base 10;
+              open -u ${{ secrets.DREAMHOST_USERNAME }},${{ secrets.DREAMHOST_PASSWORD }} sftp://${{ secrets.DREAMHOST_SERVER }};
+              mirror --reverse --delete --verbose \
+                --exclude ^\.git/ \
+                --exclude ^\.github/ \
+                --exclude ^node_modules/ \
+                --exclude ^scripts/ \
+                --exclude ^package\.json$ \
+                --exclude ^package-lock\.json$ \
+                --exclude ^index_old\.html$ \
+                --exclude ^style_old\.css$ \
+                --exclude ^404\.html$ \
+                --exclude ^vfw-cache\.json$ \
+                ./ ${{ secrets.DREAMHOST_DIR }};
+              put -O ${{ secrets.DREAMHOST_DIR }} .htaccess;
+              quit;
+            " && echo "Deploy succeeded!" && break || {
+              echo "Attempt $attempt failed, waiting 30s..."
+              sleep 30
+            }
+          done

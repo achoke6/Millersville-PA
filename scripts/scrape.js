@@ -546,6 +546,7 @@ async function runScraper() {
         // Query in weekly chunks to avoid hitting limits
         const hudlBroadcasts = new Map(); // key: YYYY-MM-DD|sportId|genderId -> broadcast info
         const hudlScores = new Map(); // key: YYYY-MM-DD|sportId|genderId -> score info
+        const hudlAllEntries = new Map(); // key: YYYY-MM-DD|sportId|genderId -> all tracked games
         let totalHudlEntries = 0, broadcastCount = 0, scoreCount = 0;
 
         // Query Hudl in chunks, handling pagination
@@ -591,7 +592,15 @@ async function runScraper() {
                         const gameDate = new Date(item.timeUtc).toISOString().split('T')[0];
                         const key = `${gameDate}|${item.sportId}|${item.genderId}`;
 
-                        // Store broadcast info
+                        // Store ALL entries (for highlight links on past games)
+                        if (!hudlAllEntries.has(key)) {
+                            hudlAllEntries.set(key, {
+                                id: item.id,
+                                timeUtc: item.timeUtc
+                            });
+                        }
+
+                        // Store broadcast info (full replays / livestreams)
                         if (item.broadcastStatus !== null && item.broadcastStatus !== undefined) {
                             hudlBroadcasts.set(key, {
                                 id: item.id,
@@ -604,7 +613,7 @@ async function runScraper() {
 
                         // Store scores (for all entries that have them)
                         if (item.score1 !== null && item.score2 !== null) {
-                            const outcome = item.scheduleEntryOutcome; // 1=win, 2=loss, 3=tie?
+                            const outcome = item.scheduleEntryOutcome;
                             const result = outcome === 1 ? 'W' : outcome === 2 ? 'L' : outcome === 3 ? 'T' : '';
                             if (result) {
                                 hudlScores.set(key, {
@@ -640,7 +649,7 @@ async function runScraper() {
         for (const [id, name] of Object.entries(hudlSportMap)) sportToHudlId[name] = parseInt(id);
 
         // Match broadcasts AND scores to PM events
-        let matchCount = 0;
+        let matchCount = 0, highlightCount = 0;
         for (const ev of events) {
             if (!ev.tags || !ev.tags.includes('PM')) continue;
             const sportTag = ev.tags.find(t => sportToHudlId[t.toLowerCase()]);
@@ -651,15 +660,23 @@ async function runScraper() {
             const sportId = sportToHudlId[sportTag.toLowerCase()];
             const key = `${evDate}|${sportId}|${gender}`;
 
-            // Broadcast link
+            // Broadcast link (full replay / livestream)
             const broadcast = hudlBroadcasts.get(key);
             if (broadcast) {
                 const watchDate = new Date(broadcast.timeUtc).toISOString();
                 ev.streamLink = `https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/schedule?date=${encodeURIComponent(watchDate)}&range=Day&s=${encodeURIComponent(broadcast.id)}`;
                 matchCount++;
+            } else {
+                // No broadcast, but if game is tracked on Hudl and in the past, link for potential highlights
+                const hudlEntry = hudlAllEntries.get(key);
+                if (hudlEntry && new Date(ev.date) < now) {
+                    const watchDate = new Date(hudlEntry.timeUtc).toISOString();
+                    ev.streamLink = `https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/schedule?date=${encodeURIComponent(watchDate)}&range=Day&s=${encodeURIComponent(hudlEntry.id)}`;
+                    highlightCount++;
+                }
             }
         }
-        console.log(`  📺 Matched ${matchCount} broadcasts`);
+        console.log(`  📺 Matched ${matchCount} broadcasts, ${highlightCount} highlight links`);
 
         // Store for score matching after MaxPreps
         global._hudlScores = hudlScores;

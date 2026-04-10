@@ -1177,3 +1177,9 @@ window.showGroceryDeals = function(e) {
         <a href="https://www.johnherrsvillagemarket.com/weekly-ad" target="_blank" class="btn btn-sm btn-ticket" style="display:block;text-align:center;margin-top:16px;">View Full Circular</a>`;
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
+};
+
+window.refreshCam=function(){const cam=document.getElementById('cam-img');if(cam)cam.src=`https://snowball.millersville.edu/~cws/wxcam/latest.jpeg?t=${Date.now()}`;const t=document.getElementById('cam-time');if(t)t.textContent=`Updated: ${new Date().toLocaleTimeString()}`;};
+</script>
+</body>
+</html>

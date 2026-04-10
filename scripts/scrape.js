@@ -621,7 +621,7 @@ async function runScraper() {
         // Match broadcasts to PM events
         // Debug: log sample Hudl keys and PM event info
         const hudlKeys = [...hudlBroadcasts.keys()];
-        console.log(`  📺 Sample Hudl broadcast keys: ${hudlKeys.slice(0, 5).join(', ')}`);
+        console.log(`  📺 ALL broadcast keys: ${hudlKeys.sort().join(', ')}`);
 
         let matchCount = 0;
         let pmAthEvents = 0;

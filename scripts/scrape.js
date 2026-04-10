@@ -277,7 +277,7 @@ async function runScraper() {
 
             // Check if game is live (happening right now)
             const eventEnd = ev.end ? new Date(ev.end) : new Date(eventDate.getTime() + 3*60*60*1000);
-            const isLive = now >= eventDate && now <= eventEnd && !gameResult;
+            const isLive = now >= eventDate && now <= eventEnd && !gameResult && !!streamLink;
 
             // Build source URL: prefer the event's own URL (links to specific game on schedule),
             // fall back to sport schedule page, then composite calendar
@@ -486,7 +486,7 @@ async function runScraper() {
 
                 // Check if game is live
                 const eventEnd = ev.end ? new Date(ev.end) : new Date(eventDate.getTime() + 2*60*60*1000);
-                const pmIsLive = now >= eventDate && now <= eventEnd;
+                const pmIsLive = now >= eventDate && now <= eventEnd && !!pmStreamLink;
 
                 events.push({
                     title, date: eventDate.toISOString(), location: loc,
@@ -517,10 +517,13 @@ async function runScraper() {
                 // Skip PM-Other events (uncategorized, not useful)
                 if (tags.includes('Other')) continue;
 
+                const pmBoardStream = /board/i.test(lt) ? 'https://www.youtube.com/@PennManorSchoolDistrict/streams' : '';
+
                 events.push({
                     title, date: eventDate.toISOString(), location: loc,
                     tags: [...new Set(tags)], price: "Free", ticketLink: "",
-                    sourceLink: ev.url || "https://www.pennmanor.net/calendar/"
+                    sourceLink: ev.url || "https://www.pennmanor.net/calendar/",
+                    streamLink: pmBoardStream
                 });
                 pmGenCount++;
             }
@@ -673,6 +676,15 @@ async function runScraper() {
                     const watchDate = new Date(hudlEntry.timeUtc).toISOString();
                     ev.streamLink = `https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/schedule?date=${encodeURIComponent(watchDate)}&range=Day&s=${encodeURIComponent(hudlEntry.id)}`;
                     highlightCount++;
+                }
+            }
+
+            // Update isLive if stream link was added and game is happening now
+            if (ev.streamLink && !ev.isLive) {
+                const evStart = new Date(ev.date);
+                const evEnd = new Date(evStart.getTime() + 2*60*60*1000);
+                if (now >= evStart && now <= evEnd && !ev.gameResult) {
+                    ev.isLive = true;
                 }
             }
         }

@@ -638,6 +638,11 @@ async function runScraper() {
             const gender = ev.tags.includes('Girls') ? 1 : 0;
             const sportId = sportToHudlId[sportTag.toLowerCase()];
 
+            // Debug: log all volleyball events to find date mismatch
+            if (sportTag === 'Volleyball') {
+                console.log(`    🏐 ${ev.title} | raw date: ${ev.date} | key: ${evDate}|${sportId}|${gender} | inMap: ${hudlBroadcasts.has(`${evDate}|${sportId}|${gender}`)}`);
+            }
+
             const key = `${evDate}|${sportId}|${gender}`;
             const broadcast = hudlBroadcasts.get(key);
             if (broadcast) {

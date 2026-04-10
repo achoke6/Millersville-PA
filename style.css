@@ -87,11 +87,12 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 
 /* Three-item toolbar: left label, center date, right clear */
 .toolbar-three { justify-content: center; }
-.toolbar-three .game-label { position: absolute; left: 0; }
+.toolbar-three .game-label { position: absolute; left: 0; min-width: 130px; }
 .game-label {
     font-size: 0.85rem;
     font-weight: 700;
     color: var(--text);
+    white-space: nowrap;
 }
 .toolbar-row .section-title { margin-bottom: 0; }
 
@@ -266,11 +267,13 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 }
 .ev-source-row {
     align-items: center;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
 }
 .ev-source-row .filter-group {
-    flex: 1;
-    min-width: 0;
+    display: contents;
+}
+.ev-source-row .family-toggle {
+    margin-left: auto;
 }
 
 .home-toggle {

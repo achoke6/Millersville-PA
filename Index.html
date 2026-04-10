@@ -398,6 +398,9 @@
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// Auto cache-bust .json fetches (hourly, matches scraper cron)
+(function(){const _f=window.fetch,_v=Math.floor(Date.now()/3600000);window.fetch=function(u,o){if(typeof u==='string'&&u.endsWith('.json'))u+=(/\?/.test(u)?'&':'?')+'_='+_v;return _f.call(this,u,o);}})();
+
 let allEvents=[], currentNews=[];
 let evSource='All', evTags=new Set();
 let evKidMode=false;

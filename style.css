@@ -83,11 +83,11 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     min-height: 32px;
 }
 .toolbar-row .clear-btn { position: absolute; right: 0; }
-.toolbar-row .date-label { text-align: center; }
+.toolbar-row .date-label { text-align: center; width: 100%; pointer-events: none; }
 
 /* Three-item toolbar: left label, center date, right clear */
 .toolbar-three { justify-content: center; }
-.toolbar-three .game-label { position: absolute; left: 0; min-width: 130px; }
+.toolbar-three .game-label { position: absolute; left: 0; }
 .game-label {
     font-size: 0.85rem;
     font-weight: 700;

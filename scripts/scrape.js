@@ -540,53 +540,72 @@ async function runScraper() {
 }`;
         // Query in weekly chunks to avoid hitting limits
         const hudlBroadcasts = new Map(); // key: YYYY-MM-DD|sportId|genderId -> scheduleEntryId
-        const chunkSize = 14 * 24 * 60 * 60 * 1000; // 14 days
+        let totalHudlEntries = 0, broadcastCount = 0;
+
+        // Query Hudl in chunks, handling pagination
+        const chunkSize = 30 * 24 * 60 * 60 * 1000; // 30 days
         let hudlStart = pastDate.getTime();
         const hudlEnd = futureDate.getTime();
-        let totalHudlEntries = 0, broadcastCount = 0;
+        const sportIdsSeen = new Set();
 
         while (hudlStart < hudlEnd) {
             const chunkEnd = Math.min(hudlStart + chunkSize, hudlEnd);
-            const res = await fetch('https://www.hudl.com/api/public/graphql/query', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    operationName: 'Web_Fan_GetScheduleEntrySummaries_r1',
-                    variables: {
-                        input: {
-                            sortType: 'SCHEDULE_ENTRY_DATE',
-                            schoolIds: ['U2Nob29sNjcyNw=='],
-                            filterStartDate: new Date(hudlStart).toISOString(),
-                            filterEndDate: new Date(chunkEnd).toISOString(),
-                            sortByAscending: true
-                        }
-                    },
-                    query: hudlQuery
-                })
-            });
+            let cursor = null;
+            let hasMore = true;
 
-            if (res.ok) {
-                const data = await res.json();
-                const items = data?.data?.scheduleEntryPublicSummaries?.items || [];
-                totalHudlEntries += items.length;
-                for (const item of items) {
-                    if (item.broadcastStatus !== null && item.broadcastStatus !== undefined) {
-                        // Build lookup key: date (YYYY-MM-DD) + sportId + genderId
-                        const gameDate = new Date(item.timeUtc).toISOString().split('T')[0];
-                        const key = `${gameDate}|${item.sportId}|${item.genderId}`;
-                        hudlBroadcasts.set(key, {
-                            scheduleEntryId: item.scheduleEntryId,
-                            broadcastStatus: item.broadcastStatus,
-                            timeUtc: item.timeUtc
-                        });
-                        broadcastCount++;
+            while (hasMore) {
+                const inputVars = {
+                    sortType: 'SCHEDULE_ENTRY_DATE',
+                    schoolIds: ['U2Nob29sNjcyNw=='],
+                    filterStartDate: new Date(hudlStart).toISOString(),
+                    filterEndDate: new Date(chunkEnd).toISOString(),
+                    sortByAscending: true,
+                    first: 100
+                };
+                if (cursor) inputVars.after = cursor;
+
+                const res = await fetch('https://www.hudl.com/api/public/graphql/query', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        operationName: 'Web_Fan_GetScheduleEntrySummaries_r1',
+                        variables: { input: inputVars },
+                        query: hudlQuery
+                    })
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    const result = data?.data?.scheduleEntryPublicSummaries;
+                    const items = result?.items || [];
+                    totalHudlEntries += items.length;
+
+                    for (const item of items) {
+                        sportIdsSeen.add(`${item.sportId}:g${item.genderId}`);
+                        if (item.broadcastStatus !== null && item.broadcastStatus !== undefined) {
+                            const gameDate = new Date(item.timeUtc).toISOString().split('T')[0];
+                            const key = `${gameDate}|${item.sportId}|${item.genderId}`;
+                            hudlBroadcasts.set(key, {
+                                scheduleEntryId: item.scheduleEntryId,
+                                broadcastStatus: item.broadcastStatus,
+                                timeUtc: item.timeUtc
+                            });
+                            broadcastCount++;
+                        }
                     }
+
+                    hasMore = result?.pageInfo?.hasNextPage || false;
+                    cursor = result?.pageInfo?.endCursor || null;
+                    if (items.length === 0) hasMore = false;
+                } else {
+                    hasMore = false;
                 }
             }
             hudlStart = chunkEnd;
         }
 
         console.log(`  📺 Hudl: ${totalHudlEntries} schedule entries, ${broadcastCount} with broadcasts`);
+        console.log(`  📺 Sport IDs seen: ${[...sportIdsSeen].sort().join(', ')}`);
 
         // Hudl sportId mapping (observed from API data)
         const hudlSportMap = {
@@ -606,12 +625,14 @@ async function runScraper() {
 
         let matchCount = 0;
         let pmAthEvents = 0;
+        const pmSportsSeen = new Set();
         for (const ev of events) {
             if (!ev.tags || !ev.tags.includes('PM')) continue;
             // PM athletic events have sport tags, not 'Athletic Competitions'
             const sportTag = ev.tags.find(t => sportToHudlId[t.toLowerCase()]);
             if (!sportTag) continue;
             pmAthEvents++;
+            pmSportsSeen.add(sportTag);
 
             const evDate = new Date(ev.date).toISOString().split('T')[0];
             const gender = ev.tags.includes('Girls') ? 1 : 0;
@@ -629,6 +650,7 @@ async function runScraper() {
                 console.log(`    ❌ ${ev.title} (${evDate}) key=${key} not in Hudl`);
             }
         }
+        console.log(`  📺 PM sports: ${[...pmSportsSeen].join(', ')}`);
         console.log(`  📺 ${pmAthEvents} PM athletic events, matched ${matchCount} with Hudl broadcasts`);
 
     } catch (e) { console.log(`  ⚠️ Hudl broadcast check error: ${e.message}`); }

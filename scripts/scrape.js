@@ -399,24 +399,29 @@ async function runScraper() {
         const coverageEnd = latestEventDate ? latestEventDate.toISOString().split('T')[0] : 'unknown';
         console.log(`  Future: ${totalFutureRaw} unique across ${page} page(s), coverage through ${coverageEnd}`);
 
-        // Fetch PAST events (paginated backward, up to 5 pages for ~30 days back)
+        // Fetch PAST events (paginated backward until we cover PAST_DAYS or run out)
         const pmPastUrl = 'https://www.pennmanor.net/events/list/?ical=1&tribe_event_display=past&tribe_paged=';
-        const maxPastPages = 5;
+        const maxPastPages = 20;
         for (let pp = 1; pp <= maxPastPages; pp++) {
             try {
                 const pastPageData = await ical.async.fromURL(pmPastUrl + pp, { headers: baseHeaders });
                 const pastPageEvents = Object.values(pastPageData).filter(e => e.type === 'VEVENT');
                 if (pastPageEvents.length === 0) break;
                 let newPast = 0;
+                let oldestDate = null;
                 for (const [key, val] of Object.entries(pastPageData)) {
                     if (val.type === 'VEVENT') {
                         const uid = val.uid || key;
                         if (!allPMEvents[uid]) newPast++;
                         allPMEvents[uid] = val;
+                        const d = new Date(val.start);
+                        if (!oldestDate || d < oldestDate) oldestDate = d;
                     }
                 }
                 console.log(`  Past page ${pp}: ${pastPageEvents.length} VEVENTs, ${newPast} new`);
                 if (newPast === 0) break;
+                // Stop if we've reached far enough back
+                if (oldestDate && oldestDate < pastDate) { console.log(`  Past coverage reached ${oldestDate.toISOString().split('T')[0]}`); break; }
             } catch (err) { console.log(`  Past page ${pp} failed: ${err.message}`); break; }
         }
 
@@ -586,6 +591,7 @@ async function runScraper() {
                             const gameDate = new Date(item.timeUtc).toISOString().split('T')[0];
                             const key = `${gameDate}|${item.sportId}|${item.genderId}`;
                             hudlBroadcasts.set(key, {
+                                id: item.id,
                                 scheduleEntryId: item.scheduleEntryId,
                                 broadcastStatus: item.broadcastStatus,
                                 timeUtc: item.timeUtc
@@ -631,7 +637,7 @@ async function runScraper() {
             const broadcast = hudlBroadcasts.get(key);
             if (broadcast) {
                 const watchDate = new Date(broadcast.timeUtc).toISOString();
-                ev.streamLink = `https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/schedule?date=${encodeURIComponent(watchDate)}&range=Day`;
+                ev.streamLink = `https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/schedule?date=${encodeURIComponent(watchDate)}&range=Day&s=${encodeURIComponent(broadcast.id)}`;
                 matchCount++;
             }
         }

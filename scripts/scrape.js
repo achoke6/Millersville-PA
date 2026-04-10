@@ -544,8 +544,9 @@ async function runScraper() {
   }
 }`;
         // Query in weekly chunks to avoid hitting limits
-        const hudlBroadcasts = new Map(); // key: YYYY-MM-DD|sportId|genderId -> scheduleEntryId
-        let totalHudlEntries = 0, broadcastCount = 0;
+        const hudlBroadcasts = new Map(); // key: YYYY-MM-DD|sportId|genderId -> broadcast info
+        const hudlScores = new Map(); // key: YYYY-MM-DD|sportId|genderId -> score info
+        let totalHudlEntries = 0, broadcastCount = 0, scoreCount = 0;
 
         // Query Hudl in chunks, handling pagination
         const chunkSize = 30 * 24 * 60 * 60 * 1000; // 30 days
@@ -587,9 +588,11 @@ async function runScraper() {
 
                     for (const item of items) {
                         sportIdsSeen.add(`${item.sportId}:g${item.genderId}`);
+                        const gameDate = new Date(item.timeUtc).toISOString().split('T')[0];
+                        const key = `${gameDate}|${item.sportId}|${item.genderId}`;
+
+                        // Store broadcast info
                         if (item.broadcastStatus !== null && item.broadcastStatus !== undefined) {
-                            const gameDate = new Date(item.timeUtc).toISOString().split('T')[0];
-                            const key = `${gameDate}|${item.sportId}|${item.genderId}`;
                             hudlBroadcasts.set(key, {
                                 id: item.id,
                                 scheduleEntryId: item.scheduleEntryId,
@@ -597,6 +600,20 @@ async function runScraper() {
                                 timeUtc: item.timeUtc
                             });
                             broadcastCount++;
+                        }
+
+                        // Store scores (for all entries that have them)
+                        if (item.score1 !== null && item.score2 !== null) {
+                            const outcome = item.scheduleEntryOutcome; // 1=win, 2=loss, 3=tie?
+                            const result = outcome === 1 ? 'W' : outcome === 2 ? 'L' : outcome === 3 ? 'T' : '';
+                            if (result) {
+                                hudlScores.set(key, {
+                                    result,
+                                    score: `${item.score1}-${item.score2}`,
+                                    timeUtc: item.timeUtc
+                                });
+                                scoreCount++;
+                            }
                         }
                     }
 
@@ -610,7 +627,7 @@ async function runScraper() {
             hudlStart = chunkEnd;
         }
 
-        console.log(`  📺 Hudl: ${totalHudlEntries} schedule entries, ${broadcastCount} with broadcasts`);
+        console.log(`  📺 Hudl: ${totalHudlEntries} schedule entries, ${broadcastCount} with broadcasts, ${scoreCount} with scores`);
 
         // Hudl sportId mapping (confirmed: 2=basketball, 4=volleyball, 7=lacrosse)
         const hudlSportMap = {
@@ -622,7 +639,7 @@ async function runScraper() {
         const sportToHudlId = {};
         for (const [id, name] of Object.entries(hudlSportMap)) sportToHudlId[name] = parseInt(id);
 
-        // Match broadcasts to PM events
+        // Match broadcasts AND scores to PM events
         let matchCount = 0;
         for (const ev of events) {
             if (!ev.tags || !ev.tags.includes('PM')) continue;
@@ -632,8 +649,9 @@ async function runScraper() {
             const evDate = new Date(ev.date).toISOString().split('T')[0];
             const gender = ev.tags.includes('Girls') ? 1 : 0;
             const sportId = sportToHudlId[sportTag.toLowerCase()];
-
             const key = `${evDate}|${sportId}|${gender}`;
+
+            // Broadcast link
             const broadcast = hudlBroadcasts.get(key);
             if (broadcast) {
                 const watchDate = new Date(broadcast.timeUtc).toISOString();
@@ -641,7 +659,11 @@ async function runScraper() {
                 matchCount++;
             }
         }
-        console.log(`  📺 Matched ${matchCount} PM games with Hudl broadcasts`);
+        console.log(`  📺 Matched ${matchCount} broadcasts`);
+
+        // Store for score matching after MaxPreps
+        global._hudlScores = hudlScores;
+        global._hudlSportToId = sportToHudlId;
 
     } catch (e) { console.log(`  ⚠️ Hudl broadcast check error: ${e.message}`); }
 
@@ -1421,6 +1443,34 @@ Focus on the most impressive deals a shopper would want to know about. Include m
             console.log(`  ⚠️ No MaxPreps results found`);
         }
     } catch (e) { console.error("❌ MaxPreps scores error:", e.message); }
+
+    // ===== HUDL SCORES (fill gaps not covered by MaxPreps) =====
+    try {
+        const hudlScores = global._hudlScores;
+        const sportToHudlId = global._hudlSportToId;
+        if (hudlScores && hudlScores.size > 0 && sportToHudlId) {
+            let hudlScoreMatches = 0;
+            for (const ev of events) {
+                if (ev.gameResult) continue; // Already has a score from MaxPreps
+                if (!ev.tags || !ev.tags.includes('PM')) continue;
+                const sportTag = ev.tags.find(t => sportToHudlId[t.toLowerCase()]);
+                if (!sportTag) continue;
+
+                const evDate = new Date(ev.date).toISOString().split('T')[0];
+                const gender = ev.tags.includes('Girls') ? 1 : 0;
+                const sportId = sportToHudlId[sportTag.toLowerCase()];
+                const key = `${evDate}|${sportId}|${gender}`;
+
+                const hudlScore = hudlScores.get(key);
+                if (hudlScore) {
+                    ev.gameResult = hudlScore.result;
+                    ev.gameScore = hudlScore.score;
+                    hudlScoreMatches++;
+                }
+            }
+            console.log(`📺 Hudl scores filled: ${hudlScoreMatches} games (supplementing MaxPreps)`);
+        }
+    } catch (e) { console.log(`  ⚠️ Hudl scores error: ${e.message}`); }
 
     // ===== DEDUPLICATION & SAVE =====
     const seen = new Set();

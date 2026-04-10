@@ -49,8 +49,148 @@
   },
   "John Herr's Village Market": {
     "note": "Weekly deals · Wed–Tue · 20 Crossgates Dr",
-    "weekly": [],
-    "weeklyDateRange": "",
-    "rawDeals": []
+    "weekly": [
+      "Boneless Ribeye or NY Strip Steak – $16.99/lb ($1.00/lb off)",
+      "Certified Angus Beef Boneless Chuck Roast – $7.99/lb (Premium cut)",
+      "Choice Beef Mock Tender Boneless Thick Eye Roast – $6.49/lb (Premium cut)",
+      "Fresh Ground Sirloin – $6.49/lb ($2.50/lb off)",
+      "Bone-in Chicken Thighs – $1.99/lb ($0.49/lb off)"
+    ],
+    "weeklyDateRange": "Thu Apr 9 - Wed Apr 15",
+    "rawDeals": [
+      {
+        "item": "Boneless Ribeye or NY Strip Steak",
+        "salePrice": "$16.99/lb",
+        "regularPrice": "$17.99/lb",
+        "savings": "$1.00/lb off",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Certified Angus Beef Boneless Chuck Roast",
+        "salePrice": "$7.99/lb",
+        "regularPrice": "",
+        "savings": "Premium cut",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Choice Beef Mock Tender Boneless Thick Eye Roast",
+        "salePrice": "$6.49/lb",
+        "regularPrice": "",
+        "savings": "Premium cut",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Fresh Ground Sirloin",
+        "salePrice": "$6.49/lb",
+        "regularPrice": "$8.99/lb",
+        "savings": "$2.50/lb off",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Bone-in Chicken Thighs",
+        "salePrice": "$1.99/lb",
+        "regularPrice": "$2.48/lb",
+        "savings": "$0.49/lb off",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Bone-in Pork Butt",
+        "salePrice": "$1.99/lb",
+        "regularPrice": "",
+        "savings": "Low price",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Dietz & Watson Medium Roast Beef",
+        "salePrice": "$14.99/lb",
+        "regularPrice": "",
+        "savings": "Premium deli meat",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Dietz & Watson Gourmet Lite Black Pepper Turkey Breast",
+        "salePrice": "$12.99/lb",
+        "regularPrice": "",
+        "savings": "Premium deli meat",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "John F Martin Oven Roasted Chicken Breast",
+        "salePrice": "$5.99/lb",
+        "regularPrice": "",
+        "savings": "Local specialty",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "BOGO Smithfield Pork Tenderloins, Fillets or Picnic Roasts",
+        "salePrice": "Buy 1 Get 1 Free",
+        "regularPrice": "18.4-27.2 oz",
+        "savings": "50% off",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "BOGO Food Club Skillet Classics",
+        "salePrice": "Buy 1 Get 1 Free",
+        "regularPrice": "5-6.4 oz",
+        "savings": "50% off",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "BOGO Herr's Original Potato Chips",
+        "salePrice": "Buy 1 Get 1 Free",
+        "regularPrice": "7-8 oz",
+        "savings": "50% off",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "BOGO Martin's Potato Rolls",
+        "salePrice": "Buy 1 Get 1 Free",
+        "regularPrice": "7-10.5 oz",
+        "savings": "50% off",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "BOGO Rana Family Size Pasta",
+        "salePrice": "Buy 1 Get 1 Free",
+        "regularPrice": "20 oz",
+        "savings": "50% off",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "BOGO Food Club Long Grain White Rice",
+        "salePrice": "Buy 1 Get 1 Free",
+        "regularPrice": "1 lb",
+        "savings": "50% off",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "California Seedless Naval Oranges",
+        "salePrice": "$7.99",
+        "regularPrice": "",
+        "savings": "8 lb bag",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Little Potato Company Potatoes",
+        "salePrice": "2/$7",
+        "regularPrice": "",
+        "savings": "$3.50 each",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Clorox Liquid Bleach",
+        "salePrice": "$7.98",
+        "regularPrice": "",
+        "savings": "121 oz Concentrated",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Clorox Disinfectant Wipes",
+        "salePrice": "$5.48",
+        "regularPrice": "",
+        "savings": "75 ct",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      }
+    ]
   }
 }

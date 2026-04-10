@@ -605,43 +605,27 @@ async function runScraper() {
         }
 
         console.log(`  📺 Hudl: ${totalHudlEntries} schedule entries, ${broadcastCount} with broadcasts`);
-        console.log(`  📺 Sport IDs seen: ${[...sportIdsSeen].sort().join(', ')}`);
 
-        // Hudl sportId mapping (observed from API data)
+        // Hudl sportId mapping (confirmed: 2=basketball, 4=volleyball, 7=lacrosse)
         const hudlSportMap = {
-            1: 'football', 2: 'soccer', 3: 'basketball', 4: 'volleyball',
+            1: 'football', 2: 'basketball', 3: 'soccer', 4: 'volleyball',
             5: 'baseball', 6: 'softball', 7: 'lacrosse', 8: 'field hockey',
             9: 'wrestling', 10: 'tennis', 11: 'track', 12: 'swimming',
             13: 'cross country', 14: 'golf'
         };
-        // Reverse: sport name -> sportId
         const sportToHudlId = {};
         for (const [id, name] of Object.entries(hudlSportMap)) sportToHudlId[name] = parseInt(id);
 
         // Match broadcasts to PM events
-        // Debug: log sample Hudl keys and PM event info
-        const hudlKeys = [...hudlBroadcasts.keys()];
-        console.log(`  📺 ALL broadcast keys: ${hudlKeys.sort().join(', ')}`);
-
         let matchCount = 0;
-        let pmAthEvents = 0;
-        const pmSportsSeen = new Set();
         for (const ev of events) {
             if (!ev.tags || !ev.tags.includes('PM')) continue;
-            // PM athletic events have sport tags, not 'Athletic Competitions'
             const sportTag = ev.tags.find(t => sportToHudlId[t.toLowerCase()]);
             if (!sportTag) continue;
-            pmAthEvents++;
-            pmSportsSeen.add(sportTag);
 
             const evDate = new Date(ev.date).toISOString().split('T')[0];
             const gender = ev.tags.includes('Girls') ? 1 : 0;
             const sportId = sportToHudlId[sportTag.toLowerCase()];
-
-            // Debug: log all volleyball events to find date mismatch
-            if (sportTag === 'Volleyball') {
-                console.log(`    🏐 ${ev.title} | raw date: ${ev.date} | key: ${evDate}|${sportId}|${gender} | inMap: ${hudlBroadcasts.has(`${evDate}|${sportId}|${gender}`)}`);
-            }
 
             const key = `${evDate}|${sportId}|${gender}`;
             const broadcast = hudlBroadcasts.get(key);
@@ -649,14 +633,9 @@ async function runScraper() {
                 const watchDate = new Date(broadcast.timeUtc).toISOString();
                 ev.streamLink = `https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/schedule?date=${encodeURIComponent(watchDate)}&range=Day`;
                 matchCount++;
-                if (matchCount <= 5) console.log(`    ✅ ${ev.title} (${evDate}) → broadcast found`);
-            } else if (pmAthEvents <= 3) {
-                // Debug first few misses
-                console.log(`    ❌ ${ev.title} (${evDate}) key=${key} not in Hudl`);
             }
         }
-        console.log(`  📺 PM sports: ${[...pmSportsSeen].join(', ')}`);
-        console.log(`  📺 ${pmAthEvents} PM athletic events, matched ${matchCount} with Hudl broadcasts`);
+        console.log(`  📺 Matched ${matchCount} PM games with Hudl broadcasts`);
 
     } catch (e) { console.log(`  ⚠️ Hudl broadcast check error: ${e.message}`); }
 

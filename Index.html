@@ -24,6 +24,9 @@
             <h1><span class="logo-link" onclick="switchView('home')">Millersville<span class="logo-dot">.APP</span></span><span id="header-page-title" class="header-page-title"></span></h1>
         </div>
         <div class="header-actions">
+            <button class="search-toggle" onclick="openSearch()" title="Search" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--text-dark);">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </button>
             <div class="ec-cart-widget header-cart header-cart-mobile"></div>
             <button class="hamburger-menu" id="hamburger-menu" onclick="toggleMobileMenu()">
                 <svg viewBox="0 0 24 24" width="28" height="28" fill="var(--text-dark)"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
@@ -401,7 +404,7 @@
 // Auto cache-bust .json fetches (hourly, matches scraper cron)
 (function(){const _f=window.fetch,_v=Math.floor(Date.now()/3600000);window.fetch=function(u,o){if(typeof u==='string'&&u.endsWith('.json'))u+=(/\?/.test(u)?'&':'?')+'_='+_v;return _f.call(this,u,o);}})();
 
-let allEvents=[], currentNews=[];
+let allEvents=[], currentNews=[], allRestaurants=[];
 let evSource='All', evTags=new Set();
 let evKidMode=false;
 
@@ -1093,6 +1096,7 @@ async function loadDining(){try{
     // Store grocery deals for popup
     const jh = specials["John Herr's Village Market"];
     if(jh && jh.rawDeals) { allGroceryDeals = jh.rawDeals; }
+    allRestaurants = data;
     const c=document.getElementById('food-container');
     const dayName = new Date().toLocaleDateString('en-US',{weekday:'long'});
 
@@ -1194,6 +1198,129 @@ window.showGroceryDeals = function(e) {
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
 };
+
+// Global Search
+window.openSearch = function() {
+    const overlay = document.createElement('div');
+    overlay.id = 'search-overlay';
+    overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg);z-index:9999;display:flex;flex-direction:column;';
+    overlay.innerHTML = `
+        <div style="padding:16px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border);background:var(--surface);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input id="search-input" type="text" placeholder="Search events, news, food, services..." autofocus style="flex:1;padding:10px;border:none;font-family:inherit;font-size:1rem;background:transparent;color:var(--text);outline:none;">
+            <button onclick="document.getElementById('search-overlay').remove()" style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);padding:4px 8px;">✕</button>
+        </div>
+        <div id="search-results" style="flex:1;overflow-y:auto;padding:16px;"></div>`;
+    document.body.appendChild(overlay);
+    const input = document.getElementById('search-input');
+    input.addEventListener('input', function(){ runSearch(this.value); });
+    input.addEventListener('keydown', function(ev){ if(ev.key==='Escape') overlay.remove(); });
+    document.getElementById('search-results').innerHTML = '<p style="color:var(--text-muted);text-align:center;margin-top:40px;">Start typing to search across all content</p>';
+};
+
+function runSearch(q) {
+    const results = document.getElementById('search-results');
+    if (!q || q.length < 2) {
+        results.innerHTML = '<p style="color:var(--text-muted);text-align:center;margin-top:40px;">Start typing to search across all content</p>';
+        return;
+    }
+    const ql = q.toLowerCase();
+    let html = '';
+
+    // Search Events (non-sport, upcoming)
+    const now = new Date();
+    const eventHits = allEvents.filter(e => {
+        if (new Date(e.date) < now) return false;
+        const text = (e.title + ' ' + e.location + ' ' + (e.tags||[]).join(' ')).toLowerCase();
+        return text.includes(ql);
+    }).slice(0, 6);
+    if (eventHits.length) {
+        html += `<div style="margin-bottom:20px;"><h4 style="color:var(--text-muted);font-size:0.8rem;text-transform:uppercase;margin-bottom:8px;">📅 Events</h4>`;
+        eventHits.forEach(e => {
+            const d = new Date(e.date);
+            const src = (e.tags||[])[0] || '';
+            html += `<div class="search-result" onclick="document.getElementById('search-overlay').remove();switchView('events');" style="padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;margin-bottom:4px;background:var(--surface);">
+                <span style="font-size:0.7rem;color:var(--text-muted);">${src}</span>
+                <p style="font-weight:600;margin:2px 0;">${e.title}</p>
+                <span style="font-size:0.8rem;color:var(--text-muted);">${formatDate(d)} · ${e.location}</span>
+            </div>`;
+        });
+        html += '</div>';
+    }
+
+    // Search Sports (upcoming games)
+    const sportHits = allEvents.filter(e => {
+        const tags = e.tags || [];
+        if (!tags.includes('Athletic Competitions') && !tags.includes('Athletics')) return false;
+        if (new Date(e.date) < now) return false;
+        const text = (e.title + ' ' + e.location + ' ' + tags.join(' ')).toLowerCase();
+        return text.includes(ql);
+    }).slice(0, 6);
+    if (sportHits.length) {
+        html += `<div style="margin-bottom:20px;"><h4 style="color:var(--text-muted);font-size:0.8rem;text-transform:uppercase;margin-bottom:8px;">🏆 Sports</h4>`;
+        sportHits.forEach(e => {
+            const d = new Date(e.date);
+            const src = (e.tags||[])[0] || '';
+            html += `<div class="search-result" onclick="document.getElementById('search-overlay').remove();switchView('sports');" style="padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;margin-bottom:4px;background:var(--surface);">
+                <span style="font-size:0.7rem;color:var(--text-muted);">${src}</span>
+                <p style="font-weight:600;margin:2px 0;">${e.title}</p>
+                <span style="font-size:0.8rem;color:var(--text-muted);">${formatDate(d)} · ${e.location}</span>
+            </div>`;
+        });
+        html += '</div>';
+    }
+
+    // Search News
+    const newsHits = (currentNews||[]).filter(n => {
+        return (n.title + ' ' + n.source).toLowerCase().includes(ql);
+    }).slice(0, 5);
+    if (newsHits.length) {
+        html += `<div style="margin-bottom:20px;"><h4 style="color:var(--text-muted);font-size:0.8rem;text-transform:uppercase;margin-bottom:8px;">📰 News</h4>`;
+        newsHits.forEach(n => {
+            html += `<div class="search-result" onclick="window.open('${n.link}','_blank')" style="padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;margin-bottom:4px;background:var(--surface);">
+                <span style="font-size:0.7rem;color:var(--text-muted);">${n.source}</span>
+                <p style="font-weight:600;margin:2px 0;">${n.title}</p>
+                <span style="font-size:0.8rem;color:var(--text-muted);">${n.date || ''}</span>
+            </div>`;
+        });
+        html += '</div>';
+    }
+
+    // Search Restaurants
+    const foodHits = (allRestaurants||[]).filter(r => {
+        return (r.name + ' ' + r.cuisine + ' ' + (r.description||'')).toLowerCase().includes(ql);
+    }).slice(0, 5);
+    if (foodHits.length) {
+        html += `<div style="margin-bottom:20px;"><h4 style="color:var(--text-muted);font-size:0.8rem;text-transform:uppercase;margin-bottom:8px;">🍴 Food</h4>`;
+        foodHits.forEach(r => {
+            html += `<div class="search-result" onclick="document.getElementById('search-overlay').remove();switchView('food');" style="padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;margin-bottom:4px;background:var(--surface);">
+                <p style="font-weight:600;margin:2px 0;">${r.name}</p>
+                <span style="font-size:0.8rem;color:var(--text-muted);">${r.cuisine} · ${r.address||''}</span>
+            </div>`;
+        });
+        html += '</div>';
+    }
+
+    // Search Services
+    const svcHits = (allServices||[]).filter(s => {
+        return (s.name + ' ' + s.category + ' ' + (s.description||'')).toLowerCase().includes(ql);
+    }).slice(0, 5);
+    if (svcHits.length) {
+        html += `<div style="margin-bottom:20px;"><h4 style="color:var(--text-muted);font-size:0.8rem;text-transform:uppercase;margin-bottom:8px;">🛠️ Services</h4>`;
+        svcHits.forEach(s => {
+            html += `<div class="search-result" onclick="document.getElementById('search-overlay').remove();switchView('services');" style="padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;margin-bottom:4px;background:var(--surface);">
+                <p style="font-weight:600;margin:2px 0;">${s.name}</p>
+                <span style="font-size:0.8rem;color:var(--text-muted);">${s.category} · ${s.description?.substring(0,60)||''}</span>
+            </div>`;
+        });
+        html += '</div>';
+    }
+
+    if (!html) {
+        html = `<p style="color:var(--text-muted);text-align:center;margin-top:40px;">No results for "${q}"</p>`;
+    }
+    results.innerHTML = html;
+}
 
 window.refreshCam=function(){const cam=document.getElementById('cam-img');if(cam)cam.src=`https://snowball.millersville.edu/~cws/wxcam/latest.jpeg?t=${Date.now()}`;const t=document.getElementById('cam-time');if(t)t.textContent=`Updated: ${new Date().toLocaleTimeString()}`;};
 

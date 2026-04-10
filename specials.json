@@ -50,138 +50,131 @@
   "John Herr's Village Market": {
     "note": "Weekly deals · Wed–Tue · 20 Crossgates Dr",
     "weekly": [
-      "Boneless Ribeye (Delmonico) Steak – $16.99/lb ($1.00 off per lb)",
-      "John F Martin Oven Roasted Chicken Breast – $5.99/lb (Premium deli meat)",
-      "Choice Beef Mock Tender Boneless Thick Eye Roast – $6.49/lb (Premium beef cut)",
-      "Certified Angus Beef Boneless Chuck Roast – $7.99/lb (Premium Angus beef)",
-      "Fresh Ground Sirloin – $6.49/lb (Premium ground beef)"
+      "Boneless Ribeye Delmonico Steak – $16.99/lb ($1.00/lb off)",
+      "Certified Angus Beef Chuck Roast – $7.99/lb (Premium quality)",
+      "Fresh Ground Sirloin – $6.49/lb ($2.50/lb off)",
+      "Bone-In Chicken Thighs – $1.99/lb ($0.49/lb off)",
+      "John F. Martin Oven Roasted Chicken Breast – $5.99/lb (Deli special)"
     ],
     "weeklyDateRange": "Thu Apr 9 - Wed Apr 15",
     "rawDeals": [
       {
-        "item": "Boneless Ribeye (Delmonico) Steak",
+        "item": "Boneless Ribeye Delmonico Steak",
         "salePrice": "$16.99/lb",
         "regularPrice": "$17.99/lb",
-        "savings": "$1.00 off per lb",
+        "savings": "$1.00/lb off",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "John F Martin Oven Roasted Chicken Breast",
-        "salePrice": "$5.99/lb",
-        "regularPrice": "",
-        "savings": "Premium deli meat",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
-      },
-      {
-        "item": "Choice Beef Mock Tender Boneless Thick Eye Roast",
-        "salePrice": "$6.49/lb",
-        "regularPrice": "",
-        "savings": "Premium beef cut",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
-      },
-      {
-        "item": "Certified Angus Beef Boneless Chuck Roast",
+        "item": "Certified Angus Beef Chuck Roast",
         "salePrice": "$7.99/lb",
         "regularPrice": "",
-        "savings": "Premium Angus beef",
+        "savings": "Premium quality",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
         "item": "Fresh Ground Sirloin",
         "salePrice": "$6.49/lb",
-        "regularPrice": "",
-        "savings": "Premium ground beef",
+        "regularPrice": "$8.99/lb",
+        "savings": "$2.50/lb off",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Value Pack Select Beef Boneless Ribeye (Delmonico) Steak",
-        "salePrice": "$16.99/lb",
-        "regularPrice": "$17.99/lb",
-        "savings": "$1.00 off per lb",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
-      },
-      {
-        "item": "Value Pack Fresh All Natural Bone-In Chicken Thighs",
+        "item": "Bone-In Chicken Thighs",
         "salePrice": "$1.99/lb",
-        "regularPrice": "$2.49/lb",
-        "savings": "50 cents off per lb",
+        "regularPrice": "$2.48/lb",
+        "savings": "$0.49/lb off",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "John F. Martin Oven Roasted Chicken Breast",
+        "salePrice": "$5.99/lb",
+        "regularPrice": "",
+        "savings": "Deli special",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
         "item": "Fresh Whole Bone-In Pork Butt",
         "salePrice": "$1.99/lb",
         "regularPrice": "",
-        "savings": "Great price on pork",
+        "savings": "Great price",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Dietz & Watson Medium Yellow American Cheese",
-        "salePrice": "$5.49/lb",
+        "item": "Dietz & Watson Medium Roast Beef",
+        "salePrice": "$14.99/lb",
         "regularPrice": "",
-        "savings": "Premium deli cheese",
+        "savings": "Premium deli meat",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Southern Seas Breaded Coconut Shrimp",
-        "salePrice": "$4.99",
+        "item": "Choice Beef Meaty Boneless Chuck Eye Roast",
+        "salePrice": "$6.49/lb",
         "regularPrice": "",
-        "savings": "Frozen seafood deal",
+        "savings": "Quality cut",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Fresh Whole Atlantic Salmon Fillet",
+        "item": "Nathan's Beef Franks",
+        "salePrice": "$5.99",
+        "regularPrice": "",
+        "savings": "Premium brand",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "California Seedless Naval Oranges 3lb Bag",
+        "salePrice": "$7.99",
+        "regularPrice": "",
+        "savings": "Fresh produce",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Atlantic Salmon Fillet",
         "salePrice": "$9.99/lb",
         "regularPrice": "",
         "savings": "Fresh seafood",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Little Potato Company Potatoes 24oz",
-        "salePrice": "2 for $7",
-        "regularPrice": "",
-        "savings": "Premium potatoes",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
-      },
-      {
-        "item": "Lewis Bakery Hamburger Buns 8ct",
-        "salePrice": "$2.48",
-        "regularPrice": "",
-        "savings": "Fresh bakery item",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
-      },
-      {
-        "item": "Campbell's Condensed Soup",
-        "salePrice": "3 for $4",
+        "item": "Ragu Pasta Sauce 16-24oz",
+        "salePrice": "$1.98",
         "regularPrice": "",
         "savings": "Stock up price",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Ragu Pasta Sauce 16-24oz",
-        "salePrice": "$1.98",
+        "item": "Campbell's Condensed Soup 10.5-11.25oz",
+        "salePrice": "3/$4",
         "regularPrice": "",
-        "savings": "Pantry staple deal",
+        "savings": "$1.33 each",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Ritz Bits or Crackers 8-13.7oz",
-        "salePrice": "$3.98",
+        "item": "Clorox Disinfectant Wipes 75ct",
+        "salePrice": "$5.48",
         "regularPrice": "",
-        "savings": "Snack deal",
+        "savings": "Essential item",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "California Seedless Navel Oranges 4lb bag",
-        "salePrice": "$7.99",
+        "item": "Fresh Mozzarella Galbani 16oz",
+        "salePrice": "$5.48",
         "regularPrice": "",
-        "savings": "Fresh citrus",
+        "savings": "Premium cheese",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Hass Avocados",
-        "salePrice": "4 for $5",
+        "item": "Country Mart Ice Cream Pails 1/8 Gal",
+        "salePrice": "$5.98",
         "regularPrice": "",
-        "savings": "Popular produce item",
+        "savings": "Family size",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Mission Street Soft Taco Flour Tortillas 18ct",
+        "salePrice": "2/$4",
+        "regularPrice": "",
+        "savings": "$2 each",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
@@ -192,10 +185,17 @@
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Celery Stalks",
-        "salePrice": "3 for $5",
+        "item": "Iceberg Lettuce Head",
+        "salePrice": "3/$5",
         "regularPrice": "",
-        "savings": "Fresh produce staple",
+        "savings": "$1.67 each",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Baby Carrots 1lb",
+        "salePrice": "3/$5",
+        "regularPrice": "",
+        "savings": "$1.67 each",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       }
     ]

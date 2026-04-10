@@ -752,7 +752,8 @@ async function runScraper() {
                 events.push({
                     title: eventTitle, date: row[startIdx], location: eventLoc,
                     tags: [...new Set(tags)], price: pricing.price,
-                    ticketLink: pricing.link, sourceLink
+                    ticketLink: pricing.link, sourceLink,
+                    description: row[descIdx] || ""
                 });
                 muCount++;
             });
@@ -1283,16 +1284,22 @@ Focus on the most impressive deals a shopper would want to know about. Include m
     } catch (e) { console.error("❌ VFW/Specials error:", e.message); }
 
     // ===== FAMILY-FRIENDLY TAGGING =====
-    const familyKeywords = /\bfamily\b|families|\bkids?\b|\bchild(ren)?\b|\byouth\b|\ball ages\b|\bopen house\b|\bparade\b|\bfestival\b|\bfun run\b|\begg hunt\b|\btrick.or.treat\b|\bstory ?time\b/i;
+    const familyKeywords = /\bfamily\b|families|\bkids?\b|\bchild(ren)?\b|\byouth\b|\ball ages\b|\bopen house\b|\bparade\b|\bfestival\b|\bfun run\b|\begg hunt\b|\btrick.or.treat\b|\bstory ?time\b|\bfun fest\b|\bdoodle\b|\bpuppet\b|\bmagic show\b|\barts smarts\b|\bsalsa\b.*\b5\+/i;
+    const familyDescKeywords = /\bfamily[- ]friendly\b|\bfor (kids|children|families)\b|\ball ages\b|\bages?\s*\d+\s*(\+|and up|and older)\b|\byoung audiences?\b|\bkids?\s*(welcome|invited|event)\b|\bnon[- ]verbal show\b|\binteractive\b.*\b(kids|children|animation)\b|\bfamily fun\b/i;
     const notFamilyKeywords = /\brehersal\b|\brehearsal\b|\bpractice\b|\btraining\b|\bsap meeting\b|\bstaff\b|\bfaculty\b|\bin-service\b|\bboard\b|\bpto\b/i;
-    const notFamilyMUKeywords = /\bjob\b|\binternship\b|\bcareer fair\b|\bemployment\b|\brecruitment\b|\bhiring\b|\bresume\b/i;
+    const notFamilyMUKeywords = /\bjob\b|\binternship\b|\bcareer fair\b|\bemployment\b|\brecruitment\b|\bhiring\b|\bresume\b|\bworkshop\b.*\bprofessional\b|\bgraduate\b|\bthesis\b/i;
     const familyPMKeywords = /\bconcert\b|\bensemble\b|\bshowcase\b|\bspring show\b|\bmusical\b|\bplay\b|\btalent show\b|\bassembly\b|\bbook fair\b|\bfood fair\b|\bpicture\b/i;
+    // MU event types that are almost always family-friendly
+    const familyMUTypes = /family fun fest|arts smarts|kids.?\s*salsa/i;
     let famCount = 0;
     events.forEach(e => {
         const tags = e.tags || [];
         const src = tags[0] || '';
         const title = e.title || '';
         const titleLower = title.toLowerCase();
+        const desc = (e.description || '').toLowerCase();
+        const loc = (e.location || '').toLowerCase();
+        const allText = titleLower + ' ' + desc;
 
         let isFamilyFriendly = false;
 
@@ -1314,19 +1321,15 @@ Focus on the most impressive deals a shopper would want to know about. Include m
         }
         // PM events — selective
         else if (src === 'PM') {
-            // NOT family friendly: Board/PTO, Meetings, School Events, Field Trips
             if (tags.includes('Board/PTO') || tags.includes('Meetings') || tags.includes('School Events') || tags.includes('Field Trips')) {
                 isFamilyFriendly = false;
             }
-            // NOT family friendly: rehearsals/practice in title
             else if (notFamilyKeywords.test(titleLower)) {
                 isFamilyFriendly = false;
             }
-            // YES family friendly: concerts, showcases, assemblies, book fairs, spirit days, etc.
             else if (familyPMKeywords.test(titleLower)) {
                 isFamilyFriendly = true;
             }
-            // Default PM: not family friendly
             else {
                 isFamilyFriendly = false;
             }
@@ -1335,16 +1338,36 @@ Focus on the most impressive deals a shopper would want to know about. Include m
         else if (tags.includes('Other') && tags.includes('Live Music')) {
             isFamilyFriendly = false;
         }
-        // MU events — keyword match, but exclude job/internship fairs
+        // MU events — check title, description, event type, and venue
         else if (src === 'MU') {
             if (notFamilyMUKeywords.test(titleLower)) {
                 isFamilyFriendly = false;
-            } else if (familyKeywords.test(title)) {
+            }
+            // Known family event types (Family Fun Fest, Arts Smarts, Kids' Salsa)
+            else if (familyMUTypes.test(title)) {
+                isFamilyFriendly = true;
+            }
+            // Check title keywords
+            else if (familyKeywords.test(title)) {
+                isFamilyFriendly = true;
+            }
+            // Check description for family-friendly signals
+            else if (familyDescKeywords.test(desc)) {
+                isFamilyFriendly = true;
+            }
+            // Ware Center events with playful/kids content in description
+            else if (/ware|steinman/i.test(loc) && /\b(playful|imaginati|wonder|interactive|puppet|animation)\b/i.test(desc)) {
                 isFamilyFriendly = true;
             }
         }
-        // Other sources — keyword match
-        else if (familyKeywords.test(title)) {
+        // VFW events — check for open-to-public family events
+        else if (tags.includes('VFW')) {
+            if (familyKeywords.test(title) || /open to the public/i.test(title)) {
+                isFamilyFriendly = true;
+            }
+        }
+        // Other sources — keyword match on title or description
+        else if (familyKeywords.test(title) || familyDescKeywords.test(desc)) {
             isFamilyFriendly = true;
         }
 
@@ -1520,6 +1543,8 @@ Focus on the most impressive deals a shopper would want to know about. Include m
     }
 
     deduped.sort((a, b) => new Date(a.date) - new Date(b.date));
+    // Strip descriptions before saving (only used for family-friendly detection)
+    deduped.forEach(e => { delete e.description; });
     fs.writeFileSync(path.join(__dirname, '../events.json'), JSON.stringify(deduped, null, 2));
     console.log(`📊 Total events saved: ${deduped.length}`);
 

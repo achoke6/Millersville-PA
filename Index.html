@@ -347,7 +347,7 @@
                 <div class="adv-tier-icon">💬</div>
                 <h4 class="adv-tier-name">Not sure what fits?</h4>
                 <p class="adv-tier-desc">We'll help you find the right placement for your business and budget.</p>
-                <a href="mailto:advertise@millersville.app" class="btn btn-gold" style="margin-top:12px;display:block;text-align:center;">Let's Talk →</a>
+                <a href="/cdn-cgi/l/email-protection#b4d5d0c2d1c6c0ddc7d1f4d9ddd8d8d1c6c7c2ddd8d8d19ad5c4c4" class="btn btn-gold" style="margin-top:12px;display:block;text-align:center;">Let's Talk →</a>
             </div>
         </div>
 
@@ -356,7 +356,7 @@
             <h3 class="adv-cta-title">Ready to get started?</h3>
             <p class="adv-cta-sub">Tell us about your business and we'll get back to you within 24 hours.</p>
             <a href="https://forms.gle/YOUR_FORM_ID_HERE" target="_blank" class="btn btn-gold btn-lg">Submit Your Business →</a>
-            <p class="adv-cta-note">Or email us at <a href="mailto:advertise@millersville.app">advertise@millersville.app</a></p>
+            <p class="adv-cta-note">Or email us at <a href="/cdn-cgi/l/email-protection#87e6e3f1e2f5f3eef4e2c7eaeeebebe2f5f4f1eeebebe2a9e6f7f7"><span class="__cf_email__" data-cfemail="244540524156504d574164494d4848415657524d4848410a455454">[email&#160;protected]</span></a></p>
         </div>
 
         <!-- FAQ Accordions -->
@@ -395,7 +395,11 @@
     <p>Independent aggregator. Not affiliated with, or endorsed by, any featured institutions, schools, or venues.</p>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// Cache-bust data files every hour (matches scraper cron)
+const _cb = Math.floor(Date.now() / 3600000);
+function cb(url) { return url + '?v=' + _cb; }
+
 let allEvents=[], currentNews=[];
 let evSource='All', evTags=new Set();
 let evKidMode=false;
@@ -635,7 +639,7 @@ window.switchView=function(view,skipPush){
 };
 
 async function loadEvents(){
-    try{const res=await fetch('events.json'); if(!res.ok) return;
+    try{const res=await fetch(cb('events.json')); if(!res.ok) return;
     allEvents=await res.json(); allEvents.sort((a,b)=>new Date(a.date)-new Date(b.date));
     updateModeUI('ev',evMode,evAnchorDate);
     updateModeUI('sp',spMode,spAnchorDate);
@@ -959,7 +963,7 @@ function renderHomeUI(){
 /* ==================== HOME SPECIALS ==================== */
 async function loadHomeSpecials(){
     try {
-        const specials = await fetch('specials.json').then(r=>r.json());
+        const specials = await fetch(cb('specials.json')).then(r=>r.json());
         const dayName = new Date().toLocaleDateString('en-US',{weekday:'long'});
         const container = document.getElementById('home-specials');
         let cards = [];
@@ -981,7 +985,7 @@ async function loadHomeSpecials(){
 
 /* ==================== WEATHER ==================== */
 async function loadWeather(){
-    try{const data=await(await fetch('weather.json')).json();
+    try{const data=await(await fetch(cb('weather.json'))).json();
     const icon=data.icon||'🌡️';
     // Home page weather hero
     document.getElementById('home-weather').innerHTML=`<div class="weather-hero-home">
@@ -1010,7 +1014,7 @@ async function loadWeather(){
     }catch(e){console.error('Weather load error:',e);}
 }
 async function loadSpecials(){ await loadHomeSpecials(); }
-async function loadNews(){try{currentNews=await(await fetch('news.json')).json();renderNewsSubFilters();renderNewsUI();}catch(e){}}
+async function loadNews(){try{currentNews=await(await fetch(cb('news.json'))).json();renderNewsSubFilters();renderNewsUI();}catch(e){}}
 
 let newsSource='All', newsSubFilter=null;
 
@@ -1071,8 +1075,8 @@ function renderNewsUI(){
 }
 async function loadDining(){try{
     const [data, specials] = await Promise.all([
-        fetch('restaurants.json').then(r=>r.json()),
-        fetch('specials.json').then(r=>r.json()).catch(()=>({}))
+        fetch(cb('restaurants.json')).then(r=>r.json()),
+        fetch(cb('specials.json')).then(r=>r.json()).catch(()=>({}))
     ]);
     // Store grocery deals for popup
     const jh = specials["John Herr's Village Market"];
@@ -1123,9 +1127,9 @@ async function loadDining(){try{
         return `<div class="app-card ${p.featured?'card-featured':''}" style="position:relative;">${membersBadge}${featuredBadge}<h3 class="card-title">${p.name}</h3><p class="card-meta" style="margin-bottom:4px;">🍴 ${p.cuisine}</p>${addr}<p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:8px;">${p.description||''}</p>${specialsHtml}<div style="margin-top:auto;">${b}</div></div>`;
     }).join('');
 }catch(e){console.error('Dining error:',e);}}
-async function loadHousing(){try{const data=await(await fetch('housing.json')).json();const c=document.getElementById('housing-container');data.sort((a,b)=>(b.featured===true)-(a.featured===true));c.innerHTML=data.map(p=>{const badge=p.featured?'<span class="badge badge-premium">Featured</span>':'';return `<div class="app-card ${p.featured?'card-featured':''}">${badge}<h3 class="card-title">${p.name}</h3><p class="card-meta" style="font-weight:bold;text-transform:uppercase;margin-bottom:8px;">${p.landlord}</p><p style="font-size:0.9rem;margin-bottom:16px;">${p.description}</p><div class="card-footer"><a href="${p.link}" target="_blank" class="btn btn-sm ${p.featured?'btn-dark':'btn-outline'}" style="display:block;text-align:center;">View Property</a></div></div>`;}).join('');}catch(e){}}
+async function loadHousing(){try{const data=await(await fetch(cb('housing.json'))).json();const c=document.getElementById('housing-container');data.sort((a,b)=>(b.featured===true)-(a.featured===true));c.innerHTML=data.map(p=>{const badge=p.featured?'<span class="badge badge-premium">Featured</span>':'';return `<div class="app-card ${p.featured?'card-featured':''}">${badge}<h3 class="card-title">${p.name}</h3><p class="card-meta" style="font-weight:bold;text-transform:uppercase;margin-bottom:8px;">${p.landlord}</p><p style="font-size:0.9rem;margin-bottom:16px;">${p.description}</p><div class="card-footer"><a href="${p.link}" target="_blank" class="btn btn-sm ${p.featured?'btn-dark':'btn-outline'}" style="display:block;text-align:center;">View Property</a></div></div>`;}).join('');}catch(e){}}
 let allServices=[], svcFilter='All';
-async function loadServices(){try{allServices=await(await fetch('services.json')).json();renderServices();}catch(e){}}
+async function loadServices(){try{allServices=await(await fetch(cb('services.json'))).json();renderServices();}catch(e){}}
 window.setSvcFilter=function(cat,btn){
     svcFilter=cat;
     btn.closest('.filter-group').querySelectorAll('.src-btn').forEach(b=>b.classList.remove('active'));
@@ -1177,9 +1181,3 @@ window.showGroceryDeals = function(e) {
         <a href="https://www.johnherrsvillagemarket.com/weekly-ad" target="_blank" class="btn btn-sm btn-ticket" style="display:block;text-align:center;margin-top:16px;">View Full Circular</a>`;
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
-};
-
-window.refreshCam=function(){const cam=document.getElementById('cam-img');if(cam)cam.src=`https://snowball.millersville.edu/~cws/wxcam/latest.jpeg?t=${Date.now()}`;const t=document.getElementById('cam-time');if(t)t.textContent=`Updated: ${new Date().toLocaleTimeString()}`;};
-</script>
-</body>
-</html>

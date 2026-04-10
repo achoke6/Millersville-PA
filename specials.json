@@ -50,118 +50,118 @@
   "John Herr's Village Market": {
     "note": "Weekly deals · Wed–Tue · 20 Crossgates Dr",
     "weekly": [
-      "Boneless Ribeye (Delmonico) Steak – $16.99/lb ($1.00/lb off)",
-      "Choice Beef, Meaty, Tender Boneless Chuck Eye Roast – $6.49/lb (Premium cut at great price)",
-      "Certified Angus Beef Boneless Chuck Roast – $7.99/lb (Premium beef)",
-      "Fresh Ground Sirloin – $6.49/lb ($2.50/lb off)",
-      "Bone-in Pork Butt – $1.99/lb (Very low price)"
+      "Boneless Ribeye or New York Strip Steak – $16.99/lb (Value Pack pricing)",
+      "Choice Beef Thick Boneless Chuck Eye Roast – $6.49/lb (Premium cut at great price)",
+      "Certified Angus Beef Boneless Chuck Roast – $7.99/lb (Premium Angus beef)",
+      "Fresh Ground Sirloin – $6.49/lb (Value Pack - Less Amount $6.99/lb)",
+      "Bone-in Chicken Thighs – $1.99/lb (Value Pack - Less Amount $2.49/lb)"
     ],
-    "weeklyDateRange": "Thu Apr 9 - Wed Apr 15",
+    "weeklyDateRange": "Thu Apr 9 - Wed Apr 15, 2024",
     "rawDeals": [
       {
-        "item": "Boneless Ribeye (Delmonico) Steak",
+        "item": "Boneless Ribeye or New York Strip Steak",
         "salePrice": "$16.99/lb",
         "regularPrice": "$17.99/lb",
-        "savings": "$1.00/lb off",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
+        "savings": "Value Pack pricing",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
       },
       {
-        "item": "Choice Beef, Meaty, Tender Boneless Chuck Eye Roast",
+        "item": "Choice Beef Thick Boneless Chuck Eye Roast",
         "salePrice": "$6.49/lb",
         "regularPrice": "",
         "savings": "Premium cut at great price",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
       },
       {
         "item": "Certified Angus Beef Boneless Chuck Roast",
         "salePrice": "$7.99/lb",
         "regularPrice": "",
-        "savings": "Premium beef",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
+        "savings": "Premium Angus beef",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
       },
       {
         "item": "Fresh Ground Sirloin",
         "salePrice": "$6.49/lb",
-        "regularPrice": "$8.99/lb",
-        "savings": "$2.50/lb off",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
-      },
-      {
-        "item": "Bone-in Pork Butt",
-        "salePrice": "$1.99/lb",
-        "regularPrice": "",
-        "savings": "Very low price",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
+        "regularPrice": "$6.99/lb",
+        "savings": "Value Pack - Less Amount $6.99/lb",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
       },
       {
         "item": "Bone-in Chicken Thighs",
         "salePrice": "$1.99/lb",
-        "regularPrice": "$2.48/lb",
-        "savings": "49¢/lb off",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
+        "regularPrice": "$2.49/lb",
+        "savings": "Value Pack - Less Amount $2.49/lb",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
       },
       {
-        "item": "John F. Martin Oven Roasted Chicken Breast",
-        "salePrice": "$5.99/lb",
+        "item": "Fresh Whole Atlantic Salmon Fillet",
+        "salePrice": "$9.99/lb",
         "regularPrice": "",
-        "savings": "Deli meat special",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
+        "savings": "Fresh seafood deal",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
       },
       {
         "item": "Dietz & Watson Medium Roast Beef",
         "salePrice": "$14.99/lb",
         "regularPrice": "",
         "savings": "Premium deli meat",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
       },
       {
-        "item": "Fresh Whole Atlantic Salmon Fillet",
+        "item": "Dietz & Watson Gourmet Lite Cooked Ham",
         "salePrice": "$9.99/lb",
         "regularPrice": "",
-        "savings": "Fresh seafood special",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
+        "savings": "Quality deli ham",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
       },
       {
-        "item": "California Seedless Navel Oranges",
+        "item": "John F. Martin Oven Roasted Chicken Breast",
+        "salePrice": "$5.99/lb",
+        "regularPrice": "",
+        "savings": "Local specialty",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Pork Butt Half",
+        "salePrice": "$2.49/lb",
+        "regularPrice": "",
+        "savings": "Great for BBQ",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Baby Back Ribs",
+        "salePrice": "$2.99/lb",
+        "regularPrice": "",
+        "savings": "Less Amount $3.49/lb",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Hatfield or Ball Park Hot Dogs",
+        "salePrice": "$3.69/lb",
+        "regularPrice": "",
+        "savings": "Family pack value",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "California Seedless Navel Oranges 3lb bag",
         "salePrice": "$7.99",
         "regularPrice": "",
-        "savings": "8 lb bag",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
+        "savings": "Bulk produce savings",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
       },
       {
-        "item": "Smithfield Pork Tenderloins/Fillets/Picnic Roasts Buy 1 Get 1 FREE",
-        "salePrice": "BOGO",
+        "item": "Hass Avocados",
+        "salePrice": "4/$5",
         "regularPrice": "",
-        "savings": "50% savings",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
+        "savings": "Multi-buy deal",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
       },
       {
-        "item": "Food Club Skillet Classics Buy 1 Get 1 FREE",
-        "salePrice": "BOGO",
+        "item": "Fresh Whole Bone-in Pork Butt",
+        "salePrice": "$1.99/lb",
         "regularPrice": "",
-        "savings": "50% savings",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
-      },
-      {
-        "item": "Herr's Original Potato Chips Buy 1 Get 1 FREE",
-        "salePrice": "BOGO",
-        "regularPrice": "",
-        "savings": "50% savings",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
-      },
-      {
-        "item": "McCafe Single Serve K-Cup Coffee Buy 1 Get 1 FREE",
-        "salePrice": "BOGO",
-        "regularPrice": "",
-        "savings": "50% savings",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
-      },
-      {
-        "item": "Yankee Candles Buy 1 Get 1 FREE",
-        "salePrice": "BOGO",
-        "regularPrice": "",
-        "savings": "50% savings",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
+        "savings": "Excellent price for large roast",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
       }
     ]
   }

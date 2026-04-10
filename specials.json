@@ -50,117 +50,117 @@
   "John Herr's Village Market": {
     "note": "Weekly deals · Wed–Tue · 20 Crossgates Dr",
     "weekly": [
-      "Boneless Ribeye Delmonico Steak – $16.99/lb ($1.00 off per lb)",
-      "Choice Beef Meaty Boneless Chuck Eye Roast – $6.49/lb (Premium cut at great price)",
-      "Certified Angus Beef Boneless Chuck Roast – $7.99/lb (Premium Angus beef)",
-      "Fresh Ground Sirloin – $6.49/lb ($2.50 off per lb)",
-      "Bone-In Chicken Thighs – $1.99/lb (49¢ off per lb)"
+      "Boneless Ribeye or New York Steak – $16.99/lb (Value Pack)",
+      "Choice Beef Chuck Roast – $6.49/lb (Premium cut)",
+      "Certified Angus Beef Boneless Chuck Roast – $7.99/lb (Premium Angus)",
+      "Fresh Ground Sirloin – $6.49/lb (Value Pack)",
+      "Bone-in Chicken Thighs – $1.99/lb (Value Pack)"
     ],
     "weeklyDateRange": "Thu Apr 9 - Wed Apr 15",
     "rawDeals": [
       {
-        "item": "Boneless Ribeye Delmonico Steak",
+        "item": "Boneless Ribeye or New York Steak",
         "salePrice": "$16.99/lb",
         "regularPrice": "$17.99/lb",
-        "savings": "$1.00 off per lb",
+        "savings": "Value Pack",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Choice Beef Meaty Boneless Chuck Eye Roast",
+        "item": "Choice Beef Chuck Roast",
         "salePrice": "$6.49/lb",
         "regularPrice": "",
-        "savings": "Premium cut at great price",
+        "savings": "Premium cut",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
         "item": "Certified Angus Beef Boneless Chuck Roast",
         "salePrice": "$7.99/lb",
         "regularPrice": "",
-        "savings": "Premium Angus beef",
+        "savings": "Premium Angus",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
         "item": "Fresh Ground Sirloin",
         "salePrice": "$6.49/lb",
         "regularPrice": "$8.99/lb",
-        "savings": "$2.50 off per lb",
+        "savings": "Value Pack",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Bone-In Chicken Thighs",
+        "item": "Bone-in Chicken Thighs",
         "salePrice": "$1.99/lb",
-        "regularPrice": "$2.48/lb",
-        "savings": "49¢ off per lb",
+        "regularPrice": "$2.49/lb",
+        "savings": "Value Pack",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Fresh Whole Atlantic Salmon Fillet",
-        "salePrice": "$9.99/lb",
+        "item": "Bone-in Pork Butt",
+        "salePrice": "$1.99/lb",
         "regularPrice": "",
-        "savings": "Fresh salmon great price",
+        "savings": "Great price",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
         "item": "John F Martin Oven Roasted Chicken Breast",
         "salePrice": "$5.99/lb",
         "regularPrice": "",
-        "savings": "Deli quality",
+        "savings": "Deli special",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Fresh Whole Atlantic Salmon Fillet",
+        "salePrice": "$9.99/lb",
+        "regularPrice": "",
+        "savings": "Fresh seafood",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Northern Seas Breaded Butterfly Shrimp",
+        "salePrice": "$4.99",
+        "regularPrice": "",
+        "savings": "4 to 5 oz",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Fresh All Natural Boneless Chicken Breast",
+        "salePrice": "$3.69/lb",
+        "regularPrice": "$4.99/lb",
+        "savings": "Value Pack",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Sweet Italian or Hot Italian Sausage",
+        "salePrice": "$3.99/lb",
+        "regularPrice": "$4.99/lb",
+        "savings": "Family Owned brand",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "California Seedless Navel Oranges",
+        "salePrice": "$7.99",
+        "regularPrice": "",
+        "savings": "8 lb bag",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
         "item": "Dietz & Watson Medium Roast Beef",
         "salePrice": "$14.99/lb",
         "regularPrice": "",
-        "savings": "Premium deli meat",
+        "savings": "Premium deli",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Buy 1 Get 1 FREE Smithfield Pork Tenderloins or Picnic Roasts",
-        "salePrice": "BOGO FREE",
+        "item": "Dietz & Watson Homestyle Black Pepper Turkey Breast",
+        "salePrice": "$12.99/lb",
         "regularPrice": "",
-        "savings": "50% off",
+        "savings": "Premium deli",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Buy 1 Get 1 FREE Food Club Skillet Classics",
-        "salePrice": "BOGO FREE",
+        "item": "Little Potato Company Potatoes",
+        "salePrice": "$2.67",
         "regularPrice": "",
-        "savings": "50% off",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
-      },
-      {
-        "item": "Buy 1 Get 1 FREE Herr's Original Potato Chips",
-        "salePrice": "BOGO FREE",
-        "regularPrice": "",
-        "savings": "50% off",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
-      },
-      {
-        "item": "Buy 1 Get 1 FREE Yankee Candles",
-        "salePrice": "BOGO FREE",
-        "regularPrice": "",
-        "savings": "50% off",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
-      },
-      {
-        "item": "California Seedless Navel Oranges",
-        "salePrice": "$7.99/5lb bag",
-        "regularPrice": "",
-        "savings": "$1.60 per lb",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
-      },
-      {
-        "item": "Nesquik Chocolate Milk 12-Pack",
-        "salePrice": "$12.98",
-        "regularPrice": "",
-        "savings": "Bulk price",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
-      },
-      {
-        "item": "Crav'n Flavor Mozzarella Cheese Sticks",
-        "salePrice": "$2.50",
-        "regularPrice": "",
-        "savings": "Frozen snack deal",
+        "savings": "24 oz",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       }
     ]

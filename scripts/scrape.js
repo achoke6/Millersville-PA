@@ -477,47 +477,7 @@ async function runScraper() {
                 if (/track\s*&?\s*field/i.test(desc) && !tags.includes('Track')) tags.push('Track');
                 if (/bocce/i.test(lowerTitle)) tags.push('Athletics'); // Bocce not in list but keep tagged
 
-                // PM Hudl team links by sport + gender
-                // Only sports that commonly have Hudl video replays
-                const pmHudlBase = 'https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/';
-                const pmHudlTeams = {
-                    'boys-football': '17195/boys-varsity-football',
-                    'boys-basketball': '71274/boys-varsity-basketball',
-                    'girls-basketball': '71273/girls-varsity-basketball',
-                    'boys-baseball': '569426/Mens-Varsity-Baseball',
-                    'boys-volleyball': '569433/boys-varsity-volleyball',
-                    'girls-soccer': '346666/girls-varsity-soccer',
-                    'girls-field hockey': '497810/Penn-Manor-Field-Hockey-',
-                    'field hockey': '497810/Penn-Manor-Field-Hockey-',
-                    'boys-lacrosse': '420912/boys-varsity-lacrosse',
-                    'girls-lacrosse': '569435/girls-varsity-lacrosse',
-                    'girls-softball': '569427/girls-varsity-softball',
-                    'softball': '569427/girls-varsity-softball',
-                };
-                // Sports that rarely have Hudl video — skip these
-                const noVideoSports = ['track', 'tennis', 'wrestling', 'cross country', 'swimming', 'golf', 'bowling'];
-
-                // Build lookup key from gender + sport
-                const gender = tags.includes('Boys') ? 'boys' : tags.includes('Girls') ? 'girls' : '';
-                const sportTag = sportsList.find(s => tags.includes(s));
-                const sportLower = sportTag ? sportTag.toLowerCase() : '';
-                const hudlKey1 = gender && sportTag ? `${gender}-${sportLower}` : '';
-                const hudlKey2 = sportLower;
-
-                // Only add Hudl link if:
-                // 1. It's a Varsity game (not JV, not Freshman)
-                // 2. It's a sport that commonly has video
-                // 3. It's a past game (replay) or happening today (potential live)
-                const isVarsity = /varsity/i.test(title) && !/\bjv\b|junior varsity|freshman|9th/i.test(title);
-                const hasVideoSport = !noVideoSports.some(s => sportLower.includes(s));
-                const hudlTeam = pmHudlTeams[hudlKey1] || pmHudlTeams[hudlKey2] || null;
-                const isPastOrToday = eventDate < new Date(now.getTime() + 24*60*60*1000);
-
                 let pmStreamLink = '';
-                if (isVarsity && hasVideoSport && hudlTeam && isPastOrToday) {
-                    const hudlDate = eventDate.toISOString().split('.')[0] + '.000Z';
-                    pmStreamLink = pmHudlBase + hudlTeam + '/schedule?date=' + encodeURIComponent(hudlDate) + '&range=Day';
-                }
 
                 // Check if game is live
                 const eventEnd = ev.end ? new Date(ev.end) : new Date(eventDate.getTime() + 2*60*60*1000);
@@ -562,6 +522,110 @@ async function runScraper() {
         }
         console.log(`✅ Penn Manor: ${pmAthCount} athletic + ${pmGenCount} general = ${pmAthCount + pmGenCount} events`);
     } catch (e) { console.error("❌ Penn Manor error:", e.message); }
+
+    // ===== 2b. HUDL BROADCAST CHECK (Penn Manor) =====
+    try {
+        console.log("📡 Checking Hudl broadcasts for PM games...");
+        const hudlQuery = `query Web_Fan_GetScheduleEntrySummaries_r1($input: GetScheduleEntryPublicSummariesInput!) {
+  scheduleEntryPublicSummaries(input: $input) {
+    items {
+      gameType genderId id internalId
+      opponentDetails { name shortName __typename }
+      scheduleEntryId scheduleEntryLocation scheduleEntryOutcome
+      score1 score2 sportId teamId timeUtc broadcastStatus
+      __typename
+    }
+    totalCount __typename
+  }
+}`;
+        // Query in weekly chunks to avoid hitting limits
+        const hudlBroadcasts = new Map(); // key: YYYY-MM-DD|sportId|genderId -> scheduleEntryId
+        const chunkSize = 14 * 24 * 60 * 60 * 1000; // 14 days
+        let hudlStart = pastDate.getTime();
+        const hudlEnd = futureDate.getTime();
+        let totalHudlEntries = 0, broadcastCount = 0;
+
+        while (hudlStart < hudlEnd) {
+            const chunkEnd = Math.min(hudlStart + chunkSize, hudlEnd);
+            const res = await fetch('https://www.hudl.com/api/public/graphql/query', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    operationName: 'Web_Fan_GetScheduleEntrySummaries_r1',
+                    variables: {
+                        input: {
+                            sortType: 'SCHEDULE_ENTRY_DATE',
+                            schoolIds: ['U2Nob29sNjcyNw=='],
+                            filterStartDate: new Date(hudlStart).toISOString(),
+                            filterEndDate: new Date(chunkEnd).toISOString(),
+                            sortByAscending: true
+                        }
+                    },
+                    query: hudlQuery
+                })
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                const items = data?.data?.scheduleEntryPublicSummaries?.items || [];
+                totalHudlEntries += items.length;
+                for (const item of items) {
+                    if (item.broadcastStatus !== null && item.broadcastStatus !== undefined) {
+                        // Build lookup key: date (YYYY-MM-DD) + sportId + genderId
+                        const gameDate = new Date(item.timeUtc).toISOString().split('T')[0];
+                        const key = `${gameDate}|${item.sportId}|${item.genderId}`;
+                        hudlBroadcasts.set(key, {
+                            scheduleEntryId: item.scheduleEntryId,
+                            broadcastStatus: item.broadcastStatus,
+                            timeUtc: item.timeUtc
+                        });
+                        broadcastCount++;
+                    }
+                }
+            }
+            hudlStart = chunkEnd;
+        }
+
+        console.log(`  📺 Hudl: ${totalHudlEntries} schedule entries, ${broadcastCount} with broadcasts`);
+
+        // Hudl sportId mapping (observed from API data)
+        const hudlSportMap = {
+            1: 'football', 2: 'soccer', 3: 'basketball', 4: 'volleyball',
+            5: 'baseball', 6: 'softball', 7: 'lacrosse', 8: 'field hockey',
+            9: 'wrestling', 10: 'tennis', 11: 'track', 12: 'swimming',
+            13: 'cross country', 14: 'golf'
+        };
+        // Reverse: sport name -> sportId
+        const sportToHudlId = {};
+        for (const [id, name] of Object.entries(hudlSportMap)) sportToHudlId[name] = parseInt(id);
+
+        // Match broadcasts to PM events
+        let matchCount = 0;
+        for (const ev of events) {
+            if (!ev.tags || !ev.tags.includes('PM') || !ev.tags.includes('Athletic Competitions')) continue;
+            const evDate = new Date(ev.date).toISOString().split('T')[0];
+            const gender = ev.tags.includes('Girls') ? 1 : 0;
+
+            // Try each sport tag
+            for (const tag of ev.tags) {
+                const sportName = tag.toLowerCase();
+                const sportId = sportToHudlId[sportName];
+                if (!sportId) continue;
+
+                const key = `${evDate}|${sportId}|${gender}`;
+                const broadcast = hudlBroadcasts.get(key);
+                if (broadcast) {
+                    // Build direct watch URL using schedule page with date
+                    const watchDate = new Date(broadcast.timeUtc).toISOString();
+                    ev.streamLink = `https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/schedule?date=${encodeURIComponent(watchDate)}&range=Day`;
+                    matchCount++;
+                    break;
+                }
+            }
+        }
+        console.log(`  📺 Matched ${matchCount} PM games with Hudl broadcasts`);
+
+    } catch (e) { console.log(`  ⚠️ Hudl broadcast check error: ${e.message}`); }
 
     // ===== 3. MU CALENDAR (NON-SPORT EVENTS ONLY) =====
     try {

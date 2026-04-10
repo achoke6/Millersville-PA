@@ -478,6 +478,7 @@ async function runScraper() {
                 if (/bocce/i.test(lowerTitle)) tags.push('Athletics'); // Bocce not in list but keep tagged
 
                 // PM Hudl team links by sport + gender
+                // Only sports that commonly have Hudl video replays
                 const pmHudlBase = 'https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/team/';
                 const pmHudlTeams = {
                     'boys-football': '17195/boys-varsity-football',
@@ -492,24 +493,31 @@ async function runScraper() {
                     'girls-lacrosse': '569435/girls-varsity-lacrosse',
                     'girls-softball': '569427/girls-varsity-softball',
                     'softball': '569427/girls-varsity-softball',
-                    'boys-tennis': '594872/boys-varsity-tennis',
-                    'girls-tennis': '594873/girls-varsity-tennis',
-                    'boys-track': '569430/boys-varsity-track',
-                    'girls-track': '569432/girls-varsity-track',
-                    'boys-wrestling': '569431/boys-varsity-wrestling',
-                    'wrestling': '569431/boys-varsity-wrestling',
                 };
+                // Sports that rarely have Hudl video — skip these
+                const noVideoSports = ['track', 'tennis', 'wrestling', 'cross country', 'swimming', 'golf', 'bowling'];
+
                 // Build lookup key from gender + sport
                 const gender = tags.includes('Boys') ? 'boys' : tags.includes('Girls') ? 'girls' : '';
                 const sportTag = sportsList.find(s => tags.includes(s));
-                const hudlKey1 = gender && sportTag ? `${gender}-${sportTag.toLowerCase()}` : '';
-                const hudlKey2 = sportTag ? sportTag.toLowerCase() : '';
+                const sportLower = sportTag ? sportTag.toLowerCase() : '';
+                const hudlKey1 = gender && sportTag ? `${gender}-${sportLower}` : '';
+                const hudlKey2 = sportLower;
+
+                // Only add Hudl link if:
+                // 1. It's a Varsity game (not JV, not Freshman)
+                // 2. It's a sport that commonly has video
+                // 3. It's a past game (replay) or happening today (potential live)
+                const isVarsity = /varsity/i.test(title) && !/\bjv\b|junior varsity|freshman|9th/i.test(title);
+                const hasVideoSport = !noVideoSports.some(s => sportLower.includes(s));
                 const hudlTeam = pmHudlTeams[hudlKey1] || pmHudlTeams[hudlKey2] || null;
-                // Build date-specific schedule URL so link goes directly to that day's games/video
-                const hudlDate = eventDate.toISOString().split('.')[0] + '.000Z';
-                const pmStreamLink = hudlTeam
-                    ? pmHudlBase + hudlTeam + '/schedule?date=' + encodeURIComponent(hudlDate) + '&range=Day'
-                    : 'https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/schedule?date=' + encodeURIComponent(hudlDate) + '&range=Day';
+                const isPastOrToday = eventDate < new Date(now.getTime() + 24*60*60*1000);
+
+                let pmStreamLink = '';
+                if (isVarsity && hasVideoSport && hudlTeam && isPastOrToday) {
+                    const hudlDate = eventDate.toISOString().split('.')[0] + '.000Z';
+                    pmStreamLink = pmHudlBase + hudlTeam + '/schedule?date=' + encodeURIComponent(hudlDate) + '&range=Day';
+                }
 
                 // Check if game is live
                 const eventEnd = ev.end ? new Date(ev.end) : new Date(eventDate.getTime() + 2*60*60*1000);

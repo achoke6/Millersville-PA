@@ -264,6 +264,14 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .sp-source-row {
     align-items: center;
 }
+.ev-source-row {
+    align-items: center;
+    flex-wrap: nowrap;
+}
+.ev-source-row .filter-group {
+    flex: 1;
+    min-width: 0;
+}
 
 .home-toggle {
     display: flex;
@@ -299,6 +307,7 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     transition: var(--transition);
     color: var(--text-muted);
     flex-shrink: 0;
+    margin-left: auto;
 }
 .family-toggle:hover { border-color: #059669; color: #059669; }
 .family-toggle.active {

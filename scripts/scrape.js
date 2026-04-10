@@ -600,30 +600,36 @@ async function runScraper() {
         for (const [id, name] of Object.entries(hudlSportMap)) sportToHudlId[name] = parseInt(id);
 
         // Match broadcasts to PM events
+        // Debug: log sample Hudl keys and PM event info
+        const hudlKeys = [...hudlBroadcasts.keys()];
+        console.log(`  📺 Sample Hudl broadcast keys: ${hudlKeys.slice(0, 5).join(', ')}`);
+
         let matchCount = 0;
+        let pmAthEvents = 0;
         for (const ev of events) {
-            if (!ev.tags || !ev.tags.includes('PM') || !ev.tags.includes('Athletic Competitions')) continue;
+            if (!ev.tags || !ev.tags.includes('PM')) continue;
+            // PM athletic events have sport tags, not 'Athletic Competitions'
+            const sportTag = ev.tags.find(t => sportToHudlId[t.toLowerCase()]);
+            if (!sportTag) continue;
+            pmAthEvents++;
+
             const evDate = new Date(ev.date).toISOString().split('T')[0];
             const gender = ev.tags.includes('Girls') ? 1 : 0;
+            const sportId = sportToHudlId[sportTag.toLowerCase()];
 
-            // Try each sport tag
-            for (const tag of ev.tags) {
-                const sportName = tag.toLowerCase();
-                const sportId = sportToHudlId[sportName];
-                if (!sportId) continue;
-
-                const key = `${evDate}|${sportId}|${gender}`;
-                const broadcast = hudlBroadcasts.get(key);
-                if (broadcast) {
-                    // Build direct watch URL using schedule page with date
-                    const watchDate = new Date(broadcast.timeUtc).toISOString();
-                    ev.streamLink = `https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/schedule?date=${encodeURIComponent(watchDate)}&range=Day`;
-                    matchCount++;
-                    break;
-                }
+            const key = `${evDate}|${sportId}|${gender}`;
+            const broadcast = hudlBroadcasts.get(key);
+            if (broadcast) {
+                const watchDate = new Date(broadcast.timeUtc).toISOString();
+                ev.streamLink = `https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/schedule?date=${encodeURIComponent(watchDate)}&range=Day`;
+                matchCount++;
+                if (matchCount <= 5) console.log(`    ✅ ${ev.title} (${evDate}) → broadcast found`);
+            } else if (pmAthEvents <= 3) {
+                // Debug first few misses
+                console.log(`    ❌ ${ev.title} (${evDate}) key=${key} not in Hudl`);
             }
         }
-        console.log(`  📺 Matched ${matchCount} PM games with Hudl broadcasts`);
+        console.log(`  📺 ${pmAthEvents} PM athletic events, matched ${matchCount} with Hudl broadcasts`);
 
     } catch (e) { console.log(`  ⚠️ Hudl broadcast check error: ${e.message}`); }
 

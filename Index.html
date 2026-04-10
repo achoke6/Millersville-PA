@@ -418,7 +418,8 @@ const evSubMap={
 };
 
 // Date helpers
-function toDateStr(d){return d.toISOString().split('T')[0];}
+function toDateStr(d){const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');return `${y}-${m}-${day}`;}
+function localDateStr(iso){return toDateStr(new Date(iso));}
 function todayMidnight(){const d=new Date();return new Date(d.getFullYear(),d.getMonth(),d.getDate());}
 function getMonday(d){const day=d.getDay(),diff=d.getDate()-day+(day===0?-6:1);return new Date(d.getFullYear(),d.getMonth(),diff);}
 function addDays(d,n){const r=new Date(d);r.setDate(r.getDate()+n);return r;}
@@ -436,8 +437,8 @@ function getDateRange(mode,anchor){
 
 function getVisibleDateRange(events){
     if(events.length===0) return null;
-    const first=events[0].date.substring(0,10);
-    const last=events[events.length-1].date.substring(0,10);
+    const first=localDateStr(events[0].date);
+    const last=localDateStr(events[events.length-1].date);
     const fd=new Date(first+'T12:00:00'), ld=new Date(last+'T12:00:00');
     return fd.toLocaleDateString('en-US',{month:'short',day:'numeric'})+' – '+ld.toLocaleDateString('en-US',{month:'short',day:'numeric'});
 }
@@ -696,7 +697,7 @@ function renderEvents(){
     let filtered=allEvents.filter(e=>{
         if(isSportEvent(e)) return false;
         if(isPMSportByTitle(e)) return false;
-        const d=e.date.substring(0,10);
+        const d=localDateStr(e.date);
         if(d<range.start||d>range.end) return false;
         if(!matchesSource(e.tags||[],evSource)) return false;
         if(evTags.size>0&&!Array.from(evTags).every(t=>(e.tags||[]).includes(t))) return false;
@@ -791,7 +792,7 @@ function renderSports(){
 
     let baseFiltered=allEvents.filter(e=>{
         if(!isSportEvent(e)) return false;
-        const d=e.date.substring(0,10);
+        const d=localDateStr(e.date);
         if(d<range.start||d>range.end) return false;
         const tags=e.tags||[];
         const matchesAny=Array.from(spActiveSources).some(src=>matchesSportSource(tags,src));
@@ -901,7 +902,7 @@ function renderHomeUI(){
     const todayEvents = allEvents.filter(e => {
         if(isSportEvent(e) || isPMSportByTitle(e)) return false;
         if((e.tags||[]).includes('Clubs/Orgs')) return false;
-        return e.date.substring(0,10) === todayStr;
+        return localDateStr(e.date) === todayStr;
     }).slice(0, 8);
     const evContainer = document.getElementById('home-today-events');
     if(todayEvents.length === 0){
@@ -921,7 +922,7 @@ function renderHomeUI(){
         if(!isSportEvent(e) && !isPMSportByTitle(e)) return false;
         const tags = e.tags||[];
         if(!tags.includes('Home Game Mode') && !tags.includes('H Games')) return false;
-        return e.date.substring(0,10) === todayStr;
+        return localDateStr(e.date) === todayStr;
     }).slice(0, 8);
     const gameContainer = document.getElementById('home-today-games');
     if(todayGames.length === 0){

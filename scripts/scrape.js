@@ -1283,6 +1283,73 @@ Focus on the most impressive deals a shopper would want to know about. Include m
         console.log(`✅ Specials saved (VFW: ${vfwWeeklySpecials.length}, Grocery: ${groceryDeals.length})`);
     } catch (e) { console.error("❌ VFW/Specials error:", e.message); }
 
+    // ===== 8. COMMUNITY EVENT SUBMISSIONS (Google Sheet) =====
+    try {
+        console.log("📡 Fetching community event submissions...");
+        const SUBMIT_SHEET_ID = '1VRI55lrSl_MKoWjMPAfaOtJq2HrmU9NGn2R2waDXMCc';
+        const submitUrl = `https://docs.google.com/spreadsheets/d/${SUBMIT_SHEET_ID}/gviz/tq?tqx=out:csv`;
+        const submitRes = await fetch(submitUrl);
+        if (submitRes.ok) {
+            const csvText = await submitRes.text();
+            const rows = csvText.split('\n').slice(1); // Skip header
+            let communityCount = 0;
+            for (const row of rows) {
+                // Parse CSV: Timestamp, Event Name, Date, Time, Location, Description, Contact Email, Website/Link, Status
+                const cols = row.match(/"([^"]*)"/g);
+                if (!cols || cols.length < 8) continue;
+                const clean = cols.map(c => c.replace(/"/g, '').trim());
+                const [timestamp, eventName, dateStr, timeStr, location, description, email, link, status] = clean;
+
+                // Only include approved events
+                if (!status || !/approved/i.test(status)) continue;
+                if (!eventName || !dateStr) continue;
+
+                // Parse date (format from Google Forms: MM/DD/YYYY or YYYY-MM-DD)
+                let eventDate;
+                const mdyMatch = dateStr.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+                if (mdyMatch) {
+                    eventDate = new Date(parseInt(mdyMatch[3]), parseInt(mdyMatch[1]) - 1, parseInt(mdyMatch[2]));
+                } else {
+                    eventDate = new Date(dateStr);
+                }
+                if (isNaN(eventDate.getTime())) continue;
+
+                // Parse time if provided (format: HH:MM AM/PM or HH:MM)
+                if (timeStr) {
+                    const timeMatch = timeStr.match(/(\d{1,2}):(\d{2})\s*(AM|PM)?/i);
+                    if (timeMatch) {
+                        let h = parseInt(timeMatch[1]);
+                        const m = parseInt(timeMatch[2]);
+                        const ampm = (timeMatch[3] || '').toUpperCase();
+                        if (ampm === 'PM' && h < 12) h += 12;
+                        if (ampm === 'AM' && h === 12) h = 0;
+                        eventDate.setHours(h, m, 0);
+                    }
+                } else {
+                    eventDate.setHours(12, 0, 0); // Noon placeholder for all-day events
+                }
+
+                // Skip events outside our date range
+                if (eventDate < pastDate || eventDate >= futureDate) continue;
+
+                events.push({
+                    title: eventName,
+                    date: eventDate.toISOString(),
+                    location: location || 'Millersville',
+                    tags: ['Community'],
+                    price: 'Free',
+                    ticketLink: '',
+                    sourceLink: link || '',
+                    description: description || ''
+                });
+                communityCount++;
+            }
+            console.log(`✅ Community submissions: ${communityCount} approved events`);
+        } else {
+            console.log(`  ⚠️ Community sheet fetch failed: ${submitRes.status}`);
+        }
+    } catch (e) { console.log(`  ⚠️ Community submissions error: ${e.message}`); }
+
     // ===== FAMILY-FRIENDLY TAGGING =====
     const familyKeywords = /\bfamily\b|families|\bkids?\b|\bchild(ren)?\b|\byouth\b|\ball ages\b|\bopen house\b|\bparade\b|\bfestival\b|\bfun run\b|\begg hunt\b|\btrick.or.treat\b|\bstory ?time\b|\bfun fest\b|\bdoodle\b|\bpuppet\b|\bmagic show\b|\barts smarts\b|\bsalsa\b.*\b5\+/i;
     const familyDescKeywords = /\bfamily[- ]friendly\b|\bfor (kids|children|families)\b|\ball ages\b|\bages?\s*\d+\s*(\+|and up|and older)\b|\byoung audiences?\b|\bkids?\s*(welcome|invited|event)\b|\bnon[- ]verbal show\b|\binteractive\b.*\b(kids|children|animation)\b|\bfamily fun\b/i;

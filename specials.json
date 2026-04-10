@@ -49,8 +49,141 @@
   },
   "John Herr's Village Market": {
     "note": "Weekly deals · Wed–Tue · 20 Crossgates Dr",
-    "weekly": [],
-    "weeklyDateRange": "",
-    "rawDeals": []
+    "weekly": [
+      "Boneless Ribeye (Delmonico) Steak – $16.99/lb (Value Pack)",
+      "Choice Beef Mock Tender Boneless Chuck Eye Roast – $6.49/lb (Premium cut at great price)",
+      "Certified Angus Beef Boneless Chuck Roast – $7.99/lb (Premium Angus beef)",
+      "Fresh Ground Sirloin – $6.49/lb (Value Pack)",
+      "Bone-in Chicken Thighs – $1.99/lb (Value Pack)"
+    ],
+    "weeklyDateRange": "Thu Apr 9 - Wed Apr 15",
+    "rawDeals": [
+      {
+        "item": "Boneless Ribeye (Delmonico) Steak",
+        "salePrice": "$16.99/lb",
+        "regularPrice": "$17.99/lb",
+        "savings": "Value Pack",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Choice Beef Mock Tender Boneless Chuck Eye Roast",
+        "salePrice": "$6.49/lb",
+        "regularPrice": "",
+        "savings": "Premium cut at great price",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Certified Angus Beef Boneless Chuck Roast",
+        "salePrice": "$7.99/lb",
+        "regularPrice": "",
+        "savings": "Premium Angus beef",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Fresh Ground Sirloin",
+        "salePrice": "$6.49/lb",
+        "regularPrice": "$6.99/lb",
+        "savings": "Value Pack",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Bone-in Chicken Thighs",
+        "salePrice": "$1.99/lb",
+        "regularPrice": "$2.49/lb",
+        "savings": "Value Pack",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Bone-in Pork Butt",
+        "salePrice": "$1.99/lb",
+        "regularPrice": "",
+        "savings": "Great price for pork",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Atlantic Salmon Fillet",
+        "salePrice": "$9.99/lb",
+        "regularPrice": "",
+        "savings": "Fresh seafood",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Dietz & Watson Medium Roast Beef",
+        "salePrice": "$14.99/lb",
+        "regularPrice": "",
+        "savings": "Premium deli meat",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Dietz & Watson Gourmet Lite Cooked Ham",
+        "salePrice": "$9.99/lb",
+        "regularPrice": "",
+        "savings": "Premium deli meat",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "California Seedless Naval Oranges 4lb Bag",
+        "salePrice": "$7.99",
+        "regularPrice": "",
+        "savings": "Fresh produce value",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Hass Avocados",
+        "salePrice": "4/$5",
+        "regularPrice": "",
+        "savings": "$1.25 each",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "John F. Martin Oven Roasted Chicken Breast",
+        "salePrice": "$5.99/lb",
+        "regularPrice": "",
+        "savings": "Local premium deli",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Fresh Whole Atlantic Salmon Fillet",
+        "salePrice": "$9.99/lb",
+        "regularPrice": "",
+        "savings": "Premium seafood",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Brussels Sprouts",
+        "salePrice": "$1.99/lb",
+        "regularPrice": "",
+        "savings": "Fresh vegetable",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Gala-an Red Peppers",
+        "salePrice": "$2.99/lb",
+        "regularPrice": "",
+        "savings": "Fresh produce",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Baby Carrots 1lb",
+        "salePrice": "3/$5",
+        "regularPrice": "",
+        "savings": "$1.67 each",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Crisp Iceberg Lettuce",
+        "salePrice": "3/$5",
+        "regularPrice": "",
+        "savings": "$1.67 each",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Celery Stalks",
+        "salePrice": "3/$5",
+        "regularPrice": "",
+        "savings": "$1.67 each",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      }
+    ]
   }
 }

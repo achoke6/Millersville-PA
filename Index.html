@@ -867,22 +867,28 @@ function buildEventCard(e,isSportsPage){
         scoreBadge=`<div class="score-corner ${isWin?'score-win':isLoss?'score-loss':'score-tie'}"><span class="score-result">${e.gameResult}</span><span class="score-value">${e.gameScore}</span></div>`;
     }
 
+    // Dynamic live check (doesn't rely on scraper's hourly isLive flag)
+    const now = new Date();
+    const eventEnd = new Date(d.getTime() + 3*60*60*1000); // assume ~3hr game
+    const isCurrentlyLive = isSportsPage && e.streamLink && d <= now && now <= eventEnd && !e.gameResult;
+    const isPast = isSportsPage && d < now && !isCurrentlyLive;
+
     // Live badge
     let liveBadge='';
-    if(isSportsPage && e.isLive){
-        const streamUrl = e.streamLink || e.sourceLink;
-        liveBadge=`<a href="${streamUrl}" target="_blank" class="badge badge-live">🔴 LIVE</a>`;
+    if(isCurrentlyLive){
+        liveBadge=`<a href="${e.streamLink}" target="_blank" class="badge badge-live">🔴 LIVE</a>`;
     }
 
     // Action buttons
     let actionHtml='';
-    const isPast = isSportsPage && d < new Date() && !e.isLive;
-    if(e.isLive && e.streamLink){
+    if(isCurrentlyLive && e.streamLink){
         actionHtml=`<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-live">📺 Watch</a>`;
+    } else if(isPast && e.streamLink && e.gameResult){
+        actionHtml=`<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-outline">📺 Replay</a>`;
     } else if(isPast && e.streamLink){
         actionHtml=`<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-outline">📺 Replay</a>`;
     } else if(!isSportsPage && e.streamLink){
-        actionHtml=`<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-outline">📺 Watch Live</a>`;
+        actionHtml=`<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-outline">📺 Stream</a>`;
     } else if(hasLink){
         actionHtml=`<a href="${e.ticketLink}" target="_blank" class="btn btn-sm btn-ticket">🎟 Tickets</a>`;
     } else if(!isFree){
@@ -896,7 +902,7 @@ function buildEventCard(e,isSportsPage){
     const isNoonPlaceholder = d.getHours()===12 && d.getMinutes()===0;
     const timeStr = isNoonPlaceholder ? '' : ` @ ${formatTime(d)}`;
 
-    return `<div class="app-card${e.isLive?' card-live':''} ${cardResultClass}" style="position:relative;">${scoreBadge}<div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${e.title}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${e.location} ${homeInd}${awayInd}</p></div><div class="card-footer"><div class="card-actions"><a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
+    return `<div class="app-card${isCurrentlyLive?' card-live':''} ${cardResultClass}" style="position:relative;">${scoreBadge}<div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${e.title}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${e.location} ${homeInd}${awayInd}</p></div><div class="card-footer"><div class="card-actions"><a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
 }
 
 /* ==================== HOME ==================== */
@@ -944,7 +950,10 @@ function renderHomeUI(){
                 const cls = e.gameResult==='W' ? 'badge-win' : e.gameResult==='L' ? 'badge-loss' : 'badge-neutral';
                 scoreBadge = `<span class="badge ${cls}" style="font-size:0.7rem;">${e.gameResult} ${e.gameScore}</span>`;
             }
-            const liveBadge = e.isLive ? '<span class="badge badge-live" style="font-size:0.65rem;">🔴 LIVE</span>' : '';
+            const _now = new Date();
+            const _end = new Date(d.getTime() + 3*60*60*1000);
+            const _live = e.streamLink && d <= _now && _now <= _end && !e.gameResult;
+            const liveBadge = _live ? '<span class="badge badge-live" style="font-size:0.65rem;">🔴 LIVE</span>' : '';
             return `<div class="home-mini-card" onclick="switchView('sports')"><span class="home-mini-tag">${src}${homeTag}</span>${liveBadge}${scoreBadge}<h4 class="home-mini-title">${e.title}</h4><span class="home-card-time">${formatTime(d)}</span><p class="home-mini-loc">📍 ${e.location}</p></div>`;
         }).join('');
     }

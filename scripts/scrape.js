@@ -1386,13 +1386,11 @@ Focus on the most impressive deals a shopper would want to know about. Include m
         }
 
         // Clubs/Orgs — almost always for college students, NOT families
-        // Only tag as family-friendly if event EXPLICITLY invites families with children
+        // Only tag as family-friendly if description EXPLICITLY invites families with children
         if (src === 'Clubs/Orgs' || tags.includes('Clubs/Orgs')) {
             if (tags.includes('Club Sports')) { e.kidFriendly = false; return; }
-            // Require very explicit signals that children/families are the intended audience
-            const clubFamilySignals = /\bfamilies with (children|kids)\b|\bfor (kids|children|families)\b|\bbring your (kids|children)\b|\bages?\s*[2-9]\s*[-–]\s*\d/i;
-            const clubFamilyTitle = /\bread across america\b|\bfamily fun\b|\bkids.?\s*(day|event|fest|night)\b|\begg hunt\b/i;
-            if (clubFamilySignals.test(desc) || clubFamilyTitle.test(titleLower)) {
+            const clubFamilySignals = /\bfamilies with (children|kids)\b|\binvites?\s+(all\s+)?families\b|\bfor (kids|children) ages?\b|\bbring your (kids|children)\b|\bchildren\s+ages?\s*[2-9]\s*[-–]\s*\d/i;
+            if (clubFamilySignals.test(desc)) {
                 e.kidFriendly = true; famCount++;
             } else {
                 e.kidFriendly = false;

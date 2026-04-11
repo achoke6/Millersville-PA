@@ -828,7 +828,8 @@ async function runScraper() {
                 location: item.location || "Campus", tags: [...new Set(tags)],
                 price: "Free",
                 ticketLink: "",
-                sourceLink: `https://getinvolved.millersville.edu/event/${item.id}`
+                sourceLink: `https://getinvolved.millersville.edu/event/${item.id}`,
+                description: item.description || ""
             });
             clubCount++;
         });
@@ -1376,9 +1377,16 @@ Focus on the most impressive deals a shopper would want to know about. Include m
             return;
         }
 
-        // All Clubs/Orgs events → NOT family friendly
+        // Clubs/Orgs — mostly not family friendly, but check title + description for exceptions
         if (src === 'Clubs/Orgs' || tags.includes('Clubs/Orgs')) {
-            e.kidFriendly = false;
+            if (tags.includes('Club Sports')) { e.kidFriendly = false; return; }
+            if (familyKeywords.test(title) || familyDescKeywords.test(desc) ||
+                /\bages?\s*\d/i.test(allText) || /\bcrafts?\b.*\bgames?\b/i.test(allText) ||
+                /\bstories\b/i.test(allText) || /\bread across/i.test(allText)) {
+                e.kidFriendly = true; famCount++;
+            } else {
+                e.kidFriendly = false;
+            }
             return;
         }
 

@@ -40,6 +40,7 @@
             <button id="nav-sports" class="nav-link" onclick="switchView('sports'); toggleMobileMenu();">Sports</button>
             <button id="nav-food" class="nav-link" onclick="switchView('food'); toggleMobileMenu();">Food</button>
             <button id="nav-services" class="nav-link" onclick="switchView('services'); toggleMobileMenu();">Services</button>
+            <button id="nav-board" class="nav-link" onclick="switchView('board'); toggleMobileMenu();">Board</button>
             <button id="nav-weather" class="nav-link" onclick="switchView('weather'); toggleMobileMenu();">Weather</button>
             <button id="nav-store" class="nav-link" onclick="switchView('store'); toggleMobileMenu();">Store</button>
             <div class="nav-cart-widget"><div class="ec-cart-widget"></div></div>
@@ -226,6 +227,24 @@
         </div>
         <div id="housing-container" class="card-grid"></div>
         <div id="services-container" class="card-grid"></div>
+    </section>
+
+    <!-- COMMUNITY BOARD -->
+    <section id="view-board" class="app-view">
+        <div class="filter-bar">
+            <div class="filter-group" id="board-filter-group">
+                <button class="src-btn active" onclick="setBoardFilter('All', this)">All</button>
+                <button class="src-btn" onclick="setBoardFilter('Yard Sale', this)">🏷️ Yard Sales</button>
+                <button class="src-btn" onclick="setBoardFilter('Lost Pet', this)">🐾 Lost Pets</button>
+                <button class="src-btn" onclick="setBoardFilter('Found Pet', this)">🐾 Found Pets</button>
+                <button class="src-btn" onclick="setBoardFilter('Help Wanted', this)">💼 Help Wanted</button>
+                <button class="src-btn" onclick="setBoardFilter('For Sale', this)">🛒 For Sale</button>
+                <button class="src-btn" onclick="setBoardFilter('Free Stuff', this)">🎁 Free Stuff</button>
+                <button class="src-btn" onclick="setBoardFilter('Community Notice', this)">📢 Notices</button>
+            </div>
+        </div>
+        <div style="text-align:right;margin-bottom:12px;"><button onclick="openBoardPost()" class="btn btn-sm btn-outline" style="font-size:0.78rem;">📝 Submit a Post</button></div>
+        <div id="board-container" class="card-grid"></div>
     </section>
 
     <!-- NEWS -->
@@ -501,7 +520,7 @@ function matchesSportSource(tags, src) {
     return false;
 }
 
-const viewPaths={home:'/',news:'/news',events:'/events',sports:'/sports',food:'/food',services:'/services',weather:'/weather',store:'/store',advertise:'/advertise'};
+const viewPaths={home:'/',news:'/news',events:'/events',sports:'/sports',food:'/food',services:'/services',board:'/board',weather:'/weather',store:'/store',advertise:'/advertise'};
 const pathToView=Object.fromEntries(Object.entries(viewPaths).map(([k,v])=>[v,k]));
 
 document.addEventListener("DOMContentLoaded",()=>{
@@ -509,7 +528,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 });
 
 async function initApp(){
-    await Promise.allSettled([loadWeather(),loadSpecials(),loadEvents(),loadDining(),loadHousing(),loadServices(),loadNews()]);
+    await Promise.allSettled([loadWeather(),loadSpecials(),loadEvents(),loadDining(),loadHousing(),loadServices(),loadNews(),loadBoard()]);
     renderHomeUI();
     loadEcwidStore(); // Load Ecwid early so cart widget renders in header
     setInterval(refreshCam,60000); refreshCam();
@@ -541,7 +560,7 @@ window.toggleMobileMenu=function(){
     if(nav.classList.contains('open')){nav.classList.remove('open');overlay.classList.remove('open');setTimeout(()=>{if(!nav.classList.contains('open'))nav.style.display='';},300);}
     else{nav.style.display='flex';void nav.offsetWidth;nav.classList.add('open');overlay.classList.add('open');}
 };
-const viewLabels={home:'',news:'/ News',events:'/ Events',sports:'/ Sports',food:'/ Food',services:'/ Services',weather:'/ Weather',store:'/ Store',advertise:'/ Advertise'};
+const viewLabels={home:'',news:'/ News',events:'/ Events',sports:'/ Sports',food:'/ Food',services:'/ Services',board:'/ Board',weather:'/ Weather',store:'/ Store',advertise:'/ Advertise'};
 
 let ecwidLoaded = false;
 function loadEcwidStore(){
@@ -1177,6 +1196,114 @@ function renderServices(){
         }).join(''):'<p class="empty-state">No services found.</p>';
     }
 }
+// ==================== COMMUNITY BOARD ====================
+let allBoardPosts=[], boardFilter='All';
+async function loadBoard(){try{allBoardPosts=await(await fetch('board.json')).json();renderBoard();}catch(e){
+    document.getElementById('board-container').innerHTML='<p class="empty-state">No community posts yet. Be the first to post!</p>';
+}}
+window.setBoardFilter=function(cat,btn){
+    boardFilter=cat;
+    document.querySelectorAll('#board-filter-group .src-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    renderBoard();
+};
+function renderBoard(){
+    const c=document.getElementById('board-container');
+    const filtered=boardFilter==='All'?allBoardPosts:allBoardPosts.filter(p=>p.category===boardFilter);
+    if(filtered.length===0){c.innerHTML='<p class="empty-state">No posts in this category.</p>';return;}
+    c.innerHTML=filtered.map(p=>{
+        const catIcons={'Yard Sale':'🏷️','Lost Pet':'🐾','Found Pet':'🐾','Help Wanted':'💼','For Sale':'🛒','Free Stuff':'🎁','Community Notice':'📢'};
+        const icon=catIcons[p.category]||'📋';
+        const img=p.image?`<div class="card-img-wrap"><img src="${p.image}" alt="" loading="lazy" class="card-img"></div>`:'';
+        const contact=p.contact?`<p style="font-size:0.85rem;margin-top:8px;">📧 ${p.contact}</p>`:'';
+        const loc=p.location?`<p class="card-meta">📍 ${p.location}</p>`:'';
+        const urgentClass=(p.category==='Lost Pet')?'style="border-left:4px solid #dc2626;"':'';
+        return `<div class="app-card" ${urgentClass}>${img}<span class="card-tag">${icon} ${p.category}</span><h3 class="card-title">${p.title}</h3>${loc}<p style="font-size:0.85rem;color:var(--text-muted);margin:6px 0;">${p.description||''}</p>${contact}<p style="font-size:0.7rem;color:var(--text-muted);margin-top:6px;">${p.date||''}</p></div>`;
+    }).join('');
+}
+
+window.openBoardPost=function(){
+    const overlay=document.createElement('div');
+    overlay.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;overflow-y:auto;';
+    overlay.onclick=function(ev){if(ev.target===overlay)overlay.remove();};
+    const modal=document.createElement('div');
+    modal.style.cssText='background:var(--surface);border-radius:var(--radius);max-width:520px;width:100%;max-height:90vh;overflow-y:auto;padding:28px;position:relative;';
+    const cats=['Yard Sale','Lost Pet','Found Pet','Help Wanted','For Sale','Free Stuff','Community Notice'];
+    modal.innerHTML=`
+        <button onclick="this.closest('div[style*=fixed]').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);">✕</button>
+        <h3 style="margin-bottom:4px;">📋 Post to Community Board</h3>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:16px;">Share with your Millersville neighbors. Posts are reviewed before publishing.</p>
+        <div id="board-form-fields">
+            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Category *</label>
+            <select id="bp-cat" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;margin-bottom:12px;background:var(--bg);color:var(--text);">
+                ${cats.map(c=>`<option value="${c}">${c}</option>`).join('')}
+            </select>
+
+            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Title *</label>
+            <input id="bp-title" type="text" placeholder="e.g. Multi-family Yard Sale Saturday" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;margin-bottom:12px;background:var(--bg);color:var(--text);">
+
+            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Description *</label>
+            <textarea id="bp-desc" rows="3" placeholder="Details about your post..." style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;margin-bottom:12px;resize:vertical;background:var(--bg);color:var(--text);"></textarea>
+
+            <div style="display:flex;gap:12px;margin-bottom:12px;">
+                <div style="flex:1;">
+                    <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Contact Info *</label>
+                    <input id="bp-contact" type="text" placeholder="Phone or email" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;background:var(--bg);color:var(--text);">
+                </div>
+                <div style="flex:1;">
+                    <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Location</label>
+                    <input id="bp-loc" type="text" placeholder="Neighborhood or address" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;background:var(--bg);color:var(--text);">
+                </div>
+            </div>
+
+            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Image URL (optional)</label>
+            <input id="bp-img" type="url" placeholder="https://..." style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;margin-bottom:16px;background:var(--bg);color:var(--text);">
+
+            <button id="bp-submit-btn" onclick="submitBoardPost()" class="btn btn-sm btn-ticket" style="display:block;width:100%;text-align:center;padding:12px;font-size:0.95rem;">Submit Post</button>
+        </div>
+        <div id="bp-success" style="display:none;text-align:center;padding:24px 0;">
+            <p style="font-size:1.5rem;margin-bottom:8px;">✅</p>
+            <h3 style="margin-bottom:8px;">Post Submitted!</h3>
+            <p style="font-size:0.85rem;color:var(--text-muted);">Thanks for sharing! Your post will appear after review.</p>
+        </div>`;
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+};
+
+window.submitBoardPost=function(){
+    const cat=document.getElementById('bp-cat').value;
+    const title=document.getElementById('bp-title').value.trim();
+    const desc=document.getElementById('bp-desc').value.trim();
+    const contact=document.getElementById('bp-contact').value.trim();
+    const loc=document.getElementById('bp-loc').value.trim();
+    const img=document.getElementById('bp-img').value.trim();
+
+    if(!title||!desc||!contact){alert('Please fill in Title, Description, and Contact Info.');return;}
+
+    const btn=document.getElementById('bp-submit-btn');
+    btn.textContent='Submitting...';btn.disabled=true;
+
+    const formData=new URLSearchParams();
+    formData.append('entry.1277308076',cat);
+    formData.append('entry.1203434084',title);
+    formData.append('entry.255927381',desc);
+    formData.append('entry.214344890',contact);
+    formData.append('entry.768523464',loc);
+    formData.append('entry.1488331868',img);
+
+    fetch('https://docs.google.com/forms/d/e/1FAIpQLSeCLBn-aWzznszV25pbH9iZhNzkpZyl-48jCiCArjHQA0iphQ/formResponse',{
+        method:'POST',mode:'no-cors',
+        headers:{'Content-Type':'application/x-www-form-urlencoded'},
+        body:formData.toString()
+    }).then(()=>{
+        document.getElementById('board-form-fields').style.display='none';
+        document.getElementById('bp-success').style.display='block';
+    }).catch(()=>{
+        document.getElementById('board-form-fields').style.display='none';
+        document.getElementById('bp-success').style.display='block';
+    });
+};
+
 // Grocery deals popup
 let allGroceryDeals = [];
 window.showGroceryDeals = function(e) {
@@ -1314,6 +1441,22 @@ function runSearch(q) {
             html += `<div class="search-result" onclick="document.getElementById('search-overlay').remove();switchView('services');" style="padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;margin-bottom:4px;background:var(--surface);">
                 <p style="font-weight:600;margin:2px 0;">${s.name}</p>
                 <span style="font-size:0.8rem;color:var(--text-muted);">${s.category} · ${s.description?.substring(0,60)||''}</span>
+            </div>`;
+        });
+        html += '</div>';
+    }
+
+    // Search Community Board
+    const boardHits = (allBoardPosts||[]).filter(p => {
+        return (p.title + ' ' + p.category + ' ' + (p.description||'') + ' ' + (p.location||'')).toLowerCase().includes(ql);
+    }).slice(0, 5);
+    if (boardHits.length) {
+        html += `<div style="margin-bottom:20px;"><h4 style="color:var(--text-muted);font-size:0.8rem;text-transform:uppercase;margin-bottom:8px;">📋 Community Board</h4>`;
+        boardHits.forEach(p => {
+            html += `<div class="search-result" onclick="document.getElementById('search-overlay').remove();switchView('board');" style="padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;margin-bottom:4px;background:var(--surface);">
+                <span style="font-size:0.7rem;color:var(--text-muted);">${p.category}</span>
+                <p style="font-weight:600;margin:2px 0;">${p.title}</p>
+                <span style="font-size:0.8rem;color:var(--text-muted);">${p.location||''} · ${p.date||''}</span>
             </div>`;
         });
         html += '</div>';

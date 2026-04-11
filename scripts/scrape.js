@@ -1783,6 +1783,45 @@ Focus on the most impressive deals a shopper would want to know about. Include m
         console.log(`✅ News: ${news.length} total items (${news.filter(n=>n.image).length} with images)`);
     } catch (e) { console.error("❌ News/specials error:", e.message); }
 
+    // ===== COMMUNITY BOARD (Google Sheet) =====
+    try {
+        console.log("📡 Fetching community board posts...");
+        const BOARD_SHEET_ID = '1FZ-eFzLYFAgNd7aBCrU5uwb5wMQ2x9tBf_KLGa6GJS0';
+        const boardUrl = `https://docs.google.com/spreadsheets/d/${BOARD_SHEET_ID}/gviz/tq?tqx=out:csv`;
+        const boardRes = await fetch(boardUrl);
+        const boardPosts = [];
+        if (boardRes.ok) {
+            const csvText = await boardRes.text();
+            const rows = csvText.split('\n').slice(1);
+            for (const row of rows) {
+                const cols = row.match(/"([^"]*)"/g);
+                if (!cols || cols.length < 6) continue;
+                const clean = cols.map(c => c.replace(/"/g, '').trim());
+                // Timestamp, Category, Title, Description, Contact Info, Location, Image URL, Status
+                const [timestamp, category, title, description, contact, location, imageUrl, status] = clean;
+
+                if (!status || !/approved/i.test(status)) continue;
+                if (!title) continue;
+
+                const postDate = timestamp ? new Date(timestamp) : new Date();
+                const daysAgo = (Date.now() - postDate.getTime()) / (1000 * 60 * 60 * 24);
+                if (daysAgo > 30) continue; // Only show posts from the last 30 days
+
+                boardPosts.push({
+                    category: category || 'Community Notice',
+                    title,
+                    description: description || '',
+                    contact: contact || '',
+                    location: location || '',
+                    image: imageUrl || '',
+                    date: postDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+                });
+            }
+        }
+        fs.writeFileSync(path.join(__dirname, '../board.json'), JSON.stringify(boardPosts, null, 2));
+        console.log(`✅ Community Board: ${boardPosts.length} approved posts`);
+    } catch (e) { console.log(`  ⚠️ Community Board error: ${e.message}`); }
+
     console.log("✅ All data compilations complete.");
 }
 

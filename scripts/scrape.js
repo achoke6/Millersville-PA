@@ -110,7 +110,8 @@ function extractEventbriteEvents(ldData, eventsArray, now, futureLimit) {
                     title: ldData.name, date: eventDate.toISOString(), location: "Phantom Power",
                     tags: ["Other", "Live Music"], price: "Ticket Required",
                     ticketLink: ldData.url || "https://www.eventbrite.com/o/phantom-power-29187724817",
-                    sourceLink: ldData.url || "https://www.phantompower.net/"
+                    sourceLink: ldData.url || "https://www.phantompower.net/",
+                    image: ldData.image || ""
                 });
             }
         } else {
@@ -749,11 +750,17 @@ async function runScraper() {
                     ? `https://www.millersville.edu/calendar/events/${eventId}`
                     : "https://www.millersville.edu/calendar/";
 
+                // Extract image from description HTML if present
+                const descHtml = row[descIdx] || "";
+                const muImgMatch = descHtml.match(/<img[^>]*src="([^"]+)"/i);
+                const muImage = muImgMatch ? muImgMatch[1] : '';
+
                 events.push({
                     title: eventTitle, date: row[startIdx], location: eventLoc,
                     tags: [...new Set(tags)], price: pricing.price,
                     ticketLink: pricing.link, sourceLink,
-                    description: row[descIdx] || ""
+                    description: descHtml,
+                    image: muImage
                 });
                 muCount++;
             });
@@ -829,7 +836,8 @@ async function runScraper() {
                 price: "Free",
                 ticketLink: "",
                 sourceLink: `https://getinvolved.millersville.edu/event/${item.id}`,
-                description: item.description || ""
+                description: item.description || "",
+                image: item.imagePath ? `https://se-images.campuslabs.com/clink/images/${item.imagePath}` : ""
             });
             clubCount++;
         });
@@ -1377,12 +1385,14 @@ Focus on the most impressive deals a shopper would want to know about. Include m
             return;
         }
 
-        // Clubs/Orgs — mostly not family friendly, but check title + description for exceptions
+        // Clubs/Orgs — almost always for college students, NOT families
+        // Only tag as family-friendly if event EXPLICITLY invites families with children
         if (src === 'Clubs/Orgs' || tags.includes('Clubs/Orgs')) {
             if (tags.includes('Club Sports')) { e.kidFriendly = false; return; }
-            if (familyKeywords.test(title) || familyDescKeywords.test(desc) ||
-                /\bages?\s*\d/i.test(allText) || /\bcrafts?\b.*\bgames?\b/i.test(allText) ||
-                /\bstories\b/i.test(allText) || /\bread across/i.test(allText)) {
+            // Require very explicit signals that children/families are the intended audience
+            const clubFamilySignals = /\bfamilies with (children|kids)\b|\bfor (kids|children|families)\b|\bbring your (kids|children)\b|\bages?\s*[2-9]\s*[-–]\s*\d/i;
+            const clubFamilyTitle = /\bread across america\b|\bfamily fun\b|\bkids.?\s*(day|event|fest|night)\b|\begg hunt\b/i;
+            if (clubFamilySignals.test(desc) || clubFamilyTitle.test(titleLower)) {
                 e.kidFriendly = true; famCount++;
             } else {
                 e.kidFriendly = false;
@@ -1621,7 +1631,7 @@ Focus on the most impressive deals a shopper would want to know about. Include m
     // Strip descriptions before saving (only used for family-friendly detection)
     deduped.forEach(e => { delete e.description; });
     fs.writeFileSync(path.join(__dirname, '../events.json'), JSON.stringify(deduped, null, 2));
-    console.log(`📊 Total events saved: ${deduped.length}`);
+    console.log(`📊 Total events saved: ${deduped.length} (${deduped.filter(e=>e.image).length} with images)`);
 
     // ===== NEWS =====
     try {
@@ -1636,6 +1646,11 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 const t = items[i].match(/<title>([\s\S]*?)<\/title>/i);
                 const l = items[i].match(/<link>([\s\S]*?)<\/link>/i);
                 const d = items[i].match(/<pubDate>([\s\S]*?)<\/pubDate>/i);
+                // Extract image from media:content, enclosure, or img in content
+                const mediaImg = items[i].match(/<media:content[^>]*url="([^"]+)"/i);
+                const encImg = items[i].match(/<enclosure[^>]*url="([^"]+)"[^>]*type="image/i);
+                const contentImg = items[i].match(/<img[^>]*src="([^"]+)"/i);
+                const image = mediaImg?.[1] || encImg?.[1] || contentImg?.[1] || '';
                 // Extract RSS <category> tags for sub-categories
                 let cats = [];
                 if (!skipCats) {
@@ -1655,7 +1670,8 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                         title: t[1].replace(/<!\[CDATA\[/g, "").replace(/\]\]>/g, "").trim(),
                         link: l[1].replace(/<!\[CDATA\[/g, "").replace(/\]\]>/g, "").trim(),
                         date: pubDate ? pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : "",
-                        sortDate: pubDate ? pubDate.toISOString() : "1970-01-01T00:00:00.000Z"
+                        sortDate: pubDate ? pubDate.toISOString() : "1970-01-01T00:00:00.000Z",
+                        image
                     });
                 }
             }
@@ -1684,6 +1700,16 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                     const html = await (await fetch(section.url, { headers: baseHeaders })).text();
                     const articleRegex = /<h[23][^>]*>\s*<a\s+class="primary-link"\s+href="(https:\/\/thesnapper\.com\/[^"]+)">([^<]+)<\/a>/g;
                     const dateRegex = /<div[^>]*class="[^"]*publish-info[^"]*"[^>]*>[\s\S]*?<\/p>\s*<span[^>]*>[\s\S]*?<\/span>\s*<p>([^<]+)<\/p>/g;
+                    // Extract featured images near article cards
+                    const imgRegex = /<img[^>]*class="[^"]*featured[^"]*"[^>]*src="([^"]+)"|<img[^>]*src="([^"]+)"[^>]*class="[^"]*featured/g;
+                    const allImgs = [];
+                    let imgM;
+                    while ((imgM = imgRegex.exec(html)) !== null) allImgs.push(imgM[1] || imgM[2]);
+                    // Fallback: grab all article-area images
+                    if (allImgs.length === 0) {
+                        const simpleImg = /<article[^>]*>[\s\S]*?<img[^>]*src="([^"]+)"/g;
+                        while ((imgM = simpleImg.exec(html)) !== null) allImgs.push(imgM[1]);
+                    }
 
                     const articles = [];
                     let match;
@@ -1706,7 +1732,8 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                             title: articles[i].title,
                             link: articles[i].url,
                             date: dateStr,
-                            sortDate: parsed && !isNaN(parsed.getTime()) ? parsed.toISOString() : "1970-01-01T00:00:00.000Z"
+                            sortDate: parsed && !isNaN(parsed.getTime()) ? parsed.toISOString() : "1970-01-01T00:00:00.000Z",
+                            image: allImgs[i] || ''
                         });
                         snapperTotal++;
                     }
@@ -1755,7 +1782,7 @@ Focus on the most impressive deals a shopper would want to know about. Include m
         news.sort((a, b) => new Date(b.sortDate || 0) - new Date(a.sortDate || 0));
 
         fs.writeFileSync(path.join(__dirname, '../news.json'), JSON.stringify(news, null, 2));
-        console.log(`✅ News: ${news.length} total items`);
+        console.log(`✅ News: ${news.length} total items (${news.filter(n=>n.image).length} with images)`);
     } catch (e) { console.error("❌ News/specials error:", e.message); }
 
     console.log("✅ All data compilations complete.");

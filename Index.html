@@ -905,7 +905,9 @@ function buildEventCard(e,isSportsPage){
     const isNoonPlaceholder = d.getHours()===12 && d.getMinutes()===0;
     const timeStr = isNoonPlaceholder ? '' : ` @ ${formatTime(d)}`;
 
-    return `<div class="app-card${isCurrentlyLive?' card-live':''} ${cardResultClass}" style="position:relative;">${scoreBadge}<div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${e.title}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${e.location} ${homeInd}${awayInd}</p></div><div class="card-footer"><div class="card-actions"><a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
+    const cardImg = e.image ? `<div class="card-img-wrap"><img src="${e.image}" alt="" loading="lazy" class="card-img"></div>` : '';
+
+    return `<div class="app-card${isCurrentlyLive?' card-live':''} ${cardResultClass}" style="position:relative;">${scoreBadge}${cardImg}<div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${e.title}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${e.location} ${homeInd}${awayInd}</p></div><div class="card-footer"><div class="card-actions"><a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
 }
 
 /* ==================== HOME ==================== */
@@ -1085,7 +1087,8 @@ function renderNewsUI(){
         if(n.subCategory && !tags.includes(n.subCategory)) tags.push(n.subCategory);
         if(n.tags) n.tags.forEach(t=>{if(!tags.includes(t)) tags.push(t);});
         const tagHtml=tags.length?`<div class="card-tags">${tags.map(t=>`<span class="card-tag">${t}</span>`).join('')}</div>`:'';
-        return `<div class="app-card">${tagHtml}<p class="card-meta">${n.date}</p><h3 class="card-title">${n.title}</h3><a href="${n.link}" target="_blank" class="btn btn-sm btn-outline" style="margin-top:12px;">Read ➔</a></div>`;
+        const newsImg = n.image ? `<div class="card-img-wrap"><img src="${n.image}" alt="" loading="lazy" class="card-img"></div>` : '';
+        return `<div class="app-card">${newsImg}${tagHtml}<p class="card-meta">${n.date}</p><h3 class="card-title">${n.title}</h3><a href="${n.link}" target="_blank" class="btn btn-sm btn-outline" style="margin-top:12px;">Read ➔</a></div>`;
     }).join(''):'<p class="empty-state">No news articles found.</p>';
 }
 async function loadDining(){try{

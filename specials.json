@@ -48,118 +48,153 @@
   "John Herr's Village Market": {
     "note": "Weekly deals · Wed–Tue · 20 Crossgates Dr",
     "weekly": [
-      "Boneless Ribeye (Delmonico) Steak – $16.99/lb ($1.00/lb off)",
-      "Certified Angus Beef Boneless Chuck Roast – $7.99/lb (Premium quality)",
-      "Medium Roast Beef Deli – $14.99/lb (Premium deli meat)",
-      "Boneless Thick Cut Eye Roast – $6.49/lb (Choice cut)",
-      "Fresh Ground Sirloin – $6.49/lb (Value pack)"
+      "Boneless Ribeye or Delmonico Steak – $16.99/lb (Value Pack Select Beef)",
+      "Choice Beef Meaty Block Tender Boneless Chuck Eye Roast – $6.49/lb (Premium cut at great price)",
+      "Certified Angus Beef Boneless Chuck Roast – $7.99/lb (Premium Angus beef)",
+      "Fresh Ground Sirloin – $6.49/lb (Value Pack, Family Owned)",
+      "Bone-in Chicken Thighs – $1.99/lb (Value Pack, Fresh All Natural)"
     ],
-    "weeklyDateRange": "Thu Apr 9 - Wed Apr 15, 2026",
+    "weeklyDateRange": "Thu Apr 9 - Wed Apr 15, 2024",
     "rawDeals": [
       {
-        "item": "Boneless Ribeye (Delmonico) Steak",
+        "item": "Boneless Ribeye or Delmonico Steak",
         "salePrice": "$16.99/lb",
         "regularPrice": "$17.99/lb",
-        "savings": "$1.00/lb off",
-        "dateRange": "Thu Apr 9 - Wed Apr 15, 2026"
+        "savings": "Value Pack Select Beef",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Choice Beef Meaty Block Tender Boneless Chuck Eye Roast",
+        "salePrice": "$6.49/lb",
+        "regularPrice": "",
+        "savings": "Premium cut at great price",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
       },
       {
         "item": "Certified Angus Beef Boneless Chuck Roast",
         "salePrice": "$7.99/lb",
         "regularPrice": "",
-        "savings": "Premium quality",
-        "dateRange": "Thu Apr 9 - Wed Apr 15, 2026"
-      },
-      {
-        "item": "Medium Roast Beef Deli",
-        "salePrice": "$14.99/lb",
-        "regularPrice": "",
-        "savings": "Premium deli meat",
-        "dateRange": "Thu Apr 9 - Wed Apr 15, 2026"
-      },
-      {
-        "item": "Boneless Thick Cut Eye Roast",
-        "salePrice": "$6.49/lb",
-        "regularPrice": "",
-        "savings": "Choice cut",
-        "dateRange": "Thu Apr 9 - Wed Apr 15, 2026"
+        "savings": "Premium Angus beef",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
       },
       {
         "item": "Fresh Ground Sirloin",
         "salePrice": "$6.49/lb",
-        "regularPrice": "$8.00/lb",
-        "savings": "Value pack",
-        "dateRange": "Thu Apr 9 - Wed Apr 15, 2026"
+        "regularPrice": "$8.99/lb",
+        "savings": "Value Pack, Family Owned",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
       },
       {
         "item": "Bone-in Chicken Thighs",
         "salePrice": "$1.99/lb",
         "regularPrice": "$2.48/lb",
-        "savings": "Fresh all natural",
-        "dateRange": "Thu Apr 9 - Wed Apr 15, 2026"
+        "savings": "Value Pack, Fresh All Natural",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
       },
       {
-        "item": "Fresh Whole Atlantic Salmon Fillet",
-        "salePrice": "$9.99/lb",
+        "item": "Fresh Whole Bone-in Pork Butt",
+        "salePrice": "$1.99/lb",
         "regularPrice": "",
-        "savings": "Premium seafood",
-        "dateRange": "Thu Apr 9 - Wed Apr 15, 2026"
+        "savings": "Great for pulled pork",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
       },
       {
-        "item": "Cooked Peeled Shrimp 31-40 ct",
-        "salePrice": "$6.99/lb",
+        "item": "Dietz & Watson Medium Roast Beef",
+        "salePrice": "$14.99/lb",
         "regularPrice": "",
-        "savings": "Ready to eat",
-        "dateRange": "Thu Apr 9 - Wed Apr 15, 2026"
+        "savings": "Premium deli meat",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
       },
       {
-        "item": "John F. Martin Oven Roasted Chicken Breast",
+        "item": "Dietz & Watson Gourmet Lite Black Pepper Turkey Breast",
+        "salePrice": "$12.99/lb",
+        "regularPrice": "",
+        "savings": "Premium deli meat",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "John F Martin Oven Roasted Chicken Breast",
         "salePrice": "$5.99/lb",
         "regularPrice": "",
-        "savings": "Artisan quality",
-        "dateRange": "Thu Apr 9 - Wed Apr 15, 2026"
+        "savings": "Local quality",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
       },
       {
-        "item": "Dietz & Watson Gourmet Ham",
-        "salePrice": "$9.99/lb",
+        "item": "Smithfield Pork Tenderloins, Fillets or Picnic Roasts 1.8-2.7 oz",
+        "salePrice": "Buy 1 Get 1 FREE",
         "regularPrice": "",
-        "savings": "Premium deli",
-        "dateRange": "Thu Apr 9 - Wed Apr 15, 2026"
+        "savings": "BOGO Deal",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
       },
       {
-        "item": "California Seedless Navel Oranges 3lb bag",
+        "item": "Food Club Skillet Classics 5-6.4 oz",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "BOGO Deal",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Herr's Original Potato Chips 7-8 oz",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "BOGO Deal",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Martin's Potato Rolls 7-10.5 oz",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "BOGO Deal",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Rana Family Size Pasta 20 oz",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "BOGO Deal",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Food Club Long Grain White Rice 16 oz",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "BOGO Deal",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Michelina's Frozen Entrees 4.5-8.5 oz",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "BOGO Deal",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Lindy's Italian Ice 6 oz",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "BOGO Deal",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Mott's 100% Apple Juice 64 oz",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "BOGO Deal",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Food Club Multi-Grain Waffles 20 oz",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "BOGO Deal",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "California Seedless Navel Oranges 4lb bag",
         "salePrice": "$7.99",
         "regularPrice": "",
-        "savings": "Fresh citrus",
-        "dateRange": "Thu Apr 9 - Wed Apr 15, 2026"
-      },
-      {
-        "item": "Little Potato Company Potatoes 24oz",
-        "salePrice": "2/$7",
-        "regularPrice": "",
-        "savings": "Gourmet potatoes",
-        "dateRange": "Thu Apr 9 - Wed Apr 15, 2026"
-      },
-      {
-        "item": "Lewis Bakery Hamburger Buns 8ct",
-        "salePrice": "$2.48",
-        "regularPrice": "",
-        "savings": "Bakery fresh",
-        "dateRange": "Thu Apr 9 - Wed Apr 15, 2026"
-      },
-      {
-        "item": "Campbell's Condensed Soup",
-        "salePrice": "3/$4",
-        "regularPrice": "",
-        "savings": "Stock up price",
-        "dateRange": "Thu Apr 9 - Wed Apr 15, 2026"
-      },
-      {
-        "item": "Ritz Bits or Crackers 8-13.7oz",
-        "salePrice": "$3.98",
-        "regularPrice": "",
-        "savings": "Family size",
-        "dateRange": "Thu Apr 9 - Wed Apr 15, 2026"
+        "savings": "Fresh citrus value",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
       }
     ]
   }

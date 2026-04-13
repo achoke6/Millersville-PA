@@ -1044,9 +1044,18 @@ async function runScraper() {
             if (parsed && typeof parsed === 'object' && parsed.type) {
                 console.log(`  📱 Image (${si.date || 'no date'}): cached as ${parsed.type}`);
             } else {
+                // Convert Google Drive URLs to direct download
+                let downloadUrl = si.url;
+                const driveMatch = si.url.match(/drive\.google\.com\/file\/d\/([^/]+)/);
+                const driveMatch2 = si.url.match(/drive\.google\.com\/open\?id=([^&]+)/);
+                const driveId = driveMatch?.[1] || driveMatch2?.[1];
+                if (driveId) {
+                    downloadUrl = `https://drive.google.com/uc?export=download&id=${driveId}`;
+                }
+
                 // Download image
-                const imgRes = await fetch(si.url, { headers: baseHeaders, signal: AbortSignal.timeout(15000) });
-                if (!imgRes.ok) { console.log(`    ⚠️ Download failed: ${imgRes.status}`); continue; }
+                const imgRes = await fetch(downloadUrl, { headers: baseHeaders, signal: AbortSignal.timeout(15000), redirect: 'follow' });
+                if (!imgRes.ok) { console.log(`    ⚠️ Download failed: ${imgRes.status} (${si.url.substring(0, 80)})`); continue; }
                 const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
                 if (imgBuffer.length < 1000) { console.log(`    ⚠️ Tiny image, skipping`); continue; }
 

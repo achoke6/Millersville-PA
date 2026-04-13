@@ -98,7 +98,7 @@
             <div class="home-section-header">
                 <h3 class="home-section-title">📅 Today's Events</h3>
                 <div style="display:flex;align-items:center;gap:8px;">
-                    <button id="home-kid-toggle" onclick="toggleHomeKidMode()" class="btn btn-sm btn-outline" style="font-size:0.7rem;padding:3px 8px;">👨‍👩‍👧 Family</button>
+                    <button id="home-kid-toggle" data-feed="family-events" onclick="toggleHomeKidMode()" class="btn btn-sm btn-outline" style="font-size:0.7rem;padding:3px 8px;">👨‍👩‍👧 Family</button>
                     <a href="#" onclick="event.preventDefault();switchView('events');" class="home-more-link">All Events →</a>
                 </div>
             </div>
@@ -160,16 +160,7 @@
                 <button class="src-btn" id="ev-src-other" data-feed="other-" onclick="toggleEventSource('Other')">🎸 Other</button>
                 <button class="src-btn" id="ev-src-community" data-feed="other-community" onclick="toggleEventSource('Community')">📝 Community</button>
             </div>
-            <button class="family-toggle" id="ev-kid-toggle" onclick="toggleKidFriendly()" title="Family Friendly Events">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="4.5" r="2.5"/>
-                    <circle cx="5" cy="7" r="2"/>
-                    <circle cx="19" cy="7" r="2"/>
-                    <path d="M12 8v4.5M9.5 21v-6.5l-1-2.5h7l-1 2.5V21"/>
-                    <path d="M5 10v3l2 1.5V21"/>
-                    <path d="M19 10v3l-2 1.5V21"/>
-                </svg>
-            </button>
+            <button class="src-btn" id="ev-kid-toggle" data-feed="family-events" onclick="toggleKidFriendly()" title="Family Friendly Events">👨‍👩‍👧 Family</button>
         </div>
         <div id="ev-sub-container" class="sub-filter-bar"></div>
         <div style="text-align:right;margin-bottom:12px;"><button onclick="openSubmitEvent()" class="btn btn-sm btn-outline" style="font-size:0.78rem;">📝 Submit an Event</button></div>
@@ -472,10 +463,22 @@ const feedOptions = {
         ]
     },
     mu: {
-        label: 'Millersville University', icon: '🏴‍☠️',
+        label: 'MU Events', icon: '🏴‍☠️',
         subs: [
             {id:'mu-arts',label:'Arts & Performances',icon:'🎭'},{id:'mu-public',label:'Public Events',icon:'📢'},
             {id:'mu-student',label:'Student Events',icon:'🎓'}
+        ]
+    },
+    musports: {
+        label: 'MU Sports', icon: '🏴‍☠️',
+        subs: [
+            {id:'mu-baseball',label:'Baseball',icon:'⚾'},{id:'mu-softball',label:'Softball',icon:'🥎'},
+            {id:'mu-lacrosse',label:'Lacrosse',icon:'🥍'},{id:'mu-volleyball',label:'Volleyball',icon:'🏐'},
+            {id:'mu-football',label:'Football',icon:'🏈'},{id:'mu-basketball',label:'Basketball',icon:'🏀'},
+            {id:'mu-soccer',label:'Soccer',icon:'⚽'},{id:'mu-fieldhockey',label:'Field Hockey',icon:'🏑'},
+            {id:'mu-tennis',label:'Tennis',icon:'🎾'},{id:'mu-track',label:'Track',icon:'🏃'},
+            {id:'mu-golf',label:'Golf',icon:'⛳'},{id:'mu-swimming',label:'Swimming',icon:'🏊'},
+            {id:'mu-crosscountry',label:'Cross Country',icon:'🏃'}
         ]
     },
     clubs: {
@@ -515,13 +518,14 @@ function eventMatchesFeed(e) {
     // Family Friendly — matches any event with kidFriendly flag
     if (feedPrefs.includes('family-events') && e.kidFriendly) return true;
 
+    const sportMap = {baseball:'baseball',softball:'softball',lacrosse:'lacrosse',volleyball:'volleyball',
+        football:'football',basketball:'basketball',soccer:'soccer','field hockey':'fieldhockey',
+        tennis:'tennis',track:'track',golf:'golf',swimming:'swimming','cross country':'crosscountry'};
+
     // PM sports
     if (tags.includes('PM') && (tags.includes('Athletics') || tags.includes('Athletic Competitions'))) {
-        const sportMap = {baseball:'pm-baseball',softball:'pm-softball',lacrosse:'pm-lacrosse',volleyball:'pm-volleyball',
-            football:'pm-football',basketball:'pm-basketball',soccer:'pm-soccer','field hockey':'pm-fieldhockey',
-            tennis:'pm-tennis',track:'pm-track'};
-        for (const [sport, feedId] of Object.entries(sportMap)) {
-            if (tags.some(t => t.toLowerCase() === sport) && feedPrefs.includes(feedId)) return true;
+        for (const [sport, feedSuffix] of Object.entries(sportMap)) {
+            if (tags.some(t => t.toLowerCase() === sport) && feedPrefs.includes('pm-' + feedSuffix)) return true;
         }
         return false;
     }
@@ -529,13 +533,22 @@ function eventMatchesFeed(e) {
     if (tags.includes('PM') && tags.includes('Music/Arts') && feedPrefs.includes('pm-music')) return true;
     if (tags.includes('PM') && tags.includes('Board/PTO') && feedPrefs.includes('pm-board')) return true;
 
-    // MU events
+    // MU sports
+    if (tags.includes('MU') && (tags.includes('Athletics') || tags.includes('Athletic Competitions'))) {
+        for (const [sport, feedSuffix] of Object.entries(sportMap)) {
+            if (tags.some(t => t.toLowerCase() === sport) && feedPrefs.includes('mu-' + feedSuffix)) return true;
+        }
+        // Also match if any broad MU pref exists
+        if (feedPrefs.includes('mu-arts') || feedPrefs.includes('mu-public') || feedPrefs.includes('mu-student')) return false;
+        return false;
+    }
+
+    // MU non-sport events
     if (tags.includes('MU') && !tags.includes('Clubs/Orgs')) {
         if (tags.includes('Arts Concert / Performance') && feedPrefs.includes('mu-arts')) return true;
         if (tags.includes('Public Event') && feedPrefs.includes('mu-public')) return true;
         if (tags.includes('Student Event') && feedPrefs.includes('mu-student')) return true;
-        // Catch MU events that don't match specific types
-        if (feedPrefs.some(p => p.startsWith('mu-'))) return true;
+        if (feedPrefs.some(p => p.startsWith('mu-') && !p.startsWith('mu-baseball') && !p.startsWith('mu-soft'))) return true;
         return false;
     }
 
@@ -635,7 +648,7 @@ window.clearFeedPrefs = function() {
 
 // ==================== FEED STAR DECORATION ====================
 function decorateFeedStars() {
-    document.querySelectorAll('.src-btn[data-feed]').forEach(btn => {
+    document.querySelectorAll('[data-feed]').forEach(btn => {
         // Remove existing stars
         const existingStar = btn.querySelector('.feed-star');
         if (existingStar) existingStar.remove();
@@ -643,9 +656,16 @@ function decorateFeedStars() {
         if (!feedPrefs || feedPrefs.length === 0) return;
 
         const feedKey = btn.dataset.feed;
-        const isInFeed = feedKey.endsWith('-')
-            ? feedPrefs.some(p => p.startsWith(feedKey))
-            : feedPrefs.includes(feedKey);
+        let isInFeed = false;
+        if (feedKey.startsWith('sport-')) {
+            // Sport pill: check if pm-{sport} or mu-{sport} is favorited
+            const suffix = feedKey.replace('sport-', '');
+            isInFeed = feedPrefs.some(p => p === 'pm-' + suffix || p === 'mu-' + suffix);
+        } else if (feedKey.endsWith('-')) {
+            isInFeed = feedPrefs.some(p => p.startsWith(feedKey));
+        } else {
+            isInFeed = feedPrefs.includes(feedKey);
+        }
 
         if (isInFeed) {
             const star = document.createElement('span');
@@ -666,8 +686,8 @@ function decorateFeedStars() {
 
     // Intercept clicks on data-feed buttons in capture phase (before inline onclick)
     document.addEventListener('click', function(e) {
-        const btn = e.target.closest('.src-btn[data-feed]');
-        if (!btn) return;
+        const btn = e.target.closest('[data-feed]');
+        if (!btn || (!btn.classList.contains('src-btn') && !btn.classList.contains('sport-pill') && !btn.classList.contains('btn'))) return;
 
         const now = Date.now();
         const isDoubleTap = (lastTapBtn === btn && now - lastTapTime < 400);
@@ -708,8 +728,19 @@ function toggleFeedFromButton(btn) {
 
     let prefs = feedPrefs ? [...feedPrefs] : [];
     const isPrefix = feedKey.endsWith('-');
+    const isSportPill = feedKey.startsWith('sport-');
 
-    if (isPrefix) {
+    if (isSportPill) {
+        // Sport pill: toggle both pm-{sport} and mu-{sport}
+        const suffix = feedKey.replace('sport-', '');
+        const ids = ['pm-' + suffix, 'mu-' + suffix];
+        const allIn = ids.every(id => prefs.includes(id));
+        if (allIn) {
+            prefs = prefs.filter(p => !ids.includes(p));
+        } else {
+            ids.forEach(id => { if (!prefs.includes(id)) prefs.push(id); });
+        }
+    } else if (isPrefix) {
         // Get all feed IDs that match this prefix
         const allIds = [];
         for (const group of Object.values(feedOptions)) {
@@ -1271,11 +1302,16 @@ function renderSportTypeTags(baseEvents){
     const activeSports=new Set();
     baseEvents.forEach(e=>{(e.tags||[]).forEach(t=>{if(sportsList.includes(t))activeSports.add(t);});});
     if(activeSports.size===0){row.innerHTML='';return;}
+    const sportFeedMap={Baseball:'baseball',Softball:'softball',Lacrosse:'lacrosse',Volleyball:'volleyball',
+        Football:'football',Basketball:'basketball',Soccer:'soccer','Field Hockey':'fieldhockey',
+        Tennis:'tennis',Track:'track',Golf:'golf',Swimming:'swimming','Cross Country':'crosscountry'};
     let html=`<button class="sport-pill ${!spSportTag?'active':''}" onclick="setSportType(null)">All Sports</button>`;
     Array.from(activeSports).sort().forEach(s=>{
-        html+=`<button class="sport-pill ${spSportTag===s?'active':''}" onclick="setSportType('${s}')">${s}</button>`;
+        const feedSuffix = sportFeedMap[s] || s.toLowerCase().replace(/\s+/g,'');
+        html+=`<button class="sport-pill ${spSportTag===s?'active':''}" data-feed="sport-${feedSuffix}" onclick="setSportType('${s}')">${s}</button>`;
     });
     row.innerHTML=html;
+    decorateFeedStars();
 }
 window.setSportType=function(sport){
     spSportTag=(spSportTag===sport)?null:sport;
@@ -1303,6 +1339,7 @@ function buildEventCard(e,isSportsPage){
     const displayTags=tags.filter(t=>!hiddenTags.includes(t));
     let tagHtml=sourceLabel?`<span class="card-tag">${sourceLabel}</span>`:'';
     tagHtml+=displayTags.map(t=>`<span class="card-tag">${t}</span>`).join('');
+    if(e.kidFriendly) tagHtml+=`<span class="card-tag tag-family">👨‍👩‍👧</span>`;
 
     // Score badge for completed games — large, top-right corner
     let scoreBadge='';

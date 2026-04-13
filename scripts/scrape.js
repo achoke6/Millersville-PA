@@ -432,6 +432,12 @@ async function runScraper() {
 
         const pmData = allPMEvents;
 
+        // Debug: check raw PM lacrosse events before any processing
+        const rawLax = Object.values(pmData).filter(e => /lacrosse/i.test(e.summary || ''));
+        const rawGirlsLax = rawLax.filter(e => /girl/i.test(e.summary || ''));
+        console.log(`    🔍 Raw iCal lacrosse: ${rawLax.length} total, ${rawGirlsLax.length} girls`);
+        rawGirlsLax.filter(e => new Date(e.start) >= now).forEach(e => console.log(`      → ${e.summary} (${new Date(e.start).toISOString().split('T')[0]})`));
+
         let pmAthCount = 0, pmGenCount = 0;
 
         for (const ev of Object.values(pmData)) {
@@ -529,6 +535,11 @@ async function runScraper() {
             }
         }
         console.log(`✅ Penn Manor: ${pmAthCount} athletic + ${pmGenCount} general = ${pmAthCount + pmGenCount} events`);
+        // Debug: check girls lacrosse coverage
+        const girlsLax = events.filter(e => e.tags && e.tags.includes('PM') && e.tags.includes('Girls') && e.tags.includes('Lacrosse'));
+        const futureGirlsLax = girlsLax.filter(e => new Date(e.date) >= now);
+        console.log(`    🔍 Girls Lacrosse: ${girlsLax.length} total, ${futureGirlsLax.length} future`);
+        futureGirlsLax.forEach(e => console.log(`      → ${e.title} (${new Date(e.date).toISOString().split('T')[0]})`));
     } catch (e) { console.error("❌ Penn Manor error:", e.message); }
 
     // ===== 2b. HUDL BROADCAST CHECK (Penn Manor) =====

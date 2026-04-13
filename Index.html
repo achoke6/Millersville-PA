@@ -81,54 +81,46 @@
             </div>
         </div>
 
-        <!-- My Feed (shown when feed is configured) -->
-        <div id="home-feed" style="display:none;">
-            <div class="home-section">
-                <div class="home-section-header">
-                    <h3 class="home-section-title">⚡ My Feed</h3>
-                    <a href="#" onclick="event.preventDefault();openFeedSettings();" class="home-more-link">Edit ⚙️</a>
+        <!-- Today's Games -->
+        <div class="home-section">
+            <div class="home-section-header">
+                <h3 class="home-section-title">🏆 Today's Games</h3>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <button id="home-hgame-toggle" onclick="toggleHomeGames()" class="btn btn-sm btn-outline" style="font-size:0.7rem;padding:3px 8px;">🏠 Home Only</button>
+                    <a href="#" onclick="event.preventDefault();switchView('sports');" class="home-more-link">All Sports →</a>
                 </div>
-                <div id="home-feed-items" class="card-grid"></div>
             </div>
+            <div id="home-today-games" class="home-scroll-row"></div>
         </div>
 
-        <!-- Default Home (shown when no feed) -->
-        <div id="home-default">
-            <!-- Today's Events -->
-            <div class="home-section">
-                <div class="home-section-header">
-                    <h3 class="home-section-title">📅 Today's Events</h3>
-                    <a href="#" onclick="event.preventDefault();switchView('events');" class="home-more-link">View All →</a>
+        <!-- Today's Events -->
+        <div class="home-section">
+            <div class="home-section-header">
+                <h3 class="home-section-title">📅 Today's Events</h3>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <button id="home-kid-toggle" onclick="toggleHomeKidMode()" class="btn btn-sm btn-outline" style="font-size:0.7rem;padding:3px 8px;">👨‍👩‍👧 Family</button>
+                    <a href="#" onclick="event.preventDefault();switchView('events');" class="home-more-link">All Events →</a>
                 </div>
-                <div id="home-today-events" class="home-scroll-row"></div>
             </div>
+            <div id="home-today-events" class="home-scroll-row"></div>
+        </div>
 
-            <!-- Today's Games -->
-            <div class="home-section">
-                <div class="home-section-header">
-                    <h3 class="home-section-title">🏆 Today's Home Games</h3>
-                    <a href="#" onclick="event.preventDefault();switchView('sports');" class="home-more-link">View All →</a>
-                </div>
-                <div id="home-today-games" class="home-scroll-row"></div>
+        <!-- Food Specials -->
+        <div class="home-section">
+            <div class="home-section-header">
+                <h3 class="home-section-title">🍴 Today's Specials</h3>
+                <a href="#" onclick="event.preventDefault();switchView('food');" class="home-more-link">View All →</a>
             </div>
+            <div id="home-specials" class="home-scroll-row"></div>
+        </div>
 
-            <!-- Food Specials -->
-            <div class="home-section">
-                <div class="home-section-header">
-                    <h3 class="home-section-title">🍴 Today's Specials</h3>
-                    <a href="#" onclick="event.preventDefault();switchView('food');" class="home-more-link">View All →</a>
-                </div>
-                <div id="home-specials" class="home-scroll-row"></div>
+        <!-- Latest News -->
+        <div class="home-section">
+            <div class="home-section-header">
+                <h3 class="home-section-title">📰 Latest News</h3>
+                <a href="#" onclick="event.preventDefault();switchView('news');" class="home-more-link">All News →</a>
             </div>
-
-            <!-- Latest News -->
-            <div class="home-section">
-                <div class="home-section-header">
-                    <h3 class="home-section-title">📰 Latest News</h3>
-                    <a href="#" onclick="event.preventDefault();switchView('news');" class="home-more-link">View All →</a>
-                </div>
-                <div id="home-news" class="home-scroll-row"></div>
-            </div>
+            <div id="home-news" class="home-scroll-row"></div>
         </div>
 
         <!-- Sponsors Banner (always visible, dynamically loaded) -->
@@ -638,75 +630,25 @@ window.clearFeedPrefs = function() {
     renderHomeFeed();
 };
 
+// Homepage toggle state
+let homeHomeOnly = false, homeKidMode = false;
+
+window.toggleHomeGames = function() {
+    homeHomeOnly = !homeHomeOnly;
+    document.getElementById('home-hgame-toggle').classList.toggle('active', homeHomeOnly);
+    renderHomeUI();
+};
+window.toggleHomeKidMode = function() {
+    homeKidMode = !homeKidMode;
+    document.getElementById('home-kid-toggle').classList.toggle('active', homeKidMode);
+    renderHomeUI();
+};
+
 function renderHomeFeed() {
     const hasFeed = feedPrefs && feedPrefs.length > 0;
     const feedCta = document.getElementById('home-feed-cta');
-    const feedSection = document.getElementById('home-feed');
-    const defaultHome = document.getElementById('home-default');
-
-    if (hasFeed) {
-        if (feedCta) feedCta.style.display = 'none';
-        if (feedSection) feedSection.style.display = 'block';
-        if (defaultHome) defaultHome.style.display = 'none';
-
-        const now = new Date();
-        const feedItems = document.getElementById('home-feed-items');
-
-        // Upcoming events matching feed (next 7 days)
-        const weekAhead = new Date(now.getTime() + 7*24*60*60*1000);
-        const upcoming = allEvents.filter(e => {
-            const d = new Date(e.date);
-            return d >= now && d <= weekAhead && eventMatchesFeed(e);
-        }).slice(0, 12);
-
-        // Matching news
-        const matchingNews = (currentNews||[]).filter(n => newsMatchesFeed(n)).slice(0, 4);
-
-        let html = '';
-        if (upcoming.length > 0) {
-            upcoming.forEach(e => {
-                const d = new Date(e.date);
-                const tags = e.tags || [];
-                const src = tags.includes('VFW')?'VFW':tags.includes('Borough')?'Borough':tags.includes('PM')?'PM':tags.includes('MU')?'MU':tags.includes('Community')?'Community':'Event';
-                const isSport = tags.includes('Athletics') || tags.includes('Athletic Competitions') || tags.includes('Club Sports');
-                const isNoon = d.getHours()===12 && d.getMinutes()===0;
-                const timeStr = isNoon ? '' : ` @ ${formatTime(d)}`;
-                const nav = isSport ? 'sports' : 'events';
-
-                let scoreBadge = '';
-                if(e.gameResult && e.gameScore){
-                    const cls = e.gameResult==='W'?'badge-win':e.gameResult==='L'?'badge-loss':'badge-neutral';
-                    scoreBadge = `<span class="badge ${cls}" style="font-size:0.7rem;position:absolute;top:12px;right:12px;">${e.gameResult} ${e.gameScore}</span>`;
-                }
-
-                html += `<div class="app-card" style="cursor:pointer;position:relative;" onclick="switchView('${nav}')">
-                    ${scoreBadge}
-                    <div class="card-tags"><span class="card-tag">${src}</span></div>
-                    <h3 class="card-title">${e.title}</h3>
-                    <p class="card-meta">📅 ${formatDate(d)}${timeStr}</p>
-                    <p class="card-meta">📍 ${e.location}</p>
-                </div>`;
-            });
-        }
-
-        if (matchingNews.length > 0) {
-            matchingNews.forEach(n => {
-                html += `<div class="app-card" style="cursor:pointer;" onclick="window.open('${n.link}','_blank')">
-                    <div class="card-tags"><span class="card-tag">${n.source}</span></div>
-                    <h3 class="card-title">${n.title}</h3>
-                    <p class="card-meta">${n.date||''}</p>
-                </div>`;
-            });
-        }
-
-        if (!html) html = '<p class="empty-state">No upcoming items match your feed. Try adding more interests.</p>';
-        feedItems.innerHTML = html;
-    } else {
-        if (feedCta) feedCta.style.display = 'block';
-        if (feedSection) feedSection.style.display = 'none';
-        if (defaultHome) defaultHome.style.display = 'block';
-        renderHomeUI();
-    }
+    if (feedCta) feedCta.style.display = hasFeed ? 'none' : 'block';
+    renderHomeUI();
 }
 // ==================== END MY FEED ====================
 
@@ -1247,58 +1189,68 @@ function buildEventCard(e,isSportsPage){
 function renderHomeUI(){
     const now = new Date();
     const todayStr = toDateStr(todayMidnight());
+    const hasFeed = feedPrefs && feedPrefs.length > 0;
 
-    // Today's Events (non-sport, public only — no MU Clubs)
-    const todayEvents = allEvents.filter(e => {
-        if(isSportEvent(e) || isPMSportByTitle(e)) return false;
-        if((e.tags||[]).includes('Clubs/Orgs')) return false;
-        return localDateStr(e.date) === todayStr;
-    }).slice(0, 8);
-    const evContainer = document.getElementById('home-today-events');
-    if(todayEvents.length === 0){
-        evContainer.innerHTML = '<p class="home-empty">No events scheduled today</p>';
-    } else {
-        evContainer.innerHTML = todayEvents.map(e => {
-            const d = new Date(e.date);
-            const src = e.tags?.includes('VFW') ? 'VFW' : e.tags?.includes('Borough') ? 'Borough' : e.tags?.includes('PM') ? 'PM' : e.tags?.includes('MU') ? 'MU' : 'Event';
-            const isNoon = d.getHours()===12 && d.getMinutes()===0;
-            const timeStr = isNoon ? '' : `<span class="home-card-time">${formatTime(d)}</span>`;
-            return `<div class="home-mini-card" onclick="switchView('events')"><span class="home-mini-tag">${src}</span><h4 class="home-mini-title">${e.title}</h4>${timeStr}<p class="home-mini-loc">📍 ${e.location}</p></div>`;
-        }).join('');
-    }
-
-    // Today's Games (home games only)
+    // ===== TODAY'S GAMES (top section) =====
     const todayGames = allEvents.filter(e => {
         if(!isSportEvent(e) && !isPMSportByTitle(e)) return false;
-        const tags = e.tags||[];
-        if(!tags.includes('Home Game Mode') && !tags.includes('H Games')) return false;
-        return localDateStr(e.date) === todayStr;
-    }).slice(0, 8);
+        if(localDateStr(e.date) !== todayStr) return false;
+        if(homeHomeOnly && !(e.tags||[]).includes('Home Game Mode') && !(e.tags||[]).includes('H Games')) return false;
+        if(hasFeed && !eventMatchesFeed(e)) return false;
+        return true;
+    }).slice(0, 10);
     const gameContainer = document.getElementById('home-today-games');
     if(todayGames.length === 0){
-        gameContainer.innerHTML = '<p class="home-empty">No home games scheduled today</p>';
+        gameContainer.innerHTML = `<p class="home-empty">No ${homeHomeOnly?'home ':''}games scheduled today</p>`;
     } else {
         gameContainer.innerHTML = todayGames.map(e => {
             const d = new Date(e.date);
             const src = e.tags?.includes('PM') ? 'PM' : e.tags?.includes('Clubs/Orgs') ? 'MU Clubs' : 'MU';
             const isHome = e.tags?.includes('Home Game Mode');
             const homeTag = isHome ? ' 🏠' : '';
+            const awayTag = !isHome ? ' 📍' : '';
             let scoreBadge = '';
             if(e.gameResult && e.gameScore){
                 const cls = e.gameResult==='W' ? 'badge-win' : e.gameResult==='L' ? 'badge-loss' : 'badge-neutral';
                 scoreBadge = `<span class="badge ${cls}" style="font-size:0.7rem;">${e.gameResult} ${e.gameScore}</span>`;
             }
-            const _now = new Date();
             const _end = new Date(d.getTime() + 3*60*60*1000);
-            const _live = e.streamLink && d <= _now && _now <= _end && !e.gameResult;
+            const _live = e.streamLink && d <= now && now <= _end && !e.gameResult;
             const liveBadge = _live ? '<span class="badge badge-live" style="font-size:0.65rem;">🔴 LIVE</span>' : '';
-            return `<div class="home-mini-card" onclick="switchView('sports')"><span class="home-mini-tag">${src}${homeTag}</span>${liveBadge}${scoreBadge}<h4 class="home-mini-title">${e.title}</h4><span class="home-card-time">${formatTime(d)}</span><p class="home-mini-loc">📍 ${e.location}</p></div>`;
+            const clickAction = e.sourceLink ? `window.open('${e.sourceLink}','_blank')` : `switchView('sports')`;
+            return `<div class="home-mini-card" onclick="${clickAction}"><span class="home-mini-tag">${src}${homeTag}${awayTag}</span>${liveBadge}${scoreBadge}<h4 class="home-mini-title">${e.title}</h4><span class="home-card-time">${formatTime(d)}</span><p class="home-mini-loc">📍 ${e.location}</p></div>`;
         }).join('');
     }
 
-    // Latest News
+    // ===== TODAY'S EVENTS =====
+    const todayEvents = allEvents.filter(e => {
+        if(isSportEvent(e) || isPMSportByTitle(e)) return false;
+        if((e.tags||[]).includes('Clubs/Orgs')) return false;
+        if(localDateStr(e.date) !== todayStr) return false;
+        if(homeKidMode && !e.kidFriendly) return false;
+        if(hasFeed && !eventMatchesFeed(e)) return false;
+        return true;
+    }).slice(0, 8);
+    const evContainer = document.getElementById('home-today-events');
+    if(todayEvents.length === 0){
+        evContainer.innerHTML = `<p class="home-empty">No ${homeKidMode?'family friendly ':''}events scheduled today</p>`;
+    } else {
+        evContainer.innerHTML = todayEvents.map(e => {
+            const d = new Date(e.date);
+            const src = e.tags?.includes('VFW') ? 'VFW' : e.tags?.includes('Borough') ? 'Borough' : e.tags?.includes('PM') ? 'PM' : e.tags?.includes('MU') ? 'MU' : e.tags?.includes('Community') ? 'Community' : 'Event';
+            const isNoon = d.getHours()===12 && d.getMinutes()===0;
+            const timeStr = isNoon ? '' : `<span class="home-card-time">${formatTime(d)}</span>`;
+            const kidBadge = e.kidFriendly ? '<span style="font-size:0.65rem;color:var(--green);">👨‍👩‍👧</span> ' : '';
+            const clickAction = e.sourceLink ? `window.open('${e.sourceLink}','_blank')` : `switchView('events')`;
+            return `<div class="home-mini-card" onclick="${clickAction}"><span class="home-mini-tag">${src}</span>${kidBadge}<h4 class="home-mini-title">${e.title}</h4>${timeStr}<p class="home-mini-loc">📍 ${e.location}</p></div>`;
+        }).join('');
+    }
+
+    // ===== LATEST NEWS =====
     const newsContainer = document.getElementById('home-news');
-    const latestNews = (currentNews || []).slice(0, 6);
+    let latestNews = (currentNews || []).slice(0, 8);
+    if (hasFeed) latestNews = latestNews.filter(n => newsMatchesFeed(n));
+    latestNews = latestNews.slice(0, 6);
     if(latestNews.length === 0){
         newsContainer.innerHTML = '<p class="home-empty">No news available</p>';
     } else {
@@ -1319,6 +1271,10 @@ async function loadHomeSpecials(){
         let cards = [];
 
         for (const [restaurant, sp] of Object.entries(specials)) {
+            // VFW specials don't apply on weekends (new specials announced Monday)
+            const isWeekend = (dayName === 'Saturday' || dayName === 'Sunday');
+            if (isWeekend && restaurant === 'VFW Post 7294') continue;
+
             let items = [];
             if(sp.daily && sp.daily[dayName]) items = sp.daily[dayName];
             if(sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
@@ -1455,7 +1411,8 @@ async function loadDining(){try{
         // Build specials section for this restaurant
         let specialsHtml='';
         const sp = specials[p.name];
-        if(sp){
+        const isWeekend = (dayName === 'Saturday' || dayName === 'Sunday');
+        if(sp && !(isWeekend && p.name === 'VFW Post 7294')){
             let items=[];
             if(sp.daily && sp.daily[dayName]) items = sp.daily[dayName];
             if(sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];

@@ -158,7 +158,6 @@
                 <button class="src-btn" id="ev-src-pm" data-feed="pm-" onclick="toggleEventSource('PM')"><svg class="btn-icon" width="14" height="14"><use href="#icon-comet"/></svg> PM</button>
                 <button class="src-btn" id="ev-src-borough" data-feed="borough-" onclick="toggleEventSource('Borough')">🌳 Borough</button>
                 <button class="src-btn" id="ev-src-other" data-feed="other-" onclick="toggleEventSource('Other')">🎸 Other</button>
-                <button class="src-btn" id="ev-src-community" data-feed="other-community" onclick="toggleEventSource('Community')">📝 Community</button>
             </div>
             <button class="src-btn" id="ev-kid-toggle" data-feed="family-events" onclick="toggleKidFriendly()" title="Family Friendly Events">👨‍👩‍👧 Family</button>
         </div>
@@ -428,7 +427,7 @@
 (function(){const _f=window.fetch,_v=Math.floor(Date.now()/3600000);window.fetch=function(u,o){if(typeof u==='string'&&u.endsWith('.json'))u+=(/\?/.test(u)?'&':'?')+'_='+_v;return _f.call(this,u,o);}})();
 
 let allEvents=[], currentNews=[], allRestaurants=[];
-const allEvSources = ['MU','Clubs/Orgs','PM','Borough','Other','Community'];
+const allEvSources = ['MU','Clubs/Orgs','PM','Borough','Other'];
 let evActiveSources = new Set(allEvSources), evTags=new Set();
 let evAllMode = true;
 let evKidMode=false;
@@ -483,7 +482,14 @@ const feedOptions = {
     },
     clubs: {
         label: 'MU Clubs & Orgs', icon: '🎓',
-        subs: [{id:'clubs-all',label:'All Club Events',icon:'🎓'}]
+        subs: [
+            {id:'clubs-all',label:'All Club Events',icon:'🎓'},
+            {id:'clubs-social',label:'Social Clubs',icon:'🎉'},
+            {id:'clubs-arts',label:'Arts & Performance',icon:'🎭'},
+            {id:'clubs-sports',label:'Club Sports',icon:'⚽'},
+            {id:'clubs-greek',label:'Greek Life',icon:'🏛️'},
+            {id:'clubs-service',label:'Service & Community',icon:'🤝'}
+        ]
     },
     borough: {
         label: 'Borough', icon: '🌳',
@@ -555,7 +561,19 @@ function eventMatchesFeed(e) {
     }
 
     // Clubs/Orgs
-    if (tags.includes('Clubs/Orgs') && feedPrefs.includes('clubs-all')) return true;
+    if (tags.includes('Clubs/Orgs')) {
+        if (feedPrefs.includes('clubs-all')) return true;
+        if (feedPrefs.includes('clubs-social') && tags.includes('Social')) return true;
+        if (feedPrefs.includes('clubs-arts') && tags.includes('Arts')) return true;
+        if (feedPrefs.includes('clubs-sports') && tags.includes('Club Sports')) return true;
+        if (feedPrefs.includes('clubs-greek') && tags.includes('Greek Life')) return true;
+        if (feedPrefs.includes('clubs-service') && (tags.includes('Service') || tags.includes('Cultural'))) return true;
+        // Individual club matches
+        for (const pref of feedPrefs) {
+            if (pref.startsWith('club:') && tags.includes(pref.substring(5))) return true;
+        }
+        return false;
+    }
 
     // Borough
     if (tags.includes('Borough') && feedPrefs.includes('borough-all')) return true;
@@ -600,8 +618,22 @@ window.openFeedSettings = function() {
             <div style="display:flex;flex-wrap:wrap;gap:6px;padding-left:8px;">
                 ${group.subs.map(s => `<label style="display:flex;align-items:center;gap:4px;font-size:0.82rem;padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;background:${current.includes(s.id)?'var(--gold-soft)':'var(--bg)'};"><input type="checkbox" class="feed-sub" data-group="${key}" value="${s.id}" ${current.includes(s.id)?'checked':''} onchange="updateFeedGroup('${key}')" style="accent-color:var(--gold);"> ${s.icon} ${s.label}</label>`).join('')}
             </div>
+            ${key === 'clubs' ? '<div id="clubs-individual-wrap" style="padding-left:8px;margin-top:8px;"><button onclick="toggleClubBrowser()" class="btn btn-sm btn-outline" style="font-size:0.75rem;">📋 Browse Individual Clubs ▸</button><div id="clubs-individual-list" style="display:none;max-height:200px;overflow-y:auto;margin-top:8px;display:none;flex-wrap:wrap;gap:4px;"></div></div>' : ''}
         </div>`;
     }
+
+    // Build individual clubs list from events data
+    const clubCategoryTags = new Set(['Clubs/Orgs','MU','MU GetInvolved','Social','Service','Academic','Cultural','Club Sports','Religious','Professional','Arts','Media','Governance','Recreation','Activism','Greek Life','Honor Society','Meeting','Performance','Lecture or Speaker','Movie or Film','Sporting','Fundraising','GroupBusiness','CommunityService','Tabling','Spirituality','ThoughtfulLearning','Educational Program','Other Org',"Men's","Women's"]);
+    const clubNames = new Map();
+    allEvents.forEach(e => {
+        const tags = e.tags || [];
+        if (!tags.includes('Clubs/Orgs')) return;
+        tags.forEach(t => {
+            if (!clubCategoryTags.has(t) && t.length > 2) clubNames.set(t, (clubNames.get(t)||0) + 1);
+        });
+    });
+    const sortedClubs = [...clubNames.entries()].filter(([,c]) => c >= 2).sort((a,b) => a[0].localeCompare(b[0]));
+    window._individualClubs = sortedClubs.map(([name]) => name);
 
     modal.innerHTML = `
         <button onclick="this.closest('div[style*=fixed]').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);">✕</button>
@@ -622,6 +654,23 @@ window.toggleFeedGroup = function(groupCb) {
     document.querySelectorAll(`.feed-sub[data-group="${group}"]`).forEach(cb => { cb.checked = checked; cb.closest('label').style.background = checked ? 'var(--gold-soft)' : 'var(--bg)'; });
 };
 
+window.toggleClubBrowser = function() {
+    const list = document.getElementById('clubs-individual-list');
+    if (!list) return;
+    const isHidden = list.style.display === 'none';
+    if (isHidden) {
+        const current = feedPrefs || [];
+        list.style.display = 'flex';
+        list.innerHTML = (window._individualClubs || []).map(name => {
+            const val = 'club:' + name;
+            const checked = current.includes(val);
+            return `<label style="display:flex;align-items:center;gap:4px;font-size:0.78rem;padding:4px 8px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;background:${checked?'var(--gold-soft)':'var(--bg)'};white-space:nowrap;"><input type="checkbox" class="feed-club" value="${val}" ${checked?'checked':''} onchange="this.closest('label').style.background=this.checked?'var(--gold-soft)':'var(--bg)'" style="accent-color:var(--gold);"> ${name}</label>`;
+        }).join('');
+    } else {
+        list.style.display = 'none';
+    }
+};
+
 window.updateFeedGroup = function(group) {
     const subs = document.querySelectorAll(`.feed-sub[data-group="${group}"]`);
     const groupCb = document.querySelector(`.feed-group[data-group="${group}"]`);
@@ -631,8 +680,11 @@ window.updateFeedGroup = function(group) {
 
 window.saveFeedFromModal = function() {
     const selected = [...document.querySelectorAll('.feed-sub:checked')].map(cb => cb.value);
-    if (selected.length === 0) { clearFeedPrefs(); return; }
-    saveFeedPrefs(selected);
+    // Also capture individual club selections
+    const clubSelections = [...document.querySelectorAll('.feed-club:checked')].map(cb => cb.value);
+    const allPrefs = [...selected, ...clubSelections];
+    if (allPrefs.length === 0) { clearFeedPrefs(); return; }
+    saveFeedPrefs(allPrefs);
     renderHomeFeed();
     renderEvents(); renderSports(); renderNewsUI();
     decorateFeedStars();
@@ -880,8 +932,7 @@ function matchesSource(tags,src){
     if(src==='Clubs/Orgs') return tags.includes('Clubs/Orgs');
     if(src==='PM') return tags.includes('PM');
     if(src==='Borough') return tags.includes('Borough');
-    if(src==='Other') return tags.includes('Other');
-    if(src==='Community') return tags.includes('Community');
+    if(src==='Other') return tags.includes('Other') || tags.includes('Community');
     if(src==='Clubs') return tags.includes('Clubs/Orgs')&&(tags.includes('Club Sports')||sportsList.some(s=>tags.includes(s)));
     return false;
 }
@@ -1074,7 +1125,7 @@ window.toggleEventSource=function(src){
 function updateEventsUI(){
     const allBtn = document.getElementById('ev-src-all');
     if (allBtn) allBtn.classList.toggle('active', evAllMode);
-    const srcMap = {'MU':'mu','Clubs/Orgs':'gi','PM':'pm','Borough':'borough','Other':'other','Community':'community'};
+    const srcMap = {'MU':'mu','Clubs/Orgs':'gi','PM':'pm','Borough':'borough','Other':'other'};
     allEvSources.forEach(src => {
         const btn = document.getElementById('ev-src-' + srcMap[src]);
         if (btn) btn.classList.toggle('active', !evAllMode && evActiveSources.has(src));

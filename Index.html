@@ -669,55 +669,48 @@ function decorateFeedStars() {
     });
 }
 
-// Double-click (desktop) and long-press (mobile) to toggle feed subscription
+// Double-tap/click to toggle favorites (works on both desktop and mobile)
 (function() {
-    let pressTimer = null;
-    let pressTarget = null;
-    let didLongPress = false;
+    let lastTapTime = 0;
+    let lastTapBtn = null;
+    let singleTapTimer = null;
 
-    // Double-click for desktop
-    document.addEventListener('dblclick', function(e) {
+    // Intercept clicks on data-feed buttons in capture phase (before inline onclick)
+    document.addEventListener('click', function(e) {
         const btn = e.target.closest('.src-btn[data-feed]');
         if (!btn) return;
-        e.preventDefault();
-        toggleFeedFromButton(btn);
-    });
 
-    // Long-press for touch devices
-    document.addEventListener('touchstart', function(e) {
-        const btn = e.target.closest('.src-btn[data-feed]');
-        if (!btn) return;
-        didLongPress = false;
-        pressTarget = btn;
-        pressTimer = setTimeout(function() {
-            didLongPress = true;
-            // Clear any text selection
+        const now = Date.now();
+        const isDoubleTap = (lastTapBtn === btn && now - lastTapTime < 400);
+
+        if (isDoubleTap) {
+            // Double-tap: toggle favorite, cancel the pending single tap
+            e.stopImmediatePropagation();
+            e.preventDefault();
+            clearTimeout(singleTapTimer);
+            lastTapBtn = null;
+            lastTapTime = 0;
             if (window.getSelection) window.getSelection().removeAllRanges();
-            toggleFeedFromButton(pressTarget);
-            pressTarget = null;
-        }, 600);
-    }, { passive: true });
-
-    document.addEventListener('touchend', function(e) {
-        clearTimeout(pressTimer);
-        if (didLongPress) { e.preventDefault(); didLongPress = false; }
-        pressTarget = null;
-    });
-
-    document.addEventListener('touchmove', function() {
-        clearTimeout(pressTimer);
-        pressTarget = null;
-    });
-
-    document.addEventListener('touchcancel', function() {
-        clearTimeout(pressTimer);
-        pressTarget = null;
-    });
-
-    // Block context menu on feed buttons (Android long-press menu)
-    document.addEventListener('contextmenu', function(e) {
-        if (e.target.closest('.src-btn[data-feed]')) e.preventDefault();
-    });
+            toggleFeedFromButton(btn);
+        } else {
+            // First tap: delay the normal click action
+            e.stopImmediatePropagation();
+            e.preventDefault();
+            lastTapBtn = btn;
+            lastTapTime = now;
+            clearTimeout(singleTapTimer);
+            // Store the onclick to fire after delay
+            const onclickAttr = btn.getAttribute('onclick');
+            singleTapTimer = setTimeout(function() {
+                lastTapBtn = null;
+                lastTapTime = 0;
+                // Execute the original onclick
+                if (onclickAttr) {
+                    try { new Function(onclickAttr).call(btn); } catch(ex) {}
+                }
+            }, 350);
+        }
+    }, true); // capture phase
 })();
 
 function toggleFeedFromButton(btn) {

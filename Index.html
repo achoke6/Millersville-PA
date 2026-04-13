@@ -529,9 +529,11 @@ function eventMatchesFeed(e) {
         }
         return false;
     }
-    // PM non-sport
-    if (tags.includes('PM') && tags.includes('Music/Arts') && feedPrefs.includes('pm-music')) return true;
-    if (tags.includes('PM') && tags.includes('Board/PTO') && feedPrefs.includes('pm-board')) return true;
+    // PM non-sport: match if any pm- feed is selected
+    if (tags.includes('PM')) {
+        if (feedPrefs.some(p => p.startsWith('pm-'))) return true;
+        return false;
+    }
 
     // MU sports
     if (tags.includes('MU') && (tags.includes('Athletics') || tags.includes('Athletic Competitions'))) {
@@ -543,12 +545,12 @@ function eventMatchesFeed(e) {
         return false;
     }
 
-    // MU non-sport events
+    // MU non-sport events: match if any mu- event feed is selected
     if (tags.includes('MU') && !tags.includes('Clubs/Orgs')) {
         if (tags.includes('Arts Concert / Performance') && feedPrefs.includes('mu-arts')) return true;
         if (tags.includes('Public Event') && feedPrefs.includes('mu-public')) return true;
         if (tags.includes('Student Event') && feedPrefs.includes('mu-student')) return true;
-        if (feedPrefs.some(p => p.startsWith('mu-') && !p.startsWith('mu-baseball') && !p.startsWith('mu-soft'))) return true;
+        if (feedPrefs.includes('mu-arts') || feedPrefs.includes('mu-public') || feedPrefs.includes('mu-student')) return true;
         return false;
     }
 
@@ -1339,7 +1341,6 @@ function buildEventCard(e,isSportsPage){
     const displayTags=tags.filter(t=>!hiddenTags.includes(t));
     let tagHtml=sourceLabel?`<span class="card-tag">${sourceLabel}</span>`:'';
     tagHtml+=displayTags.map(t=>`<span class="card-tag">${t}</span>`).join('');
-    if(e.kidFriendly) tagHtml+=`<span class="card-tag tag-family">👨‍👩‍👧</span>`;
 
     // Score badge for completed games — large, top-right corner
     let scoreBadge='';
@@ -1380,11 +1381,13 @@ function buildEventCard(e,isSportsPage){
         actionHtml=`<span class="badge badge-door">${priceText}</span>`;
     }
 
-    // Game location badge (lower-left corner for sports)
+    // Game location badge (lower-left corner for sports) / Family badge for events
     let locBadge = '';
     if (isSportsPage) {
         if (isHome) locBadge = '<span class="game-loc-badge game-loc-home">🏠 Home</span>';
         else locBadge = '<span class="game-loc-badge game-loc-away">📍 Away</span>';
+    } else if (e.kidFriendly) {
+        locBadge = '<span class="game-loc-badge tag-family">👨‍👩‍👧 Family</span>';
     }
 
     // Hide time if it's exactly noon (placeholder for events with no specific time)

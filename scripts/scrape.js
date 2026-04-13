@@ -456,6 +456,12 @@ async function runScraper() {
             // Skip No School/Closings events entirely — not scraped
             if (/no school|snow day|spring break|weather make|school now in session|vacation|closing|closed/i.test(lowerTitle)) continue;
 
+            // Skip internal school events not relevant to community
+            if (/\bsap meeting\b|\bfaculty meeting\b|\bstaff meeting\b|\bin-service\b|\bprofessional development\b/i.test(lowerTitle)) continue;
+            if (/\bfield trip\b|\btrip to\b|\bgirls on the run\b|\bgotr\b|\bgotc\b|\bbus evacuation\b/i.test(lowerTitle)) continue;
+            if (/\bprogress report|report card|early dismissal|late start|delayed opening/i.test(lowerTitle)) continue;
+            if (/\bpicture day\b|\bretake\b|\bphoto day\b|\bpicture retake\b/i.test(lowerTitle)) continue;
+
             const isAthletic = categories.toLowerCase().includes('athletics') || desc.toLowerCase().includes('sport:');
 
             if (isAthletic) {

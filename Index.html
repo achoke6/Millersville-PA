@@ -154,12 +154,12 @@
             <div class="filter-group">
                 <button class="src-btn" id="ev-src-feed" onclick="setEventSource('Feed', this)" style="display:none;">⚡ My Feed</button>
                 <button class="src-btn active" id="ev-src-all" onclick="setEventSource('All', this)">All</button>
-                <button class="src-btn" id="ev-src-mu" onclick="setEventSource('MU', this)">🏴‍☠️ MU</button>
-                <button class="src-btn" id="ev-src-gi" onclick="setEventSource('Clubs/Orgs', this)">🎓 MU Clubs</button>
-                <button class="src-btn" id="ev-src-pm" onclick="setEventSource('PM', this)"><svg class="btn-icon" width="14" height="14"><use href="#icon-comet"/></svg> PM</button>
-                <button class="src-btn" id="ev-src-borough" onclick="setEventSource('Borough', this)">🌳 Borough</button>
-                <button class="src-btn" id="ev-src-other" onclick="setEventSource('Other', this)">🎸 Other</button>
-                <button class="src-btn" id="ev-src-community" onclick="setEventSource('Community', this)">📝 Community</button>
+                <button class="src-btn" id="ev-src-mu" data-feed="mu-" onclick="setEventSource('MU', this)">🏴‍☠️ MU</button>
+                <button class="src-btn" id="ev-src-gi" data-feed="clubs-" onclick="setEventSource('Clubs/Orgs', this)">🎓 MU Clubs</button>
+                <button class="src-btn" id="ev-src-pm" data-feed="pm-" onclick="setEventSource('PM', this)"><svg class="btn-icon" width="14" height="14"><use href="#icon-comet"/></svg> PM</button>
+                <button class="src-btn" id="ev-src-borough" data-feed="borough-" onclick="setEventSource('Borough', this)">🌳 Borough</button>
+                <button class="src-btn" id="ev-src-other" data-feed="other-" onclick="setEventSource('Other', this)">🎸 Other</button>
+                <button class="src-btn" id="ev-src-community" data-feed="other-community" onclick="setEventSource('Community', this)">📝 Community</button>
             </div>
             <button class="family-toggle" id="ev-kid-toggle" onclick="toggleKidFriendly()" title="Family Friendly Events">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -197,9 +197,9 @@
         <div class="filter-bar sp-source-row">
             <div class="filter-group" id="sp-source-group">
                 <button class="src-btn" id="sp-src-feed" onclick="toggleSpFeed()" style="display:none;">⚡ My Feed</button>
-                <button class="src-btn active" id="sp-src-pm" onclick="toggleSportsSource('PM')"><svg class="btn-icon" width="14" height="14"><use href="#icon-comet"/></svg> PM</button>
-                <button class="src-btn active" id="sp-src-mu" onclick="toggleSportsSource('MU')">🏴‍☠️ MU</button>
-                <button class="src-btn" id="sp-src-clubs" onclick="toggleSportsSource('Clubs')">🎓 MU Clubs</button>
+                <button class="src-btn active" id="sp-src-pm" data-feed="pm-" onclick="toggleSportsSource('PM')"><svg class="btn-icon" width="14" height="14"><use href="#icon-comet"/></svg> PM</button>
+                <button class="src-btn active" id="sp-src-mu" data-feed="mu-" onclick="toggleSportsSource('MU')">🏴‍☠️ MU</button>
+                <button class="src-btn" id="sp-src-clubs" data-feed="clubs-" onclick="toggleSportsSource('Clubs')">🎓 MU Clubs</button>
             </div>
             <button class="home-toggle" id="hgame-toggle" onclick="toggleHomeGameMode()" title="Home Games Only">
                 <svg width="20" height="20"><use href="#icon-house"/></svg>
@@ -256,13 +256,14 @@
     <section id="view-news" class="app-view">
         <div class="filter-bar">
             <div class="filter-group" id="news-source-group">
+                <button class="src-btn" id="news-src-feed" onclick="setNewsSource('Feed', this)" style="display:none;">⚡ My Feed</button>
                 <button class="src-btn active" onclick="setNewsSource('All', this)">All</button>
-                <button class="src-btn" onclick="setNewsSource('Millersville News', this)">MU</button>
-                <button class="src-btn" onclick="setNewsSource('MU Athletics', this)">🏅 MU Athletics</button>
-                <button class="src-btn" onclick="setNewsSource('The Snapper', this)">📰 MU Snapper</button>
-                <button class="src-btn" onclick="setNewsSource('MU Review', this)">📖 MU Review</button>
-                <button class="src-btn" onclick="setNewsSource('Penn Manor News', this)"><svg class="btn-icon" width="12" height="12"><use href="#icon-comet"/></svg> Penn Manor</button>
-                <button class="src-btn" onclick="setNewsSource('Millersville Borough', this)">🌳 Millersville Borough</button>
+                <button class="src-btn" data-feed="news-mu" onclick="setNewsSource('Millersville News', this)">MU</button>
+                <button class="src-btn" data-feed="news-athletics" onclick="setNewsSource('MU Athletics', this)">🏅 MU Athletics</button>
+                <button class="src-btn" data-feed="news-snapper" onclick="setNewsSource('The Snapper', this)">📰 MU Snapper</button>
+                <button class="src-btn" data-feed="news-review" onclick="setNewsSource('MU Review', this)">📖 MU Review</button>
+                <button class="src-btn" data-feed="news-pm" onclick="setNewsSource('Penn Manor News', this)"><svg class="btn-icon" width="12" height="12"><use href="#icon-comet"/></svg> Penn Manor</button>
+                <button class="src-btn" data-feed="news-borough" onclick="setNewsSource('Millersville Borough', this)">🌳 Millersville Borough</button>
             </div>
         </div>
         <div id="news-sub-container" class="sub-filter-bar"></div>
@@ -617,9 +618,24 @@ window.saveFeedFromModal = function() {
     const selected = [...document.querySelectorAll('.feed-sub:checked')].map(cb => cb.value);
     if (selected.length === 0) { clearFeedPrefs(); return; }
     saveFeedPrefs(selected);
+    // Show feed buttons
+    const hasFeed = true;
+    ['ev-src-feed','sp-src-feed','news-src-feed'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) btn.style.display = '';
+    });
+    // Activate feed on all pages
+    evSource = 'Feed';
+    document.querySelectorAll('#view-events .filter-group .src-btn').forEach(b => b.classList.remove('active'));
+    const evFb = document.getElementById('ev-src-feed'); if(evFb) evFb.classList.add('active');
+    const evl = document.getElementById('ev-event-label'); if(evl) evl.textContent = 'My Feed:';
+    spFeedMode = true; spActiveSources.clear();
+    newsSource = 'Feed';
+    document.querySelectorAll('#news-source-group .src-btn').forEach(b => b.classList.remove('active'));
+    const nFb = document.getElementById('news-src-feed'); if(nFb) nFb.classList.add('active');
     renderHomeFeed();
-    renderEventsUI();
-    renderSportsUI();
+    renderEvents(); renderSports(); renderNewsUI();
+    decorateFeedStars();
 };
 
 window.clearFeedPrefs = function() {
@@ -627,8 +643,122 @@ window.clearFeedPrefs = function() {
     feedPrefs = null;
     const dot = document.getElementById('feed-dot');
     if (dot) dot.style.display = 'none';
+    // Hide feed buttons, reset to All
+    ['ev-src-feed','sp-src-feed','news-src-feed'].forEach(id => {
+        const btn = document.getElementById(id);
+        if (btn) { btn.style.display = 'none'; btn.classList.remove('active'); }
+    });
+    evSource = 'All';
+    const evAll = document.getElementById('ev-src-all'); if(evAll) evAll.click();
+    spFeedMode = false; spActiveSources = new Set(['PM','MU']);
+    newsSource = 'All';
+    document.querySelectorAll('#news-source-group .src-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('#news-source-group .src-btn')?.classList.add('active');
     renderHomeFeed();
+    renderEvents(); renderSports(); renderNewsUI();
+    decorateFeedStars();
 };
+
+// ==================== FEED STAR DECORATION ====================
+function decorateFeedStars() {
+    document.querySelectorAll('.src-btn[data-feed]').forEach(btn => {
+        // Remove existing stars
+        const existingStar = btn.querySelector('.feed-star');
+        if (existingStar) existingStar.remove();
+
+        if (!feedPrefs || feedPrefs.length === 0) return;
+
+        const feedKey = btn.dataset.feed;
+        const isInFeed = feedKey.endsWith('-')
+            ? feedPrefs.some(p => p.startsWith(feedKey))
+            : feedPrefs.includes(feedKey);
+
+        if (isInFeed) {
+            const star = document.createElement('span');
+            star.className = 'feed-star';
+            star.textContent = '★';
+            star.style.cssText = 'color:var(--gold);font-size:0.6rem;position:absolute;top:-2px;right:-2px;pointer-events:none;';
+            btn.style.position = 'relative';
+            btn.appendChild(star);
+        }
+    });
+}
+
+// Long-press to toggle feed subscription on source buttons
+(function() {
+    let pressTimer = null;
+    let pressTarget = null;
+
+    document.addEventListener('pointerdown', function(e) {
+        const btn = e.target.closest('.src-btn[data-feed]');
+        if (!btn) return;
+        pressTarget = btn;
+        pressTimer = setTimeout(function() {
+            e.preventDefault();
+            toggleFeedFromButton(pressTarget);
+            pressTarget = null;
+        }, 600);
+    });
+
+    document.addEventListener('pointerup', function() {
+        clearTimeout(pressTimer);
+        pressTarget = null;
+    });
+
+    document.addEventListener('pointercancel', function() {
+        clearTimeout(pressTimer);
+        pressTarget = null;
+    });
+})();
+
+function toggleFeedFromButton(btn) {
+    const feedKey = btn.dataset.feed;
+    if (!feedKey) return;
+
+    let prefs = feedPrefs ? [...feedPrefs] : [];
+    const isPrefix = feedKey.endsWith('-');
+
+    if (isPrefix) {
+        // Get all feed IDs that match this prefix
+        const allIds = [];
+        for (const group of Object.values(feedOptions)) {
+            group.subs.forEach(s => { if (s.id.startsWith(feedKey)) allIds.push(s.id); });
+        }
+        const allIn = allIds.every(id => prefs.includes(id));
+        if (allIn) {
+            // Remove all matching
+            prefs = prefs.filter(p => !p.startsWith(feedKey));
+        } else {
+            // Add all matching
+            allIds.forEach(id => { if (!prefs.includes(id)) prefs.push(id); });
+        }
+    } else {
+        // Toggle single feed ID
+        if (prefs.includes(feedKey)) {
+            prefs = prefs.filter(p => p !== feedKey);
+        } else {
+            prefs.push(feedKey);
+        }
+    }
+
+    if (prefs.length === 0) {
+        clearFeedPrefs();
+    } else {
+        saveFeedPrefs(prefs);
+        // Show feed buttons
+        ['ev-src-feed','sp-src-feed','news-src-feed'].forEach(id => {
+            const b = document.getElementById(id);
+            if (b) b.style.display = '';
+        });
+        renderHomeFeed();
+        decorateFeedStars();
+    }
+
+    // Brief visual feedback
+    btn.style.transition = 'transform 0.15s';
+    btn.style.transform = 'scale(1.15)';
+    setTimeout(() => { btn.style.transform = ''; }, 200);
+}
 
 // Homepage toggle state
 let homeHomeOnly = false, homeKidMode = false;
@@ -897,8 +1027,10 @@ async function loadEvents(){
     const hasFeed = feedPrefs && feedPrefs.length > 0;
     const evFeedBtn = document.getElementById('ev-src-feed');
     const spFeedBtn = document.getElementById('sp-src-feed');
+    const newsFeedBtn = document.getElementById('news-src-feed');
     if (evFeedBtn) evFeedBtn.style.display = hasFeed ? '' : 'none';
     if (spFeedBtn) spFeedBtn.style.display = hasFeed ? '' : 'none';
+    if (newsFeedBtn) newsFeedBtn.style.display = hasFeed ? '' : 'none';
     if (hasFeed) {
         // Auto-activate feed on Events page
         evSource = 'Feed';
@@ -909,10 +1041,16 @@ async function loadEvents(){
         // Auto-activate feed on Sports page
         spFeedMode = true;
         spActiveSources.clear();
+        // Auto-activate feed on News page
+        newsSource = 'Feed';
+        document.querySelectorAll('#news-source-group .src-btn').forEach(b => b.classList.remove('active'));
+        if (newsFeedBtn) newsFeedBtn.classList.add('active');
     }
     updateModeUI('ev',evMode,evAnchorDate);
     updateModeUI('sp',spMode,spAnchorDate);
     renderEvents(); renderSports();
+    if (currentNews.length > 0) renderNewsUI();
+    decorateFeedStars();
     }catch(e){console.error('Events load error:',e);}
 }
 
@@ -1334,8 +1472,7 @@ window.setNewsSource=function(src,btn){
 
 function renderNewsSubFilters(){
     const c=document.getElementById('news-sub-container'); c.innerHTML='';
-    // Only show sub-category filters when a specific source is selected (not All)
-    if(newsSource==='All'){c.classList.remove('active');return;}
+    if(newsSource==='All'||newsSource==='Feed'){c.classList.remove('active');return;}
     let filtered=currentNews.filter(n=>n.source===newsSource);
     const subs=new Set();
     filtered.forEach(n=>{
@@ -1359,6 +1496,7 @@ function renderNewsSubFilters(){
 function renderNewsUI(){
     const c=document.getElementById('news-container');
     let f=currentNews.filter(n=>{
+        if(newsSource==='Feed'){ return newsMatchesFeed(n); }
         if(newsSource!=='All'){
             if(n.source!==newsSource) return false;
         }

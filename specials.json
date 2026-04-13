@@ -47,8 +47,155 @@
   },
   "John Herr's Village Market": {
     "note": "Weekly deals · Wed–Tue · 20 Crossgates Dr",
-    "weekly": [],
-    "weeklyDateRange": "",
-    "rawDeals": []
+    "weekly": [
+      "Smithfield Pork Tenderloins, Fillets or Picnic Roasts – Buy 1 Get 1 FREE (50% off)",
+      "Food Club Skillet Classics – Buy 1 Get 1 FREE (50% off)",
+      "Herr's Original Potato Chips – Buy 1 Get 1 FREE (50% off)",
+      "Martin's Potato Rolls – Buy 1 Get 1 FREE (50% off)",
+      "Rana Family Size Pasta – Buy 1 Get 1 FREE (50% off)"
+    ],
+    "weeklyDateRange": "Thu Apr 9 - Wed Apr 15, 2024",
+    "rawDeals": [
+      {
+        "item": "Smithfield Pork Tenderloins, Fillets or Picnic Roasts",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "$18.4-27.2 oz",
+        "savings": "50% off",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Food Club Skillet Classics",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "5-6.4 oz",
+        "savings": "50% off",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Herr's Original Potato Chips",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "7-8 oz",
+        "savings": "50% off",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Martin's Potato Rolls",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "7-10.5 oz",
+        "savings": "50% off",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Rana Family Size Pasta",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "20 oz",
+        "savings": "50% off",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Michelina's Frozen Entrees",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "4.5-6.5 oz",
+        "savings": "50% off",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Food Club Long Grain & Wild Rice",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "16 oz",
+        "savings": "50% off",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Lipton Italian Soup & Dip Mix",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "6 oz",
+        "savings": "50% off",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Q-tips Cotton Swabs",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "300-376 ct",
+        "savings": "50% off",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Simply Done Facial Tissue",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "144 ct",
+        "savings": "50% off",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "McCafe Single Serve K-Cup Coffee",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "10 ct",
+        "savings": "50% off",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Boneless Ribeye Delmonico Steak",
+        "salePrice": "$16.99/lb",
+        "regularPrice": "Less Amount $17.99/lb",
+        "savings": "$1.00/lb off",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Bone-In Chicken Thighs",
+        "salePrice": "$1.99/lb",
+        "regularPrice": "Less Amount $2.49/lb",
+        "savings": "$0.50/lb off",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Fresh Whole Pork Butt",
+        "salePrice": "$1.99/lb",
+        "regularPrice": "",
+        "savings": "Great price",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "John F. Martin Oven Roasted Chicken Breast",
+        "salePrice": "$5.99/lb",
+        "regularPrice": "",
+        "savings": "Deli special",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Dietz & Watson Medium American Yellow Cheese",
+        "salePrice": "$5.49/lb",
+        "regularPrice": "",
+        "savings": "Deli special",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Boneless Chuck Eye Roast",
+        "salePrice": "$6.49/lb",
+        "regularPrice": "",
+        "savings": "Premium cut",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Certified Angus Beef Chuck Roast",
+        "salePrice": "$7.99/lb",
+        "regularPrice": "",
+        "savings": "Premium quality",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Fresh Ground Sirloin",
+        "salePrice": "$6.49/lb",
+        "regularPrice": "Less Amount $6.99/lb",
+        "savings": "$0.50/lb off",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      },
+      {
+        "item": "Clorox Disinfectant Wipes",
+        "salePrice": "$5.48",
+        "regularPrice": "75 ct",
+        "savings": "Spring cleaning deal",
+        "dateRange": "Thu Apr 9 - Wed Apr 15, 2024"
+      }
+    ]
   }
 }

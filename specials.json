@@ -48,152 +48,152 @@
   "John Herr's Village Market": {
     "note": "Weekly deals · Wed–Tue · 20 Crossgates Dr",
     "weekly": [
-      "Boneless Ribeye Delmonico Steak – $16.99/lb ($1.00/lb off)",
-      "Boneless Chuck Eye Steak – $6.49/lb (Premium cut at great price)",
-      "Chuck Roast Certified Angus Beef – $7.99/lb (Premium certified beef)",
-      "Fresh Ground Sirloin – $6.49/lb (Less amount pricing)",
-      "Bone-in Chicken Thighs – $1.99/lb ($0.50/lb off)"
+      "Boneless Ribeye (Delmonico) Steak – $16.99/lb (Value Pack Select Beef)",
+      "Chuck Roast Certified Angus Beef – $7.99/lb (Boneless)",
+      "Eye Roast Choice Beef – $6.49/lb (Meek Tender Boneless Thick)",
+      "Fresh Ground Sirloin – $6.49/lb (Value Pack Certified Angus Beef)",
+      "Bone-In Chicken Thighs – $1.99/lb (Value Pack Fresh All Natural)"
     ],
     "weeklyDateRange": "Thu Apr 9 - Wed Apr 15",
     "rawDeals": [
       {
-        "item": "Boneless Ribeye Delmonico Steak",
+        "item": "Boneless Ribeye (Delmonico) Steak",
         "salePrice": "$16.99/lb",
         "regularPrice": "$17.99/lb",
-        "savings": "$1.00/lb off",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
-      },
-      {
-        "item": "Boneless Chuck Eye Steak",
-        "salePrice": "$6.49/lb",
-        "regularPrice": "",
-        "savings": "Premium cut at great price",
+        "savings": "Value Pack Select Beef",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
         "item": "Chuck Roast Certified Angus Beef",
         "salePrice": "$7.99/lb",
         "regularPrice": "",
-        "savings": "Premium certified beef",
+        "savings": "Boneless",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Eye Roast Choice Beef",
+        "salePrice": "$6.49/lb",
+        "regularPrice": "",
+        "savings": "Meek Tender Boneless Thick",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
         "item": "Fresh Ground Sirloin",
         "salePrice": "$6.49/lb",
-        "regularPrice": "$6.99/lb",
-        "savings": "Less amount pricing",
+        "regularPrice": "",
+        "savings": "Value Pack Certified Angus Beef",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Bone-in Chicken Thighs",
+        "item": "Bone-In Chicken Thighs",
         "salePrice": "$1.99/lb",
-        "regularPrice": "$2.49/lb",
-        "savings": "$0.50/lb off",
+        "regularPrice": "$2.48/lb",
+        "savings": "Value Pack Fresh All Natural",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Bone-in Pork Butt",
-        "salePrice": "$1.99/lb",
-        "regularPrice": "",
-        "savings": "Great price for pork",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
-      },
-      {
-        "item": "BOGO Smithfield Pork Tenderloins",
+        "item": "Smithfield Pork Tenderloins/Fillets/Picnic Roasts",
         "salePrice": "Buy 1 Get 1 FREE",
-        "regularPrice": "",
-        "savings": "18.4-27.2 oz selected",
+        "regularPrice": "18.4-27.2 oz",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "BOGO Food Club Skillet Classics",
+        "item": "Food Club Skillet Classics",
         "salePrice": "Buy 1 Get 1 FREE",
-        "regularPrice": "",
-        "savings": "5-6.4 oz selected",
+        "regularPrice": "5-6.4 oz",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "BOGO Herr's Original Potato Chips",
+        "item": "Herr's Original Potato Chips",
         "salePrice": "Buy 1 Get 1 FREE",
-        "regularPrice": "",
-        "savings": "7-8 oz selected",
+        "regularPrice": "7-9 oz",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "BOGO Martin's Pretzels",
+        "item": "Martin's Pretzels",
         "salePrice": "Buy 1 Get 1 FREE",
-        "regularPrice": "",
-        "savings": "7-10.5 oz selected",
+        "regularPrice": "7-10.5 oz",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "BOGO Rana Family Size Pasta",
+        "item": "Rana Family Size Pasta",
         "salePrice": "Buy 1 Get 1 FREE",
-        "regularPrice": "",
-        "savings": "20 oz selected",
+        "regularPrice": "20 oz",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "BOGO Food Club Long Grain White Rice",
+        "item": "Food Club Long Grain White Rice",
         "salePrice": "Buy 1 Get 1 FREE",
-        "regularPrice": "",
-        "savings": "16 oz white or brown",
+        "regularPrice": "16 oz",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "BOGO Michelina's Frozen Entrees",
+        "item": "Michelina's Frozen Entrees",
         "salePrice": "Buy 1 Get 1 FREE",
-        "regularPrice": "",
-        "savings": "4.5-8.5 oz selected",
+        "regularPrice": "4.5-8.5 oz",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "BOGO Lindy's Italian Ice",
+        "item": "Lindy's Italian Ice",
         "salePrice": "Buy 1 Get 1 FREE",
-        "regularPrice": "",
-        "savings": "6 oz selected",
+        "regularPrice": "6 oz",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "BOGO Mott's or Tree Top Juice",
+        "item": "Mott's or Applesauce",
         "salePrice": "Buy 1 Get 1 FREE",
-        "regularPrice": "",
-        "savings": "64 oz selected",
+        "regularPrice": "64 oz",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "BOGO Food Club Butter Quarters",
+        "item": "Food Club Multi-Surface Wipes",
         "salePrice": "Buy 1 Get 1 FREE",
-        "regularPrice": "",
-        "savings": "20 oz selected",
+        "regularPrice": "20-30 oz",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "BOGO Quaker Rice Crisps",
+        "item": "Chapstick Lip Care",
         "salePrice": "Buy 1 Get 1 FREE",
-        "regularPrice": "",
-        "savings": "3-3.52 oz selected",
+        "regularPrice": "15 oz",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "BOGO ChapStick Lip Care",
+        "item": "Q-Tips Cotton Swabs",
         "salePrice": "Buy 1 Get 1 FREE",
-        "regularPrice": "",
-        "savings": "15 oz selected",
+        "regularPrice": "300-375 ct",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "BOGO Q-tips Cotton Swabs",
+        "item": "Simply Done Facial Tissue",
         "salePrice": "Buy 1 Get 1 FREE",
-        "regularPrice": "",
-        "savings": "300-375 ct",
+        "regularPrice": "144 ct",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "BOGO McCafe K-Cup Coffee",
+        "item": "McCafe Single Serve K-Cup Coffee",
         "salePrice": "Buy 1 Get 1 FREE",
-        "regularPrice": "",
-        "savings": "10 ct selected varieties",
+        "regularPrice": "10 ct",
+        "savings": "BOGO Deal",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Yankee Candles",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "4.3-14.5 oz Assorted",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       }
     ]

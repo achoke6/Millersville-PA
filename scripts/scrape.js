@@ -110,8 +110,7 @@ function extractEventbriteEvents(ldData, eventsArray, now, futureLimit) {
                     title: ldData.name, date: eventDate.toISOString(), location: "Phantom Power",
                     tags: ["Other", "Live Music"], price: "Ticket Required",
                     ticketLink: ldData.url || "https://www.eventbrite.com/o/phantom-power-29187724817",
-                    sourceLink: ldData.url || "https://www.phantompower.net/",
-                    image: ldData.image || ""
+                    sourceLink: ldData.url || "https://www.phantompower.net/"
                 });
             }
         } else {
@@ -750,17 +749,13 @@ async function runScraper() {
                     ? `https://www.millersville.edu/calendar/events/${eventId}`
                     : "https://www.millersville.edu/calendar/";
 
-                // Extract image from description HTML if present
                 const descHtml = row[descIdx] || "";
-                const muImgMatch = descHtml.match(/<img[^>]*src="([^"]+)"/i);
-                const muImage = muImgMatch ? muImgMatch[1] : '';
 
                 events.push({
                     title: eventTitle, date: row[startIdx], location: eventLoc,
                     tags: [...new Set(tags)], price: pricing.price,
                     ticketLink: pricing.link, sourceLink,
-                    description: descHtml,
-                    image: muImage
+                    description: descHtml
                 });
                 muCount++;
             });
@@ -836,8 +831,7 @@ async function runScraper() {
                 price: "Free",
                 ticketLink: "",
                 sourceLink: `https://getinvolved.millersville.edu/event/${item.id}`,
-                description: item.description || "",
-                image: item.imagePath ? `https://se-images.campuslabs.com/clink/images/${item.imagePath}` : ""
+                description: item.description || ""
             });
             clubCount++;
         });
@@ -1644,11 +1638,6 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 const t = items[i].match(/<title>([\s\S]*?)<\/title>/i);
                 const l = items[i].match(/<link>([\s\S]*?)<\/link>/i);
                 const d = items[i].match(/<pubDate>([\s\S]*?)<\/pubDate>/i);
-                // Extract image from media:content, enclosure, or img in content
-                const mediaImg = items[i].match(/<media:content[^>]*url="([^"]+)"/i);
-                const encImg = items[i].match(/<enclosure[^>]*url="([^"]+)"[^>]*type="image/i);
-                const contentImg = items[i].match(/<img[^>]*src="([^"]+)"/i);
-                const image = mediaImg?.[1] || encImg?.[1] || contentImg?.[1] || '';
                 // Extract RSS <category> tags for sub-categories
                 let cats = [];
                 if (!skipCats) {
@@ -1668,8 +1657,7 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                         title: t[1].replace(/<!\[CDATA\[/g, "").replace(/\]\]>/g, "").trim(),
                         link: l[1].replace(/<!\[CDATA\[/g, "").replace(/\]\]>/g, "").trim(),
                         date: pubDate ? pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : "",
-                        sortDate: pubDate ? pubDate.toISOString() : "1970-01-01T00:00:00.000Z",
-                        image
+                        sortDate: pubDate ? pubDate.toISOString() : "1970-01-01T00:00:00.000Z"
                     });
                 }
             }
@@ -1698,16 +1686,6 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                     const html = await (await fetch(section.url, { headers: baseHeaders })).text();
                     const articleRegex = /<h[23][^>]*>\s*<a\s+class="primary-link"\s+href="(https:\/\/thesnapper\.com\/[^"]+)">([^<]+)<\/a>/g;
                     const dateRegex = /<div[^>]*class="[^"]*publish-info[^"]*"[^>]*>[\s\S]*?<\/p>\s*<span[^>]*>[\s\S]*?<\/span>\s*<p>([^<]+)<\/p>/g;
-                    // Extract featured images near article cards
-                    const imgRegex = /<img[^>]*class="[^"]*featured[^"]*"[^>]*src="([^"]+)"|<img[^>]*src="([^"]+)"[^>]*class="[^"]*featured/g;
-                    const allImgs = [];
-                    let imgM;
-                    while ((imgM = imgRegex.exec(html)) !== null) allImgs.push(imgM[1] || imgM[2]);
-                    // Fallback: grab all article-area images
-                    if (allImgs.length === 0) {
-                        const simpleImg = /<article[^>]*>[\s\S]*?<img[^>]*src="([^"]+)"/g;
-                        while ((imgM = simpleImg.exec(html)) !== null) allImgs.push(imgM[1]);
-                    }
 
                     const articles = [];
                     let match;
@@ -1730,8 +1708,7 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                             title: articles[i].title,
                             link: articles[i].url,
                             date: dateStr,
-                            sortDate: parsed && !isNaN(parsed.getTime()) ? parsed.toISOString() : "1970-01-01T00:00:00.000Z",
-                            image: allImgs[i] || ''
+                            sortDate: parsed && !isNaN(parsed.getTime()) ? parsed.toISOString() : "1970-01-01T00:00:00.000Z"
                         });
                         snapperTotal++;
                     }
@@ -1821,6 +1798,79 @@ Focus on the most impressive deals a shopper would want to know about. Include m
         fs.writeFileSync(path.join(__dirname, '../board.json'), JSON.stringify(boardPosts, null, 2));
         console.log(`✅ Community Board: ${boardPosts.length} approved posts`);
     } catch (e) { console.log(`  ⚠️ Community Board error: ${e.message}`); }
+
+    // ===== SPONSORS (from Advertise Form response sheet) =====
+    try {
+        console.log("📡 Fetching sponsor data...");
+        const SPONSOR_SHEET_ID = '1XY1eVOlw0n-W_SI-pm4vzHzrIyqpIPEt605qXeX8X1U';
+        const sponsorUrl = `https://docs.google.com/spreadsheets/d/${SPONSOR_SHEET_ID}/gviz/tq?tqx=out:csv`;
+        const sponsorRes = await fetch(sponsorUrl);
+        const sponsorList = [];
+        if (sponsorRes.ok) {
+            const csvText = await sponsorRes.text();
+            const rows = csvText.split('\n').slice(1);
+            for (const row of rows) {
+                const cols = row.match(/"([^"]*)"/g);
+                if (!cols || cols.length < 15) continue;
+                const clean = cols.map(c => c.replace(/"/g, '').trim());
+                // A:Timestamp B:Business C:Contact D:Email E:Phone F:Message G:Interest
+                // H:Tier I:Placements J:CTA K:Link L:Internal M:StartDate N:EndDate O:Active
+                const [timestamp, bizName, contact, email, phone, message, interest,
+                       tier, placements, cta, link, internal, startDate, endDate, active] = clean;
+
+                if (!active || !/^y/i.test(active)) continue;
+                if (!bizName || !tier) continue;
+
+                // Check date range
+                const now = new Date();
+                if (startDate && new Date(startDate) > now) continue;
+                if (endDate && new Date(endDate) < now) continue;
+
+                // Generate ID from business name
+                const id = bizName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+                // Tier class mapping
+                const tierClassMap = { 'premium': 'sponsor-homepage', 'standard': 'sponsor-featured', 'basic': 'sponsor-basic' };
+                const tierClass = tierClassMap[(tier || '').toLowerCase()] || 'sponsor-featured';
+
+                sponsorList.push({
+                    id,
+                    name: bizName,
+                    tier: tier || 'Standard',
+                    tierClass,
+                    placements: (placements || 'homepage').split(',').map(p => p.trim().toLowerCase()),
+                    cta: cta || `Visit ${bizName} ➔`,
+                    link: link || '#',
+                    internal: /^y/i.test(internal),
+                    active: true,
+                    startDate: startDate || '',
+                    endDate: endDate || ''
+                });
+            }
+        }
+
+        // Sort: Premium first, then Standard, then Basic
+        const tierOrder = { 'premium': 0, 'standard': 1, 'basic': 2 };
+        sponsorList.sort((a, b) => (tierOrder[a.tier.toLowerCase()] || 9) - (tierOrder[b.tier.toLowerCase()] || 9));
+
+        const sponsorJson = {
+            sponsors: sponsorList,
+            config: {
+                rotateIntervalMs: 15000,
+                inlineAdEveryN: 9,
+                placements: {
+                    homepage: { maxSlots: 3 },
+                    events: { maxSlots: 1 },
+                    sports: { maxSlots: 1 },
+                    news: { maxSlots: 1 },
+                    food: { maxSlots: 1 },
+                    directory: { maxSlots: 1 }
+                }
+            }
+        };
+        fs.writeFileSync(path.join(__dirname, '../sponsors.json'), JSON.stringify(sponsorJson, null, 2));
+        console.log(`✅ Sponsors: ${sponsorList.length} active (${sponsorList.filter(s=>s.tier.toLowerCase()==='premium').length} premium, ${sponsorList.filter(s=>s.tier.toLowerCase()==='standard').length} standard, ${sponsorList.filter(s=>s.tier.toLowerCase()==='basic').length} basic)`);
+    } catch (e) { console.log(`  ⚠️ Sponsors error: ${e.message}`); }
 
     console.log("✅ All data compilations complete.");
 }

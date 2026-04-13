@@ -1,0 +1,53 @@
+{
+  "sponsors": [
+    {
+      "id": "university-store",
+      "name": "The University Store",
+      "tier": "Homepage Sponsor",
+      "tierClass": "sponsor-homepage",
+      "placements": ["homepage", "events", "sports"],
+      "cta": "Shop Official Gear ➔",
+      "link": "/store",
+      "internal": true,
+      "active": true,
+      "startDate": "2025-01-01",
+      "endDate": "2026-12-31"
+    },
+    {
+      "id": "chick-fil-a",
+      "name": "Chick-Fil-A",
+      "tier": "Featured Restaurant",
+      "tierClass": "sponsor-featured",
+      "placements": ["homepage", "events", "news"],
+      "cta": "View on Food Page ➔",
+      "link": "/food",
+      "internal": true,
+      "active": true,
+      "startDate": "2025-01-01",
+      "endDate": "2026-12-31"
+    },
+    {
+      "id": "student-lodging",
+      "name": "Student Lodging, Inc.",
+      "tier": "Featured Housing",
+      "tierClass": "sponsor-featured",
+      "placements": ["homepage", "sports"],
+      "cta": "Brookwood · Healthy Living · College View",
+      "link": "https://www.studentlodginginc.com",
+      "internal": false,
+      "active": true,
+      "startDate": "2025-01-01",
+      "endDate": "2026-12-31"
+    }
+  ],
+  "config": {
+    "rotateIntervalMs": 15000,
+    "inlineAdEveryN": 9,
+    "placements": {
+      "homepage": { "maxSlots": 3 },
+      "events": { "maxSlots": 1 },
+      "sports": { "maxSlots": 1 },
+      "news": { "maxSlots": 1 }
+    }
+  }
+}

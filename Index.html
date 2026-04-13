@@ -27,6 +27,10 @@
             <button class="search-toggle" onclick="openSearch()" title="Search" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--text-dark);">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             </button>
+            <button id="feed-gear" onclick="openFeedSettings()" title="My Feed" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--text-dark);position:relative;">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                <span id="feed-dot" style="display:none;position:absolute;top:0;right:0;width:8px;height:8px;background:var(--gold);border-radius:50%;"></span>
+            </button>
             <div class="ec-cart-widget header-cart header-cart-mobile"></div>
             <button class="hamburger-menu" id="hamburger-menu" onclick="toggleMobileMenu()">
                 <svg viewBox="0 0 24 24" width="28" height="28" fill="var(--text-dark)"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
@@ -39,7 +43,7 @@
             <button id="nav-events" class="nav-link" onclick="switchView('events'); toggleMobileMenu();">Events</button>
             <button id="nav-sports" class="nav-link" onclick="switchView('sports'); toggleMobileMenu();">Sports</button>
             <button id="nav-food" class="nav-link" onclick="switchView('food'); toggleMobileMenu();">Food</button>
-            <button id="nav-services" class="nav-link" onclick="switchView('services'); toggleMobileMenu();">Services</button>
+            <button id="nav-services" class="nav-link" onclick="switchView('services'); toggleMobileMenu();">Directory</button>
             <button id="nav-board" class="nav-link" onclick="switchView('board'); toggleMobileMenu();">Board</button>
             <button id="nav-weather" class="nav-link" onclick="switchView('weather'); toggleMobileMenu();">Weather</button>
             <button id="nav-store" class="nav-link" onclick="switchView('store'); toggleMobileMenu();">Store</button>
@@ -69,65 +73,71 @@
         <!-- Weather Hero -->
         <div id="home-weather" class="home-weather-hero" onclick="switchView('weather')" style="cursor:pointer;"><p>Loading weather...</p></div>
 
-        <!-- Today's Events -->
-        <div class="home-section">
-            <div class="home-section-header">
-                <h3 class="home-section-title">📅 Today's Events</h3>
-                <a href="#" onclick="event.preventDefault();switchView('events');" class="home-more-link">View All →</a>
+        <!-- Feed CTA (shown when no feed configured) -->
+        <div id="home-feed-cta" class="home-section" style="display:none;">
+            <div style="background:linear-gradient(135deg,var(--navy),#1e3a5f);border-radius:var(--radius);padding:20px;text-align:center;color:white;cursor:pointer;" onclick="openFeedSettings()">
+                <p style="font-size:1.1rem;font-weight:700;margin-bottom:4px;">⚙️ Personalize Your Feed</p>
+                <p style="font-size:0.85rem;opacity:0.85;">Pick your interests — PM sports, MU events, local news — and see only what matters to you.</p>
             </div>
-            <div id="home-today-events" class="home-scroll-row"></div>
         </div>
 
-        <!-- Today's Games -->
-        <div class="home-section">
-            <div class="home-section-header">
-                <h3 class="home-section-title">🏆 Today's Home Games</h3>
-                <a href="#" onclick="event.preventDefault();switchView('sports');" class="home-more-link">View All →</a>
+        <!-- My Feed (shown when feed is configured) -->
+        <div id="home-feed" style="display:none;">
+            <div class="home-section">
+                <div class="home-section-header">
+                    <h3 class="home-section-title">⚡ My Feed</h3>
+                    <a href="#" onclick="event.preventDefault();openFeedSettings();" class="home-more-link">Edit ⚙️</a>
+                </div>
+                <div id="home-feed-items" class="card-grid"></div>
             </div>
-            <div id="home-today-games" class="home-scroll-row"></div>
         </div>
 
-        <!-- Food Specials -->
-        <div class="home-section">
-            <div class="home-section-header">
-                <h3 class="home-section-title">🍴 Today's Specials</h3>
-                <a href="#" onclick="event.preventDefault();switchView('food');" class="home-more-link">View All →</a>
+        <!-- Default Home (shown when no feed) -->
+        <div id="home-default">
+            <!-- Today's Events -->
+            <div class="home-section">
+                <div class="home-section-header">
+                    <h3 class="home-section-title">📅 Today's Events</h3>
+                    <a href="#" onclick="event.preventDefault();switchView('events');" class="home-more-link">View All →</a>
+                </div>
+                <div id="home-today-events" class="home-scroll-row"></div>
             </div>
-            <div id="home-specials" class="home-scroll-row"></div>
+
+            <!-- Today's Games -->
+            <div class="home-section">
+                <div class="home-section-header">
+                    <h3 class="home-section-title">🏆 Today's Home Games</h3>
+                    <a href="#" onclick="event.preventDefault();switchView('sports');" class="home-more-link">View All →</a>
+                </div>
+                <div id="home-today-games" class="home-scroll-row"></div>
+            </div>
+
+            <!-- Food Specials -->
+            <div class="home-section">
+                <div class="home-section-header">
+                    <h3 class="home-section-title">🍴 Today's Specials</h3>
+                    <a href="#" onclick="event.preventDefault();switchView('food');" class="home-more-link">View All →</a>
+                </div>
+                <div id="home-specials" class="home-scroll-row"></div>
+            </div>
+
+            <!-- Latest News -->
+            <div class="home-section">
+                <div class="home-section-header">
+                    <h3 class="home-section-title">📰 Latest News</h3>
+                    <a href="#" onclick="event.preventDefault();switchView('news');" class="home-more-link">View All →</a>
+                </div>
+                <div id="home-news" class="home-scroll-row"></div>
+            </div>
         </div>
 
-        <!-- Latest News -->
-        <div class="home-section">
-            <div class="home-section-header">
-                <h3 class="home-section-title">📰 Latest News</h3>
-                <a href="#" onclick="event.preventDefault();switchView('news');" class="home-more-link">View All →</a>
-            </div>
-            <div id="home-news" class="home-scroll-row"></div>
-        </div>
-
-        <!-- Sponsors Banner -->
+        <!-- Sponsors Banner (always visible, dynamically loaded) -->
         <div class="home-section" style="margin-top:8px;">
             <div class="home-section-header">
                 <h3 class="home-section-title">⭐ Our Sponsors</h3>
                 <a href="#" onclick="event.preventDefault();switchView('advertise');" class="home-more-link">Become a Sponsor →</a>
             </div>
-            <div class="sponsors-banner">
-                <a href="#" onclick="event.preventDefault();switchView('store');" class="sponsor-card sponsor-homepage">
-                    <span class="sponsor-tier">Homepage Sponsor</span>
-                    <h4 class="sponsor-name">The University Store</h4>
-                    <span class="sponsor-cta">Shop Official Gear ➔</span>
-                </a>
-                <div class="sponsor-card sponsor-featured" onclick="switchView('food')">
-                    <span class="sponsor-tier">Featured Restaurant</span>
-                    <h4 class="sponsor-name">Chick-Fil-A</h4>
-                    <span class="sponsor-cta">View on Food Page ➔</span>
-                </div>
-                <a href="https://www.studentlodginginc.com" target="_blank" class="sponsor-card sponsor-featured">
-                    <span class="sponsor-tier">Featured Housing</span>
-                    <h4 class="sponsor-name">Student Lodging, Inc.</h4>
-                    <span class="sponsor-cta">Brookwood · Healthy Living · College View</span>
-                </a>
-            </div>
+            <div id="home-sponsors" class="sponsors-banner"></div>
         </div>
     </section>
 
@@ -150,6 +160,7 @@
         </div>
         <div class="filter-bar ev-source-row">
             <div class="filter-group">
+                <button class="src-btn" id="ev-src-feed" onclick="setEventSource('Feed', this)" style="display:none;">⚡ My Feed</button>
                 <button class="src-btn active" id="ev-src-all" onclick="setEventSource('All', this)">All</button>
                 <button class="src-btn" id="ev-src-mu" onclick="setEventSource('MU', this)">🏴‍☠️ MU</button>
                 <button class="src-btn" id="ev-src-gi" onclick="setEventSource('Clubs/Orgs', this)">🎓 MU Clubs</button>
@@ -193,6 +204,7 @@
         </div>
         <div class="filter-bar sp-source-row">
             <div class="filter-group" id="sp-source-group">
+                <button class="src-btn" id="sp-src-feed" onclick="toggleSpFeed()" style="display:none;">⚡ My Feed</button>
                 <button class="src-btn active" id="sp-src-pm" onclick="toggleSportsSource('PM')"><svg class="btn-icon" width="14" height="14"><use href="#icon-comet"/></svg> PM</button>
                 <button class="src-btn active" id="sp-src-mu" onclick="toggleSportsSource('MU')">🏴‍☠️ MU</button>
                 <button class="src-btn" id="sp-src-clubs" onclick="toggleSportsSource('Clubs')">🎓 MU Clubs</button>
@@ -207,7 +219,7 @@
     </section>
 
     <!-- FOOD --><section id="view-food" class="app-view"><div id="food-container" class="card-grid"></div></section>
-    <!-- SERVICES -->
+    <!-- BUSINESS DIRECTORY -->
     <section id="view-services" class="app-view">
         <div class="filter-bar">
             <div class="filter-group" id="svc-filter-group">
@@ -225,6 +237,7 @@
                 <button class="src-btn" onclick="setSvcFilter('Education', this)">📚 Education</button>
             </div>
         </div>
+        <div style="text-align:right;margin-bottom:12px;"><button onclick="openSubmitBusiness()" class="btn btn-sm btn-outline" style="font-size:0.78rem;">➕ Add Your Business</button></div>
         <div id="housing-container" class="card-grid"></div>
         <div id="services-container" class="card-grid"></div>
     </section>
@@ -309,70 +322,62 @@
             </div>
         </div>
 
-        <!-- Two-column tier grid -->
-        <h3 class="adv-section-title">Choose Your Placement</h3>
+        <!-- Tier grid -->
+        <h3 class="adv-section-title">Sponsorship Tiers</h3>
         <div class="adv-grid">
             <div class="adv-tier adv-tier-premium">
-                <div class="adv-tier-badge">Premium</div>
+                <div class="adv-tier-badge">Best Value</div>
                 <div class="adv-tier-icon">⭐</div>
-                <h4 class="adv-tier-name">Homepage Sponsor</h4>
-                <p class="adv-tier-desc">Your branded card on the homepage — seen by every single visitor.</p>
+                <h4 class="adv-tier-name">Premium</h4>
+                <p class="adv-tier-desc">Maximum visibility across the entire site — homepage banner, inline ads on every page, and top rotation priority.</p>
                 <div class="adv-tier-perks">
-                    <span>✓ Branded homepage card</span>
+                    <span>✓ Homepage sponsor banner</span>
+                    <span>✓ Inline ads on all pages</span>
+                    <span>✓ Top rotation priority</span>
                     <span>✓ Custom call-to-action</span>
-                    <span>✓ Maximum visibility</span>
+                    <span>✓ Impression & click analytics</span>
                     <span>✓ Priority support</span>
                 </div>
             </div>
             <div class="adv-tier">
                 <div class="adv-tier-badge" style="background:var(--green);color:white;">Popular</div>
-                <div class="adv-tier-icon">🍴</div>
-                <h4 class="adv-tier-name">Featured Restaurant</h4>
-                <p class="adv-tier-desc">Gold-highlighted card at the top of the Food page with ordering links and daily specials.</p>
-                <div class="adv-tier-perks">
-                    <span>✓ Top placement on Food page</span>
-                    <span>✓ Gold-highlighted card</span>
-                    <span>✓ Ordering links & specials</span>
-                    <span>✓ Sponsor banner on homepage</span>
-                </div>
-            </div>
-            <div class="adv-tier">
-                <div class="adv-tier-icon">🏠</div>
-                <h4 class="adv-tier-name">Featured Housing</h4>
-                <p class="adv-tier-desc">Premium placement on the Housing page reaching students and families actively looking.</p>
-                <div class="adv-tier-perks">
-                    <span>✓ Top placement on Housing page</span>
-                    <span>✓ Premium highlighted listing</span>
-                    <span>✓ Direct link to your property</span>
-                    <span>✓ Sponsor banner on homepage</span>
-                </div>
-            </div>
-            <div class="adv-tier">
                 <div class="adv-tier-icon">📢</div>
-                <h4 class="adv-tier-name">Event Promotion</h4>
-                <p class="adv-tier-desc">Your event featured on the Events page and homepage for the entire community to see.</p>
+                <h4 class="adv-tier-name">Standard</h4>
+                <p class="adv-tier-desc">Homepage banner plus inline ads on pages you choose — Events, Sports, Food, News, or Directory.</p>
                 <div class="adv-tier-perks">
-                    <span>✓ Event card on Events page</span>
-                    <span>✓ Featured on homepage</span>
-                    <span>✓ Ticket/registration link</span>
+                    <span>✓ Homepage sponsor banner</span>
+                    <span>✓ Inline ads on selected pages</span>
+                    <span>✓ Custom call-to-action</span>
+                    <span>✓ Impression & click analytics</span>
                 </div>
             </div>
             <div class="adv-tier">
-                <div class="adv-tier-icon">🛠️</div>
-                <h4 class="adv-tier-name">Featured Service</h4>
-                <p class="adv-tier-desc">Get found by locals who need you — tutoring, auto repair, salons, fitness, and more.</p>
+                <div class="adv-tier-icon">📌</div>
+                <h4 class="adv-tier-name">Basic</h4>
+                <p class="adv-tier-desc">Inline ads on the pages that matter most to your business — a targeted, affordable way to reach locals.</p>
                 <div class="adv-tier-perks">
-                    <span>✓ Highlighted Services listing</span>
-                    <span>✓ Custom description</span>
-                    <span>✓ Category placement</span>
+                    <span>✓ Inline ads on assigned pages</span>
+                    <span>✓ Custom call-to-action</span>
+                    <span>✓ Impression & click analytics</span>
                 </div>
             </div>
             <div class="adv-tier adv-tier-cta-card">
                 <div class="adv-tier-icon">💬</div>
                 <h4 class="adv-tier-name">Not sure what fits?</h4>
-                <p class="adv-tier-desc">We'll help you find the right placement for your business and budget.</p>
+                <p class="adv-tier-desc">We'll help you find the right tier and placements for your business and budget.</p>
                 <button onclick="openAdvertiseForm()" class="btn btn-gold" style="margin-top:12px;display:block;text-align:center;width:100%;border:none;cursor:pointer;">Let's Talk →</button>
             </div>
+        </div>
+
+        <!-- Placement options -->
+        <h3 class="adv-section-title" style="margin-top:32px;">Available Placements</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:24px;">
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;"><span style="font-size:1.2rem;">🏠</span><p style="font-size:0.82rem;font-weight:600;margin-top:4px;">Homepage</p></div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;"><span style="font-size:1.2rem;">📅</span><p style="font-size:0.82rem;font-weight:600;margin-top:4px;">Events</p></div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;"><span style="font-size:1.2rem;">🏆</span><p style="font-size:0.82rem;font-weight:600;margin-top:4px;">Sports</p></div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;"><span style="font-size:1.2rem;">🍴</span><p style="font-size:0.82rem;font-weight:600;margin-top:4px;">Food</p></div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;"><span style="font-size:1.2rem;">📰</span><p style="font-size:0.82rem;font-weight:600;margin-top:4px;">News</p></div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;"><span style="font-size:1.2rem;">🏢</span><p style="font-size:0.82rem;font-weight:600;margin-top:4px;">Directory</p></div>
         </div>
 
         <!-- CTA -->
@@ -399,8 +404,12 @@
                 <p>Most listings go live within 24 hours of approval. Featured placements update automatically every hour through our data pipeline.</p>
             </details>
             <details class="adv-accordion">
+                <summary>What's the difference between tiers?</summary>
+                <p>Premium gets you maximum visibility — homepage banner plus inline ads on every page. Standard includes the homepage banner plus inline ads on pages you choose. Basic gives you targeted inline ads on your selected pages. All tiers include impression and click analytics.</p>
+            </details>
+            <details class="adv-accordion">
                 <summary>I'm a restaurant but I'm not listed yet. Can I be added?</summary>
-                <p>Absolutely! Submit your details and we'll add you to the Food page. Upgrade to Featured for gold-highlighted placement with ordering links and daily specials.</p>
+                <p>Absolutely! Submit your details and we'll add you to the Food page. Any tier lets you place ads on the Food page to reach hungry students and residents.</p>
             </details>
             <details class="adv-accordion">
                 <summary>What makes this different from Facebook or Google ads?</summary>
@@ -410,6 +419,19 @@
                 <summary>Can I update my listing or specials myself?</summary>
                 <p>We handle all updates for you. Just send us the changes and we'll have them live within hours. Restaurant specials can be updated weekly.</p>
             </details>
+        </div>
+    </section>
+    <!-- ANALYTICS (admin only, accessible via /analytics) -->
+    <section id="view-analytics" class="app-view">
+        <div style="max-width:800px;margin:0 auto;">
+            <h2 style="margin-bottom:4px;">📊 Sponsor Analytics</h2>
+            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:20px;">Real-time impression and click data for active sponsors. Data tracked via Google Analytics.</p>
+            <div id="analytics-dashboard"></div>
+            <div style="margin-top:24px;padding:16px;background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);">
+                <h4 style="margin-bottom:8px;">📈 Full Reports</h4>
+                <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:12px;">Detailed impression and click data is available in Google Analytics under Events → ad_impression / ad_click.</p>
+                <a href="https://analytics.google.com/" target="_blank" class="btn btn-sm btn-outline">Open Google Analytics →</a>
+            </div>
         </div>
     </section>
 </main>
@@ -427,11 +449,272 @@ let allEvents=[], currentNews=[], allRestaurants=[];
 let evSource='All', evTags=new Set();
 let evKidMode=false;
 
+// ==================== MY FEED SYSTEM ====================
+const FEED_KEY = 'mapp_feed_prefs';
+let feedPrefs = null; // null = not configured
+
+function loadFeedPrefs() {
+    try { feedPrefs = JSON.parse(localStorage.getItem(FEED_KEY)); } catch(e) { feedPrefs = null; }
+    const dot = document.getElementById('feed-dot');
+    if (dot) dot.style.display = feedPrefs ? 'block' : 'none';
+}
+function saveFeedPrefs(prefs) {
+    feedPrefs = prefs;
+    localStorage.setItem(FEED_KEY, JSON.stringify(prefs));
+    const dot = document.getElementById('feed-dot');
+    if (dot) dot.style.display = prefs ? 'block' : 'none';
+}
+
+// Feed subscription tokens and their display config
+const feedOptions = {
+    pm: {
+        label: 'Penn Manor', icon: '🏫',
+        subs: [
+            {id:'pm-baseball',label:'Baseball',icon:'⚾'},{id:'pm-softball',label:'Softball',icon:'🥎'},
+            {id:'pm-lacrosse',label:'Lacrosse',icon:'🥍'},{id:'pm-volleyball',label:'Volleyball',icon:'🏐'},
+            {id:'pm-football',label:'Football',icon:'🏈'},{id:'pm-basketball',label:'Basketball',icon:'🏀'},
+            {id:'pm-soccer',label:'Soccer',icon:'⚽'},{id:'pm-fieldhockey',label:'Field Hockey',icon:'🏑'},
+            {id:'pm-tennis',label:'Tennis',icon:'🎾'},{id:'pm-track',label:'Track',icon:'🏃'},
+            {id:'pm-music',label:'Music/Arts',icon:'🎵'},{id:'pm-board',label:'Board Meetings',icon:'📋'}
+        ]
+    },
+    mu: {
+        label: 'Millersville University', icon: '🏴‍☠️',
+        subs: [
+            {id:'mu-arts',label:'Arts & Performances',icon:'🎭'},{id:'mu-public',label:'Public Events',icon:'📢'},
+            {id:'mu-student',label:'Student Events',icon:'🎓'}
+        ]
+    },
+    clubs: {
+        label: 'MU Clubs & Orgs', icon: '🎓',
+        subs: [{id:'clubs-all',label:'All Club Events',icon:'🎓'}]
+    },
+    borough: {
+        label: 'Borough', icon: '🌳',
+        subs: [{id:'borough-all',label:'All Borough Events',icon:'🌳'}]
+    },
+    other: {
+        label: 'Other', icon: '🎸',
+        subs: [
+            {id:'other-vfw',label:'VFW Events',icon:'🎖️'},{id:'other-phantom',label:'Phantom Power',icon:'🎵'},
+            {id:'other-community',label:'Community Events',icon:'📝'}
+        ]
+    },
+    family: {
+        label: 'Family Friendly', icon: '👨‍👩‍👧',
+        subs: [{id:'family-events',label:'Family Friendly Events',icon:'👨‍👩‍👧'}]
+    },
+    news: {
+        label: 'News Sources', icon: '📰',
+        subs: [
+            {id:'news-mu',label:'MU News',icon:'📰'},{id:'news-snapper',label:'The Snapper',icon:'📰'},
+            {id:'news-athletics',label:'MU Athletics',icon:'🏅'},{id:'news-review',label:'MU Review',icon:'📖'},
+            {id:'news-pm',label:'Penn Manor',icon:'📰'},{id:'news-borough',label:'Borough',icon:'🌳'}
+        ]
+    }
+};
+
+function eventMatchesFeed(e) {
+    if (!feedPrefs || feedPrefs.length === 0) return true;
+    const tags = e.tags || [];
+    const title = (e.title || '').toLowerCase();
+
+    // Family Friendly — matches any event with kidFriendly flag
+    if (feedPrefs.includes('family-events') && e.kidFriendly) return true;
+
+    // PM sports
+    if (tags.includes('PM') && (tags.includes('Athletics') || tags.includes('Athletic Competitions'))) {
+        const sportMap = {baseball:'pm-baseball',softball:'pm-softball',lacrosse:'pm-lacrosse',volleyball:'pm-volleyball',
+            football:'pm-football',basketball:'pm-basketball',soccer:'pm-soccer','field hockey':'pm-fieldhockey',
+            tennis:'pm-tennis',track:'pm-track'};
+        for (const [sport, feedId] of Object.entries(sportMap)) {
+            if (tags.some(t => t.toLowerCase() === sport) && feedPrefs.includes(feedId)) return true;
+        }
+        return false;
+    }
+    // PM non-sport
+    if (tags.includes('PM') && tags.includes('Music/Arts') && feedPrefs.includes('pm-music')) return true;
+    if (tags.includes('PM') && tags.includes('Board/PTO') && feedPrefs.includes('pm-board')) return true;
+
+    // MU events
+    if (tags.includes('MU') && !tags.includes('Clubs/Orgs')) {
+        if (tags.includes('Arts Concert / Performance') && feedPrefs.includes('mu-arts')) return true;
+        if (tags.includes('Public Event') && feedPrefs.includes('mu-public')) return true;
+        if (tags.includes('Student Event') && feedPrefs.includes('mu-student')) return true;
+        // Catch MU events that don't match specific types
+        if (feedPrefs.some(p => p.startsWith('mu-'))) return true;
+        return false;
+    }
+
+    // Clubs/Orgs
+    if (tags.includes('Clubs/Orgs') && feedPrefs.includes('clubs-all')) return true;
+
+    // Borough
+    if (tags.includes('Borough') && feedPrefs.includes('borough-all')) return true;
+
+    // Other
+    if (tags.includes('VFW') && feedPrefs.includes('other-vfw')) return true;
+    if (tags.includes('Live Music') && feedPrefs.includes('other-phantom')) return true;
+    if (tags.includes('Community') && feedPrefs.includes('other-community')) return true;
+
+    return false;
+}
+
+function newsMatchesFeed(n) {
+    if (!feedPrefs || feedPrefs.length === 0) return true;
+    const sourceMap = {
+        'Millersville News':'news-mu','The Snapper':'news-snapper','MU Athletics':'news-athletics',
+        'MU Review':'news-review','Penn Manor News':'news-pm','Millersville Borough':'news-borough'
+    };
+    return feedPrefs.includes(sourceMap[n.source] || '');
+}
+
+window.openFeedSettings = function() {
+    loadFeedPrefs();
+    const current = feedPrefs || [];
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;overflow-y:auto;';
+    overlay.onclick = function(ev){ if(ev.target===overlay) overlay.remove(); };
+    const modal = document.createElement('div');
+    modal.style.cssText = 'background:var(--surface);border-radius:var(--radius);max-width:520px;width:100%;max-height:90vh;overflow-y:auto;padding:28px;position:relative;';
+
+    let sectionsHtml = '';
+    for (const [key, group] of Object.entries(feedOptions)) {
+        const allIds = group.subs.map(s => s.id);
+        const allChecked = allIds.every(id => current.includes(id));
+        sectionsHtml += `<div style="margin-bottom:16px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+                <label style="font-size:0.92rem;font-weight:700;display:flex;align-items:center;gap:6px;cursor:pointer;">
+                    <input type="checkbox" class="feed-group" data-group="${key}" ${allChecked?'checked':''} onchange="toggleFeedGroup(this)" style="accent-color:var(--gold);width:16px;height:16px;">
+                    ${group.icon} ${group.label}
+                </label>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;padding-left:8px;">
+                ${group.subs.map(s => `<label style="display:flex;align-items:center;gap:4px;font-size:0.82rem;padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;background:${current.includes(s.id)?'var(--gold-soft)':'var(--bg)'};"><input type="checkbox" class="feed-sub" data-group="${key}" value="${s.id}" ${current.includes(s.id)?'checked':''} onchange="updateFeedGroup('${key}')" style="accent-color:var(--gold);"> ${s.icon} ${s.label}</label>`).join('')}
+            </div>
+        </div>`;
+    }
+
+    modal.innerHTML = `
+        <button onclick="this.closest('div[style*=fixed]').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);">✕</button>
+        <h3 style="margin-bottom:4px;">⚙️ My Feed</h3>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:16px;">Pick what shows on your homepage and defaults on Events & Sports pages.</p>
+        <div id="feed-options">${sectionsHtml}</div>
+        <div style="display:flex;gap:8px;margin-top:16px;">
+            <button onclick="saveFeedFromModal();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-ticket" style="flex:1;padding:12px;font-size:0.95rem;">Save Preferences</button>
+            <button onclick="clearFeedPrefs();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-outline" style="padding:12px;font-size:0.85rem;">Reset</button>
+        </div>`;
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+};
+
+window.toggleFeedGroup = function(groupCb) {
+    const group = groupCb.dataset.group;
+    const checked = groupCb.checked;
+    document.querySelectorAll(`.feed-sub[data-group="${group}"]`).forEach(cb => { cb.checked = checked; cb.closest('label').style.background = checked ? 'var(--gold-soft)' : 'var(--bg)'; });
+};
+
+window.updateFeedGroup = function(group) {
+    const subs = document.querySelectorAll(`.feed-sub[data-group="${group}"]`);
+    const groupCb = document.querySelector(`.feed-group[data-group="${group}"]`);
+    if (groupCb) groupCb.checked = [...subs].every(s => s.checked);
+    subs.forEach(cb => { cb.closest('label').style.background = cb.checked ? 'var(--gold-soft)' : 'var(--bg)'; });
+};
+
+window.saveFeedFromModal = function() {
+    const selected = [...document.querySelectorAll('.feed-sub:checked')].map(cb => cb.value);
+    if (selected.length === 0) { clearFeedPrefs(); return; }
+    saveFeedPrefs(selected);
+    renderHomeFeed();
+    renderEventsUI();
+    renderSportsUI();
+};
+
+window.clearFeedPrefs = function() {
+    localStorage.removeItem(FEED_KEY);
+    feedPrefs = null;
+    const dot = document.getElementById('feed-dot');
+    if (dot) dot.style.display = 'none';
+    renderHomeFeed();
+};
+
+function renderHomeFeed() {
+    const hasFeed = feedPrefs && feedPrefs.length > 0;
+    const feedCta = document.getElementById('home-feed-cta');
+    const feedSection = document.getElementById('home-feed');
+    const defaultHome = document.getElementById('home-default');
+
+    if (hasFeed) {
+        if (feedCta) feedCta.style.display = 'none';
+        if (feedSection) feedSection.style.display = 'block';
+        if (defaultHome) defaultHome.style.display = 'none';
+
+        const now = new Date();
+        const feedItems = document.getElementById('home-feed-items');
+
+        // Upcoming events matching feed (next 7 days)
+        const weekAhead = new Date(now.getTime() + 7*24*60*60*1000);
+        const upcoming = allEvents.filter(e => {
+            const d = new Date(e.date);
+            return d >= now && d <= weekAhead && eventMatchesFeed(e);
+        }).slice(0, 12);
+
+        // Matching news
+        const matchingNews = (currentNews||[]).filter(n => newsMatchesFeed(n)).slice(0, 4);
+
+        let html = '';
+        if (upcoming.length > 0) {
+            upcoming.forEach(e => {
+                const d = new Date(e.date);
+                const tags = e.tags || [];
+                const src = tags.includes('VFW')?'VFW':tags.includes('Borough')?'Borough':tags.includes('PM')?'PM':tags.includes('MU')?'MU':tags.includes('Community')?'Community':'Event';
+                const isSport = tags.includes('Athletics') || tags.includes('Athletic Competitions') || tags.includes('Club Sports');
+                const isNoon = d.getHours()===12 && d.getMinutes()===0;
+                const timeStr = isNoon ? '' : ` @ ${formatTime(d)}`;
+                const nav = isSport ? 'sports' : 'events';
+
+                let scoreBadge = '';
+                if(e.gameResult && e.gameScore){
+                    const cls = e.gameResult==='W'?'badge-win':e.gameResult==='L'?'badge-loss':'badge-neutral';
+                    scoreBadge = `<span class="badge ${cls}" style="font-size:0.7rem;position:absolute;top:12px;right:12px;">${e.gameResult} ${e.gameScore}</span>`;
+                }
+
+                html += `<div class="app-card" style="cursor:pointer;position:relative;" onclick="switchView('${nav}')">
+                    ${scoreBadge}
+                    <div class="card-tags"><span class="card-tag">${src}</span></div>
+                    <h3 class="card-title">${e.title}</h3>
+                    <p class="card-meta">📅 ${formatDate(d)}${timeStr}</p>
+                    <p class="card-meta">📍 ${e.location}</p>
+                </div>`;
+            });
+        }
+
+        if (matchingNews.length > 0) {
+            matchingNews.forEach(n => {
+                html += `<div class="app-card" style="cursor:pointer;" onclick="window.open('${n.link}','_blank')">
+                    <div class="card-tags"><span class="card-tag">${n.source}</span></div>
+                    <h3 class="card-title">${n.title}</h3>
+                    <p class="card-meta">${n.date||''}</p>
+                </div>`;
+            });
+        }
+
+        if (!html) html = '<p class="empty-state">No upcoming items match your feed. Try adding more interests.</p>';
+        feedItems.innerHTML = html;
+    } else {
+        if (feedCta) feedCta.style.display = 'block';
+        if (feedSection) feedSection.style.display = 'none';
+        if (defaultHome) defaultHome.style.display = 'block';
+        renderHomeUI();
+    }
+}
+// ==================== END MY FEED ====================
+
 // View mode state for Events page
 let evMode='day', evAnchorDate=new Date();
 
 // Sports page state
-let spActiveSources=new Set(['PM','MU']), spSportTag=null, spHomeOnly=false;
+let spActiveSources=new Set(['PM','MU']), spSportTag=null, spHomeOnly=false, spFeedMode=false;
 let spMode='upcoming', spAnchorDate=new Date();
 
 const sportsList=['Baseball','Softball','Track','Soccer','Lacrosse','Tennis','Volleyball','Wrestling','Basketball','Football','Field Hockey','Golf','Cross Country','Cheerleading','Swimming','Rugby','Fencing','Esports','Archery'];
@@ -501,6 +784,7 @@ function isPMSportByTitle(e){
 }
 function matchesSource(tags,src){
     if(src==='All') return true;
+    if(src==='Feed') return false; // handled separately in filter
     if(src==='MU') return tags.includes('MU');
     if(src==='Clubs/Orgs') return tags.includes('Clubs/Orgs');
     if(src==='PM') return tags.includes('PM');
@@ -520,7 +804,7 @@ function matchesSportSource(tags, src) {
     return false;
 }
 
-const viewPaths={home:'/',news:'/news',events:'/events',sports:'/sports',food:'/food',services:'/services',board:'/board',weather:'/weather',store:'/store',advertise:'/advertise'};
+const viewPaths={home:'/',news:'/news',events:'/events',sports:'/sports',food:'/food',services:'/services',board:'/board',weather:'/weather',store:'/store',advertise:'/advertise',analytics:'/analytics'};
 const pathToView=Object.fromEntries(Object.entries(viewPaths).map(([k,v])=>[v,k]));
 
 document.addEventListener("DOMContentLoaded",()=>{
@@ -528,8 +812,9 @@ document.addEventListener("DOMContentLoaded",()=>{
 });
 
 async function initApp(){
-    await Promise.allSettled([loadWeather(),loadSpecials(),loadEvents(),loadDining(),loadHousing(),loadServices(),loadNews(),loadBoard()]);
-    renderHomeUI();
+    loadFeedPrefs();
+    await Promise.allSettled([loadWeather(),loadSpecials(),loadEvents(),loadDining(),loadHousing(),loadServices(),loadNews(),loadBoard(),loadSponsors()]);
+    renderHomeFeed();
     loadEcwidStore(); // Load Ecwid early so cart widget renders in header
     setInterval(refreshCam,60000); refreshCam();
     // Route to correct view based on URL
@@ -560,7 +845,7 @@ window.toggleMobileMenu=function(){
     if(nav.classList.contains('open')){nav.classList.remove('open');overlay.classList.remove('open');setTimeout(()=>{if(!nav.classList.contains('open'))nav.style.display='';},300);}
     else{nav.style.display='flex';void nav.offsetWidth;nav.classList.add('open');overlay.classList.add('open');}
 };
-const viewLabels={home:'',news:'/ News',events:'/ Events',sports:'/ Sports',food:'/ Food',services:'/ Services',board:'/ Board',weather:'/ Weather',store:'/ Store',advertise:'/ Advertise'};
+const viewLabels={home:'',news:'/ News',events:'/ Events',sports:'/ Sports',food:'/ Food',services:'/ Directory',board:'/ Board',weather:'/ Weather',store:'/ Store',advertise:'/ Advertise'};
 
 let ecwidLoaded = false;
 function loadEcwidStore(){
@@ -666,6 +951,23 @@ window.switchView=function(view,skipPush){
 async function loadEvents(){
     try{const res=await fetch('events.json'); if(!res.ok) return;
     allEvents=await res.json(); allEvents.sort((a,b)=>new Date(a.date)-new Date(b.date));
+    // Show/activate feed filter if preferences exist
+    const hasFeed = feedPrefs && feedPrefs.length > 0;
+    const evFeedBtn = document.getElementById('ev-src-feed');
+    const spFeedBtn = document.getElementById('sp-src-feed');
+    if (evFeedBtn) evFeedBtn.style.display = hasFeed ? '' : 'none';
+    if (spFeedBtn) spFeedBtn.style.display = hasFeed ? '' : 'none';
+    if (hasFeed) {
+        // Auto-activate feed on Events page
+        evSource = 'Feed';
+        document.querySelectorAll('#view-events .filter-group .src-btn').forEach(b => b.classList.remove('active'));
+        if (evFeedBtn) evFeedBtn.classList.add('active');
+        const evl = document.getElementById('ev-event-label');
+        if (evl) evl.textContent = 'My Feed:';
+        // Auto-activate feed on Sports page
+        spFeedMode = true;
+        spActiveSources.clear();
+    }
     updateModeUI('ev',evMode,evAnchorDate);
     updateModeUI('sp',spMode,spAnchorDate);
     renderEvents(); renderSports();
@@ -727,7 +1029,8 @@ function renderEvents(){
         if(isPMSportByTitle(e)) return false;
         const d=localDateStr(e.date);
         if(d<range.start||d>range.end) return false;
-        if(!matchesSource(e.tags||[],evSource)) return false;
+        if(evSource==='Feed'){ if(!eventMatchesFeed(e)) return false; }
+        else if(!matchesSource(e.tags||[],evSource)) return false;
         if(evTags.size>0&&!Array.from(evTags).every(t=>(e.tags||[]).includes(t))) return false;
         if(evKidMode&&!e.kidFriendly) return false;
         return true;
@@ -738,11 +1041,20 @@ function renderEvents(){
     const container=document.getElementById('ev-events-container');
     if(filtered.length===0){container.innerHTML='<p class="empty-state">No events found for this view.</p>';return;}
     container.innerHTML=filtered.map(e=>buildEventCard(e,false)).join('');
+    injectInlineAds('ev-events-container','events');
 }
 
 /* ==================== SPORTS PAGE ==================== */
 
+window.toggleSpFeed=function(){
+    spFeedMode = !spFeedMode;
+    if (spFeedMode) { spActiveSources.clear(); }
+    else { spActiveSources.add('PM'); spActiveSources.add('MU'); }
+    spSportTag=null;
+    updateSportsUI(); renderSports();
+};
 window.toggleSportsSource=function(src){
+    spFeedMode = false;
     if(spActiveSources.has(src)) spActiveSources.delete(src);
     else spActiveSources.add(src);
     spSportTag=null;
@@ -751,15 +1063,17 @@ window.toggleSportsSource=function(src){
 };
 
 function updateSportsUI(){
+    const feedBtn = document.getElementById('sp-src-feed');
+    if (feedBtn) feedBtn.classList.toggle('active', spFeedMode);
     ['PM','MU','Clubs'].forEach(src=>{
         const btn=document.getElementById('sp-src-'+src.toLowerCase());
-        if(btn) btn.classList.toggle('active', spActiveSources.has(src));
+        if(btn) btn.classList.toggle('active', !spFeedMode && spActiveSources.has(src));
     });
     document.getElementById('hgame-toggle').classList.toggle('active', spHomeOnly);
-    document.getElementById('sp-no-source').style.display = spActiveSources.size===0 ? 'block' : 'none';
+    document.getElementById('sp-no-source').style.display = (!spFeedMode && spActiveSources.size===0) ? 'block' : 'none';
     // Game label
     const gameLabel=document.getElementById('sp-game-label');
-    if(gameLabel) gameLabel.textContent=spHomeOnly?'Home Games:':'All Games:';
+    if(gameLabel) gameLabel.textContent=spFeedMode?'My Feed:':spHomeOnly?'Home Games:':'All Games:';
     const allSourcesOn = spActiveSources.size===3 && spActiveSources.has('PM') && spActiveSources.has('MU') && spActiveSources.has('Clubs');
     const isClean = !spHomeOnly && allSourcesOn && !spSportTag && spMode==='upcoming';
     document.getElementById('sp-clear-btn').style.display = isClean ? 'none' : 'flex';
@@ -800,15 +1114,15 @@ window.toggleHomeGameMode=function(){
     renderSports();
 };
 window.clearSportsFilters=function(){
-    spSportTag=null; spHomeOnly=false;
-    spActiveSources=new Set(['PM','MU','Clubs']);
+    spSportTag=null; spHomeOnly=false; spFeedMode=false;
+    spActiveSources=new Set(['PM','MU']);
     spMode='upcoming'; spAnchorDate=todayMidnight();
     updateSportsUI();
     renderSports();
 };
 
 function renderSports(){
-    if(spActiveSources.size===0){
+    if(!spFeedMode && spActiveSources.size===0){
         document.getElementById('sp-events-container').innerHTML='';
         document.getElementById('sp-sport-tags').innerHTML='';
         updateSportsUI();
@@ -822,6 +1136,7 @@ function renderSports(){
         if(!isSportEvent(e)) return false;
         const d=localDateStr(e.date);
         if(d<range.start||d>range.end) return false;
+        if(spFeedMode) { return eventMatchesFeed(e); }
         const tags=e.tags||[];
         const matchesAny=Array.from(spActiveSources).some(src=>matchesSportSource(tags,src));
         if(!matchesAny) return false;
@@ -839,6 +1154,7 @@ function renderSports(){
     const container=document.getElementById('sp-events-container');
     if(filtered.length===0){container.innerHTML='<p class="empty-state">No sports events found for this view.</p>';return;}
     container.innerHTML=filtered.map(e=>buildEventCard(e,true)).join('');
+    injectInlineAds('sp-events-container','sports');
 }
 
 function renderSportTypeTags(baseEvents){
@@ -924,9 +1240,7 @@ function buildEventCard(e,isSportsPage){
     const isNoonPlaceholder = d.getHours()===12 && d.getMinutes()===0;
     const timeStr = isNoonPlaceholder ? '' : ` @ ${formatTime(d)}`;
 
-    const cardImg = e.image ? `<div class="card-img-wrap"><img src="${e.image}" alt="" loading="lazy" class="card-img"></div>` : '';
-
-    return `<div class="app-card${isCurrentlyLive?' card-live':''} ${cardResultClass}" style="position:relative;">${scoreBadge}${cardImg}<div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${e.title}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${e.location} ${homeInd}${awayInd}</p></div><div class="card-footer"><div class="card-actions"><a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
+    return `<div class="app-card${isCurrentlyLive?' card-live':''} ${cardResultClass}" style="position:relative;">${scoreBadge}<div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${e.title}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${e.location} ${homeInd}${awayInd}</p></div><div class="card-footer"><div class="card-actions"><a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
 }
 
 /* ==================== HOME ==================== */
@@ -1106,9 +1420,9 @@ function renderNewsUI(){
         if(n.subCategory && !tags.includes(n.subCategory)) tags.push(n.subCategory);
         if(n.tags) n.tags.forEach(t=>{if(!tags.includes(t)) tags.push(t);});
         const tagHtml=tags.length?`<div class="card-tags">${tags.map(t=>`<span class="card-tag">${t}</span>`).join('')}</div>`:'';
-        const newsImg = n.image ? `<div class="card-img-wrap"><img src="${n.image}" alt="" loading="lazy" class="card-img"></div>` : '';
-        return `<div class="app-card">${newsImg}${tagHtml}<p class="card-meta">${n.date}</p><h3 class="card-title">${n.title}</h3><a href="${n.link}" target="_blank" class="btn btn-sm btn-outline" style="margin-top:12px;">Read ➔</a></div>`;
+        return `<div class="app-card">${tagHtml}<p class="card-meta">${n.date}</p><h3 class="card-title">${n.title}</h3><a href="${n.link}" target="_blank" class="btn btn-sm btn-outline" style="margin-top:12px;">Read ➔</a></div>`;
     }).join(''):'<p class="empty-state">No news articles found.</p>';
+    injectInlineAds('news-container','news');
 }
 async function loadDining(){try{
     const [data, specials] = await Promise.all([
@@ -1174,26 +1488,54 @@ window.setSvcFilter=function(cat,btn){
     btn.classList.add('active');
     renderServices();
 };
+function renderStars(rating) {
+    if (!rating) return '';
+    const full = Math.floor(rating);
+    const half = rating % 1 >= 0.25 && rating % 1 < 0.75 ? 1 : 0;
+    const empty = 5 - full - half;
+    const extra = rating % 1 >= 0.75 ? 1 : 0;
+    return '<span style="color:var(--gold);font-size:0.85rem;letter-spacing:1px;">' +
+        '★'.repeat(full + extra) + (half ? '½' : '') + '☆'.repeat(empty - extra) +
+        '</span> <span style="font-size:0.8rem;color:var(--text-muted);">' + rating.toFixed(1) + '</span>';
+}
 function renderServices(){
     const hc=document.getElementById('housing-container');
     const sc=document.getElementById('services-container');
-    // Show housing for All or Housing filter
     if(svcFilter==='All' || svcFilter==='Housing'){
         hc.style.display='';
     } else {
         hc.style.display='none';
     }
-    // Show services for All or non-Housing filter
     if(svcFilter==='Housing'){
         sc.style.display='none';
     } else {
         sc.style.display='';
         const f=svcFilter==='All'?allServices:allServices.filter(s=>s.category===svcFilter);
         sc.innerHTML=f.length?f.map(s=>{
-            const link=s.gasLink?`<a href="${s.gasLink}" target="_blank" class="ext-link">⛽ Prices</a>`:`<a href="${s.link}" target="_blank" class="ext-link">🌐 Site</a>`;
-            const phone=s.phone?`<span style="font-weight:600;font-size:0.9rem;">📞 ${s.phone}</span>`:'';
-            return `<div class="app-card"><span class="card-tag">${s.category}</span><h3 class="card-title">${s.name}</h3><p class="card-meta">📍 ${s.address}</p><p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:16px;">${s.description}</p><div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;">${phone}${link}</div></div>`;
-        }).join(''):'<p class="empty-state">No services found.</p>';
+            const catIcons={'Government':'🏛','Health':'🏥','Beauty/Grooming':'💈','Shopping':'🛒','Recreation':'🏞','Transport':'🚌','Finance':'🏦','Shipping':'📦','Entertainment':'🎵','Education':'📚','Housing':'🏠'};
+            const icon = catIcons[s.category] || '🏢';
+            const stars = s.rating ? renderStars(s.rating) : '';
+            const reviews = s.reviewCount ? `<span style="font-size:0.75rem;color:var(--text-muted);margin-left:4px;">(${s.reviewCount} review${s.reviewCount>1?'s':''})</span>` : '';
+            const ratingRow = stars ? `<div style="margin:4px 0 6px;">${stars}${reviews}</div>` : '';
+            const hours = s.hours ? `<p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:4px;">🕐 ${s.hours}</p>` : '';
+            const phone = s.phone ? `<a href="tel:${s.phone.replace(/[^+\d]/g,'')}" style="font-weight:600;font-size:0.85rem;color:var(--text);text-decoration:none;">📞 ${s.phone}</a>` : '';
+            const site = s.gasLink ? `<a href="${s.gasLink}" target="_blank" class="btn btn-sm btn-outline" style="font-size:0.75rem;">⛽ Prices</a>` :
+                         s.link ? `<a href="${s.link}" target="_blank" class="btn btn-sm btn-outline" style="font-size:0.75rem;">🌐 Visit</a>` : '';
+            return `<div class="app-card">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                    <span class="card-tag">${icon} ${s.category}</span>
+                </div>
+                <h3 class="card-title" style="margin-top:6px;">${s.name}</h3>
+                ${ratingRow}
+                <p class="card-meta" style="margin-bottom:4px;">📍 ${s.address}</p>
+                ${hours}
+                <p style="font-size:0.85rem;color:var(--text-muted);margin:8px 0;">${s.description}</p>
+                <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                    ${phone}
+                    <div style="display:flex;gap:6px;align-items:center;">${site}</div>
+                </div>
+            </div>`;
+        }).join(''):'<p class="empty-state">No businesses found in this category.</p>';
     }
 }
 // ==================== COMMUNITY BOARD ====================
@@ -1221,6 +1563,10 @@ function renderBoard(){
         return `<div class="app-card" ${urgentClass}>${img}<span class="card-tag">${icon} ${p.category}</span><h3 class="card-title">${p.title}</h3>${loc}<p style="font-size:0.85rem;color:var(--text-muted);margin:6px 0;">${p.description||''}</p>${contact}<p style="font-size:0.7rem;color:var(--text-muted);margin-top:6px;">${p.date||''}</p></div>`;
     }).join('');
 }
+
+window.openSubmitBusiness=function(){
+    openAdvertiseForm();
+};
 
 window.openBoardPost=function(){
     const overlay=document.createElement('div');
@@ -1303,6 +1649,168 @@ window.submitBoardPost=function(){
         document.getElementById('bp-success').style.display='block';
     });
 };
+
+// ==================== SPONSOR SYSTEM ====================
+let sponsorData = { sponsors: [], config: { rotateIntervalMs: 15000, inlineAdEveryN: 9, placements: {} } };
+let sponsorImpressions = {}; // { sponsorId: { impressions: N, clicks: N } }
+
+async function loadSponsors() {
+    try {
+        sponsorData = await (await fetch('sponsors.json')).json();
+        const now = new Date();
+        // Filter active sponsors within date range
+        sponsorData.sponsors = sponsorData.sponsors.filter(s => {
+            if (!s.active) return false;
+            if (s.startDate && new Date(s.startDate) > now) return false;
+            if (s.endDate && new Date(s.endDate) < now) return false;
+            return true;
+        });
+        renderHomeSponsors();
+        startSponsorRotation();
+        renderAnalytics();
+    } catch (e) { console.log('Sponsors load error:', e.message); renderHomeSponsors(); }
+}
+
+function trackImpression(sponsorId, placement) {
+    if (!sponsorImpressions[sponsorId]) sponsorImpressions[sponsorId] = { impressions: 0, clicks: 0 };
+    sponsorImpressions[sponsorId].impressions++;
+    if (typeof gtag === 'function') {
+        gtag('event', 'ad_impression', { sponsor_id: sponsorId, placement: placement, sponsor_name: sponsorData.sponsors.find(s => s.id === sponsorId)?.name || sponsorId });
+    }
+}
+
+function trackClick(sponsorId, placement) {
+    if (!sponsorImpressions[sponsorId]) sponsorImpressions[sponsorId] = { impressions: 0, clicks: 0 };
+    sponsorImpressions[sponsorId].clicks++;
+    if (typeof gtag === 'function') {
+        gtag('event', 'ad_click', { sponsor_id: sponsorId, placement: placement, sponsor_name: sponsorData.sponsors.find(s => s.id === sponsorId)?.name || sponsorId });
+    }
+}
+
+function buildSponsorCard(s, placement) {
+    const clickHandler = s.internal
+        ? `event.preventDefault();trackClick('${s.id}','${placement}');switchView('${s.link.replace('/','')}')`
+        : `trackClick('${s.id}','${placement}')`;
+    const href = s.internal ? '#' : s.link;
+    const target = s.internal ? '' : 'target="_blank"';
+    return `<a href="${href}" ${target} class="sponsor-card ${s.tierClass||'sponsor-featured'}" onclick="${clickHandler}" data-sponsor="${s.id}" data-placement="${placement}">
+        <span class="sponsor-tier">${s.tier}</span>
+        <h4 class="sponsor-name">${s.name}</h4>
+        <span class="sponsor-cta">${s.cta}</span>
+    </a>`;
+}
+
+function renderHomeSponsors() {
+    const container = document.getElementById('home-sponsors');
+    if (!container) return;
+    const homeSponsors = sponsorData.sponsors.filter(s => s.placements.includes('homepage'));
+    if (homeSponsors.length === 0) {
+        container.innerHTML = '<p class="empty-state">Interested in sponsoring? <a href="#" onclick="event.preventDefault();switchView(\'advertise\')">Learn more →</a></p>';
+        return;
+    }
+    container.innerHTML = homeSponsors.map(s => buildSponsorCard(s, 'homepage')).join('');
+    // Track impressions for visible sponsors
+    homeSponsors.forEach(s => trackImpression(s.id, 'homepage'));
+}
+
+function buildInlineAd(placement) {
+    const pool = sponsorData.sponsors.filter(s => s.placements.includes(placement));
+    if (pool.length === 0) return '';
+    const s = pool[Math.floor(Math.random() * pool.length)];
+    trackImpression(s.id, placement + '-inline');
+    const clickHandler = s.internal
+        ? `event.preventDefault();trackClick('${s.id}','${placement}-inline');switchView('${s.link.replace('/','')}')`
+        : `trackClick('${s.id}','${placement}-inline')`;
+    const href = s.internal ? '#' : s.link;
+    const target = s.internal ? '' : 'target="_blank"';
+    return `<a href="${href}" ${target} class="app-card sponsor-inline" onclick="${clickHandler}" data-sponsor="${s.id}" style="background:linear-gradient(135deg,var(--gold-soft),var(--surface));border:1px solid var(--gold);text-decoration:none;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;cursor:pointer;">
+        <span style="font-size:0.65rem;font-weight:700;text-transform:uppercase;color:var(--gold);letter-spacing:1px;margin-bottom:4px;">Sponsored</span>
+        <h4 style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:4px;">${s.name}</h4>
+        <span style="font-size:0.85rem;color:var(--text-muted);">${s.cta}</span>
+    </a>`;
+}
+
+// Inject inline ads into card grids after rendering
+function injectInlineAds(containerId, placement) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const n = sponsorData.config.inlineAdEveryN || 9;
+    const cards = container.querySelectorAll('.app-card:not(.sponsor-inline)');
+    // Remove existing inline ads
+    container.querySelectorAll('.sponsor-inline').forEach(el => el.remove());
+    if (cards.length < n) return; // Not enough cards to warrant an ad
+    const pool = sponsorData.sponsors.filter(s => s.placements.includes(placement));
+    if (pool.length === 0) return;
+    // Insert after every Nth card
+    let inserted = 0;
+    cards.forEach((card, i) => {
+        if ((i + 1) % n === 0) {
+            const ad = document.createElement('div');
+            ad.innerHTML = buildInlineAd(placement);
+            const adEl = ad.firstElementChild;
+            if (adEl) { card.after(adEl); inserted++; }
+        }
+    });
+}
+
+let rotationInterval = null;
+function startSponsorRotation() {
+    if (rotationInterval) clearInterval(rotationInterval);
+    const interval = sponsorData.config.rotateIntervalMs || 15000;
+    rotationInterval = setInterval(() => {
+        // Rotate homepage sponsors order
+        const container = document.getElementById('home-sponsors');
+        if (!container || container.children.length <= 1) return;
+        const first = container.firstElementChild;
+        if (first) {
+            first.style.transition = 'opacity 0.3s';
+            first.style.opacity = '0';
+            setTimeout(() => {
+                container.appendChild(first);
+                first.style.opacity = '1';
+                // Track impression for the newly visible first sponsor
+                const newFirst = container.firstElementChild;
+                if (newFirst?.dataset?.sponsor) {
+                    trackImpression(newFirst.dataset.sponsor, 'homepage-rotate');
+                }
+            }, 300);
+        }
+    }, interval);
+}
+
+function renderAnalytics() {
+    const dash = document.getElementById('analytics-dashboard');
+    if (!dash) return;
+    const now = new Date();
+    let html = '';
+    sponsorData.sponsors.forEach(s => {
+        const stats = sponsorImpressions[s.id] || { impressions: 0, clicks: 0 };
+        const ctr = stats.impressions > 0 ? ((stats.clicks / stats.impressions) * 100).toFixed(1) : '0.0';
+        const endDate = s.endDate ? new Date(s.endDate) : null;
+        const daysLeft = endDate ? Math.ceil((endDate - now) / (1000*60*60*24)) : '∞';
+        html += `<div class="app-card" style="margin-bottom:12px;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                <div>
+                    <span class="card-tag">${s.tier}</span>
+                    <h3 class="card-title" style="margin-top:6px;">${s.name}</h3>
+                </div>
+                <span class="badge" style="background:var(--green);color:white;font-size:0.7rem;">Active</span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px;">
+                <div style="text-align:center;"><p style="font-size:1.2rem;font-weight:700;">${stats.impressions}</p><p style="font-size:0.7rem;color:var(--text-muted);">Impressions</p></div>
+                <div style="text-align:center;"><p style="font-size:1.2rem;font-weight:700;">${stats.clicks}</p><p style="font-size:0.7rem;color:var(--text-muted);">Clicks</p></div>
+                <div style="text-align:center;"><p style="font-size:1.2rem;font-weight:700;">${ctr}%</p><p style="font-size:0.7rem;color:var(--text-muted);">CTR</p></div>
+                <div style="text-align:center;"><p style="font-size:1.2rem;font-weight:700;">${daysLeft}</p><p style="font-size:0.7rem;color:var(--text-muted);">Days Left</p></div>
+            </div>
+            <div style="margin-top:12px;font-size:0.8rem;color:var(--text-muted);">
+                Placements: ${s.placements.join(', ')}
+            </div>
+        </div>`;
+    });
+    if (!html) html = '<p class="empty-state">No active sponsors.</p>';
+    dash.innerHTML = html;
+}
+// ==================== END SPONSOR SYSTEM ====================
 
 // Grocery deals popup
 let allGroceryDeals = [];
@@ -1436,7 +1944,7 @@ function runSearch(q) {
         return (s.name + ' ' + s.category + ' ' + (s.description||'')).toLowerCase().includes(ql);
     }).slice(0, 5);
     if (svcHits.length) {
-        html += `<div style="margin-bottom:20px;"><h4 style="color:var(--text-muted);font-size:0.8rem;text-transform:uppercase;margin-bottom:8px;">🛠️ Services</h4>`;
+        html += `<div style="margin-bottom:20px;"><h4 style="color:var(--text-muted);font-size:0.8rem;text-transform:uppercase;margin-bottom:8px;">🏢 Directory</h4>`;
         svcHits.forEach(s => {
             html += `<div class="search-result" onclick="document.getElementById('search-overlay').remove();switchView('services');" style="padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;margin-bottom:4px;background:var(--surface);">
                 <p style="font-weight:600;margin:2px 0;">${s.name}</p>
@@ -1477,7 +1985,7 @@ window.openAdvertiseForm = function() {
     overlay.onclick = function(ev){ if(ev.target===overlay) overlay.remove(); };
     const modal = document.createElement('div');
     modal.style.cssText = 'background:var(--surface);border-radius:var(--radius);max-width:520px;width:100%;max-height:90vh;overflow-y:auto;padding:28px;position:relative;';
-    const tiers = ['Homepage Sponsor','Featured Restaurant','Featured Housing','Event Promotion','Featured Service','Other'];
+    const tiers = ['Premium','Standard','Basic','Not Sure'];
     modal.innerHTML = `
         <button onclick="this.closest('div[style*=fixed]').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);">✕</button>
         <h3 style="margin-bottom:4px;">📢 Advertise With Us</h3>

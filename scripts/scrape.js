@@ -1060,8 +1060,26 @@ async function runScraper() {
                 }
 
                 // Download image
-                const imgRes = await fetch(downloadUrl, { headers: baseHeaders, signal: AbortSignal.timeout(15000), redirect: 'follow' });
-                if (!imgRes.ok) { console.log(`    ⚠️ Download failed: ${imgRes.status} (${si.url.substring(0, 80)})`); continue; }
+                const isFacebookCDN = downloadUrl.includes('fbcdn.net') || downloadUrl.includes('facebook.com');
+                const dlHeaders = isFacebookCDN ? {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+                    'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+                    'Accept-Language': 'en-US,en;q=0.9',
+                    'Referer': 'https://www.facebook.com/',
+                    'Sec-Fetch-Dest': 'image',
+                    'Sec-Fetch-Mode': 'no-cors',
+                    'Sec-Fetch-Site': 'cross-site'
+                } : baseHeaders;
+                const imgRes = await fetch(downloadUrl, { headers: dlHeaders, signal: AbortSignal.timeout(15000), redirect: 'follow' });
+                if (!imgRes.ok) {
+                    if (isFacebookCDN) {
+                        console.log(`    ⚠️ Facebook CDN expired (403) — save image to Google Drive and update sheet URL`);
+                        console.log(`      URL: ${si.url.substring(0, 100)}...`);
+                    } else {
+                        console.log(`    ⚠️ Download failed: ${imgRes.status} (${si.url.substring(0, 80)})`);
+                    }
+                    continue;
+                }
                 const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
                 if (imgBuffer.length < 1000) { console.log(`    ⚠️ Tiny image, skipping`); continue; }
 

@@ -1961,6 +1961,57 @@ Focus on the most impressive deals a shopper would want to know about. Include m
         console.log(`✅ Sponsors: ${sponsorList.length} active (${sponsorList.filter(s=>s.tier.toLowerCase()==='premium').length} premium, ${sponsorList.filter(s=>s.tier.toLowerCase()==='standard').length} standard, ${sponsorList.filter(s=>s.tier.toLowerCase()==='basic').length} basic)`);
     } catch (e) { console.log(`  ⚠️ Sponsors error: ${e.message}`); }
 
+    // ===== BUSINESS REVIEWS =====
+    try {
+        const REVIEW_SHEET_ID = process.env.REVIEW_SHEET_ID || '1-E7fJ6PyC1o-n5RpqKvkyGtvvxwqUrHnNRTvN5RWICc';
+        if (REVIEW_SHEET_ID) {
+            console.log('📡 Fetching business reviews...');
+            const reviewUrl = `https://docs.google.com/spreadsheets/d/${REVIEW_SHEET_ID}/gviz/tq?tqx=out:csv`;
+            const reviewRes = await fetch(reviewUrl, { headers: baseHeaders, signal: AbortSignal.timeout(10000) });
+            if (reviewRes.ok) {
+                const reviewCsv = await reviewRes.text();
+                const reviewRows = reviewCsv.split('\n').slice(1); // skip header
+                const bizReviews = {}; // { businessName: { total: N, sum: N, reviews: [] } }
+
+                for (const row of reviewRows) {
+                    if (!row.trim()) continue;
+                    // CSV: timestamp, business, rating, review text, reviewer name
+                    const cols = row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+                    if (!cols || cols.length < 3) continue;
+                    const business = (cols[1] || '').replace(/"/g, '').trim();
+                    const rating = parseFloat((cols[2] || '').replace(/"/g, '').trim());
+                    if (!business || isNaN(rating) || rating < 1 || rating > 5) continue;
+                    const reviewText = cols[3] ? cols[3].replace(/"/g, '').trim() : '';
+                    const reviewer = cols[4] ? cols[4].replace(/"/g, '').trim() : 'Anonymous';
+
+                    if (!bizReviews[business]) bizReviews[business] = { total: 0, sum: 0 };
+                    bizReviews[business].total++;
+                    bizReviews[business].sum += rating;
+                }
+
+                // Read current services.json and merge ratings
+                const servicesPath = path.join(__dirname, '../services.json');
+                let services = [];
+                try { services = JSON.parse(fs.readFileSync(servicesPath, 'utf8')); } catch (e) {}
+
+                let updated = 0;
+                for (const svc of services) {
+                    const rev = bizReviews[svc.name];
+                    if (rev && rev.total > 0) {
+                        svc.rating = (rev.sum / rev.total).toFixed(1);
+                        svc.reviewCount = rev.total;
+                        updated++;
+                    }
+                }
+
+                fs.writeFileSync(servicesPath, JSON.stringify(services, null, 2));
+                console.log(`✅ Reviews: ${Object.keys(bizReviews).length} businesses reviewed, ${updated} ratings updated`);
+            } else {
+                console.log(`  ⚠️ Reviews sheet fetch failed: ${reviewRes.status}`);
+            }
+        }
+    } catch (e) { console.log(`  ⚠️ Reviews error: ${e.message}`); }
+
     console.log("✅ All data compilations complete.");
 }
 

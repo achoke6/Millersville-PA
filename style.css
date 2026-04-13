@@ -126,6 +126,9 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .specials-section { background: var(--gold-soft); border-radius: var(--radius-sm); padding: 10px 12px; margin-bottom: 12px; border-left: 3px solid var(--gold); }
 .badge-members-only { position: absolute; top: 12px; right: 12px; background: #dc2626; color: white; font-size: 0.7rem; font-weight: 700; padding: 3px 8px; border-radius: var(--radius-sm); text-transform: uppercase; letter-spacing: 0.5px; }
 .card-actions { display: flex; justify-content: flex-end; align-items: center; gap: 8px; }
+.game-loc-badge { font-size: 0.7rem; font-weight: 700; padding: 2px 8px; border-radius: var(--radius-pill); margin-right: auto; }
+.game-loc-home { background: #dcfce7; color: #166534; }
+.game-loc-away { background: #f3f4f6; color: var(--text-muted); }
 
 /* =========================================================
    7. BUTTONS & BADGES

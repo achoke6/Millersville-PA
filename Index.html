@@ -195,8 +195,9 @@
         </div>
         <div class="filter-bar sp-source-row">
             <div class="filter-group" id="sp-source-group">
-                <button class="src-btn active" id="sp-src-pm" data-feed="pm-" onclick="toggleSportsSource('PM')"><svg class="btn-icon" width="14" height="14"><use href="#icon-comet"/></svg> PM</button>
-                <button class="src-btn active" id="sp-src-mu" data-feed="mu-" onclick="toggleSportsSource('MU')">🏴‍☠️ MU</button>
+                <button class="src-btn active" id="sp-src-all" onclick="setSportsSourceAll(this)">All</button>
+                <button class="src-btn" id="sp-src-pm" data-feed="pm-" onclick="toggleSportsSource('PM')"><svg class="btn-icon" width="14" height="14"><use href="#icon-comet"/></svg> PM</button>
+                <button class="src-btn" id="sp-src-mu" data-feed="mu-" onclick="toggleSportsSource('MU')">🏴‍☠️ MU</button>
                 <button class="src-btn" id="sp-src-clubs" data-feed="clubs-" onclick="toggleSportsSource('Clubs')">🎓 MU Clubs</button>
             </div>
             <button class="home-toggle" id="hgame-toggle" onclick="toggleHomeGameMode()" title="Home Games Only">
@@ -786,7 +787,7 @@ function renderHomeFeed() {
 let evMode='day', evAnchorDate=new Date();
 
 // Sports page state
-let spActiveSources=new Set(['PM','MU']), spSportTag=null, spHomeOnly=false;
+let spActiveSources=new Set(['PM','MU','Clubs']), spSportTag=null, spHomeOnly=false;
 let spMode='upcoming', spAnchorDate=new Date();
 
 const sportsList=['Baseball','Softball','Track','Soccer','Lacrosse','Tennis','Volleyball','Wrestling','Basketball','Football','Field Hockey','Golf','Cross Country','Cheerleading','Swimming','Rugby','Fencing','Esports','Archery'];
@@ -1104,8 +1105,8 @@ function renderEvents(){
     const container=document.getElementById('ev-events-container');
     if(filtered.length===0){container.innerHTML='<p class="empty-state">No events found for this view.</p>';return;}
 
-    const hasFeed = feedPrefs && feedPrefs.length > 0;
-    if (hasFeed) {
+    const showFavs = feedPrefs && feedPrefs.length > 0 && evSource === 'All';
+    if (showFavs) {
         const feedItems = filtered.filter(e => eventMatchesFeed(e));
         const otherItems = filtered.filter(e => !eventMatchesFeed(e));
         let html = '';
@@ -1126,25 +1127,44 @@ function renderEvents(){
 
 /* ==================== SPORTS PAGE ==================== */
 
+let spAllMode = true; // tracks if "All" is the active selection
+
+window.setSportsSourceAll=function(btn){
+    spAllMode = true;
+    spActiveSources = new Set(['PM','MU','Clubs']);
+    spSportTag = null;
+    updateSportsUI();
+    renderSports();
+};
+
 window.toggleSportsSource=function(src){
-    if(spActiveSources.has(src)) spActiveSources.delete(src);
-    else spActiveSources.add(src);
+    spAllMode = false;
+    // When switching from All, start fresh with just this source
+    if (spActiveSources.size === 3 && spActiveSources.has('PM') && spActiveSources.has('MU') && spActiveSources.has('Clubs')) {
+        spActiveSources = new Set([src]);
+    } else {
+        if(spActiveSources.has(src)) spActiveSources.delete(src);
+        else spActiveSources.add(src);
+    }
+    // If all three are back on, switch to All mode
+    if (spActiveSources.size === 3) spAllMode = true;
     spSportTag=null;
     updateSportsUI();
     renderSports();
 };
 
 function updateSportsUI(){
+    const allBtn = document.getElementById('sp-src-all');
+    if (allBtn) allBtn.classList.toggle('active', spAllMode);
     ['PM','MU','Clubs'].forEach(src=>{
         const btn=document.getElementById('sp-src-'+src.toLowerCase());
-        if(btn) btn.classList.toggle('active', spActiveSources.has(src));
+        if(btn) btn.classList.toggle('active', !spAllMode && spActiveSources.has(src));
     });
     document.getElementById('hgame-toggle').classList.toggle('active', spHomeOnly);
     document.getElementById('sp-no-source').style.display = spActiveSources.size===0 ? 'block' : 'none';
     const gameLabel=document.getElementById('sp-game-label');
     if(gameLabel) gameLabel.textContent=spHomeOnly?'Home Games:':'All Games:';
-    const allSourcesOn = spActiveSources.size===3 && spActiveSources.has('PM') && spActiveSources.has('MU') && spActiveSources.has('Clubs');
-    const isClean = !spHomeOnly && allSourcesOn && !spSportTag && spMode==='upcoming';
+    const isClean = spAllMode && !spHomeOnly && !spSportTag && spMode==='upcoming';
     document.getElementById('sp-clear-btn').style.display = isClean ? 'none' : 'flex';
     // Show/hide arrows based on mode
     const showArrows=(spMode==='day'||spMode==='week');
@@ -1183,8 +1203,8 @@ window.toggleHomeGameMode=function(){
     renderSports();
 };
 window.clearSportsFilters=function(){
-    spSportTag=null; spHomeOnly=false;
-    spActiveSources=new Set(['PM','MU']);
+    spSportTag=null; spHomeOnly=false; spAllMode=true;
+    spActiveSources=new Set(['PM','MU','Clubs']);
     spMode='upcoming'; spAnchorDate=todayMidnight();
     updateSportsUI();
     renderSports();
@@ -1221,8 +1241,8 @@ function renderSports(){
     const container=document.getElementById('sp-events-container');
     if(filtered.length===0){container.innerHTML='<p class="empty-state">No sports events found for this view.</p>';return;}
 
-    const hasFeed = feedPrefs && feedPrefs.length > 0;
-    if (hasFeed) {
+    const showFavs = feedPrefs && feedPrefs.length > 0 && spAllMode;
+    if (showFavs) {
         const feedItems = filtered.filter(e => eventMatchesFeed(e));
         const otherItems = filtered.filter(e => !eventMatchesFeed(e));
         let html = '';
@@ -1318,14 +1338,18 @@ function buildEventCard(e,isSportsPage){
         actionHtml=`<span class="badge badge-door">${priceText}</span>`;
     }
 
-    const homeInd=isSportsPage&&isHome?'<span class="home-indicator">🏠 Home</span>':'';
-    const awayInd=isSportsPage&&!isHome?'<span class="away-indicator">📍 Away</span>':'';
+    // Game location badge (lower-left corner for sports)
+    let locBadge = '';
+    if (isSportsPage) {
+        if (isHome) locBadge = '<span class="game-loc-badge game-loc-home">🏠 Home</span>';
+        else locBadge = '<span class="game-loc-badge game-loc-away">📍 Away</span>';
+    }
 
     // Hide time if it's exactly noon (placeholder for events with no specific time)
     const isNoonPlaceholder = d.getHours()===12 && d.getMinutes()===0;
     const timeStr = isNoonPlaceholder ? '' : ` @ ${formatTime(d)}`;
 
-    return `<div class="app-card${isCurrentlyLive?' card-live':''} ${cardResultClass}" style="position:relative;">${scoreBadge}<div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${e.title}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${e.location} ${homeInd}${awayInd}</p></div><div class="card-footer"><div class="card-actions"><a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
+    return `<div class="app-card${isCurrentlyLive?' card-live':''} ${cardResultClass}" style="position:relative;">${scoreBadge}<div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${e.title}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${e.location}</p></div><div class="card-footer"><div class="card-actions">${locBadge}<a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
 }
 
 /* ==================== HOME ==================== */
@@ -1414,14 +1438,27 @@ async function loadHomeSpecials(){
         let cards = [];
 
         for (const [restaurant, sp] of Object.entries(specials)) {
-            // VFW specials don't apply on weekends (new specials announced Monday)
             const isWeekend = (dayName === 'Saturday' || dayName === 'Sunday');
             if (isWeekend && restaurant === 'VFW Post 7294') continue;
 
             let items = [];
             if(sp.daily && sp.daily[dayName]) items = sp.daily[dayName];
-            if(sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
-            if(sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
+
+            // VFW: show recurring for today + weekly as "This Friday" specials
+            if (restaurant === 'VFW Post 7294') {
+                if(sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
+                if(sp.weekly && sp.weekly.length > 0) {
+                    if (dayName === 'Friday') {
+                        items = [...items, ...sp.weekly];
+                    } else {
+                        items.push('🍽️ This Friday:');
+                        items = [...items, ...sp.weekly];
+                    }
+                }
+            } else {
+                if(sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
+                if(sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
+            }
 
             if(items.length > 0){
                 const note = sp.note || '';
@@ -1558,14 +1595,29 @@ async function loadDining(){try{
         if(sp && !(isWeekend && p.name === 'VFW Post 7294')){
             let items=[];
             if(sp.daily && sp.daily[dayName]) items = sp.daily[dayName];
-            if(sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
-            if(sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
+
+            // VFW: show recurring for today + weekly as "This Friday" specials
+            if (p.name === 'VFW Post 7294') {
+                if(sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
+                if(sp.weekly && sp.weekly.length > 0) {
+                    if (dayName === 'Friday') {
+                        items = [...items, ...sp.weekly];
+                    } else {
+                        items.push('🍽️ This Friday:');
+                        items = [...items, ...sp.weekly];
+                    }
+                }
+            } else {
+                if(sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
+                if(sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
+            }
 
             if(items.length > 0){
                 const note = sp.note ? `<p style="font-size:0.7rem;color:var(--text-muted);margin-bottom:4px;font-style:italic;">${sp.note}</p>` : '';
                 const dateRange = sp.weeklyDateRange ? `<p style="font-size:0.7rem;color:var(--gold);font-weight:600;margin-bottom:4px;">${sp.weeklyDateRange}</p>` : '';
                 const isGrocery = p.name === "John Herr's Village Market";
-                const heading = isGrocery ? '🏷️ Top Weekly Deals:' : `Today's Specials (${dayName}):`;
+                const isVFW = p.name === 'VFW Post 7294';
+                const heading = isGrocery ? '🏷️ Top Weekly Deals:' : isVFW ? `Specials (${dayName}):` : `Today's Specials (${dayName}):`;
                 const topItems = isGrocery ? items.slice(0, 5) : items;
                 const moreItems = isGrocery ? items.slice(5) : [];
                 let moreHtml = '';

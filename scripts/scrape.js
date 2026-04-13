@@ -1195,32 +1195,50 @@ Respond with ONLY the JSON object.`;
         // ===== JOHN HERR'S WEEKLY GROCERY DEALS =====
         let groceryDeals = [];
         try {
-            console.log("📡 Fetching John Herr's weekly circular...");
-            const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY;
-            const circularUrl = 'https://circulars.freshop.ncrcloud.com/3867191523330246931-b162f04b-f913-448d-aa0c-48f174abb46e.pdf';
-            
-            if (ANTHROPIC_KEY) {
-                const pdfRes = await fetch(circularUrl, { signal: AbortSignal.timeout(30000) });
-                if (pdfRes.ok) {
-                    const pdfBuffer = Buffer.from(await pdfRes.arrayBuffer());
-                    console.log(`  📄 PDF downloaded: ${(pdfBuffer.length / 1024).toFixed(0)}KB`);
+            const groceryCachePath = path.join(__dirname, '../grocery-cache.json');
+            let groceryCache = {};
+            try { groceryCache = JSON.parse(fs.readFileSync(groceryCachePath, 'utf8')); } catch(e) {}
 
-                    // Send PDF to Claude to extract best deals
-                    const claudeRes = await fetch('https://api.anthropic.com/v1/messages', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'x-api-key': ANTHROPIC_KEY,
-                            'anthropic-version': '2023-06-01'
-                        },
-                        body: JSON.stringify({
-                            model: 'claude-sonnet-4-20250514',
-                            max_tokens: 2048,
-                            messages: [{
-                                role: 'user',
-                                content: [
-                                    { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: pdfBuffer.toString('base64') } },
-                                    { type: 'text', text: `Analyze this grocery store weekly circular for John Herr's Village Market. Extract the TOP 15-20 best deals — items with the biggest savings, lowest prices, or best value (BOGO, buy-one-get-one, manager's specials, etc).
+            // Determine if we need to refresh: cache empty, or it's Wednesday+ and cache is from before this Wednesday
+            const now = new Date();
+            const cacheTime = groceryCache.timestamp ? new Date(groceryCache.timestamp) : null;
+            const dayOfWeek = now.getDay(); // 0=Sun, 3=Wed
+            // Find most recent Wednesday
+            const daysSinceWed = (dayOfWeek + 7 - 3) % 7;
+            const lastWed = new Date(now); lastWed.setDate(now.getDate() - daysSinceWed); lastWed.setHours(0,0,0,0);
+            const cacheIsStale = !cacheTime || cacheTime < lastWed;
+            const cacheHasDeals = groceryCache.deals && groceryCache.deals.length > 0;
+
+            if (cacheHasDeals && !cacheIsStale) {
+                // Use cached deals
+                groceryDeals = groceryCache.deals;
+                console.log(`📡 John Herr's: using cached deals (${groceryDeals.length} deals, cached ${cacheTime.toLocaleDateString()})`);
+            } else {
+                console.log(`📡 Fetching John Herr's weekly circular...${cacheIsStale ? ' (cache stale, refreshing)' : ' (no cache)'}`);
+                const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY;
+                const circularUrl = 'https://circulars.freshop.ncrcloud.com/3867191523330246931-b162f04b-f913-448d-aa0c-48f174abb46e.pdf';
+
+                if (ANTHROPIC_KEY) {
+                    const pdfRes = await fetch(circularUrl, { signal: AbortSignal.timeout(30000) });
+                    if (pdfRes.ok) {
+                        const pdfBuffer = Buffer.from(await pdfRes.arrayBuffer());
+                        console.log(`  📄 PDF downloaded: ${(pdfBuffer.length / 1024).toFixed(0)}KB`);
+
+                        const claudeRes = await fetch('https://api.anthropic.com/v1/messages', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'x-api-key': ANTHROPIC_KEY,
+                                'anthropic-version': '2023-06-01'
+                            },
+                            body: JSON.stringify({
+                                model: 'claude-sonnet-4-20250514',
+                                max_tokens: 2048,
+                                messages: [{
+                                    role: 'user',
+                                    content: [
+                                        { type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: pdfBuffer.toString('base64') } },
+                                        { type: 'text', text: `Analyze this grocery store weekly circular for John Herr's Village Market. Extract the TOP 15-20 best deals — items with the biggest savings, lowest prices, or best value (BOGO, buy-one-get-one, manager's specials, etc).
 
 IMPORTANT: Order the deals from BEST to worst. The first 5 should be the absolute best deals in the circular — the ones a savvy shopper would be most excited about.
 
@@ -1232,35 +1250,44 @@ Respond ONLY with valid JSON (no markdown, no backticks):
 {"dateRange":"Wed Apr 9 - Tue Apr 15","deals":[{"item":"Boneless Chicken Breast","salePrice":"$1.99/lb","regularPrice":"$4.99/lb","savings":"60% off"},{"item":"Strawberries 1lb","salePrice":"$2.50","regularPrice":"","savings":"Great price"}]}
 
 Focus on the most impressive deals a shopper would want to know about. Include meats, produce, dairy, pantry staples. Skip minor items like 10 cents off a can of beans. Respond with ONLY the JSON.` }
-                                ]
-                            }]
-                        })
-                    });
+                                    ]
+                                }]
+                            })
+                        });
 
-                    if (claudeRes.ok) {
-                        const claudeData = await claudeRes.json();
-                        const responseText = claudeData.content?.[0]?.text || '';
-                        try {
-                            const cleanJson = responseText.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
-                            const parsed = JSON.parse(cleanJson);
-                            groceryDeals = parsed.deals || [];
-                            const dateRange = parsed.dateRange || '';
-                            console.log(`  ✅ John Herr's: ${groceryDeals.length} top deals (${dateRange})`);
-                            groceryDeals.forEach(d => console.log(`    🏷️ ${d.item} – ${d.salePrice}${d.savings ? ' (' + d.savings + ')' : ''}`));
-                            // Attach date range to each deal
-                            groceryDeals = groceryDeals.map(d => ({ ...d, dateRange }));
-                        } catch (jsonErr) {
-                            console.log(`    ⚠️ Failed to parse deals: ${responseText.substring(0, 200)}`);
+                        if (claudeRes.ok) {
+                            const claudeData = await claudeRes.json();
+                            const responseText = claudeData.content?.[0]?.text || '';
+                            try {
+                                const cleanJson = responseText.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+                                const parsed = JSON.parse(cleanJson);
+                                groceryDeals = parsed.deals || [];
+                                const dateRange = parsed.dateRange || '';
+                                console.log(`  ✅ John Herr's: ${groceryDeals.length} top deals (${dateRange})`);
+                                groceryDeals.forEach(d => console.log(`    🏷️ ${d.item} – ${d.salePrice}${d.savings ? ' (' + d.savings + ')' : ''}`));
+                                groceryDeals = groceryDeals.map(d => ({ ...d, dateRange }));
+                                // Save to cache
+                                fs.writeFileSync(groceryCachePath, JSON.stringify({ timestamp: now.toISOString(), deals: groceryDeals }, null, 2));
+                                console.log(`  💾 Grocery deals cached`);
+                            } catch (jsonErr) {
+                                console.log(`    ⚠️ Failed to parse deals: ${responseText.substring(0, 200)}`);
+                            }
+                        } else {
+                            const err = await claudeRes.text();
+                            console.log(`    ⚠️ Claude API error: ${err.substring(0, 200)}`);
                         }
                     } else {
-                        const err = await claudeRes.text();
-                        console.log(`    ⚠️ Claude API error: ${err.substring(0, 200)}`);
+                        console.log(`    ⚠️ PDF download failed: ${pdfRes.status}`);
                     }
                 } else {
-                    console.log(`    ⚠️ PDF download failed: ${pdfRes.status}`);
+                    console.log(`    ⚠️ ANTHROPIC_API_KEY not set — skipping grocery deals`);
                 }
-            } else {
-                console.log(`    ⚠️ ANTHROPIC_API_KEY not set — skipping grocery deals`);
+
+                // Fallback to cached deals if API failed
+                if (groceryDeals.length === 0 && cacheHasDeals) {
+                    groceryDeals = groceryCache.deals;
+                    console.log(`  📦 Using cached grocery deals as fallback (${groceryDeals.length} deals)`);
+                }
             }
         } catch (e) { console.log(`  ⚠️ John Herr's error: ${e.message}`); }
 

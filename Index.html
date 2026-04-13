@@ -683,29 +683,24 @@ function decorateFeedStars() {
         toggleFeedFromButton(btn);
     });
 
-    // Long-press for touch devices — prevent text selection on feed buttons
+    // Long-press for touch devices
     document.addEventListener('touchstart', function(e) {
         const btn = e.target.closest('.src-btn[data-feed]');
         if (!btn) return;
-        e.preventDefault(); // Block text selection / context menu
         didLongPress = false;
         pressTarget = btn;
         pressTimer = setTimeout(function() {
             didLongPress = true;
-            // Clear any text selection that snuck through
+            // Clear any text selection
             if (window.getSelection) window.getSelection().removeAllRanges();
             toggleFeedFromButton(pressTarget);
             pressTarget = null;
         }, 600);
-    }, { passive: false });
+    }, { passive: true });
 
     document.addEventListener('touchend', function(e) {
         clearTimeout(pressTimer);
         if (didLongPress) { e.preventDefault(); didLongPress = false; }
-        else if (pressTarget) {
-            // Short tap — let the normal click handler fire
-            pressTarget.click();
-        }
         pressTarget = null;
     });
 

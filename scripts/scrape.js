@@ -1563,6 +1563,8 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 const tags = ev.tags || [];
                 if (!tags.includes('PM') || !tags.includes('Athletics')) continue;
                 if (ev.gameResult) continue;
+                // MaxPreps only tracks varsity — skip JV and Jr High
+                if (tags.includes('JV') || tags.includes('Jr High')) continue;
                 
                 const evDate = ev.date.substring(0, 10);
                 const evTitle = (ev.title || '').toLowerCase();
@@ -1607,6 +1609,8 @@ Focus on the most impressive deals a shopper would want to know about. Include m
             for (const ev of events) {
                 if (ev.gameResult) continue; // Already has a score from MaxPreps
                 if (!ev.tags || !ev.tags.includes('PM')) continue;
+                // Hudl scores are varsity-level — skip JV and Jr High
+                if (ev.tags.includes('JV') || ev.tags.includes('Jr High')) continue;
                 const sportTag = ev.tags.find(t => sportToHudlId[t.toLowerCase()]);
                 if (!sportTag) continue;
 

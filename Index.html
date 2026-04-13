@@ -159,7 +159,7 @@
                 <button class="src-btn" id="ev-src-borough" data-feed="borough-" onclick="toggleEventSource('Borough')">🌳 Borough</button>
                 <button class="src-btn" id="ev-src-other" data-feed="other-" onclick="toggleEventSource('Other')">🎸 Other</button>
             </div>
-            <button class="src-btn" id="ev-kid-toggle" data-feed="family-events" onclick="toggleKidFriendly()" title="Family Friendly Events">👨‍👩‍👧 Family</button>
+            <button class="family-toggle" id="ev-kid-toggle" data-feed="family-events" onclick="toggleKidFriendly()" title="Family Friendly Events">👨‍👩‍👧</button>
         </div>
         <div id="ev-sub-container" class="sub-filter-bar"></div>
         <div style="text-align:right;margin-bottom:12px;"><button onclick="openSubmitEvent()" class="btn btn-sm btn-outline" style="font-size:0.78rem;">📝 Submit an Event</button></div>
@@ -741,7 +741,7 @@ function decorateFeedStars() {
     // Intercept clicks on data-feed buttons in capture phase (before inline onclick)
     document.addEventListener('click', function(e) {
         const btn = e.target.closest('[data-feed]');
-        if (!btn || (!btn.classList.contains('src-btn') && !btn.classList.contains('sport-pill') && !btn.classList.contains('btn'))) return;
+        if (!btn || (!btn.classList.contains('src-btn') && !btn.classList.contains('sport-pill') && !btn.classList.contains('btn') && !btn.classList.contains('family-toggle'))) return;
 
         const now = Date.now();
         const isDoubleTap = (lastTapBtn === btn && now - lastTapTime < 400);

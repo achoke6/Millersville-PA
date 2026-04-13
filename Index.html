@@ -27,7 +27,7 @@
             <button class="search-toggle" onclick="openSearch()" title="Search" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--text-dark);">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             </button>
-            <button id="feed-gear" onclick="openFeedSettings()" title="My Feed" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--text-dark);position:relative;">
+            <button id="feed-gear" onclick="openFeedSettings()" title="My Favorites" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--text-dark);position:relative;">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
                 <span id="feed-dot" style="display:none;position:absolute;top:0;right:0;width:8px;height:8px;background:var(--gold);border-radius:50%;"></span>
             </button>
@@ -254,7 +254,7 @@
     <section id="view-news" class="app-view">
         <div class="filter-bar">
             <div class="filter-group" id="news-source-group">
-                <button class="src-btn" id="news-src-feed" onclick="setNewsSource('Feed', this)" style="display:none;">⚡ My Feed</button>
+                <button class="src-btn" id="news-src-feed" onclick="setNewsSource('Feed', this)" style="display:none;">⚡ My Favorites</button>
                 <button class="src-btn active" onclick="setNewsSource('All', this)">All</button>
                 <button class="src-btn" data-feed="news-mu" onclick="setNewsSource('Millersville News', this)">MU</button>
                 <button class="src-btn" data-feed="news-athletics" onclick="setNewsSource('MU Athletics', this)">🏅 MU Athletics</button>
@@ -588,7 +588,7 @@ window.openFeedSettings = function() {
 
     modal.innerHTML = `
         <button onclick="this.closest('div[style*=fixed]').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);">✕</button>
-        <h3 style="margin-bottom:4px;">⚙️ My Feed</h3>
+        <h3 style="margin-bottom:4px;">⚙️ My Favorites</h3>
         <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:16px;">Pick what shows on your homepage and defaults on Events & Sports pages.</p>
         <div id="feed-options">${sectionsHtml}</div>
         <div style="display:flex;gap:8px;margin-top:16px;">
@@ -661,7 +661,7 @@ function decorateFeedStars() {
             const star = document.createElement('span');
             star.className = 'feed-star';
             star.textContent = '★';
-            star.style.cssText = 'color:var(--gold);font-size:0.6rem;position:absolute;top:-2px;right:-2px;pointer-events:none;';
+            star.style.cssText = 'color:var(--gold);font-size:0.75rem;position:absolute;top:-4px;right:-4px;pointer-events:none;text-shadow:0 0 2px rgba(0,0,0,0.15);';
             btn.style.position = 'relative';
             btn.appendChild(star);
         }
@@ -1110,7 +1110,7 @@ function renderEvents(){
         const otherItems = filtered.filter(e => !eventMatchesFeed(e));
         let html = '';
         if (feedItems.length > 0) {
-            html += '<div class="feed-pinned-header"><span>⚡ My Feed</span></div>';
+            html += '<div class="feed-pinned-header"><span>⚡ My Favorites</span></div>';
             html += feedItems.map(e => buildEventCard(e, false)).join('');
             if (otherItems.length > 0) {
                 html += '<div class="feed-divider"><span>All Events</span></div>';
@@ -1227,7 +1227,7 @@ function renderSports(){
         const otherItems = filtered.filter(e => !eventMatchesFeed(e));
         let html = '';
         if (feedItems.length > 0) {
-            html += '<div class="feed-pinned-header"><span>⚡ My Feed</span></div>';
+            html += '<div class="feed-pinned-header"><span>⚡ My Favorites</span></div>';
             html += feedItems.map(e => buildEventCard(e, true)).join('');
             if (otherItems.length > 0) {
                 html += '<div class="feed-divider"><span>All Games</span></div>';

@@ -674,16 +674,16 @@ async function runScraper() {
             const sportId = sportToHudlId[sportTag.toLowerCase()];
             const key = `${evDate}|${sportId}|${gender}`;
 
-            // Broadcast link (full replay / livestream)
+            // Broadcast link (actual stream / livestream)
             const broadcast = hudlBroadcasts.get(key);
             if (broadcast) {
                 const watchDate = new Date(broadcast.timeUtc).toISOString();
                 ev.streamLink = `https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/schedule?date=${encodeURIComponent(watchDate)}&range=Day&s=${encodeURIComponent(broadcast.id)}`;
                 matchCount++;
             } else {
-                // No broadcast flag, but if game is tracked on Hudl, link to Hudl page
+                // No broadcast — only link past games for potential highlights
                 const hudlEntry = hudlAllEntries.get(key);
-                if (hudlEntry) {
+                if (hudlEntry && new Date(ev.date) < now) {
                     const watchDate = new Date(hudlEntry.timeUtc).toISOString();
                     ev.streamLink = `https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/schedule?date=${encodeURIComponent(watchDate)}&range=Day&s=${encodeURIComponent(hudlEntry.id)}`;
                     highlightCount++;

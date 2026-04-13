@@ -48,26 +48,61 @@
   "John Herr's Village Market": {
     "note": "Weekly deals · Wed–Tue · 20 Crossgates Dr",
     "weekly": [
-      "Boneless Ribeye (Delmonico) Steak – $16.99/lb (Value Pack, Select Beef)",
-      "Certified Angus Beef Chuck Roast – $7.99/lb (Premium quality)",
-      "Fresh Ground Sirloin – $6.49/lb (Value Pack, Certified Angus Beef)",
-      "Choice Beef Mock Tender Boneless Chuck Eye Roast – $6.49/lb (Choice grade beef)",
-      "John F. Martin Oak Roasted Chicken Breast – $5.99/lb (Deli quality)"
+      "Boneless Ribeye Delmonico Steak – $16.99/lb (Value Pack Select Beef)",
+      "Choice Beef Meaty Chuck Roast – $6.49/lb (Premium cut)",
+      "Certified Angus Beef Boneless Chuck Roast – $7.99/lb (Premium Certified Angus)",
+      "Fresh Ground Sirloin – $6.49/lb (Less Amount $6.99/lb)",
+      "Bone-in Chicken Thighs – $1.99/lb (Value Pack Fresh All Natural)"
     ],
-    "weeklyDateRange": "Thu Apr 9 - Wed Apr 15, 2026",
+    "weeklyDateRange": "Thu Apr 9 - Wed Apr 15",
     "rawDeals": [
       {
-        "item": "Boneless Ribeye (Delmonico) Steak",
+        "item": "Boneless Ribeye Delmonico Steak",
         "salePrice": "$16.99/lb",
         "regularPrice": "$17.99/lb",
-        "savings": "Value Pack, Select Beef",
+        "savings": "Value Pack Select Beef",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Certified Angus Beef Chuck Roast",
+        "item": "Choice Beef Meaty Chuck Roast",
+        "salePrice": "$6.49/lb",
+        "regularPrice": "",
+        "savings": "Premium cut",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Certified Angus Beef Boneless Chuck Roast",
         "salePrice": "$7.99/lb",
         "regularPrice": "",
-        "savings": "Premium quality",
+        "savings": "Premium Certified Angus",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Fresh Ground Sirloin",
+        "salePrice": "$6.49/lb",
+        "regularPrice": "$6.99/lb",
+        "savings": "Less Amount $6.99/lb",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Bone-in Chicken Thighs",
+        "salePrice": "$1.99/lb",
+        "regularPrice": "$2.49/lb",
+        "savings": "Value Pack Fresh All Natural",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Bone-in Pork Butt",
+        "salePrice": "$1.99/lb",
+        "regularPrice": "",
+        "savings": "Fresh Whole",
+        "dateRange": "Thu Apr 9 - Wed Apr 15"
+      },
+      {
+        "item": "Smithfield Pork Tenderloins 18.4-27.2 oz",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
@@ -81,119 +116,91 @@
         "item": "Choice Beef Mock Tender Boneless Chuck Eye Roast",
         "salePrice": "$6.49/lb",
         "regularPrice": "",
-        "savings": "Choice grade beef",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
         "item": "John F. Martin Oak Roasted Chicken Breast",
         "salePrice": "$5.99/lb",
         "regularPrice": "",
-        "savings": "Deli quality",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Bone-In Chicken Thighs",
-        "salePrice": "$1.99/lb",
-        "regularPrice": "$2.48/lb",
-        "savings": "Value Pack, Fresh All Natural",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
-      },
-      {
-        "item": "Fresh Whole Pork Butt",
-        "salePrice": "$1.99/lb",
+        "item": "Martin's Potato Rolls 7-10.5 oz",
+        "salePrice": "Buy 1 Get 1 FREE",
         "regularPrice": "",
-        "savings": "Bone-In",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Medium Premium Roast Beef",
-        "salePrice": "$14.99/lb",
+        "item": "Rana Family Size Pasta 20 oz",
+        "salePrice": "Buy 1 Get 1 FREE",
         "regularPrice": "",
-        "savings": "Dietz & Watson deli",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Honey Turkey Breast",
-        "salePrice": "$12.99/lb",
+        "item": "Food Club Long Grain White Rice 16 oz",
+        "salePrice": "Buy 1 Get 1 FREE",
         "regularPrice": "",
-        "savings": "Dietz & Watson deli",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Gourmet HAM Cooked Ham",
-        "salePrice": "$9.99/lb",
+        "item": "Michelina's Frozen Entrees 4.5-6.5 oz",
+        "salePrice": "Buy 1 Get 1 FREE",
         "regularPrice": "",
-        "savings": "Dietz & Watson deli",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "California Seedless Navel Oranges",
-        "salePrice": "$7.99",
+        "item": "Lindy's Italian Ice 6 oz",
+        "salePrice": "Buy 1 Get 1 FREE",
         "regularPrice": "",
-        "savings": "8 lb bag",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Atlantic Salmon Fillet",
-        "salePrice": "$9.99/lb",
+        "item": "Mott's 5g Nutrients Applesauce 64 oz",
+        "salePrice": "Buy 1 Get 1 FREE",
         "regularPrice": "",
-        "savings": "Fresh, Whole",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Muso-Ct Raw Peeled & Deveined Shrimp",
-        "salePrice": "$6.99/lb",
+        "item": "Food Club Muffin Mix 20 oz",
+        "salePrice": "Buy 1 Get 1 FREE",
         "regularPrice": "",
-        "savings": "1 lb bag, tail-off",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Nesquik Chocolate Milk",
-        "salePrice": "$12.98",
+        "item": "ChapStick Lip Care 3-3.5 oz",
+        "salePrice": "Buy 1 Get 1 FREE",
         "regularPrice": "",
-        "savings": "12-Pack ready to drink",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Spartan Paper Towels",
-        "salePrice": "$7.98",
-        "regularPrice": "$8.98",
-        "savings": "6-ct double roll with digital coupon",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
-      },
-      {
-        "item": "Purina Beneful Dog Food",
-        "salePrice": "$20.48",
+        "item": "Q-tips Cotton Swabs 300-375 ct",
+        "salePrice": "Buy 1 Get 1 FREE",
         "regularPrice": "",
-        "savings": "14-lb selected varieties",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Little Potato Company Potatoes",
-        "salePrice": "2/$7",
+        "item": "Simply Done Facial Tissue 144 ct",
+        "salePrice": "Buy 1 Get 1 FREE",
         "regularPrice": "",
-        "savings": "24-oz varieties",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       },
       {
-        "item": "Lewis Bakery Hamburger Buns",
-        "salePrice": "$2.48",
+        "item": "McCafe Single Serve K-Cup Coffee 10 ct",
+        "salePrice": "Buy 1 Get 1 FREE",
         "regularPrice": "",
-        "savings": "8-ct",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
-      },
-      {
-        "item": "Ritz Bits or Crackers",
-        "salePrice": "$3.98",
-        "regularPrice": "",
-        "savings": "8 to 13.7-oz selected varieties",
-        "dateRange": "Thu Apr 9 - Wed Apr 15"
-      },
-      {
-        "item": "Ore-Ida Frozen Potatoes",
-        "salePrice": "2/$6",
-        "regularPrice": "",
-        "savings": "19 to 32-oz selected varieties",
+        "savings": "BOGO Deal",
         "dateRange": "Thu Apr 9 - Wed Apr 15"
       }
     ]

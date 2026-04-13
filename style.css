@@ -103,6 +103,8 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .card-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
 @media (min-width: 640px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1024px) { .card-grid { grid-template-columns: repeat(3, 1fr); } }
+.feed-pinned-header { grid-column: 1 / -1; padding: 8px 0 4px; font-size: 0.85rem; font-weight: 700; color: var(--gold); border-bottom: 2px solid var(--gold); margin-bottom: 4px; }
+.feed-divider { grid-column: 1 / -1; padding: 12px 0 4px; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); border-top: 1px solid var(--border); margin-top: 8px; }
 
 /* =========================================================
    6. CARDS
@@ -229,6 +231,7 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .src-btn { background: var(--surface); border: 1.5px solid var(--border); color: var(--text); padding: 7px 14px; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: var(--transition); font-family: inherit; display: flex; align-items: center; gap: 4px; }
 .src-btn:hover { border-color: var(--gold); }
 .src-btn.active { background: var(--gold); color: #000; border-color: var(--gold); }
+.src-btn[data-feed] { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
 .btn-icon { vertical-align: middle; margin-right: 2px; flex-shrink: 0; }
 
 /* Clear button: sits in toolbar-row, right-aligned, hidden by default */

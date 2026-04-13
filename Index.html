@@ -151,14 +151,14 @@
             <button class="nav-arrow" id="ev-next" onclick="evNavNext()">→</button>
         </div>
         <div class="filter-bar ev-source-row">
-            <div class="filter-group">
-                <button class="src-btn active" id="ev-src-all" onclick="setEventSource('All', this)">All</button>
-                <button class="src-btn" id="ev-src-mu" data-feed="mu-" onclick="setEventSource('MU', this)">🏴‍☠️ MU</button>
-                <button class="src-btn" id="ev-src-gi" data-feed="clubs-" onclick="setEventSource('Clubs/Orgs', this)">🎓 MU Clubs</button>
-                <button class="src-btn" id="ev-src-pm" data-feed="pm-" onclick="setEventSource('PM', this)"><svg class="btn-icon" width="14" height="14"><use href="#icon-comet"/></svg> PM</button>
-                <button class="src-btn" id="ev-src-borough" data-feed="borough-" onclick="setEventSource('Borough', this)">🌳 Borough</button>
-                <button class="src-btn" id="ev-src-other" data-feed="other-" onclick="setEventSource('Other', this)">🎸 Other</button>
-                <button class="src-btn" id="ev-src-community" data-feed="other-community" onclick="setEventSource('Community', this)">📝 Community</button>
+            <div class="filter-group" id="ev-source-group">
+                <button class="src-btn active" id="ev-src-all" onclick="setEventSourceAll()">All</button>
+                <button class="src-btn" id="ev-src-mu" data-feed="mu-" onclick="toggleEventSource('MU')">🏴‍☠️ MU</button>
+                <button class="src-btn" id="ev-src-gi" data-feed="clubs-" onclick="toggleEventSource('Clubs/Orgs')">🎓 MU Clubs</button>
+                <button class="src-btn" id="ev-src-pm" data-feed="pm-" onclick="toggleEventSource('PM')"><svg class="btn-icon" width="14" height="14"><use href="#icon-comet"/></svg> PM</button>
+                <button class="src-btn" id="ev-src-borough" data-feed="borough-" onclick="toggleEventSource('Borough')">🌳 Borough</button>
+                <button class="src-btn" id="ev-src-other" data-feed="other-" onclick="toggleEventSource('Other')">🎸 Other</button>
+                <button class="src-btn" id="ev-src-community" data-feed="other-community" onclick="toggleEventSource('Community')">📝 Community</button>
             </div>
             <button class="family-toggle" id="ev-kid-toggle" onclick="toggleKidFriendly()" title="Family Friendly Events">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -255,7 +255,6 @@
     <section id="view-news" class="app-view">
         <div class="filter-bar">
             <div class="filter-group" id="news-source-group">
-                <button class="src-btn" id="news-src-feed" onclick="setNewsSource('Feed', this)" style="display:none;">⚡ My Favorites</button>
                 <button class="src-btn active" onclick="setNewsSource('All', this)">All</button>
                 <button class="src-btn" data-feed="news-mu" onclick="setNewsSource('Millersville News', this)">MU</button>
                 <button class="src-btn" data-feed="news-athletics" onclick="setNewsSource('MU Athletics', this)">🏅 MU Athletics</button>
@@ -438,7 +437,9 @@
 (function(){const _f=window.fetch,_v=Math.floor(Date.now()/3600000);window.fetch=function(u,o){if(typeof u==='string'&&u.endsWith('.json'))u+=(/\?/.test(u)?'&':'?')+'_='+_v;return _f.call(this,u,o);}})();
 
 let allEvents=[], currentNews=[], allRestaurants=[];
-let evSource='All', evTags=new Set();
+const allEvSources = ['MU','Clubs/Orgs','PM','Borough','Other','Community'];
+let evActiveSources = new Set(allEvSources), evTags=new Set();
+let evAllMode = true;
 let evKidMode=false;
 
 // ==================== MY FEED SYSTEM ====================
@@ -617,12 +618,6 @@ window.saveFeedFromModal = function() {
     const selected = [...document.querySelectorAll('.feed-sub:checked')].map(cb => cb.value);
     if (selected.length === 0) { clearFeedPrefs(); return; }
     saveFeedPrefs(selected);
-    // News feed activation
-    const newsFeedBtn = document.getElementById('news-src-feed');
-    if (newsFeedBtn) { newsFeedBtn.style.display = ''; }
-    newsSource = 'Feed';
-    document.querySelectorAll('#news-source-group .src-btn').forEach(b => b.classList.remove('active'));
-    if (newsFeedBtn) newsFeedBtn.classList.add('active');
     renderHomeFeed();
     renderEvents(); renderSports(); renderNewsUI();
     decorateFeedStars();
@@ -633,12 +628,6 @@ window.clearFeedPrefs = function() {
     feedPrefs = null;
     const dot = document.getElementById('feed-dot');
     if (dot) dot.style.display = 'none';
-    // Reset news
-    const newsFeedBtn = document.getElementById('news-src-feed');
-    if (newsFeedBtn) { newsFeedBtn.style.display = 'none'; newsFeedBtn.classList.remove('active'); }
-    newsSource = 'All';
-    document.querySelectorAll('#news-source-group .src-btn').forEach(b => b.classList.remove('active'));
-    document.querySelector('#news-source-group .src-btn')?.classList.add('active');
     renderHomeFeed();
     renderEvents(); renderSports(); renderNewsUI();
     decorateFeedStars();
@@ -747,10 +736,8 @@ function toggleFeedFromButton(btn) {
         clearFeedPrefs();
     } else {
         saveFeedPrefs(prefs);
-        const nfb = document.getElementById('news-src-feed');
-        if (nfb) nfb.style.display = '';
         renderHomeFeed();
-        renderEvents(); renderSports();
+        renderEvents(); renderSports(); renderNewsUI();
         decorateFeedStars();
     }
 
@@ -1022,15 +1009,6 @@ window.switchView=function(view,skipPush){
 async function loadEvents(){
     try{const res=await fetch('events.json'); if(!res.ok) return;
     allEvents=await res.json(); allEvents.sort((a,b)=>new Date(a.date)-new Date(b.date));
-    const hasFeed = feedPrefs && feedPrefs.length > 0;
-    // News feed auto-activation
-    const newsFeedBtn = document.getElementById('news-src-feed');
-    if (newsFeedBtn) newsFeedBtn.style.display = hasFeed ? '' : 'none';
-    if (hasFeed) {
-        newsSource = 'Feed';
-        document.querySelectorAll('#news-source-group .src-btn').forEach(b => b.classList.remove('active'));
-        if (newsFeedBtn) newsFeedBtn.classList.add('active');
-    }
     updateModeUI('ev',evMode,evAnchorDate);
     updateModeUI('sp',spMode,spAnchorDate);
     renderEvents(); renderSports();
@@ -1040,29 +1018,47 @@ async function loadEvents(){
 }
 
 /* ==================== EVENTS PAGE ==================== */
-window.setEventSource=function(src,btn){
-    evSource=src; evTags.clear();
-    btn.closest('.filter-group').querySelectorAll('.src-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active'); renderEvSubFilters(); renderEvents();
+window.setEventSourceAll=function(){
+    evAllMode = true;
+    evActiveSources = new Set(allEvSources);
+    evTags.clear();
+    updateEventsUI();
+    renderEvents();
 };
-function renderEvSubFilters(){
-    const c=document.getElementById('ev-sub-container'); c.innerHTML='';
-    const subs=evSubMap[evSource];
-    if(!subs){c.classList.remove('active');return;} c.classList.add('active');
-    subs.forEach(tag=>{
-        const b=document.createElement('button'); b.className='sub-btn'; b.textContent=tag;
-        b.onclick=()=>{
-            if(evTags.has(tag)) evTags.delete(tag);
-            else{subs.forEach(t=>evTags.delete(t)); evTags.add(tag);}
-            c.querySelectorAll('.sub-btn').forEach(x=>x.classList.toggle('active',evTags.has(x.textContent)));
-            renderEvents();
-        }; c.appendChild(b);
+window.toggleEventSource=function(src){
+    evAllMode = false;
+    if (evActiveSources.size === allEvSources.length && allEvSources.every(s => evActiveSources.has(s))) {
+        evActiveSources = new Set([src]);
+    } else {
+        if(evActiveSources.has(src)) evActiveSources.delete(src);
+        else evActiveSources.add(src);
+    }
+    if (evActiveSources.size === allEvSources.length) evAllMode = true;
+    evTags.clear();
+    updateEventsUI();
+    renderEvents();
+};
+function updateEventsUI(){
+    const allBtn = document.getElementById('ev-src-all');
+    if (allBtn) allBtn.classList.toggle('active', evAllMode);
+    const srcMap = {'MU':'mu','Clubs/Orgs':'gi','PM':'pm','Borough':'borough','Other':'other','Community':'community'};
+    allEvSources.forEach(src => {
+        const btn = document.getElementById('ev-src-' + srcMap[src]);
+        if (btn) btn.classList.toggle('active', !evAllMode && evActiveSources.has(src));
     });
+    const evLabel = document.getElementById('ev-event-label');
+    if (evLabel) evLabel.textContent = evKidMode ? 'Family Friendly:' : 'All Events:';
+    const isClean = evAllMode && evTags.size === 0 && evMode === 'upcoming' && !evKidMode;
+    document.getElementById('ev-clear-btn').style.display = isClean ? 'none' : 'flex';
+}
+function renderEvSubFilters(){
+    const c=document.getElementById('ev-sub-container'); c.innerHTML=''; c.classList.remove('active');
 }
 window.setEvMode=function(mode){
     evMode=mode;
     if(mode==='day'||mode==='week') evAnchorDate=todayMidnight();
     updateModeUI('ev',evMode,evAnchorDate);
+    updateEventsUI();
     renderEvents();
 };
 window.evNavPrev=function(){
@@ -1080,22 +1076,32 @@ window.evNavNext=function(){
 window.toggleKidFriendly=function(){
     evKidMode=!evKidMode;
     document.getElementById('ev-kid-toggle').classList.toggle('active',evKidMode);
-    const evLabel=document.getElementById('ev-event-label');
-    if(evLabel) evLabel.textContent=evKidMode?'Family Friendly:':'All Events:';
+    updateEventsUI();
     renderEvents();
 };
-window.clearEventFilters=function(){evTags.clear();evSource='All';evMode='upcoming';evKidMode=false;evAnchorDate=todayMidnight();document.getElementById('ev-kid-toggle').classList.remove('active');const evl=document.getElementById('ev-event-label');if(evl)evl.textContent='All Events:';document.getElementById('ev-src-all').click();updateModeUI('ev',evMode,evAnchorDate);};
+window.clearEventFilters=function(){
+    evTags.clear(); evAllMode=true; evActiveSources=new Set(allEvSources);
+    evMode='upcoming'; evKidMode=false; evAnchorDate=todayMidnight();
+    document.getElementById('ev-kid-toggle').classList.remove('active');
+    updateEventsUI(); updateModeUI('ev',evMode,evAnchorDate); renderEvents();
+};
 
 function renderEvents(){
     const range=getDateRange(evMode,evAnchorDate);
-    document.getElementById('ev-clear-btn').style.display=(evSource!=='All'||evTags.size>0||evMode!=='upcoming'||evKidMode)?'flex':'none';
+    updateEventsUI();
+    if(evActiveSources.size===0){
+        document.getElementById('ev-events-container').innerHTML='<p class="empty-state">Select a source to view events.</p>';
+        return;
+    }
     let filtered=allEvents.filter(e=>{
         if(isSportEvent(e)) return false;
         if(isPMSportByTitle(e)) return false;
         const d=localDateStr(e.date);
         if(d<range.start||d>range.end) return false;
-        if(!matchesSource(e.tags||[],evSource)) return false;
-        if(evTags.size>0&&!Array.from(evTags).every(t=>(e.tags||[]).includes(t))) return false;
+        const tags=e.tags||[];
+        const matchesAny=Array.from(evActiveSources).some(src=>matchesSource(tags,src));
+        if(!matchesAny) return false;
+        if(evTags.size>0&&!Array.from(evTags).every(t=>tags.includes(t))) return false;
         if(evKidMode&&!e.kidFriendly) return false;
         return true;
     });
@@ -1104,7 +1110,7 @@ function renderEvents(){
     const container=document.getElementById('ev-events-container');
     if(filtered.length===0){container.innerHTML='<p class="empty-state">No events found for this view.</p>';return;}
 
-    const showFavs = feedPrefs && feedPrefs.length > 0 && evSource === 'All';
+    const showFavs = feedPrefs && feedPrefs.length > 0 && evAllMode;
     if (showFavs) {
         const feedItems = filtered.filter(e => eventMatchesFeed(e));
         const otherItems = filtered.filter(e => !eventMatchesFeed(e));
@@ -1513,7 +1519,7 @@ window.setNewsSource=function(src,btn){
 
 function renderNewsSubFilters(){
     const c=document.getElementById('news-sub-container'); c.innerHTML='';
-    if(newsSource==='All'||newsSource==='Feed'){c.classList.remove('active');return;}
+    if(newsSource==='All'){c.classList.remove('active');return;}
     let filtered=currentNews.filter(n=>n.source===newsSource);
     const subs=new Set();
     filtered.forEach(n=>{
@@ -1534,10 +1540,18 @@ function renderNewsSubFilters(){
     });
 }
 
+function buildNewsCard(n) {
+    const sourceDisplay={'Millersville News':'MU','The Snapper':'MU Snapper'};
+    let tags=[];
+    if(n.source) tags.push(sourceDisplay[n.source]||n.source);
+    if(n.subCategory && !tags.includes(n.subCategory)) tags.push(n.subCategory);
+    if(n.tags) n.tags.forEach(t=>{if(!tags.includes(t)) tags.push(t);});
+    const tagHtml=tags.length?`<div class="card-tags">${tags.map(t=>`<span class="card-tag">${t}</span>`).join('')}</div>`:'';
+    return `<div class="app-card">${tagHtml}<p class="card-meta">${n.date}</p><h3 class="card-title">${n.title}</h3><a href="${n.link}" target="_blank" class="btn btn-sm btn-outline" style="margin-top:12px;">Read ➔</a></div>`;
+}
 function renderNewsUI(){
     const c=document.getElementById('news-container');
     let f=currentNews.filter(n=>{
-        if(newsSource==='Feed'){ return newsMatchesFeed(n); }
         if(newsSource!=='All'){
             if(n.source!==newsSource) return false;
         }
@@ -1547,16 +1561,25 @@ function renderNewsUI(){
         }
         return true;
     });
-    c.innerHTML=f.length?f.map(n=>{
-        // Map source names for display bubbles
-        const sourceDisplay={'Millersville News':'MU','The Snapper':'MU Snapper'};
-        let tags=[];
-        if(n.source) tags.push(sourceDisplay[n.source]||n.source);
-        if(n.subCategory && !tags.includes(n.subCategory)) tags.push(n.subCategory);
-        if(n.tags) n.tags.forEach(t=>{if(!tags.includes(t)) tags.push(t);});
-        const tagHtml=tags.length?`<div class="card-tags">${tags.map(t=>`<span class="card-tag">${t}</span>`).join('')}</div>`:'';
-        return `<div class="app-card">${tagHtml}<p class="card-meta">${n.date}</p><h3 class="card-title">${n.title}</h3><a href="${n.link}" target="_blank" class="btn btn-sm btn-outline" style="margin-top:12px;">Read ➔</a></div>`;
-    }).join(''):'<p class="empty-state">No news articles found.</p>';
+    if(f.length===0){ c.innerHTML='<p class="empty-state">No news articles found.</p>'; return; }
+
+    const showFavs = feedPrefs && feedPrefs.length > 0 && newsSource === 'All';
+    if (showFavs) {
+        const feedItems = f.filter(n => newsMatchesFeed(n));
+        const otherItems = f.filter(n => !newsMatchesFeed(n));
+        let html = '';
+        if (feedItems.length > 0) {
+            html += '<div class="feed-pinned-header"><span>⚡ My Favorites</span></div>';
+            html += feedItems.map(n => buildNewsCard(n)).join('');
+            if (otherItems.length > 0) {
+                html += '<div class="feed-divider"><span>All News</span></div>';
+            }
+        }
+        html += otherItems.map(n => buildNewsCard(n)).join('');
+        c.innerHTML = html;
+    } else {
+        c.innerHTML = f.map(n => buildNewsCard(n)).join('');
+    }
     injectInlineAds('news-container','news');
 }
 async function loadDining(){try{

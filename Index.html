@@ -136,7 +136,6 @@
             <div class="toolbar-center">
                 <button class="nav-arrow" id="ev-prev" onclick="evNavPrev()">←</button>
                 <div class="view-mode-group">
-                    <button class="mode-btn" id="ev-mode-past" onclick="setEvMode('past')">Past</button>
                     <button class="mode-btn" id="ev-mode-day" onclick="setEvMode('day')">Day</button>
                     <button class="mode-btn active" id="ev-mode-week" onclick="setEvMode('week')">Week</button>
                 </div>
@@ -144,7 +143,9 @@
                 <span id="ev-date-label" class="date-label-inline"></span>
             </div>
             <div class="toolbar-right">
-                <button id="ev-clear-btn" class="filter-clear-x" onclick="clearEventFilters()" style="display:none;">✕</button>
+                <button class="family-toggle" id="ev-kid-toggle" data-feed="family-events" onclick="toggleKidFriendly()" title="Family Friendly Events">👨‍👩‍👧</button>
+                <button onclick="openSubmitEvent()" class="btn btn-sm btn-outline" style="font-size:0.72rem;padding:5px 8px;">📝 Submit</button>
+                <button id="ev-clear-btn" class="clear-btn" onclick="clearEventFilters()" style="display:none;">Clear ✕</button>
                 <button id="ev-filter-toggle" class="filter-toggle" onclick="toggleEvFilters()">Filter <span id="ev-filter-arrow">▾</span></button>
             </div>
         </div>
@@ -157,10 +158,6 @@
                     <button class="src-btn" id="ev-src-pm" data-feed="pm-" onclick="toggleEventSource('PM')"><svg class="btn-icon" width="14" height="14"><use href="#icon-comet"/></svg> PM</button>
                     <button class="src-btn" id="ev-src-borough" data-feed="borough-" onclick="toggleEventSource('Borough')">🌳 Borough</button>
                     <button class="src-btn" id="ev-src-other" data-feed="other-" onclick="toggleEventSource('Other')">🎸 Other</button>
-                </div>
-                <div style="display:flex;align-items:center;gap:8px;">
-                    <button class="family-toggle" id="ev-kid-toggle" data-feed="family-events" onclick="toggleKidFriendly()" title="Family Friendly Events">👨‍👩‍👧</button>
-                    <button onclick="openSubmitEvent()" class="btn btn-sm btn-outline" style="font-size:0.75rem;">📝 Submit</button>
                 </div>
             </div>
             <div id="ev-sub-container" class="sub-filter-bar"></div>
@@ -175,7 +172,6 @@
             <div class="toolbar-center">
                 <button class="nav-arrow" id="sp-prev" onclick="spNavPrev()">←</button>
                 <div class="view-mode-group">
-                    <button class="mode-btn" id="sp-mode-past" onclick="setSpMode('past')">Past</button>
                     <button class="mode-btn" id="sp-mode-day" onclick="setSpMode('day')">Day</button>
                     <button class="mode-btn active" id="sp-mode-week" onclick="setSpMode('week')">Week</button>
                 </div>
@@ -183,7 +179,10 @@
                 <span id="sp-date-label" class="date-label-inline"></span>
             </div>
             <div class="toolbar-right">
-                <button id="sp-clear-btn" class="filter-clear-x" onclick="clearSportsFilters()" style="display:none;">✕</button>
+                <button class="home-toggle" id="hgame-toggle" onclick="toggleHomeGameMode()" title="Home Games Only">
+                    <svg width="20" height="20"><use href="#icon-house"/></svg>
+                </button>
+                <button id="sp-clear-btn" class="clear-btn" onclick="clearSportsFilters()" style="display:none;">Clear ✕</button>
                 <button id="sp-filter-toggle" class="filter-toggle" onclick="toggleSpFilters()">Filter <span id="sp-filter-arrow">▾</span></button>
             </div>
         </div>
@@ -195,9 +194,6 @@
                     <button class="src-btn" id="sp-src-mu" data-feed="mu-" onclick="toggleSportsSource('MU')">🏴‍☠️ MU</button>
                     <button class="src-btn" id="sp-src-clubs" data-feed="clubs-" onclick="toggleSportsSource('Clubs')">🎓 MU Clubs</button>
                 </div>
-                <button class="home-toggle" id="hgame-toggle" onclick="toggleHomeGameMode()" title="Home Games Only">
-                    <svg width="20" height="20"><use href="#icon-house"/></svg>
-                </button>
             </div>
             <div id="sp-sport-tags" class="sport-tag-row"></div>
         </div>
@@ -1128,7 +1124,7 @@ function updateEventsUI(){
     if (evLabel) evLabel.textContent = evKidMode ? 'Family Friendly:' : 'All Events:';
     const isCurrentWeek = toDateStr(getMonday(evAnchorDate)) === toDateStr(getMonday(todayMidnight()));
     const isClean = evAllMode && evTags.size === 0 && evMode === 'week' && !evKidMode && isCurrentWeek;
-    document.getElementById('ev-clear-btn').style.display = isClean ? 'none' : 'inline-block';
+    document.getElementById('ev-clear-btn').style.display = isClean ? 'none' : 'flex';
 }
 function renderEvSubFilters(){
     const c=document.getElementById('ev-sub-container'); c.innerHTML=''; c.classList.remove('active');
@@ -1288,7 +1284,7 @@ function updateSportsUI(){
     if(gameLabel) gameLabel.textContent=spHomeOnly?'Home Games:':'All Games:';
     const isCurrentWeek = toDateStr(getMonday(spAnchorDate)) === toDateStr(getMonday(todayMidnight()));
     const isClean = spAllMode && !spHomeOnly && !spSportTag && spMode==='week' && isCurrentWeek;
-    document.getElementById('sp-clear-btn').style.display = isClean ? 'none' : 'inline-block';
+    document.getElementById('sp-clear-btn').style.display = isClean ? 'none' : 'flex';
     // Show/hide arrows based on mode
     const showArrows=(spMode==='day'||spMode==='week');
     const prevBtn=document.getElementById('sp-prev');
@@ -1628,17 +1624,10 @@ async function loadHomeSpecials(){
             let items = [];
             if(sp.daily && sp.daily[dayName]) items = sp.daily[dayName];
 
-            // VFW: show recurring for today + weekly as "This Friday" specials
+            // VFW: show recurring for today + weekly specials
             if (restaurant === 'VFW Post 7294') {
                 if(sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
-                if(sp.weekly && sp.weekly.length > 0) {
-                    if (dayName === 'Friday') {
-                        items = [...items, ...sp.weekly];
-                    } else {
-                        items.push('🍽️ This Friday:');
-                        items = [...items, ...sp.weekly];
-                    }
-                }
+                if(sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
             } else {
                 if(sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
                 if(sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
@@ -1793,17 +1782,10 @@ async function loadDining(){try{
             let items=[];
             if(sp.daily && sp.daily[dayName]) items = sp.daily[dayName];
 
-            // VFW: show recurring for today + weekly as "This Friday" specials
+            // VFW: show recurring for today + weekly specials
             if (p.name === 'VFW Post 7294') {
                 if(sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
-                if(sp.weekly && sp.weekly.length > 0) {
-                    if (dayName === 'Friday') {
-                        items = [...items, ...sp.weekly];
-                    } else {
-                        items.push('🍽️ This Friday:');
-                        items = [...items, ...sp.weekly];
-                    }
-                }
+                if(sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
             } else {
                 if(sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
                 if(sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);

@@ -69,46 +69,28 @@
 
     <!-- HOME -->
     <section id="view-home" class="app-view active">
-        <!-- Weather Hero -->
-        <div id="home-weather" class="home-weather-hero" onclick="switchView('weather')" style="cursor:pointer;"><p>Loading weather...</p></div>
-
-        <!-- Feed CTA (shown when no feed configured) -->
-        <div id="home-feed-cta" class="home-section" style="display:none;">
-            <div style="background:linear-gradient(135deg,var(--navy),#1e3a5f);border-radius:var(--radius);padding:20px;text-align:center;color:white;cursor:pointer;" onclick="openFeedSettings()">
-                <p style="font-size:1.1rem;font-weight:700;margin-bottom:4px;">⚙️ Personalize Your Feed</p>
-                <p style="font-size:0.85rem;opacity:0.85;">Pick your interests — PM sports, MU events, local news — and see only what matters to you.</p>
-            </div>
+        <!-- Compact Weather Bar -->
+        <div id="home-weather-bar" class="home-weather-bar" onclick="switchView('weather')" style="cursor:pointer;">
+            <p>Loading weather...</p>
         </div>
 
-        <!-- Today's Games -->
+        <!-- Today in Millersville — combined timeline -->
         <div class="home-section">
             <div class="home-section-header">
-                <h3 class="home-section-title">🏆 Today's Games</h3>
-                <div style="display:flex;align-items:center;gap:8px;">
-                    <button id="home-hgame-toggle" onclick="toggleHomeGames()" class="btn btn-sm btn-outline" style="font-size:0.7rem;padding:3px 8px;">🏠 Home Only</button>
-                    <a href="#" onclick="event.preventDefault();switchView('sports');" class="home-more-link">All Sports →</a>
+                <h3 class="home-section-title">📅 Today in Millersville</h3>
+                <div style="display:flex;gap:12px;">
+                    <a href="#" onclick="event.preventDefault();switchView('events');" class="home-more-link">Events →</a>
+                    <a href="#" onclick="event.preventDefault();switchView('sports');" class="home-more-link">Sports →</a>
                 </div>
             </div>
-            <div id="home-today-games" class="home-scroll-row"></div>
+            <div id="home-timeline"></div>
         </div>
 
-        <!-- Today's Events -->
+        <!-- Today's Specials -->
         <div class="home-section">
             <div class="home-section-header">
-                <h3 class="home-section-title">📅 Today's Events</h3>
-                <div style="display:flex;align-items:center;gap:8px;">
-                    <button id="home-kid-toggle" data-feed="family-events" onclick="toggleHomeKidMode()" class="btn btn-sm btn-outline" style="font-size:0.7rem;padding:3px 8px;">👨‍👩‍👧 Family</button>
-                    <a href="#" onclick="event.preventDefault();switchView('events');" class="home-more-link">All Events →</a>
-                </div>
-            </div>
-            <div id="home-today-events" class="home-scroll-row"></div>
-        </div>
-
-        <!-- Food Specials -->
-        <div class="home-section">
-            <div class="home-section-header">
-                <h3 class="home-section-title">🍴 Today's Specials</h3>
-                <a href="#" onclick="event.preventDefault();switchView('food');" class="home-more-link">View All →</a>
+                <h3 class="home-section-title">🍴 Specials & Deals</h3>
+                <a href="#" onclick="event.preventDefault();switchView('food');" class="home-more-link">All Food →</a>
             </div>
             <div id="home-specials" class="home-scroll-row"></div>
         </div>
@@ -119,16 +101,33 @@
                 <h3 class="home-section-title">📰 Latest News</h3>
                 <a href="#" onclick="event.preventDefault();switchView('news');" class="home-more-link">All News →</a>
             </div>
-            <div id="home-news" class="home-scroll-row"></div>
+            <div id="home-news-list"></div>
         </div>
 
-        <!-- Sponsors Banner (always visible, dynamically loaded) -->
+        <!-- Community Board -->
+        <div class="home-section" id="home-board-section" style="display:none;">
+            <div class="home-section-header">
+                <h3 class="home-section-title">📋 Community Board</h3>
+                <a href="#" onclick="event.preventDefault();switchView('board');" class="home-more-link">View All →</a>
+            </div>
+            <div id="home-board-preview"></div>
+        </div>
+
+        <!-- Sponsors -->
         <div class="home-section" style="margin-top:8px;">
             <div class="home-section-header">
                 <h3 class="home-section-title">⭐ Our Sponsors</h3>
                 <a href="#" onclick="event.preventDefault();switchView('advertise');" class="home-more-link">Become a Sponsor →</a>
             </div>
             <div id="home-sponsors" class="sponsors-banner"></div>
+        </div>
+
+        <!-- Feed CTA (bottom, for new users) -->
+        <div id="home-feed-cta" class="home-section" style="display:none;">
+            <div class="home-feed-cta-box" onclick="openFeedSettings()">
+                <p style="font-size:0.95rem;font-weight:700;margin-bottom:4px;">⚙️ Personalize Your Feed</p>
+                <p style="font-size:0.8rem;opacity:0.85;">Pick your interests to see your favorites first across Events, Sports, and News.</p>
+            </div>
         </div>
     </section>
 
@@ -137,30 +136,35 @@
         <div class="toolbar-row toolbar-three">
             <span id="ev-event-label" class="game-label">All Events:</span>
             <span id="ev-date-label" class="date-label"></span>
-            <button id="ev-clear-btn" class="clear-btn" onclick="clearEventFilters()">Clear ✖</button>
-        </div>
-        <div class="view-mode-bar">
-            <button class="nav-arrow" id="ev-prev" onclick="evNavPrev()">←</button>
-            <div class="view-mode-group">
-                <button class="mode-btn" id="ev-mode-past" onclick="setEvMode('past')">Past</button>
-                <button class="mode-btn" id="ev-mode-upcoming" onclick="setEvMode('upcoming')">Upcoming</button>
-                <button class="mode-btn active" id="ev-mode-day" onclick="setEvMode('day')">Day</button>
-                <button class="mode-btn" id="ev-mode-week" onclick="setEvMode('week')">Week</button>
+            <div style="display:flex;align-items:center;gap:8px;">
+                <button id="ev-clear-btn" class="filter-clear-x" onclick="clearEventFilters()" style="display:none;">✕</button>
+                <button id="ev-filter-toggle" class="filter-toggle" onclick="toggleEvFilters()">Filter <span id="ev-filter-arrow">▾</span></button>
             </div>
-            <button class="nav-arrow" id="ev-next" onclick="evNavNext()">→</button>
         </div>
-        <div class="filter-bar ev-source-row">
-            <div class="filter-group" id="ev-source-group">
-                <button class="src-btn active" id="ev-src-all" onclick="setEventSourceAll()">All</button>
-                <button class="src-btn" id="ev-src-mu" data-feed="mu-" onclick="toggleEventSource('MU')">🏴‍☠️ MU</button>
-                <button class="src-btn" id="ev-src-gi" data-feed="clubs-" onclick="toggleEventSource('Clubs/Orgs')">🎓 MU Clubs</button>
-                <button class="src-btn" id="ev-src-pm" data-feed="pm-" onclick="toggleEventSource('PM')"><svg class="btn-icon" width="14" height="14"><use href="#icon-comet"/></svg> PM</button>
-                <button class="src-btn" id="ev-src-borough" data-feed="borough-" onclick="toggleEventSource('Borough')">🌳 Borough</button>
-                <button class="src-btn" id="ev-src-other" data-feed="other-" onclick="toggleEventSource('Other')">🎸 Other</button>
+        <div id="ev-filters-wrap" class="filters-collapsible">
+            <div class="view-mode-bar">
+                <button class="nav-arrow" id="ev-prev" onclick="evNavPrev()">←</button>
+                <div class="view-mode-group">
+                    <button class="mode-btn" id="ev-mode-past" onclick="setEvMode('past')">Past</button>
+                    <button class="mode-btn" id="ev-mode-day" onclick="setEvMode('day')">Day</button>
+                    <button class="mode-btn active" id="ev-mode-week" onclick="setEvMode('week')">Week</button>
+                </div>
+                <button class="nav-arrow" id="ev-next" onclick="evNavNext()">→</button>
             </div>
-            <button class="family-toggle" id="ev-kid-toggle" data-feed="family-events" onclick="toggleKidFriendly()" title="Family Friendly Events">👨‍👩‍👧</button>
+            <div class="filter-bar ev-source-row">
+                <div class="filter-group" id="ev-source-group">
+                    <button class="src-btn active" id="ev-src-all" onclick="setEventSourceAll()">All</button>
+                    <button class="src-btn" id="ev-src-mu" data-feed="mu-" onclick="toggleEventSource('MU')">🏴‍☠️ MU</button>
+                    <button class="src-btn" id="ev-src-gi" data-feed="clubs-" onclick="toggleEventSource('Clubs/Orgs')">🎓 MU Clubs</button>
+                    <button class="src-btn" id="ev-src-pm" data-feed="pm-" onclick="toggleEventSource('PM')"><svg class="btn-icon" width="14" height="14"><use href="#icon-comet"/></svg> PM</button>
+                    <button class="src-btn" id="ev-src-borough" data-feed="borough-" onclick="toggleEventSource('Borough')">🌳 Borough</button>
+                    <button class="src-btn" id="ev-src-other" data-feed="other-" onclick="toggleEventSource('Other')">🎸 Other</button>
+                </div>
+                <button class="family-toggle" id="ev-kid-toggle" data-feed="family-events" onclick="toggleKidFriendly()" title="Family Friendly Events">👨‍👩‍👧</button>
+            </div>
+            <div id="ev-sub-container" class="sub-filter-bar"></div>
         </div>
-        <div id="ev-sub-container" class="sub-filter-bar"></div>
+        <div id="ev-fav-tip" class="fav-tip" style="display:none;">★ Tip: double-tap any source to add it to your favorites</div>
         <div style="text-align:right;margin-bottom:12px;"><button onclick="openSubmitEvent()" class="btn btn-sm btn-outline" style="font-size:0.78rem;">📝 Submit an Event</button></div>
         <div id="ev-events-container" class="card-grid"></div>
     </section>
@@ -168,33 +172,38 @@
     <!-- SPORTS -->
     <section id="view-sports" class="app-view">
         <div class="toolbar-row toolbar-three">
-            <span id="sp-game-label" class="game-label">Home Games:</span>
+            <span id="sp-game-label" class="game-label">All Games:</span>
             <span id="sp-date-label" class="date-label"></span>
-            <button id="sp-clear-btn" class="clear-btn" onclick="clearSportsFilters()">Clear ✖</button>
-        </div>
-        <div class="view-mode-bar">
-            <button class="nav-arrow" id="sp-prev" onclick="spNavPrev()" style="display:none;">←</button>
-            <div class="view-mode-group">
-                <button class="mode-btn" id="sp-mode-past" onclick="setSpMode('past')">Past</button>
-                <button class="mode-btn active" id="sp-mode-upcoming" onclick="setSpMode('upcoming')">Upcoming</button>
-                <button class="mode-btn" id="sp-mode-day" onclick="setSpMode('day')">Day</button>
-                <button class="mode-btn" id="sp-mode-week" onclick="setSpMode('week')">Week</button>
+            <div style="display:flex;align-items:center;gap:8px;">
+                <button id="sp-clear-btn" class="filter-clear-x" onclick="clearSportsFilters()" style="display:none;">✕</button>
+                <button id="sp-filter-toggle" class="filter-toggle" onclick="toggleSpFilters()">Filter <span id="sp-filter-arrow">▾</span></button>
             </div>
-            <button class="nav-arrow" id="sp-next" onclick="spNavNext()" style="display:none;">→</button>
         </div>
-        <div class="filter-bar sp-source-row">
-            <div class="filter-group" id="sp-source-group">
-                <button class="src-btn active" id="sp-src-all" onclick="setSportsSourceAll(this)">All</button>
-                <button class="src-btn" id="sp-src-pm" data-feed="pm-" onclick="toggleSportsSource('PM')"><svg class="btn-icon" width="14" height="14"><use href="#icon-comet"/></svg> PM</button>
-                <button class="src-btn" id="sp-src-mu" data-feed="mu-" onclick="toggleSportsSource('MU')">🏴‍☠️ MU</button>
-                <button class="src-btn" id="sp-src-clubs" data-feed="clubs-" onclick="toggleSportsSource('Clubs')">🎓 MU Clubs</button>
+        <div id="sp-filters-wrap" class="filters-collapsible">
+            <div class="view-mode-bar">
+                <button class="nav-arrow" id="sp-prev" onclick="spNavPrev()">←</button>
+                <div class="view-mode-group">
+                    <button class="mode-btn" id="sp-mode-past" onclick="setSpMode('past')">Past</button>
+                    <button class="mode-btn" id="sp-mode-day" onclick="setSpMode('day')">Day</button>
+                    <button class="mode-btn active" id="sp-mode-week" onclick="setSpMode('week')">Week</button>
+                </div>
+                <button class="nav-arrow" id="sp-next" onclick="spNavNext()">→</button>
             </div>
-            <button class="home-toggle" id="hgame-toggle" onclick="toggleHomeGameMode()" title="Home Games Only">
-                <svg width="20" height="20"><use href="#icon-house"/></svg>
-            </button>
+            <div class="filter-bar sp-source-row">
+                <div class="filter-group" id="sp-source-group">
+                    <button class="src-btn active" id="sp-src-all" onclick="setSportsSourceAll(this)">All</button>
+                    <button class="src-btn" id="sp-src-pm" data-feed="pm-" onclick="toggleSportsSource('PM')"><svg class="btn-icon" width="14" height="14"><use href="#icon-comet"/></svg> PM</button>
+                    <button class="src-btn" id="sp-src-mu" data-feed="mu-" onclick="toggleSportsSource('MU')">🏴‍☠️ MU</button>
+                    <button class="src-btn" id="sp-src-clubs" data-feed="clubs-" onclick="toggleSportsSource('Clubs')">🎓 MU Clubs</button>
+                </div>
+                <button class="home-toggle" id="hgame-toggle" onclick="toggleHomeGameMode()" title="Home Games Only">
+                    <svg width="20" height="20"><use href="#icon-house"/></svg>
+                </button>
+            </div>
+            <div id="sp-sport-tags" class="sport-tag-row"></div>
         </div>
+        <div id="sp-fav-tip" class="fav-tip" style="display:none;">★ Tip: double-tap any source to add it to your favorites</div>
         <div id="sp-no-source" class="empty-state" style="display:none;">Select a source (PM, MU, or MU Clubs) to view games.</div>
-        <div id="sp-sport-tags" class="sport-tag-row"></div>
         <div id="sp-events-container" class="card-grid"></div>
     </section>
 
@@ -724,11 +733,12 @@ function decorateFeedStars() {
             const star = document.createElement('span');
             star.className = 'feed-star';
             star.textContent = '★';
-            star.style.cssText = 'color:var(--navy);font-size:0.75rem;position:absolute;top:1px;right:3px;pointer-events:none;text-shadow:0 0 1px rgba(255,255,255,0.5);';
+            star.style.cssText = 'color:var(--navy);font-size:0.7rem;position:absolute;top:-5px;right:-5px;pointer-events:none;text-shadow:0 0 2px rgba(255,255,255,0.8);line-height:1;';
             btn.style.position = 'relative';
             btn.appendChild(star);
         }
     });
+    updateFavTips();
 }
 
 // Double-tap/click to toggle favorites (works on both desktop and mobile)
@@ -831,20 +841,6 @@ function toggleFeedFromButton(btn) {
     setTimeout(() => { btn.style.transform = ''; }, 200);
 }
 
-// Homepage toggle state
-let homeHomeOnly = false, homeKidMode = false;
-
-window.toggleHomeGames = function() {
-    homeHomeOnly = !homeHomeOnly;
-    document.getElementById('home-hgame-toggle').classList.toggle('active', homeHomeOnly);
-    renderHomeUI();
-};
-window.toggleHomeKidMode = function() {
-    homeKidMode = !homeKidMode;
-    document.getElementById('home-kid-toggle').classList.toggle('active', homeKidMode);
-    renderHomeUI();
-};
-
 function renderHomeFeed() {
     const hasFeed = feedPrefs && feedPrefs.length > 0;
     const feedCta = document.getElementById('home-feed-cta');
@@ -854,11 +850,11 @@ function renderHomeFeed() {
 // ==================== END MY FEED ====================
 
 // View mode state for Events page
-let evMode='day', evAnchorDate=new Date();
+let evMode='week', evAnchorDate=new Date();
 
 // Sports page state
 let spActiveSources=new Set(['PM','MU','Clubs']), spSportTag=null, spHomeOnly=false;
-let spMode='upcoming', spAnchorDate=new Date();
+let spMode='week', spAnchorDate=new Date();
 
 const sportsList=['Baseball','Softball','Track','Soccer','Lacrosse','Tennis','Volleyball','Wrestling','Basketball','Football','Field Hockey','Golf','Cross Country','Cheerleading','Swimming','Rugby','Fencing','Esports','Archery'];
 const topSources=['MU','Clubs/Orgs','PM','Borough','Other'];
@@ -897,7 +893,7 @@ function getVisibleDateRange(events){
 }
 
 function updateModeUI(prefix,mode,anchor,filteredEvents){
-    ['past','upcoming','day','week'].forEach(m=>{
+    ['past','day','week'].forEach(m=>{
         const btn=document.getElementById(prefix+'-mode-'+m);
         if(btn) btn.classList.toggle('active',m===mode);
     });
@@ -1131,8 +1127,9 @@ function updateEventsUI(){
     });
     const evLabel = document.getElementById('ev-event-label');
     if (evLabel) evLabel.textContent = evKidMode ? 'Family Friendly:' : 'All Events:';
-    const isClean = evAllMode && evTags.size === 0 && evMode === 'upcoming' && !evKidMode;
-    document.getElementById('ev-clear-btn').style.display = isClean ? 'none' : 'flex';
+    const isCurrentWeek = toDateStr(getMonday(evAnchorDate)) === toDateStr(getMonday(todayMidnight()));
+    const isClean = evAllMode && evTags.size === 0 && evMode === 'week' && !evKidMode && isCurrentWeek;
+    document.getElementById('ev-clear-btn').style.display = isClean ? 'none' : 'inline-block';
 }
 function renderEvSubFilters(){
     const c=document.getElementById('ev-sub-container'); c.innerHTML=''; c.classList.remove('active');
@@ -1164,10 +1161,35 @@ window.toggleKidFriendly=function(){
 };
 window.clearEventFilters=function(){
     evTags.clear(); evAllMode=true; evActiveSources=new Set(allEvSources);
-    evMode='upcoming'; evKidMode=false; evAnchorDate=todayMidnight();
+    evMode='week'; evKidMode=false; evAnchorDate=todayMidnight();
     document.getElementById('ev-kid-toggle').classList.remove('active');
     updateEventsUI(); updateModeUI('ev',evMode,evAnchorDate); renderEvents();
 };
+
+// Collapsible filter toggles
+window.toggleEvFilters=function(){
+    const wrap = document.getElementById('ev-filters-wrap');
+    const arrow = document.getElementById('ev-filter-arrow');
+    const open = wrap.style.display !== 'none';
+    wrap.style.display = open ? 'none' : '';
+    arrow.textContent = open ? '▸' : '▾';
+};
+window.toggleSpFilters=function(){
+    const wrap = document.getElementById('sp-filters-wrap');
+    const arrow = document.getElementById('sp-filter-arrow');
+    const open = wrap.style.display !== 'none';
+    wrap.style.display = open ? 'none' : '';
+    arrow.textContent = open ? '▸' : '▾';
+};
+
+// Favorites tip — show until user creates first favorite
+function updateFavTips(){
+    const hasFeed = feedPrefs && feedPrefs.length > 0;
+    const evTip = document.getElementById('ev-fav-tip');
+    const spTip = document.getElementById('sp-fav-tip');
+    if(evTip) evTip.style.display = hasFeed ? 'none' : 'block';
+    if(spTip) spTip.style.display = hasFeed ? 'none' : 'block';
+}
 
 function renderEvents(){
     const range=getDateRange(evMode,evAnchorDate);
@@ -1252,15 +1274,16 @@ function updateSportsUI(){
     document.getElementById('sp-no-source').style.display = spActiveSources.size===0 ? 'block' : 'none';
     const gameLabel=document.getElementById('sp-game-label');
     if(gameLabel) gameLabel.textContent=spHomeOnly?'Home Games:':'All Games:';
-    const isClean = spAllMode && !spHomeOnly && !spSportTag && spMode==='upcoming';
-    document.getElementById('sp-clear-btn').style.display = isClean ? 'none' : 'flex';
+    const isCurrentWeek = toDateStr(getMonday(spAnchorDate)) === toDateStr(getMonday(todayMidnight()));
+    const isClean = spAllMode && !spHomeOnly && !spSportTag && spMode==='week' && isCurrentWeek;
+    document.getElementById('sp-clear-btn').style.display = isClean ? 'none' : 'inline-block';
     // Show/hide arrows based on mode
     const showArrows=(spMode==='day'||spMode==='week');
     const prevBtn=document.getElementById('sp-prev');
     const nextBtn=document.getElementById('sp-next');
     if(prevBtn) prevBtn.style.display=showArrows?'flex':'none';
     if(nextBtn) nextBtn.style.display=showArrows?'flex':'none';
-    ['past','upcoming','day','week'].forEach(m=>{
+    ['past','day','week'].forEach(m=>{
         const btn=document.getElementById('sp-mode-'+m);
         if(btn) btn.classList.toggle('active',m===spMode);
     });
@@ -1293,7 +1316,7 @@ window.toggleHomeGameMode=function(){
 window.clearSportsFilters=function(){
     spSportTag=null; spHomeOnly=false; spAllMode=true;
     spActiveSources=new Set(['PM','MU','Clubs']);
-    spMode='upcoming'; spAnchorDate=todayMidnight();
+    spMode='week'; spAnchorDate=todayMidnight();
     updateSportsUI();
     renderSports();
 };
@@ -1453,75 +1476,129 @@ function renderHomeUI(){
     const todayStr = toDateStr(todayMidnight());
     const hasFeed = feedPrefs && feedPrefs.length > 0;
 
-    // ===== TODAY'S GAMES (top section) =====
-    const todayGames = allEvents.filter(e => {
-        if(!isSportEvent(e) && !isPMSportByTitle(e)) return false;
+    // ===== COMBINED TIMELINE: games + events sorted by time =====
+    const todayAll = allEvents.filter(e => {
         if(localDateStr(e.date) !== todayStr) return false;
-        if(homeHomeOnly && !(e.tags||[]).includes('Home Game Mode') && !(e.tags||[]).includes('H Games')) return false;
-        if(hasFeed && !eventMatchesFeed(e)) return false;
-        return true;
-    }).slice(0, 10);
-    const gameContainer = document.getElementById('home-today-games');
-    if(todayGames.length === 0){
-        gameContainer.innerHTML = `<p class="home-empty">No ${homeHomeOnly?'home ':''}games scheduled today</p>`;
-    } else {
-        gameContainer.innerHTML = todayGames.map(e => {
-            const d = new Date(e.date);
-            const src = e.tags?.includes('PM') ? 'PM' : e.tags?.includes('Clubs/Orgs') ? 'MU Clubs' : 'MU';
-            const isHome = e.tags?.includes('Home Game Mode');
-            const homeTag = isHome ? ' 🏠' : '';
-            const awayTag = !isHome ? ' 📍' : '';
-            let scoreBadge = '';
-            if(e.gameResult && e.gameScore){
-                const cls = e.gameResult==='W' ? 'badge-win' : e.gameResult==='L' ? 'badge-loss' : 'badge-neutral';
-                scoreBadge = `<span class="badge ${cls}" style="font-size:0.7rem;">${e.gameResult} ${e.gameScore}</span>`;
-            }
-            const _end = new Date(d.getTime() + 3*60*60*1000);
-            const _live = e.streamLink && d <= now && now <= _end && !e.gameResult;
-            const liveBadge = _live ? '<span class="badge badge-live" style="font-size:0.65rem;">🔴 LIVE</span>' : '';
-            const clickAction = e.sourceLink ? `window.open('${e.sourceLink}','_blank')` : `switchView('sports')`;
-            return `<div class="home-mini-card" onclick="${clickAction}"><span class="home-mini-tag">${src}${homeTag}${awayTag}</span>${liveBadge}${scoreBadge}<h4 class="home-mini-title">${e.title}</h4><span class="home-card-time">${formatTime(d)}</span><p class="home-mini-loc">📍 ${e.location}</p></div>`;
-        }).join('');
-    }
-
-    // ===== TODAY'S EVENTS =====
-    const todayEvents = allEvents.filter(e => {
-        if(isSportEvent(e) || isPMSportByTitle(e)) return false;
+        // Skip Clubs/Orgs from homepage timeline (too noisy)
         if((e.tags||[]).includes('Clubs/Orgs')) return false;
-        if(localDateStr(e.date) !== todayStr) return false;
-        if(homeKidMode && !e.kidFriendly) return false;
-        if(hasFeed && !eventMatchesFeed(e)) return false;
         return true;
-    }).slice(0, 8);
-    const evContainer = document.getElementById('home-today-events');
-    if(todayEvents.length === 0){
-        evContainer.innerHTML = `<p class="home-empty">No ${homeKidMode?'family friendly ':''}events scheduled today</p>`;
+    }).sort((a,b) => new Date(a.date) - new Date(b.date));
+
+    const timeline = document.getElementById('home-timeline');
+    if(todayAll.length === 0){
+        // Show next upcoming items
+        const upcoming = allEvents.filter(e => {
+            const d = localDateStr(e.date);
+            return d > todayStr && !(e.tags||[]).includes('Clubs/Orgs');
+        }).sort((a,b) => new Date(a.date) - new Date(b.date)).slice(0, 5);
+        if (upcoming.length > 0) {
+            timeline.innerHTML = '<p class="home-empty">Nothing scheduled today. Coming up next:</p>' + upcoming.map(e => buildTimelineItem(e, now)).join('');
+        } else {
+            timeline.innerHTML = '<p class="home-empty">No events or games scheduled today.</p>';
+        }
+    } else if (hasFeed) {
+        const favs = todayAll.filter(e => eventMatchesFeed(e));
+        const others = todayAll.filter(e => !eventMatchesFeed(e));
+        let html = '';
+        if (favs.length > 0) {
+            html += '<div class="feed-pinned-header"><span>⚡ My Favorites</span></div>';
+            html += favs.map(e => buildTimelineItem(e, now)).join('');
+            if (others.length > 0) html += '<div class="feed-divider"><span>All Today</span></div>';
+        }
+        html += others.map(e => buildTimelineItem(e, now)).join('');
+        timeline.innerHTML = html;
     } else {
-        evContainer.innerHTML = todayEvents.map(e => {
-            const d = new Date(e.date);
-            const src = e.tags?.includes('VFW') ? 'VFW' : e.tags?.includes('Borough') ? 'Borough' : e.tags?.includes('PM') ? 'PM' : e.tags?.includes('MU') ? 'MU' : e.tags?.includes('Community') ? 'Community' : 'Event';
-            const isNoon = d.getHours()===12 && d.getMinutes()===0;
-            const timeStr = isNoon ? '' : `<span class="home-card-time">${formatTime(d)}</span>`;
-            const kidBadge = e.kidFriendly ? '<span style="font-size:0.65rem;color:var(--green);">👨‍👩‍👧</span> ' : '';
-            const clickAction = e.sourceLink ? `window.open('${e.sourceLink}','_blank')` : `switchView('events')`;
-            return `<div class="home-mini-card" onclick="${clickAction}"><span class="home-mini-tag">${src}</span>${kidBadge}<h4 class="home-mini-title">${e.title}</h4>${timeStr}<p class="home-mini-loc">📍 ${e.location}</p></div>`;
-        }).join('');
+        timeline.innerHTML = todayAll.map(e => buildTimelineItem(e, now)).join('');
     }
 
-    // ===== LATEST NEWS =====
-    const newsContainer = document.getElementById('home-news');
-    let latestNews = (currentNews || []).slice(0, 8);
-    if (hasFeed) latestNews = latestNews.filter(n => newsMatchesFeed(n));
-    latestNews = latestNews.slice(0, 6);
+    // ===== LATEST NEWS (compact text links) =====
+    const newsContainer = document.getElementById('home-news-list');
+    let latestNews = (currentNews || []).slice(0, 12);
+    if (hasFeed) {
+        const favNews = latestNews.filter(n => newsMatchesFeed(n));
+        const otherNews = latestNews.filter(n => !newsMatchesFeed(n));
+        latestNews = [...favNews, ...otherNews];
+    }
+    latestNews = latestNews.slice(0, 5);
     if(latestNews.length === 0){
         newsContainer.innerHTML = '<p class="home-empty">No news available</p>';
     } else {
-        const sourceDisplay = {'Millersville News':'MU','The Snapper':'MU Snapper'};
+        const sourceDisplay = {'Millersville News':'MU','The Snapper':'Snapper','MU Athletics':'MU Athletics','MU Review':'MU Review','Penn Manor News':'PM','Millersville Borough':'Borough'};
         newsContainer.innerHTML = latestNews.map(n => {
-            const displaySrc = sourceDisplay[n.source] || n.source;
-            return `<div class="home-mini-card" onclick="window.open('${n.link}','_blank')"><span class="home-mini-tag">${displaySrc}</span><h4 class="home-mini-title">${n.title}</h4><p class="home-mini-date">${n.date}</p></div>`;
+            const src = sourceDisplay[n.source] || n.source;
+            return `<a href="${n.link}" target="_blank" class="home-news-item"><span class="home-news-src">${src}</span><span class="home-news-title">${n.title}</span></a>`;
         }).join('');
     }
+
+    // ===== COMMUNITY BOARD PREVIEW =====
+    const boardSection = document.getElementById('home-board-section');
+    const boardPreview = document.getElementById('home-board-preview');
+    if (allBoardPosts && allBoardPosts.length > 0) {
+        boardSection.style.display = '';
+        const latest = allBoardPosts.slice(0, 2);
+        boardPreview.innerHTML = latest.map(p => {
+            const catColors = {'Lost Pet':'#dc2626','Found Pet':'#16a34a','Yard Sale':'#d97706','Help Wanted':'#2563eb','For Sale':'#7c3aed','Free Stuff':'#059669','Community Notice':'#6b7280'};
+            const color = catColors[p.category] || 'var(--text-muted)';
+            return `<div class="home-board-item" onclick="switchView('board')"><span class="home-board-cat" style="color:${color};">${p.category}</span> <span class="home-board-title">${p.title}</span></div>`;
+        }).join('');
+    } else {
+        boardSection.style.display = 'none';
+    }
+
+    // ===== FEED CTA =====
+    const feedCta = document.getElementById('home-feed-cta');
+    if (feedCta) feedCta.style.display = hasFeed ? 'none' : 'block';
+}
+
+function buildTimelineItem(e, now) {
+    const d = new Date(e.date);
+    const tags = e.tags || [];
+    const isSport = isSportEvent(e) || isPMSportByTitle(e);
+    const isHome = tags.includes('Home Game Mode') || tags.includes('H Games');
+
+    // Source label
+    let src = '';
+    if(tags.includes('VFW')) src = 'VFW';
+    else if(tags.includes('Borough')) src = 'Borough';
+    else if(tags.includes('PM') && isSport) src = 'PM';
+    else if(tags.includes('PM')) src = 'PM';
+    else if(tags.includes('MU') && isSport) src = 'MU';
+    else if(tags.includes('MU')) src = 'MU';
+    else if(tags.includes('Community')) src = 'Community';
+    else src = 'Event';
+
+    // Time
+    const isNoon = d.getHours()===12 && d.getMinutes()===0;
+    const timeStr = isNoon ? 'All Day' : formatTime(d);
+
+    // Badges
+    let badges = '';
+    if (isSport && isHome) badges += '<span class="tl-badge tl-home">🏠</span>';
+    if (e.kidFriendly) badges += '<span class="tl-badge tl-family">👨‍👩‍👧</span>';
+
+    // Live / Score
+    const _end = new Date(d.getTime() + 3*60*60*1000);
+    const _live = isSport && e.streamLink && d <= now && now <= _end && !e.gameResult;
+    if (_live) badges += '<span class="badge badge-live" style="font-size:0.6rem;padding:1px 6px;">LIVE</span>';
+    if (e.gameResult && e.gameScore) {
+        const cls = e.gameResult==='W' ? 'tl-win' : e.gameResult==='L' ? 'tl-loss' : 'tl-tie';
+        badges += `<span class="tl-badge ${cls}">${e.gameResult} ${e.gameScore}</span>`;
+    }
+
+    // Stream button for future games
+    let streamBtn = '';
+    if (isSport && e.streamLink && d > now) streamBtn = `<a href="${e.streamLink}" target="_blank" class="tl-stream" onclick="event.stopPropagation()">📺</a>`;
+
+    const clickAction = e.sourceLink ? `window.open('${e.sourceLink}','_blank')` : '';
+
+    return `<div class="tl-item${isSport?' tl-sport':''}" onclick="${clickAction}">
+        <span class="tl-time">${timeStr}</span>
+        <div class="tl-content">
+            <span class="tl-src">${src}</span>
+            <span class="tl-title">${e.title}</span>
+            ${badges}${streamBtn}
+        </div>
+    </div>`;
 }
 
 /* ==================== HOME SPECIALS ==================== */
@@ -1568,19 +1645,15 @@ async function loadHomeSpecials(){
 async function loadWeather(){
     try{const data=await(await fetch('weather.json')).json();
     const icon=data.icon||'🌡️';
-    // Home page weather hero
-    document.getElementById('home-weather').innerHTML=`<div class="weather-hero-home">
-        <div class="weather-hero-main">
-            <span class="weather-hero-home-icon">${icon}</span>
-            <div>
-                <h2 class="weather-hero-home-temp">${data.temp}°F</h2>
-                <p class="weather-hero-home-feels">Feels like ${data.feelsLike||data.temp}°F</p>
-            </div>
+    const todayDate = new Date().toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'});
+    // Home page compact weather bar
+    document.getElementById('home-weather-bar').innerHTML=`<div class="weather-bar">
+        <div class="weather-bar-left">
+            <span class="weather-bar-icon">${icon}</span>
+            <span class="weather-bar-temp">${data.temp}°F</span>
+            <span class="weather-bar-cond">${data.condition}</span>
         </div>
-        <div class="weather-hero-details">
-            <p class="weather-hero-home-cond">${data.condition}</p>
-            <p class="weather-hero-home-wind">💨 ${data.wind} · 💧 ${data.humidity}</p>
-        </div>
+        <span class="weather-bar-date">${todayDate}</span>
     </div>`;
     // Weather page
     document.getElementById('w-icon').textContent=icon;

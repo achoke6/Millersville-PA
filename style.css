@@ -86,6 +86,19 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .toolbar-row .clear-btn { position: absolute; right: 0; }
 .toolbar-row .date-label { text-align: center; width: 100%; pointer-events: none; }
 
+/* Compact toolbar: single row with label, modes+date, filter toggle */
+.toolbar-compact {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    min-height: 36px;
+}
+.toolbar-compact .game-label { flex-shrink: 0; }
+.toolbar-center { display: flex; align-items: center; gap: 6px; flex: 1; justify-content: center; }
+.toolbar-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.date-label-inline { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); white-space: nowrap; }
+
 /* Three-item toolbar: left label, center date, right clear */
 .toolbar-three { justify-content: center; }
 .toolbar-three .game-label { position: absolute; left: 0; }
@@ -258,7 +271,14 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .filter-clear-x { background: none; border: none; color: #dc2626; font-size: 1.1rem; font-weight: 700; cursor: pointer; padding: 2px 6px; line-height: 1; display: none; }
 .filter-clear-x:hover { color: #b91c1c; }
 .filters-collapsible { }
-.fav-tip { font-size: 0.78rem; color: var(--gold); font-style: italic; padding: 4px 0 8px; text-align: center; }
+.fav-toast { position: fixed; bottom: -60px; left: 50%; transform: translateX(-50%); background: var(--navy); color: white; padding: 10px 20px; border-radius: var(--radius); font-size: 0.82rem; z-index: 9998; transition: bottom 0.3s ease; cursor: pointer; white-space: nowrap; box-shadow: var(--shadow); }
+.fav-toast-visible { bottom: 24px; }
+@media (max-width: 768px) {
+    .filters-collapsible { display: none; }
+    .toolbar-compact { flex-wrap: wrap; }
+    .toolbar-compact .game-label { font-size: 0.8rem; }
+    .toolbar-center { order: 2; width: 100%; justify-content: center; }
+}
 
 .sub-filter-bar { display: none; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dashed var(--border); }
 .sub-filter-bar.active { display: flex; }

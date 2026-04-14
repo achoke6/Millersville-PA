@@ -24,9 +24,6 @@
             <h1><span class="logo-link" onclick="switchView('home')">Millersville<span class="logo-dot">.APP</span></span><span id="header-page-title" class="header-page-title"></span></h1>
         </div>
         <div class="header-actions">
-            <button class="search-toggle" onclick="openSearch()" title="Search" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--text-dark);">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            </button>
             <button id="feed-gear" onclick="openFeedSettings()" title="My Favorites" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--text-dark);position:relative;">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
                 <span id="feed-dot" style="display:none;position:absolute;top:0;right:0;width:8px;height:8px;background:var(--gold);border-radius:50%;"></span>
@@ -38,6 +35,7 @@
         </div>
         <nav class="main-nav" id="top-nav">
             <button class="close-menu" onclick="toggleMobileMenu()">✖</button>
+            <button class="nav-link" onclick="openSearch(); toggleMobileMenu();">🔍 Search</button>
             <button id="nav-news" class="nav-link" onclick="switchView('news'); toggleMobileMenu();">News</button>
             <button id="nav-events" class="nav-link" onclick="switchView('events'); toggleMobileMenu();">Events</button>
             <button id="nav-sports" class="nav-link" onclick="switchView('sports'); toggleMobileMenu();">Sports</button>
@@ -133,16 +131,9 @@
 
     <!-- EVENTS (No Sports) -->
     <section id="view-events" class="app-view">
-        <div class="toolbar-row toolbar-three">
+        <div class="toolbar-compact">
             <span id="ev-event-label" class="game-label">All Events:</span>
-            <span id="ev-date-label" class="date-label"></span>
-            <div style="display:flex;align-items:center;gap:8px;">
-                <button id="ev-clear-btn" class="filter-clear-x" onclick="clearEventFilters()" style="display:none;">✕</button>
-                <button id="ev-filter-toggle" class="filter-toggle" onclick="toggleEvFilters()">Filter <span id="ev-filter-arrow">▾</span></button>
-            </div>
-        </div>
-        <div id="ev-filters-wrap" class="filters-collapsible">
-            <div class="view-mode-bar">
+            <div class="toolbar-center">
                 <button class="nav-arrow" id="ev-prev" onclick="evNavPrev()">←</button>
                 <div class="view-mode-group">
                     <button class="mode-btn" id="ev-mode-past" onclick="setEvMode('past')">Past</button>
@@ -150,7 +141,14 @@
                     <button class="mode-btn active" id="ev-mode-week" onclick="setEvMode('week')">Week</button>
                 </div>
                 <button class="nav-arrow" id="ev-next" onclick="evNavNext()">→</button>
+                <span id="ev-date-label" class="date-label-inline"></span>
             </div>
+            <div class="toolbar-right">
+                <button id="ev-clear-btn" class="filter-clear-x" onclick="clearEventFilters()" style="display:none;">✕</button>
+                <button id="ev-filter-toggle" class="filter-toggle" onclick="toggleEvFilters()">Filter <span id="ev-filter-arrow">▾</span></button>
+            </div>
+        </div>
+        <div id="ev-filters-wrap" class="filters-collapsible">
             <div class="filter-bar ev-source-row">
                 <div class="filter-group" id="ev-source-group">
                     <button class="src-btn active" id="ev-src-all" onclick="setEventSourceAll()">All</button>
@@ -160,27 +158,21 @@
                     <button class="src-btn" id="ev-src-borough" data-feed="borough-" onclick="toggleEventSource('Borough')">🌳 Borough</button>
                     <button class="src-btn" id="ev-src-other" data-feed="other-" onclick="toggleEventSource('Other')">🎸 Other</button>
                 </div>
-                <button class="family-toggle" id="ev-kid-toggle" data-feed="family-events" onclick="toggleKidFriendly()" title="Family Friendly Events">👨‍👩‍👧</button>
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <button class="family-toggle" id="ev-kid-toggle" data-feed="family-events" onclick="toggleKidFriendly()" title="Family Friendly Events">👨‍👩‍👧</button>
+                    <button onclick="openSubmitEvent()" class="btn btn-sm btn-outline" style="font-size:0.75rem;">📝 Submit</button>
+                </div>
             </div>
             <div id="ev-sub-container" class="sub-filter-bar"></div>
         </div>
-        <div id="ev-fav-tip" class="fav-tip" style="display:none;">★ Tip: double-tap any source to add it to your favorites</div>
-        <div style="text-align:right;margin-bottom:12px;"><button onclick="openSubmitEvent()" class="btn btn-sm btn-outline" style="font-size:0.78rem;">📝 Submit an Event</button></div>
         <div id="ev-events-container" class="card-grid"></div>
     </section>
 
     <!-- SPORTS -->
     <section id="view-sports" class="app-view">
-        <div class="toolbar-row toolbar-three">
+        <div class="toolbar-compact">
             <span id="sp-game-label" class="game-label">All Games:</span>
-            <span id="sp-date-label" class="date-label"></span>
-            <div style="display:flex;align-items:center;gap:8px;">
-                <button id="sp-clear-btn" class="filter-clear-x" onclick="clearSportsFilters()" style="display:none;">✕</button>
-                <button id="sp-filter-toggle" class="filter-toggle" onclick="toggleSpFilters()">Filter <span id="sp-filter-arrow">▾</span></button>
-            </div>
-        </div>
-        <div id="sp-filters-wrap" class="filters-collapsible">
-            <div class="view-mode-bar">
+            <div class="toolbar-center">
                 <button class="nav-arrow" id="sp-prev" onclick="spNavPrev()">←</button>
                 <div class="view-mode-group">
                     <button class="mode-btn" id="sp-mode-past" onclick="setSpMode('past')">Past</button>
@@ -188,7 +180,14 @@
                     <button class="mode-btn active" id="sp-mode-week" onclick="setSpMode('week')">Week</button>
                 </div>
                 <button class="nav-arrow" id="sp-next" onclick="spNavNext()">→</button>
+                <span id="sp-date-label" class="date-label-inline"></span>
             </div>
+            <div class="toolbar-right">
+                <button id="sp-clear-btn" class="filter-clear-x" onclick="clearSportsFilters()" style="display:none;">✕</button>
+                <button id="sp-filter-toggle" class="filter-toggle" onclick="toggleSpFilters()">Filter <span id="sp-filter-arrow">▾</span></button>
+            </div>
+        </div>
+        <div id="sp-filters-wrap" class="filters-collapsible">
             <div class="filter-bar sp-source-row">
                 <div class="filter-group" id="sp-source-group">
                     <button class="src-btn active" id="sp-src-all" onclick="setSportsSourceAll(this)">All</button>
@@ -202,7 +201,6 @@
             </div>
             <div id="sp-sport-tags" class="sport-tag-row"></div>
         </div>
-        <div id="sp-fav-tip" class="fav-tip" style="display:none;">★ Tip: double-tap any source to add it to your favorites</div>
         <div id="sp-no-source" class="empty-state" style="display:none;">Select a source (PM, MU, or MU Clubs) to view games.</div>
         <div id="sp-events-container" class="card-grid"></div>
     </section>
@@ -738,7 +736,7 @@ function decorateFeedStars() {
             btn.appendChild(star);
         }
     });
-    updateFavTips();
+    showFavTipToast();
 }
 
 // Double-tap/click to toggle favorites (works on both desktop and mobile)
@@ -952,6 +950,7 @@ async function initApp(){
     loadFeedPrefs();
     await Promise.allSettled([loadWeather(),loadSpecials(),loadEvents(),loadDining(),loadHousing(),loadServices(),loadNews(),loadBoard(),loadSponsors()]);
     renderHomeFeed();
+    syncFilterArrows();
     loadEcwidStore(); // Load Ecwid early so cart widget renders in header
     setInterval(refreshCam,60000); refreshCam();
     // Route to correct view based on URL
@@ -1170,25 +1169,38 @@ window.clearEventFilters=function(){
 window.toggleEvFilters=function(){
     const wrap = document.getElementById('ev-filters-wrap');
     const arrow = document.getElementById('ev-filter-arrow');
-    const open = wrap.style.display !== 'none';
-    wrap.style.display = open ? 'none' : '';
-    arrow.textContent = open ? '▸' : '▾';
+    const isVisible = getComputedStyle(wrap).display !== 'none';
+    wrap.style.display = isVisible ? 'none' : 'block';
+    arrow.textContent = isVisible ? '▸' : '▾';
 };
 window.toggleSpFilters=function(){
     const wrap = document.getElementById('sp-filters-wrap');
     const arrow = document.getElementById('sp-filter-arrow');
-    const open = wrap.style.display !== 'none';
-    wrap.style.display = open ? 'none' : '';
-    arrow.textContent = open ? '▸' : '▾';
+    const isVisible = getComputedStyle(wrap).display !== 'none';
+    wrap.style.display = isVisible ? 'none' : 'block';
+    arrow.textContent = isVisible ? '▸' : '▾';
 };
+// Sync filter arrows on load (mobile defaults to collapsed via CSS)
+function syncFilterArrows(){
+    ['ev','sp'].forEach(p => {
+        const wrap = document.getElementById(p+'-filters-wrap');
+        const arrow = document.getElementById(p+'-filter-arrow');
+        if(wrap && arrow) arrow.textContent = getComputedStyle(wrap).display === 'none' ? '▸' : '▾';
+    });
+}
 
-// Favorites tip — show until user creates first favorite
-function updateFavTips(){
-    const hasFeed = feedPrefs && feedPrefs.length > 0;
-    const evTip = document.getElementById('ev-fav-tip');
-    const spTip = document.getElementById('sp-fav-tip');
-    if(evTip) evTip.style.display = hasFeed ? 'none' : 'block';
-    if(spTip) spTip.style.display = hasFeed ? 'none' : 'block';
+// Favorites tip — one-time toast notification
+function showFavTipToast(){
+    if (localStorage.getItem('favTipShown')) return;
+    if (feedPrefs && feedPrefs.length > 0) return;
+    const toast = document.createElement('div');
+    toast.className = 'fav-toast';
+    toast.innerHTML = '★ <strong>Tip:</strong> Double-tap any source button to add it to your favorites';
+    toast.onclick = function(){ toast.remove(); };
+    document.body.appendChild(toast);
+    setTimeout(() => toast.classList.add('fav-toast-visible'), 100);
+    setTimeout(() => { toast.classList.remove('fav-toast-visible'); setTimeout(() => toast.remove(), 400); }, 5000);
+    localStorage.setItem('favTipShown', '1');
 }
 
 function renderEvents(){

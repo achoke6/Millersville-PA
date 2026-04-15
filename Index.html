@@ -648,14 +648,16 @@ window.openFeedSettings = function() {
     window._individualClubs = sortedClubs.map(([name]) => name);
 
     modal.innerHTML = `
-        <button onclick="this.closest('div[style*=fixed]').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);">✕</button>
-        <h3 style="margin-bottom:4px;">⚙️ My Favorites</h3>
-        <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:16px;">Pick what shows on your homepage and defaults on Events & Sports pages.</p>
-        <div id="feed-options">${sectionsHtml}</div>
-        <div style="display:flex;gap:8px;margin-top:16px;">
-            <button onclick="saveFeedFromModal();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-ticket" style="flex:1;padding:12px;font-size:0.95rem;">Save Preferences</button>
-            <button onclick="clearFeedPrefs();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-outline" style="padding:12px;font-size:0.85rem;">Reset</button>
-        </div>`;
+        <button onclick="this.closest('div[style*=fixed]').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);z-index:2;">✕</button>
+        <div style="position:sticky;top:0;background:var(--surface);z-index:1;padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:12px;">
+            <h3 style="margin-bottom:4px;">⚙️ My Favorites</h3>
+            <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:10px;">Pick what shows on your homepage and defaults on Events & Sports pages.</p>
+            <div style="display:flex;gap:8px;">
+                <button onclick="saveFeedFromModal();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-ticket" style="flex:1;padding:10px;font-size:0.9rem;">Save Preferences</button>
+                <button onclick="clearFeedPrefs();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-outline" style="padding:10px;font-size:0.82rem;">Reset</button>
+            </div>
+        </div>
+        <div id="feed-options">${sectionsHtml}</div>`;
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
 };

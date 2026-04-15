@@ -1232,14 +1232,14 @@ Respond with ONLY the JSON object.`;
             let groceryCache = {};
             try { groceryCache = JSON.parse(fs.readFileSync(groceryCachePath, 'utf8')); } catch(e) {}
 
-            // Determine if we need to refresh: cache empty, or it's Wednesday+ and cache is from before this Wednesday
+            // Determine if we need to refresh: cache empty, or it's Thursday+ and cache is from before this Thursday
             const now = new Date();
             const cacheTime = groceryCache.timestamp ? new Date(groceryCache.timestamp) : null;
-            const dayOfWeek = now.getDay(); // 0=Sun, 3=Wed
-            // Find most recent Wednesday
-            const daysSinceWed = (dayOfWeek + 7 - 3) % 7;
-            const lastWed = new Date(now); lastWed.setDate(now.getDate() - daysSinceWed); lastWed.setHours(0,0,0,0);
-            const cacheIsStale = !cacheTime || cacheTime < lastWed;
+            const dayOfWeek = now.getDay(); // 0=Sun, 4=Thu
+            // Find most recent Thursday (circular release day)
+            const daysSinceThu = (dayOfWeek + 7 - 4) % 7;
+            const lastThu = new Date(now); lastThu.setDate(now.getDate() - daysSinceThu); lastThu.setHours(0,0,0,0);
+            const cacheIsStale = !cacheTime || cacheTime < lastThu;
             const cacheHasDeals = groceryCache.deals && groceryCache.deals.length > 0;
 
             if (cacheHasDeals && !cacheIsStale) {

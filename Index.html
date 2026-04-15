@@ -1433,6 +1433,13 @@ window.setSportType=function(sport){
 };
 
 /* ==================== CARD BUILDER ==================== */
+function cleanLocation(loc) {
+    if (!loc) return '';
+    return loc.replace(/^AcCALEN$/i, 'Millersville University')
+              .replace(/^WARE Ware Center$/i, 'Ware Center')
+              .replace(/^WARE\b/, 'Ware Center')
+              .replace(/^Ware Center\s+(?!,)/, 'Ware Center, ');
+}
 function buildEventCard(e,isSportsPage){
     const d=new Date(e.date), tags=e.tags||[];
     const priceText=e.price?e.price.toString():"Free";
@@ -1509,7 +1516,7 @@ function buildEventCard(e,isSportsPage){
     // Clean title
     const displayTitle = (e.title || '').replace(/^Millersville University\s*/i, '').replace(/ - (Girls|Boys)\s+(vs |@ )/i, ' $2');
 
-    return `<div class="app-card${isCurrentlyLive?' card-live':''} ${cardResultClass}" style="position:relative;">${scoreBadge}<div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${displayTitle}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${e.location}</p></div><div class="card-footer"><div class="card-actions">${locBadge}<a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
+    return `<div class="app-card${isCurrentlyLive?' card-live':''} ${cardResultClass}" style="position:relative;">${scoreBadge}<div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${displayTitle}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${cleanLocation(e.location)}</p></div><div class="card-footer"><div class="card-actions">${locBadge}<a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
 }
 
 /* ==================== HOME ==================== */
@@ -2339,7 +2346,7 @@ function runSearch(q) {
             html += `<div class="search-result" onclick="document.getElementById('search-overlay').remove();switchView('events');" style="padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;margin-bottom:4px;background:var(--surface);">
                 <span style="font-size:0.7rem;color:var(--text-muted);">${src}</span>
                 <p style="font-weight:600;margin:2px 0;">${e.title}</p>
-                <span style="font-size:0.8rem;color:var(--text-muted);">${formatDate(d)} · ${e.location}</span>
+                <span style="font-size:0.8rem;color:var(--text-muted);">${formatDate(d)} · ${cleanLocation(e.location)}</span>
             </div>`;
         });
         html += '</div>';
@@ -2361,7 +2368,7 @@ function runSearch(q) {
             html += `<div class="search-result" onclick="document.getElementById('search-overlay').remove();switchView('sports');" style="padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;margin-bottom:4px;background:var(--surface);">
                 <span style="font-size:0.7rem;color:var(--text-muted);">${src}</span>
                 <p style="font-weight:600;margin:2px 0;">${e.title}</p>
-                <span style="font-size:0.8rem;color:var(--text-muted);">${formatDate(d)} · ${e.location}</span>
+                <span style="font-size:0.8rem;color:var(--text-muted);">${formatDate(d)} · ${cleanLocation(e.location)}</span>
             </div>`;
         });
         html += '</div>';

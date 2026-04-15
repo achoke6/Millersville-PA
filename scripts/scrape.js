@@ -768,7 +768,12 @@ async function runScraper() {
                 // SKIP Athletic Competitions — we get those from Sidearm now
                 if (eventType === 'Athletic Competitions') return;
 
-                const eventLoc = `${row[bldgIdx] || ''} ${row[roomIdx] || ''}`.trim() || "Campus";
+                let eventLoc = `${row[bldgIdx] || ''} ${row[roomIdx] || ''}`.trim() || "Campus";
+                // Clean up building codes
+                if (eventLoc === 'AcCALEN') eventLoc = 'Millersville University';
+                eventLoc = eventLoc.replace(/^WARE Ware Center$/i, 'Ware Center')
+                                   .replace(/^WARE\b/, 'Ware Center')
+                                   .replace(/^Ware Center\s+/, 'Ware Center, ');
                 const pricing = extractPricing(row[descIdx] || "", eventTitle, eventLoc, linkIdx !== -1 ? (row[linkIdx] || "") : "");
 
                 let tags = ["MU"];

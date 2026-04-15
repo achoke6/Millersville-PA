@@ -1474,7 +1474,7 @@ Focus on the most impressive deals a shopper would want to know about. Include m
         // Only tag as family-friendly if description EXPLICITLY invites families with children
         if (src === 'Clubs/Orgs' || tags.includes('Clubs/Orgs')) {
             if (tags.includes('Club Sports')) { e.kidFriendly = false; return; }
-            const clubFamilySignals = /\bfamilies with (children|kids)\b|\binvites?\s+(all\s+)?families\b|\bfor (kids|children) ages?\b|\bbring your (kids|children)\b|\bchildren\s+ages?\s*[2-9]\s*[-–]\s*\d/i;
+            const clubFamilySignals = /\bfamilies with (children|kids)\b|\binvites?\s+(all\s+)?families\b|\bfor (kids|children)\b|\bbring your (kids|children)\b|\bchildren\s+ages?\s*[2-9]\s*[-–]\s*\d|\bkids?\s*(camp|day|workshop|class|event|welcome|invited|from the area)\b|\bhosting\s+kids\b|\byouth\s+(camp|workshop|event|day)\b/i;
             if (clubFamilySignals.test(desc)) {
                 e.kidFriendly = true; famCount++;
             } else {

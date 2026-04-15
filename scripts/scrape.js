@@ -847,7 +847,11 @@ async function runScraper() {
 
             let isPermittedSport = hGameClubSports.some(s => name.includes(s) || orgName.includes(s));
 
-            if (isPermittedSport || tags.some(t => t.toLowerCase().includes('club sport'))) {
+            // Only classify as Club Sports if the event looks like an actual game/match
+            // Practices, fundraisers, trips, community service etc. stay as regular events
+            const isCompetitiveGame = /\bvs\.?\b|\bversus\b|\bgame\b|\bmatch\b|\btournament\b|\binvitational\b|\bchampionship\b|\bscrimmage\b|@\s*[A-Z]/i.test(name);
+
+            if ((isPermittedSport || tags.some(t => t.toLowerCase().includes('club sport'))) && isCompetitiveGame) {
                 tags.push("Club Sports");
                 if (/men's|mens/.test(name)) tags.push("Men's");
                 if (/women's|womens/.test(name)) tags.push("Women's");

@@ -90,14 +90,15 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .toolbar-compact {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
     margin-bottom: 10px;
     min-height: 36px;
+    flex-wrap: wrap;
 }
 .toolbar-compact .game-label { flex-shrink: 0; }
-.toolbar-center { display: flex; align-items: center; gap: 6px; flex: 1; justify-content: center; }
-.toolbar-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
-.date-label-inline { font-size: 0.82rem; font-weight: 600; color: var(--text-muted); white-space: nowrap; }
+.toolbar-center { display: flex; align-items: center; gap: 4px; }
+.toolbar-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; margin-left: auto; }
+.date-label-inline { font-size: 0.85rem; font-weight: 700; color: var(--text); white-space: nowrap; min-width: 100px; text-align: center; }
 
 /* Three-item toolbar: left label, center date, right clear */
 .toolbar-three { justify-content: center; }
@@ -223,20 +224,20 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 34px;
+    width: 28px;
     height: 34px;
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
+    background: none;
+    border: none;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 1.2rem;
     cursor: pointer;
     transition: var(--transition);
     font-family: inherit;
-    color: var(--text);
+    color: var(--text-muted);
     flex-shrink: 0;
+    padding: 0;
 }
-.nav-arrow:hover { border-color: var(--gold); background: var(--gold-soft); }
+.nav-arrow:hover { color: var(--gold); }
 .date-label {
     font-size: 0.85rem;
     font-weight: 700;
@@ -258,7 +259,8 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     background: var(--red-soft);
     color: var(--red);
     border: none;
-    padding: 7px 12px;
+    padding: 0 12px;
+    height: 34px;
     border-radius: var(--radius-sm);
     font-size: 0.78rem;
     font-weight: 700;
@@ -266,7 +268,7 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     font-family: inherit;
     white-space: nowrap;
 }
-.filter-toggle { background: var(--surface); border: 1.5px solid var(--border); color: var(--text); padding: 6px 12px; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.8rem; cursor: pointer; font-family: inherit; transition: var(--transition); }
+.filter-toggle { background: var(--surface); border: 1.5px solid var(--border); color: var(--text); padding: 0 12px; height: 34px; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.8rem; cursor: pointer; font-family: inherit; transition: var(--transition); display: flex; align-items: center; gap: 4px; }
 .filter-toggle:hover { border-color: var(--gold); }
 .toolbar-compact .clear-btn { position: static; }
 .filters-collapsible { }
@@ -274,9 +276,9 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .fav-toast-visible { bottom: 24px; }
 @media (max-width: 768px) {
     .filters-collapsible { display: none; }
-    .toolbar-compact { flex-wrap: wrap; }
     .toolbar-compact .game-label { font-size: 0.8rem; }
-    .toolbar-center { order: 2; width: 100%; justify-content: center; }
+    .toolbar-center { flex-wrap: nowrap; }
+    .date-label-inline { font-size: 0.78rem; min-width: auto; }
 }
 
 .sub-filter-bar { display: none; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dashed var(--border); }
@@ -307,16 +309,13 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .ev-source-row .filter-group {
     display: contents;
 }
-.ev-source-row .family-toggle {
-    margin-left: auto;
-}
 
 .home-toggle {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
     background: var(--surface);
     border: 1.5px solid var(--border);
     border-radius: var(--radius-sm);
@@ -336,8 +335,8 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
     background: var(--surface);
     border: 1.5px solid var(--border);
     border-radius: var(--radius-sm);
@@ -345,7 +344,6 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     transition: var(--transition);
     color: var(--text-muted);
     flex-shrink: 0;
-    margin-left: auto;
 }
 .family-toggle:hover { border-color: #059669; color: #059669; }
 .family-toggle.active {

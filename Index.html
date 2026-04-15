@@ -35,7 +35,7 @@
         </div>
         <nav class="main-nav" id="top-nav">
             <button class="close-menu" onclick="toggleMobileMenu()">✖</button>
-            <button class="nav-link" onclick="openSearch(); toggleMobileMenu();">🔍 Search</button>
+            <button class="nav-link" onclick="openSearch(); toggleMobileMenu();">Search</button>
             <button id="nav-news" class="nav-link" onclick="switchView('news'); toggleMobileMenu();">News</button>
             <button id="nav-events" class="nav-link" onclick="switchView('events'); toggleMobileMenu();">Events</button>
             <button id="nav-sports" class="nav-link" onclick="switchView('sports'); toggleMobileMenu();">Sports</button>
@@ -134,23 +134,23 @@
         <div class="toolbar-compact">
             <span id="ev-event-label" class="game-label">All Events:</span>
             <div class="toolbar-center">
-                <button class="nav-arrow" id="ev-prev" onclick="evNavPrev()">←</button>
+                <button class="nav-arrow" id="ev-prev" onclick="evNavPrev()">‹</button>
+                <span id="ev-date-label" class="date-label-inline"></span>
+                <button class="nav-arrow" id="ev-next" onclick="evNavNext()">›</button>
                 <div class="view-mode-group">
                     <button class="mode-btn" id="ev-mode-day" onclick="setEvMode('day')">Day</button>
                     <button class="mode-btn active" id="ev-mode-week" onclick="setEvMode('week')">Week</button>
                 </div>
-                <button class="nav-arrow" id="ev-next" onclick="evNavNext()">→</button>
-                <span id="ev-date-label" class="date-label-inline"></span>
             </div>
             <div class="toolbar-right">
                 <button class="family-toggle" id="ev-kid-toggle" data-feed="family-events" onclick="toggleKidFriendly()" title="Family Friendly Events">👨‍👩‍👧</button>
-                <button onclick="openSubmitEvent()" class="btn btn-sm btn-outline" style="font-size:0.72rem;padding:5px 8px;">📝 Submit</button>
+                <button onclick="openSubmitEvent()" class="filter-toggle" style="font-size:0.75rem;">📝 Submit</button>
                 <button id="ev-clear-btn" class="clear-btn" onclick="clearEventFilters()" style="display:none;">Clear ✕</button>
                 <button id="ev-filter-toggle" class="filter-toggle" onclick="toggleEvFilters()">Filter <span id="ev-filter-arrow">▾</span></button>
             </div>
         </div>
         <div id="ev-filters-wrap" class="filters-collapsible">
-            <div class="filter-bar ev-source-row">
+            <div class="filter-bar ev-source-row" style="justify-content:flex-start;">
                 <div class="filter-group" id="ev-source-group">
                     <button class="src-btn active" id="ev-src-all" onclick="setEventSourceAll()">All</button>
                     <button class="src-btn" id="ev-src-mu" data-feed="mu-" onclick="toggleEventSource('MU')">🏴‍☠️ MU</button>
@@ -170,13 +170,13 @@
         <div class="toolbar-compact">
             <span id="sp-game-label" class="game-label">All Games:</span>
             <div class="toolbar-center">
-                <button class="nav-arrow" id="sp-prev" onclick="spNavPrev()">←</button>
+                <button class="nav-arrow" id="sp-prev" onclick="spNavPrev()">‹</button>
+                <span id="sp-date-label" class="date-label-inline"></span>
+                <button class="nav-arrow" id="sp-next" onclick="spNavNext()">›</button>
                 <div class="view-mode-group">
                     <button class="mode-btn" id="sp-mode-day" onclick="setSpMode('day')">Day</button>
                     <button class="mode-btn active" id="sp-mode-week" onclick="setSpMode('week')">Week</button>
                 </div>
-                <button class="nav-arrow" id="sp-next" onclick="spNavNext()">→</button>
-                <span id="sp-date-label" class="date-label-inline"></span>
             </div>
             <div class="toolbar-right">
                 <button class="home-toggle" id="hgame-toggle" onclick="toggleHomeGameMode()" title="Home Games Only">

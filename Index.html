@@ -136,14 +136,9 @@
                 <button class="nav-arrow" id="ev-prev" onclick="evNavPrev()">‹</button>
                 <span id="ev-date-label" class="date-label-inline"></span>
                 <button class="nav-arrow" id="ev-next" onclick="evNavNext()">›</button>
-                <div class="view-mode-group">
-                    <button class="mode-btn" id="ev-mode-day" onclick="setEvMode('day')">Day</button>
-                    <button class="mode-btn active" id="ev-mode-week" onclick="setEvMode('week')">Week</button>
-                </div>
             </div>
             <div class="toolbar-right">
                 <button class="family-toggle" id="ev-kid-toggle" data-feed="family-events" onclick="toggleKidFriendly()" title="Family Friendly Events">👨‍👩‍👧</button>
-                <button onclick="openSubmitEvent()" class="filter-toggle" style="font-size:0.75rem;">📝 Submit</button>
                 <button id="ev-clear-btn" class="clear-btn" onclick="clearEventFilters()" style="display:none;">Clear ✕</button>
                 <button id="ev-filter-toggle" class="filter-toggle" onclick="toggleEvFilters()">Filter <span id="ev-filter-arrow">▾</span></button>
             </div>
@@ -162,6 +157,7 @@
             <div id="ev-sub-container" class="sub-filter-bar"></div>
         </div>
         <div id="ev-events-container" class="card-grid"></div>
+        <button class="fab-submit" onclick="openSubmitEvent()" title="Submit an Event">📝</button>
     </section>
 
     <!-- SPORTS -->
@@ -172,10 +168,6 @@
                 <button class="nav-arrow" id="sp-prev" onclick="spNavPrev()">‹</button>
                 <span id="sp-date-label" class="date-label-inline"></span>
                 <button class="nav-arrow" id="sp-next" onclick="spNavNext()">›</button>
-                <div class="view-mode-group">
-                    <button class="mode-btn" id="sp-mode-day" onclick="setSpMode('day')">Day</button>
-                    <button class="mode-btn active" id="sp-mode-week" onclick="setSpMode('week')">Week</button>
-                </div>
             </div>
             <div class="toolbar-right">
                 <button class="home-toggle" id="hgame-toggle" onclick="toggleHomeGameMode()" title="Home Games Only">

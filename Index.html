@@ -537,9 +537,11 @@ function eventMatchesFeed(e) {
         }
         return false;
     }
-    // PM non-sport: match if any pm- feed is selected
+    // PM non-sport: only match specific non-sport feeds
     if (tags.includes('PM')) {
-        if (feedPrefs.some(p => p.startsWith('pm-'))) return true;
+        if (tags.includes('Music/Arts') && feedPrefs.includes('pm-music')) return true;
+        if (tags.includes('Board/PTO') && feedPrefs.includes('pm-board')) return true;
+        if ((tags.includes('School Events') || tags.includes('Health/Wellness') || tags.includes('Meetings')) && feedPrefs.includes('pm-board')) return true;
         return false;
     }
 
@@ -553,12 +555,11 @@ function eventMatchesFeed(e) {
         return false;
     }
 
-    // MU non-sport events: match if any mu- event feed is selected
+    // MU non-sport events: match specific event type feeds only
     if (tags.includes('MU') && !tags.includes('Clubs/Orgs')) {
         if (tags.includes('Arts Concert / Performance') && feedPrefs.includes('mu-arts')) return true;
         if (tags.includes('Public Event') && feedPrefs.includes('mu-public')) return true;
         if (tags.includes('Student Event') && feedPrefs.includes('mu-student')) return true;
-        if (feedPrefs.includes('mu-arts') || feedPrefs.includes('mu-public') || feedPrefs.includes('mu-student')) return true;
         return false;
     }
 

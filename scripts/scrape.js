@@ -457,10 +457,11 @@ async function runScraper() {
             if (/no school|snow day|spring break|weather make|school now in session|vacation|closing|closed/i.test(lowerTitle)) continue;
 
             // Skip internal school events not relevant to community
-            if (/\bsap meeting\b|\bfaculty meeting\b|\bstaff meeting\b|\bin-service\b|\bprofessional development\b/i.test(lowerTitle)) continue;
+            if (/\bsap meeting\b|\bfaculty meeting\b|\bstaff meeting\b|\bin-service\b|\bprofessional development\b|\bteam leader meeting\b/i.test(lowerTitle)) continue;
             if (/\bfield trip\b|\btrip to\b|\bgirls on the run\b|\bgotr\b|\bgotc\b|\bbus evacuation\b/i.test(lowerTitle)) continue;
             if (/\bprogress report|report card|early dismissal|late start|delayed opening/i.test(lowerTitle)) continue;
-            if (/\bpicture day\b|\bretake\b|\bphoto day\b|\bpicture retake\b/i.test(lowerTitle)) continue;
+            if (/\bpicture day\b|\bretake\b|\bphoto day\b|\bpicture retake\b|\bspring pictures\b/i.test(lowerTitle)) continue;
+            if (/\brehearsal\b|\bappreciation (day|week)\b|\blibrarian day\b|\ball school assembly\b|\bpride assembly\b/i.test(lowerTitle)) continue;
 
             const isAthletic = categories.toLowerCase().includes('athletics') || desc.toLowerCase().includes('sport:');
 
@@ -1358,7 +1359,7 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 }
             },
             "John Herr's Village Market": {
-                note: "Weekly deals · Wed–Tue · 20 Crossgates Dr",
+                note: groceryDeals.length > 0 && groceryDeals[0].dateRange ? `Weekly deals: ${groceryDeals[0].dateRange}` : "Weekly deals · Thu–Wed",
                 weekly: groceryDeals.slice(0, 5).map(d => {
                     let label = `${d.item} – ${d.salePrice}`;
                     if (d.savings) label += ` (${d.savings})`;

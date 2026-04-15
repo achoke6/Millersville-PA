@@ -1842,7 +1842,7 @@ async function loadDining(){try{
 
             if(items.length > 0){
                 const note = sp.note ? `<p style="font-size:0.7rem;color:var(--text-muted);margin-bottom:4px;font-style:italic;">${sp.note}</p>` : '';
-                const dateRange = sp.weeklyDateRange ? `<p style="font-size:0.7rem;color:var(--gold);font-weight:600;margin-bottom:4px;">${sp.weeklyDateRange}</p>` : '';
+                const dateRange = (!isGrocery && sp.weeklyDateRange) ? `<p style="font-size:0.7rem;color:var(--gold);font-weight:600;margin-bottom:4px;">${sp.weeklyDateRange}</p>` : '';
                 const isGrocery = p.name === "John Herr's Village Market";
                 const isVFW = p.name === 'VFW Post 7294';
                 const heading = isGrocery ? '🏷️ Top Weekly Deals:' : isVFW ? `Specials (${dayName}):` : `Today's Specials (${dayName}):`;

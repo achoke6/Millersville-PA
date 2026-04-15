@@ -1477,7 +1477,7 @@ function buildEventCard(e,isSportsPage){
     const timeStr = isNoonPlaceholder ? '' : ` @ ${formatTime(d)}`;
 
     // Clean title
-    const displayTitle = (e.title || '').replace(/^Millersville University\s*/i, '');
+    const displayTitle = (e.title || '').replace(/^Millersville University\s*/i, '').replace(/ - (Girls|Boys)\s+(vs |@ )/i, ' $2');
 
     return `<div class="app-card${isCurrentlyLive?' card-live':''} ${cardResultClass}" style="position:relative;">${scoreBadge}<div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${displayTitle}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${e.location}</p></div><div class="card-footer"><div class="card-actions">${locBadge}<a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
 }
@@ -1582,9 +1582,9 @@ function buildTimelineItem(e, now) {
     else if(tags.includes('Community')) src = 'Community';
     else src = 'Event';
 
-    // Clean title — strip "Millersville University" prefix
+    // Clean title — strip "Millersville University" prefix and redundant gender
     let title = e.title || '';
-    title = title.replace(/^Millersville University\s*/i, '');
+    title = title.replace(/^Millersville University\s*/i, '').replace(/ - (Girls|Boys)\s+(vs |@ )/i, ' $2');
 
     // Time
     const isNoon = d.getHours()===12 && d.getMinutes()===0;

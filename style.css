@@ -389,9 +389,11 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .tl-item:hover { background: var(--gold-soft); }
 .tl-item:last-child { border-bottom: none; }
 .tl-sport { border-left: 3px solid var(--navy); }
+.tl-event { border-left: 3px solid #059669; }
 .tl-time { font-size: 0.78rem; font-weight: 700; color: var(--gold); min-width: 60px; flex-shrink: 0; padding-top: 1px; }
 .tl-content { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; flex: 1; min-width: 0; }
 .tl-src { font-size: 0.65rem; font-weight: 700; background: var(--navy); color: var(--gold); padding: 1px 7px; border-radius: var(--radius-pill); flex-shrink: 0; }
+.tl-src-event { background: #059669; color: white; }
 .tl-title { font-size: 0.88rem; font-weight: 600; color: var(--text); line-height: 1.3; }
 .tl-badge { font-size: 0.65rem; flex-shrink: 0; }
 .tl-win { color: #16a34a; font-weight: 700; }

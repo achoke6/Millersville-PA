@@ -77,8 +77,8 @@
             <div class="home-section-header">
                 <h3 class="home-section-title">📅 Today in Millersville</h3>
                 <div style="display:flex;gap:12px;">
-                    <a href="#" onclick="event.preventDefault();switchView('events');" class="home-more-link">Events →</a>
-                    <a href="#" onclick="event.preventDefault();switchView('sports');" class="home-more-link">Sports →</a>
+                    <a href="#" onclick="event.preventDefault();switchView('events');" class="home-more-link" style="color:#059669;">Events →</a>
+                    <a href="#" onclick="event.preventDefault();switchView('sports');" class="home-more-link" style="color:var(--navy);">Sports →</a>
                 </div>
             </div>
             <div id="home-timeline"></div>
@@ -868,14 +868,14 @@ function todayMidnight(){const d=new Date();return new Date(d.getFullYear(),d.ge
 function getMonday(d){const day=d.getDay(),diff=d.getDate()-day+(day===0?-6:1);return new Date(d.getFullYear(),d.getMonth(),diff);}
 function addDays(d,n){const r=new Date(d);r.setDate(r.getDate()+n);return r;}
 function fmtDateLabel(d){const t=todayMidnight();if(toDateStr(d)===toDateStr(t))return 'Today, '+d.toLocaleDateString('en-US',{month:'short',day:'numeric'});return d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});}
-function fmtWeekLabel(mon){const sun=addDays(mon,6);return mon.toLocaleDateString('en-US',{month:'short',day:'numeric'})+' – '+sun.toLocaleDateString('en-US',{month:'short',day:'numeric'});}
+function fmtWeekLabel(start){const end=addDays(start,6);return start.toLocaleDateString('en-US',{month:'short',day:'numeric'})+' – '+end.toLocaleDateString('en-US',{month:'short',day:'numeric'});}
 
 function getDateRange(mode,anchor){
     const today=todayMidnight();
     if(mode==='upcoming') return {start:toDateStr(today),end:'9999-12-31'};
     if(mode==='past') return {start:'0000-01-01',end:toDateStr(addDays(today,-1))};
     if(mode==='day') return {start:toDateStr(anchor),end:toDateStr(anchor)};
-    if(mode==='week'){const mon=getMonday(anchor);return {start:toDateStr(mon),end:toDateStr(addDays(mon,6))};}
+    if(mode==='week'){return {start:toDateStr(anchor),end:toDateStr(addDays(anchor,6))};}
     return {start:'0000-01-01',end:'9999-12-31'};
 }
 
@@ -900,7 +900,7 @@ function updateModeUI(prefix,mode,anchor,filteredEvents){
     if(nextBtn) nextBtn.style.display=showArrows?'flex':'none';
     if(label){
         if(mode==='day') label.textContent=fmtDateLabel(anchor);
-        else if(mode==='week') label.textContent=fmtWeekLabel(getMonday(anchor));
+        else if(mode==='week') label.textContent=fmtWeekLabel(anchor);
         else if((mode==='upcoming'||mode==='past')&&filteredEvents&&filteredEvents.length>0) label.textContent=getVisibleDateRange(filteredEvents);
         else label.textContent='';
     }
@@ -1123,7 +1123,7 @@ function updateEventsUI(){
     });
     const evLabel = document.getElementById('ev-event-label');
     if (evLabel) evLabel.textContent = evKidMode ? 'Family Friendly:' : 'All Events:';
-    const isCurrentWeek = toDateStr(getMonday(evAnchorDate)) === toDateStr(getMonday(todayMidnight()));
+    const isCurrentWeek = toDateStr(evAnchorDate) === toDateStr(todayMidnight());
     const isClean = evAllMode && evTags.size === 0 && evMode === 'week' && !evKidMode && isCurrentWeek;
     document.getElementById('ev-clear-btn').style.display = isClean ? 'none' : 'flex';
 }
@@ -1283,7 +1283,7 @@ function updateSportsUI(){
     document.getElementById('sp-no-source').style.display = spActiveSources.size===0 ? 'block' : 'none';
     const gameLabel=document.getElementById('sp-game-label');
     if(gameLabel) gameLabel.textContent=spHomeOnly?'Home Games:':'All Games:';
-    const isCurrentWeek = toDateStr(getMonday(spAnchorDate)) === toDateStr(getMonday(todayMidnight()));
+    const isCurrentWeek = toDateStr(spAnchorDate) === toDateStr(todayMidnight());
     const isClean = spAllMode && !spHomeOnly && !spSportTag && spMode==='week' && isCurrentWeek;
     document.getElementById('sp-clear-btn').style.display = isClean ? 'none' : 'flex';
     // Show/hide arrows based on mode
@@ -1476,7 +1476,10 @@ function buildEventCard(e,isSportsPage){
     const isNoonPlaceholder = d.getHours()===12 && d.getMinutes()===0;
     const timeStr = isNoonPlaceholder ? '' : ` @ ${formatTime(d)}`;
 
-    return `<div class="app-card${isCurrentlyLive?' card-live':''} ${cardResultClass}" style="position:relative;">${scoreBadge}<div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${e.title}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${e.location}</p></div><div class="card-footer"><div class="card-actions">${locBadge}<a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
+    // Clean title
+    const displayTitle = (e.title || '').replace(/^Millersville University\s*/i, '');
+
+    return `<div class="app-card${isCurrentlyLive?' card-live':''} ${cardResultClass}" style="position:relative;">${scoreBadge}<div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${displayTitle}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${e.location}</p></div><div class="card-footer"><div class="card-actions">${locBadge}<a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
 }
 
 /* ==================== HOME ==================== */
@@ -1513,6 +1516,9 @@ function renderHomeUI(){
             html += '<div class="feed-pinned-header"><span>⚡ My Favorites</span></div>';
             html += favs.map(e => buildTimelineItem(e, now)).join('');
             if (others.length > 0) html += '<div class="feed-divider"><span>All Today</span></div>';
+        } else {
+            html += '<p class="home-empty">No favorites scheduled today</p>';
+            html += '<div class="feed-divider"><span>All Today</span></div>';
         }
         html += others.map(e => buildTimelineItem(e, now)).join('');
         timeline.innerHTML = html;
@@ -1576,6 +1582,10 @@ function buildTimelineItem(e, now) {
     else if(tags.includes('Community')) src = 'Community';
     else src = 'Event';
 
+    // Clean title — strip "Millersville University" prefix
+    let title = e.title || '';
+    title = title.replace(/^Millersville University\s*/i, '');
+
     // Time
     const isNoon = d.getHours()===12 && d.getMinutes()===0;
     const timeStr = isNoon ? 'All Day' : formatTime(d);
@@ -1599,12 +1609,13 @@ function buildTimelineItem(e, now) {
     if (isSport && e.streamLink && d > now) streamBtn = `<a href="${e.streamLink}" target="_blank" class="tl-stream" onclick="event.stopPropagation()">📺</a>`;
 
     const clickAction = e.sourceLink ? `window.open('${e.sourceLink}','_blank')` : '';
+    const typeClass = isSport ? ' tl-sport' : ' tl-event';
 
-    return `<div class="tl-item${isSport?' tl-sport':''}" onclick="${clickAction}">
+    return `<div class="tl-item${typeClass}" onclick="${clickAction}">
         <span class="tl-time">${timeStr}</span>
         <div class="tl-content">
-            <span class="tl-src">${src}</span>
-            <span class="tl-title">${e.title}</span>
+            <span class="tl-src${isSport?'':' tl-src-event'}">${src}</span>
+            <span class="tl-title">${title}</span>
             ${badges}${streamBtn}
         </div>
     </div>`;

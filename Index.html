@@ -39,8 +39,7 @@
             <button id="nav-news" class="nav-link" onclick="switchView('news'); toggleMobileMenu();">News</button>
             <button id="nav-events" class="nav-link" onclick="switchView('events'); toggleMobileMenu();">Events</button>
             <button id="nav-sports" class="nav-link" onclick="switchView('sports'); toggleMobileMenu();">Sports</button>
-            <button id="nav-food" class="nav-link" onclick="switchView('food'); toggleMobileMenu();">Food</button>
-            <button id="nav-services" class="nav-link" onclick="switchView('services'); toggleMobileMenu();">Directory</button>
+            <button id="nav-places" class="nav-link" onclick="switchView('places'); toggleMobileMenu();">Places</button>
             <button id="nav-board" class="nav-link" onclick="switchView('board'); toggleMobileMenu();">Board</button>
             <button id="nav-weather" class="nav-link" onclick="switchView('weather'); toggleMobileMenu();">Weather</button>
             <button id="nav-store" class="nav-link" onclick="switchView('store'); toggleMobileMenu();">Store</button>
@@ -88,7 +87,7 @@
         <div class="home-section">
             <div class="home-section-header">
                 <h3 class="home-section-title">🍴 Specials & Deals</h3>
-                <a href="#" onclick="event.preventDefault();switchView('food');" class="home-more-link">All Food →</a>
+                <a href="#" onclick="event.preventDefault();switchView('places');" class="home-more-link">All Places →</a>
             </div>
             <div id="home-specials" class="home-scroll-row"></div>
         </div>
@@ -201,28 +200,24 @@
         <div id="sp-events-container" class="card-grid"></div>
     </section>
 
-    <!-- FOOD --><section id="view-food" class="app-view"><div id="food-container" class="card-grid"></div></section>
-    <!-- BUSINESS DIRECTORY -->
-    <section id="view-services" class="app-view">
+    <!-- PLACES -->
+    <section id="view-places" class="app-view">
         <div class="filter-bar">
-            <div class="filter-group" id="svc-filter-group">
-                <button class="src-btn active" onclick="setSvcFilter('All', this)">All</button>
-                <button class="src-btn" onclick="setSvcFilter('Housing', this)">🏠 Housing</button>
-                <button class="src-btn" onclick="setSvcFilter('Government', this)">🏛 Government</button>
-                <button class="src-btn" onclick="setSvcFilter('Health', this)">🏥 Health</button>
-                <button class="src-btn" onclick="setSvcFilter('Beauty/Grooming', this)">💈 Beauty</button>
-                <button class="src-btn" onclick="setSvcFilter('Shopping', this)">🛒 Shopping</button>
-                <button class="src-btn" onclick="setSvcFilter('Recreation', this)">🏞 Recreation</button>
-                <button class="src-btn" onclick="setSvcFilter('Transport', this)">🚌 Transport</button>
-                <button class="src-btn" onclick="setSvcFilter('Finance', this)">🏦 Finance</button>
-                <button class="src-btn" onclick="setSvcFilter('Shipping', this)">📦 Shipping</button>
-                <button class="src-btn" onclick="setSvcFilter('Entertainment', this)">🎵 Entertainment</button>
-                <button class="src-btn" onclick="setSvcFilter('Education', this)">📚 Education</button>
+            <div class="filter-group" id="places-filter-group">
+                <button class="src-btn active" onclick="setPlacesFilter('All', this)">All</button>
+                <button class="src-btn" onclick="setPlacesFilter('Food & Drink', this)">🍴 Food</button>
+                <button class="src-btn" onclick="setPlacesFilter('Housing', this)">🏠 Housing</button>
+                <button class="src-btn" onclick="setPlacesFilter('Mechanic', this)">🔧 Auto</button>
+                <button class="src-btn" onclick="setPlacesFilter('Gas Station', this)">⛽ Gas</button>
+                <button class="src-btn" onclick="setPlacesFilter('Shopping', this)">🛒 Shopping</button>
+                <button class="src-btn" onclick="setPlacesFilter('Health', this)">🏥 Health</button>
+                <button class="src-btn" onclick="setPlacesFilter('Recreation', this)">🏞 Recreation</button>
+                <button class="src-btn" onclick="setPlacesFilter('Education', this)">📚 Education</button>
             </div>
         </div>
         <div style="text-align:right;margin-bottom:12px;"><button onclick="openSubmitBusiness()" class="btn btn-sm btn-outline" style="font-size:0.78rem;">➕ Add Your Business</button></div>
         <div id="housing-container" class="card-grid"></div>
-        <div id="services-container" class="card-grid"></div>
+        <div id="places-container" class="card-grid"></div>
     </section>
 
     <!-- COMMUNITY BOARD -->
@@ -960,8 +955,12 @@ function matchesSportSource(tags, src) {
     return false;
 }
 
-const viewPaths={home:'/',news:'/news',events:'/events',sports:'/sports',food:'/food',services:'/services',board:'/board',weather:'/weather',store:'/store',advertise:'/advertise',analytics:'/analytics'};
+const viewPaths={home:'/',news:'/news',events:'/events',sports:'/sports',places:'/places',board:'/board',weather:'/weather',store:'/store',advertise:'/advertise',analytics:'/analytics'};
 const pathToView=Object.fromEntries(Object.entries(viewPaths).map(([k,v])=>[v,k]));
+// Legacy URL redirects
+pathToView['/food'] = 'places';
+pathToView['/services'] = 'places';
+pathToView['/directory'] = 'places';
 
 document.addEventListener("DOMContentLoaded",()=>{
     initApp();
@@ -969,7 +968,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 
 async function initApp(){
     loadFeedPrefs();
-    await Promise.allSettled([loadWeather(),loadSpecials(),loadEvents(),loadDining(),loadHousing(),loadServices(),loadNews(),loadBoard(),loadSponsors()]);
+    await Promise.allSettled([loadWeather(),loadSpecials(),loadEvents(),loadPlaces(),loadHousing(),loadNews(),loadBoard(),loadSponsors()]);
     renderHomeFeed();
     syncFilterArrows();
     loadEcwidStore(); // Load Ecwid early so cart widget renders in header
@@ -984,7 +983,7 @@ async function initApp(){
     }
     let view=pathToView[p]||'home';
     // Redirect old /housing URL to services with Housing filter
-    if(p==='/housing'){ view='services'; history.replaceState(null,'','/services'); }
+    if(p==='/housing'){ view='places'; history.replaceState(null,'','/places'); }
     switchView(view,true);
     if(p==='/housing'){ setTimeout(()=>{ const btn=document.querySelector('#svc-filter-group .src-btn:nth-child(2)'); if(btn) btn.click(); },500); }
 }
@@ -1002,7 +1001,7 @@ window.toggleMobileMenu=function(){
     if(nav.classList.contains('open')){nav.classList.remove('open');overlay.classList.remove('open');setTimeout(()=>{if(!nav.classList.contains('open'))nav.style.display='';},300);}
     else{nav.style.display='flex';void nav.offsetWidth;nav.classList.add('open');overlay.classList.add('open');}
 };
-const viewLabels={home:'',news:'/ News',events:'/ Events',sports:'/ Sports',food:'/ Food',services:'/ Directory',board:'/ Board',weather:'/ Weather',store:'/ Store',advertise:'/ Advertise'};
+const viewLabels={home:'',news:'/ News',events:'/ Events',sports:'/ Sports',places:'/ Places',board:'/ Board',weather:'/ Weather',store:'/ Store',advertise:'/ Advertise'};
 
 let ecwidLoaded = false;
 function loadEcwidStore(){
@@ -1795,81 +1794,11 @@ function renderNewsUI(){
     }
     injectInlineAds('news-container','news');
 }
-async function loadDining(){try{
-    const [data, specials] = await Promise.all([
-        fetch('restaurants.json').then(r=>r.json()),
-        fetch('specials.json').then(r=>r.json()).catch(()=>({}))
-    ]);
-    // Store grocery deals for popup
-    const jh = specials["John Herr's Village Market"];
-    if(jh && jh.rawDeals) { allGroceryDeals = jh.rawDeals; }
-    allRestaurants = data;
-    const c=document.getElementById('food-container');
-    const dayName = new Date().toLocaleDateString('en-US',{weekday:'long'});
+let allPlaces=[], allRestaurants=[], allGroceryDeals=[], placesFilter='All';
 
-    // Sort featured restaurants to top
-    data.sort((a,b) => (b.featured===true) - (a.featured===true));
-
-    c.innerHTML=data.map(p=>{
-        let b='';
-        if(p.status==='App Required')b=`<div style="display:flex;gap:8px;"><a href="${p.iosLink||'#'}" target="_blank" class="btn btn-sm ${p.featured?'btn-dark':'btn-outline'}" style="flex:1;text-align:center;">🍎 iOS</a><a href="${p.link||'#'}" target="_blank" class="btn btn-sm ${p.featured?'btn-dark':'btn-outline'}" style="flex:1;text-align:center;">🤖 Android</a></div>`;
-        else if(p.status==='Order Online')b=`<a href="${p.link}" target="_blank" class="btn btn-sm btn-ticket" style="display:block;text-align:center;">🛒 Order Online</a>`;
-        else b=`<a href="${p.link}" target="_blank" class="btn btn-sm btn-outline" style="display:block;text-align:center;">📄 View Menu</a>`;
-
-        // Members Only badge for VFW
-        const membersBadge = p.status==='Members Only' ? '<span class="badge-members-only">Members Only</span>' : '';
-        // Featured badge
-        const featuredBadge = p.featured ? '<span class="badge badge-premium">Featured</span>' : '';
-
-        const addr=p.address?`<p class="card-meta" style="margin-bottom:4px;">📍 ${p.address}</p>`:'';
-
-        // Build specials section for this restaurant
-        let specialsHtml='';
-        const sp = specials[p.name];
-        const isWeekend = (dayName === 'Saturday' || dayName === 'Sunday');
-        if(sp && !(isWeekend && p.name === 'VFW Post 7294')){
-            let items=[];
-            if(sp.daily && sp.daily[dayName]) items = sp.daily[dayName];
-
-            // VFW: show recurring for today + weekly specials
-            if (p.name === 'VFW Post 7294') {
-                if(sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
-                if(sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
-            } else {
-                if(sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
-                if(sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
-            }
-
-            if(items.length > 0){
-                const note = sp.note ? `<p style="font-size:0.7rem;color:var(--text-muted);margin-bottom:4px;font-style:italic;">${sp.note}</p>` : '';
-                const dateRange = (!isGrocery && sp.weeklyDateRange) ? `<p style="font-size:0.7rem;color:var(--gold);font-weight:600;margin-bottom:4px;">${sp.weeklyDateRange}</p>` : '';
-                const isGrocery = p.name === "John Herr's Village Market";
-                const isVFW = p.name === 'VFW Post 7294';
-                const heading = isGrocery ? '🏷️ Top Weekly Deals:' : isVFW ? `Specials (${dayName}):` : `Today's Specials (${dayName}):`;
-                const topItems = isGrocery ? items.slice(0, 5) : items;
-                const moreItems = isGrocery ? items.slice(5) : [];
-                let moreHtml = '';
-                if(moreItems.length > 0){
-                    moreHtml = `<button onclick="showGroceryDeals(event)" class="btn btn-sm btn-outline" style="margin-top:6px;font-size:0.75rem;width:100%;text-align:center;">View All ${items.length} Deals</button>`;
-                }
-                specialsHtml=`<div class="specials-section">${note}${dateRange}<p style="font-size:0.8rem;font-weight:700;margin-bottom:4px;">${heading}</p>${topItems.map(i=>`<p style="font-size:0.8rem;color:var(--text);margin:2px 0;">• ${i}</p>`).join('')}${moreHtml}</div>`;
-            }
-        }
-
-        return `<div class="app-card ${p.featured?'card-featured':''}" style="position:relative;">${membersBadge}${featuredBadge}<h3 class="card-title">${p.name}</h3><p class="card-meta" style="margin-bottom:4px;">🍴 ${p.cuisine}</p>${addr}<p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:8px;">${p.description||''}</p>${specialsHtml}<div style="margin-top:auto;">${b}</div></div>`;
-    }).join('');
-}catch(e){console.error('Dining error:',e);}}
-async function loadHousing(){try{const data=await(await fetch('housing.json')).json();const c=document.getElementById('housing-container');data.sort((a,b)=>(b.featured===true)-(a.featured===true));c.innerHTML=data.map(p=>{const badge=p.featured?'<span class="badge badge-premium">Featured</span>':'';return `<div class="app-card ${p.featured?'card-featured':''}">${badge}<h3 class="card-title">${p.name}</h3><p class="card-meta" style="font-weight:bold;text-transform:uppercase;margin-bottom:8px;">${p.landlord}</p><p style="font-size:0.9rem;margin-bottom:16px;">${p.description}</p><div class="card-footer"><a href="${p.link}" target="_blank" class="btn btn-sm ${p.featured?'btn-dark':'btn-outline'}" style="display:block;text-align:center;">View Property</a></div></div>`;}).join('');}catch(e){}}
-let allServices=[], svcFilter='All';
-async function loadServices(){try{allServices=await(await fetch('services.json')).json();renderServices();}catch(e){}}
-window.setSvcFilter=function(cat,btn){
-    svcFilter=cat;
-    btn.closest('.filter-group').querySelectorAll('.src-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    renderServices();
-};
 function renderStars(rating) {
     if (!rating) return '';
+    rating = parseFloat(rating);
     const full = Math.floor(rating);
     const half = rating % 1 >= 0.25 && rating % 1 < 0.75 ? 1 : 0;
     const empty = 5 - full - half;
@@ -1878,48 +1807,150 @@ function renderStars(rating) {
         '★'.repeat(full + extra) + (half ? '½' : '') + '☆'.repeat(empty - extra) +
         '</span> <span style="font-size:0.8rem;color:var(--text-muted);">' + rating.toFixed(1) + '</span>';
 }
-function renderServices(){
+
+async function loadHousing(){try{const data=await(await fetch('housing.json')).json();const c=document.getElementById('housing-container');data.sort((a,b)=>(b.featured===true)-(a.featured===true));c.innerHTML=data.map(p=>{const badge=p.featured?'<span class="badge badge-premium">Featured</span>':'';return `<div class="app-card ${p.featured?'card-featured':''}">${badge}<h3 class="card-title">${p.name}</h3><p class="card-meta" style="font-weight:bold;text-transform:uppercase;margin-bottom:8px;">${p.landlord}</p><p style="font-size:0.9rem;margin-bottom:16px;">${p.description}</p><div class="card-footer"><a href="${p.link}" target="_blank" class="btn btn-sm ${p.featured?'btn-dark':'btn-outline'}" style="display:block;text-align:center;">View Property</a></div></div>`;}).join('');}catch(e){}}
+
+async function loadPlaces(){try{
+    const [restaurants, services, specials] = await Promise.all([
+        fetch('restaurants.json').then(r=>r.json()).catch(()=>[]),
+        fetch('services.json').then(r=>r.json()).catch(()=>[]),
+        fetch('specials.json').then(r=>r.json()).catch(()=>({}))
+    ]);
+    // Store grocery deals for popup
+    const jh = specials["John Herr's Village Market"];
+    if(jh && jh.rawDeals) { allGroceryDeals = jh.rawDeals; }
+    allRestaurants = restaurants;
+    // Merge: add category to restaurants, combine
+    const foodPlaces = restaurants.map(r => ({...r, placeType:'food', category:'Food & Drink'}));
+    const svcPlaces = services.map(s => ({...s, placeType:'service'}));
+    allPlaces = [...foodPlaces, ...svcPlaces];
+    // Store specials globally for rendering
+    window._placesSpecials = specials;
+    renderPlaces();
+}catch(e){console.error('Places error:',e);}}
+
+window.setPlacesFilter=function(cat,btn){
+    placesFilter=cat;
+    btn.closest('.filter-group').querySelectorAll('.src-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    renderPlaces();
+};
+
+function renderPlaces(){
     const hc=document.getElementById('housing-container');
-    const sc=document.getElementById('services-container');
-    if(svcFilter==='All' || svcFilter==='Housing'){
+    const pc=document.getElementById('places-container');
+    const specials = window._placesSpecials || {};
+    const dayName = new Date().toLocaleDateString('en-US',{weekday:'long'});
+
+    // Housing visibility
+    if(placesFilter==='All' || placesFilter==='Housing'){
         hc.style.display='';
     } else {
         hc.style.display='none';
     }
-    if(svcFilter==='Housing'){
-        sc.style.display='none';
-    } else {
-        sc.style.display='';
-        const f=svcFilter==='All'?allServices:allServices.filter(s=>s.category===svcFilter);
-        sc.innerHTML=f.length?f.map(s=>{
-            const catIcons={'Government':'🏛','Health':'🏥','Beauty/Grooming':'💈','Shopping':'🛒','Recreation':'🏞','Transport':'🚌','Finance':'🏦','Shipping':'📦','Entertainment':'🎵','Education':'📚','Housing':'🏠'};
-            const icon = catIcons[s.category] || '🏢';
-            const stars = s.rating ? renderStars(s.rating) : '';
-            const reviews = s.reviewCount ? `<span style="font-size:0.75rem;color:var(--text-muted);margin-left:4px;">(${s.reviewCount} review${s.reviewCount>1?'s':''})</span>` : '';
-            const ratingRow = stars ? `<div style="margin:4px 0 6px;">${stars}${reviews}</div>` : '';
-            const hours = s.hours ? `<p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:4px;">🕐 ${s.hours}</p>` : '';
-            const phone = s.phone ? `<a href="tel:${s.phone.replace(/[^+\d]/g,'')}" style="font-weight:600;font-size:0.85rem;color:var(--text);text-decoration:none;">📞 ${s.phone}</a>` : '';
-            const site = s.gasLink ? `<a href="${s.gasLink}" target="_blank" class="btn btn-sm btn-outline" style="font-size:0.75rem;">⛽ Prices</a>` :
-                         s.link ? `<a href="${s.link}" target="_blank" class="btn btn-sm btn-outline" style="font-size:0.75rem;">🌐 Visit</a>` : '';
-            return `<div class="app-card">
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-                    <span class="card-tag">${icon} ${s.category}</span>
-                </div>
-                <h3 class="card-title" style="margin-top:6px;">${s.name}</h3>
-                ${ratingRow}
-                <p class="card-meta" style="margin-bottom:4px;">📍 ${s.address}</p>
-                ${hours}
-                <p style="font-size:0.85rem;color:var(--text-muted);margin:8px 0;">${s.description}</p>
-                <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-                    ${phone}
-                    <div style="display:flex;gap:6px;align-items:center;">
-                        <button onclick="openReviewModal('${s.name.replace(/'/g,"\\'")}')" class="btn btn-sm btn-outline" style="font-size:0.75rem;">⭐ Review</button>
-                        ${site}
-                    </div>
-                </div>
-            </div>`;
-        }).join(''):'<p class="empty-state">No businesses found in this category.</p>';
+
+    if(placesFilter==='Housing'){
+        pc.style.display='none';
+        return;
     }
+    pc.style.display='';
+
+    // Filter places
+    const filtered = placesFilter==='All' ? allPlaces : allPlaces.filter(p=>p.category===placesFilter);
+
+    // Sort: featured first, then food, then services
+    filtered.sort((a,b) => (b.featured===true)-(a.featured===true) || (a.placeType==='food'?0:1)-(b.placeType==='food'?0:1));
+
+    pc.innerHTML = filtered.length ? filtered.map(p => {
+        if (p.placeType === 'food') return buildFoodCard(p, specials, dayName);
+        return buildServiceCard(p);
+    }).join('') : '<p class="empty-state">No places found in this category.</p>';
+}
+
+function buildFoodCard(p, specials, dayName) {
+    // Action buttons
+    let actionBtn='';
+    if(p.status==='App Required') actionBtn=`<div style="display:flex;gap:8px;"><a href="${p.iosLink||'#'}" target="_blank" class="btn btn-sm ${p.featured?'btn-dark':'btn-outline'}" style="flex:1;text-align:center;">🍎 iOS</a><a href="${p.link||'#'}" target="_blank" class="btn btn-sm ${p.featured?'btn-dark':'btn-outline'}" style="flex:1;text-align:center;">🤖 Android</a></div>`;
+    else if(p.status==='Order Online') actionBtn=`<a href="${p.link}" target="_blank" class="btn btn-sm btn-ticket" style="display:block;text-align:center;">🛒 Order Online</a>`;
+    else actionBtn=`<a href="${p.link}" target="_blank" class="btn btn-sm btn-outline" style="display:block;text-align:center;">📄 View Menu</a>`;
+
+    const membersBadge = p.status==='Members Only' ? '<span class="badge-members-only">Members Only</span>' : '';
+    const featuredBadge = p.featured ? '<span class="badge badge-premium">Featured</span>' : '';
+    const addr = p.address ? `<p class="card-meta" style="margin-bottom:4px;">📍 ${p.address}</p>` : '';
+    const stars = p.rating ? renderStars(p.rating) : '';
+    const reviews = p.reviewCount ? `<span style="font-size:0.75rem;color:var(--text-muted);margin-left:4px;">(${p.reviewCount} review${p.reviewCount>1?'s':''})</span>` : '';
+    const ratingRow = stars ? `<div style="margin:4px 0 6px;">${stars}${reviews}</div>` : '';
+
+    // Build specials section
+    let specialsHtml='';
+    const sp = specials[p.name];
+    const isWeekend = (dayName === 'Saturday' || dayName === 'Sunday');
+    if(sp && !(isWeekend && p.name === 'VFW Post 7294')){
+        let items=[];
+        if(sp.daily && sp.daily[dayName]) items = sp.daily[dayName];
+        if (p.name === 'VFW Post 7294') {
+            if(sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
+            if(sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
+        } else {
+            if(sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
+            if(sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
+        }
+        if(items.length > 0){
+            const isGrocery = p.name === "John Herr's Village Market";
+            const note = sp.note ? `<p style="font-size:0.7rem;color:var(--text-muted);margin-bottom:4px;font-style:italic;">${sp.note}</p>` : '';
+            const dateRange = (!isGrocery && sp.weeklyDateRange) ? `<p style="font-size:0.7rem;color:var(--gold);font-weight:600;margin-bottom:4px;">${sp.weeklyDateRange}</p>` : '';
+            const isVFW = p.name === 'VFW Post 7294';
+            const heading = isGrocery ? '🏷️ Top Weekly Deals:' : isVFW ? `Specials (${dayName}):` : `Today's Specials (${dayName}):`;
+            const topItems = isGrocery ? items.slice(0, 5) : items;
+            const moreItems = isGrocery ? items.slice(5) : [];
+            let moreHtml = '';
+            if(moreItems.length > 0){
+                moreHtml = `<button onclick="showGroceryDeals(event)" class="btn btn-sm btn-outline" style="margin-top:6px;font-size:0.75rem;width:100%;text-align:center;">View All ${items.length} Deals</button>`;
+            }
+            specialsHtml=`<div class="specials-section">${note}${dateRange}<p style="font-size:0.8rem;font-weight:700;margin-bottom:4px;">${heading}</p>${topItems.map(i=>`<p style="font-size:0.8rem;color:var(--text);margin:2px 0;">• ${i}</p>`).join('')}${moreHtml}</div>`;
+        }
+    }
+
+    return `<div class="app-card ${p.featured?'card-featured':''}" style="position:relative;">${membersBadge}${featuredBadge}
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;"><span class="card-tag">🍴 ${p.cuisine || 'Food & Drink'}</span></div>
+        <h3 class="card-title" style="margin-top:6px;">${p.name}</h3>
+        ${ratingRow}${addr}
+        <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:8px;">${p.description||''}</p>
+        ${specialsHtml}
+        <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+            <button onclick="openReviewModal('${p.name.replace(/'/g,"\\'")}')" class="btn btn-sm btn-outline" style="font-size:0.75rem;">⭐ Review</button>
+            <div style="flex:1;">${actionBtn}</div>
+        </div>
+    </div>`;
+}
+
+function buildServiceCard(p) {
+    const catIcons={'Government':'🏛','Health':'🏥','Beauty/Grooming':'💈','Shopping':'🛒','Recreation':'🏞','Transport':'🚌','Finance':'🏦','Shipping':'📦','Entertainment':'🎵','Education':'📚','Mechanic':'🔧','Gas Station':'⛽','EV Charging':'🔌','Housing':'🏠'};
+    const icon = catIcons[p.category] || '🏢';
+    const stars = p.rating ? renderStars(p.rating) : '';
+    const reviews = p.reviewCount ? `<span style="font-size:0.75rem;color:var(--text-muted);margin-left:4px;">(${p.reviewCount} review${p.reviewCount>1?'s':''})</span>` : '';
+    const ratingRow = stars ? `<div style="margin:4px 0 6px;">${stars}${reviews}</div>` : '';
+    const hours = p.hours ? `<p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:4px;">🕐 ${p.hours}</p>` : '';
+    const phone = p.phone ? `<a href="tel:${p.phone.replace(/[^+\d]/g,'')}" style="font-weight:600;font-size:0.85rem;color:var(--text);text-decoration:none;">📞 ${p.phone}</a>` : '';
+    const site = p.gasLink ? `<a href="${p.gasLink}" target="_blank" class="btn btn-sm btn-outline" style="font-size:0.75rem;">⛽ Prices</a>` :
+                 p.link ? `<a href="${p.link}" target="_blank" class="btn btn-sm btn-outline" style="font-size:0.75rem;">🌐 Visit</a>` : '';
+    return `<div class="app-card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+            <span class="card-tag">${icon} ${p.category}</span>
+        </div>
+        <h3 class="card-title" style="margin-top:6px;">${p.name}</h3>
+        ${ratingRow}
+        <p class="card-meta" style="margin-bottom:4px;">📍 ${p.address}</p>
+        ${hours}
+        <p style="font-size:0.85rem;color:var(--text-muted);margin:8px 0;">${p.description}</p>
+        <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+            ${phone}
+            <div style="display:flex;gap:6px;align-items:center;">
+                <button onclick="openReviewModal('${p.name.replace(/'/g,"\\'")}')" class="btn btn-sm btn-outline" style="font-size:0.75rem;">⭐ Review</button>
+                ${site}
+            </div>
+        </div>
+    </div>`;
 }
 // ==================== COMMUNITY BOARD ====================
 let allBoardPosts=[], boardFilter='All';
@@ -2040,7 +2071,7 @@ const REVIEW_FIELDS = { business: 'entry.1618716598', rating: 'entry.417623384',
 
 window.openReviewModal = function(businessName) {
     // Build dropdown from loaded services data
-    const bizOptions = (allServices || []).map(s => `<option value="${s.name}" ${s.name===businessName?'selected':''}>${s.name}</option>`).join('');
+    const bizOptions = (allPlaces || []).map(s => `<option value="${s.name}" ${s.name===businessName?'selected':''}>${s.name}</option>`).join('');
 
     const overlay = document.createElement('div');
     overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;overflow-y:auto;';
@@ -2390,31 +2421,16 @@ function runSearch(q) {
         html += '</div>';
     }
 
-    // Search Restaurants
-    const foodHits = (allRestaurants||[]).filter(r => {
-        return (r.name + ' ' + r.cuisine + ' ' + (r.description||'')).toLowerCase().includes(ql);
-    }).slice(0, 5);
-    if (foodHits.length) {
-        html += `<div style="margin-bottom:20px;"><h4 style="color:var(--text-muted);font-size:0.8rem;text-transform:uppercase;margin-bottom:8px;">🍴 Food</h4>`;
-        foodHits.forEach(r => {
-            html += `<div class="search-result" onclick="document.getElementById('search-overlay').remove();switchView('food');" style="padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;margin-bottom:4px;background:var(--surface);">
-                <p style="font-weight:600;margin:2px 0;">${r.name}</p>
-                <span style="font-size:0.8rem;color:var(--text-muted);">${r.cuisine} · ${r.address||''}</span>
-            </div>`;
-        });
-        html += '</div>';
-    }
-
-    // Search Services
-    const svcHits = (allServices||[]).filter(s => {
-        return (s.name + ' ' + s.category + ' ' + (s.description||'')).toLowerCase().includes(ql);
+    // Search Places (food + services)
+    const svcHits = (allPlaces||[]).filter(s => {
+        return (s.name + ' ' + (s.category||'') + ' ' + (s.cuisine||'') + ' ' + (s.description||'')).toLowerCase().includes(ql);
     }).slice(0, 5);
     if (svcHits.length) {
-        html += `<div style="margin-bottom:20px;"><h4 style="color:var(--text-muted);font-size:0.8rem;text-transform:uppercase;margin-bottom:8px;">🏢 Directory</h4>`;
+        html += `<div style="margin-bottom:20px;"><h4 style="color:var(--text-muted);font-size:0.8rem;text-transform:uppercase;margin-bottom:8px;">📍 Places</h4>`;
         svcHits.forEach(s => {
-            html += `<div class="search-result" onclick="document.getElementById('search-overlay').remove();switchView('services');" style="padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;margin-bottom:4px;background:var(--surface);">
+            html += `<div class="search-result" onclick="document.getElementById('search-overlay').remove();switchView('places');" style="padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;margin-bottom:4px;background:var(--surface);">
                 <p style="font-weight:600;margin:2px 0;">${s.name}</p>
-                <span style="font-size:0.8rem;color:var(--text-muted);">${s.category} · ${s.description?.substring(0,60)||''}</span>
+                <span style="font-size:0.8rem;color:var(--text-muted);">${s.category||s.cuisine||''} · ${s.description?.substring(0,60)||''}</span>
             </div>`;
         });
         html += '</div>';

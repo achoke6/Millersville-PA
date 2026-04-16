@@ -71,6 +71,18 @@
             <p>Loading weather...</p>
         </div>
 
+        <div id="welcome-banner" class="welcome-banner" style="display:none;">
+            <div style="display:flex;align-items:center;gap:12px;">
+                <span style="font-size:1.5rem;">👋</span>
+                <div style="flex:1;">
+                    <strong>Welcome to Millersville.APP!</strong>
+                    <p style="font-size:0.82rem;color:var(--text-muted);margin:2px 0 0;">Personalize your experience — pick your favorite sports, events, and news sources to see what matters to you first.</p>
+                </div>
+                <button onclick="openFeedSettings()" class="btn btn-sm btn-ticket" style="white-space:nowrap;">Set Up Favorites</button>
+                <button onclick="dismissWelcome()" style="background:none;border:none;font-size:1rem;cursor:pointer;color:var(--text-muted);padding:4px;">✕</button>
+            </div>
+        </div>
+
         <!-- Today in Millersville — combined timeline -->
         <div class="home-section">
             <div class="home-section-header">
@@ -131,7 +143,6 @@
     <!-- EVENTS (No Sports) -->
     <section id="view-events" class="app-view">
         <div class="toolbar-compact">
-            <span id="ev-event-label" class="game-label">All Events:</span>
             <div class="toolbar-center">
                 <button class="nav-arrow" id="ev-prev" onclick="evNavPrev()">‹</button>
                 <span id="ev-date-label" class="date-label-inline"></span>
@@ -163,7 +174,6 @@
     <!-- SPORTS -->
     <section id="view-sports" class="app-view">
         <div class="toolbar-compact">
-            <span id="sp-game-label" class="game-label">All Games:</span>
             <div class="toolbar-center">
                 <button class="nav-arrow" id="sp-prev" onclick="spNavPrev()">‹</button>
                 <span id="sp-date-label" class="date-label-inline"></span>
@@ -851,8 +861,19 @@ function renderHomeFeed() {
     const hasFeed = feedPrefs && feedPrefs.length > 0;
     const feedCta = document.getElementById('home-feed-cta');
     if (feedCta) feedCta.style.display = hasFeed ? 'none' : 'block';
+    // Welcome banner: show for first-time visitors without favorites
+    const wb = document.getElementById('welcome-banner');
+    if (wb) {
+        const dismissed = localStorage.getItem('welcomeDismissed');
+        wb.style.display = (!hasFeed && !dismissed) ? 'block' : 'none';
+    }
     renderHomeUI();
 }
+window.dismissWelcome = function() {
+    localStorage.setItem('welcomeDismissed', '1');
+    const wb = document.getElementById('welcome-banner');
+    if (wb) wb.style.display = 'none';
+};
 // ==================== END MY FEED ====================
 
 // View mode state for Events page
@@ -1136,8 +1157,6 @@ function updateEventsUI(){
         const btn = document.getElementById('ev-src-' + srcMap[src]);
         if (btn) btn.classList.toggle('active', !evAllMode && evActiveSources.has(src));
     });
-    const evLabel = document.getElementById('ev-event-label');
-    if (evLabel) evLabel.textContent = evKidMode ? 'Family Friendly:' : 'All Events:';
     const isCurrentWeek = toDateStr(evAnchorDate) === toDateStr(todayMidnight());
     const isClean = evAllMode && evTags.size === 0 && evMode === 'week' && !evKidMode && isCurrentWeek;
     document.getElementById('ev-clear-btn').style.display = isClean ? 'none' : 'flex';
@@ -1237,7 +1256,13 @@ function renderEvents(){
     if(evMode==='past') filtered.sort((a,b)=>new Date(b.date)-new Date(a.date));
     updateModeUI('ev',evMode,evAnchorDate,filtered);
     const container=document.getElementById('ev-events-container');
-    if(filtered.length===0){container.innerHTML='<p class="empty-state">No events found for this view.</p>';return;}
+    if(filtered.length===0){
+        let msg = 'No events found for this date range.';
+        if (evKidMode) msg = '👨‍👩‍👧 No family-friendly events this week. Try turning off the family filter or navigate to a different week.';
+        else if (!evAllMode) msg = 'No events from ' + Array.from(evActiveSources).join(', ') + ' this week. Try selecting "All" sources or a different week.';
+        container.innerHTML='<p class="empty-state">'+msg+'</p>';
+        return;
+    }
 
     const hasAnyPrefs = feedPrefs && feedPrefs.length > 0;
     const hasEventPrefs = hasAnyPrefs && feedPrefs.some(p => eventFeedIds.has(p) || p.startsWith('club:'));
@@ -1299,8 +1324,6 @@ function updateSportsUI(){
     });
     document.getElementById('hgame-toggle').classList.toggle('active', spHomeOnly);
     document.getElementById('sp-no-source').style.display = spActiveSources.size===0 ? 'block' : 'none';
-    const gameLabel=document.getElementById('sp-game-label');
-    if(gameLabel) gameLabel.textContent=spHomeOnly?'Home Games:':'All Games:';
     const isCurrentWeek = toDateStr(spAnchorDate) === toDateStr(todayMidnight());
     const isClean = spAllMode && !spHomeOnly && !spSportTag && spMode==='week' && isCurrentWeek;
     document.getElementById('sp-clear-btn').style.display = isClean ? 'none' : 'flex';
@@ -1377,7 +1400,15 @@ function renderSports(){
     updateModeUI('sp',spMode,spAnchorDate,filtered);
 
     const container=document.getElementById('sp-events-container');
-    if(filtered.length===0){container.innerHTML='<p class="empty-state">No sports events found for this view.</p>';return;}
+    if(filtered.length===0){
+        let msg = 'No games found for this date range.';
+        if (spHomeOnly && spSportTag) msg = '🏠 No home ' + spSportTag.toLowerCase() + ' games this week. Try a different sport or week.';
+        else if (spHomeOnly) msg = '🏠 No home games this week. Try turning off the home filter or navigate to a different week.';
+        else if (spSportTag) msg = 'No ' + spSportTag.toLowerCase() + ' games this week. Try a different sport or week.';
+        else if (!spAllMode) msg = 'No games from ' + Array.from(spActiveSources).join(', ') + ' this week.';
+        container.innerHTML='<p class="empty-state">'+msg+'</p>';
+        return;
+    }
 
     const hasAnyPrefs = feedPrefs && feedPrefs.length > 0;
     const hasSportPrefs = hasAnyPrefs && feedPrefs.some(p => sportFeedIds.has(p));
@@ -1767,17 +1798,20 @@ function renderNewsUI(){
     });
     if(f.length===0){ c.innerHTML='<p class="empty-state">No news articles found.</p>'; return; }
 
-    const showFavs = feedPrefs && feedPrefs.length > 0 && newsSource === 'All';
-    if (showFavs) {
-        const feedItems = f.filter(n => newsMatchesFeed(n));
-        const otherItems = f.filter(n => !newsMatchesFeed(n));
+    const hasAnyPrefs = feedPrefs && feedPrefs.length > 0;
+    const hasNewsPrefs = hasAnyPrefs && feedPrefs.some(p => p.startsWith('news-'));
+    if (newsSource === 'All') {
+        const feedItems = hasNewsPrefs ? f.filter(n => newsMatchesFeed(n)) : [];
+        const otherItems = hasNewsPrefs ? f.filter(n => !newsMatchesFeed(n)) : f;
         let html = '';
-        if (feedItems.length > 0) {
+        if (hasNewsPrefs && feedItems.length > 0) {
             html += '<div class="feed-pinned-header"><span>⚡ My Favorites</span></div>';
             html += feedItems.map(n => buildNewsCard(n)).join('');
-            if (otherItems.length > 0) {
-                html += '<div class="feed-divider"><span>All News</span></div>';
-            }
+            if (otherItems.length > 0) html += '<div class="feed-divider"><span>All News</span></div>';
+        } else if (!hasAnyPrefs) {
+            html += '<div class="feed-setup-hint">⚙️ <a href="#" onclick="event.preventDefault();openFeedSettings();">Set up your favorites</a> to see your preferred news sources first</div>';
+        } else if (hasAnyPrefs && !hasNewsPrefs) {
+            html += '<div class="feed-setup-hint">No news favorites set — <a href="#" onclick="event.preventDefault();openFeedSettings();">add some</a> to pin them here</div>';
         }
         html += otherItems.map(n => buildNewsCard(n)).join('');
         c.innerHTML = html;
@@ -1856,7 +1890,7 @@ function renderPlaces(){
     pc.innerHTML = filtered.length ? filtered.map(p => {
         if (p.placeType === 'food') return buildFoodCard(p, specials, dayName);
         return buildServiceCard(p);
-    }).join('') : '<p class="empty-state">No places found in this category.</p>';
+    }).join('') : '<p class="empty-state">No places found in this category. Know a local business? <a href="#" onclick="event.preventDefault();openSubmitBusiness();">Add it here →</a></p>';
 }
 
 function buildFoodCard(p, specials, dayName) {

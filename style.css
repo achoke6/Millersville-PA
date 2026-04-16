@@ -86,19 +86,17 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .toolbar-row .clear-btn { position: absolute; right: 0; }
 .toolbar-row .date-label { text-align: center; width: 100%; pointer-events: none; }
 
-/* Compact toolbar: single row with label, modes+date, filter toggle */
+/* Compact toolbar: date nav + action buttons */
 .toolbar-compact {
     display: flex;
     align-items: center;
     gap: 8px;
     margin-bottom: 10px;
     min-height: 36px;
-    flex-wrap: wrap;
 }
-.toolbar-compact .game-label { flex-shrink: 0; }
-.toolbar-center { display: flex; align-items: center; gap: 4px; }
+.toolbar-center { display: flex; align-items: center; gap: 0; }
 .toolbar-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; margin-left: auto; }
-.date-label-inline { font-size: 0.85rem; font-weight: 700; color: var(--text); white-space: nowrap; min-width: 100px; text-align: center; }
+.date-label-inline { font-size: 0.95rem; font-weight: 700; color: var(--text); white-space: nowrap; min-width: 140px; text-align: center; }
 
 /* Three-item toolbar: left label, center date, right clear */
 .toolbar-three { justify-content: center; }
@@ -121,6 +119,8 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .feed-divider { grid-column: 1 / -1; padding: 12px 0 4px; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); border-top: 1px solid var(--border); margin-top: 8px; }
 .feed-setup-hint { grid-column: 1 / -1; font-size: 0.82rem; color: var(--text-muted); padding: 8px 12px; background: var(--gold-soft); border-radius: var(--radius-sm); margin-bottom: 8px; }
 .feed-setup-hint a { color: var(--navy); font-weight: 700; }
+.welcome-banner { background: linear-gradient(135deg, var(--gold-soft), #fff8e1); border: 1.5px solid var(--gold); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 16px; }
+.welcome-banner strong { font-size: 0.95rem; color: var(--navy); }
 
 /* =========================================================
    6. CARDS
@@ -226,20 +226,20 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 34px;
+    width: 36px;
+    height: 36px;
     background: none;
     border: none;
-    font-weight: 700;
-    font-size: 1.2rem;
+    font-weight: 400;
+    font-size: 1.4rem;
     cursor: pointer;
-    transition: var(--transition);
     font-family: inherit;
     color: var(--text-muted);
     flex-shrink: 0;
     padding: 0;
+    transition: color 0.15s;
 }
-.nav-arrow:hover { color: var(--gold); }
+.nav-arrow:hover { color: var(--navy); }
 .date-label {
     font-size: 0.85rem;
     font-weight: 700;
@@ -280,9 +280,7 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .fab-submit:hover { transform: scale(1.1); box-shadow: 0 6px 16px rgba(0,0,0,0.3); }
 @media (max-width: 768px) {
     .filters-collapsible { display: none; }
-    .toolbar-compact .game-label { font-size: 0.8rem; }
-    .toolbar-center { flex-wrap: nowrap; }
-    .date-label-inline { font-size: 0.78rem; min-width: auto; }
+    .date-label-inline { font-size: 0.9rem; min-width: 120px; }
 }
 
 .sub-filter-bar { display: none; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dashed var(--border); }

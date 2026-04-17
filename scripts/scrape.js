@@ -919,98 +919,108 @@ async function runScraper() {
             'https://millersvilletechcamps.com/shop/?query-9-page=2',
             'https://millersvilletechcamps.com/shop/?query-9-page=3'
         ];
-        const campUrls = new Map(); // url -> title
+        // Stage 1: find all unique product URLs from shop pages
+        const productUrls = new Set();
         for (const shopUrl of techShopPages) {
             try {
                 const res = await fetch(shopUrl, { headers: baseHeaders, signal: AbortSignal.timeout(30000) });
                 if (!res.ok) continue;
                 const html = await res.text();
-                // Product links like: <a href="https://millersvilletechcamps.com/product/{slug}/">
-                // Each product has an h2/h3 with the title that includes the date range
-                const productRegex = /<a[^>]+href="(https:\/\/millersvilletechcamps\.com\/product\/[a-z0-9-]+\/)"[^>]*>[\s\S]*?<\/a>\s*<h[23][^>]*>\s*<a[^>]+href="\1"[^>]*>([^<]+)<\/a>\s*<\/h[23]>/gi;
-                // Simpler: capture h2/h3 titles with their product link
-                const altRegex = /<h[23][^>]*class="[^"]*product[^"]*"[^>]*>\s*<a[^>]+href="(https:\/\/millersvilletechcamps\.com\/product\/[a-z0-9-]+\/)"[^>]*>([^<]+)<\/a>/gi;
-                for (const m of html.matchAll(altRegex)) {
-                    const url = m[1];
-                    const title = m[2].trim()
-                        .replace(/&#8211;/g, '–').replace(/&#038;/g, '&').replace(/&amp;/g, '&')
-                        .replace(/&#8217;/g, "'").replace(/&quot;/g, '"');
-                    if (!campUrls.has(url)) campUrls.set(url, title);
+                const urlRegex = /https:\/\/millersvilletechcamps\.com\/product\/[a-z0-9-]+\/?/gi;
+                for (const m of html.matchAll(urlRegex)) {
+                    const clean = m[0].replace(/\/$/, '') + '/';
+                    productUrls.add(clean);
                 }
             } catch (e) { console.log(`  ⚠️ ${shopUrl}: ${e.message}`); }
         }
-        console.log(`  🔗 Found ${campUrls.size} tech camp products`);
+        console.log(`  🔗 Found ${productUrls.size} unique tech camp product URLs`);
 
-        let techCount = 0, techSkipped = 0;
+        // Stage 2: fetch each product page for accurate title + price
+        let techCount = 0, techSkipped = 0, techFailed = 0;
         const existingKeys2 = new Set(events.map(e => (e.title || '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 40) + '|' + (e.date || '').slice(0, 10)));
 
-        for (const [url, rawTitle] of campUrls) {
-            // Skip non-camp products (supervised lunch, add-ons, etc.)
-            if (/supervised lunch|add[- ]on|gift card|apparel/i.test(rawTitle)) { techSkipped++; continue; }
+        for (const productUrl of productUrls) {
+            try {
+                const pRes = await fetch(productUrl, { headers: baseHeaders, signal: AbortSignal.timeout(15000) });
+                if (!pRes.ok) { techFailed++; continue; }
+                const pHtml = await pRes.text();
 
-            // Parse date range from title: "7/13-7/17" or "6/22-6/26" or "7/11 only"
-            const dateRangeMatch = rawTitle.match(/(\d{1,2})\/(\d{1,2})\s*[-–]\s*(\d{1,2})\/(\d{1,2})/);
-            const singleDayMatch = rawTitle.match(/(\d{1,2})\/(\d{1,2})\s+only/i);
+                // Get title from og:title or h1 or schema.org JSON-LD
+                let rawTitle = '';
+                const ogMatch = pHtml.match(/<meta[^>]+property="og:title"[^>]+content="([^"]+)"/i);
+                if (ogMatch) rawTitle = ogMatch[1];
+                if (!rawTitle) {
+                    const h1Match = pHtml.match(/<h1[^>]*>([^<]+)<\/h1>/i);
+                    if (h1Match) rawTitle = h1Match[1];
+                }
+                rawTitle = rawTitle.trim()
+                    .replace(/&#8211;/g, '–').replace(/&#038;/g, '&').replace(/&amp;/g, '&')
+                    .replace(/&#8217;/g, "'").replace(/&quot;/g, '"');
+                if (!rawTitle) { techFailed++; continue; }
 
-            let startMonth, startDay, endMonth, endDay;
-            if (dateRangeMatch) {
-                [, startMonth, startDay, endMonth, endDay] = dateRangeMatch.map(Number);
-            } else if (singleDayMatch) {
-                startMonth = endMonth = parseInt(singleDayMatch[1]);
-                startDay = endDay = parseInt(singleDayMatch[2]);
-            } else {
-                techSkipped++; continue;
-            }
+                // Skip non-camp products
+                if (/supervised lunch|add[- ]on|gift card|apparel|tshirt|t-shirt/i.test(rawTitle)) { techSkipped++; continue; }
 
-            // Determine year — assume current year or next year if month is in past
-            const nowD = new Date();
-            const currentYear = nowD.getFullYear();
-            let year = currentYear;
-            const testDate = new Date(year, startMonth - 1, startDay);
-            if (testDate < nowD && (nowD.getMonth() > startMonth || (nowD.getMonth() === startMonth && nowD.getDate() > endDay))) {
-                year = currentYear + 1;
-            }
+                // Parse date range from title
+                const dateRangeMatch = rawTitle.match(/(\d{1,2})\/(\d{1,2})\s*[-–]\s*(\d{1,2})\/(\d{1,2})/);
+                const singleDayMatch = rawTitle.match(/(\d{1,2})\/(\d{1,2})\s+only/i);
+                let startMonth, startDay, endMonth, endDay;
+                if (dateRangeMatch) {
+                    [, startMonth, startDay, endMonth, endDay] = dateRangeMatch.map(Number);
+                } else if (singleDayMatch) {
+                    startMonth = endMonth = parseInt(singleDayMatch[1]);
+                    startDay = endDay = parseInt(singleDayMatch[2]);
+                } else { techSkipped++; continue; }
 
-            // Parse time from title: "Morning" / "Afternoon" / "All Day" / "Evening"
-            let hour = 9, minute = 0; // default morning
-            if (/afternoon/i.test(rawTitle)) hour = 13;
-            else if (/evening/i.test(rawTitle)) hour = 17;
-            else if (/all ?day/i.test(rawTitle)) hour = 9;
-            else if (/morning/i.test(rawTitle)) hour = 9;
+                // Determine year
+                const nowD = new Date();
+                const currentYear = nowD.getFullYear();
+                let year = currentYear;
+                const testDate = new Date(year, startMonth - 1, startDay);
+                if (testDate < nowD && (nowD.getMonth() > startMonth || (nowD.getMonth() === startMonth && nowD.getDate() > endDay))) {
+                    year = currentYear + 1;
+                }
 
-            // Clean title — keep grade info but remove redundant date info if desired
-            const title = rawTitle.replace(/\s+–\s+\d{1,2}\/\d{1,2}[-–]\d{1,2}\/\d{1,2}\s*[-–]?/g, '').replace(/\s+–\s+\d{1,2}\/\d{1,2}\s+only\s*[-–]?/gi, '').replace(/\s+/g, ' ').trim() || rawTitle;
+                // Parse time from title
+                let hour = 9, minute = 0;
+                if (/afternoon/i.test(rawTitle)) hour = 13;
+                else if (/evening/i.test(rawTitle)) hour = 17;
+                else if (/all ?day/i.test(rawTitle)) hour = 9;
 
-            // Create ONE event on start date (users think of camps as a single week, not 5 separate events)
-            const startDateTime = new Date(year, startMonth - 1, startDay, hour, minute, 0, 0);
-            if (startDateTime < pastDate || startDateTime >= futureDate) { techSkipped++; continue; }
+                // Extract price from schema.org JSON-LD if available
+                let priceStr = '';
+                const priceMatch = pHtml.match(/"price":"(\d+\.\d+)"/);
+                if (priceMatch) priceStr = '$' + priceMatch[1].replace(/\.00$/, '');
 
-            const key = title.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 40) + '|' + startDateTime.toISOString().slice(0, 10);
-            if (existingKeys2.has(key)) { techSkipped++; continue; }
+                // Clean title for display
+                const title = rawTitle.replace(/\s+–\s+\d{1,2}\/\d{1,2}[-–]\d{1,2}\/\d{1,2}\s*[-–]?/g, '').replace(/\s+–\s+\d{1,2}\/\d{1,2}\s+only\s*[-–]?/gi, '').replace(/\s+/g, ' ').trim() || rawTitle;
 
-            // Build human-readable date range for display
-            let dateRangeText = '';
-            if (startMonth === endMonth && startDay === endDay) {
-                dateRangeText = `${startMonth}/${startDay}`;
-            } else {
-                dateRangeText = `${startMonth}/${startDay}–${endMonth}/${endDay}`;
-            }
-            const description = `Summer camp: ${dateRangeText}. ${rawTitle}`;
+                const startDateTime = new Date(year, startMonth - 1, startDay, hour, minute, 0, 0);
+                if (startDateTime < pastDate || startDateTime >= futureDate) { techSkipped++; continue; }
 
-            events.push({
-                title, date: startDateTime.toISOString(),
-                location: 'Millersville University (Tech & Engineering)',
-                tags: ['MU', 'Summer Camp', 'Educational'],
-                price: '',
-                ticketLink: url,
-                sourceLink: url,
-                description,
-                kidFriendly: true
-            });
-            existingKeys2.add(key);
-            techCount++;
+                const key = title.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 40) + '|' + startDateTime.toISOString().slice(0, 10);
+                if (existingKeys2.has(key)) { techSkipped++; continue; }
+
+                let dateRangeText = (startMonth === endMonth && startDay === endDay)
+                    ? `${startMonth}/${startDay}`
+                    : `${startMonth}/${startDay}–${endMonth}/${endDay}`;
+                const description = `Summer camp: ${dateRangeText}. ${rawTitle}`;
+
+                events.push({
+                    title, date: startDateTime.toISOString(),
+                    location: 'Millersville University (Tech & Engineering)',
+                    tags: ['MU', 'Summer Camp', 'Educational'],
+                    price: priceStr,
+                    ticketLink: productUrl,
+                    sourceLink: productUrl,
+                    description,
+                    kidFriendly: true
+                });
+                existingKeys2.add(key);
+                techCount++;
+            } catch (e) { techFailed++; }
         }
-        console.log(`✅ Tech Camps: ${techCount} camps added (${techSkipped} skipped)`);
+        console.log(`✅ Tech Camps: ${techCount} camps added (${techSkipped} skipped, ${techFailed} failed)`);
     } catch (e) { console.error("❌ Tech Camps error:", e.message); }
 
     // ===== 3d. MU ATHLETIC CAMPS (TotalCamps API) =====
@@ -1037,14 +1047,24 @@ async function runScraper() {
                 const apiUrl = `https://api.totalcamps.com/market/api/public/${site.siteId}/products/EVENT`;
                 const apiHeaders = {
                     'accept': 'application/json, text/plain, */*',
+                    'accept-language': 'en-US,en;q=0.9',
                     'logtoken': site.jwt,
                     'origin': `https://${site.subdomain}.totalcamps.com`,
+                    'priority': 'u=1, i',
                     'referer': `https://${site.subdomain}.totalcamps.com/`,
-                    'user-agent': baseHeaders['User-Agent'] || 'Mozilla/5.0'
+                    'sec-ch-ua': '"Google Chrome";v="147", "Not.A/Brand";v="8", "Chromium";v="147"',
+                    'sec-ch-ua-mobile': '?0',
+                    'sec-ch-ua-platform': '"Windows"',
+                    'sec-fetch-dest': 'empty',
+                    'sec-fetch-mode': 'cors',
+                    'sec-fetch-site': 'same-site',
+                    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36'
                 };
                 const apiRes = await fetch(apiUrl, { headers: apiHeaders, signal: AbortSignal.timeout(20000) });
                 if (!apiRes.ok) {
-                    console.log(`  ⚠️ ${site.sport}: API returned ${apiRes.status} — JWT may have expired, refresh via DevTools`);
+                    const errBody = await apiRes.text().catch(() => '');
+                    console.log(`  ⚠️ ${site.sport}: API returned ${apiRes.status}. Body: ${errBody.substring(0, 200)}`);
+                    console.log(`     JWT may be IP-bound or expired — refresh via DevTools and redeploy`);
                     continue;
                 }
                 const data = await apiRes.json();

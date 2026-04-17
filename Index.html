@@ -1535,10 +1535,17 @@ function buildEventCard(e,isSportsPage){
     const isNoonPlaceholder = d.getHours()===12 && d.getMinutes()===0;
     const timeStr = isNoonPlaceholder ? '' : ` @ ${formatTime(d)}`;
 
+    // Student perks
+    const benefits = e.benefits || [];
+    let perkBadges = '';
+    if (benefits.includes('Free Food')) perkBadges += '<span class="perk-badge perk-food">🍕 Free Food</span>';
+    if (benefits.includes('Free Stuff')) perkBadges += '<span class="perk-badge perk-stuff">🎁 Free Stuff</span>';
+    if (benefits.includes('Credit')) perkBadges += '<span class="perk-badge perk-credit">📚 Credit</span>';
+
     // Clean title
     const displayTitle = (e.title || '').replace(/^Millersville University\s*/i, '').replace(/ - (Girls|Boys)\s+(vs |@ )/i, ' $2');
 
-    return `<div class="app-card${isCurrentlyLive?' card-live':''} ${cardResultClass}" style="position:relative;">${scoreBadge}<div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${displayTitle}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${cleanLocation(e.location)}</p></div><div class="card-footer"><div class="card-actions">${locBadge}<a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
+    return `<div class="app-card${isCurrentlyLive?' card-live':''} ${cardResultClass}" style="position:relative;">${scoreBadge}<div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${displayTitle}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${cleanLocation(e.location)}</p>${perkBadges?`<div class="perk-row">${perkBadges}</div>`:''}</div><div class="card-footer"><div class="card-actions">${locBadge}<a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
 }
 
 /* ==================== HOME ==================== */
@@ -1653,6 +1660,9 @@ function buildTimelineItem(e, now) {
     let badges = '';
     if (isSport && isHome) badges += '<span class="tl-badge tl-home">🏠</span>';
     if (e.kidFriendly) badges += '<span class="tl-badge tl-family">👨‍👩‍👧</span>';
+    const benefits = e.benefits || [];
+    if (benefits.includes('Free Food')) badges += '<span class="tl-badge tl-perk">🍕</span>';
+    if (benefits.includes('Free Stuff')) badges += '<span class="tl-badge tl-perk">🎁</span>';
 
     // Live / Score
     const _end = new Date(d.getTime() + 3*60*60*1000);

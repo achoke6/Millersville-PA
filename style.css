@@ -121,6 +121,12 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .feed-setup-hint a { color: var(--navy); font-weight: 700; }
 .welcome-banner { background: linear-gradient(135deg, var(--gold-soft), #fff8e1); border: 1.5px solid var(--gold); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 16px; }
 .welcome-banner strong { font-size: 0.95rem; color: var(--navy); }
+.perk-row { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+.perk-badge { display: inline-flex; align-items: center; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: var(--radius-pill); white-space: nowrap; }
+.perk-food { background: #fef3c7; color: #92400e; border: 1px solid #fbbf24; }
+.perk-stuff { background: #dbeafe; color: #1e40af; border: 1px solid #60a5fa; }
+.perk-credit { background: #d1fae5; color: #065f46; border: 1px solid #34d399; }
+.tl-perk { font-size: 0.8rem; }
 
 /* =========================================================
    6. CARDS

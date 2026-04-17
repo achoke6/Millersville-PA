@@ -802,6 +802,100 @@ async function runScraper() {
         }
     } catch (e) { console.error("❌ MU Calendar error:", e.message); }
 
+    // ===== 3b. ARTSMU.COM (WARE CENTER / WINTER CENTER — supplements MU Calendar) =====
+    try {
+        console.log("📡 Fetching artsmu.com events...");
+        const artsRes = await fetch('https://artsmu.com/events/', { headers: baseHeaders, signal: AbortSignal.timeout(30000) });
+        if (!artsRes.ok) throw new Error(`artsmu.com returned ${artsRes.status}`);
+        const artsHtml = await artsRes.text();
+
+        // Stage 1: Extract unique event URLs from the list page
+        const eventUrls = new Set();
+        const urlRegex = /https:\/\/artsmu\.com\/event\/[a-z0-9-]+\/(?:the-ware-center|winter-visual-performing-arts-center)\/?/gi;
+        for (const m of artsHtml.matchAll(urlRegex)) {
+            eventUrls.add(m[0].replace(/\/$/, '') + '/');
+        }
+        console.log(`  🔗 Found ${eventUrls.size} unique artsmu event URLs`);
+
+        // Stage 2: Fetch each event page and parse structured data
+        const monthMap = {January:0,February:1,March:2,April:3,May:4,June:5,July:6,August:7,September:8,October:9,November:10,December:11};
+        let artsCount = 0, artsSkipped = 0, artsFailed = 0;
+        const existingKeys = new Set(events.map(e => (e.title || '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 40) + '|' + (e.date || '').slice(0, 10)));
+
+        for (const eventUrl of eventUrls) {
+            try {
+                const evRes = await fetch(eventUrl, { headers: baseHeaders, signal: AbortSignal.timeout(15000) });
+                if (!evRes.ok) { artsFailed++; continue; }
+                const evHtml = await evRes.text();
+
+                // Extract title from <title> or h1
+                const titleMatch = evHtml.match(/<h1[^>]*>([^<]+)<\/h1>/i);
+                if (!titleMatch) { artsFailed++; continue; }
+                let title = titleMatch[1].trim()
+                    .replace(/&#0?38;/g, '&').replace(/&#0?39;/g, "'").replace(/&#8217;/g, "'")
+                    .replace(/&#8220;|&#8221;/g, '"').replace(/&#8211;/g, '–')
+                    .replace(/&amp;/g, '&').replace(/&quot;/g, '"');
+                if (/^CANCELLED:/i.test(title)) { artsSkipped++; continue; }
+
+                // Date: "Friday, May 01, 2026" pattern near the top of the event page
+                const dateMatch = evHtml.match(/(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday),?\s+(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),?\s+(\d{4})/);
+                if (!dateMatch) { artsFailed++; continue; }
+                const [, , monthName, day, year] = dateMatch;
+                const eventDate = new Date(parseInt(year), monthMap[monthName], parseInt(day));
+
+                // Time: "Performance: 7:30 pm" or "Performance: 5 pm"
+                let hour = 19, min = 0;
+                const timeMatch = evHtml.match(/Performance:\s*(\d{1,2})(?::(\d{2}))?\s*([ap])m/i);
+                if (timeMatch) {
+                    hour = parseInt(timeMatch[1]);
+                    min = timeMatch[2] ? parseInt(timeMatch[2]) : 0;
+                    if (timeMatch[3].toLowerCase() === 'p' && hour !== 12) hour += 12;
+                    if (timeMatch[3].toLowerCase() === 'a' && hour === 12) hour = 0;
+                }
+                eventDate.setHours(hour, min, 0, 0);
+
+                // Date range filter
+                if (eventDate < pastDate || eventDate >= futureDate) { artsSkipped++; continue; }
+
+                // Venue
+                const venue = eventUrl.includes('winter-visual') ? 'Winter Visual & Performing Arts Center' : 'The Ware Center';
+
+                // Price: "$10" or "$8 to $10" — grab text between key markers
+                const priceMatch = evHtml.match(/\$\d+(?:\s*to\s*\$\d+)?/);
+                const price = priceMatch ? priceMatch[0] : '';
+
+                // Ticket link: Etix URL
+                const etixMatch = evHtml.match(/https:\/\/www\.etix\.com\/ticket\/p\/\d+\/[^"\s?&<]+/);
+                const ticketLink = etixMatch ? etixMatch[0] : '';
+
+                // Description: look for content between known markers — keep short
+                let description = '';
+                const descMatch = evHtml.match(/<div[^>]*class="[^"]*event[_-]?description[^"]*"[^>]*>([\s\S]*?)<\/div>/i);
+                if (descMatch) description = descMatch[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 500);
+
+                // Dedupe against MU Calendar entries
+                const key = title.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 40) + '|' + eventDate.toISOString().slice(0, 10);
+                if (existingKeys.has(key)) { artsSkipped++; continue; }
+
+                // Tag: art exhibit events are different from performances
+                const tags = ['MU'];
+                if (/exhibit|gallery|on display/i.test(title + ' ' + description)) tags.push('Art Exhibit');
+                else tags.push('Arts Concert / Performance');
+
+                events.push({
+                    title, date: eventDate.toISOString(), location: venue,
+                    tags, price: price || 'Open To Public',
+                    ticketLink, sourceLink: eventUrl, description
+                });
+                existingKeys.add(key);
+                artsCount++;
+            } catch (e) {
+                artsFailed++;
+            }
+        }
+        console.log(`✅ artsmu.com: ${artsCount} new events (${artsSkipped} skipped, ${artsFailed} failed)`);
+    } catch (e) { console.error("❌ artsmu.com error:", e.message); }
+
     // ===== 4. CLUBS/ORGS (ANTHOLOGY / GETINVOLVED API) =====
     try {
         console.log("📡 Fetching Clubs/Orgs...");
@@ -829,6 +923,25 @@ async function runScraper() {
             if (item.organizationName) rawTags.push(item.organizationName.trim());
             if (item.theme && item.theme !== "Not Applicable") rawTags.push(item.theme.trim());
             (item.categoryNames || []).forEach(c => rawTags.push(c.trim()));
+
+            // Extract student perks/benefits
+            const benefits = [];
+            (item.benefitNames || []).forEach(b => {
+                const bl = b.toLowerCase();
+                if (bl.includes('food')) benefits.push('Free Food');
+                else if (bl.includes('free stuff') || bl.includes('swag') || bl.includes('giveaway')) benefits.push('Free Stuff');
+                else if (bl.includes('credit')) benefits.push('Credit');
+            });
+            // Also scan description & title for free food / swag signals (some events don't set benefits)
+            const descText = (item.description || '').toLowerCase();
+            const nameText = (item.name || '').toLowerCase();
+            const combined = nameText + ' ' + descText;
+            if (!benefits.includes('Free Food') && /\bfree (food|pizza|snacks|refreshments|lunch|dinner|breakfast|coffee|drinks)\b|\bpizza (will be )?provided\b|\bfood (will be )?(served|provided)\b/i.test(combined)) {
+                benefits.push('Free Food');
+            }
+            if (!benefits.includes('Free Stuff') && /\bfree (t.?shirt|shirts|swag|merch|giveaway|prize)\b|\braffle\b|\bprize drawing\b/i.test(combined)) {
+                benefits.push('Free Stuff');
+            }
 
             const name = (item.name || "").toLowerCase();
             const orgName = (item.organizationName || "").toLowerCase();
@@ -872,7 +985,8 @@ async function runScraper() {
                 price: "Free",
                 ticketLink: "",
                 sourceLink: `https://getinvolved.millersville.edu/event/${item.id}`,
-                description: item.description || ""
+                description: item.description || "",
+                benefits: benefits
             });
             clubCount++;
         });

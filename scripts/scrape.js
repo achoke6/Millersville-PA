@@ -805,17 +805,31 @@ async function runScraper() {
     // ===== 3b. ARTSMU.COM (WARE CENTER / WINTER CENTER — supplements MU Calendar) =====
     try {
         console.log("📡 Fetching artsmu.com events...");
-        const artsRes = await fetch('https://artsmu.com/events/', { headers: baseHeaders, signal: AbortSignal.timeout(30000) });
-        if (!artsRes.ok) throw new Error(`artsmu.com returned ${artsRes.status}`);
-        const artsHtml = await artsRes.text();
-
-        // Stage 1: Extract unique event URLs from the list page
+        // Fetch multiple list pages to cover regular events + summer camps
+        const listPages = [
+            'https://artsmu.com/events/',
+            'https://artsmu.com/arts-smarts-camps/'
+        ];
         const eventUrls = new Set();
-        const urlRegex = /https:\/\/artsmu\.com\/event\/[a-z0-9-]+\/(?:the-ware-center|winter-visual-performing-arts-center)\/?/gi;
-        for (const m of artsHtml.matchAll(urlRegex)) {
-            eventUrls.add(m[0].replace(/\/$/, '') + '/');
+        for (const listUrl of listPages) {
+            try {
+                const listRes = await fetch(listUrl, { headers: baseHeaders, signal: AbortSignal.timeout(30000) });
+                if (!listRes.ok) { console.log(`  ⚠️ ${listUrl} returned ${listRes.status}`); continue; }
+                const listHtml = await listRes.text();
+                // Extract event URLs matching the pattern
+                const urlRegex = /https:\/\/artsmu\.com\/event\/[a-z0-9-]+\/(?:the-ware-center|winter-visual-performing-arts-center)\/?/gi;
+                let pageFound = 0;
+                for (const m of listHtml.matchAll(urlRegex)) {
+                    const cleanUrl = m[0].replace(/\/$/, '') + '/';
+                    if (!eventUrls.has(cleanUrl)) pageFound++;
+                    eventUrls.add(cleanUrl);
+                }
+                console.log(`  🔗 ${listUrl.split('/').slice(-2,-1)[0]}: ${pageFound} new URLs`);
+            } catch (e) {
+                console.log(`  ⚠️ ${listUrl} fetch failed: ${e.message}`);
+            }
         }
-        console.log(`  🔗 Found ${eventUrls.size} unique artsmu event URLs`);
+        console.log(`  🔗 Total ${eventUrls.size} unique artsmu event URLs to check`);
 
         // Stage 2: Fetch each event page and parse structured data
         const monthMap = {January:0,February:1,March:2,April:3,May:4,June:5,July:6,August:7,September:8,October:9,November:10,December:11};

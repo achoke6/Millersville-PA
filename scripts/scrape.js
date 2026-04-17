@@ -923,14 +923,30 @@ async function runScraper() {
         const productUrls = new Set();
         for (const shopUrl of techShopPages) {
             try {
-                const res = await fetch(shopUrl, { headers: baseHeaders, signal: AbortSignal.timeout(30000) });
-                if (!res.ok) continue;
+                const res = await fetch(shopUrl, {
+                    headers: {
+                        ...baseHeaders,
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36',
+                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+                    },
+                    signal: AbortSignal.timeout(30000)
+                });
+                if (!res.ok) { console.log(`  ⚠️ ${shopUrl}: HTTP ${res.status}`); continue; }
                 const html = await res.text();
-                const urlRegex = /https:\/\/millersvilletechcamps\.com\/product\/[a-z0-9-]+\/?/gi;
-                for (const m of html.matchAll(urlRegex)) {
+                // Match both absolute and relative product URLs
+                const absRegex = /https:\/\/millersvilletechcamps\.com\/product\/[a-z0-9-]+\/?/gi;
+                const relRegex = /href="(\/product\/[a-z0-9-]+\/?)"/gi;
+                let pageCount = 0;
+                for (const m of html.matchAll(absRegex)) {
                     const clean = m[0].replace(/\/$/, '') + '/';
-                    productUrls.add(clean);
+                    if (!productUrls.has(clean)) { productUrls.add(clean); pageCount++; }
                 }
+                for (const m of html.matchAll(relRegex)) {
+                    const clean = 'https://millersvilletechcamps.com' + m[1].replace(/\/$/, '') + '/';
+                    if (!productUrls.has(clean)) { productUrls.add(clean); pageCount++; }
+                }
+                console.log(`  🔗 ${shopUrl}: HTML ${html.length} bytes, ${pageCount} new URLs`);
+                if (html.length < 1000) console.log(`     Snippet: ${html.substring(0, 200)}`);
             } catch (e) { console.log(`  ⚠️ ${shopUrl}: ${e.message}`); }
         }
         console.log(`  🔗 Found ${productUrls.size} unique tech camp product URLs`);
@@ -1035,8 +1051,19 @@ async function runScraper() {
                 subdomain: 'shehanbaseballcamps',
                 siteId: 70,
                 jwt: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJTSEVIQU5CQVNFQkFMTENBTVBTIiwiVFpOIjoiQW1lcmljYS9OZXdfWW9yayIsImlhdCI6MTc3NjQ1NTY2MH0.DI9aFu5rH82q5pEmlvFtANgXXGKeQjw_USlgg0WJhdUkWgvDbXthc_QRxtpdsXHv71IPNgn8lThl_en4F83PPg'
+            },
+            {
+                sport: 'Field Hockey',
+                subdomain: 'millersvillefieldhockey',
+                siteId: 480,
+                jwt: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJNSUxMRVJTVklMTEVGSUVMREhPQ0tFWSIsIlRaTiI6IkFtZXJpY2EvTmV3X1lvcmsiLCJpYXQiOjE3NzY0NTYzMDV9.oEjBBkCgyjbrX6M-YnNTXTkBJBzqnZNoamfhcW82Gitzs8ycNWb64MMp6z-QaM2KssU57vRbIl4kcpwISF2UGQ'
+            },
+            {
+                sport: "Men's Soccer",
+                subdomain: 'millersvillemenssoccer',
+                siteId: 450,
+                jwt: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJNSUxMRVJTVklMTEVNRU5TU09DQ0VSIiwiVFpOIjoiQW1lcmljYS9OZXdfWW9yayIsImlhdCI6MTc3NjQ1NjM4N30.5ukb5wHn7U1jn--Fo2iPzH0bCEMHwNv9Cmzu1yjsOBMksC0sAWNoseuyw8gVG9C9Q6bwfmqpPxkxqsjaNAOsWQ'
             }
-            // TODO: Add field hockey + soccer once JWTs are captured
         ];
 
         let athCount = 0, athSkipped = 0;

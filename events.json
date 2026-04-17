@@ -4720,7 +4720,7 @@
   {
     "title": "ESH House Meeting (2nd grade Special)",
     "date": "2026-04-01T17:55:00.000Z",
-    "location": "Penn Manor School District",
+    "location": "PA",
     "tags": [
       "PM",
       "Meetings"
@@ -5839,7 +5839,7 @@
   {
     "title": "K-6 School Physicals",
     "date": "2026-04-07T04:00:00.000Z",
-    "location": "Penn Manor School District",
+    "location": "PA",
     "tags": [
       "PM",
       "Health/Wellness"
@@ -5853,7 +5853,7 @@
   {
     "title": "ESH String Ensemble",
     "date": "2026-04-07T04:00:00.000Z",
-    "location": "Penn Manor School District",
+    "location": "PA",
     "tags": [
       "PM",
       "Music/Arts"
@@ -8082,7 +8082,7 @@
   {
     "title": "Book Fair",
     "date": "2026-04-13T04:00:00.000Z",
-    "location": "Penn Manor School District",
+    "location": "PA",
     "tags": [
       "PM",
       "School Events"
@@ -8091,6 +8091,22 @@
     "ticketLink": "",
     "sourceLink": "https://www.pennmanor.net/event/book-fair-2/",
     "streamLink": "",
+    "kidFriendly": false
+  },
+  {
+    "title": "Appliance/Tire Collection",
+    "date": "2026-04-13T12:00:00.000Z",
+    "location": "Millersville Borough",
+    "tags": [
+      "Borough"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "",
+    "isLive": false,
     "kidFriendly": false
   },
   {
@@ -8111,22 +8127,6 @@
   },
   {
     "title": "Woody Yard Waste Collection",
-    "date": "2026-04-13T12:00:00.000Z",
-    "location": "Millersville Borough",
-    "tags": [
-      "Borough"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
-    "gameResult": "",
-    "gameScore": "",
-    "streamLink": "",
-    "isLive": false,
-    "kidFriendly": false
-  },
-  {
-    "title": "Appliance/Tire Collection",
     "date": "2026-04-13T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -9094,7 +9094,7 @@
   {
     "title": "Spring Concert",
     "date": "2026-04-15T13:30:00.000Z",
-    "location": "PA",
+    "location": "Penn Manor School District",
     "tags": [
       "PM",
       "Music/Arts"
@@ -9969,7 +9969,7 @@
   {
     "title": "PTO Meeting",
     "date": "2026-04-16T22:00:00.000Z",
-    "location": "Penn Manor School District",
+    "location": "PA",
     "tags": [
       "PM",
       "Board/PTO"
@@ -10217,7 +10217,7 @@
   {
     "title": "PEQ 6th Grade Downtown Trip",
     "date": "2026-04-17T13:00:00.000Z",
-    "location": "Penn Manor School District",
+    "location": "PA",
     "tags": [
       "PM",
       "Field Trips"
@@ -10333,8 +10333,8 @@
     "price": "Free",
     "ticketLink": "",
     "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10516&sport_id=11",
-    "gameResult": "",
-    "gameScore": "",
+    "gameResult": "L",
+    "gameScore": "4-7",
     "streamLink": "https://psacsportsdigitalnetwork.com/?B=3712246",
     "isLive": false,
     "kidFriendly": false
@@ -10352,8 +10352,8 @@
     "price": "Free",
     "ticketLink": "",
     "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10463&sport_id=1",
-    "gameResult": "",
-    "gameScore": "",
+    "gameResult": "L",
+    "gameScore": "2-4",
     "streamLink": "https://psacsportsdigitalnetwork.com/gomounties/",
     "isLive": false,
     "kidFriendly": false
@@ -10380,8 +10380,8 @@
       "MU",
       "Arts Concert / Performance"
     ],
-    "price": "$10",
-    "ticketLink": "https://www.etix.com/ticket/p/71235627/orchestral-masterworks-millersville-winter-visual-performing-arts-center",
+    "price": "Open To Public",
+    "ticketLink": "",
     "sourceLink": "https://artsmu.com/event/orchestral-masterworks-4/winter-visual-performing-arts-center/",
     "kidFriendly": false
   },
@@ -10399,27 +10399,6 @@
     "ticketLink": "",
     "sourceLink": "https://getinvolved.millersville.edu/event/12158843",
     "benefits": [],
-    "kidFriendly": false
-  },
-  {
-    "title": "Millersville University Women's Outdoor Track and Field vs Tom Ecker Middle School Meet",
-    "date": "2026-04-17T20:00:00.000Z",
-    "location": "Biemesderfer Stadium",
-    "tags": [
-      "MU",
-      "Athletic Competitions",
-      "Athletics",
-      "Home Game Mode",
-      "Women's",
-      "Track"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10425&sport_id=18",
-    "gameResult": "",
-    "gameScore": "",
-    "streamLink": "",
-    "isLive": false,
     "kidFriendly": false
   },
   {
@@ -10533,7 +10512,7 @@
     "gameResult": "",
     "gameScore": "",
     "streamLink": "https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/schedule?date=2026-04-17T20%3A15%3A00.000Z&range=Day&s=U2NoZWR1bGVFbnRyeVB1YmxpY1N1bW1hcnk2OWIxN2FiZjRlMTYyNmEzODRiODNmZjg%3D",
-    "isLive": true,
+    "isLive": false,
     "kidFriendly": false
   },
   {
@@ -11408,7 +11387,7 @@
   {
     "title": "School Board Meeting",
     "date": "2026-04-20T23:00:00.000Z",
-    "location": "PA",
+    "location": "Penn Manor School District",
     "tags": [
       "PM",
       "Board/PTO"
@@ -11640,7 +11619,7 @@
   {
     "title": "HB PTO Mtg",
     "date": "2026-04-21T20:00:00.000Z",
-    "location": "PA",
+    "location": "Penn Manor School District",
     "tags": [
       "PM",
       "Board/PTO"
@@ -12283,27 +12262,6 @@
     "kidFriendly": false
   },
   {
-    "title": "Coed Unified Track & Field - Outdoor vs Solanco High School",
-    "date": "2026-04-23T08:00:00.000Z",
-    "location": "100 E. Cottage Ave, Millersville, PA, United States",
-    "tags": [
-      "PM",
-      "Athletics",
-      "Home Game Mode",
-      "Boys",
-      "Girls",
-      "Track"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://www.pennmanor.net/event/coed-unified-track-field-outdoor-vs-solanco-high-school/",
-    "gameResult": "",
-    "gameScore": "",
-    "streamLink": "",
-    "isLive": false,
-    "kidFriendly": false
-  },
-  {
     "title": "Mentorship Recruitment and Recognition Day ",
     "date": "2026-04-23T11:00:00",
     "location": "SMC Promenade (Front/Back)",
@@ -12466,6 +12424,27 @@
       "Free Food",
       "Free Stuff"
     ],
+    "kidFriendly": false
+  },
+  {
+    "title": "Coed Unified Track & Field - Outdoor vs Solanco High School",
+    "date": "2026-04-23T20:00:00.000Z",
+    "location": "100 E. Cottage Ave, Millersville, PA, United States",
+    "tags": [
+      "PM",
+      "Athletics",
+      "Home Game Mode",
+      "Boys",
+      "Girls",
+      "Track"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://www.pennmanor.net/event/coed-unified-track-field-outdoor-vs-solanco-high-school/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "",
+    "isLive": false,
     "kidFriendly": false
   },
   {
@@ -12650,27 +12629,6 @@
     "ticketLink": "",
     "sourceLink": "https://getinvolved.millersville.edu/event/12431026",
     "benefits": [],
-    "kidFriendly": false
-  },
-  {
-    "title": "Millersville University Women's Outdoor Track and Field vs Cy Fritz High School Meet",
-    "date": "2026-04-24T17:00:00.000Z",
-    "location": "Biemesderfer Stadium",
-    "tags": [
-      "MU",
-      "Athletic Competitions",
-      "Athletics",
-      "Home Game Mode",
-      "Women's",
-      "Track"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10427&sport_id=18",
-    "gameResult": "",
-    "gameScore": "",
-    "streamLink": "",
-    "isLive": false,
     "kidFriendly": false
   },
   {
@@ -16340,6 +16298,22 @@
     "kidFriendly": false
   },
   {
+    "title": "Historic Commission",
+    "date": "2026-05-11T12:00:00.000Z",
+    "location": "Millersville Borough",
+    "tags": [
+      "Borough"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
     "title": "Regular Trash & Recycling Collection ",
     "date": "2026-05-11T12:00:00.000Z",
     "location": "Millersville Borough",
@@ -16357,22 +16331,6 @@
   },
   {
     "title": "Woody Yard Waste Collection",
-    "date": "2026-05-11T12:00:00.000Z",
-    "location": "Millersville Borough",
-    "tags": [
-      "Borough"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
-    "gameResult": "",
-    "gameScore": "",
-    "streamLink": "",
-    "isLive": false,
-    "kidFriendly": false
-  },
-  {
-    "title": "Historic Commission",
     "date": "2026-05-11T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -16933,6 +16891,22 @@
     "kidFriendly": false
   },
   {
+    "title": "Historic Commission",
+    "date": "2026-06-08T12:00:00.000Z",
+    "location": "Millersville Borough",
+    "tags": [
+      "Borough"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
     "title": "Regular Trash & Recycling Collection ",
     "date": "2026-06-08T12:00:00.000Z",
     "location": "Millersville Borough",
@@ -16950,22 +16924,6 @@
   },
   {
     "title": "Woody Yard Waste Collection",
-    "date": "2026-06-08T12:00:00.000Z",
-    "location": "Millersville Borough",
-    "tags": [
-      "Borough"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
-    "gameResult": "",
-    "gameScore": "",
-    "streamLink": "",
-    "isLive": false,
-    "kidFriendly": false
-  },
-  {
-    "title": "Historic Commission",
     "date": "2026-06-08T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -17553,6 +17511,22 @@
     "kidFriendly": true
   },
   {
+    "title": "Historic Commission",
+    "date": "2026-07-13T12:00:00.000Z",
+    "location": "Millersville Borough",
+    "tags": [
+      "Borough"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
     "title": "Regular Trash & Recycling Collection ",
     "date": "2026-07-13T12:00:00.000Z",
     "location": "Millersville Borough",
@@ -17570,22 +17544,6 @@
   },
   {
     "title": "Woody Yard Waste Collection",
-    "date": "2026-07-13T12:00:00.000Z",
-    "location": "Millersville Borough",
-    "tags": [
-      "Borough"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
-    "gameResult": "",
-    "gameScore": "",
-    "streamLink": "",
-    "isLive": false,
-    "kidFriendly": false
-  },
-  {
-    "title": "Historic Commission",
     "date": "2026-07-13T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -17889,6 +17847,22 @@
     "kidFriendly": false
   },
   {
+    "title": "Historic Commission",
+    "date": "2026-08-10T12:00:00.000Z",
+    "location": "Millersville Borough",
+    "tags": [
+      "Borough"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
     "title": "Regular Trash & Recycling Collection ",
     "date": "2026-08-10T12:00:00.000Z",
     "location": "Millersville Borough",
@@ -17906,22 +17880,6 @@
   },
   {
     "title": "Woody Yard Waste Collection",
-    "date": "2026-08-10T12:00:00.000Z",
-    "location": "Millersville Borough",
-    "tags": [
-      "Borough"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
-    "gameResult": "",
-    "gameScore": "",
-    "streamLink": "",
-    "isLive": false,
-    "kidFriendly": false
-  },
-  {
-    "title": "Historic Commission",
     "date": "2026-08-10T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -18519,6 +18477,22 @@
     "kidFriendly": false
   },
   {
+    "title": "Historic Commission",
+    "date": "2026-09-14T12:00:00.000Z",
+    "location": "Millersville Borough",
+    "tags": [
+      "Borough"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
     "title": "Regular Trash & Recycling Collection ",
     "date": "2026-09-14T12:00:00.000Z",
     "location": "Millersville Borough",
@@ -18536,22 +18510,6 @@
   },
   {
     "title": "Woody Yard Waste Collection",
-    "date": "2026-09-14T12:00:00.000Z",
-    "location": "Millersville Borough",
-    "tags": [
-      "Borough"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
-    "gameResult": "",
-    "gameScore": "",
-    "streamLink": "",
-    "isLive": false,
-    "kidFriendly": false
-  },
-  {
-    "title": "Historic Commission",
     "date": "2026-09-14T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -19223,6 +19181,22 @@
     "kidFriendly": false
   },
   {
+    "title": "Historic Commission",
+    "date": "2026-10-12T12:00:00.000Z",
+    "location": "Millersville Borough",
+    "tags": [
+      "Borough"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
     "title": "Regular Trash & Recycling Collection ",
     "date": "2026-10-12T12:00:00.000Z",
     "location": "Millersville Borough",
@@ -19240,22 +19214,6 @@
   },
   {
     "title": "Woody Yard Waste Collection",
-    "date": "2026-10-12T12:00:00.000Z",
-    "location": "Millersville Borough",
-    "tags": [
-      "Borough"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
-    "gameResult": "",
-    "gameScore": "",
-    "streamLink": "",
-    "isLive": false,
-    "kidFriendly": false
-  },
-  {
-    "title": "Historic Commission",
     "date": "2026-10-12T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -19422,7 +19380,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Appliance/Tire Collection",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-10-19T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -19438,7 +19396,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Appliance/Tire Collection",
     "date": "2026-10-19T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [

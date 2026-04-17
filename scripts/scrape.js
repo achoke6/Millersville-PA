@@ -1039,139 +1039,43 @@ async function runScraper() {
         console.log(`✅ Tech Camps: ${techCount} camps added (${techSkipped} skipped, ${techFailed} failed)`);
     } catch (e) { console.error("❌ Tech Camps error:", e.message); }
 
-    // ===== 3d. MU ATHLETIC CAMPS (TotalCamps API) =====
+    // ===== 3d. HAND-MAINTAINED CAMPS (camps.json) =====
+    // For camps where automated scraping fails (e.g., TotalCamps API blocks GHA IPs).
+    // Edit /camps.json in the repo root to add/update camps. They'll appear on the site within the hour.
     try {
-        console.log("📡 Fetching MU Athletic Camps (TotalCamps API)...");
-        // Each TotalCamps site uses api.totalcamps.com/market/api/public/{siteId}/products/EVENT
-        // The logtoken JWT is browser-generated but has no exp field, seems long-lived
-        // If a JWT goes stale, new tokens can be obtained from DevTools Network tab
-        const athleticCampSites = [
-            {
-                sport: 'Baseball',
-                subdomain: 'shehanbaseballcamps',
-                siteId: 70,
-                jwt: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJTSEVIQU5CQVNFQkFMTENBTVBTIiwiVFpOIjoiQW1lcmljYS9OZXdfWW9yayIsImlhdCI6MTc3NjQ1NTY2MH0.DI9aFu5rH82q5pEmlvFtANgXXGKeQjw_USlgg0WJhdUkWgvDbXthc_QRxtpdsXHv71IPNgn8lThl_en4F83PPg'
-            },
-            {
-                sport: 'Field Hockey',
-                subdomain: 'millersvillefieldhockey',
-                siteId: 480,
-                jwt: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJNSUxMRVJTVklMTEVGSUVMREhPQ0tFWSIsIlRaTiI6IkFtZXJpY2EvTmV3X1lvcmsiLCJpYXQiOjE3NzY0NTYzMDV9.oEjBBkCgyjbrX6M-YnNTXTkBJBzqnZNoamfhcW82Gitzs8ycNWb64MMp6z-QaM2KssU57vRbIl4kcpwISF2UGQ'
-            },
-            {
-                sport: "Men's Soccer",
-                subdomain: 'millersvillemenssoccer',
-                siteId: 450,
-                jwt: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJNSUxMRVJTVklMTEVNRU5TU09DQ0VSIiwiVFpOIjoiQW1lcmljYS9OZXdfWW9yayIsImlhdCI6MTc3NjQ1NjM4N30.5ukb5wHn7U1jn--Fo2iPzH0bCEMHwNv9Cmzu1yjsOBMksC0sAWNoseuyw8gVG9C9Q6bwfmqpPxkxqsjaNAOsWQ'
-            }
-        ];
-
-        let athCount = 0, athSkipped = 0;
-        const existingKeys3 = new Set(events.map(e => (e.title || '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 40) + '|' + (e.date || '').slice(0, 10)));
-
-        for (const site of athleticCampSites) {
-            try {
-                const apiUrl = `https://api.totalcamps.com/market/api/public/${site.siteId}/products/EVENT`;
-                const apiHeaders = {
-                    'accept': 'application/json, text/plain, */*',
-                    'accept-language': 'en-US,en;q=0.9',
-                    'logtoken': site.jwt,
-                    'origin': `https://${site.subdomain}.totalcamps.com`,
-                    'priority': 'u=1, i',
-                    'referer': `https://${site.subdomain}.totalcamps.com/`,
-                    'sec-ch-ua': '"Google Chrome";v="147", "Not.A/Brand";v="8", "Chromium";v="147"',
-                    'sec-ch-ua-mobile': '?0',
-                    'sec-ch-ua-platform': '"Windows"',
-                    'sec-fetch-dest': 'empty',
-                    'sec-fetch-mode': 'cors',
-                    'sec-fetch-site': 'same-site',
-                    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36'
-                };
-                const apiRes = await fetch(apiUrl, { headers: apiHeaders, signal: AbortSignal.timeout(20000) });
-                if (!apiRes.ok) {
-                    const errBody = await apiRes.text().catch(() => '');
-                    console.log(`  ⚠️ ${site.sport}: API returned ${apiRes.status}. Body: ${errBody.substring(0, 200)}`);
-                    console.log(`     JWT may be IP-bound or expired — refresh via DevTools and redeploy`);
-                    continue;
-                }
-                const data = await apiRes.json();
-                // Response structure is unknown on first run — try common shapes
-                const products = Array.isArray(data) ? data : (data.products || data.data || data.items || data.results || []);
-                if (!Array.isArray(products) || products.length === 0) {
-                    console.log(`  ⚠️ ${site.sport}: no products found. Response keys: ${Object.keys(data).slice(0, 10).join(', ')}`);
-                    continue;
-                }
-                console.log(`  🏟️ ${site.sport}: ${products.length} products received`);
-
-                for (const p of products) {
-                    // Try common field names for camp data
-                    const rawTitle = p.name || p.title || p.productName || p.displayName || '';
-                    if (!rawTitle) continue;
-                    if (/add[- ]on|tshirt|t-shirt|apparel|gift card|merch/i.test(rawTitle)) { athSkipped++; continue; }
-
-                    // Date field variations
-                    const startRaw = p.startDate || p.start_date || p.starts_at || p.startsAt || p.eventStartDate || p.date || '';
-                    const endRaw = p.endDate || p.end_date || p.ends_at || p.endsAt || p.eventEndDate || '';
-                    if (!startRaw) { athSkipped++; continue; }
-
-                    const startDate = new Date(startRaw);
-                    if (isNaN(startDate.getTime())) { athSkipped++; continue; }
-                    if (startDate < pastDate || startDate >= futureDate) { athSkipped++; continue; }
-
-                    // If no time specified, default to 9am
-                    if (startDate.getHours() === 0 && startDate.getMinutes() === 0) {
-                        startDate.setHours(9, 0, 0, 0);
-                    }
-
-                    // Price
-                    let priceStr = '';
-                    const priceNum = p.price || p.basePrice || p.cost || 0;
-                    if (typeof priceNum === 'number' && priceNum > 0) priceStr = `$${priceNum}`;
-                    else if (typeof priceNum === 'string') priceStr = priceNum;
-
-                    // Registration URL
-                    const productId = p.id || p.productId || p._id || '';
-                    const registerUrl = productId
-                        ? `https://${site.subdomain}.totalcamps.com/shop/product/${productId}`
-                        : `https://${site.subdomain}.totalcamps.com/shop/EVENT`;
-
-                    // Build end-date suffix for description
-                    let dateRangeText = startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                    if (endRaw) {
-                        const endDate = new Date(endRaw);
-                        if (!isNaN(endDate.getTime()) && endDate.getTime() !== startDate.getTime()) {
-                            dateRangeText += ' – ' + endDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                        }
-                    }
-
-                    // Clean title
-                    const title = `MU ${site.sport} Camp: ${rawTitle}`.replace(/\s+/g, ' ').trim();
-                    const description = (p.description || p.shortDescription || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 500) || `${site.sport} camp at Millersville University. ${dateRangeText}.`;
-
-                    // Dedupe
-                    const key = title.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 40) + '|' + startDate.toISOString().slice(0, 10);
-                    if (existingKeys3.has(key)) { athSkipped++; continue; }
-
+        const campsPath = path.join(__dirname, '../camps.json');
+        if (fs.existsSync(campsPath)) {
+            const campsData = JSON.parse(fs.readFileSync(campsPath, 'utf-8'));
+            if (Array.isArray(campsData)) {
+                let campCount = 0, campSkipped = 0;
+                const existingKeys4 = new Set(events.map(e => (e.title || '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 40) + '|' + (e.date || '').slice(0, 10)));
+                for (const camp of campsData) {
+                    if (!camp.title || !camp.date) { campSkipped++; continue; }
+                    const campDate = new Date(camp.date);
+                    if (isNaN(campDate.getTime())) { campSkipped++; continue; }
+                    if (campDate < pastDate || campDate >= futureDate) { campSkipped++; continue; }
+                    const key = camp.title.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 40) + '|' + campDate.toISOString().slice(0, 10);
+                    if (existingKeys4.has(key)) { campSkipped++; continue; }
                     events.push({
-                        title,
-                        date: startDate.toISOString(),
-                        location: `Millersville University (${site.sport})`,
-                        tags: ['MU', 'Summer Camp', 'Athletic Camp', site.sport],
-                        price: priceStr,
-                        ticketLink: registerUrl,
-                        sourceLink: registerUrl,
-                        description,
-                        kidFriendly: true
+                        title: camp.title,
+                        date: campDate.toISOString(),
+                        location: camp.location || 'Millersville University',
+                        tags: Array.isArray(camp.tags) ? camp.tags : ['MU', 'Summer Camp'],
+                        price: camp.price || '',
+                        ticketLink: camp.registrationUrl || camp.ticketLink || '',
+                        sourceLink: camp.sourceLink || camp.registrationUrl || '',
+                        description: camp.description || '',
+                        kidFriendly: camp.kidFriendly !== false
                     });
-                    existingKeys3.add(key);
-                    athCount++;
+                    existingKeys4.add(key);
+                    campCount++;
                 }
-            } catch (e) {
-                console.log(`  ⚠️ ${site.sport} fetch failed: ${e.message}`);
+                console.log(`✅ Hand-maintained camps: ${campCount} loaded from camps.json (${campSkipped} skipped)`);
             }
+        } else {
+            console.log(`ℹ️  camps.json not found at ${campsPath} — skipping hand-maintained camps`);
         }
-        console.log(`✅ MU Athletic Camps: ${athCount} camps added (${athSkipped} skipped)`);
-    } catch (e) { console.error("❌ MU Athletic Camps error:", e.message); }
+    } catch (e) { console.error("❌ camps.json error:", e.message); }
 
     // ===== 4. CLUBS/ORGS (ANTHOLOGY / GETINVOLVED API) =====
     try {

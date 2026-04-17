@@ -818,13 +818,14 @@ async function runScraper() {
                 const listHtml = await listRes.text();
                 // Extract event URLs matching the pattern
                 const urlRegex = /https:\/\/artsmu\.com\/event\/[a-z0-9-]+\/(?:the-ware-center|winter-visual-performing-arts-center)\/?/gi;
-                let pageFound = 0;
+                let pageTotal = 0, pageNew = 0;
                 for (const m of listHtml.matchAll(urlRegex)) {
                     const cleanUrl = m[0].replace(/\/$/, '') + '/';
-                    if (!eventUrls.has(cleanUrl)) pageFound++;
-                    eventUrls.add(cleanUrl);
+                    pageTotal++;
+                    if (!eventUrls.has(cleanUrl)) { eventUrls.add(cleanUrl); pageNew++; }
                 }
-                console.log(`  🔗 ${listUrl.split('/').slice(-2,-1)[0]}: ${pageFound} new URLs`);
+                const pageLabel = listUrl.split('/').slice(-2,-1)[0];
+                console.log(`  🔗 ${pageLabel}: ${pageTotal} URLs found (${pageNew} unique new)`);
             } catch (e) {
                 console.log(`  ⚠️ ${listUrl} fetch failed: ${e.message}`);
             }
@@ -909,6 +910,221 @@ async function runScraper() {
         }
         console.log(`✅ artsmu.com: ${artsCount} new events (${artsSkipped} skipped, ${artsFailed} failed)`);
     } catch (e) { console.error("❌ artsmu.com error:", e.message); }
+
+    // ===== 3c. MILLERSVILLE TECH & ENGINEERING CAMPS =====
+    try {
+        console.log("📡 Fetching Millersville Tech Camps...");
+        const techShopPages = [
+            'https://millersvilletechcamps.com/shop/',
+            'https://millersvilletechcamps.com/shop/?query-9-page=2',
+            'https://millersvilletechcamps.com/shop/?query-9-page=3'
+        ];
+        const campUrls = new Map(); // url -> title
+        for (const shopUrl of techShopPages) {
+            try {
+                const res = await fetch(shopUrl, { headers: baseHeaders, signal: AbortSignal.timeout(30000) });
+                if (!res.ok) continue;
+                const html = await res.text();
+                // Product links like: <a href="https://millersvilletechcamps.com/product/{slug}/">
+                // Each product has an h2/h3 with the title that includes the date range
+                const productRegex = /<a[^>]+href="(https:\/\/millersvilletechcamps\.com\/product\/[a-z0-9-]+\/)"[^>]*>[\s\S]*?<\/a>\s*<h[23][^>]*>\s*<a[^>]+href="\1"[^>]*>([^<]+)<\/a>\s*<\/h[23]>/gi;
+                // Simpler: capture h2/h3 titles with their product link
+                const altRegex = /<h[23][^>]*class="[^"]*product[^"]*"[^>]*>\s*<a[^>]+href="(https:\/\/millersvilletechcamps\.com\/product\/[a-z0-9-]+\/)"[^>]*>([^<]+)<\/a>/gi;
+                for (const m of html.matchAll(altRegex)) {
+                    const url = m[1];
+                    const title = m[2].trim()
+                        .replace(/&#8211;/g, '–').replace(/&#038;/g, '&').replace(/&amp;/g, '&')
+                        .replace(/&#8217;/g, "'").replace(/&quot;/g, '"');
+                    if (!campUrls.has(url)) campUrls.set(url, title);
+                }
+            } catch (e) { console.log(`  ⚠️ ${shopUrl}: ${e.message}`); }
+        }
+        console.log(`  🔗 Found ${campUrls.size} tech camp products`);
+
+        let techCount = 0, techSkipped = 0;
+        const existingKeys2 = new Set(events.map(e => (e.title || '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 40) + '|' + (e.date || '').slice(0, 10)));
+
+        for (const [url, rawTitle] of campUrls) {
+            // Skip non-camp products (supervised lunch, add-ons, etc.)
+            if (/supervised lunch|add[- ]on|gift card|apparel/i.test(rawTitle)) { techSkipped++; continue; }
+
+            // Parse date range from title: "7/13-7/17" or "6/22-6/26" or "7/11 only"
+            const dateRangeMatch = rawTitle.match(/(\d{1,2})\/(\d{1,2})\s*[-–]\s*(\d{1,2})\/(\d{1,2})/);
+            const singleDayMatch = rawTitle.match(/(\d{1,2})\/(\d{1,2})\s+only/i);
+
+            let startMonth, startDay, endMonth, endDay;
+            if (dateRangeMatch) {
+                [, startMonth, startDay, endMonth, endDay] = dateRangeMatch.map(Number);
+            } else if (singleDayMatch) {
+                startMonth = endMonth = parseInt(singleDayMatch[1]);
+                startDay = endDay = parseInt(singleDayMatch[2]);
+            } else {
+                techSkipped++; continue;
+            }
+
+            // Determine year — assume current year or next year if month is in past
+            const nowD = new Date();
+            const currentYear = nowD.getFullYear();
+            let year = currentYear;
+            const testDate = new Date(year, startMonth - 1, startDay);
+            if (testDate < nowD && (nowD.getMonth() > startMonth || (nowD.getMonth() === startMonth && nowD.getDate() > endDay))) {
+                year = currentYear + 1;
+            }
+
+            // Parse time from title: "Morning" / "Afternoon" / "All Day" / "Evening"
+            let hour = 9, minute = 0; // default morning
+            if (/afternoon/i.test(rawTitle)) hour = 13;
+            else if (/evening/i.test(rawTitle)) hour = 17;
+            else if (/all ?day/i.test(rawTitle)) hour = 9;
+            else if (/morning/i.test(rawTitle)) hour = 9;
+
+            // Clean title — keep grade info but remove redundant date info if desired
+            const title = rawTitle.replace(/\s+–\s+\d{1,2}\/\d{1,2}[-–]\d{1,2}\/\d{1,2}\s*[-–]?/g, '').replace(/\s+–\s+\d{1,2}\/\d{1,2}\s+only\s*[-–]?/gi, '').replace(/\s+/g, ' ').trim() || rawTitle;
+
+            // Create ONE event on start date (users think of camps as a single week, not 5 separate events)
+            const startDateTime = new Date(year, startMonth - 1, startDay, hour, minute, 0, 0);
+            if (startDateTime < pastDate || startDateTime >= futureDate) { techSkipped++; continue; }
+
+            const key = title.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 40) + '|' + startDateTime.toISOString().slice(0, 10);
+            if (existingKeys2.has(key)) { techSkipped++; continue; }
+
+            // Build human-readable date range for display
+            let dateRangeText = '';
+            if (startMonth === endMonth && startDay === endDay) {
+                dateRangeText = `${startMonth}/${startDay}`;
+            } else {
+                dateRangeText = `${startMonth}/${startDay}–${endMonth}/${endDay}`;
+            }
+            const description = `Summer camp: ${dateRangeText}. ${rawTitle}`;
+
+            events.push({
+                title, date: startDateTime.toISOString(),
+                location: 'Millersville University (Tech & Engineering)',
+                tags: ['MU', 'Summer Camp', 'Educational'],
+                price: '',
+                ticketLink: url,
+                sourceLink: url,
+                description,
+                kidFriendly: true
+            });
+            existingKeys2.add(key);
+            techCount++;
+        }
+        console.log(`✅ Tech Camps: ${techCount} camps added (${techSkipped} skipped)`);
+    } catch (e) { console.error("❌ Tech Camps error:", e.message); }
+
+    // ===== 3d. MU ATHLETIC CAMPS (TotalCamps API) =====
+    try {
+        console.log("📡 Fetching MU Athletic Camps (TotalCamps API)...");
+        // Each TotalCamps site uses api.totalcamps.com/market/api/public/{siteId}/products/EVENT
+        // The logtoken JWT is browser-generated but has no exp field, seems long-lived
+        // If a JWT goes stale, new tokens can be obtained from DevTools Network tab
+        const athleticCampSites = [
+            {
+                sport: 'Baseball',
+                subdomain: 'shehanbaseballcamps',
+                siteId: 70,
+                jwt: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJTSEVIQU5CQVNFQkFMTENBTVBTIiwiVFpOIjoiQW1lcmljYS9OZXdfWW9yayIsImlhdCI6MTc3NjQ1NTY2MH0.DI9aFu5rH82q5pEmlvFtANgXXGKeQjw_USlgg0WJhdUkWgvDbXthc_QRxtpdsXHv71IPNgn8lThl_en4F83PPg'
+            }
+            // TODO: Add field hockey + soccer once JWTs are captured
+        ];
+
+        let athCount = 0, athSkipped = 0;
+        const existingKeys3 = new Set(events.map(e => (e.title || '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 40) + '|' + (e.date || '').slice(0, 10)));
+
+        for (const site of athleticCampSites) {
+            try {
+                const apiUrl = `https://api.totalcamps.com/market/api/public/${site.siteId}/products/EVENT`;
+                const apiHeaders = {
+                    'accept': 'application/json, text/plain, */*',
+                    'logtoken': site.jwt,
+                    'origin': `https://${site.subdomain}.totalcamps.com`,
+                    'referer': `https://${site.subdomain}.totalcamps.com/`,
+                    'user-agent': baseHeaders['User-Agent'] || 'Mozilla/5.0'
+                };
+                const apiRes = await fetch(apiUrl, { headers: apiHeaders, signal: AbortSignal.timeout(20000) });
+                if (!apiRes.ok) {
+                    console.log(`  ⚠️ ${site.sport}: API returned ${apiRes.status} — JWT may have expired, refresh via DevTools`);
+                    continue;
+                }
+                const data = await apiRes.json();
+                // Response structure is unknown on first run — try common shapes
+                const products = Array.isArray(data) ? data : (data.products || data.data || data.items || data.results || []);
+                if (!Array.isArray(products) || products.length === 0) {
+                    console.log(`  ⚠️ ${site.sport}: no products found. Response keys: ${Object.keys(data).slice(0, 10).join(', ')}`);
+                    continue;
+                }
+                console.log(`  🏟️ ${site.sport}: ${products.length} products received`);
+
+                for (const p of products) {
+                    // Try common field names for camp data
+                    const rawTitle = p.name || p.title || p.productName || p.displayName || '';
+                    if (!rawTitle) continue;
+                    if (/add[- ]on|tshirt|t-shirt|apparel|gift card|merch/i.test(rawTitle)) { athSkipped++; continue; }
+
+                    // Date field variations
+                    const startRaw = p.startDate || p.start_date || p.starts_at || p.startsAt || p.eventStartDate || p.date || '';
+                    const endRaw = p.endDate || p.end_date || p.ends_at || p.endsAt || p.eventEndDate || '';
+                    if (!startRaw) { athSkipped++; continue; }
+
+                    const startDate = new Date(startRaw);
+                    if (isNaN(startDate.getTime())) { athSkipped++; continue; }
+                    if (startDate < pastDate || startDate >= futureDate) { athSkipped++; continue; }
+
+                    // If no time specified, default to 9am
+                    if (startDate.getHours() === 0 && startDate.getMinutes() === 0) {
+                        startDate.setHours(9, 0, 0, 0);
+                    }
+
+                    // Price
+                    let priceStr = '';
+                    const priceNum = p.price || p.basePrice || p.cost || 0;
+                    if (typeof priceNum === 'number' && priceNum > 0) priceStr = `$${priceNum}`;
+                    else if (typeof priceNum === 'string') priceStr = priceNum;
+
+                    // Registration URL
+                    const productId = p.id || p.productId || p._id || '';
+                    const registerUrl = productId
+                        ? `https://${site.subdomain}.totalcamps.com/shop/product/${productId}`
+                        : `https://${site.subdomain}.totalcamps.com/shop/EVENT`;
+
+                    // Build end-date suffix for description
+                    let dateRangeText = startDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    if (endRaw) {
+                        const endDate = new Date(endRaw);
+                        if (!isNaN(endDate.getTime()) && endDate.getTime() !== startDate.getTime()) {
+                            dateRangeText += ' – ' + endDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                        }
+                    }
+
+                    // Clean title
+                    const title = `MU ${site.sport} Camp: ${rawTitle}`.replace(/\s+/g, ' ').trim();
+                    const description = (p.description || p.shortDescription || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 500) || `${site.sport} camp at Millersville University. ${dateRangeText}.`;
+
+                    // Dedupe
+                    const key = title.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 40) + '|' + startDate.toISOString().slice(0, 10);
+                    if (existingKeys3.has(key)) { athSkipped++; continue; }
+
+                    events.push({
+                        title,
+                        date: startDate.toISOString(),
+                        location: `Millersville University (${site.sport})`,
+                        tags: ['MU', 'Summer Camp', 'Athletic Camp', site.sport],
+                        price: priceStr,
+                        ticketLink: registerUrl,
+                        sourceLink: registerUrl,
+                        description,
+                        kidFriendly: true
+                    });
+                    existingKeys3.add(key);
+                    athCount++;
+                }
+            } catch (e) {
+                console.log(`  ⚠️ ${site.sport} fetch failed: ${e.message}`);
+            }
+        }
+        console.log(`✅ MU Athletic Camps: ${athCount} camps added (${athSkipped} skipped)`);
+    } catch (e) { console.error("❌ MU Athletic Camps error:", e.message); }
 
     // ===== 4. CLUBS/ORGS (ANTHOLOGY / GETINVOLVED API) =====
     try {
@@ -1618,6 +1834,12 @@ Focus on the most impressive deals a shopper would want to know about. Include m
         const allText = titleLower + ' ' + desc;
 
         let isFamilyFriendly = false;
+
+        // Respect pre-set kidFriendly for events that already declared themselves (e.g. Summer Camps, Athletic Camps)
+        if ((tags.includes('Summer Camp') || tags.includes('Athletic Camp')) && e.kidFriendly === true) {
+            famCount++;
+            return;
+        }
 
         // Skip all sporting events (they're on the Sports page, not Events)
         if (tags.includes('Athletic Competitions') || tags.includes('Athletics') || tags.includes('Club Sports')) {

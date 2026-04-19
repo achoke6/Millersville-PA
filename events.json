@@ -2756,27 +2756,6 @@
     "kidFriendly": false
   },
   {
-    "title": "Millersville University Women's Lacrosse vs Shepherd",
-    "date": "2026-03-18T20:00:00.000Z",
-    "location": "Millersville, PA, Chryst Field at Biemesderfer Stadium ",
-    "tags": [
-      "MU",
-      "Athletic Competitions",
-      "Athletics",
-      "Home Game Mode",
-      "Women's",
-      "Lacrosse"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10395&sport_id=14",
-    "gameResult": "W",
-    "gameScore": "17-8",
-    "streamLink": "https://psacsportsdigitalnetwork.com/millersvilleathletics/?B=3617356",
-    "isLive": false,
-    "kidFriendly": false
-  },
-  {
     "title": "Co-Ed Bible Study",
     "date": "2026-03-18T20:00:00",
     "location": "SMC Meeting Room",
@@ -10271,7 +10250,7 @@
     "price": "Free",
     "ticketLink": "",
     "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10426&sport_id=18",
-    "gameResult": "",
+    "gameResult": "N",
     "gameScore": "",
     "streamLink": "https://psacsportsdigitalnetwork.com/millersvilleathletics/?B=3937651",
     "isLive": false,
@@ -10434,8 +10413,8 @@
     "price": "Free",
     "ticketLink": "",
     "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10349&sport_id=17",
-    "gameResult": "",
-    "gameScore": "",
+    "gameResult": "L",
+    "gameScore": "2-5",
     "streamLink": "",
     "isLive": false,
     "kidFriendly": false
@@ -10515,8 +10494,8 @@
     "price": "Free",
     "ticketLink": "",
     "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10518&sport_id=11",
-    "gameResult": "",
-    "gameScore": "",
+    "gameResult": "W",
+    "gameScore": "6-5",
     "streamLink": "https://psacsportsdigitalnetwork.com/millersvilleathletics/?B=3918612",
     "isLive": false,
     "kidFriendly": false
@@ -10535,8 +10514,8 @@
     "price": "Ticket Required",
     "ticketLink": "https://www.etix.com/ticket/p/83914721/",
     "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10465&sport_id=1",
-    "gameResult": "",
-    "gameScore": "",
+    "gameResult": "W",
+    "gameScore": "13-5",
     "streamLink": "https://psacsportsdigitalnetwork.com/millersvilleathletics/",
     "isLive": false,
     "kidFriendly": false
@@ -10553,32 +10532,6 @@
     "price": "$18",
     "ticketLink": "https://www.etix.com/ticket/p/71762678/jazz-ensemblesjazz-java-with-alumni-band-millersville-winter-visual-performing-arts-center",
     "sourceLink": "https://www.millersville.edu/calendar/events/306469a4-619b-11f0-a8e9-c35832a91fce",
-    "kidFriendly": false
-  },
-  {
-    "title": "Jazz Ensembles: Jazz & Java with Alumni Band",
-    "date": "2026-04-18T19:30:00.000Z",
-    "location": "Winter Visual & Performing Arts Center",
-    "tags": [
-      "MU",
-      "Arts Concert / Performance"
-    ],
-    "price": "$18",
-    "ticketLink": "",
-    "sourceLink": "https://artsmu.com/event/jazz-ensembles-jazz-java-with-alumni-band-2/winter-visual-performing-arts-center/",
-    "kidFriendly": false
-  },
-  {
-    "title": "KISS ALIVE! NYC - Kiss Tribute",
-    "date": "2026-04-19T00:00:00.000Z",
-    "location": "Phantom Power",
-    "tags": [
-      "Other",
-      "Live Music"
-    ],
-    "price": "Ticket Required",
-    "ticketLink": "https://www.eventbrite.com/e/kiss-alive-nyc-kiss-tribute-tickets-1983547173993",
-    "sourceLink": "https://www.eventbrite.com/e/kiss-alive-nyc-kiss-tribute-tickets-1983547173993",
     "kidFriendly": false
   },
   {
@@ -16121,6 +16074,19 @@
     "kidFriendly": false
   },
   {
+    "title": "Sponge - 30th Anniversary of “Rotting Piñata\"",
+    "date": "2026-05-17T23:00:00.000Z",
+    "location": "Phantom Power",
+    "tags": [
+      "Other",
+      "Live Music"
+    ],
+    "price": "Ticket Required",
+    "ticketLink": "https://www.eventbrite.com/e/sponge-30th-anniversary-of-rotting-pinata-tickets-1986638485188",
+    "sourceLink": "https://www.eventbrite.com/e/sponge-30th-anniversary-of-rotting-pinata-tickets-1986638485188",
+    "kidFriendly": false
+  },
+  {
     "title": "Regular Trash & Recycling Collection ",
     "date": "2026-05-18T12:00:00.000Z",
     "location": "Millersville Borough",
@@ -16183,7 +16149,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Election Day",
+    "title": "Office Closed",
     "date": "2026-05-19T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -16199,7 +16165,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Office Closed",
+    "title": "Election Day",
     "date": "2026-05-19T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [

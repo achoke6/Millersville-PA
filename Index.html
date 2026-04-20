@@ -940,6 +940,8 @@ function updateModeUI(prefix,mode,anchor,filteredEvents){
 
 function isSportEvent(e){
     const t=e.tags||[];
+    // Athletic Camps are kids events (not competitive games) — keep on Events page
+    if(t.includes('Athletic Camp')) return false;
     return t.includes('Athletic Competitions')||t.includes('Athletics')||t.includes('Club Sports')||sportsList.some(s=>t.includes(s))||(t.includes('PM')&&t.includes('Athletics'));
 }
 function isPMSportByTitle(e){

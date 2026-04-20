@@ -146,30 +146,32 @@
 
     <!-- EVENTS (No Sports) -->
     <section id="view-events" class="app-view">
-        <div class="toolbar-compact">
-            <div class="toolbar-center">
-                <button class="nav-arrow" id="ev-prev" onclick="evNavPrev()">‹</button>
-                <span id="ev-date-label" class="date-label-inline"></span>
-                <button class="nav-arrow" id="ev-next" onclick="evNavNext()">›</button>
-            </div>
-            <div class="toolbar-right">
-                <button class="family-toggle" id="ev-kid-toggle" data-feed="family-events" onclick="toggleKidFriendly()" title="Family Friendly Events">👨‍👩‍👧</button>
-                <button id="ev-clear-btn" class="clear-btn" onclick="clearEventFilters()" style="display:none;">Clear ✕</button>
-                <button id="ev-filter-toggle" class="filter-toggle" onclick="toggleEvFilters()">Filter <span id="ev-filter-arrow">▾</span></button>
-            </div>
-        </div>
-        <div id="ev-filters-wrap" class="filters-collapsible">
-            <div class="filter-bar ev-source-row" style="justify-content:flex-start;">
-                <div class="filter-group" id="ev-source-group">
-                    <button class="src-btn active" id="ev-src-all" onclick="setEventSourceAll()">All</button>
-                    <button class="src-btn" id="ev-src-mu" data-feed="mu-" onclick="toggleEventSource('MU')">🏴‍☠️ MU</button>
-                    <button class="src-btn" id="ev-src-gi" data-feed="clubs-" onclick="toggleEventSource('Clubs/Orgs')">🎓 MU Clubs</button>
-                    <button class="src-btn" id="ev-src-pm" data-feed="pm-" onclick="toggleEventSource('PM')"><svg class="btn-icon" width="14" height="14"><use href="#icon-comet"/></svg> PM</button>
-                    <button class="src-btn" id="ev-src-borough" data-feed="borough-" onclick="toggleEventSource('Borough')">🌳 Borough</button>
-                    <button class="src-btn" id="ev-src-other" data-feed="other-" onclick="toggleEventSource('Other')">🎸 Other</button>
+        <div class="sticky-nav-bar">
+            <div class="toolbar-compact">
+                <div class="toolbar-center">
+                    <button class="nav-arrow" id="ev-prev" onclick="evNavPrev()">‹</button>
+                    <span id="ev-date-label" class="date-label-inline"></span>
+                    <button class="nav-arrow" id="ev-next" onclick="evNavNext()">›</button>
+                </div>
+                <div class="toolbar-right">
+                    <button class="family-toggle" id="ev-kid-toggle" data-feed="family-events" onclick="toggleKidFriendly()" title="Family Friendly Events">👨‍👩‍👧</button>
+                    <button id="ev-clear-btn" class="clear-btn" onclick="clearEventFilters()" style="display:none;">Clear ✕</button>
+                    <button id="ev-filter-toggle" class="filter-toggle" onclick="toggleEvFilters()">Filter <span id="ev-filter-arrow">▾</span></button>
                 </div>
             </div>
-            <div id="ev-sub-container" class="sub-filter-bar"></div>
+            <div id="ev-filters-wrap" class="filters-collapsible">
+                <div class="filter-bar ev-source-row" style="justify-content:flex-start;">
+                    <div class="filter-group" id="ev-source-group">
+                        <button class="src-btn active" id="ev-src-all" onclick="setEventSourceAll()">All</button>
+                        <button class="src-btn" id="ev-src-mu" data-feed="mu-" onclick="toggleEventSource('MU')">🏴‍☠️ MU</button>
+                        <button class="src-btn" id="ev-src-gi" data-feed="clubs-" onclick="toggleEventSource('Clubs/Orgs')">🎓 MU Clubs</button>
+                        <button class="src-btn" id="ev-src-pm" data-feed="pm-" onclick="toggleEventSource('PM')"><svg class="btn-icon" width="14" height="14"><use href="#icon-comet"/></svg> PM</button>
+                        <button class="src-btn" id="ev-src-borough" data-feed="borough-" onclick="toggleEventSource('Borough')">🌳 Borough</button>
+                        <button class="src-btn" id="ev-src-other" data-feed="other-" onclick="toggleEventSource('Other')">🎸 Other</button>
+                    </div>
+                </div>
+                <div id="ev-sub-container" class="sub-filter-bar"></div>
+            </div>
         </div>
         <div id="ev-events-container" class="card-grid"></div>
         <button class="fab-submit" onclick="openSubmitEvent()" title="Submit an Event">📝</button>
@@ -177,30 +179,32 @@
 
     <!-- SPORTS -->
     <section id="view-sports" class="app-view">
-        <div class="toolbar-compact">
-            <div class="toolbar-center">
-                <button class="nav-arrow" id="sp-prev" onclick="spNavPrev()">‹</button>
-                <span id="sp-date-label" class="date-label-inline"></span>
-                <button class="nav-arrow" id="sp-next" onclick="spNavNext()">›</button>
-            </div>
-            <div class="toolbar-right">
-                <button class="home-toggle" id="hgame-toggle" onclick="toggleHomeGameMode()" title="Home Games Only">
-                    <svg width="20" height="20"><use href="#icon-house"/></svg>
-                </button>
-                <button id="sp-clear-btn" class="clear-btn" onclick="clearSportsFilters()" style="display:none;">Clear ✕</button>
-                <button id="sp-filter-toggle" class="filter-toggle" onclick="toggleSpFilters()">Filter <span id="sp-filter-arrow">▾</span></button>
-            </div>
-        </div>
-        <div id="sp-filters-wrap" class="filters-collapsible">
-            <div class="filter-bar sp-source-row">
-                <div class="filter-group" id="sp-source-group">
-                    <button class="src-btn active" id="sp-src-all" onclick="setSportsSourceAll(this)">All</button>
-                    <button class="src-btn" id="sp-src-pm" data-feed="pm-" onclick="toggleSportsSource('PM')"><svg class="btn-icon" width="14" height="14"><use href="#icon-comet"/></svg> PM</button>
-                    <button class="src-btn" id="sp-src-mu" data-feed="mu-" onclick="toggleSportsSource('MU')">🏴‍☠️ MU</button>
-                    <button class="src-btn" id="sp-src-clubs" data-feed="clubs-" onclick="toggleSportsSource('Clubs')">🎓 MU Clubs</button>
+        <div class="sticky-nav-bar">
+            <div class="toolbar-compact">
+                <div class="toolbar-center">
+                    <button class="nav-arrow" id="sp-prev" onclick="spNavPrev()">‹</button>
+                    <span id="sp-date-label" class="date-label-inline"></span>
+                    <button class="nav-arrow" id="sp-next" onclick="spNavNext()">›</button>
+                </div>
+                <div class="toolbar-right">
+                    <button class="home-toggle" id="hgame-toggle" onclick="toggleHomeGameMode()" title="Home Games Only">
+                        <svg width="20" height="20"><use href="#icon-house"/></svg>
+                    </button>
+                    <button id="sp-clear-btn" class="clear-btn" onclick="clearSportsFilters()" style="display:none;">Clear ✕</button>
+                    <button id="sp-filter-toggle" class="filter-toggle" onclick="toggleSpFilters()">Filter <span id="sp-filter-arrow">▾</span></button>
                 </div>
             </div>
-            <div id="sp-sport-tags" class="sport-tag-row"></div>
+            <div id="sp-filters-wrap" class="filters-collapsible">
+                <div class="filter-bar sp-source-row">
+                    <div class="filter-group" id="sp-source-group">
+                        <button class="src-btn active" id="sp-src-all" onclick="setSportsSourceAll(this)">All</button>
+                        <button class="src-btn" id="sp-src-pm" data-feed="pm-" onclick="toggleSportsSource('PM')"><svg class="btn-icon" width="14" height="14"><use href="#icon-comet"/></svg> PM</button>
+                        <button class="src-btn" id="sp-src-mu" data-feed="mu-" onclick="toggleSportsSource('MU')">🏴‍☠️ MU</button>
+                        <button class="src-btn" id="sp-src-clubs" data-feed="clubs-" onclick="toggleSportsSource('Clubs')">🎓 MU Clubs</button>
+                    </div>
+                </div>
+                <div id="sp-sport-tags" class="sport-tag-row"></div>
+            </div>
         </div>
         <div id="sp-no-source" class="empty-state" style="display:none;">Select a source (PM, MU, or MU Clubs) to view games.</div>
         <div id="sp-events-container" class="card-grid"></div>

@@ -86,23 +86,26 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .toolbar-row .clear-btn { position: absolute; right: 0; }
 .toolbar-row .date-label { text-align: center; width: 100%; pointer-events: none; }
 
-/* Compact toolbar: date nav + action buttons — sticky below header for quick navigation while scrolling */
+/* Sticky wrapper that holds toolbar + filters together so filters stay visible when expanded while scrolled.
+   The negative margin + extra top padding pushes the background up to cover the container's padding-top gap
+   so there's no sliver of page content visible between the header and the sticky bar. */
+.sticky-nav-bar {
+    position: sticky;
+    top: 50px;
+    z-index: 50;
+    background: var(--bg);
+    margin: -16px -16px 10px;
+    padding: 24px 16px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+/* Compact toolbar: date nav + action buttons */
 .toolbar-compact {
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-bottom: 10px;
     min-height: 36px;
-    position: sticky;
-    top: 56px;
-    z-index: 50;
-    background: var(--bg);
-    padding: 8px 0;
-    border-bottom: 1px solid var(--border);
-    margin-left: -16px;
-    margin-right: -16px;
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-bottom: 8px;
 }
 .toolbar-center { display: flex; align-items: center; gap: 0; }
 .toolbar-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; margin-left: auto; }

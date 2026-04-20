@@ -515,17 +515,37 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .header-cart-mobile { display: block; }
 .nav-cart-widget { display: none; padding: 4px 12px; cursor: pointer; }
 
-/* Feed gear button — styled differently for mobile vs desktop */
+/* Feed gear button — mobile (in header-actions) */
 #feed-gear { transition: background 0.15s, color 0.15s; border-radius: 50% !important; }
 #feed-gear:hover { background: var(--border-light) !important; color: var(--navy) !important; }
+
+/* Feed gear button — desktop (in nav) - hidden by default on mobile */
+.feed-gear-desktop { display: none; }
+.feed-dot-desktop { position: absolute; top: 4px; right: 4px; width: 8px; height: 8px; background: var(--gold); border-radius: 50%; }
 
 @media (min-width: 768px) {
     .header-cart-mobile { display: none; }
     .nav-cart-widget { display: flex; align-items: center; }
-    /* Gear becomes a square nav-aligned button with refined padding */
-    #feed-gear { padding: 8px !important; width: 38px; height: 38px; display: inline-flex; align-items: center; justify-content: center; }
-    #feed-gear svg { width: 20px; height: 20px; }
-    #feed-gear #feed-dot { top: 6px !important; right: 6px !important; }
+    /* Hide the mobile gear entirely on desktop */
+    #feed-gear { display: none !important; }
+    /* Show desktop gear in nav */
+    .feed-gear-desktop {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+        width: 38px;
+        height: 38px;
+        margin-left: 4px;
+        border-radius: 50%;
+        color: var(--text-dark);
+        position: relative;
+        transition: background 0.15s, color 0.15s;
+    }
+    .feed-gear-desktop:hover { background: var(--border-light); color: var(--navy); }
 }
 
 /* Ecwid overrides to match app theme */

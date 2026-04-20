@@ -45,6 +45,10 @@
             <button id="nav-store" class="nav-link" onclick="switchView('store'); toggleMobileMenu();">Store</button>
             <div class="nav-cart-widget"><div class="ec-cart-widget"></div></div>
             <button id="nav-advertise" class="nav-link nav-advertise" onclick="switchView('advertise'); toggleMobileMenu();">Advertise</button>
+            <button id="feed-gear-desktop" class="feed-gear-desktop" onclick="openFeedSettings()" title="My Favorites" aria-label="My Favorites">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                <span id="feed-dot-desktop" class="feed-dot-desktop" style="display:none;"></span>
+            </button>
         </nav>
         <div class="menu-overlay" id="menu-overlay" onclick="toggleMobileMenu()"></div>
     </div>
@@ -435,16 +439,21 @@ let evKidMode=false;
 const FEED_KEY = 'mapp_feed_prefs';
 let feedPrefs = null; // null = not configured
 
+function setFeedDotVisible(visible) {
+    const d1 = document.getElementById('feed-dot');
+    const d2 = document.getElementById('feed-dot-desktop');
+    if (d1) d1.style.display = visible ? 'block' : 'none';
+    if (d2) d2.style.display = visible ? 'block' : 'none';
+}
+
 function loadFeedPrefs() {
     try { feedPrefs = JSON.parse(localStorage.getItem(FEED_KEY)); } catch(e) { feedPrefs = null; }
-    const dot = document.getElementById('feed-dot');
-    if (dot) dot.style.display = feedPrefs ? 'block' : 'none';
+    setFeedDotVisible(!!feedPrefs);
 }
 function saveFeedPrefs(prefs) {
     feedPrefs = prefs;
     localStorage.setItem(FEED_KEY, JSON.stringify(prefs));
-    const dot = document.getElementById('feed-dot');
-    if (dot) dot.style.display = prefs ? 'block' : 'none';
+    setFeedDotVisible(!!prefs);
 }
 
 // Feed subscription tokens and their display config
@@ -704,8 +713,7 @@ window.saveFeedFromModal = function() {
 window.clearFeedPrefs = function() {
     localStorage.removeItem(FEED_KEY);
     feedPrefs = null;
-    const dot = document.getElementById('feed-dot');
-    if (dot) dot.style.display = 'none';
+    setFeedDotVisible(false);
     renderHomeFeed();
     renderEvents(); renderSports(); renderNewsUI();
     decorateFeedStars();

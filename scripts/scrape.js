@@ -2003,12 +2003,16 @@ Focus on the most impressive deals a shopper would want to know about. Include m
 
             if (!titleMatch) continue;
 
-            // Fix #4: require times to be close (within 30 min) UNLESS it's an exact title match
-            //         with cross-source — exact+cross is a strong signal it's the same event
-            //         regardless of listed time. For loose (substring) matches, enforce time check.
+            // Time-window check for loose (substring) matches. Two cases:
+            //   (a) Short substring match (shorter norm < 10 chars): require times within 30 min —
+            //       very short phrases could legitimately occur as multiple sessions.
+            //   (b) Long substring match (shorter norm >= 10 chars): title overlap is distinctive
+            //       enough that same-day match is almost certainly the same event. Sources often
+            //       list different times for the same event (doors-open vs performance-start),
+            //       so allow merging regardless of time gap.
             if (!exactMatch) {
                 const timeDiff = Math.abs(ne.time - seed.time);
-                if (timeDiff > ONE_HALF_HOUR_MS) continue;
+                if (shorter.length < 10 && timeDiff > ONE_HALF_HOUR_MS) continue;
             }
 
             matched = g;

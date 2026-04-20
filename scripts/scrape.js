@@ -1942,34 +1942,77 @@ Focus on the most impressive deals a shopper would want to know about. Include m
     });
 
     // Pass 2: cross-source dedupe — group by (normalized title, same day) and pick the best one.
-    // "Same day" means same YYYY-MM-DD in local time — ignores different times on the same day,
-    // which is important for events like "Doodle POP" where artsmu and MU Calendar list different times.
-    // For loose title matching (e.g. "Family Fun Fest – Doodle POP" vs "Doodle POP"), we iterate
-    // each event against already-grouped events and merge if ONE title contains the other.
+    // Four safeguards against false positives:
+    //   1) Only merge across DIFFERENT sources (same-source events on the same day are real
+    //      separate events — doubleheaders, recurring meetings, morning/afternoon sessions).
+    //   2) Generic meeting titles ("General Meeting", "PTO Meeting", "Studio Hours", etc.) require
+    //      EXACT match — substring matching creates false positives when many groups have meetings
+    //      with the same generic name on the same day.
+    //   3) Calendar artifact titles starting with "Setup Window for" / "Teardown" never match real
+    //      events — these are back-of-house calendar entries, not the real event.
+    //   4) Times must be within 30 minutes OR titles must match exactly. This protects morning/afternoon
+    //      camp sessions, doubleheader games, and multiple showings on the same day (e.g. Concert
+    //      Band 10:30 AM and 2:00 PM are different performances even if they're cross-source).
+
+    // Titles that are too generic to substring-match. Require exact match for these.
+    const GENERIC_MEETING_TITLES = /^(general meeting|board meeting|staff meeting|pto meeting|committee meeting|studio hours|game night|meeting|practice|rehearsal|office hours|open house|book club|prayer meeting|tabling)$/i;
+    const CALENDAR_ARTIFACT_PATTERNS = /^(setup window|teardown|breakdown|prep for|rehearsal for)\b/i;
+    const ONE_HALF_HOUR_MS = 30 * 60 * 1000;
+
+    // Get a "source bucket" for same-source detection. Within a bucket, don't merge.
+    const sourceBucket = e => {
+        const tags = e.tags || [];
+        if (tags.includes('Clubs/Orgs')) return 'clubs';
+        if (tags.includes('Arts Concert / Performance') || tags.includes('Art Exhibit')) return 'artsmu';
+        if (tags.includes('PM')) return 'pm';
+        if (tags.includes('Borough')) return 'borough';
+        if (tags.includes('MU')) return 'mu';
+        return 'other';
+    };
 
     const normalizedEvents = pass1.map((e, i) => ({
         idx: i,
         event: e,
         norm: normalizeTitle(e.title),
-        day: (e.date || '').slice(0, 10)
-    })).filter(n => n.norm); // drop events with empty titles
+        day: (e.date || '').slice(0, 10),
+        time: new Date(e.date || 0).getTime(),
+        bucket: sourceBucket(e)
+    })).filter(n => n.norm && !CALENDAR_ARTIFACT_PATTERNS.test(n.norm));
 
-    // Build groups by iterating: each event is added to the first existing group where
-    // its normalized title is a substring match (either direction) AND on the same day,
-    // or becomes the seed of a new group.
-    const groups2 = []; // each group is an array of { idx, event, norm, day }
+    const groups2 = [];
+
     for (const ne of normalizedEvents) {
         let matched = null;
         for (const g of groups2) {
             const seed = g[0];
             if (seed.day !== ne.day) continue;
-            // Substring match in either direction — handles "Doodle POP" ⊂ "Family Fun Fest – Doodle POP"
-            // Also catch exact normalized match (handles "&" vs "and" once punctuation stripped)
-            if (seed.norm === ne.norm || seed.norm.includes(ne.norm) || ne.norm.includes(seed.norm)) {
-                // Require at least 8 chars of match to avoid false positives (e.g. short titles like "5K")
-                const shorter = seed.norm.length < ne.norm.length ? seed.norm : ne.norm;
-                if (shorter.length >= 8) { matched = g; break; }
+
+            // Fix #1: require different source buckets
+            if (g.some(m => m.bucket === ne.bucket)) continue;
+
+            // Title match logic: generic titles need EXACT match, others allow substring
+            const shorter = seed.norm.length < ne.norm.length ? seed.norm : ne.norm;
+            const exactMatch = seed.norm === ne.norm;
+            const substringMatch = seed.norm.includes(ne.norm) || ne.norm.includes(seed.norm);
+            const isGeneric = GENERIC_MEETING_TITLES.test(shorter);
+
+            let titleMatch;
+            if (exactMatch) titleMatch = true;
+            else if (isGeneric) titleMatch = false;
+            else titleMatch = substringMatch && shorter.length >= 8;
+
+            if (!titleMatch) continue;
+
+            // Fix #4: require times to be close (within 30 min) UNLESS it's an exact title match
+            //         with cross-source — exact+cross is a strong signal it's the same event
+            //         regardless of listed time. For loose (substring) matches, enforce time check.
+            if (!exactMatch) {
+                const timeDiff = Math.abs(ne.time - seed.time);
+                if (timeDiff > ONE_HALF_HOUR_MS) continue;
             }
+
+            matched = g;
+            break;
         }
         if (matched) matched.push(ne);
         else groups2.push([ne]);

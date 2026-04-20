@@ -116,5 +116,26 @@
         "date": "2020-05-01"
       }
     ]
+  },
+  "https://drive.google.com/file/d/1oIuY9gvPJw7tXFS1I_0ImyLq14BgRxIi/view?usp=drive_link": {
+    "type": "specials",
+    "dateRange": "Tuesday, April 21 through Saturday, April 25",
+    "items": [
+      {
+        "name": "Pulled Pork BBQ",
+        "price": "$12.95",
+        "fridayOnly": false
+      },
+      {
+        "name": "3 Shrimp Tacos",
+        "price": "$13.95",
+        "fridayOnly": false
+      },
+      {
+        "name": "Sea Scallops",
+        "price": "$16.95",
+        "fridayOnly": true
+      }
+    ]
   }
 }

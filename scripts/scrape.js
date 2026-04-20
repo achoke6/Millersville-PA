@@ -856,7 +856,6 @@ async function runScraper() {
                 const dateMatch = evHtml.match(/(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday),?\s+(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),?\s+(\d{4})/);
                 if (!dateMatch) { artsFailed++; continue; }
                 const [, , monthName, day, year] = dateMatch;
-                const eventDate = new Date(parseInt(year), monthMap[monthName], parseInt(day));
 
                 // Time: "Performance: 7:30 pm" or "Performance: 5 pm"
                 let hour = 19, min = 0;
@@ -867,7 +866,24 @@ async function runScraper() {
                     if (timeMatch[3].toLowerCase() === 'p' && hour !== 12) hour += 12;
                     if (timeMatch[3].toLowerCase() === 'a' && hour === 12) hour = 0;
                 }
-                eventDate.setHours(hour, min, 0, 0);
+
+                // Build date with explicit ET offset so timezone-unaware runners (UTC on GitHub Actions)
+                // don't produce wrong times. Use -04:00 (EDT) for DST months, -05:00 (EST) otherwise.
+                // Rough US DST: second Sunday of March through first Sunday of November.
+                const yearNum = parseInt(year);
+                const monthNum = monthMap[monthName]; // 0-indexed
+                const dayNum = parseInt(day);
+                // DST window approximation: months 3-10 (April-October) are always DST;
+                // March and November depend on date — use day-of-month heuristics.
+                let isDST;
+                if (monthNum >= 3 && monthNum <= 9) isDST = true;           // Apr..Oct
+                else if (monthNum === 2) isDST = dayNum >= 8;                // March: second Sunday ≥ day 8
+                else if (monthNum === 10) isDST = dayNum < 8;                // November: first Sunday < day 8
+                else isDST = false;                                          // Dec, Jan, Feb
+                const offset = isDST ? '-04:00' : '-05:00';
+                const pad = n => String(n).padStart(2, '0');
+                const iso = `${year}-${pad(monthNum + 1)}-${pad(dayNum)}T${pad(hour)}:${pad(min)}:00${offset}`;
+                const eventDate = new Date(iso);
 
                 // Date range filter
                 if (eventDate < pastDate || eventDate >= futureDate) { artsSkipped++; continue; }
@@ -1987,7 +2003,8 @@ Focus on the most impressive deals a shopper would want to know about. Include m
             const seed = g[0];
             if (seed.day !== ne.day) continue;
 
-            // Fix #1: require different source buckets
+            // Fix #1: require different source buckets — same-source events on the same day
+            // are real separate events (doubleheaders, recurring meetings, multiple sessions).
             if (g.some(m => m.bucket === ne.bucket)) continue;
 
             // Title match logic: generic titles need EXACT match, others allow substring

@@ -1896,21 +1896,157 @@ Focus on the most impressive deals a shopper would want to know about. Include m
     } catch (e) { console.log(`  ⚠️ Hudl scores error: ${e.message}`); }
 
     // ===== DEDUPLICATION & SAVE =====
+    // Two-pass dedupe:
+    //   Pass 1: exact match (title + full date + location) — legacy behavior
+    //   Pass 2: cross-source match (normalized title + same day). Handles cases where the same event
+    //           is posted by MU Calendar AND GetInvolved, or has slight title variations like
+    //           "Family Fun Fest – Doodle POP" vs "Doodle POP"
+    //
+    // Source priority: MU Calendar > Clubs/Orgs > artsmu, BUT a Clubs/Orgs entry wins if it has
+    // student benefits (Free Food, Free Stuff, Credit) that the MU version lacks. This preserves
+    // the 🍕 badge on student-perk events while giving public-facing MU entries priority otherwise.
+
+    const normalizeTitle = s => (s || '').toLowerCase()
+        .replace(/&/g, ' and ')      // treat "&" and "and" the same
+        .replace(/[^\w\s]/g, ' ')    // strip remaining punctuation
+        .replace(/\s+/g, ' ')
+        .trim();
+
+    const sourceRank = e => {
+        const tags = e.tags || [];
+        // Highest priority: MU Calendar (public-facing, has ticket links)
+        // Detect via the presence of MU tag without Clubs/Orgs AND without Arts Concert/Performance
+        // (artsmu.com scraper tags events as MU + "Arts Concert / Performance" or "Art Exhibit")
+        if (tags.includes('MU') && !tags.includes('Clubs/Orgs')
+            && !tags.includes('Arts Concert / Performance') && !tags.includes('Art Exhibit')) return 3;
+        // Clubs/Orgs: valuable if it has student benefits the other doesn't
+        if (tags.includes('Clubs/Orgs')) return 2;
+        // artsmu — fills in what MU Calendar sometimes misses
+        if (tags.includes('Arts Concert / Performance') || tags.includes('Art Exhibit')) return 1;
+        return 0;
+    };
+
+    const hasBenefits = e => (e.benefits && e.benefits.length > 0);
+
+    // Pass 1: exact-match dedupe (unchanged legacy)
     const seen = new Set();
-    const dupeList = [];
-    const deduped = events.filter(e => {
-        const key = `${e.title.trim().toLowerCase()}-${e.date}-${(e.location || '').trim().toLowerCase()}`;
+    const exactDupes = [];
+    let pass1 = events.filter(e => {
+        const key = `${(e.title||'').trim().toLowerCase()}-${e.date}-${(e.location || '').trim().toLowerCase()}`;
         if (seen.has(key)) {
-            dupeList.push({ title: e.title, date: e.date.substring(0,10), source: (e.tags||[])[0] || 'Unknown' });
+            exactDupes.push({ title: e.title, date: e.date.substring(0,10), source: (e.tags||[])[0] || 'Unknown' });
             return false;
         }
         seen.add(key);
         return true;
     });
 
-    if (dupeList.length > 0) {
-        console.log(`⚠️ Removed ${dupeList.length} duplicates:`);
-        dupeList.forEach(d => console.log(`   ✕ [${d.source}] ${d.title} (${d.date})`));
+    // Pass 2: cross-source dedupe — group by (normalized title, same day) and pick the best one.
+    // "Same day" means same YYYY-MM-DD in local time — ignores different times on the same day,
+    // which is important for events like "Doodle POP" where artsmu and MU Calendar list different times.
+    // For loose title matching (e.g. "Family Fun Fest – Doodle POP" vs "Doodle POP"), we iterate
+    // each event against already-grouped events and merge if ONE title contains the other.
+
+    const normalizedEvents = pass1.map((e, i) => ({
+        idx: i,
+        event: e,
+        norm: normalizeTitle(e.title),
+        day: (e.date || '').slice(0, 10)
+    })).filter(n => n.norm); // drop events with empty titles
+
+    // Build groups by iterating: each event is added to the first existing group where
+    // its normalized title is a substring match (either direction) AND on the same day,
+    // or becomes the seed of a new group.
+    const groups2 = []; // each group is an array of { idx, event, norm, day }
+    for (const ne of normalizedEvents) {
+        let matched = null;
+        for (const g of groups2) {
+            const seed = g[0];
+            if (seed.day !== ne.day) continue;
+            // Substring match in either direction — handles "Doodle POP" ⊂ "Family Fun Fest – Doodle POP"
+            // Also catch exact normalized match (handles "&" vs "and" once punctuation stripped)
+            if (seed.norm === ne.norm || seed.norm.includes(ne.norm) || ne.norm.includes(seed.norm)) {
+                // Require at least 8 chars of match to avoid false positives (e.g. short titles like "5K")
+                const shorter = seed.norm.length < ne.norm.length ? seed.norm : ne.norm;
+                if (shorter.length >= 8) { matched = g; break; }
+            }
+        }
+        if (matched) matched.push(ne);
+        else groups2.push([ne]);
+    }
+
+    const kept = new Set();
+    const crossDupes = [];
+    pass1.forEach((_, i) => kept.add(i)); // start by keeping all
+
+    groups2.forEach((candidates) => {
+        if (candidates.length <= 1) return; // no duplicates in this group
+        // Rank candidates — best first
+        candidates.sort((a, b) => {
+            // Primary: source priority (MU Calendar > Clubs/Orgs > artsmu)
+            const rankDiff = sourceRank(b.event) - sourceRank(a.event);
+            if (rankDiff !== 0) return rankDiff;
+            // Tiebreaker: whichever has a ticketLink wins (more useful for users)
+            const aHasTicket = !!a.event.ticketLink;
+            const bHasTicket = !!b.event.ticketLink;
+            if (aHasTicket && !bHasTicket) return -1;
+            if (bHasTicket && !aHasTicket) return 1;
+            // Final tiebreaker: whichever has student benefits wins
+            const aHasBenefits = hasBenefits(a.event);
+            const bHasBenefits = hasBenefits(b.event);
+            if (aHasBenefits && !bHasBenefits) return -1;
+            if (bHasBenefits && !aHasBenefits) return 1;
+            return 0;
+        });
+        // Merge useful fields from losers into the winner, then drop losers.
+        // This preserves context (benefits, kid-friendly flag, ticket links) that
+        // would otherwise be lost when the lower-priority duplicate is removed.
+        const winner = candidates[0].event;
+        for (let i = 1; i < candidates.length; i++) {
+            const loser = candidates[i];
+
+            // Merge benefits (union, no dupes) — preserves 🍕 Free Food / 🎁 Free Stuff / 📚 Credit badges
+            if (loser.event.benefits && loser.event.benefits.length > 0) {
+                const existingBenefits = new Set(winner.benefits || []);
+                loser.event.benefits.forEach(b => existingBenefits.add(b));
+                winner.benefits = Array.from(existingBenefits);
+            }
+            // Propagate kid-friendly signal — if ANY source says it's family-friendly, it is
+            if (loser.event.kidFriendly === true && winner.kidFriendly !== true) {
+                winner.kidFriendly = true;
+            }
+            // Inherit ticket link if winner lacks one (rare since ticketLink is a sort tiebreaker, but possible)
+            if (!winner.ticketLink && loser.event.ticketLink) {
+                winner.ticketLink = loser.event.ticketLink;
+            }
+
+            kept.delete(loser.idx);
+            crossDupes.push({
+                title: loser.event.title,
+                date: (loser.event.date || '').substring(0, 10),
+                source: (loser.event.tags || [])[0] || 'Unknown',
+                replacedBy: winner.title + ' [' + ((winner.tags || [])[0] || '?') + ']',
+                merged: [
+                    loser.event.benefits?.length ? `benefits:${loser.event.benefits.join(',')}` : '',
+                    loser.event.kidFriendly && !winner.kidFriendly ? 'kidFriendly' : '',
+                    !winner.ticketLink && loser.event.ticketLink ? 'ticketLink' : ''
+                ].filter(Boolean).join('+')
+            });
+        }
+    });
+
+    const deduped = pass1.filter((_, i) => kept.has(i));
+
+    if (exactDupes.length > 0) {
+        console.log(`⚠️ Removed ${exactDupes.length} exact duplicates:`);
+        exactDupes.forEach(d => console.log(`   ✕ [${d.source}] ${d.title} (${d.date})`));
+    }
+    if (crossDupes.length > 0) {
+        console.log(`🔗 Removed ${crossDupes.length} cross-source duplicates:`);
+        crossDupes.forEach(d => {
+            const mergedNote = d.merged ? ` [merged: ${d.merged}]` : '';
+            console.log(`   ✕ [${d.source}] ${d.title} (${d.date}) → kept ${d.replacedBy}${mergedNote}`);
+        });
     }
 
     deduped.sort((a, b) => new Date(a.date) - new Date(b.date));

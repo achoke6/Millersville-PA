@@ -86,13 +86,23 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .toolbar-row .clear-btn { position: absolute; right: 0; }
 .toolbar-row .date-label { text-align: center; width: 100%; pointer-events: none; }
 
-/* Compact toolbar: date nav + action buttons */
+/* Compact toolbar: date nav + action buttons — sticky below header for quick navigation while scrolling */
 .toolbar-compact {
     display: flex;
     align-items: center;
     gap: 8px;
     margin-bottom: 10px;
     min-height: 36px;
+    position: sticky;
+    top: 56px;
+    z-index: 50;
+    background: var(--bg);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    margin-left: -16px;
+    margin-right: -16px;
+    padding-left: 16px;
+    padding-right: 16px;
 }
 .toolbar-center { display: flex; align-items: center; gap: 0; }
 .toolbar-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; margin-left: auto; }

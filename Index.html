@@ -989,6 +989,33 @@ document.addEventListener("DOMContentLoaded",()=>{
     initApp();
 });
 
+// Keyboard shortcuts: Left/Right arrows navigate weeks when on Events or Sports pages
+document.addEventListener('keydown', (e) => {
+    // Ignore if user is typing in an input/textarea/contenteditable
+    const tag = (e.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea' || tag === 'select' || e.target.isContentEditable) return;
+    // Ignore if any modifier keys are held (don't hijack browser shortcuts)
+    if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return;
+    // Ignore if a modal/overlay is open
+    if (document.getElementById('search-overlay') || document.getElementById('feed-settings-overlay')) return;
+
+    const eventsView = document.getElementById('view-events');
+    const sportsView = document.getElementById('view-sports');
+    const onEvents = eventsView && eventsView.classList.contains('active');
+    const onSports = sportsView && sportsView.classList.contains('active');
+    if (!onEvents && !onSports) return;
+
+    if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        if (onEvents) window.evNavPrev && window.evNavPrev();
+        else if (onSports) window.spNavPrev && window.spNavPrev();
+    } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        if (onEvents) window.evNavNext && window.evNavNext();
+        else if (onSports) window.spNavNext && window.spNavNext();
+    }
+});
+
 async function initApp(){
     loadFeedPrefs();
     await Promise.allSettled([loadWeather(),loadSpecials(),loadEvents(),loadPlaces(),loadHousing(),loadNews(),loadBoard(),loadSponsors()]);
@@ -2397,6 +2424,9 @@ window.openSearch = function() {
     input.addEventListener('input', function(){ runSearch(this.value); });
     input.addEventListener('keydown', function(ev){ if(ev.key==='Escape') overlay.remove(); });
     document.getElementById('search-results').innerHTML = '<p style="color:var(--text-muted);text-align:center;margin-top:40px;">Start typing to search across all content</p>';
+    // Focus the input — autofocus attribute isn't reliable for dynamically-injected elements
+    // Small delay ensures the browser has painted the overlay before focusing (prevents iOS keyboard jank)
+    setTimeout(() => input.focus(), 50);
 };
 
 function runSearch(q) {

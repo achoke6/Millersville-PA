@@ -1976,10 +1976,15 @@ Focus on the most impressive deals a shopper would want to know about. Include m
     const ONE_HALF_HOUR_MS = 30 * 60 * 1000;
 
     // Get a "source bucket" for same-source detection. Within a bucket, don't merge.
+    // Use sourceLink URL as the primary signal since tags like "Arts Concert / Performance"
+    // can be shared across sources (MU Calendar's event category AND artsmu's own tag).
     const sourceBucket = e => {
+        const link = (e.sourceLink || '').toLowerCase();
         const tags = e.tags || [];
-        if (tags.includes('Clubs/Orgs')) return 'clubs';
-        if (tags.includes('Arts Concert / Performance') || tags.includes('Art Exhibit')) return 'artsmu';
+        if (link.includes('artsmu.com')) return 'artsmu';
+        if (link.includes('getinvolved.millersville.edu') || tags.includes('Clubs/Orgs')) return 'clubs';
+        if (link.includes('millersville.edu/calendar')) return 'mu';
+        // Fall back to tag-based detection for sources without distinctive URLs
         if (tags.includes('PM')) return 'pm';
         if (tags.includes('Borough')) return 'borough';
         if (tags.includes('MU')) return 'mu';

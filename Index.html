@@ -2412,7 +2412,10 @@ function runSearch(q) {
         eventHits.forEach(e => {
             const d = new Date(e.date);
             const src = (e.tags||[])[0] || '';
-            html += `<div class="search-result" onclick="document.getElementById('search-overlay').remove();switchView('events');" style="padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;margin-bottom:4px;background:var(--surface);">
+            const clickAction = e.sourceLink
+                ? `document.getElementById('search-overlay').remove();window.open('${e.sourceLink.replace(/'/g, "\\'")}','_blank');`
+                : `document.getElementById('search-overlay').remove();switchView('events');`;
+            html += `<div class="search-result" onclick="${clickAction}" style="padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;margin-bottom:4px;background:var(--surface);">
                 <span style="font-size:0.7rem;color:var(--text-muted);">${src}</span>
                 <p style="font-weight:600;margin:2px 0;">${e.title}</p>
                 <span style="font-size:0.8rem;color:var(--text-muted);">${formatDate(d)} · ${cleanLocation(e.location)}</span>
@@ -2434,7 +2437,10 @@ function runSearch(q) {
         sportHits.forEach(e => {
             const d = new Date(e.date);
             const src = (e.tags||[])[0] || '';
-            html += `<div class="search-result" onclick="document.getElementById('search-overlay').remove();switchView('sports');" style="padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;margin-bottom:4px;background:var(--surface);">
+            const clickAction = e.sourceLink
+                ? `document.getElementById('search-overlay').remove();window.open('${e.sourceLink.replace(/'/g, "\\'")}','_blank');`
+                : `document.getElementById('search-overlay').remove();switchView('sports');`;
+            html += `<div class="search-result" onclick="${clickAction}" style="padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;margin-bottom:4px;background:var(--surface);">
                 <span style="font-size:0.7rem;color:var(--text-muted);">${src}</span>
                 <p style="font-weight:600;margin:2px 0;">${e.title}</p>
                 <span style="font-size:0.8rem;color:var(--text-muted);">${formatDate(d)} · ${cleanLocation(e.location)}</span>

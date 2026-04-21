@@ -172,6 +172,8 @@
                 </div>
                 <div class="toolbar-right">
                     <button class="family-toggle" id="ev-kid-toggle" data-feed="family-events" onclick="toggleKidFriendly()" title="Family Friendly Events">👨‍👩‍👧</button>
+                    <button class="family-toggle" id="ev-freefood-toggle" onclick="toggleFreeFood()" title="Free Food Events" style="display:none;">🍕</button>
+                    <button class="family-toggle" id="ev-freestuff-toggle" onclick="toggleFreeStuff()" title="Free Stuff Events" style="display:none;">🎁</button>
                     <button id="ev-clear-btn" class="clear-btn" onclick="clearEventFilters()" style="display:none;">Clear ✕</button>
                     <button id="ev-filter-toggle" class="filter-toggle" onclick="toggleEvFilters()">Filter <span id="ev-filter-arrow">▾</span></button>
                 </div>
@@ -454,6 +456,8 @@ const allEvSources = ['MU','PM','Borough','Other'];
 let evActiveSources = new Set(allEvSources), evTags=new Set();
 let evAllMode = true;
 let evKidMode=false;
+// Marauder-only perk filters — hidden for Townies, shown for Marauders in place of family toggle
+let evFreeFoodMode=false, evFreeStuffMode=false;
 
 // ==================== MY FEED SYSTEM ====================
 const FEED_KEY = 'mapp_feed_prefs';
@@ -1461,8 +1465,32 @@ function updateEventsUI(){
         else if (src === 'Borough') hidePill = isSourceHidden('Borough');
         btn.style.display = hidePill ? 'none' : '';
     });
+
+    // Toolbar toggle swap based on affiliation:
+    //   Townies (default) → show 👨‍👩‍👧 family toggle; hide 🍕/🎁 perks
+    //   Marauders → hide family toggle; show 🍕 Free Food + 🎁 Free Stuff toggles
+    const kidBtn = document.getElementById('ev-kid-toggle');
+    const foodBtn = document.getElementById('ev-freefood-toggle');
+    const stuffBtn = document.getElementById('ev-freestuff-toggle');
+    const isMarauder = muAffiliation === 'student';
+    if (kidBtn) kidBtn.style.display = isMarauder ? 'none' : '';
+    if (foodBtn) foodBtn.style.display = isMarauder ? '' : 'none';
+    if (stuffBtn) stuffBtn.style.display = isMarauder ? '' : 'none';
+    // If affiliation changed away from Marauder, clear any stale perk-toggle state so
+    // switching back to Townie doesn't leave an invisible filter applied.
+    if (!isMarauder && (evFreeFoodMode || evFreeStuffMode)) {
+        evFreeFoodMode = false; evFreeStuffMode = false;
+        if (foodBtn) foodBtn.classList.remove('active');
+        if (stuffBtn) stuffBtn.classList.remove('active');
+    }
+    // And similarly: a Marauder shouldn't have an active kid-mode filter since the button is hidden
+    if (isMarauder && evKidMode) {
+        evKidMode = false;
+        if (kidBtn) kidBtn.classList.remove('active');
+    }
+
     const isCurrentWeek = toDateStr(evAnchorDate) === toDateStr(todayMidnight());
-    const isClean = evAllMode && evTags.size === 0 && evMode === 'week' && !evKidMode && isCurrentWeek;
+    const isClean = evAllMode && evTags.size === 0 && evMode === 'week' && !evKidMode && !evFreeFoodMode && !evFreeStuffMode && isCurrentWeek;
     document.getElementById('ev-clear-btn').style.display = isClean ? 'none' : 'flex';
 }
 function renderEvSubFilters(){
@@ -1493,10 +1521,27 @@ window.toggleKidFriendly=function(){
     updateEventsUI();
     renderEvents();
 };
+window.toggleFreeFood=function(){
+    evFreeFoodMode=!evFreeFoodMode;
+    document.getElementById('ev-freefood-toggle').classList.toggle('active',evFreeFoodMode);
+    updateEventsUI();
+    renderEvents();
+};
+window.toggleFreeStuff=function(){
+    evFreeStuffMode=!evFreeStuffMode;
+    document.getElementById('ev-freestuff-toggle').classList.toggle('active',evFreeStuffMode);
+    updateEventsUI();
+    renderEvents();
+};
 window.clearEventFilters=function(){
     evTags.clear(); evAllMode=true; evActiveSources=new Set(allEvSources);
-    evMode='week'; evKidMode=false; evAnchorDate=todayMidnight();
+    evMode='week'; evKidMode=false; evFreeFoodMode=false; evFreeStuffMode=false;
+    evAnchorDate=todayMidnight();
     document.getElementById('ev-kid-toggle').classList.remove('active');
+    const ff=document.getElementById('ev-freefood-toggle');
+    const fs=document.getElementById('ev-freestuff-toggle');
+    if(ff) ff.classList.remove('active');
+    if(fs) fs.classList.remove('active');
     updateEventsUI(); updateModeUI('ev',evMode,evAnchorDate); renderEvents();
 };
 
@@ -1557,6 +1602,19 @@ function renderEvents(){
         if(!matchesAny) return false;
         if(evTags.size>0&&!Array.from(evTags).every(t=>tags.includes(t))) return false;
         if(evKidMode&&!e.kidFriendly) return false;
+        // Marauder perk filters — when both are on, show events with EITHER free food or free stuff (OR logic)
+        if(evFreeFoodMode || evFreeStuffMode){
+            const benefits = e.benefits || [];
+            const hasFood = benefits.includes('Free Food');
+            const hasStuff = benefits.includes('Free Stuff');
+            if (evFreeFoodMode && evFreeStuffMode) {
+                if (!hasFood && !hasStuff) return false;
+            } else if (evFreeFoodMode) {
+                if (!hasFood) return false;
+            } else if (evFreeStuffMode) {
+                if (!hasStuff) return false;
+            }
+        }
         return true;
     });
     if(evMode==='past') filtered.sort((a,b)=>new Date(b.date)-new Date(a.date));
@@ -1565,6 +1623,9 @@ function renderEvents(){
     if(filtered.length===0){
         let msg = 'No events found for this date range.';
         if (evKidMode) msg = '👨‍👩‍👧 No family-friendly events this week. Try turning off the family filter or navigate to a different week.';
+        else if (evFreeFoodMode && evFreeStuffMode) msg = '🍕🎁 No free food or free stuff events this week. Try turning off the filters or checking a different week.';
+        else if (evFreeFoodMode) msg = '🍕 No free food events this week. Try turning off the filter or checking a different week.';
+        else if (evFreeStuffMode) msg = '🎁 No free stuff events this week. Try turning off the filter or checking a different week.';
         else if (!evAllMode) msg = 'No events from ' + Array.from(evActiveSources).join(', ') + ' this week. Try selecting "All" sources or a different week.';
         container.innerHTML='<p class="empty-state">'+msg+'</p>';
         return;

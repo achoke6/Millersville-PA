@@ -166,9 +166,7 @@
         <div class="sticky-nav-bar">
             <div class="toolbar-compact">
                 <div class="toolbar-center">
-                    <button class="nav-arrow" id="ev-prev" onclick="evNavPrev()">‹</button>
-                    <span id="ev-date-label" class="date-label-inline"></span>
-                    <button class="nav-arrow" id="ev-next" onclick="evNavNext()">›</button>
+                    <button id="ev-today-btn" class="today-btn" onclick="evScrollToToday()" title="Jump to today">📅 Today</button>
                 </div>
                 <div class="toolbar-right">
                     <button class="family-toggle" id="ev-kid-toggle" data-feed="family-events" onclick="toggleKidFriendly()" title="Family Friendly Events">👨‍👩‍👧</button>
@@ -200,9 +198,10 @@
         <div class="sticky-nav-bar">
             <div class="toolbar-compact">
                 <div class="toolbar-center">
-                    <button class="nav-arrow" id="sp-prev" onclick="spNavPrev()">‹</button>
-                    <span id="sp-date-label" class="date-label-inline"></span>
-                    <button class="nav-arrow" id="sp-next" onclick="spNavNext()">›</button>
+                    <div class="sp-time-toggle">
+                        <button id="sp-tab-upcoming" class="sp-time-btn active" onclick="setSportsTimeView('upcoming')">Upcoming</button>
+                        <button id="sp-tab-past" class="sp-time-btn" onclick="setSportsTimeView('past')">Past</button>
+                    </div>
                 </div>
                 <div class="toolbar-right">
                     <button class="home-toggle" id="hgame-toggle" onclick="toggleHomeGameMode()" title="Home Games Only">
@@ -1134,10 +1133,21 @@ window.pickAffiliation = function(value) {
 // ==================== END MY FEED ====================
 
 // View mode state for Events page
-let evMode='week', evAnchorDate=new Date();
+// Infinite-scroll state: how many days of future events are currently rendered.
+// Each "Load more" click adds LOAD_MORE_INCREMENT days.
+const INITIAL_DAYS = 60;
+const LOAD_MORE_INCREMENT = 60;
+let evDaysVisible = INITIAL_DAYS;
+// Events page retains mode/anchor only for back-compat with older functions that
+// reference them; actively ignored by the new render pipeline.
+let evMode='upcoming', evAnchorDate=new Date();
 
 // Sports page state
 let spActiveSources=new Set(['PM','MU','Clubs']), spSportTag=null, spHomeOnly=false;
+// Sports view state: 'upcoming' (infinite-scroll forward) or 'past' (infinite-scroll backward)
+let spTimeView = 'upcoming';
+let spDaysVisible = INITIAL_DAYS;
+let spPastDaysVisible = INITIAL_DAYS;
 let spMode='week', spAnchorDate=new Date();
 
 const sportsList=['Baseball','Softball','Track','Soccer','Lacrosse','Tennis','Volleyball','Wrestling','Basketball','Football','Field Hockey','Golf','Cross Country','Cheerleading','Swimming','Rugby','Fencing','Esports','Archery'];
@@ -1256,15 +1266,8 @@ document.addEventListener('keydown', (e) => {
     const onSports = sportsView && sportsView.classList.contains('active');
     if (!onEvents && !onSports) return;
 
-    if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        if (onEvents) window.evNavPrev && window.evNavPrev();
-        else if (onSports) window.spNavPrev && window.spNavPrev();
-    } else if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        if (onEvents) window.evNavNext && window.evNavNext();
-        else if (onSports) window.spNavNext && window.spNavNext();
-    }
+    // Arrow-key navigation used to step through weeks. With day-grouped infinite scroll
+    // that concept is gone, so arrows are no longer bound. Left as a hook for future use.
 });
 
 async function initApp(){
@@ -1408,8 +1411,6 @@ window.switchView=function(view,skipPush){
 async function loadEvents(){
     try{const res=await fetch('events.json'); if(!res.ok) return;
     allEvents=await res.json(); allEvents.sort((a,b)=>new Date(a.date)-new Date(b.date));
-    updateModeUI('ev',evMode,evAnchorDate);
-    updateModeUI('sp',spMode,spAnchorDate);
     renderEvents(); renderSports();
     if (currentNews.length > 0) renderNewsUI();
     decorateFeedStars();
@@ -1489,32 +1490,20 @@ function updateEventsUI(){
         if (kidBtn) kidBtn.classList.remove('active');
     }
 
-    const isCurrentWeek = toDateStr(evAnchorDate) === toDateStr(todayMidnight());
-    const isClean = evAllMode && evTags.size === 0 && evMode === 'week' && !evKidMode && !evFreeFoodMode && !evFreeStuffMode && isCurrentWeek;
+    // "Clean state" for the clear-filters button: all sources on, no tag/kid/perk filters,
+    // default scroll window (60 days). Week/anchor concept is retired.
+    const isClean = evAllMode && evTags.size === 0 && !evKidMode && !evFreeFoodMode && !evFreeStuffMode && evDaysVisible === INITIAL_DAYS;
     document.getElementById('ev-clear-btn').style.display = isClean ? 'none' : 'flex';
 }
 function renderEvSubFilters(){
     const c=document.getElementById('ev-sub-container'); c.innerHTML=''; c.classList.remove('active');
 }
-window.setEvMode=function(mode){
-    evMode=mode;
-    if(mode==='day'||mode==='week') evAnchorDate=todayMidnight();
-    updateModeUI('ev',evMode,evAnchorDate);
-    updateEventsUI();
-    renderEvents();
-};
-window.evNavPrev=function(){
-    if(evMode==='day') evAnchorDate=addDays(evAnchorDate,-1);
-    else if(evMode==='week') evAnchorDate=addDays(evAnchorDate,-7);
-    updateModeUI('ev',evMode,evAnchorDate);
-    renderEvents();
-};
-window.evNavNext=function(){
-    if(evMode==='day') evAnchorDate=addDays(evAnchorDate,1);
-    else if(evMode==='week') evAnchorDate=addDays(evAnchorDate,7);
-    updateModeUI('ev',evMode,evAnchorDate);
-    renderEvents();
-};
+window.setEvMode = function(){};
+// Legacy no-op stubs — the Events/Sports toolbars no longer have prev/next nav
+// since the day-grouped infinite-scroll replaces week-paging. Kept so any stale
+// onclick handlers or external callers don't throw.
+window.evNavPrev = function(){};
+window.evNavNext = function(){};
 window.toggleKidFriendly=function(){
     evKidMode=!evKidMode;
     document.getElementById('ev-kid-toggle').classList.toggle('active',evKidMode);
@@ -1535,14 +1524,17 @@ window.toggleFreeStuff=function(){
 };
 window.clearEventFilters=function(){
     evTags.clear(); evAllMode=true; evActiveSources=new Set(allEvSources);
-    evMode='week'; evKidMode=false; evFreeFoodMode=false; evFreeStuffMode=false;
-    evAnchorDate=todayMidnight();
+    evKidMode=false; evFreeFoodMode=false; evFreeStuffMode=false;
+    evDaysVisible = INITIAL_DAYS;
     document.getElementById('ev-kid-toggle').classList.remove('active');
     const ff=document.getElementById('ev-freefood-toggle');
     const fs=document.getElementById('ev-freestuff-toggle');
     if(ff) ff.classList.remove('active');
     if(fs) fs.classList.remove('active');
-    updateEventsUI(); updateModeUI('ev',evMode,evAnchorDate); renderEvents();
+    updateEventsUI();
+    renderEvents();
+    // Scroll to top so the user sees the reset fresh state
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
 // Collapsible filter toggles
@@ -1583,83 +1575,156 @@ function showFavTipToast(){
     localStorage.setItem('favTipShown', '1');
 }
 
-function renderEvents(){
-    const range=getDateRange(evMode,evAnchorDate);
-    updateEventsUI();
-    if(evActiveSources.size===0){
-        document.getElementById('ev-events-container').innerHTML='<p class="empty-state">Select a source to view events.</p>';
-        return;
-    }
-    let filtered=allEvents.filter(e=>{
-        if(isSportEvent(e)) return false;
-        if(isPMSportByTitle(e)) return false;
-        if(isHiddenForTownie(e)) return false;
-        if(isEventFromHiddenSource(e)) return false;
-        const d=localDateStr(e.date);
-        if(d<range.start||d>range.end) return false;
-        const tags=e.tags||[];
-        const matchesAny=Array.from(evActiveSources).some(src=>matchesSource(tags,src));
-        if(!matchesAny) return false;
-        if(evTags.size>0&&!Array.from(evTags).every(t=>tags.includes(t))) return false;
-        if(evKidMode&&!e.kidFriendly) return false;
-        // Marauder perk filters — when both are on, show events with EITHER free food or free stuff (OR logic)
-        if(evFreeFoodMode || evFreeStuffMode){
-            const benefits = e.benefits || [];
-            const hasFood = benefits.includes('Free Food');
-            const hasStuff = benefits.includes('Free Stuff');
-            if (evFreeFoodMode && evFreeStuffMode) {
-                if (!hasFood && !hasStuff) return false;
-            } else if (evFreeFoodMode) {
-                if (!hasFood) return false;
-            } else if (evFreeStuffMode) {
-                if (!hasStuff) return false;
-            }
+// ===== Day grouping helpers =====
+// Format a Date as a friendly header label: "Today" / "Tomorrow" / "Thu, Apr 23"
+function formatDayHeader(d) {
+    const today = todayMidnight();
+    const target = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    const diff = Math.round((target - today) / (1000 * 60 * 60 * 24));
+    if (diff === 0) return 'Today';
+    if (diff === 1) return 'Tomorrow';
+    if (diff === -1) return 'Yesterday';
+    return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+}
+
+// Group a flat sorted list of events into [{dateKey, dateObj, events: [...]}, ...]
+// Preserves the caller's sort order within each day.
+function groupEventsByDay(events) {
+    const groups = new Map();
+    for (const e of events) {
+        const d = new Date(e.date);
+        const key = toDateStr(d); // YYYY-MM-DD
+        if (!groups.has(key)) {
+            groups.set(key, { dateKey: key, dateObj: new Date(d.getFullYear(), d.getMonth(), d.getDate()), events: [] });
         }
-        return true;
-    });
-    if(evMode==='past') filtered.sort((a,b)=>new Date(b.date)-new Date(a.date));
-    updateModeUI('ev',evMode,evAnchorDate,filtered);
-    const container=document.getElementById('ev-events-container');
-    if(filtered.length===0){
-        let msg = 'No events found for this date range.';
-        if (evKidMode) msg = '👨‍👩‍👧 No family-friendly events this week. Try turning off the family filter or navigate to a different week.';
-        else if (evFreeFoodMode && evFreeStuffMode) msg = '🍕🎁 No free food or free stuff events this week. Try turning off the filters or checking a different week.';
-        else if (evFreeFoodMode) msg = '🍕 No free food events this week. Try turning off the filter or checking a different week.';
-        else if (evFreeStuffMode) msg = '🎁 No free stuff events this week. Try turning off the filter or checking a different week.';
-        else if (!evAllMode) msg = 'No events from ' + Array.from(evActiveSources).join(', ') + ' this week. Try selecting "All" sources or a different week.';
-        container.innerHTML='<p class="empty-state">'+msg+'</p>';
+        groups.get(key).events.push(e);
+    }
+    return [...groups.values()];
+}
+
+// Build HTML for a single day group: a sticky header + its card list
+function buildDayGroupHTML(group, buildCard) {
+    const todayStr = toDateStr(todayMidnight());
+    const isToday = group.dateKey === todayStr;
+    const label = formatDayHeader(group.dateObj);
+    const count = group.events.length;
+    const plural = count === 1 ? 'event' : 'events';
+    return `<div class="day-group-header${isToday ? ' today' : ''}">${label}<span class="day-count">${count} ${plural}</span></div>`
+        + group.events.map(e => buildCard(e)).join('');
+}
+
+function renderEvents(){
+    updateEventsUI();
+    const container = document.getElementById('ev-events-container');
+    if (evActiveSources.size === 0) {
+        container.innerHTML = '<p class="empty-state">Select a source to view events.</p>';
         return;
     }
 
+    // Infinite-scroll window: today through today+evDaysVisible
+    const today = todayMidnight();
+    const rangeStart = toDateStr(today);
+    const rangeEnd = toDateStr(addDays(today, evDaysVisible));
+
+    // Build the filter predicate once so we can reuse it when counting "beyond" events
+    const filterEvent = (e) => {
+        if (isSportEvent(e)) return false;
+        if (isPMSportByTitle(e)) return false;
+        if (isHiddenForTownie(e)) return false;
+        if (isEventFromHiddenSource(e)) return false;
+        const tags = e.tags || [];
+        if (!Array.from(evActiveSources).some(src => matchesSource(tags, src))) return false;
+        if (evTags.size > 0 && !Array.from(evTags).every(t => tags.includes(t))) return false;
+        if (evKidMode && !e.kidFriendly) return false;
+        if (evFreeFoodMode || evFreeStuffMode) {
+            const benefits = e.benefits || [];
+            const hasFood = benefits.includes('Free Food');
+            const hasStuff = benefits.includes('Free Stuff');
+            if (evFreeFoodMode && evFreeStuffMode) { if (!hasFood && !hasStuff) return false; }
+            else if (evFreeFoodMode && !hasFood) return false;
+            else if (evFreeStuffMode && !hasStuff) return false;
+        }
+        return true;
+    };
+
+    const allMatching = allEvents.filter(filterEvent);
+    // Visible window (today + next N days)
+    const filtered = allMatching.filter(e => {
+        const d = localDateStr(e.date);
+        return d >= rangeStart && d <= rangeEnd;
+    });
+    // Count of events beyond the window (to decide whether to show "Load more")
+    const beyondCount = allMatching.filter(e => localDateStr(e.date) > rangeEnd).length;
+
+    if (filtered.length === 0) {
+        let msg = 'No events in the next ' + evDaysVisible + ' days.';
+        if (evKidMode) msg = '👨‍👩‍👧 No family-friendly events coming up. Try turning off the family filter.';
+        else if (evFreeFoodMode && evFreeStuffMode) msg = '🍕🎁 No free food or free stuff events coming up. Try turning off the filters.';
+        else if (evFreeFoodMode) msg = '🍕 No free food events coming up. Try turning off the filter.';
+        else if (evFreeStuffMode) msg = '🎁 No free stuff events coming up. Try turning off the filter.';
+        else if (!evAllMode) msg = 'No events from ' + Array.from(evActiveSources).join(', ') + ' in the next ' + evDaysVisible + ' days.';
+        let html = '<p class="empty-state">' + msg + '</p>';
+        if (beyondCount > 0) html += '<button class="load-more-btn" onclick="evLoadMore()">Load more events (' + beyondCount + ' more available)</button>';
+        container.innerHTML = html;
+        return;
+    }
+
+    // Favorites pinning: if the user has event favorites, pull them to the top in their own group.
+    // Otherwise show a setup hint and fall through to day grouping.
     const hasAnyPrefs = feedPrefs && feedPrefs.length > 0;
     const hasEventPrefs = hasAnyPrefs && feedPrefs.some(p => eventFeedIds.has(p) || p.startsWith('club:'));
-    if (evAllMode) {
-        const feedItems = hasEventPrefs ? filtered.filter(e => eventMatchesFeed(e)) : [];
-        const otherItems = hasEventPrefs ? filtered.filter(e => !eventMatchesFeed(e)) : filtered;
-        let html = '';
-        if (hasEventPrefs && feedItems.length > 0) {
+
+    let html = '';
+    let dayItems = filtered;
+    if (evAllMode && hasEventPrefs) {
+        const feedItems = filtered.filter(e => eventMatchesFeed(e));
+        if (feedItems.length > 0) {
             html += '<div class="feed-pinned-header"><span>⚡ My Favorites</span></div>';
             html += feedItems.map(e => buildEventCard(e, false)).join('');
-            if (otherItems.length > 0) html += '<div class="feed-divider"><span>All Events</span></div>';
-        } else if (!hasAnyPrefs) {
-            html += '<div class="feed-setup-hint">⚙️ <a href="#" onclick="event.preventDefault();openFeedSettings();">Set up your favorites</a> to see your preferred events first</div>';
-        } else if (hasAnyPrefs && !hasEventPrefs) {
-            html += '<div class="feed-setup-hint">No event favorites set — <a href="#" onclick="event.preventDefault();openFeedSettings();">add some</a> to pin them here</div>';
+            dayItems = filtered.filter(e => !eventMatchesFeed(e));
+            if (dayItems.length > 0) html += '<div class="feed-divider"><span>All Events</span></div>';
         }
-        html += otherItems.map(e => buildEventCard(e, false)).join('');
-        container.innerHTML = html;
-    } else {
-        // Not "All" mode — still show the setup hint if user has no favorites
-        let html = '';
-        const hasAnyPrefs2 = feedPrefs && feedPrefs.length > 0;
-        if (!hasAnyPrefs2) {
-            html += '<div class="feed-setup-hint">⚙️ <a href="#" onclick="event.preventDefault();openFeedSettings();">Set up your favorites</a> to see your preferred events first</div>';
-        }
-        html += filtered.map(e=>buildEventCard(e,false)).join('');
-        container.innerHTML = html;
+    } else if (!hasAnyPrefs) {
+        html += '<div class="feed-setup-hint">⚙️ <a href="#" onclick="event.preventDefault();openFeedSettings();">Set up your favorites</a> to see your preferred events first</div>';
+    } else if (hasAnyPrefs && !hasEventPrefs) {
+        html += '<div class="feed-setup-hint">No event favorites set — <a href="#" onclick="event.preventDefault();openFeedSettings();">add some</a> to pin them here</div>';
     }
+
+    // Day-grouped render
+    const groups = groupEventsByDay(dayItems);
+    html += groups.map(g => buildDayGroupHTML(g, e => buildEventCard(e, false))).join('');
+
+    // Load more / footer note
+    if (beyondCount > 0) {
+        html += '<button class="load-more-btn" onclick="evLoadMore()">Load more events (' + beyondCount + ' more available)</button>';
+    } else {
+        html += '<div class="load-more-note">That\'s all scheduled events 👋</div>';
+    }
+
+    container.innerHTML = html;
     injectInlineAds('ev-events-container','events');
 }
+
+// Load the next batch of future days on the Events page
+window.evLoadMore = function() {
+    evDaysVisible += LOAD_MORE_INCREMENT;
+    renderEvents();
+};
+
+// Scroll-to-today helper
+window.evScrollToToday = function() {
+    const container = document.getElementById('ev-events-container');
+    if (!container) return;
+    // Find the "Today" header specifically; fall back to the first day-group header
+    const todayHeader = container.querySelector('.day-group-header.today') || container.querySelector('.day-group-header');
+    if (todayHeader) {
+        const stickyOffset = 140; // approximate combined height of site header + sticky toolbar
+        const top = todayHeader.getBoundingClientRect().top + window.scrollY - stickyOffset;
+        window.scrollTo({ top, behavior: 'smooth' });
+    } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+};
 
 /* ==================== SPORTS PAGE ==================== */
 
@@ -1715,39 +1780,16 @@ function updateSportsUI(){
     });
     document.getElementById('hgame-toggle').classList.toggle('active', spHomeOnly);
     document.getElementById('sp-no-source').style.display = spActiveSources.size===0 ? 'block' : 'none';
-    const isCurrentWeek = toDateStr(spAnchorDate) === toDateStr(todayMidnight());
-    const isClean = spAllMode && !spHomeOnly && !spSportTag && spMode==='week' && isCurrentWeek;
+    // "Clean state" for the clear-filters button: all sources on, no tag filter, no home-only,
+    // viewing the default Upcoming tab. (Day/week paging no longer exists.)
+    const isClean = spAllMode && !spHomeOnly && !spSportTag && spTimeView === 'upcoming';
     document.getElementById('sp-clear-btn').style.display = isClean ? 'none' : 'flex';
-    // Show/hide arrows based on mode
-    const showArrows=(spMode==='day'||spMode==='week');
-    const prevBtn=document.getElementById('sp-prev');
-    const nextBtn=document.getElementById('sp-next');
-    if(prevBtn) prevBtn.style.display=showArrows?'flex':'none';
-    if(nextBtn) nextBtn.style.display=showArrows?'flex':'none';
-    ['past','day','week'].forEach(m=>{
-        const btn=document.getElementById('sp-mode-'+m);
-        if(btn) btn.classList.toggle('active',m===spMode);
-    });
 }
 
-window.setSpMode=function(mode){
-    spMode=mode;
-    if(mode==='day'||mode==='week') spAnchorDate=todayMidnight();
-    updateSportsUI();
-    renderSports();
-};
-window.spNavPrev=function(){
-    if(spMode==='day') spAnchorDate=addDays(spAnchorDate,-1);
-    else if(spMode==='week') spAnchorDate=addDays(spAnchorDate,-7);
-    updateSportsUI();
-    renderSports();
-};
-window.spNavNext=function(){
-    if(spMode==='day') spAnchorDate=addDays(spAnchorDate,1);
-    else if(spMode==='week') spAnchorDate=addDays(spAnchorDate,7);
-    updateSportsUI();
-    renderSports();
-};
+// Legacy no-op stubs — Sports page uses Upcoming/Past tabs now, not week nav
+window.setSpMode = function(){};
+window.spNavPrev = function(){};
+window.spNavNext = function(){};
 
 window.toggleHomeGameMode=function(){
     spHomeOnly=!spHomeOnly;
@@ -1757,9 +1799,17 @@ window.toggleHomeGameMode=function(){
 window.clearSportsFilters=function(){
     spSportTag=null; spHomeOnly=false; spAllMode=true;
     spActiveSources=new Set(['PM','MU','Clubs']);
-    spMode='week'; spAnchorDate=todayMidnight();
+    spTimeView='upcoming';
+    spDaysVisible = INITIAL_DAYS;
+    spPastDaysVisible = INITIAL_DAYS;
+    // Reset Upcoming/Past tab active state
+    const upBtn = document.getElementById('sp-tab-upcoming');
+    const pastBtn = document.getElementById('sp-tab-past');
+    if (upBtn) upBtn.classList.add('active');
+    if (pastBtn) pastBtn.classList.remove('active');
     updateSportsUI();
     renderSports();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
 function renderSports(){
@@ -1770,67 +1820,119 @@ function renderSports(){
         return;
     }
 
-    const range=getDateRange(spMode,spAnchorDate);
     updateSportsUI();
 
-    let baseFiltered=allEvents.filter(e=>{
-        if(!isSportEvent(e)) return false;
-        if(isSportsEventFromHiddenSource(e)) return false;
-        const d=localDateStr(e.date);
-        if(d<range.start||d>range.end) return false;
-        const tags=e.tags||[];
-        const matchesAny=Array.from(spActiveSources).some(src=>matchesSportSource(tags,src));
-        if(!matchesAny) return false;
-        if(spHomeOnly&&!tags.includes('Home Game Mode')&&!tags.includes('H Games')) return false;
+    const today = todayMidnight();
+    const todayStr = toDateStr(today);
+    const isPast = spTimeView === 'past';
+    // Date window:
+    //   upcoming: today through today+spDaysVisible
+    //   past:     today-spPastDaysVisible through yesterday
+    const daysN = isPast ? spPastDaysVisible : spDaysVisible;
+    const rangeStart = isPast ? toDateStr(addDays(today, -daysN)) : todayStr;
+    const rangeEnd   = isPast ? toDateStr(addDays(today, -1))     : toDateStr(addDays(today, daysN));
+
+    // Base filter (source + hidden-affiliation + home-game toggle) — applied to BOTH counts & visible
+    const filterSport = (e) => {
+        if (!isSportEvent(e)) return false;
+        if (isSportsEventFromHiddenSource(e)) return false;
+        const tags = e.tags || [];
+        if (!Array.from(spActiveSources).some(src => matchesSportSource(tags, src))) return false;
+        if (spHomeOnly && !tags.includes('Home Game Mode') && !tags.includes('H Games')) return false;
         return true;
+    };
+    const allMatching = allEvents.filter(filterSport);
+
+    // Sport-type tag row uses only the visible window's events (matches what the user sees)
+    const windowMatching = allMatching.filter(e => {
+        const d = localDateStr(e.date);
+        return d >= rangeStart && d <= rangeEnd;
     });
+    renderSportTypeTags(windowMatching);
 
-    renderSportTypeTags(baseFiltered);
-    let filtered=spSportTag?baseFiltered.filter(e=>(e.tags||[]).includes(spSportTag)):baseFiltered;
+    // Apply sport-type filter after the tag bar is rendered
+    let filtered = spSportTag ? windowMatching.filter(e => (e.tags || []).includes(spSportTag)) : windowMatching;
 
-    if(spMode==='past') filtered.sort((a,b)=>new Date(b.date)-new Date(a.date));
-    updateModeUI('sp',spMode,spAnchorDate,filtered);
+    // Sort: past view newest-first (so "most recent" is at top); upcoming oldest-first
+    filtered.sort((a, b) => isPast ? new Date(b.date) - new Date(a.date) : new Date(a.date) - new Date(b.date));
 
-    const container=document.getElementById('sp-events-container');
-    if(filtered.length===0){
-        let msg = 'No games found for this date range.';
-        if (spHomeOnly && spSportTag) msg = '🏠 No home ' + spSportTag.toLowerCase() + ' games this week. Try a different sport or week.';
-        else if (spHomeOnly) msg = '🏠 No home games this week. Try turning off the home filter or navigate to a different week.';
-        else if (spSportTag) msg = 'No ' + spSportTag.toLowerCase() + ' games this week. Try a different sport or week.';
-        else if (!spAllMode) msg = 'No games from ' + Array.from(spActiveSources).join(', ') + ' this week.';
-        container.innerHTML='<p class="empty-state">'+msg+'</p>';
+    // Count of events beyond the current window (for "Load more" label)
+    let beyondCount = 0;
+    if (isPast) {
+        beyondCount = allMatching.filter(e => localDateStr(e.date) < rangeStart
+            && (!spSportTag || (e.tags || []).includes(spSportTag))).length;
+    } else {
+        beyondCount = allMatching.filter(e => localDateStr(e.date) > rangeEnd
+            && (!spSportTag || (e.tags || []).includes(spSportTag))).length;
+    }
+
+    const container = document.getElementById('sp-events-container');
+    if (filtered.length === 0) {
+        let msg = isPast ? 'No past games in the last ' + daysN + ' days.' : 'No games in the next ' + daysN + ' days.';
+        if (spHomeOnly && spSportTag) msg = '🏠 No home ' + spSportTag.toLowerCase() + ' games ' + (isPast ? 'recently' : 'coming up') + '.';
+        else if (spHomeOnly) msg = '🏠 No home games ' + (isPast ? 'recently' : 'coming up') + '. Try turning off the home filter.';
+        else if (spSportTag) msg = 'No ' + spSportTag.toLowerCase() + ' games ' + (isPast ? 'recently' : 'coming up') + '.';
+        else if (!spAllMode) msg = 'No games from ' + Array.from(spActiveSources).join(', ') + (isPast ? ' recently' : ' coming up') + '.';
+        let html = '<p class="empty-state">' + msg + '</p>';
+        if (beyondCount > 0) html += '<button class="load-more-btn" onclick="spLoadMore()">Load more games (' + beyondCount + ' more available)</button>';
+        container.innerHTML = html;
         return;
     }
 
+    // Favorites pinning: only in upcoming view. Past view just shows chronological list.
     const hasAnyPrefs = feedPrefs && feedPrefs.length > 0;
     const hasSportPrefs = hasAnyPrefs && feedPrefs.some(p => sportFeedIds.has(p));
-    if (spAllMode) {
-        const feedItems = hasSportPrefs ? filtered.filter(e => eventMatchesFeed(e)) : [];
-        const otherItems = hasSportPrefs ? filtered.filter(e => !eventMatchesFeed(e)) : filtered;
-        let html = '';
-        if (hasSportPrefs && feedItems.length > 0) {
+    let html = '';
+    let dayItems = filtered;
+    if (!isPast && spAllMode && hasSportPrefs) {
+        const feedItems = filtered.filter(e => eventMatchesFeed(e));
+        if (feedItems.length > 0) {
             html += '<div class="feed-pinned-header"><span>⚡ My Favorites</span></div>';
             html += feedItems.map(e => buildEventCard(e, true)).join('');
-            if (otherItems.length > 0) html += '<div class="feed-divider"><span>All Games</span></div>';
-        } else if (!hasAnyPrefs) {
-            html += '<div class="feed-setup-hint">⚙️ <a href="#" onclick="event.preventDefault();openFeedSettings();">Set up your favorites</a> to see your preferred games first</div>';
-        } else if (hasAnyPrefs && !hasSportPrefs) {
-            html += '<div class="feed-setup-hint">No sport favorites set — <a href="#" onclick="event.preventDefault();openFeedSettings();">add some</a> to pin them here</div>';
+            dayItems = filtered.filter(e => !eventMatchesFeed(e));
+            if (dayItems.length > 0) html += '<div class="feed-divider"><span>All Games</span></div>';
         }
-        html += otherItems.map(e => buildEventCard(e, true)).join('');
-        container.innerHTML = html;
-    } else {
-        // Not "All" mode — still show the setup hint if user has no favorites
-        let html = '';
-        const hasAnyPrefs2 = feedPrefs && feedPrefs.length > 0;
-        if (!hasAnyPrefs2) {
-            html += '<div class="feed-setup-hint">⚙️ <a href="#" onclick="event.preventDefault();openFeedSettings();">Set up your favorites</a> to see your preferred games first</div>';
-        }
-        html += filtered.map(e=>buildEventCard(e,true)).join('');
-        container.innerHTML = html;
+    } else if (!isPast && !hasAnyPrefs) {
+        html += '<div class="feed-setup-hint">⚙️ <a href="#" onclick="event.preventDefault();openFeedSettings();">Set up your favorites</a> to see your preferred games first</div>';
+    } else if (!isPast && hasAnyPrefs && !hasSportPrefs) {
+        html += '<div class="feed-setup-hint">No sport favorites set — <a href="#" onclick="event.preventDefault();openFeedSettings();">add some</a> to pin them here</div>';
     }
+
+    // Day-grouped render
+    const groups = groupEventsByDay(dayItems);
+    html += groups.map(g => buildDayGroupHTML(g, e => buildEventCard(e, true))).join('');
+
+    if (beyondCount > 0) {
+        html += '<button class="load-more-btn" onclick="spLoadMore()">Load more games (' + beyondCount + ' more available)</button>';
+    } else {
+        html += '<div class="load-more-note">That\'s all ' + (isPast ? 'past' : 'scheduled') + ' games 👋</div>';
+    }
+    container.innerHTML = html;
     injectInlineAds('sp-events-container','sports');
 }
+
+// Load the next batch in the active view (upcoming extends forward, past extends backward)
+window.spLoadMore = function() {
+    if (spTimeView === 'past') spPastDaysVisible += LOAD_MORE_INCREMENT;
+    else spDaysVisible += LOAD_MORE_INCREMENT;
+    renderSports();
+};
+
+// Switch between Upcoming and Past tabs on Sports
+window.setSportsTimeView = function(view) {
+    if (view !== 'upcoming' && view !== 'past') return;
+    spTimeView = view;
+    spMode = view; // keep legacy variable in sync for any remaining consumers
+    // Reset the other view's window so switching feels fresh; current view retains its extension
+    if (view === 'upcoming') spPastDaysVisible = INITIAL_DAYS;
+    else spDaysVisible = INITIAL_DAYS;
+    // Update tab button styles
+    const upBtn = document.getElementById('sp-tab-upcoming');
+    const pastBtn = document.getElementById('sp-tab-past');
+    if (upBtn) upBtn.classList.toggle('active', view === 'upcoming');
+    if (pastBtn) pastBtn.classList.toggle('active', view === 'past');
+    renderSports();
+};
 
 function renderSportTypeTags(baseEvents){
     const row=document.getElementById('sp-sport-tags');

@@ -135,6 +135,46 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .feed-group-dimmed { opacity: 0.55; }
 .feed-group-dimmed label:hover { opacity: 0.85; }
 .feed-group-dim-note { font-size: 0.7rem; color: var(--text-muted); font-weight: 400; margin-left: 6px; }
+
+/* ===== Infinite-scroll day grouping (Events + Sports) ===== */
+/* Day group header — sticky inside the card grid. When the user scrolls past one group,
+   the next group's header slides up and takes over the top position (iOS Messages-style). */
+.day-group-header {
+    grid-column: 1 / -1;
+    position: sticky;
+    /* Sit below the site header (~50px) + sticky nav bar (~60-90px). The offset
+       is intentionally generous so the sticky header never overlaps the toolbar,
+       even when the filter bar is open below the compact toolbar row. */
+    top: 110px;
+    z-index: 5;
+    background: var(--bg);
+    padding: 10px 12px 8px;
+    margin: 8px -4px 0;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--navy);
+    border-bottom: 2px solid var(--gold);
+    backdrop-filter: saturate(180%) blur(8px);
+    -webkit-backdrop-filter: saturate(180%) blur(8px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+/* Taller offset on narrower screens where the sticky nav stacks a bit taller */
+@media (max-width: 640px) {
+    .day-group-header { top: 120px; }
+}
+.day-group-header.today { color: var(--navy); background: var(--gold-soft); }
+.day-group-header .day-count { font-size: 0.72rem; font-weight: 500; color: var(--text-muted); margin-left: 8px; }
+/* Today/Load More buttons */
+.today-btn { background: var(--gold); color: var(--navy); border: 1.5px solid var(--gold); padding: 6px 12px; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.82rem; cursor: pointer; font-family: inherit; white-space: nowrap; }
+.today-btn:hover { background: #f3c75c; }
+.load-more-btn { grid-column: 1 / -1; display: block; width: 100%; padding: 14px; margin-top: 16px; background: var(--surface); color: var(--navy); border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; font-size: 0.9rem; cursor: pointer; font-family: inherit; transition: var(--transition); }
+.load-more-btn:hover { border-color: var(--gold); background: var(--gold-soft); }
+.load-more-note { grid-column: 1 / -1; text-align: center; font-size: 0.8rem; color: var(--text-muted); padding: 16px 8px; }
+/* Upcoming/Past tab switcher on Sports page */
+.sp-time-toggle { display: inline-flex; border: 1.5px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; background: var(--surface); }
+.sp-time-btn { background: transparent; border: none; padding: 6px 14px; font-size: 0.85rem; font-weight: 600; cursor: pointer; color: var(--text-muted); font-family: inherit; transition: var(--transition); }
+.sp-time-btn.active { background: var(--navy); color: white; }
+.sp-time-btn:not(.active):hover { background: var(--gold-soft); color: var(--navy); }
 .welcome-banner { background: linear-gradient(135deg, var(--gold-soft), #fff8e1); border: 1.5px solid var(--gold); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 16px; }
 .welcome-banner strong { font-size: 0.95rem; color: var(--navy); }
 .affiliation-btn { background: white; border: 1.5px solid var(--gold); color: var(--navy); padding: 8px 14px; border-radius: var(--radius-sm); font-weight: 600; font-size: 0.88rem; cursor: pointer; font-family: inherit; transition: var(--transition); white-space: nowrap; }

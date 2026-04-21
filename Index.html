@@ -500,14 +500,14 @@ const feedSections = {
     sports: {
         title: '🏆 Sports Favorites',
         groups: {
-            pm: { label: 'Penn Manor Sports', icon: '🏫', subs: [
+            pm: { label: 'Penn Manor Sports', icon: '🏫', audience: 'townie', subs: [
                 {id:'pm-baseball',label:'Baseball',icon:'⚾'},{id:'pm-softball',label:'Softball',icon:'🥎'},
                 {id:'pm-lacrosse',label:'Lacrosse',icon:'🥍'},{id:'pm-volleyball',label:'Volleyball',icon:'🏐'},
                 {id:'pm-football',label:'Football',icon:'🏈'},{id:'pm-basketball',label:'Basketball',icon:'🏀'},
                 {id:'pm-soccer',label:'Soccer',icon:'⚽'},{id:'pm-fieldhockey',label:'Field Hockey',icon:'🏑'},
                 {id:'pm-tennis',label:'Tennis',icon:'🎾'},{id:'pm-track',label:'Track',icon:'🏃'}
             ]},
-            musports: { label: 'MU Sports', icon: '🏴‍☠️', subs: [
+            musports: { label: 'MU Sports', icon: '🏴‍☠️', audience: 'student', subs: [
                 {id:'mu-baseball',label:'Baseball',icon:'⚾'},{id:'mu-softball',label:'Softball',icon:'🥎'},
                 {id:'mu-lacrosse',label:'Lacrosse',icon:'🥍'},{id:'mu-volleyball',label:'Volleyball',icon:'🏐'},
                 {id:'mu-football',label:'Football',icon:'🏈'},{id:'mu-basketball',label:'Basketball',icon:'🏀'},
@@ -521,14 +521,14 @@ const feedSections = {
     events: {
         title: '📅 Event Favorites',
         groups: {
-            pmev: { label: 'PM Events', icon: '🏫', subs: [
+            pmev: { label: 'PM Events', icon: '🏫', audience: 'townie', subs: [
                 {id:'pm-music',label:'Music/Arts',icon:'🎵'},{id:'pm-board',label:'Board Meetings',icon:'📋'}
             ]},
-            mu: { label: 'MU Events', icon: '🏴‍☠️', subs: [
+            mu: { label: 'MU Events', icon: '🏴‍☠️', audience: 'student', subs: [
                 {id:'mu-arts',label:'Arts & Performances',icon:'🎭'},{id:'mu-public',label:'Public Events',icon:'📢'},
                 {id:'mu-student',label:'Student Events',icon:'🎓'}
             ]},
-            clubs: { label: 'MU GetInvolved', icon: '🎓', subs: [
+            clubs: { label: 'MU GetInvolved', icon: '🎓', audience: 'student', subs: [
                 {id:'clubs-all',label:'All GetInvolved Events',icon:'🎓'},
                 {id:'clubs-social',label:'Social Clubs',icon:'🎉'},
                 {id:'clubs-arts',label:'Arts & Performance',icon:'🎭'},
@@ -536,21 +536,21 @@ const feedSections = {
                 {id:'clubs-greek',label:'Greek Life',icon:'🏛️'},
                 {id:'clubs-service',label:'Service & Community',icon:'🤝'}
             ]},
-            borough: { label: 'Borough', icon: '🌳', subs: [{id:'borough-all',label:'All Borough Events',icon:'🌳'}] },
-            other: { label: 'Other', icon: '🎸', subs: [
+            borough: { label: 'Borough', icon: '🌳', audience: 'townie', subs: [{id:'borough-all',label:'All Borough Events',icon:'🌳'}] },
+            other: { label: 'Other', icon: '🎸', audience: 'townie', subs: [
                 {id:'other-vfw',label:'VFW Events',icon:'🎖️'},{id:'other-phantom',label:'Phantom Power',icon:'🎵'},
                 {id:'other-community',label:'Community Events',icon:'📝'}
             ]},
-            family: { label: 'Family Friendly', icon: '👨‍👩‍👧', subs: [{id:'family-events',label:'Family Friendly Events',icon:'👨‍👩‍👧'}] }
+            family: { label: 'Family Friendly', icon: '👨‍👩‍👧', audience: 'both', subs: [{id:'family-events',label:'Family Friendly Events',icon:'👨‍👩‍👧'}] }
         }
     },
     news: {
         title: '📰 News Favorites',
         groups: {
-            news: { label: 'News Sources', icon: '📰', subs: [
-                {id:'news-mu',label:'MU News',icon:'📰'},{id:'news-snapper',label:'The Snapper',icon:'📰'},
-                {id:'news-athletics',label:'MU Athletics',icon:'🏅'},{id:'news-review',label:'MU Review',icon:'📖'},
-                {id:'news-pm',label:'Penn Manor',icon:'📰'},{id:'news-borough',label:'Borough',icon:'🌳'}
+            news: { label: 'News Sources', icon: '📰', audience: 'both', subs: [
+                {id:'news-mu',label:'MU News',icon:'📰',audience:'student'},{id:'news-snapper',label:'The Snapper',icon:'📰',audience:'student'},
+                {id:'news-athletics',label:'MU Athletics',icon:'🏅',audience:'student'},{id:'news-review',label:'MU Review',icon:'📖',audience:'student'},
+                {id:'news-pm',label:'Penn Manor',icon:'📰',audience:'townie'},{id:'news-borough',label:'Borough',icon:'🌳',audience:'townie'}
             ]}
         }
     }
@@ -657,21 +657,41 @@ window.openFeedSettings = function() {
     modal.style.cssText = 'background:var(--surface);border-radius:var(--radius);max-width:520px;width:100%;max-height:90vh;overflow-y:auto;padding:28px;position:relative;';
 
     let sectionsHtml = '';
+    // Helper: rank a group (or sub) for current affiliation — relevant first, 'both' next, non-relevant last
+    const audienceRank = aud => {
+        if (!muAffiliation || aud === 'both') return 1;
+        if (aud === muAffiliation) return 0; // matches user's affiliation
+        return 2; // non-relevant
+    };
     // Build sectioned HTML
     for (const [secKey, section] of Object.entries(feedSections)) {
         sectionsHtml += `<div style="margin-bottom:20px;"><h4 style="font-size:0.95rem;font-weight:800;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid ${secKey==='sports'?'var(--navy)':secKey==='events'?'#b45309':'var(--border)'};">${section.title}</h4>`;
-        for (const [key, group] of Object.entries(section.groups)) {
+        // Sort groups: user's affiliation first, 'both' next, other affiliation last
+        const groupEntries = Object.entries(section.groups).sort((a, b) => audienceRank(a[1].audience) - audienceRank(b[1].audience));
+        for (const [key, group] of groupEntries) {
             const allIds = group.subs.map(s => s.id);
             const allChecked = allIds.every(id => current.includes(id));
-            sectionsHtml += `<div style="margin-bottom:12px;">
+            // Dim groups that don't match the user's affiliation (but still let them enable if they want)
+            const groupDimmed = muAffiliation && group.audience && group.audience !== 'both' && group.audience !== muAffiliation;
+            const groupClass = groupDimmed ? 'feed-group-dimmed' : '';
+
+            // For groups with audience-tagged subs (like news), sort those too
+            const subs = group.subs.slice().sort((a, b) => audienceRank(a.audience || group.audience || 'both') - audienceRank(b.audience || group.audience || 'both'));
+
+            sectionsHtml += `<div class="${groupClass}" style="margin-bottom:12px;">
                 <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
                     <label style="font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:6px;cursor:pointer;">
                         <input type="checkbox" class="feed-group" data-group="${key}" ${allChecked?'checked':''} onchange="toggleFeedGroup(this)" style="accent-color:var(--gold);width:16px;height:16px;">
-                        ${group.icon} ${group.label}
+                        ${group.icon} ${group.label}${groupDimmed?'<span class="feed-group-dim-note">(not typical for '+(muAffiliation==='student'?'marauders':'townies')+' — enable if interested)</span>':''}
                     </label>
                 </div>
                 <div style="display:flex;flex-wrap:wrap;gap:6px;padding-left:8px;">
-                    ${group.subs.map(s => `<label style="display:flex;align-items:center;gap:4px;font-size:0.82rem;padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;background:${current.includes(s.id)?'var(--gold-soft)':'var(--bg)'};"><input type="checkbox" class="feed-sub" data-group="${key}" value="${s.id}" ${current.includes(s.id)?'checked':''} onchange="updateFeedGroup('${key}')" style="accent-color:var(--gold);"> ${s.icon} ${s.label}</label>`).join('')}
+                    ${subs.map(s => {
+                        const subAud = s.audience || group.audience || 'both';
+                        const subDimmed = muAffiliation && subAud !== 'both' && subAud !== muAffiliation;
+                        const subClass = subDimmed && !groupDimmed ? 'feed-group-dimmed' : '';
+                        return `<label class="${subClass}" style="display:flex;align-items:center;gap:4px;font-size:0.82rem;padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;background:${current.includes(s.id)?'var(--gold-soft)':'var(--bg)'};"><input type="checkbox" class="feed-sub" data-group="${key}" value="${s.id}" ${current.includes(s.id)?'checked':''} onchange="updateFeedGroup('${key}')" style="accent-color:var(--gold);"> ${s.icon} ${s.label}</label>`;
+                    }).join('')}
                 </div>
                 ${key === 'clubs' ? '<div id="clubs-individual-wrap" style="padding-left:8px;margin-top:8px;"><button onclick="toggleClubBrowser()" class="btn btn-sm btn-outline" style="font-size:0.75rem;">📋 Browse Individual Clubs ▸</button><div id="clubs-individual-list" style="display:none;max-height:200px;overflow-y:auto;margin-top:8px;display:none;flex-wrap:wrap;gap:4px;"></div></div>' : ''}
             </div>`;
@@ -948,12 +968,29 @@ window.dismissWelcome = function() {
 };
 window.pickAffiliation = function(value) {
     if (value !== 'student' && value !== 'townie') return;
+    const prev = muAffiliation;
+    const changingExisting = prev && prev !== value && feedPrefs && feedPrefs.length > 0;
+    if (changingExisting) {
+        const label = value === 'student' ? 'Marauder' : 'Townie';
+        if (!confirm(`Reset your favorites to ${label} defaults? Your current favorites will be cleared.`)) {
+            // User declined — just update affiliation, keep favorites
+            muAffiliation = value;
+            localStorage.setItem(AFFILIATION_KEY, value);
+            renderHomeFeed();
+            if (typeof renderEvents === 'function') renderEvents();
+            return;
+        }
+        // User confirmed — clear favorites and reopen modal
+        localStorage.removeItem(FEED_KEY);
+        feedPrefs = null;
+        setFeedDotVisible(false);
+    }
     muAffiliation = value;
     localStorage.setItem(AFFILIATION_KEY, value);
-    // After picking, advance to the favorites prompt if they haven't configured yet
     renderHomeFeed();
-    // Re-render events so the filter takes immediate effect
     if (typeof renderEvents === 'function') renderEvents();
+    if (typeof renderNewsUI === 'function') renderNewsUI();
+    if (typeof decorateFeedStars === 'function') decorateFeedStars();
 };
 // ==================== END MY FEED ====================
 
@@ -1395,7 +1432,14 @@ function renderEvents(){
         html += otherItems.map(e => buildEventCard(e, false)).join('');
         container.innerHTML = html;
     } else {
-        container.innerHTML=filtered.map(e=>buildEventCard(e,false)).join('');
+        // Not "All" mode — still show the setup hint if user has no favorites
+        let html = '';
+        const hasAnyPrefs2 = feedPrefs && feedPrefs.length > 0;
+        if (!hasAnyPrefs2) {
+            html += '<div class="feed-setup-hint">⚙️ <a href="#" onclick="event.preventDefault();openFeedSettings();">Set up your favorites</a> to see your preferred events first</div>';
+        }
+        html += filtered.map(e=>buildEventCard(e,false)).join('');
+        container.innerHTML = html;
     }
     injectInlineAds('ev-events-container','events');
 }
@@ -1541,7 +1585,14 @@ function renderSports(){
         html += otherItems.map(e => buildEventCard(e, true)).join('');
         container.innerHTML = html;
     } else {
-        container.innerHTML=filtered.map(e=>buildEventCard(e,true)).join('');
+        // Not "All" mode — still show the setup hint if user has no favorites
+        let html = '';
+        const hasAnyPrefs2 = feedPrefs && feedPrefs.length > 0;
+        if (!hasAnyPrefs2) {
+            html += '<div class="feed-setup-hint">⚙️ <a href="#" onclick="event.preventDefault();openFeedSettings();">Set up your favorites</a> to see your preferred games first</div>';
+        }
+        html += filtered.map(e=>buildEventCard(e,true)).join('');
+        container.innerHTML = html;
     }
     injectInlineAds('sp-events-container','sports');
 }

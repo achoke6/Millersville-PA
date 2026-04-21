@@ -970,17 +970,57 @@ async function runScraper() {
         // Fetch future events (from today forward) and past events separately
         const giUrlFuture = `https://getinvolved.millersville.edu/api/discovery/event/search?endsAfter=${today.toISOString().split('T')[0]}T00:00:00-04:00&orderByField=endsOn&orderByDirection=ascending&status=Approved&take=200`;
         const giUrlPast = `https://getinvolved.millersville.edu/api/discovery/event/search?endsAfter=${startDay}T00:00:00-04:00&endsBefore=${today.toISOString().split('T')[0]}T00:00:00-04:00&orderByField=endsOn&orderByDirection=descending&status=Approved&take=100`;
-        
-        const [giFuture, giPast] = await Promise.allSettled([
+
+        // Extra fetches purely to discover org names — events from the past 2 years.
+        // We don't use these events for the timeline; we only mine org names from them.
+        // Split into chunks to work around any per-request row limits.
+        const twoYearsAgo = new Date(today.getTime() - 730 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+        const oneYearAgo = new Date(today.getTime() - 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+        const giUrlOrgDiscovery1 = `https://getinvolved.millersville.edu/api/discovery/event/search?endsAfter=${twoYearsAgo}T00:00:00-04:00&endsBefore=${oneYearAgo}T00:00:00-04:00&orderByField=endsOn&orderByDirection=descending&status=Approved&take=400`;
+        const giUrlOrgDiscovery2 = `https://getinvolved.millersville.edu/api/discovery/event/search?endsAfter=${oneYearAgo}T00:00:00-04:00&endsBefore=${startDay}T00:00:00-04:00&orderByField=endsOn&orderByDirection=descending&status=Approved&take=400`;
+
+        const [giFuture, giPast, giOrgDisc1, giOrgDisc2] = await Promise.allSettled([
             fetch(giUrlFuture, { headers: baseHeaders }).then(r => r.json()),
-            fetch(giUrlPast, { headers: baseHeaders }).then(r => r.json())
+            fetch(giUrlPast, { headers: baseHeaders }).then(r => r.json()),
+            fetch(giUrlOrgDiscovery1, { headers: baseHeaders }).then(r => r.json()),
+            fetch(giUrlOrgDiscovery2, { headers: baseHeaders }).then(r => r.json())
         ]);
-        
+
         const giItems = [
             ...((giFuture.status === 'fulfilled' ? giFuture.value.value : []) || []),
             ...((giPast.status === 'fulfilled' ? giPast.value.value : []) || [])
         ];
+        // Items used only for org-name mining (not added to events timeline)
+        const giOrgDiscoveryItems = [
+            ...((giOrgDisc1.status === 'fulfilled' ? giOrgDisc1.value.value : []) || []),
+            ...((giOrgDisc2.status === 'fulfilled' ? giOrgDisc2.value.value : []) || [])
+        ];
         let clubCount = 0;
+
+        // Track orgs seen in events so we can build a clubs.json from this dataset
+        // (the dedicated /organization/search endpoint returns HTTP 500 for anonymous callers,
+        //  so deriving from events is the reliable alternative).
+        if (!global._orgsFromEvents) global._orgsFromEvents = new Map();
+        const orgsMap = global._orgsFromEvents;
+        // Record every org seen in giItems regardless of event date, so orgs with
+        // only old events still appear in the directory.
+        // Also include the deep-past org-discovery items to catch orgs that host events rarely.
+        const orgSourceLists = [giItems, giOrgDiscoveryItems];
+        orgSourceLists.forEach(list => {
+            list.forEach(item => {
+                if (!item.organizationName) return;
+                const orgName = item.organizationName.trim();
+                if (orgName && !orgsMap.has(orgName)) {
+                    orgsMap.set(orgName, {
+                        name: orgName,
+                        category: (item.categoryNames && item.categoryNames[0]) || '',
+                        categories: item.categoryNames || [],
+                        shortName: '',
+                        id: ''
+                    });
+                }
+            });
+        });
 
         giItems.forEach(item => {
             const eventDate = new Date(item.startsOn);
@@ -2165,51 +2205,96 @@ Focus on the most impressive deals a shopper would want to know about. Include m
     console.log(`📊 Total events saved: ${deduped.length} (${deduped.filter(e=>e.image).length} with images, ${deduped.filter(e=>e.description).length} with descriptions)`);
 
     // ===== CLUBS DIRECTORY (all MU organizations from GetInvolved) =====
-    // Separate from events.json so the frontend can show the full list in the "Browse Individual Clubs"
-    // picker even for orgs that haven't posted events recently.
+    // Fetches the full org list from the Engage "discovery/search/organizations" endpoint
+    // (the same one the GetInvolved web UI uses to render its browse-organizations page).
+    // NOTE: The correct path is `/api/discovery/search/organizations` with `top=N`; an earlier
+    //       guess of `/api/discovery/organization/search` with `take=N` returned HTTP 500.
+    //
+    // If the fetch fails entirely, we fall back to org names mined from the event feed
+    // (`global._orgsFromEvents`) plus an optional manual seed at v3/clubs-manual.json.
     try {
         console.log("📡 Fetching all MU organizations from GetInvolved...");
-        // Try progressively simpler query shapes — the discovery endpoint rejects
-        // unknown parameters with HTTP 500 instead of ignoring them, so start minimal.
-        // The events endpoint uses orderByField= (not orderBy=); match that convention.
+        // Try the ordered query first; if that rejects the orderBy param, fall back to
+        // the plain top=500, then the facets-only probe that the frontend uses.
         const orgCandidates = [
-            'https://getinvolved.millersville.edu/api/discovery/organization/search?orderByField=UpperName&orderByDirection=ascending&status=Active&take=800',
-            'https://getinvolved.millersville.edu/api/discovery/organization/search?orderByField=UpperName&orderByDirection=ascending&take=800',
-            'https://getinvolved.millersville.edu/api/discovery/organization/search?take=800',
-            'https://getinvolved.millersville.edu/api/discovery/organization/search?query=&take=800'
+            'https://getinvolved.millersville.edu/api/discovery/search/organizations?top=500&orderBy%5B0%5D=name%20asc',
+            'https://getinvolved.millersville.edu/api/discovery/search/organizations?top=500',
+            'https://getinvolved.millersville.edu/api/discovery/search/organizations?top=0&facets%5B0%5D=BranchId%2Ccount%3A100%2Csort%3Avalue&facets%5B1%5D=CategoryIds%2Ccount%3A100%2Csort%3Avalue'
         ];
         let orgData = null;
-        let usedUrl = '';
-        for (const url of orgCandidates) {
+        for (let i = 0; i < orgCandidates.length; i++) {
             try {
-                const res = await fetch(url, { headers: baseHeaders });
+                const res = await fetch(orgCandidates[i], { headers: baseHeaders });
                 if (res.ok) {
                     orgData = await res.json();
-                    usedUrl = url;
+                    console.log(`  ✓ Candidate ${i + 1} succeeded`);
                     break;
                 } else {
-                    console.log(`  ⚠️ HTTP ${res.status} for: ${url.replace('https://getinvolved.millersville.edu/api/discovery/organization/search', '...')}`);
+                    console.log(`  ⚠️ HTTP ${res.status} for candidate ${i + 1}`);
                 }
             } catch (fetchErr) {
-                console.log(`  ⚠️ Fetch error: ${fetchErr.message}`);
+                console.log(`  ⚠️ Fetch error on candidate ${i + 1}: ${fetchErr.message}`);
             }
         }
-        if (!orgData) {
-            console.log("  ❌ All organization query variants failed; skipping clubs.json");
-        } else {
-            // Response shape: either { value: [...] } or raw array; handle both
-            const raw = orgData.value || orgData || [];
-            const orgs = raw.map(o => ({
-                name: (o.Name || o.name || '').trim(),
-                category: (o.CategoryNames && o.CategoryNames[0]) || (o.categoryNames && o.categoryNames[0]) || '',
-                categories: o.CategoryNames || o.categoryNames || [],
-                shortName: (o.ShortName || o.shortName || '').trim(),
-                id: o.WebsiteKey || o.Id || o.websiteKey || o.id
-            })).filter(o => o.name);
-            orgs.sort((a, b) => a.name.localeCompare(b.name));
-            fs.writeFileSync(path.join(__dirname, '../clubs.json'), JSON.stringify(orgs, null, 2));
-            console.log(`✅ Clubs directory: ${orgs.length} organizations saved (via ${usedUrl.split('?')[1].slice(0, 50)}...)`);
+
+        // Merge sources: API response (primary) + event-derived orgs + manual seed
+        const orgsMap = (global._orgsFromEvents instanceof Map) ? new Map(global._orgsFromEvents) : new Map();
+        let apiCount = 0;
+
+        if (orgData) {
+            // Response shape varies — try common container fields
+            const rawItems = orgData.value || orgData.Value || orgData.items || orgData.Items || orgData.results || [];
+            if (rawItems.length > 0) {
+                console.log(`  ℹ️ First item fields: ${Object.keys(rawItems[0]).slice(0, 10).join(', ')}`);
+            }
+            rawItems.forEach(o => {
+                // Field names vary by API version — handle both casings
+                const name = (o.Name || o.name || '').trim();
+                if (!name) return;
+                if (!orgsMap.has(name)) {
+                    orgsMap.set(name, {
+                        name,
+                        category: (o.CategoryNames && o.CategoryNames[0]) || (o.categoryNames && o.categoryNames[0]) || '',
+                        categories: o.CategoryNames || o.categoryNames || [],
+                        shortName: (o.ShortName || o.shortName || '').trim(),
+                        id: o.WebsiteKey || o.websiteKey || o.Id || o.id || ''
+                    });
+                    apiCount++;
+                }
+            });
         }
+
+        // Merge in optional manual seed list (won't override API results)
+        const manualPath = path.join(__dirname, '../v3/clubs-manual.json');
+        let manualCount = 0;
+        try {
+            if (fs.existsSync(manualPath)) {
+                const manualList = JSON.parse(fs.readFileSync(manualPath, 'utf8'));
+                if (Array.isArray(manualList)) {
+                    manualList.forEach(entry => {
+                        const name = (typeof entry === 'string' ? entry : (entry && entry.name) || '').trim();
+                        if (!name) return;
+                        if (!orgsMap.has(name)) {
+                            orgsMap.set(name, {
+                                name,
+                                category: (entry && entry.category) || '',
+                                categories: (entry && entry.categories) || [],
+                                shortName: (entry && entry.shortName) || '',
+                                id: (entry && entry.id) || ''
+                            });
+                            manualCount++;
+                        }
+                    });
+                }
+            }
+        } catch (manualErr) {
+            console.log(`  ⚠️ Couldn't load manual clubs seed: ${manualErr.message}`);
+        }
+
+        const orgs = [...orgsMap.values()].sort((a, b) => a.name.localeCompare(b.name));
+        fs.writeFileSync(path.join(__dirname, '../clubs.json'), JSON.stringify(orgs, null, 2));
+        const eventDerivedCount = orgs.length - apiCount - manualCount;
+        console.log(`✅ Clubs directory: ${orgs.length} organizations saved (${apiCount} from API + ${eventDerivedCount} from events + ${manualCount} manual)`);
     } catch (e) {
         console.error("❌ Clubs directory error:", e.message);
     }

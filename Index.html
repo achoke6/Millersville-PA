@@ -24,7 +24,7 @@
             <h1><span class="logo-link" onclick="switchView('home')">Millersville<span class="logo-dot">.APP</span></span><span id="header-page-title" class="header-page-title"></span></h1>
         </div>
         <div class="header-actions">
-            <button id="feed-gear" onclick="openFeedSettings()" title="My Favorites" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--text-dark);position:relative;">
+            <button id="feed-gear" onclick="openFeedSettings()" title="My Feed" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--text-dark);position:relative;">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
                 <span id="feed-dot" style="display:none;position:absolute;top:0;right:0;width:8px;height:8px;background:var(--gold);border-radius:50%;"></span>
             </button>
@@ -45,7 +45,7 @@
             <button id="nav-store" class="nav-link" onclick="switchView('store'); toggleMobileMenu();">Store</button>
             <div class="nav-cart-widget"><div class="ec-cart-widget"></div></div>
             <button id="nav-advertise" class="nav-link nav-advertise" onclick="switchView('advertise'); toggleMobileMenu();">Advertise</button>
-            <button id="feed-gear-desktop" class="feed-gear-desktop" onclick="openFeedSettings()" title="My Favorites" aria-label="My Favorites">
+            <button id="feed-gear-desktop" class="feed-gear-desktop" onclick="openFeedSettings()" title="My Feed" aria-label="My Feed">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
                 <span id="feed-dot-desktop" class="feed-dot-desktop" style="display:none;"></span>
             </button>
@@ -541,7 +541,7 @@ const feedSections = {
                 {id:'other-vfw',label:'VFW Events',icon:'🎖️'},{id:'other-phantom',label:'Phantom Power',icon:'🎵'},
                 {id:'other-community',label:'Community Events',icon:'📝'}
             ]},
-            family: { label: 'Family Friendly', icon: '👨‍👩‍👧', audience: 'both', subs: [{id:'family-events',label:'Family Friendly Events',icon:'👨‍👩‍👧'}] }
+            family: { label: 'Family Friendly', icon: '👨‍👩‍👧', audience: 'townie', subs: [{id:'family-events',label:'Family Friendly Events',icon:'👨‍👩‍👧'}] }
         }
     },
     news: {
@@ -779,11 +779,12 @@ window.openFeedSettings = function() {
     modal.innerHTML = `
         <button onclick="this.closest('div[style*=fixed]').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);z-index:2;">✕</button>
         <div style="position:sticky;top:0;background:var(--surface);z-index:1;padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:12px;">
-            <h3 style="margin-bottom:4px;">⚙️ My Favorites</h3>
+            <h3 style="margin-bottom:4px;">⚙️ My Feed</h3>
             <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:10px;">Pick what shows on your homepage and defaults on Events & Sports pages.</p>
-            <div style="display:flex;gap:8px;">
-                <button onclick="saveFeedFromModal();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-ticket" style="flex:1;padding:10px;font-size:0.9rem;">Save Preferences</button>
-                <button onclick="clearFeedPrefs();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-outline" style="padding:10px;font-size:0.82rem;">Reset</button>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                <button onclick="saveFeedFromModal();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-ticket" style="flex:1;min-width:140px;padding:10px;font-size:0.9rem;">Save Preferences</button>
+                <button onclick="clearFavoritesOnly();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-outline" style="padding:10px;font-size:0.8rem;">Clear Favorites</button>
+                <button onclick="resetEverything();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-outline" style="padding:10px;font-size:0.8rem;">Reset All</button>
             </div>
         </div>
         <div style="background:var(--gold-soft);border:1px solid var(--gold);border-radius:var(--radius-sm);padding:10px 12px;margin-bottom:14px;">
@@ -809,17 +810,61 @@ window.toggleClubBrowser = function() {
     const list = document.getElementById('clubs-individual-list');
     if (!list) return;
     const isHidden = list.style.display === 'none';
-    if (isHidden) {
+    if (!isHidden) { list.style.display = 'none'; return; }
+
+    // Prefer the full directory from clubs.json; fall back to events-derived list if unavailable
+    const directory = (allClubsDirectory && allClubsDirectory.length > 0)
+        ? allClubsDirectory
+        : (window._individualClubs || []).map(n => ({ name: n, category: '', categories: [] }));
+
+    // Render a search input + a scrollable list. Re-rendering happens via the input handler.
+    list.style.display = 'block';
+    list.style.flexWrap = 'initial';
+    list.style.maxHeight = '340px';
+    list.innerHTML = `
+        <input id="club-search-input" type="text" placeholder="Search ${directory.length} MU organizations..." style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.85rem;margin-bottom:8px;box-sizing:border-box;">
+        <div id="club-search-results" style="display:flex;flex-wrap:wrap;gap:4px;max-height:260px;overflow-y:auto;"></div>`;
+
+    const input = document.getElementById('club-search-input');
+    const results = document.getElementById('club-search-results');
+
+    function renderList(query) {
+        const q = (query || '').trim().toLowerCase();
         const current = feedPrefs || [];
-        list.style.display = 'flex';
-        list.innerHTML = (window._individualClubs || []).map(name => {
-            const val = 'club:' + name;
+        // Show matching orgs. When no query, show favorited ones first then all others,
+        // limited to first 60 to keep render fast — search narrows it down.
+        let orgs = directory.filter(o => {
+            if (!q) return true;
+            return o.name.toLowerCase().includes(q) || (o.category || '').toLowerCase().includes(q);
+        });
+        if (!q) {
+            // Sort: favorited first, then alphabetical
+            orgs = orgs.slice().sort((a, b) => {
+                const af = current.includes('club:' + a.name) ? 0 : 1;
+                const bf = current.includes('club:' + b.name) ? 0 : 1;
+                if (af !== bf) return af - bf;
+                return a.name.localeCompare(b.name);
+            });
+            if (orgs.length > 60) orgs = orgs.slice(0, 60);
+        }
+        const totalInDir = directory.length;
+        const showingInfo = q
+            ? `<div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:6px;">${orgs.length} of ${totalInDir} match "${q}"</div>`
+            : (totalInDir > 60 ? `<div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:6px;">Showing 60 of ${totalInDir} — type to search for more</div>` : '');
+        if (orgs.length === 0) {
+            results.innerHTML = showingInfo + '<div style="padding:16px;text-align:center;color:var(--text-muted);font-size:0.85rem;">No organizations match.</div>';
+            return;
+        }
+        results.innerHTML = showingInfo + orgs.map(o => {
+            const val = 'club:' + o.name;
             const checked = current.includes(val);
-            return `<label style="display:flex;align-items:center;gap:4px;font-size:0.78rem;padding:4px 8px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;background:${checked?'var(--gold-soft)':'var(--bg)'};white-space:nowrap;"><input type="checkbox" class="feed-club" value="${val}" ${checked?'checked':''} onchange="this.closest('label').style.background=this.checked?'var(--gold-soft)':'var(--bg)'" style="accent-color:var(--gold);"> ${name}</label>`;
+            const escapedName = o.name.replace(/"/g, '&quot;');
+            return `<label style="display:flex;align-items:center;gap:4px;font-size:0.78rem;padding:4px 8px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;background:${checked?'var(--gold-soft)':'var(--bg)'};white-space:nowrap;"><input type="checkbox" class="feed-club" value="${val}" ${checked?'checked':''} onchange="this.closest('label').style.background=this.checked?'var(--gold-soft)':'var(--bg)'" style="accent-color:var(--gold);"> ${escapedName}</label>`;
         }).join('');
-    } else {
-        list.style.display = 'none';
     }
+
+    input.addEventListener('input', () => renderList(input.value));
+    renderList('');
 };
 
 window.updateFeedGroup = function(group) {
@@ -844,6 +889,29 @@ window.saveFeedFromModal = function() {
 window.clearFeedPrefs = function() {
     localStorage.removeItem(FEED_KEY);
     feedPrefs = null;
+    setFeedDotVisible(false);
+    renderHomeFeed();
+    renderEvents(); renderSports(); renderNewsUI();
+    decorateFeedStars();
+};
+
+// Clear just the favorites list but keep the Marauder/Townie affiliation
+window.clearFavoritesOnly = function() {
+    localStorage.removeItem(FEED_KEY);
+    feedPrefs = null;
+    setFeedDotVisible(false);
+    renderHomeFeed();
+    renderEvents(); renderSports(); renderNewsUI();
+    decorateFeedStars();
+};
+
+// Reset everything: favorites AND affiliation. Next page load will re-prompt.
+window.resetEverything = function() {
+    localStorage.removeItem(FEED_KEY);
+    localStorage.removeItem(AFFILIATION_KEY);
+    localStorage.removeItem('welcomeDismissed'); // let the welcome banner show again
+    feedPrefs = null;
+    muAffiliation = null;
     setFeedDotVisible(false);
     renderHomeFeed();
     renderEvents(); renderSports(); renderNewsUI();
@@ -1197,7 +1265,7 @@ document.addEventListener('keydown', (e) => {
 
 async function initApp(){
     loadFeedPrefs();
-    await Promise.allSettled([loadWeather(),loadSpecials(),loadEvents(),loadPlaces(),loadHousing(),loadNews(),loadBoard(),loadSponsors()]);
+    await Promise.allSettled([loadWeather(),loadSpecials(),loadEvents(),loadPlaces(),loadHousing(),loadNews(),loadBoard(),loadSponsors(),loadClubsDirectory()]);
     renderHomeFeed();
     syncFilterArrows();
     loadEcwidStore(); // Load Ecwid early so cart widget renders in header
@@ -1938,10 +2006,12 @@ function buildTimelineItem(e, now) {
     let streamBtn = '';
     if (isSport && e.streamLink && d > now) streamBtn = `<a href="${e.streamLink}" target="_blank" class="tl-stream" onclick="event.stopPropagation()">📺</a>`;
 
-    const clickAction = e.sourceLink ? `window.open('${e.sourceLink}','_blank')` : '';
+    // Use event's sourceLink as unique identifier for the detail modal lookup.
+    // Falls back to title+date composite for events without sourceLink.
+    const eventKey = e.sourceLink || (e.title + '|' + e.date);
     const typeClass = isSport ? ' tl-sport' : ' tl-event';
 
-    return `<div class="tl-item${typeClass}" onclick="${clickAction}">
+    return `<div class="tl-item${typeClass}" onclick="window.openEventDetails(${JSON.stringify(eventKey).replace(/"/g, '&quot;')})">
         <span class="tl-time">${timeStr}</span>
         <div class="tl-content">
             <span class="tl-src${isSport?'':' tl-src-event'}">${src}</span>
@@ -1950,6 +2020,87 @@ function buildTimelineItem(e, now) {
         </div>
     </div>`;
 }
+
+// Event detail modal — shown when a user clicks a timeline card (home) or search result.
+// Looks up event by key (sourceLink or title|date composite), renders title/time/location/
+// description/tags/benefits, and provides buttons to open source link or tickets.
+window.openEventDetails = function(key) {
+    if (!key) return;
+    const e = allEvents.find(ev => (ev.sourceLink || (ev.title + '|' + ev.date)) === key);
+    if (!e) return;
+
+    const d = new Date(e.date);
+    const tags = e.tags || [];
+    const isSport = isSportEvent(e) || isPMSportByTitle(e);
+    const isHome = tags.includes('Home Game Mode') || tags.includes('H Games');
+    const isNoon = d.getHours() === 12 && d.getMinutes() === 0;
+    const timeStr = isNoon ? 'All Day' : formatTime(d);
+    const dateStr = d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+
+    // Source label (reuse logic from buildTimelineItem)
+    let src = '';
+    if(tags.includes('VFW')) src = 'VFW';
+    else if(tags.includes('Borough')) src = 'Borough';
+    else if(tags.includes('PM')) src = 'PM';
+    else if(tags.includes('MU')) src = 'MU';
+    else if(tags.includes('Community')) src = 'Community';
+    else src = 'Event';
+
+    // Badges row
+    let badges = '';
+    if (isSport && isHome) badges += '<span class="tl-badge tl-home">🏠 Home</span>';
+    if (e.kidFriendly) badges += '<span class="tl-badge tl-family">👨‍👩‍👧 Family</span>';
+    const benefits = e.benefits || [];
+    if (benefits.includes('Free Food')) badges += '<span class="tl-badge tl-perk">🍕 Free Food</span>';
+    if (benefits.includes('Free Stuff')) badges += '<span class="tl-badge tl-perk">🎁 Free Stuff</span>';
+    if (benefits.includes('Credit')) badges += '<span class="tl-badge tl-perk">📚 Credit</span>';
+    if (e.gameResult && e.gameScore) {
+        const cls = e.gameResult === 'W' ? 'tl-win' : e.gameResult === 'L' ? 'tl-loss' : 'tl-tie';
+        badges += `<span class="tl-badge ${cls}">${e.gameResult} ${e.gameScore}</span>`;
+    }
+
+    // Tag chips (exclude noisy internal markers)
+    const hiddenTags = new Set(['MU','PM','Borough','Other','VFW','Clubs/Orgs','Live Music','H Games','Home Game Mode','Athletic Competitions','Athletics','Phantom Power']);
+    const displayTags = tags.filter(t => !hiddenTags.has(t)).slice(0, 6);
+
+    const description = (e.description || '').trim();
+    const descBlock = description
+        ? `<div style="margin-top:12px;font-size:0.9rem;line-height:1.5;color:var(--text);">${description}</div>`
+        : '';
+
+    const location = (e.location || '').trim();
+    const locBlock = location
+        ? `<div style="margin-top:10px;font-size:0.88rem;color:var(--text-muted);">📍 ${location}</div>`
+        : '';
+
+    // Action buttons
+    let actions = '';
+    if (e.ticketLink) actions += `<a href="${e.ticketLink}" target="_blank" class="btn btn-sm btn-ticket" style="text-decoration:none;">🎟️ Buy Tickets</a>`;
+    if (e.streamLink) actions += `<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-outline" style="text-decoration:none;">📺 Watch Stream</a>`;
+    if (e.sourceLink) actions += `<a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline" style="text-decoration:none;">🔗 View Source</a>`;
+
+    // Build modal
+    const overlay = document.createElement('div');
+    overlay.className = 'event-details-overlay';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9998;display:flex;align-items:flex-start;justify-content:center;padding:40px 16px 16px;overflow-y:auto;';
+    overlay.onclick = ev => { if (ev.target === overlay) overlay.remove(); };
+
+    const modal = document.createElement('div');
+    modal.style.cssText = 'background:var(--surface);border-radius:var(--radius);max-width:540px;width:100%;padding:24px;position:relative;box-shadow:0 10px 40px rgba(0,0,0,0.2);';
+    modal.innerHTML = `
+        <button onclick="this.closest('.event-details-overlay').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);padding:4px 8px;">✕</button>
+        <span style="display:inline-block;font-size:0.7rem;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:0.04em;">${src}</span>
+        <h2 style="margin:4px 0 8px;font-size:1.25rem;color:var(--navy);line-height:1.3;padding-right:24px;">${e.title || 'Event'}</h2>
+        <div style="font-size:0.92rem;color:var(--text);font-weight:600;">📅 ${dateStr}${!isNoon ? ' · ' + timeStr : ''}</div>
+        ${locBlock}
+        ${badges ? `<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:4px;">${badges}</div>` : ''}
+        ${displayTags.length ? `<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:4px;">${displayTags.map(t => `<span class="card-tag">${t}</span>`).join('')}</div>` : ''}
+        ${descBlock}
+        ${actions ? `<div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:8px;">${actions}</div>` : ''}
+    `;
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+};
 
 /* ==================== HOME SPECIALS ==================== */
 async function loadHomeSpecials(){
@@ -2448,6 +2599,19 @@ window.submitReview = function() {
 let sponsorData = { sponsors: [], config: { rotateIntervalMs: 15000, inlineAdEveryN: 9, placements: {} } };
 let sponsorImpressions = {}; // { sponsorId: { impressions: N, clicks: N } }
 
+// Full MU organization directory (loaded from clubs.json — includes orgs without current events)
+let allClubsDirectory = [];
+async function loadClubsDirectory() {
+    try {
+        const res = await fetch('clubs.json');
+        if (!res.ok) return;
+        allClubsDirectory = await res.json();
+    } catch (e) {
+        // Non-fatal — the club browser falls back to events-derived list
+        console.log('Clubs directory not available');
+    }
+}
+
 async function loadSponsors() {
     try {
         sponsorData = await (await fetch('sponsors.json')).json();
@@ -2674,9 +2838,8 @@ function runSearch(q) {
         eventHits.forEach(e => {
             const d = new Date(e.date);
             const src = (e.tags||[])[0] || '';
-            const clickAction = e.sourceLink
-                ? `document.getElementById('search-overlay').remove();window.open('${e.sourceLink.replace(/'/g, "\\'")}','_blank');`
-                : `document.getElementById('search-overlay').remove();switchView('events');`;
+            const eventKey = (e.sourceLink || (e.title + '|' + e.date)).replace(/"/g, '&quot;').replace(/'/g, "\\'");
+            const clickAction = `document.getElementById('search-overlay').remove();window.openEventDetails('${eventKey}');`;
             // Student-only badge + "not in your feed" note for townies
             const hiddenForMe = isHiddenForTownie(e);
             const muOnlyBadge = hiddenForMe
@@ -2708,9 +2871,8 @@ function runSearch(q) {
         sportHits.forEach(e => {
             const d = new Date(e.date);
             const src = (e.tags||[])[0] || '';
-            const clickAction = e.sourceLink
-                ? `document.getElementById('search-overlay').remove();window.open('${e.sourceLink.replace(/'/g, "\\'")}','_blank');`
-                : `document.getElementById('search-overlay').remove();switchView('sports');`;
+            const eventKey = (e.sourceLink || (e.title + '|' + e.date)).replace(/"/g, '&quot;').replace(/'/g, "\\'");
+            const clickAction = `document.getElementById('search-overlay').remove();window.openEventDetails('${eventKey}');`;
             html += `<div class="search-result" onclick="${clickAction}" style="padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;margin-bottom:4px;background:var(--surface);">
                 <span style="font-size:0.7rem;color:var(--text-muted);">${src}</span>
                 <p style="font-weight:600;margin:2px 0;">${e.title}</p>

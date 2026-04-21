@@ -2149,10 +2149,46 @@ Focus on the most impressive deals a shopper would want to know about. Include m
     }
 
     deduped.sort((a, b) => new Date(a.date) - new Date(b.date));
-    // Strip descriptions before saving (only used for family-friendly detection)
-    deduped.forEach(e => { delete e.description; });
+    // Preserve descriptions for the card-detail modal on home/search. Truncate aggressively
+    // to keep events.json size manageable — 600 chars is enough for a useful preview.
+    deduped.forEach(e => {
+        if (e.description && typeof e.description === 'string') {
+            // Strip HTML tags and collapse whitespace
+            const plain = e.description.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&#0?39;/g, "'").replace(/&quot;/g, '"').replace(/\s+/g, ' ').trim();
+            e.description = plain.length > 600 ? plain.slice(0, 600).trim() + '…' : plain;
+            if (!e.description) delete e.description;
+        } else {
+            delete e.description;
+        }
+    });
     fs.writeFileSync(path.join(__dirname, '../events.json'), JSON.stringify(deduped, null, 2));
-    console.log(`📊 Total events saved: ${deduped.length} (${deduped.filter(e=>e.image).length} with images)`);
+    console.log(`📊 Total events saved: ${deduped.length} (${deduped.filter(e=>e.image).length} with images, ${deduped.filter(e=>e.description).length} with descriptions)`);
+
+    // ===== CLUBS DIRECTORY (all MU organizations from GetInvolved) =====
+    // Separate from events.json so the frontend can show the full list in the "Browse Individual Clubs"
+    // picker even for orgs that haven't posted events recently.
+    try {
+        console.log("📡 Fetching all MU organizations from GetInvolved...");
+        const orgUrl = 'https://getinvolved.millersville.edu/api/discovery/organization/search?orderBy=UpperName&orderByDirection=ascending&status=Active&take=800';
+        const orgRes = await fetch(orgUrl);
+        if (orgRes.ok) {
+            const orgData = await orgRes.json();
+            const orgs = (orgData.value || []).map(o => ({
+                name: (o.Name || '').trim(),
+                category: (o.CategoryNames && o.CategoryNames[0]) || '',
+                categories: o.CategoryNames || [],
+                shortName: (o.ShortName || '').trim(),
+                id: o.WebsiteKey || o.Id
+            })).filter(o => o.name);
+            orgs.sort((a, b) => a.name.localeCompare(b.name));
+            fs.writeFileSync(path.join(__dirname, '../clubs.json'), JSON.stringify(orgs, null, 2));
+            console.log(`✅ Clubs directory: ${orgs.length} organizations saved`);
+        } else {
+            console.log(`  ⚠️ Clubs directory fetch failed: HTTP ${orgRes.status}`);
+        }
+    } catch (e) {
+        console.error("❌ Clubs directory error:", e.message);
+    }
 
     // ===== NEWS =====
     try {

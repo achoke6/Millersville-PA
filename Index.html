@@ -566,6 +566,70 @@ for (const g of Object.values(feedSections.sports.groups)) g.subs.forEach(s => s
 const eventFeedIds = new Set();
 for (const g of Object.values(feedSections.events.groups)) g.subs.forEach(s => eventFeedIds.add(s.id));
 
+// ========== Affiliation-based source hiding ==========
+// When a user picks Marauder, PM/Borough/VFW events + PM sports are hidden by default.
+// When a user picks Townie, MU GetInvolved events + MU Club Sports are hidden by default.
+// Users can "unlock" hidden sources by favoriting items in them — at which point the pill
+// reappears and their favorited items become visible in the filtered list.
+
+// Map of source-pill → set of feed-pref IDs that "unlock" it. If user's feedPrefs contains
+// any of these IDs, the source is considered user-opted-in and treated normally.
+const SOURCE_UNLOCK_IDS = {
+    // Events page source pills
+    'PM':      ['pm-music', 'pm-board', 'pm-baseball', 'pm-softball', 'pm-lacrosse', 'pm-volleyball', 'pm-football', 'pm-basketball', 'pm-soccer', 'pm-fieldhockey', 'pm-tennis', 'pm-track'],
+    'Borough': ['borough-all'],
+    'VFW':     ['other-vfw'],
+    // MU-side sources for townies
+    'MU':         [], // MU itself always shown — only GetInvolved sub-content is gated
+    'GetInvolved':['clubs-all', 'clubs-social', 'clubs-arts', 'clubs-sports', 'clubs-greek', 'clubs-service', 'mu-arts', 'mu-public', 'mu-student'],
+    // Sports page source pills
+    'SP_PM':      ['pm-baseball', 'pm-softball', 'pm-lacrosse', 'pm-volleyball', 'pm-football', 'pm-basketball', 'pm-soccer', 'pm-fieldhockey', 'pm-tennis', 'pm-track'],
+    'SP_Clubs':   ['clubs-sports']
+};
+
+// Does the user's affiliation hide this source by default?
+function isSourceHiddenByAffiliation(source) {
+    if (muAffiliation === 'student') {
+        // Marauders hide PM, Borough, VFW events + PM sports
+        return source === 'PM' || source === 'Borough' || source === 'VFW' || source === 'SP_PM';
+    }
+    if (muAffiliation === 'townie' || muAffiliation === null) {
+        // Townies (and default/unset users) hide GetInvolved + MU Club Sports
+        return source === 'GetInvolved' || source === 'SP_Clubs';
+    }
+    return false;
+}
+// Does the user have a favorite that "unlocks" this hidden source?
+function hasFavInSource(source) {
+    if (!feedPrefs || feedPrefs.length === 0) return false;
+    const ids = SOURCE_UNLOCK_IDS[source] || [];
+    // Individual club favorites (club:*) also count as unlocking GetInvolved
+    if (source === 'GetInvolved' && feedPrefs.some(p => typeof p === 'string' && p.startsWith('club:'))) return true;
+    return feedPrefs.some(p => ids.includes(p));
+}
+// Should this source be hidden from the user? (hidden by affiliation AND no favorite unlock)
+function isSourceHidden(source) {
+    return isSourceHiddenByAffiliation(source) && !hasFavInSource(source);
+}
+// For a given event, is it from a hidden source?
+function isEventFromHiddenSource(e) {
+    const tags = e.tags || [];
+    if (tags.includes('VFW') && isSourceHidden('VFW')) return true;
+    if (tags.includes('PM') && isSourceHidden('PM')) return true;
+    if (tags.includes('Borough') && isSourceHidden('Borough')) return true;
+    if (tags.includes('Clubs/Orgs') && isSourceHidden('GetInvolved')) return true;
+    return false;
+}
+// For sports events, check against the sports-specific hidden sources
+function isSportsEventFromHiddenSource(e) {
+    const tags = e.tags || [];
+    const isPM = tags.includes('PM') && (tags.includes('Athletics') || tags.includes('Athletic Competitions'));
+    const isMUClubSport = tags.includes('Clubs/Orgs') && tags.includes('Club Sports');
+    if (isPM && isSourceHidden('SP_PM')) return true;
+    if (isMUClubSport && isSourceHidden('SP_Clubs')) return true;
+    return false;
+}
+
 function eventMatchesFeed(e) {
     if (!feedPrefs || feedPrefs.length === 0) return true;
     const tags = e.tags || [];
@@ -978,6 +1042,8 @@ window.pickAffiliation = function(value) {
             localStorage.setItem(AFFILIATION_KEY, value);
             renderHomeFeed();
             if (typeof renderEvents === 'function') renderEvents();
+            if (typeof renderSports === 'function') renderSports();
+            if (typeof renderNewsUI === 'function') renderNewsUI();
             return;
         }
         // User confirmed — clear favorites and reopen modal
@@ -989,6 +1055,7 @@ window.pickAffiliation = function(value) {
     localStorage.setItem(AFFILIATION_KEY, value);
     renderHomeFeed();
     if (typeof renderEvents === 'function') renderEvents();
+    if (typeof renderSports === 'function') renderSports();
     if (typeof renderNewsUI === 'function') renderNewsUI();
     if (typeof decorateFeedStars === 'function') decorateFeedStars();
 };
@@ -1304,7 +1371,18 @@ function updateEventsUI(){
     const srcMap = {'MU':'mu','PM':'pm','Borough':'borough','Other':'other'};
     allEvSources.forEach(src => {
         const btn = document.getElementById('ev-src-' + srcMap[src]);
-        if (btn) btn.classList.toggle('active', !evAllMode && evActiveSources.has(src));
+        if (!btn) return;
+        btn.classList.toggle('active', !evAllMode && evActiveSources.has(src));
+        // Hide pills for sources the user's affiliation doesn't care about (unless they've favorited them)
+        //   PM pill hidden for Marauders unless they favorited a PM item
+        //   Borough pill hidden for Marauders unless they favorited Borough content
+        //   Other pill is NOT hidden — it contains VFW + Phantom Power + Community; keeping it
+        //   visible preserves Phantom Power visibility for Marauders (Phantom Power is a campus
+        //   event venue). We filter VFW out at the event level via isEventFromHiddenSource.
+        let hidePill = false;
+        if (src === 'PM') hidePill = isSourceHidden('PM');
+        else if (src === 'Borough') hidePill = isSourceHidden('Borough');
+        btn.style.display = hidePill ? 'none' : '';
     });
     const isCurrentWeek = toDateStr(evAnchorDate) === toDateStr(todayMidnight());
     const isClean = evAllMode && evTags.size === 0 && evMode === 'week' && !evKidMode && isCurrentWeek;
@@ -1394,6 +1472,7 @@ function renderEvents(){
         if(isSportEvent(e)) return false;
         if(isPMSportByTitle(e)) return false;
         if(isHiddenForTownie(e)) return false;
+        if(isEventFromHiddenSource(e)) return false;
         const d=localDateStr(e.date);
         if(d<range.start||d>range.end) return false;
         const tags=e.tags||[];
@@ -1477,7 +1556,14 @@ function updateSportsUI(){
     if (allBtn) allBtn.classList.toggle('active', spAllMode);
     ['PM','MU','Clubs'].forEach(src=>{
         const btn=document.getElementById('sp-src-'+src.toLowerCase());
-        if(btn) btn.classList.toggle('active', !spAllMode && spActiveSources.has(src));
+        if(!btn) return;
+        btn.classList.toggle('active', !spAllMode && spActiveSources.has(src));
+        // Hide PM pill for Marauders (unless they favorited PM sports);
+        // Hide Clubs pill for Townies (unless they favorited Club Sports)
+        let hidePill = false;
+        if (src === 'PM') hidePill = isSourceHidden('SP_PM');
+        else if (src === 'Clubs') hidePill = isSourceHidden('SP_Clubs');
+        btn.style.display = hidePill ? 'none' : '';
     });
     document.getElementById('hgame-toggle').classList.toggle('active', spHomeOnly);
     document.getElementById('sp-no-source').style.display = spActiveSources.size===0 ? 'block' : 'none';
@@ -1541,6 +1627,7 @@ function renderSports(){
 
     let baseFiltered=allEvents.filter(e=>{
         if(!isSportEvent(e)) return false;
+        if(isSportsEventFromHiddenSource(e)) return false;
         const d=localDateStr(e.date);
         if(d<range.start||d>range.end) return false;
         const tags=e.tags||[];
@@ -1724,9 +1811,9 @@ function renderHomeUI(){
     const todayAll = allEvents.filter(e => {
         if(localDateStr(e.date) !== todayStr) return false;
         if(isHiddenForTownie(e)) return false;
+        if(isEventFromHiddenSource(e)) return false;
+        if(isSportsEventFromHiddenSource(e)) return false;
         // Legacy behavior: hide mu-only GetInvolved content from homepage for non-students
-        // (isHiddenForTownie already handles this when affiliation is set or null, but
-        //  double-check explicitly for events that lack the audience field entirely)
         if((e.tags||[]).includes('Clubs/Orgs') && e.audience !== 'public' && muAffiliation !== 'student') return false;
         return true;
     }).sort((a,b) => new Date(a.date) - new Date(b.date));
@@ -1738,6 +1825,8 @@ function renderHomeUI(){
             const d = localDateStr(e.date);
             if (d <= todayStr) return false;
             if (isHiddenForTownie(e)) return false;
+            if (isEventFromHiddenSource(e)) return false;
+            if (isSportsEventFromHiddenSource(e)) return false;
             if ((e.tags||[]).includes('Clubs/Orgs') && e.audience !== 'public' && muAffiliation !== 'student') return false;
             return true;
         }).sort((a,b) => new Date(a.date) - new Date(b.date)).slice(0, 5);

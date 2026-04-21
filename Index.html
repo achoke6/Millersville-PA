@@ -1428,7 +1428,16 @@ window.toggleEventSource=function(src){
         if(evActiveSources.has(src)) evActiveSources.delete(src);
         else evActiveSources.add(src);
     }
-    if (evActiveSources.size === allEvSources.length) evAllMode = true;
+    // All mode activates when all VISIBLE sources are selected (affiliation can hide PM/Borough)
+    const visibleEvSources = allEvSources.filter(s =>
+        !(s === 'PM' && isSourceHidden('PM')) &&
+        !(s === 'Borough' && isSourceHidden('Borough'))
+    );
+    if (visibleEvSources.length > 0 && visibleEvSources.every(s => evActiveSources.has(s))) {
+        evAllMode = true;
+        // Ensure hidden sources are also in the set so filter logic stays consistent
+        evActiveSources = new Set(allEvSources);
+    }
     evTags.clear();
     updateEventsUI();
     renderEvents();
@@ -1612,8 +1621,18 @@ window.toggleSportsSource=function(src){
         if(spActiveSources.has(src)) spActiveSources.delete(src);
         else spActiveSources.add(src);
     }
-    // If all three are back on, switch to All mode
-    if (spActiveSources.size === 3) spAllMode = true;
+    // If all VISIBLE sources are active, switch to All mode.
+    // We used to require all 3 hard-coded sources, but affiliation can hide PM (Marauders)
+    // or Clubs (Townies) — so for those users, "all sources selected" means all visible ones.
+    const visibleSources = ['PM','MU','Clubs'].filter(s =>
+        !(s === 'PM' && isSourceHidden('SP_PM')) &&
+        !(s === 'Clubs' && isSourceHidden('SP_Clubs'))
+    );
+    if (visibleSources.length > 0 && visibleSources.every(s => spActiveSources.has(s))) {
+        spAllMode = true;
+        // Ensure hidden sources are also in the set so event filter stays consistent
+        spActiveSources = new Set(['PM','MU','Clubs']);
+    }
     spSportTag=null;
     updateSportsUI();
     renderSports();

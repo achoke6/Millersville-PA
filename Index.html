@@ -76,14 +76,31 @@
         </div>
 
         <div id="welcome-banner" class="welcome-banner" style="display:none;">
-            <div style="display:flex;align-items:center;gap:12px;">
-                <span style="font-size:1.5rem;">👋</span>
-                <div style="flex:1;">
-                    <strong>Welcome to Millersville.APP!</strong>
-                    <p style="font-size:0.82rem;color:var(--text-muted);margin:2px 0 0;">Personalize your experience — pick your favorite sports, events, and news sources to see what matters to you first.</p>
+            <!-- Affiliation prompt: shown when muAffiliation not yet set -->
+            <div id="affiliation-prompt" style="display:none;">
+                <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+                    <span style="font-size:1.5rem;">👋</span>
+                    <div style="flex:1;min-width:200px;">
+                        <strong>Welcome!</strong>
+                        <p style="font-size:0.82rem;color:var(--text-muted);margin:2px 0 0;">Are you a MU Marauder or a townie? We'll use this to personalize your event feed.</p>
+                    </div>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+                        <button onclick="pickAffiliation('student')" class="affiliation-btn">🏴‍☠️ MU Marauder</button>
+                        <button onclick="pickAffiliation('townie')" class="affiliation-btn">🏘️ Townie</button>
+                    </div>
                 </div>
-                <button onclick="openFeedSettings()" class="btn btn-sm btn-ticket" style="white-space:nowrap;">Set Up Favorites</button>
-                <button onclick="dismissWelcome()" style="background:none;border:none;font-size:1rem;cursor:pointer;color:var(--text-muted);padding:4px;">✕</button>
+            </div>
+            <!-- Favorites CTA: shown after affiliation set OR for existing users who haven't configured favorites -->
+            <div id="favorites-prompt" style="display:none;">
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <span style="font-size:1.5rem;">👋</span>
+                    <div style="flex:1;">
+                        <strong>Welcome to Millersville.APP!</strong>
+                        <p style="font-size:0.82rem;color:var(--text-muted);margin:2px 0 0;">Personalize your experience — pick your favorite sports, events, and news sources to see what matters to you first.</p>
+                    </div>
+                    <button onclick="openFeedSettings()" class="btn btn-sm btn-ticket" style="white-space:nowrap;">Set Up Favorites</button>
+                    <button onclick="dismissWelcome()" style="background:none;border:none;font-size:1rem;cursor:pointer;color:var(--text-muted);padding:4px;">✕</button>
+                </div>
             </div>
         </div>
 
@@ -164,7 +181,6 @@
                     <div class="filter-group" id="ev-source-group">
                         <button class="src-btn active" id="ev-src-all" onclick="setEventSourceAll()">All</button>
                         <button class="src-btn" id="ev-src-mu" data-feed="mu-" onclick="toggleEventSource('MU')">🏴‍☠️ MU</button>
-                        <button class="src-btn" id="ev-src-gi" data-feed="clubs-" onclick="toggleEventSource('Clubs/Orgs')">🎓 MU Clubs</button>
                         <button class="src-btn" id="ev-src-pm" data-feed="pm-" onclick="toggleEventSource('PM')"><svg class="btn-icon" width="14" height="14"><use href="#icon-comet"/></svg> PM</button>
                         <button class="src-btn" id="ev-src-borough" data-feed="borough-" onclick="toggleEventSource('Borough')">🌳 Borough</button>
                         <button class="src-btn" id="ev-src-other" data-feed="other-" onclick="toggleEventSource('Other')">🎸 Other</button>
@@ -434,14 +450,16 @@
 (function(){const _f=window.fetch,_v=Math.floor(Date.now()/3600000);window.fetch=function(u,o){if(typeof u==='string'&&u.endsWith('.json'))u+=(/\?/.test(u)?'&':'?')+'_='+_v;return _f.call(this,u,o);}})();
 
 let allEvents=[], currentNews=[], allRestaurants=[];
-const allEvSources = ['MU','Clubs/Orgs','PM','Borough','Other'];
+const allEvSources = ['MU','PM','Borough','Other'];
 let evActiveSources = new Set(allEvSources), evTags=new Set();
 let evAllMode = true;
 let evKidMode=false;
 
 // ==================== MY FEED SYSTEM ====================
 const FEED_KEY = 'mapp_feed_prefs';
+const AFFILIATION_KEY = 'mapp_mu_affiliation'; // 'student' | 'townie' | null (unset)
 let feedPrefs = null; // null = not configured
+let muAffiliation = null; // null = not yet asked; 'student' or 'townie' once set
 
 function setFeedDotVisible(visible) {
     const d1 = document.getElementById('feed-dot');
@@ -453,11 +471,27 @@ function setFeedDotVisible(visible) {
 function loadFeedPrefs() {
     try { feedPrefs = JSON.parse(localStorage.getItem(FEED_KEY)); } catch(e) { feedPrefs = null; }
     setFeedDotVisible(!!feedPrefs);
+    try { muAffiliation = localStorage.getItem(AFFILIATION_KEY); } catch(e) { muAffiliation = null; }
+    if (muAffiliation !== 'student' && muAffiliation !== 'townie') muAffiliation = null;
 }
 function saveFeedPrefs(prefs) {
     feedPrefs = prefs;
     localStorage.setItem(FEED_KEY, JSON.stringify(prefs));
     setFeedDotVisible(!!prefs);
+}
+window.setMuAffiliation = function(value) {
+    if (value !== 'student' && value !== 'townie') return;
+    muAffiliation = value;
+    localStorage.setItem(AFFILIATION_KEY, value);
+    // Re-render everything so the filter takes immediate effect
+    if (typeof renderHomeFeed === 'function') renderHomeFeed();
+    if (typeof renderEvents === 'function') renderEvents();
+};
+// An event is hidden from a townie's feed if it's MU-student-only.
+// Students see everything. Unset affiliation defaults to townie behavior.
+function isHiddenForTownie(e) {
+    if (muAffiliation === 'student') return false; // students see all
+    return e && e.audience === 'mu-only';
 }
 
 // Feed subscription tokens and their display config
@@ -494,8 +528,8 @@ const feedSections = {
                 {id:'mu-arts',label:'Arts & Performances',icon:'🎭'},{id:'mu-public',label:'Public Events',icon:'📢'},
                 {id:'mu-student',label:'Student Events',icon:'🎓'}
             ]},
-            clubs: { label: 'MU Clubs & Orgs', icon: '🎓', subs: [
-                {id:'clubs-all',label:'All Club Events',icon:'🎓'},
+            clubs: { label: 'MU GetInvolved', icon: '🎓', subs: [
+                {id:'clubs-all',label:'All GetInvolved Events',icon:'🎓'},
                 {id:'clubs-social',label:'Social Clubs',icon:'🎉'},
                 {id:'clubs-arts',label:'Arts & Performance',icon:'🎭'},
                 {id:'clubs-sports',label:'Club Sports',icon:'⚽'},
@@ -569,15 +603,8 @@ function eventMatchesFeed(e) {
         return false;
     }
 
-    // MU non-sport events: match specific event type feeds only
-    if (tags.includes('MU') && !tags.includes('Clubs/Orgs')) {
-        if (tags.includes('Arts Concert / Performance') && feedPrefs.includes('mu-arts')) return true;
-        if (tags.includes('Public Event') && feedPrefs.includes('mu-public')) return true;
-        if (tags.includes('Student Event') && feedPrefs.includes('mu-student')) return true;
-        return false;
-    }
-
-    // Clubs/Orgs
+    // Clubs/Orgs (GetInvolved) — check BEFORE generic MU because GetInvolved events
+    // now carry both 'MU' and 'Clubs/Orgs' tags. The more specific check wins.
     if (tags.includes('Clubs/Orgs')) {
         if (feedPrefs.includes('clubs-all')) return true;
         if (feedPrefs.includes('clubs-social') && tags.includes('Social')) return true;
@@ -589,6 +616,14 @@ function eventMatchesFeed(e) {
         for (const pref of feedPrefs) {
             if (pref.startsWith('club:') && tags.includes(pref.substring(5))) return true;
         }
+        return false;
+    }
+
+    // MU non-sport events (MU Calendar proper — Clubs/Orgs already handled above)
+    if (tags.includes('MU')) {
+        if (tags.includes('Arts Concert / Performance') && feedPrefs.includes('mu-arts')) return true;
+        if (tags.includes('Public Event') && feedPrefs.includes('mu-public')) return true;
+        if (tags.includes('Student Event') && feedPrefs.includes('mu-student')) return true;
         return false;
     }
 
@@ -645,7 +680,7 @@ window.openFeedSettings = function() {
     }
 
     // Build individual clubs list from events data
-    const clubCategoryTags = new Set(['Clubs/Orgs','MU','MU GetInvolved','Social','Service','Academic','Cultural','Club Sports','Religious','Professional','Arts','Media','Governance','Recreation','Activism','Greek Life','Honor Society','Meeting','Performance','Lecture or Speaker','Movie or Film','Sporting','Fundraising','GroupBusiness','CommunityService','Tabling','Spirituality','ThoughtfulLearning','Educational Program','Other Org',"Men's","Women's"]);
+    const clubCategoryTags = new Set(['Clubs/Orgs','MU','GetInvolved','Social','Service','Academic','Cultural','Club Sports','Religious','Professional','Arts','Media','Governance','Recreation','Activism','Greek Life','Honor Society','Meeting','Performance','Lecture or Speaker','Movie or Film','Sporting','Fundraising','GroupBusiness','CommunityService','Tabling','Spirituality','ThoughtfulLearning','Educational Program',"Men's","Women's"]);
     const clubNames = new Map();
     allEvents.forEach(e => {
         const tags = e.tags || [];
@@ -665,6 +700,14 @@ window.openFeedSettings = function() {
             <div style="display:flex;gap:8px;">
                 <button onclick="saveFeedFromModal();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-ticket" style="flex:1;padding:10px;font-size:0.9rem;">Save Preferences</button>
                 <button onclick="clearFeedPrefs();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-outline" style="padding:10px;font-size:0.82rem;">Reset</button>
+            </div>
+        </div>
+        <div style="background:var(--gold-soft);border:1px solid var(--gold);border-radius:var(--radius-sm);padding:10px 12px;margin-bottom:14px;">
+            <div style="font-size:0.85rem;font-weight:600;color:var(--navy);margin-bottom:6px;">Are you a MU Marauder or a townie?</div>
+            <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:8px;">Students see all MU events; townies see only community-friendly ones.</div>
+            <div style="display:flex;gap:6px;">
+                <button onclick="window.pickAffiliation('student');this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));this.classList.add('active');" class="aff-chip ${muAffiliation==='student'?'active':''}">🏴‍☠️ MU Marauder</button>
+                <button onclick="window.pickAffiliation('townie');this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));this.classList.add('active');" class="aff-chip ${muAffiliation==='townie'?'active':''}">🏘️ Townie</button>
             </div>
         </div>
         <div id="feed-options">${sectionsHtml}</div>`;
@@ -873,11 +916,28 @@ function renderHomeFeed() {
     const hasFeed = feedPrefs && feedPrefs.length > 0;
     const feedCta = document.getElementById('home-feed-cta');
     if (feedCta) feedCta.style.display = hasFeed ? 'none' : 'block';
-    // Welcome banner: show for first-time visitors without favorites
+    // Welcome banner has two states:
+    //   1. Affiliation not yet set → show Marauder/Townie question
+    //   2. Affiliation set but favorites not configured (and not dismissed) → show favorites CTA
+    //   3. Otherwise hidden
     const wb = document.getElementById('welcome-banner');
-    if (wb) {
+    const affPrompt = document.getElementById('affiliation-prompt');
+    const favPrompt = document.getElementById('favorites-prompt');
+    if (wb && affPrompt && favPrompt) {
         const dismissed = localStorage.getItem('welcomeDismissed');
-        wb.style.display = (!hasFeed && !dismissed) ? 'block' : 'none';
+        if (muAffiliation === null) {
+            // Ask affiliation first
+            wb.style.display = 'block';
+            affPrompt.style.display = 'block';
+            favPrompt.style.display = 'none';
+        } else if (!hasFeed && !dismissed) {
+            // Have affiliation, ask about favorites
+            wb.style.display = 'block';
+            affPrompt.style.display = 'none';
+            favPrompt.style.display = 'block';
+        } else {
+            wb.style.display = 'none';
+        }
     }
     renderHomeUI();
 }
@@ -885,6 +945,15 @@ window.dismissWelcome = function() {
     localStorage.setItem('welcomeDismissed', '1');
     const wb = document.getElementById('welcome-banner');
     if (wb) wb.style.display = 'none';
+};
+window.pickAffiliation = function(value) {
+    if (value !== 'student' && value !== 'townie') return;
+    muAffiliation = value;
+    localStorage.setItem(AFFILIATION_KEY, value);
+    // After picking, advance to the favorites prompt if they haven't configured yet
+    renderHomeFeed();
+    // Re-render events so the filter takes immediate effect
+    if (typeof renderEvents === 'function') renderEvents();
 };
 // ==================== END MY FEED ====================
 
@@ -896,12 +965,13 @@ let spActiveSources=new Set(['PM','MU','Clubs']), spSportTag=null, spHomeOnly=fa
 let spMode='week', spAnchorDate=new Date();
 
 const sportsList=['Baseball','Softball','Track','Soccer','Lacrosse','Tennis','Volleyball','Wrestling','Basketball','Football','Field Hockey','Golf','Cross Country','Cheerleading','Swimming','Rugby','Fencing','Esports','Archery'];
-const topSources=['MU','Clubs/Orgs','PM','Borough','Other'];
+const topSources=['MU','PM','Borough','Other'];
 const sportMetaTags=['Athletic Competitions','Athletics','Club Sports','Home Game Mode','H Games'];
 
 const evSubMap={
-    'MU':['Public Event','Student Event','Arts Concert / Performance'],
-    'Clubs/Orgs':['Residence Halls','Greek Life','Fundraising','Other Org'],
+    // MU now includes GetInvolved (formerly MU Clubs) plus the legacy MU calendar sub-types.
+    // Residence Halls, Greek Life, Fundraising carry through from GetInvolved tags.
+    'MU':['Public Event','Student Event','Arts Concert / Performance','GetInvolved','Residence Halls','Greek Life','Fundraising'],
     'PM':['Music/Arts','School Events','Board/PTO','Health/Wellness','Field Trips','Meetings']
 };
 
@@ -964,11 +1034,12 @@ function isPMSportByTitle(e){
 }
 function matchesSource(tags,src){
     if(src==='All') return true;
+    // MU now includes GetInvolved (MU Clubs) since those events are tagged MU + GetInvolved + Clubs/Orgs
     if(src==='MU') return tags.includes('MU');
-    if(src==='Clubs/Orgs') return tags.includes('Clubs/Orgs');
     if(src==='PM') return tags.includes('PM');
     if(src==='Borough') return tags.includes('Borough');
     if(src==='Other') return tags.includes('Other') || tags.includes('Community');
+    // Sports page still uses 'Clubs' as a separate filter (Club Sports games)
     if(src==='Clubs') return tags.includes('Clubs/Orgs')&&(tags.includes('Club Sports')||sportsList.some(s=>tags.includes(s)));
     return false;
 }
@@ -1193,7 +1264,7 @@ window.toggleEventSource=function(src){
 function updateEventsUI(){
     const allBtn = document.getElementById('ev-src-all');
     if (allBtn) allBtn.classList.toggle('active', evAllMode);
-    const srcMap = {'MU':'mu','Clubs/Orgs':'gi','PM':'pm','Borough':'borough','Other':'other'};
+    const srcMap = {'MU':'mu','PM':'pm','Borough':'borough','Other':'other'};
     allEvSources.forEach(src => {
         const btn = document.getElementById('ev-src-' + srcMap[src]);
         if (btn) btn.classList.toggle('active', !evAllMode && evActiveSources.has(src));
@@ -1285,6 +1356,7 @@ function renderEvents(){
     let filtered=allEvents.filter(e=>{
         if(isSportEvent(e)) return false;
         if(isPMSportByTitle(e)) return false;
+        if(isHiddenForTownie(e)) return false;
         const d=localDateStr(e.date);
         if(d<range.start||d>range.end) return false;
         const tags=e.tags||[];
@@ -1516,10 +1588,9 @@ function buildEventCard(e,isSportsPage){
     else if(tags.includes('Other')&&tags.includes('Live Music')) sourceLabel='Phantom Power';
     else if(tags.includes('Borough')) sourceLabel='Borough';
     else if(tags.includes('PM')) sourceLabel='PM';
-    else if(tags.includes('Clubs/Orgs')) sourceLabel='MU Clubs';
     else if(tags.includes('MU')) sourceLabel='MU';
 
-    const hiddenTags=[...topSources,...sportMetaTags,'MU Calendar','Penn Manor','MU GetInvolved','Phantom Power','VFW','Live Music','Other'];
+    const hiddenTags=[...topSources,...sportMetaTags,'MU Calendar','Penn Manor','Clubs/Orgs','Phantom Power','VFW','Live Music','Other'];
     const displayTags=tags.filter(t=>!hiddenTags.includes(t));
     let tagHtml=sourceLabel?`<span class="card-tag">${sourceLabel}</span>`:'';
     tagHtml+=displayTags.map(t=>`<span class="card-tag">${t}</span>`).join('');
@@ -1596,10 +1667,16 @@ function renderHomeUI(){
     const hasFeed = feedPrefs && feedPrefs.length > 0;
 
     // ===== COMBINED TIMELINE: games + events sorted by time =====
+    // Filter out student-only events for townies. Also skip GetInvolved mu-only content
+    // from the home timeline entirely (it was already hidden via Clubs/Orgs tag exclusion
+    // before the affiliation system existed) — keep that behavior for non-students.
     const todayAll = allEvents.filter(e => {
         if(localDateStr(e.date) !== todayStr) return false;
-        // Skip Clubs/Orgs from homepage timeline (too noisy)
-        if((e.tags||[]).includes('Clubs/Orgs')) return false;
+        if(isHiddenForTownie(e)) return false;
+        // Legacy behavior: hide mu-only GetInvolved content from homepage for non-students
+        // (isHiddenForTownie already handles this when affiliation is set or null, but
+        //  double-check explicitly for events that lack the audience field entirely)
+        if((e.tags||[]).includes('Clubs/Orgs') && e.audience !== 'public' && muAffiliation !== 'student') return false;
         return true;
     }).sort((a,b) => new Date(a.date) - new Date(b.date));
 
@@ -1608,7 +1685,10 @@ function renderHomeUI(){
         // Show next upcoming items
         const upcoming = allEvents.filter(e => {
             const d = localDateStr(e.date);
-            return d > todayStr && !(e.tags||[]).includes('Clubs/Orgs');
+            if (d <= todayStr) return false;
+            if (isHiddenForTownie(e)) return false;
+            if ((e.tags||[]).includes('Clubs/Orgs') && e.audience !== 'public' && muAffiliation !== 'student') return false;
+            return true;
         }).sort((a,b) => new Date(a.date) - new Date(b.date)).slice(0, 5);
         if (upcoming.length > 0) {
             timeline.innerHTML = '<p class="home-empty">Nothing scheduled today. Coming up next:</p>' + upcoming.map(e => buildTimelineItem(e, now)).join('');
@@ -2457,10 +2537,19 @@ function runSearch(q) {
             const clickAction = e.sourceLink
                 ? `document.getElementById('search-overlay').remove();window.open('${e.sourceLink.replace(/'/g, "\\'")}','_blank');`
                 : `document.getElementById('search-overlay').remove();switchView('events');`;
+            // Student-only badge + "not in your feed" note for townies
+            const hiddenForMe = isHiddenForTownie(e);
+            const muOnlyBadge = hiddenForMe
+                ? '<span style="display:inline-block;background:var(--gold-soft);color:var(--navy);border:1px solid var(--gold);font-size:0.68rem;font-weight:600;padding:1px 6px;border-radius:10px;margin-left:6px;vertical-align:1px;">🎓 MU students only</span>'
+                : '';
+            const hiddenNote = hiddenForMe
+                ? '<div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;font-style:italic;">Not shown in your feed — you marked yourself as a townie</div>'
+                : '';
             html += `<div class="search-result" onclick="${clickAction}" style="padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;margin-bottom:4px;background:var(--surface);">
-                <span style="font-size:0.7rem;color:var(--text-muted);">${src}</span>
+                <span style="font-size:0.7rem;color:var(--text-muted);">${src}</span>${muOnlyBadge}
                 <p style="font-weight:600;margin:2px 0;">${e.title}</p>
                 <span style="font-size:0.8rem;color:var(--text-muted);">${formatDate(d)} · ${cleanLocation(e.location)}</span>
+                ${hiddenNote}
             </div>`;
         });
         html += '</div>';

@@ -134,6 +134,11 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .feed-setup-hint a { color: var(--navy); font-weight: 700; }
 .welcome-banner { background: linear-gradient(135deg, var(--gold-soft), #fff8e1); border: 1.5px solid var(--gold); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 16px; }
 .welcome-banner strong { font-size: 0.95rem; color: var(--navy); }
+.affiliation-btn { background: white; border: 1.5px solid var(--gold); color: var(--navy); padding: 8px 14px; border-radius: var(--radius-sm); font-weight: 600; font-size: 0.88rem; cursor: pointer; font-family: inherit; transition: var(--transition); white-space: nowrap; }
+.affiliation-btn:hover { background: var(--gold); color: white; transform: translateY(-1px); }
+.aff-chip { background: white; border: 1px solid var(--border); color: var(--text); padding: 6px 12px; border-radius: var(--radius-sm); font-weight: 600; font-size: 0.82rem; cursor: pointer; font-family: inherit; transition: var(--transition); flex: 1; }
+.aff-chip:hover { border-color: var(--gold); }
+.aff-chip.active { background: var(--navy); color: white; border-color: var(--navy); }
 .perk-row { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
 .perk-badge { display: inline-flex; align-items: center; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: var(--radius-pill); white-space: nowrap; }
 .perk-food { background: #fef3c7; color: #92400e; border: 1px solid #fbbf24; }

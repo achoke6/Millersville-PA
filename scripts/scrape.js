@@ -986,7 +986,9 @@ async function runScraper() {
             const eventDate = new Date(item.startsOn);
             if (eventDate < pastDate || eventDate >= futureDate) return;
 
-            let tags = ["Clubs/Orgs"];
+            // Tag as MU (folded into main MU source) + GetInvolved (sub-category display tag)
+            // Keep 'Clubs/Orgs' as internal marker so existing dedupe source-bucket logic still works
+            let tags = ["MU", "GetInvolved", "Clubs/Orgs"];
             let rawTags = [];
             if (item.organizationName) rawTags.push(item.organizationName.trim());
             if (item.theme && item.theme !== "Not Applicable") rawTags.push(item.theme.trim());
@@ -1044,8 +1046,25 @@ async function runScraper() {
                 if (homeWords.some(k => loc.includes(k)) || /\bvs\b/.test(name)) tags.push("Home Game Mode");
             }
 
-            const isMainCategory = ['Residence Halls', 'Greek Life', 'Fundraising', 'Club Sports'].some(c => tags.includes(c));
-            if (!isMainCategory) tags.push('Other Org');
+            // Audience classification: default mu-only (student-only), promote to public if signals match.
+            // This determines whether non-MU visitors (townies) see the event in their feed.
+            //   - Fundraisers, club sports games, community service, and clearly-public events → public
+            //   - Credit-granting events are inherently student-only → always mu-only regardless
+            //   - Everything else defaults to mu-only (private club meetings, chapter business, tabling, practices)
+            const combinedText = nameText + ' ' + descText + ' ' + orgName;
+            const publicKeywordRegex = /\b(open to (the )?(public|community|all)|community welcome|all (are )?welcome|public event|for the public|the community|family|children|kids|everyone|blood drive|fundraiser|walkathon|5k|10k|run for|bake sale|festival|fair|concert|performance|recital|exhibition|gallery|benefit (for|concert)|donate|donation|charity|awareness (day|walk|event)|food drive|clothing drive|toy drive|drive for|volunteer|service project|community service|habitat for humanity|red cross|food pantry|soup kitchen)\b/i;
+            const publicCategoryRegex = /\b(fundraising|service|community service|performance|sporting|athletic|community|philanthropy|volunteer)\b/i;
+            const publicOrgRegex = /\b(red cross|food pantry|habitat for humanity|goodwill|salvation army|special olympics|make[- ]?a[- ]?wish)\b/i;
+
+            let audience = 'mu-only'; // default
+            if (!benefits.includes('Credit')) {
+                // Credit events stay student-only regardless of other signals
+                if (publicKeywordRegex.test(combinedText)) audience = 'public';
+                else if (rawTags.some(t => publicCategoryRegex.test(t))) audience = 'public';
+                else if (publicOrgRegex.test(orgName)) audience = 'public';
+                else if (tags.includes('Fundraising')) audience = 'public';
+                else if (tags.includes('Club Sports') && tags.includes('Home Game Mode')) audience = 'public';
+            }
 
             events.push({
                 title: item.name || "Student Event", date: eventDate.toISOString(),
@@ -1054,11 +1073,15 @@ async function runScraper() {
                 ticketLink: "",
                 sourceLink: `https://getinvolved.millersville.edu/event/${item.id}`,
                 description: item.description || "",
-                benefits: benefits
+                benefits: benefits,
+                audience: audience
             });
             clubCount++;
         });
-        console.log(`✅ Clubs/Orgs: ${clubCount} events`);
+        const giEvents = events.filter(e => (e.tags||[]).includes('GetInvolved'));
+        const publicCount = giEvents.filter(e => e.audience === 'public').length;
+        const muOnlyCount = giEvents.filter(e => e.audience === 'mu-only').length;
+        console.log(`✅ Clubs/Orgs: ${clubCount} events (${publicCount} public, ${muOnlyCount} MU-only)`);
     } catch (e) { console.error("❌ Clubs/Orgs error:", e.message); }
 
     // ===== 5. EVENTBRITE (PHANTOM POWER) =====
@@ -2088,6 +2111,12 @@ Focus on the most impressive deals a shopper would want to know about. Include m
             if (!winner.ticketLink && loser.event.ticketLink) {
                 winner.ticketLink = loser.event.ticketLink;
             }
+            // Merge audience — if any duplicate says the event is public-facing, keep it public.
+            // This helps MU Calendar entries (which have no audience field) pick up the 'public'
+            // signal from the GetInvolved duplicate that was being merged in.
+            if (loser.event.audience === 'public' && winner.audience !== 'public') {
+                winner.audience = 'public';
+            }
 
             kept.delete(loser.idx);
             crossDupes.push({
@@ -2098,7 +2127,8 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 merged: [
                     loser.event.benefits?.length ? `benefits:${loser.event.benefits.join(',')}` : '',
                     loser.event.kidFriendly && !winner.kidFriendly ? 'kidFriendly' : '',
-                    !winner.ticketLink && loser.event.ticketLink ? 'ticketLink' : ''
+                    !winner.ticketLink && loser.event.ticketLink ? 'ticketLink' : '',
+                    loser.event.audience === 'public' && winner.audience === 'public' && candidates[0].event.audience !== 'public' ? 'audience:public' : ''
                 ].filter(Boolean).join('+')
             });
         }

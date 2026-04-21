@@ -2169,22 +2169,46 @@ Focus on the most impressive deals a shopper would want to know about. Include m
     // picker even for orgs that haven't posted events recently.
     try {
         console.log("📡 Fetching all MU organizations from GetInvolved...");
-        const orgUrl = 'https://getinvolved.millersville.edu/api/discovery/organization/search?orderBy=UpperName&orderByDirection=ascending&status=Active&take=800';
-        const orgRes = await fetch(orgUrl);
-        if (orgRes.ok) {
-            const orgData = await orgRes.json();
-            const orgs = (orgData.value || []).map(o => ({
-                name: (o.Name || '').trim(),
-                category: (o.CategoryNames && o.CategoryNames[0]) || '',
-                categories: o.CategoryNames || [],
-                shortName: (o.ShortName || '').trim(),
-                id: o.WebsiteKey || o.Id
+        // Try progressively simpler query shapes — the discovery endpoint rejects
+        // unknown parameters with HTTP 500 instead of ignoring them, so start minimal.
+        // The events endpoint uses orderByField= (not orderBy=); match that convention.
+        const orgCandidates = [
+            'https://getinvolved.millersville.edu/api/discovery/organization/search?orderByField=UpperName&orderByDirection=ascending&status=Active&take=800',
+            'https://getinvolved.millersville.edu/api/discovery/organization/search?orderByField=UpperName&orderByDirection=ascending&take=800',
+            'https://getinvolved.millersville.edu/api/discovery/organization/search?take=800',
+            'https://getinvolved.millersville.edu/api/discovery/organization/search?query=&take=800'
+        ];
+        let orgData = null;
+        let usedUrl = '';
+        for (const url of orgCandidates) {
+            try {
+                const res = await fetch(url, { headers: baseHeaders });
+                if (res.ok) {
+                    orgData = await res.json();
+                    usedUrl = url;
+                    break;
+                } else {
+                    console.log(`  ⚠️ HTTP ${res.status} for: ${url.replace('https://getinvolved.millersville.edu/api/discovery/organization/search', '...')}`);
+                }
+            } catch (fetchErr) {
+                console.log(`  ⚠️ Fetch error: ${fetchErr.message}`);
+            }
+        }
+        if (!orgData) {
+            console.log("  ❌ All organization query variants failed; skipping clubs.json");
+        } else {
+            // Response shape: either { value: [...] } or raw array; handle both
+            const raw = orgData.value || orgData || [];
+            const orgs = raw.map(o => ({
+                name: (o.Name || o.name || '').trim(),
+                category: (o.CategoryNames && o.CategoryNames[0]) || (o.categoryNames && o.categoryNames[0]) || '',
+                categories: o.CategoryNames || o.categoryNames || [],
+                shortName: (o.ShortName || o.shortName || '').trim(),
+                id: o.WebsiteKey || o.Id || o.websiteKey || o.id
             })).filter(o => o.name);
             orgs.sort((a, b) => a.name.localeCompare(b.name));
             fs.writeFileSync(path.join(__dirname, '../clubs.json'), JSON.stringify(orgs, null, 2));
-            console.log(`✅ Clubs directory: ${orgs.length} organizations saved`);
-        } else {
-            console.log(`  ⚠️ Clubs directory fetch failed: HTTP ${orgRes.status}`);
+            console.log(`✅ Clubs directory: ${orgs.length} organizations saved (via ${usedUrl.split('?')[1].slice(0, 50)}...)`);
         }
     } catch (e) {
         console.error("❌ Clubs directory error:", e.message);

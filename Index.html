@@ -2002,9 +2002,10 @@ function buildTimelineItem(e, now) {
         badges += `<span class="tl-badge ${cls}">${e.gameResult} ${e.gameScore}</span>`;
     }
 
-    // Stream button for future games
+    // Stream icon for future games — just a visual indicator; card click opens modal.
+    // Previously this was an <a> that navigated to stream directly (bypassed modal).
     let streamBtn = '';
-    if (isSport && e.streamLink && d > now) streamBtn = `<a href="${e.streamLink}" target="_blank" class="tl-stream" onclick="event.stopPropagation()">📺</a>`;
+    if (isSport && e.streamLink && d > now) streamBtn = `<span class="tl-stream" title="Live stream available">📺</span>`;
 
     // Use event's sourceLink as unique identifier for the detail modal lookup.
     // Falls back to title+date composite for events without sourceLink.

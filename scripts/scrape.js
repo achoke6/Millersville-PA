@@ -1650,6 +1650,10 @@ Focus on the most impressive deals a shopper would want to know about. Include m
     } catch (e) { console.error("❌ VFW/Specials error:", e.message); }
 
     // ===== 8. COMMUNITY EVENT SUBMISSIONS (Google Sheet) =====
+    // Sheet columns (expected order, based on the Google Form):
+    //   0: Timestamp  1: Event Name  2: Date  3: Time  4: Location
+    //   5: Description  6: Email  7: Link  8: Status (manually added)
+    // An event is imported if its Status column is Approved / Yes / Y / ✓ / true.
     try {
         console.log("📡 Fetching community event submissions...");
         const SUBMIT_SHEET_ID = '1VRI55lrSl_MKoWjMPAfaOtJq2HrmU9NGn2R2waDXMCc';
@@ -1657,17 +1661,74 @@ Focus on the most impressive deals a shopper would want to know about. Include m
         const submitRes = await fetch(submitUrl);
         if (submitRes.ok) {
             const csvText = await submitRes.text();
-            const rows = csvText.split('\n').slice(1); // Skip header
-            let communityCount = 0;
-            for (const row of rows) {
-                // Parse CSV: Timestamp, Event Name, Date, Time, Location, Description, Contact Email, Website/Link, Status
-                const cols = row.match(/"([^"]*)"/g);
-                if (!cols || cols.length < 8) continue;
-                const clean = cols.map(c => c.replace(/"/g, '').trim());
-                const [timestamp, eventName, dateStr, timeStr, location, description, email, link, status] = clean;
 
-                // Only include approved events
-                if (!status || !/approved/i.test(status)) continue;
+            // Proper CSV parser: handles quoted cells, escaped quotes (""), and UNQUOTED cells.
+            // The previous regex-based approach only matched `"..."` blocks and silently dropped
+            // rows where any column (like status = Yes) was exported without quotes.
+            function parseCSVLine(line) {
+                const result = [];
+                let cur = '';
+                let inQuotes = false;
+                for (let i = 0; i < line.length; i++) {
+                    const ch = line[i];
+                    if (inQuotes) {
+                        if (ch === '"') {
+                            if (line[i + 1] === '"') { cur += '"'; i++; } // escaped quote
+                            else inQuotes = false;
+                        } else { cur += ch; }
+                    } else {
+                        if (ch === '"') inQuotes = true;
+                        else if (ch === ',') { result.push(cur); cur = ''; }
+                        else cur += ch;
+                    }
+                }
+                result.push(cur);
+                return result.map(s => s.trim());
+            }
+
+            // Split on newlines but respect embedded newlines inside quoted cells.
+            const allRows = [];
+            {
+                let cur = '';
+                let inQuotes = false;
+                for (let i = 0; i < csvText.length; i++) {
+                    const ch = csvText[i];
+                    if (ch === '"') inQuotes = !inQuotes;
+                    if (ch === '\n' && !inQuotes) {
+                        allRows.push(cur);
+                        cur = '';
+                    } else {
+                        cur += ch;
+                    }
+                }
+                if (cur) allRows.push(cur);
+            }
+
+            const rows = allRows.slice(1); // skip header
+            let communityCount = 0;
+            let skippedNoStatus = 0;
+            let skippedBadDate = 0;
+            let skippedOutOfRange = 0;
+            for (const row of rows) {
+                if (!row.trim()) continue;
+                const cols = parseCSVLine(row);
+                if (cols.length < 2) continue;
+                // Safer destructuring — don't bail just because cols.length < 9; status might be in col 8
+                // but other fields may be present even if status is missing/short.
+                const eventName = (cols[1] || '').trim();
+                const dateStr = (cols[2] || '').trim();
+                const timeStr = (cols[3] || '').trim();
+                const location = (cols[4] || '').trim();
+                const description = (cols[5] || '').trim();
+                const link = (cols[7] || '').trim();
+                const status = (cols[8] || '').trim();
+
+                // Accept multiple "approved" signals: Approved, Yes, Y, ✓, true, 1
+                const statusApproved = /^(approved|yes|y|true|1|✓|✔)$/i.test(status);
+                if (!statusApproved) {
+                    if (eventName && dateStr) skippedNoStatus++;
+                    continue;
+                }
                 if (!eventName || !dateStr) continue;
 
                 // Parse date (format from Google Forms: MM/DD/YYYY or YYYY-MM-DD)
@@ -1678,7 +1739,7 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 } else {
                     eventDate = new Date(dateStr);
                 }
-                if (isNaN(eventDate.getTime())) continue;
+                if (isNaN(eventDate.getTime())) { skippedBadDate++; continue; }
 
                 // Parse time if provided (format: HH:MM AM/PM or HH:MM)
                 if (timeStr) {
@@ -1696,7 +1757,7 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 }
 
                 // Skip events outside our date range
-                if (eventDate < pastDate || eventDate >= futureDate) continue;
+                if (eventDate < pastDate || eventDate >= futureDate) { skippedOutOfRange++; continue; }
 
                 events.push({
                     title: eventName,
@@ -1710,7 +1771,10 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 });
                 communityCount++;
             }
-            console.log(`✅ Community submissions: ${communityCount} approved events`);
+            console.log(`✅ Community submissions: ${communityCount} approved events` +
+                (skippedNoStatus || skippedBadDate || skippedOutOfRange
+                    ? ` (skipped: ${skippedNoStatus} not-approved, ${skippedBadDate} bad date, ${skippedOutOfRange} out of range)`
+                    : ''));
         } else {
             console.log(`  ⚠️ Community sheet fetch failed: ${submitRes.status}`);
         }

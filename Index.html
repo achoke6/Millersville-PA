@@ -781,10 +781,10 @@ window.openFeedSettings = function() {
         <div style="position:sticky;top:0;background:var(--surface);z-index:1;padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:12px;">
             <h3 style="margin-bottom:4px;">⚙️ My Feed</h3>
             <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:10px;">Pick what shows on your homepage and defaults on Events & Sports pages.</p>
-            <div style="display:flex;gap:6px;flex-wrap:wrap;">
-                <button onclick="saveFeedFromModal();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-ticket" style="flex:1;min-width:140px;padding:10px;font-size:0.9rem;">Save Preferences</button>
-                <button onclick="clearFavoritesOnly();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-outline" style="padding:10px;font-size:0.8rem;">Clear Favorites</button>
-                <button onclick="resetEverything();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-outline" style="padding:10px;font-size:0.8rem;">Reset All</button>
+            <div style="display:flex;gap:6px;align-items:stretch;">
+                <button onclick="saveFeedFromModal();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-ticket" style="flex:2;padding:10px 8px;font-size:0.85rem;white-space:nowrap;">💾 Save</button>
+                <button onclick="clearFavoritesOnly();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-outline" style="flex:1;padding:10px 4px;font-size:0.72rem;white-space:nowrap;">Clear Favs</button>
+                <button onclick="resetEverything();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-outline" style="flex:1;padding:10px 4px;font-size:0.72rem;white-space:nowrap;">Reset All</button>
             </div>
         </div>
         <div style="background:var(--gold-soft);border:1px solid var(--gold);border-radius:var(--radius-sm);padding:10px 12px;margin-bottom:14px;">

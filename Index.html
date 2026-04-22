@@ -530,14 +530,20 @@ const feedSections = {
             mu: { label: 'MU Events', icon: '🏴‍☠️', audience: 'student', subs: [
                 {id:'mu-arts',label:'Arts & Performances',icon:'🎭'},{id:'mu-public',label:'Public Events',icon:'📢'}
             ]},
-            clubs: { label: 'MU GetInvolved', icon: '🎓', audience: 'student', subs: [
-                {id:'clubs-all',label:'All GetInvolved Events',icon:'🎓'},
-                {id:'clubs-social',label:'Social Clubs',icon:'🎉'},
-                {id:'clubs-arts',label:'Arts & Performance',icon:'🎭'},
-                {id:'clubs-sports',label:'Club Sports',icon:'⚽'},
-                {id:'clubs-greek',label:'Greek Life',icon:'🏛️'},
-                {id:'clubs-service',label:'Service & Community',icon:'🤝'}
-            ]},
+            clubs: {
+                label: 'MU GetInvolved',      // marauder-facing default
+                townieLabel: 'MU Community Events', // shown to townies (GetInvolved is MU-internal jargon)
+                icon: '🎓',
+                audience: 'student',
+                subs: [
+                    {id:'clubs-all',label:'All Events',townieLabel:'All Community Events',icon:'🎓'},
+                    {id:'clubs-social',label:'Social Clubs',icon:'🎉'},
+                    {id:'clubs-arts',label:'Arts & Performance',icon:'🎭'},
+                    {id:'clubs-sports',label:'Club Sports',icon:'⚽'},
+                    {id:'clubs-greek',label:'Greek Life',icon:'🏛️',audience:'student'},      // hidden from townies
+                    {id:'clubs-service',label:'Service & Community',icon:'🤝'}
+                ]
+            },
             borough: { label: 'Borough', icon: '🌳', audience: 'townie', subs: [{id:'borough-all',label:'All Borough Events',icon:'🌳'}] },
             other: { label: 'Other', icon: '🎸', audience: 'townie', subs: [
                 {id:'other-vfw',label:'VFW Events',icon:'🎖️'},{id:'other-phantom',label:'Phantom Power',icon:'🎵'},
@@ -739,25 +745,37 @@ window.openFeedSettings = function() {
         return 2; // non-relevant
     };
     // Build sectioned HTML
+    const isTownie = muAffiliation !== 'student';
+    // Resolve a display label: use townieLabel if one is set AND user is townie (or unset)
+    const labelFor = (item) => (isTownie && item.townieLabel) ? item.townieLabel : item.label;
     for (const [secKey, section] of Object.entries(feedSections)) {
         sectionsHtml += `<div style="margin-bottom:20px;"><h4 style="font-size:0.95rem;font-weight:800;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid ${secKey==='sports'?'var(--navy)':secKey==='events'?'#b45309':'var(--border)'};">${section.title}</h4>`;
         // Sort groups: user's affiliation first, 'both' next, other affiliation last
         const groupEntries = Object.entries(section.groups).sort((a, b) => audienceRank(a[1].audience) - audienceRank(b[1].audience));
         for (const [key, group] of groupEntries) {
-            const allIds = group.subs.map(s => s.id);
+            // Hide subs whose individual audience excludes the current user. (Group-level
+            // audience mismatch only dims the group — user can still opt in. But a SUB-level
+            // audience tag means "only show this chip to users with matching affiliation".)
+            const visibleSubs = group.subs.filter(s => {
+                if (!s.audience || s.audience === 'both') return true;
+                return s.audience === muAffiliation;
+            });
+            if (visibleSubs.length === 0) continue; // skip entirely-filtered groups
+
+            const allIds = visibleSubs.map(s => s.id);
             const allChecked = allIds.every(id => current.includes(id));
             // Dim groups that don't match the user's affiliation (but still let them enable if they want)
             const groupDimmed = muAffiliation && group.audience && group.audience !== 'both' && group.audience !== muAffiliation;
             const groupClass = groupDimmed ? 'feed-group-dimmed' : '';
 
-            // For groups with audience-tagged subs (like news), sort those too
-            const subs = group.subs.slice().sort((a, b) => audienceRank(a.audience || group.audience || 'both') - audienceRank(b.audience || group.audience || 'both'));
+            // Sort visible subs by per-sub audience relevance (for groups like news that mix both)
+            const subs = visibleSubs.slice().sort((a, b) => audienceRank(a.audience || group.audience || 'both') - audienceRank(b.audience || group.audience || 'both'));
 
             sectionsHtml += `<div class="${groupClass}" style="margin-bottom:12px;">
                 <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
                     <label style="font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:6px;cursor:pointer;">
                         <input type="checkbox" class="feed-group" data-group="${key}" ${allChecked?'checked':''} onchange="toggleFeedGroup(this)" style="accent-color:var(--gold);width:16px;height:16px;">
-                        ${group.icon} ${group.label}${groupDimmed?'<span class="feed-group-dim-note">(not typical for '+(muAffiliation==='student'?'marauders':'townies')+' — enable if interested)</span>':''}
+                        ${group.icon} ${labelFor(group)}${groupDimmed?'<span class="feed-group-dim-note">(not typical for '+(muAffiliation==='student'?'marauders':'townies')+' — enable if interested)</span>':''}
                     </label>
                 </div>
                 <div style="display:flex;flex-wrap:wrap;gap:6px;padding-left:8px;">
@@ -765,7 +783,7 @@ window.openFeedSettings = function() {
                         const subAud = s.audience || group.audience || 'both';
                         const subDimmed = muAffiliation && subAud !== 'both' && subAud !== muAffiliation;
                         const subClass = subDimmed && !groupDimmed ? 'feed-group-dimmed' : '';
-                        return `<label class="${subClass}" style="display:flex;align-items:center;gap:4px;font-size:0.82rem;padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;background:${current.includes(s.id)?'var(--gold-soft)':'var(--bg)'};"><input type="checkbox" class="feed-sub" data-group="${key}" value="${s.id}" ${current.includes(s.id)?'checked':''} onchange="updateFeedGroup('${key}')" style="accent-color:var(--gold);"> ${s.icon} ${s.label}</label>`;
+                        return `<label class="${subClass}" style="display:flex;align-items:center;gap:4px;font-size:0.82rem;padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;background:${current.includes(s.id)?'var(--gold-soft)':'var(--bg)'};"><input type="checkbox" class="feed-sub" data-group="${key}" value="${s.id}" ${current.includes(s.id)?'checked':''} onchange="updateFeedGroup('${key}')" style="accent-color:var(--gold);"> ${s.icon} ${labelFor(s)}</label>`;
                     }).join('')}
                 </div>
                 ${key === 'clubs' ? '<div id="clubs-individual-wrap" style="padding-left:8px;margin-top:8px;"><button onclick="toggleClubBrowser()" class="btn btn-sm btn-outline" style="font-size:0.75rem;">📋 Browse Individual Clubs ▸</button><div id="clubs-individual-list" style="display:none;max-height:200px;overflow-y:auto;margin-top:8px;display:none;flex-wrap:wrap;gap:4px;"></div></div>' : ''}

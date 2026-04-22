@@ -2422,21 +2422,25 @@ Focus on the most impressive deals a shopper would want to know about. Include m
         const normalizeClubName = (name) => {
             return (name || '')
                 .toLowerCase()
-                // Strip common Millersville suffix phrases
-                .replace(/\s*[-–]\s*millersville university student chapter.*$/i, '')
-                .replace(/\s+millersville university student chapter\b.*$/i, '')
-                .replace(/\s+at millersville university\b.*$/i, '')
-                .replace(/\s+at millersville univ(e?rsity|ersity)?\b.*$/i, '') // handle typo "Univeristy"
-                .replace(/\s+at mu\b.*$/i, '')
+                // Strip common Millersville suffix phrases (expanded to cover "of" and "at"
+                // plus variations like "Student Chapter", college radio station, etc.)
+                .replace(/\s*[-–]\s*millersville university.*$/i, '')
                 .replace(/\s*[-–]\s*mu'?s?\s+college radio station.*$/i, '')
-                // Strip leading "The "
+                .replace(/\s+(at|of)\s+millersville(\s+univ(e?rsity|ersity)?)?\b.*$/i, '')
+                .replace(/\s+millersville\s+university\s+student\s+chapter\b.*$/i, '')
+                .replace(/\s+at\s+mu\b.*$/i, '')
+                // Strip leading "Millersville " / "MU " / "The " prefix
+                .replace(/^millersville\s+/i, '')
+                .replace(/^mu\s+/i, '')
                 .replace(/^the\s+/i, '')
                 // Normalize hyphens/dashes to spaces
                 .replace(/[-–—]/g, ' ')
                 // Strip apostrophes so "Women's" and "Womens" collapse
                 .replace(/'/g, '')
-                // Strip trailing common suffix words that come and go (don't strip "Club" — it's a varsity/club distinguisher)
-                .replace(/\s+(fraternity|sorority)\s*$/i, '') // Acacia / Acacia Fraternity
+                // Normalize comma-reversed forms: "Club Soccer, Womens" -> "womens club soccer"
+                .replace(/^(.+?),\s*(womens?|mens?)$/i, '$2 $1')
+                // Strip trailing "Fraternity"/"Sorority" (Acacia / Acacia Fraternity)
+                .replace(/\s+(fraternity|sorority)\s*$/i, '')
                 // Collapse whitespace
                 .replace(/\s+/g, ' ')
                 .trim();

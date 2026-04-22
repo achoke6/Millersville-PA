@@ -4989,7 +4989,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-04-06T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -5005,7 +5005,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-04-06T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -5543,7 +5543,7 @@
   {
     "title": "Chorus, Band, and Orchestra Concert (grades 3-6 attending)",
     "date": "2026-04-08T18:00:00.000Z",
-    "location": "Penn Manor School District",
+    "location": "PA",
     "tags": [
       "PM",
       "Music/Arts"
@@ -7029,6 +7029,22 @@
     "kidFriendly": false
   },
   {
+    "title": "Woody Yard Waste Collection",
+    "date": "2026-04-13T12:00:00.000Z",
+    "location": "Millersville Borough",
+    "tags": [
+      "Borough"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
     "title": "Regular Trash & Recycling Collection ",
     "date": "2026-04-13T12:00:00.000Z",
     "location": "Millersville Borough",
@@ -7046,22 +7062,6 @@
   },
   {
     "title": "Appliance/Tire Collection",
-    "date": "2026-04-13T12:00:00.000Z",
-    "location": "Millersville Borough",
-    "tags": [
-      "Borough"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
-    "gameResult": "",
-    "gameScore": "",
-    "streamLink": "",
-    "isLive": false,
-    "kidFriendly": false
-  },
-  {
-    "title": "Woody Yard Waste Collection",
     "date": "2026-04-13T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -9025,7 +9025,7 @@
   {
     "title": "PTO Meeting",
     "date": "2026-04-16T22:00:00.000Z",
-    "location": "Penn Manor School District",
+    "location": "PA",
     "tags": [
       "PM",
       "Board/PTO"
@@ -10118,7 +10118,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-04-20T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -10134,7 +10134,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-04-20T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -11436,45 +11436,6 @@
     "kidFriendly": false
   },
   {
-    "title": "Millersville University Baseball vs Kutztown",
-    "date": "2026-04-23T00:00:00.000Z",
-    "location": "Millersville, PA, Cooper Park",
-    "tags": [
-      "MU",
-      "Athletic Competitions",
-      "Athletics",
-      "Home Game Mode",
-      "Baseball"
-    ],
-    "price": "Ticket Required",
-    "ticketLink": "https://www.etix.com/ticket/p/65318534/",
-    "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10469&sport_id=1",
-    "gameResult": "",
-    "gameScore": "",
-    "streamLink": "https://psacsportsdigitalnetwork.com/millersvilleathletics/",
-    "isLive": false,
-    "kidFriendly": false
-  },
-  {
-    "title": "Millersville University Baseball at Kutztown",
-    "date": "2026-04-23T00:00:00.000Z",
-    "location": "Kutztown, PA",
-    "tags": [
-      "MU",
-      "Athletic Competitions",
-      "Athletics",
-      "Baseball"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10467&sport_id=1",
-    "gameResult": "",
-    "gameScore": "",
-    "streamLink": "https://kubears.com/watch",
-    "isLive": false,
-    "kidFriendly": false
-  },
-  {
     "title": "RUF Wednesday Night Bible Study",
     "date": "2026-04-23T00:00:00.000Z",
     "location": "Student Memorial Center, Room 18",
@@ -11632,6 +11593,26 @@
     "kidFriendly": false
   },
   {
+    "title": "Millersville University Baseball vs Kutztown",
+    "date": "2026-04-23T18:00:00.000Z",
+    "location": "Millersville, PA, Cooper Park",
+    "tags": [
+      "MU",
+      "Athletic Competitions",
+      "Athletics",
+      "Home Game Mode",
+      "Baseball"
+    ],
+    "price": "Ticket Required",
+    "ticketLink": "https://www.etix.com/ticket/p/65318534/",
+    "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10469&sport_id=1",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://psacsportsdigitalnetwork.com/millersvilleathletics/",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
     "title": "Millersville University Softball vs Holy Family",
     "date": "2026-04-23T19:00:00.000Z",
     "location": "Millersville, PA, Seaber Softball Stadium",
@@ -11732,6 +11713,26 @@
     "description": "Millersville Men's Rugby will be having Practice 4pm-6pm",
     "benefits": [],
     "audience": "mu-only",
+    "kidFriendly": false
+  },
+  {
+    "title": "Millersville University Baseball vs Kutztown",
+    "date": "2026-04-23T20:30:00.000Z",
+    "location": "Millersville, PA, Cooper Park",
+    "tags": [
+      "MU",
+      "Athletic Competitions",
+      "Athletics",
+      "Home Game Mode",
+      "Baseball"
+    ],
+    "price": "Ticket Required",
+    "ticketLink": "https://www.etix.com/ticket/p/65318534/",
+    "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10470&sport_id=1",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://psacsportsdigitalnetwork.com/millersvilleathletics/",
+    "isLive": false,
     "kidFriendly": false
   },
   {
@@ -11925,6 +11926,25 @@
     "description": "IAEM is hosting a bake sale where you can buy so many different baked goods and",
     "benefits": [],
     "audience": "public",
+    "kidFriendly": false
+  },
+  {
+    "title": "Millersville University Baseball at Kutztown",
+    "date": "2026-04-24T17:00:00.000Z",
+    "location": "Kutztown, PA",
+    "tags": [
+      "MU",
+      "Athletic Competitions",
+      "Athletics",
+      "Baseball"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10467&sport_id=1",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://kubears.com/watch",
+    "isLive": false,
     "kidFriendly": false
   },
   {
@@ -12243,26 +12263,6 @@
     "kidFriendly": false
   },
   {
-    "title": "Millersville University Baseball vs Kutztown",
-    "date": "2026-04-25T22:30:00.000Z",
-    "location": "Millersville, PA, Cooper Park",
-    "tags": [
-      "MU",
-      "Athletic Competitions",
-      "Athletics",
-      "Home Game Mode",
-      "Baseball"
-    ],
-    "price": "Ticket Required",
-    "ticketLink": "https://www.etix.com/ticket/p/65318534/",
-    "sourceLink": "https://millersvilleathletics.com/calendar.aspx?game_id=10470&sport_id=1",
-    "gameResult": "",
-    "gameScore": "",
-    "streamLink": "https://psacsportsdigitalnetwork.com/millersvilleathletics/",
-    "isLive": false,
-    "kidFriendly": false
-  },
-  {
     "title": "Phi Delta Theta Iron 5K",
     "date": "2026-04-26T08:00:00",
     "location": "SMC Robert Slabinski | SMC - Promenade (Front/Back), Promenade (Front/Back)",
@@ -12388,7 +12388,7 @@
     "kidFriendly": true
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-04-27T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -12404,7 +12404,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-04-27T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -13363,25 +13363,6 @@
     "ticketLink": "",
     "sourceLink": "https://www.millersville.edu/calendar/events/3fce9d56-b42f-11f0-9b87-35c835b63695",
     "description": "Meeting for all new FSL members of Spring 26",
-    "kidFriendly": false
-  },
-  {
-    "title": "Moo-d Boost Finals Edition",
-    "date": "2026-04-29T19:00:00.000Z",
-    "location": "The Quad",
-    "tags": [
-      "MU",
-      "GetInvolved",
-      "Clubs/Orgs",
-      "Campus Recreation",
-      "Social"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://getinvolved.millersville.edu/event/12435107",
-    "description": "Come hangout with Campus Rec and some farm animals (including mini highland cows) on the Quad to destress before finals week!",
-    "benefits": [],
-    "audience": "mu-only",
     "kidFriendly": false
   },
   {
@@ -14625,7 +14606,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-05-04T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -14641,7 +14622,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-05-04T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -15311,7 +15292,7 @@
   {
     "title": "Lunch & Learn (Evening Event for Incoming Kdg)",
     "date": "2026-05-07T22:00:00.000Z",
-    "location": "Penn Manor School District",
+    "location": "PA",
     "tags": [
       "PM",
       "Meetings"
@@ -15583,7 +15564,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Historic Commission",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-05-11T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -15615,7 +15596,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Historic Commission",
     "date": "2026-05-11T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -15723,7 +15704,7 @@
     "kidFriendly": true
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-05-18T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -15739,7 +15720,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-05-18T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -15785,7 +15766,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Election Day",
+    "title": "Office Closed",
     "date": "2026-05-19T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -15801,7 +15782,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Office Closed",
+    "title": "Election Day",
     "date": "2026-05-19T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -15941,7 +15922,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-05-26T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -15957,7 +15938,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-05-26T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -16025,7 +16006,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-06-01T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -16041,7 +16022,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-06-01T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -16160,7 +16141,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Historic Commission",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-06-08T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -16192,7 +16173,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Historic Commission",
     "date": "2026-06-08T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -16259,7 +16240,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-06-15T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -16275,7 +16256,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-06-15T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -16321,7 +16302,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-06-22T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -16337,7 +16318,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-06-22T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -16523,7 +16504,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-06-29T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -16539,7 +16520,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-06-29T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -16629,7 +16610,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-07-06T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -16645,7 +16626,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-07-06T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -16876,7 +16857,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Historic Commission",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-07-13T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -16908,7 +16889,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Historic Commission",
     "date": "2026-07-13T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -17150,7 +17131,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-07-20T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -17166,7 +17147,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-07-20T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -17214,7 +17195,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-07-27T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -17230,7 +17211,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-07-27T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -17262,7 +17243,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-08-03T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -17278,7 +17259,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-08-03T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -17356,7 +17337,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Historic Commission",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-08-10T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -17388,7 +17369,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Historic Commission",
     "date": "2026-08-10T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -17434,7 +17415,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-08-17T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -17450,7 +17431,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-08-17T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -17496,7 +17477,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-08-24T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -17512,7 +17493,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-08-24T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -17662,7 +17643,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-08-31T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -17678,7 +17659,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-08-31T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -17835,7 +17816,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-09-08T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -17851,7 +17832,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-09-08T00:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -17996,7 +17977,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Historic Commission",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-09-14T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -18028,7 +18009,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Historic Commission",
     "date": "2026-09-14T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -18161,7 +18142,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-09-21T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -18177,7 +18158,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-09-21T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -18356,7 +18337,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-09-28T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -18372,7 +18353,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-09-28T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -18488,7 +18469,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-10-05T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -18504,7 +18485,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-10-05T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -18713,7 +18694,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Historic Commission",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-10-12T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -18745,7 +18726,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Historic Commission",
     "date": "2026-10-12T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -18901,7 +18882,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-10-19T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -18917,7 +18898,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-10-19T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -19074,7 +19055,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Regular Trash & Recycling Collection ",
+    "title": "Woody Yard Waste Collection",
     "date": "2026-10-26T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -19090,7 +19071,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Woody Yard Waste Collection",
+    "title": "Regular Trash & Recycling Collection ",
     "date": "2026-10-26T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [

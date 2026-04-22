@@ -166,7 +166,7 @@
         <div class="sticky-nav-bar">
             <div class="toolbar-compact">
                 <div class="toolbar-center">
-                    <button id="ev-today-btn" class="today-btn" onclick="evScrollToToday()" title="Jump to today">📅 Today</button>
+                    <span id="ev-current-day-label" class="current-day-label" onclick="evScrollToToday()" title="Jump to today">Today</span>
                 </div>
                 <div class="toolbar-right">
                     <button class="family-toggle" id="ev-kid-toggle" data-feed="family-events" onclick="toggleKidFriendly()" title="Family Friendly Events">👨‍👩‍👧</button>
@@ -202,6 +202,7 @@
                         <button id="sp-tab-upcoming" class="sp-time-btn active" onclick="setSportsTimeView('upcoming')">Upcoming</button>
                         <button id="sp-tab-past" class="sp-time-btn" onclick="setSportsTimeView('past')">Past</button>
                     </div>
+                    <span id="sp-current-day-label" class="current-day-label" onclick="spScrollToToday()" title="Jump to today" style="margin-left:10px;">Today</span>
                 </div>
                 <div class="toolbar-right">
                     <button class="home-toggle" id="hgame-toggle" onclick="toggleHomeGameMode()" title="Home Games Only">
@@ -1703,6 +1704,7 @@ function renderEvents(){
 
     container.innerHTML = html;
     injectInlineAds('ev-events-container','events');
+    if (typeof refreshDayLabels === 'function') refreshDayLabels();
 }
 
 // Load the next batch of future days on the Events page
@@ -1711,20 +1713,78 @@ window.evLoadMore = function() {
     renderEvents();
 };
 
-// Scroll-to-today helper
+// Scroll-to-today helper (clicking the toolbar date label jumps back to Today)
 window.evScrollToToday = function() {
     const container = document.getElementById('ev-events-container');
     if (!container) return;
-    // Find the "Today" header specifically; fall back to the first day-group header
     const todayHeader = container.querySelector('.day-group-header.today') || container.querySelector('.day-group-header');
     if (todayHeader) {
-        const stickyOffset = 140; // approximate combined height of site header + sticky toolbar
+        const stickyOffset = 140; // site header + sticky toolbar combined
         const top = todayHeader.getBoundingClientRect().top + window.scrollY - stickyOffset;
         window.scrollTo({ top, behavior: 'smooth' });
     } else {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 };
+window.spScrollToToday = function() {
+    const container = document.getElementById('sp-events-container');
+    if (!container) return;
+    const todayHeader = container.querySelector('.day-group-header.today') || container.querySelector('.day-group-header');
+    if (todayHeader) {
+        const stickyOffset = 140;
+        const top = todayHeader.getBoundingClientRect().top + window.scrollY - stickyOffset;
+        window.scrollTo({ top, behavior: 'smooth' });
+    } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+};
+
+// ===== Toolbar date label — updates as the user scrolls through day groups =====
+// Tracks which day-group-header is nearest the top of the viewport and mirrors its
+// label into the toolbar's #ev-current-day-label / #sp-current-day-label span.
+// Uses a simple scroll listener rather than IntersectionObserver because the
+// day groups are added/removed as "Load more" extends the list.
+function updateCurrentDayLabel(pageKey) {
+    const prefix = pageKey; // 'ev' or 'sp'
+    const labelEl = document.getElementById(prefix + '-current-day-label');
+    const container = document.getElementById(prefix + '-events-container');
+    if (!labelEl || !container) return;
+    const headers = container.querySelectorAll('.day-group-header');
+    if (headers.length === 0) {
+        labelEl.textContent = 'Today';
+        return;
+    }
+    // "Active" header = the last one whose top has scrolled above the toolbar offset
+    const offsetTop = 120; // ~ site header (50) + toolbar height (70)
+    let active = headers[0];
+    for (const h of headers) {
+        const rect = h.getBoundingClientRect();
+        if (rect.top <= offsetTop + 8) active = h;
+        else break;
+    }
+    // Extract just the label (ignore the count span)
+    const labelText = active.childNodes[0] ? active.childNodes[0].textContent.trim() : active.textContent.trim();
+    if (labelEl.textContent !== labelText) labelEl.textContent = labelText;
+}
+// Throttle to once-per-animation-frame to avoid jank on scroll
+let _dayLabelScrollPending = false;
+window.addEventListener('scroll', () => {
+    if (_dayLabelScrollPending) return;
+    _dayLabelScrollPending = true;
+    requestAnimationFrame(() => {
+        _dayLabelScrollPending = false;
+        // Only update for whichever view is active
+        const eventsView = document.getElementById('view-events');
+        const sportsView = document.getElementById('view-sports');
+        if (eventsView && eventsView.classList.contains('active')) updateCurrentDayLabel('ev');
+        else if (sportsView && sportsView.classList.contains('active')) updateCurrentDayLabel('sp');
+    });
+}, { passive: true });
+// Also update after renders in case a filter changes what's at the top
+function refreshDayLabels() {
+    updateCurrentDayLabel('ev');
+    updateCurrentDayLabel('sp');
+}
 
 /* ==================== SPORTS PAGE ==================== */
 
@@ -1909,6 +1969,7 @@ function renderSports(){
     }
     container.innerHTML = html;
     injectInlineAds('sp-events-container','sports');
+    if (typeof refreshDayLabels === 'function') refreshDayLabels();
 }
 
 // Load the next batch in the active view (upcoming extends forward, past extends backward)

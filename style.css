@@ -137,33 +137,37 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .feed-group-dim-note { font-size: 0.7rem; color: var(--text-muted); font-weight: 400; margin-left: 6px; }
 
 /* ===== Infinite-scroll day grouping (Events + Sports) ===== */
-/* Day group header — sticky inside the card grid. When the user scrolls past one group,
-   the next group's header slides up and takes over the top position (iOS Messages-style). */
+/* Day group header — an in-list divider between days. Not sticky anymore since the
+   toolbar's #ev-current-day-label / #sp-current-day-label shows the active date as
+   you scroll. That avoids double stacking of sticky elements. */
 .day-group-header {
     grid-column: 1 / -1;
-    position: sticky;
-    /* Sit below the site header (~50px) + sticky nav bar (~60-90px). The offset
-       is intentionally generous so the sticky header never overlaps the toolbar,
-       even when the filter bar is open below the compact toolbar row. */
-    top: 110px;
-    z-index: 5;
-    background: var(--bg);
-    padding: 10px 12px 8px;
-    margin: 8px -4px 0;
+    background: transparent;
+    padding: 10px 4px 6px;
+    margin: 12px 0 0;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+.day-group-header.today { color: var(--navy); border-bottom-color: var(--gold); }
+.day-group-header .day-count { font-size: 0.7rem; font-weight: 500; color: var(--text-muted); margin-left: 8px; text-transform: none; letter-spacing: 0; }
+/* Dynamic date label in the sticky toolbar — updates as the user scrolls past day groups */
+.current-day-label {
     font-size: 0.95rem;
     font-weight: 800;
     color: var(--navy);
-    border-bottom: 2px solid var(--gold);
-    backdrop-filter: saturate(180%) blur(8px);
-    -webkit-backdrop-filter: saturate(180%) blur(8px);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    padding: 4px 12px;
+    background: var(--gold-soft);
+    border: 1px solid var(--gold);
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+    transition: color 0.15s;
+    cursor: pointer;
 }
-/* Taller offset on narrower screens where the sticky nav stacks a bit taller */
-@media (max-width: 640px) {
-    .day-group-header { top: 120px; }
-}
-.day-group-header.today { color: var(--navy); background: var(--gold-soft); }
-.day-group-header .day-count { font-size: 0.72rem; font-weight: 500; color: var(--text-muted); margin-left: 8px; }
+.current-day-label:hover { background: var(--gold); }
 /* Today/Load More buttons */
 .today-btn { background: var(--gold); color: var(--navy); border: 1.5px solid var(--gold); padding: 6px 12px; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.82rem; cursor: pointer; font-family: inherit; white-space: nowrap; }
 .today-btn:hover { background: #f3c75c; }

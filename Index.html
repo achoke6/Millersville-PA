@@ -1139,6 +1139,11 @@ window.pickAffiliation = function(value) {
 const INITIAL_DAYS = 60;
 const LOAD_MORE_INCREMENT = 60;
 let evDaysVisible = INITIAL_DAYS;
+// Favorites-only filter mode — when on, only favorited events show (still day-grouped).
+// Replaces the old "pin at top" behavior since pinning all future favorites under the
+// Today header was confusing when the first pinned card was weeks away.
+let evFavOnlyMode = false;
+let spFavOnlyMode = false;
 // Events page retains mode/anchor only for back-compat with older functions that
 // reference them; actively ignored by the new render pipeline.
 let evMode='upcoming', evAnchorDate=new Date();
@@ -1526,6 +1531,7 @@ window.toggleFreeStuff=function(){
 window.clearEventFilters=function(){
     evTags.clear(); evAllMode=true; evActiveSources=new Set(allEvSources);
     evKidMode=false; evFreeFoodMode=false; evFreeStuffMode=false;
+    evFavOnlyMode=false;
     evDaysVisible = INITIAL_DAYS;
     document.getElementById('ev-kid-toggle').classList.remove('active');
     const ff=document.getElementById('ev-freefood-toggle');
@@ -1670,25 +1676,38 @@ function renderEvents(){
         return;
     }
 
-    // Favorites pinning: if the user has event favorites, pull them to the top in their own group.
-    // Otherwise show a setup hint and fall through to day grouping.
+    // Favorites UX: no longer pinned at the top (created confusion with day headers).
+    // Instead: show a "⭐ N favorites" chip — tapping it filters the list to favorites only.
+    // Favorited cards themselves get a gold border (via buildEventCard's card-fav class)
+    // so they stand out in their natural day group.
     const hasAnyPrefs = feedPrefs && feedPrefs.length > 0;
     const hasEventPrefs = hasAnyPrefs && feedPrefs.some(p => eventFeedIds.has(p) || p.startsWith('club:'));
+    const favCount = hasEventPrefs ? allMatching.filter(e => eventMatchesFeed(e)).length : 0;
 
     let html = '';
     let dayItems = filtered;
-    if (evAllMode && hasEventPrefs) {
-        const feedItems = filtered.filter(e => eventMatchesFeed(e));
-        if (feedItems.length > 0) {
-            html += '<div class="feed-pinned-header"><span>⚡ My Favorites</span></div>';
-            html += feedItems.map(e => buildEventCard(e, false)).join('');
-            dayItems = filtered.filter(e => !eventMatchesFeed(e));
-            if (dayItems.length > 0) html += '<div class="feed-divider"><span>All Events</span></div>';
-        }
+
+    // Chip / setup hint (non-exclusive — show one appropriate call-to-action)
+    if (hasEventPrefs && favCount > 0) {
+        const activeCls = evFavOnlyMode ? ' active' : '';
+        const label = evFavOnlyMode ? '⭐ Showing favorites only' : '⭐ Jump to your favorites';
+        html += '<div class="fav-filter-chip-wrap"><button class="fav-filter-chip' + activeCls + '" onclick="evToggleFavOnly()">' + label + ' <span class="fav-count">(' + favCount + ')</span></button></div>';
     } else if (!hasAnyPrefs) {
-        html += '<div class="feed-setup-hint">⚙️ <a href="#" onclick="event.preventDefault();openFeedSettings();">Set up your favorites</a> to see your preferred events first</div>';
+        html += '<div class="feed-setup-hint">⚙️ <a href="#" onclick="event.preventDefault();openFeedSettings();">Set up your favorites</a> to highlight your preferred events</div>';
     } else if (hasAnyPrefs && !hasEventPrefs) {
-        html += '<div class="feed-setup-hint">No event favorites set — <a href="#" onclick="event.preventDefault();openFeedSettings();">add some</a> to pin them here</div>';
+        html += '<div class="feed-setup-hint">No event favorites set — <a href="#" onclick="event.preventDefault();openFeedSettings();">add some</a> to highlight them here</div>';
+    }
+
+    // If favorites-only mode is on, narrow the list to favorites
+    if (evFavOnlyMode && hasEventPrefs) {
+        dayItems = filtered.filter(e => eventMatchesFeed(e));
+        if (dayItems.length === 0) {
+            html += '<p class="empty-state">No upcoming favorites in the next ' + evDaysVisible + ' days. <a href="#" onclick="event.preventDefault();evToggleFavOnly();">Show all events</a></p>';
+            if (beyondCount > 0) html += '<button class="load-more-btn" onclick="evLoadMore()">Load more (' + beyondCount + ' more events)</button>';
+            container.innerHTML = html;
+            if (typeof refreshDayLabels === 'function') refreshDayLabels();
+            return;
+        }
     }
 
     // Day-grouped render
@@ -1711,6 +1730,14 @@ function renderEvents(){
 window.evLoadMore = function() {
     evDaysVisible += LOAD_MORE_INCREMENT;
     renderEvents();
+};
+
+// Toggle favorites-only filter on Events
+window.evToggleFavOnly = function() {
+    evFavOnlyMode = !evFavOnlyMode;
+    renderEvents();
+    // Scroll to top so the user sees the filtered view from the beginning
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
 // Scroll-to-today helper (clicking the toolbar date label jumps back to Today)
@@ -1860,6 +1887,7 @@ window.clearSportsFilters=function(){
     spSportTag=null; spHomeOnly=false; spAllMode=true;
     spActiveSources=new Set(['PM','MU','Clubs']);
     spTimeView='upcoming';
+    spFavOnlyMode=false;
     spDaysVisible = INITIAL_DAYS;
     spPastDaysVisible = INITIAL_DAYS;
     // Reset Upcoming/Past tab active state
@@ -1939,23 +1967,37 @@ function renderSports(){
         return;
     }
 
-    // Favorites pinning: only in upcoming view. Past view just shows chronological list.
+    // Favorites UX: no longer pinned at the top. Chip lets user filter to favorites only.
+    // Past view doesn't use the chip — past games are shown chronologically newest-first.
     const hasAnyPrefs = feedPrefs && feedPrefs.length > 0;
     const hasSportPrefs = hasAnyPrefs && feedPrefs.some(p => sportFeedIds.has(p));
+    const sportFavCount = (!isPast && hasSportPrefs) ? allMatching.filter(e => eventMatchesFeed(e)).length : 0;
+
     let html = '';
     let dayItems = filtered;
-    if (!isPast && spAllMode && hasSportPrefs) {
-        const feedItems = filtered.filter(e => eventMatchesFeed(e));
-        if (feedItems.length > 0) {
-            html += '<div class="feed-pinned-header"><span>⚡ My Favorites</span></div>';
-            html += feedItems.map(e => buildEventCard(e, true)).join('');
-            dayItems = filtered.filter(e => !eventMatchesFeed(e));
-            if (dayItems.length > 0) html += '<div class="feed-divider"><span>All Games</span></div>';
+
+    if (!isPast) {
+        if (hasSportPrefs && sportFavCount > 0) {
+            const activeCls = spFavOnlyMode ? ' active' : '';
+            const label = spFavOnlyMode ? '⭐ Showing favorites only' : '⭐ Jump to your favorites';
+            html += '<div class="fav-filter-chip-wrap"><button class="fav-filter-chip' + activeCls + '" onclick="spToggleFavOnly()">' + label + ' <span class="fav-count">(' + sportFavCount + ')</span></button></div>';
+        } else if (!hasAnyPrefs) {
+            html += '<div class="feed-setup-hint">⚙️ <a href="#" onclick="event.preventDefault();openFeedSettings();">Set up your favorites</a> to highlight your preferred games</div>';
+        } else if (hasAnyPrefs && !hasSportPrefs) {
+            html += '<div class="feed-setup-hint">No sport favorites set — <a href="#" onclick="event.preventDefault();openFeedSettings();">add some</a> to highlight them here</div>';
         }
-    } else if (!isPast && !hasAnyPrefs) {
-        html += '<div class="feed-setup-hint">⚙️ <a href="#" onclick="event.preventDefault();openFeedSettings();">Set up your favorites</a> to see your preferred games first</div>';
-    } else if (!isPast && hasAnyPrefs && !hasSportPrefs) {
-        html += '<div class="feed-setup-hint">No sport favorites set — <a href="#" onclick="event.preventDefault();openFeedSettings();">add some</a> to pin them here</div>';
+
+        // Apply favorites-only filter if active
+        if (spFavOnlyMode && hasSportPrefs) {
+            dayItems = filtered.filter(e => eventMatchesFeed(e));
+            if (dayItems.length === 0) {
+                html += '<p class="empty-state">No upcoming favorite games in the next ' + daysN + ' days. <a href="#" onclick="event.preventDefault();spToggleFavOnly();">Show all games</a></p>';
+                if (beyondCount > 0) html += '<button class="load-more-btn" onclick="spLoadMore()">Load more (' + beyondCount + ' more games)</button>';
+                container.innerHTML = html;
+                if (typeof refreshDayLabels === 'function') refreshDayLabels();
+                return;
+            }
+        }
     }
 
     // Day-grouped render
@@ -1979,11 +2021,20 @@ window.spLoadMore = function() {
     renderSports();
 };
 
+// Toggle favorites-only filter on Sports (Upcoming view only)
+window.spToggleFavOnly = function() {
+    spFavOnlyMode = !spFavOnlyMode;
+    renderSports();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
 // Switch between Upcoming and Past tabs on Sports
 window.setSportsTimeView = function(view) {
     if (view !== 'upcoming' && view !== 'past') return;
     spTimeView = view;
     spMode = view; // keep legacy variable in sync for any remaining consumers
+    // Past view doesn't support favorites-only filtering — clear if switching there
+    if (view === 'past') spFavOnlyMode = false;
     // Reset the other view's window so switching feels fresh; current view retains its extension
     if (view === 'upcoming') spPastDaysVisible = INITIAL_DAYS;
     else spDaysVisible = INITIAL_DAYS;
@@ -2106,7 +2157,13 @@ function buildEventCard(e,isSportsPage){
     // Clean title
     const displayTitle = (e.title || '').replace(/^Millersville University\s*/i, '').replace(/ - (Girls|Boys)\s+(vs |@ )/i, ' $2');
 
-    return `<div class="app-card${isCurrentlyLive?' card-live':''} ${cardResultClass}" style="position:relative;">${scoreBadge}<div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${displayTitle}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${cleanLocation(e.location)}</p>${perkBadges?`<div class="perk-row">${perkBadges}</div>`:''}</div><div class="card-footer"><div class="card-actions">${locBadge}<a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
+    // Visual highlight for favorited cards. Replaces the old "pinned at top" behavior —
+    // favorites now sit in their chronological day group with a gold accent so users can
+    // spot them at a glance while scrolling.
+    const isFav = (typeof eventMatchesFeed === 'function') && eventMatchesFeed(e);
+    const favClass = isFav ? ' card-fav' : '';
+
+    return `<div class="app-card${isCurrentlyLive?' card-live':''} ${cardResultClass}${favClass}" style="position:relative;">${scoreBadge}<div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${isFav?'<span class="fav-star" title="Favorite">⭐</span> ':''}${displayTitle}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${cleanLocation(e.location)}</p>${perkBadges?`<div class="perk-row">${perkBadges}</div>`:''}</div><div class="card-footer"><div class="card-actions">${locBadge}<a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
 }
 
 /* ==================== HOME ==================== */

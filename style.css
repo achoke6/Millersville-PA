@@ -91,12 +91,21 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
    so there's no sliver of page content visible between the header and the sticky bar. */
 .sticky-nav-bar {
     position: sticky;
-    top: 50px;
+    /* Site header is ~44px tall (padding 10px + ~22px content + 1px border). Use 44px to sit
+       flush below it. Previously used 50px with a -16px margin-top which caused a visible
+       scroll offset before the bar "caught" on the header. */
+    top: 44px;
     z-index: 50;
     background: var(--bg);
-    margin: -16px -16px 10px;
-    padding: 24px 16px 0;
+    /* Negative horizontal margins let the bar's background bleed to the page edges on mobile.
+       No vertical negative margin — that was creating the "scrolls a bit" issue. */
+    margin: 0 -16px 10px;
+    padding: 12px 16px 0;
     border-bottom: 1px solid var(--border);
+}
+@media (max-width: 768px) {
+    /* On mobile the header may render a hair shorter; tuck the sticky bar right up against it */
+    .sticky-nav-bar { top: 42px; }
 }
 
 /* Compact toolbar: date nav + action buttons */
@@ -135,6 +144,36 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .feed-group-dimmed { opacity: 0.55; }
 .feed-group-dimmed label:hover { opacity: 0.85; }
 .feed-group-dim-note { font-size: 0.7rem; color: var(--text-muted); font-weight: 400; margin-left: 6px; }
+
+/* Favorited event/game card — gold accent. Favorites are no longer pinned at the top of
+   Events/Sports pages; they live in their chronological day group with this visual badge
+   so users can spot them at a glance while scrolling. */
+.app-card.card-fav { border: 2px solid var(--gold); box-shadow: 0 2px 12px rgba(216, 163, 46, 0.15); }
+.fav-star { font-size: 0.85em; vertical-align: 2px; }
+
+/* Favorites-only filter chip — shown at the top of Events/Sports when user has favorites.
+   One tap filters the list to favorites only; same tap (now styled "active") un-filters. */
+.fav-filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px;
+    background: var(--surface);
+    border: 1.5px solid var(--gold);
+    border-radius: 999px;
+    color: var(--navy);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    white-space: nowrap;
+    font-family: inherit;
+}
+.fav-filter-chip:hover { background: var(--gold-soft); }
+.fav-filter-chip.active { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+.fav-filter-chip .fav-count { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; }
+.fav-filter-chip.active .fav-count { color: var(--navy); opacity: 0.7; }
+.fav-filter-chip-wrap { grid-column: 1 / -1; display: flex; justify-content: flex-start; margin: 4px 0 8px; }
 
 /* ===== Infinite-scroll day grouping (Events + Sports) ===== */
 /* Day group header — an in-list divider between days. Not sticky anymore since the

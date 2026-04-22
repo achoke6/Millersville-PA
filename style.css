@@ -91,21 +91,16 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
    so there's no sliver of page content visible between the header and the sticky bar. */
 .sticky-nav-bar {
     position: sticky;
-    /* Site header is ~44px tall (padding 10px + ~22px content + 1px border). Use 44px to sit
-       flush below it. Previously used 50px with a -16px margin-top which caused a visible
-       scroll offset before the bar "caught" on the header. */
+    /* Stick flush below the site header, which is sticky at top:0 and ~43px tall
+       (10px padding + ~22px logo line + 1px border). Using 44px leaves no visible gap. */
     top: 44px;
     z-index: 50;
     background: var(--bg);
-    /* Negative horizontal margins let the bar's background bleed to the page edges on mobile.
-       No vertical negative margin — that was creating the "scrolls a bit" issue. */
-    margin: 0 -16px 10px;
-    padding: 12px 16px 0;
+    /* Negative margin pulls the bar up into the container's 16px top-padding so it sits
+       flush with the header from the page's initial render (no scroll gap). */
+    margin: -16px -16px 10px;
+    padding: 16px 16px 0;
     border-bottom: 1px solid var(--border);
-}
-@media (max-width: 768px) {
-    /* On mobile the header may render a hair shorter; tuck the sticky bar right up against it */
-    .sticky-nav-bar { top: 42px; }
 }
 
 /* Compact toolbar: date nav + action buttons */
@@ -151,29 +146,49 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .app-card.card-fav { border: 2px solid var(--gold); box-shadow: 0 2px 12px rgba(216, 163, 46, 0.15); }
 .fav-star { font-size: 0.85em; vertical-align: 2px; }
 
-/* Favorites-only filter chip — shown at the top of Events/Sports when user has favorites.
-   One tap filters the list to favorites only; same tap (now styled "active") un-filters. */
-.fav-filter-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 7px 14px;
-    background: var(--surface);
-    border: 1.5px solid var(--gold);
-    border-radius: 999px;
+/* Toolbar ⭐ Favs button — a variant of .family-toggle that shows a label next to the star.
+   Matches .family-toggle size so it lines up with other toolbar toggles. */
+.family-toggle.fav-toggle {
+    width: auto;
+    padding: 0 10px;
+    gap: 4px;
+    font-size: 0.78rem;
+    font-weight: 700;
     color: var(--navy);
-    font-size: 0.85rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
-    white-space: nowrap;
-    font-family: inherit;
+    border-color: var(--gold);
 }
-.fav-filter-chip:hover { background: var(--gold-soft); }
-.fav-filter-chip.active { background: var(--gold); color: var(--navy); border-color: var(--gold); }
-.fav-filter-chip .fav-count { font-size: 0.75rem; color: var(--text-muted); font-weight: 500; }
-.fav-filter-chip.active .fav-count { color: var(--navy); opacity: 0.7; }
-.fav-filter-chip-wrap { grid-column: 1 / -1; display: flex; justify-content: flex-start; margin: 4px 0 8px; }
+.family-toggle.fav-toggle.active { background: var(--gold); color: var(--navy); border-color: var(--gold); }
+.family-toggle.fav-toggle:not(.active):hover { background: var(--gold-soft); }
+.fav-toggle-label { font-size: 0.78rem; }
+/* Tight mobile: hide the text, keep just the star so the toolbar fits */
+@media (max-width: 420px) {
+    .fav-toggle-label { display: none; }
+    .family-toggle.fav-toggle { padding: 0; width: 36px; gap: 0; }
+}
+
+/* Clear filters button — compact X-only so the toolbar has room for more items.
+   The button ID is `ev-clear-btn` / `sp-clear-btn`; JS toggles its `display` between
+   `none` and the flex value set here. Tooltip ("Clear filters") explains the action. */
+.clear-btn {
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 0.95rem;
+    font-weight: 700;
+    background: var(--surface);
+    color: #dc2626;
+    border: 1.5px solid #fecaca;
+    cursor: pointer;
+    font-family: inherit;
+    line-height: 1;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    /* display toggled to flex by JS when filters are active */
+}
+.clear-btn:hover { background: #fef2f2; border-color: #dc2626; }
 
 /* ===== Infinite-scroll day grouping (Events + Sports) ===== */
 /* Day group header — an in-list divider between days. Not sticky anymore since the
@@ -364,22 +379,6 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .src-btn[data-feed] { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; touch-action: manipulation; position: relative; overflow: visible; }
 .btn-icon { vertical-align: middle; margin-right: 2px; flex-shrink: 0; }
 
-/* Clear button: sits in toolbar-row, right-aligned, hidden by default */
-.clear-btn {
-    display: none; /* toggled to flex by JS */
-    align-items: center;
-    background: var(--red-soft);
-    color: var(--red);
-    border: none;
-    padding: 0 12px;
-    height: 34px;
-    border-radius: var(--radius-sm);
-    font-size: 0.78rem;
-    font-weight: 700;
-    cursor: pointer;
-    font-family: inherit;
-    white-space: nowrap;
-}
 .filter-toggle { background: var(--surface); border: 1.5px solid var(--border); color: var(--text); padding: 0 12px; height: 34px; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.8rem; cursor: pointer; font-family: inherit; transition: var(--transition); display: flex; align-items: center; gap: 4px; }
 .filter-toggle:hover { border-color: var(--gold); }
 .toolbar-compact .clear-btn { position: static; }

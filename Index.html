@@ -169,10 +169,11 @@
                     <span id="ev-current-day-label" class="current-day-label" onclick="evScrollToToday()" title="Jump to today">Today</span>
                 </div>
                 <div class="toolbar-right">
+                    <button class="family-toggle fav-toggle" id="ev-fav-toggle" onclick="evToggleFavOnly()" title="Jump to your favorites" style="display:none;">⭐ <span class="fav-toggle-label">Favs</span></button>
                     <button class="family-toggle" id="ev-kid-toggle" data-feed="family-events" onclick="toggleKidFriendly()" title="Family Friendly Events">👨‍👩‍👧</button>
                     <button class="family-toggle" id="ev-freefood-toggle" onclick="toggleFreeFood()" title="Free Food Events" style="display:none;">🍕</button>
                     <button class="family-toggle" id="ev-freestuff-toggle" onclick="toggleFreeStuff()" title="Free Stuff Events" style="display:none;">🎁</button>
-                    <button id="ev-clear-btn" class="clear-btn" onclick="clearEventFilters()" style="display:none;">Clear ✕</button>
+                    <button id="ev-clear-btn" class="clear-btn" onclick="clearEventFilters()" title="Clear filters" style="display:none;">✕</button>
                     <button id="ev-filter-toggle" class="filter-toggle" onclick="toggleEvFilters()">Filter <span id="ev-filter-arrow">▾</span></button>
                 </div>
             </div>
@@ -205,10 +206,11 @@
                     <span id="sp-current-day-label" class="current-day-label" onclick="spScrollToToday()" title="Jump to today" style="margin-left:10px;">Today</span>
                 </div>
                 <div class="toolbar-right">
+                    <button class="family-toggle fav-toggle" id="sp-fav-toggle" onclick="spToggleFavOnly()" title="Jump to your favorites" style="display:none;">⭐ <span class="fav-toggle-label">Favs</span></button>
                     <button class="home-toggle" id="hgame-toggle" onclick="toggleHomeGameMode()" title="Home Games Only">
                         <svg width="20" height="20"><use href="#icon-house"/></svg>
                     </button>
-                    <button id="sp-clear-btn" class="clear-btn" onclick="clearSportsFilters()" style="display:none;">Clear ✕</button>
+                    <button id="sp-clear-btn" class="clear-btn" onclick="clearSportsFilters()" title="Clear filters" style="display:none;">✕</button>
                     <button id="sp-filter-toggle" class="filter-toggle" onclick="toggleSpFilters()">Filter <span id="sp-filter-arrow">▾</span></button>
                 </div>
             </div>
@@ -1676,23 +1678,26 @@ function renderEvents(){
         return;
     }
 
-    // Favorites UX: no longer pinned at the top (created confusion with day headers).
-    // Instead: show a "⭐ N favorites" chip — tapping it filters the list to favorites only.
-    // Favorited cards themselves get a gold border (via buildEventCard's card-fav class)
-    // so they stand out in their natural day group.
+    // Favorites UX: toolbar ⭐ Favs button is shown when user has event favorites.
+    // Favorited cards get a gold border (.card-fav via buildEventCard) so they stand out
+    // in their natural day group. When fav-only mode is active, the list narrows to favorites.
     const hasAnyPrefs = feedPrefs && feedPrefs.length > 0;
     const hasEventPrefs = hasAnyPrefs && feedPrefs.some(p => eventFeedIds.has(p) || p.startsWith('club:'));
     const favCount = hasEventPrefs ? allMatching.filter(e => eventMatchesFeed(e)).length : 0;
 
+    // Show/hide toolbar fav button based on whether user has any event favorites
+    const favBtn = document.getElementById('ev-fav-toggle');
+    if (favBtn) {
+        favBtn.style.display = (hasEventPrefs && favCount > 0) ? '' : 'none';
+        favBtn.classList.toggle('active', evFavOnlyMode);
+        favBtn.title = evFavOnlyMode ? 'Showing favorites only — tap to show all' : 'Jump to your favorites (' + favCount + ')';
+    }
+
     let html = '';
     let dayItems = filtered;
 
-    // Chip / setup hint (non-exclusive — show one appropriate call-to-action)
-    if (hasEventPrefs && favCount > 0) {
-        const activeCls = evFavOnlyMode ? ' active' : '';
-        const label = evFavOnlyMode ? '⭐ Showing favorites only' : '⭐ Jump to your favorites';
-        html += '<div class="fav-filter-chip-wrap"><button class="fav-filter-chip' + activeCls + '" onclick="evToggleFavOnly()">' + label + ' <span class="fav-count">(' + favCount + ')</span></button></div>';
-    } else if (!hasAnyPrefs) {
+    // Setup hint (shown only when user has no prefs at all — not a filter chip, just guidance)
+    if (!hasAnyPrefs) {
         html += '<div class="feed-setup-hint">⚙️ <a href="#" onclick="event.preventDefault();openFeedSettings();">Set up your favorites</a> to highlight your preferred events</div>';
     } else if (hasAnyPrefs && !hasEventPrefs) {
         html += '<div class="feed-setup-hint">No event favorites set — <a href="#" onclick="event.preventDefault();openFeedSettings();">add some</a> to highlight them here</div>';
@@ -1967,21 +1972,24 @@ function renderSports(){
         return;
     }
 
-    // Favorites UX: no longer pinned at the top. Chip lets user filter to favorites only.
-    // Past view doesn't use the chip — past games are shown chronologically newest-first.
+    // Favorites UX: toolbar ⭐ Favs button shown only in Upcoming view when user has sport favorites.
+    // Past view never shows favorites filtering (past games are strictly chronological).
     const hasAnyPrefs = feedPrefs && feedPrefs.length > 0;
     const hasSportPrefs = hasAnyPrefs && feedPrefs.some(p => sportFeedIds.has(p));
     const sportFavCount = (!isPast && hasSportPrefs) ? allMatching.filter(e => eventMatchesFeed(e)).length : 0;
+
+    const spFavBtn = document.getElementById('sp-fav-toggle');
+    if (spFavBtn) {
+        spFavBtn.style.display = (!isPast && hasSportPrefs && sportFavCount > 0) ? '' : 'none';
+        spFavBtn.classList.toggle('active', spFavOnlyMode);
+        spFavBtn.title = spFavOnlyMode ? 'Showing favorites only — tap to show all' : 'Jump to your favorites (' + sportFavCount + ')';
+    }
 
     let html = '';
     let dayItems = filtered;
 
     if (!isPast) {
-        if (hasSportPrefs && sportFavCount > 0) {
-            const activeCls = spFavOnlyMode ? ' active' : '';
-            const label = spFavOnlyMode ? '⭐ Showing favorites only' : '⭐ Jump to your favorites';
-            html += '<div class="fav-filter-chip-wrap"><button class="fav-filter-chip' + activeCls + '" onclick="spToggleFavOnly()">' + label + ' <span class="fav-count">(' + sportFavCount + ')</span></button></div>';
-        } else if (!hasAnyPrefs) {
+        if (!hasAnyPrefs) {
             html += '<div class="feed-setup-hint">⚙️ <a href="#" onclick="event.preventDefault();openFeedSettings();">Set up your favorites</a> to highlight your preferred games</div>';
         } else if (hasAnyPrefs && !hasSportPrefs) {
             html += '<div class="feed-setup-hint">No sport favorites set — <a href="#" onclick="event.preventDefault();openFeedSettings();">add some</a> to highlight them here</div>';

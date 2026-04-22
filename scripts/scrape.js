@@ -2406,10 +2406,156 @@ Focus on the most impressive deals a shopper would want to know about. Include m
             console.log(`  ⚠️ Couldn't load manual clubs seed: ${manualErr.message}`);
         }
 
-        const orgs = [...orgsMap.values()].sort((a, b) => a.name.localeCompare(b.name));
+        let orgs = [...orgsMap.values()].sort((a, b) => a.name.localeCompare(b.name));
+
+        // ===== DEDUPE PASS =====
+        // The GetInvolved directory + event-mined org list + manual seed often produce
+        // near-duplicates with wording variations:
+        //   "ADAPT" vs "ADAPT at Millersville Univeristy"
+        //   "American Chemical Society" vs "American Chemical Society - Millersville University Student Chapter"
+        //   "All Campus Musical Organization" vs "All-Campus Musical Organization"
+        //   "Super Smash Club" vs "Super Smash Club at MU"
+        //   "Yoga Club" vs "The Yoga Club At Millersville University"
+        // Collapse these to a single canonical entry while PROTECTING legitimate look-alikes:
+        //   "Women's Basketball" (varsity) vs "Women's Club Basketball" (club sport) — KEEP BOTH
+        //   "Acacia" vs "Acacia Fraternity" — different category signals but same org — merge
+        const normalizeClubName = (name) => {
+            return (name || '')
+                .toLowerCase()
+                // Strip common Millersville suffix phrases
+                .replace(/\s*[-–]\s*millersville university student chapter.*$/i, '')
+                .replace(/\s+millersville university student chapter\b.*$/i, '')
+                .replace(/\s+at millersville university\b.*$/i, '')
+                .replace(/\s+at millersville univ(e?rsity|ersity)?\b.*$/i, '') // handle typo "Univeristy"
+                .replace(/\s+at mu\b.*$/i, '')
+                .replace(/\s*[-–]\s*mu'?s?\s+college radio station.*$/i, '')
+                // Strip leading "The "
+                .replace(/^the\s+/i, '')
+                // Normalize hyphens/dashes to spaces
+                .replace(/[-–—]/g, ' ')
+                // Strip apostrophes so "Women's" and "Womens" collapse
+                .replace(/'/g, '')
+                // Strip trailing common suffix words that come and go (don't strip "Club" — it's a varsity/club distinguisher)
+                .replace(/\s+(fraternity|sorority)\s*$/i, '') // Acacia / Acacia Fraternity
+                // Collapse whitespace
+                .replace(/\s+/g, ' ')
+                .trim();
+        };
+
+        // Check if two normalized names represent a varsity-vs-club-sport distinction that should NOT merge
+        const isVarsityVsClubConflict = (nameA, nameB) => {
+            const a = nameA.toLowerCase();
+            const b = nameB.toLowerCase();
+            const varsitySports = ['baseball','softball','basketball','soccer','volleyball','football','lacrosse','field hockey','tennis','track','golf','swimming','wrestling','rugby','cross country'];
+            for (const sport of varsitySports) {
+                const aHas = a.includes(sport);
+                const bHas = b.includes(sport);
+                if (!aHas || !bHas) continue;
+                const aIsClub = /\bclub\b/.test(a);
+                const bIsClub = /\bclub\b/.test(b);
+                // One has "club", the other doesn't → varsity vs club sport, keep separate
+                if (aIsClub !== bIsClub) return true;
+            }
+            return false;
+        };
+
+        // Pick the "better" of two entries to keep as canonical
+        const nameNoisiness = (name) => {
+            // Higher score = noisier (less preferred as display name)
+            const lower = (name || '').toLowerCase();
+            let score = 0;
+            if (/\bat millersville/i.test(lower)) score += 10;
+            if (/\bat mu\b/i.test(lower)) score += 10;
+            if (/student chapter/i.test(lower)) score += 10;
+            if (/college radio station/i.test(lower)) score += 10;
+            if (/^the\s+/i.test(name)) score += 1; // mild preference against leading "The"
+            return score;
+        };
+        const pickWinner = (a, b) => {
+            // Prefer the one with a non-empty id (authoritative GetInvolved API entry)
+            if (a.id && !b.id) return { winner: a, loser: b };
+            if (b.id && !a.id) return { winner: b, loser: a };
+            // Prefer the cleaner name (lower noisiness score)
+            const aNoise = nameNoisiness(a.name);
+            const bNoise = nameNoisiness(b.name);
+            if (aNoise !== bNoise) return aNoise < bNoise ? { winner: a, loser: b } : { winner: b, loser: a };
+            // Tiebreaker: more filled-in categories
+            const aCats = (a.categories || []).length;
+            const bCats = (b.categories || []).length;
+            if (aCats !== bCats) return aCats > bCats ? { winner: a, loser: b } : { winner: b, loser: a };
+            // Tiebreaker: shorter name
+            return a.name.length <= b.name.length ? { winner: a, loser: b } : { winner: b, loser: a };
+        };
+
+        // Build groups by normalized name
+        const groups = new Map(); // normalizedName -> [entries]
+        for (const org of orgs) {
+            const key = normalizeClubName(org.name);
+            if (!key) continue;
+            if (!groups.has(key)) groups.set(key, []);
+            groups.get(key).push(org);
+        }
+
+        const dedupedOrgs = [];
+        const mergeLog = [];
+        for (const [key, entries] of groups) {
+            if (entries.length === 1) { dedupedOrgs.push(entries[0]); continue; }
+
+            // Check if any pair in the group is a varsity-vs-club conflict
+            // If so, split the group: one bucket has "club" names, the other doesn't
+            const anyConflict = entries.some((e1, i) =>
+                entries.slice(i + 1).some(e2 => isVarsityVsClubConflict(e1.name, e2.name))
+            );
+            if (anyConflict) {
+                const clubBucket = entries.filter(e => /\bclub\b/i.test(e.name));
+                const nonClubBucket = entries.filter(e => !/\bclub\b/i.test(e.name));
+                [clubBucket, nonClubBucket].forEach(bucket => {
+                    if (bucket.length === 0) return;
+                    if (bucket.length === 1) { dedupedOrgs.push(bucket[0]); return; }
+                    let merged = bucket[0];
+                    for (let i = 1; i < bucket.length; i++) {
+                        const { winner, loser } = pickWinner(merged, bucket[i]);
+                        merged = mergeTwoOrgs(winner, loser);
+                        mergeLog.push(`  • "${loser.name}" → "${merged.name}"`);
+                    }
+                    dedupedOrgs.push(merged);
+                });
+                continue;
+            }
+
+            // Standard merge: collapse all entries into one
+            let merged = entries[0];
+            for (let i = 1; i < entries.length; i++) {
+                const { winner, loser } = pickWinner(merged, entries[i]);
+                merged = mergeTwoOrgs(winner, loser);
+                mergeLog.push(`  • "${loser.name}" → "${merged.name}"`);
+            }
+            dedupedOrgs.push(merged);
+        }
+
+        function mergeTwoOrgs(winner, loser) {
+            const mergedCategories = [...new Set([...(winner.categories || []), ...(loser.categories || [])])];
+            return {
+                name: winner.name,
+                category: winner.category || loser.category || '',
+                categories: mergedCategories,
+                shortName: winner.shortName || loser.shortName || '',
+                id: winner.id || loser.id || ''
+            };
+        }
+
+        dedupedOrgs.sort((a, b) => a.name.localeCompare(b.name));
+        const dedupedCount = orgs.length - dedupedOrgs.length;
+        if (dedupedCount > 0) {
+            console.log(`  🔀 Merged ${dedupedCount} near-duplicate org entries:`);
+            mergeLog.slice(0, 20).forEach(l => console.log(l));
+            if (mergeLog.length > 20) console.log(`  ... and ${mergeLog.length - 20} more`);
+        }
+        orgs = dedupedOrgs;
+
         fs.writeFileSync(path.join(__dirname, '../clubs.json'), JSON.stringify(orgs, null, 2));
         const eventDerivedCount = orgs.length - apiCount - manualCount;
-        console.log(`✅ Clubs directory: ${orgs.length} organizations saved (${apiCount} from API + ${eventDerivedCount} from events + ${manualCount} manual)`);
+        console.log(`✅ Clubs directory: ${orgs.length} organizations saved (${apiCount} from API + ${eventDerivedCount} from events + ${manualCount} manual, ${dedupedCount} merged)`);
     } catch (e) {
         console.error("❌ Clubs directory error:", e.message);
     }

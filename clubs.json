@@ -329,8 +329,12 @@
   },
   {
     "name": "Best Buddies",
-    "category": "",
-    "categories": [],
+    "category": "Service",
+    "categories": [
+      "Service",
+      "Meeting",
+      "Social"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -412,7 +416,8 @@
     "name": "Campus Life",
     "category": "Social",
     "categories": [
-      "Social"
+      "Social",
+      "Sporting"
     ],
     "shortName": "",
     "id": ""
@@ -1113,11 +1118,8 @@
   },
   {
     "name": "International Association of Emergency Managers",
-    "category": "Meeting",
-    "categories": [
-      "Meeting",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1192,9 +1194,8 @@
   },
   {
     "name": "Korea Defense Veterans Association Campus Club - Millersville University",
-    "category": "Competition",
+    "category": "Social",
     "categories": [
-      "Competition",
       "Social"
     ],
     "shortName": "",
@@ -1528,7 +1529,7 @@
     "category": "Educational Program",
     "categories": [
       "Educational Program",
-      "Movie or Film",
+      "Performance",
       "Social"
     ],
     "shortName": "",
@@ -1571,9 +1572,9 @@
   },
   {
     "name": "Ocean Science Club",
-    "category": "Service",
+    "category": "Social",
     "categories": [
-      "Service"
+      "Social"
     ],
     "shortName": "",
     "id": ""
@@ -1605,8 +1606,7 @@
     "name": "Office of Sustainability",
     "category": "Educational Program",
     "categories": [
-      "Educational Program",
-      "Social"
+      "Educational Program"
     ],
     "shortName": "",
     "id": ""

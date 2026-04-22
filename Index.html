@@ -166,7 +166,7 @@
         <div class="sticky-nav-bar">
             <div class="toolbar-compact">
                 <div class="toolbar-center">
-                    <span id="ev-current-day-label" class="current-day-label" onclick="evScrollToToday()" title="Jump to today">Today</span>
+                    <span id="ev-current-day-label" class="current-day-label">Today</span>
                 </div>
                 <div class="toolbar-right">
                     <button class="family-toggle fav-toggle" id="ev-fav-toggle" onclick="evToggleFavOnly()" title="Jump to your favorites" style="display:none;">⭐ <span class="fav-toggle-label">Favs</span></button>
@@ -203,7 +203,7 @@
                         <button id="sp-tab-upcoming" class="sp-time-btn active" onclick="setSportsTimeView('upcoming')">Upcoming</button>
                         <button id="sp-tab-past" class="sp-time-btn" onclick="setSportsTimeView('past')">Past</button>
                     </div>
-                    <span id="sp-current-day-label" class="current-day-label" onclick="spScrollToToday()" title="Jump to today" style="margin-left:10px;">Today</span>
+                    <span id="sp-current-day-label" class="current-day-label" style="margin-left:10px;">Today</span>
                 </div>
                 <div class="toolbar-right">
                     <button class="family-toggle fav-toggle" id="sp-fav-toggle" onclick="spToggleFavOnly()" title="Jump to your favorites" style="display:none;">⭐ <span class="fav-toggle-label">Favs</span></button>
@@ -531,8 +531,7 @@ const feedSections = {
                 {id:'pm-music',label:'Music/Arts',icon:'🎵'},{id:'pm-board',label:'Board Meetings',icon:'📋'}
             ]},
             mu: { label: 'MU Events', icon: '🏴‍☠️', audience: 'student', subs: [
-                {id:'mu-arts',label:'Arts & Performances',icon:'🎭'},{id:'mu-public',label:'Public Events',icon:'📢'},
-                {id:'mu-student',label:'Student Events',icon:'🎓'}
+                {id:'mu-arts',label:'Arts & Performances',icon:'🎭'},{id:'mu-public',label:'Public Events',icon:'📢'}
             ]},
             clubs: { label: 'MU GetInvolved', icon: '🎓', audience: 'student', subs: [
                 {id:'clubs-all',label:'All GetInvolved Events',icon:'🎓'},
@@ -587,7 +586,7 @@ const SOURCE_UNLOCK_IDS = {
     'VFW':     ['other-vfw'],
     // MU-side sources for townies
     'MU':         [], // MU itself always shown — only GetInvolved sub-content is gated
-    'GetInvolved':['clubs-all', 'clubs-social', 'clubs-arts', 'clubs-sports', 'clubs-greek', 'clubs-service', 'mu-arts', 'mu-public', 'mu-student'],
+    'GetInvolved':['clubs-all', 'clubs-social', 'clubs-arts', 'clubs-sports', 'clubs-greek', 'clubs-service', 'mu-arts', 'mu-public'],
     // Sports page source pills
     'SP_PM':      ['pm-baseball', 'pm-softball', 'pm-lacrosse', 'pm-volleyball', 'pm-football', 'pm-basketball', 'pm-soccer', 'pm-fieldhockey', 'pm-tennis', 'pm-track'],
     'SP_Clubs':   ['clubs-sports']
@@ -669,7 +668,7 @@ function eventMatchesFeed(e) {
             if (tags.some(t => t.toLowerCase() === sport) && feedPrefs.includes('mu-' + feedSuffix)) return true;
         }
         // Also match if any broad MU pref exists
-        if (feedPrefs.includes('mu-arts') || feedPrefs.includes('mu-public') || feedPrefs.includes('mu-student')) return false;
+        if (feedPrefs.includes('mu-arts') || feedPrefs.includes('mu-public')) return false;
         return false;
     }
 
@@ -693,7 +692,6 @@ function eventMatchesFeed(e) {
     if (tags.includes('MU')) {
         if (tags.includes('Arts Concert / Performance') && feedPrefs.includes('mu-arts')) return true;
         if (tags.includes('Public Event') && feedPrefs.includes('mu-public')) return true;
-        if (tags.includes('Student Event') && feedPrefs.includes('mu-student')) return true;
         return false;
     }
 
@@ -1163,9 +1161,10 @@ const topSources=['MU','PM','Borough','Other'];
 const sportMetaTags=['Athletic Competitions','Athletics','Club Sports','Home Game Mode','H Games'];
 
 const evSubMap={
-    // MU now includes GetInvolved (formerly MU Clubs) plus the legacy MU calendar sub-types.
-    // Residence Halls, Greek Life, Fundraising carry through from GetInvolved tags.
-    'MU':['Public Event','Student Event','Arts Concert / Performance','GetInvolved','Residence Halls','Greek Life','Fundraising'],
+    // MU now includes GetInvolved. "Student Event" removed — those items are relabeled as
+    // GetInvolved at scrape time since they're GetInvolved feed items republished on the MU
+    // calendar. Residence Halls, Greek Life, Fundraising carry through from GetInvolved tags.
+    'MU':['Public Event','Arts Concert / Performance','GetInvolved','Residence Halls','Greek Life','Fundraising'],
     'PM':['Music/Arts','School Events','Board/PTO','Health/Wellness','Field Trips','Meetings']
 };
 
@@ -1500,12 +1499,42 @@ function updateEventsUI(){
 
     // "Clean state" for the clear-filters button: all sources on, no tag/kid/perk filters,
     // default scroll window (60 days). Week/anchor concept is retired.
-    const isClean = evAllMode && evTags.size === 0 && !evKidMode && !evFreeFoodMode && !evFreeStuffMode && evDaysVisible === INITIAL_DAYS;
+    const isClean = evAllMode && evTags.size === 0 && !evKidMode && !evFreeFoodMode && !evFreeStuffMode && !evFavOnlyMode && evDaysVisible === INITIAL_DAYS;
     document.getElementById('ev-clear-btn').style.display = isClean ? 'none' : 'flex';
+
+    // Refresh sub-category chip row so it matches the currently-active source
+    renderEvSubFilters();
 }
+// Render sub-category filter chips under the source row. Shows subs for whichever
+// top-level source is currently active (MU, PM, etc.). Clicking a sub chip toggles it
+// in `evTags`, which the event filter uses to narrow down by sub-type (e.g. "Greek Life",
+// "Music/Arts"). No-ops when multiple sources are active or when the active source has
+// no sub-map entry (Borough and Other don't have sub-filters).
 function renderEvSubFilters(){
-    const c=document.getElementById('ev-sub-container'); c.innerHTML=''; c.classList.remove('active');
+    const c = document.getElementById('ev-sub-container');
+    if (!c) return;
+    c.innerHTML = '';
+    c.classList.remove('active');
+
+    // Only show sub-filters when exactly one source is active and it has a sub-map entry.
+    if (evAllMode || evActiveSources.size !== 1) return;
+    const src = Array.from(evActiveSources)[0];
+    const subs = evSubMap[src];
+    if (!subs || subs.length === 0) return;
+
+    c.classList.add('active');
+    c.innerHTML = subs.map(sub => {
+        const active = evTags.has(sub);
+        return `<button class="sub-tag-btn${active ? ' active' : ''}" onclick="toggleEventSub('${sub.replace(/'/g, "\\'")}')">${sub}</button>`;
+    }).join('');
 }
+// Toggle a sub-category tag on/off
+window.toggleEventSub = function(tag){
+    if (evTags.has(tag)) evTags.delete(tag);
+    else evTags.add(tag);
+    renderEvSubFilters();
+    renderEvents();
+};
 window.setEvMode = function(){};
 // Legacy no-op stubs — the Events/Sports toolbars no longer have prev/next nav
 // since the day-grouped infinite-scroll replaces week-paging. Kept so any stale
@@ -1874,7 +1903,7 @@ function updateSportsUI(){
     document.getElementById('sp-no-source').style.display = spActiveSources.size===0 ? 'block' : 'none';
     // "Clean state" for the clear-filters button: all sources on, no tag filter, no home-only,
     // viewing the default Upcoming tab. (Day/week paging no longer exists.)
-    const isClean = spAllMode && !spHomeOnly && !spSportTag && spTimeView === 'upcoming';
+    const isClean = spAllMode && !spHomeOnly && !spSportTag && spTimeView === 'upcoming' && !spFavOnlyMode;
     document.getElementById('sp-clear-btn').style.display = isClean ? 'none' : 'flex';
 }
 
@@ -2099,7 +2128,11 @@ function buildEventCard(e,isSportsPage){
     else if(tags.includes('MU')) sourceLabel='MU';
 
     const hiddenTags=[...topSources,...sportMetaTags,'MU Calendar','Penn Manor','Clubs/Orgs','Phantom Power','VFW','Live Music','Other'];
-    const displayTags=tags.filter(t=>!hiddenTags.includes(t));
+    // Townie-friendly label swap: "GetInvolved" is MU-internal jargon. For townies (and default
+    // unset users), display it as "Community" so the tag reads as "this is open to you" rather
+    // than "this is a student thing." Marauders keep the original "GetInvolved" label.
+    const relabelForTownie = (tag) => (muAffiliation !== 'student' && tag === 'GetInvolved') ? 'Community' : tag;
+    const displayTags=tags.filter(t=>!hiddenTags.includes(t)).map(relabelForTownie);
     let tagHtml=sourceLabel?`<span class="card-tag">${sourceLabel}</span>`:'';
     tagHtml+=displayTags.map(t=>`<span class="card-tag">${t}</span>`).join('');
 
@@ -2368,9 +2401,11 @@ window.openEventDetails = function(key) {
         badges += `<span class="tl-badge ${cls}">${e.gameResult} ${e.gameScore}</span>`;
     }
 
-    // Tag chips (exclude noisy internal markers)
+    // Tag chips (exclude noisy internal markers). Apply the same townie-friendly relabel
+    // used on cards so "GetInvolved" shows as "Community" for non-Marauders.
     const hiddenTags = new Set(['MU','PM','Borough','Other','VFW','Clubs/Orgs','Live Music','H Games','Home Game Mode','Athletic Competitions','Athletics','Phantom Power']);
-    const displayTags = tags.filter(t => !hiddenTags.has(t)).slice(0, 6);
+    const relabelForTownie = (tag) => (muAffiliation !== 'student' && tag === 'GetInvolved') ? 'Community' : tag;
+    const displayTags = tags.filter(t => !hiddenTags.has(t)).map(relabelForTownie).slice(0, 6);
 
     const description = (e.description || '').trim();
     const descBlock = description

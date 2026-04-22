@@ -1,0 +1,2697 @@
+const fs = require('fs');
+const path = require('path');
+const dns = require('dns');
+const ical = require('node-ical');
+
+dns.setDefaultResultOrder('ipv4first');
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
+const baseHeaders = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+};
+
+const SCRAPE_HORIZON_DAYS = 60;
+
+const sportsList = ['Baseball', 'Softball', 'Track', 'Soccer', 'Lacrosse', 'Tennis', 'Volleyball', 'Wrestling', 'Basketball', 'Football', 'Field Hockey', 'Golf', 'Cross Country', 'Cheerleading', 'Swimming', 'Rugby', 'Fencing', 'Esports', 'Archery'];
+
+const hGameClubSports = [
+    'baseball', 'bowling', 'equestrian', 'fencing', 'ice hockey', 'mma',
+    "men's basketball", "men's ice hockey", "men's lacrosse", "men's rugby",
+    "men's soccer", "men's volleyball", 'dance team', 'running', 'softball',
+    'tennis', 'ultimate frisbee', "women's basketball", "women's rugby",
+    "women's soccer", "women's volleyball"
+];
+
+// ===== UTILITY FUNCTIONS =====
+
+function extractPricing(desc, title = "", location = "", apiLink = "") {
+    // Etix direct ticket links for known MU events
+    const etixEvents = [
+        { match: /shawan rice/i, url: 'https://www.etix.com/ticket/p/52838436/shawan-rice-the-quiet-riders-lancaster-ware-center-for-the-arts', price: '$15' },
+        { match: /making of life on our planet/i, url: 'https://www.etix.com/ticket/p/44575281/the-making-of-life-on-our-planet-lancaster-ware-center-for-the-arts', price: '$8 - $10' },
+        { match: /kids.?\s*salsa/i, url: 'https://www.etix.com/ticket/p/34862669/kidssalsa-5-lancaster-ware-center-for-the-arts', price: '$15' },
+        { match: /family fun fest.*doodle/i, url: 'https://www.etix.com/ticket/p/55340777/family-fun-fest-doodle-pop-lancaster-ware-center-for-the-arts', price: '$10 - $15' },
+        { match: /commercial lab band/i, url: 'https://www.etix.com/ticket/p/69670740/commercial-lab-band-millersville-winter-visual-performing-arts-center', price: '$10' },
+        { match: /commercial music ensemble/i, url: 'https://www.etix.com/ticket/p/36061167/commercial-music-ensemble-millersville-winter-visual-performing-arts-center', price: '$10' },
+        { match: /xun pan|gabriel chamber/i, url: 'https://www.etix.com/ticket/p/77977956/xun-pan-gabriel-chamber-ensemble-millersville-winter-visual-performing-arts-center', price: 'Tickets Available' },
+        { match: /orchestral masterworks/i, url: 'https://www.etix.com/ticket/p/71235627/orchestral-masterworks-millersville-winter-visual-performing-arts-center', price: '$10' },
+        { match: /jazz ensembles|jazz.*java/i, url: 'https://www.etix.com/ticket/p/71762678/jazz-ensemblesjazz-java-with-alumni-band-millersville-winter-visual-performing-arts-center', price: '$18' },
+        { match: /concert band.*wind ensemble|wind ensemble.*concert band/i, url: 'https://www.etix.com/ticket/p/74152110/concert-band-wind-ensemble-millersville-winter-visual-performing-arts-center', price: '$10' },
+        { match: /spring choral concert/i, url: 'https://www.etix.com/ticket/p/42106815/spring-choral-concert-millersville-winter-visual-performing-arts-center', price: '$10' },
+    ];
+
+    // Check for direct etix match first
+    const etixMatch = etixEvents.find(e => e.match.test(title));
+    if (etixMatch) return { price: etixMatch.price, link: etixMatch.url };
+
+    let price = "Free";
+    let link = apiLink || "";
+    if (desc) {
+        const priceRegex = /\$\d+(?:\.\d{2})?(?:\s+(student|public|general|admission|door|advance|mu|adult|child)s?)?/gi;
+        const prices = desc.match(priceRegex);
+        if (prices) price = [...new Set(prices)].join(' / ');
+        else if (/ticket|admission|cover charge|cost:/i.test(desc)) price = "Ticket Required";
+
+        if (!link) {
+            const anchorRegex = /<a[^>]*href=["'](https?:\/\/[^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi;
+            let match, bestLink = null, highestScore = 0;
+            while ((match = anchorRegex.exec(desc)) !== null) {
+                const url = match[1], anchorText = match[2].toLowerCase(), lowerUrl = url.toLowerCase();
+                let score = 0;
+                if (/instagram\.com|facebook\.com|twitter\.com|campusgroups\.com\/organization/.test(lowerUrl)) continue;
+                if (/etix\.com|universitytickets\.com|muticketsonline\.com|eventbrite\.com/.test(lowerUrl)) score = 3;
+                else if (/ticket|register|buy|rsvp|purchase/.test(anchorText)) score = 2;
+                else if (/ticket|register|rsvp/.test(lowerUrl)) score = 1;
+                if (score > highestScore) { highestScore = score; bestLink = url; }
+            }
+            if (!bestLink) {
+                const rawMatch = desc.match(/(https?:\/\/[^\s"'<]+)/gi);
+                if (rawMatch) {
+                    const ticketRaw = rawMatch.find(l => /etix\.com|universitytickets|eventbrite/.test(l.toLowerCase()));
+                    if (ticketRaw) bestLink = ticketRaw;
+                }
+            }
+            if (bestLink) link = bestLink;
+        }
+    }
+    if (!link && price !== "Free") {
+        const lt = title.toLowerCase(), ll = location.toLowerCase();
+        if (/winter|lyte/.test(ll) || /concert|recital|theatre/.test(lt)) link = "https://www.etix.com/ticket/v/23659/";
+        else if (/pucillo|biemesderfer/.test(ll) || /game|match|tournament/.test(lt)) link = "https://www.etix.com/ticket/v/23684/";
+    }
+    // Ware Center / Steinman Hall events with admission → etix
+    if (!link) {
+        const lt = title.toLowerCase(), ll = location.toLowerCase();
+        if (/ware|steinman/.test(ll)) {
+            if (price !== "Free" || /concert|ensemble|recital|performance|theatre|theater|film|screening|opera|symphony|jazz|music|dance|ballet|on screen|in person/.test(lt)) {
+                link = "https://www.etix.com/ticket/v/23659/";
+                if (price === "Free") price = "Tickets Available";
+            }
+        }
+        // Winter Center / Lyte events
+        if (/winter|lyte/.test(ll) && price === "Free") {
+            if (/concert|ensemble|recital|performance|theatre|theater|musical|show/.test(lt)) {
+                link = "https://www.etix.com/ticket/v/23659/";
+                price = "Tickets Available";
+            }
+        }
+    }
+    return { price, link };
+}
+
+// Classify whether an event is open to the general public or student-only.
+// Used by both the GetInvolved scraper (where it was originally defined inline) and the
+// MU Calendar scraper (for "Student Event" items, which we relabel as GetInvolved below).
+// Returns 'public' or 'mu-only'. Credit-granting events are always student-only.
+function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tags = [], benefits = [] }) {
+    if (benefits.includes('Credit')) return 'mu-only';
+    const publicKeywordRegex = /\b(open to (the )?(public|community|all)|community welcome|all (are )?welcome|public event|for the public|the community|family|children|kids|everyone|blood drive|fundraiser|walkathon|5k|10k|run for|bake sale|festival|fair|concert|performance|recital|exhibition|gallery|benefit (for|concert)|donate|donation|charity|awareness (day|walk|event)|food drive|clothing drive|toy drive|drive for|volunteer|service project|community service|habitat for humanity|red cross|food pantry|soup kitchen)\b/i;
+    const publicCategoryRegex = /\b(fundraising|service|community service|performance|sporting|athletic|community|philanthropy|volunteer)\b/i;
+    const publicOrgRegex = /\b(red cross|food pantry|habitat for humanity|goodwill|salvation army|special olympics|make[- ]?a[- ]?wish)\b/i;
+    const combinedText = (titleText || '') + ' ' + (descText || '') + ' ' + (orgName || '');
+    if (publicKeywordRegex.test(combinedText)) return 'public';
+    if (rawTags.some(t => publicCategoryRegex.test(t))) return 'public';
+    if (publicOrgRegex.test(orgName)) return 'public';
+    if (tags.includes('Fundraising')) return 'public';
+    if (tags.includes('Club Sports') && tags.includes('Home Game Mode')) return 'public';
+    return 'mu-only';
+}
+
+function extractEventbriteEvents(ldData, eventsArray, now, futureLimit) {
+    if (Array.isArray(ldData)) {
+        ldData.forEach(item => extractEventbriteEvents(item, eventsArray, now, futureLimit));
+    } else if (ldData && typeof ldData === 'object') {
+        if (ldData['@type'] === 'Event' && ldData.name && ldData.startDate) {
+            const eventDate = new Date(ldData.startDate);
+            if (eventDate >= now && eventDate < futureLimit) {
+                eventsArray.push({
+                    title: ldData.name, date: eventDate.toISOString(), location: "Phantom Power",
+                    tags: ["Other", "Live Music"], price: "Ticket Required",
+                    ticketLink: ldData.url || "https://www.eventbrite.com/o/phantom-power-29187724817",
+                    sourceLink: ldData.url || "https://www.phantompower.net/"
+                });
+            }
+        } else {
+            for (let key in ldData) if (typeof ldData[key] === 'object') extractEventbriteEvents(ldData[key], eventsArray, now, futureLimit);
+        }
+    }
+}
+
+// ===== MAIN SCRAPER =====
+
+async function runScraper() {
+    const PAST_DAYS = 90;
+    const FUTURE_DAYS = 365;
+    console.log(`🚀 Starting Millersville Scraper (${PAST_DAYS}d back + ${FUTURE_DAYS}d forward)...`);
+
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate()); // midnight today
+    const pastDate = new Date(today);
+    pastDate.setDate(today.getDate() - PAST_DAYS);
+    const futureDate = new Date(today);
+    futureDate.setDate(today.getDate() + FUTURE_DAYS);
+    const startDay = pastDate.toISOString().split('T')[0];
+    const endDay = futureDate.toISOString().split('T')[0];
+
+    // ===== WEATHER (MU Station + Open-Meteo combined) =====
+    try {
+        // Source 1: MU Weather Information Center — hyper-local station data
+        let muTemp = null, muHumidity = null, muWindDir = null, muWindSpeed = null, muUpdate = null;
+        try {
+            const muRes = await fetch('https://snowball.millersville.edu/~cws/current.xml', { headers: baseHeaders });
+            if (muRes.ok) {
+                const muXml = await muRes.text();
+                const gx = (tag) => { const m = muXml.match(new RegExp(`<${tag}>([^<]+)</${tag}>`, 'i')); return m ? m[1].trim() : null; };
+                muTemp = gx('temp');
+                muHumidity = gx('humidity');
+                muWindDir = gx('wind_direction');
+                muWindSpeed = gx('wind_speed');
+                muUpdate = gx('update');
+                console.log(`  ✅ MU Station: ${muTemp}°F, Wind ${muWindSpeed} mph ${muWindDir}, Humidity ${muHumidity}%`);
+            }
+        } catch (e) { console.log(`  ⚠️ MU Station unavailable: ${e.message}`); }
+
+        // Source 2: Open-Meteo — condition text, icon, feels-like (free, no API key)
+        let condition = 'Unknown', icon = '🌡️', feelsLike = null;
+        try {
+            const omUrl = 'https://api.open-meteo.com/v1/forecast?latitude=39.9982&longitude=-76.3541&current=weather_code,apparent_temperature,temperature_2m,wind_speed_10m,relative_humidity_2m&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America%2FNew_York';
+            const omRes = await fetch(omUrl);
+            if (omRes.ok) {
+                const omData = await omRes.json();
+                const c = omData.current;
+                const wmoMap = {
+                    0:{cond:'Clear sky',icon:'☀️'},1:{cond:'Mainly clear',icon:'🌤️'},2:{cond:'Partly cloudy',icon:'⛅'},3:{cond:'Overcast',icon:'☁️'},
+                    45:{cond:'Fog',icon:'🌫️'},48:{cond:'Rime fog',icon:'🌫️'},
+                    51:{cond:'Light drizzle',icon:'🌦️'},53:{cond:'Drizzle',icon:'🌦️'},55:{cond:'Dense drizzle',icon:'🌧️'},
+                    61:{cond:'Slight rain',icon:'🌦️'},63:{cond:'Rain',icon:'🌧️'},65:{cond:'Heavy rain',icon:'🌧️'},
+                    66:{cond:'Freezing rain',icon:'🌧️'},67:{cond:'Heavy freezing rain',icon:'🌧️'},
+                    71:{cond:'Light snow',icon:'🌨️'},73:{cond:'Snow',icon:'❄️'},75:{cond:'Heavy snow',icon:'❄️'},77:{cond:'Snow grains',icon:'❄️'},
+                    80:{cond:'Light showers',icon:'🌦️'},81:{cond:'Rain showers',icon:'🌧️'},82:{cond:'Heavy showers',icon:'⛈️'},
+                    85:{cond:'Snow showers',icon:'🌨️'},86:{cond:'Heavy snow showers',icon:'❄️'},
+                    95:{cond:'Thunderstorm',icon:'⛈️'},96:{cond:'Thunderstorm w/ hail',icon:'⛈️'},99:{cond:'Severe thunderstorm',icon:'⛈️'}
+                };
+                const wmo = wmoMap[c.weather_code] || {cond:'Unknown',icon:'🌡️'};
+                condition = wmo.cond;
+                icon = wmo.icon;
+                feelsLike = Math.round(c.apparent_temperature);
+                // Use Open-Meteo as fallback if MU station is down
+                if (muTemp === null) {
+                    muTemp = Math.round(c.temperature_2m);
+                    muHumidity = Math.round(c.relative_humidity_2m);
+                    const dirs = ['N','NNE','NE','ENE','E','ESE','SE','SSE','S','SSW','SW','WSW','W','WNW','NW','NNW'];
+                    muWindDir = dirs[Math.round(c.wind_direction_10m / 22.5) % 16];
+                    muWindSpeed = Math.round(c.wind_speed_10m);
+                    console.log(`  ⚠️ Using Open-Meteo as fallback for readings`);
+                }
+                console.log(`  ✅ Open-Meteo: ${condition} ${icon}, Feels like ${feelsLike}°F`);
+            }
+        } catch (e) { console.log(`  ⚠️ Open-Meteo unavailable: ${e.message}`); }
+
+        fs.writeFileSync(path.join(__dirname, '../weather.json'), JSON.stringify({
+            temp: muTemp ? parseInt(muTemp) : '--',
+            feelsLike: feelsLike || (muTemp ? parseInt(muTemp) : '--'),
+            condition,
+            icon,
+            wind: muWindSpeed ? `${muWindSpeed} mph ${muWindDir || ''}`.trim() : 'Calm',
+            humidity: muHumidity ? muHumidity + '%' : '--',
+            stationUpdate: muUpdate || '',
+            lastUpdated: new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: 'America/New_York' }),
+            source: muTemp ? 'MU Weather Station + Open-Meteo' : 'Open-Meteo'
+        }, null, 2));
+        console.log(`✅ Weather saved: ${muTemp || '--'}°F, ${condition}`);
+    } catch (e) { console.error("❌ Weather error:", e.message); }
+
+    let events = [];
+
+    // ===== 1. MU ATHLETICS (SIDEARM iCAL) =====
+    try {
+        console.log("📡 Fetching MU Athletics (Sidearm iCal)...");
+        const muAthData = await ical.async.fromURL(
+            'https://millersvilleathletics.com/api/v2/Calendar/subscribe?type=ics&downloadFile=false',
+            { headers: baseHeaders }
+        );
+        let muAthCount = 0;
+
+        for (const ev of Object.values(muAthData)) {
+            if (ev.type !== 'VEVENT') continue;
+            const eventDate = new Date(ev.start);
+            if (isNaN(eventDate.getTime()) || eventDate < pastDate || eventDate >= futureDate) continue;
+
+            const summary = ev.summary || '';
+            const desc = ev.description || '';
+            const loc = ev.location || '';
+
+            // Skip past-game results (have [W], [L], [N] prefix)
+            // We still include them — they have scores which could be useful
+            // But for upcoming games, no prefix exists
+
+            // Determine sport from summary: "Millersville University {Sport} vs/at {Opponent}"
+            const sportMatch = summary.match(/Millersville University\s+([\w''&\s]+?)\s+(?:vs|at)\s/i);
+            let sportName = sportMatch ? sportMatch[1].trim() : '';
+            // Clean prefix like [W], [L], [N]
+            let cleanTitle = summary.replace(/^\[.\]\s*/, '').trim();
+
+            // Determine home/away: "vs" = home, "at" = away
+            const isHome = /\bvs\b/i.test(summary) || loc.toLowerCase().includes('millersville');
+
+            // Extract ticket link from description
+            let ticketLink = '';
+            const ticketMatch = desc.match(/Tickets:\s*(https?:\/\/[^\s\\]+)/i);
+            if (ticketMatch) ticketLink = ticketMatch[1].replace(/&amp;/g, '&');
+
+            // Extract streaming link
+            let streamLink = '';
+            const streamMatch = desc.match(/Streaming Video:\s*(https?:\/\/[^\s\\]+)/i);
+            if (streamMatch) streamLink = streamMatch[1].replace(/&amp;/g, '&');
+
+            // Build tags
+            let tags = ["MU", "Athletic Competitions", "Athletics"];
+            if (isHome) tags.push("Home Game Mode");
+
+            // Detect gender
+            if (/women's|women's/i.test(sportName)) tags.push("Women's");
+            else if (/men's|men's/i.test(sportName)) tags.push("Men's");
+
+            // Map sport name to our standard sport list
+            sportsList.forEach(s => {
+                if (sportName.toLowerCase().includes(s.toLowerCase())) tags.push(s);
+            });
+            // Handle "Indoor Track" / "Outdoor Track" → Track
+            if (/track/i.test(sportName) && !tags.includes('Track')) tags.push('Track');
+            // Handle Golf
+            if (/golf/i.test(sportName) && !tags.includes('Golf')) tags.push('Golf');
+
+            // Extract game result and score from summary prefix and description
+            // Past games: "[W] Title" with "W 16-7" or "L 4-6" in description
+            // Upcoming: no prefix
+            let gameResult = '';  // 'W', 'L', 'N', or '' for upcoming
+            let gameScore = '';
+            const resultPrefix = summary.match(/^\[([WLN])\]/);
+            if (resultPrefix) {
+                gameResult = resultPrefix[1];
+                const scoreMatch = desc.match(/^[WLN]\s+(\d+-\d+)/m);
+                if (scoreMatch) gameScore = scoreMatch[1];
+            }
+
+            // Check if game is live (happening right now)
+            const eventEnd = ev.end ? new Date(ev.end) : new Date(eventDate.getTime() + 3*60*60*1000);
+            const isLive = now >= eventDate && now <= eventEnd && !gameResult && !!streamLink;
+
+            // Build source URL: prefer the event's own URL (links to specific game on schedule),
+            // fall back to sport schedule page, then composite calendar
+            const scheduleSlugMap = {
+                'baseball': 'baseball', 'softball': 'softball', 'football': 'football',
+                'wrestling': 'wrestling', 'volleyball': 'womens-volleyball',
+                'field hockey': 'field-hockey', 'swimming': 'womens-swimming',
+                "women's basketball": 'womens-basketball', "men's basketball": 'mens-basketball',
+                "women's soccer": 'womens-soccer', "men's soccer": 'mens-soccer',
+                "women's lacrosse": 'womens-lacrosse',
+                "women's tennis": 'womens-tennis', "men's tennis": 'mens-tennis',
+                "women's golf": 'womens-golf', "men's golf": 'mens-golf',
+                "women's cross country": 'womens-cross-country', "men's cross country": 'mens-cross-country',
+                "women's indoor track & field": 'womens-indoor-track-and-field',
+                "women's outdoor track & field": 'womens-outdoor-track-and-field',
+                "men's track and field": 'mens-track-and-field',
+                "women's track and field": 'womens-track-and-field'
+            };
+            const sportLower = sportName.toLowerCase();
+            let scheduleSlug = scheduleSlugMap[sportLower];
+            if (!scheduleSlug) {
+                for (const [key, slug] of Object.entries(scheduleSlugMap)) {
+                    if (sportLower.includes(key) || key.includes(sportLower)) { scheduleSlug = slug; break; }
+                }
+            }
+            const scheduleUrl = scheduleSlug
+                ? `https://millersvilleathletics.com/sports/${scheduleSlug}/schedule`
+                : 'https://millersvilleathletics.com/calendar';
+            // ev.url from iCal points to the specific game entry on the schedule
+            const sourceUrl = ev.url ? ev.url.replace(/&amp;/g, '&') : scheduleUrl;
+
+            events.push({
+                title: cleanTitle,
+                date: eventDate.toISOString(),
+                location: loc || "TBD",
+                tags: [...new Set(tags)],
+                price: ticketLink ? "Ticket Required" : "Free",
+                ticketLink: ticketLink,
+                sourceLink: sourceUrl,
+                gameResult,
+                gameScore,
+                streamLink,
+                isLive
+            });
+            muAthCount++;
+        }
+        console.log(`✅ MU Athletics: ${muAthCount} events`);
+    } catch (e) { console.error("❌ MU Athletics error:", e.message); }
+
+    // ===== 2. PENN MANOR iCAL (PAGINATED — fetch past + future events) =====
+    try {
+        console.log("📡 Fetching Penn Manor iCal (paginated until " + endDay + ")...");
+        let allPMEvents = {};
+
+        // Fetch UPCOMING events (paginated forward)
+        const pmFutureUrl = 'https://www.pennmanor.net/events/list/?ical=1&tribe_event_display=list&tribe_paged=';
+        let page = 1;
+        const maxPages = 20;
+        let latestEventDate = null;
+
+        while (page <= maxPages) {
+            try {
+                const url = pmFutureUrl + page;
+                console.log(`  Fetching page ${page}...`);
+                const pageData = await ical.async.fromURL(url, { headers: baseHeaders });
+                const pageEvents = Object.values(pageData).filter(e => e.type === 'VEVENT');
+                console.log(`  → Page ${page}: ${pageEvents.length} VEVENTs`);
+
+                if (pageEvents.length === 0) {
+                    console.log(`  → Empty page, stopping.`);
+                    break;
+                }
+
+                // Merge into allPMEvents, count truly new ones
+                let newCount = 0;
+                for (const [key, val] of Object.entries(pageData)) {
+                    if (val.type === 'VEVENT') {
+                        const uid = val.uid || key;
+                        if (!allPMEvents[uid]) newCount++;
+                        allPMEvents[uid] = val;
+                    }
+                }
+
+                // Find latest event date on this page
+                let pageLatest = null;
+                pageEvents.forEach(ev => {
+                    const d = new Date(ev.start);
+                    if (!isNaN(d.getTime()) && (!pageLatest || d > pageLatest)) pageLatest = d;
+                });
+                if (pageLatest) {
+                    latestEventDate = pageLatest;
+                    console.log(`  → Latest: ${pageLatest.toISOString().split('T')[0]} | New unique: ${newCount}`);
+                }
+
+                // Stop if we've reached the end of our date range
+                if (latestEventDate && latestEventDate >= futureDate) {
+                    console.log(`  → Covered full range through ${endDay}, stopping.`);
+                    break;
+                }
+                // Stop if partial page (no more data)
+                if (pageEvents.length < 30) {
+                    console.log(`  → Partial page (${pageEvents.length} < 30), likely last page.`);
+                    break;
+                }
+                // Stop if no new unique events (all dupes)
+                if (newCount === 0) {
+                    console.log(`  → No new unique events, stopping.`);
+                    break;
+                }
+
+                page++;
+            } catch (err) {
+                console.log(`  → Page ${page} failed: ${err.message}`);
+                break;
+            }
+        }
+
+        const totalFutureRaw = Object.keys(allPMEvents).length;
+        const coverageEnd = latestEventDate ? latestEventDate.toISOString().split('T')[0] : 'unknown';
+        console.log(`  Future: ${totalFutureRaw} unique across ${page} page(s), coverage through ${coverageEnd}`);
+
+        // Fetch PAST events (paginated backward until we cover PAST_DAYS or run out)
+        const pmPastUrl = 'https://www.pennmanor.net/events/list/?ical=1&tribe_event_display=past&tribe_paged=';
+        const maxPastPages = 20;
+        for (let pp = 1; pp <= maxPastPages; pp++) {
+            try {
+                const pastPageData = await ical.async.fromURL(pmPastUrl + pp, { headers: baseHeaders });
+                const pastPageEvents = Object.values(pastPageData).filter(e => e.type === 'VEVENT');
+                if (pastPageEvents.length === 0) break;
+                let newPast = 0;
+                let oldestDate = null;
+                for (const [key, val] of Object.entries(pastPageData)) {
+                    if (val.type === 'VEVENT') {
+                        const uid = val.uid || key;
+                        if (!allPMEvents[uid]) newPast++;
+                        allPMEvents[uid] = val;
+                        const d = new Date(val.start);
+                        if (!oldestDate || d < oldestDate) oldestDate = d;
+                    }
+                }
+                console.log(`  Past page ${pp}: ${pastPageEvents.length} VEVENTs, ${newPast} new`);
+                if (newPast === 0) break;
+                // Stop if we've reached far enough back
+                if (oldestDate && oldestDate < pastDate) { console.log(`  Past coverage reached ${oldestDate.toISOString().split('T')[0]}`); break; }
+            } catch (err) { console.log(`  Past page ${pp} failed: ${err.message}`); break; }
+        }
+
+        const totalPMRaw = Object.keys(allPMEvents).length;
+        console.log(`  Total unique (past+future): ${totalPMRaw}`);
+
+        if (totalPMRaw === 0) throw new Error('Penn Manor returned no events');
+
+        const pmData = allPMEvents;
+
+        // Debug: check raw PM lacrosse events before any processing
+        const rawLax = Object.values(pmData).filter(e => /lacrosse/i.test(e.summary || ''));
+        const rawGirlsLax = rawLax.filter(e => /girl/i.test(e.summary || ''));
+        console.log(`    🔍 Raw iCal lacrosse: ${rawLax.length} total, ${rawGirlsLax.length} girls`);
+        rawGirlsLax.filter(e => new Date(e.start) >= now).forEach(e => console.log(`      → ${e.summary} (${new Date(e.start).toISOString().split('T')[0]})`));
+
+        let pmAthCount = 0, pmGenCount = 0;
+
+        for (const ev of Object.values(pmData)) {
+            const eventDate = new Date(ev.start);
+            if (isNaN(eventDate.getTime()) || eventDate < pastDate || eventDate >= futureDate) continue;
+
+            const title = ev.summary || 'Penn Manor Event';
+            const lowerTitle = title.toLowerCase();
+            const desc = ev.description || '';
+            const loc = ev.location || 'Penn Manor School District';
+            const categories = ev.categories ? (Array.isArray(ev.categories) ? ev.categories.join(',') : String(ev.categories)) : '';
+
+            // Skip noise
+            if (/cycle day|^start of|^end of/i.test(lowerTitle)) continue;
+
+            // Skip No School/Closings events entirely — not scraped
+            if (/no school|snow day|spring break|weather make|school now in session|vacation|closing|closed/i.test(lowerTitle)) continue;
+
+            // Skip internal school events not relevant to community
+            if (/\bsap meeting\b|\bfaculty meeting\b|\bstaff meeting\b|\bin-service\b|\bprofessional development\b|\bteam leader meeting\b/i.test(lowerTitle)) continue;
+            if (/\bfield trip\b|\btrip to\b|\bgirls on the run\b|\bgotr\b|\bgotc\b|\bbus evacuation\b/i.test(lowerTitle)) continue;
+            if (/\bprogress report|report card|early dismissal|late start|delayed opening/i.test(lowerTitle)) continue;
+            if (/\bpicture day\b|\bretake\b|\bphoto day\b|\bpicture retake\b|\bspring pictures\b/i.test(lowerTitle)) continue;
+            if (/\brehearsal\b|\bappreciation (day|week)\b|\blibrarian day\b|\ball school assembly\b|\bpride assembly\b/i.test(lowerTitle)) continue;
+
+            const isAthletic = categories.toLowerCase().includes('athletics') || desc.toLowerCase().includes('sport:');
+
+            if (isAthletic) {
+                // Parse structured description: Sport:, Level:, Site:
+                const sportMatch = desc.match(/Sport:\s*(.+?)(?:\\n|\n|$)/i);
+                const levelMatch = desc.match(/Level:\s*(.+?)(?:\\n|\n|$)/i);
+
+                let tags = ["PM", "Athletics"];
+
+                // Home vs Away: "vs" = home, "@" = away
+                const isHome = lowerTitle.includes(' vs ');
+                if (isHome) tags.push("Home Game Mode");
+
+                // Level
+                const level = levelMatch ? levelMatch[1].trim() : '';
+                if (/varsity/i.test(level) && !/jv/i.test(level)) tags.push('Varsity');
+                if (/jv/i.test(level)) tags.push('JV');
+                if (/7th|8th|jr high|junior high/i.test(level)) tags.push('Jr High');
+
+                // Gender
+                if (/\bboys\b|boy's/i.test(level) || /\bboys\b/i.test(lowerTitle)) tags.push('Boys');
+                if (/\bgirls\b|girl's/i.test(level) || /\bgirls\b/i.test(lowerTitle)) tags.push('Girls');
+                if (/\bcoed\b/i.test(level) || /\bcoed\b/i.test(lowerTitle)) { tags.push('Boys'); tags.push('Girls'); }
+
+                // Sport type
+                sportsList.forEach(s => {
+                    if (lowerTitle.includes(s.toLowerCase())) tags.push(s);
+                });
+                // Catch Track & Field variants
+                if (/track\s*&?\s*field/i.test(desc) && !tags.includes('Track')) tags.push('Track');
+                if (/bocce/i.test(lowerTitle)) tags.push('Athletics'); // Bocce not in list but keep tagged
+
+                let pmStreamLink = '';
+
+                // Check if game is live
+                const eventEnd = ev.end ? new Date(ev.end) : new Date(eventDate.getTime() + 2*60*60*1000);
+                const pmIsLive = now >= eventDate && now <= eventEnd && !!pmStreamLink;
+
+                events.push({
+                    title, date: eventDate.toISOString(), location: loc,
+                    tags: [...new Set(tags)], price: "Free", ticketLink: "",
+                    sourceLink: ev.url || "https://www.pennmanor.net/calendar/",
+                    gameResult: '', gameScore: '',
+                    streamLink: pmStreamLink,
+                    isLive: pmIsLive
+                });
+                pmAthCount++;
+            } else {
+                // Non-athletic PM event — categorize by title keywords
+                let tags = ["PM"];
+                const lt = lowerTitle;
+
+                if (/board/i.test(lt)) tags.push('Board/PTO');
+                else if (/pto/i.test(lt)) tags.push('Board/PTO');
+                else if (/staff|in-service|act 80|faculty/i.test(lt)) continue; // Skip Staff events
+                else if (/concert|band|chorus|choir|orchestra|musical|theater|play|string ensemble|showcase/i.test(lt)) tags.push('Music/Arts');
+                else if (/pssa|grades?\s+(due|posted|are)|report card|marking period/i.test(lt)) continue; // Skip Testing/Grades events
+                else if (/spirit day|dress down|reward day|talent show|pm cares/i.test(lt)) continue; // Skip Spirit/Fun Days
+                else if (/field trip|downtown trip|trip to/i.test(lt)) tags.push('Field Trips');
+                else if (/gotr|girls on the run|heart & sole|physicals|health/i.test(lt)) tags.push('Health/Wellness');
+                else if (/book fair|food fair|picture|assembly|appreciation|librarian/i.test(lt)) tags.push('School Events');
+                else if (/sap meeting|team leader|lunch\s*&?\s*learn|house meeting/i.test(lt)) tags.push('Meetings');
+                else tags.push('Other');
+
+                // Skip PM-Other events (uncategorized, not useful)
+                if (tags.includes('Other')) continue;
+
+                const pmBoardStream = /board/i.test(lt) ? 'https://www.youtube.com/@PennManorSchoolDistrict/streams' : '';
+
+                events.push({
+                    title, date: eventDate.toISOString(), location: loc,
+                    tags: [...new Set(tags)], price: "Free", ticketLink: "",
+                    sourceLink: ev.url || "https://www.pennmanor.net/calendar/",
+                    streamLink: pmBoardStream
+                });
+                pmGenCount++;
+            }
+        }
+        console.log(`✅ Penn Manor: ${pmAthCount} athletic + ${pmGenCount} general = ${pmAthCount + pmGenCount} events`);
+        // Debug: check girls lacrosse coverage
+        const girlsLax = events.filter(e => e.tags && e.tags.includes('PM') && e.tags.includes('Girls') && e.tags.includes('Lacrosse'));
+        const futureGirlsLax = girlsLax.filter(e => new Date(e.date) >= now);
+        console.log(`    🔍 Girls Lacrosse: ${girlsLax.length} total, ${futureGirlsLax.length} future`);
+        futureGirlsLax.forEach(e => console.log(`      → ${e.title} (${new Date(e.date).toISOString().split('T')[0]})`));
+    } catch (e) { console.error("❌ Penn Manor error:", e.message); }
+
+    // ===== 2b. HUDL BROADCAST CHECK (Penn Manor) =====
+    try {
+        console.log("📡 Checking Hudl broadcasts for PM games...");
+        const hudlQuery = `query Web_Fan_GetScheduleEntrySummaries_r1($input: GetScheduleEntryPublicSummariesInput!) {
+  scheduleEntryPublicSummaries(input: $input) {
+    items {
+      gameType genderId id internalId
+      opponentDetails { name shortName __typename }
+      scheduleEntryId scheduleEntryLocation scheduleEntryOutcome
+      score1 score2 sportId teamId timeUtc broadcastStatus
+      __typename
+    }
+    totalCount __typename
+  }
+}`;
+        // Query in weekly chunks to avoid hitting limits
+        const hudlBroadcasts = new Map(); // key: YYYY-MM-DD|sportId|genderId -> broadcast info
+        const hudlScores = new Map(); // key: YYYY-MM-DD|sportId|genderId -> score info
+        const hudlAllEntries = new Map(); // key: YYYY-MM-DD|sportId|genderId -> all tracked games
+        let totalHudlEntries = 0, broadcastCount = 0, scoreCount = 0;
+
+        // Query Hudl in chunks, handling pagination
+        const chunkSize = 30 * 24 * 60 * 60 * 1000; // 30 days
+        let hudlStart = pastDate.getTime();
+        const hudlEnd = futureDate.getTime();
+        const sportIdsSeen = new Set();
+
+        while (hudlStart < hudlEnd) {
+            const chunkEnd = Math.min(hudlStart + chunkSize, hudlEnd);
+            let cursor = null;
+            let hasMore = true;
+
+            while (hasMore) {
+                const inputVars = {
+                    sortType: 'SCHEDULE_ENTRY_DATE',
+                    schoolIds: ['U2Nob29sNjcyNw=='],
+                    filterStartDate: new Date(hudlStart).toISOString(),
+                    filterEndDate: new Date(chunkEnd).toISOString(),
+                    sortByAscending: true,
+                    first: 100
+                };
+                if (cursor) inputVars.after = cursor;
+
+                const res = await fetch('https://www.hudl.com/api/public/graphql/query', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        operationName: 'Web_Fan_GetScheduleEntrySummaries_r1',
+                        variables: { input: inputVars },
+                        query: hudlQuery
+                    })
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    const result = data?.data?.scheduleEntryPublicSummaries;
+                    const items = result?.items || [];
+                    totalHudlEntries += items.length;
+
+                    for (const item of items) {
+                        sportIdsSeen.add(`${item.sportId}:g${item.genderId}`);
+                        const gameDate = new Date(item.timeUtc).toISOString().split('T')[0];
+                        const key = `${gameDate}|${item.sportId}|${item.genderId}`;
+
+                        // Store ALL entries (for highlight links on past games)
+                        if (!hudlAllEntries.has(key)) {
+                            hudlAllEntries.set(key, {
+                                id: item.id,
+                                timeUtc: item.timeUtc
+                            });
+                        }
+
+                        // Store broadcast info (full replays / livestreams)
+                        if (item.broadcastStatus !== null && item.broadcastStatus !== undefined) {
+                            hudlBroadcasts.set(key, {
+                                id: item.id,
+                                scheduleEntryId: item.scheduleEntryId,
+                                broadcastStatus: item.broadcastStatus,
+                                timeUtc: item.timeUtc
+                            });
+                            broadcastCount++;
+                        }
+
+                        // Store scores (for all entries that have them)
+                        if (item.score1 !== null && item.score2 !== null) {
+                            const outcome = item.scheduleEntryOutcome;
+                            const result = outcome === 1 ? 'W' : outcome === 2 ? 'L' : outcome === 3 ? 'T' : '';
+                            if (result) {
+                                hudlScores.set(key, {
+                                    result,
+                                    score: `${item.score1}-${item.score2}`,
+                                    timeUtc: item.timeUtc
+                                });
+                                scoreCount++;
+                            }
+                        }
+                    }
+
+                    hasMore = result?.pageInfo?.hasNextPage || false;
+                    cursor = result?.pageInfo?.endCursor || null;
+                    if (items.length === 0) hasMore = false;
+                } else {
+                    hasMore = false;
+                }
+            }
+            hudlStart = chunkEnd;
+        }
+
+        console.log(`  📺 Hudl: ${totalHudlEntries} schedule entries, ${broadcastCount} with broadcasts, ${scoreCount} with scores`);
+
+        // Hudl sportId mapping (confirmed: 2=basketball, 4=volleyball, 7=lacrosse)
+        const hudlSportMap = {
+            1: 'football', 2: 'basketball', 3: 'soccer', 4: 'volleyball',
+            5: 'baseball', 6: 'softball', 7: 'lacrosse', 8: 'field hockey',
+            9: 'wrestling', 10: 'tennis', 11: 'track', 12: 'swimming',
+            13: 'cross country', 14: 'golf'
+        };
+        const sportToHudlId = {};
+        for (const [id, name] of Object.entries(hudlSportMap)) sportToHudlId[name] = parseInt(id);
+
+        // Match broadcasts AND scores to PM events
+        let matchCount = 0, highlightCount = 0;
+        for (const ev of events) {
+            if (!ev.tags || !ev.tags.includes('PM')) continue;
+            const sportTag = ev.tags.find(t => sportToHudlId[t.toLowerCase()]);
+            if (!sportTag) continue;
+
+            const evDate = new Date(ev.date).toISOString().split('T')[0];
+            const gender = ev.tags.includes('Girls') ? 1 : 0;
+            const sportId = sportToHudlId[sportTag.toLowerCase()];
+            const key = `${evDate}|${sportId}|${gender}`;
+
+            // Broadcast link (actual stream / livestream)
+            const broadcast = hudlBroadcasts.get(key);
+            if (broadcast) {
+                const watchDate = new Date(broadcast.timeUtc).toISOString();
+                ev.streamLink = `https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/schedule?date=${encodeURIComponent(watchDate)}&range=Day&s=${encodeURIComponent(broadcast.id)}`;
+                matchCount++;
+            } else {
+                // No broadcast — only link past games for potential highlights
+                const hudlEntry = hudlAllEntries.get(key);
+                if (hudlEntry && new Date(ev.date) < now) {
+                    const watchDate = new Date(hudlEntry.timeUtc).toISOString();
+                    ev.streamLink = `https://fan.hudl.com/usa/pa/millersville/organization/6727/penn-manor-high-school/schedule?date=${encodeURIComponent(watchDate)}&range=Day&s=${encodeURIComponent(hudlEntry.id)}`;
+                    highlightCount++;
+                }
+            }
+
+            // Update isLive if stream link was added and game is happening now
+            if (ev.streamLink && !ev.isLive) {
+                const evStart = new Date(ev.date);
+                const evEnd = new Date(evStart.getTime() + 2*60*60*1000);
+                if (now >= evStart && now <= evEnd && !ev.gameResult) {
+                    ev.isLive = true;
+                }
+            }
+        }
+        console.log(`  📺 Matched ${matchCount} broadcasts, ${highlightCount} highlight links`);
+        // Debug: show unmatched PM games
+        for (const ev of events) {
+            if (!ev.tags || !ev.tags.includes('PM')) continue;
+            if (ev.streamLink) continue;
+            const sportTag = ev.tags.find(t => sportToHudlId[t.toLowerCase()]);
+            if (!sportTag) continue;
+            const evDate = new Date(ev.date).toISOString().split('T')[0];
+            const gender = ev.tags.includes('Girls') ? 1 : 0;
+            const sportId = sportToHudlId[sportTag.toLowerCase()];
+            const key = `${evDate}|${sportId}|${gender}`;
+            if (new Date(ev.date) >= now) {
+                console.log(`    ⚠️ No Hudl match: "${ev.title}" key=${key} tags=[${ev.tags.join(',')}]`);
+            }
+        }
+
+        // Store for score matching after MaxPreps
+        global._hudlScores = hudlScores;
+        global._hudlSportToId = sportToHudlId;
+
+    } catch (e) { console.log(`  ⚠️ Hudl broadcast check error: ${e.message}`); }
+
+    // ===== 3. MU CALENDAR (NON-SPORT EVENTS ONLY) =====
+    try {
+        console.log("📡 Fetching MU Calendar (non-sport events)...");
+        const pageRes = await fetch('https://www.millersville.edu/calendar/', { headers: baseHeaders });
+        const rawCookies = pageRes.headers.get('set-cookie');
+        let cookieHeader = rawCookies ? rawCookies.split(', ').map(c => c.split(';')[0]).join('; ') : '';
+
+        const apiHeaders = {
+            ...baseHeaders, 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest',
+            'Origin': 'https://www.millersville.edu', 'Referer': 'https://www.millersville.edu/calendar/',
+            'Content-Type': 'application/json'
+        };
+        if (cookieHeader) apiHeaders['Cookie'] = cookieHeader;
+
+        const res = await fetch('https://www.millersville.edu/calendar/app/api/index.php', {
+            method: 'POST', headers: apiHeaders,
+            body: JSON.stringify({ getEvents: true, startDate: startDay, endDate: endDay })
+        });
+        if (!res.ok) throw new Error(`MU API returned ${res.status}`);
+        const data = JSON.parse(await res.text());
+
+        if (data.fields && Array.isArray(data.data)) {
+            const fields = data.fields.split(',');
+            const nameIdx = fields.indexOf('ActivityName');
+            const startIdx = fields.indexOf('StartDateTime');
+            const bldgIdx = fields.indexOf('BuildingCode');
+            const roomIdx = fields.indexOf('RoomName');
+            const descIdx = fields.indexOf('EventMeetingByActivityId.Event.Description');
+            const linkIdx = fields.findIndex(f => f.toLowerCase().includes('url') || f.toLowerCase().includes('link'));
+            const idIdx = fields.indexOf('ActivityId');
+            const typeIdx = fields.indexOf('MeetingType:EventMeetingByActivityId.EventMeetingType.Name');
+            const customerIdx = fields.indexOf('Customer:EventMeetingByActivityId.Event.Customer.Name');
+
+            let muCount = 0;
+            data.data.forEach(row => {
+                const eventTitle = row[nameIdx] || "Campus Event";
+                const eventType = typeIdx !== -1 ? (row[typeIdx] || '').trim() : '';
+
+                // SKIP Athletic Competitions — we get those from Sidearm now
+                if (eventType === 'Athletic Competitions') return;
+
+                let eventLoc = `${row[bldgIdx] || ''} ${row[roomIdx] || ''}`.trim() || "Campus";
+                // Clean up building codes
+                if (eventLoc === 'AcCALEN') eventLoc = 'Millersville University';
+                eventLoc = eventLoc.replace(/^WARE Ware Center$/i, 'Ware Center')
+                                   .replace(/^WARE\b/, 'Ware Center')
+                                   .replace(/^Ware Center\s+/, 'Ware Center, ');
+                const pricing = extractPricing(row[descIdx] || "", eventTitle, eventLoc, linkIdx !== -1 ? (row[linkIdx] || "") : "");
+
+                let tags = ["MU"];
+                if (eventType) tags.push(eventType);
+                if (customerIdx !== -1 && row[customerIdx]) tags.push(row[customerIdx].trim());
+
+                // RELABEL: "Student Event" from the MU calendar is really the GetInvolved feed
+                // being republished on the main calendar, creating duplicates. Treat these as
+                // GetInvolved events so they filter/display/dedupe consistently.
+                //   - Swap tag: "Student Event" → "GetInvolved" + "Clubs/Orgs"
+                //   - Run the audience classifier so townies filter correctly (public stuff like
+                //     blood drives / fundraisers stays visible to them, private chapter meetings don't)
+                let audience;
+                if (tags.includes('Student Event')) {
+                    tags = tags.filter(t => t !== 'Student Event');
+                    if (!tags.includes('GetInvolved')) tags.push('GetInvolved');
+                    if (!tags.includes('Clubs/Orgs')) tags.push('Clubs/Orgs');
+                    // Plain-text description for keyword scanning
+                    const plainDesc = (row[descIdx] || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+                    const customerName = (customerIdx !== -1 && row[customerIdx]) ? row[customerIdx].trim() : '';
+                    audience = classifyAudience({
+                        titleText: eventTitle,
+                        descText: plainDesc,
+                        orgName: customerName,
+                        rawTags: tags,
+                        tags,
+                        benefits: []
+                    });
+                }
+
+                const eventId = idIdx !== -1 ? row[idIdx] : "";
+                const sourceLink = eventId
+                    ? `https://www.millersville.edu/calendar/events/${eventId}`
+                    : "https://www.millersville.edu/calendar/";
+
+                const descHtml = row[descIdx] || "";
+
+                events.push({
+                    title: eventTitle, date: row[startIdx], location: eventLoc,
+                    tags: [...new Set(tags)], price: pricing.price,
+                    ticketLink: pricing.link, sourceLink,
+                    description: descHtml,
+                    ...(audience ? { audience } : {})
+                });
+                muCount++;
+            });
+            console.log(`✅ MU Calendar (non-sport): ${muCount} events`);
+        } else {
+            throw new Error('MU API unexpected structure');
+        }
+    } catch (e) { console.error("❌ MU Calendar error:", e.message); }
+
+    // ===== 3b. ARTSMU.COM (WARE CENTER / WINTER CENTER — supplements MU Calendar) =====
+    try {
+        console.log("📡 Fetching artsmu.com events...");
+        // Fetch multiple list pages to cover regular events + summer camps
+        const listPages = [
+            'https://artsmu.com/events/',
+            'https://artsmu.com/arts-smarts-camps/'
+        ];
+        const eventUrls = new Set();
+        for (const listUrl of listPages) {
+            try {
+                const listRes = await fetch(listUrl, { headers: baseHeaders, signal: AbortSignal.timeout(30000) });
+                if (!listRes.ok) { console.log(`  ⚠️ ${listUrl} returned ${listRes.status}`); continue; }
+                const listHtml = await listRes.text();
+                // Extract event URLs matching the pattern
+                const urlRegex = /https:\/\/artsmu\.com\/event\/[a-z0-9-]+\/(?:the-ware-center|winter-visual-performing-arts-center)\/?/gi;
+                let pageTotal = 0, pageNew = 0;
+                for (const m of listHtml.matchAll(urlRegex)) {
+                    const cleanUrl = m[0].replace(/\/$/, '') + '/';
+                    pageTotal++;
+                    if (!eventUrls.has(cleanUrl)) { eventUrls.add(cleanUrl); pageNew++; }
+                }
+                const pageLabel = listUrl.split('/').slice(-2,-1)[0];
+                console.log(`  🔗 ${pageLabel}: ${pageTotal} URLs found (${pageNew} unique new)`);
+            } catch (e) {
+                console.log(`  ⚠️ ${listUrl} fetch failed: ${e.message}`);
+            }
+        }
+        console.log(`  🔗 Total ${eventUrls.size} unique artsmu event URLs to check`);
+
+        // Stage 2: Fetch each event page and parse structured data
+        const monthMap = {January:0,February:1,March:2,April:3,May:4,June:5,July:6,August:7,September:8,October:9,November:10,December:11};
+        let artsCount = 0, artsSkipped = 0, artsFailed = 0;
+        const existingKeys = new Set(events.map(e => (e.title || '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 40) + '|' + (e.date || '').slice(0, 10)));
+
+        for (const eventUrl of eventUrls) {
+            try {
+                const evRes = await fetch(eventUrl, { headers: baseHeaders, signal: AbortSignal.timeout(15000) });
+                if (!evRes.ok) { artsFailed++; continue; }
+                const evHtml = await evRes.text();
+
+                // Extract title from <title> or h1
+                const titleMatch = evHtml.match(/<h1[^>]*>([^<]+)<\/h1>/i);
+                if (!titleMatch) { artsFailed++; continue; }
+                let title = titleMatch[1].trim()
+                    .replace(/&#0?38;/g, '&').replace(/&#0?39;/g, "'").replace(/&#8217;/g, "'")
+                    .replace(/&#8220;|&#8221;/g, '"').replace(/&#8211;/g, '–')
+                    .replace(/&amp;/g, '&').replace(/&quot;/g, '"');
+                if (/^CANCELLED:/i.test(title)) { artsSkipped++; continue; }
+
+                // Date: "Friday, May 01, 2026" pattern near the top of the event page
+                const dateMatch = evHtml.match(/(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday),?\s+(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),?\s+(\d{4})/);
+                if (!dateMatch) { artsFailed++; continue; }
+                const [, , monthName, day, year] = dateMatch;
+
+                // Time: "Performance: 7:30 pm" or "Performance: 5 pm"
+                let hour = 19, min = 0;
+                const timeMatch = evHtml.match(/Performance:\s*(\d{1,2})(?::(\d{2}))?\s*([ap])m/i);
+                if (timeMatch) {
+                    hour = parseInt(timeMatch[1]);
+                    min = timeMatch[2] ? parseInt(timeMatch[2]) : 0;
+                    if (timeMatch[3].toLowerCase() === 'p' && hour !== 12) hour += 12;
+                    if (timeMatch[3].toLowerCase() === 'a' && hour === 12) hour = 0;
+                }
+
+                // Build date with explicit ET offset so timezone-unaware runners (UTC on GitHub Actions)
+                // don't produce wrong times. Use -04:00 (EDT) for DST months, -05:00 (EST) otherwise.
+                // Rough US DST: second Sunday of March through first Sunday of November.
+                const yearNum = parseInt(year);
+                const monthNum = monthMap[monthName]; // 0-indexed
+                const dayNum = parseInt(day);
+                // DST window approximation: months 3-10 (April-October) are always DST;
+                // March and November depend on date — use day-of-month heuristics.
+                let isDST;
+                if (monthNum >= 3 && monthNum <= 9) isDST = true;           // Apr..Oct
+                else if (monthNum === 2) isDST = dayNum >= 8;                // March: second Sunday ≥ day 8
+                else if (monthNum === 10) isDST = dayNum < 8;                // November: first Sunday < day 8
+                else isDST = false;                                          // Dec, Jan, Feb
+                const offset = isDST ? '-04:00' : '-05:00';
+                const pad = n => String(n).padStart(2, '0');
+                const iso = `${year}-${pad(monthNum + 1)}-${pad(dayNum)}T${pad(hour)}:${pad(min)}:00${offset}`;
+                const eventDate = new Date(iso);
+
+                // Date range filter
+                if (eventDate < pastDate || eventDate >= futureDate) { artsSkipped++; continue; }
+
+                // Venue
+                const venue = eventUrl.includes('winter-visual') ? 'Winter Visual & Performing Arts Center' : 'The Ware Center';
+
+                // Price: "$10" or "$8 to $10" — grab text between key markers
+                const priceMatch = evHtml.match(/\$\d+(?:\s*to\s*\$\d+)?/);
+                const price = priceMatch ? priceMatch[0] : '';
+
+                // Ticket link: Etix URL
+                const etixMatch = evHtml.match(/https:\/\/www\.etix\.com\/ticket\/p\/\d+\/[^"\s?&<]+/);
+                const ticketLink = etixMatch ? etixMatch[0] : '';
+
+                // Description: look for content between known markers — keep short
+                let description = '';
+                const descMatch = evHtml.match(/<div[^>]*class="[^"]*event[_-]?description[^"]*"[^>]*>([\s\S]*?)<\/div>/i);
+                if (descMatch) description = descMatch[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 500);
+
+                // Dedupe against MU Calendar entries
+                const key = title.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 40) + '|' + eventDate.toISOString().slice(0, 10);
+                if (existingKeys.has(key)) { artsSkipped++; continue; }
+
+                // Tag: art exhibit events are different from performances
+                const tags = ['MU'];
+                if (/exhibit|gallery|on display/i.test(title + ' ' + description)) tags.push('Art Exhibit');
+                else tags.push('Arts Concert / Performance');
+
+                events.push({
+                    title, date: eventDate.toISOString(), location: venue,
+                    tags, price: price || 'Open To Public',
+                    ticketLink, sourceLink: eventUrl, description
+                });
+                existingKeys.add(key);
+                artsCount++;
+            } catch (e) {
+                artsFailed++;
+            }
+        }
+        console.log(`✅ artsmu.com: ${artsCount} new events (${artsSkipped} skipped, ${artsFailed} failed)`);
+    } catch (e) { console.error("❌ artsmu.com error:", e.message); }
+    // ===== 3d. HAND-MAINTAINED CAMPS (camps.json) =====
+    // For camps where automated scraping fails (e.g., TotalCamps API blocks GHA IPs).
+    // Edit /camps.json in the repo root to add/update camps. They'll appear on the site within the hour.
+    try {
+        const campsPath = path.join(__dirname, '../camps.json');
+        if (fs.existsSync(campsPath)) {
+            const campsData = JSON.parse(fs.readFileSync(campsPath, 'utf-8'));
+            if (Array.isArray(campsData)) {
+                let campCount = 0, campSkipped = 0;
+                const existingKeys4 = new Set(events.map(e => (e.title || '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 40) + '|' + (e.date || '').slice(0, 10)));
+                for (const camp of campsData) {
+                    if (!camp.title || !camp.date) { campSkipped++; continue; }
+                    const campDate = new Date(camp.date);
+                    if (isNaN(campDate.getTime())) { campSkipped++; continue; }
+                    if (campDate < pastDate || campDate >= futureDate) { campSkipped++; continue; }
+                    const key = camp.title.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 40) + '|' + campDate.toISOString().slice(0, 10);
+                    if (existingKeys4.has(key)) { campSkipped++; continue; }
+                    events.push({
+                        title: camp.title,
+                        date: campDate.toISOString(),
+                        location: camp.location || 'Millersville University',
+                        tags: Array.isArray(camp.tags) ? camp.tags : ['MU', 'Summer Camp'],
+                        price: camp.price || '',
+                        ticketLink: camp.registrationUrl || camp.ticketLink || '',
+                        sourceLink: camp.sourceLink || camp.registrationUrl || '',
+                        description: camp.description || '',
+                        kidFriendly: camp.kidFriendly !== false
+                    });
+                    existingKeys4.add(key);
+                    campCount++;
+                }
+                console.log(`✅ Hand-maintained camps: ${campCount} loaded from camps.json (${campSkipped} skipped)`);
+            }
+        } else {
+            console.log(`ℹ️  camps.json not found at ${campsPath} — skipping hand-maintained camps`);
+        }
+    } catch (e) { console.error("❌ camps.json error:", e.message); }
+
+    // ===== 4. CLUBS/ORGS (ANTHOLOGY / GETINVOLVED API) =====
+    try {
+        console.log("📡 Fetching Clubs/Orgs...");
+        // Fetch future events (from today forward) and past events separately
+        const giUrlFuture = `https://getinvolved.millersville.edu/api/discovery/event/search?endsAfter=${today.toISOString().split('T')[0]}T00:00:00-04:00&orderByField=endsOn&orderByDirection=ascending&status=Approved&take=200`;
+        const giUrlPast = `https://getinvolved.millersville.edu/api/discovery/event/search?endsAfter=${startDay}T00:00:00-04:00&endsBefore=${today.toISOString().split('T')[0]}T00:00:00-04:00&orderByField=endsOn&orderByDirection=descending&status=Approved&take=100`;
+
+        // Extra fetches purely to discover org names — events from the past 2 years.
+        // We don't use these events for the timeline; we only mine org names from them.
+        // Split into chunks to work around any per-request row limits.
+        const twoYearsAgo = new Date(today.getTime() - 730 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+        const oneYearAgo = new Date(today.getTime() - 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+        const giUrlOrgDiscovery1 = `https://getinvolved.millersville.edu/api/discovery/event/search?endsAfter=${twoYearsAgo}T00:00:00-04:00&endsBefore=${oneYearAgo}T00:00:00-04:00&orderByField=endsOn&orderByDirection=descending&status=Approved&take=400`;
+        const giUrlOrgDiscovery2 = `https://getinvolved.millersville.edu/api/discovery/event/search?endsAfter=${oneYearAgo}T00:00:00-04:00&endsBefore=${startDay}T00:00:00-04:00&orderByField=endsOn&orderByDirection=descending&status=Approved&take=400`;
+
+        const [giFuture, giPast, giOrgDisc1, giOrgDisc2] = await Promise.allSettled([
+            fetch(giUrlFuture, { headers: baseHeaders }).then(r => r.json()),
+            fetch(giUrlPast, { headers: baseHeaders }).then(r => r.json()),
+            fetch(giUrlOrgDiscovery1, { headers: baseHeaders }).then(r => r.json()),
+            fetch(giUrlOrgDiscovery2, { headers: baseHeaders }).then(r => r.json())
+        ]);
+
+        const giItems = [
+            ...((giFuture.status === 'fulfilled' ? giFuture.value.value : []) || []),
+            ...((giPast.status === 'fulfilled' ? giPast.value.value : []) || [])
+        ];
+        // Items used only for org-name mining (not added to events timeline)
+        const giOrgDiscoveryItems = [
+            ...((giOrgDisc1.status === 'fulfilled' ? giOrgDisc1.value.value : []) || []),
+            ...((giOrgDisc2.status === 'fulfilled' ? giOrgDisc2.value.value : []) || [])
+        ];
+        let clubCount = 0;
+
+        // Track orgs seen in events so we can build a clubs.json from this dataset
+        // (the dedicated /organization/search endpoint returns HTTP 500 for anonymous callers,
+        //  so deriving from events is the reliable alternative).
+        if (!global._orgsFromEvents) global._orgsFromEvents = new Map();
+        const orgsMap = global._orgsFromEvents;
+        // Record every org seen in giItems regardless of event date, so orgs with
+        // only old events still appear in the directory.
+        // Also include the deep-past org-discovery items to catch orgs that host events rarely.
+        const orgSourceLists = [giItems, giOrgDiscoveryItems];
+        orgSourceLists.forEach(list => {
+            list.forEach(item => {
+                if (!item.organizationName) return;
+                const orgName = item.organizationName.trim();
+                if (orgName && !orgsMap.has(orgName)) {
+                    orgsMap.set(orgName, {
+                        name: orgName,
+                        category: (item.categoryNames && item.categoryNames[0]) || '',
+                        categories: item.categoryNames || [],
+                        shortName: '',
+                        id: ''
+                    });
+                }
+            });
+        });
+
+        giItems.forEach(item => {
+            const eventDate = new Date(item.startsOn);
+            if (eventDate < pastDate || eventDate >= futureDate) return;
+
+            // Tag as MU (folded into main MU source) + GetInvolved (sub-category display tag)
+            // Keep 'Clubs/Orgs' as internal marker so existing dedupe source-bucket logic still works
+            let tags = ["MU", "GetInvolved", "Clubs/Orgs"];
+            let rawTags = [];
+            if (item.organizationName) rawTags.push(item.organizationName.trim());
+            if (item.theme && item.theme !== "Not Applicable") rawTags.push(item.theme.trim());
+            (item.categoryNames || []).forEach(c => rawTags.push(c.trim()));
+
+            // Extract student perks/benefits
+            const benefits = [];
+            (item.benefitNames || []).forEach(b => {
+                const bl = b.toLowerCase();
+                if (bl.includes('food')) benefits.push('Free Food');
+                else if (bl.includes('free stuff') || bl.includes('swag') || bl.includes('giveaway')) benefits.push('Free Stuff');
+                else if (bl.includes('credit')) benefits.push('Credit');
+            });
+            // Also scan description & title for free food / swag signals (some events don't set benefits)
+            const descText = (item.description || '').toLowerCase();
+            const nameText = (item.name || '').toLowerCase();
+            const combined = nameText + ' ' + descText;
+            if (!benefits.includes('Free Food') && /\bfree (food|pizza|snacks|refreshments|lunch|dinner|breakfast|coffee|drinks)\b|\bpizza (will be )?provided\b|\bfood (will be )?(served|provided)\b/i.test(combined)) {
+                benefits.push('Free Food');
+            }
+            if (!benefits.includes('Free Stuff') && /\bfree (t.?shirt|shirts|swag|merch|giveaway|prize)\b|\braffle\b|\bprize drawing\b/i.test(combined)) {
+                benefits.push('Free Stuff');
+            }
+
+            const name = (item.name || "").toLowerCase();
+            const orgName = (item.organizationName || "").toLowerCase();
+            const greekRegex = /^(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega)\b/i;
+
+            rawTags.forEach(t => {
+                const lt = t.toLowerCase();
+                if (/athletics|^competition$|^competitions$/.test(lt)) return;
+                if (/fundrais/.test(lt)) { if (!tags.includes('Fundraising')) tags.push('Fundraising'); }
+                else if (/fraternity|sorority|greek/.test(lt)) { if (!tags.includes('Greek Life')) tags.push('Greek Life'); }
+                else tags.push(t);
+            });
+
+            if (/housing and residential|residence hall/.test(orgName)) tags.push('Residence Halls');
+            if (/greek council/.test(orgName) || greekRegex.test(orgName) || greekRegex.test(name)) tags.push('Greek Life');
+
+            let isPermittedSport = hGameClubSports.some(s => name.includes(s) || orgName.includes(s));
+
+            // Only classify as Club Sports if the event looks like an actual game/match
+            // Practices, fundraisers, trips, community service etc. stay as regular events
+            const isCompetitiveGame = /\bvs\.?\b|\bversus\b|\bgame\b|\bmatch\b|\btournament\b|\binvitational\b|\bchampionship\b|\bscrimmage\b|@\s*[A-Z]/i.test(name);
+
+            if ((isPermittedSport || tags.some(t => t.toLowerCase().includes('club sport'))) && isCompetitiveGame) {
+                tags.push("Club Sports");
+                if (/men's|mens/.test(name)) tags.push("Men's");
+                if (/women's|womens/.test(name)) tags.push("Women's");
+                sportsList.forEach(s => { if (name.includes(s.toLowerCase())) tags.push(s); });
+
+                // Home game detection for club sports
+                const loc = (item.location || '').toLowerCase();
+                const homeWords = ['pucillo', 'chryst', 'biemesderfer', 'cooper park', 'seaber', 'mccomsey', 'anttonen', 'millersville', 'comet'];
+                if (homeWords.some(k => loc.includes(k)) || /\bvs\b/.test(name)) tags.push("Home Game Mode");
+            }
+
+            // Audience classification: default mu-only (student-only), promote to public if signals match.
+            // Logic lives in classifyAudience() helper since MU Calendar Student Events reuse it below.
+            const audience = classifyAudience({
+                titleText: nameText, descText, orgName,
+                rawTags, tags, benefits
+            });
+
+            events.push({
+                title: item.name || "Student Event", date: eventDate.toISOString(),
+                location: item.location || "Campus", tags: [...new Set(tags)],
+                price: "Free",
+                ticketLink: "",
+                sourceLink: `https://getinvolved.millersville.edu/event/${item.id}`,
+                description: item.description || "",
+                benefits: benefits,
+                audience: audience
+            });
+            clubCount++;
+        });
+        const giEvents = events.filter(e => (e.tags||[]).includes('GetInvolved'));
+        const publicCount = giEvents.filter(e => e.audience === 'public').length;
+        const muOnlyCount = giEvents.filter(e => e.audience === 'mu-only').length;
+        console.log(`✅ Clubs/Orgs: ${clubCount} events (${publicCount} public, ${muOnlyCount} MU-only)`);
+    } catch (e) { console.error("❌ Clubs/Orgs error:", e.message); }
+
+    // ===== 5. EVENTBRITE (PHANTOM POWER) =====
+    let ebCount = 0;
+    try {
+        console.log("📡 Fetching Eventbrite (Phantom Power)...");
+        const ebText = await (await fetch('https://www.eventbrite.com/o/phantom-power-29187724817', { headers: baseHeaders })).text();
+        const ldMatches = ebText.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi);
+        if (ldMatches) {
+            const before = events.length;
+            ldMatches.forEach(block => {
+                try {
+                    extractEventbriteEvents(JSON.parse(block.replace(/<script type="application\/ld\+json">|<\/script>/gi, '')), events, today, futureDate);
+                } catch (e) { console.error("  JSON-LD parse error:", e.message); }
+            });
+            ebCount = events.length - before;
+        }
+        console.log(`✅ Eventbrite: ${ebCount} events`);
+    } catch (e) { console.error("❌ Eventbrite error:", e.message); }
+
+    // ===== 6. MILLERSVILLE BOROUGH (Google Calendar iCal — with recurring event expansion) =====
+    try {
+        console.log("📡 Fetching Borough Calendar...");
+        const boroughData = await ical.async.fromURL(
+            'https://calendar.google.com/calendar/ical/millersville%40millersvilleborough.org/public/basic.ics',
+            { headers: baseHeaders }
+        );
+        let boroughCount = 0;
+        let boroughRecurring = 0;
+
+        for (const ev of Object.values(boroughData)) {
+            if (ev.type !== 'VEVENT') continue;
+
+            const title = ev.summary || 'Borough Event';
+            const loc = ev.location || 'Millersville Borough';
+
+            // Handle recurring events (RRULE)
+            if (ev.rrule) {
+                try {
+                    const occurrences = ev.rrule.between(pastDate, futureDate);
+                    for (const occ of occurrences) {
+                        const origStart = new Date(ev.start);
+                        
+                        // Get the date from the occurrence (UTC components = intended local date)
+                        const occYear = occ.getUTCFullYear();
+                        const occMonth = occ.getUTCMonth();
+                        const occDay = occ.getUTCDate();
+                        
+                        // Detect all-day events: they have midnight UTC start or the ical 'datetype' is 'date-time' vs 'date'
+                        const isAllDay = (origStart.getUTCHours() === 0 && origStart.getUTCMinutes() === 0) ||
+                                         (ev.start && ev.start.dateOnly) ||
+                                         (ev.datetype === 'date');
+                        
+                        // For all-day events, use noon UTC so the date stays correct in Eastern time
+                        // For timed events, use the original UTC time
+                        const origHour = isAllDay ? 12 : origStart.getUTCHours();
+                        const origMin = isAllDay ? 0 : origStart.getUTCMinutes();
+                        
+                        const eventDate = new Date(Date.UTC(occYear, occMonth, occDay, origHour, origMin, 0));
+
+                        // Check for exceptions/modifications (EXDATE)
+                        const occKey = `${occYear}-${String(occMonth+1).padStart(2,'0')}-${String(occDay).padStart(2,'0')}`;
+                        if (ev.exdate) {
+                            const exdates = Object.values(ev.exdate).map(d => {
+                                const ed = new Date(d);
+                                return `${ed.getUTCFullYear()}-${String(ed.getUTCMonth()+1).padStart(2,'0')}-${String(ed.getUTCDate()).padStart(2,'0')}`;
+                            });
+                            if (exdates.includes(occKey)) continue;
+                        }
+
+                        // Check if this occurrence has been modified (RECURRENCE-ID)
+                        if (ev.recurrences && ev.recurrences[occKey]) {
+                            const mod = ev.recurrences[occKey];
+                            const modTitle = mod.summary || title;
+                            const boroughStream = /council/i.test(modTitle) ? 'https://www.youtube.com/@MillersvilleBorough/streams' : '';
+                            events.push({
+                                title: modTitle,
+                                date: new Date(mod.start).toISOString(),
+                                location: mod.location || loc,
+                                tags: ['Borough'],
+                                price: 'Free', ticketLink: '',
+                                sourceLink: 'https://millersvilleborough.org/resident-info/calendar/',
+                                gameResult: '', gameScore: '', streamLink: boroughStream, isLive: false
+                            });
+                        } else {
+                            const boroughStream = /council/i.test(title) ? 'https://www.youtube.com/@MillersvilleBorough/streams' : '';
+                            events.push({
+                                title,
+                                date: eventDate.toISOString(),
+                                location: loc,
+                                tags: ['Borough'],
+                                price: 'Free', ticketLink: '',
+                                sourceLink: 'https://millersvilleborough.org/resident-info/calendar/',
+                                gameResult: '', gameScore: '', streamLink: boroughStream, isLive: false
+                            });
+                        }
+                        boroughCount++;
+                        boroughRecurring++;
+                    }
+                } catch (rrErr) {
+                    console.log(`  ⚠️ RRULE expansion failed for "${title}": ${rrErr.message}`);
+                }
+            } else {
+                // Single (non-recurring) event
+                let eventDate = new Date(ev.start);
+                if (isNaN(eventDate.getTime()) || eventDate < pastDate || eventDate >= futureDate) continue;
+
+                // Fix all-day events: midnight UTC → noon UTC so date stays correct in Eastern
+                const singleIsAllDay = (eventDate.getUTCHours() === 0 && eventDate.getUTCMinutes() === 0) ||
+                                       (ev.start && ev.start.dateOnly) || (ev.datetype === 'date');
+                if (singleIsAllDay) {
+                    eventDate = new Date(Date.UTC(eventDate.getUTCFullYear(), eventDate.getUTCMonth(), eventDate.getUTCDate(), 12, 0, 0));
+                }
+
+                events.push({
+                    title,
+                    date: eventDate.toISOString(),
+                    location: loc,
+                    tags: ['Borough'],
+                    price: 'Free', ticketLink: '',
+                    sourceLink: ev.url || 'https://millersvilleborough.org/resident-info/calendar/',
+                    gameResult: '', gameScore: '',
+                    streamLink: /council/i.test(title) ? 'https://www.youtube.com/@MillersvilleBorough/streams' : '',
+                    isLive: false
+                });
+                boroughCount++;
+            }
+        }
+        console.log(`✅ Borough Calendar: ${boroughCount} events (${boroughRecurring} from recurring)`);
+    } catch (e) { console.error("❌ Borough Calendar error:", e.message); }
+
+
+    // ===== 7. VFW POST 7294 (Google Sheet + Anthropic Claude Vision) =====
+    try {
+        console.log("📡 Fetching VFW Post 7294 images from Google Sheet...");
+        const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY;
+        if (!ANTHROPIC_KEY) throw new Error('ANTHROPIC_API_KEY not set');
+
+        const VFW_SHEET_ID = process.env.VFW_SHEET_ID || '';
+        const cachePath = path.join(__dirname, '../vfw-cache.json');
+        let vfwCache = {};
+        try {
+            vfwCache = JSON.parse(fs.readFileSync(cachePath, 'utf8'));
+            for (const [key, val] of Object.entries(vfwCache)) {
+                if (!val || (typeof val === 'string' && val.trim().length === 0)) delete vfwCache[key];
+            }
+        } catch (e) { /* no cache yet */ }
+
+        let vfwEventCount = 0, vfwApiCalls = 0;
+        let vfwWeeklySpecials = [], vfwSpecialsDateRange = '';
+
+        // Fetch image URLs from Google Sheet
+        let sheetImages = [];
+        if (VFW_SHEET_ID) {
+            try {
+                const sheetUrl = `https://docs.google.com/spreadsheets/d/${VFW_SHEET_ID}/gviz/tq?tqx=out:csv`;
+                const sheetRes = await fetch(sheetUrl);
+                if (sheetRes.ok) {
+                    const csvText = await sheetRes.text();
+                    for (const row of csvText.split('\n').slice(1)) {
+                        const cols = row.match(/"([^"]*)"/g);
+                        if (!cols || cols.length < 1) continue;
+                        const imgUrl = cols[0].replace(/"/g, '').trim();
+                        const postDate = cols[1] ? cols[1].replace(/"/g, '').trim() : '';
+                        if (imgUrl && /^https?:\/\//.test(imgUrl)) {
+                            sheetImages.push({ url: imgUrl, date: postDate });
+                        }
+                    }
+                    console.log(`  📋 Google Sheet: ${sheetImages.length} image(s)`);
+                }
+            } catch (e) { console.log(`  ⚠️ Sheet error: ${e.message}`); }
+        } else {
+            console.log(`  ⚠️ VFW_SHEET_ID not set — skipping`);
+        }
+
+        // Process each image with Claude Vision
+        for (const si of sheetImages) {
+          try {
+            // Check cache first
+            let parsed = vfwCache[si.url];
+            if (parsed && typeof parsed === 'object' && parsed.type) {
+                console.log(`  📱 Image (${si.date || 'no date'}): cached as ${parsed.type}`);
+            } else {
+                // Convert Google Drive URLs to direct download
+                let downloadUrl = si.url;
+                const driveMatch = si.url.match(/drive\.google\.com\/file\/d\/([^/]+)/);
+                const driveMatch2 = si.url.match(/drive\.google\.com\/open\?id=([^&]+)/);
+                const driveId = driveMatch?.[1] || driveMatch2?.[1];
+                if (driveId) {
+                    downloadUrl = `https://drive.google.com/uc?export=download&id=${driveId}`;
+                }
+
+                // Download image
+                const isFacebookCDN = downloadUrl.includes('fbcdn.net') || downloadUrl.includes('facebook.com');
+                const dlHeaders = isFacebookCDN ? {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+                    'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+                    'Accept-Language': 'en-US,en;q=0.9',
+                    'Referer': 'https://www.facebook.com/',
+                    'Sec-Fetch-Dest': 'image',
+                    'Sec-Fetch-Mode': 'no-cors',
+                    'Sec-Fetch-Site': 'cross-site'
+                } : baseHeaders;
+                const imgRes = await fetch(downloadUrl, { headers: dlHeaders, signal: AbortSignal.timeout(15000), redirect: 'follow' });
+                if (!imgRes.ok) {
+                    if (isFacebookCDN) {
+                        console.log(`    ⚠️ Facebook CDN expired (403) — save image to Google Drive and update sheet URL`);
+                        console.log(`      URL: ${si.url.substring(0, 100)}...`);
+                    } else {
+                        console.log(`    ⚠️ Download failed: ${imgRes.status} (${si.url.substring(0, 80)})`);
+                    }
+                    continue;
+                }
+                const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
+                if (imgBuffer.length < 1000) { console.log(`    ⚠️ Tiny image, skipping`); continue; }
+
+                // Detect media type
+                const isJpeg = imgBuffer[0] === 0xFF && imgBuffer[1] === 0xD8;
+                const isPng = imgBuffer[0] === 0x89 && imgBuffer[1] === 0x50;
+                const mediaType = isPng ? 'image/png' : isJpeg ? 'image/jpeg' : 'image/jpeg';
+
+                // Send to Claude Vision API
+                const prompt = `Analyze this VFW Post 7294 image. Today is ${today.toISOString().split('T')[0]}. Determine the type and extract structured data.
+
+Respond ONLY with valid JSON (no markdown, no backticks), using one of these formats:
+
+If it's a MONTHLY CALENDAR with events:
+{"type":"calendar","month":"April","year":2026,"events":[{"name":"Music Bingo","date":"2026-04-10"},{"name":"Trivia Night","date":"2026-04-15"}]}
+Only include special events like Bingo, Trivia, Meetings, Parties, BBQ, Paint nights, Concerts. Do NOT include recurring food nights (Shrimp Night, Wing Night, Taco Night, Burger Night) or daily food specials.
+
+If it's a WEEKLY SPECIALS flyer:
+{"type":"specials","dateRange":"Tuesday, April 7 through Saturday, April 11","items":[{"name":"Tuna Melt","price":"$12.95","fridayOnly":false},{"name":"Prime Rib","price":"$17.95","fridayOnly":true}]}
+Extract food item names, prices, and whether they are Friday-only.
+
+If it's an EVENT FLYER/ANNOUNCEMENT:
+{"type":"event","name":"Meat Tray Bingo","date":"2026-05-03","time":"1:00 PM","details":"Doors open 12:00 PM, Starter Packs $25","openToPublic":true}
+
+Respond with ONLY the JSON object.`;
+
+                const claudeRes = await fetch('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': ANTHROPIC_KEY,
+                        'anthropic-version': '2023-06-01'
+                    },
+                    body: JSON.stringify({
+                        model: 'claude-sonnet-4-20250514',
+                        max_tokens: 1024,
+                        messages: [{
+                            role: 'user',
+                            content: [
+                                { type: 'image', source: { type: 'base64', media_type: mediaType, data: imgBuffer.toString('base64') } },
+                                { type: 'text', text: prompt }
+                            ]
+                        }]
+                    })
+                });
+
+                if (!claudeRes.ok) {
+                    const err = await claudeRes.text();
+                    console.log(`    ⚠️ Claude API error: ${err.substring(0, 200)}`);
+                    continue;
+                }
+
+                const claudeData = await claudeRes.json();
+                const responseText = claudeData.content?.[0]?.text || '';
+                vfwApiCalls++;
+
+                try {
+                    // Strip any markdown fences if present
+                    const cleanJson = responseText.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+                    parsed = JSON.parse(cleanJson);
+                    vfwCache[si.url] = parsed;
+                    console.log(`  📱 Image (${si.date || 'no date'}): ${parsed.type}`);
+                } catch (jsonErr) {
+                    console.log(`    ⚠️ Failed to parse Claude response: ${responseText.substring(0, 200)}`);
+                    continue;
+                }
+            }
+
+            const postLink = 'https://www.facebook.com/VFWPost7294';
+
+            // ===== CALENDAR =====
+            if (parsed.type === 'calendar' && parsed.events) {
+                console.log(`    📅 Calendar: ${parsed.month} ${parsed.year}, ${parsed.events.length} events`);
+                for (const evt of parsed.events) {
+                    if (!evt.date || !evt.name) continue;
+                    const evDate = new Date(evt.date + 'T16:00:00Z');
+                    if (isNaN(evDate.getTime()) || evDate < pastDate || evDate >= futureDate) continue;
+                    // Skip recurring food nights
+                    if (/^(wing night|taco night|burger night|shrimp night)$/i.test(evt.name)) continue;
+                    events.push({
+                        title: evt.name, date: evDate.toISOString(),
+                        location: 'VFW Post 7294, 219 Walnut Hill Rd',
+                        tags: ['Other', 'VFW'], price: 'Members Only', ticketLink: '', sourceLink: postLink,
+                        gameResult: '', gameScore: '', streamLink: '', isLive: false, kidFriendly: false
+                    });
+                    vfwEventCount++;
+                    console.log(`    📌 Event: "${evt.name}" on ${evt.date}`);
+                }
+
+            // ===== WEEKLY SPECIALS =====
+            } else if (parsed.type === 'specials' && parsed.items && vfwWeeklySpecials.length === 0) {
+                console.log(`    🍽️ Weekly specials: ${parsed.items.length} items`);
+                if (parsed.dateRange) console.log(`    📅 Range: ${parsed.dateRange}`);
+
+                // Check if current week
+                let isCurrent = true;
+                if (parsed.dateRange) {
+                    const months = {january:0,february:1,march:2,april:3,may:4,june:5,july:6,august:7,september:8,october:9,november:10,december:11};
+                    const sm = parsed.dateRange.match(/(january|february|march|april|may|june|july|august|september|october|november|december)\s+(\d{1,2})/i);
+                    const em = parsed.dateRange.match(/through\s+\w+,?\s*(?:(january|february|march|april|may|june|july|august|september|october|november|december)\s+)?(\d{1,2})/i);
+                    if (sm && em) {
+                        const yr = today.getFullYear();
+                        const sM = months[sm[1].toLowerCase()], sD = parseInt(sm[2]);
+                        const eM = months[(em[1] || sm[1]).toLowerCase()], eD = parseInt(em[2]);
+                        if (today < new Date(yr, sM, sD) || today > new Date(yr, eM, eD, 23, 59, 59)) {
+                            isCurrent = false;
+                            console.log(`    ⏭️ Expired (${parsed.dateRange})`);
+                        }
+                    }
+                }
+
+                if (isCurrent) {
+                    vfwWeeklySpecials = parsed.items.map(s => ({
+                        name: s.name, price: s.price || '', fridayOnly: s.fridayOnly || false,
+                        dateRange: parsed.dateRange || ''
+                    }));
+                    vfwSpecialsDateRange = parsed.dateRange || '';
+                    parsed.items.forEach(s => console.log(`    🍽️ ${s.name} – ${s.price}${s.fridayOnly ? ' (Fri only)' : ''}`));
+                    console.log(`    ✅ Current week specials`);
+                }
+
+            // ===== EVENT FLYER =====
+            } else if (parsed.type === 'event' && parsed.name) {
+                const evDateStr = parsed.date || '';
+                const evDate = evDateStr ? new Date(evDateStr + 'T16:00:00Z') : null;
+                if (evDate && !isNaN(evDate.getTime()) && evDate >= pastDate && evDate < futureDate) {
+                    const priceTag = parsed.openToPublic ? 'Open to Public' : 'Members Only';
+                    events.push({
+                        title: parsed.name, date: evDate.toISOString(),
+                        location: 'VFW Post 7294, 219 Walnut Hill Rd',
+                        tags: ['Other', 'VFW'], price: priceTag, ticketLink: '', sourceLink: postLink,
+                        gameResult: '', gameScore: '', streamLink: '', isLive: false, kidFriendly: false
+                    });
+                    vfwEventCount++;
+                    console.log(`    📌 Event: "${parsed.name}" on ${evDateStr}${parsed.time ? ' at ' + parsed.time : ''}`);
+                }
+            }
+
+          } catch (err) { console.log(`    ⚠️ Error: ${err.message}`); }
+        }
+
+        // Save cache + specials
+        fs.writeFileSync(cachePath, JSON.stringify(vfwCache, null, 2));
+        console.log(`✅ VFW: ${vfwEventCount} events (${vfwApiCalls} API calls, ${Object.keys(vfwCache).length} cached)`);
+
+        // ===== JOHN HERR'S WEEKLY GROCERY DEALS =====
+        let groceryDeals = [];
+        try {
+            const groceryCachePath = path.join(__dirname, '../grocery-cache.json');
+            let groceryCache = {};
+            try { groceryCache = JSON.parse(fs.readFileSync(groceryCachePath, 'utf8')); } catch(e) {}
+
+            // Determine if we need to refresh: cache empty, or it's Thursday+ and cache is from before this Thursday
+            const now = new Date();
+            const cacheTime = groceryCache.timestamp ? new Date(groceryCache.timestamp) : null;
+            const dayOfWeek = now.getDay(); // 0=Sun, 4=Thu
+            // Find most recent Thursday (circular release day)
+            const daysSinceThu = (dayOfWeek + 7 - 4) % 7;
+            const lastThu = new Date(now); lastThu.setDate(now.getDate() - daysSinceThu); lastThu.setHours(0,0,0,0);
+            const cacheIsStale = !cacheTime || cacheTime < lastThu;
+            const cacheHasDeals = groceryCache.deals && groceryCache.deals.length > 0;
+
+            if (cacheHasDeals && !cacheIsStale) {
+                // Use cached deals
+                groceryDeals = groceryCache.deals;
+                console.log(`📡 John Herr's: using cached deals (${groceryDeals.length} deals, cached ${cacheTime.toLocaleDateString()})`);
+            } else {
+                console.log(`📡 Fetching John Herr's weekly circular...${cacheIsStale ? ' (cache stale, refreshing)' : ' (no cache)'}`);
+                const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY;
+                // Stable print page for John Herr's Village Market (store ID: 54348)
+                const printPageUrl = 'https://www.familyownedmarkets.com/print-weekly-specials/?circularstoreidentifier=54348';
+
+                if (ANTHROPIC_KEY) {
+                    // Step 1: Fetch print page and extract image URLs
+                    const pageRes = await fetch(printPageUrl, { signal: AbortSignal.timeout(30000) });
+                    if (!pageRes.ok) throw new Error(`Print page fetch failed: ${pageRes.status}`);
+                    const html = await pageRes.text();
+                    const imageUrls = [...html.matchAll(/https:\/\/familyownedmarketsdata\.shoptocook\.com\/shoptocook\/Content\/SimpleCircular\/\d+\/\d+_max\.jpg/g)].map(m => m[0]);
+                    const uniqueImages = [...new Set(imageUrls)];
+                    console.log(`  📄 Found ${uniqueImages.length} circular pages`);
+
+                    if (uniqueImages.length === 0) throw new Error('No circular images found on print page');
+
+                    // Step 2: Download each image and convert to base64
+                    const imageBlocks = [];
+                    for (const imgUrl of uniqueImages) {
+                        try {
+                            const imgRes = await fetch(imgUrl, { signal: AbortSignal.timeout(20000) });
+                            if (!imgRes.ok) continue;
+                            const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
+                            imageBlocks.push({
+                                type: 'image',
+                                source: { type: 'base64', media_type: 'image/jpeg', data: imgBuffer.toString('base64') }
+                            });
+                        } catch (e) {
+                            console.log(`    ⚠️ Image download failed: ${e.message}`);
+                        }
+                    }
+                    console.log(`  🖼️ Downloaded ${imageBlocks.length}/${uniqueImages.length} images (total ${(imageBlocks.reduce((sum,b)=>sum+b.source.data.length,0)/1024).toFixed(0)}KB base64)`);
+
+                    if (imageBlocks.length === 0) throw new Error('All image downloads failed');
+
+                    // Step 3: Send all images to Claude Vision
+                    const claudeRes = await fetch('https://api.anthropic.com/v1/messages', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'x-api-key': ANTHROPIC_KEY,
+                            'anthropic-version': '2023-06-01'
+                        },
+                        body: JSON.stringify({
+                            model: 'claude-sonnet-4-20250514',
+                            max_tokens: 2048,
+                            messages: [{
+                                role: 'user',
+                                content: [
+                                    ...imageBlocks,
+                                    { type: 'text', text: `These images are pages from the weekly grocery circular for John Herr's Village Market. Extract the TOP 15-20 best deals across all pages — items with the biggest savings, lowest prices, or best value (BOGO, buy-one-get-one, manager's specials, etc).
+
+IMPORTANT: Order the deals from BEST to worst. The first 5 should be the absolute best deals — the ones a savvy shopper would be most excited about.
+
+For each deal, provide the item name, sale price, and original/regular price if shown.
+
+Also find the valid date range for this circular (usually Thursday through Wednesday).
+
+Respond ONLY with valid JSON (no markdown, no backticks):
+{"dateRange":"Thu Apr 16 - Wed Apr 22","deals":[{"item":"Boneless Chicken Breast","salePrice":"$1.99/lb","regularPrice":"$4.99/lb","savings":"60% off"},{"item":"Strawberries 1lb","salePrice":"$2.50","regularPrice":"","savings":"Great price"}]}
+
+Focus on the most impressive deals a shopper would want to know about. Include meats, produce, dairy, pantry staples. Skip minor items like 10 cents off a can of beans. Respond with ONLY the JSON.` }
+                                ]
+                            }]
+                        })
+                    });
+
+                    if (claudeRes.ok) {
+                        const claudeData = await claudeRes.json();
+                        const responseText = claudeData.content?.[0]?.text || '';
+                        try {
+                            const cleanJson = responseText.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
+                            const parsed = JSON.parse(cleanJson);
+                            groceryDeals = parsed.deals || [];
+                            const dateRange = parsed.dateRange || '';
+                            console.log(`  ✅ John Herr's: ${groceryDeals.length} top deals (${dateRange})`);
+                            groceryDeals.forEach(d => console.log(`    🏷️ ${d.item} – ${d.salePrice}${d.savings ? ' (' + d.savings + ')' : ''}`));
+                            groceryDeals = groceryDeals.map(d => ({ ...d, dateRange }));
+                            // Save to cache
+                            fs.writeFileSync(groceryCachePath, JSON.stringify({ timestamp: now.toISOString(), deals: groceryDeals }, null, 2));
+                            console.log(`  💾 Grocery deals cached`);
+                        } catch (jsonErr) {
+                            console.log(`    ⚠️ Failed to parse deals: ${responseText.substring(0, 200)}`);
+                        }
+                    } else {
+                        const err = await claudeRes.text();
+                        console.log(`    ⚠️ Claude API error: ${err.substring(0, 200)}`);
+                    }
+                } else {
+                    console.log(`    ⚠️ ANTHROPIC_API_KEY not set — skipping grocery deals`);
+                }
+
+                // Fallback to cached deals if API failed
+                if (groceryDeals.length === 0 && cacheHasDeals) {
+                    groceryDeals = groceryCache.deals;
+                    console.log(`  📦 Using cached grocery deals as fallback (${groceryDeals.length} deals)`);
+                }
+            }
+        } catch (e) { console.log(`  ⚠️ John Herr's error: ${e.message}`); }
+
+        const specials = {
+            "House of Pizza": {
+                note: "Dine-in & Carryout Only · Mon-Fri till 2 PM · Not for Delivery",
+                daily: {
+                    "Monday": ["2 Slices & MD Drink – $4.50", "Soup & Sandwich – $5.99", "Turkey Sub – $5.25"],
+                    "Tuesday": ["2 Slices & MD Drink – $4.50", "Ham Sub – $5.00", "Pork BBQ Sandwich w/Fries – $5.99"],
+                    "Wednesday": ["2 Slices & MD Drink – $4.50", "Soup & Sandwich – $5.99", "Italian Sub – $5.25"],
+                    "Thursday": ["2 Slices & MD Drink – $4.50", "Soup & Sandwich – $5.99", "¼ Lb. Cheeseburger & Fries – $4.50", "🍺 Miller Lite Draft (Pint) – $1.50 (all day till midnight)"],
+                    "Friday": ["2 Slices & MD Drink – $4.50", "Meatball Sub – $5.50", "Shrimp Basket & Fries – $5.75"]
+                }
+            },
+            "VFW Post 7294": {
+                note: "Members & Guests · Weekly specials change each week",
+                weekly: vfwWeeklySpecials.map(s => {
+                    let label = s.name;
+                    if (s.price) label += ` – ${s.price}`;
+                    if (s.fridayOnly) label += ' (Friday only)';
+                    return label;
+                }),
+                weeklyDateRange: vfwSpecialsDateRange,
+                recurring: {
+                    "Tuesday": "Shrimp Night",
+                    "Wednesday": "Wing Night",
+                    "Thursday": "Taco Night",
+                    "Friday": "Special (varies weekly)",
+                    "Saturday": "Burger Night"
+                }
+            },
+            "John Herr's Village Market": {
+                note: groceryDeals.length > 0 && groceryDeals[0].dateRange ? `Weekly deals: ${groceryDeals[0].dateRange}` : "Weekly deals · Thu–Wed",
+                weekly: groceryDeals.slice(0, 5).map(d => {
+                    let label = `${d.item} – ${d.salePrice}`;
+                    if (d.savings) label += ` (${d.savings})`;
+                    return label;
+                }),
+                weeklyDateRange: groceryDeals.length > 0 ? groceryDeals[0].dateRange : '',
+                rawDeals: groceryDeals.map(d => ({
+                    item: d.item, salePrice: d.salePrice,
+                    regularPrice: d.regularPrice || '', savings: d.savings || '',
+                    dateRange: d.dateRange || ''
+                }))
+            }
+        };
+        fs.writeFileSync(path.join(__dirname, '../specials.json'), JSON.stringify(specials, null, 2));
+        console.log(`✅ Specials saved (VFW: ${vfwWeeklySpecials.length}, Grocery: ${groceryDeals.length})`);
+    } catch (e) { console.error("❌ VFW/Specials error:", e.message); }
+
+    // ===== 8. COMMUNITY EVENT SUBMISSIONS (Google Sheet) =====
+    // Sheet columns (expected order, based on the Google Form):
+    //   0: Timestamp  1: Event Name  2: Date  3: Time  4: Location
+    //   5: Description  6: Email  7: Link  8: Status (manually added)
+    // An event is imported if its Status column is Approved / Yes / Y / ✓ / true.
+    try {
+        console.log("📡 Fetching community event submissions...");
+        const SUBMIT_SHEET_ID = '1VRI55lrSl_MKoWjMPAfaOtJq2HrmU9NGn2R2waDXMCc';
+        const submitUrl = `https://docs.google.com/spreadsheets/d/${SUBMIT_SHEET_ID}/gviz/tq?tqx=out:csv`;
+        const submitRes = await fetch(submitUrl);
+        if (submitRes.ok) {
+            const csvText = await submitRes.text();
+
+            // Proper CSV parser: handles quoted cells, escaped quotes (""), and UNQUOTED cells.
+            // The previous regex-based approach only matched `"..."` blocks and silently dropped
+            // rows where any column (like status = Yes) was exported without quotes.
+            function parseCSVLine(line) {
+                const result = [];
+                let cur = '';
+                let inQuotes = false;
+                for (let i = 0; i < line.length; i++) {
+                    const ch = line[i];
+                    if (inQuotes) {
+                        if (ch === '"') {
+                            if (line[i + 1] === '"') { cur += '"'; i++; } // escaped quote
+                            else inQuotes = false;
+                        } else { cur += ch; }
+                    } else {
+                        if (ch === '"') inQuotes = true;
+                        else if (ch === ',') { result.push(cur); cur = ''; }
+                        else cur += ch;
+                    }
+                }
+                result.push(cur);
+                return result.map(s => s.trim());
+            }
+
+            // Split on newlines but respect embedded newlines inside quoted cells.
+            const allRows = [];
+            {
+                let cur = '';
+                let inQuotes = false;
+                for (let i = 0; i < csvText.length; i++) {
+                    const ch = csvText[i];
+                    if (ch === '"') inQuotes = !inQuotes;
+                    if (ch === '\n' && !inQuotes) {
+                        allRows.push(cur);
+                        cur = '';
+                    } else {
+                        cur += ch;
+                    }
+                }
+                if (cur) allRows.push(cur);
+            }
+
+            const rows = allRows.slice(1); // skip header
+            let communityCount = 0;
+            let skippedNoStatus = 0;
+            let skippedBadDate = 0;
+            let skippedOutOfRange = 0;
+            for (const row of rows) {
+                if (!row.trim()) continue;
+                const cols = parseCSVLine(row);
+                if (cols.length < 2) continue;
+                // Safer destructuring — don't bail just because cols.length < 9; status might be in col 8
+                // but other fields may be present even if status is missing/short.
+                const eventName = (cols[1] || '').trim();
+                const dateStr = (cols[2] || '').trim();
+                const timeStr = (cols[3] || '').trim();
+                const location = (cols[4] || '').trim();
+                const description = (cols[5] || '').trim();
+                const link = (cols[7] || '').trim();
+                const status = (cols[8] || '').trim();
+
+                // Accept multiple "approved" signals: Approved, Yes, Y, ✓, true, 1
+                const statusApproved = /^(approved|yes|y|true|1|✓|✔)$/i.test(status);
+                if (!statusApproved) {
+                    if (eventName && dateStr) skippedNoStatus++;
+                    continue;
+                }
+                if (!eventName || !dateStr) continue;
+
+                // Parse date (format from Google Forms: MM/DD/YYYY or YYYY-MM-DD)
+                let eventDate;
+                const mdyMatch = dateStr.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+                if (mdyMatch) {
+                    eventDate = new Date(parseInt(mdyMatch[3]), parseInt(mdyMatch[1]) - 1, parseInt(mdyMatch[2]));
+                } else {
+                    eventDate = new Date(dateStr);
+                }
+                if (isNaN(eventDate.getTime())) { skippedBadDate++; continue; }
+
+                // Parse time if provided (format: HH:MM AM/PM or HH:MM)
+                if (timeStr) {
+                    const timeMatch = timeStr.match(/(\d{1,2}):(\d{2})\s*(AM|PM)?/i);
+                    if (timeMatch) {
+                        let h = parseInt(timeMatch[1]);
+                        const m = parseInt(timeMatch[2]);
+                        const ampm = (timeMatch[3] || '').toUpperCase();
+                        if (ampm === 'PM' && h < 12) h += 12;
+                        if (ampm === 'AM' && h === 12) h = 0;
+                        eventDate.setHours(h, m, 0);
+                    }
+                } else {
+                    eventDate.setHours(12, 0, 0); // Noon placeholder for all-day events
+                }
+
+                // Skip events outside our date range
+                if (eventDate < pastDate || eventDate >= futureDate) { skippedOutOfRange++; continue; }
+
+                events.push({
+                    title: eventName,
+                    date: eventDate.toISOString(),
+                    location: location || 'Millersville',
+                    tags: ['Community'],
+                    price: 'Free',
+                    ticketLink: '',
+                    sourceLink: link || '',
+                    description: description || ''
+                });
+                communityCount++;
+            }
+            console.log(`✅ Community submissions: ${communityCount} approved events` +
+                (skippedNoStatus || skippedBadDate || skippedOutOfRange
+                    ? ` (skipped: ${skippedNoStatus} not-approved, ${skippedBadDate} bad date, ${skippedOutOfRange} out of range)`
+                    : ''));
+        } else {
+            console.log(`  ⚠️ Community sheet fetch failed: ${submitRes.status}`);
+        }
+    } catch (e) { console.log(`  ⚠️ Community submissions error: ${e.message}`); }
+
+    // ===== FAMILY-FRIENDLY TAGGING =====
+    const familyKeywords = /\bfamily\b|families|\bkids?\b|\bchild(ren)?\b|\byouth\b|\ball ages\b|\bopen house\b|\bparade\b|\bfestival\b|\bfun run\b|\begg hunt\b|\btrick.or.treat\b|\bstory ?time\b|\bfun fest\b|\bdoodle\b|\bpuppet\b|\bmagic show\b|\barts smarts\b|\bsalsa\b.*\b5\+/i;
+    const familyDescKeywords = /\bfamily[- ]friendly\b|\bfor (kids|children|families)\b|\ball ages\b|\bages?\s*\d+\s*(\+|and up|and older)\b|\byoung audiences?\b|\bkids?\s*(welcome|invited|event)\b|\bnon[- ]verbal show\b|\binteractive\b.*\b(kids|children|animation)\b|\bfamily fun\b/i;
+    const notFamilyKeywords = /\brehersal\b|\brehearsal\b|\bpractice\b|\btraining\b|\bsap meeting\b|\bstaff\b|\bfaculty\b|\bin-service\b|\bboard\b|\bpto\b/i;
+    const notFamilyMUKeywords = /\bjob\b|\binternship\b|\bcareer fair\b|\bemployment\b|\brecruitment\b|\bhiring\b|\bresume\b|\bworkshop\b.*\bprofessional\b|\bgraduate\b|\bthesis\b/i;
+    const familyPMKeywords = /\bconcert\b|\bensemble\b|\bshowcase\b|\bspring show\b|\bmusical\b|\bplay\b|\btalent show\b|\bassembly\b|\bbook fair\b|\bfood fair\b|\bpicture\b/i;
+    // MU event types that are almost always family-friendly
+    const familyMUTypes = /family fun fest|arts smarts|kids.?\s*salsa/i;
+    let famCount = 0;
+    events.forEach(e => {
+        const tags = e.tags || [];
+        const src = tags[0] || '';
+        const title = e.title || '';
+        const titleLower = title.toLowerCase();
+        const desc = (e.description || '').toLowerCase();
+        const loc = (e.location || '').toLowerCase();
+        const allText = titleLower + ' ' + desc;
+
+        let isFamilyFriendly = false;
+
+        // Respect pre-set kidFriendly for events that already declared themselves (e.g. Summer Camps, Athletic Camps)
+        if ((tags.includes('Summer Camp') || tags.includes('Athletic Camp')) && e.kidFriendly === true) {
+            famCount++;
+            return;
+        }
+
+        // Skip all sporting events (they're on the Sports page, not Events)
+        if (tags.includes('Athletic Competitions') || tags.includes('Athletics') || tags.includes('Club Sports')) {
+            e.kidFriendly = false;
+            return;
+        }
+
+        // Clubs/Orgs — almost always for college students, NOT families
+        // Only tag as family-friendly if description EXPLICITLY invites families with children
+        if (src === 'Clubs/Orgs' || tags.includes('Clubs/Orgs')) {
+            if (tags.includes('Club Sports')) { e.kidFriendly = false; return; }
+            const clubFamilySignals = /\bfamilies with (children|kids)\b|\binvites?\s+(all\s+)?families\b|\bfor (kids|children)\b|\bbring your (kids|children)\b|\bchildren\s+ages?\s*[2-9]\s*[-–]\s*\d|\bkids?\s*(camp|day|workshop|class|event|welcome|invited|from the area)\b|\bhosting\s+kids\b|\byouth\s+(camp|workshop|event|day)\b/i;
+            if (clubFamilySignals.test(desc)) {
+                e.kidFriendly = true; famCount++;
+            } else {
+                e.kidFriendly = false;
+            }
+            return;
+        }
+
+        // Borough events → NOT family friendly (trash collection, meetings, etc.)
+        if (src === 'Borough') {
+            isFamilyFriendly = false;
+        }
+        // PM events — selective
+        else if (src === 'PM') {
+            if (tags.includes('Board/PTO') || tags.includes('Meetings') || tags.includes('School Events') || tags.includes('Field Trips')) {
+                isFamilyFriendly = false;
+            }
+            else if (notFamilyKeywords.test(titleLower)) {
+                isFamilyFriendly = false;
+            }
+            else if (familyPMKeywords.test(titleLower)) {
+                isFamilyFriendly = true;
+            }
+            else {
+                isFamilyFriendly = false;
+            }
+        }
+        // Phantom Power / bar events → NOT family friendly
+        else if (tags.includes('Other') && tags.includes('Live Music')) {
+            isFamilyFriendly = false;
+        }
+        // MU events — check title, description, event type, and venue
+        else if (src === 'MU') {
+            if (notFamilyMUKeywords.test(titleLower)) {
+                isFamilyFriendly = false;
+            }
+            // Known family event types (Family Fun Fest, Arts Smarts, Kids' Salsa)
+            else if (familyMUTypes.test(title)) {
+                isFamilyFriendly = true;
+            }
+            // Check title keywords
+            else if (familyKeywords.test(title)) {
+                isFamilyFriendly = true;
+            }
+            // Check description for family-friendly signals
+            else if (familyDescKeywords.test(desc)) {
+                isFamilyFriendly = true;
+            }
+            // Ware Center events with playful/kids content in description
+            else if (/ware|steinman/i.test(loc) && /\b(playful|imaginati|wonder|interactive|puppet|animation)\b/i.test(desc)) {
+                isFamilyFriendly = true;
+            }
+        }
+        // VFW events — check for open-to-public family events
+        else if (tags.includes('VFW')) {
+            if (familyKeywords.test(title) || /open to the public/i.test(title)) {
+                isFamilyFriendly = true;
+            }
+        }
+        // Other sources — keyword match on title or description
+        else if (familyKeywords.test(title) || familyDescKeywords.test(desc)) {
+            isFamilyFriendly = true;
+        }
+
+        e.kidFriendly = isFamilyFriendly;
+        if (isFamilyFriendly) famCount++;
+    });
+    console.log(`👨‍👩‍👧 Family-friendly tagged: ${famCount} of ${events.length} events`);
+
+    // ===== PENN MANOR SCORES FROM MAXPREPS =====
+    try {
+        console.log("📡 Fetching Penn Manor scores from MaxPreps...");
+        const maxPrepsSports = [
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/baseball/schedule/', sport: 'Baseball', gender: 'Boys' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/softball/schedule/', sport: 'Softball', gender: 'Girls' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/lacrosse/schedule/', sport: 'Lacrosse', gender: 'Boys' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/lacrosse/girls/schedule/', sport: 'Lacrosse', gender: 'Girls' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/volleyball/boys/schedule/', sport: 'Volleyball', gender: 'Boys' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/tennis/schedule/', sport: 'Tennis', gender: 'Boys' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/tennis/girls/schedule/', sport: 'Tennis', gender: 'Girls' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/soccer/girls/schedule/', sport: 'Soccer', gender: 'Girls' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/football/schedule/', sport: 'Football', gender: 'Boys' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/basketball/schedule/', sport: 'Basketball', gender: 'Boys' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/basketball/girls/schedule/', sport: 'Basketball', gender: 'Girls' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/field-hockey/schedule/', sport: 'Field Hockey', gender: 'Girls' },
+        ];
+
+        let pmScoreCount = 0;
+        const pmScores = [];
+
+        for (const mp of maxPrepsSports) {
+            try {
+                const res = await fetch(mp.url, { headers: baseHeaders, signal: AbortSignal.timeout(10000) });
+                if (!res.ok) { console.log(`  ⚠️ ${mp.gender} ${mp.sport}: HTTP ${res.status}`); continue; }
+                const html = await res.text();
+
+                // MaxPreps renders schedule as HTML table or markdown-like content
+                // Results appear as: "W 3-0" or "L 1-3" near dates like "3/20" or "4/2"
+                // Strategy: extract all text, find date+result pairs
+                
+                // Strip HTML tags to get clean text
+                const text = html.replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/g, ' ').replace(/\s+/g, ' ');
+                
+                // Find all results: date followed eventually by W/L + score
+                // Pattern: "3/20" ... "L 3-0" or "W 3-0"
+                const allResults = [...text.matchAll(/(\d{1,2})\/(\d{1,2})\s+[^]*?([WLT])\s+(\d+-\d+)/g)];
+                
+                // That greedy regex won't work well. Use a different approach:
+                // Split text into chunks around W/L results, then look backwards for the date
+                const resultMatches = [...text.matchAll(/\b([WLT])\s+(\d{1,2}-\d{1,2})\b/g)];
+                
+                for (const rm of resultMatches) {
+                    const result = rm[1];
+                    const score = rm[2];
+                    const beforeText = text.substring(Math.max(0, rm.index - 200), rm.index);
+                    
+                    // Find the closest date before this result
+                    const dateMatches = [...beforeText.matchAll(/\b(\d{1,2})\/(\d{1,2})\b/g)];
+                    if (dateMatches.length === 0) continue;
+                    
+                    const lastDate = dateMatches[dateMatches.length - 1];
+                    const m = parseInt(lastDate[1]);
+                    const d = parseInt(lastDate[2]);
+                    if (m < 1 || m > 12 || d < 1 || d > 31) continue;
+                    
+                    // Determine year
+                    let gameYear = today.getFullYear();
+                    if (m >= 8 && today.getMonth() < 6) gameYear--;
+                    
+                    const gameDate = `${gameYear}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+                    
+                    // Avoid duplicate entries for same date+sport
+                    if (pmScores.some(s => s.date === gameDate && s.sport === mp.sport && s.gender === mp.gender)) continue;
+                    
+                    pmScores.push({ date: gameDate, sport: mp.sport, gender: mp.gender, result, score });
+                }
+                
+                const sportScores = pmScores.filter(s => s.sport === mp.sport && s.gender === mp.gender);
+                if (sportScores.length > 0) {
+                    console.log(`  ✅ ${mp.gender} ${mp.sport}: ${sportScores.length} results`);
+                    sportScores.forEach(s => console.log(`     ${s.date}: ${s.result} ${s.score}`));
+                }
+            } catch (e) {
+                console.log(`  ⚠️ ${mp.gender} ${mp.sport}: ${e.message}`);
+            }
+        }
+
+        // Match scores to PM events
+        if (pmScores.length > 0) {
+            console.log(`  📊 Total MaxPreps results found: ${pmScores.length}`);
+            for (const ev of events) {
+                const tags = ev.tags || [];
+                if (!tags.includes('PM') || !tags.includes('Athletics')) continue;
+                if (ev.gameResult) continue;
+                // MaxPreps only tracks varsity — skip JV and Jr High
+                if (tags.includes('JV') || tags.includes('Jr High')) continue;
+                
+                const evDate = ev.date.substring(0, 10);
+                const evTitle = (ev.title || '').toLowerCase();
+                
+                for (const sc of pmScores) {
+                    if (sc.date !== evDate) continue;
+                    
+                    const sportLower = sc.sport.toLowerCase();
+                    const titleHasSport = evTitle.includes(sportLower) || 
+                                          (sportLower === 'football' && evTitle.includes('football')) ||
+                                          (sportLower === 'field hockey' && (evTitle.includes('field hockey') || evTitle.includes('hockey')));
+                    const tagHasSport = tags.some(t => t.toLowerCase() === sportLower);
+                    
+                    if (titleHasSport || tagHasSport) {
+                        const genderMatch = 
+                            (sc.gender === 'Boys' && (tags.includes('Boys') || evTitle.includes('boys') || evTitle.includes('men'))) ||
+                            (sc.gender === 'Girls' && (tags.includes('Girls') || evTitle.includes('girls') || evTitle.includes('women'))) ||
+                            (!tags.includes('Boys') && !tags.includes('Girls'));
+                        
+                        if (genderMatch) {
+                            ev.gameResult = sc.result;
+                            ev.gameScore = sc.score;
+                            pmScoreCount++;
+                            console.log(`     🏆 Matched: ${ev.title} (${evDate}) → ${sc.result} ${sc.score}`);
+                            break;
+                        }
+                    }
+                }
+            }
+            console.log(`🏆 PM scores matched: ${pmScoreCount} games updated`);
+        } else {
+            console.log(`  ⚠️ No MaxPreps results found`);
+        }
+    } catch (e) { console.error("❌ MaxPreps scores error:", e.message); }
+
+    // ===== HUDL SCORES (fill gaps not covered by MaxPreps) =====
+    try {
+        const hudlScores = global._hudlScores;
+        const sportToHudlId = global._hudlSportToId;
+        if (hudlScores && hudlScores.size > 0 && sportToHudlId) {
+            let hudlScoreMatches = 0;
+            for (const ev of events) {
+                if (ev.gameResult) continue; // Already has a score from MaxPreps
+                if (!ev.tags || !ev.tags.includes('PM')) continue;
+                // Hudl scores are varsity-level — skip JV and Jr High
+                if (ev.tags.includes('JV') || ev.tags.includes('Jr High')) continue;
+                const sportTag = ev.tags.find(t => sportToHudlId[t.toLowerCase()]);
+                if (!sportTag) continue;
+
+                const evDate = new Date(ev.date).toISOString().split('T')[0];
+                const gender = ev.tags.includes('Girls') ? 1 : 0;
+                const sportId = sportToHudlId[sportTag.toLowerCase()];
+                const key = `${evDate}|${sportId}|${gender}`;
+
+                const hudlScore = hudlScores.get(key);
+                if (hudlScore) {
+                    ev.gameResult = hudlScore.result;
+                    ev.gameScore = hudlScore.score;
+                    hudlScoreMatches++;
+                }
+            }
+            console.log(`📺 Hudl scores filled: ${hudlScoreMatches} games (supplementing MaxPreps)`);
+        }
+    } catch (e) { console.log(`  ⚠️ Hudl scores error: ${e.message}`); }
+
+    // ===== DEDUPLICATION & SAVE =====
+    // Two-pass dedupe:
+    //   Pass 1: exact match (title + full date + location) — legacy behavior
+    //   Pass 2: cross-source match (normalized title + same day). Handles cases where the same event
+    //           is posted by MU Calendar AND GetInvolved, or has slight title variations like
+    //           "Family Fun Fest – Doodle POP" vs "Doodle POP"
+    //
+    // Source priority: Clubs/Orgs > MU Calendar > artsmu. GetInvolved events have richer metadata
+    // (category tags, org names, benefits, descriptions), so they're preferred when a duplicate
+    // exists. The old order favored MU Calendar because it had ticket links, but field-merging
+    // (ticketLink inherits from loser) already handles that case — the winner can be the GetInvolved
+    // version and still pick up the ticketLink from the MU Calendar duplicate during merge.
+
+    const normalizeTitle = s => (s || '').toLowerCase()
+        .replace(/&/g, ' and ')      // treat "&" and "and" the same
+        .replace(/[^\w\s]/g, ' ')    // strip remaining punctuation
+        .replace(/\s+/g, ' ')
+        .trim();
+
+    const sourceRank = e => {
+        const tags = e.tags || [];
+        // Highest: Clubs/Orgs (GetInvolved) — richest metadata, org context, benefits
+        if (tags.includes('Clubs/Orgs')) return 3;
+        // MU Calendar proper: tagged MU without Clubs/Orgs or artsmu signals
+        if (tags.includes('MU') && !tags.includes('Clubs/Orgs')
+            && !tags.includes('Arts Concert / Performance') && !tags.includes('Art Exhibit')) return 2;
+        // artsmu — fills in what MU Calendar sometimes misses
+        if (tags.includes('Arts Concert / Performance') || tags.includes('Art Exhibit')) return 1;
+        return 0;
+    };
+
+    const hasBenefits = e => (e.benefits && e.benefits.length > 0);
+
+    // Pass 1: exact-match dedupe (unchanged legacy)
+    const seen = new Set();
+    const exactDupes = [];
+    let pass1 = events.filter(e => {
+        const key = `${(e.title||'').trim().toLowerCase()}-${e.date}-${(e.location || '').trim().toLowerCase()}`;
+        if (seen.has(key)) {
+            exactDupes.push({ title: e.title, date: e.date.substring(0,10), source: (e.tags||[])[0] || 'Unknown' });
+            return false;
+        }
+        seen.add(key);
+        return true;
+    });
+
+    // Pass 2: cross-source dedupe — group by (normalized title, same day) and pick the best one.
+    // Four safeguards against false positives:
+    //   1) Only merge across DIFFERENT sources (same-source events on the same day are real
+    //      separate events — doubleheaders, recurring meetings, morning/afternoon sessions).
+    //   2) Generic meeting titles ("General Meeting", "PTO Meeting", "Studio Hours", etc.) require
+    //      EXACT match — substring matching creates false positives when many groups have meetings
+    //      with the same generic name on the same day.
+    //   3) Calendar artifact titles starting with "Setup Window for" / "Teardown" never match real
+    //      events — these are back-of-house calendar entries, not the real event.
+    //   4) Times must be within 30 minutes OR titles must match exactly. This protects morning/afternoon
+    //      camp sessions, doubleheader games, and multiple showings on the same day (e.g. Concert
+    //      Band 10:30 AM and 2:00 PM are different performances even if they're cross-source).
+
+    // Titles that are too generic to substring-match. Require exact match for these.
+    const GENERIC_MEETING_TITLES = /^(general meeting|board meeting|staff meeting|pto meeting|committee meeting|studio hours|game night|meeting|practice|rehearsal|office hours|open house|book club|prayer meeting|tabling)$/i;
+    const CALENDAR_ARTIFACT_PATTERNS = /^(setup window|teardown|breakdown|prep for|rehearsal for)\b/i;
+    const ONE_HALF_HOUR_MS = 30 * 60 * 1000;
+
+    // Get a "source bucket" for same-source detection. Within a bucket, don't merge.
+    // Use sourceLink URL as the primary signal since tags like "Arts Concert / Performance"
+    // can be shared across sources (MU Calendar's event category AND artsmu's own tag).
+    const sourceBucket = e => {
+        const link = (e.sourceLink || '').toLowerCase();
+        const tags = e.tags || [];
+        if (link.includes('artsmu.com')) return 'artsmu';
+        if (link.includes('getinvolved.millersville.edu') || tags.includes('Clubs/Orgs')) return 'clubs';
+        if (link.includes('millersville.edu/calendar')) return 'mu';
+        // Fall back to tag-based detection for sources without distinctive URLs
+        if (tags.includes('PM')) return 'pm';
+        if (tags.includes('Borough')) return 'borough';
+        if (tags.includes('MU')) return 'mu';
+        return 'other';
+    };
+
+    const normalizedEvents = pass1.map((e, i) => ({
+        idx: i,
+        event: e,
+        norm: normalizeTitle(e.title),
+        day: (e.date || '').slice(0, 10),
+        time: new Date(e.date || 0).getTime(),
+        bucket: sourceBucket(e)
+    })).filter(n => n.norm && !CALENDAR_ARTIFACT_PATTERNS.test(n.norm));
+
+    const groups2 = [];
+
+    for (const ne of normalizedEvents) {
+        let matched = null;
+        for (const g of groups2) {
+            const seed = g[0];
+            if (seed.day !== ne.day) continue;
+
+            // Fix #1: require different source buckets — same-source events on the same day
+            // are real separate events (doubleheaders, recurring meetings, multiple sessions).
+            if (g.some(m => m.bucket === ne.bucket)) continue;
+
+            // Title match logic: generic titles need EXACT match, others allow substring
+            const shorter = seed.norm.length < ne.norm.length ? seed.norm : ne.norm;
+            const exactMatch = seed.norm === ne.norm;
+            const substringMatch = seed.norm.includes(ne.norm) || ne.norm.includes(seed.norm);
+            const isGeneric = GENERIC_MEETING_TITLES.test(shorter);
+
+            let titleMatch;
+            if (exactMatch) titleMatch = true;
+            else if (isGeneric) titleMatch = false;
+            else titleMatch = substringMatch && shorter.length >= 8;
+
+            if (!titleMatch) continue;
+
+            // Time-window check for loose (substring) matches. Two cases:
+            //   (a) Short substring match (shorter norm < 10 chars): require times within 30 min —
+            //       very short phrases could legitimately occur as multiple sessions.
+            //   (b) Long substring match (shorter norm >= 10 chars): title overlap is distinctive
+            //       enough that same-day match is almost certainly the same event. Sources often
+            //       list different times for the same event (doors-open vs performance-start),
+            //       so allow merging regardless of time gap.
+            if (!exactMatch) {
+                const timeDiff = Math.abs(ne.time - seed.time);
+                if (shorter.length < 10 && timeDiff > ONE_HALF_HOUR_MS) continue;
+            }
+
+            matched = g;
+            break;
+        }
+        if (matched) matched.push(ne);
+        else groups2.push([ne]);
+    }
+
+    const kept = new Set();
+    const crossDupes = [];
+    pass1.forEach((_, i) => kept.add(i)); // start by keeping all
+
+    groups2.forEach((candidates) => {
+        if (candidates.length <= 1) return; // no duplicates in this group
+        // Rank candidates — best first
+        candidates.sort((a, b) => {
+            // Primary: source priority (MU Calendar > Clubs/Orgs > artsmu)
+            const rankDiff = sourceRank(b.event) - sourceRank(a.event);
+            if (rankDiff !== 0) return rankDiff;
+            // Tiebreaker: whichever has a ticketLink wins (more useful for users)
+            const aHasTicket = !!a.event.ticketLink;
+            const bHasTicket = !!b.event.ticketLink;
+            if (aHasTicket && !bHasTicket) return -1;
+            if (bHasTicket && !aHasTicket) return 1;
+            // Final tiebreaker: whichever has student benefits wins
+            const aHasBenefits = hasBenefits(a.event);
+            const bHasBenefits = hasBenefits(b.event);
+            if (aHasBenefits && !bHasBenefits) return -1;
+            if (bHasBenefits && !aHasBenefits) return 1;
+            return 0;
+        });
+        // Merge useful fields from losers into the winner, then drop losers.
+        // This preserves context (benefits, kid-friendly flag, ticket links) that
+        // would otherwise be lost when the lower-priority duplicate is removed.
+        const winner = candidates[0].event;
+        for (let i = 1; i < candidates.length; i++) {
+            const loser = candidates[i];
+
+            // Merge benefits (union, no dupes) — preserves 🍕 Free Food / 🎁 Free Stuff / 📚 Credit badges
+            if (loser.event.benefits && loser.event.benefits.length > 0) {
+                const existingBenefits = new Set(winner.benefits || []);
+                loser.event.benefits.forEach(b => existingBenefits.add(b));
+                winner.benefits = Array.from(existingBenefits);
+            }
+            // Propagate kid-friendly signal — if ANY source says it's family-friendly, it is
+            if (loser.event.kidFriendly === true && winner.kidFriendly !== true) {
+                winner.kidFriendly = true;
+            }
+            // Inherit ticket link if winner lacks one (rare since ticketLink is a sort tiebreaker, but possible)
+            if (!winner.ticketLink && loser.event.ticketLink) {
+                winner.ticketLink = loser.event.ticketLink;
+            }
+            // Merge audience — if any duplicate says the event is public-facing, keep it public.
+            // This helps MU Calendar entries (which have no audience field) pick up the 'public'
+            // signal from the GetInvolved duplicate that was being merged in.
+            if (loser.event.audience === 'public' && winner.audience !== 'public') {
+                winner.audience = 'public';
+            }
+
+            kept.delete(loser.idx);
+            crossDupes.push({
+                title: loser.event.title,
+                date: (loser.event.date || '').substring(0, 10),
+                source: (loser.event.tags || [])[0] || 'Unknown',
+                replacedBy: winner.title + ' [' + ((winner.tags || [])[0] || '?') + ']',
+                merged: [
+                    loser.event.benefits?.length ? `benefits:${loser.event.benefits.join(',')}` : '',
+                    loser.event.kidFriendly && !winner.kidFriendly ? 'kidFriendly' : '',
+                    !winner.ticketLink && loser.event.ticketLink ? 'ticketLink' : '',
+                    loser.event.audience === 'public' && winner.audience === 'public' && candidates[0].event.audience !== 'public' ? 'audience:public' : ''
+                ].filter(Boolean).join('+')
+            });
+        }
+    });
+
+    const deduped = pass1.filter((_, i) => kept.has(i));
+
+    if (exactDupes.length > 0) {
+        console.log(`⚠️ Removed ${exactDupes.length} exact duplicates:`);
+        exactDupes.forEach(d => console.log(`   ✕ [${d.source}] ${d.title} (${d.date})`));
+    }
+    if (crossDupes.length > 0) {
+        console.log(`🔗 Removed ${crossDupes.length} cross-source duplicates:`);
+        crossDupes.forEach(d => {
+            const mergedNote = d.merged ? ` [merged: ${d.merged}]` : '';
+            console.log(`   ✕ [${d.source}] ${d.title} (${d.date}) → kept ${d.replacedBy}${mergedNote}`);
+        });
+    }
+
+    deduped.sort((a, b) => new Date(a.date) - new Date(b.date));
+    // Preserve descriptions for the card-detail modal on home/search. Truncate aggressively
+    // to keep events.json size manageable — 600 chars is enough for a useful preview.
+    deduped.forEach(e => {
+        if (e.description && typeof e.description === 'string') {
+            // Strip HTML tags and collapse whitespace
+            const plain = e.description.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&#0?39;/g, "'").replace(/&quot;/g, '"').replace(/\s+/g, ' ').trim();
+            e.description = plain.length > 600 ? plain.slice(0, 600).trim() + '…' : plain;
+            if (!e.description) delete e.description;
+        } else {
+            delete e.description;
+        }
+    });
+    fs.writeFileSync(path.join(__dirname, '../events.json'), JSON.stringify(deduped, null, 2));
+    console.log(`📊 Total events saved: ${deduped.length} (${deduped.filter(e=>e.image).length} with images, ${deduped.filter(e=>e.description).length} with descriptions)`);
+
+    // ===== CLUBS DIRECTORY (all MU organizations from GetInvolved) =====
+    // Fetches the full org list from the Engage "discovery/search/organizations" endpoint
+    // (the same one the GetInvolved web UI uses to render its browse-organizations page).
+    // NOTE: The correct path is `/api/discovery/search/organizations` with `top=N`; an earlier
+    //       guess of `/api/discovery/organization/search` with `take=N` returned HTTP 500.
+    //
+    // If the fetch fails entirely, we fall back to org names mined from the event feed
+    // (`global._orgsFromEvents`) plus an optional manual seed at v3/clubs-manual.json.
+    try {
+        console.log("📡 Fetching all MU organizations from GetInvolved...");
+        // Try the ordered query first; if that rejects the orderBy param, fall back to
+        // the plain top=500, then the facets-only probe that the frontend uses.
+        const orgCandidates = [
+            'https://getinvolved.millersville.edu/api/discovery/search/organizations?top=500&orderBy%5B0%5D=name%20asc',
+            'https://getinvolved.millersville.edu/api/discovery/search/organizations?top=500',
+            'https://getinvolved.millersville.edu/api/discovery/search/organizations?top=0&facets%5B0%5D=BranchId%2Ccount%3A100%2Csort%3Avalue&facets%5B1%5D=CategoryIds%2Ccount%3A100%2Csort%3Avalue'
+        ];
+        let orgData = null;
+        for (let i = 0; i < orgCandidates.length; i++) {
+            try {
+                const res = await fetch(orgCandidates[i], { headers: baseHeaders });
+                if (res.ok) {
+                    orgData = await res.json();
+                    console.log(`  ✓ Candidate ${i + 1} succeeded`);
+                    break;
+                } else {
+                    console.log(`  ⚠️ HTTP ${res.status} for candidate ${i + 1}`);
+                }
+            } catch (fetchErr) {
+                console.log(`  ⚠️ Fetch error on candidate ${i + 1}: ${fetchErr.message}`);
+            }
+        }
+
+        // Merge sources: API response (primary) + event-derived orgs + manual seed
+        const orgsMap = (global._orgsFromEvents instanceof Map) ? new Map(global._orgsFromEvents) : new Map();
+        let apiCount = 0;
+
+        if (orgData) {
+            // Response shape varies — try common container fields
+            const rawItems = orgData.value || orgData.Value || orgData.items || orgData.Items || orgData.results || [];
+            if (rawItems.length > 0) {
+                console.log(`  ℹ️ First item fields: ${Object.keys(rawItems[0]).slice(0, 10).join(', ')}`);
+            }
+            rawItems.forEach(o => {
+                // Field names vary by API version — handle both casings
+                const name = (o.Name || o.name || '').trim();
+                if (!name) return;
+                if (!orgsMap.has(name)) {
+                    orgsMap.set(name, {
+                        name,
+                        category: (o.CategoryNames && o.CategoryNames[0]) || (o.categoryNames && o.categoryNames[0]) || '',
+                        categories: o.CategoryNames || o.categoryNames || [],
+                        shortName: (o.ShortName || o.shortName || '').trim(),
+                        id: o.WebsiteKey || o.websiteKey || o.Id || o.id || ''
+                    });
+                    apiCount++;
+                }
+            });
+        }
+
+        // Merge in optional manual seed list (won't override API results)
+        const manualPath = path.join(__dirname, '../v3/clubs-manual.json');
+        let manualCount = 0;
+        try {
+            if (fs.existsSync(manualPath)) {
+                const manualList = JSON.parse(fs.readFileSync(manualPath, 'utf8'));
+                if (Array.isArray(manualList)) {
+                    manualList.forEach(entry => {
+                        const name = (typeof entry === 'string' ? entry : (entry && entry.name) || '').trim();
+                        if (!name) return;
+                        if (!orgsMap.has(name)) {
+                            orgsMap.set(name, {
+                                name,
+                                category: (entry && entry.category) || '',
+                                categories: (entry && entry.categories) || [],
+                                shortName: (entry && entry.shortName) || '',
+                                id: (entry && entry.id) || ''
+                            });
+                            manualCount++;
+                        }
+                    });
+                }
+            }
+        } catch (manualErr) {
+            console.log(`  ⚠️ Couldn't load manual clubs seed: ${manualErr.message}`);
+        }
+
+        const orgs = [...orgsMap.values()].sort((a, b) => a.name.localeCompare(b.name));
+        fs.writeFileSync(path.join(__dirname, '../clubs.json'), JSON.stringify(orgs, null, 2));
+        const eventDerivedCount = orgs.length - apiCount - manualCount;
+        console.log(`✅ Clubs directory: ${orgs.length} organizations saved (${apiCount} from API + ${eventDerivedCount} from events + ${manualCount} manual)`);
+    } catch (e) {
+        console.error("❌ Clubs directory error:", e.message);
+    }
+
+    // ===== NEWS =====
+    try {
+        let news = [];
+
+        // Helper to parse RSS items WITH optional category extraction
+        function parseRSSItems(xml, sourceCategory, source, maxItems, options = {}) {
+            const items = xml.match(/<item>([\s\S]*?)<\/item>/g) || [];
+            const results = [];
+            const skipCats = options.skipCategories || false;
+            for (let i = 0; i < Math.min(maxItems, items.length); i++) {
+                const t = items[i].match(/<title>([\s\S]*?)<\/title>/i);
+                const l = items[i].match(/<link>([\s\S]*?)<\/link>/i);
+                const d = items[i].match(/<pubDate>([\s\S]*?)<\/pubDate>/i);
+                // Extract RSS <category> tags for sub-categories
+                let cats = [];
+                if (!skipCats) {
+                    const catRegex = /<category[^>]*>(?:<!\[CDATA\[)?([\s\S]*?)(?:\]\]>)?<\/category>/gi;
+                    let cm;
+                    while ((cm = catRegex.exec(items[i])) !== null) {
+                        const cat = cm[1].trim();
+                        if (cat && !cats.includes(cat)) cats.push(cat);
+                    }
+                }
+                if (t && l) {
+                    const pubDate = d ? new Date(d[1]) : null;
+                    results.push({
+                        category: sourceCategory, source,
+                        subCategory: cats.length > 0 ? cats[0] : '',
+                        tags: cats,
+                        title: t[1].replace(/<!\[CDATA\[/g, "").replace(/\]\]>/g, "").trim(),
+                        link: l[1].replace(/<!\[CDATA\[/g, "").replace(/\]\]>/g, "").trim(),
+                        date: pubDate ? pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : "",
+                        sortDate: pubDate ? pubDate.toISOString() : "1970-01-01T00:00:00.000Z"
+                    });
+                }
+            }
+            return results;
+        }
+
+        // MU Official News (all posts — no sub-categories, too granular)
+        try {
+            const xml = await (await fetch('https://blogs.millersville.edu/news/feed/', { headers: baseHeaders })).text();
+            news.push(...parseRSSItems(xml, "MU", "Millersville News", 15, { skipCategories: true }));
+            console.log(`  ✅ MU News: ${Math.min(15, (xml.match(/<item>/g)||[]).length)} articles`);
+        } catch (e) { console.error("❌ MU News RSS error:", e.message); }
+
+        // The Snapper — scrape each section page for proper categorization
+        try {
+            const snapperSections = [
+                { url: 'https://thesnapper.com/news/', sub: 'News' },
+                { url: 'https://thesnapper.com/opinion/', sub: 'Opinion' },
+                { url: 'https://thesnapper.com/features/', sub: 'Features' },
+                { url: 'https://thesnapper.com/arts-and-culture/', sub: 'Arts & Culture' },
+                { url: 'https://thesnapper.com/sports/', sub: 'Sports' }
+            ];
+            let snapperTotal = 0;
+            for (const section of snapperSections) {
+                try {
+                    const html = await (await fetch(section.url, { headers: baseHeaders })).text();
+                    const articleRegex = /<h[23][^>]*>\s*<a\s+class="primary-link"\s+href="(https:\/\/thesnapper\.com\/[^"]+)">([^<]+)<\/a>/g;
+                    const dateRegex = /<div[^>]*class="[^"]*publish-info[^"]*"[^>]*>[\s\S]*?<\/p>\s*<span[^>]*>[\s\S]*?<\/span>\s*<p>([^<]+)<\/p>/g;
+
+                    const articles = [];
+                    let match;
+                    while ((match = articleRegex.exec(html)) !== null) {
+                        const url = match[1], title = match[2].trim();
+                        if (url.includes('/author/') || url.includes('/tag/') || title === 'View All') continue;
+                        articles.push({ url, title });
+                    }
+                    const dates = [];
+                    while ((match = dateRegex.exec(html)) !== null) dates.push(match[1].trim());
+
+                    const max = Math.min(5, articles.length);
+                    for (let i = 0; i < max; i++) {
+                        const dateStr = dates[i] || '';
+                        const parsed = dateStr ? new Date(dateStr) : null;
+                        news.push({
+                            category: "MU", source: "The Snapper",
+                            subCategory: section.sub,
+                            tags: [section.sub],
+                            title: articles[i].title,
+                            link: articles[i].url,
+                            date: dateStr,
+                            sortDate: parsed && !isNaN(parsed.getTime()) ? parsed.toISOString() : "1970-01-01T00:00:00.000Z"
+                        });
+                        snapperTotal++;
+                    }
+                } catch (e) { /* section failed, continue */ }
+            }
+            console.log(`  ✅ The Snapper: ${snapperTotal} articles across ${snapperSections.length} sections`);
+        } catch (e) { console.error("❌ Snapper scrape error:", e.message); }
+
+        // Millersville Borough News & Alerts
+        try {
+            const xml = await (await fetch('https://millersvilleborough.org/category/news-alerts/feed/', { headers: baseHeaders })).text();
+            news.push(...parseRSSItems(xml, "Borough", "Millersville Borough", 10));
+            console.log(`  ✅ Borough News: ${Math.min(10, (xml.match(/<item>/g)||[]).length)} articles`);
+        } catch (e) { console.error("❌ Borough News RSS error:", e.message); }
+
+        // Penn Manor School District News
+        try {
+            const xml = await (await fetch('https://www.pennmanor.net/blog/feed/', { headers: baseHeaders })).text();
+            news.push(...parseRSSItems(xml, "PM", "Penn Manor News", 10));
+            console.log(`  ✅ PM News: ${Math.min(10, (xml.match(/<item>/g)||[]).length)} articles`);
+        } catch (e) { console.error("❌ PM News RSS error:", e.message); }
+
+        // MU Athletics News (Sidearm RSS)
+        try {
+            const xml = await (await fetch('https://millersvilleathletics.com/rss', { headers: baseHeaders })).text();
+            news.push(...parseRSSItems(xml, "MU", "MU Athletics", 15));
+            console.log(`  ✅ MU Athletics: ${Math.min(15, (xml.match(/<item>/g)||[]).length)} articles`);
+        } catch (e) { console.error("❌ MU Athletics News RSS error:", e.message); }
+
+        // MU The Review (magazine)
+        try {
+            const xml = await (await fetch('https://blogs.millersville.edu/news/category/the-review/feed/', { headers: baseHeaders })).text();
+            news.push(...parseRSSItems(xml, "MU", "MU Review", 10, { skipCategories: true }));
+            console.log(`  ✅ MU Review: ${Math.min(10, (xml.match(/<item>/g)||[]).length)} articles`);
+        } catch (e) { console.error("❌ The Review RSS error:", e.message); }
+
+        // Deduplicate news by link
+        const seenLinks = new Set();
+        news = news.filter(n => {
+            if (seenLinks.has(n.link)) return false;
+            seenLinks.add(n.link);
+            return true;
+        });
+
+        // Sort by date, most recent first
+        news.sort((a, b) => new Date(b.sortDate || 0) - new Date(a.sortDate || 0));
+
+        fs.writeFileSync(path.join(__dirname, '../news.json'), JSON.stringify(news, null, 2));
+        console.log(`✅ News: ${news.length} total items (${news.filter(n=>n.image).length} with images)`);
+    } catch (e) { console.error("❌ News/specials error:", e.message); }
+
+    // ===== COMMUNITY BOARD (Google Sheet) =====
+    try {
+        console.log("📡 Fetching community board posts...");
+        const BOARD_SHEET_ID = '1FZ-eFzLYFAgNd7aBCrU5uwb5wMQ2x9tBf_KLGa6GJS0';
+        const boardUrl = `https://docs.google.com/spreadsheets/d/${BOARD_SHEET_ID}/gviz/tq?tqx=out:csv`;
+        const boardRes = await fetch(boardUrl);
+        const boardPosts = [];
+        if (boardRes.ok) {
+            const csvText = await boardRes.text();
+            const rows = csvText.split('\n').slice(1);
+            for (const row of rows) {
+                const cols = row.match(/"([^"]*)"/g);
+                if (!cols || cols.length < 6) continue;
+                const clean = cols.map(c => c.replace(/"/g, '').trim());
+                // Timestamp, Category, Title, Description, Contact Info, Location, Image URL, Status
+                const [timestamp, category, title, description, contact, location, imageUrl, status] = clean;
+
+                if (!status || !/approved/i.test(status)) continue;
+                if (!title) continue;
+
+                const postDate = timestamp ? new Date(timestamp) : new Date();
+                const daysAgo = (Date.now() - postDate.getTime()) / (1000 * 60 * 60 * 24);
+                if (daysAgo > 30) continue; // Only show posts from the last 30 days
+
+                boardPosts.push({
+                    category: category || 'Community Notice',
+                    title,
+                    description: description || '',
+                    contact: contact || '',
+                    location: location || '',
+                    image: imageUrl || '',
+                    date: postDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+                });
+            }
+        }
+        fs.writeFileSync(path.join(__dirname, '../board.json'), JSON.stringify(boardPosts, null, 2));
+        console.log(`✅ Community Board: ${boardPosts.length} approved posts`);
+    } catch (e) { console.log(`  ⚠️ Community Board error: ${e.message}`); }
+
+    // ===== SPONSORS (from Advertise Form response sheet) =====
+    try {
+        console.log("📡 Fetching sponsor data...");
+        const SPONSOR_SHEET_ID = '1XY1eVOlw0n-W_SI-pm4vzHzrIyqpIPEt605qXeX8X1U';
+        const sponsorUrl = `https://docs.google.com/spreadsheets/d/${SPONSOR_SHEET_ID}/gviz/tq?tqx=out:csv`;
+        const sponsorRes = await fetch(sponsorUrl);
+        const sponsorList = [];
+        if (sponsorRes.ok) {
+            const csvText = await sponsorRes.text();
+            const rows = csvText.split('\n').slice(1);
+            for (const row of rows) {
+                const cols = row.match(/"([^"]*)"/g);
+                if (!cols || cols.length < 15) continue;
+                const clean = cols.map(c => c.replace(/"/g, '').trim());
+                // A:Timestamp B:Business C:Contact D:Email E:Phone F:Message G:Interest
+                // H:Tier I:Placements J:CTA K:Link L:Internal M:StartDate N:EndDate O:Active
+                const [timestamp, bizName, contact, email, phone, message, interest,
+                       tier, placements, cta, link, internal, startDate, endDate, active] = clean;
+
+                if (!active || !/^y/i.test(active)) continue;
+                if (!bizName || !tier) continue;
+
+                // Check date range
+                const now = new Date();
+                if (startDate && new Date(startDate) > now) continue;
+                if (endDate && new Date(endDate) < now) continue;
+
+                // Generate ID from business name
+                const id = bizName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+                // Tier class mapping
+                const tierClassMap = { 'premium': 'sponsor-homepage', 'standard': 'sponsor-featured', 'basic': 'sponsor-basic' };
+                const tierClass = tierClassMap[(tier || '').toLowerCase()] || 'sponsor-featured';
+
+                sponsorList.push({
+                    id,
+                    name: bizName,
+                    tier: tier || 'Standard',
+                    tierClass,
+                    placements: (placements || 'homepage').split(',').map(p => p.trim().toLowerCase()),
+                    cta: cta || `Visit ${bizName} ➔`,
+                    link: link || '#',
+                    internal: /^y/i.test(internal),
+                    active: true,
+                    startDate: startDate || '',
+                    endDate: endDate || ''
+                });
+            }
+        }
+
+        // Sort: Premium first, then Standard, then Basic
+        const tierOrder = { 'premium': 0, 'standard': 1, 'basic': 2 };
+        sponsorList.sort((a, b) => (tierOrder[a.tier.toLowerCase()] || 9) - (tierOrder[b.tier.toLowerCase()] || 9));
+
+        const sponsorJson = {
+            sponsors: sponsorList,
+            config: {
+                rotateIntervalMs: 15000,
+                inlineAdEveryN: 9,
+                placements: {
+                    homepage: { maxSlots: 3 },
+                    events: { maxSlots: 1 },
+                    sports: { maxSlots: 1 },
+                    news: { maxSlots: 1 },
+                    food: { maxSlots: 1 },
+                    directory: { maxSlots: 1 }
+                }
+            }
+        };
+        fs.writeFileSync(path.join(__dirname, '../sponsors.json'), JSON.stringify(sponsorJson, null, 2));
+        console.log(`✅ Sponsors: ${sponsorList.length} active (${sponsorList.filter(s=>s.tier.toLowerCase()==='premium').length} premium, ${sponsorList.filter(s=>s.tier.toLowerCase()==='standard').length} standard, ${sponsorList.filter(s=>s.tier.toLowerCase()==='basic').length} basic)`);
+    } catch (e) { console.log(`  ⚠️ Sponsors error: ${e.message}`); }
+
+    // ===== BUSINESS REVIEWS =====
+    try {
+        const REVIEW_SHEET_ID = process.env.REVIEW_SHEET_ID || '1-E7fJ6PyC1o-n5RpqKvkyGtvvxwqUrHnNRTvN5RWICc';
+        if (REVIEW_SHEET_ID) {
+            console.log('📡 Fetching business reviews...');
+            const reviewUrl = `https://docs.google.com/spreadsheets/d/${REVIEW_SHEET_ID}/gviz/tq?tqx=out:csv`;
+            const reviewRes = await fetch(reviewUrl, { headers: baseHeaders, signal: AbortSignal.timeout(10000) });
+            if (reviewRes.ok) {
+                const reviewCsv = await reviewRes.text();
+                const reviewRows = reviewCsv.split('\n').slice(1); // skip header
+                const bizReviews = {}; // { businessName: { total: N, sum: N, reviews: [] } }
+
+                for (const row of reviewRows) {
+                    if (!row.trim()) continue;
+                    // CSV: timestamp, business, rating, review text, reviewer name
+                    const cols = row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
+                    if (!cols || cols.length < 3) continue;
+                    const business = (cols[1] || '').replace(/"/g, '').trim();
+                    const rating = parseFloat((cols[2] || '').replace(/"/g, '').trim());
+                    if (!business || isNaN(rating) || rating < 1 || rating > 5) continue;
+                    const reviewText = cols[3] ? cols[3].replace(/"/g, '').trim() : '';
+                    const reviewer = cols[4] ? cols[4].replace(/"/g, '').trim() : 'Anonymous';
+
+                    if (!bizReviews[business]) bizReviews[business] = { total: 0, sum: 0 };
+                    bizReviews[business].total++;
+                    bizReviews[business].sum += rating;
+                }
+
+                // Read current services.json and merge ratings
+                const servicesPath = path.join(__dirname, '../services.json');
+                let services = [];
+                try { services = JSON.parse(fs.readFileSync(servicesPath, 'utf8')); } catch (e) {}
+
+                let updated = 0;
+                for (const svc of services) {
+                    const rev = bizReviews[svc.name];
+                    if (rev && rev.total > 0) {
+                        svc.rating = (rev.sum / rev.total).toFixed(1);
+                        svc.reviewCount = rev.total;
+                        updated++;
+                    }
+                }
+
+                fs.writeFileSync(servicesPath, JSON.stringify(services, null, 2));
+                console.log(`✅ Reviews: ${Object.keys(bizReviews).length} businesses reviewed, ${updated} ratings updated`);
+            } else {
+                console.log(`  ⚠️ Reviews sheet fetch failed: ${reviewRes.status}`);
+            }
+        }
+    } catch (e) { console.log(`  ⚠️ Reviews error: ${e.message}`); }
+
+    console.log("✅ All data compilations complete.");
+}
+
+runScraper();

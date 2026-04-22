@@ -99,6 +99,45 @@ function extractPricing(desc, title = "", location = "", apiLink = "") {
     return { price, link };
 }
 
+// Classify whether an event is open to the general public or student-only.
+// Used by both the GetInvolved scraper (where it was originally defined inline) and the
+// MU Calendar scraper (for "Student Event" items, which we relabel as GetInvolved below).
+// Returns 'public' or 'mu-only'. Credit-granting events are always student-only.
+//
+// Heuristic order:
+//   1. Credit events → mu-only (unconditional)
+//   2. Strong mu-only signals (bible study, fellowship meeting, chapter meeting, weekly
+//      meeting, members only, tabling, orientation, info session) → mu-only even if the
+//      text also mentions public-ish words. These are student-facing by nature even when
+//      the word "community" appears (e.g. "our club community").
+//   3. Public signals (keyword / category / org / fundraising tag) → public
+//   4. Everything else → mu-only (default)
+function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tags = [], benefits = [] }) {
+    if (benefits.includes('Credit')) return 'mu-only';
+    const combinedText = ((titleText || '') + ' ' + (descText || '') + ' ' + (orgName || '')).toLowerCase();
+
+    // Strong mu-only signals — things that are obviously student-facing. Checked FIRST so
+    // they override weaker "public" keyword matches (e.g. "our campus community").
+    // Kept conservative so we don't false-positive open-to-public recitals or concerts.
+    const muOnlyKeywordRegex = /\b(bible study|fellowship(?! hall)|chapter meeting|chapter business|weekly meeting|general body meeting|gbm|e-?board meeting|executive meeting|officer meeting|members only|tabling|orientation|info session|information session|club meeting|resume review|mock interview|study group|study session|homework help|office hours|interest meeting|rush|recruitment night|new member|initiation|brother hood|sister hood|sisterhood|brotherhood)\b/i;
+    const muOnlyOrgRegex = /\b(fraternity|sorority|christian fellowship|campus ministry|cru |intervarsity|reformed university fellowship|ruf\b|gsa\b|gender and sexuality alliance|residence hall|housing community)\b/i;
+    if (muOnlyKeywordRegex.test(combinedText)) return 'mu-only';
+    if (muOnlyOrgRegex.test(orgName.toLowerCase() + ' ' + combinedText)) return 'mu-only';
+    // Greek Life category tag → always mu-only
+    if (rawTags.some(t => /greek life|residence hall/i.test(t))) return 'mu-only';
+
+    // Public signals (unchanged from prior logic)
+    const publicKeywordRegex = /\b(open to (the )?(public|community|all)|community welcome|all (are )?welcome|public event|for the public|blood drive|fundraiser|walkathon|5k|10k|run for|bake sale|festival|fair|concert|performance|recital|exhibition|gallery|benefit (for|concert)|donate|donation|charity|awareness (day|walk|event)|food drive|clothing drive|toy drive|drive for|volunteer|service project|community service|habitat for humanity|red cross|food pantry|soup kitchen)\b/i;
+    const publicCategoryRegex = /\b(fundraising|service|community service|performance|sporting|athletic|community|philanthropy|volunteer)\b/i;
+    const publicOrgRegex = /\b(red cross|food pantry|habitat for humanity|goodwill|salvation army|special olympics|make[- ]?a[- ]?wish)\b/i;
+    if (publicKeywordRegex.test(combinedText)) return 'public';
+    if (rawTags.some(t => publicCategoryRegex.test(t))) return 'public';
+    if (publicOrgRegex.test(orgName)) return 'public';
+    if (tags.includes('Fundraising')) return 'public';
+    if (tags.includes('Club Sports') && tags.includes('Home Game Mode')) return 'public';
+    return 'mu-only';
+}
+
 function extractEventbriteEvents(ldData, eventsArray, now, futureLimit) {
     if (Array.isArray(ldData)) {
         ldData.forEach(item => extractEventbriteEvents(item, eventsArray, now, futureLimit));
@@ -781,6 +820,30 @@ async function runScraper() {
                 if (eventType) tags.push(eventType);
                 if (customerIdx !== -1 && row[customerIdx]) tags.push(row[customerIdx].trim());
 
+                // RELABEL: "Student Event" from the MU calendar is really the GetInvolved feed
+                // being republished on the main calendar, creating duplicates. Treat these as
+                // GetInvolved events so they filter/display/dedupe consistently.
+                //   - Swap tag: "Student Event" → "GetInvolved" + "Clubs/Orgs"
+                //   - Run the audience classifier so townies filter correctly (public stuff like
+                //     blood drives / fundraisers stays visible to them, private chapter meetings don't)
+                let audience;
+                if (tags.includes('Student Event')) {
+                    tags = tags.filter(t => t !== 'Student Event');
+                    if (!tags.includes('GetInvolved')) tags.push('GetInvolved');
+                    if (!tags.includes('Clubs/Orgs')) tags.push('Clubs/Orgs');
+                    // Plain-text description for keyword scanning
+                    const plainDesc = (row[descIdx] || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+                    const customerName = (customerIdx !== -1 && row[customerIdx]) ? row[customerIdx].trim() : '';
+                    audience = classifyAudience({
+                        titleText: eventTitle,
+                        descText: plainDesc,
+                        orgName: customerName,
+                        rawTags: tags,
+                        tags,
+                        benefits: []
+                    });
+                }
+
                 const eventId = idIdx !== -1 ? row[idIdx] : "";
                 const sourceLink = eventId
                     ? `https://www.millersville.edu/calendar/events/${eventId}`
@@ -792,7 +855,8 @@ async function runScraper() {
                     title: eventTitle, date: row[startIdx], location: eventLoc,
                     tags: [...new Set(tags)], price: pricing.price,
                     ticketLink: pricing.link, sourceLink,
-                    description: descHtml
+                    description: descHtml,
+                    ...(audience ? { audience } : {})
                 });
                 muCount++;
             });
@@ -1087,24 +1151,11 @@ async function runScraper() {
             }
 
             // Audience classification: default mu-only (student-only), promote to public if signals match.
-            // This determines whether non-MU visitors (townies) see the event in their feed.
-            //   - Fundraisers, club sports games, community service, and clearly-public events → public
-            //   - Credit-granting events are inherently student-only → always mu-only regardless
-            //   - Everything else defaults to mu-only (private club meetings, chapter business, tabling, practices)
-            const combinedText = nameText + ' ' + descText + ' ' + orgName;
-            const publicKeywordRegex = /\b(open to (the )?(public|community|all)|community welcome|all (are )?welcome|public event|for the public|the community|family|children|kids|everyone|blood drive|fundraiser|walkathon|5k|10k|run for|bake sale|festival|fair|concert|performance|recital|exhibition|gallery|benefit (for|concert)|donate|donation|charity|awareness (day|walk|event)|food drive|clothing drive|toy drive|drive for|volunteer|service project|community service|habitat for humanity|red cross|food pantry|soup kitchen)\b/i;
-            const publicCategoryRegex = /\b(fundraising|service|community service|performance|sporting|athletic|community|philanthropy|volunteer)\b/i;
-            const publicOrgRegex = /\b(red cross|food pantry|habitat for humanity|goodwill|salvation army|special olympics|make[- ]?a[- ]?wish)\b/i;
-
-            let audience = 'mu-only'; // default
-            if (!benefits.includes('Credit')) {
-                // Credit events stay student-only regardless of other signals
-                if (publicKeywordRegex.test(combinedText)) audience = 'public';
-                else if (rawTags.some(t => publicCategoryRegex.test(t))) audience = 'public';
-                else if (publicOrgRegex.test(orgName)) audience = 'public';
-                else if (tags.includes('Fundraising')) audience = 'public';
-                else if (tags.includes('Club Sports') && tags.includes('Home Game Mode')) audience = 'public';
-            }
+            // Logic lives in classifyAudience() helper since MU Calendar Student Events reuse it below.
+            const audience = classifyAudience({
+                titleText: nameText, descText, orgName,
+                rawTags, tags, benefits
+            });
 
             events.push({
                 title: item.name || "Student Event", date: eventDate.toISOString(),
@@ -2045,9 +2096,11 @@ Focus on the most impressive deals a shopper would want to know about. Include m
     //           is posted by MU Calendar AND GetInvolved, or has slight title variations like
     //           "Family Fun Fest – Doodle POP" vs "Doodle POP"
     //
-    // Source priority: MU Calendar > Clubs/Orgs > artsmu, BUT a Clubs/Orgs entry wins if it has
-    // student benefits (Free Food, Free Stuff, Credit) that the MU version lacks. This preserves
-    // the 🍕 badge on student-perk events while giving public-facing MU entries priority otherwise.
+    // Source priority: Clubs/Orgs > MU Calendar > artsmu. GetInvolved events have richer metadata
+    // (category tags, org names, benefits, descriptions), so they're preferred when a duplicate
+    // exists. The old order favored MU Calendar because it had ticket links, but field-merging
+    // (ticketLink inherits from loser) already handles that case — the winner can be the GetInvolved
+    // version and still pick up the ticketLink from the MU Calendar duplicate during merge.
 
     const normalizeTitle = s => (s || '').toLowerCase()
         .replace(/&/g, ' and ')      // treat "&" and "and" the same
@@ -2057,13 +2110,11 @@ Focus on the most impressive deals a shopper would want to know about. Include m
 
     const sourceRank = e => {
         const tags = e.tags || [];
-        // Highest priority: MU Calendar (public-facing, has ticket links)
-        // Detect via the presence of MU tag without Clubs/Orgs AND without Arts Concert/Performance
-        // (artsmu.com scraper tags events as MU + "Arts Concert / Performance" or "Art Exhibit")
+        // Highest: Clubs/Orgs (GetInvolved) — richest metadata, org context, benefits
+        if (tags.includes('Clubs/Orgs')) return 3;
+        // MU Calendar proper: tagged MU without Clubs/Orgs or artsmu signals
         if (tags.includes('MU') && !tags.includes('Clubs/Orgs')
-            && !tags.includes('Arts Concert / Performance') && !tags.includes('Art Exhibit')) return 3;
-        // Clubs/Orgs: valuable if it has student benefits the other doesn't
-        if (tags.includes('Clubs/Orgs')) return 2;
+            && !tags.includes('Arts Concert / Performance') && !tags.includes('Art Exhibit')) return 2;
         // artsmu — fills in what MU Calendar sometimes misses
         if (tags.includes('Arts Concert / Performance') || tags.includes('Art Exhibit')) return 1;
         return 0;

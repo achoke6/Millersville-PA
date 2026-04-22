@@ -1170,13 +1170,28 @@ const sportsList=['Baseball','Softball','Track','Soccer','Lacrosse','Tennis','Vo
 const topSources=['MU','PM','Borough','Other'];
 const sportMetaTags=['Athletic Competitions','Athletics','Club Sports','Home Game Mode','H Games'];
 
-const evSubMap={
-    // MU now includes GetInvolved. "Student Event" removed — those items are relabeled as
-    // GetInvolved at scrape time since they're GetInvolved feed items republished on the MU
-    // calendar. Residence Halls, Greek Life, Fundraising carry through from GetInvolved tags.
-    'MU':['Public Event','Arts Concert / Performance','GetInvolved','Residence Halls','Greek Life','Fundraising'],
-    'PM':['Music/Arts','School Events','Board/PTO','Health/Wellness','Field Trips','Meetings']
-};
+// Sub-filter chips vary by affiliation:
+//   - Marauders see MU-internal vocabulary (GetInvolved, Residence Halls, Greek Life)
+//   - Townies see community-friendly vocabulary (Community). Residence Halls and Greek Life
+//     are omitted because they're MU-internal living arrangements townies don't filter by.
+// Each sub-chip entry is either a string (label = tagName = filter-tag) or
+// { label, tag } when the display label differs from the underlying tag to match on.
+function getEvSubMap() {
+    const isMarauder = muAffiliation === 'student';
+    return {
+        'MU': isMarauder
+            ? ['Public Event', 'Arts Concert / Performance', 'GetInvolved', 'Residence Halls', 'Greek Life', 'Fundraising']
+            : [
+                'Public Event',
+                'Arts Concert / Performance',
+                { label: 'Community', tag: 'Clubs/Orgs' },  // townie-friendly label for student-org public events
+                'Fundraising'
+            ],
+        'PM': ['Music/Arts', 'School Events', 'Board/PTO', 'Health/Wellness', 'Field Trips', 'Meetings']
+    };
+}
+// Keep evSubMap as a getter for any legacy readers that expect an object shape
+const evSubMap = new Proxy({}, { get: (_, key) => getEvSubMap()[key] });
 
 // Date helpers
 function toDateStr(d){const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');return `${y}-${m}-${day}`;}
@@ -1529,13 +1544,17 @@ function renderEvSubFilters(){
     // Only show sub-filters when exactly one source is active and it has a sub-map entry.
     if (evAllMode || evActiveSources.size !== 1) return;
     const src = Array.from(evActiveSources)[0];
-    const subs = evSubMap[src];
+    const subs = getEvSubMap()[src];
     if (!subs || subs.length === 0) return;
 
     c.classList.add('active');
     c.innerHTML = subs.map(sub => {
-        const active = evTags.has(sub);
-        return `<button class="sub-tag-btn${active ? ' active' : ''}" onclick="toggleEventSub('${sub.replace(/'/g, "\\'")}')">${sub}</button>`;
+        // Entries can be strings (label === tag) or { label, tag } objects for the townie-
+        // friendly "Community" relabel where display differs from the underlying filter tag.
+        const label = typeof sub === 'string' ? sub : sub.label;
+        const tag = typeof sub === 'string' ? sub : sub.tag;
+        const active = evTags.has(tag);
+        return `<button class="sub-tag-btn${active ? ' active' : ''}" onclick="toggleEventSub('${tag.replace(/'/g, "\\'")}')">${label}</button>`;
     }).join('');
 }
 // Toggle a sub-category tag on/off

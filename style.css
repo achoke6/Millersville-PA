@@ -160,10 +160,26 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .family-toggle.fav-toggle.active { background: var(--gold); color: var(--navy); border-color: var(--gold); }
 .family-toggle.fav-toggle:not(.active):hover { background: var(--gold-soft); }
 .fav-toggle-label { font-size: 0.78rem; }
-/* Mobile: hide the "Favs" text label, show just the star. Desktop keeps the label. */
+
+/* Past toggle on Sports — same shape as fav-toggle but different color accent (navy) since
+   it represents a mode switch rather than a favorites overlay. */
+.family-toggle.past-toggle {
+    width: auto;
+    padding: 0 10px;
+    gap: 4px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--navy);
+    border-color: var(--navy);
+}
+.family-toggle.past-toggle.active { background: var(--navy); color: white; border-color: var(--navy); }
+.family-toggle.past-toggle:not(.active):hover { background: var(--bg); }
+.past-toggle-label { font-size: 0.78rem; }
+
+/* Mobile: hide the text, keep just the star/icon. Desktop shows the full label. */
 @media (max-width: 768px) {
-    .fav-toggle-label { display: none; }
-    .family-toggle.fav-toggle { padding: 0; width: 36px; gap: 0; }
+    .fav-toggle-label, .past-toggle-label { display: none; }
+    .family-toggle.fav-toggle, .family-toggle.past-toggle { padding: 0; width: 36px; gap: 0; }
 }
 
 /* Clear filters button — compact X-only so the toolbar has room for more items.
@@ -236,10 +252,8 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .load-more-btn:hover { border-color: var(--gold); background: var(--gold-soft); }
 .load-more-note { grid-column: 1 / -1; text-align: center; font-size: 0.8rem; color: var(--text-muted); padding: 16px 8px; }
 /* Upcoming/Past tab switcher on Sports page */
-.sp-time-toggle { display: inline-flex; border: 1.5px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; background: var(--surface); }
-.sp-time-btn { background: transparent; border: none; padding: 6px 14px; font-size: 0.85rem; font-weight: 600; cursor: pointer; color: var(--text-muted); font-family: inherit; transition: var(--transition); }
-.sp-time-btn.active { background: var(--navy); color: white; }
-.sp-time-btn:not(.active):hover { background: var(--gold-soft); color: var(--navy); }
+/* (Upcoming/Past tab switcher removed — Sports now uses a single "Past" toggle button
+   in the toolbar-right, styled via .family-toggle.past-toggle above.) */
 .welcome-banner { background: linear-gradient(135deg, var(--gold-soft), #fff8e1); border: 1.5px solid var(--gold); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 16px; }
 .welcome-banner strong { font-size: 0.95rem; color: var(--navy); }
 .affiliation-btn { background: white; border: 1.5px solid var(--gold); color: var(--navy); padding: 8px 14px; border-radius: var(--radius-sm); font-weight: 600; font-size: 0.88rem; cursor: pointer; font-family: inherit; transition: var(--transition); white-space: nowrap; }

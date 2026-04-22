@@ -199,15 +199,12 @@
         <div class="sticky-nav-bar">
             <div class="toolbar-compact">
                 <div class="toolbar-center">
-                    <div class="sp-time-toggle">
-                        <button id="sp-tab-upcoming" class="sp-time-btn active" onclick="setSportsTimeView('upcoming')">Upcoming</button>
-                        <button id="sp-tab-past" class="sp-time-btn" onclick="setSportsTimeView('past')">Past</button>
-                    </div>
-                    <span id="sp-current-day-label" class="current-day-label" style="margin-left:10px;">Today</span>
+                    <span id="sp-current-day-label" class="current-day-label">Today</span>
                 </div>
                 <div class="toolbar-right">
                     <button id="sp-clear-btn" class="clear-btn" onclick="clearSportsFilters()" title="Clear filters">✕</button>
                     <button class="family-toggle fav-toggle" id="sp-fav-toggle" onclick="spToggleFavOnly()" title="Jump to your favorites" style="display:none;">⭐ <span class="fav-toggle-label">Favs</span></button>
+                    <button class="family-toggle past-toggle" id="sp-past-toggle" onclick="toggleSportsPast()" title="Show past games with scores">⏮ <span class="past-toggle-label">Past</span></button>
                     <button class="home-toggle" id="hgame-toggle" onclick="toggleHomeGameMode()" title="Home Games Only">
                         <svg width="20" height="20"><use href="#icon-house"/></svg>
                     </button>
@@ -1929,6 +1926,9 @@ function updateSportsUI(){
         btn.style.display = hidePill ? 'none' : '';
     });
     document.getElementById('hgame-toggle').classList.toggle('active', spHomeOnly);
+    // Past button active state — highlighted when viewing past games
+    const pastBtn = document.getElementById('sp-past-toggle');
+    if (pastBtn) pastBtn.classList.toggle('active', spTimeView === 'past');
     document.getElementById('sp-no-source').style.display = spActiveSources.size===0 ? 'block' : 'none';
     // "Clean state" for the clear-filters button: all sources on, no tag filter, no home-only,
     // viewing the default Upcoming tab. (Day/week paging no longer exists.)
@@ -1953,11 +1953,7 @@ window.clearSportsFilters=function(){
     spFavOnlyMode=false;
     spDaysVisible = INITIAL_DAYS;
     spPastDaysVisible = INITIAL_DAYS;
-    // Reset Upcoming/Past tab active state
-    const upBtn = document.getElementById('sp-tab-upcoming');
-    const pastBtn = document.getElementById('sp-tab-past');
-    if (upBtn) upBtn.classList.add('active');
-    if (pastBtn) pastBtn.classList.remove('active');
+    // Past-toggle button's active class is refreshed by updateSportsUI below
     updateSportsUI();
     renderSports();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2094,22 +2090,27 @@ window.spToggleFavOnly = function() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
-// Switch between Upcoming and Past tabs on Sports
+// Toggle Past mode on the Sports page. Replaces the old two-tab Upcoming/Past switcher.
+// When Past is on, the list shows completed games newest-first. When off, it shows
+// scheduled games chronologically. The Clear ✕ button lights up when Past is on so
+// users have an obvious way out (alongside tapping the Past button itself again).
+window.toggleSportsPast = function() {
+    const newView = spTimeView === 'past' ? 'upcoming' : 'past';
+    spTimeView = newView;
+    spMode = newView; // keep legacy variable in sync
+    // Past view doesn't support favorites-only filtering — clear if switching there
+    if (newView === 'past') spFavOnlyMode = false;
+    // Reset the other view's day window so switching feels fresh
+    if (newView === 'upcoming') spPastDaysVisible = INITIAL_DAYS;
+    else spDaysVisible = INITIAL_DAYS;
+    renderSports();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+// Back-compat: callers that still expect setSportsTimeView (e.g. memoryEdits or tests)
 window.setSportsTimeView = function(view) {
     if (view !== 'upcoming' && view !== 'past') return;
-    spTimeView = view;
-    spMode = view; // keep legacy variable in sync for any remaining consumers
-    // Past view doesn't support favorites-only filtering — clear if switching there
-    if (view === 'past') spFavOnlyMode = false;
-    // Reset the other view's window so switching feels fresh; current view retains its extension
-    if (view === 'upcoming') spPastDaysVisible = INITIAL_DAYS;
-    else spDaysVisible = INITIAL_DAYS;
-    // Update tab button styles
-    const upBtn = document.getElementById('sp-tab-upcoming');
-    const pastBtn = document.getElementById('sp-tab-past');
-    if (upBtn) upBtn.classList.toggle('active', view === 'upcoming');
-    if (pastBtn) pastBtn.classList.toggle('active', view === 'past');
-    renderSports();
+    if (spTimeView !== view) toggleSportsPast();
 };
 
 function renderSportTypeTags(baseEvents){

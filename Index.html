@@ -635,6 +635,16 @@ function isSportsEventFromHiddenSource(e) {
     return false;
 }
 
+// Returns true ONLY when the user has favorites set AND this event matches them.
+// Unlike eventMatchesFeed, this returns FALSE when no favorites exist — which is what
+// the card-favorite-highlight needs (no prefs = no gold border, no star). eventMatchesFeed
+// returns true in the no-prefs case to mean "show everything", which is correct for its
+// filter/pinning callers but wrong for the highlight check.
+function isEventFavorited(e) {
+    if (!feedPrefs || feedPrefs.length === 0) return false;
+    return eventMatchesFeed(e);
+}
+
 function eventMatchesFeed(e) {
     if (!feedPrefs || feedPrefs.length === 0) return true;
     const tags = e.tags || [];
@@ -2200,8 +2210,9 @@ function buildEventCard(e,isSportsPage){
 
     // Visual highlight for favorited cards. Replaces the old "pinned at top" behavior —
     // favorites now sit in their chronological day group with a gold accent so users can
-    // spot them at a glance while scrolling.
-    const isFav = (typeof eventMatchesFeed === 'function') && eventMatchesFeed(e);
+    // spot them at a glance while scrolling. Uses isEventFavorited (not eventMatchesFeed)
+    // because the latter returns true for all events when user has no prefs set.
+    const isFav = (typeof isEventFavorited === 'function') && isEventFavorited(e);
     const favClass = isFav ? ' card-fav' : '';
 
     return `<div class="app-card${isCurrentlyLive?' card-live':''} ${cardResultClass}${favClass}" style="position:relative;">${scoreBadge}<div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${isFav?'<span class="fav-star" title="Favorite">⭐</span> ':''}${displayTitle}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${cleanLocation(e.location)}</p>${perkBadges?`<div class="perk-row">${perkBadges}</div>`:''}</div><div class="card-footer"><div class="card-actions">${locBadge}<a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;

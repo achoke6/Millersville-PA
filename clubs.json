@@ -3,15 +3,7 @@
     "name": "Acacia",
     "category": "Service",
     "categories": [
-      "Service"
-    ],
-    "shortName": "",
-    "id": ""
-  },
-  {
-    "name": "Acacia Fraternity",
-    "category": "Fundraiser",
-    "categories": [
+      "Service",
       "Fundraiser"
     ],
     "shortName": "",
@@ -47,15 +39,6 @@
     "id": ""
   },
   {
-    "name": "African Caribbean Student Association at Millersville University",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
-    "shortName": "",
-    "id": ""
-  },
-  {
     "name": "AI & Technology Society",
     "category": "Academic",
     "categories": [
@@ -64,15 +47,6 @@
     ],
     "shortName": "AI & Tech  / AI Club",
     "id": "ai_and_technology_society"
-  },
-  {
-    "name": "All Campus Musical Organization",
-    "category": "Performance",
-    "categories": [
-      "Performance"
-    ],
-    "shortName": "",
-    "id": ""
   },
   {
     "name": "All Greek Council",
@@ -87,7 +61,8 @@
     "name": "All-Campus Musical Organization",
     "category": "Arts & Culture",
     "categories": [
-      "Arts & Culture"
+      "Arts & Culture",
+      "Performance"
     ],
     "shortName": "ACMO",
     "id": "acmo"
@@ -157,13 +132,6 @@
     "id": ""
   },
   {
-    "name": "American Chemical Society - Millersville University Student Chapter",
-    "category": "",
-    "categories": [],
-    "shortName": "",
-    "id": ""
-  },
-  {
     "name": "American Choral Directors Association",
     "category": "Arts & Culture",
     "categories": [
@@ -187,19 +155,11 @@
     "name": "American Society of Safety Professionals",
     "category": "Academic",
     "categories": [
-      "Academic"
+      "Academic",
+      "Lecture or Speaker"
     ],
     "shortName": "ASSP-MU",
     "id": "assp"
-  },
-  {
-    "name": "American Society of Safety Professionals Millersville University Student Chapter",
-    "category": "Lecture or Speaker",
-    "categories": [
-      "Lecture or Speaker"
-    ],
-    "shortName": "",
-    "id": ""
   },
   {
     "name": "Angler's Association of Millersville",
@@ -216,18 +176,8 @@
     "category": "Movie or Film",
     "categories": [
       "Movie or Film",
-      "Social"
-    ],
-    "shortName": "",
-    "id": ""
-  },
-  {
-    "name": "AniMU: The Anime and Video Gaming Club at Millersville University",
-    "category": "Meeting",
-    "categories": [
-      "Meeting",
-      "Movie or Film",
-      "Social"
+      "Social",
+      "Meeting"
     ],
     "shortName": "",
     "id": ""
@@ -263,15 +213,6 @@
   },
   {
     "name": "Art Club",
-    "category": "Meeting",
-    "categories": [
-      "Meeting"
-    ],
-    "shortName": "",
-    "id": ""
-  },
-  {
-    "name": "Art Club at Millersville University",
     "category": "Meeting",
     "categories": [
       "Meeting"
@@ -510,19 +451,11 @@
     "name": "Climbing Club",
     "category": "Sports and Leisure",
     "categories": [
-      "Sports and Leisure"
-    ],
-    "shortName": "",
-    "id": "climbingclub"
-  },
-  {
-    "name": "Climbing Club at Millersville University",
-    "category": "Meeting",
-    "categories": [
+      "Sports and Leisure",
       "Meeting"
     ],
     "shortName": "",
-    "id": ""
+    "id": "climbingclub"
   },
   {
     "name": "Clinical Psychology Student Association",
@@ -541,19 +474,11 @@
     "id": "millersvilleclubbaseball"
   },
   {
-    "name": "Club cheerleading",
-    "category": "Meeting",
-    "categories": [
-      "Meeting"
-    ],
-    "shortName": "",
-    "id": ""
-  },
-  {
     "name": "Club Cheerleading",
     "category": "Sports and Leisure",
     "categories": [
-      "Sports and Leisure"
+      "Sports and Leisure",
+      "Meeting"
     ],
     "shortName": "Club cheer",
     "id": "na"
@@ -917,7 +842,9 @@
     "name": "Fencing Guild",
     "category": "Sports and Leisure",
     "categories": [
-      "Sports and Leisure"
+      "Sports and Leisure",
+      "Social",
+      "Sporting"
     ],
     "shortName": "MUFG",
     "id": "fencing"
@@ -1303,13 +1230,6 @@
     "id": "memu"
   },
   {
-    "name": "Mathematics Educators at Millersville University",
-    "category": "",
-    "categories": [],
-    "shortName": "",
-    "id": ""
-  },
-  {
     "name": "McNairy Library",
     "category": "Service",
     "categories": [
@@ -1467,13 +1387,6 @@
     ],
     "shortName": "MUMMA",
     "id": "martialarts"
-  },
-  {
-    "name": "Mixed Martial Arts Club at Millersville University",
-    "category": "",
-    "categories": [],
-    "shortName": "",
-    "id": ""
   },
   {
     "name": "Mock Trial Club",
@@ -1996,13 +1909,6 @@
     "id": "supersmashclubmu"
   },
   {
-    "name": "Super Smash Club at MU",
-    "category": "",
-    "categories": [],
-    "shortName": "",
-    "id": ""
-  },
-  {
     "name": "Tau Kappa Epsilon",
     "category": "Fraternity & Sorority Life",
     "categories": [
@@ -2040,13 +1946,6 @@
     "id": "teeca"
   },
   {
-    "name": "Technology and Engineering Education Collegiate Association At Millersville University",
-    "category": "",
-    "categories": [],
-    "shortName": "",
-    "id": ""
-  },
-  {
     "name": "Technology Camp",
     "category": "",
     "categories": [],
@@ -2057,19 +1956,11 @@
     "name": "Technology Career Network",
     "category": "Academic",
     "categories": [
-      "Academic"
+      "Academic",
+      "Social"
     ],
     "shortName": "TCN",
     "id": "tcn"
-  },
-  {
-    "name": "Technology Career Network at Millersville University",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
-    "shortName": "",
-    "id": ""
   },
   {
     "name": "The Career Center",
@@ -2086,16 +1977,6 @@
     "categories": [],
     "shortName": "",
     "id": "admissions"
-  },
-  {
-    "name": "The Fencing Guild at Millersville University",
-    "category": "Social",
-    "categories": [
-      "Social",
-      "Sporting"
-    ],
-    "shortName": "",
-    "id": ""
   },
   {
     "name": "The HUB",
@@ -2118,13 +1999,6 @@
   },
   {
     "name": "The Snapper",
-    "category": "",
-    "categories": [],
-    "shortName": "",
-    "id": ""
-  },
-  {
-    "name": "The Yoga Club At Millersville University",
     "category": "",
     "categories": [],
     "shortName": "",
@@ -2246,13 +2120,6 @@
     "categories": [
       "Fundraiser"
     ],
-    "shortName": "",
-    "id": ""
-  },
-  {
-    "name": "WIXQ 91.7 FM - MU's College Radio Station",
-    "category": "",
-    "categories": [],
     "shortName": "",
     "id": ""
   },

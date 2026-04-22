@@ -160,15 +160,16 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .family-toggle.fav-toggle.active { background: var(--gold); color: var(--navy); border-color: var(--gold); }
 .family-toggle.fav-toggle:not(.active):hover { background: var(--gold-soft); }
 .fav-toggle-label { font-size: 0.78rem; }
-/* Tight mobile: hide the text, keep just the star so the toolbar fits */
-@media (max-width: 420px) {
+/* Mobile: hide the "Favs" text label, show just the star. Desktop keeps the label. */
+@media (max-width: 768px) {
     .fav-toggle-label { display: none; }
     .family-toggle.fav-toggle { padding: 0; width: 36px; gap: 0; }
 }
 
 /* Clear filters button — compact X-only so the toolbar has room for more items.
-   The button ID is `ev-clear-btn` / `sp-clear-btn`; JS toggles its `display` between
-   `none` and the flex value set here. Tooltip ("Clear filters") explains the action. */
+   The button ID is `ev-clear-btn` / `sp-clear-btn`; JS toggles its `visibility` between
+   `hidden` (reserves space so other buttons don't shift) and `visible` (shown when
+   filters are active). Tooltip ("Clear filters") explains the action. */
 .clear-btn {
     padding: 0;
     width: 32px;
@@ -183,10 +184,14 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     font-family: inherit;
     line-height: 1;
     flex-shrink: 0;
+    display: flex;
     align-items: center;
     justify-content: center;
     white-space: nowrap;
-    /* display toggled to flex by JS when filters are active */
+    /* Hidden by default — JS flips visibility to 'visible' when filters active.
+       Using visibility (not display) so the button reserves its slot and the other
+       toolbar buttons don't shift horizontally when it appears/disappears. */
+    visibility: hidden;
 }
 .clear-btn:hover { background: #fef2f2; border-color: #dc2626; }
 
@@ -208,20 +213,22 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 }
 .day-group-header.today { color: var(--navy); border-bottom-color: var(--gold); }
 .day-group-header .day-count { font-size: 0.7rem; font-weight: 500; color: var(--text-muted); margin-left: 8px; text-transform: none; letter-spacing: 0; }
-/* Dynamic date label in the sticky toolbar — updates as the user scrolls past day groups */
+/* Dynamic date label in the sticky toolbar — updates as the user scrolls past day groups.
+   Plain text, explicitly not interactive — just a quiet indicator of the current date. */
 .current-day-label {
     font-size: 0.95rem;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--navy);
-    padding: 4px 12px;
-    background: var(--gold-soft);
-    border: 1px solid var(--gold);
-    border-radius: var(--radius-sm);
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
     white-space: nowrap;
     transition: color 0.15s;
-    cursor: pointer;
+    cursor: default;
+    user-select: none;
+    pointer-events: none;
 }
-.current-day-label:hover { background: var(--gold); }
 /* Today/Load More buttons */
 .today-btn { background: var(--gold); color: var(--navy); border: 1.5px solid var(--gold); padding: 6px 12px; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.82rem; cursor: pointer; font-family: inherit; white-space: nowrap; }
 .today-btn:hover { background: #f3c75c; }
@@ -394,6 +401,23 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 
 .sub-filter-bar { display: none; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dashed var(--border); }
 .sub-filter-bar.active { display: flex; }
+/* Sub-category chip — slightly smaller and muted vs .src-btn so the visual hierarchy reads:
+   source row (primary) → sub row (secondary narrowing). */
+.sub-tag-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: 5px 11px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: var(--transition);
+    font-family: inherit;
+    white-space: nowrap;
+}
+.sub-tag-btn:hover { border-color: var(--gold); color: var(--text); }
+.sub-tag-btn.active { background: var(--gold-soft); color: var(--navy); border-color: var(--gold); }
 .sub-btn { background: var(--bg); border: 1px solid var(--border); color: var(--text); padding: 5px 12px; border-radius: var(--radius-sm); font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: var(--transition); font-family: inherit; }
 .sub-btn:hover { border-color: var(--gold); }
 .sub-btn.active { background: var(--navy); color: var(--gold); border-color: var(--navy); }

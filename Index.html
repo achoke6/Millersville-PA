@@ -169,11 +169,11 @@
                     <span id="ev-current-day-label" class="current-day-label">Today</span>
                 </div>
                 <div class="toolbar-right">
+                    <button id="ev-clear-btn" class="clear-btn" onclick="clearEventFilters()" title="Clear filters">✕</button>
                     <button class="family-toggle fav-toggle" id="ev-fav-toggle" onclick="evToggleFavOnly()" title="Jump to your favorites" style="display:none;">⭐ <span class="fav-toggle-label">Favs</span></button>
                     <button class="family-toggle" id="ev-kid-toggle" data-feed="family-events" onclick="toggleKidFriendly()" title="Family Friendly Events">👨‍👩‍👧</button>
                     <button class="family-toggle" id="ev-freefood-toggle" onclick="toggleFreeFood()" title="Free Food Events" style="display:none;">🍕</button>
                     <button class="family-toggle" id="ev-freestuff-toggle" onclick="toggleFreeStuff()" title="Free Stuff Events" style="display:none;">🎁</button>
-                    <button id="ev-clear-btn" class="clear-btn" onclick="clearEventFilters()" title="Clear filters" style="display:none;">✕</button>
                     <button id="ev-filter-toggle" class="filter-toggle" onclick="toggleEvFilters()">Filter <span id="ev-filter-arrow">▾</span></button>
                 </div>
             </div>
@@ -206,11 +206,11 @@
                     <span id="sp-current-day-label" class="current-day-label" style="margin-left:10px;">Today</span>
                 </div>
                 <div class="toolbar-right">
+                    <button id="sp-clear-btn" class="clear-btn" onclick="clearSportsFilters()" title="Clear filters">✕</button>
                     <button class="family-toggle fav-toggle" id="sp-fav-toggle" onclick="spToggleFavOnly()" title="Jump to your favorites" style="display:none;">⭐ <span class="fav-toggle-label">Favs</span></button>
                     <button class="home-toggle" id="hgame-toggle" onclick="toggleHomeGameMode()" title="Home Games Only">
                         <svg width="20" height="20"><use href="#icon-house"/></svg>
                     </button>
-                    <button id="sp-clear-btn" class="clear-btn" onclick="clearSportsFilters()" title="Clear filters" style="display:none;">✕</button>
                     <button id="sp-filter-toggle" class="filter-toggle" onclick="toggleSpFilters()">Filter <span id="sp-filter-arrow">▾</span></button>
                 </div>
             </div>
@@ -1500,7 +1500,7 @@ function updateEventsUI(){
     // "Clean state" for the clear-filters button: all sources on, no tag/kid/perk filters,
     // default scroll window (60 days). Week/anchor concept is retired.
     const isClean = evAllMode && evTags.size === 0 && !evKidMode && !evFreeFoodMode && !evFreeStuffMode && !evFavOnlyMode && evDaysVisible === INITIAL_DAYS;
-    document.getElementById('ev-clear-btn').style.display = isClean ? 'none' : 'flex';
+    document.getElementById('ev-clear-btn').style.visibility = isClean ? 'hidden' : 'visible';
 
     // Refresh sub-category chip row so it matches the currently-active source
     renderEvSubFilters();
@@ -1904,7 +1904,7 @@ function updateSportsUI(){
     // "Clean state" for the clear-filters button: all sources on, no tag filter, no home-only,
     // viewing the default Upcoming tab. (Day/week paging no longer exists.)
     const isClean = spAllMode && !spHomeOnly && !spSportTag && spTimeView === 'upcoming' && !spFavOnlyMode;
-    document.getElementById('sp-clear-btn').style.display = isClean ? 'none' : 'flex';
+    document.getElementById('sp-clear-btn').style.visibility = isClean ? 'hidden' : 'visible';
 }
 
 // Legacy no-op stubs — Sports page uses Upcoming/Past tabs now, not week nav

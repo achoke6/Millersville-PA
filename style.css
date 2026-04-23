@@ -146,6 +146,34 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .app-card.card-fav { border: 2px solid var(--gold); box-shadow: 0 2px 12px rgba(216, 163, 46, 0.15); }
 .fav-star { font-size: 0.85em; vertical-align: 2px; }
 
+/* Card-level favorite toggle — top-right star button. One-tap adds/removes the event's
+   best-matching pref ID from feedPrefs. Empty ☆ = not favorited, filled ★ = favorited. */
+.card-fav-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    font-size: 1rem;
+    line-height: 1;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transition: transform 0.15s, color 0.15s, background 0.15s;
+    z-index: 2;
+}
+.card-fav-btn:hover { transform: scale(1.1); color: var(--gold); border-color: var(--gold); }
+.card-fav-btn.active { color: var(--gold); border-color: var(--gold); background: white; }
+
 /* Toolbar ⭐ Favs button — a variant of .family-toggle that shows a label next to the star.
    Matches .family-toggle size so it lines up with other toolbar toggles. */
 .family-toggle.fav-toggle {
@@ -262,6 +290,17 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .aff-chip:hover { border-color: var(--gold); }
 .aff-chip.active { background: var(--navy); color: white; border-color: var(--navy); }
 .perk-row { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+
+/* Card description — short summary below location. Long descriptions get a "more" link
+   that expands in-place (toggles .expanded on the parent .card-desc). Keeping cards
+   compact by default; users opt in to reading more. */
+.card-desc { margin-top: 8px; }
+.card-desc-text { font-size: 0.82rem; color: var(--text); line-height: 1.45; margin: 0; white-space: pre-wrap; }
+.card-desc .card-desc-full { display: none; }
+.card-desc.expanded .card-desc-preview { display: none; }
+.card-desc.expanded .card-desc-full { display: block; }
+.card-desc-more, .card-desc-less { color: var(--navy); font-weight: 600; text-decoration: underline; cursor: pointer; white-space: nowrap; }
+.card-desc-more:hover, .card-desc-less:hover { color: #1e3a8a; }
 .perk-badge { display: inline-flex; align-items: center; font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: var(--radius-pill); white-space: nowrap; }
 .perk-food { background: #fef3c7; color: #92400e; border: 1px solid #fbbf24; }
 .perk-stuff { background: #dbeafe; color: #1e40af; border: 1px solid #60a5fa; }
@@ -625,7 +664,9 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
    ========================================================= */
 .ext-link { font-size: 0.85rem; color: var(--navy); font-weight: 700; text-decoration: none; white-space: nowrap; }
 .ext-link:hover { text-decoration: underline; }
-.empty-state { padding: 40px 20px; text-align: center; color: var(--text-muted); font-size: 0.95rem; grid-column: 1 / -1; }
+.empty-state { padding: 32px 20px; text-align: center; color: var(--text-muted); font-size: 0.95rem; grid-column: 1 / -1; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius); margin: 12px 0; }
+.empty-state p { margin: 0; }
+.empty-state p + p { margin-top: 6px; }
 
 /* =========================================================
    14. FOOTER

@@ -24,7 +24,7 @@
             <h1><span class="logo-link" onclick="switchView('home')">Millersville<span class="logo-dot">.APP</span></span><span id="header-page-title" class="header-page-title"></span></h1>
         </div>
         <div class="header-actions">
-            <button id="feed-gear" onclick="openFeedSettings()" title="My Feed" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--text-dark);position:relative;">
+            <button id="feed-gear" onclick="openFeedSettings()" title="My Favorites & Settings" style="background:none;border:none;cursor:pointer;padding:4px;color:var(--text-dark);position:relative;">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
                 <span id="feed-dot" style="display:none;position:absolute;top:0;right:0;width:8px;height:8px;background:var(--gold);border-radius:50%;"></span>
             </button>
@@ -45,7 +45,7 @@
             <button id="nav-store" class="nav-link" onclick="switchView('store'); toggleMobileMenu();">Store</button>
             <div class="nav-cart-widget"><div class="ec-cart-widget"></div></div>
             <button id="nav-advertise" class="nav-link nav-advertise" onclick="switchView('advertise'); toggleMobileMenu();">Advertise</button>
-            <button id="feed-gear-desktop" class="feed-gear-desktop" onclick="openFeedSettings()" title="My Feed" aria-label="My Feed">
+            <button id="feed-gear-desktop" class="feed-gear-desktop" onclick="openFeedSettings()" title="My Favorites & Settings" aria-label="My Favorites & Settings">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
                 <span id="feed-dot-desktop" class="feed-dot-desktop" style="display:none;"></span>
             </button>
@@ -150,8 +150,8 @@
         <!-- Feed CTA (bottom, for new users) -->
         <div id="home-feed-cta" class="home-section" style="display:none;">
             <div class="home-feed-cta-box" onclick="openFeedSettings()">
-                <p style="font-size:0.95rem;font-weight:700;margin-bottom:4px;">⚙️ Personalize Your Feed</p>
-                <p style="font-size:0.8rem;opacity:0.85;">Pick your interests to see your favorites first across Events, Sports, and News.</p>
+                <p style="font-size:0.95rem;font-weight:700;margin-bottom:4px;">⭐ Set Up Your Favorites</p>
+                <p style="font-size:0.8rem;opacity:0.85;">Pick your interests to see your favorite events, sports, and news first.</p>
             </div>
         </div>
     </section>
@@ -647,6 +647,105 @@ function isEventFavorited(e) {
     return eventMatchesFeed(e);
 }
 
+// Pick the best pref ID to toggle when the user taps the ☆ button on a card.
+// Logic is "most specific first" — for an MU sports game tagged Baseball we'd rather
+// toggle `mu-baseball` (specific) than `musports` (everything). For a club event we
+// toggle `club:<orgName>` so only that club's events get the star treatment.
+// Returns null for events where there's no sensible single-tag target (e.g. non-tagged
+// VFW or Phantom Power events fall back to 'other-vfw' / 'other-phantom' group IDs).
+function suggestFeedIdForEvent(e, isSportsPage) {
+    const tags = e.tags || [];
+    // Sports page: match the sport to the affiliation's sport pref
+    if (isSportsPage) {
+        const sportMap = {
+            'Baseball': 'baseball', 'Softball': 'softball', 'Lacrosse': 'lacrosse',
+            'Volleyball': 'volleyball', 'Football': 'football', 'Basketball': 'basketball',
+            'Soccer': 'soccer', 'Field Hockey': 'fieldhockey', 'Tennis': 'tennis',
+            'Track': 'track', 'Golf': 'golf', 'Swimming': 'swimming', 'Cross Country': 'crosscountry'
+        };
+        const sportKey = tags.find(t => sportMap[t]);
+        if (!sportKey) return null;
+        const slug = sportMap[sportKey];
+        if (tags.includes('MU')) return 'mu-' + slug;
+        if (tags.includes('PM')) return 'pm-' + slug;
+        if (tags.includes('Clubs/Orgs')) return 'clubs-sports';
+        return null;
+    }
+    // Events page: individual club for GetInvolved events — org name is a non-meta tag
+    if (tags.includes('Clubs/Orgs')) {
+        const metaTags = new Set(['MU', 'Clubs/Orgs', 'GetInvolved', 'Student Event', 'Public Event',
+            'Arts Concert / Performance', 'Art Exhibit', 'Social', 'Arts', 'Fundraising',
+            'Service', 'Cultural', 'Club Sports', 'Greek Life', 'Residence Halls',
+            'Home Game Mode', 'Family Friendly']);
+        const orgTag = tags.find(t => !metaTags.has(t));
+        if (orgTag) return 'club:' + orgTag;
+        // Fallback: broad GetInvolved sub-category
+        if (tags.includes('Social')) return 'clubs-social';
+        if (tags.includes('Arts')) return 'clubs-arts';
+        if (tags.includes('Club Sports')) return 'clubs-sports';
+        if (tags.includes('Greek Life')) return 'clubs-greek';
+        if (tags.includes('Service') || tags.includes('Cultural')) return 'clubs-service';
+        return 'clubs-all';
+    }
+    // MU Calendar proper
+    if (tags.includes('MU')) {
+        if (tags.includes('Arts Concert / Performance') || tags.includes('Art Exhibit')) return 'mu-arts';
+        if (tags.includes('Public Event')) return 'mu-public';
+        return null;
+    }
+    // Penn Manor events
+    if (tags.includes('PM')) {
+        if (tags.includes('Music/Arts')) return 'pm-music';
+        if (tags.includes('Board/PTO')) return 'pm-board';
+        return null;
+    }
+    // Borough
+    if (tags.includes('Borough')) return 'borough-all';
+    // Other
+    if (tags.includes('VFW')) return 'other-vfw';
+    if (tags.includes('Phantom Power') || tags.includes('Live Music')) return 'other-phantom';
+    // Community-submitted events
+    if (tags.includes('Other')) return 'other-community';
+    return null;
+}
+
+// Toggle a feed preference from a card-level ☆ button. Updates feedPrefs, persists,
+// and re-renders the current view so gold borders/stars reflect the change.
+window.toggleCardFavorite = function(prefId, btnEl) {
+    if (!prefId) return;
+    if (!feedPrefs) feedPrefs = [];
+    const idx = feedPrefs.indexOf(prefId);
+    if (idx >= 0) {
+        feedPrefs.splice(idx, 1);
+        if (btnEl) {
+            btnEl.classList.remove('active');
+            btnEl.textContent = '☆';
+            btnEl.setAttribute('title', 'Add to favorites');
+            btnEl.setAttribute('aria-label', 'Add to favorites');
+        }
+    } else {
+        feedPrefs.push(prefId);
+        if (btnEl) {
+            btnEl.classList.add('active');
+            btnEl.textContent = '★';
+            btnEl.setAttribute('title', 'Remove from favorites');
+            btnEl.setAttribute('aria-label', 'Remove from favorites');
+        }
+    }
+    // Persist
+    if (feedPrefs.length === 0) {
+        localStorage.removeItem(FEED_KEY);
+        feedPrefs = null;
+    } else {
+        localStorage.setItem(FEED_KEY, JSON.stringify(feedPrefs));
+    }
+    if (typeof setFeedDotVisible === 'function') setFeedDotVisible(!!(feedPrefs && feedPrefs.length > 0));
+    // Re-render active view so gold borders update across all other matching cards
+    if (typeof renderEvents === 'function') renderEvents();
+    if (typeof renderSports === 'function') renderSports();
+    if (typeof renderHomeUI === 'function') renderHomeUI();
+};
+
 function eventMatchesFeed(e) {
     if (!feedPrefs || feedPrefs.length === 0) return true;
     const tags = e.tags || [];
@@ -841,7 +940,7 @@ window.openFeedSettings = function() {
     modal.innerHTML = `
         <button onclick="this.closest('div[style*=fixed]').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);z-index:2;">✕</button>
         <div style="position:sticky;top:0;background:var(--surface);z-index:1;padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:12px;">
-            <h3 style="margin-bottom:4px;">⚙️ My Feed</h3>
+            <h3 style="margin-bottom:4px;">⭐ My Favorites</h3>
             <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:10px;">Pick what shows on your homepage and defaults on Events & Sports pages.</p>
             <div style="display:flex;gap:6px;align-items:stretch;">
                 <button onclick="saveFeedFromModal();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-ticket" style="flex:2;padding:10px 8px;font-size:0.85rem;white-space:nowrap;">💾 Save</button>
@@ -849,15 +948,16 @@ window.openFeedSettings = function() {
                 <button onclick="resetEverything();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-outline" style="flex:1;padding:10px 4px;font-size:0.72rem;white-space:nowrap;">Reset All</button>
             </div>
         </div>
-        <div style="background:var(--gold-soft);border:1px solid var(--gold);border-radius:var(--radius-sm);padding:10px 12px;margin-bottom:14px;">
-            <div style="font-size:0.85rem;font-weight:600;color:var(--navy);margin-bottom:6px;">Are you a MU Marauder or a townie?</div>
-            <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:8px;">Students see all MU events; townies see only community-friendly ones.</div>
-            <div style="display:flex;gap:6px;">
-                <button onclick="window.pickAffiliation('student');this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));this.classList.add('active');" class="aff-chip ${muAffiliation==='student'?'active':''}">🏴‍☠️ MU Marauder</button>
-                <button onclick="window.pickAffiliation('townie');this.parentElement.querySelectorAll('button').forEach(b=>b.classList.remove('active'));this.classList.add('active');" class="aff-chip ${muAffiliation==='townie'?'active':''}">🏘️ Townie</button>
-            </div>
-        </div>
-        <div id="feed-options">${sectionsHtml}</div>`;
+        <div id="feed-options">${sectionsHtml}</div>
+        <!-- Small affiliation opt-out/opt-in link at the bottom. Mirrors the welcome banner's
+             "Not a student? I'm a townie →" pattern. Text flips depending on current affiliation
+             so users can switch back if they mis-picked. Unset users see the townie opt-out. -->
+        <div style="margin-top:16px;padding-top:12px;border-top:1px dashed var(--border);font-size:0.78rem;color:var(--text-muted);text-align:center;">
+            ${muAffiliation === 'townie'
+                ? 'Actually a Marauder? <a href="#" onclick="event.preventDefault();this.closest(\'div[style*=fixed]\').remove();window.pickAffiliation(\'student\');openFeedSettings();" style="color:var(--navy);font-weight:600;text-decoration:underline;">I\'m a student →</a>'
+                : 'Not a student? <a href="#" onclick="event.preventDefault();this.closest(\'div[style*=fixed]\').remove();window.pickAffiliation(\'townie\');openFeedSettings();" style="color:var(--navy);font-weight:600;text-decoration:underline;">I\'m a townie →</a>'
+            }
+        </div>`;
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
 };
@@ -1171,9 +1271,10 @@ window.pickAffiliation = function(value) {
     if (changingExisting) {
         const label = value === 'student' ? 'Marauder' : 'Townie';
         if (!confirm(`Reset your favorites to ${label} defaults? Your current favorites will be cleared.`)) {
-            // User declined — just update affiliation, keep favorites
+            // User declined — just update affiliation, keep favorites (but still prune stale state below)
             muAffiliation = value;
             localStorage.setItem(AFFILIATION_KEY, value);
+            pruneStaleStateForAffiliation();
             renderHomeFeed();
             if (typeof renderEvents === 'function') renderEvents();
             if (typeof renderSports === 'function') renderSports();
@@ -1187,12 +1288,76 @@ window.pickAffiliation = function(value) {
     }
     muAffiliation = value;
     localStorage.setItem(AFFILIATION_KEY, value);
+    pruneStaleStateForAffiliation();
     renderHomeFeed();
     if (typeof renderEvents === 'function') renderEvents();
     if (typeof renderSports === 'function') renderSports();
     if (typeof renderNewsUI === 'function') renderNewsUI();
     if (typeof decorateFeedStars === 'function') decorateFeedStars();
 };
+
+// Called after affiliation changes. Cleans up state that may be invalid under the new
+// affiliation. Specifically:
+//   - evTags: drop any sub-filter tag not present in the new affiliation's evSubMap
+//     (e.g. a Marauder with "Greek Life" selected becomes a Townie → "Greek Life" no
+//     longer appears as a sub-chip, but the tag would silently keep filtering the list).
+//   - feedPrefs: drop any pref tied to a sub-chip that the new affiliation can't see
+//     in the modal (e.g. clubs-greek when switching to Townie). Protects against the
+//     user not being able to uncheck favorites they no longer see.
+//   - evKidMode / perk toggles: cleared here too, since the buttons themselves are
+//     shown/hidden per affiliation and an invisible active filter is confusing.
+function pruneStaleStateForAffiliation() {
+    // Rebuild valid sub-tag set from the current affiliation's evSubMap
+    if (typeof getEvSubMap === 'function' && typeof evTags !== 'undefined') {
+        const validSubTags = new Set();
+        const subMap = getEvSubMap();
+        for (const subs of Object.values(subMap || {})) {
+            for (const sub of subs) {
+                const tag = typeof sub === 'string' ? sub : sub.tag;
+                validSubTags.add(tag);
+            }
+        }
+        // Prune any active tag that doesn't exist under the new affiliation
+        for (const tag of Array.from(evTags)) {
+            if (!validSubTags.has(tag)) evTags.delete(tag);
+        }
+    }
+    // Prune feedPrefs: drop IDs tied to subs the user can't see anymore
+    if (feedPrefs && feedPrefs.length > 0 && typeof feedSections !== 'undefined') {
+        const effectiveAff = muAffiliation === 'townie' ? 'townie' : 'student';
+        const visibleIds = new Set();
+        for (const section of Object.values(feedSections)) {
+            for (const group of Object.values(section.groups)) {
+                for (const sub of group.subs) {
+                    // A sub is visible if it has no audience OR its audience matches effective
+                    if (!sub.audience || sub.audience === 'both' || sub.audience === effectiveAff) {
+                        visibleIds.add(sub.id);
+                    }
+                }
+            }
+        }
+        // Keep `club:*` favorites (individual clubs are always visible in the browser)
+        const pruned = feedPrefs.filter(p => {
+            if (typeof p !== 'string') return false;
+            if (p.startsWith('club:')) return true;
+            return visibleIds.has(p);
+        });
+        if (pruned.length !== feedPrefs.length) {
+            feedPrefs = pruned;
+            if (feedPrefs.length === 0) {
+                localStorage.removeItem(FEED_KEY);
+                feedPrefs = null;
+            } else {
+                localStorage.setItem(FEED_KEY, JSON.stringify(feedPrefs));
+            }
+        }
+    }
+    // Clear toolbar mode state that no longer applies. updateEventsUI/updateSportsUI
+    // will be called by the renderEvents/renderSports that follow pickAffiliation.
+    evKidMode = false;
+    evFreeFoodMode = false;
+    evFreeStuffMode = false;
+}
 // ==================== END MY FEED ====================
 
 // View mode state for Events page
@@ -1755,7 +1920,12 @@ function renderEvents(){
         if (isEventFromHiddenSource(e)) return false;
         const tags = e.tags || [];
         if (!Array.from(evActiveSources).some(src => matchesSource(tags, src))) return false;
-        if (evTags.size > 0 && !Array.from(evTags).every(t => tags.includes(t))) return false;
+        // Sub-tag filter uses OR semantics: an event matches if it has ANY of the
+        // selected sub-tags. Previously this was AND (every tag must match) which felt
+        // like the filter was "narrowing" beyond what users expected — they think of
+        // sub-chips as additive ("show me Greek Life AND Fundraising events") and expect
+        // the list to grow, not shrink.
+        if (evTags.size > 0 && !Array.from(evTags).some(t => tags.includes(t))) return false;
         if (evKidMode && !e.kidFriendly) return false;
         if (evFreeFoodMode || evFreeStuffMode) {
             const benefits = e.benefits || [];
@@ -1778,13 +1948,45 @@ function renderEvents(){
     const beyondCount = allMatching.filter(e => localDateStr(e.date) > rangeEnd).length;
 
     if (filtered.length === 0) {
-        let msg = 'No events in the next ' + evDaysVisible + ' days.';
-        if (evKidMode) msg = '👨‍👩‍👧 No family-friendly events coming up. Try turning off the family filter.';
-        else if (evFreeFoodMode && evFreeStuffMode) msg = '🍕🎁 No free food or free stuff events coming up. Try turning off the filters.';
-        else if (evFreeFoodMode) msg = '🍕 No free food events coming up. Try turning off the filter.';
-        else if (evFreeStuffMode) msg = '🎁 No free stuff events coming up. Try turning off the filter.';
-        else if (!evAllMode) msg = 'No events from ' + Array.from(evActiveSources).join(', ') + ' in the next ' + evDaysVisible + ' days.';
-        let html = '<p class="empty-state">' + msg + '</p>';
+        // Build a contextual empty-state message based on what's actively filtering.
+        // We lead with the MOST restrictive-seeming filter so users understand why nothing shows.
+        const activeTags = Array.from(evTags);
+        const activeSources = Array.from(evActiveSources);
+        const sourceLabel = activeSources.length <= 2 ? activeSources.join(', ') : activeSources.length + ' sources';
+        const windowText = 'next ' + evDaysVisible + ' days';
+        let msg, hint = '';
+        if (evKidMode) {
+            msg = '👨‍👩‍👧 No family-friendly events coming up in the ' + windowText + '.';
+            hint = 'Try turning off the family filter, or loading more days.';
+        } else if (evFreeFoodMode && evFreeStuffMode) {
+            msg = '🍕🎁 No free food or free stuff events coming up.';
+            hint = 'Try turning off one or both perk filters.';
+        } else if (evFreeFoodMode) {
+            msg = '🍕 No free food events coming up in the ' + windowText + '.';
+            hint = 'Try turning off the free food filter.';
+        } else if (evFreeStuffMode) {
+            msg = '🎁 No free stuff events coming up in the ' + windowText + '.';
+            hint = 'Try turning off the free stuff filter.';
+        } else if (activeTags.length > 0 && !evAllMode) {
+            msg = 'No events matching "' + activeTags.join(', ') + '" from ' + sourceLabel + ' in the ' + windowText + '.';
+            hint = 'Try clearing your filters or adding more sources.';
+        } else if (activeTags.length > 0) {
+            msg = 'No events matching "' + activeTags.join(', ') + '" in the ' + windowText + '.';
+            hint = 'Try clearing the filter tags.';
+        } else if (!evAllMode) {
+            msg = 'No events from ' + sourceLabel + ' in the ' + windowText + '.';
+            hint = 'Try adding more sources or loading more days.';
+        } else {
+            msg = 'Nothing scheduled in the ' + windowText + '.';
+            hint = beyondCount > 0 ? 'There are more events further out.' : 'Check back later — new events come in hourly.';
+        }
+        let html = '<div class="empty-state"><p>' + msg + '</p><p style="font-size:0.82rem;color:var(--text-muted);margin-top:4px;">' + hint + '</p>';
+        // Offer a one-click clear button when any filter is active (other than just the default window)
+        const anyFilterActive = evKidMode || evFreeFoodMode || evFreeStuffMode || activeTags.length > 0 || !evAllMode || evFavOnlyMode;
+        if (anyFilterActive) {
+            html += '<button class="btn btn-sm btn-outline" onclick="clearEventFilters()" style="margin-top:10px;">Clear all filters</button>';
+        }
+        html += '</div>';
         if (beyondCount > 0) html += '<button class="load-more-btn" onclick="evLoadMore()">Load more events (' + beyondCount + ' more available)</button>';
         container.innerHTML = html;
         return;
@@ -2072,12 +2274,32 @@ function renderSports(){
 
     const container = document.getElementById('sp-events-container');
     if (filtered.length === 0) {
-        let msg = isPast ? 'No past games in the last ' + daysN + ' days.' : 'No games in the next ' + daysN + ' days.';
-        if (spHomeOnly && spSportTag) msg = '🏠 No home ' + spSportTag.toLowerCase() + ' games ' + (isPast ? 'recently' : 'coming up') + '.';
-        else if (spHomeOnly) msg = '🏠 No home games ' + (isPast ? 'recently' : 'coming up') + '. Try turning off the home filter.';
-        else if (spSportTag) msg = 'No ' + spSportTag.toLowerCase() + ' games ' + (isPast ? 'recently' : 'coming up') + '.';
-        else if (!spAllMode) msg = 'No games from ' + Array.from(spActiveSources).join(', ') + (isPast ? ' recently' : ' coming up') + '.';
-        let html = '<p class="empty-state">' + msg + '</p>';
+        const sourceList = Array.from(spActiveSources);
+        const sourceLabel = sourceList.length <= 2 ? sourceList.join(', ') : sourceList.length + ' sources';
+        const windowText = isPast ? 'past ' + daysN + ' days' : 'next ' + daysN + ' days';
+        let msg, hint = '';
+        if (spHomeOnly && spSportTag) {
+            msg = '🏠 No home ' + spSportTag.toLowerCase() + ' games ' + (isPast ? 'recently' : 'coming up') + '.';
+            hint = 'Try turning off the home-only filter or picking a different sport.';
+        } else if (spHomeOnly) {
+            msg = '🏠 No home games in the ' + windowText + '.';
+            hint = 'Try turning off the home-only filter.';
+        } else if (spSportTag) {
+            msg = 'No ' + spSportTag.toLowerCase() + ' games ' + (isPast ? 'recently' : 'coming up') + '.';
+            hint = 'Try selecting a different sport, or clear the sport filter.';
+        } else if (!spAllMode) {
+            msg = 'No games from ' + sourceLabel + (isPast ? ' recently' : ' coming up') + '.';
+            hint = 'Try adding more sources.';
+        } else {
+            msg = isPast ? 'No past games in the ' + windowText + '.' : 'Nothing scheduled in the ' + windowText + '.';
+            hint = beyondCount > 0 ? 'There are more games further out.' : (isPast ? 'Past games stream in after they finish.' : 'Check back later — new games come in hourly.');
+        }
+        let html = '<div class="empty-state"><p>' + msg + '</p><p style="font-size:0.82rem;color:var(--text-muted);margin-top:4px;">' + hint + '</p>';
+        const anyFilterActive = spHomeOnly || spSportTag || !spAllMode || spFavOnlyMode || spTimeView === 'past';
+        if (anyFilterActive) {
+            html += '<button class="btn btn-sm btn-outline" onclick="clearSportsFilters()" style="margin-top:10px;">Clear all filters</button>';
+        }
+        html += '</div>';
         if (beyondCount > 0) html += '<button class="load-more-btn" onclick="spLoadMore()">Load more games (' + beyondCount + ' more available)</button>';
         container.innerHTML = html;
         return;
@@ -2296,8 +2518,44 @@ function buildEventCard(e,isSportsPage){
     // because the latter returns true for all events when user has no prefs set.
     const isFav = (typeof isEventFavorited === 'function') && isEventFavorited(e);
     const favClass = isFav ? ' card-fav' : '';
+    // One-tap favorite button — top-right of card. Toggles the best-matching pref ID for
+    // this event so the user doesn't have to open the settings modal for a simple pick.
+    // For club events the ID is `club:<orgName>`; for MU sports it's the sport-specific ID;
+    // everything else falls back to the broad source ID (e.g. `borough-all`). See
+    // suggestFeedIdForEvent() for the mapping logic.
+    const favId = (typeof suggestFeedIdForEvent === 'function') ? suggestFeedIdForEvent(e, isSportsPage) : null;
+    const favBtnHtml = favId
+        ? `<button class="card-fav-btn${isFav ? ' active' : ''}" onclick="event.stopPropagation();toggleCardFavorite('${favId.replace(/'/g, "\\'")}', this)" title="${isFav ? 'Remove from favorites' : 'Add to favorites'}" aria-label="${isFav ? 'Remove from favorites' : 'Add to favorites'}">${isFav ? '★' : '☆'}</button>`
+        : '';
 
-    return `<div class="app-card${isCurrentlyLive?' card-live':''} ${cardResultClass}${favClass}" style="position:relative;">${scoreBadge}<div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${isFav?'<span class="fav-star" title="Favorite">⭐</span> ':''}${displayTitle}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${cleanLocation(e.location)}</p>${perkBadges?`<div class="perk-row">${perkBadges}</div>`:''}</div><div class="card-footer"><div class="card-actions">${locBadge}<a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
+    // Description block — shown on event cards (not sports cards, where descriptions are
+    // usually empty or boilerplate). Short descriptions render plain; longer ones get a
+    // "more" link that toggles a `.expanded` class on the parent <div> via inline handler.
+    // Kept inline rather than routed to the modal so users can scan multiple descriptions
+    // at once without opening modals. Descriptions over 400 chars are truncated in the
+    // scraper already (600 cap), so our 180-char preview is always smaller than the full.
+    let descBlock = '';
+    const desc = (e.description || '').trim();
+    const PREVIEW_LEN = 180;
+    if (desc && !isSportsPage) {
+        // Escape quotes for safe HTML attribute use; the full text is embedded in the DOM
+        // so the expand handler doesn't need to re-fetch. Preserve basic whitespace.
+        const escaped = desc.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        if (desc.length <= PREVIEW_LEN) {
+            descBlock = `<div class="card-desc"><p class="card-desc-text">${escaped}</p></div>`;
+        } else {
+            // Cut at a word boundary near PREVIEW_LEN so we don't truncate mid-word.
+            let cut = desc.lastIndexOf(' ', PREVIEW_LEN);
+            if (cut < PREVIEW_LEN - 30) cut = PREVIEW_LEN; // no word break nearby, use hard cut
+            const preview = desc.substring(0, cut).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+            descBlock = `<div class="card-desc">
+                <p class="card-desc-text card-desc-preview">${preview}… <a href="#" class="card-desc-more" onclick="event.preventDefault();event.stopPropagation();this.closest('.card-desc').classList.add('expanded');">more</a></p>
+                <p class="card-desc-text card-desc-full">${escaped} <a href="#" class="card-desc-less" onclick="event.preventDefault();event.stopPropagation();this.closest('.card-desc').classList.remove('expanded');">less</a></p>
+            </div>`;
+        }
+    }
+
+    return `<div class="app-card${isCurrentlyLive?' card-live':''} ${cardResultClass}${favClass}" style="position:relative;">${scoreBadge}${favBtnHtml}<div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${displayTitle}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${cleanLocation(e.location)}</p>${descBlock}${perkBadges?`<div class="perk-row">${perkBadges}</div>`:''}</div><div class="card-footer"><div class="card-actions">${locBadge}<a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
 }
 
 /* ==================== HOME ==================== */

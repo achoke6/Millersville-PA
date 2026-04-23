@@ -555,13 +555,19 @@ const feedSections = {
     news: {
         title: '📰 News Favorites',
         groups: {
-            news: { label: 'News Sources', icon: '📰', audience: 'both', subs: [
-                // News sources are visible to everyone regardless of affiliation — anyone
-                // might want to follow any source. No per-sub audience tag means they don't
-                // get filtered out. (Previously these were tagged which hid MU news from
-                // townies — corrected since townies may legitimately want MU news.)
+            // MU-side news — visible to both affiliations at full opacity.
+            // Townies may legitimately want to follow MU news (e.g. alumni, parents),
+            // and marauders obviously want it.
+            news: { label: 'MU News Sources', icon: '📰', audience: 'both', subs: [
                 {id:'news-mu',label:'MU News',icon:'📰'},{id:'news-snapper',label:'The Snapper',icon:'📰'},
-                {id:'news-athletics',label:'MU Athletics',icon:'🏅'},{id:'news-review',label:'MU Review',icon:'📖'},
+                {id:'news-athletics',label:'MU Athletics',icon:'🏅'},{id:'news-review',label:'MU Review',icon:'📖'}
+            ]},
+            // Community news (Penn Manor, Borough) — tagged townie-audience so the
+            // existing "dim for marauders" modal infrastructure (see groupDimmed
+            // logic in openFeedSettings) kicks in. Marauders see these dimmed with
+            // the "not typical for marauders — enable if interested" nag; favoriting
+            // a sub here unlocks the source via SOURCE_UNLOCK_IDS below.
+            newsCommunity: { label: 'Community News Sources', icon: '🌳', audience: 'townie', subs: [
                 {id:'news-pm',label:'Penn Manor',icon:'📰'},{id:'news-borough',label:'Borough',icon:'🌳'}
             ]}
         }
@@ -596,7 +602,11 @@ const SOURCE_UNLOCK_IDS = {
     'GetInvolved':['clubs-all', 'clubs-social', 'clubs-arts', 'clubs-sports', 'clubs-greek', 'clubs-service', 'mu-arts', 'mu-public'],
     // Sports page source pills
     'SP_PM':      ['pm-baseball', 'pm-softball', 'pm-lacrosse', 'pm-volleyball', 'pm-football', 'pm-basketball', 'pm-soccer', 'pm-fieldhockey', 'pm-tennis', 'pm-track'],
-    'SP_Clubs':   ['clubs-sports']
+    'SP_Clubs':   ['clubs-sports'],
+    // News page — Penn Manor and Borough news are community-side; hidden from
+    // marauders by default. Each "unlocks" only via its matching news-* fav.
+    'PM_NEWS':      ['news-pm'],
+    'BOROUGH_NEWS': ['news-borough']
 };
 
 // Does the user's affiliation hide this source by default?
@@ -607,8 +617,9 @@ function isSourceHiddenByAffiliation(source) {
         // Townies hide GetInvolved + MU Club Sports
         return source === 'GetInvolved' || source === 'SP_Clubs';
     }
-    // Marauder OR unset/default: hide PM, Borough, VFW events + PM sports
-    return source === 'PM' || source === 'Borough' || source === 'VFW' || source === 'SP_PM';
+    // Marauder OR unset/default: hide PM, Borough, VFW events + PM sports + PM/Borough news
+    return source === 'PM' || source === 'Borough' || source === 'VFW' || source === 'SP_PM'
+        || source === 'PM_NEWS' || source === 'BOROUGH_NEWS';
 }
 // Does the user have a favorite that "unlocks" this hidden source?
 function hasFavInSource(source) {
@@ -638,6 +649,15 @@ function isSportsEventFromHiddenSource(e) {
     const isMUClubSport = tags.includes('Clubs/Orgs') && tags.includes('Club Sports');
     if (isPM && isSourceHidden('SP_PM')) return true;
     if (isMUClubSport && isSourceHidden('SP_Clubs')) return true;
+    return false;
+}
+// For news items, is it from a hidden source? Parallel to isEventFromHiddenSource.
+// Marauders (default) hide Penn Manor + Borough news unless they've favorited one.
+// Townies see everything (no townie-side news hiding rules exist).
+function isNewsFromHiddenSource(n) {
+    if (!n || !n.source) return false;
+    if (n.source === 'Penn Manor News' && isSourceHidden('PM_NEWS')) return true;
+    if (n.source === 'Millersville Borough' && isSourceHidden('BOROUGH_NEWS')) return true;
     return false;
 }
 
@@ -2808,7 +2828,9 @@ function renderHomeUI(){
 
     // ===== LATEST NEWS (compact text links) =====
     const newsContainer = document.getElementById('home-news-list');
-    let latestNews = (currentNews || []).slice(0, 12);
+    // Filter PM/Borough news out for marauders (unless favorited) so the home
+    // feed matches the main News page's marauder-default behavior.
+    let latestNews = (currentNews || []).filter(n => !isNewsFromHiddenSource(n)).slice(0, 12);
     if (hasFeed) {
         const favNews = latestNews.filter(n => newsMatchesFeed(n));
         const otherNews = latestNews.filter(n => !newsMatchesFeed(n));
@@ -3100,9 +3122,37 @@ function buildNewsCard(n) {
     const tagHtml=tags.length?`<div class="card-tags">${tags.map(t=>`<span class="card-tag">${t}</span>`).join('')}</div>`:'';
     return `<div class="app-card">${tagHtml}<p class="card-meta">${n.date}</p><h3 class="card-title">${n.title}</h3><a href="${n.link}" target="_blank" class="btn btn-sm btn-outline" style="margin-top:12px;">Read ➔</a></div>`;
 }
+
+// Hide PM/Borough news source pills for marauders who haven't favorited them.
+// Mirrors updateEventsUI / updateSportsUI pill-visibility pattern. Also resets
+// newsSource back to 'All' if the currently-selected source just got hidden
+// (e.g. user switched affiliation while on the Penn Manor pill).
+function updateNewsSourcePills() {
+    const pmBtn = document.querySelector('#news-source-group .src-btn[data-feed="news-pm"]');
+    const boBtn = document.querySelector('#news-source-group .src-btn[data-feed="news-borough"]');
+    const pmHidden = isSourceHidden('PM_NEWS');
+    const boHidden = isSourceHidden('BOROUGH_NEWS');
+    if (pmBtn) pmBtn.style.display = pmHidden ? 'none' : '';
+    if (boBtn) boBtn.style.display = boHidden ? 'none' : '';
+    // If the active pill just got hidden, fall back to "All".
+    if ((pmHidden && newsSource === 'Penn Manor News') ||
+        (boHidden && newsSource === 'Millersville Borough')) {
+        newsSource = 'All';
+        document.querySelectorAll('#news-source-group .src-btn').forEach(b => b.classList.remove('active'));
+        const allBtn = document.querySelector('#news-source-group .src-btn');
+        if (allBtn) allBtn.classList.add('active');
+    }
+}
+
 function renderNewsUI(){
+    // Refresh source pill visibility first — hidden PM/Borough pills may have
+    // become visible (user favorited one) or vice-versa.
+    updateNewsSourcePills();
     const c=document.getElementById('news-container');
     let f=currentNews.filter(n=>{
+        // Affiliation-based source filter: marauders without a PM/Borough news favorite
+        // won't see those items. If user has favorited one, it shows through normally.
+        if (isNewsFromHiddenSource(n)) return false;
         if(newsSource!=='All'){
             if(n.source!==newsSource) return false;
         }
@@ -3778,6 +3828,9 @@ function runSearch(q) {
 
     // Search News
     const newsHits = (currentNews||[]).filter(n => {
+        // Respect affiliation-based source hiding (marauders don't see PM/Borough
+        // news in search unless they've favorited one).
+        if (isNewsFromHiddenSource(n)) return false;
         return (n.title + ' ' + n.source).toLowerCase().includes(ql);
     }).slice(0, 5);
     if (newsHits.length) {

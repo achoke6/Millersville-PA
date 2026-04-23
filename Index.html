@@ -942,8 +942,6 @@ window.openFeedSettings = function() {
         <div style="position:sticky;top:0;background:var(--surface);z-index:1;padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:12px;">
             <h3 style="margin-bottom:4px;">⭐ My Favorites</h3>
             <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:10px;">Pick what shows on your homepage and defaults on Events & Sports pages.</p>
-            <div style="display:flex;gap:6px;align-items:stretch;">
-                <button onclick="saveFeedFromModal();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-ticket" style="flex:2;padding:10px 8px;font-size:0.85rem;white-space:nowrap;">💾 Save</button>
                 <button onclick="clearFavoritesOnly();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-outline" style="flex:1;padding:10px 4px;font-size:0.72rem;white-space:nowrap;">Clear Favs</button>
                 <button onclick="resetEverything();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-outline" style="flex:1;padding:10px 4px;font-size:0.72rem;white-space:nowrap;">Reset All</button>
             </div>
@@ -2419,6 +2417,80 @@ window.setSportType=function(sport){
 };
 
 /* ==================== CARD BUILDER ==================== */
+// Generate a minimal .ics (iCalendar) file and trigger a browser download.
+// The file is the universal "add to calendar" format accepted by Apple Calendar,
+// Google Calendar (as import), Outlook, Thunderbird, and mobile OS calendars.
+// We keep the ICS body minimal — Anthropic spec compliance:
+//   - DTSTART/DTEND use floating time (no TZID) since event.date strings vary in
+//     how they encode timezone; most are America/New_York local time from scrapers.
+//     Floating time means "the calendar treats this as local time wherever imported"
+//     which is the sensible default for a local-community aggregator.
+//   - DTEND defaults to DTSTART + 1 hour since most event sources don't include
+//     end times. Users can adjust after import.
+//   - UID uses the sourceLink (or title+date as fallback) so re-importing the same
+//     event updates rather than duplicates in calendars that respect UID.
+function buildICS(e) {
+    const start = new Date(e.date);
+    if (isNaN(start)) return null;
+    const end = new Date(start.getTime() + 60 * 60 * 1000); // +1 hour default
+    // ICS wants YYYYMMDDTHHMMSS (no punctuation) in floating local time
+    const pad = n => String(n).padStart(2, '0');
+    const fmt = (d) => d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate())
+        + 'T' + pad(d.getHours()) + pad(d.getMinutes()) + '00';
+    const now = new Date();
+    const dtStamp = now.getUTCFullYear() + pad(now.getUTCMonth() + 1) + pad(now.getUTCDate())
+        + 'T' + pad(now.getUTCHours()) + pad(now.getUTCMinutes()) + pad(now.getUTCSeconds()) + 'Z';
+    // ICS requires \-escape of commas, semicolons, backslashes; newlines become \n literal
+    const esc = (s) => (s || '').replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n');
+    // Long lines should be folded at 75 octets per RFC 5545, but most clients accept
+    // unfolded lines. Skipping fold logic for minimalism.
+    const uid = (e.sourceLink || (e.title + '-' + e.date)).replace(/[^\w@.-]/g, '').substring(0, 200) + '@millersville.app';
+    const summary = esc((e.title || 'Event').substring(0, 250));
+    const location = esc((e.location || '').substring(0, 250));
+    const description = esc(((e.description || '') + (e.sourceLink ? '\n\n' + e.sourceLink : '')).substring(0, 1500));
+    const lines = [
+        'BEGIN:VCALENDAR',
+        'VERSION:2.0',
+        'PRODID:-//Millersville.APP//Event//EN',
+        'CALSCALE:GREGORIAN',
+        'METHOD:PUBLISH',
+        'BEGIN:VEVENT',
+        'UID:' + uid,
+        'DTSTAMP:' + dtStamp,
+        'DTSTART:' + fmt(start),
+        'DTEND:' + fmt(end),
+        'SUMMARY:' + summary
+    ];
+    if (location) lines.push('LOCATION:' + location);
+    if (description) lines.push('DESCRIPTION:' + description);
+    if (e.sourceLink) lines.push('URL:' + e.sourceLink);
+    lines.push('END:VEVENT', 'END:VCALENDAR');
+    return lines.join('\r\n');
+}
+
+// Click handler for card 📅 buttons. Builds the ICS, triggers a download.
+// Filename uses a slugged version of the event title for easy recognition in
+// the user's Downloads folder.
+window.addToCalendar = function(btn) {
+    const cardEl = btn.closest('.app-card');
+    const key = btn.dataset.cardkey;
+    if (!key) return;
+    const e = (allEvents || []).find(ev => (ev.sourceLink || (ev.title + '|' + ev.date)) === key);
+    if (!e) return;
+    const ics = buildICS(e);
+    if (!ics) return;
+    const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const slug = (e.title || 'event').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').substring(0, 60) || 'event';
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = slug + '.ics';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 100);
+};
+
 function cleanLocation(loc) {
     if (!loc) return '';
     return loc.replace(/^AcCALEN$/i, 'Millersville University')
@@ -2555,7 +2627,13 @@ function buildEventCard(e,isSportsPage){
         }
     }
 
-    return `<div class="app-card${isCurrentlyLive?' card-live':''} ${cardResultClass}${favClass}" style="position:relative;">${scoreBadge}${favBtnHtml}<div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${displayTitle}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${cleanLocation(e.location)}</p>${descBlock}${perkBadges?`<div class="perk-row">${perkBadges}</div>`:''}</div><div class="card-footer"><div class="card-actions">${locBadge}<a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
+    // Card-level identifier that addToCalendar uses to find the event in allEvents.
+    // Uses sourceLink when available; otherwise title+date as a fallback (matches the
+    // composite key strategy used by openEventDetails and search hit-handling).
+    const cardKey = (e.sourceLink || (e.title + '|' + e.date)).replace(/"/g, '&quot;');
+    const calBtn = `<button class="btn-cal" data-cardkey="${cardKey}" onclick="event.stopPropagation();addToCalendar(this)" title="Add to calendar" aria-label="Add to calendar">📅</button>`;
+
+    return `<div class="app-card${isCurrentlyLive?' card-live':''} ${cardResultClass}${favClass}" style="position:relative;">${scoreBadge}${favBtnHtml}<div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${displayTitle}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${cleanLocation(e.location)}</p>${descBlock}${perkBadges?`<div class="perk-row">${perkBadges}</div>`:''}</div><div class="card-footer"><div class="card-actions">${locBadge}${calBtn}<a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
 }
 
 /* ==================== HOME ==================== */
@@ -2773,6 +2851,9 @@ window.openEventDetails = function(key) {
     let actions = '';
     if (e.ticketLink) actions += `<a href="${e.ticketLink}" target="_blank" class="btn btn-sm btn-ticket" style="text-decoration:none;">🎟️ Buy Tickets</a>`;
     if (e.streamLink) actions += `<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-outline" style="text-decoration:none;">📺 Watch Stream</a>`;
+    // Calendar action — uses the same key scheme as card buttons so addToCalendar can find it
+    const modalCardKey = (e.sourceLink || (e.title + '|' + e.date)).replace(/"/g, '&quot;');
+    actions += `<button class="btn btn-sm btn-outline" data-cardkey="${modalCardKey}" onclick="addToCalendar(this)" style="cursor:pointer;">📅 Add to Calendar</button>`;
     if (e.sourceLink) actions += `<a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline" style="text-decoration:none;">🔗 View Source</a>`;
 
     // Build modal

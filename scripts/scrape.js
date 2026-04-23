@@ -348,6 +348,12 @@ async function runScraper() {
             // ev.url from iCal points to the specific game entry on the schedule
             const sourceUrl = ev.url ? ev.url.replace(/&amp;/g, '&') : scheduleUrl;
 
+            // Diagnostic: log the first few ev.url values so we can inspect what Sidearm
+            // provides in the iCal feed. Remove after we understand the pattern.
+            if (muAthCount < 3) {
+                console.log(`  [DEBUG] MU game URL for "${summary}": ev.url=${JSON.stringify(ev.url)} → sourceUrl=${sourceUrl}`);
+            }
+
             events.push({
                 title: cleanTitle,
                 date: eventDate.toISOString(),

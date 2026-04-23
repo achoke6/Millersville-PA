@@ -138,24 +138,83 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
     return 'mu-only';
 }
 
-function extractEventbriteEvents(ldData, eventsArray, now, futureLimit) {
+function extractEventbriteEvents(ldData, eventsArray, now, futureLimit, overrideUrl = null) {
     if (Array.isArray(ldData)) {
-        ldData.forEach(item => extractEventbriteEvents(item, eventsArray, now, futureLimit));
+        ldData.forEach(item => extractEventbriteEvents(item, eventsArray, now, futureLimit, overrideUrl));
     } else if (ldData && typeof ldData === 'object') {
         if (ldData['@type'] === 'Event' && ldData.name && ldData.startDate) {
             const eventDate = new Date(ldData.startDate);
             if (eventDate >= now && eventDate < futureLimit) {
+                // Prefer the override (we know exactly which event page we fetched);
+                // fall back to the url embedded in the LD-JSON; last resort the organizer.
+                const url = overrideUrl || ldData.url || "https://www.eventbrite.com/o/phantom-power-29187724817";
                 eventsArray.push({
                     title: ldData.name, date: eventDate.toISOString(), location: "Phantom Power",
                     tags: ["Other", "Live Music"], price: "Ticket Required",
-                    ticketLink: ldData.url || "https://www.eventbrite.com/o/phantom-power-29187724817",
-                    sourceLink: ldData.url || "https://www.phantompower.net/"
+                    ticketLink: url,
+                    sourceLink: url
                 });
             }
         } else {
-            for (let key in ldData) if (typeof ldData[key] === 'object') extractEventbriteEvents(ldData[key], eventsArray, now, futureLimit);
+            for (let key in ldData) if (typeof ldData[key] === 'object') extractEventbriteEvents(ldData[key], eventsArray, now, futureLimit, overrideUrl);
         }
     }
+}
+
+// Parses a single Eventbrite event page HTML. Tries JSON-LD first (if Eventbrite
+// ever restores it), then falls back to regex extraction against embedded JSON
+// (Next.js __NEXT_DATA__, Apollo state, or any other serialized blob — all of
+// which serialize the event shape with "startDate":"..." and "name":"..."). The
+// visible <h1> is a very reliable title source because Eventbrite event pages
+// have exactly one. Returns number of events added.
+function extractPhantomPowerEventFromHTML(html, url, eventsArray, now, futureLimit) {
+    const before = eventsArray.length;
+
+    // --- Attempt 1: JSON-LD (primary, preserves old behavior) ---
+    const ldMatches = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi);
+    if (ldMatches) {
+        ldMatches.forEach(block => {
+            try {
+                const json = JSON.parse(block.replace(/<script type="application\/ld\+json">|<\/script>/gi, ''));
+                extractEventbriteEvents(json, eventsArray, now, futureLimit, url);
+            } catch (e) { /* skip malformed blocks silently — very common on real pages */ }
+        });
+        if (eventsArray.length > before) return eventsArray.length - before;
+    }
+
+    // --- Attempt 2: regex over any embedded JSON ---
+    // "startDate" in an Eventbrite event page appears inside __NEXT_DATA__ or an
+    // Apollo/Relay cache. The first occurrence is the event's own start date.
+    const startMatch = html.match(/"startDate":"([^"]+)"/);
+    if (!startMatch) return 0;
+
+    const eventDate = new Date(startMatch[1]);
+    if (isNaN(eventDate) || eventDate < now || eventDate >= futureLimit) return 0;
+
+    // Title: prefer the <h1> (exactly one on event pages). Strip any nested
+    // tags and HTML-decode the basic entities we're likely to encounter.
+    let title = null;
+    const h1Match = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
+    if (h1Match) {
+        title = h1Match[1]
+            .replace(/<[^>]+>/g, '')
+            .replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
+            .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+            .trim();
+    }
+    // og:title is a reliable fallback if <h1> has odd nesting or is missing.
+    if (!title) {
+        const ogMatch = html.match(/<meta\s+property="og:title"\s+content="([^"]+)"/i);
+        if (ogMatch) title = ogMatch[1].replace(/\s*[|\-–]\s*Eventbrite\s*$/i, '').trim();
+    }
+    if (!title) return 0;
+
+    eventsArray.push({
+        title, date: eventDate.toISOString(), location: "Phantom Power",
+        tags: ["Other", "Live Music"], price: "Ticket Required",
+        ticketLink: url, sourceLink: url
+    });
+    return 1;
 }
 
 // ===== MAIN SCRAPER =====
@@ -835,21 +894,6 @@ async function runScraper() {
             }
         }
         console.log(`  📺 Matched ${matchCount} broadcasts, ${highlightCount} highlight links`);
-        // Debug: show unmatched PM games
-        for (const ev of events) {
-            if (!ev.tags || !ev.tags.includes('PM')) continue;
-            if (ev.streamLink) continue;
-            const sportTag = ev.tags.find(t => sportToHudlId[t.toLowerCase()]);
-            if (!sportTag) continue;
-            const evDate = new Date(ev.date).toISOString().split('T')[0];
-            const gender = ev.tags.includes('Girls') ? 1 : 0;
-            const sportId = sportToHudlId[sportTag.toLowerCase()];
-            const key = `${evDate}|${sportId}|${gender}`;
-            if (new Date(ev.date) >= now) {
-                console.log(`    ⚠️ No Hudl match: "${ev.title}" key=${key} tags=[${ev.tags.join(',')}]`);
-            }
-        }
-
         // Store for score matching after MaxPreps
         global._hudlScores = hudlScores;
         global._hudlSportToId = sportToHudlId;
@@ -1265,21 +1309,54 @@ async function runScraper() {
     } catch (e) { console.error("❌ Clubs/Orgs error:", e.message); }
 
     // ===== 5. EVENTBRITE (PHANTOM POWER) =====
+    // Two-stage scrape. The Eventbrite organizer page is now SPA-rendered with
+    // no scrapable event content, so we instead source event URLs from Phantom
+    // Power's own homepage (where each upcoming concert poster image is wrapped
+    // in a direct link to its Eventbrite event page), then fetch each page
+    // individually. Individual event pages still expose date/title via either
+    // JSON-LD or embedded JSON — extractPhantomPowerEventFromHTML handles both.
     let ebCount = 0;
     try {
-        console.log("📡 Fetching Eventbrite (Phantom Power)...");
-        const ebText = await (await fetch('https://www.eventbrite.com/o/phantom-power-29187724817', { headers: baseHeaders })).text();
-        const ldMatches = ebText.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/gi);
-        if (ldMatches) {
-            const before = events.length;
-            ldMatches.forEach(block => {
-                try {
-                    extractEventbriteEvents(JSON.parse(block.replace(/<script type="application\/ld\+json">|<\/script>/gi, '')), events, today, futureDate);
-                } catch (e) { console.error("  JSON-LD parse error:", e.message); }
-            });
-            ebCount = events.length - before;
+        console.log("📡 Fetching Phantom Power homepage for Eventbrite links...");
+        const ppRes = await fetch('https://www.phantompower.net/', {
+            headers: baseHeaders,
+            signal: AbortSignal.timeout(15000)
+        });
+        const ppHtml = await ppRes.text();
+
+        // Match Eventbrite event URLs. The ID is always the numeric suffix.
+        // Using a character class that excludes URL terminators instead of \S
+        // avoids accidentally grabbing trailing quotes/brackets.
+        const urlRe = /https:\/\/www\.eventbrite\.com\/e\/[^"'\s<>)]+?-(\d+)/g;
+        const seen = new Set();
+        const urls = [];
+        let m;
+        while ((m = urlRe.exec(ppHtml)) !== null) {
+            const id = m[1];
+            if (seen.has(id)) continue;
+            seen.add(id);
+            urls.push(m[0]);
         }
-        console.log(`✅ Eventbrite: ${ebCount} events`);
+        console.log(`   Found ${urls.length} unique Eventbrite event URLs on phantompower.net`);
+
+        // Fetch each event page sequentially with a small delay between requests
+        // to be polite to Eventbrite. ~20-30 events * 200ms = ~6s in the worst
+        // case, which is fine for an hourly background scraper.
+        for (const url of urls) {
+            try {
+                const res = await fetch(url, {
+                    headers: baseHeaders,
+                    signal: AbortSignal.timeout(10000)
+                });
+                if (!res.ok) { console.log(`   ⚠️  ${res.status} on ${url}`); continue; }
+                const html = await res.text();
+                ebCount += extractPhantomPowerEventFromHTML(html, url, events, today, futureDate);
+            } catch (e) {
+                console.error(`   ⚠️  Skipping ${url}: ${e.message}`);
+            }
+            await new Promise(r => setTimeout(r, 200));
+        }
+        console.log(`✅ Eventbrite: ${ebCount} events from ${urls.length} pages`);
     } catch (e) { console.error("❌ Eventbrite error:", e.message); }
 
     // ===== 6. MILLERSVILLE BOROUGH (Google Calendar iCal — with recurring event expansion) =====

@@ -383,7 +383,8 @@
     "name": "Center for Health Education and Promotion",
     "category": "Educational Program",
     "categories": [
-      "Educational Program"
+      "Educational Program",
+      "Tabling"
     ],
     "shortName": "",
     "id": ""
@@ -786,8 +787,10 @@
   },
   {
     "name": "Expressions Dance",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -870,9 +873,9 @@
   },
   {
     "name": "Fraternity & Sorority Life",
-    "category": "Social",
+    "category": "Educational Program",
     "categories": [
-      "Social"
+      "Educational Program"
     ],
     "shortName": "",
     "id": ""
@@ -1428,9 +1431,10 @@
   },
   {
     "name": "Office of Sustainability",
-    "category": "Educational Program",
+    "category": "Service",
     "categories": [
-      "Educational Program"
+      "Service",
+      "Social"
     ],
     "shortName": "",
     "id": ""

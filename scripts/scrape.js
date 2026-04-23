@@ -1149,6 +1149,30 @@ async function runScraper() {
                     // Plain-text description for keyword scanning
                     const plainDesc = (row[descIdx] || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
                     const customerName = (customerIdx !== -1 && row[customerIdx]) ? row[customerIdx].trim() : '';
+
+                    // Derived-tag detection — mirrors the logic in the main
+                    // GetInvolved API block (search for greekRegex). Cross-source
+                    // dedupe prioritizes MU Calendar over GetInvolved; without
+                    // this parallel detection, the surviving merged event would
+                    // lose its Greek Life / Residence Halls / Fundraising tags
+                    // (which only the GetInvolved path knew how to derive).
+                    // Townie-side filtering also depends on these tags via
+                    // classifyAudience below, so the detection MUST run before
+                    // that call for Greek/Residence events to be correctly
+                    // marked mu-only instead of public.
+                    const greekRegex = /^(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega)\b/i;
+                    const orgLower = customerName.toLowerCase();
+                    const titleLower = (eventTitle || '').toLowerCase();
+                    if (/housing and residential|residence hall/.test(orgLower)) {
+                        if (!tags.includes('Residence Halls')) tags.push('Residence Halls');
+                    }
+                    if (/greek council/.test(orgLower) || greekRegex.test(orgLower) || greekRegex.test(titleLower)) {
+                        if (!tags.includes('Greek Life')) tags.push('Greek Life');
+                    }
+                    if (/fundrais/i.test(eventTitle) || /fundrais/i.test(plainDesc)) {
+                        if (!tags.includes('Fundraising')) tags.push('Fundraising');
+                    }
+
                     audience = classifyAudience({
                         titleText: eventTitle,
                         descText: plainDesc,
@@ -2631,17 +2655,25 @@ Focus on the most impressive deals a shopper would want to know about. Include m
     const ONE_HALF_HOUR_MS = 30 * 60 * 1000;
 
     // Get a "source bucket" for same-source detection. Within a bucket, don't merge.
-    // Use sourceLink URL as the primary signal since tags like "Arts Concert / Performance"
-    // can be shared across sources (MU Calendar's event category AND artsmu's own tag).
+    // URL is checked BEFORE tags because the Clubs/Orgs tag is attached to BOTH
+    // GetInvolved API events AND MU Calendar "Student Event" relabels (for
+    // consistent frontend filtering). Bucketing by tag would treat them as the
+    // same source and block their dedupe — but they ARE the duplication we want
+    // to collapse, from two genuinely different upstream feeds publishing the
+    // same event. The sourceLink URL reliably distinguishes them.
     const sourceBucket = e => {
         const link = (e.sourceLink || '').toLowerCase();
         const tags = e.tags || [];
         if (link.includes('artsmu.com')) return 'artsmu';
-        if (link.includes('getinvolved.millersville.edu') || tags.includes('Clubs/Orgs')) return 'clubs';
+        if (link.includes('getinvolved.millersville.edu')) return 'clubs';
         if (link.includes('millersville.edu/calendar')) return 'mu';
         // Fall back to tag-based detection for sources without distinctive URLs
+        // (PM iCal, Borough iCal, etc.). Clubs/Orgs tag check is kept as a
+        // last resort for the rare case where a Clubs/Orgs event lacks a
+        // recognizable sourceLink.
         if (tags.includes('PM')) return 'pm';
         if (tags.includes('Borough')) return 'borough';
+        if (tags.includes('Clubs/Orgs')) return 'clubs';
         if (tags.includes('MU')) return 'mu';
         return 'other';
     };

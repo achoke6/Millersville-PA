@@ -366,6 +366,19 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .perk-credit { background: #d1fae5; color: #065f46; border: 1px solid #34d399; }
 .tl-perk { font-size: 0.8rem; }
 
+/* Modal-scoped perk row: Free Food / Free Stuff are often the primary draw
+   for an event, so in the modal we give them their own strip directly below
+   the location with larger, high-contrast pills. These selectors only apply
+   inside the event details overlay — card-level .perk-badge usage elsewhere
+   keeps the compact pill sizing. */
+.modal-perks { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+.event-details-overlay .perk-badge {
+    font-size: 0.88rem;
+    padding: 6px 12px;
+    border-width: 2px;
+    gap: 4px;
+}
+
 /* =========================================================
    6. CARDS
    ========================================================= */
@@ -377,7 +390,7 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .card-featured { border: 2px solid var(--gold); background: linear-gradient(135deg, #fffbeb 0%, var(--surface) 100%); }
 .card-body { flex: 1; }
 .card-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 6px; }
-.card-tag { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; background: var(--bg); color: var(--text-muted); padding: 2px 8px; border-radius: var(--radius-pill); border: 1px solid var(--border); }
+.card-tag { display: inline-flex; align-items: center; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; background: var(--bg); color: var(--text-muted); padding: 2px 8px; border-radius: var(--radius-pill); border: 1px solid var(--border); white-space: nowrap; line-height: 1.4; }
 .card-title { font-size: 1rem; font-weight: 700; margin: 4px 0 6px; line-height: 1.3; }
 .card-title-sm { font-size: 0.95rem; font-weight: 700; margin: 4px 0; line-height: 1.3; }
 .card-meta { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }

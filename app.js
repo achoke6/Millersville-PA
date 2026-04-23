@@ -2115,13 +2115,23 @@ function buildGoogleCalendarURL(e) {
     return 'https://calendar.google.com/calendar/render?' + params.toString();
 }
 
-// iOS detection: Safari on iOS handles .ics file downloads poorly (lands in Files app,
-// user has to tap through to get to Calendar). On iOS we offer both: a Google Calendar
-// web link AND the .ics download. On everything else we just download the .ics.
+// Mobile detection: .ics file downloads are a poor UX on both iOS (Safari drops
+// the file in the Files app) and Android (Chrome drops it in Downloads and the
+// user has to tap through the notification to reach Calendar). On mobile we
+// offer a chooser modal with Google Calendar as primary (works one-tap on
+// every platform via a pre-filled web URL) and .ics as secondary fallback.
+// Desktop keeps the simple .ics download — OS-level .ics handlers (macOS
+// Calendar, Outlook, Thunderbird) are reliable there.
 function isIOS() {
     const ua = navigator.userAgent || '';
     // iPad on iOS 13+ reports as "MacIntel" so also check for touch
     return /iPad|iPhone|iPod/.test(ua) || (ua.includes('Mac') && 'ontouchend' in document);
+}
+function isAndroid() {
+    return /Android/i.test(navigator.userAgent || '');
+}
+function isMobile() {
+    return isIOS() || isAndroid();
 }
 
 window.addToCalendar = function(btn) {
@@ -2129,7 +2139,7 @@ window.addToCalendar = function(btn) {
     if (!key) return;
     const e = (allEvents || []).find(ev => (ev.sourceLink || (ev.title + '|' + ev.date)) === key);
     if (!e) return;
-    if (isIOS()) {
+    if (isMobile()) {
         showCalendarChooser(e);
     } else {
         downloadICS(e);
@@ -2152,8 +2162,12 @@ function downloadICS(e) {
     setTimeout(() => URL.revokeObjectURL(url), 100);
 }
 
-// Small modal offering Apple Calendar (.ics) or Google Calendar (web) — shown on iOS
-// where the .ics download flow is degraded.
+// Mobile chooser modal. Google Calendar is the primary action — a pre-filled web
+// URL works one-tap on both iOS (opens in browser / Google Calendar app) and
+// Android (hands off to the GCal app if installed, otherwise web). The .ics
+// download remains as a secondary option for users on Apple Calendar, Outlook,
+// Samsung Calendar, etc. — the label is device-neutral since .ics isn't
+// Apple-specific.
 function showCalendarChooser(e) {
     const overlay = document.createElement('div');
     overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:10000;display:flex;align-items:center;justify-content:center;padding:16px;';
@@ -2163,10 +2177,10 @@ function showCalendarChooser(e) {
     modal.style.cssText = 'background:var(--surface);border-radius:var(--radius);max-width:360px;width:100%;padding:20px;text-align:center;';
     modal.innerHTML = `
         <h3 style="margin:0 0 8px;font-size:1rem;">Add to Calendar</h3>
-        <p style="font-size:0.82rem;color:var(--text-muted);margin:0 0 16px;">Which calendar are you using?</p>
+        <p style="font-size:0.82rem;color:var(--text-muted);margin:0 0 16px;">Which calendar do you use?</p>
         <div style="display:flex;flex-direction:column;gap:8px;">
-            <button onclick="this.closest('div[style*=fixed]').remove();downloadICS(window.__calEvent);" class="btn btn-sm btn-ticket" style="padding:10px;">🍎 Apple Calendar</button>
-            ${gcalUrl ? `<a href="${gcalUrl}" target="_blank" onclick="this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-outline" style="padding:10px;text-decoration:none;">📆 Google Calendar</a>` : ''}
+            ${gcalUrl ? `<a href="${gcalUrl}" target="_blank" onclick="this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-ticket" style="padding:10px;text-decoration:none;">📆 Google Calendar</a>` : ''}
+            <button onclick="this.closest('div[style*=fixed]').remove();downloadICS(window.__calEvent);" class="btn btn-sm btn-outline" style="padding:10px;">📥 Apple Calendar / Other (.ics)</button>
             <button onclick="this.closest('div[style*=fixed]').remove();" style="background:none;border:none;color:var(--text-muted);font-size:0.82rem;cursor:pointer;padding:6px;margin-top:4px;">Cancel</button>
         </div>
     `;
@@ -2509,18 +2523,24 @@ window.openEventDetails = function(key) {
     else if(tags.includes('Community')) src = 'Community';
     else src = 'Event';
 
-    // Badges row
+    // Badges row — home/family/score only. Perks (food/stuff/credit) get their
+    // own high-visibility strip rendered separately below the location so they
+    // stand out as the primary draw for the event.
     let badges = '';
     if (isSport && isHome) badges += '<span class="tl-badge tl-home">🏠 Home</span>';
     if (e.kidFriendly) badges += '<span class="tl-badge tl-family">👨‍👩‍👧 Family</span>';
-    const benefits = e.benefits || [];
-    if (benefits.includes('Free Food')) badges += '<span class="tl-badge tl-perk">🍕 Free Food</span>';
-    if (benefits.includes('Free Stuff')) badges += '<span class="tl-badge tl-perk">🎁 Free Stuff</span>';
-    if (benefits.includes('Credit')) badges += '<span class="tl-badge tl-perk">📚 Credit</span>';
     if (e.gameResult && e.gameScore) {
         const cls = e.gameResult === 'W' ? 'tl-win' : e.gameResult === 'L' ? 'tl-loss' : 'tl-tie';
         badges += `<span class="tl-badge ${cls}">${e.gameResult} ${e.gameScore}</span>`;
     }
+
+    // Perk badges — prominent colored pills, own row, bigger sizing via
+    // .event-details-overlay .perk-badge rules in CSS.
+    const benefits = e.benefits || [];
+    let perks = '';
+    if (benefits.includes('Free Food'))  perks += '<span class="perk-badge perk-food">🍕 Free Food</span>';
+    if (benefits.includes('Free Stuff')) perks += '<span class="perk-badge perk-stuff">🎁 Free Stuff</span>';
+    if (benefits.includes('Credit'))     perks += '<span class="perk-badge perk-credit">📚 Credit</span>';
 
     // Tag chips (exclude noisy internal markers). Only townies get the Community relabel
     // (unset/Marauder users see "GetInvolved" since default is now Marauder mode).
@@ -2561,6 +2581,7 @@ window.openEventDetails = function(key) {
         <h2 style="margin:4px 0 8px;font-size:1.25rem;color:var(--navy);line-height:1.3;padding-right:24px;">${e.title || 'Event'}</h2>
         <div style="font-size:0.92rem;color:var(--text);font-weight:600;">📅 ${dateStr}${!isNoon ? ' · ' + timeStr : ''}</div>
         ${locBlock}
+        ${perks ? `<div class="modal-perks">${perks}</div>` : ''}
         ${badges ? `<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:4px;">${badges}</div>` : ''}
         ${displayTags.length ? `<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:4px;">${displayTags.map(t => `<span class="card-tag">${t}</span>`).join('')}</div>` : ''}
         ${descBlock}

@@ -653,6 +653,22 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .tl-family { color: #92400e; }
 .tl-stream { font-size: 0.85rem; text-decoration: none; flex-shrink: 0; }
 
+/* Mobile: tighten home timeline density.
+   Base styles are tuned for desktop width; on narrow viewports the 10px vertical
+   padding + unified 6px gap (which applies to row-gap when badges wrap to a new
+   line) add ~6-10px per row of unnecessary airspace. On a busy day with 14+
+   items this compounds into 100px+ of wasted vertical scroll. */
+@media (max-width: 640px) {
+    .tl-item { padding: 7px 10px; gap: 10px; }
+    .tl-time { min-width: 54px; font-size: 0.76rem; }
+    /* Decouple row-gap from column-gap: wrapped badges sit tight to the title
+       line (2px) instead of floating 6px below it. */
+    .tl-content { row-gap: 2px; column-gap: 6px; }
+    .tl-title { line-height: 1.25; }
+    .home-section { margin-bottom: 14px; }
+    .home-section-header { margin-bottom: 8px; }
+}
+
 /* News compact links */
 .home-news-item { display: flex; gap: 8px; align-items: baseline; padding: 8px 0; border-bottom: 1px solid var(--border); text-decoration: none; transition: var(--transition); }
 .home-news-item:hover { background: var(--gold-soft); margin: 0 -8px; padding: 8px; border-radius: var(--radius-sm); }

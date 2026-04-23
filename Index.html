@@ -154,9 +154,11 @@
                 <p style="font-size:0.8rem;opacity:0.85;">Pick your interests to see your favorite events, sports, and news first.</p>
             </div>
         </div>
+        <!-- Last-updated indicator. Small, muted text at bottom of home view. If the hourly
+             cron fails, the timestamp grows stale and users can see "updated 6 hours ago"
+             instead of silently consuming outdated data. -->
+        <div id="home-last-updated" class="home-last-updated" style="display:none;"></div>
     </section>
-
-    <!-- EVENTS (No Sports) -->
     <section id="view-events" class="app-view">
         <div class="sticky-nav-bar">
             <div class="toolbar-compact">
@@ -437,8 +439,10 @@
 </main>
 
 <footer class="site-footer">
+    <p id="footer-last-updated" style="font-size:0.78rem;color:var(--text-muted);margin:0 0 6px;">&nbsp;</p>
     <p>Web sourced community resource</p>
     <p>Independent aggregator. Not affiliated with, or endorsed by, any featured institutions, schools, or venues.</p>
+    <p style="font-size:0.78rem;margin-top:8px;"><a href="mailto:admin@millersville.app?subject=Millersville.APP%20feedback" style="color:var(--text-muted);text-decoration:underline;">Report an issue or missing event</a></p>
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
@@ -942,8 +946,9 @@ window.openFeedSettings = function() {
         <div style="position:sticky;top:0;background:var(--surface);z-index:1;padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:12px;">
             <h3 style="margin-bottom:4px;">⭐ My Favorites</h3>
             <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:10px;">Pick what shows on your homepage and defaults on Events & Sports pages.</p>
-                <button onclick="clearFavoritesOnly();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-outline" style="flex:1;padding:10px 4px;font-size:0.72rem;white-space:nowrap;">Clear Favs</button>
-                <button onclick="resetEverything();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-outline" style="flex:1;padding:10px 4px;font-size:0.72rem;white-space:nowrap;">Reset All</button>
+            <div style="display:flex;gap:8px;align-items:stretch;">
+                <button onclick="saveFeedFromModal();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-ticket" style="flex:2;padding:10px 8px;font-size:0.88rem;white-space:nowrap;">💾 Save</button>
+                <button onclick="clearFavoritesOnly();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-outline" style="flex:1;padding:10px 8px;font-size:0.82rem;white-space:nowrap;">Clear Favs</button>
             </div>
         </div>
         <div id="feed-options">${sectionsHtml}</div>
@@ -1360,9 +1365,14 @@ function pruneStaleStateForAffiliation() {
 
 // View mode state for Events page
 // Infinite-scroll state: how many days of future events are currently rendered.
-// Each "Load more" click adds LOAD_MORE_INCREMENT days.
+// Each "Load more" click adds LOAD_MORE_INCREMENT days for future, or
+// LOAD_MORE_INCREMENT_PAST days for past. Past uses a smaller step because users
+// typically want "last week's games" not "last 2 months" — 60-day jumps there are
+// an awkward amount.
 const INITIAL_DAYS = 60;
+const INITIAL_DAYS_PAST = 14;
 const LOAD_MORE_INCREMENT = 60;
+const LOAD_MORE_INCREMENT_PAST = 14;
 let evDaysVisible = INITIAL_DAYS;
 // Favorites-only filter mode — when on, only favorited events show (still day-grouped).
 // Replaces the old "pin at top" behavior since pinning all future favorites under the
@@ -1378,7 +1388,7 @@ let spActiveSources=new Set(['PM','MU','Clubs']), spSportTag=null, spHomeOnly=fa
 // Sports view state: 'upcoming' (infinite-scroll forward) or 'past' (infinite-scroll backward)
 let spTimeView = 'upcoming';
 let spDaysVisible = INITIAL_DAYS;
-let spPastDaysVisible = INITIAL_DAYS;
+let spPastDaysVisible = INITIAL_DAYS_PAST;
 let spMode='week', spAnchorDate=new Date();
 
 const sportsList=['Baseball','Softball','Track','Soccer','Lacrosse','Tennis','Volleyball','Wrestling','Basketball','Football','Field Hockey','Golf','Cross Country','Cheerleading','Swimming','Rugby','Fencing','Esports','Archery'];
@@ -1663,7 +1673,48 @@ async function loadEvents(){
     renderEvents(); renderSports();
     if (currentNews.length > 0) renderNewsUI();
     decorateFeedStars();
+    // Load sibling meta for the "last updated" indicator. Failing quietly is fine —
+    // the file may not exist on first deploy before the scraper has run.
+    try {
+        const metaRes = await fetch('events-meta.json', { cache: 'no-store' });
+        if (metaRes.ok) {
+            const meta = await metaRes.json();
+            renderLastUpdated(meta.generatedAt);
+        }
+    } catch (_) { /* silent */ }
     }catch(e){console.error('Events load error:',e);}
+}
+
+// Render the homepage's "updated X ago" line. Reads from the scraper-written
+// events-meta.json. The threshold for calling it "stale" is 3 hours — our cron runs
+// hourly, so anything past 3 hours means 2+ consecutive runs failed.
+function renderLastUpdated(iso) {
+    if (!iso) return;
+    const then = new Date(iso);
+    if (isNaN(then)) return;
+    const now = new Date();
+    const diffMin = Math.max(0, Math.round((now - then) / 60000));
+    let label;
+    if (diffMin < 2) label = 'Just updated';
+    else if (diffMin < 60) label = `Updated ${diffMin} min ago`;
+    else if (diffMin < 120) label = 'Updated 1 hour ago';
+    else if (diffMin < 24 * 60) label = `Updated ${Math.floor(diffMin / 60)} hours ago`;
+    else label = `Updated ${Math.floor(diffMin / (24 * 60))} days ago`;
+    const stale = diffMin > 180;
+    const suffix = stale ? ' ⚠️' : '';
+    // Home page pill — only on home view, top-of-feed position
+    const homeEl = document.getElementById('home-last-updated');
+    if (homeEl) {
+        homeEl.textContent = label + suffix;
+        homeEl.classList.toggle('stale', stale);
+        homeEl.style.display = 'block';
+    }
+    // Footer — visible across all views, dimmer styling
+    const footerEl = document.getElementById('footer-last-updated');
+    if (footerEl) {
+        footerEl.textContent = label + suffix;
+        footerEl.classList.toggle('stale', stale);
+    }
 }
 
 /* ==================== EVENTS PAGE ==================== */
@@ -2209,7 +2260,7 @@ window.clearSportsFilters=function(){
     spTimeView='upcoming';
     spFavOnlyMode=false;
     spDaysVisible = INITIAL_DAYS;
-    spPastDaysVisible = INITIAL_DAYS;
+    spPastDaysVisible = INITIAL_DAYS_PAST;
     // Past-toggle button's active class is refreshed by updateSportsUI below
     updateSportsUI();
     renderSports();
@@ -2360,7 +2411,7 @@ function renderSports(){
 
 // Load the next batch in the active view (upcoming extends forward, past extends backward)
 window.spLoadMore = function() {
-    if (spTimeView === 'past') spPastDaysVisible += LOAD_MORE_INCREMENT;
+    if (spTimeView === 'past') spPastDaysVisible += LOAD_MORE_INCREMENT_PAST;
     else spDaysVisible += LOAD_MORE_INCREMENT;
     renderSports();
 };
@@ -2383,7 +2434,7 @@ window.toggleSportsPast = function() {
     spTimeView = newView;
     spMode = newView; // keep legacy variable in sync
     // Reset the other view's day window so switching feels fresh
-    if (newView === 'upcoming') spPastDaysVisible = INITIAL_DAYS;
+    if (newView === 'upcoming') spPastDaysVisible = INITIAL_DAYS_PAST;
     else spDaysVisible = INITIAL_DAYS;
     renderSports();
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2471,12 +2522,50 @@ function buildICS(e) {
 // Click handler for card 📅 buttons. Builds the ICS, triggers a download.
 // Filename uses a slugged version of the event title for easy recognition in
 // the user's Downloads folder.
+// Build a Google Calendar web URL for a given event. Opens the GCal "create event"
+// form pre-filled with details. Universal fallback for platforms where .ics downloads
+// don't trigger an "Add to Calendar" prompt — notably iOS Safari, which drops the file
+// into the Files app instead of offering the calendar sheet.
+function buildGoogleCalendarURL(e) {
+    const start = new Date(e.date);
+    if (isNaN(start)) return null;
+    const end = new Date(start.getTime() + 60 * 60 * 1000);
+    const pad = n => String(n).padStart(2, '0');
+    const fmt = d => d.getUTCFullYear() + pad(d.getUTCMonth() + 1) + pad(d.getUTCDate())
+        + 'T' + pad(d.getUTCHours()) + pad(d.getUTCMinutes()) + '00Z';
+    const params = new URLSearchParams({
+        action: 'TEMPLATE',
+        text: (e.title || 'Event').substring(0, 200),
+        dates: fmt(start) + '/' + fmt(end),
+        details: ((e.description || '') + (e.sourceLink ? '\n\n' + e.sourceLink : '')).substring(0, 1500),
+        location: (e.location || '').substring(0, 250)
+    });
+    return 'https://calendar.google.com/calendar/render?' + params.toString();
+}
+
+// iOS detection: Safari on iOS handles .ics file downloads poorly (lands in Files app,
+// user has to tap through to get to Calendar). On iOS we offer both: a Google Calendar
+// web link AND the .ics download. On everything else we just download the .ics.
+function isIOS() {
+    const ua = navigator.userAgent || '';
+    // iPad on iOS 13+ reports as "MacIntel" so also check for touch
+    return /iPad|iPhone|iPod/.test(ua) || (ua.includes('Mac') && 'ontouchend' in document);
+}
+
 window.addToCalendar = function(btn) {
-    const cardEl = btn.closest('.app-card');
     const key = btn.dataset.cardkey;
     if (!key) return;
     const e = (allEvents || []).find(ev => (ev.sourceLink || (ev.title + '|' + ev.date)) === key);
     if (!e) return;
+    if (isIOS()) {
+        showCalendarChooser(e);
+    } else {
+        downloadICS(e);
+    }
+};
+
+// Trigger .ics download (desktop / Android primary path)
+function downloadICS(e) {
     const ics = buildICS(e);
     if (!ics) return;
     const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
@@ -2489,7 +2578,32 @@ window.addToCalendar = function(btn) {
     a.click();
     document.body.removeChild(a);
     setTimeout(() => URL.revokeObjectURL(url), 100);
-};
+}
+
+// Small modal offering Apple Calendar (.ics) or Google Calendar (web) — shown on iOS
+// where the .ics download flow is degraded.
+function showCalendarChooser(e) {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:10000;display:flex;align-items:center;justify-content:center;padding:16px;';
+    overlay.onclick = ev => { if (ev.target === overlay) overlay.remove(); };
+    const gcalUrl = buildGoogleCalendarURL(e);
+    const modal = document.createElement('div');
+    modal.style.cssText = 'background:var(--surface);border-radius:var(--radius);max-width:360px;width:100%;padding:20px;text-align:center;';
+    modal.innerHTML = `
+        <h3 style="margin:0 0 8px;font-size:1rem;">Add to Calendar</h3>
+        <p style="font-size:0.82rem;color:var(--text-muted);margin:0 0 16px;">Which calendar are you using?</p>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+            <button onclick="this.closest('div[style*=fixed]').remove();downloadICS(window.__calEvent);" class="btn btn-sm btn-ticket" style="padding:10px;">🍎 Apple Calendar</button>
+            ${gcalUrl ? `<a href="${gcalUrl}" target="_blank" onclick="this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-outline" style="padding:10px;text-decoration:none;">📆 Google Calendar</a>` : ''}
+            <button onclick="this.closest('div[style*=fixed]').remove();" style="background:none;border:none;color:var(--text-muted);font-size:0.82rem;cursor:pointer;padding:6px;margin-top:4px;">Cancel</button>
+        </div>
+    `;
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+    // Stash the event on window so the inline handler can reach it after the closure
+    window.__calEvent = e;
+}
+window.downloadICS = downloadICS;
 
 function cleanLocation(loc) {
     if (!loc) return '';
@@ -2631,7 +2745,7 @@ function buildEventCard(e,isSportsPage){
     // Uses sourceLink when available; otherwise title+date as a fallback (matches the
     // composite key strategy used by openEventDetails and search hit-handling).
     const cardKey = (e.sourceLink || (e.title + '|' + e.date)).replace(/"/g, '&quot;');
-    const calBtn = `<button class="btn-cal" data-cardkey="${cardKey}" onclick="event.stopPropagation();addToCalendar(this)" title="Add to calendar" aria-label="Add to calendar">📅</button>`;
+    const calBtn = `<button class="btn-cal" data-cardkey="${cardKey}" onclick="event.stopPropagation();addToCalendar(this)" title="Add to calendar" aria-label="Add to calendar">📥</button>`;
 
     return `<div class="app-card${isCurrentlyLive?' card-live':''} ${cardResultClass}${favClass}" style="position:relative;">${scoreBadge}${favBtnHtml}<div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${displayTitle}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${cleanLocation(e.location)}</p>${descBlock}${perkBadges?`<div class="perk-row">${perkBadges}</div>`:''}</div><div class="card-footer"><div class="card-actions">${locBadge}${calBtn}<a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
 }

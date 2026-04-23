@@ -35,6 +35,16 @@ body {
    2. HEADER
    ========================================================= */
 header { background: var(--surface); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); }
+/* Height of the main sticky header — used by .sticky-nav-bar and scroll-margin
+   calculations below so a secondary sticky chip row sits flush against the
+   header's bottom edge instead of being clipped behind it. Desktop height is
+   driven by the horizontal nav buttons (6px + ~22px + 6px ≈ 34px content) +
+   10px header padding top/bottom + 1px border ≈ 54px. Mobile replaces the
+   nav row with a 28×28px hamburger, giving a smaller ~49px header (override
+   in the 768px media query). If you ever change the header's padding, nav
+   button size, or logo font metrics, update these values. */
+:root { --header-h: 54px; }
+@media (max-width: 768px) { :root { --header-h: 50px; } }
 .header-container { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; }
 .logo-block h1 { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.5px; color: var(--text); line-height: 1; user-select: none; display: flex; align-items: baseline; }
 .logo-link { cursor: pointer; }
@@ -91,9 +101,12 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
    so there's no sliver of page content visible between the header and the sticky bar. */
 .sticky-nav-bar {
     position: sticky;
-    /* Stick flush below the site header, which is sticky at top:0 and ~43px tall
-       (10px padding + ~22px logo line + 1px border). Using 44px leaves no visible gap. */
-    top: 44px;
+    /* Sit flush below the main sticky header. Previously hardcoded to 44px,
+       which was ~10px too short on desktop (header is ~54px with nav buttons),
+       causing the top edge of the bar — including the "Today" label — to be
+       obscured by the header's higher z-index. The --header-h variable tracks
+       the real height and keeps mobile/desktop in sync automatically. */
+    top: var(--header-h);
     z-index: 50;
     background: var(--bg);
     /* Negative margin pulls the bar up into the container's 16px top-padding so it sits
@@ -306,10 +319,12 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     border-bottom: 1px solid var(--border);
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    /* Account for the double sticky stack (header ~44px + sticky-nav-bar ~130px) when the
-       browser auto-scrolls to a day group (hash link or JS scrollIntoView). Without this,
-       the day header lands clipped under the sticky toolbar. */
-    scroll-margin-top: 180px;
+    /* Keep day-group-header clear of both sticky elements when programmatically
+       scrolled to (hash link, JS scrollIntoView). Sticky-nav-bar is typically
+       ~130px tall (toolbar-compact + filter row + padding); combined with
+       --header-h gives a safe offset. Previously hardcoded 180px; variable-
+       based keeps mobile/desktop in sync with the header height. */
+    scroll-margin-top: calc(var(--header-h) + 130px);
 }
 /* First day-group-header in a container doesn't need extra top margin since it's already
    separated from the sticky bar by the container's normal spacing. */

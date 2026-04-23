@@ -1564,23 +1564,29 @@ async function runScraper() {
         });
         const jbHtml = await jbRes.text();
 
-        // Match any anchor whose href contains /show/<slug>-phantom-power-YYYYMMDD.
-        // The link text is the artist name. The same URL appears 2-3 times per
-        // card (poster image, h4 heading, "Tickets & Info" button) so we dedupe
-        // by URL. Using [^<]* for link text handles nested tags like <span>.
-        const showRe = /<a[^>]*href="(https:\/\/www\.jambase\.com\/show\/[^"]*-phantom-power-(\d{4})(\d{2})(\d{2}))"[^>]*>([^<]+)<\/a>/g;
+        // Match any anchor whose href points to a phantom-power show page.
+        // JamBase serves same-domain anchors as RELATIVE URLs (/show/...) but
+        // some embedded paths render as absolute — accept either and normalize
+        // to an absolute URL when storing. Link text may be wrapped in nested
+        // HTML tags (e.g., <a><img></a> for the thumbnail anchor), so we match
+        // across tags via [\s\S]*? and strip HTML from the captured text
+        // afterward. Empty-text matches (image-only anchors) fail the length
+        // filter and fall through to the h4 title link's match for the same URL.
+        const showRe = /<a[^>]*href="((?:https:\/\/[^"]+)?\/show\/[^"]*-phantom-power-(\d{4})(\d{2})(\d{2}))"[^>]*>([\s\S]*?)<\/a>/g;
         const seen = new Map(); // url -> { title, date }
         let m;
         while ((m = showRe.exec(jbHtml)) !== null) {
-            const [, url, yyyy, mm, dd, rawText] = m;
-            const text = rawText.trim();
-            // Skip entries where the link text is empty, "Tickets & Info",
-            // "Calendar", or anything that starts with punctuation/digits
-            // (these are repeat matches from support-act lists or button text).
+            const [, hrefPart, yyyy, mm, dd, rawText] = m;
+            const url = hrefPart.startsWith('http') ? hrefPart : `https://www.jambase.com${hrefPart}`;
+            // Strip any nested tags, decode common HTML entities that appear in
+            // button labels ("Tickets &amp; Info"), then trim.
+            const text = rawText.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&nbsp;/g, ' ').trim();
+            // Skip matches with no usable text (image-only anchors) and the
+            // repeat matches from call-to-action buttons that share the URL.
             if (!text || text.length < 2) continue;
             if (/^(Tickets & Info|Calendar|Buy Tickets|More Info)$/i.test(text)) continue;
-            // First match for a given URL wins — the artist-title anchor tends
-            // to appear first in the DOM, before the "Tickets & Info" button.
+            // First valid match for a given URL wins — after empty-text filtering
+            // the artist-title h4 anchor is typically the first valid match in DOM.
             if (seen.has(url)) continue;
             seen.set(url, {
                 title: text,

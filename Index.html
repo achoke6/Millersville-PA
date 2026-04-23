@@ -76,30 +76,25 @@
         </div>
 
         <div id="welcome-banner" class="welcome-banner" style="display:none;">
-            <!-- Affiliation prompt: shown when muAffiliation not yet set -->
-            <div id="affiliation-prompt" style="display:none;">
+            <!-- Unified welcome: assumes Marauder by default (the majority of MU.APP users are
+                 MU students). Offers Set Up Favorites as the primary CTA, Skip to dismiss,
+                 and a smaller "I'm a townie" opt-out link for the minority of users who
+                 should see the townie view instead. -->
+            <div id="welcome-prompt">
                 <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-                    <span style="font-size:1.5rem;">👋</span>
-                    <div style="flex:1;min-width:200px;">
-                        <strong>Welcome!</strong>
-                        <p style="font-size:0.82rem;color:var(--text-muted);margin:2px 0 0;">Are you a MU Marauder or a townie? We'll use this to personalize your event feed.</p>
+                    <span style="font-size:1.5rem;">⭐</span>
+                    <div style="flex:1;min-width:220px;">
+                        <strong>Welcome to Millersville.APP!</strong>
+                        <p style="font-size:0.82rem;color:var(--text-muted);margin:2px 0 0;">Set up your favorites to see what matters to you.</p>
                     </div>
-                    <div style="display:flex;gap:8px;flex-wrap:wrap;">
-                        <button onclick="pickAffiliation('student')" class="affiliation-btn">🏴‍☠️ MU Marauder</button>
-                        <button onclick="pickAffiliation('townie')" class="affiliation-btn">🏘️ Townie</button>
+                    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                        <button onclick="welcomeSetupFavorites()" class="btn btn-sm btn-ticket" style="white-space:nowrap;">Set Up Favorites</button>
+                        <button onclick="dismissWelcome()" style="background:none;border:1.5px solid var(--border);padding:6px 12px;border-radius:var(--radius-sm);font-size:0.82rem;color:var(--text-muted);cursor:pointer;font-family:inherit;">Skip for now</button>
                     </div>
                 </div>
-            </div>
-            <!-- Favorites CTA: shown after affiliation set OR for existing users who haven't configured favorites -->
-            <div id="favorites-prompt" style="display:none;">
-                <div style="display:flex;align-items:center;gap:12px;">
-                    <span style="font-size:1.5rem;">👋</span>
-                    <div style="flex:1;">
-                        <strong>Welcome to Millersville.APP!</strong>
-                        <p style="font-size:0.82rem;color:var(--text-muted);margin:2px 0 0;">Personalize your experience — pick your favorite sports, events, and news sources to see what matters to you first.</p>
-                    </div>
-                    <button onclick="openFeedSettings()" class="btn btn-sm btn-ticket" style="white-space:nowrap;">Set Up Favorites</button>
-                    <button onclick="dismissWelcome()" style="background:none;border:none;font-size:1rem;cursor:pointer;color:var(--text-muted);padding:4px;">✕</button>
+                <!-- Secondary opt-out: smaller, less prominent than the primary CTA -->
+                <div style="margin-top:10px;padding-top:8px;border-top:1px dashed var(--border);font-size:0.78rem;color:var(--text-muted);text-align:right;">
+                    Not a student? <a href="#" onclick="event.preventDefault();welcomeIdentifyAsTownie();" style="color:var(--navy);font-weight:600;text-decoration:underline;">I'm a townie →</a>
                 </div>
             </div>
         </div>
@@ -753,12 +748,38 @@ window.openFeedSettings = function() {
     const effectiveAffiliation = muAffiliation === 'townie' ? 'townie' : 'student';
     const isTownie = effectiveAffiliation === 'townie';
     const isMarauder = !isTownie;
+    // Helper to predict whether a group would be dimmed — must match the actual dimming
+    // condition below so the sort-to-bottom and the visual dim are consistent.
+    const isGroupDimmed = (group) => {
+        if (!isMarauder) return false; // townies never dim
+        return !!(group && group.audience && group.audience !== 'both' && group.audience !== 'student');
+    };
     // Resolve a display label: use townieLabel if one is set AND user is townie
     const labelFor = (item) => (isTownie && item.townieLabel) ? item.townieLabel : item.label;
-    for (const [secKey, section] of Object.entries(feedSections)) {
+    // Display order: Events before Sports (matches the nav order where Events is listed
+    // before Sports), then News. Falls back to whatever keys exist in feedSections.
+    const sectionOrder = ['events', 'sports', 'news'];
+    const orderedSections = sectionOrder
+        .map(k => [k, feedSections[k]])
+        .filter(([, v]) => v)
+        .concat(Object.entries(feedSections).filter(([k]) => !sectionOrder.includes(k)));
+    for (const [secKey, section] of orderedSections) {
         sectionsHtml += `<div style="margin-bottom:20px;"><h4 style="font-size:0.95rem;font-weight:800;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid ${secKey==='sports'?'var(--navy)':secKey==='events'?'#b45309':'var(--border)'};">${section.title}</h4>`;
-        // Sort groups: user's affiliation first, 'both' next, other affiliation last
-        const groupEntries = Object.entries(section.groups).sort((a, b) => audienceRank(a[1].audience) - audienceRank(b[1].audience));
+        // Group ordering strategy:
+        //   - Marauders: ALL dimmed groups sink to the bottom (in their natural section
+        //     order), leaving the top of the list for Marauder-relevant picks. This beats
+        //     the old audienceRank sort which split by "both" audience — Other was landing
+        //     in the middle instead of staying grouped with relevant options.
+        //   - Townies: keep natural feedSections order (no dimming to sort around).
+        // Object.entries preserves insertion order, so natural order = definition order.
+        const rawEntries = Object.entries(section.groups);
+        const groupEntries = isMarauder
+            ? [...rawEntries].sort((a, b) => {
+                const ad = isGroupDimmed(a[1]) ? 1 : 0;
+                const bd = isGroupDimmed(b[1]) ? 1 : 0;
+                return ad - bd;  // dimmed (1) sorts after undimmed (0); Array.sort is stable
+            })
+            : rawEntries;
         for (const [key, group] of groupEntries) {
             // Filter subs by per-sub audience tag:
             //   - For Marauders: all subs visible (no subs tagged audience:'townie' exist)
@@ -1109,28 +1130,15 @@ function renderHomeFeed() {
     const hasFeed = feedPrefs && feedPrefs.length > 0;
     const feedCta = document.getElementById('home-feed-cta');
     if (feedCta) feedCta.style.display = hasFeed ? 'none' : 'block';
-    // Welcome banner has two states:
-    //   1. Affiliation not yet set → show Marauder/Townie question
-    //   2. Affiliation set but favorites not configured (and not dismissed) → show favorites CTA
-    //   3. Otherwise hidden
+    // Welcome banner shows once on first visit. Dismisses permanently when:
+    //   - User clicks "Set Up Favorites" (opens the feed modal; they've engaged)
+    //   - User clicks "Skip for now" (explicit dismiss; stays Marauder-default)
+    //   - User clicks "I'm a townie" (sets affiliation + offers favorites setup)
+    //   - User has already set up favorites (hasFeed)
     const wb = document.getElementById('welcome-banner');
-    const affPrompt = document.getElementById('affiliation-prompt');
-    const favPrompt = document.getElementById('favorites-prompt');
-    if (wb && affPrompt && favPrompt) {
+    if (wb) {
         const dismissed = localStorage.getItem('welcomeDismissed');
-        if (muAffiliation === null) {
-            // Ask affiliation first
-            wb.style.display = 'block';
-            affPrompt.style.display = 'block';
-            favPrompt.style.display = 'none';
-        } else if (!hasFeed && !dismissed) {
-            // Have affiliation, ask about favorites
-            wb.style.display = 'block';
-            affPrompt.style.display = 'none';
-            favPrompt.style.display = 'block';
-        } else {
-            wb.style.display = 'none';
-        }
+        wb.style.display = (!hasFeed && !dismissed) ? 'block' : 'none';
     }
     renderHomeUI();
 }
@@ -1138,6 +1146,23 @@ window.dismissWelcome = function() {
     localStorage.setItem('welcomeDismissed', '1');
     const wb = document.getElementById('welcome-banner');
     if (wb) wb.style.display = 'none';
+};
+// Primary CTA: user wants to set up favorites. Dismiss the banner and open the feed modal.
+// Affiliation stays unset → treated as Marauder (the app default).
+window.welcomeSetupFavorites = function() {
+    localStorage.setItem('welcomeDismissed', '1');
+    const wb = document.getElementById('welcome-banner');
+    if (wb) wb.style.display = 'none';
+    openFeedSettings();
+};
+// Secondary opt-out: user says they're a townie. Set affiliation, dismiss the banner,
+// then open the feed modal (already in townie mode) so they can set up their favorites.
+window.welcomeIdentifyAsTownie = function() {
+    pickAffiliation('townie');
+    localStorage.setItem('welcomeDismissed', '1');
+    const wb = document.getElementById('welcome-banner');
+    if (wb) wb.style.display = 'none';
+    openFeedSettings();
 };
 window.pickAffiliation = function(value) {
     if (value !== 'student' && value !== 'townie') return;
@@ -2058,15 +2083,16 @@ function renderSports(){
         return;
     }
 
-    // Favorites UX: toolbar ⭐ Favs button shown only in Upcoming view when user has sport favorites.
-    // Past view never shows favorites filtering (past games are strictly chronological).
+    // Favorites UX: toolbar ⭐ Favs button shown whenever user has sport favorites.
+    // Works in both Upcoming and Past views — users can jump to past games of their
+    // favorite teams to see scores, or upcoming games to see what's next.
     const hasAnyPrefs = feedPrefs && feedPrefs.length > 0;
     const hasSportPrefs = hasAnyPrefs && feedPrefs.some(p => sportFeedIds.has(p));
-    const sportFavCount = (!isPast && hasSportPrefs) ? allMatching.filter(e => eventMatchesFeed(e)).length : 0;
+    const sportFavCount = hasSportPrefs ? allMatching.filter(e => eventMatchesFeed(e)).length : 0;
 
     const spFavBtn = document.getElementById('sp-fav-toggle');
     if (spFavBtn) {
-        spFavBtn.style.display = (!isPast && hasSportPrefs && sportFavCount > 0) ? '' : 'none';
+        spFavBtn.style.display = (hasSportPrefs && sportFavCount > 0) ? '' : 'none';
         spFavBtn.classList.toggle('active', spFavOnlyMode);
         spFavBtn.title = spFavOnlyMode ? 'Showing favorites only — tap to show all' : 'Jump to your favorites (' + sportFavCount + ')';
     }
@@ -2074,23 +2100,27 @@ function renderSports(){
     let html = '';
     let dayItems = filtered;
 
+    // Setup hints — shown in upcoming view only, since past view is more of a "check results"
+    // mode where a fresh user wouldn't be configuring favorites.
     if (!isPast) {
         if (!hasAnyPrefs) {
             html += '<div class="feed-setup-hint">⚙️ <a href="#" onclick="event.preventDefault();openFeedSettings();">Set up your favorites</a> to highlight your preferred games</div>';
         } else if (hasAnyPrefs && !hasSportPrefs) {
             html += '<div class="feed-setup-hint">No sport favorites set — <a href="#" onclick="event.preventDefault();openFeedSettings();">add some</a> to highlight them here</div>';
         }
+    }
 
-        // Apply favorites-only filter if active
-        if (spFavOnlyMode && hasSportPrefs) {
-            dayItems = filtered.filter(e => eventMatchesFeed(e));
-            if (dayItems.length === 0) {
-                html += '<p class="empty-state">No upcoming favorite games in the next ' + daysN + ' days. <a href="#" onclick="event.preventDefault();spToggleFavOnly();">Show all games</a></p>';
-                if (beyondCount > 0) html += '<button class="load-more-btn" onclick="spLoadMore()">Load more (' + beyondCount + ' more games)</button>';
-                container.innerHTML = html;
-                if (typeof refreshDayLabels === 'function') refreshDayLabels();
-                return;
-            }
+    // Apply favorites-only filter in BOTH upcoming and past views
+    if (spFavOnlyMode && hasSportPrefs) {
+        dayItems = filtered.filter(e => eventMatchesFeed(e));
+        if (dayItems.length === 0) {
+            const timeLabel = isPast ? 'past ' + daysN + ' days' : 'next ' + daysN + ' days';
+            const kindLabel = isPast ? 'past favorite games' : 'upcoming favorite games';
+            html += '<p class="empty-state">No ' + kindLabel + ' in the ' + timeLabel + '. <a href="#" onclick="event.preventDefault();spToggleFavOnly();">Show all games</a></p>';
+            if (beyondCount > 0) html += '<button class="load-more-btn" onclick="spLoadMore()">Load more (' + beyondCount + ' more games)</button>';
+            container.innerHTML = html;
+            if (typeof refreshDayLabels === 'function') refreshDayLabels();
+            return;
         }
     }
 
@@ -2126,12 +2156,12 @@ window.spToggleFavOnly = function() {
 // When Past is on, the list shows completed games newest-first. When off, it shows
 // scheduled games chronologically. The Clear ✕ button lights up when Past is on so
 // users have an obvious way out (alongside tapping the Past button itself again).
+// Favorites-only filter stays available in both modes so users can jump to past games
+// of their favorite teams.
 window.toggleSportsPast = function() {
     const newView = spTimeView === 'past' ? 'upcoming' : 'past';
     spTimeView = newView;
     spMode = newView; // keep legacy variable in sync
-    // Past view doesn't support favorites-only filtering — clear if switching there
-    if (newView === 'past') spFavOnlyMode = false;
     // Reset the other view's day window so switching feels fresh
     if (newView === 'upcoming') spPastDaysVisible = INITIAL_DAYS;
     else spDaysVisible = INITIAL_DAYS;

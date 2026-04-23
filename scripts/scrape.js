@@ -112,6 +112,27 @@ function extractPricing(desc, title = "", location = "", apiLink = "") {
 //      the word "community" appears (e.g. "our club community").
 //   3. Public signals (keyword / category / org / fundraising tag) → public
 //   4. Everything else → mu-only (default)
+// Overly generic event titles ("Practice", "Meeting", "Informational") don't
+// identify the event in a mixed feed — a bare "Practice" card is useless when
+// the reader hasn't already opened a specific club page. When the source
+// provides an owner/org name, prepend it so titles become "Men's Rugby Club
+// Practice" or "Greek Life Informational" on cards and the home page.
+//
+// Covers the common single-word/short-phrase titles posted by student orgs on
+// GetInvolved. Extend this list when you spot new offenders.
+const GENERIC_CLUB_EVENT_TITLES = /^(practice|rehearsal|meeting|tabling|informational|info session|information session|interest meeting|general meeting|general body meeting|gbm|e-?board|e-?board meeting|executive meeting|officer meeting|chapter meeting|chapter business|weekly meeting|open house|office hours|game night|movie night|social|rush|recruitment|recruitment night|welcome back|orientation|new member|initiation|banquet|cookout|hangout|bible study|fellowship|prayer meeting|worship|study group|study session|workshop|fundraiser)$/i;
+
+function decorateGenericTitle(title, orgName) {
+    const t = (title || '').trim();
+    const o = (orgName || '').trim();
+    if (!t || !o) return t;
+    if (!GENERIC_CLUB_EVENT_TITLES.test(t)) return t;
+    // Avoid redundancy: if the org name is already somewhere in the title, skip.
+    // Prevents "Rugby Club Practice" from becoming "Men's Rugby Club Rugby Club Practice".
+    if (t.toLowerCase().includes(o.toLowerCase())) return t;
+    return `${o} ${t}`;
+}
+
 function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tags = [], benefits = [] }) {
     if (benefits.includes('Credit')) return 'mu-only';
     const combinedText = ((titleText || '') + ' ' + (descText || '') + ' ' + (orgName || '')).toLowerCase();
@@ -1145,8 +1166,15 @@ async function runScraper() {
 
                 const descHtml = row[descIdx] || "";
 
+                // Decorate generic single-word titles ("Practice" / "Meeting" /
+                // "Informational") with the customer/org name when available,
+                // producing clearer card labels like "Men's Rugby Club Practice".
+                // The customerIdx value is the row's associated org on MU Calendar.
+                const calCustomerName = (customerIdx !== -1 && row[customerIdx]) ? row[customerIdx].trim() : '';
+                const decoratedTitle = decorateGenericTitle(eventTitle, calCustomerName);
+
                 events.push({
-                    title: eventTitle, date: row[startIdx], location: eventLoc,
+                    title: decoratedTitle, date: row[startIdx], location: eventLoc,
                     tags: [...new Set(tags)], price: pricing.price,
                     ticketLink: pricing.link, sourceLink,
                     description: descHtml,
@@ -1384,11 +1412,23 @@ async function runScraper() {
             const eventDate = new Date(item.startsOn);
             if (eventDate < pastDate || eventDate >= futureDate) return;
 
-            // Tag as MU (folded into main MU source) + GetInvolved (sub-category display tag)
-            // Keep 'Clubs/Orgs' as internal marker so existing dedupe source-bucket logic still works
+            // Display tags start with internal markers (MU/Clubs/Orgs are hidden
+            // by frontend) + GetInvolved + the org name. Theme and categoryNames
+            // are deliberately NOT pushed to display tags — end users don't
+            // benefit from seeing "Educational Program", "ThoughtfulLearning",
+            // "Tabling", "GroupBusiness", etc. on cards. Those values still
+            // feed the classifyAudience logic via rawTags below, and a small
+            // set of derived labels (Fundraising, Greek Life, Residence Halls,
+            // Club Sports) are still added when the theme/category patterns
+            // match.
             let tags = ["MU", "GetInvolved", "Clubs/Orgs"];
+            const orgDisplayName = (item.organizationName || '').trim();
+            if (orgDisplayName) tags.push(orgDisplayName);
+
+            // rawTags retained for classifyAudience (greek life, residence hall,
+            // service/community/fundraising signals) — not for display.
             let rawTags = [];
-            if (item.organizationName) rawTags.push(item.organizationName.trim());
+            if (orgDisplayName) rawTags.push(orgDisplayName);
             if (item.theme && item.theme !== "Not Applicable") rawTags.push(item.theme.trim());
             (item.categoryNames || []).forEach(c => rawTags.push(c.trim()));
 
@@ -1417,10 +1457,13 @@ async function runScraper() {
 
             rawTags.forEach(t => {
                 const lt = t.toLowerCase();
+                // Skip athletics/competition noise — Sidearm is the source of truth
+                // for those, and GetInvolved often double-tags club sports games.
                 if (/athletics|^competition$|^competitions$/.test(lt)) return;
+                // Normalize fundraising/greek patterns into clean display tags.
+                // Any other rawTag is classification-only and is NOT surfaced.
                 if (/fundrais/.test(lt)) { if (!tags.includes('Fundraising')) tags.push('Fundraising'); }
                 else if (/fraternity|sorority|greek/.test(lt)) { if (!tags.includes('Greek Life')) tags.push('Greek Life'); }
-                else tags.push(t);
             });
 
             if (/housing and residential|residence hall/.test(orgName)) tags.push('Residence Halls');
@@ -1452,7 +1495,8 @@ async function runScraper() {
             });
 
             events.push({
-                title: item.name || "Student Event", date: eventDate.toISOString(),
+                title: decorateGenericTitle(item.name || "Student Event", orgDisplayName),
+                date: eventDate.toISOString(),
                 location: item.location || "Campus", tags: [...new Set(tags)],
                 price: "Free",
                 ticketLink: "",

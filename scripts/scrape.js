@@ -342,16 +342,29 @@ async function runScraper() {
                     if (sportLower.includes(key) || key.includes(sportLower)) { scheduleSlug = slug; break; }
                 }
             }
-            const scheduleUrl = scheduleSlug
-                ? `https://millersvilleathletics.com/sports/${scheduleSlug}/schedule`
-                : 'https://millersvilleathletics.com/calendar';
-            // ev.url from iCal points to the specific game entry on the schedule
-            const sourceUrl = ev.url ? ev.url.replace(/&amp;/g, '&') : scheduleUrl;
-
-            // Diagnostic: log the first few ev.url values so we can inspect what Sidearm
-            // provides in the iCal feed. Remove after we understand the pattern.
-            if (muAthCount < 3) {
-                console.log(`  [DEBUG] MU game URL for "${summary}": ev.url=${JSON.stringify(ev.url)} → sourceUrl=${sourceUrl}`);
+            // Source URL strategy:
+            //   - The Sidearm iCal feed's ev.url points to `/calendar.aspx?game_id=X&sport_id=Y`,
+            //     which IGNORES the query params and just renders the composite schedule for ALL
+            //     sports. Useless for users who want to see their specific game. Verified by
+            //     fetching the URL — query params have no effect.
+            //   - Much better: link to the sport-specific schedule page. For past games, use
+            //     `/schedule/<year>` so the page defaults to the correct season and the game
+            //     is visible in context with its Box Score / Recap links right there.
+            //   - Fallback to composite `/calendar` only when we can't figure out the sport.
+            let sourceUrl;
+            if (scheduleSlug) {
+                // For past games, include the year so Sidearm shows the right season view
+                if (gameResult) {
+                    const gameYear = eventDate.getFullYear();
+                    const currentYear = now.getFullYear();
+                    sourceUrl = gameYear === currentYear
+                        ? `https://millersvilleathletics.com/sports/${scheduleSlug}/schedule`
+                        : `https://millersvilleathletics.com/sports/${scheduleSlug}/schedule/${gameYear}`;
+                } else {
+                    sourceUrl = `https://millersvilleathletics.com/sports/${scheduleSlug}/schedule`;
+                }
+            } else {
+                sourceUrl = 'https://millersvilleathletics.com/calendar';
             }
 
             events.push({

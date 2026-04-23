@@ -244,6 +244,60 @@ async function runScraper() {
 
     let events = [];
 
+    // Cache of recap URLs keyed by "{scheduleSlug}|{YYYY-M-D}". Populated once per scrape
+    // by fetching each sport's schedule page HTML and extracting Recap links for past games.
+    // Sidearm doesn't expose this in the iCal (their ev.url is a useless composite link),
+    // so we parse the schedule HTML directly. A single doubleheader usually shares one recap.
+    const muRecapCache = new Map();
+    // Fetch and parse one sport's schedule page. Extracts recap URLs keyed by date.
+    async function fetchSportRecapMap(scheduleSlug, seasonYear) {
+        // seasonYear optional — omit for current season (Sidearm's default view)
+        const url = seasonYear
+            ? `https://millersvilleathletics.com/sports/${scheduleSlug}/schedule/${seasonYear}`
+            : `https://millersvilleathletics.com/sports/${scheduleSlug}/schedule`;
+        try {
+            const res = await fetch(url, { headers: baseHeaders });
+            if (!res.ok) return;
+            const html = await res.text();
+            // Per-row markup is wild and varies; a robust approach is to find every recap
+            // anchor and then walk back from it to find the nearest date label. But the
+            // date labels in the rendered HTML look like `Feb 7(Sat) 1:00 PM` and the recap
+            // URL has the date baked in (`/news/2026/2/7/...`). Since we only need to match
+            // on date + sport, we can just extract dates directly from the recap URLs.
+            // URL pattern: /news/YYYY/M/D/slug
+            const recapRegex = /href="(\/news\/(\d{4})\/(\d{1,2})\/(\d{1,2})\/[^"]+?)"[^>]*>Recap<\/a>/gi;
+            let match;
+            while ((match = recapRegex.exec(html)) !== null) {
+                const [, relHref, yr, mo, dy] = match;
+                const key = `${scheduleSlug}|${parseInt(yr,10)}-${parseInt(mo,10)}-${parseInt(dy,10)}`;
+                const fullUrl = 'https://millersvilleathletics.com' + relHref;
+                // First one wins if multiple games share a date (doubleheaders share the recap)
+                if (!muRecapCache.has(key)) muRecapCache.set(key, fullUrl);
+            }
+        } catch (err) {
+            console.log(`  ⚠️ Sidearm schedule fetch failed for ${scheduleSlug}: ${err.message}`);
+        }
+    }
+    // Pre-fetch all sport schedule pages in parallel so the MU iCal loop below can look up
+    // recap URLs synchronously. Covers current season only; past-season games (rare in our
+    // 60-day past horizon) still fall back to the schedule-page source link.
+    {
+        console.log("📡 Pre-fetching MU sport schedule pages for recap URLs...");
+        const allSlugs = ['baseball', 'softball', 'football', 'wrestling', 'volleyball',
+            'field-hockey', 'swimming', 'womens-basketball', 'mens-basketball',
+            'womens-soccer', 'mens-soccer', 'womens-lacrosse', 'womens-tennis',
+            'mens-tennis', 'womens-golf', 'mens-golf', 'womens-cross-country',
+            'mens-cross-country', 'womens-outdoor-track-and-field',
+            'womens-indoor-track-and-field', 'mens-track-and-field'];
+        // Parallelize but cap concurrency at a reasonable number to avoid hammering the host
+        const chunks = [];
+        for (let i = 0; i < allSlugs.length; i += 4) chunks.push(allSlugs.slice(i, i + 4));
+        for (const chunk of chunks) {
+            await Promise.all(chunk.map(slug => fetchSportRecapMap(slug)));
+        }
+        console.log(`  ✅ Loaded ${muRecapCache.size} recap URLs across ${allSlugs.length} sports`);
+    }
+
     // ===== 1. MU ATHLETICS (SIDEARM iCAL) =====
     try {
         console.log("📡 Fetching MU Athletics (Sidearm iCal)...");
@@ -343,25 +397,34 @@ async function runScraper() {
                 }
             }
             // Source URL strategy:
-            //   - The Sidearm iCal feed's ev.url points to `/calendar.aspx?game_id=X&sport_id=Y`,
-            //     which IGNORES the query params and just renders the composite schedule for ALL
-            //     sports. Useless for users who want to see their specific game. Verified by
-            //     fetching the URL — query params have no effect.
-            //   - Much better: link to the sport-specific schedule page. For past games, use
-            //     `/schedule/<year>` so the page defaults to the correct season and the game
-            //     is visible in context with its Box Score / Recap links right there.
-            //   - Fallback to composite `/calendar` only when we can't figure out the sport.
+            //   - Past games with a recap: use the recap article URL from muRecapCache. Links
+            //     users to the game story, which is what they actually want.
+            //   - Past games without a recap: use the sport's schedule page for the year.
+            //   - Upcoming games: use the sport's top page (`/sports/{slug}`) which shows
+            //     Upcoming Events first. Much better than `/schedule` which shows the whole
+            //     season chronologically with next games buried at the bottom.
+            //   - No sport slug match: fall back to composite calendar.
             let sourceUrl;
             if (scheduleSlug) {
-                // For past games, include the year so Sidearm shows the right season view
                 if (gameResult) {
+                    // Past game: try recap cache first
                     const gameYear = eventDate.getFullYear();
-                    const currentYear = now.getFullYear();
-                    sourceUrl = gameYear === currentYear
-                        ? `https://millersvilleathletics.com/sports/${scheduleSlug}/schedule`
-                        : `https://millersvilleathletics.com/sports/${scheduleSlug}/schedule/${gameYear}`;
+                    const gameMonth = eventDate.getMonth() + 1;
+                    const gameDay = eventDate.getDate();
+                    const recapKey = `${scheduleSlug}|${gameYear}-${gameMonth}-${gameDay}`;
+                    const recapUrl = muRecapCache.get(recapKey);
+                    if (recapUrl) {
+                        sourceUrl = recapUrl;
+                    } else {
+                        // Fall back to season-specific schedule page
+                        const currentYear = now.getFullYear();
+                        sourceUrl = gameYear === currentYear
+                            ? `https://millersvilleathletics.com/sports/${scheduleSlug}/schedule`
+                            : `https://millersvilleathletics.com/sports/${scheduleSlug}/schedule/${gameYear}`;
+                    }
                 } else {
-                    sourceUrl = `https://millersvilleathletics.com/sports/${scheduleSlug}/schedule`;
+                    // Upcoming game: top page shows upcoming first
+                    sourceUrl = `https://millersvilleathletics.com/sports/${scheduleSlug}`;
                 }
             } else {
                 sourceUrl = 'https://millersvilleathletics.com/calendar';

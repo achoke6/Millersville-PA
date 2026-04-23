@@ -24,7 +24,13 @@
     --transition: 0.2s ease;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { overflow-y: scroll; }
+/* Disable browser "text auto-inflation" / "font boosting" (Chrome Android,
+   iOS Safari). Without this, wide blocks of text get auto-enlarged for
+   readability — which means a tag pill like "CENTER FOR HEALTH EDUCATION
+   AND PROMOTION" that spans most of the screen width renders LARGER than
+   short pills on the same card, producing inconsistent pill heights.
+   Declaring 100% makes the browser honor author font-size exactly. */
+html { overflow-y: scroll; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body {
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
     background: var(--bg); color: var(--text); line-height: 1.5;

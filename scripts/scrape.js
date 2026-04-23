@@ -1308,56 +1308,148 @@ async function runScraper() {
         console.log(`✅ Clubs/Orgs: ${clubCount} events (${publicCount} public, ${muOnlyCount} MU-only)`);
     } catch (e) { console.error("❌ Clubs/Orgs error:", e.message); }
 
-    // ===== 5. EVENTBRITE (PHANTOM POWER) =====
-    // Two-stage scrape. The Eventbrite organizer page is now SPA-rendered with
-    // no scrapable event content, so we instead source event URLs from Phantom
-    // Power's own homepage (where each upcoming concert poster image is wrapped
-    // in a direct link to its Eventbrite event page), then fetch each page
-    // individually. Individual event pages still expose date/title via either
-    // JSON-LD or embedded JSON — extractPhantomPowerEventFromHTML handles both.
-    let ebCount = 0;
+    // ===== 5. PHANTOM POWER (JamBase primary + Eventbrite enrichment) =====
+    //
+    // Phantom Power's own website only promotes 1-3 featured shows at a time and
+    // its Eventbrite organizer page is SPA-rendered (unscrapable). JamBase, a
+    // concert aggregator, maintains a server-rendered public venue page with
+    // the full upcoming calendar — typically 15-20 shows out 6 months. That's
+    // our primary source.
+    //
+    // Eventbrite still matters because it owns the ticket URL. We do a second,
+    // cheap fetch of phantompower.net to harvest its 1-3 featured Eventbrite
+    // URLs, then overlay those onto JamBase entries by fuzzy-matching artist
+    // name + date. Shows with no Eventbrite match fall back to the JamBase show
+    // page URL — users can click through to JamBase which redirects to tickets.
+    //
+    // Default time: Phantom Power's standard door time is 8pm ET. Some shows
+    // start earlier (6pm / 7pm) but JamBase only publishes dates, not times.
+    // This is good enough for event cards — the UI shows the date prominently
+    // and users are expected to verify time on the ticket page.
+    let ppCount = 0;
     try {
-        console.log("📡 Fetching Phantom Power homepage for Eventbrite links...");
-        const ppRes = await fetch('https://www.phantompower.net/', {
+        console.log("📡 Fetching JamBase for Phantom Power calendar...");
+        const jbRes = await fetch('https://www.jambase.com/venue/phantom-power', {
             headers: baseHeaders,
             signal: AbortSignal.timeout(15000)
         });
-        const ppHtml = await ppRes.text();
+        const jbHtml = await jbRes.text();
 
-        // Match Eventbrite event URLs. The ID is always the numeric suffix.
-        // Using a character class that excludes URL terminators instead of \S
-        // avoids accidentally grabbing trailing quotes/brackets.
-        const urlRe = /https:\/\/www\.eventbrite\.com\/e\/[^"'\s<>)]+?-(\d+)/g;
-        const seen = new Set();
-        const urls = [];
+        // Match any anchor whose href contains /show/<slug>-phantom-power-YYYYMMDD.
+        // The link text is the artist name. The same URL appears 2-3 times per
+        // card (poster image, h4 heading, "Tickets & Info" button) so we dedupe
+        // by URL. Using [^<]* for link text handles nested tags like <span>.
+        const showRe = /<a[^>]*href="(https:\/\/www\.jambase\.com\/show\/[^"]*-phantom-power-(\d{4})(\d{2})(\d{2}))"[^>]*>([^<]+)<\/a>/g;
+        const seen = new Map(); // url -> { title, date }
         let m;
-        while ((m = urlRe.exec(ppHtml)) !== null) {
-            const id = m[1];
-            if (seen.has(id)) continue;
-            seen.add(id);
-            urls.push(m[0]);
+        while ((m = showRe.exec(jbHtml)) !== null) {
+            const [, url, yyyy, mm, dd, rawText] = m;
+            const text = rawText.trim();
+            // Skip entries where the link text is empty, "Tickets & Info",
+            // "Calendar", or anything that starts with punctuation/digits
+            // (these are repeat matches from support-act lists or button text).
+            if (!text || text.length < 2) continue;
+            if (/^(Tickets & Info|Calendar|Buy Tickets|More Info)$/i.test(text)) continue;
+            // First match for a given URL wins — the artist-title anchor tends
+            // to appear first in the DOM, before the "Tickets & Info" button.
+            if (seen.has(url)) continue;
+            seen.set(url, {
+                title: text,
+                date: new Date(`${yyyy}-${mm}-${dd}T20:00:00-04:00`)
+            });
         }
-        console.log(`   Found ${urls.length} unique Eventbrite event URLs on phantompower.net`);
+        console.log(`   Found ${seen.size} unique shows on JamBase`);
 
-        // Fetch each event page sequentially with a small delay between requests
-        // to be polite to Eventbrite. ~20-30 events * 200ms = ~6s in the worst
-        // case, which is fine for an hourly background scraper.
-        for (const url of urls) {
-            try {
-                const res = await fetch(url, {
-                    headers: baseHeaders,
-                    signal: AbortSignal.timeout(10000)
-                });
-                if (!res.ok) { console.log(`   ⚠️  ${res.status} on ${url}`); continue; }
-                const html = await res.text();
-                ebCount += extractPhantomPowerEventFromHTML(html, url, events, today, futureDate);
-            } catch (e) {
-                console.error(`   ⚠️  Skipping ${url}: ${e.message}`);
+        // Eventbrite enrichment: fetch phantompower.net homepage, extract the
+        // 1-3 Eventbrite URLs it promotes, and harvest title+date from each so
+        // we can fuzzy-match into the JamBase set. This enrichment is strictly
+        // best-effort — if it fails, JamBase entries still ship with JamBase
+        // URLs as the ticket link.
+        const ebMatches = []; // { url, title, date }
+        try {
+            const ppRes = await fetch('https://www.phantompower.net/', {
+                headers: baseHeaders,
+                signal: AbortSignal.timeout(10000)
+            });
+            const ppHtml = await ppRes.text();
+            const urlRe = /https:\/\/www\.eventbrite\.com\/e\/[^"'\s<>)]+?-(\d+)/g;
+            const ebSeen = new Set();
+            const ebUrls = [];
+            let em;
+            while ((em = urlRe.exec(ppHtml)) !== null) {
+                if (ebSeen.has(em[1])) continue;
+                ebSeen.add(em[1]);
+                ebUrls.push(em[0]);
             }
-            await new Promise(r => setTimeout(r, 200));
+            console.log(`   Found ${ebUrls.length} Eventbrite URL(s) promoted on phantompower.net`);
+            for (const ebUrl of ebUrls) {
+                try {
+                    const res = await fetch(ebUrl, { headers: baseHeaders, signal: AbortSignal.timeout(10000) });
+                    if (!res.ok) continue;
+                    const ebHtml = await res.text();
+                    // Reuse the same title/date extraction logic
+                    const tmp = [];
+                    extractPhantomPowerEventFromHTML(ebHtml, ebUrl, tmp, today, futureDate);
+                    if (tmp.length > 0) {
+                        ebMatches.push({ url: ebUrl, title: tmp[0].title, date: new Date(tmp[0].date) });
+                    }
+                } catch (e) { /* best-effort */ }
+                await new Promise(r => setTimeout(r, 200));
+            }
+        } catch (e) {
+            console.log(`   ⚠️  Eventbrite enrichment failed (non-fatal): ${e.message}`);
         }
-        console.log(`✅ Eventbrite: ${ebCount} events from ${urls.length} pages`);
-    } catch (e) { console.error("❌ Eventbrite error:", e.message); }
+
+        // Normalization helper for fuzzy title matching. Strip non-alphanumerics,
+        // lowercase everything, drop common noise words. "EMF w. Ecce Shnak" and
+        // "EMF" should both reduce to a comparable prefix.
+        const norm = s => (s || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+
+        // Match each Eventbrite entry to a JamBase entry by comparing normalized
+        // title prefix + date within ±1 day (sometimes JamBase lists the door
+        // date while Eventbrite lists the show start-of-next-day).
+        const ebByJbUrl = new Map(); // jbUrl -> ebUrl
+        for (const eb of ebMatches) {
+            const ebNorm = norm(eb.title);
+            // Try each JamBase entry
+            for (const [jbUrl, jb] of seen.entries()) {
+                if (ebByJbUrl.has(jbUrl)) continue;
+                const jbNorm = norm(jb.title);
+                const firstWord = jbNorm.split(' ')[0];
+                // Match if either title starts with the other's first word AND
+                // the dates are within 2 days (accounts for door vs. show time
+                // differences that cross midnight).
+                const titleMatch = firstWord.length >= 3 &&
+                    (ebNorm.startsWith(firstWord) || jbNorm.startsWith(ebNorm.split(' ')[0]));
+                const dayDiff = Math.abs(eb.date - jb.date) / 86400000;
+                if (titleMatch && dayDiff <= 2) {
+                    ebByJbUrl.set(jbUrl, eb.url);
+                    break;
+                }
+            }
+        }
+        if (ebByJbUrl.size > 0) {
+            console.log(`   Matched ${ebByJbUrl.size} JamBase show(s) to direct Eventbrite ticket URLs`);
+        }
+
+        // Emit all JamBase events into the main events array, layering
+        // Eventbrite URLs where we matched them.
+        for (const [jbUrl, jb] of seen.entries()) {
+            if (jb.date < today || jb.date >= futureDate) continue;
+            const ticketUrl = ebByJbUrl.get(jbUrl) || jbUrl;
+            events.push({
+                title: jb.title,
+                date: jb.date.toISOString(),
+                location: "Phantom Power",
+                tags: ["Other", "Live Music"],
+                price: "Ticket Required",
+                ticketLink: ticketUrl,
+                sourceLink: ticketUrl
+            });
+            ppCount++;
+        }
+        console.log(`✅ Phantom Power: ${ppCount} events (${ebByJbUrl.size} with direct Eventbrite links)`);
+    } catch (e) { console.error("❌ Phantom Power error:", e.message); }
 
     // ===== 6. MILLERSVILLE BOROUGH (Google Calendar iCal — with recurring event expansion) =====
     try {

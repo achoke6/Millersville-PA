@@ -1077,8 +1077,54 @@ pathToView['/food'] = 'places';
 pathToView['/services'] = 'places';
 pathToView['/directory'] = 'places';
 
+// Runtime header-height measurement. The secondary sticky nav bar (events/
+// sports pages) uses --header-h to position flush below the main header. A
+// hardcoded CSS value drifts any time the header's content changes size —
+// new nav item, bigger gear icon, Ecwid cart widget loading async, font
+// metrics shifting across platforms. Measuring once on load and again
+// whenever the header's bounding box changes keeps everything aligned
+// without guess-work. Falls back to the CSS fallback values (60px desktop /
+// 50px mobile) if the header element isn't found.
+function updateHeaderHeightVar() {
+    const header = document.querySelector('header');
+    if (!header) return;
+    const h = Math.round(header.getBoundingClientRect().height);
+    if (h > 0) {
+        document.documentElement.style.setProperty('--header-h', h + 'px');
+    }
+}
+// rAF coalesce so rapid fire resize events don't thrash layout.
+let _headerMeasurePending = false;
+function scheduleHeaderMeasure() {
+    if (_headerMeasurePending) return;
+    _headerMeasurePending = true;
+    requestAnimationFrame(() => {
+        _headerMeasurePending = false;
+        updateHeaderHeightVar();
+    });
+}
+
 document.addEventListener("DOMContentLoaded",()=>{
+    updateHeaderHeightVar();
     initApp();
+
+    // Re-measure on viewport resize (covers mobile→desktop breakpoint flips
+    // where the header's content swaps between hamburger and nav buttons).
+    window.addEventListener('resize', scheduleHeaderMeasure);
+
+    // Re-measure when web fonts finish loading — text-driven heights can
+    // shift a pixel or two after font swap.
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(updateHeaderHeightVar);
+    }
+
+    // Re-measure whenever the header's own size changes. Catches async
+    // widget loads (e.g., the Ecwid cart widget initializing after script
+    // download) that would otherwise silently break the sticky offset.
+    if (typeof ResizeObserver !== 'undefined') {
+        const header = document.querySelector('header');
+        if (header) new ResizeObserver(scheduleHeaderMeasure).observe(header);
+    }
 });
 
 // Keyboard shortcuts: Left/Right arrows navigate weeks when on Events or Sports pages

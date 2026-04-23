@@ -36,14 +36,15 @@ body {
    ========================================================= */
 header { background: var(--surface); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--border); }
 /* Height of the main sticky header — used by .sticky-nav-bar and scroll-margin
-   calculations below so a secondary sticky chip row sits flush against the
-   header's bottom edge instead of being clipped behind it. Desktop height is
-   driven by the horizontal nav buttons (6px + ~22px + 6px ≈ 34px content) +
-   10px header padding top/bottom + 1px border ≈ 54px. Mobile replaces the
-   nav row with a 28×28px hamburger, giving a smaller ~49px header (override
-   in the 768px media query). If you ever change the header's padding, nav
-   button size, or logo font metrics, update these values. */
-:root { --header-h: 54px; }
+   calculations below. These values are SAFE FALLBACKS only: JS measures the
+   actual rendered header height at runtime and overrides this variable (see
+   updateHeaderHeightVar in app.js). Fallback values are intentionally
+   conservative so nothing gets clipped before JS runs:
+     Desktop: 38px gear button + 10px padding×2 + 1px border = ~59px (→ 60px)
+     Mobile:  28px hamburger  + 10px padding×2 + 1px border = ~49px (→ 50px)
+   If JS fails entirely (no-JS users), these fallbacks still produce a usable
+   layout with no clipping. */
+:root { --header-h: 60px; }
 @media (max-width: 768px) { :root { --header-h: 50px; } }
 .header-container { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; }
 .logo-block h1 { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.5px; color: var(--text); line-height: 1; user-select: none; display: flex; align-items: baseline; }

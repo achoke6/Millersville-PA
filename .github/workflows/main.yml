@@ -26,6 +26,7 @@ jobs:
           GOOGLE_VISION_API_KEY: ${{ secrets.GOOGLE_VISION_API_KEY }}
           VFW_SHEET_ID: ${{ secrets.VFW_SHEET_ID }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          HEALTHCHECK_URL: ${{ secrets.HEALTHCHECK_URL }}
 
       - name: Commit and push updated data
         run: |
@@ -75,3 +76,17 @@ jobs:
               sleep 30
             }
           done
+
+      # Fast-fail alert. The scraper already pings HEALTHCHECK_URL on success
+      # (see scrape.js). If the whole job crashes before that ping, healthchecks.io
+      # will eventually fire its dead-man alert after the grace period — but this
+      # step sends an explicit /fail ping immediately so we hear about it in
+      # seconds rather than waiting 30+ minutes. `if: failure()` means it only
+      # runs when a prior step failed; `|| true` guarantees the ping itself
+      # never flips a successful job red.
+      - name: Ping healthchecks.io on failure
+        if: failure()
+        run: |
+          if [ -n "${{ secrets.HEALTHCHECK_URL }}" ]; then
+            curl -fsS -m 10 --retry 3 "${{ secrets.HEALTHCHECK_URL }}/fail" || true
+          fi

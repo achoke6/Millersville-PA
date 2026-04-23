@@ -3140,12 +3140,34 @@ Focus on the most impressive deals a shopper would want to know about. Include m
     } catch (e) { console.error("❌ News/specials error:", e.message); }
 
     // ===== COMMUNITY BOARD (Google Sheet) =====
+    //
+    // Expiration policy: posts get a category-specific time-to-live, falling
+    // back to 30 days. If the sheet ever gains an explicit "Expires" column
+    // (9th column, optional date string), that overrides the category TTL.
+    // Rationales per category:
+    //   Lost Pet / Found Pet — should resolve within 2 weeks; stale posts
+    //     depress the feed and imply the pet is still missing
+    //   Free Stuff — goes fast, week-old post is almost certainly claimed
+    //   Yard Sale — most sales within 3 weeks of the posting; covers this
+    //     weekend + next weekend + slack
+    //   Help Wanted / For Sale / Community Notice — standard 30-day shelf life
     try {
         console.log("📡 Fetching community board posts...");
         const BOARD_SHEET_ID = '1FZ-eFzLYFAgNd7aBCrU5uwb5wMQ2x9tBf_KLGa6GJS0';
+        const BOARD_TTL_DAYS = {
+            'Lost Pet': 14,
+            'Found Pet': 14,
+            'Free Stuff': 7,
+            'Yard Sale': 21,
+            'Help Wanted': 30,
+            'For Sale': 30,
+            'Community Notice': 30,
+        };
+        const DEFAULT_BOARD_TTL_DAYS = 30;
         const boardUrl = `https://docs.google.com/spreadsheets/d/${BOARD_SHEET_ID}/gviz/tq?tqx=out:csv`;
         const boardRes = await fetch(boardUrl);
         const boardPosts = [];
+        let expiredCount = 0;
         if (boardRes.ok) {
             const csvText = await boardRes.text();
             const rows = csvText.split('\n').slice(1);
@@ -3153,29 +3175,52 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 const cols = row.match(/"([^"]*)"/g);
                 if (!cols || cols.length < 6) continue;
                 const clean = cols.map(c => c.replace(/"/g, '').trim());
-                // Timestamp, Category, Title, Description, Contact Info, Location, Image URL, Status
-                const [timestamp, category, title, description, contact, location, imageUrl, status] = clean;
+                // Schema (extensible): Timestamp, Category, Title, Description,
+                // Contact Info, Location, Image URL, Status, [Expires?]
+                const [timestamp, category, title, description, contact, location, imageUrl, status, expiresRaw] = clean;
 
                 if (!status || !/approved/i.test(status)) continue;
                 if (!title) continue;
 
                 const postDate = timestamp ? new Date(timestamp) : new Date();
-                const daysAgo = (Date.now() - postDate.getTime()) / (1000 * 60 * 60 * 24);
-                if (daysAgo > 30) continue; // Only show posts from the last 30 days
+                const nowMs = Date.now();
+                const cat = category || 'Community Notice';
+
+                // Explicit expiration (column 9) wins if present and parseable
+                let expiresAt;
+                const explicitExpires = expiresRaw ? new Date(expiresRaw) : null;
+                if (explicitExpires && !isNaN(explicitExpires)) {
+                    expiresAt = explicitExpires;
+                } else {
+                    const ttlDays = BOARD_TTL_DAYS[cat] ?? DEFAULT_BOARD_TTL_DAYS;
+                    expiresAt = new Date(postDate.getTime() + ttlDays * 24 * 60 * 60 * 1000);
+                }
+                if (expiresAt.getTime() <= nowMs) { expiredCount++; continue; }
 
                 boardPosts.push({
-                    category: category || 'Community Notice',
+                    category: cat,
                     title,
                     description: description || '',
                     contact: contact || '',
                     location: location || '',
                     image: imageUrl || '',
-                    date: postDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+                    // Human-readable posted date (kept for backward compatibility
+                    // with existing frontend rendering at board.json consumers)
+                    date: postDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+                    // New ISO fields for UI features like "posted N days ago" or
+                    // "expiring soon" badges. Safe to ignore on older frontends.
+                    postedAt: postDate.toISOString(),
+                    expiresAt: expiresAt.toISOString(),
                 });
             }
         }
+        // Newest first — previously preserved spreadsheet order, which for a
+        // Google Form-backed sheet happens to be oldest-first (forms append).
+        // Flipping here means freshly-approved posts appear at the top of the
+        // board without the frontend having to re-sort.
+        boardPosts.sort((a, b) => new Date(b.postedAt) - new Date(a.postedAt));
         fs.writeFileSync(path.join(__dirname, '../board.json'), JSON.stringify(boardPosts, null, 2));
-        console.log(`✅ Community Board: ${boardPosts.length} approved posts`);
+        console.log(`✅ Community Board: ${boardPosts.length} active, ${expiredCount} expired`);
     } catch (e) { console.log(`  ⚠️ Community Board error: ${e.message}`); }
 
     // ===== SPONSORS (from Advertise Form response sheet) =====

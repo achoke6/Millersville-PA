@@ -1595,6 +1595,35 @@ async function runScraper() {
         }
         console.log(`   Found ${seen.size} unique shows on JamBase`);
 
+        // Data-quality assertion. Phantom Power is an active venue that
+        // consistently has 10-20 upcoming shows on JamBase. If the fetch
+        // succeeded (status 200) but we extracted zero shows, the regex or
+        // JamBase's HTML structure has almost certainly drifted — fire a /fail
+        // ping so we hear about it within the hour instead of silently shipping
+        // an empty concert feed for days. A successful subsequent scrape will
+        // flip the check back to "up" and trigger a recovery notification.
+        // Kept tightly scoped: only fires when jbRes.ok (so a 5xx fetch error
+        // doesn't false-alarm — those are handled by the outer try/catch as
+        // transient failures, not regressions).
+        if (jbRes.ok && seen.size === 0) {
+            console.warn(`⚠️  DATA QUALITY: JamBase returned 0 Phantom Power shows despite HTTP 200. Likely a regex or HTML-structure regression — Phantom Power is an active venue.`);
+            const healthUrl = process.env.HEALTHCHECK_URL;
+            if (healthUrl) {
+                try {
+                    const ctrl = new AbortController();
+                    const timer = setTimeout(() => ctrl.abort(), 5000);
+                    await fetch(`${healthUrl}/fail`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'text/plain' },
+                        body: 'JamBase returned 0 Phantom Power shows despite HTTP 200 — likely regex/markup regression in scrape.js Phantom Power block.',
+                        signal: ctrl.signal
+                    }).catch(() => {});
+                    clearTimeout(timer);
+                    console.log("   🚨 Fired /fail ping to healthchecks.io");
+                } catch (_) { /* never break the scrape on monitoring failure */ }
+            }
+        }
+
         // Eventbrite enrichment: fetch phantompower.net homepage, extract the
         // 1-3 Eventbrite URLs it promotes, and harvest title+date from each so
         // we can fuzzy-match into the JamBase set. This enrichment is strictly

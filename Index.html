@@ -2897,12 +2897,15 @@ function buildTimelineItem(e, now) {
     const eventKey = e.sourceLink || (e.title + '|' + e.date);
     const typeClass = isSport ? ' tl-sport' : ' tl-event';
 
+    // Wrap badges + stream icon in a single flex cluster so they stay
+    // right-anchored and never wrap to a new line below the title.
+    // Empty cluster is hidden via `.tl-badges:empty { display: none; }` in CSS.
     return `<div class="tl-item${typeClass}" onclick="window.openEventDetails(${JSON.stringify(eventKey).replace(/"/g, '&quot;')})">
         <span class="tl-time">${timeStr}</span>
         <div class="tl-content">
             <span class="tl-src${isSport?'':' tl-src-event'}">${src}</span>
             <span class="tl-title">${title}</span>
-            ${badges}${streamBtn}
+            <span class="tl-badges">${badges}${streamBtn}</span>
         </div>
     </div>`;
 }

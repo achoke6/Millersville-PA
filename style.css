@@ -641,10 +641,19 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .tl-sport { border-left: 3px solid var(--navy); }
 .tl-event { border-left: 3px solid #b45309; }
 .tl-time { font-size: 0.78rem; font-weight: 700; color: var(--gold); min-width: 60px; flex-shrink: 0; padding-top: 1px; }
-.tl-content { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; flex: 1; min-width: 0; }
+/* 3-column flex row: [MU pill] [title (grows/wraps)] [badges (right-anchored)].
+   Critical: flex-wrap: nowrap prevents badges from dropping to a new line
+   beneath the title on narrow viewports — instead the title itself wraps
+   characters inside its own box via min-width: 0 + overflow-wrap. */
+.tl-content { display: flex; flex-wrap: nowrap; align-items: center; gap: 6px; flex: 1; min-width: 0; }
 .tl-src { font-size: 0.65rem; font-weight: 700; background: var(--navy); color: var(--gold); padding: 1px 7px; border-radius: var(--radius-pill); flex-shrink: 0; }
 .tl-src-event { background: #b45309; color: white; }
-.tl-title { font-size: 0.88rem; font-weight: 600; color: var(--text); line-height: 1.3; }
+.tl-title { font-size: 0.88rem; font-weight: 600; color: var(--text); line-height: 1.3; flex: 1 1 auto; min-width: 0; overflow-wrap: break-word; }
+/* Right-anchored cluster for emoji badges, score, LIVE indicator, stream icon.
+   flex-shrink: 0 guarantees badges keep their full width — title shrinks instead.
+   :empty hides the cluster entirely (no phantom gap) when an event has no badges. */
+.tl-badges { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+.tl-badges:empty { display: none; }
 .tl-badge { font-size: 0.65rem; flex-shrink: 0; }
 .tl-win { color: #16a34a; font-weight: 700; }
 .tl-loss { color: #dc2626; font-weight: 700; }
@@ -655,15 +664,12 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 
 /* Mobile: tighten home timeline density.
    Base styles are tuned for desktop width; on narrow viewports the 10px vertical
-   padding + unified 6px gap (which applies to row-gap when badges wrap to a new
-   line) add ~6-10px per row of unnecessary airspace. On a busy day with 14+
-   items this compounds into 100px+ of wasted vertical scroll. */
+   padding adds unnecessary airspace. With the nowrap 3-column layout above,
+   each row is now predictably 1-2-3 lines of the title only (no more badge-line
+   overflow), so the remaining tightening is all about padding/sizing. */
 @media (max-width: 640px) {
     .tl-item { padding: 7px 10px; gap: 10px; }
     .tl-time { min-width: 54px; font-size: 0.76rem; }
-    /* Decouple row-gap from column-gap: wrapped badges sit tight to the title
-       line (2px) instead of floating 6px below it. */
-    .tl-content { row-gap: 2px; column-gap: 6px; }
     .tl-title { line-height: 1.25; }
     .home-section { margin-bottom: 14px; }
     .home-section-header { margin-bottom: 8px; }

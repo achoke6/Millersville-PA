@@ -99,7 +99,9 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     /* Negative margin pulls the bar up into the container's 16px top-padding so it sits
        flush with the header from the page's initial render (no scroll gap). */
     margin: -16px -16px 10px;
-    padding: 16px 16px 0;
+    /* Bottom padding gives breathing room below the chip row so content scrolling underneath
+       (like day-group-header "Today" labels) isn't clipped by the bar's lower boundary. */
+    padding: 16px 16px 12px;
     border-bottom: 1px solid var(--border);
 }
 
@@ -142,16 +144,22 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 
 /* Favorited event/game card — gold accent. Favorites are no longer pinned at the top of
    Events/Sports pages; they live in their chronological day group with this visual badge
-   so users can spot them at a glance while scrolling. */
-.app-card.card-fav { border: 2px solid var(--gold); box-shadow: 0 2px 12px rgba(216, 163, 46, 0.15); }
-.fav-star { font-size: 0.85em; vertical-align: 2px; }
+   so users can spot them at a glance while scrolling. A soft gold-tinted background makes
+   the favorite easier to pick out in a long list — the border alone was too subtle against
+   the off-white surface. */
+.app-card.card-fav {
+    border: 2px solid var(--gold);
+    background: linear-gradient(0deg, rgba(216, 163, 46, 0.06), rgba(216, 163, 46, 0.06)), var(--surface);
+    box-shadow: 0 2px 12px rgba(216, 163, 46, 0.18);
+}
 
-/* Card-level favorite toggle — top-right star button. One-tap adds/removes the event's
-   best-matching pref ID from feedPrefs. Empty ☆ = not favorited, filled ★ = favorited. */
+/* Card-level favorite toggle — top-LEFT star button. Originally top-right but that
+   collided with the score-corner badge on past sports cards. Left side is always clear
+   since tags/title start below it. */
 .card-fav-btn {
     position: absolute;
     top: 8px;
-    right: 8px;
+    left: 8px;
     width: 30px;
     height: 30px;
     padding: 0;
@@ -173,6 +181,13 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 }
 .card-fav-btn:hover { transform: scale(1.1); color: var(--gold); border-color: var(--gold); }
 .card-fav-btn.active { color: var(--gold); border-color: var(--gold); background: white; }
+/* When a card has a fav button, push the tags/title row right so it doesn't overlap. */
+.app-card:has(.card-fav-btn) .card-body > .card-tags { padding-left: 34px; min-height: 30px; }
+.app-card:has(.card-fav-btn) .card-body > .card-title { padding-left: 34px; }
+/* When the card ALSO has a score badge (past games), pad right side too so the title
+   line wraps cleanly around both fixed corners. */
+.app-card:has(.score-corner) .card-body > .card-title { padding-right: 80px; }
+.app-card:has(.score-corner) .card-body > .card-tags { padding-right: 80px; }
 
 /* Small 📅 add-to-calendar button in the card action row. Matches height of the
    Details button (28px) but square so it reads as an icon-only action. On tap it
@@ -195,6 +210,18 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     transition: border-color 0.15s, background 0.15s;
 }
 .btn-cal:hover { border-color: var(--navy); background: var(--bg); }
+
+/* Last-updated line at the bottom of the home view. Small, muted — informational not
+   alarming in the normal case. When stale (>3hr), gains an amber tint to signal the
+   data may be old without being visually scary. */
+.home-last-updated {
+    text-align: center;
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    padding: 12px 8px 6px;
+    letter-spacing: 0.01em;
+}
+.home-last-updated.stale { color: #b8860b; }
 
 /* Toolbar ⭐ Favs button — a variant of .family-toggle that shows a label next to the star.
    Matches .family-toggle size so it lines up with other toolbar toggles. */
@@ -269,14 +296,24 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     grid-column: 1 / -1;
     background: transparent;
     padding: 10px 4px 6px;
-    margin: 12px 0 0;
+    /* Extra top margin so the day header clears the sticky toolbar's bottom edge cleanly
+       when scrolling. Without this, "Today" would appear partially clipped under the bar
+       as it scrolls into view (the top of the text hidden behind the sticky area). */
+    margin: 20px 0 0;
     font-size: 0.88rem;
     font-weight: 700;
     color: var(--text-muted);
     border-bottom: 1px solid var(--border);
     text-transform: uppercase;
     letter-spacing: 0.04em;
+    /* Account for the double sticky stack (header ~44px + sticky-nav-bar ~130px) when the
+       browser auto-scrolls to a day group (hash link or JS scrollIntoView). Without this,
+       the day header lands clipped under the sticky toolbar. */
+    scroll-margin-top: 180px;
 }
+/* First day-group-header in a container doesn't need extra top margin since it's already
+   separated from the sticky bar by the container's normal spacing. */
+.card-grid > .day-group-header:first-child { margin-top: 4px; }
 .day-group-header.today { color: var(--navy); border-bottom-color: var(--gold); }
 .day-group-header .day-count { font-size: 0.7rem; font-weight: 500; color: var(--text-muted); margin-left: 8px; text-transform: none; letter-spacing: 0; }
 /* Dynamic date label in the sticky toolbar — updates as the user scrolls past day groups.
@@ -389,12 +426,15 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .card-tie { background: linear-gradient(135deg, #fefce8 0%, var(--surface) 40%); border-left: 3px solid #ca8a04; }
 
 /* Score corner — top right of game card */
-.score-corner { position: absolute; top: 0; right: 0; padding: 8px 12px; border-radius: 0 var(--radius) 0 var(--radius); text-align: center; line-height: 1; }
+/* Past game score badge — top-right corner of card. Intentionally prominent because the
+   score IS the thing users want to see at a glance in past view. W/L takes a bright bg color
+   that pops against the card surface. Score value is large so it's scannable while scrolling. */
+.score-corner { position: absolute; top: 0; right: 0; padding: 12px 16px; border-radius: 0 var(--radius) 0 var(--radius); text-align: center; line-height: 1; min-width: 64px; z-index: 1; }
 .score-win { background: #16a34a; color: white; }
 .score-loss { background: #dc2626; color: white; }
-.score-tie { background: #ca8a04; color: white; }
-.score-result { display: block; font-size: 0.7rem; font-weight: 800; letter-spacing: 1px; opacity: 0.85; }
-.score-value { display: block; font-size: 1.1rem; font-weight: 800; margin-top: 2px; }
+.score-tie { background: #64748b; color: white; }
+.score-result { display: block; font-size: 0.78rem; font-weight: 800; letter-spacing: 1.5px; opacity: 0.95; margin-bottom: 4px; }
+.score-value { display: block; font-size: 1.75rem; font-weight: 800; letter-spacing: -0.5px; }
 
 /* =========================================================
    8. FILTERS

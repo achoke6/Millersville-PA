@@ -255,8 +255,12 @@ async function runScraper() {
         const url = seasonYear
             ? `https://millersvilleathletics.com/sports/${scheduleSlug}/schedule/${seasonYear}`
             : `https://millersvilleathletics.com/sports/${scheduleSlug}/schedule`;
+        // 10s timeout so a hung Sidearm host can't block the whole scrape. Stalls here used
+        // to silently freeze the GitHub Action until the job's default timeout killed it.
+        const ctrl = new AbortController();
+        const timer = setTimeout(() => ctrl.abort(), 10000);
         try {
-            const res = await fetch(url, { headers: baseHeaders });
+            const res = await fetch(url, { headers: baseHeaders, signal: ctrl.signal });
             if (!res.ok) return;
             const html = await res.text();
             // Per-row markup is wild and varies; a robust approach is to find every recap
@@ -275,7 +279,10 @@ async function runScraper() {
                 if (!muRecapCache.has(key)) muRecapCache.set(key, fullUrl);
             }
         } catch (err) {
-            console.log(`  ⚠️ Sidearm schedule fetch failed for ${scheduleSlug}: ${err.message}`);
+            const reason = err.name === 'AbortError' ? 'timeout after 10s' : err.message;
+            console.log(`  ⚠️ Sidearm schedule fetch failed for ${scheduleSlug}: ${reason}`);
+        } finally {
+            clearTimeout(timer);
         }
     }
     // Pre-fetch all sport schedule pages in parallel so the MU iCal loop below can look up
@@ -2022,19 +2029,33 @@ Focus on the most impressive deals a shopper would want to know about. Include m
     // ===== PENN MANOR SCORES FROM MAXPREPS =====
     try {
         console.log("📡 Fetching Penn Manor scores from MaxPreps...");
+        // Expanded list — MaxPreps URLs that may return 404 (out-of-season or missing team)
+        // are handled gracefully by the fetch block below, which logs a warning and skips.
+        // We err on the side of over-requesting so that in-season sports are always covered
+        // regardless of the time of year.
         const maxPrepsSports = [
             { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/baseball/schedule/', sport: 'Baseball', gender: 'Boys' },
             { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/softball/schedule/', sport: 'Softball', gender: 'Girls' },
             { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/lacrosse/schedule/', sport: 'Lacrosse', gender: 'Boys' },
             { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/lacrosse/girls/schedule/', sport: 'Lacrosse', gender: 'Girls' },
             { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/volleyball/boys/schedule/', sport: 'Volleyball', gender: 'Boys' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/volleyball/schedule/', sport: 'Volleyball', gender: 'Girls' },
             { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/tennis/schedule/', sport: 'Tennis', gender: 'Boys' },
             { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/tennis/girls/schedule/', sport: 'Tennis', gender: 'Girls' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/soccer/schedule/', sport: 'Soccer', gender: 'Boys' },
             { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/soccer/girls/schedule/', sport: 'Soccer', gender: 'Girls' },
             { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/football/schedule/', sport: 'Football', gender: 'Boys' },
             { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/basketball/schedule/', sport: 'Basketball', gender: 'Boys' },
             { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/basketball/girls/schedule/', sport: 'Basketball', gender: 'Girls' },
             { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/field-hockey/schedule/', sport: 'Field Hockey', gender: 'Girls' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/wrestling/schedule/', sport: 'Wrestling', gender: 'Boys' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/golf/schedule/', sport: 'Golf', gender: 'Boys' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/cross-country/schedule/', sport: 'Cross Country', gender: 'Boys' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/cross-country/girls/schedule/', sport: 'Cross Country', gender: 'Girls' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/swimming/schedule/', sport: 'Swimming', gender: 'Boys' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/swimming/girls/schedule/', sport: 'Swimming', gender: 'Girls' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/track-and-field/schedule/', sport: 'Track', gender: 'Boys' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/track-and-field/girls/schedule/', sport: 'Track', gender: 'Girls' },
         ];
 
         let pmScoreCount = 0;
@@ -2399,6 +2420,13 @@ Focus on the most impressive deals a shopper would want to know about. Include m
         }
     });
     fs.writeFileSync(path.join(__dirname, '../events.json'), JSON.stringify(deduped, null, 2));
+    // Sibling metadata file for the frontend's "last updated" display. Kept separate so we
+    // don't have to change the events.json array-shape that tons of code reads from.
+    const metaPath = path.join(__dirname, '../events-meta.json');
+    fs.writeFileSync(metaPath, JSON.stringify({
+        generatedAt: new Date().toISOString(),
+        eventCount: deduped.length
+    }, null, 2));
     console.log(`📊 Total events saved: ${deduped.length} (${deduped.filter(e=>e.image).length} with images, ${deduped.filter(e=>e.description).length} with descriptions)`);
 
     // ===== CLUBS DIRECTORY (all MU organizations from GetInvolved) =====
@@ -2943,6 +2971,22 @@ Focus on the most impressive deals a shopper would want to know about. Include m
             }
         }
     } catch (e) { console.log(`  ⚠️ Reviews error: ${e.message}`); }
+
+    // Dead-man switch ping. If the GitHub Action secret HEALTHCHECK_URL is set, ping it
+    // when the scrape completes. If the scrape never finishes (hang, crash, GitHub Actions
+    // outage, etc.) the healthchecks.io service will email the admin after the configured
+    // grace period. Fails silently if the URL isn't configured or the ping fails — we
+    // don't want monitoring to ever break the scrape itself.
+    const healthUrl = process.env.HEALTHCHECK_URL;
+    if (healthUrl) {
+        try {
+            const ctrl = new AbortController();
+            const timer = setTimeout(() => ctrl.abort(), 5000);
+            await fetch(healthUrl, { signal: ctrl.signal }).catch(() => {});
+            clearTimeout(timer);
+            console.log("🫀 Healthcheck ping sent");
+        } catch (_) { /* never break the scrape on monitoring failure */ }
+    }
 
     console.log("✅ All data compilations complete.");
 }

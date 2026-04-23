@@ -438,6 +438,23 @@ async function runScraper() {
             const eventEnd = ev.end ? new Date(ev.end) : new Date(eventDate.getTime() + 3*60*60*1000);
             const isLive = now >= eventDate && now <= eventEnd && !gameResult && !!streamLink;
 
+            // Defensive stream URL filter: Sidearm's iCal publishes a generic
+            // PSAC-network landing URL for upcoming/past games (e.g.
+            // psacsportsdigitalnetwork.com/millersvilleathletics/) which drops
+            // the user on the school index with no way to reach the specific
+            // broadcast. Game-specific URLs embed a numeric broadcast/event ID
+            // either in the path (.../broadcast/3846663) or in a query param
+            // (?B=3846663, ?broadcast=...). For anything that isn't currently
+            // live we strip generic URLs so the frontend doesn't render a
+            // misleading Watch button. Live games keep the URL regardless —
+            // during game time the school landing page auto-features the
+            // active broadcast, so even a "generic" URL resolves usefully.
+            if (streamLink && !isLive) {
+                const hasIdInQuery = /[?&][a-z_]+=\d{4,}/i.test(streamLink);
+                const hasIdInPath  = /\/\d{4,}(\?|\/|$)/.test(streamLink);
+                if (!hasIdInQuery && !hasIdInPath) streamLink = '';
+            }
+
             // Build source URL: prefer the event's own URL (links to specific game on schedule),
             // fall back to sport schedule page, then composite calendar
             const scheduleSlugMap = {
@@ -899,6 +916,150 @@ async function runScraper() {
         global._hudlSportToId = sportToHudlId;
 
     } catch (e) { console.log(`  ⚠️ Hudl broadcast check error: ${e.message}`); }
+
+    // ===== 2c. HUDL BROADCAST CHECK (Millersville University Athletics) =====
+    // MU broadcasts on PSAC Sports Digital Network, which is powered by Hudl TV
+    // (BlueFrame was acquired by Hudl in 2022). MU's Hudl schoolId is derived
+    // from org ID 12060: base64("School12060") = "U2Nob29sMTIwNjA=".
+    //
+    // The user-facing PSAC URL is
+    //   https://psacsportsdigitalnetwork.com/millersvilleathletics/?B=<broadcastId>
+    // where <broadcastId> is the numeric BlueFrame broadcast ID. We haven't
+    // verified the mapping from Hudl's `id` or `internalId` to that BlueFrame
+    // ID, so we use the same fan.hudl.com URL pattern as the PM block — known
+    // to work because BlueFrame's player ultimately embeds vcloud.hudl.com, so
+    // both front-ends resolve the same underlying broadcast.
+    //
+    // This block OVERRIDES the Sidearm streamLink for MU games when Hudl has a
+    // broadcast entry. Combined with the earlier defensive filter (which strips
+    // generic PSAC URLs from non-live games), the net effect is: upcoming
+    // games without a Hudl broadcast show no Watch button; upcoming games with
+    // a Hudl broadcast get a working per-game URL; live and past games work
+    // the same as before, improved by specific archive URLs where available.
+    try {
+        console.log("📡 Checking Hudl broadcasts for MU games...");
+        const muHudlQuery = `query Web_Fan_GetScheduleEntrySummaries_r1($input: GetScheduleEntryPublicSummariesInput!) {
+  scheduleEntryPublicSummaries(input: $input) {
+    items {
+      gameType genderId id internalId
+      opponentDetails { name shortName __typename }
+      scheduleEntryId scheduleEntryLocation scheduleEntryOutcome
+      score1 score2 sportId teamId timeUtc broadcastStatus
+      __typename
+    }
+    totalCount __typename
+  }
+}`;
+        const muHudlBroadcasts = new Map();  // key -> { id, timeUtc }
+        const muHudlAllEntries = new Map();  // key -> { id, timeUtc } (for past highlights)
+        let muTotalEntries = 0, muBroadcastCount = 0;
+
+        // Same 30-day paginated chunking as PM block
+        const muChunkSize = 30 * 24 * 60 * 60 * 1000;
+        let muStart = pastDate.getTime();
+        const muEnd = futureDate.getTime();
+
+        while (muStart < muEnd) {
+            const chunkEnd = Math.min(muStart + muChunkSize, muEnd);
+            let cursor = null;
+            let hasMore = true;
+            while (hasMore) {
+                const inputVars = {
+                    sortType: 'SCHEDULE_ENTRY_DATE',
+                    schoolIds: ['U2Nob29sMTIwNjA='],
+                    filterStartDate: new Date(muStart).toISOString(),
+                    filterEndDate: new Date(chunkEnd).toISOString(),
+                    sortByAscending: true,
+                    first: 100
+                };
+                if (cursor) inputVars.after = cursor;
+
+                const res = await fetch('https://www.hudl.com/api/public/graphql/query', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        operationName: 'Web_Fan_GetScheduleEntrySummaries_r1',
+                        variables: { input: inputVars },
+                        query: muHudlQuery
+                    })
+                });
+                if (!res.ok) { hasMore = false; break; }
+                const data = await res.json();
+                const result = data?.data?.scheduleEntryPublicSummaries;
+                const items = result?.items || [];
+                muTotalEntries += items.length;
+
+                for (const item of items) {
+                    const gameDate = new Date(item.timeUtc).toISOString().split('T')[0];
+                    const key = `${gameDate}|${item.sportId}|${item.genderId}`;
+                    if (!muHudlAllEntries.has(key)) {
+                        muHudlAllEntries.set(key, { id: item.id, timeUtc: item.timeUtc });
+                    }
+                    if (item.broadcastStatus !== null && item.broadcastStatus !== undefined) {
+                        muHudlBroadcasts.set(key, { id: item.id, timeUtc: item.timeUtc });
+                        muBroadcastCount++;
+                    }
+                }
+                hasMore = result?.pageInfo?.hasNextPage || false;
+                cursor = result?.pageInfo?.endCursor || null;
+                if (items.length === 0) hasMore = false;
+            }
+            muStart = chunkEnd;
+        }
+        console.log(`  📺 MU Hudl: ${muTotalEntries} schedule entries, ${muBroadcastCount} with broadcasts`);
+
+        // Reuse the sport mapping from the PM block via global (set at line above).
+        // If for some reason the PM block failed and didn't set it, derive ours here.
+        const muSportToHudlId = global._hudlSportToId || (() => {
+            const m = { 1:'football', 2:'basketball', 3:'soccer', 4:'volleyball',
+                        5:'baseball', 6:'softball', 7:'lacrosse', 8:'field hockey',
+                        9:'wrestling', 10:'tennis', 11:'track', 12:'swimming' };
+            const out = {};
+            for (const [id, name] of Object.entries(m)) out[name] = parseInt(id);
+            return out;
+        })();
+
+        // Apply MU Hudl broadcasts to MU Athletic Competitions events already in
+        // the events array (Sidearm MU block ran earlier in section 2).
+        let muMatchCount = 0, muHighlightCount = 0;
+        for (const ev of events) {
+            if (!ev.tags || !ev.tags.includes('MU')) continue;
+            if (!ev.tags.includes('Athletic Competitions')) continue;
+            const sportTag = ev.tags.find(t => muSportToHudlId[t.toLowerCase()]);
+            if (!sportTag) continue;
+            const evDate = new Date(ev.date).toISOString().split('T')[0];
+            // MU tag convention is Women's / Men's (not Girls / Boys like PM)
+            const gender = ev.tags.includes("Women's") ? 1 : 0;
+            const sportId = muSportToHudlId[sportTag.toLowerCase()];
+            const key = `${evDate}|${sportId}|${gender}`;
+
+            const broadcast = muHudlBroadcasts.get(key);
+            if (broadcast) {
+                const watchDate = new Date(broadcast.timeUtc).toISOString();
+                ev.streamLink = `https://fan.hudl.com/usa/pa/millersville/organization/12060/millersville/schedule?date=${encodeURIComponent(watchDate)}&range=Day&s=${encodeURIComponent(broadcast.id)}`;
+                muMatchCount++;
+            } else if (new Date(ev.date) < now) {
+                // Past game with no broadcast — link to team schedule day view for
+                // any highlight reels that may be available
+                const entry = muHudlAllEntries.get(key);
+                if (entry) {
+                    const watchDate = new Date(entry.timeUtc).toISOString();
+                    ev.streamLink = `https://fan.hudl.com/usa/pa/millersville/organization/12060/millersville/schedule?date=${encodeURIComponent(watchDate)}&range=Day&s=${encodeURIComponent(entry.id)}`;
+                    muHighlightCount++;
+                }
+            }
+
+            // Re-evaluate isLive now that streamLink may have been added
+            if (ev.streamLink && !ev.isLive) {
+                const evStart = new Date(ev.date);
+                const evEnd = new Date(evStart.getTime() + 3 * 60 * 60 * 1000);
+                if (now >= evStart && now <= evEnd && !ev.gameResult) {
+                    ev.isLive = true;
+                }
+            }
+        }
+        console.log(`  📺 MU matched ${muMatchCount} broadcasts, ${muHighlightCount} past highlight links`);
+    } catch (e) { console.log(`  ⚠️ MU Hudl broadcast check error: ${e.message}`); }
 
     // ===== 3. MU CALENDAR (NON-SPORT EVENTS ONLY) =====
     try {

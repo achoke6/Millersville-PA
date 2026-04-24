@@ -132,7 +132,7 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     align-items: center;
     gap: 8px;
     min-height: 36px;
-    padding-bottom: 8px;
+    padding-bottom: 0;
 }
 .toolbar-center { display: flex; align-items: center; gap: 0; }
 .toolbar-right { display: flex; align-items: center; gap: 6px; flex-shrink: 0; margin-left: auto; }
@@ -602,6 +602,12 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 }
 
 .filter-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+/* When a sibling sub-filter-bar is active (sub-categories expanded), hide the
+   filter-bar's bottom divider so the two rows read as one continuous filter
+   block instead of being separated by a line. :has() support: Safari 15.4+,
+   Chrome 105+, Firefox 121+ — covers 98%+ of users per caniuse. Older browsers
+   see the line but nothing breaks; it's purely visual polish. */
+.sticky-nav-bar:has(.sub-filter-bar.active) .filter-bar { border-bottom: none; padding-bottom: 4px; margin-bottom: 4px; }
 .filter-group { display: flex; flex-wrap: wrap; gap: 6px; }
 .src-btn { background: var(--surface); border: 1.5px solid var(--border); color: var(--text); padding: 7px 14px; border-radius: var(--radius-sm); font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: var(--transition); font-family: inherit; display: flex; align-items: center; gap: 4px; }
 .src-btn:hover { border-color: var(--gold); }

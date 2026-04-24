@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Status · Millersville.APP</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="style.css">
+<style>
+    body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 20px; }
+    .status-container { max-width: 900px; margin: 0 auto; }
+    .status-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+    .status-header h1 { font-size: 1.5rem; margin: 0; color: var(--navy); }
+    .status-badge { padding: 4px 10px; border-radius: 999px; font-size: 0.78rem; font-weight: 700; }
+    .status-badge.ok { background: #dcfce7; color: #166534; }
+    .status-badge.warn { background: #fef3c7; color: #92400e; }
+    .status-badge.err { background: #fee2e2; color: #991b1b; }
+    .status-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .status-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+    .status-card h2 { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin: 0 0 10px; font-weight: 700; }
+    .status-metric { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 0.92rem; }
+    .status-metric:last-child { border-bottom: none; }
+    .status-metric-label { color: var(--text); }
+    .status-metric-value { font-weight: 700; color: var(--navy); font-variant-numeric: tabular-nums; }
+    .status-metric-value.zero { color: var(--text-muted); font-weight: 400; }
+    .status-hero { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .status-hero-big { font-size: 2rem; font-weight: 800; color: var(--navy); line-height: 1; }
+    .status-hero-label { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin-top: 4px; }
+    .status-meta { font-size: 0.82rem; color: var(--text-muted); text-align: center; padding: 20px 0; }
+    .status-meta a { color: var(--navy); }
+    .status-error { padding: 20px; background: #fee2e2; border: 1px solid #fca5a5; border-radius: var(--radius); color: #991b1b; }
+</style>
+</head>
+<body>
+<div class="status-container">
+    <div class="status-header">
+        <h1>📊 Millersville.APP Status</h1>
+        <span id="freshness-badge" class="status-badge ok">Loading…</span>
+    </div>
+
+    <div id="hero-block" class="status-hero">
+        <div>
+            <div id="hero-events" class="status-hero-big">—</div>
+            <div class="status-hero-label">Events live</div>
+        </div>
+        <div>
+            <div id="hero-time" class="status-hero-big" style="font-size:1rem;line-height:1.4;">—</div>
+            <div class="status-hero-label">Last scrape</div>
+        </div>
+    </div>
+
+    <div id="grid" class="status-grid"></div>
+
+    <div class="status-meta">
+        <a href="/">← Back to site</a> · Auto-refreshes every 60s ·
+        <a href="https://github.com/achoke6/Millersville-PA/actions" target="_blank">GitHub Actions</a>
+    </div>
+</div>
+
+<script>
+// Freshness thresholds. Cron runs hourly; we tolerate up to 75 minutes as OK
+// (gives the scrape itself ~10 mins of runtime buffer), yellow from 75-180 min
+// meaning "at least one run skipped", red past 3 hours meaning "repeatedly
+// failing".
+const OK_MAX_MIN = 75;
+const WARN_MAX_MIN = 180;
+
+function formatRelative(iso) {
+    const now = Date.now();
+    const then = new Date(iso).getTime();
+    if (isNaN(then)) return 'unknown';
+    const minAgo = Math.round((now - then) / 60000);
+    if (minAgo < 1) return 'just now';
+    if (minAgo < 60) return minAgo + ' min ago';
+    const hrAgo = Math.floor(minAgo / 60);
+    if (hrAgo < 24) return hrAgo + 'h ' + (minAgo % 60) + 'm ago';
+    const dayAgo = Math.floor(hrAgo / 24);
+    return dayAgo + ' day' + (dayAgo > 1 ? 's' : '') + ' ago';
+}
+
+function metric(label, value, opts) {
+    opts = opts || {};
+    const valStr = value == null ? '—' : String(value);
+    const isZero = value === 0;
+    return '<div class="status-metric"><span class="status-metric-label">' + label +
+           '</span><span class="status-metric-value' + (isZero ? ' zero' : '') + '">' + valStr +
+           (opts.suffix || '') + '</span></div>';
+}
+
+function card(title, rows) {
+    return '<div class="status-card"><h2>' + title + '</h2>' + rows + '</div>';
+}
+
+async function render() {
+    let status;
+    try {
+        // Bust the cache explicitly — we want fresh numbers, not hourly CDN-
+        // cached snapshots. The scraper writes these files as the last step
+        // of each cron run so "just now" fetches should see new data.
+        const res = await fetch('status.json?' + Date.now(), { cache: 'no-store' });
+        if (!res.ok) throw new Error('status.json HTTP ' + res.status);
+        status = await res.json();
+    } catch (err) {
+        document.getElementById('grid').innerHTML =
+            '<div class="status-error"><strong>Status file unavailable.</strong> Either the scraper hasn\'t run yet, or the status.json file is missing. Error: ' +
+            err.message + '</div>';
+        document.getElementById('freshness-badge').textContent = 'No data';
+        document.getElementById('freshness-badge').className = 'status-badge err';
+        return;
+    }
+
+    // Hero: event count + last-updated + freshness badge
+    document.getElementById('hero-events').textContent = status.totalEvents.toLocaleString();
+    document.getElementById('hero-time').textContent = formatRelative(status.generatedAt);
+    const minAgo = Math.round((Date.now() - new Date(status.generatedAt).getTime()) / 60000);
+    const badge = document.getElementById('freshness-badge');
+    if (minAgo <= OK_MAX_MIN) {
+        badge.textContent = '● Healthy';
+        badge.className = 'status-badge ok';
+    } else if (minAgo <= WARN_MAX_MIN) {
+        badge.textContent = '● Stale (1+ runs missed)';
+        badge.className = 'status-badge warn';
+    } else {
+        badge.textContent = '● Failing (3+ hours)';
+        badge.className = 'status-badge err';
+    }
+
+    // Per-section cards
+    const s = status.sources || {};
+    const sp = status.sports || {};
+
+    const sourcesCard = card('Events by Source',
+        metric('MU Athletics', s.muAthletics) +
+        metric('MU Calendar', s.muCalendar) +
+        metric('MU GetInvolved', s.muGetInvolved) +
+        metric('Penn Manor', s.pennManor) +
+        metric('Borough', s.borough) +
+        metric('VFW', s.vfw) +
+        metric('Phantom Power', s.phantomPower) +
+        metric('Community submissions', s.community)
+    );
+
+    const sportsCard = card('Sports Results',
+        metric('Total sport events', sp.total) +
+        metric('Scored (past games)', sp.scored) +
+        metric('Wins', sp.wins) +
+        metric('Losses', sp.losses) +
+        metric('Ties / Neutral', sp.ties) +
+        metric('Box scores parsed', sp.boxScoresParsed,
+            { suffix: sp.scored ? ' / ' + sp.scored + ' (' + Math.round(sp.boxScoresParsed / sp.scored * 100) + '%)' : '' })
+    );
+
+    const contentCard = card('Content Coverage',
+        metric('With description', status.withDescription,
+            { suffix: ' / ' + status.totalEvents + ' (' + Math.round(status.withDescription / status.totalEvents * 100) + '%)' }) +
+        metric('With image', status.withImage,
+            { suffix: ' / ' + status.totalEvents + ' (' + Math.round(status.withImage / status.totalEvents * 100) + '%)' }) +
+        metric('Family-friendly tagged', status.familyFriendly)
+    );
+
+    document.getElementById('grid').innerHTML = sourcesCard + sportsCard + contentCard;
+}
+
+render();
+// Poll every 60s. The scrape runs hourly, so we won't see data update most
+// of the time — but it's useful around the top of the hour to watch the
+// refresh happen without manually reloading.
+setInterval(render, 60000);
+</script>
+</body>
+</html>

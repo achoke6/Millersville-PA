@@ -133,6 +133,136 @@ function decorateGenericTitle(title, orgName) {
     return `${o} ${t}`;
 }
 
+// Extract a linescore (box score) from a Sidearm recap page's HTML. Scans
+// every <table> in the document and returns the first one that looks like
+// a linescore, defined as:
+//
+//   - Has a header row whose trailing columns are totals: "R/H/E" (baseball,
+//     softball), or "T"/"TOT"/"F"/"Final" (basketball, soccer, etc.)
+//   - Has exactly 2 body rows (the two teams)
+//   - Numeric period columns in between (1-N, or "1H/2H" for halves)
+//
+// We match team names against the event's title (to identify which row is
+// Millersville vs opponent) and against "vs"/"@" in the title (to identify
+// which is home vs away). Returns normalized shape or null on no match.
+//
+// Not perfect — some sports render linescores inside <div> layouts rather
+// than <table> — but covers baseball/softball/basketball/lacrosse/volleyball
+// well since they all ship StatCrew-generated tables.
+function parseLinescoreFromHTML(html, event) {
+    if (!html || !event || !event.title) return null;
+
+    // Rough extractor: find all table blocks, then for each, split by <tr>.
+    // Non-greedy + dot-includes-newline for robustness against formatted HTML.
+    const tableBlocks = html.match(/<table[^>]*>[\s\S]*?<\/table>/gi) || [];
+    if (tableBlocks.length === 0) return null;
+
+    const stripTags = s => s.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&#\d+;/g, '').replace(/\s+/g, ' ').trim();
+    const isNumericLabel = s => /^\d+$/.test(s);
+    const isTotalLabel = s => /^(r|h|e|t|tot|final|f|pts)$/i.test(s);
+    const isHalfLabel = s => /^(1h|2h|1st|2nd|3rd|4th|ot\d*|ot)$/i.test(s);
+    const isValidLabel = s => isNumericLabel(s) || isTotalLabel(s) || isHalfLabel(s);
+
+    // Extract opponent name from event title — we'll use this to identify
+    // which team row is MU and which is the opponent. "Softball vs Kutztown"
+    // → "Kutztown". "Baseball at Hempfield" → "Hempfield". Title formatting
+    // varies, so we fall back to a lax match.
+    const oppMatch = event.title.match(/\s(?:vs\.?|@|at)\s+(.+?)(?:\s+(?:-|·|–).*)?$/i);
+    const opponent = oppMatch ? oppMatch[1].trim().toLowerCase() : '';
+    const titleHasVs = /\bvs\b/i.test(event.title);
+
+    for (const tableHtml of tableBlocks) {
+        const rowMatches = tableHtml.match(/<tr[^>]*>[\s\S]*?<\/tr>/gi) || [];
+        if (rowMatches.length < 3) continue;  // need header + 2 teams
+
+        // Parse each row into { tag: 'th'|'td'|'mixed', cells: [text,...] }
+        const rows = rowMatches.map(r => {
+            const cellMatches = r.match(/<t[hd][^>]*>[\s\S]*?<\/t[hd]>/gi) || [];
+            return cellMatches.map(c => stripTags(c));
+        }).filter(row => row.length > 0);
+
+        if (rows.length < 3) continue;
+
+        // Identify the header row — first row whose non-first cells are
+        // mostly valid period/total labels. Some tables have a "Game Info"
+        // caption row above the real header; allow up to 2 rows of skip.
+        let headerIdx = -1;
+        for (let i = 0; i < Math.min(3, rows.length - 2); i++) {
+            const candidate = rows[i];
+            if (candidate.length < 3) continue;
+            // Non-first cells should all be valid labels
+            const labelCells = candidate.slice(1);
+            if (labelCells.length < 2) continue;
+            const validCount = labelCells.filter(isValidLabel).length;
+            if (validCount / labelCells.length < 0.7) continue;
+
+            // REJECT player stats tables. A stats table has headers like
+            // "Player, AB, R, H, RBI" — our valid-label regex accepts R/H
+            // as total-style labels, which gives a false positive. The
+            // distinguishing signal: a real linescore has at least one
+            // sequential numeric period (1, 2, 3...) or a half label
+            // (1H/2H/1st/2nd/OT). A stats table has no periods at all.
+            const periodCells = labelCells.filter(c => isNumericLabel(c) || isHalfLabel(c));
+            if (periodCells.length < 2) continue;
+
+            // Also require the first-column header cell to be empty (the
+            // conventional linescore corner cell) rather than a label like
+            // "Player" or "Starters" which would indicate a stats table.
+            const cornerCell = candidate[0].trim();
+            if (cornerCell.length > 0 && cornerCell.length < 20) continue;
+
+            headerIdx = i;
+            break;
+        }
+        if (headerIdx < 0) continue;
+
+        const labels = rows[headerIdx].slice(1);
+        const teamRows = rows.slice(headerIdx + 1).filter(r => r.length === rows[headerIdx].length);
+        if (teamRows.length < 2) continue;  // need at least 2 team rows matching the header width
+
+        // Take the first 2 rows. StatCrew tables render "Visitor" then "Home"
+        // by convention — the first team row is the away/visitor side.
+        const awayRow = teamRows[0];
+        const homeRow = teamRows[1];
+
+        const awayName = awayRow[0];
+        const homeName = homeRow[0];
+        const awayValues = awayRow.slice(1);
+        const homeValues = homeRow.slice(1);
+
+        // Sanity check: at least half of the score cells should be numeric
+        // (or "X"/"-" for skipped-inning placeholders). If they're mostly
+        // text, this isn't a linescore — probably a team-stats table.
+        const isDataCell = v => /^(\d+|x|-|—|\.\d+)$/i.test((v || '').trim());
+        const allValues = [...awayValues, ...homeValues];
+        const numericRatio = allValues.filter(isDataCell).length / (allValues.length || 1);
+        if (numericRatio < 0.7) continue;
+
+        // Determine which row is Millersville. Match on name substring.
+        const isMU = s => /millersville|marauders/i.test(s);
+        let ourTeamSide;
+        if (isMU(awayName) && !isMU(homeName)) ourTeamSide = 'away';
+        else if (isMU(homeName) && !isMU(awayName)) ourTeamSide = 'home';
+        else if (opponent) {
+            // Fallback: match opponent to one of the team names.
+            if (awayName.toLowerCase().includes(opponent)) ourTeamSide = 'home';
+            else if (homeName.toLowerCase().includes(opponent)) ourTeamSide = 'away';
+            // Still unknown — use title's vs/at to decide (MU vs OPP = MU home)
+            else ourTeamSide = titleHasVs ? 'home' : 'away';
+        } else {
+            ourTeamSide = titleHasVs ? 'home' : 'away';
+        }
+
+        return {
+            labels,
+            home: { team: homeName, values: homeValues },
+            away: { team: awayName, values: awayValues },
+            ourTeamSide
+        };
+    }
+    return null;
+}
+
 function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tags = [], benefits = [] }) {
     if (benefits.includes('Credit')) return 'mu-only';
     const combinedText = ((titleText || '') + ' ' + (descText || '') + ' ' + (orgName || '')).toLowerCase();
@@ -2153,6 +2283,38 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                             console.log(`  ✅ John Herr's: ${groceryDeals.length} top deals (${dateRange})`);
                             groceryDeals.forEach(d => console.log(`    🏷️ ${d.item} – ${d.salePrice}${d.savings ? ' (' + d.savings + ')' : ''}`));
                             groceryDeals = groceryDeals.map(d => ({ ...d, dateRange }));
+
+                            // Data-quality assertion. If the full pipeline ran
+                            // (cache stale, ANTHROPIC_KEY set, print page
+                            // fetched OK, Claude returned 200) but extracted
+                            // ZERO deals, something's broken: store ID might
+                            // have rotated (print page empty), Freshop may
+                            // have changed its image CDN pattern breaking our
+                            // regex, or the circular layout drifted enough
+                            // that Claude can't parse it. Fire /fail so we
+                            // hear about it within the hour. This is distinct
+                            // from cache-miss (handled by outer try/catch as
+                            // transient) and the "cache is warm" path (which
+                            // skips this block entirely).
+                            if (groceryDeals.length === 0) {
+                                console.warn(`⚠️  DATA QUALITY: John Herr's Vision pipeline ran but extracted 0 deals. Likely store ID rotation, CDN change, or circular layout drift.`);
+                                const healthUrl = process.env.HEALTHCHECK_URL;
+                                if (healthUrl) {
+                                    try {
+                                        const ctrl = new AbortController();
+                                        const timer = setTimeout(() => ctrl.abort(), 5000);
+                                        await fetch(`${healthUrl}/fail`, {
+                                            method: 'POST',
+                                            headers: { 'Content-Type': 'text/plain' },
+                                            body: "John Herr's grocery deals extracted 0 items from circular despite full pipeline success — likely store ID 54348 rotation or circular layout drift.",
+                                            signal: ctrl.signal
+                                        }).catch(() => {});
+                                        clearTimeout(timer);
+                                        console.log("   🚨 Fired /fail ping to healthchecks.io");
+                                    } catch (_) { /* never break the scrape on monitoring failure */ }
+                                }
+                            }
+
                             // Save to cache
                             fs.writeFileSync(groceryCachePath, JSON.stringify({ timestamp: now.toISOString(), deals: groceryDeals }, null, 2));
                             console.log(`  💾 Grocery deals cached`);
@@ -2625,6 +2787,60 @@ Focus on the most impressive deals a shopper would want to know about. Include m
         }
     } catch (e) { console.log(`  ⚠️ Hudl scores error: ${e.message}`); }
 
+    // ===== BOX SCORES (MU via Sidearm recap pages) =====
+    // For past MU sport events with a final score and a Sidearm recap URL,
+    // fetch the recap page and try to extract the inline linescore (box
+    // score) table. We attach it to event.periodScores with a normalized
+    // shape { labels, home, away, ourTeamSide } so the frontend can render
+    // a clean table regardless of whether it's baseball (1-9 innings + R/H/E)
+    // or basketball (1-4 quarters + T) etc.
+    //
+    // Capped at BOX_SCORE_FETCH_CAP fetches per scrape run to avoid blowing
+    // past cron time budget if we have 100+ past games. Silent failure when
+    // a page doesn't contain a parseable linescore — periodScores simply
+    // stays undefined and the frontend falls back to the summary block.
+    try {
+        console.log("📡 Fetching MU box scores from Sidearm recap pages...");
+        const BOX_SCORE_FETCH_CAP = 30;
+        let bsFetched = 0, bsMatched = 0, bsSkipped = 0;
+
+        const pastMUGames = events.filter(ev => {
+            const tags = ev.tags || [];
+            if (!tags.includes('MU')) return false;
+            if (!ev.gameResult || !ev.gameScore) return false;   // must be past + scored
+            if (!ev.sourceLink) return false;
+            if (!/athletics\.millersville\.edu/i.test(ev.sourceLink)) return false;
+            return true;
+        });
+
+        // Most-recent-first ordering so if we hit the cap, we get fresh box
+        // scores rather than stale ones from months ago.
+        pastMUGames.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        for (const ev of pastMUGames) {
+            if (bsFetched >= BOX_SCORE_FETCH_CAP) { bsSkipped++; continue; }
+            try {
+                const res = await fetch(ev.sourceLink, {
+                    headers: baseHeaders,
+                    signal: AbortSignal.timeout(8000)
+                });
+                bsFetched++;
+                if (!res.ok) continue;
+                const html = await res.text();
+                const ps = parseLinescoreFromHTML(html, ev);
+                if (ps) {
+                    ev.periodScores = ps;
+                    bsMatched++;
+                }
+            } catch (err) {
+                // Individual page fetch failures are routine (timeouts,
+                // redirects to nonexistent pages, etc.) — swallow silently,
+                // the outer try/catch only catches catastrophic errors.
+            }
+        }
+        console.log(`  📋 Box scores: ${bsMatched}/${bsFetched} parsed (${bsSkipped} over cap)`);
+    } catch (e) { console.log(`  ⚠️ Box score fetch error: ${e.message}`); }
+
     // ===== DEDUPLICATION & SAVE =====
     // Two-pass dedupe:
     //   Pass 1: exact match (title + full date + location) — legacy behavior
@@ -2869,6 +3085,53 @@ Focus on the most impressive deals a shopper would want to know about. Include m
         eventCount: deduped.length
     }, null, 2));
     console.log(`📊 Total events saved: ${deduped.length} (${deduped.filter(e=>e.image).length} with images, ${deduped.filter(e=>e.description).length} with descriptions)`);
+
+    // ===== STATUS DASHBOARD DATA =====
+    // Companion stats file consumed by /status.html. Computed from the final
+    // deduped array so it reflects the TRUE state shipped to users, not raw
+    // fetch counts (which would inflate totals before cross-source dedupe).
+    // Separate from events-meta.json so the frontend's "last updated" code
+    // stays stable on a simple schema while this file grows as we add metrics.
+    try {
+        const bySourceCount = (sourceTag, extraFilter = () => true) =>
+            deduped.filter(e => (e.tags || []).includes(sourceTag) && extraFilter(e)).length;
+        const pastSports = deduped.filter(e =>
+            (e.tags || []).includes('Athletics') || (e.tags || []).includes('Athletic Competitions')
+        ).filter(e => e.gameResult && e.gameScore);
+        const status = {
+            generatedAt: new Date().toISOString(),
+            totalEvents: deduped.length,
+            withDescription: deduped.filter(e => e.description).length,
+            withImage: deduped.filter(e => e.image).length,
+            familyFriendly: deduped.filter(e => e.kidFriendly).length,
+            // Per-source counts (after dedupe)
+            sources: {
+                muAthletics: bySourceCount('MU', e => (e.tags || []).includes('Athletics') || (e.tags || []).includes('Athletic Competitions')),
+                muCalendar: bySourceCount('MU', e => !(e.tags || []).includes('Athletics') && !(e.tags || []).includes('Clubs/Orgs')),
+                muGetInvolved: bySourceCount('Clubs/Orgs'),
+                pennManor: bySourceCount('PM'),
+                borough: bySourceCount('Borough'),
+                vfw: bySourceCount('VFW'),
+                phantomPower: bySourceCount('Phantom Power'),
+                community: bySourceCount('Community')
+            },
+            sports: {
+                total: deduped.filter(e =>
+                    (e.tags || []).includes('Athletics') || (e.tags || []).includes('Athletic Competitions')
+                ).length,
+                scored: pastSports.length,
+                wins: pastSports.filter(e => e.gameResult === 'W').length,
+                losses: pastSports.filter(e => e.gameResult === 'L').length,
+                ties: pastSports.filter(e => e.gameResult === 'T' || e.gameResult === 'N').length,
+                boxScoresParsed: pastSports.filter(e => e.periodScores).length
+            }
+        };
+        fs.writeFileSync(path.join(__dirname, '../status.json'), JSON.stringify(status, null, 2));
+        console.log(`📊 Status file written (${status.totalEvents} events across ${Object.values(status.sources).filter(n => n > 0).length} active sources)`);
+    } catch (statsErr) {
+        // Stats are informational — don't let a stats error break the scrape.
+        console.log(`  ⚠️ Status file error: ${statsErr.message}`);
+    }
 
     // ===== CLUBS DIRECTORY (all MU organizations from GetInvolved) =====
     // Fetches the full org list from the Engage "discovery/search/organizations" endpoint

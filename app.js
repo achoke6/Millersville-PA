@@ -411,93 +411,144 @@ window.openFeedSettings = function() {
     const modal = document.createElement('div');
     modal.style.cssText = 'background:var(--surface);border-radius:var(--radius);max-width:520px;width:100%;max-height:90vh;overflow-y:auto;padding:28px;position:relative;';
 
-    let sectionsHtml = '';
-    // Helper: rank a group (or sub) for current affiliation — relevant first, 'both' next, non-relevant last
-    const audienceRank = aud => {
-        if (!muAffiliation || aud === 'both') return 1;
-        if (aud === muAffiliation) return 0; // matches user's affiliation
-        return 2; // non-relevant
-    };
-    // Build sectioned HTML
-    // Affiliation resolves to marauder/townie — unset is treated as marauder (the app's default).
+    // Affiliation / dimming setup — shared state for all rendering helpers below.
+    // Unset muAffiliation is treated as marauder (the app's default).
     const effectiveAffiliation = muAffiliation === 'townie' ? 'townie' : 'student';
     const isTownie = effectiveAffiliation === 'townie';
     const isMarauder = !isTownie;
-    // Helper to predict whether a group would be dimmed — must match the actual dimming
-    // condition below so the sort-to-bottom and the visual dim are consistent.
+    // Rank a group (or sub) by relevance to the current user — relevant first,
+    // 'both' next, non-relevant last. Used to order sub-chips within a group.
+    const audienceRank = aud => {
+        if (!muAffiliation || aud === 'both') return 1;
+        if (aud === muAffiliation) return 0;
+        return 2;
+    };
+    // A group is "dimmed" for marauders when its audience is explicitly townie-
+    // leaning (PM Events, Borough, etc.). Townies never dim. Now used to extract
+    // dimmed groups into the Uncommon accordion, not to visually fade them
+    // inside their natural section.
     const isGroupDimmed = (group) => {
-        if (!isMarauder) return false; // townies never dim
+        if (!isMarauder) return false;
         return !!(group && group.audience && group.audience !== 'both' && group.audience !== 'student');
     };
-    // Resolve a display label: use townieLabel if one is set AND user is townie
+    // Use townie-specific label if user is townie and one is defined.
     const labelFor = (item) => (isTownie && item.townieLabel) ? item.townieLabel : item.label;
-    // Display order: Events before Sports (matches the nav order where Events is listed
-    // before Sports), then News. Falls back to whatever keys exist in feedSections.
+    // Display order: Events first (matches the nav), then Sports, then News.
     const sectionOrder = ['events', 'sports', 'news'];
     const orderedSections = sectionOrder
         .map(k => [k, feedSections[k]])
         .filter(([, v]) => v)
         .concat(Object.entries(feedSections).filter(([k]) => !sectionOrder.includes(k)));
+
+    // Accordion + group rendering helpers — closure-scoped so they share
+    // access to `current`, `effectiveAffiliation`, `isMarauder`, `labelFor`.
+    const groupHasFavs = (g) => g.subs.some(s => current.includes(s.id));
+    const anyFavsIn = (groupEntries) => groupEntries.some(([, g]) => groupHasFavs(g));
+
+    // Render one group block (label + checkboxes + sub-chips). Extracted so
+    // both the per-section render AND the Uncommon bucket can reuse it.
+    const renderGroupBlock = (key, group) => {
+        const visibleSubs = group.subs.filter(s => {
+            if (!s.audience || s.audience === 'both') return true;
+            return s.audience === effectiveAffiliation;
+        });
+        if (visibleSubs.length === 0) return '';
+
+        const allIds = visibleSubs.map(s => s.id);
+        const allChecked = allIds.every(id => current.includes(id));
+        const groupDimmed = isMarauder && group.audience && group.audience !== 'both' && group.audience !== 'student';
+        const groupClass = groupDimmed ? 'feed-group-dimmed' : '';
+        const subs = visibleSubs.slice().sort((a, b) => audienceRank(a.audience || group.audience || 'both') - audienceRank(b.audience || group.audience || 'both'));
+
+        return `<div class="${groupClass}" style="margin-bottom:12px;">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+                <label style="font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:6px;cursor:pointer;">
+                    <input type="checkbox" class="feed-group" data-group="${key}" ${allChecked?'checked':''} onchange="toggleFeedGroup(this)" style="accent-color:var(--gold);width:16px;height:16px;">
+                    ${group.icon} ${labelFor(group)}
+                </label>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:6px;padding-left:8px;">
+                ${subs.map(s => {
+                    const subAud = s.audience || group.audience || 'both';
+                    const subDimmed = isMarauder && subAud !== 'both' && subAud !== 'student';
+                    const subClass = subDimmed && !groupDimmed ? 'feed-group-dimmed' : '';
+                    return `<label class="${subClass}" style="display:flex;align-items:center;gap:4px;font-size:0.82rem;padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;background:${current.includes(s.id)?'var(--gold-soft)':'var(--bg)'};"><input type="checkbox" class="feed-sub" data-group="${key}" value="${s.id}" ${current.includes(s.id)?'checked':''} onchange="updateFeedGroup('${key}')" style="accent-color:var(--gold);"> ${s.icon} ${labelFor(s)}</label>`;
+                }).join('')}
+            </div>
+            ${key === 'clubs' ? '<div id="clubs-individual-wrap" style="padding-left:8px;margin-top:8px;"><button onclick="toggleClubBrowser()" class="btn btn-sm btn-outline" style="font-size:0.75rem;">📋 Browse Individual Clubs ▸</button><div id="clubs-individual-list" style="display:none;max-height:200px;overflow-y:auto;margin-top:8px;display:none;flex-wrap:wrap;gap:4px;"></div></div>' : ''}
+        </div>`;
+    };
+
+    // Render one accordion wrapper. `accent` is a left-border color preserving
+    // the section color coding (navy/amber/border) from the old design.
+    // `defaultOpen` controls initial expanded/collapsed state — we auto-expand
+    // sections where the user already has favorites.
+    const renderAccordion = (title, contentHtml, defaultOpen, subtitle, accent) => {
+        const chevronStyle = defaultOpen ? 'transform:rotate(90deg);' : '';
+        const contentStyle = defaultOpen ? '' : 'display:none;';
+        const accentStyle = accent ? `border-left:4px solid ${accent};` : '';
+        return `<div class="feed-accordion" data-open="${defaultOpen}" style="margin-bottom:10px;border:1px solid var(--border);${accentStyle}border-radius:var(--radius-sm);overflow:hidden;background:var(--surface);">
+            <button type="button" onclick="toggleFeedAccordion(this)" style="width:100%;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 14px;background:var(--bg);border:none;cursor:pointer;font-family:inherit;text-align:left;">
+                <span style="flex:1;font-size:0.95rem;font-weight:800;color:var(--text);">
+                    ${title}
+                    ${subtitle ? `<span style="display:block;font-size:0.72rem;font-weight:400;color:var(--text-muted);margin-top:2px;">${subtitle}</span>` : ''}
+                </span>
+                <span class="feed-accordion-chevron" style="font-size:0.85rem;color:var(--text-muted);transition:transform 0.2s;${chevronStyle}">▶</span>
+            </button>
+            <div class="feed-accordion-content" style="${contentStyle}padding:14px;border-top:1px solid var(--border);">
+                ${contentHtml}
+            </div>
+        </div>`;
+    };
+
+    // Main sections render. For marauders, dimmed (townie-audience) groups
+    // are extracted out of their sections into a single "Uncommon" bucket at
+    // the bottom — much cleaner than the old "dimmed at bottom of each section"
+    // approach, since now sections show ONLY marauder-relevant picks.
+    let sectionsHtml = '';
+    const uncommonGroups = []; // [[key, group]] gathered for marauders
+
     for (const [secKey, section] of orderedSections) {
-        sectionsHtml += `<div style="margin-bottom:20px;"><h4 style="font-size:0.95rem;font-weight:800;margin-bottom:10px;padding-bottom:6px;border-bottom:2px solid ${secKey==='sports'?'var(--navy)':secKey==='events'?'#b45309':'var(--border)'};">${section.title}</h4>`;
-        // Group ordering strategy:
-        //   - Marauders: ALL dimmed groups sink to the bottom (in their natural section
-        //     order), leaving the top of the list for Marauder-relevant picks. This beats
-        //     the old audienceRank sort which split by "both" audience — Other was landing
-        //     in the middle instead of staying grouped with relevant options.
-        //   - Townies: keep natural feedSections order (no dimming to sort around).
-        // Object.entries preserves insertion order, so natural order = definition order.
         const rawEntries = Object.entries(section.groups);
-        const groupEntries = isMarauder
-            ? [...rawEntries].sort((a, b) => {
-                const ad = isGroupDimmed(a[1]) ? 1 : 0;
-                const bd = isGroupDimmed(b[1]) ? 1 : 0;
-                return ad - bd;  // dimmed (1) sorts after undimmed (0); Array.sort is stable
-            })
-            : rawEntries;
-        for (const [key, group] of groupEntries) {
-            // Filter subs by per-sub audience tag:
-            //   - For Marauders: all subs visible (no subs tagged audience:'townie' exist)
-            //   - For townies: hide subs tagged audience:'student' (e.g. Greek Life — genuinely
-            //     student-only, weird for a townie to favorite). MU news sub-items are NOT
-            //     tagged so they stay visible to townies who want to follow MU news.
-            const visibleSubs = group.subs.filter(s => {
-                if (!s.audience || s.audience === 'both') return true;
-                return s.audience === effectiveAffiliation;
-            });
-            if (visibleSubs.length === 0) continue; // skip entirely-filtered groups
 
-            const allIds = visibleSubs.map(s => s.id);
-            const allChecked = allIds.every(id => current.includes(id));
-            // Dimming is MARAUDER-ONLY. Marauders see "not typical for marauders" groups
-            // (PM Events, Borough, Family Friendly) dimmed with a nag note so common picks
-            // surface first. Townies see everything at full opacity.
-            const groupDimmed = isMarauder && group.audience && group.audience !== 'both' && group.audience !== 'student';
-            const groupClass = groupDimmed ? 'feed-group-dimmed' : '';
-
-            // Sort visible subs by audience relevance (only meaningful for Marauders)
-            const subs = visibleSubs.slice().sort((a, b) => audienceRank(a.audience || group.audience || 'both') - audienceRank(b.audience || group.audience || 'both'));
-
-            sectionsHtml += `<div class="${groupClass}" style="margin-bottom:12px;">
-                <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-                    <label style="font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:6px;cursor:pointer;">
-                        <input type="checkbox" class="feed-group" data-group="${key}" ${allChecked?'checked':''} onchange="toggleFeedGroup(this)" style="accent-color:var(--gold);width:16px;height:16px;">
-                        ${group.icon} ${labelFor(group)}${groupDimmed?'<span class="feed-group-dim-note">(not typical for marauders — enable if interested)</span>':''}
-                    </label>
-                </div>
-                <div style="display:flex;flex-wrap:wrap;gap:6px;padding-left:8px;">
-                    ${subs.map(s => {
-                        const subAud = s.audience || group.audience || 'both';
-                        // Only dim sub-chips for Marauders (townies see everything full-opacity)
-                        const subDimmed = isMarauder && subAud !== 'both' && subAud !== 'student';
-                        const subClass = subDimmed && !groupDimmed ? 'feed-group-dimmed' : '';
-                        return `<label class="${subClass}" style="display:flex;align-items:center;gap:4px;font-size:0.82rem;padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;background:${current.includes(s.id)?'var(--gold-soft)':'var(--bg)'};"><input type="checkbox" class="feed-sub" data-group="${key}" value="${s.id}" ${current.includes(s.id)?'checked':''} onchange="updateFeedGroup('${key}')" style="accent-color:var(--gold);"> ${s.icon} ${labelFor(s)}</label>`;
-                    }).join('')}
-                </div>
-                ${key === 'clubs' ? '<div id="clubs-individual-wrap" style="padding-left:8px;margin-top:8px;"><button onclick="toggleClubBrowser()" class="btn btn-sm btn-outline" style="font-size:0.75rem;">📋 Browse Individual Clubs ▸</button><div id="clubs-individual-list" style="display:none;max-height:200px;overflow-y:auto;margin-top:8px;display:none;flex-wrap:wrap;gap:4px;"></div></div>' : ''}
-            </div>`;
+        let commonEntries;
+        if (isMarauder) {
+            commonEntries = [];
+            for (const [gk, g] of rawEntries) {
+                if (isGroupDimmed(g)) uncommonGroups.push([gk, g]);
+                else commonEntries.push([gk, g]);
+            }
+        } else {
+            commonEntries = rawEntries; // townies see everything in natural order
         }
-        sectionsHtml += '</div>';
+
+        if (commonEntries.length === 0) continue;
+        const groupHtml = commonEntries.map(([k, g]) => renderGroupBlock(k, g)).filter(Boolean).join('');
+        if (!groupHtml.trim()) continue;
+
+        const defaultOpen = anyFavsIn(commonEntries);
+        const accent = secKey === 'sports' ? 'var(--navy)' : secKey === 'events' ? '#b45309' : 'var(--border)';
+        sectionsHtml += renderAccordion(section.title, groupHtml, defaultOpen, null, accent);
+    }
+
+    // Bottom "Uncommon for Marauders" accordion — consolidates all the
+    // townie-audience groups (PM Sports, PM Events, Borough, VFW, Phantom
+    // Power, Community News) that used to appear individually dimmed within
+    // each section. One collapsible bucket keeps the modal compact while
+    // still making these options discoverable for marauders who want to
+    // opt into community content. The "enable if interested" nag that used
+    // to sit next to each dimmed group label now lives in the bucket's
+    // subtitle, so we drop the per-group repetition.
+    if (isMarauder && uncommonGroups.length > 0) {
+        const uncommonHtml = uncommonGroups.map(([k, g]) => renderGroupBlock(k, g)).filter(Boolean).join('');
+        const defaultOpen = anyFavsIn(uncommonGroups);
+        sectionsHtml += renderAccordion(
+            '🏘️ Uncommon for Marauders',
+            uncommonHtml,
+            defaultOpen,
+            'Penn Manor, Borough, and broader community — favorite if interested',
+            '#9ca3af'  // muted gray accent to de-emphasize vs. the themed sections
+        );
     }
 
     // Build individual clubs list from events data
@@ -541,6 +592,26 @@ window.toggleFeedGroup = function(groupCb) {
     const group = groupCb.dataset.group;
     const checked = groupCb.checked;
     document.querySelectorAll(`.feed-sub[data-group="${group}"]`).forEach(cb => { cb.checked = checked; cb.closest('label').style.background = checked ? 'var(--gold-soft)' : 'var(--bg)'; });
+};
+
+// Expand/collapse a feed-settings accordion. data-open is the source of truth
+// for the state — we mirror it into inline display + chevron rotation on each
+// toggle so CSS is simple and no animation library is needed.
+window.toggleFeedAccordion = function(btn) {
+    const accordion = btn.closest('.feed-accordion');
+    if (!accordion) return;
+    const content = accordion.querySelector('.feed-accordion-content');
+    const chevron = accordion.querySelector('.feed-accordion-chevron');
+    const isOpen = accordion.dataset.open === 'true';
+    if (isOpen) {
+        content.style.display = 'none';
+        if (chevron) chevron.style.transform = '';
+        accordion.dataset.open = 'false';
+    } else {
+        content.style.display = '';
+        if (chevron) chevron.style.transform = 'rotate(90deg)';
+        accordion.dataset.open = 'true';
+    }
 };
 
 window.toggleClubBrowser = function() {
@@ -1106,6 +1177,37 @@ function scheduleHeaderMeasure() {
 
 document.addEventListener("DOMContentLoaded",()=>{
     updateHeaderHeightVar();
+
+    // Admin/demo convenience: ?resetWelcome=1 in the URL clears ONLY the
+    // welcome-dismissed flag (not favorites or affiliation), letting the
+    // banner resurface without losing real user state. Appended silently
+    // via history.replaceState so the URL bar stays clean.
+    try {
+        const params = new URLSearchParams(window.location.search);
+        if (params.has('resetWelcome')) {
+            localStorage.removeItem('welcomeDismissed');
+            params.delete('resetWelcome');
+            const cleanSearch = params.toString();
+            const newUrl = window.location.pathname + (cleanSearch ? '?' + cleanSearch : '') + window.location.hash;
+            history.replaceState(null, '', newUrl);
+        }
+    } catch (_) { /* no URL params support → skip */ }
+
+    // Show welcome banner IMMEDIATELY if this is a first-time visitor.
+    // We previously only set banner visibility in renderHomeFeed(), which
+    // runs after ~9 concurrent data fetches settle — producing a 2-5 second
+    // window where the page is visible but the banner isn't, making new
+    // visitors think it doesn't exist. Since the show/hide condition only
+    // reads localStorage, there's no reason to wait for remote data.
+    try {
+        const hasFeed = !!localStorage.getItem(FEED_KEY);
+        const dismissed = !!localStorage.getItem('welcomeDismissed');
+        if (!hasFeed && !dismissed) {
+            const wb = document.getElementById('welcome-banner');
+            if (wb) wb.style.display = 'block';
+        }
+    } catch (_) { /* localStorage blocked → banner stays hidden, no-op */ }
+
     initApp();
 
     // Re-measure on viewport resize (covers mobile→desktop breakpoint flips
@@ -1291,6 +1393,10 @@ async function loadEvents(){
     renderEvents(); renderSports();
     if (currentNews.length > 0) renderNewsUI();
     decorateFeedStars();
+    // Inject schema.org Event structured data for the next ~20 upcoming public
+    // events. Helps Google, Bing, and social-media crawlers understand what's
+    // scheduled. Runs once per load — enough for SEO discovery.
+    if (typeof emitEventsStructuredData === 'function') emitEventsStructuredData();
     // Load sibling meta for the "last updated" indicator. Failing quietly is fine —
     // the file may not exist on first deploy before the scraper has run.
     try {
@@ -1301,6 +1407,104 @@ async function loadEvents(){
         }
     } catch (_) { /* silent */ }
     }catch(e){console.error('Events load error:',e);}
+}
+
+// Emit schema.org Event JSON-LD for upcoming public events. We skip student-
+// only (mu-only) content since that's irrelevant to general web search, and
+// we cap at 20 to keep the payload reasonable. Google's Event rich results
+// require: @type, name, startDate, location (with @type Place + name). We
+// also include endDate (estimated) and eventStatus, which are recommended.
+function emitEventsStructuredData() {
+    try {
+        // Remove any prior injection — avoids duplicates if called twice.
+        const prior = document.getElementById('mapp-events-ld');
+        if (prior) prior.remove();
+
+        const now = new Date();
+        const upcoming = (allEvents || [])
+            .filter(e => {
+                if (!e.date || new Date(e.date) < now) return false;
+                // Public-facing only: skip mu-student-only content and
+                // GetInvolved-internal events (not useful for townie web
+                // searchers, and mostly require MU credentials anyway).
+                if (e.audience === 'mu-only') return false;
+                if ((e.tags || []).includes('Clubs/Orgs') && e.audience !== 'public') return false;
+                return true;
+            })
+            .slice(0, 20);
+        if (upcoming.length === 0) return;
+
+        const cleanLoc = (loc) => {
+            if (!loc) return 'Millersville, PA';
+            return loc.replace(/^\s+|\s+$/g, '').substring(0, 200);
+        };
+
+        const ldArray = upcoming.map(e => {
+            const d = new Date(e.date);
+            // End time: most of our events don't have an explicit end; assume
+            // 2 hours for events, 3 for sport games. Schema.org accepts this
+            // and it's closer to reality than omitting endDate entirely.
+            const tags = e.tags || [];
+            const isSport = tags.includes('Athletics') || tags.includes('Athletic Competitions');
+            const endD = new Date(d.getTime() + (isSport ? 3 : 2) * 60 * 60 * 1000);
+            const item = {
+                "@context": "https://schema.org",
+                "@type": "Event",
+                "name": e.title || 'Millersville event',
+                "startDate": d.toISOString(),
+                "endDate": endD.toISOString(),
+                "eventStatus": "https://schema.org/EventScheduled",
+                "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+                "location": {
+                    "@type": "Place",
+                    "name": cleanLoc(e.location),
+                    "address": {
+                        "@type": "PostalAddress",
+                        "addressLocality": "Millersville",
+                        "addressRegion": "PA",
+                        "addressCountry": "US"
+                    }
+                }
+            };
+            if (e.description) {
+                // Google allows up to ~500 chars for description in rich
+                // results. Strip any HTML that may have leaked in.
+                item.description = e.description.replace(/<[^>]+>/g, '').substring(0, 500);
+            }
+            if (e.image) item.image = [e.image];
+            if (e.ticketLink) {
+                item.offers = {
+                    "@type": "Offer",
+                    "url": e.ticketLink,
+                    "availability": "https://schema.org/InStock"
+                };
+                if (e.price && e.price.toLowerCase() !== 'free') {
+                    // Only set price if we have numeric extraction from "$X";
+                    // pure strings like "Free entry" or "Members only" get
+                    // skipped to avoid schema validation warnings.
+                    const priceNum = (e.price.match(/\$?([\d.]+)/) || [])[1];
+                    if (priceNum) {
+                        item.offers.price = priceNum;
+                        item.offers.priceCurrency = "USD";
+                    }
+                } else {
+                    item.offers.price = "0";
+                    item.offers.priceCurrency = "USD";
+                }
+            }
+            if (e.sourceLink) item.url = e.sourceLink;
+            return item;
+        });
+
+        const script = document.createElement('script');
+        script.id = 'mapp-events-ld';
+        script.type = 'application/ld+json';
+        script.textContent = JSON.stringify(ldArray);
+        document.head.appendChild(script);
+    } catch (err) {
+        // SEO injection is informational — never break the app if it fails.
+        console.warn('Structured data injection failed:', err);
+    }
 }
 
 // Render the homepage's "updated X ago" line. Reads from the scraper-written
@@ -2192,6 +2396,77 @@ window.addToCalendar = function(btn) {
     }
 };
 
+// Share action — Web Share API on mobile (native share sheet: iMessage,
+// AirDrop, WhatsApp, etc.), clipboard copy fallback on desktop. Share text
+// includes title, formatted date/time, location, and a link back to the
+// event's source or millersville.app if no source URL exists.
+window.shareEvent = function(btn) {
+    const key = btn.dataset.cardkey;
+    if (!key) return;
+    const e = (allEvents || []).find(ev => (ev.sourceLink || (ev.title + '|' + ev.date)) === key);
+    if (!e) return;
+
+    const d = new Date(e.date);
+    const dateStr = d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    const isNoon = d.getHours() === 12 && d.getMinutes() === 0;
+    const timeStr = isNoon ? '' : ` @ ${formatTime(d)}`;
+    // Prefer the event's own source URL (recap page, MU Calendar entry, etc.)
+    // as the share link since it's the most specific landing page. Fall back
+    // to the site root for events without a source — the user landing there
+    // can at least find the same item via Today's list.
+    const link = e.sourceLink || 'https://millersville.app';
+    const location = (e.location || '').trim();
+
+    const title = e.title || 'Millersville event';
+    // Body includes all essentials so a shared SMS/iMessage is self-contained
+    // without relying on link previews (which don't always render).
+    const body = `${title}\n📅 ${dateStr}${timeStr}${location ? '\n📍 ' + location : ''}\n\n${link}`;
+
+    // Visual success feedback — flips the icon to a green check for 1.5s
+    // so the user knows the action fired. Used on both the native-share
+    // success path AND the clipboard fallback.
+    const flashSuccess = () => {
+        const originalText = btn.innerHTML;
+        const originalColor = btn.style.color;
+        btn.innerHTML = '✓';
+        btn.style.color = '#16a34a';
+        btn.style.borderColor = '#16a34a';
+        setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.style.color = originalColor;
+            btn.style.borderColor = '';
+        }, 1500);
+    };
+
+    if (navigator.share) {
+        navigator.share({ title, text: body, url: link })
+            .then(flashSuccess)
+            .catch(err => {
+                // AbortError = user dismissed the share sheet; don't treat as failure.
+                if (err && err.name === 'AbortError') return;
+                // Other errors (permission denied, etc.) — fall back to clipboard.
+                copyToClipboardFallback();
+            });
+    } else {
+        copyToClipboardFallback();
+    }
+
+    function copyToClipboardFallback() {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(body)
+                .then(flashSuccess)
+                .catch(() => {
+                    // Clipboard API unavailable or blocked. Last resort:
+                    // prompt() the text so user can manually copy. Rare path
+                    // on modern browsers with HTTPS.
+                    window.prompt('Copy this text to share:', body);
+                });
+        } else {
+            window.prompt('Copy this text to share:', body);
+        }
+    }
+};
+
 // Trigger .ics download (desktop / Android primary path)
 function downloadICS(e) {
     const ics = buildICS(e);
@@ -2336,15 +2611,12 @@ function buildEventCard(e,isSportsPage){
     // because the latter returns true for all events when user has no prefs set.
     const isFav = (typeof isEventFavorited === 'function') && isEventFavorited(e);
     const favClass = isFav ? ' card-fav' : '';
-    // One-tap favorite button — top-right of card. Toggles the best-matching pref ID for
+    // One-tap favorite button — inline with title. Toggles the best-matching pref ID for
     // this event so the user doesn't have to open the settings modal for a simple pick.
     // For club events the ID is `club:<orgName>`; for MU sports it's the sport-specific ID;
     // everything else falls back to the broad source ID (e.g. `borough-all`). See
     // suggestFeedIdForEvent() for the mapping logic.
     const favId = (typeof suggestFeedIdForEvent === 'function') ? suggestFeedIdForEvent(e, isSportsPage) : null;
-    const favBtnHtml = favId
-        ? `<button class="card-fav-btn${isFav ? ' active' : ''}" onclick="event.stopPropagation();toggleCardFavorite('${favId.replace(/'/g, "\\'")}', this)" title="${isFav ? 'Remove from favorites' : 'Add to favorites'}" aria-label="${isFav ? 'Remove from favorites' : 'Add to favorites'}">${isFav ? '★' : '☆'}</button>`
-        : '';
 
     // Description block — shown on event cards (not sports cards, where descriptions are
     // usually empty or boilerplate). Short descriptions render plain; longer ones get a
@@ -2378,8 +2650,36 @@ function buildEventCard(e,isSportsPage){
     // composite key strategy used by openEventDetails and search hit-handling).
     const cardKey = (e.sourceLink || (e.title + '|' + e.date)).replace(/"/g, '&quot;');
     const calBtn = `<button class="btn-cal" data-cardkey="${cardKey}" onclick="event.stopPropagation();addToCalendar(this)" title="Add to calendar" aria-label="Add to calendar">📥</button>`;
+    // Share button — uses Web Share API on mobile (native share sheet with
+    // iMessage/AirDrop/Slack/etc.) and falls back to clipboard copy on
+    // desktop browsers where navigator.share is undefined. Visual feedback
+    // (✓) on the button itself confirms the copy worked on the fallback path.
+    const shareBtn = `<button class="btn-share" data-cardkey="${cardKey}" onclick="event.stopPropagation();shareEvent(this)" title="Share" aria-label="Share">🔗</button>`;
 
-    return `<div class="app-card${isCurrentlyLive?' card-live':''} ${cardResultClass}${favClass}" style="position:relative;">${scoreBadge}${favBtnHtml}<div class="card-body"><div class="card-tags">${tagHtml}${liveBadge}</div><h3 class="card-title">${displayTitle}</h3><p class="card-meta">📅 ${formatDate(d)}${timeStr}</p><p class="card-meta">📍 ${cleanLocation(e.location)}</p>${descBlock}${perkBadges?`<div class="perk-row">${perkBadges}</div>`:''}</div><div class="card-footer"><div class="card-actions">${locBadge}${calBtn}<a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline">Details</a>${actionHtml}</div></div></div>`;
+    // Whole-card click opens the detail modal — the same one used by homepage
+    // timeline and search results. All interactive children (star, calendar,
+    // tickets, stream, description more/less) call stopPropagation so their
+    // action wins over the card-level click.
+    const modalKey = cardKey; // same composite key as cardKey
+    const cardOnclick = `onclick="window.openEventDetails(&quot;${modalKey}&quot;)" style="cursor:pointer;"`;
+
+    // Star renders inline before the title so it's visually anchored to the
+    // event name rather than floating in the corner. Older layout used
+    // position:absolute which forced ad-hoc left/right padding on the tags
+    // row and title to avoid overlap — now the star is part of the title
+    // flow line and those padding hacks are unnecessary.
+    const inlineFavBtn = favId
+        ? `<button class="card-fav-inline${isFav ? ' active' : ''}" onclick="event.stopPropagation();toggleCardFavorite('${favId.replace(/'/g, "\\'")}', this)" title="${isFav ? 'Remove from favorites' : 'Add to favorites'}" aria-label="${isFav ? 'Remove from favorites' : 'Add to favorites'}">${isFav ? '★' : '☆'}</button>`
+        : '';
+
+    return `<div class="app-card${isCurrentlyLive?' card-live':''} ${cardResultClass}${favClass}" style="position:relative;" ${cardOnclick}>${scoreBadge}<div class="card-body">
+        <div class="card-heading">${inlineFavBtn}<h3 class="card-title">${displayTitle}</h3></div>
+        <p class="card-meta">📅 ${formatDate(d)}${timeStr}</p>
+        <p class="card-meta">📍 ${cleanLocation(e.location)}</p>
+        ${tagHtml || liveBadge ? `<div class="card-tags card-tags-secondary">${tagHtml}${liveBadge}</div>` : ''}
+        ${descBlock}
+        ${perkBadges?`<div class="perk-row">${perkBadges}</div>`:''}
+    </div><div class="card-footer"><div class="card-actions">${locBadge}${calBtn}${shareBtn}${actionHtml}</div></div></div>`;
 }
 
 /* ==================== HOME ==================== */
@@ -2526,6 +2826,21 @@ function buildTimelineItem(e, now) {
     let streamBtn = '';
     if (isSport && e.streamLink && d > now) streamBtn = `<span class="tl-stream" title="Live stream available">📺</span>`;
 
+    // Ticket icon for events with a purchase link. Suppressed for marauders on
+    // MU athletic events because MU students get in free with their student ID
+    // (the icon would just cause confusion / unnecessary clicks). Townies always
+    // see the icon when a ticket link exists — they pay for everything. Unset
+    // affiliation defaults to marauder behavior (the app's default audience).
+    // Click opens the ticket link directly and stops propagation so the card's
+    // modal doesn't also fire; title attribute hints at the action on hover.
+    let ticketBtn = '';
+    const isMUAthletic = isSport && tags.includes('MU');
+    const hideTicketForMarauder = (muAffiliation !== 'townie') && isMUAthletic;
+    if (e.ticketLink && e.ticketLink.trim() && !hideTicketForMarauder) {
+        const safeUrl = e.ticketLink.replace(/"/g, '&quot;');
+        ticketBtn = `<a href="${safeUrl}" target="_blank" rel="noopener" class="tl-ticket" title="Buy tickets" onclick="event.stopPropagation();">🎟️</a>`;
+    }
+
     // Use event's sourceLink as unique identifier for the detail modal lookup.
     // Falls back to title+date composite for events without sourceLink.
     const eventKey = e.sourceLink || (e.title + '|' + e.date);
@@ -2539,7 +2854,7 @@ function buildTimelineItem(e, now) {
         <div class="tl-content">
             <span class="tl-src${isSport?'':' tl-src-event'}">${src}</span>
             <span class="tl-title">${title}</span>
-            <span class="tl-badges">${badges}${streamBtn}</span>
+            <span class="tl-badges">${badges}${streamBtn}${ticketBtn}</span>
         </div>
     </div>`;
 }
@@ -2569,16 +2884,12 @@ window.openEventDetails = function(key) {
     else if(tags.includes('Community')) src = 'Community';
     else src = 'Event';
 
-    // Badges row — home/family/score only. Perks (food/stuff/credit) get their
-    // own high-visibility strip rendered separately below the location so they
-    // stand out as the primary draw for the event.
+    // Badges row — home/family only. Score is shown in the dedicated scoreSummary
+    // block below (more readable: "Millersville 4, Holy Family 2 – Final (W)"
+    // beats a plain "W 4-2" pill). Perks get their own high-visibility strip.
     let badges = '';
     if (isSport && isHome) badges += '<span class="tl-badge tl-home">🏠 Home</span>';
     if (e.kidFriendly) badges += '<span class="tl-badge tl-family">👨‍👩‍👧 Family</span>';
-    if (e.gameResult && e.gameScore) {
-        const cls = e.gameResult === 'W' ? 'tl-win' : e.gameResult === 'L' ? 'tl-loss' : 'tl-tie';
-        badges += `<span class="tl-badge ${cls}">${e.gameResult} ${e.gameScore}</span>`;
-    }
 
     // Perk badges — prominent colored pills, own row, bigger sizing via
     // .event-details-overlay .perk-badge rules in CSS.
@@ -2604,6 +2915,79 @@ window.openEventDetails = function(key) {
         ? `<div style="margin-top:10px;font-size:0.88rem;color:var(--text-muted);">📍 ${location}</div>`
         : '';
 
+    // Game score summary for past sports events. We store the score as "4-2"
+    // (our-team first when home, their-team first when away — inherited from
+    // the scraper's parse). Pair that with the opponent extracted from the
+    // title to build a human-readable summary line. Inning-by-inning box
+    // scores aren't in our data pipeline; the recap URL points at MaxPreps
+    // (PM) or MU Athletics (MU) where the full box score is published.
+    let scoreSummary = '';
+    if (isSport && e.gameResult && e.gameScore) {
+        const ourTeam = tags.includes('MU') ? 'Millersville' : tags.includes('PM') ? 'Penn Manor' : 'Home';
+        // Extract opponent from title: "Softball vs Holy Family" → "Holy Family"
+        const oppMatch = (e.title || '').match(/\s(?:vs\.?|@|at)\s+(.+?)(?:\s+(?:-|·|–).*)?$/i);
+        const opponent = oppMatch ? oppMatch[1].trim() : '';
+        const [n1, n2] = e.gameScore.split('-').map(s => s.trim());
+        // When we won, our score is the higher number; when we lost, ours is lower.
+        // Tie: either order works — use home-first convention.
+        let ourScore, theirScore;
+        if (e.gameResult === 'W') {
+            ourScore = Math.max(+n1, +n2); theirScore = Math.min(+n1, +n2);
+        } else if (e.gameResult === 'L') {
+            ourScore = Math.min(+n1, +n2); theirScore = Math.max(+n1, +n2);
+        } else {
+            ourScore = n1; theirScore = n2;
+        }
+        const resultLabel = e.gameResult === 'W' ? 'Final (W)' : e.gameResult === 'L' ? 'Final (L)' : 'Final';
+        const resultColor = e.gameResult === 'W' ? '#15803d' : e.gameResult === 'L' ? '#b91c1c' : '#6b7280';
+        scoreSummary = `<div style="margin-top:12px;padding:10px 12px;background:var(--bg);border-left:4px solid ${resultColor};border-radius:var(--radius-sm);">
+            <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:${resultColor};font-weight:700;">${resultLabel}</div>
+            <div style="font-size:1rem;font-weight:700;color:var(--text);margin-top:2px;">${ourTeam} ${ourScore}${opponent ? `, ${opponent} ${theirScore}` : ` – ${theirScore}`}</div>
+        </div>`;
+    }
+
+    // Inline linescore (box score). Rendered only when the scraper populated
+    // event.periodScores. Structure: { labels: [...], home: {team, values},
+    // away: {team, values}, ourTeamSide: 'home'|'away' }. ourTeamSide tells us
+    // which row to visually emphasize (the "home team" in box-score parlance
+    // is the school hosting, not necessarily the MU/PM team we're tracking).
+    let linescoreBlock = '';
+    if (isSport && e.periodScores && Array.isArray(e.periodScores.labels) && e.periodScores.home && e.periodScores.away) {
+        const ps = e.periodScores;
+        const rowHtml = (side, data) => {
+            const isOur = side === ps.ourTeamSide;
+            const rowStyle = isOur
+                ? 'background:var(--gold-soft);font-weight:700;'
+                : '';
+            const teamName = (data.team || '').replace(/</g, '&lt;');
+            const cells = (data.values || []).map((v, i) => {
+                // Last three columns (R/H/E for baseball, or total for other
+                // sports) get bold emphasis as summary values.
+                const isTotal = i >= ps.labels.length - 3;
+                const cellStyle = isTotal ? 'font-weight:700;border-left:1px solid var(--border);' : '';
+                return `<td style="padding:4px 8px;text-align:center;${cellStyle}">${v}</td>`;
+            }).join('');
+            return `<tr style="${rowStyle}"><td style="padding:4px 8px;font-weight:600;">${teamName}</td>${cells}</tr>`;
+        };
+        const headerCells = ps.labels.map((lbl, i) => {
+            const isTotal = i >= ps.labels.length - 3;
+            const cellStyle = isTotal ? 'font-weight:800;border-left:1px solid var(--border);' : '';
+            return `<th style="padding:4px 8px;text-align:center;font-size:0.72rem;color:var(--text-muted);${cellStyle}">${lbl}</th>`;
+        }).join('');
+        linescoreBlock = `<div style="margin-top:12px;overflow-x:auto;">
+            <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);font-weight:700;margin-bottom:4px;">Box Score</div>
+            <table style="border-collapse:collapse;font-size:0.85rem;min-width:100%;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;">
+                <thead style="background:var(--bg);">
+                    <tr><th style="padding:4px 8px;text-align:left;"></th>${headerCells}</tr>
+                </thead>
+                <tbody>
+                    ${rowHtml('away', ps.away)}
+                    ${rowHtml('home', ps.home)}
+                </tbody>
+            </table>
+        </div>`;
+    }
+
     // Action buttons
     let actions = '';
     if (e.ticketLink) actions += `<a href="${e.ticketLink}" target="_blank" class="btn btn-sm btn-ticket" style="text-decoration:none;">🎟️ Buy Tickets</a>`;
@@ -2611,7 +2995,16 @@ window.openEventDetails = function(key) {
     // Calendar action — uses the same key scheme as card buttons so addToCalendar can find it
     const modalCardKey = (e.sourceLink || (e.title + '|' + e.date)).replace(/"/g, '&quot;');
     actions += `<button class="btn btn-sm btn-outline" data-cardkey="${modalCardKey}" onclick="addToCalendar(this)" style="cursor:pointer;">📅 Add to Calendar</button>`;
-    if (e.sourceLink) actions += `<a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline" style="text-decoration:none;">🔗 View Source</a>`;
+    actions += `<button class="btn btn-sm btn-outline" data-cardkey="${modalCardKey}" onclick="shareEvent(this)" style="cursor:pointer;">🔗 Share</button>`;
+    // Source link labeling: for past sports games, promote it to "Game Recap
+    // & Box Score" since the target URL is the MaxPreps/MU Athletics recap
+    // page where inning/quarter box scores and recap articles live. Other
+    // contexts keep the generic "View Source" label.
+    if (e.sourceLink) {
+        const isPastGame = isSport && e.gameResult && e.gameScore;
+        const srcLabel = isPastGame ? '📊 Game Recap & Box Score' : '🔗 View Source';
+        actions += `<a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline" style="text-decoration:none;">${srcLabel}</a>`;
+    }
 
     // Build modal
     const overlay = document.createElement('div');
@@ -2627,6 +3020,8 @@ window.openEventDetails = function(key) {
         <h2 style="margin:4px 0 8px;font-size:1.25rem;color:var(--navy);line-height:1.3;padding-right:24px;">${e.title || 'Event'}</h2>
         <div style="font-size:0.92rem;color:var(--text);font-weight:600;">📅 ${dateStr}${!isNoon ? ' · ' + timeStr : ''}</div>
         ${locBlock}
+        ${scoreSummary}
+        ${linescoreBlock}
         ${perks ? `<div class="modal-perks">${perks}</div>` : ''}
         ${badges ? `<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:4px;">${badges}</div>` : ''}
         ${displayTags.length ? `<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:4px;">${displayTags.map(t => `<span class="card-tag">${t}</span>`).join('')}</div>` : ''}
@@ -2978,6 +3373,8 @@ function renderBoard(){
     const c=document.getElementById('board-container');
     const filtered=boardFilter==='All'?allBoardPosts:allBoardPosts.filter(p=>p.category===boardFilter);
     if(filtered.length===0){c.innerHTML='<p class="empty-state">No posts in this category.</p>';return;}
+    const now = Date.now();
+    const dayMs = 24 * 60 * 60 * 1000;
     c.innerHTML=filtered.map(p=>{
         const catIcons={'Yard Sale':'🏷️','Lost Pet':'🐾','Found Pet':'🐾','Help Wanted':'💼','For Sale':'🛒','Free Stuff':'🎁','Community Notice':'📢'};
         const icon=catIcons[p.category]||'📋';
@@ -2985,7 +3382,53 @@ function renderBoard(){
         const contact=p.contact?`<p style="font-size:0.85rem;margin-top:8px;">📧 ${p.contact}</p>`:'';
         const loc=p.location?`<p class="card-meta">📍 ${p.location}</p>`:'';
         const urgentClass=(p.category==='Lost Pet')?'style="border-left:4px solid #dc2626;"':'';
-        return `<div class="app-card" ${urgentClass}>${img}<span class="card-tag">${icon} ${p.category}</span><h3 class="card-title">${p.title}</h3>${loc}<p style="font-size:0.85rem;color:var(--text-muted);margin:6px 0;">${p.description||''}</p>${contact}<p style="font-size:0.7rem;color:var(--text-muted);margin-top:6px;">${p.date||''}</p></div>`;
+
+        // Age + expiry badges. Scraper now writes postedAt/expiresAt as ISO
+        // strings (per BOARD_TTL_DAYS: 7d for Free Stuff, 14d for Lost/Found
+        // Pet, 21d for Yard Sale, 30d for Help Wanted/For Sale/Community
+        // Notice). Older posts predating the TTL fields keep their legacy
+        // p.date display. Future posts (dated beyond today) label as "posted
+        // today" since they're freshly approved from the sheet.
+        let ageBadge = '';
+        let expiryBadge = '';
+        if (p.postedAt) {
+            const postedMs = new Date(p.postedAt).getTime();
+            if (!isNaN(postedMs)) {
+                const ageDays = Math.floor((now - postedMs) / dayMs);
+                let ageText;
+                if (ageDays <= 0) ageText = 'Posted today';
+                else if (ageDays === 1) ageText = 'Posted yesterday';
+                else if (ageDays < 7) ageText = `Posted ${ageDays} days ago`;
+                else if (ageDays < 14) ageText = 'Posted over a week ago';
+                else ageText = `Posted ${Math.floor(ageDays / 7)} weeks ago`;
+                ageBadge = `<span class="board-badge board-badge-age">${ageText}</span>`;
+            }
+        }
+        if (p.expiresAt) {
+            const expMs = new Date(p.expiresAt).getTime();
+            if (!isNaN(expMs)) {
+                const daysLeft = Math.ceil((expMs - now) / dayMs);
+                // Only show if within 3 days of expiry (the "urgent" window).
+                // Posts with more time get no expiry badge — reduces clutter.
+                if (daysLeft <= 0) {
+                    expiryBadge = `<span class="board-badge board-badge-expiring-now">Expiring today</span>`;
+                } else if (daysLeft === 1) {
+                    expiryBadge = `<span class="board-badge board-badge-expiring-soon">Expires tomorrow</span>`;
+                } else if (daysLeft <= 3) {
+                    expiryBadge = `<span class="board-badge board-badge-expiring-soon">Expires in ${daysLeft} days</span>`;
+                }
+            }
+        }
+
+        // Footer meta row: fall back to the original p.date string only when
+        // we have nothing dynamic to say (very old posts or posts with no
+        // postedAt). Keeps legacy display without forcing every post to
+        // wait for a scraper-regen to show anything at all.
+        const footerMeta = (ageBadge || expiryBadge)
+            ? `<div class="board-meta-row">${ageBadge}${expiryBadge}</div>`
+            : (p.date ? `<p style="font-size:0.7rem;color:var(--text-muted);margin-top:6px;">${p.date}</p>` : '');
+
+        return `<div class="app-card" ${urgentClass}>${img}<span class="card-tag">${icon} ${p.category}</span><h3 class="card-title">${p.title}</h3>${loc}<p style="font-size:0.85rem;color:var(--text-muted);margin:6px 0;">${p.description||''}</p>${contact}${footerMeta}</div>`;
     }).join('');
 }
 

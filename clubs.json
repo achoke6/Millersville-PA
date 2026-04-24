@@ -3,8 +3,7 @@
     "name": "Acacia",
     "category": "Service",
     "categories": [
-      "Service",
-      "Fundraiser"
+      "Service"
     ],
     "shortName": "",
     "id": ""
@@ -117,12 +116,12 @@
   },
   {
     "name": "American Chemical Society",
-    "category": "Educational Program",
+    "category": "Academic",
     "categories": [
-      "Educational Program"
+      "Academic"
     ],
-    "shortName": "",
-    "id": ""
+    "shortName": "ACS",
+    "id": "acs"
   },
   {
     "name": "American Choral Directors Association",
@@ -705,16 +704,10 @@
   },
   {
     "name": "Dr. Rita Smith-Wade-El Center for Intercultural Student Engagement",
-    "category": "Educational Program",
-    "categories": [
-      "Educational Program",
-      "Lecture or Speaker",
-      "Movie or Film",
-      "Performance",
-      "Social"
-    ],
-    "shortName": "",
-    "id": ""
+    "category": "",
+    "categories": [],
+    "shortName": "CISE",
+    "id": "cise"
   },
   {
     "name": "Dr. Rita Smith-Wade-El Intercultural Center",
@@ -787,10 +780,8 @@
   },
   {
     "name": "Expressions Dance",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1202,8 +1193,11 @@
   },
   {
     "name": "Men's Club Lacrosse",
-    "category": "",
-    "categories": [],
+    "category": "Competition",
+    "categories": [
+      "Competition",
+      "Sporting"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1356,7 +1350,7 @@
     "categories": [
       "Identity-Based",
       "Educational Program",
-      "Performance",
+      "Lecture or Speaker",
       "Social"
     ],
     "shortName": "MSA",
@@ -1663,13 +1657,12 @@
   },
   {
     "name": "Sneakers to Stilettos Modeling Troupe",
-    "category": "Performance",
+    "category": "Arts & Culture",
     "categories": [
-      "Performance",
-      "Social"
+      "Arts & Culture"
     ],
-    "shortName": "",
-    "id": ""
+    "shortName": "S2S",
+    "id": "sneakers2stilettos"
   },
   {
     "name": "Society of Manufacturing Engineers",
@@ -1750,10 +1743,8 @@
   },
   {
     "name": "Student Business Association",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },

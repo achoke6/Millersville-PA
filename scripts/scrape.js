@@ -1687,56 +1687,165 @@ async function runScraper() {
     // and users are expected to verify time on the ticket page.
     let ppCount = 0;
     try {
-        console.log("📡 Fetching JamBase for Phantom Power calendar...");
-        const jbRes = await fetch('https://www.jambase.com/venue/phantom-power', {
-            headers: baseHeaders,
-            signal: AbortSignal.timeout(15000)
-        });
-        const jbHtml = await jbRes.text();
+        // Phantom Power scrape strategy (as of Apr 2026):
+        //
+        //   PRIMARY:   Eventbrite organizer page (ID 29187724817) — Phantom
+        //              Power's own published calendar, 30+ upcoming shows.
+        //              We scrape the organizer listing page HTML for event
+        //              URLs, then hit each event page for details.
+        //   SECONDARY: phantompower.net homepage — catches 1-3 featured
+        //              shows that might be promoted outside Eventbrite.
+        //   TERTIARY:  JamBase venue page — used to be primary but started
+        //              returning HTTP 403 "Host not in allowlist" on our
+        //              scraper IP around Apr 2026. Attempted silently now;
+        //              when it comes back online we'll pick up extra dates
+        //              automatically without any code change.
+        //
+        // Each source contributes URLs to a single ebUrls Set (de-duped),
+        // then one fetch-per-URL pass extracts event details. Emits events
+        // with ticketLink = sourceLink = the Eventbrite event page.
 
-        // Match any anchor whose href points to a phantom-power show page.
-        // JamBase serves same-domain anchors as RELATIVE URLs (/show/...) but
-        // some embedded paths render as absolute — accept either and normalize
-        // to an absolute URL when storing. Link text may be wrapped in nested
-        // HTML tags (e.g., <a><img></a> for the thumbnail anchor), so we match
-        // across tags via [\s\S]*? and strip HTML from the captured text
-        // afterward. Empty-text matches (image-only anchors) fail the length
-        // filter and fall through to the h4 title link's match for the same URL.
-        const showRe = /<a[^>]*href="((?:https:\/\/[^"]+)?\/show\/[^"]*-phantom-power-(\d{4})(\d{2})(\d{2}))"[^>]*>([\s\S]*?)<\/a>/g;
-        const seen = new Map(); // url -> { title, date }
-        let m;
-        while ((m = showRe.exec(jbHtml)) !== null) {
-            const [, hrefPart, yyyy, mm, dd, rawText] = m;
-            const url = hrefPart.startsWith('http') ? hrefPart : `https://www.jambase.com${hrefPart}`;
-            // Strip any nested tags, decode common HTML entities that appear in
-            // button labels ("Tickets &amp; Info"), then trim.
-            const text = rawText.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&nbsp;/g, ' ').trim();
-            // Skip matches with no usable text (image-only anchors) and the
-            // repeat matches from call-to-action buttons that share the URL.
-            if (!text || text.length < 2) continue;
-            if (/^(Tickets & Info|Calendar|Buy Tickets|More Info)$/i.test(text)) continue;
-            // First valid match for a given URL wins — after empty-text filtering
-            // the artist-title h4 anchor is typically the first valid match in DOM.
-            if (seen.has(url)) continue;
-            seen.set(url, {
-                title: text,
-                date: new Date(`${yyyy}-${mm}-${dd}T20:00:00-04:00`)
+        const allEventbriteUrls = new Set();  // Deduped across all sources
+
+        // ---- SOURCE 1: Eventbrite organizer listing (PRIMARY) ----
+        console.log("📡 Fetching Phantom Power events via Eventbrite organizer...");
+        try {
+            const orgRes = await fetch('https://www.eventbrite.com/o/phantom-power-29187724817', {
+                headers: baseHeaders,
+                signal: AbortSignal.timeout(15000)
             });
+            if (orgRes.ok) {
+                const orgHtml = await orgRes.text();
+                // Organizer pages render a list of event cards each with an
+                // /e/...-<eventId> link. Pull unique event IDs — regex captures
+                // both the trailing 11-12 digit ID and the full URL.
+                const evRe = /https:\/\/www\.eventbrite\.com\/e\/([^"'\s<>)]+?-(\d{10,13}))/g;
+                const seenIds = new Set();
+                let em;
+                while ((em = evRe.exec(orgHtml)) !== null) {
+                    if (seenIds.has(em[2])) continue;
+                    seenIds.add(em[2]);
+                    allEventbriteUrls.add(em[1] ? `https://www.eventbrite.com/e/${em[1]}` : em[0]);
+                }
+                console.log(`   Organizer page: ${seenIds.size} Eventbrite URL(s)`);
+            } else {
+                console.log(`   ⚠️  Eventbrite organizer page returned HTTP ${orgRes.status}`);
+            }
+        } catch (e) {
+            console.log(`   ⚠️  Eventbrite organizer fetch failed: ${e.message}`);
         }
-        console.log(`   Found ${seen.size} unique shows on JamBase`);
 
-        // Data-quality assertion. Phantom Power is an active venue that
-        // consistently has 10-20 upcoming shows on JamBase. If the fetch
-        // succeeded (status 200) but we extracted zero shows, the regex or
-        // JamBase's HTML structure has almost certainly drifted — fire a /fail
-        // ping so we hear about it within the hour instead of silently shipping
-        // an empty concert feed for days. A successful subsequent scrape will
-        // flip the check back to "up" and trigger a recovery notification.
-        // Kept tightly scoped: only fires when jbRes.ok (so a 5xx fetch error
-        // doesn't false-alarm — those are handled by the outer try/catch as
-        // transient failures, not regressions).
-        if (jbRes.ok && seen.size === 0) {
-            console.warn(`⚠️  DATA QUALITY: JamBase returned 0 Phantom Power shows despite HTTP 200. Likely a regex or HTML-structure regression — Phantom Power is an active venue.`);
+        // ---- SOURCE 2: phantompower.net homepage (SECONDARY) ----
+        try {
+            const ppRes = await fetch('https://www.phantompower.net/', {
+                headers: baseHeaders,
+                signal: AbortSignal.timeout(10000)
+            });
+            if (ppRes.ok) {
+                const ppHtml = await ppRes.text();
+                const urlRe = /https:\/\/www\.eventbrite\.com\/e\/[^"'\s<>)]+?-(\d+)/g;
+                let prevSize = allEventbriteUrls.size;
+                const seenIdsPP = new Set();
+                let em;
+                while ((em = urlRe.exec(ppHtml)) !== null) {
+                    if (seenIdsPP.has(em[1])) continue;
+                    seenIdsPP.add(em[1]);
+                    allEventbriteUrls.add(em[0]);
+                }
+                const added = allEventbriteUrls.size - prevSize;
+                console.log(`   phantompower.net: ${seenIdsPP.size} URL(s) found, ${added} new`);
+            }
+        } catch (e) { /* best-effort — homepage down is non-critical */ }
+
+        // ---- SOURCE 3: JamBase venue page (TERTIARY, may be blocked) ----
+        const jbSeen = new Map(); // url -> { title, date } — used when JamBase works
+        try {
+            const jbRes = await fetch('https://www.jambase.com/venue/phantom-power', {
+                headers: baseHeaders,
+                signal: AbortSignal.timeout(15000)
+            });
+            if (jbRes.ok) {
+                const jbHtml = await jbRes.text();
+                const showRe = /<a[^>]*href="((?:https:\/\/[^"]+)?\/show\/[^"]*-phantom-power-(\d{4})(\d{2})(\d{2}))"[^>]*>([\s\S]*?)<\/a>/g;
+                let m;
+                while ((m = showRe.exec(jbHtml)) !== null) {
+                    const [, hrefPart, yyyy, mm, dd, rawText] = m;
+                    const url = hrefPart.startsWith('http') ? hrefPart : `https://www.jambase.com${hrefPart}`;
+                    const text = rawText.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/&nbsp;/g, ' ').trim();
+                    if (!text || text.length < 2) continue;
+                    if (/^(Tickets & Info|Calendar|Buy Tickets|More Info)$/i.test(text)) continue;
+                    if (jbSeen.has(url)) continue;
+                    jbSeen.set(url, { title: text, date: new Date(`${yyyy}-${mm}-${dd}T20:00:00-04:00`) });
+                }
+                console.log(`   JamBase: ${jbSeen.size} show(s)`);
+            } else {
+                // 403 "Host not in allowlist" is the known failure mode as of
+                // Apr 2026 — log at debug level, not warning, since it's no
+                // longer the primary source.
+                console.log(`   JamBase: HTTP ${jbRes.status} (source tertiary, not fatal)`);
+            }
+        } catch (e) { /* silent — JamBase is best-effort */ }
+
+        // ---- EMIT EVENTS: fetch each Eventbrite URL, extract details ----
+        console.log(`   Processing ${allEventbriteUrls.size} unique Eventbrite URL(s)...`);
+        const ebEventsEmitted = [];
+        for (const ebUrl of allEventbriteUrls) {
+            try {
+                const res = await fetch(ebUrl, { headers: baseHeaders, signal: AbortSignal.timeout(10000) });
+                if (!res.ok) continue;
+                const ebHtml = await res.text();
+                const before = events.length;
+                extractPhantomPowerEventFromHTML(ebHtml, ebUrl, events, today, futureDate);
+                if (events.length > before) {
+                    ebEventsEmitted.push({ url: ebUrl, title: events[events.length - 1].title, date: new Date(events[events.length - 1].date) });
+                    ppCount++;
+                }
+            } catch (e) { /* individual fetch failures are routine */ }
+            // Rate limit: Eventbrite is tolerant but we're still polite.
+            await new Promise(r => setTimeout(r, 200));
+        }
+
+        // Merge JamBase-only shows (not represented in Eventbrite URLs) as
+        // events with JamBase as the source link. Rare — most shows have an
+        // Eventbrite URL too — but ensures we don't lose a show just because
+        // Phantom Power didn't link its Eventbrite equivalent.
+        const norm = s => (s || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+        let jbOnlyCount = 0;
+        for (const [jbUrl, jb] of jbSeen.entries()) {
+            if (jb.date < today || jb.date >= futureDate) continue;
+            // Skip if we already emitted a matching Eventbrite event for this show.
+            const jbTitleNorm = norm(jb.title);
+            const firstWord = jbTitleNorm.split(' ')[0];
+            const dupe = ebEventsEmitted.some(eb => {
+                const ebNorm = norm(eb.title);
+                const titleMatch = firstWord.length >= 3 &&
+                    (ebNorm.startsWith(firstWord) || jbTitleNorm.startsWith(ebNorm.split(' ')[0]));
+                const dayDiff = Math.abs(eb.date - jb.date) / 86400000;
+                return titleMatch && dayDiff <= 2;
+            });
+            if (dupe) continue;
+            events.push({
+                title: jb.title,
+                date: jb.date.toISOString(),
+                location: "Phantom Power",
+                tags: ["Other", "Live Music"],
+                price: "Ticket Required",
+                ticketLink: jbUrl,
+                sourceLink: jbUrl
+            });
+            ppCount++;
+            jbOnlyCount++;
+        }
+
+        console.log(`✅ Phantom Power: ${ppCount} events (${ebEventsEmitted.length} via Eventbrite, ${jbOnlyCount} JamBase-only)`);
+
+        // ---- DATA QUALITY: alert only on TOTAL pipeline failure ----
+        // Earlier version pinged /fail whenever JamBase alone was empty. Now
+        // that JamBase is optional, ping only when BOTH Eventbrite sources
+        // (organizer + phantompower.net) yielded zero usable events. That's
+        // the true "we lost our concert feed" state.
+        if (ppCount === 0) {
+            console.warn(`⚠️  DATA QUALITY: All Phantom Power sources returned 0 events. Eventbrite organizer, phantompower.net, and JamBase all failed or returned empty.`);
             const healthUrl = process.env.HEALTHCHECK_URL;
             if (healthUrl) {
                 try {
@@ -1745,7 +1854,7 @@ async function runScraper() {
                     await fetch(`${healthUrl}/fail`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'text/plain' },
-                        body: 'JamBase returned 0 Phantom Power shows despite HTTP 200 — likely regex/markup regression in scrape.js Phantom Power block.',
+                        body: 'Phantom Power scrape produced 0 events — Eventbrite organizer, phantompower.net, and JamBase all unreachable or empty.',
                         signal: ctrl.signal
                     }).catch(() => {});
                     clearTimeout(timer);
@@ -1753,96 +1862,6 @@ async function runScraper() {
                 } catch (_) { /* never break the scrape on monitoring failure */ }
             }
         }
-
-        // Eventbrite enrichment: fetch phantompower.net homepage, extract the
-        // 1-3 Eventbrite URLs it promotes, and harvest title+date from each so
-        // we can fuzzy-match into the JamBase set. This enrichment is strictly
-        // best-effort — if it fails, JamBase entries still ship with JamBase
-        // URLs as the ticket link.
-        const ebMatches = []; // { url, title, date }
-        try {
-            const ppRes = await fetch('https://www.phantompower.net/', {
-                headers: baseHeaders,
-                signal: AbortSignal.timeout(10000)
-            });
-            const ppHtml = await ppRes.text();
-            const urlRe = /https:\/\/www\.eventbrite\.com\/e\/[^"'\s<>)]+?-(\d+)/g;
-            const ebSeen = new Set();
-            const ebUrls = [];
-            let em;
-            while ((em = urlRe.exec(ppHtml)) !== null) {
-                if (ebSeen.has(em[1])) continue;
-                ebSeen.add(em[1]);
-                ebUrls.push(em[0]);
-            }
-            console.log(`   Found ${ebUrls.length} Eventbrite URL(s) promoted on phantompower.net`);
-            for (const ebUrl of ebUrls) {
-                try {
-                    const res = await fetch(ebUrl, { headers: baseHeaders, signal: AbortSignal.timeout(10000) });
-                    if (!res.ok) continue;
-                    const ebHtml = await res.text();
-                    // Reuse the same title/date extraction logic
-                    const tmp = [];
-                    extractPhantomPowerEventFromHTML(ebHtml, ebUrl, tmp, today, futureDate);
-                    if (tmp.length > 0) {
-                        ebMatches.push({ url: ebUrl, title: tmp[0].title, date: new Date(tmp[0].date) });
-                    }
-                } catch (e) { /* best-effort */ }
-                await new Promise(r => setTimeout(r, 200));
-            }
-        } catch (e) {
-            console.log(`   ⚠️  Eventbrite enrichment failed (non-fatal): ${e.message}`);
-        }
-
-        // Normalization helper for fuzzy title matching. Strip non-alphanumerics,
-        // lowercase everything, drop common noise words. "EMF w. Ecce Shnak" and
-        // "EMF" should both reduce to a comparable prefix.
-        const norm = s => (s || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
-
-        // Match each Eventbrite entry to a JamBase entry by comparing normalized
-        // title prefix + date within ±1 day (sometimes JamBase lists the door
-        // date while Eventbrite lists the show start-of-next-day).
-        const ebByJbUrl = new Map(); // jbUrl -> ebUrl
-        for (const eb of ebMatches) {
-            const ebNorm = norm(eb.title);
-            // Try each JamBase entry
-            for (const [jbUrl, jb] of seen.entries()) {
-                if (ebByJbUrl.has(jbUrl)) continue;
-                const jbNorm = norm(jb.title);
-                const firstWord = jbNorm.split(' ')[0];
-                // Match if either title starts with the other's first word AND
-                // the dates are within 2 days (accounts for door vs. show time
-                // differences that cross midnight).
-                const titleMatch = firstWord.length >= 3 &&
-                    (ebNorm.startsWith(firstWord) || jbNorm.startsWith(ebNorm.split(' ')[0]));
-                const dayDiff = Math.abs(eb.date - jb.date) / 86400000;
-                if (titleMatch && dayDiff <= 2) {
-                    ebByJbUrl.set(jbUrl, eb.url);
-                    break;
-                }
-            }
-        }
-        if (ebByJbUrl.size > 0) {
-            console.log(`   Matched ${ebByJbUrl.size} JamBase show(s) to direct Eventbrite ticket URLs`);
-        }
-
-        // Emit all JamBase events into the main events array, layering
-        // Eventbrite URLs where we matched them.
-        for (const [jbUrl, jb] of seen.entries()) {
-            if (jb.date < today || jb.date >= futureDate) continue;
-            const ticketUrl = ebByJbUrl.get(jbUrl) || jbUrl;
-            events.push({
-                title: jb.title,
-                date: jb.date.toISOString(),
-                location: "Phantom Power",
-                tags: ["Other", "Live Music"],
-                price: "Ticket Required",
-                ticketLink: ticketUrl,
-                sourceLink: ticketUrl
-            });
-            ppCount++;
-        }
-        console.log(`✅ Phantom Power: ${ppCount} events (${ebByJbUrl.size} with direct Eventbrite links)`);
     } catch (e) { console.error("❌ Phantom Power error:", e.message); }
 
     // ===== 6. MILLERSVILLE BOROUGH (Google Calendar iCal — with recurring event expansion) =====

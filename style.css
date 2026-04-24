@@ -183,9 +183,9 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
    cards use .card-fav-inline now. */
 .card-heading {
     display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    margin-bottom: 6px;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
 }
 .card-heading .card-title {
     margin: 0;
@@ -254,6 +254,19 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
    de-emphasized vs the primary source/category tag pills. Slightly smaller,
    thinner top margin — they're metadata, not headline content anymore. */
 .card-tags-secondary { margin-top: 8px; margin-bottom: 0; }
+
+/* Gold pulse animation applied to .card-tags when a star is toggled on.
+   Visual cue showing the user which category bucket they just favorited. */
+@keyframes tags-flash-pulse {
+    0%, 100% { background: transparent; box-shadow: none; }
+    50% { background: var(--gold-soft); box-shadow: 0 0 0 3px var(--gold); }
+}
+.card-tags.tags-flash {
+    animation: tags-flash-pulse 0.7s ease-in-out 2;
+    border-radius: var(--radius-sm);
+    padding: 2px 4px;
+    margin: 6px -4px 0 -4px;
+}
 
 /* Community board post footer badges. Age badge is quiet gray (informational);
    expiry badges are progressively louder as the deadline approaches — amber
@@ -473,7 +486,7 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .card-body { flex: 1; }
 .card-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 6px; }
 .card-tag { display: inline-flex; align-items: center; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; background: var(--bg); color: var(--text-muted); padding: 3px 8px 1px; border-radius: var(--radius-pill); border: 1px solid var(--border); white-space: nowrap; line-height: 1.4; }
-.card-title { font-size: 1rem; font-weight: 700; margin: 4px 0 6px; line-height: 1.3; }
+.card-title { font-size: 1.08rem; font-weight: 700; margin: 4px 0 6px; line-height: 1.3; color: var(--text); }
 .card-title-sm { font-size: 0.95rem; font-weight: 700; margin: 4px 0; line-height: 1.3; }
 .card-meta { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
 .card-heading { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }

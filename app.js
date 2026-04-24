@@ -287,11 +287,59 @@ function suggestFeedIdForEvent(e, isSportsPage) {
 
 // Toggle a feed preference from a card-level ☆ button. Updates feedPrefs, persists,
 // and re-renders the current view so gold borders/stars reflect the change.
+// Resolve a prefId (e.g. "baseball-mu" or "club:Chess Club") back to the
+// human-readable label users see in the favorites modal. Used by the toast
+// message so the user knows exactly which category got toggled. Returns the
+// prefId unchanged if no match found, which is a reasonable fallback (the
+// user at least sees the raw identifier rather than a silent action).
+function resolvePrefLabel(prefId) {
+    if (!prefId) return '';
+    if (prefId.startsWith('club:')) return prefId.slice(5);
+    if (typeof feedSections === 'undefined' || !feedSections) return prefId;
+    for (const section of Object.values(feedSections)) {
+        if (!section || !section.groups) continue;
+        for (const group of Object.values(section.groups)) {
+            if (!group.subs) continue;
+            const match = group.subs.find(s => s.id === prefId);
+            if (match) {
+                // Strip leading emoji(s) from the label for a cleaner toast.
+                return (match.icon ? match.icon + ' ' : '') + match.label;
+            }
+        }
+    }
+    return prefId;
+}
+
+// Lightweight toast notifier. Reuses a single fixed element so repeated
+// clicks don't stack multiple notifications. Auto-dismisses after 2s.
+function showToast(message) {
+    let toast = document.getElementById('mapp-toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'mapp-toast';
+        toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:white;padding:10px 18px;border-radius:999px;font-size:0.9rem;font-weight:600;box-shadow:0 4px 20px rgba(0,0,0,0.25);z-index:9999;opacity:0;transition:opacity 0.25s,transform 0.25s;pointer-events:none;max-width:calc(100% - 40px);text-align:center;';
+        document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    // Force reflow so the transition kicks in on first show
+    // (otherwise the element goes straight to visible without animating).
+    void toast.offsetWidth;
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(20px)';
+    }, 2000);
+}
+
 window.toggleCardFavorite = function(prefId, btnEl) {
     if (!prefId) return;
     if (!feedPrefs) feedPrefs = [];
     const idx = feedPrefs.indexOf(prefId);
-    if (idx >= 0) {
+    const wasActive = idx >= 0;
+    const label = resolvePrefLabel(prefId);
+    if (wasActive) {
         feedPrefs.splice(idx, 1);
         if (btnEl) {
             btnEl.classList.remove('active');
@@ -299,6 +347,7 @@ window.toggleCardFavorite = function(prefId, btnEl) {
             btnEl.setAttribute('title', 'Add to favorites');
             btnEl.setAttribute('aria-label', 'Add to favorites');
         }
+        showToast(`Removed: ${label}`);
     } else {
         feedPrefs.push(prefId);
         if (btnEl) {
@@ -306,7 +355,21 @@ window.toggleCardFavorite = function(prefId, btnEl) {
             btnEl.textContent = '★';
             btnEl.setAttribute('title', 'Remove from favorites');
             btnEl.setAttribute('aria-label', 'Remove from favorites');
+            // Gold-pulse the card's secondary tag row so the user sees
+            // which category bucket they just bookmarked. Animation runs
+            // for ~1.2s and self-clears when it ends.
+            const card = btnEl.closest('.app-card');
+            if (card) {
+                const tagsRow = card.querySelector('.card-tags');
+                if (tagsRow) {
+                    tagsRow.classList.remove('tags-flash');  // reset if mid-animation
+                    void tagsRow.offsetWidth;                 // force reflow
+                    tagsRow.classList.add('tags-flash');
+                    setTimeout(() => tagsRow.classList.remove('tags-flash'), 1400);
+                }
+            }
         }
+        showToast(`★ Added: ${label}`);
     }
     // Persist
     if (feedPrefs.length === 0) {
@@ -3002,7 +3065,11 @@ window.openEventDetails = function(key) {
     // contexts keep the generic "View Source" label.
     if (e.sourceLink) {
         const isPastGame = isSport && e.gameResult && e.gameScore;
-        const srcLabel = isPastGame ? '📊 Game Recap & Box Score' : '🔗 View Source';
+        const isMUSport = isSport && tags.includes('MU');
+        let srcLabel;
+        if (isPastGame) srcLabel = '📊 Game Recap & Box Score';
+        else if (isMUSport && !e.ticketLink) srcLabel = '🎟️ View on MU Athletics';
+        else srcLabel = '🔗 View Source';
         actions += `<a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline" style="text-decoration:none;">${srcLabel}</a>`;
     }
 
@@ -3016,8 +3083,7 @@ window.openEventDetails = function(key) {
     modal.style.cssText = 'background:var(--surface);border-radius:var(--radius);max-width:540px;width:100%;padding:24px;position:relative;box-shadow:0 10px 40px rgba(0,0,0,0.2);';
     modal.innerHTML = `
         <button onclick="this.closest('.event-details-overlay').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);padding:4px 8px;">✕</button>
-        <span style="display:inline-block;font-size:0.7rem;color:var(--text-muted);font-weight:700;text-transform:uppercase;letter-spacing:0.04em;">${src}</span>
-        <h2 style="margin:4px 0 8px;font-size:1.25rem;color:var(--navy);line-height:1.3;padding-right:24px;">${e.title || 'Event'}</h2>
+        <h2 style="margin:0 0 8px;font-size:1.25rem;color:var(--navy);line-height:1.3;padding-right:24px;">${e.title || 'Event'}</h2>
         <div style="font-size:0.92rem;color:var(--text);font-weight:600;">📅 ${dateStr}${!isNoon ? ' · ' + timeStr : ''}</div>
         ${locBlock}
         ${scoreSummary}

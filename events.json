@@ -6678,6 +6678,22 @@
     "kidFriendly": false
   },
   {
+    "title": "Appliance/Tire Collection",
+    "date": "2026-04-13T12:00:00.000Z",
+    "location": "Millersville Borough",
+    "tags": [
+      "Borough"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
     "title": "Regular Trash & Recycling Collection ",
     "date": "2026-04-13T12:00:00.000Z",
     "location": "Millersville Borough",
@@ -6695,22 +6711,6 @@
   },
   {
     "title": "Woody Yard Waste Collection",
-    "date": "2026-04-13T12:00:00.000Z",
-    "location": "Millersville Borough",
-    "tags": [
-      "Borough"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://millersvilleborough.org/resident-info/calendar/",
-    "gameResult": "",
-    "gameScore": "",
-    "streamLink": "",
-    "isLive": false,
-    "kidFriendly": false
-  },
-  {
-    "title": "Appliance/Tire Collection",
     "date": "2026-04-13T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -11489,7 +11489,7 @@
     "gameResult": "",
     "gameScore": "",
     "streamLink": "https://psacsportsdigitalnetwork.com/shipraiders/?B=3666778",
-    "isLive": true,
+    "isLive": false,
     "kidFriendly": false
   },
   {
@@ -11510,7 +11510,7 @@
     "gameResult": "",
     "gameScore": "",
     "streamLink": "https://psacsportsdigitalnetwork.com/millersvilleathletics/?B=3846692",
-    "isLive": false,
+    "isLive": true,
     "kidFriendly": false
   },
   {
@@ -11532,25 +11532,6 @@
     "kidFriendly": false
   },
   {
-    "title": "Millersville University Softball at Shippensburg University",
-    "date": "2026-04-25T17:00:00.000Z",
-    "location": "Shippensburg, PA",
-    "tags": [
-      "MU",
-      "Athletic Competitions",
-      "Athletics",
-      "Softball"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://millersvilleathletics.com/sports/softball",
-    "gameResult": "",
-    "gameScore": "",
-    "streamLink": "https://psacsportsdigitalnetwork.com/?B=3545205",
-    "isLive": false,
-    "kidFriendly": false
-  },
-  {
     "title": "Family Fun Fest – Doodle POP",
     "date": "2026-04-25T17:00:00.000Z",
     "location": "The Ware Center",
@@ -11562,25 +11543,6 @@
     "ticketLink": "https://www.etix.com/ticket/p/55340777/family-fun-fest-doodle-pop-lancaster-ware-center-for-the-arts",
     "sourceLink": "https://artsmu.com/event/family-fun-fest-doodle-pop/the-ware-center/",
     "kidFriendly": true
-  },
-  {
-    "title": "Millersville University Softball at Shippensburg University",
-    "date": "2026-04-25T19:00:00.000Z",
-    "location": "Shippensburg, PA",
-    "tags": [
-      "MU",
-      "Athletic Competitions",
-      "Athletics",
-      "Softball"
-    ],
-    "price": "Free",
-    "ticketLink": "",
-    "sourceLink": "https://millersvilleathletics.com/sports/softball",
-    "gameResult": "",
-    "gameScore": "",
-    "streamLink": "https://psacsportsdigitalnetwork.com/?B=3545211",
-    "isLive": false,
-    "kidFriendly": false
   },
   {
     "title": "SBA End of Semester Bowling Trip",
@@ -11702,6 +11664,25 @@
     "kidFriendly": false
   },
   {
+    "title": "Millersville University Softball at Shippensburg University",
+    "date": "2026-04-26T17:00:00.000Z",
+    "location": "Shippensburg, PA",
+    "tags": [
+      "MU",
+      "Athletic Competitions",
+      "Athletics",
+      "Softball"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://millersvilleathletics.com/sports/softball",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://psacsportsdigitalnetwork.com/?B=3545205",
+    "isLive": false,
+    "kidFriendly": false
+  },
+  {
     "title": "WIXQ Council Meeting",
     "date": "2026-04-26T17:00:00",
     "location": "SMC Meeting Room",
@@ -11751,6 +11732,25 @@
     "description": "Millersville Mens Club Soccer hosts York FC at Home on Sunday, April 26th at 2pm! Come support the guys by cheering us on and wearing black and gold!",
     "benefits": [],
     "audience": "public",
+    "kidFriendly": false
+  },
+  {
+    "title": "Millersville University Softball at Shippensburg University",
+    "date": "2026-04-26T19:00:00.000Z",
+    "location": "Shippensburg, PA",
+    "tags": [
+      "MU",
+      "Athletic Competitions",
+      "Athletics",
+      "Softball"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://millersvilleathletics.com/sports/softball",
+    "gameResult": "",
+    "gameScore": "",
+    "streamLink": "https://psacsportsdigitalnetwork.com/?B=3545211",
+    "isLive": false,
     "kidFriendly": false
   },
   {
@@ -12720,6 +12720,24 @@
     "ticketLink": "",
     "sourceLink": "https://www.millersville.edu/calendar/events/671b38d4-f0c5-11f0-b888-737f031b35c9",
     "description": "GSA's end-of-semester celebration showcasing the successes of all Millersville students, especially LGBTQ+ students. Honorees get to talk about their successes from this semester and we celebrate with a party.",
+    "audience": "mu-only",
+    "kidFriendly": false
+  },
+  {
+    "title": "National Deodorant Day",
+    "date": "2026-04-29T16:00:00.000Z",
+    "location": "Student Memorial Center, Atrium",
+    "tags": [
+      "MU",
+      "GetInvolved",
+      "Clubs/Orgs",
+      "Center for Health Education and Promotion"
+    ],
+    "price": "Free",
+    "ticketLink": "",
+    "sourceLink": "https://getinvolved.millersville.edu/event/12449507",
+    "description": "Come celebrate National Deodorant Day with CHEP and get a free Deodorant Hygiene Gift Bag!",
+    "benefits": [],
     "audience": "mu-only",
     "kidFriendly": false
   },
@@ -15195,7 +15213,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Office Closed",
+    "title": "Election Day",
     "date": "2026-05-19T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -15211,7 +15229,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Election Day",
+    "title": "Office Closed",
     "date": "2026-05-19T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -18690,7 +18708,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Election Day",
+    "title": "Office Closed",
     "date": "2026-11-03T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [
@@ -18706,7 +18724,7 @@
     "kidFriendly": false
   },
   {
-    "title": "Office Closed",
+    "title": "Election Day",
     "date": "2026-11-03T12:00:00.000Z",
     "location": "Millersville Borough",
     "tags": [

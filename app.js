@@ -71,6 +71,31 @@ const feedSections = {
                 {id:'mu-golf',label:'Golf',icon:'⛳'},{id:'mu-swimming',label:'Swimming',icon:'🏊'},
                 {id:'mu-crosscountry',label:'Cross Country',icon:'🏃'}
             ]}
+        },
+        // Townie picker shape. Same per-sport granularity for PM/MU varsity, plus
+        // a new MU Club Sports composite (moved from the Events picker since it's
+        // categorically a sports thing, not a club-event thing).
+        townieGroups: {
+            pm: { label: 'Penn Manor Sports', icon: '🏫', subs: [
+                {id:'pm-baseball',label:'Baseball',icon:'⚾'},{id:'pm-softball',label:'Softball',icon:'🥎'},
+                {id:'pm-lacrosse',label:'Lacrosse',icon:'🥍'},{id:'pm-volleyball',label:'Volleyball',icon:'🏐'},
+                {id:'pm-football',label:'Football',icon:'🏈'},{id:'pm-basketball',label:'Basketball',icon:'🏀'},
+                {id:'pm-soccer',label:'Soccer',icon:'⚽'},{id:'pm-fieldhockey',label:'Field Hockey',icon:'🏑'},
+                {id:'pm-tennis',label:'Tennis',icon:'🎾'},{id:'pm-track',label:'Track',icon:'🏃'}
+            ]},
+            musports: { label: 'MU Sports', icon: '🏴‍☠️', subs: [
+                {id:'mu-baseball',label:'Baseball',icon:'⚾'},{id:'mu-softball',label:'Softball',icon:'🥎'},
+                {id:'mu-lacrosse',label:'Lacrosse',icon:'🥍'},{id:'mu-volleyball',label:'Volleyball',icon:'🏐'},
+                {id:'mu-football',label:'Football',icon:'🏈'},{id:'mu-basketball',label:'Basketball',icon:'🏀'},
+                {id:'mu-soccer',label:'Soccer',icon:'⚽'},{id:'mu-fieldhockey',label:'Field Hockey',icon:'🏑'},
+                {id:'mu-tennis',label:'Tennis',icon:'🎾'},{id:'mu-track',label:'Track',icon:'🏃'},
+                {id:'mu-golf',label:'Golf',icon:'⛳'},{id:'mu-swimming',label:'Swimming',icon:'🏊'},
+                {id:'mu-crosscountry',label:'Cross Country',icon:'🏃'}
+            ]},
+            // Composite group: single checkbox toggles the underlying clubs-sports
+            // pref. Moved here from Events for townies — club sports belong in the
+            // Sports picker conceptually.
+            muclubsports: { label: 'MU Club Sports', icon: '🎓', linkedIds: ['clubs-sports'] }
         }
     },
     events: {
@@ -102,6 +127,42 @@ const feedSections = {
                 {id:'other-community',label:'Community Events',icon:'📝'}
             ]},
             family: { label: 'Family Friendly', icon: '👨‍👩‍👧', audience: 'townie', subs: [{id:'family-events',label:'Family Friendly Events',icon:'👨‍👩‍👧'}] }
+        },
+        // Townie picker shape — restructured around what townies actually want
+        // to highlight, not how the data is sourced. Sub-feeds are clustered by
+        // institution via `subgroupHeading`. Composite groups (linkedIds, no
+        // subs) collapse multiple underlying source-specific pref IDs into a
+        // single checkbox so the townie isn't confronted with both "MU Arts &
+        // Performance" (Calendar) and "Arts & Performance" (GetInvolved) as
+        // separate items — they experience them as one kind of event.
+        townieGroups: {
+            // Penn Manor — keep granularity; Music/Arts vs Board Meetings is a
+            // meaningful distinction even for casual townies.
+            pmev: { label: 'PM Events', icon: '🏫', subgroupHeading: 'Penn Manor', subs: [
+                {id:'pm-music',label:'Music/Arts',icon:'🎵'},{id:'pm-board',label:'Board Meetings',icon:'📋'}
+            ]},
+            // Millersville University — three composite buckets covering what
+            // townies would actually care to highlight from MU.
+            muArts: {
+                label: 'MU Arts & Performance', icon: '🎭', subgroupHeading: 'Millersville University',
+                linkedIds: ['mu-arts', 'clubs-arts']
+            },
+            muPublic: {
+                label: 'MU Public Events', icon: '📢', subgroupHeading: 'Millersville University',
+                linkedIds: ['mu-public']
+            },
+            muFundraisers: {
+                label: 'MU Community Fundraisers', icon: '🤝', subgroupHeading: 'Millersville University',
+                linkedIds: ['clubs-service']
+            },
+            // Standalone groups — no subgroup heading. Borough is a composite;
+            // Other keeps its sub structure (VFW vs Phantom Power are distinct).
+            borough: { label: 'Borough', icon: '🌳', linkedIds: ['borough-all'] },
+            other: { label: 'Other', icon: '🎸', subs: [
+                {id:'other-vfw',label:'VFW Events',icon:'🎖️'},{id:'other-phantom',label:'Phantom Power',icon:'🎵'},
+                {id:'other-community',label:'Community Events',icon:'📝'}
+            ]},
+            family: { label: 'Family Friendly', icon: '👨‍👩‍👧', linkedIds: ['family-events'] }
         }
     },
     news: {
@@ -151,7 +212,7 @@ const SOURCE_UNLOCK_IDS = {
     'VFW':     ['other-vfw'],
     // MU-side sources for townies
     'MU':         [], // MU itself always shown — only GetInvolved sub-content is gated
-    'GetInvolved':['clubs-all', 'clubs-social', 'clubs-arts', 'clubs-sports', 'clubs-greek', 'clubs-service', 'mu-arts', 'mu-public'],
+    'GetInvolved':['clubs-all', 'clubs-social', 'clubs-arts', 'clubs-sports', 'clubs-greek', 'clubs-service'],
     // Sports page source pills
     'SP_PM':      ['pm-baseball', 'pm-softball', 'pm-lacrosse', 'pm-volleyball', 'pm-football', 'pm-basketball', 'pm-soccer', 'pm-fieldhockey', 'pm-tennis', 'pm-track'],
     'SP_Clubs':   ['clubs-sports'],
@@ -187,7 +248,25 @@ function isSourceHidden(source) {
 }
 // For a given event, is it from a hidden source?
 function isEventFromHiddenSource(e) {
+    if (!e) return false;
     const tags = e.tags || [];
+
+    // Townie + public-audience: never source-hidden. The townie hide on
+    // GetInvolved exists to filter out student-internal content (club
+    // meetings, Greek Life, Residence Halls, etc.); events classified
+    // audience:public during scrape are explicitly NOT student-internal —
+    // they're community service, fundraisers, public-facing performances,
+    // etc. Hiding them from townies defeats the audience classification.
+    // Without this bypass, a townie has to set an unrelated favorite that
+    // incidentally unlocks GetInvolved before they can see e.g. a Bake
+    // Sale or Dance Team Showcase. The audience signal is the truth here,
+    // not the source-pill default.
+    //
+    // Marauder side intentionally unchanged: their PM/Borough/VFW hide is
+    // venue-focus-based, not audience-based ("I want MU campus content"),
+    // so the existing default stands.
+    if (muAffiliation === 'townie' && e.audience === 'public') return false;
+
     if (tags.includes('VFW') && isSourceHidden('VFW')) return true;
     if (tags.includes('PM') && isSourceHidden('PM')) return true;
     if (tags.includes('Borough') && isSourceHidden('Borough')) return true;
@@ -505,12 +584,32 @@ window.openFeedSettings = function() {
 
     // Accordion + group rendering helpers — closure-scoped so they share
     // access to `current`, `effectiveAffiliation`, `isMarauder`, `labelFor`.
-    const groupHasFavs = (g) => g.subs.some(s => current.includes(s.id));
+    const groupHasFavs = (g) => {
+        if (g.linkedIds && Array.isArray(g.linkedIds)) {
+            return g.linkedIds.some(id => current.includes(id));
+        }
+        return (g.subs || []).some(s => current.includes(s.id));
+    };
     const anyFavsIn = (groupEntries) => groupEntries.some(([, g]) => groupHasFavs(g));
 
     // Render one group block (label + checkboxes + sub-chips). Extracted so
     // both the per-section render AND the Uncommon bucket can reuse it.
     const renderGroupBlock = (key, group) => {
+        // Composite group: a single togglable checkbox that maps to multiple
+        // underlying pref IDs. Used by the townie picker to collapse e.g.
+        // mu-arts + clubs-arts into one "MU Arts & Performance" item.
+        // Checked state = "any linked ID is currently in feedPrefs".
+        if (group.linkedIds && Array.isArray(group.linkedIds)) {
+            const linkedIds = group.linkedIds;
+            const isChecked = linkedIds.some(id => current.includes(id));
+            return `<div style="margin-bottom:8px;">
+                <label style="font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:8px;cursor:pointer;padding:9px 12px;border:1.5px solid ${isChecked?'var(--gold)':'var(--border)'};border-radius:var(--radius-sm);background:${isChecked?'var(--gold-soft)':'var(--surface)'};transition:0.15s;">
+                    <input type="checkbox" class="feed-sub" data-linked-ids="${linkedIds.join(',')}" ${isChecked?'checked':''} onchange="updateCompositeSub(this)" style="accent-color:var(--gold);width:16px;height:16px;flex-shrink:0;">
+                    <span>${group.icon} ${labelFor(group)}</span>
+                </label>
+            </div>`;
+        }
+
         const visibleSubs = group.subs.filter(s => {
             if (!s.audience || s.audience === 'both') return true;
             return s.audience === effectiveAffiliation;
@@ -572,7 +671,11 @@ window.openFeedSettings = function() {
     const uncommonGroups = []; // [[key, group]] gathered for marauders
 
     for (const [secKey, section] of orderedSections) {
-        const rawEntries = Object.entries(section.groups);
+        // Townies use townieGroups when defined — a restructured shape with
+        // composite groups and subgroup headings tailored to their UX needs.
+        // Marauders always use the granular groups field.
+        const sourceGroups = (isTownie && section.townieGroups) ? section.townieGroups : section.groups;
+        const rawEntries = Object.entries(sourceGroups);
 
         let commonEntries;
         if (isMarauder) {
@@ -586,7 +689,25 @@ window.openFeedSettings = function() {
         }
 
         if (commonEntries.length === 0) continue;
-        const groupHtml = commonEntries.map(([k, g]) => renderGroupBlock(k, g)).filter(Boolean).join('');
+
+        // Build group HTML, interleaving subgroup heading dividers when the
+        // .subgroupHeading field changes between consecutive groups. Headings
+        // visually cluster e.g. "Penn Manor" / "Millersville University" /
+        // standalone in the townie events picker. Marauder data has no
+        // subgroupHeading fields so no headings render in their picker.
+        let lastHeading = null;
+        const groupHtml = commonEntries.map(([k, g]) => {
+            const block = renderGroupBlock(k, g);
+            if (!block) return '';
+            let prefix = '';
+            if (g.subgroupHeading && g.subgroupHeading !== lastHeading) {
+                prefix = `<div class="feed-subgroup-heading">${g.subgroupHeading}</div>`;
+                lastHeading = g.subgroupHeading;
+            } else if (!g.subgroupHeading) {
+                lastHeading = null;
+            }
+            return prefix + block;
+        }).filter(Boolean).join('');
         if (!groupHtml.trim()) continue;
 
         const defaultOpen = anyFavsIn(commonEntries);
@@ -746,7 +867,27 @@ window.updateFeedGroup = function(group) {
 };
 
 window.saveFeedFromModal = function() {
-    const selected = [...document.querySelectorAll('.feed-sub:checked')].map(cb => cb.value);
+    // Composite subs (data-linked-ids) expand to multiple pref IDs; standard
+    // subs use their single .value. De-duplicate via a Set since composites
+    // could overlap with each other's linked IDs in theory.
+    const seen = new Set();
+    const selected = [];
+    [...document.querySelectorAll('.feed-sub:checked')].forEach(cb => {
+        if (cb.dataset.linkedIds) {
+            cb.dataset.linkedIds.split(',').forEach(id => {
+                const trimmed = id.trim();
+                if (trimmed && !seen.has(trimmed)) {
+                    seen.add(trimmed);
+                    selected.push(trimmed);
+                }
+            });
+        } else if (cb.value) {
+            if (!seen.has(cb.value)) {
+                seen.add(cb.value);
+                selected.push(cb.value);
+            }
+        }
+    });
     // Also capture individual club selections
     const clubSelections = [...document.querySelectorAll('.feed-club:checked')].map(cb => cb.value);
     const allPrefs = [...selected, ...clubSelections];
@@ -755,6 +896,21 @@ window.saveFeedFromModal = function() {
     renderHomeFeed();
     renderEvents(); renderSports(); renderNewsUI();
     decorateFeedStars();
+};
+
+// Visual feedback when a composite sub (linkedIds checkbox) is toggled.
+// Reflects the same gold-border/soft-background pattern used by other
+// favorited UI elements so the state is unmistakable.
+window.updateCompositeSub = function(cb) {
+    const label = cb.closest('label');
+    if (!label) return;
+    if (cb.checked) {
+        label.style.background = 'var(--gold-soft)';
+        label.style.borderColor = 'var(--gold)';
+    } else {
+        label.style.background = 'var(--surface)';
+        label.style.borderColor = 'var(--border)';
+    }
 };
 
 window.clearFeedPrefs = function() {
@@ -2634,7 +2790,7 @@ function buildEventCard(e,isSportsPage){
     if(isCurrentlyLive && e.streamLink){
         actionHtml=`<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-live">📺 Watch</a>`;
     } else if(isFuture && e.streamLink){
-        actionHtml=`<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-outline" style="border-color:var(--gold);color:var(--gold);">📺 Stream</a>`;
+        actionHtml=`<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-outline" style="border-color:var(--gold);color:var(--gold);">📺 Will Stream</a>`;
     } else if(isPast && e.streamLink){
         actionHtml=`<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-outline">📺 Replay</a>`;
     } else if(!isSportsPage && e.streamLink){
@@ -2884,10 +3040,21 @@ function buildTimelineItem(e, now) {
         badges += `<span class="tl-badge ${cls}">${e.gameResult} ${e.gameScore}</span>`;
     }
 
-    // Stream icon for future games — just a visual indicator; card click opens modal.
-    // Previously this was an <a> that navigated to stream directly (bypassed modal).
+    // Stream icon for games with Hudl broadcast data. Three states:
+    //   - Future game + not yet started → "Stream scheduled" (Hudl has
+    //     planned broadcast but it's not live yet — tooltip makes this
+    //     clear rather than misleading users into thinking it's active).
+    //   - Currently in game window → no separate icon; the LIVE badge
+    //     above already announces the active stream with higher prominence.
+    //   - Past game → "Replay available" (Hudl archives post-game).
     let streamBtn = '';
-    if (isSport && e.streamLink && d > now) streamBtn = `<span class="tl-stream" title="Live stream available">📺</span>`;
+    if (isSport && e.streamLink && !_live) {
+        if (d > now) {
+            streamBtn = `<span class="tl-stream" title="Stream scheduled">📺</span>`;
+        } else if (e.gameResult) {
+            streamBtn = `<span class="tl-stream" title="Replay available">📺</span>`;
+        }
+    }
 
     // Ticket icon for events with a purchase link. Suppressed for marauders on
     // MU athletic events because MU students get in free with their student ID
@@ -3054,7 +3221,20 @@ window.openEventDetails = function(key) {
     // Action buttons
     let actions = '';
     if (e.ticketLink) actions += `<a href="${e.ticketLink}" target="_blank" class="btn btn-sm btn-ticket" style="text-decoration:none;">🎟️ Buy Tickets</a>`;
-    if (e.streamLink) actions += `<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-outline" style="text-decoration:none;">📺 Watch Stream</a>`;
+    if (e.streamLink) {
+        // State-aware label — same three cases as the card buttons. Clarifies
+        // that a future streamLink is a scheduled broadcast, not something
+        // you can tune into right now.
+        const streamD = new Date(e.date);
+        const streamEnd = new Date(streamD.getTime() + 3*60*60*1000);
+        const streamNow = new Date();
+        const isLiveNow = isSport && streamD <= streamNow && streamNow <= streamEnd && !e.gameResult;
+        let streamLabel;
+        if (isLiveNow) streamLabel = '🔴 Watch Live';
+        else if (e.gameResult) streamLabel = '📺 Replay';
+        else streamLabel = '📺 Will Stream';
+        actions += `<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-outline" style="text-decoration:none;">${streamLabel}</a>`;
+    }
     // Calendar action — uses the same key scheme as card buttons so addToCalendar can find it
     const modalCardKey = (e.sourceLink || (e.title + '|' + e.date)).replace(/"/g, '&quot;');
     actions += `<button class="btn btn-sm btn-outline" data-cardkey="${modalCardKey}" onclick="addToCalendar(this)" style="cursor:pointer;">📅 Add to Calendar</button>`;

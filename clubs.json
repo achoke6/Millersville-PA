@@ -165,11 +165,11 @@
   },
   {
     "name": "AniMU: The Anime and Video Gaming Club",
-    "category": "Movie or Film",
+    "category": "Meeting",
     "categories": [
+      "Meeting",
       "Movie or Film",
-      "Social",
-      "Meeting"
+      "Social"
     ],
     "shortName": "",
     "id": ""
@@ -999,8 +999,11 @@
   },
   {
     "name": "International Association of Emergency Managers",
-    "category": "",
-    "categories": [],
+    "category": "Meeting",
+    "categories": [
+      "Meeting",
+      "Social"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1015,13 +1018,10 @@
   },
   {
     "name": "It's On Us",
-    "category": "Educational Program",
-    "categories": [
-      "Educational Program",
-      "Social"
-    ],
-    "shortName": "",
-    "id": ""
+    "category": "",
+    "categories": [],
+    "shortName": "IOU",
+    "id": "itsonus"
   },
   {
     "name": "Jazz Bands",
@@ -1736,7 +1736,8 @@
     "name": "Student Affiliates in School Psychology",
     "category": "Academic",
     "categories": [
-      "Academic"
+      "Academic",
+      "Social"
     ],
     "shortName": "SASP MU",
     "id": "sasp-mu"
@@ -2024,10 +2025,8 @@
   },
   {
     "name": "WIXQ 91.7 FM",
-    "category": "Fundraiser",
-    "categories": [
-      "Fundraiser"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },

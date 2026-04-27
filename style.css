@@ -210,13 +210,18 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 }
 .card-fav-inline {
     flex-shrink: 0;
-    width: 28px;
-    height: 28px;
+    /* Visible button: 30×30 — slightly larger than before for better legibility
+       but still compact enough not to dominate the title row. Touch target
+       expanded to 44×44 via ::before pseudo-element below to meet WCAG/iOS
+       guidelines without shifting layout. */
+    width: 30px;
+    height: 30px;
+    position: relative;
     padding: 0;
     background: transparent;
     border: 1.5px solid var(--border);
     border-radius: 50%;
-    font-size: 1rem;
+    font-size: 1.05rem;
     line-height: 1;
     color: var(--text-muted);
     cursor: pointer;
@@ -225,6 +230,16 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     align-items: center;
     justify-content: center;
     transition: transform 0.15s, color 0.15s, border-color 0.15s, background 0.15s;
+}
+/* Invisible hit-target expander: an absolutely positioned ::before overlay
+   that adds 7px of clickable space on every side without affecting layout
+   geometry. Final tap area = 44×44 (ideal for thumbs); visible button stays
+   30×30 so it doesn't visually overpower the title. */
+.card-fav-inline::before {
+    content: '';
+    position: absolute;
+    inset: -7px;
+    border-radius: 50%;
 }
 .card-fav-inline:hover { transform: scale(1.1); color: var(--gold); border-color: var(--gold); }
 .card-fav-inline.active { color: var(--gold); border-color: var(--gold); background: var(--surface); }
@@ -770,6 +785,11 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .tl-item:last-child { border-bottom: none; }
 .tl-sport { border-left: 3px solid var(--navy); }
 .tl-event { border-left: 3px solid #b45309; }
+/* Favorited timeline items get a subtle gold tint background so they're
+   visible at a scroll. Border-left stays the source-color (navy/amber) so
+   provenance isn't lost. */
+.tl-fav { background: rgba(216, 163, 46, 0.08); }
+.tl-fav:hover { background: var(--gold-soft); }
 .tl-time { font-size: 0.78rem; font-weight: 700; color: var(--gold); min-width: 60px; flex-shrink: 0; padding-top: 1px; }
 /* 3-column flex row: [MU pill] [title (grows/wraps)] [badges (right-anchored)].
    Critical: flex-wrap: nowrap prevents badges from dropping to a new line

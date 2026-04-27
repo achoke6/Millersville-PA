@@ -1623,7 +1623,14 @@ async function runScraper() {
             if (/housing and residential|residence hall/.test(orgName)) tags.push('Residence Halls');
             if (/greek council/.test(orgName) || greekRegex.test(orgName) || greekRegex.test(name)) tags.push('Greek Life');
 
-            let isPermittedSport = hGameClubSports.some(s => name.includes(s) || orgName.includes(s));
+            // Use word-boundary matching, NOT String.includes — short tokens
+            // like "mma" otherwise false-match inside words like "scriMMAge",
+            // pulling Mock Trial Club's "Internal Scrimmage" onto the Sports
+            // page. The escaped-and-anchored regex requires the sport name
+            // to appear as its own whole word(s).
+            const escapeRe = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const sportWordMatch = (haystack, needle) => new RegExp(`\\b${escapeRe(needle)}\\b`, 'i').test(haystack);
+            let isPermittedSport = hGameClubSports.some(s => sportWordMatch(name, s) || sportWordMatch(orgName, s));
 
             // Only classify as Club Sports if the event looks like an actual game/match
             // Practices, fundraisers, trips, community service etc. stay as regular events
@@ -1633,7 +1640,10 @@ async function runScraper() {
                 tags.push("Club Sports");
                 if (/men's|mens/.test(name)) tags.push("Men's");
                 if (/women's|womens/.test(name)) tags.push("Women's");
-                sportsList.forEach(s => { if (name.includes(s.toLowerCase())) tags.push(s); });
+                // Same word-boundary safety on the sportsList categorization —
+                // without it, "tennis" would match inside e.g. "antennis" (less
+                // realistic but still safer to be strict).
+                sportsList.forEach(s => { if (sportWordMatch(name, s)) tags.push(s); });
 
                 // Home game detection for club sports
                 const loc = (item.location || '').toLowerCase();
@@ -2495,15 +2505,32 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 }
                 if (isNaN(eventDate.getTime())) { skippedBadDate++; continue; }
 
-                // Parse time if provided (format: HH:MM AM/PM or HH:MM)
+                // Parse time if provided. Google Forms' default time picker
+                // submits as "H:MM:SS AM/PM" (e.g., "5:00:00 PM") — seconds
+                // included. The original regex only matched H:MM and looked
+                // for AM/PM immediately after, missing the marker entirely
+                // when seconds were present and silently treating PM events
+                // as AM. Now we explicitly skip optional ":SS" before the
+                // AM/PM lookahead. Also handles 24-hour format (17:00) and
+                // bare H:MM with no marker (which we treat as PM for hours
+                // 1-7 since 5am events are rare and 5pm events are common).
                 if (timeStr) {
-                    const timeMatch = timeStr.match(/(\d{1,2}):(\d{2})\s*(AM|PM)?/i);
+                    const timeMatch = timeStr.match(/(\d{1,2}):(\d{2})(?::\d{2})?\s*(AM|PM)?/i);
                     if (timeMatch) {
                         let h = parseInt(timeMatch[1]);
                         const m = parseInt(timeMatch[2]);
                         const ampm = (timeMatch[3] || '').toUpperCase();
                         if (ampm === 'PM' && h < 12) h += 12;
-                        if (ampm === 'AM' && h === 12) h = 0;
+                        else if (ampm === 'AM' && h === 12) h = 0;
+                        else if (!ampm && h >= 1 && h <= 7) {
+                            // No AM/PM marker (rare — Google Forms always
+                            // includes one, but this protects against forms
+                            // configured for 24h or hand-entered times). For
+                            // unmarked hours 1-7, assume PM since community
+                            // events at those AM hours are essentially
+                            // nonexistent. Hours 8-23 stay as-is (24h read).
+                            h += 12;
+                        }
                         eventDate.setHours(h, m, 0);
                     }
                 } else {

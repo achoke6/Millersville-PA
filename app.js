@@ -71,31 +71,6 @@ const feedSections = {
                 {id:'mu-golf',label:'Golf',icon:'⛳'},{id:'mu-swimming',label:'Swimming',icon:'🏊'},
                 {id:'mu-crosscountry',label:'Cross Country',icon:'🏃'}
             ]}
-        },
-        // Townie picker shape. Same per-sport granularity for PM/MU varsity, plus
-        // a new MU Club Sports composite (moved from the Events picker since it's
-        // categorically a sports thing, not a club-event thing).
-        townieGroups: {
-            pm: { label: 'Penn Manor Sports', icon: '🏫', subs: [
-                {id:'pm-baseball',label:'Baseball',icon:'⚾'},{id:'pm-softball',label:'Softball',icon:'🥎'},
-                {id:'pm-lacrosse',label:'Lacrosse',icon:'🥍'},{id:'pm-volleyball',label:'Volleyball',icon:'🏐'},
-                {id:'pm-football',label:'Football',icon:'🏈'},{id:'pm-basketball',label:'Basketball',icon:'🏀'},
-                {id:'pm-soccer',label:'Soccer',icon:'⚽'},{id:'pm-fieldhockey',label:'Field Hockey',icon:'🏑'},
-                {id:'pm-tennis',label:'Tennis',icon:'🎾'},{id:'pm-track',label:'Track',icon:'🏃'}
-            ]},
-            musports: { label: 'MU Sports', icon: '🏴‍☠️', subs: [
-                {id:'mu-baseball',label:'Baseball',icon:'⚾'},{id:'mu-softball',label:'Softball',icon:'🥎'},
-                {id:'mu-lacrosse',label:'Lacrosse',icon:'🥍'},{id:'mu-volleyball',label:'Volleyball',icon:'🏐'},
-                {id:'mu-football',label:'Football',icon:'🏈'},{id:'mu-basketball',label:'Basketball',icon:'🏀'},
-                {id:'mu-soccer',label:'Soccer',icon:'⚽'},{id:'mu-fieldhockey',label:'Field Hockey',icon:'🏑'},
-                {id:'mu-tennis',label:'Tennis',icon:'🎾'},{id:'mu-track',label:'Track',icon:'🏃'},
-                {id:'mu-golf',label:'Golf',icon:'⛳'},{id:'mu-swimming',label:'Swimming',icon:'🏊'},
-                {id:'mu-crosscountry',label:'Cross Country',icon:'🏃'}
-            ]},
-            // Composite group: single checkbox toggles the underlying clubs-sports
-            // pref. Moved here from Events for townies — club sports belong in the
-            // Sports picker conceptually.
-            muclubsports: { label: 'MU Club Sports', icon: '🎓', linkedIds: ['clubs-sports'] }
         }
     },
     events: {
@@ -129,39 +104,92 @@ const feedSections = {
             family: { label: 'Family Friendly', icon: '👨‍👩‍👧', audience: 'townie', subs: [{id:'family-events',label:'Family Friendly Events',icon:'👨‍👩‍👧'}] }
         },
         // Townie picker shape — restructured around what townies actually want
-        // to highlight, not how the data is sourced. Sub-feeds are clustered by
-        // institution via `subgroupHeading`. Composite groups (linkedIds, no
-        // subs) collapse multiple underlying source-specific pref IDs into a
-        // single checkbox so the townie isn't confronted with both "MU Arts &
-        // Performance" (Calendar) and "Arts & Performance" (GetInvolved) as
-        // separate items — they experience them as one kind of event.
+        // to highlight, not how the data is sourced. Two top-level master
+        // groups (Penn Manor, Millersville University) act as composite
+        // section headers: their checkbox toggles all subs at once, and the
+        // section heading replaces the group label. Standalone groups
+        // (Borough, Other, Family Friendly) sit beneath without a heading.
         townieGroups: {
-            // Penn Manor — keep granularity; Music/Arts vs Board Meetings is a
-            // meaningful distinction even for casual townies.
-            pmev: { label: 'PM Events', icon: '🏫', subgroupHeading: 'Penn Manor', subs: [
-                {id:'pm-music',label:'Music/Arts',icon:'🎵'},{id:'pm-board',label:'Board Meetings',icon:'📋'}
-            ]},
-            // Millersville University — three composite buckets covering what
-            // townies would actually care to highlight from MU.
-            muArts: {
-                label: 'MU Arts & Performance', icon: '🎭', subgroupHeading: 'Millersville University',
-                linkedIds: ['mu-arts', 'clubs-arts']
+            // Penn Manor — single master group, heading-style, toggles both
+            // sub-prefs at once. Removed the redundant "PM Events" sub-label
+            // since the section heading IS the group.
+            pmev: {
+                label: 'Penn Manor',
+                icon: '🏫',
+                headingStyle: true,
+                subs: [
+                    {id:'pm-music',label:'Music/Arts',icon:'🎵'},
+                    {id:'pm-board',label:'Board Meetings',icon:'📋'}
+                ]
             },
-            muPublic: {
-                label: 'MU Public Events', icon: '📢', subgroupHeading: 'Millersville University',
-                linkedIds: ['mu-public']
+            // Millersville University — heading-style master, four sub
+            // composites underneath. MU master toggles all four.
+            // Composites flatten the underlying source-specific pref IDs
+            // (mu-arts + clubs-arts → "Arts & Performance", etc.) so townies
+            // don't see redundant entries from MU Calendar vs GetInvolved.
+            // Club Sports lives here too since MU is the cluster.
+            mu: {
+                label: 'Millersville University',
+                icon: '🏴‍☠️',
+                headingStyle: true,
+                composites: [
+                    { label: 'Arts & Performance', icon: '🎭', linkedIds: ['mu-arts', 'clubs-arts'] },
+                    { label: 'Public Events',      icon: '📢', linkedIds: ['mu-public'] },
+                    { label: 'Community Fundraisers', icon: '🤝', linkedIds: ['clubs-service'] },
+                    {
+                        label: 'Club Sports', icon: '⚽',
+                        linkedIds: ['clubs-sports'],
+                        // Per-sport sub-chips under the umbrella. Townies often
+                        // care about one or two specific club sports, not all
+                        // of them — these let them target. Master umbrella
+                        // (clubs-sports) catches everything; checking a specific
+                        // sport ALSO catches everything since clubs-sports is
+                        // checked alongside, BUT unchecking the master leaves
+                        // only the specific sports active. Realistic flow:
+                        // user checks "Club Sports" master once, sees broader
+                        // results, then unchecks the master and re-checks just
+                        // the 1-2 sports they actually care about.
+                        subSports: [
+                            {id:'cs-baseball',label:'Baseball',icon:'⚾'},
+                            {id:'cs-softball',label:'Softball',icon:'🥎'},
+                            {id:'cs-basketball-mens',label:"Men's Basketball",icon:'🏀'},
+                            {id:'cs-basketball-womens',label:"Women's Basketball",icon:'🏀'},
+                            {id:'cs-soccer-mens',label:"Men's Soccer",icon:'⚽'},
+                            {id:'cs-soccer-womens',label:"Women's Soccer",icon:'⚽'},
+                            {id:'cs-lacrosse',label:'Lacrosse',icon:'🥍'},
+                            {id:'cs-volleyball-mens',label:"Men's Volleyball",icon:'🏐'},
+                            {id:'cs-volleyball-womens',label:"Women's Volleyball",icon:'🏐'},
+                            {id:'cs-rugby-mens',label:"Men's Rugby",icon:'🏉'},
+                            {id:'cs-rugby-womens',label:"Women's Rugby",icon:'🏉'},
+                            {id:'cs-icehockey',label:'Ice Hockey',icon:'🏒'},
+                            {id:'cs-tennis',label:'Tennis',icon:'🎾'},
+                            {id:'cs-frisbee',label:'Ultimate Frisbee',icon:'🥏'},
+                            {id:'cs-fencing',label:'Fencing',icon:'🤺'},
+                            {id:'cs-equestrian',label:'Equestrian',icon:'🐴'},
+                            {id:'cs-dance',label:'Dance Team',icon:'💃'},
+                            {id:'cs-bowling',label:'Bowling',icon:'🎳'},
+                            {id:'cs-running',label:'Running',icon:'🏃'},
+                            {id:'cs-mma',label:'MMA',icon:'🥋'}
+                        ]
+                    }
+                ]
             },
-            muFundraisers: {
-                label: 'MU Community Fundraisers', icon: '🤝', subgroupHeading: 'Millersville University',
-                linkedIds: ['clubs-service']
+            // Standalone composites — no heading style, no master checkbox
+            // beyond their own.
+            borough: { label: 'Millersville Borough', icon: '🌳', linkedIds: ['borough-all'] },
+            // Other — heading-style cluster matching Penn Manor / MU shape.
+            // Three distinct sub-feeds (VFW, Phantom Power, Community
+            // submissions) so townies can pick individually.
+            other: {
+                label: 'Other',
+                icon: '🎸',
+                headingStyle: true,
+                subs: [
+                    {id:'other-vfw',label:'VFW Events',icon:'🎖️'},
+                    {id:'other-phantom',label:'Phantom Power',icon:'🎵'},
+                    {id:'other-community',label:'Community Events',icon:'📝'}
+                ]
             },
-            // Standalone groups — no subgroup heading. Borough is a composite;
-            // Other keeps its sub structure (VFW vs Phantom Power are distinct).
-            borough: { label: 'Borough', icon: '🌳', linkedIds: ['borough-all'] },
-            other: { label: 'Other', icon: '🎸', subs: [
-                {id:'other-vfw',label:'VFW Events',icon:'🎖️'},{id:'other-phantom',label:'Phantom Power',icon:'🎵'},
-                {id:'other-community',label:'Community Events',icon:'📝'}
-            ]},
             family: { label: 'Family Friendly', icon: '👨‍👩‍👧', linkedIds: ['family-events'] }
         }
     },
@@ -212,7 +240,11 @@ const SOURCE_UNLOCK_IDS = {
     'VFW':     ['other-vfw'],
     // MU-side sources for townies
     'MU':         [], // MU itself always shown — only GetInvolved sub-content is gated
-    'GetInvolved':['clubs-all', 'clubs-social', 'clubs-arts', 'clubs-sports', 'clubs-greek', 'clubs-service'],
+    'GetInvolved':['clubs-all', 'clubs-social', 'clubs-arts', 'clubs-sports', 'clubs-greek', 'clubs-service',
+        'cs-baseball','cs-bowling','cs-equestrian','cs-fencing','cs-icehockey','cs-mma',
+        'cs-basketball-mens','cs-basketball-womens','cs-lacrosse','cs-rugby-mens','cs-rugby-womens',
+        'cs-soccer-mens','cs-soccer-womens','cs-volleyball-mens','cs-volleyball-womens',
+        'cs-dance','cs-running','cs-softball','cs-tennis','cs-frisbee'],
     // Sports page source pills
     'SP_PM':      ['pm-baseball', 'pm-softball', 'pm-lacrosse', 'pm-volleyball', 'pm-football', 'pm-basketball', 'pm-soccer', 'pm-fieldhockey', 'pm-tennis', 'pm-track'],
     'SP_Clubs':   ['clubs-sports'],
@@ -510,6 +542,32 @@ function eventMatchesFeed(e) {
         if (feedPrefs.includes('clubs-sports') && tags.includes('Club Sports')) return true;
         if (feedPrefs.includes('clubs-greek') && tags.includes('Greek Life')) return true;
         if (feedPrefs.includes('clubs-service') && (tags.includes('Service') || tags.includes('Cultural'))) return true;
+        // Per-sport club matchers. The Club Sports umbrella tag is required so
+        // these prefs don't accidentally match a Sidearm varsity event that
+        // happens to share the same sport tag (e.g. "Baseball"). cs-* IDs
+        // distinguish from mu-* (varsity) and pm-* (Penn Manor) prefs.
+        if (tags.includes('Club Sports')) {
+            if (feedPrefs.includes('cs-baseball') && tags.includes('Baseball')) return true;
+            if (feedPrefs.includes('cs-bowling') && /bowling/i.test(e.title || '')) return true;
+            if (feedPrefs.includes('cs-equestrian') && /equestrian/i.test(e.title || '')) return true;
+            if (feedPrefs.includes('cs-fencing') && tags.includes('Fencing')) return true;
+            if (feedPrefs.includes('cs-icehockey') && /ice hockey/i.test(e.title || '')) return true;
+            if (feedPrefs.includes('cs-mma') && /\bmma\b/i.test(e.title || '')) return true;
+            if (feedPrefs.includes('cs-basketball-mens') && tags.includes('Basketball') && tags.includes("Men's")) return true;
+            if (feedPrefs.includes('cs-basketball-womens') && tags.includes('Basketball') && tags.includes("Women's")) return true;
+            if (feedPrefs.includes('cs-lacrosse') && tags.includes('Lacrosse')) return true;
+            if (feedPrefs.includes('cs-rugby-mens') && tags.includes('Rugby') && tags.includes("Men's")) return true;
+            if (feedPrefs.includes('cs-rugby-womens') && tags.includes('Rugby') && tags.includes("Women's")) return true;
+            if (feedPrefs.includes('cs-soccer-mens') && tags.includes('Soccer') && tags.includes("Men's")) return true;
+            if (feedPrefs.includes('cs-soccer-womens') && tags.includes('Soccer') && tags.includes("Women's")) return true;
+            if (feedPrefs.includes('cs-volleyball-mens') && tags.includes('Volleyball') && tags.includes("Men's")) return true;
+            if (feedPrefs.includes('cs-volleyball-womens') && tags.includes('Volleyball') && tags.includes("Women's")) return true;
+            if (feedPrefs.includes('cs-dance') && /dance team/i.test(e.title || '')) return true;
+            if (feedPrefs.includes('cs-running') && /\brunning\b/i.test(e.title || '')) return true;
+            if (feedPrefs.includes('cs-softball') && tags.includes('Softball')) return true;
+            if (feedPrefs.includes('cs-tennis') && tags.includes('Tennis')) return true;
+            if (feedPrefs.includes('cs-frisbee') && /ultimate frisbee/i.test(e.title || '')) return true;
+        }
         // Individual club matches
         for (const pref of feedPrefs) {
             if (pref.startsWith('club:') && tags.includes(pref.substring(5))) return true;
@@ -588,6 +646,16 @@ window.openFeedSettings = function() {
         if (g.linkedIds && Array.isArray(g.linkedIds)) {
             return g.linkedIds.some(id => current.includes(id));
         }
+        if (g.headingStyle) {
+            const allIds = [
+                ...((g.subs || []).map(s => s.id)),
+                ...((g.composites || []).flatMap(c => [
+                    ...(c.linkedIds || []),
+                    ...((c.subSports || []).map(s => s.id))
+                ]))
+            ];
+            return allIds.some(id => current.includes(id));
+        }
         return (g.subs || []).some(s => current.includes(s.id));
     };
     const anyFavsIn = (groupEntries) => groupEntries.some(([, g]) => groupHasFavs(g));
@@ -607,6 +675,62 @@ window.openFeedSettings = function() {
                     <input type="checkbox" class="feed-sub" data-linked-ids="${linkedIds.join(',')}" ${isChecked?'checked':''} onchange="updateCompositeSub(this)" style="accent-color:var(--gold);width:16px;height:16px;flex-shrink:0;">
                     <span>${group.icon} ${labelFor(group)}</span>
                 </label>
+            </div>`;
+        }
+
+        // Heading-style group: renders as an institutional cluster header
+        // ("Penn Manor", "Millersville University", "Other") with its own
+        // master checkbox attached. Children below can be either traditional
+        // subs (granular pref-id chips) or composites (linkedIds aggregated
+        // into chips). Master checkbox toggles every underlying pref ID
+        // across both child types.
+        if (group.headingStyle) {
+            const subs = group.subs || [];
+            const composites = group.composites || [];
+            // Collect ALL underlying IDs (subs + every composite's linkedIds)
+            // to determine master state. Master is checked when every
+            // underlying ID is in current.
+            const allIds = [
+                ...subs.map(s => s.id),
+                ...composites.flatMap(c => [
+                    ...(c.linkedIds || []),
+                    ...((c.subSports || []).map(s => s.id))
+                ])
+            ];
+            const allChecked = allIds.length > 0 && allIds.every(id => current.includes(id));
+
+            // Render subs as chips (same shape as marauder picker), composites
+            // as full-width pill-styled checkboxes.
+            const subsHtml = subs.length ? `<div style="display:flex;flex-wrap:wrap;gap:6px;padding-left:14px;margin-top:6px;">
+                ${subs.map(s => `<label style="display:flex;align-items:center;gap:4px;font-size:0.82rem;padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;background:${current.includes(s.id)?'var(--gold-soft)':'var(--bg)'};"><input type="checkbox" class="feed-sub" data-group="${key}" value="${s.id}" ${current.includes(s.id)?'checked':''} onchange="updateFeedGroup('${key}')" style="accent-color:var(--gold);"> ${s.icon} ${labelFor(s)}</label>`).join('')}
+            </div>` : '';
+
+            const compositesHtml = composites.length ? `<div style="padding-left:14px;margin-top:8px;">
+                ${composites.map(c => {
+                    const cChecked = (c.linkedIds || []).some(id => current.includes(id));
+                    // Optional sub-sports chips inside a composite (used for
+                    // Club Sports, where townies often want individual sports).
+                    const subSports = c.subSports || [];
+                    const subSportsHtml = subSports.length ? `<div style="display:flex;flex-wrap:wrap;gap:6px;padding:8px 0 4px 14px;">
+                        ${subSports.map(s => `<label style="display:flex;align-items:center;gap:4px;font-size:0.78rem;padding:4px 9px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;background:${current.includes(s.id)?'var(--gold-soft)':'var(--bg)'};"><input type="checkbox" class="feed-sub" data-group="${key}" value="${s.id}" ${current.includes(s.id)?'checked':''} onchange="updateFeedGroup('${key}')" style="accent-color:var(--gold);"> ${s.icon} ${s.label}</label>`).join('')}
+                    </div>` : '';
+                    return `<div style="margin-bottom:6px;">
+                        <label class="feed-composite-label" style="font-size:0.85rem;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer;padding:8px 12px;border:1.5px solid ${cChecked?'var(--gold)':'var(--border)'};border-radius:var(--radius-sm);background:${cChecked?'var(--gold-soft)':'var(--surface)'};transition:0.15s;">
+                            <input type="checkbox" class="feed-sub" data-group="${key}" data-linked-ids="${(c.linkedIds||[]).join(',')}" ${cChecked?'checked':''} onchange="updateCompositeSub(this)" style="accent-color:var(--gold);width:16px;height:16px;flex-shrink:0;">
+                            <span>${c.icon} ${c.label}</span>
+                        </label>
+                        ${subSportsHtml}
+                    </div>`;
+                }).join('')}
+            </div>` : '';
+
+            return `<div class="feed-heading-group" style="margin-bottom:14px;">
+                <label class="feed-heading-label" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding-bottom:6px;border-bottom:1px solid var(--border);">
+                    <input type="checkbox" class="feed-group" data-group="${key}" ${allChecked?'checked':''} onchange="toggleFeedGroup(this)" style="accent-color:var(--gold);width:16px;height:16px;">
+                    <span class="feed-heading-text">${group.icon} ${labelFor(group)}</span>
+                </label>
+                ${subsHtml}
+                ${compositesHtml}
             </div>`;
         }
 
@@ -689,25 +813,7 @@ window.openFeedSettings = function() {
         }
 
         if (commonEntries.length === 0) continue;
-
-        // Build group HTML, interleaving subgroup heading dividers when the
-        // .subgroupHeading field changes between consecutive groups. Headings
-        // visually cluster e.g. "Penn Manor" / "Millersville University" /
-        // standalone in the townie events picker. Marauder data has no
-        // subgroupHeading fields so no headings render in their picker.
-        let lastHeading = null;
-        const groupHtml = commonEntries.map(([k, g]) => {
-            const block = renderGroupBlock(k, g);
-            if (!block) return '';
-            let prefix = '';
-            if (g.subgroupHeading && g.subgroupHeading !== lastHeading) {
-                prefix = `<div class="feed-subgroup-heading">${g.subgroupHeading}</div>`;
-                lastHeading = g.subgroupHeading;
-            } else if (!g.subgroupHeading) {
-                lastHeading = null;
-            }
-            return prefix + block;
-        }).filter(Boolean).join('');
+        const groupHtml = commonEntries.map(([k, g]) => renderGroupBlock(k, g)).filter(Boolean).join('');
         if (!groupHtml.trim()) continue;
 
         const defaultOpen = anyFavsIn(commonEntries);
@@ -775,7 +881,20 @@ window.openFeedSettings = function() {
 window.toggleFeedGroup = function(groupCb) {
     const group = groupCb.dataset.group;
     const checked = groupCb.checked;
-    document.querySelectorAll(`.feed-sub[data-group="${group}"]`).forEach(cb => { cb.checked = checked; cb.closest('label').style.background = checked ? 'var(--gold-soft)' : 'var(--bg)'; });
+    document.querySelectorAll(`.feed-sub[data-group="${group}"]`).forEach(cb => {
+        cb.checked = checked;
+        const label = cb.closest('label');
+        if (!label) return;
+        // Composite-styled labels (full-width, with border highlight) vs
+        // chip-styled labels (background-only). Composites have the
+        // .feed-composite-label class; chips don't.
+        if (label.classList.contains('feed-composite-label')) {
+            label.style.background = checked ? 'var(--gold-soft)' : 'var(--surface)';
+            label.style.borderColor = checked ? 'var(--gold)' : 'var(--border)';
+        } else {
+            label.style.background = checked ? 'var(--gold-soft)' : 'var(--bg)';
+        }
+    });
 };
 
 // Expand/collapse a feed-settings accordion. data-open is the source of truth
@@ -910,6 +1029,17 @@ window.updateCompositeSub = function(cb) {
     } else {
         label.style.background = 'var(--surface)';
         label.style.borderColor = 'var(--border)';
+    }
+    // If this composite belongs to a heading-style group (data-group present),
+    // re-sync the master checkbox state — checked when every sibling sub
+    // (chips + composites) is checked.
+    if (cb.dataset.group) {
+        const groupKey = cb.dataset.group;
+        const siblingSubs = document.querySelectorAll(`.feed-sub[data-group="${groupKey}"]`);
+        const masterCb = document.querySelector(`.feed-group[data-group="${groupKey}"]`);
+        if (masterCb && siblingSubs.length > 0) {
+            masterCb.checked = [...siblingSubs].every(s => s.checked);
+        }
     }
 };
 

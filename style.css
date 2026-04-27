@@ -163,22 +163,21 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .feed-group-dimmed label:hover { opacity: 0.85; }
 .feed-group-dim-note { font-size: 0.7rem; color: var(--text-muted); font-weight: 400; margin-left: 6px; }
 
-/* Subgroup heading inside a feed-section accordion. Visually clusters items
-   by institution (Penn Manor / Millersville University) for the townie
-   picker. Quiet styling — it's a label, not a header. */
-.feed-subgroup-heading {
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--text-muted);
-    font-weight: 700;
-    margin: 12px 0 6px;
-    padding-bottom: 4px;
-    border-bottom: 1px solid var(--border);
+/* Heading-style group label (Penn Manor / Millersville University / Other).
+   The whole row is a clickable master checkbox. Visual treatment: uppercase
+   navy text with bottom border so it reads as a section divider, while
+   remaining obviously interactive (cursor:pointer, hover background). */
+.feed-heading-label {
+    transition: background 0.15s;
 }
-/* The first subgroup heading inside an accordion shouldn't have extra
-   top margin since the accordion content already has padding. */
-.feed-accordion-content > .feed-subgroup-heading:first-child { margin-top: 0; }
+.feed-heading-label:hover { background: var(--bg); }
+.feed-heading-text {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--navy);
+    font-weight: 800;
+}
 
 /* Favorited event/game card — gold accent. Favorites are no longer pinned at the top of
    Events/Sports pages; they live in their chronological day group with this visual badge

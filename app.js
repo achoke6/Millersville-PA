@@ -70,42 +70,7 @@ const feedSections = {
                 {id:'mu-tennis',label:'Tennis',icon:'🎾'},{id:'mu-track',label:'Track',icon:'🏃'},
                 {id:'mu-golf',label:'Golf',icon:'⛳'},{id:'mu-swimming',label:'Swimming',icon:'🏊'},
                 {id:'mu-crosscountry',label:'Cross Country',icon:'🏃'}
-            ]},
-            // MU Club Sports — heading-style, with the sport-master toggle and
-            // 20 per-sport chips. Lives in Sports because club sports games
-            // are categorically a sports thing. Visible to both townies and
-            // marauders (latter get full granular control alongside the
-            // varsity Sidearm feed). The umbrella `clubs-sports` pref is the
-            // master sub; per-sport `cs-*` chips are individual subs.
-            muclubsports: {
-                label: 'MU Club Sports',
-                icon: '🎓',
-                headingStyle: true,
-                // No `audience` set — visible at full opacity to everyone.
-                subs: [
-                    {id:'clubs-sports',label:'All Club Sports',icon:'⚽'},
-                    {id:'cs-baseball',label:'Baseball',icon:'⚾'},
-                    {id:'cs-softball',label:'Softball',icon:'🥎'},
-                    {id:'cs-basketball-mens',label:"Men's Basketball",icon:'🏀'},
-                    {id:'cs-basketball-womens',label:"Women's Basketball",icon:'🏀'},
-                    {id:'cs-soccer-mens',label:"Men's Soccer",icon:'⚽'},
-                    {id:'cs-soccer-womens',label:"Women's Soccer",icon:'⚽'},
-                    {id:'cs-lacrosse',label:'Lacrosse',icon:'🥍'},
-                    {id:'cs-volleyball-mens',label:"Men's Volleyball",icon:'🏐'},
-                    {id:'cs-volleyball-womens',label:"Women's Volleyball",icon:'🏐'},
-                    {id:'cs-rugby-mens',label:"Men's Rugby",icon:'🏉'},
-                    {id:'cs-rugby-womens',label:"Women's Rugby",icon:'🏉'},
-                    {id:'cs-icehockey',label:'Ice Hockey',icon:'🏒'},
-                    {id:'cs-tennis',label:'Tennis',icon:'🎾'},
-                    {id:'cs-frisbee',label:'Ultimate Frisbee',icon:'🥏'},
-                    {id:'cs-fencing',label:'Fencing',icon:'🤺'},
-                    {id:'cs-equestrian',label:'Equestrian',icon:'🐴'},
-                    {id:'cs-dance',label:'Dance Team',icon:'💃'},
-                    {id:'cs-bowling',label:'Bowling',icon:'🎳'},
-                    {id:'cs-running',label:'Running',icon:'🏃'},
-                    {id:'cs-mma',label:'MMA',icon:'🥋'}
-                ]
-            }
+            ]}
         }
     },
     events: {
@@ -127,9 +92,82 @@ const feedSections = {
                     {id:'clubs-all',label:'All Events',townieLabel:'All Community Events',icon:'🎓'},
                     {id:'clubs-social',label:'Social Clubs',icon:'🎉'},
                     {id:'clubs-arts',label:'Arts & Performance',icon:'🎭'},
-                    {id:'clubs-sports',label:'Club Sports',icon:'⚽'},
-                    {id:'clubs-greek',label:'Greek Life',icon:'🏛️',audience:'student'},      // hidden from townies
                     {id:'clubs-service',label:'Service & Community',icon:'🤝'}
+                ],
+                // Collapsible nested subgroups — each renders as a click-to-
+                // expand row inside the GetInvolved heading group. The
+                // subgroup's master ID (e.g. clubs-sports) toggles the
+                // umbrella, while individual children (cs-*, chapter names)
+                // can be picked granularly. Default state is collapsed since
+                // each subgroup has 19-21 chips that would overwhelm the
+                // accordion if always-open.
+                subgroups: [
+                    {
+                        key: 'clubsports',
+                        label: 'Club Sports',
+                        icon: '⚽',
+                        masterId: 'clubs-sports',
+                        children: [
+                            {id:'cs-baseball',label:'Baseball',icon:'⚾'},
+                            {id:'cs-softball',label:'Softball',icon:'🥎'},
+                            {id:'cs-basketball-mens',label:"Men's Basketball",icon:'🏀'},
+                            {id:'cs-basketball-womens',label:"Women's Basketball",icon:'🏀'},
+                            {id:'cs-soccer-mens',label:"Men's Soccer",icon:'⚽'},
+                            {id:'cs-soccer-womens',label:"Women's Soccer",icon:'⚽'},
+                            {id:'cs-lacrosse',label:'Lacrosse',icon:'🥍'},
+                            {id:'cs-volleyball-mens',label:"Men's Volleyball",icon:'🏐'},
+                            {id:'cs-volleyball-womens',label:"Women's Volleyball",icon:'🏐'},
+                            {id:'cs-rugby-mens',label:"Men's Rugby",icon:'🏉'},
+                            {id:'cs-rugby-womens',label:"Women's Rugby",icon:'🏉'},
+                            {id:'cs-icehockey',label:'Ice Hockey',icon:'🏒'},
+                            {id:'cs-tennis',label:'Tennis',icon:'🎾'},
+                            {id:'cs-frisbee',label:'Ultimate Frisbee',icon:'🥏'},
+                            {id:'cs-fencing',label:'Fencing',icon:'🤺'},
+                            {id:'cs-equestrian',label:'Equestrian',icon:'🐴'},
+                            {id:'cs-dance',label:'Dance Team',icon:'💃'},
+                            {id:'cs-bowling',label:'Bowling',icon:'🎳'},
+                            {id:'cs-running',label:'Running',icon:'🏃'},
+                            {id:'cs-mma',label:'MMA',icon:'🥋'}
+                        ]
+                    },
+                    {
+                        key: 'greeklife',
+                        label: 'Greek Life',
+                        icon: '🏛️',
+                        masterId: 'clubs-greek',
+                        // Per-chapter children. The id uses the `club:<Name>`
+                        // pattern matching the existing club-tag matcher, so
+                        // events tagged with the chapter name (e.g. 'Delta
+                        // Zeta') get matched without any new logic. Names
+                        // taken verbatim from millersville.edu/campuslife/
+                        // fraternity-and-sorority-life — case-sensitive
+                        // because the scraper preserves casing. The 19 active
+                        // chapters; suspended (Sigma Tau Gamma) and
+                        // unrecognized (Alpha Gamma Theta) are excluded.
+                        children: [
+                            // Sororities (10)
+                            {id:'club:Alpha Xi Delta',label:'Alpha Xi Delta',icon:'♀'},
+                            {id:'club:Alpha Sigma Alpha',label:'Alpha Sigma Alpha',icon:'♀'},
+                            {id:'club:Alpha Sigma Tau',label:'Alpha Sigma Tau',icon:'♀'},
+                            {id:'club:Chi Upsilon Sigma Latin Sorority Inc.',label:'Chi Upsilon Sigma',icon:'♀'},
+                            {id:'club:Delta Zeta',label:'Delta Zeta',icon:'♀'},
+                            {id:'club:Delta Sigma Theta Sorority Inc.',label:'Delta Sigma Theta',icon:'♀'},
+                            {id:'club:Zeta Phi Beta Sorority Inc.',label:'Zeta Phi Beta',icon:'♀'},
+                            {id:'club:Mu Sigma Upsilon Sorority Inc.',label:'Mu Sigma Upsilon',icon:'♀'},
+                            {id:'club:Sigma Alpha Iota International Music Fraternity Inc.',label:'Sigma Alpha Iota',icon:'♀'},
+                            {id:'club:Sigma Gamma Rho Sorority Inc.',label:'Sigma Gamma Rho',icon:'♀'},
+                            // Fraternities (9)
+                            {id:'club:Acacia Fraternity',label:'Acacia',icon:'♂'},
+                            {id:'club:Alpha Phi Alpha Fraternity Inc.',label:'Alpha Phi Alpha',icon:'♂'},
+                            {id:'club:Kappa Alpha Psi Fraternity Inc.',label:'Kappa Alpha Psi',icon:'♂'},
+                            {id:'club:Lambda Sigma Upsilon',label:'Lambda Sigma Upsilon',icon:'♂'},
+                            {id:'club:Tau Kappa Epsilon',label:'Tau Kappa Epsilon',icon:'♂'},
+                            {id:'club:Phi Beta Sigma Fraternity Inc.',label:'Phi Beta Sigma',icon:'♂'},
+                            {id:'club:Phi Delta Theta',label:'Phi Delta Theta',icon:'♂'},
+                            {id:'club:Phi Mu Alpha Sinfonia',label:'Phi Mu Alpha Sinfonia',icon:'♂'},
+                            {id:'club:Omega Psi Phi Fraternity Inc.',label:'Omega Psi Phi',icon:'♂'}
+                        ]
+                    }
                 ]
             },
             borough: { label: 'Borough', icon: '🌳', headingStyle: true, audience: 'townie', subs: [{id:'borough-all',label:'All Borough Events',icon:'🌳'}] },
@@ -676,6 +714,10 @@ window.openFeedSettings = function() {
                 ...((g.composites || []).flatMap(c => [
                     ...(c.linkedIds || []),
                     ...((c.subSports || []).map(s => s.id))
+                ])),
+                ...((g.subgroups || []).flatMap(sg => [
+                    sg.masterId,
+                    ...((sg.children || []).map(c => c.id))
                 ]))
             ];
             return allIds.some(id => current.includes(id));
@@ -711,14 +753,19 @@ window.openFeedSettings = function() {
         if (group.headingStyle) {
             const subs = group.subs || [];
             const composites = group.composites || [];
-            // Collect ALL underlying IDs (subs + every composite's linkedIds)
-            // to determine master state. Master is checked when every
-            // underlying ID is in current.
+            const subgroups = group.subgroups || [];
+            // Collect ALL underlying IDs (subs + every composite's linkedIds
+            // + subgroup masters + subgroup children) to determine master
+            // state. Master is checked when every underlying ID is in current.
             const allIds = [
                 ...subs.map(s => s.id),
                 ...composites.flatMap(c => [
                     ...(c.linkedIds || []),
                     ...((c.subSports || []).map(s => s.id))
+                ]),
+                ...subgroups.flatMap(sg => [
+                    sg.masterId,
+                    ...((sg.children || []).map(c => c.id))
                 ])
             ];
             const allChecked = allIds.length > 0 && allIds.every(id => current.includes(id));
@@ -748,6 +795,34 @@ window.openFeedSettings = function() {
                 }).join('')}
             </div>` : '';
 
+            // Subgroups: collapsible nested sections with their own master +
+            // children. Used by MU GetInvolved for Club Sports and Greek Life
+            // — each carries 19-21 chips that would overwhelm the picker if
+            // always-expanded. Default collapsed; click row to expand. The
+            // subgroup master toggles all children at once via toggleFeedSubgroup.
+            const subgroupsHtml = subgroups.length ? `<div style="padding-left:14px;margin-top:10px;">
+                ${subgroups.map(sg => {
+                    const childIds = (sg.children || []).map(c => c.id);
+                    const masterChecked = current.includes(sg.masterId);
+                    const anyChildChecked = childIds.some(id => current.includes(id));
+                    // Auto-expand if user has any sub-pref selected — they're
+                    // working in this subgroup, so don't make them re-find it.
+                    const startExpanded = anyChildChecked;
+                    const sgKey = key + '__' + sg.key;
+                    const chipsHtml = (sg.children || []).map(c =>
+                        `<label style="display:flex;align-items:center;gap:4px;font-size:0.78rem;padding:4px 9px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;background:${current.includes(c.id)?'var(--gold-soft)':'var(--bg)'};"><input type="checkbox" class="feed-sub" data-group="${key}" data-subgroup="${sgKey}" value="${c.id.replace(/"/g,'&quot;')}" ${current.includes(c.id)?'checked':''} onchange="updateFeedSubgroup('${sgKey}')" style="accent-color:var(--gold);"> ${c.icon||''} ${c.label}</label>`
+                    ).join('');
+                    return `<div class="feed-subgroup" data-subgroup-key="${sgKey}" style="margin-bottom:8px;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;">
+                        <div class="feed-subgroup-header" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:${masterChecked||anyChildChecked?'var(--gold-soft)':'var(--bg)'};cursor:pointer;" onclick="toggleSubgroupCollapse(event, '${sgKey}')">
+                            <input type="checkbox" class="feed-subgroup-master feed-sub" data-group="${key}" data-subgroup="${sgKey}" value="${sg.masterId}" ${masterChecked?'checked':''} onclick="event.stopPropagation()" onchange="toggleFeedSubgroup(this)" style="accent-color:var(--gold);">
+                            <span style="flex:1;font-size:0.85rem;font-weight:700;">${sg.icon} ${sg.label}</span>
+                            <span class="feed-subgroup-chevron" style="font-size:0.85rem;color:var(--text-muted);transition:transform 0.15s;${startExpanded?'transform:rotate(90deg);':''}">▸</span>
+                        </div>
+                        <div class="feed-subgroup-children" style="display:${startExpanded?'flex':'none'};flex-wrap:wrap;gap:6px;padding:10px 12px;background:var(--surface);border-top:1px solid var(--border);">${chipsHtml}</div>
+                    </div>`;
+                }).join('')}
+            </div>` : '';
+
             return `<div class="feed-heading-group" style="margin-bottom:14px;">
                 <label class="feed-heading-label" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding-bottom:6px;border-bottom:1px solid var(--border);">
                     <input type="checkbox" class="feed-group" data-group="${key}" ${allChecked?'checked':''} onchange="toggleFeedGroup(this)" style="accent-color:var(--gold);width:16px;height:16px;">
@@ -755,6 +830,7 @@ window.openFeedSettings = function() {
                 </label>
                 ${subsHtml}
                 ${compositesHtml}
+                ${subgroupsHtml}
             </div>`;
         }
 
@@ -952,28 +1028,44 @@ window.toggleClubBrowser = function() {
         ? allClubsDirectory
         : (window._individualClubs || []).map(n => ({ name: n, category: '', categories: [] }));
 
-    // Render a search input + a scrollable list. Re-rendering happens via the input handler.
+    // Render search input + major dropdown + scrollable list. The major
+    // dropdown is populated once the mapping JSON loads (lazy fetch); the
+    // search input is always available even if the mapping fails.
     list.style.display = 'block';
     list.style.flexWrap = 'initial';
-    list.style.maxHeight = '340px';
+    list.style.maxHeight = '380px';
     list.innerHTML = `
+        <div id="major-filter-row" style="margin-bottom:8px;display:none;">
+            <select id="major-filter-select" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.85rem;background:var(--surface);box-sizing:border-box;cursor:pointer;">
+                <option value="">— Show all majors —</option>
+            </select>
+        </div>
         <input id="club-search-input" type="text" placeholder="Search ${directory.length} MU organizations..." style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.85rem;margin-bottom:8px;box-sizing:border-box;">
         <div id="club-search-results" style="display:flex;flex-wrap:wrap;gap:4px;max-height:260px;overflow-y:auto;"></div>`;
 
     const input = document.getElementById('club-search-input');
     const results = document.getElementById('club-search-results');
+    const majorRow = document.getElementById('major-filter-row');
+    const majorSelect = document.getElementById('major-filter-select');
+
+    // Currently selected major spec (object from mapping JSON), or null for "all".
+    let selectedMajor = null;
 
     function renderList(query) {
         const q = (query || '').trim().toLowerCase();
         const current = feedPrefs || [];
-        // Show matching orgs. When no query, show favorited ones first then all others,
-        // limited to first 60 to keep render fast — search narrows it down.
-        let orgs = directory.filter(o => {
-            if (!q) return true;
-            return o.name.toLowerCase().includes(q) || (o.category || '').toLowerCase().includes(q);
-        });
-        if (!q) {
-            // Sort: favorited first, then alphabetical
+        // Filter pipeline: major filter narrows first (if active), then text
+        // search refines. This is the most user-intuitive ordering — picking
+        // a major sets a context, typing within it narrows further.
+        let orgs = directory;
+        if (selectedMajor) {
+            orgs = orgs.filter(o => clubMatchesMajor(o, selectedMajor));
+        }
+        if (q) {
+            orgs = orgs.filter(o => o.name.toLowerCase().includes(q) || (o.category || '').toLowerCase().includes(q));
+        }
+        if (!q && !selectedMajor) {
+            // Default sort: favorited first, then alphabetical. Top 60 only.
             orgs = orgs.slice().sort((a, b) => {
                 const af = current.includes('club:' + a.name) ? 0 : 1;
                 const bf = current.includes('club:' + b.name) ? 0 : 1;
@@ -981,13 +1073,34 @@ window.toggleClubBrowser = function() {
                 return a.name.localeCompare(b.name);
             });
             if (orgs.length > 60) orgs = orgs.slice(0, 60);
+        } else if (selectedMajor) {
+            // When filtering by major, sort favorited first then alphabetical.
+            // No 60-cap since major filtering naturally narrows the list.
+            orgs = orgs.slice().sort((a, b) => {
+                const af = current.includes('club:' + a.name) ? 0 : 1;
+                const bf = current.includes('club:' + b.name) ? 0 : 1;
+                if (af !== bf) return af - bf;
+                return a.name.localeCompare(b.name);
+            });
         }
         const totalInDir = directory.length;
-        const showingInfo = q
-            ? `<div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:6px;">${orgs.length} of ${totalInDir} match "${q}"</div>`
-            : (totalInDir > 60 ? `<div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:6px;">Showing 60 of ${totalInDir} — type to search for more</div>` : '');
+        // Status row at top of results — communicates filter state to user.
+        let showingInfo = '';
+        if (selectedMajor && q) {
+            showingInfo = `<div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:6px;">${orgs.length} clubs for ${selectedMajor.displayName || selectedMajor.name} matching "${q}"</div>`;
+        } else if (selectedMajor) {
+            showingInfo = `<div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:6px;">${orgs.length} clubs related to ${selectedMajor.displayName || selectedMajor.name}</div>`;
+        } else if (q) {
+            showingInfo = `<div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:6px;">${orgs.length} of ${totalInDir} match "${q}"</div>`;
+        } else if (totalInDir > 60) {
+            showingInfo = `<div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:6px;">Showing 60 of ${totalInDir} — type to search or pick your major above</div>`;
+        }
         if (orgs.length === 0) {
-            results.innerHTML = showingInfo + '<div style="padding:16px;text-align:center;color:var(--text-muted);font-size:0.85rem;">No organizations match.</div>';
+            // Different empty-state message depending on what filters are active.
+            const reason = selectedMajor
+                ? `No clubs in our directory matched "${selectedMajor.displayName || selectedMajor.name}". <a href="#" onclick="event.preventDefault();document.getElementById('major-filter-select').value='';document.getElementById('major-filter-select').dispatchEvent(new Event('change'));" style="color:var(--navy);">Show all clubs</a>`
+                : 'No organizations match.';
+            results.innerHTML = showingInfo + `<div style="padding:16px;text-align:center;color:var(--text-muted);font-size:0.85rem;">${reason}</div>`;
             return;
         }
         results.innerHTML = showingInfo + orgs.map(o => {
@@ -999,6 +1112,40 @@ window.toggleClubBrowser = function() {
     }
 
     input.addEventListener('input', () => renderList(input.value));
+    majorSelect.addEventListener('change', () => {
+        const idx = majorSelect.value;
+        selectedMajor = (idx === '' || !majorClubsMapping) ? null : majorClubsMapping.majors[parseInt(idx)];
+        renderList(input.value);
+    });
+
+    // Populate the major dropdown asynchronously. If load fails or returns
+    // empty, the row stays hidden and the rest of the UI works unaffected.
+    loadMajorClubsMapping().then(mapping => {
+        if (!mapping || !mapping.majors || mapping.majors.length === 0) return;
+        // Append major options. Use index as value so we can reference the
+        // full spec object (with keywords + categories) on selection.
+        const opts = mapping.majors.map((m, i) =>
+            `<option value="${i}">${m.displayName || m.name}</option>`
+        ).join('');
+        majorSelect.insertAdjacentHTML('beforeend', opts);
+        majorRow.style.display = 'block';
+
+        // Diagnostic: log any mapping that produces 0 matches against the
+        // current directory. Helps us spot dead/misaligned mappings without
+        // needing a separate eval pass. Logs once per session.
+        if (!window._majorMappingDiagnosticLogged) {
+            window._majorMappingDiagnosticLogged = true;
+            const empties = mapping.majors
+                .filter(m => directory.filter(c => clubMatchesMajor(c, m)).length === 0)
+                .map(m => m.displayName || m.name);
+            if (empties.length > 0) {
+                console.log(`[major-mapping] ${empties.length} of ${mapping.majors.length} majors produced 0 matches against ${directory.length}-club directory:`, empties);
+            } else {
+                console.log(`[major-mapping] all ${mapping.majors.length} majors produced ≥1 match against ${directory.length}-club directory.`);
+            }
+        }
+    });
+
     renderList('');
 };
 
@@ -1007,6 +1154,70 @@ window.updateFeedGroup = function(group) {
     const groupCb = document.querySelector(`.feed-group[data-group="${group}"]`);
     if (groupCb) groupCb.checked = [...subs].every(s => s.checked);
     subs.forEach(cb => { cb.closest('label').style.background = cb.checked ? 'var(--gold-soft)' : 'var(--bg)'; });
+};
+
+// Subgroup toggle handlers. Subgroups are collapsible nested sections inside
+// heading-style groups (Club Sports, Greek Life under MU GetInvolved). Each
+// has: a master checkbox (toggles all children), a row that expands/collapses
+// to reveal child chips, and a parent-state ripple back up to the group's
+// master.
+
+// Click on the subgroup row (anywhere except the master checkbox) toggles
+// the chips panel. Stop propagation on the master so checking it doesn't also
+// collapse/expand the panel.
+window.toggleSubgroupCollapse = function(evt, sgKey) {
+    // If the click originated on the master checkbox, ignore (its onclick
+    // already stopped propagation). Belt and suspenders.
+    if (evt && evt.target && evt.target.classList && evt.target.classList.contains('feed-subgroup-master')) return;
+    const sg = document.querySelector(`.feed-subgroup[data-subgroup-key="${sgKey}"]`);
+    if (!sg) return;
+    const panel = sg.querySelector('.feed-subgroup-children');
+    const chevron = sg.querySelector('.feed-subgroup-chevron');
+    if (!panel) return;
+    const isOpen = panel.style.display !== 'none';
+    panel.style.display = isOpen ? 'none' : 'flex';
+    if (chevron) chevron.style.transform = isOpen ? '' : 'rotate(90deg)';
+};
+
+// Master checkbox toggled — set ALL children to match. Also flip the row
+// background (gold-soft when any state is "on", default otherwise) and
+// re-sync the parent group's master state via updateFeedGroup.
+window.toggleFeedSubgroup = function(masterCb) {
+    const sgKey = masterCb.dataset.subgroup;
+    const groupKey = masterCb.dataset.group;
+    const checked = masterCb.checked;
+    const sg = document.querySelector(`.feed-subgroup[data-subgroup-key="${sgKey}"]`);
+    if (!sg) return;
+    sg.querySelectorAll(`.feed-sub[data-subgroup="${sgKey}"]:not(.feed-subgroup-master)`).forEach(cb => {
+        cb.checked = checked;
+        const label = cb.closest('label');
+        if (label) label.style.background = checked ? 'var(--gold-soft)' : 'var(--bg)';
+    });
+    const header = sg.querySelector('.feed-subgroup-header');
+    if (header) header.style.background = checked ? 'var(--gold-soft)' : 'var(--bg)';
+    if (groupKey && typeof updateFeedGroup === 'function') updateFeedGroup(groupKey);
+};
+
+// Individual child toggled — re-sync the subgroup master (checked when every
+// child is checked, unchecked otherwise) and the parent group's master.
+window.updateFeedSubgroup = function(sgKey) {
+    const sg = document.querySelector(`.feed-subgroup[data-subgroup-key="${sgKey}"]`);
+    if (!sg) return;
+    const children = [...sg.querySelectorAll(`.feed-sub[data-subgroup="${sgKey}"]:not(.feed-subgroup-master)`)];
+    const master = sg.querySelector('.feed-subgroup-master');
+    const allChecked = children.length > 0 && children.every(c => c.checked);
+    const anyChecked = children.some(c => c.checked);
+    if (master) master.checked = allChecked;
+    // Update each child's own background since updateFeedGroup won't reach them
+    children.forEach(c => {
+        const label = c.closest('label');
+        if (label) label.style.background = c.checked ? 'var(--gold-soft)' : 'var(--bg)';
+    });
+    const header = sg.querySelector('.feed-subgroup-header');
+    if (header) header.style.background = (allChecked || anyChecked) ? 'var(--gold-soft)' : 'var(--bg)';
+    // Cascade up to parent group master via the data-group attribute
+    const groupKey = master && master.dataset.group;
+    if (groupKey && typeof updateFeedGroup === 'function') updateFeedGroup(groupKey);
 };
 
 window.saveFeedFromModal = function() {
@@ -4025,6 +4236,55 @@ let sponsorImpressions = {}; // { sponsorId: { impressions: N, clicks: N } }
 
 // Full MU organization directory (loaded from clubs.json — includes orgs without current events)
 let allClubsDirectory = [];
+
+// Major → relevant clubs mapping (loaded from major-clubs-mapping.json on first
+// club-browser open). Lazy-loaded since most users won't open the picker. Once
+// fetched it stays in memory for the session.
+let majorClubsMapping = null;
+let majorClubsMappingLoadPromise = null;
+function loadMajorClubsMapping() {
+    if (majorClubsMapping) return Promise.resolve(majorClubsMapping);
+    if (majorClubsMappingLoadPromise) return majorClubsMappingLoadPromise;
+    majorClubsMappingLoadPromise = fetch('major-clubs-mapping.json')
+        .then(r => r.ok ? r.json() : null)
+        .then(data => {
+            majorClubsMapping = data;
+            return data;
+        })
+        .catch(err => {
+            // File missing or malformed isn't a fatal error — picker just
+            // hides the major dropdown. Search still works.
+            console.warn('Major mapping unavailable:', err);
+            majorClubsMapping = null;
+            return null;
+        });
+    return majorClubsMappingLoadPromise;
+}
+
+// Match a club against a major spec from the mapping. Returns true if any
+// keyword (substring of name or category) matches, OR any of the major's
+// listed categories matches one of the club's categories. Case-insensitive.
+function clubMatchesMajor(club, majorSpec) {
+    if (!club || !majorSpec) return false;
+    const nameLower = (club.name || '').toLowerCase();
+    const catLower = (club.category || '').toLowerCase();
+    const cats = (club.categories || []).map(c => (c || '').toLowerCase());
+    // Pool the singular .category string with the .categories array for
+    // robust matching — some clubs (especially event-derived ones) only
+    // have the singular field populated.
+    const allCats = catLower ? [...cats, catLower] : cats;
+    const keywords = majorSpec.keywords || [];
+    for (const kw of keywords) {
+        const kwLower = kw.toLowerCase();
+        if (nameLower.includes(kwLower)) return true;
+        if (catLower.includes(kwLower)) return true;
+    }
+    const majorCats = (majorSpec.categories || []).map(c => c.toLowerCase());
+    for (const mc of majorCats) {
+        if (allCats.some(c => c.includes(mc))) return true;
+    }
+    return false;
+}
 async function loadClubsDirectory() {
     try {
         const res = await fetch('clubs.json');

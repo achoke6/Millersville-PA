@@ -1,0 +1,344 @@
+{
+  "_meta": {
+    "purpose": "Major → relevant clubs mapping for the GetInvolved club browser. Drop into the same dir as clubs.json.",
+    "schema": "{ majors: [{ name, displayName?, keywords[], categories[]?, namedClubs[]?, confidence }] }",
+    "matchLogic": "A club matches a major if ANY of: (a) club.name lowercased contains any keyword, (b) one of club's categories matches any entry in the major's categories list, (c) club.name appears in namedClubs list (exact match).",
+    "confidence": "high = strong direct linkage. medium = thematically related. low = best-guess; user should review.",
+    "reviewNote": "Review every entry. Remove keywords that produce noisy false-positive matches. Add named clubs you know belong but aren't keyword-matched.",
+    "totalMajors": 46
+  },
+  "majors": [
+    {
+      "name": "Nursing Science",
+      "displayName": "Nursing",
+      "keywords": ["nursing", "pre-health", "pre-med", "health profession", "medical", "student nurses"],
+      "categories": ["Pre-Professional", "Health"],
+      "confidence": "high"
+    },
+    {
+      "name": "Early Childhood Education and Teaching",
+      "displayName": "Early Childhood Education",
+      "keywords": ["education", "teaching", "early childhood", "future teachers", "student educators", "pse", "kappa delta pi"],
+      "categories": ["Education", "Pre-Professional"],
+      "confidence": "high"
+    },
+    {
+      "name": "Business Administration and Management",
+      "displayName": "Business Administration",
+      "keywords": ["business", "management", "entrepreneur", "marketing", "finance", "accounting", "delta sigma pi", "alpha kappa psi", "investment"],
+      "categories": ["Pre-Professional", "Business"],
+      "confidence": "high"
+    },
+    {
+      "name": "Social Work",
+      "displayName": "Social Work",
+      "keywords": ["social work", "human services", "advocacy", "phi alpha"],
+      "categories": ["Pre-Professional", "Service"],
+      "confidence": "high"
+    },
+    {
+      "name": "Psychology",
+      "displayName": "Psychology",
+      "keywords": ["psychology", "psi chi", "mental health", "counseling"],
+      "categories": ["Pre-Professional", "Academic"],
+      "confidence": "high"
+    },
+    {
+      "name": "Biology/Biological Sciences",
+      "displayName": "Biology",
+      "keywords": ["biology", "bio", "pre-med", "pre-health", "tri-beta", "beta beta beta", "ecology", "wildlife"],
+      "categories": ["Academic", "Pre-Professional"],
+      "confidence": "high"
+    },
+    {
+      "name": "Special Education and Teaching",
+      "displayName": "Special Education",
+      "keywords": ["special education", "education", "teaching", "future teachers", "kappa delta pi", "council for exceptional"],
+      "categories": ["Education", "Pre-Professional"],
+      "confidence": "high"
+    },
+    {
+      "name": "Computer and Information Sciences",
+      "displayName": "Computer Science",
+      "keywords": ["computer", "computing", "tech", "coding", "programming", "acm", "cybersecurity", "game dev", "robotics", "hackathon"],
+      "categories": ["Academic", "Special Interest"],
+      "confidence": "high"
+    },
+    {
+      "name": "Applied Engineering",
+      "displayName": "Applied Engineering",
+      "keywords": ["engineering", "robotics", "society of women engineers", "ieee", "asme", "engineers without borders", "manufacturing"],
+      "categories": ["Academic", "Pre-Professional"],
+      "confidence": "high"
+    },
+    {
+      "name": "Speech Communication and Rhetoric",
+      "displayName": "Speech & Communication",
+      "keywords": ["communication", "rhetoric", "speech", "debate", "forensics", "lambda pi eta", "public speaking", "broadcasting", "wixq"],
+      "categories": ["Academic", "Media"],
+      "confidence": "high"
+    },
+    {
+      "name": "English Language and Literature",
+      "displayName": "English",
+      "keywords": ["english", "literature", "writing", "creative writing", "sigma tau delta", "literary", "poetry", "snapper", "george street press"],
+      "categories": ["Academic", "Media"],
+      "confidence": "high"
+    },
+    {
+      "name": "Art/Art Studies",
+      "displayName": "Art",
+      "keywords": ["art", "studio art", "fine arts", "painting", "drawing", "sculpture", "ceramics", "kappa pi", "art history"],
+      "categories": ["Arts", "Academic"],
+      "confidence": "high"
+    },
+    {
+      "name": "Multi-/Interdisciplinary Studies",
+      "displayName": "Interdisciplinary Studies",
+      "keywords": [],
+      "categories": ["Academic", "Service", "Special Interest"],
+      "confidence": "low",
+      "_note": "Generic major — best to surface broadly relevant academic+service clubs rather than pretend to know specifics. User: consider whether this should map to anything at all, or stay empty (showing all clubs)."
+    },
+    {
+      "name": "Sociology",
+      "displayName": "Sociology",
+      "keywords": ["sociology", "social", "alpha kappa delta", "diversity", "human services"],
+      "categories": ["Academic", "Cultural", "Service"],
+      "confidence": "high"
+    },
+    {
+      "name": "Music Technology",
+      "displayName": "Music Technology",
+      "keywords": ["music", "audio", "recording", "wixq", "music technology", "sound", "concert"],
+      "categories": ["Arts", "Special Interest"],
+      "confidence": "high"
+    },
+    {
+      "name": "Allied Health Diagnostic, Intervention, and Treatment Professions",
+      "displayName": "Allied Health",
+      "keywords": ["pre-health", "health", "medical", "pre-med", "respiratory", "occupational therapy", "physical therapy"],
+      "categories": ["Pre-Professional", "Health"],
+      "confidence": "medium"
+    },
+    {
+      "name": "Design and Visual Communications",
+      "displayName": "Design & Visual Communications",
+      "keywords": ["design", "graphic", "visual", "art", "media", "digital media", "illustration"],
+      "categories": ["Arts", "Media"],
+      "confidence": "high"
+    },
+    {
+      "name": "Mathematics",
+      "displayName": "Mathematics",
+      "keywords": ["math", "mathematics", "kappa mu epsilon", "pi mu epsilon", "actuarial", "statistics"],
+      "categories": ["Academic", "Honors"],
+      "confidence": "high"
+    },
+    {
+      "name": "Social Sciences",
+      "displayName": "Social Sciences",
+      "keywords": [],
+      "categories": ["Academic", "Cultural"],
+      "confidence": "low",
+      "_note": "Catch-all major. Probably better to show the user nothing-specific and let them browse. User's call."
+    },
+    {
+      "name": "Political Science and Government",
+      "displayName": "Political Science",
+      "keywords": ["political", "politics", "government", "model un", "pre-law", "mock trial", "debate", "pi sigma alpha", "young democrats", "young republicans", "college democrats", "college republicans"],
+      "categories": ["Academic", "Pre-Professional"],
+      "confidence": "high"
+    },
+    {
+      "name": "Music",
+      "displayName": "Music",
+      "keywords": ["music", "choir", "band", "orchestra", "ensemble", "concert", "phi mu alpha", "sigma alpha iota", "marching", "jazz", "a cappella", "wixq"],
+      "categories": ["Arts"],
+      "confidence": "high"
+    },
+    {
+      "name": "Sport and Fitness Administration/Management",
+      "displayName": "Sport Management",
+      "keywords": ["sport management", "fitness", "athletic", "recreation", "intramural", "sports business"],
+      "categories": ["Pre-Professional", "Sport Clubs"],
+      "confidence": "high"
+    },
+    {
+      "name": "Geology/Earth Science",
+      "displayName": "Geology / Earth Science",
+      "keywords": ["geology", "earth science", "geoscience", "sigma gamma epsilon", "rocks"],
+      "categories": ["Academic"],
+      "confidence": "high"
+    },
+    {
+      "name": "Atmospheric Sciences and Meteorology",
+      "displayName": "Meteorology",
+      "keywords": ["meteorology", "weather", "atmospheric", "iaem", "american meteorological"],
+      "categories": ["Academic"],
+      "confidence": "high"
+    },
+    {
+      "name": "History",
+      "displayName": "History",
+      "keywords": ["history", "phi alpha theta", "historical"],
+      "categories": ["Academic"],
+      "confidence": "high"
+    },
+    {
+      "name": "Economics",
+      "displayName": "Economics",
+      "keywords": ["economics", "finance", "business", "investment", "omicron delta epsilon"],
+      "categories": ["Academic", "Pre-Professional"],
+      "confidence": "high"
+    },
+    {
+      "name": "Digital Communication and Media/Multimedia",
+      "displayName": "Digital Media & Communication",
+      "keywords": ["media", "communication", "digital", "broadcasting", "video", "film", "wixq", "snapper", "podcast"],
+      "categories": ["Media", "Arts"],
+      "confidence": "high"
+    },
+    {
+      "name": "Industrial Production Technologies/Technicians",
+      "displayName": "Industrial Production",
+      "keywords": ["manufacturing", "industrial", "engineering technology"],
+      "categories": ["Pre-Professional", "Academic"],
+      "confidence": "medium"
+    },
+    {
+      "name": "Crisis/Emergency/Disaster Management",
+      "displayName": "Emergency Management",
+      "keywords": ["emergency", "disaster", "crisis management", "iaem", "international association of emergency"],
+      "categories": ["Pre-Professional", "Service"],
+      "confidence": "high"
+    },
+    {
+      "name": "Anthropology",
+      "displayName": "Anthropology",
+      "keywords": ["anthropology", "archaeology", "lambda alpha", "cultural"],
+      "categories": ["Academic", "Cultural"],
+      "confidence": "high"
+    },
+    {
+      "name": "Accounting",
+      "displayName": "Accounting",
+      "keywords": ["accounting", "beta alpha psi", "business", "finance"],
+      "categories": ["Pre-Professional", "Business"],
+      "confidence": "high"
+    },
+    {
+      "name": "Occupational Safety and Health Technology/Technician",
+      "displayName": "Occupational Safety & Health",
+      "keywords": ["safety", "health", "occupational", "industrial hygiene"],
+      "categories": ["Pre-Professional", "Health"],
+      "confidence": "medium"
+    },
+    {
+      "name": "Manufacturing Engineering Technology/Technician",
+      "displayName": "Manufacturing Engineering",
+      "keywords": ["manufacturing", "engineering", "robotics", "industrial"],
+      "categories": ["Pre-Professional", "Academic"],
+      "confidence": "medium"
+    },
+    {
+      "name": "Information Technology",
+      "displayName": "Information Technology",
+      "keywords": ["information technology", "tech", "computer", "computing", "acm", "cybersecurity", "network", "infosec"],
+      "categories": ["Academic", "Special Interest"],
+      "confidence": "high"
+    },
+    {
+      "name": "Chemistry",
+      "displayName": "Chemistry",
+      "keywords": ["chemistry", "chemical", "biochemistry", "alpha chi sigma", "pre-pharmacy"],
+      "categories": ["Academic", "Pre-Professional"],
+      "confidence": "high"
+    },
+    {
+      "name": "Technical Theatre/Theatre Design and Technology",
+      "displayName": "Technical Theatre",
+      "keywords": ["theatre", "theater", "drama", "stage", "alpha psi omega", "production", "performance"],
+      "categories": ["Arts"],
+      "confidence": "high"
+    },
+    {
+      "name": "Junior High/Intermediate/Middle School Education and Teaching",
+      "displayName": "Middle School Education",
+      "keywords": ["education", "teaching", "future teachers", "kappa delta pi"],
+      "categories": ["Education", "Pre-Professional"],
+      "confidence": "high"
+    },
+    {
+      "name": "Geography",
+      "displayName": "Geography",
+      "keywords": ["geography", "gamma theta upsilon", "earth", "gis", "mapping"],
+      "categories": ["Academic"],
+      "confidence": "high"
+    },
+    {
+      "name": "Finance",
+      "displayName": "Finance",
+      "keywords": ["finance", "investment", "business", "economics", "accounting"],
+      "categories": ["Pre-Professional", "Business"],
+      "confidence": "high"
+    },
+    {
+      "name": "Marketing/Marketing Management",
+      "displayName": "Marketing",
+      "keywords": ["marketing", "advertising", "business", "brand", "american marketing"],
+      "categories": ["Pre-Professional", "Business"],
+      "confidence": "high"
+    },
+    {
+      "name": "Physics",
+      "displayName": "Physics",
+      "keywords": ["physics", "sigma pi sigma", "society of physics students", "astronomy"],
+      "categories": ["Academic"],
+      "confidence": "high"
+    },
+    {
+      "name": "Philosophy",
+      "displayName": "Philosophy",
+      "keywords": ["philosophy", "phi sigma tau", "ethics", "debate"],
+      "categories": ["Academic"],
+      "confidence": "high"
+    },
+    {
+      "name": "Automation Engineer Technology/Technician",
+      "displayName": "Automation Engineering",
+      "keywords": ["automation", "engineering", "robotics", "manufacturing"],
+      "categories": ["Pre-Professional", "Academic"],
+      "confidence": "medium"
+    },
+    {
+      "name": "Area Studies",
+      "displayName": "Area Studies",
+      "keywords": ["international", "global", "cultural", "language"],
+      "categories": ["Cultural", "Academic"],
+      "confidence": "low",
+      "_note": "Generic. Probably maps to language/culture clubs but specific mapping needs user input."
+    },
+    {
+      "name": "Human Services",
+      "displayName": "Human Services",
+      "keywords": ["human services", "social work", "service", "advocacy"],
+      "categories": ["Service", "Pre-Professional"],
+      "confidence": "high"
+    },
+    {
+      "name": "Foreign Languages and Literatures",
+      "displayName": "Foreign Languages",
+      "keywords": ["spanish", "french", "german", "language", "international", "linguistics", "sigma delta pi", "pi delta phi"],
+      "categories": ["Academic", "Cultural"],
+      "confidence": "high"
+    },
+    {
+      "name": "Environmental Science",
+      "displayName": "Environmental Science",
+      "keywords": ["environmental", "ecology", "sustainability", "green", "wildlife", "conservation"],
+      "categories": ["Academic", "Service"],
+      "confidence": "high"
+    }
+  ]
+}

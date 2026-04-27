@@ -148,7 +148,22 @@
                     <a href="#" onclick="event.preventDefault();switchView('sports');" class="home-more-link" style="color:var(--navy);">Sports →</a>
                 </div>
             </div>
-            <div id="home-timeline"></div>
+            <div id="home-timeline">
+                <!-- Skeleton placeholders shown during events.json fetch.
+                     Replaced wholesale by renderHomeFeed once data arrives. -->
+                <div class="tl-item tl-skeleton" aria-hidden="true">
+                    <span class="tl-time skel-bar" style="width:54px;height:14px;"></span>
+                    <div class="tl-content"><span class="skel-bar" style="width:60%;height:14px;display:block;margin-bottom:6px;"></span><span class="skel-bar" style="width:80%;height:12px;display:block;"></span></div>
+                </div>
+                <div class="tl-item tl-skeleton" aria-hidden="true">
+                    <span class="tl-time skel-bar" style="width:54px;height:14px;"></span>
+                    <div class="tl-content"><span class="skel-bar" style="width:75%;height:14px;display:block;margin-bottom:6px;"></span><span class="skel-bar" style="width:65%;height:12px;display:block;"></span></div>
+                </div>
+                <div class="tl-item tl-skeleton" aria-hidden="true">
+                    <span class="tl-time skel-bar" style="width:54px;height:14px;"></span>
+                    <div class="tl-content"><span class="skel-bar" style="width:50%;height:14px;display:block;margin-bottom:6px;"></span><span class="skel-bar" style="width:70%;height:12px;display:block;"></span></div>
+                </div>
+            </div>
         </div>
 
         <!-- Today's Specials -->

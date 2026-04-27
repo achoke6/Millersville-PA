@@ -2368,9 +2368,35 @@ function buildDayGroupHTML(group, buildCard) {
         + group.events.map(e => buildCard(e)).join('');
 }
 
+// Render N skeleton cards as a loading placeholder. Layout mimics the real
+// .app-card so the visual shift on data arrival is minimal. Each card has
+// a title bar, two metadata rows, and a tag row — the shimmer animation
+// is pure CSS (.skel-bar class), no JS animation loops.
+function renderSkeletonCards(n) {
+    const card = `<div class="app-card card-skeleton" aria-hidden="true">
+        <div class="card-body">
+            <div class="card-heading"><span class="skel-bar" style="width:30px;height:30px;border-radius:50%;flex-shrink:0;"></span><span class="skel-bar" style="height:18px;flex:1;"></span></div>
+            <span class="skel-bar" style="display:block;width:60%;height:14px;margin:6px 0;"></span>
+            <span class="skel-bar" style="display:block;width:75%;height:14px;margin:6px 0 10px;"></span>
+            <div style="display:flex;gap:6px;"><span class="skel-bar" style="width:50px;height:18px;border-radius:10px;"></span><span class="skel-bar" style="width:80px;height:18px;border-radius:10px;"></span></div>
+        </div>
+    </div>`;
+    return card.repeat(n);
+}
+
 function renderEvents(){
     updateEventsUI();
     const container = document.getElementById('ev-events-container');
+    // Loading state: events.json hasn't returned yet. Render 4 skeleton cards
+    // so the page doesn't flash empty before content arrives. Once allEvents
+    // populates, loadEvents triggers another renderEvents() which replaces
+    // these. Empty allEvents after load is a different state (no events at
+    // all) — we can't distinguish here, but realistically allEvents.length
+    // is always >0 in production, so skeletons only show during fetch.
+    if (!allEvents || allEvents.length === 0) {
+        container.innerHTML = renderSkeletonCards(4);
+        return;
+    }
     if (evActiveSources.size === 0) {
         container.innerHTML = '<p class="empty-state">Select a source to view events.</p>';
         return;
@@ -2688,6 +2714,14 @@ window.clearSportsFilters=function(){
 };
 
 function renderSports(){
+    // Loading state: events.json hasn't returned yet. Show skeletons in the
+    // sports container so the page doesn't flash empty.
+    if (!allEvents || allEvents.length === 0) {
+        document.getElementById('sp-events-container').innerHTML = renderSkeletonCards(4);
+        document.getElementById('sp-sport-tags').innerHTML = '';
+        updateSportsUI();
+        return;
+    }
     if(spActiveSources.size===0){
         document.getElementById('sp-events-container').innerHTML='';
         document.getElementById('sp-sport-tags').innerHTML='';
@@ -4493,7 +4527,22 @@ window.openSearch = function() {
         <div id="search-results" style="flex:1;overflow-y:auto;padding:16px;"></div>`;
     document.body.appendChild(overlay);
     const input = document.getElementById('search-input');
-    input.addEventListener('input', function(){ runSearch(this.value); });
+    // Debounce search input — runSearch does a full filter + DOM rebuild on
+    // ~1200 events, which feels laggy on phones for longer queries. 120ms
+    // wait gives the user time to finish typing a word before we re-render.
+    // Empty input still clears immediately (no debounce on the cleared state)
+    // since users tend to expect Backspace-to-clear to feel instant.
+    let searchDebounceTimer = null;
+    input.addEventListener('input', function(){
+        const val = this.value;
+        clearTimeout(searchDebounceTimer);
+        if (!val) {
+            // Cleared input: respond immediately, no delay
+            runSearch('');
+            return;
+        }
+        searchDebounceTimer = setTimeout(() => runSearch(val), 120);
+    });
     input.addEventListener('keydown', function(ev){ if(ev.key==='Escape') overlay.remove(); });
     document.getElementById('search-results').innerHTML = '<p style="color:var(--text-muted);text-align:center;margin-top:40px;">Start typing to search across all content</p>';
     // Focus the input — autofocus attribute isn't reliable for dynamically-injected elements

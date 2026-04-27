@@ -2505,16 +2505,20 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 }
                 if (isNaN(eventDate.getTime())) { skippedBadDate++; continue; }
 
-                // Parse time if provided. Google Forms' default time picker
-                // submits as "H:MM:SS AM/PM" (e.g., "5:00:00 PM") — seconds
-                // included. The original regex only matched H:MM and looked
-                // for AM/PM immediately after, missing the marker entirely
-                // when seconds were present and silently treating PM events
-                // as AM. Now we explicitly skip optional ":SS" before the
-                // AM/PM lookahead. Also handles 24-hour format (17:00) and
-                // bare H:MM with no marker (which we treat as PM for hours
-                // 1-7 since 5am events are rare and 5pm events are common).
+                // Parse time if provided. Google Sheets can export time-typed
+                // cells in several formats depending on cell formatting:
+                //   - "5:00:00 PM" (12-hour with seconds, default Forms format)
+                //   - "5:00 PM" (12-hour, no seconds)
+                //   - "17:00:00" or "17:00" (24-hour duration format)
+                //   - "0.7083333" (fraction-of-day, when cell formatted as
+                //     plain Number; rare but documented Sheets behavior)
+                //   - "5pm" / "5 PM" (hand-typed shorthand)
+                // We also log the raw + parsed values so any future format
+                // surprise shows up in the scrape log instead of producing
+                // silently-wrong times.
                 if (timeStr) {
+                    let parsed = null;
+                    // (1) Standard H:MM[:SS] [AM|PM] / 24-hour
                     const timeMatch = timeStr.match(/(\d{1,2}):(\d{2})(?::\d{2})?\s*(AM|PM)?/i);
                     if (timeMatch) {
                         let h = parseInt(timeMatch[1]);
@@ -2522,16 +2526,32 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                         const ampm = (timeMatch[3] || '').toUpperCase();
                         if (ampm === 'PM' && h < 12) h += 12;
                         else if (ampm === 'AM' && h === 12) h = 0;
-                        else if (!ampm && h >= 1 && h <= 7) {
-                            // No AM/PM marker (rare — Google Forms always
-                            // includes one, but this protects against forms
-                            // configured for 24h or hand-entered times). For
-                            // unmarked hours 1-7, assume PM since community
-                            // events at those AM hours are essentially
-                            // nonexistent. Hours 8-23 stay as-is (24h read).
-                            h += 12;
+                        else if (!ampm && h >= 1 && h <= 7) h += 12;
+                        parsed = { h, m };
+                    } else {
+                        // (2) Shorthand "5pm" / "5 PM" without minutes
+                        const shortMatch = timeStr.match(/^(\d{1,2})\s*(am|pm)$/i);
+                        if (shortMatch) {
+                            let h = parseInt(shortMatch[1]);
+                            const ampm = shortMatch[2].toUpperCase();
+                            if (ampm === 'PM' && h < 12) h += 12;
+                            if (ampm === 'AM' && h === 12) h = 0;
+                            parsed = { h, m: 0 };
+                        } else {
+                            // (3) Fraction-of-day decimal (Google Sheets)
+                            const decMatch = timeStr.match(/^0?\.\d+$/);
+                            if (decMatch) {
+                                const totalMinutes = Math.round(parseFloat(timeStr) * 24 * 60);
+                                parsed = { h: Math.floor(totalMinutes / 60), m: totalMinutes % 60 };
+                            }
                         }
-                        eventDate.setHours(h, m, 0);
+                    }
+                    if (parsed) {
+                        eventDate.setHours(parsed.h, parsed.m, 0);
+                        console.log(`  📅 Submission time: "${timeStr}" → ${parsed.h}:${String(parsed.m).padStart(2,'0')}`);
+                    } else {
+                        console.log(`  ⚠️ Submission time unparsed: "${timeStr}" — defaulting to noon`);
+                        eventDate.setHours(12, 0, 0);
                     }
                 } else {
                     eventDate.setHours(12, 0, 0); // Noon placeholder for all-day events
@@ -3122,7 +3142,45 @@ Focus on the most impressive deals a shopper would want to know about. Include m
             delete e.description;
         }
     });
-    fs.writeFileSync(path.join(__dirname, '../events.json'), JSON.stringify(deduped, null, 2));
+    // Slim pass before write: events.json gets fetched by every page load and
+    // is the largest file the frontend downloads. Strip empty/redundant fields
+    // and drop pretty-printing — the file is consumed by code, not humans, so
+    // 2-space indent on a 1200-event array adds ~25KB of pure whitespace.
+    //
+    // Fields removed if empty/falsy: description (already handled above),
+    // image, location, ticketLink, streamLink, sourceLink, price,
+    // categories (redundant with tags array), benefits (rarely populated),
+    // periodScores when no labels, gameScore/gameResult on future games.
+    //
+    // Don't touch: title, date, tags, audience, _dateMs (added at runtime
+    // anyway, but harmless if scraper accidentally emits it).
+    const SLIM_FIELDS = ['image', 'location', 'ticketLink', 'streamLink', 'sourceLink', 'price', 'benefits', 'org', 'orgName', 'category', 'categories', 'kidFriendly', 'isLive', 'periodScores'];
+    let beforeBytes = 0, afterBytes = 0;
+    try { beforeBytes = JSON.stringify(deduped, null, 2).length; } catch(_) {}
+    for (const ev of deduped) {
+        for (const field of SLIM_FIELDS) {
+            const val = ev[field];
+            if (val === '' || val === null || val === undefined) {
+                delete ev[field];
+            } else if (Array.isArray(val) && val.length === 0) {
+                delete ev[field];
+            } else if (field === 'kidFriendly' && val === false) {
+                // Default-false; only emit when true (saves a key per non-kidFriendly event).
+                delete ev[field];
+            } else if (field === 'isLive' && val === false) {
+                delete ev[field];
+            } else if (field === 'periodScores' && (!val.labels || val.labels.length === 0)) {
+                delete ev[field];
+            }
+        }
+    }
+    const slimJson = JSON.stringify(deduped);  // No pretty-print — wire format
+    afterBytes = slimJson.length;
+    fs.writeFileSync(path.join(__dirname, '../events.json'), slimJson);
+    if (beforeBytes > 0) {
+        const reductionPct = Math.round((1 - afterBytes / beforeBytes) * 100);
+        console.log(`💾 events.json: ${(afterBytes/1024).toFixed(1)}KB (${reductionPct}% smaller than pretty-printed)`);
+    }
     // Sibling metadata file for the frontend's "last updated" display. Kept separate so we
     // don't have to change the events.json array-shape that tons of code reads from.
     const metaPath = path.join(__dirname, '../events-meta.json');

@@ -179,6 +179,18 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     font-weight: 800;
 }
 
+/* Subgroup (collapsible nested section, e.g. Club Sports / Greek Life under
+   MU GetInvolved). The header row is clickable to expand/collapse; chevron
+   rotates 90deg when open. Children render below in a wrapped chip layout. */
+.feed-subgroup-header {
+    transition: background 0.15s;
+}
+.feed-subgroup-header:hover { filter: brightness(0.97); }
+.feed-subgroup-chevron {
+    transition: transform 0.18s ease;
+    user-select: none;
+}
+
 /* Favorited event/game card — gold accent. Favorites are no longer pinned at the top of
    Events/Sports pages; they live in their chronological day group with this visual badge
    so users can spot them at a glance while scrolling. A soft gold-tinted background makes
@@ -1050,3 +1062,31 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .adv-accordion summary::after { content: "+"; font-size: 1.2rem; font-weight: 300; color: var(--text-muted); transition: transform 0.2s; }
 .adv-accordion[open] summary::after { content: "−"; color: var(--gold); }
 .adv-accordion p { padding: 0 18px 14px; margin: 0; font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+
+/* ============ Loading skeletons ============
+   Shown when events.json hasn't loaded yet (first page paint, slow connections).
+   Cards mimic the real .app-card shape so the layout doesn't shift when data
+   arrives. Shimmer animation is pure CSS — gradient sweep on a translucent
+   background. Honors prefers-reduced-motion by stopping the sweep but keeping
+   the skeleton shape (still useful as a layout anchor without animation). */
+.skel-bar {
+    background: linear-gradient(90deg, var(--border) 0%, rgba(0,0,0,0.04) 50%, var(--border) 100%);
+    background-size: 200% 100%;
+    animation: skel-shimmer 1.4s ease-in-out infinite;
+    border-radius: 4px;
+    display: inline-block;
+}
+@keyframes skel-shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .skel-bar { animation: none; background: var(--border); }
+}
+.card-skeleton, .tl-skeleton {
+    pointer-events: none;
+    /* Subtle gold-soft tint distinguishes loading state from real cards
+       without being distracting. Disappears as soon as render fires. */
+    opacity: 0.85;
+}
+.tl-skeleton { border-left-color: var(--border) !important; }

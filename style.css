@@ -186,6 +186,7 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     transition: background 0.15s;
 }
 .feed-subgroup-header:hover { filter: brightness(0.97); }
+.feed-subgroup-header.is-active { background: var(--gold-soft); }
 .feed-subgroup-chevron {
     transition: transform 0.18s ease;
     user-select: none;
@@ -1090,3 +1091,126 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     opacity: 0.85;
 }
 .tl-skeleton { border-left-color: var(--border) !important; }
+
+/* ============ Picker chip and pill styles ============
+   Extracted from inline styles in app.js for maintainability. The favorites
+   picker renders ~30-50 of these per modal open, so reducing inline-style
+   duplication trims real bytes per render. Behavior identical to the
+   inline versions — just named.
+   
+   .feed-chip:    small chip used for source pref subs (e.g. 🎵 Music/Arts)
+   .feed-chip-tiny: extra-compact chip for nested sub-sports (e.g. ⚾ Baseball
+                  inside the Club Sports composite)
+   .feed-chip.is-checked: gold-soft background when chosen
+   .feed-pill: full-width pill for composite linkedIds (e.g. Arts & Performance)
+   .feed-pill.is-checked: gold border + soft background when chosen
+*/
+.feed-chip {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.82rem;
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    background: var(--bg);
+    transition: background 0.15s;
+}
+.feed-chip-tiny {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.78rem;
+    padding: 4px 9px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    background: var(--bg);
+    transition: background 0.15s;
+}
+.feed-chip.is-checked,
+.feed-chip-tiny.is-checked {
+    background: var(--gold-soft);
+}
+/* Club browser chip — same as tiny chip but never wraps; long official chapter
+   names like "Sigma Alpha Iota International Music Fraternity Inc." would
+   wrap into two lines and look broken inside the modal. */
+.feed-chip-club { white-space: nowrap; }
+.feed-pill {
+    font-size: 0.88rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 9px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    transition: 0.15s;
+}
+.feed-pill > input[type="checkbox"],
+.feed-pill-sm > input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+.feed-pill.is-checked {
+    border-color: var(--gold);
+    background: var(--gold-soft);
+}
+/* Smaller composite pill used inside heading groups (e.g. MU University composites).
+   Same shape, different size. */
+.feed-pill-sm {
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 8px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    transition: 0.15s;
+}
+.feed-pill-sm.is-checked {
+    border-color: var(--gold);
+    background: var(--gold-soft);
+}
+/* Shared accent-color for all picker checkboxes. Was inline on every input. */
+.feed-sub, .feed-group, .feed-club, .feed-subgroup-master {
+    accent-color: var(--gold);
+}
+
+/* ============ Modal & overlay shared styles ============ */
+.modal-close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--text-muted);
+}
+
+/* Compact section label inside modals (uppercase, muted, used for grouping
+   search results). */
+.modal-section-label {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+}
+
+/* Search-result row in the search overlay. */
+.search-result {
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    margin-bottom: 4px;
+    background: var(--surface);
+}
+.search-result:hover { background: var(--bg); }

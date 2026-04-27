@@ -737,8 +737,8 @@ window.openFeedSettings = function() {
             const linkedIds = group.linkedIds;
             const isChecked = linkedIds.some(id => current.includes(id));
             return `<div style="margin-bottom:8px;">
-                <label style="font-size:0.88rem;font-weight:700;display:flex;align-items:center;gap:8px;cursor:pointer;padding:9px 12px;border:1.5px solid ${isChecked?'var(--gold)':'var(--border)'};border-radius:var(--radius-sm);background:${isChecked?'var(--gold-soft)':'var(--surface)'};transition:0.15s;">
-                    <input type="checkbox" class="feed-sub" data-linked-ids="${linkedIds.join(',')}" ${isChecked?'checked':''} onchange="updateCompositeSub(this)" style="accent-color:var(--gold);width:16px;height:16px;flex-shrink:0;">
+                <label class="feed-pill${isChecked?' is-checked':''}">
+                    <input type="checkbox" class="feed-sub" data-linked-ids="${linkedIds.join(',')}" ${isChecked?'checked':''} onchange="updateCompositeSub(this)">
                     <span>${group.icon} ${labelFor(group)}</span>
                 </label>
             </div>`;
@@ -773,7 +773,7 @@ window.openFeedSettings = function() {
             // Render subs as chips (same shape as marauder picker), composites
             // as full-width pill-styled checkboxes.
             const subsHtml = subs.length ? `<div style="display:flex;flex-wrap:wrap;gap:6px;padding-left:14px;margin-top:6px;">
-                ${subs.map(s => `<label style="display:flex;align-items:center;gap:4px;font-size:0.82rem;padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;background:${current.includes(s.id)?'var(--gold-soft)':'var(--bg)'};"><input type="checkbox" class="feed-sub" data-group="${key}" value="${s.id}" ${current.includes(s.id)?'checked':''} onchange="updateFeedGroup('${key}')" style="accent-color:var(--gold);"> ${s.icon} ${labelFor(s)}</label>`).join('')}
+                ${subs.map(s => `<label class="feed-chip${current.includes(s.id)?' is-checked':''}"><input type="checkbox" class="feed-sub" data-group="${key}" value="${s.id}" ${current.includes(s.id)?'checked':''} onchange="updateFeedGroup('${key}')"> ${s.icon} ${labelFor(s)}</label>`).join('')}
             </div>` : '';
 
             const compositesHtml = composites.length ? `<div style="padding-left:14px;margin-top:8px;">
@@ -783,11 +783,11 @@ window.openFeedSettings = function() {
                     // Club Sports, where townies often want individual sports).
                     const subSports = c.subSports || [];
                     const subSportsHtml = subSports.length ? `<div style="display:flex;flex-wrap:wrap;gap:6px;padding:8px 0 4px 14px;">
-                        ${subSports.map(s => `<label style="display:flex;align-items:center;gap:4px;font-size:0.78rem;padding:4px 9px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;background:${current.includes(s.id)?'var(--gold-soft)':'var(--bg)'};"><input type="checkbox" class="feed-sub" data-group="${key}" value="${s.id}" ${current.includes(s.id)?'checked':''} onchange="updateFeedGroup('${key}')" style="accent-color:var(--gold);"> ${s.icon} ${s.label}</label>`).join('')}
+                        ${subSports.map(s => `<label class="feed-chip-tiny${current.includes(s.id)?' is-checked':''}"><input type="checkbox" class="feed-sub" data-group="${key}" value="${s.id}" ${current.includes(s.id)?'checked':''} onchange="updateFeedGroup('${key}')"> ${s.icon} ${s.label}</label>`).join('')}
                     </div>` : '';
                     return `<div style="margin-bottom:6px;">
-                        <label class="feed-composite-label" style="font-size:0.85rem;font-weight:600;display:flex;align-items:center;gap:8px;cursor:pointer;padding:8px 12px;border:1.5px solid ${cChecked?'var(--gold)':'var(--border)'};border-radius:var(--radius-sm);background:${cChecked?'var(--gold-soft)':'var(--surface)'};transition:0.15s;">
-                            <input type="checkbox" class="feed-sub" data-group="${key}" data-linked-ids="${(c.linkedIds||[]).join(',')}" ${cChecked?'checked':''} onchange="updateCompositeSub(this)" style="accent-color:var(--gold);width:16px;height:16px;flex-shrink:0;">
+                        <label class="feed-composite-label feed-pill-sm${cChecked?' is-checked':''}">
+                            <input type="checkbox" class="feed-sub" data-group="${key}" data-linked-ids="${(c.linkedIds||[]).join(',')}" ${cChecked?'checked':''} onchange="updateCompositeSub(this)">
                             <span>${c.icon} ${c.label}</span>
                         </label>
                         ${subSportsHtml}
@@ -858,7 +858,7 @@ window.openFeedSettings = function() {
                     const subAud = s.audience || group.audience || 'both';
                     const subDimmed = isMarauder && subAud !== 'both' && subAud !== 'student';
                     const subClass = subDimmed && !groupDimmed ? 'feed-group-dimmed' : '';
-                    return `<label class="${subClass}" style="display:flex;align-items:center;gap:4px;font-size:0.82rem;padding:5px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;background:${current.includes(s.id)?'var(--gold-soft)':'var(--bg)'};"><input type="checkbox" class="feed-sub" data-group="${key}" value="${s.id}" ${current.includes(s.id)?'checked':''} onchange="updateFeedGroup('${key}')" style="accent-color:var(--gold);"> ${s.icon} ${labelFor(s)}</label>`;
+                    return `<label class="feed-chip${current.includes(s.id)?' is-checked':''}${subClass?' '+subClass:''}"><input type="checkbox" class="feed-sub" data-group="${key}" value="${s.id}" ${current.includes(s.id)?'checked':''} onchange="updateFeedGroup('${key}')"> ${s.icon} ${labelFor(s)}</label>`;
                 }).join('')}
             </div>
             ${key === 'clubs' ? '<div id="clubs-individual-wrap" style="padding-left:8px;margin-top:8px;"><button onclick="toggleClubBrowser()" class="btn btn-sm btn-outline" style="font-size:0.75rem;">📋 Browse Individual Clubs ▸</button><div id="clubs-individual-list" style="display:none;max-height:200px;overflow-y:auto;margin-top:8px;display:none;flex-wrap:wrap;gap:4px;"></div></div>' : ''}
@@ -984,16 +984,7 @@ window.toggleFeedGroup = function(groupCb) {
     document.querySelectorAll(`.feed-sub[data-group="${group}"]`).forEach(cb => {
         cb.checked = checked;
         const label = cb.closest('label');
-        if (!label) return;
-        // Composite-styled labels (full-width, with border highlight) vs
-        // chip-styled labels (background-only). Composites have the
-        // .feed-composite-label class; chips don't.
-        if (label.classList.contains('feed-composite-label')) {
-            label.style.background = checked ? 'var(--gold-soft)' : 'var(--surface)';
-            label.style.borderColor = checked ? 'var(--gold)' : 'var(--border)';
-        } else {
-            label.style.background = checked ? 'var(--gold-soft)' : 'var(--bg)';
-        }
+        if (label) label.classList.toggle('is-checked', checked);
     });
 };
 
@@ -1107,7 +1098,7 @@ window.toggleClubBrowser = function() {
             const val = 'club:' + o.name;
             const checked = current.includes(val);
             const escapedName = o.name.replace(/"/g, '&quot;');
-            return `<label style="display:flex;align-items:center;gap:4px;font-size:0.78rem;padding:4px 8px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;background:${checked?'var(--gold-soft)':'var(--bg)'};white-space:nowrap;"><input type="checkbox" class="feed-club" value="${val}" ${checked?'checked':''} onchange="this.closest('label').style.background=this.checked?'var(--gold-soft)':'var(--bg)'" style="accent-color:var(--gold);"> ${escapedName}</label>`;
+            return `<label class="feed-chip-tiny feed-chip-club${checked?' is-checked':''}"><input type="checkbox" class="feed-club" value="${val}" ${checked?'checked':''} onchange="this.closest('label').classList.toggle('is-checked', this.checked)"> ${escapedName}</label>`;
         }).join('');
     }
 
@@ -1153,7 +1144,10 @@ window.updateFeedGroup = function(group) {
     const subs = document.querySelectorAll(`.feed-sub[data-group="${group}"]`);
     const groupCb = document.querySelector(`.feed-group[data-group="${group}"]`);
     if (groupCb) groupCb.checked = [...subs].every(s => s.checked);
-    subs.forEach(cb => { cb.closest('label').style.background = cb.checked ? 'var(--gold-soft)' : 'var(--bg)'; });
+    subs.forEach(cb => {
+        const label = cb.closest('label');
+        if (label) label.classList.toggle('is-checked', cb.checked);
+    });
 };
 
 // Subgroup toggle handlers. Subgroups are collapsible nested sections inside
@@ -1191,10 +1185,10 @@ window.toggleFeedSubgroup = function(masterCb) {
     sg.querySelectorAll(`.feed-sub[data-subgroup="${sgKey}"]:not(.feed-subgroup-master)`).forEach(cb => {
         cb.checked = checked;
         const label = cb.closest('label');
-        if (label) label.style.background = checked ? 'var(--gold-soft)' : 'var(--bg)';
+        if (label) label.classList.toggle('is-checked', checked);
     });
     const header = sg.querySelector('.feed-subgroup-header');
-    if (header) header.style.background = checked ? 'var(--gold-soft)' : 'var(--bg)';
+    if (header) header.classList.toggle('is-active', checked);
     if (groupKey && typeof updateFeedGroup === 'function') updateFeedGroup(groupKey);
 };
 
@@ -1208,13 +1202,13 @@ window.updateFeedSubgroup = function(sgKey) {
     const allChecked = children.length > 0 && children.every(c => c.checked);
     const anyChecked = children.some(c => c.checked);
     if (master) master.checked = allChecked;
-    // Update each child's own background since updateFeedGroup won't reach them
+    // Update each child's own check state class — updateFeedGroup won't reach them
     children.forEach(c => {
         const label = c.closest('label');
-        if (label) label.style.background = c.checked ? 'var(--gold-soft)' : 'var(--bg)';
+        if (label) label.classList.toggle('is-checked', c.checked);
     });
     const header = sg.querySelector('.feed-subgroup-header');
-    if (header) header.style.background = (allChecked || anyChecked) ? 'var(--gold-soft)' : 'var(--bg)';
+    if (header) header.classList.toggle('is-active', allChecked || anyChecked);
     // Cascade up to parent group master via the data-group attribute
     const groupKey = master && master.dataset.group;
     if (groupKey && typeof updateFeedGroup === 'function') updateFeedGroup(groupKey);
@@ -1258,13 +1252,7 @@ window.saveFeedFromModal = function() {
 window.updateCompositeSub = function(cb) {
     const label = cb.closest('label');
     if (!label) return;
-    if (cb.checked) {
-        label.style.background = 'var(--gold-soft)';
-        label.style.borderColor = 'var(--gold)';
-    } else {
-        label.style.background = 'var(--surface)';
-        label.style.borderColor = 'var(--border)';
-    }
+    label.classList.toggle('is-checked', cb.checked);
     // If this composite belongs to a heading-style group (data-group present),
     // re-sync the master checkbox state — checked when every sibling sub
     // (chips + composites) is checked.
@@ -4107,7 +4095,7 @@ window.openBoardPost=function(){
     modal.style.cssText='background:var(--surface);border-radius:var(--radius);max-width:520px;width:100%;max-height:90vh;overflow-y:auto;padding:28px;position:relative;';
     const cats=['Yard Sale','Lost Pet','Found Pet','Help Wanted','For Sale','Free Stuff','Community Notice'];
     modal.innerHTML=`
-        <button onclick="this.closest('div[style*=fixed]').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);">✕</button>
+        <button onclick="this.closest('div[style*=fixed]').remove()" class="modal-close-btn">✕</button>
         <h3 style="margin-bottom:4px;">📋 Post to Community Board</h3>
         <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:16px;">Share with your Millersville neighbors. Posts are reviewed before publishing.</p>
         <div id="board-form-fields">
@@ -4196,7 +4184,7 @@ window.openReviewModal = function(businessName) {
     const modal = document.createElement('div');
     modal.style.cssText = 'background:var(--surface);border-radius:var(--radius);max-width:420px;width:100%;max-height:90vh;overflow-y:auto;padding:28px;position:relative;';
     modal.innerHTML = `
-        <button onclick="this.closest('div[style*=fixed]').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);">✕</button>
+        <button onclick="this.closest('div[style*=fixed]').remove()" class="modal-close-btn">✕</button>
         <h3 style="margin-bottom:12px;">⭐ Leave a Review</h3>
         <div id="rv-form-fields">
             <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Business *</label>
@@ -4499,7 +4487,7 @@ window.showGroceryDeals = function(e) {
     const modal = document.createElement('div');
     modal.style.cssText = 'background:var(--surface);border-radius:var(--radius);max-width:480px;width:100%;max-height:80vh;overflow-y:auto;padding:24px;position:relative;';
     const dateRange = allGroceryDeals[0]?.dateRange || '';
-    modal.innerHTML = `<button onclick="this.closest('div[style*=fixed]').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);">✕</button>
+    modal.innerHTML = `<button onclick="this.closest('div[style*=fixed]').remove()" class="modal-close-btn">✕</button>
         <h3 style="margin-bottom:4px;">🏷️ John Herr's Weekly Deals</h3>
         ${dateRange ? `<p style="font-size:0.8rem;color:var(--gold);font-weight:600;margin-bottom:12px;">${dateRange}</p>` : ''}
         ${allGroceryDeals.map((d,i) => `<div style="padding:8px 0;${i>0?'border-top:1px solid var(--border);':''}">
@@ -4568,7 +4556,7 @@ function runSearch(q) {
         return text.includes(ql);
     }).slice(0, 6);
     if (eventHits.length) {
-        html += `<div style="margin-bottom:20px;"><h4 style="color:var(--text-muted);font-size:0.8rem;text-transform:uppercase;margin-bottom:8px;">📅 Events</h4>`;
+        html += `<div style="margin-bottom:20px;"><h4 class="modal-section-label">📅 Events</h4>`;
         eventHits.forEach(e => {
             const d = new Date(e.date);
             const src = (e.tags||[])[0] || '';
@@ -4582,7 +4570,7 @@ function runSearch(q) {
             const hiddenNote = hiddenForMe
                 ? '<div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;font-style:italic;">Not shown in your feed — you marked yourself as a townie</div>'
                 : '';
-            html += `<div class="search-result" onclick="${clickAction}" style="padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;margin-bottom:4px;background:var(--surface);">
+            html += `<div class="search-result" onclick="${clickAction}">
                 <span style="font-size:0.7rem;color:var(--text-muted);">${src}</span>${muOnlyBadge}
                 <p style="font-weight:600;margin:2px 0;">${e.title}</p>
                 <span style="font-size:0.8rem;color:var(--text-muted);">${formatDate(d)} · ${cleanLocation(e.location)}</span>
@@ -4601,13 +4589,13 @@ function runSearch(q) {
         return text.includes(ql);
     }).slice(0, 6);
     if (sportHits.length) {
-        html += `<div style="margin-bottom:20px;"><h4 style="color:var(--text-muted);font-size:0.8rem;text-transform:uppercase;margin-bottom:8px;">🏆 Sports</h4>`;
+        html += `<div style="margin-bottom:20px;"><h4 class="modal-section-label">🏆 Sports</h4>`;
         sportHits.forEach(e => {
             const d = new Date(e.date);
             const src = (e.tags||[])[0] || '';
             const eventKey = (e.sourceLink || (e.title + '|' + e.date)).replace(/"/g, '&quot;').replace(/'/g, "\\'");
             const clickAction = `document.getElementById('search-overlay').remove();window.openEventDetails('${eventKey}');`;
-            html += `<div class="search-result" onclick="${clickAction}" style="padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;margin-bottom:4px;background:var(--surface);">
+            html += `<div class="search-result" onclick="${clickAction}">
                 <span style="font-size:0.7rem;color:var(--text-muted);">${src}</span>
                 <p style="font-weight:600;margin:2px 0;">${e.title}</p>
                 <span style="font-size:0.8rem;color:var(--text-muted);">${formatDate(d)} · ${cleanLocation(e.location)}</span>
@@ -4624,9 +4612,9 @@ function runSearch(q) {
         return (n.title + ' ' + n.source).toLowerCase().includes(ql);
     }).slice(0, 5);
     if (newsHits.length) {
-        html += `<div style="margin-bottom:20px;"><h4 style="color:var(--text-muted);font-size:0.8rem;text-transform:uppercase;margin-bottom:8px;">📰 News</h4>`;
+        html += `<div style="margin-bottom:20px;"><h4 class="modal-section-label">📰 News</h4>`;
         newsHits.forEach(n => {
-            html += `<div class="search-result" onclick="window.open('${n.link}','_blank')" style="padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;margin-bottom:4px;background:var(--surface);">
+            html += `<div class="search-result" onclick="window.open('${n.link}','_blank')">
                 <span style="font-size:0.7rem;color:var(--text-muted);">${n.source}</span>
                 <p style="font-weight:600;margin:2px 0;">${n.title}</p>
                 <span style="font-size:0.8rem;color:var(--text-muted);">${n.date || ''}</span>
@@ -4640,9 +4628,9 @@ function runSearch(q) {
         return (s.name + ' ' + (s.category||'') + ' ' + (s.cuisine||'') + ' ' + (s.description||'')).toLowerCase().includes(ql);
     }).slice(0, 5);
     if (svcHits.length) {
-        html += `<div style="margin-bottom:20px;"><h4 style="color:var(--text-muted);font-size:0.8rem;text-transform:uppercase;margin-bottom:8px;">📍 Places</h4>`;
+        html += `<div style="margin-bottom:20px;"><h4 class="modal-section-label">📍 Places</h4>`;
         svcHits.forEach(s => {
-            html += `<div class="search-result" onclick="document.getElementById('search-overlay').remove();switchView('places');" style="padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;margin-bottom:4px;background:var(--surface);">
+            html += `<div class="search-result" onclick="document.getElementById('search-overlay').remove();switchView('places');">
                 <p style="font-weight:600;margin:2px 0;">${s.name}</p>
                 <span style="font-size:0.8rem;color:var(--text-muted);">${s.category||s.cuisine||''} · ${s.description?.substring(0,60)||''}</span>
             </div>`;
@@ -4655,9 +4643,9 @@ function runSearch(q) {
         return (p.title + ' ' + p.category + ' ' + (p.description||'') + ' ' + (p.location||'')).toLowerCase().includes(ql);
     }).slice(0, 5);
     if (boardHits.length) {
-        html += `<div style="margin-bottom:20px;"><h4 style="color:var(--text-muted);font-size:0.8rem;text-transform:uppercase;margin-bottom:8px;">📋 Community Board</h4>`;
+        html += `<div style="margin-bottom:20px;"><h4 class="modal-section-label">📋 Community Board</h4>`;
         boardHits.forEach(p => {
-            html += `<div class="search-result" onclick="document.getElementById('search-overlay').remove();switchView('board');" style="padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;margin-bottom:4px;background:var(--surface);">
+            html += `<div class="search-result" onclick="document.getElementById('search-overlay').remove();switchView('board');">
                 <span style="font-size:0.7rem;color:var(--text-muted);">${p.category}</span>
                 <p style="font-weight:600;margin:2px 0;">${p.title}</p>
                 <span style="font-size:0.8rem;color:var(--text-muted);">${p.location||''} · ${p.date||''}</span>
@@ -4683,7 +4671,7 @@ window.openAdvertiseForm = function() {
     modal.style.cssText = 'background:var(--surface);border-radius:var(--radius);max-width:520px;width:100%;max-height:90vh;overflow-y:auto;padding:28px;position:relative;';
     const tiers = ['Premium','Standard','Basic','Not Sure'];
     modal.innerHTML = `
-        <button onclick="this.closest('div[style*=fixed]').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);">✕</button>
+        <button onclick="this.closest('div[style*=fixed]').remove()" class="modal-close-btn">✕</button>
         <h3 style="margin-bottom:4px;">📢 Advertise With Us</h3>
         <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:16px;">Tell us about your business and we'll get back to you within 24 hours.</p>
         <div id="adv-form-fields">
@@ -4770,7 +4758,7 @@ window.openSubmitEvent = function() {
     const modal = document.createElement('div');
     modal.style.cssText = 'background:var(--surface);border-radius:var(--radius);max-width:520px;width:100%;max-height:90vh;overflow-y:auto;padding:28px;position:relative;';
     modal.innerHTML = `
-        <button onclick="this.closest('div[style*=fixed]').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);">✕</button>
+        <button onclick="this.closest('div[style*=fixed]').remove()" class="modal-close-btn">✕</button>
         <h3 style="margin-bottom:4px;">📝 Submit an Event</h3>
         <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:16px;">Share a community event with Millersville. Submissions are reviewed before publishing.</p>
         <div id="submit-event-form">

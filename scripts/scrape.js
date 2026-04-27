@@ -2495,41 +2495,73 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 }
                 if (!eventName || !dateStr) continue;
 
-                // Parse date (format from Google Forms: MM/DD/YYYY or YYYY-MM-DD)
-                let eventDate;
+                // Parse date (format from Google Forms: MM/DD/YYYY or YYYY-MM-DD).
+                // CRITICAL: GitHub Actions runs in UTC, so naive Date construction
+                // here would treat the cell value as a UTC moment. When user
+                // browsers in Eastern Time then render the ISO string, they'd
+                // see times shifted 4-5 hours earlier ("5pm" → "1pm"). This was
+                // the production bug. Fix: build an explicit Eastern-offset ISO
+                // string so the moment we save is the moment the user intended.
+                let yyyy, mm, dd;
                 const mdyMatch = dateStr.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
                 if (mdyMatch) {
-                    eventDate = new Date(parseInt(mdyMatch[3]), parseInt(mdyMatch[1]) - 1, parseInt(mdyMatch[2]));
+                    yyyy = parseInt(mdyMatch[3]);
+                    mm = parseInt(mdyMatch[1]);
+                    dd = parseInt(mdyMatch[2]);
                 } else {
-                    eventDate = new Date(dateStr);
+                    // Fallback for non-MDY (e.g. "2026-04-27"). Take the local
+                    // calendar interpretation and pull components.
+                    const fallbackD = new Date(dateStr);
+                    if (isNaN(fallbackD.getTime())) { skippedBadDate++; continue; }
+                    yyyy = fallbackD.getFullYear();
+                    mm = fallbackD.getMonth() + 1;
+                    dd = fallbackD.getDate();
                 }
-                if (isNaN(eventDate.getTime())) { skippedBadDate++; continue; }
+                if (!yyyy || !mm || !dd) { skippedBadDate++; continue; }
 
-                // Parse time if provided. Google Sheets can export time-typed
-                // cells in several formats depending on cell formatting:
-                //   - "5:00:00 PM" (12-hour with seconds, default Forms format)
-                //   - "5:00 PM" (12-hour, no seconds)
-                //   - "17:00:00" or "17:00" (24-hour duration format)
-                //   - "0.7083333" (fraction-of-day, when cell formatted as
-                //     plain Number; rare but documented Sheets behavior)
-                //   - "5pm" / "5 PM" (hand-typed shorthand)
-                // We also log the raw + parsed values so any future format
-                // surprise shows up in the scrape log instead of producing
-                // silently-wrong times.
+                // Eastern Time DST rule: starts 2nd Sunday in March, ends 1st
+                // Sunday in November. Compute the boundary dates for this
+                // event's year, then pick offset accordingly. Approximate
+                // around boundary days (±1 hour drift) but exact for typical
+                // events that aren't scheduled at 2am on a DST switch day.
+                function isEasternDST(y, monthIdx, dayOfMonth) {
+                    // monthIdx is 0-based (Jan=0). Quick rejects:
+                    if (monthIdx < 2) return false;       // Jan-Feb: no DST
+                    if (monthIdx > 10) return false;      // Dec: no DST
+                    if (monthIdx > 2 && monthIdx < 10) return true;  // Apr-Oct: yes
+                    // March: DST starts on the 2nd Sunday. Find it.
+                    if (monthIdx === 2) {
+                        const firstOfMonth = new Date(Date.UTC(y, 2, 1)).getUTCDay(); // 0=Sun
+                        const firstSunday = firstOfMonth === 0 ? 1 : (8 - firstOfMonth);
+                        const secondSunday = firstSunday + 7;
+                        return dayOfMonth >= secondSunday;
+                    }
+                    // November: DST ends on the 1st Sunday.
+                    if (monthIdx === 10) {
+                        const firstOfMonth = new Date(Date.UTC(y, 10, 1)).getUTCDay();
+                        const firstSunday = firstOfMonth === 0 ? 1 : (8 - firstOfMonth);
+                        return dayOfMonth < firstSunday;
+                    }
+                    return false;
+                }
+
+                // Parse time. Same format-detection as before (H:MM[:SS]
+                // [AM|PM] / 24h / fraction-of-day / shorthand). Output is
+                // {h, m} both 0-23 / 0-59. Falls back to 12:00 noon if
+                // unparseable.
+                let timeH = 12, timeM = 0;
                 if (timeStr) {
                     let parsed = null;
-                    // (1) Standard H:MM[:SS] [AM|PM] / 24-hour
                     const timeMatch = timeStr.match(/(\d{1,2}):(\d{2})(?::\d{2})?\s*(AM|PM)?/i);
                     if (timeMatch) {
                         let h = parseInt(timeMatch[1]);
-                        const m = parseInt(timeMatch[2]);
+                        const mn = parseInt(timeMatch[2]);
                         const ampm = (timeMatch[3] || '').toUpperCase();
                         if (ampm === 'PM' && h < 12) h += 12;
                         else if (ampm === 'AM' && h === 12) h = 0;
                         else if (!ampm && h >= 1 && h <= 7) h += 12;
-                        parsed = { h, m };
+                        parsed = { h, m: mn };
                     } else {
-                        // (2) Shorthand "5pm" / "5 PM" without minutes
                         const shortMatch = timeStr.match(/^(\d{1,2})\s*(am|pm)$/i);
                         if (shortMatch) {
                             let h = parseInt(shortMatch[1]);
@@ -2538,7 +2570,6 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                             if (ampm === 'AM' && h === 12) h = 0;
                             parsed = { h, m: 0 };
                         } else {
-                            // (3) Fraction-of-day decimal (Google Sheets)
                             const decMatch = timeStr.match(/^0?\.\d+$/);
                             if (decMatch) {
                                 const totalMinutes = Math.round(parseFloat(timeStr) * 24 * 60);
@@ -2547,15 +2578,21 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                         }
                     }
                     if (parsed) {
-                        eventDate.setHours(parsed.h, parsed.m, 0);
-                        console.log(`  📅 Submission time: "${timeStr}" → ${parsed.h}:${String(parsed.m).padStart(2,'0')}`);
+                        timeH = parsed.h;
+                        timeM = parsed.m;
+                        console.log(`  📅 Submission time: "${timeStr}" → ${timeH}:${String(timeM).padStart(2,'0')} ET`);
                     } else {
-                        console.log(`  ⚠️ Submission time unparsed: "${timeStr}" — defaulting to noon`);
-                        eventDate.setHours(12, 0, 0);
+                        console.log(`  ⚠️ Submission time unparsed: "${timeStr}" — defaulting to noon ET`);
                     }
-                } else {
-                    eventDate.setHours(12, 0, 0); // Noon placeholder for all-day events
                 }
+                // Build an explicit Eastern-offset ISO string. Bypasses the
+                // setHours() trap where the runtime's local TZ contaminates
+                // the result. Format: "2026-04-27T17:00:00-04:00".
+                const dst = isEasternDST(yyyy, mm - 1, dd);
+                const offset = dst ? '-04:00' : '-05:00';
+                const isoStr = `${yyyy}-${String(mm).padStart(2,'0')}-${String(dd).padStart(2,'0')}T${String(timeH).padStart(2,'0')}:${String(timeM).padStart(2,'0')}:00${offset}`;
+                const eventDate = new Date(isoStr);
+                if (isNaN(eventDate.getTime())) { skippedBadDate++; continue; }
 
                 // Skip events outside our date range
                 if (eventDate < pastDate || eventDate >= futureDate) { skippedOutOfRange++; continue; }

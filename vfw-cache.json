@@ -137,5 +137,26 @@
         "fridayOnly": true
       }
     ]
+  },
+  "https://drive.google.com/file/d/1EoTmAplVxRiik7Yry-rewjJAc41dCeJm/view?usp=drive_link": {
+    "type": "specials",
+    "dateRange": "Tuesday, April 28 through Saturday, May 2",
+    "items": [
+      {
+        "name": "Chicken Caesar Wrap",
+        "price": "$12.95",
+        "fridayOnly": false
+      },
+      {
+        "name": "Chicken, Bacon, Ranch Pizza",
+        "price": "$10.95",
+        "fridayOnly": false
+      },
+      {
+        "name": "Steak Night",
+        "price": "$24.95",
+        "fridayOnly": true
+      }
+    ]
   }
 }

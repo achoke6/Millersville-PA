@@ -55,14 +55,14 @@ const feedSections = {
     sports: {
         title: '🏆 Sports Favorites',
         groups: {
-            pm: { label: 'Penn Manor Sports', icon: '🏫', audience: 'townie', subs: [
+            pm: { label: 'Penn Manor Sports', icon: '🏫', headingStyle: true, audience: 'townie', subs: [
                 {id:'pm-baseball',label:'Baseball',icon:'⚾'},{id:'pm-softball',label:'Softball',icon:'🥎'},
                 {id:'pm-lacrosse',label:'Lacrosse',icon:'🥍'},{id:'pm-volleyball',label:'Volleyball',icon:'🏐'},
                 {id:'pm-football',label:'Football',icon:'🏈'},{id:'pm-basketball',label:'Basketball',icon:'🏀'},
                 {id:'pm-soccer',label:'Soccer',icon:'⚽'},{id:'pm-fieldhockey',label:'Field Hockey',icon:'🏑'},
                 {id:'pm-tennis',label:'Tennis',icon:'🎾'},{id:'pm-track',label:'Track',icon:'🏃'}
             ]},
-            musports: { label: 'MU Sports', icon: '🏴‍☠️', audience: 'student', subs: [
+            musports: { label: 'MU Sports', icon: '🏴‍☠️', headingStyle: true, audience: 'student', subs: [
                 {id:'mu-baseball',label:'Baseball',icon:'⚾'},{id:'mu-softball',label:'Softball',icon:'🥎'},
                 {id:'mu-lacrosse',label:'Lacrosse',icon:'🥍'},{id:'mu-volleyball',label:'Volleyball',icon:'🏐'},
                 {id:'mu-football',label:'Football',icon:'🏈'},{id:'mu-basketball',label:'Basketball',icon:'🏀'},
@@ -70,22 +70,58 @@ const feedSections = {
                 {id:'mu-tennis',label:'Tennis',icon:'🎾'},{id:'mu-track',label:'Track',icon:'🏃'},
                 {id:'mu-golf',label:'Golf',icon:'⛳'},{id:'mu-swimming',label:'Swimming',icon:'🏊'},
                 {id:'mu-crosscountry',label:'Cross Country',icon:'🏃'}
-            ]}
+            ]},
+            // MU Club Sports — heading-style, with the sport-master toggle and
+            // 20 per-sport chips. Lives in Sports because club sports games
+            // are categorically a sports thing. Visible to both townies and
+            // marauders (latter get full granular control alongside the
+            // varsity Sidearm feed). The umbrella `clubs-sports` pref is the
+            // master sub; per-sport `cs-*` chips are individual subs.
+            muclubsports: {
+                label: 'MU Club Sports',
+                icon: '🎓',
+                headingStyle: true,
+                // No `audience` set — visible at full opacity to everyone.
+                subs: [
+                    {id:'clubs-sports',label:'All Club Sports',icon:'⚽'},
+                    {id:'cs-baseball',label:'Baseball',icon:'⚾'},
+                    {id:'cs-softball',label:'Softball',icon:'🥎'},
+                    {id:'cs-basketball-mens',label:"Men's Basketball",icon:'🏀'},
+                    {id:'cs-basketball-womens',label:"Women's Basketball",icon:'🏀'},
+                    {id:'cs-soccer-mens',label:"Men's Soccer",icon:'⚽'},
+                    {id:'cs-soccer-womens',label:"Women's Soccer",icon:'⚽'},
+                    {id:'cs-lacrosse',label:'Lacrosse',icon:'🥍'},
+                    {id:'cs-volleyball-mens',label:"Men's Volleyball",icon:'🏐'},
+                    {id:'cs-volleyball-womens',label:"Women's Volleyball",icon:'🏐'},
+                    {id:'cs-rugby-mens',label:"Men's Rugby",icon:'🏉'},
+                    {id:'cs-rugby-womens',label:"Women's Rugby",icon:'🏉'},
+                    {id:'cs-icehockey',label:'Ice Hockey',icon:'🏒'},
+                    {id:'cs-tennis',label:'Tennis',icon:'🎾'},
+                    {id:'cs-frisbee',label:'Ultimate Frisbee',icon:'🥏'},
+                    {id:'cs-fencing',label:'Fencing',icon:'🤺'},
+                    {id:'cs-equestrian',label:'Equestrian',icon:'🐴'},
+                    {id:'cs-dance',label:'Dance Team',icon:'💃'},
+                    {id:'cs-bowling',label:'Bowling',icon:'🎳'},
+                    {id:'cs-running',label:'Running',icon:'🏃'},
+                    {id:'cs-mma',label:'MMA',icon:'🥋'}
+                ]
+            }
         }
     },
     events: {
         title: '📅 Event Favorites',
         groups: {
-            pmev: { label: 'PM Events', icon: '🏫', audience: 'townie', subs: [
+            pmev: { label: 'PM Events', icon: '🏫', headingStyle: true, audience: 'townie', subs: [
                 {id:'pm-music',label:'Music/Arts',icon:'🎵'},{id:'pm-board',label:'Board Meetings',icon:'📋'}
             ]},
-            mu: { label: 'MU Events', icon: '🏴‍☠️', audience: 'student', subs: [
+            mu: { label: 'MU Events', icon: '🏴‍☠️', headingStyle: true, audience: 'student', subs: [
                 {id:'mu-arts',label:'Arts & Performances',icon:'🎭'},{id:'mu-public',label:'Public Events',icon:'📢'}
             ]},
             clubs: {
                 label: 'MU GetInvolved',      // marauder-facing default
                 townieLabel: 'MU Community Events', // shown to townies (GetInvolved is MU-internal jargon)
                 icon: '🎓',
+                headingStyle: true,
                 audience: 'student',
                 subs: [
                     {id:'clubs-all',label:'All Events',townieLabel:'All Community Events',icon:'🎓'},
@@ -96,101 +132,52 @@ const feedSections = {
                     {id:'clubs-service',label:'Service & Community',icon:'🤝'}
                 ]
             },
-            borough: { label: 'Borough', icon: '🌳', audience: 'townie', subs: [{id:'borough-all',label:'All Borough Events',icon:'🌳'}] },
-            other: { label: 'Other', icon: '🎸', audience: 'townie', subs: [
+            borough: { label: 'Borough', icon: '🌳', headingStyle: true, audience: 'townie', subs: [{id:'borough-all',label:'All Borough Events',icon:'🌳'}] },
+            other: { label: 'Other', icon: '🎸', headingStyle: true, audience: 'townie', subs: [
                 {id:'other-vfw',label:'VFW Events',icon:'🎖️'},{id:'other-phantom',label:'Phantom Power',icon:'🎵'},
                 {id:'other-community',label:'Community Events',icon:'📝'}
             ]},
-            family: { label: 'Family Friendly', icon: '👨‍👩‍👧', audience: 'townie', subs: [{id:'family-events',label:'Family Friendly Events',icon:'👨‍👩‍👧'}] }
+            family: { label: 'Family Friendly', icon: '👨‍👩‍👧', headingStyle: true, audience: 'townie', subs: [{id:'family-events',label:'Family Friendly Events',icon:'👨‍👩‍👧'}] }
         },
-        // Townie picker shape — restructured around what townies actually want
-        // to highlight, not how the data is sourced. Two top-level master
-        // groups (Penn Manor, Millersville University) act as composite
-        // section headers: their checkbox toggles all subs at once, and the
-        // section heading replaces the group label. Standalone groups
-        // (Borough, Other, Family Friendly) sit beneath without a heading.
+        // Townie picker shape — heading-style throughout, same uniform look.
+        // Borough and Family Friendly are now heading-style groups (matching
+        // Penn Manor / MU / Other) instead of standalone pills. Club Sports
+        // removed from MU University composites — it lives in the Sports
+        // section now. Composites remain inside MU University to collapse
+        // mu-arts + clubs-arts into "Arts & Performance" (etc.) since townies
+        // don't experience those as distinct.
         townieGroups: {
-            // Penn Manor — single master group, heading-style, toggles both
-            // sub-prefs at once. Removed the redundant "PM Events" sub-label
-            // since the section heading IS the group.
             pmev: {
-                label: 'Penn Manor',
-                icon: '🏫',
-                headingStyle: true,
+                label: 'Penn Manor', icon: '🏫', headingStyle: true,
                 subs: [
                     {id:'pm-music',label:'Music/Arts',icon:'🎵'},
                     {id:'pm-board',label:'Board Meetings',icon:'📋'}
                 ]
             },
-            // Millersville University — heading-style master, four sub
-            // composites underneath. MU master toggles all four.
-            // Composites flatten the underlying source-specific pref IDs
-            // (mu-arts + clubs-arts → "Arts & Performance", etc.) so townies
-            // don't see redundant entries from MU Calendar vs GetInvolved.
-            // Club Sports lives here too since MU is the cluster.
             mu: {
-                label: 'Millersville University',
-                icon: '🏴‍☠️',
-                headingStyle: true,
+                label: 'Millersville University', icon: '🏴‍☠️', headingStyle: true,
                 composites: [
                     { label: 'Arts & Performance', icon: '🎭', linkedIds: ['mu-arts', 'clubs-arts'] },
                     { label: 'Public Events',      icon: '📢', linkedIds: ['mu-public'] },
-                    { label: 'Community Fundraisers', icon: '🤝', linkedIds: ['clubs-service'] },
-                    {
-                        label: 'Club Sports', icon: '⚽',
-                        linkedIds: ['clubs-sports'],
-                        // Per-sport sub-chips under the umbrella. Townies often
-                        // care about one or two specific club sports, not all
-                        // of them — these let them target. Master umbrella
-                        // (clubs-sports) catches everything; checking a specific
-                        // sport ALSO catches everything since clubs-sports is
-                        // checked alongside, BUT unchecking the master leaves
-                        // only the specific sports active. Realistic flow:
-                        // user checks "Club Sports" master once, sees broader
-                        // results, then unchecks the master and re-checks just
-                        // the 1-2 sports they actually care about.
-                        subSports: [
-                            {id:'cs-baseball',label:'Baseball',icon:'⚾'},
-                            {id:'cs-softball',label:'Softball',icon:'🥎'},
-                            {id:'cs-basketball-mens',label:"Men's Basketball",icon:'🏀'},
-                            {id:'cs-basketball-womens',label:"Women's Basketball",icon:'🏀'},
-                            {id:'cs-soccer-mens',label:"Men's Soccer",icon:'⚽'},
-                            {id:'cs-soccer-womens',label:"Women's Soccer",icon:'⚽'},
-                            {id:'cs-lacrosse',label:'Lacrosse',icon:'🥍'},
-                            {id:'cs-volleyball-mens',label:"Men's Volleyball",icon:'🏐'},
-                            {id:'cs-volleyball-womens',label:"Women's Volleyball",icon:'🏐'},
-                            {id:'cs-rugby-mens',label:"Men's Rugby",icon:'🏉'},
-                            {id:'cs-rugby-womens',label:"Women's Rugby",icon:'🏉'},
-                            {id:'cs-icehockey',label:'Ice Hockey',icon:'🏒'},
-                            {id:'cs-tennis',label:'Tennis',icon:'🎾'},
-                            {id:'cs-frisbee',label:'Ultimate Frisbee',icon:'🥏'},
-                            {id:'cs-fencing',label:'Fencing',icon:'🤺'},
-                            {id:'cs-equestrian',label:'Equestrian',icon:'🐴'},
-                            {id:'cs-dance',label:'Dance Team',icon:'💃'},
-                            {id:'cs-bowling',label:'Bowling',icon:'🎳'},
-                            {id:'cs-running',label:'Running',icon:'🏃'},
-                            {id:'cs-mma',label:'MMA',icon:'🥋'}
-                        ]
-                    }
+                    { label: 'Community Fundraisers', icon: '🤝', linkedIds: ['clubs-service'] }
                 ]
             },
-            // Standalone composites — no heading style, no master checkbox
-            // beyond their own.
-            borough: { label: 'Millersville Borough', icon: '🌳', linkedIds: ['borough-all'] },
-            // Other — heading-style cluster matching Penn Manor / MU shape.
-            // Three distinct sub-feeds (VFW, Phantom Power, Community
-            // submissions) so townies can pick individually.
+            borough: {
+                label: 'Millersville Borough', icon: '🌳', headingStyle: true,
+                subs: [{id:'borough-all',label:'All Borough Events',icon:'🌳'}]
+            },
             other: {
-                label: 'Other',
-                icon: '🎸',
-                headingStyle: true,
+                label: 'Other', icon: '🎸', headingStyle: true,
                 subs: [
                     {id:'other-vfw',label:'VFW Events',icon:'🎖️'},
                     {id:'other-phantom',label:'Phantom Power',icon:'🎵'},
                     {id:'other-community',label:'Community Events',icon:'📝'}
                 ]
             },
-            family: { label: 'Family Friendly', icon: '👨‍👩‍👧', linkedIds: ['family-events'] }
+            family: {
+                label: 'Family Friendly', icon: '👨‍👩‍👧', headingStyle: true,
+                subs: [{id:'family-events',label:'Family Friendly Events',icon:'👨‍👩‍👧'}]
+            }
         }
     },
     news: {
@@ -199,7 +186,7 @@ const feedSections = {
             // MU-side news — visible to both affiliations at full opacity.
             // Townies may legitimately want to follow MU news (e.g. alumni, parents),
             // and marauders obviously want it.
-            news: { label: 'MU News Sources', icon: '📰', audience: 'both', subs: [
+            news: { label: 'MU News Sources', icon: '📰', headingStyle: true, audience: 'both', subs: [
                 {id:'news-mu',label:'MU News',icon:'📰'},{id:'news-snapper',label:'The Snapper',icon:'📰'},
                 {id:'news-athletics',label:'MU Athletics',icon:'🏅'},{id:'news-review',label:'MU Review',icon:'📖'}
             ]},
@@ -208,7 +195,7 @@ const feedSections = {
             // logic in openFeedSettings) kicks in. Marauders see these dimmed with
             // the "not typical for marauders — enable if interested" nag; favoriting
             // a sub here unlocks the source via SOURCE_UNLOCK_IDS below.
-            newsCommunity: { label: 'Community News Sources', icon: '🌳', audience: 'townie', subs: [
+            newsCommunity: { label: 'Community News Sources', icon: '🌳', headingStyle: true, audience: 'townie', subs: [
                 {id:'news-pm',label:'Penn Manor',icon:'📰'},{id:'news-borough',label:'Borough',icon:'🌳'}
             ]}
         }

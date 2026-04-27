@@ -823,6 +823,15 @@ window.openFeedSettings = function() {
                 }).join('')}
             </div>` : '';
 
+            // Club browser button — only on the GetInvolved (clubs) group.
+            // Lives below the subgroups so it sits beneath Greek Life / Club
+            // Sports as a "go deeper" affordance. The heading-style render
+            // path lost this button when GetInvolved became heading-style;
+            // restore it here.
+            const clubBrowserHtml = key === 'clubs'
+                ? '<div id="clubs-individual-wrap" style="padding-left:14px;margin-top:10px;"><button onclick="toggleClubBrowser()" class="btn btn-sm btn-outline" style="font-size:0.75rem;">📋 Browse Individual Clubs ▸</button><div id="clubs-individual-list" style="display:none;max-height:200px;overflow-y:auto;margin-top:8px;flex-wrap:wrap;gap:4px;"></div></div>'
+                : '';
+
             return `<div class="feed-heading-group" style="margin-bottom:14px;">
                 <label class="feed-heading-label" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding-bottom:6px;border-bottom:1px solid var(--border);">
                     <input type="checkbox" class="feed-group" data-group="${key}" ${allChecked?'checked':''} onchange="toggleFeedGroup(this)" style="accent-color:var(--gold);width:16px;height:16px;">
@@ -831,6 +840,7 @@ window.openFeedSettings = function() {
                 ${subsHtml}
                 ${compositesHtml}
                 ${subgroupsHtml}
+                ${clubBrowserHtml}
             </div>`;
         }
 

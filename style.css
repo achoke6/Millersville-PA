@@ -1214,3 +1214,48 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     background: var(--surface);
 }
 .search-result:hover { background: var(--bg); }
+
+/* ============ Home day navigator ============
+   Replaces the old static "Today in Millersville" heading with a date-stepper.
+   Layout: [‹] [📅 Today, Apr 28] [›] [Today]   ←  Today snap-back only when off-today
+   Buttons are 32x32 to meet WCAG/iOS hit target guidelines on mobile. */
+.home-day-nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+.home-day-btn {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
+    line-height: 1;
+    color: var(--text);
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.12s, border-color 0.12s;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.home-day-btn:hover { background: var(--gold-soft); border-color: var(--gold); }
+.home-day-btn:active { transform: scale(0.95); }
+.home-day-today-btn {
+    background: var(--gold-soft);
+    border: 1px solid var(--gold);
+    border-radius: var(--radius-sm);
+    padding: 6px 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.12s;
+    margin-left: 4px;
+}
+.home-day-today-btn:hover { background: var(--gold); }
+.home-day-label { margin: 0; }

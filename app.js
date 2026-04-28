@@ -2,6 +2,13 @@
 (function(){const _f=window.fetch,_v=Math.floor(Date.now()/3600000);window.fetch=function(u,o){if(typeof u==='string'&&u.endsWith('.json'))u+=(/\?/.test(u)?'&':'?')+'_='+_v;return _f.call(this,u,o);}})();
 
 let allEvents=[], currentNews=[], allRestaurants=[];
+
+// Date the home timeline is currently showing. Defaults to today (midnight),
+// can be moved ±1 day via shiftHomeDay() and reset via resetHomeDay(). Not
+// persisted — every fresh load lands on today, matching the "Today's news"
+// expectation for a home page. The Specials & Deals card stays anchored to
+// today regardless of this value.
+let homeViewDate = null;
 const allEvSources = ['MU','PM','Borough','Other'];
 let evActiveSources = new Set(allEvSources), evTags=new Set();
 let evAllMode = true;
@@ -1470,6 +1477,30 @@ function renderHomeFeed() {
     }
     renderHomeUI();
 }
+// Day navigator on the home page. Selected day persists only for the current
+// view session — refresh always lands on today.
+window.shiftHomeDay = function(direction) {
+    if (!homeViewDate) homeViewDate = todayMidnight();
+    const d = new Date(homeViewDate);
+    d.setDate(d.getDate() + direction);
+    // Bound the navigator: 30 days back (older events have rolled off the
+    // scrape window), 60 days forward (matches scrape horizon). Beyond those,
+    // every day would be empty and that's just confusing UX.
+    const today = todayMidnight();
+    const minDate = new Date(today); minDate.setDate(minDate.getDate() - 30);
+    const maxDate = new Date(today); maxDate.setDate(maxDate.getDate() + 60);
+    if (d < minDate || d > maxDate) return;
+    homeViewDate = d;
+    renderHomeUI();
+    // Scroll the timeline section into view if user is below it (in case
+    // nav was clicked from far down the page). Subtle UX nicety.
+    const sec = document.getElementById('home-timeline');
+    if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+};
+window.resetHomeDay = function() {
+    homeViewDate = todayMidnight();
+    renderHomeUI();
+};
 window.dismissWelcome = function() {
     localStorage.setItem('welcomeDismissed', '1');
     const wb = document.getElementById('welcome-banner');
@@ -3339,57 +3370,75 @@ function buildEventCard(e,isSportsPage){
 /* ==================== HOME ==================== */
 function renderHomeUI(){
     const now = new Date();
-    const todayStr = toDateStr(todayMidnight());
+    if (!homeViewDate) homeViewDate = todayMidnight();
+    const todayD = todayMidnight();
+    const isToday = toDateStr(homeViewDate) === toDateStr(todayD);
+    const viewDateStr = toDateStr(homeViewDate);
     const hasFeed = feedPrefs && feedPrefs.length > 0;
 
+    // Update the day-navigator label and Today-snap-back visibility. The
+    // label uses fmtDateLabel for consistent formatting ("Today, Apr 28" vs
+    // "Tue, Apr 29"). Today button hidden when already on today since it
+    // would be a no-op.
+    const dayLabelEl = document.getElementById('home-day-label');
+    if (dayLabelEl) {
+        const labelText = isToday ? 'Today' : fmtDateLabel(homeViewDate);
+        dayLabelEl.textContent = '📅 ' + labelText;
+    }
+    const todayBtn = document.getElementById('home-day-today');
+    if (todayBtn) todayBtn.style.display = isToday ? 'none' : '';
+
     // ===== COMBINED TIMELINE: games + events sorted by time =====
-    // Filter out student-only events for townies. Also skip GetInvolved mu-only content
-    // from the home timeline entirely (it was already hidden via Clubs/Orgs tag exclusion
-    // before the affiliation system existed) — keep that behavior for non-students.
-    const todayAll = allEvents.filter(e => {
-        if(localDateStr(e.date) !== todayStr) return false;
+    // Filter against the currently-selected home view date. Same audience and
+    // source filtering as before — date is the only thing that changes.
+    const dayEvents = allEvents.filter(e => {
+        if(localDateStr(e.date) !== viewDateStr) return false;
         if(isHiddenForTownie(e)) return false;
         if(isEventFromHiddenSource(e)) return false;
         if(isSportsEventFromHiddenSource(e)) return false;
-        // Only townies hide mu-only GetInvolved content (isHiddenForTownie handles this too, but
-        // this extra guard catches events lacking an `audience` field by falling back to the tag).
         if((e.tags||[]).includes('Clubs/Orgs') && e.audience !== 'public' && muAffiliation === 'townie') return false;
         return true;
     }).sort((a,b) => a._dateMs - b._dateMs);
 
     const timeline = document.getElementById('home-timeline');
-    if(todayAll.length === 0){
-        // Show next upcoming items
+    if(dayEvents.length === 0){
+        // Show next upcoming items relative to viewed day. Slightly different
+        // copy depending on whether user is on today or another day.
         const upcoming = allEvents.filter(e => {
             const d = localDateStr(e.date);
-            if (d <= todayStr) return false;
+            if (d <= viewDateStr) return false;
             if (isHiddenForTownie(e)) return false;
             if (isEventFromHiddenSource(e)) return false;
             if (isSportsEventFromHiddenSource(e)) return false;
             if ((e.tags||[]).includes('Clubs/Orgs') && e.audience !== 'public' && muAffiliation === 'townie') return false;
             return true;
         }).sort((a,b) => a._dateMs - b._dateMs).slice(0, 5);
+        const noneCopy = isToday
+            ? 'Nothing scheduled today.'
+            : 'Nothing scheduled on ' + fmtDateLabel(homeViewDate) + '.';
         if (upcoming.length > 0) {
-            timeline.innerHTML = '<p class="home-empty">Nothing scheduled today. Coming up next:</p>' + upcoming.map(e => buildTimelineItem(e, now)).join('');
+            timeline.innerHTML = '<p class="home-empty">' + noneCopy + ' Coming up next:</p>' + upcoming.map(e => buildTimelineItem(e, now)).join('');
         } else {
-            timeline.innerHTML = '<p class="home-empty">No events or games scheduled today.</p>';
+            timeline.innerHTML = '<p class="home-empty">' + noneCopy + '</p>';
         }
     } else if (hasFeed) {
-        const favs = todayAll.filter(e => eventMatchesFeed(e));
-        const others = todayAll.filter(e => !eventMatchesFeed(e));
+        const favs = dayEvents.filter(e => eventMatchesFeed(e));
+        const others = dayEvents.filter(e => !eventMatchesFeed(e));
+        const allLabel = isToday ? 'All Today' : 'All ' + fmtDateLabel(homeViewDate);
         let html = '';
         if (favs.length > 0) {
             html += '<div class="feed-pinned-header"><span>⚡ My Favorites</span></div>';
             html += favs.map(e => buildTimelineItem(e, now)).join('');
-            if (others.length > 0) html += '<div class="feed-divider"><span>All Today</span></div>';
+            if (others.length > 0) html += '<div class="feed-divider"><span>' + allLabel + '</span></div>';
         } else {
-            html += '<p class="home-empty">No favorites scheduled today</p>';
-            html += '<div class="feed-divider"><span>All Today</span></div>';
+            const noFavCopy = isToday ? 'No favorites scheduled today' : 'No favorites scheduled';
+            html += '<p class="home-empty">' + noFavCopy + '</p>';
+            html += '<div class="feed-divider"><span>' + allLabel + '</span></div>';
         }
         html += others.map(e => buildTimelineItem(e, now)).join('');
         timeline.innerHTML = html;
     } else {
-        timeline.innerHTML = todayAll.map(e => buildTimelineItem(e, now)).join('');
+        timeline.innerHTML = dayEvents.map(e => buildTimelineItem(e, now)).join('');
     }
 
     // ===== LATEST NEWS (compact text links) =====

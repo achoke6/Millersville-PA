@@ -295,25 +295,53 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
     if (benefits.includes('Credit')) return 'mu-only';
     const combinedText = ((titleText || '') + ' ' + (descText || '') + ' ' + (orgName || '')).toLowerCase();
 
-    // Strong mu-only signals — things that are obviously student-facing. Checked FIRST so
-    // they override weaker "public" keyword matches (e.g. "our campus community").
-    // Kept conservative so we don't false-positive open-to-public recitals or concerts.
+    // ===== Highest-priority public signals =====
+    // Public org names ("Red Cross", "Habitat for Humanity") and explicit
+    // public-facing event types (blood drive, 5K, food drive). Win over softer
+    // mu-only signals like "host org is a fraternity" — a blood drive hosted
+    // BY a frat is still genuinely a blood drive open to all.
+    const publicOrgRegex = /\b(red cross|food pantry|habitat for humanity|goodwill|salvation army|special olympics|make[- ]?a[- ]?wish)\b/i;
+    const publicNamedEventRegex = /\b(blood drive|food drive|clothing drive|toy drive|5k|10k|walkathon|run for|habitat for humanity|red cross|food pantry|soup kitchen)\b/i;
+    if (publicNamedEventRegex.test(combinedText)) return 'public';
+    if (publicOrgRegex.test(orgName)) return 'public';
+
+    // Fundraising-tagged events. A frat bake sale or sorority charity event
+    // is still a fundraiser open to the public — the tag is the signal.
+    if (tags.includes('Fundraising')) return 'public';
+
+    // Fundraiser/bake sale/festival keywords in title or description. Same
+    // reasoning as the Fundraising tag — these are public-facing event types.
+    const publicFundraisingKeywordRegex = /\b(fundraiser|bake sale|festival|fair|charity|donation|donate|benefit (for|concert))\b/i;
+    if (publicFundraisingKeywordRegex.test(combinedText)) return 'public';
+
+    // ===== Academic-internal signals =====
+    // Run AFTER strong public markers (so "Department of Theatre Public
+    // Recital" with explicit "public" still wins as public), but BEFORE the
+    // soft public-keyword regex (so "End of Year Celebration" tagged
+    // Community doesn't leak). Excludes "Office of Sustainability" since
+    // it runs genuinely public events.
+    const hasExplicitPublicMarker = /\b(public|open to (the )?(public|community|all)|community welcome|all (are )?welcome)\b/i.test(combinedText);
+    const muOnlyAcademicRegex = /\b(college of |department of |school of |office of (?!sustainability)|honors college|honors program|year[- ]end|end of (the )?year|end of (the )?semester|faculty (mixer|concert|event)|senior (recognition|celebration|class)|graduating class|provost'?s|dean'?s (list|reception)|alumni (and student|student)|student[- ]faculty|capstone|thesis defense|comprehensive exam)\b/i;
+    if (muOnlyAcademicRegex.test(combinedText) && !hasExplicitPublicMarker) return 'mu-only';
+
+    // ===== Strong mu-only signals (club business) =====
     const muOnlyKeywordRegex = /\b(bible study|fellowship(?! hall)|chapter meeting|chapter business|weekly meeting|general body meeting|gbm|e-?board meeting|executive meeting|officer meeting|members only|tabling|orientation|info session|information session|club meeting|resume review|mock interview|study group|study session|homework help|office hours|interest meeting|rush|recruitment night|new member|initiation|brother hood|sister hood|sisterhood|brotherhood)\b/i;
     const muOnlyOrgRegex = /\b(fraternity|sorority|christian fellowship|campus ministry|cru |intervarsity|reformed university fellowship|ruf\b|gsa\b|gender and sexuality alliance|residence hall|housing community)\b/i;
     if (muOnlyKeywordRegex.test(combinedText)) return 'mu-only';
     if (muOnlyOrgRegex.test(orgName.toLowerCase() + ' ' + combinedText)) return 'mu-only';
-    // Greek Life category tag → always mu-only
     if (rawTags.some(t => /greek life|residence hall/i.test(t))) return 'mu-only';
 
-    // Public signals (unchanged from prior logic)
-    const publicKeywordRegex = /\b(open to (the )?(public|community|all)|community welcome|all (are )?welcome|public event|for the public|blood drive|fundraiser|walkathon|5k|10k|run for|bake sale|festival|fair|concert|performance|recital|exhibition|gallery|benefit (for|concert)|donate|donation|charity|awareness (day|walk|event)|food drive|clothing drive|toy drive|drive for|volunteer|service project|community service|habitat for humanity|red cross|food pantry|soup kitchen)\b/i;
-    const publicCategoryRegex = /\b(fundraising|service|community service|performance|sporting|athletic|community|philanthropy|volunteer)\b/i;
-    const publicOrgRegex = /\b(red cross|food pantry|habitat for humanity|goodwill|salvation army|special olympics|make[- ]?a[- ]?wish)\b/i;
+    // ===== Generic public-language signals =====
+    // Run after mu-only-org regex because "fraternity" host can override loose
+    // public language; but blood/food drives, fundraising, and explicit public
+    // markers already handled above.
+    const publicKeywordRegex = /\b(open to (the )?(public|community|all)|community welcome|all (are )?welcome|public event|for the public|concert|performance|recital|exhibition|gallery|awareness (day|walk|event)|volunteer|service project|community service)\b/i;
     if (publicKeywordRegex.test(combinedText)) return 'public';
-    if (rawTags.some(t => publicCategoryRegex.test(t))) return 'public';
-    if (publicOrgRegex.test(orgName)) return 'public';
-    if (tags.includes('Fundraising')) return 'public';
     if (tags.includes('Club Sports') && tags.includes('Home Game Mode')) return 'public';
+
+    // ===== Loose category-only matches (last resort) =====
+    const publicCategoryRegex = /\b(fundraising|service|community service|sporting|athletic|philanthropy|volunteer)\b/i;
+    if (rawTags.some(t => publicCategoryRegex.test(t))) return 'public';
     return 'mu-only';
 }
 
@@ -1977,7 +2005,8 @@ async function runScraper() {
                                 tags: ['Borough'],
                                 price: 'Free', ticketLink: '',
                                 sourceLink: 'https://millersvilleborough.org/resident-info/calendar/',
-                                gameResult: '', gameScore: '', streamLink: boroughStream, isLive: false
+                                gameResult: '', gameScore: '', streamLink: boroughStream, isLive: false,
+                                ...(isAllDay ? { allDay: true } : {})
                             });
                         }
                         boroughCount++;
@@ -2007,7 +2036,8 @@ async function runScraper() {
                     sourceLink: ev.url || 'https://millersvilleborough.org/resident-info/calendar/',
                     gameResult: '', gameScore: '',
                     streamLink: /council/i.test(title) ? 'https://www.youtube.com/@MillersvilleBorough/streams' : '',
-                    isLive: false
+                    isLive: false,
+                    ...(singleIsAllDay ? { allDay: true } : {})
                 });
                 boroughCount++;
             }
@@ -2578,8 +2608,12 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 // Parse time. Same format-detection as before (H:MM[:SS]
                 // [AM|PM] / 24h / fraction-of-day / shorthand). Output is
                 // {h, m} both 0-23 / 0-59. Falls back to 12:00 noon if
-                // unparseable.
+                // unparseable. Track whether a time was provided at all so
+                // we can emit an explicit allDay flag on the event — needed
+                // because the frontend used to guess "all-day" by checking
+                // for noon, which falsely categorized real noon meetings.
                 let timeH = 12, timeM = 0;
+                let timeProvided = false;
                 if (timeStr) {
                     let parsed = null;
                     const timeMatch = timeStr.match(/(\d{1,2}):(\d{2})(?::\d{2})?\s*(AM|PM)?/i);
@@ -2610,6 +2644,7 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                     if (parsed) {
                         timeH = parsed.h;
                         timeM = parsed.m;
+                        timeProvided = true;
                         console.log(`  📅 Submission time: "${timeStr}" → ${timeH}:${String(timeM).padStart(2,'0')} ET`);
                     } else {
                         console.log(`  ⚠️ Submission time unparsed: "${timeStr}" — defaulting to noon ET`);
@@ -2635,7 +2670,8 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                     price: 'Free',
                     ticketLink: '',
                     sourceLink: link || '',
-                    description: description || ''
+                    description: description || '',
+                    ...(timeProvided ? {} : { allDay: true })
                 });
                 communityCount++;
             }

@@ -2593,6 +2593,21 @@ function updateCurrentDayLabel(pageKey) {
         labelEl.textContent = 'Today';
         return;
     }
+    // Defensive bail-out: when called immediately after innerHTML assignment,
+    // the browser hasn't laid out the new DOM yet and getBoundingClientRect()
+    // returns top: 0 for every header. The loop below would then mark every
+    // header as "above threshold" and `active` would advance to the LAST one,
+    // showing e.g. "Wed, Jun 24" on the toolbar at first paint instead of
+    // "Today". If we detect this state, default to the today-marked header
+    // (or the first if no today-marked exists) and skip the scroll math.
+    const firstRect = headers[0].getBoundingClientRect();
+    const lastRect = headers[headers.length - 1].getBoundingClientRect();
+    if (firstRect.top === 0 && lastRect.top === 0) {
+        const todayHeader = container.querySelector('.day-group-header.today');
+        const fallback = todayHeader || headers[0];
+        labelEl.textContent = (fallback.childNodes[0] ? fallback.childNodes[0].textContent.trim() : fallback.textContent.trim()) || 'Today';
+        return;
+    }
     // "Active" header = the last one whose top has scrolled above the toolbar offset
     const offsetTop = 120; // ~ site header (50) + toolbar height (70)
     let active = headers[0];
@@ -2619,10 +2634,16 @@ window.addEventListener('scroll', () => {
         else if (sportsView && sportsView.classList.contains('active')) updateCurrentDayLabel('sp');
     });
 }, { passive: true });
-// Also update after renders in case a filter changes what's at the top
+// Also update after renders in case a filter changes what's at the top.
+// Defer to next animation frame so the browser has a chance to lay out the
+// freshly-rendered DOM — calling immediately after innerHTML returns
+// getBoundingClientRect tops of 0 for everything (no layout yet), which
+// makes the active-header loop pick the last header instead of the first.
 function refreshDayLabels() {
-    updateCurrentDayLabel('ev');
-    updateCurrentDayLabel('sp');
+    requestAnimationFrame(() => {
+        updateCurrentDayLabel('ev');
+        updateCurrentDayLabel('sp');
+    });
 }
 
 /* ==================== SPORTS PAGE ==================== */
@@ -3038,8 +3059,8 @@ window.shareEvent = function(btn) {
 
     const d = new Date(e.date);
     const dateStr = d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
-    const isNoon = d.getHours() === 12 && d.getMinutes() === 0;
-    const timeStr = isNoon ? '' : ` @ ${formatTime(d)}`;
+    const isAllDay = e.allDay === true;
+    const timeStr = isAllDay ? '' : ` @ ${formatTime(d)}`;
     // Prefer the event's own source URL (recap page, MU Calendar entry, etc.)
     // as the share link since it's the most specific landing page. Fall back
     // to the site root for events without a source — the user landing there
@@ -3221,9 +3242,12 @@ function buildEventCard(e,isSportsPage){
         locBadge = '<span class="game-loc-badge tag-family">👨‍👩‍👧 Family</span>';
     }
 
-    // Hide time if it's exactly noon (placeholder for events with no specific time)
-    const isNoonPlaceholder = d.getHours()===12 && d.getMinutes()===0;
-    const timeStr = isNoonPlaceholder ? '' : ` @ ${formatTime(d)}`;
+    // Hide time if event is explicitly all-day. Trusts the scraper's allDay
+    // flag rather than guessing from "exactly 12:00". The old noon heuristic
+    // misidentified real noon meetings (e.g. lunchtime club meetings) as
+    // all-day.
+    const isAllDay = e.allDay === true;
+    const timeStr = isAllDay ? '' : ` @ ${formatTime(d)}`;
 
     // Student perks
     const benefits = e.benefits || [];
@@ -3472,9 +3496,10 @@ function buildTimelineItem(e, now) {
         title = `${title} — ${rawLoc}`;
     }
 
-    // Time
-    const isNoon = d.getHours()===12 && d.getMinutes()===0;
-    const timeStr = isNoon ? 'All Day' : formatTime(d);
+    // Time — uses the scraper's allDay flag. Real noon meetings now show
+    // their actual time instead of being heuristic-guessed as "All Day".
+    const isAllDay = e.allDay === true;
+    const timeStr = isAllDay ? 'All Day' : formatTime(d);
 
     // Badges
     let badges = '';
@@ -3558,8 +3583,8 @@ window.openEventDetails = function(key) {
     const tags = e.tags || [];
     const isSport = isSportEvent(e) || isPMSportByTitle(e);
     const isHome = tags.includes('Home Game Mode') || tags.includes('H Games');
-    const isNoon = d.getHours() === 12 && d.getMinutes() === 0;
-    const timeStr = isNoon ? 'All Day' : formatTime(d);
+    const isAllDay = e.allDay === true;
+    const timeStr = isAllDay ? 'All Day' : formatTime(d);
     const dateStr = d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
 
     // Source label (reuse logic from buildTimelineItem)
@@ -3721,7 +3746,7 @@ window.openEventDetails = function(key) {
     modal.innerHTML = `
         <button onclick="this.closest('.event-details-overlay').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);padding:4px 8px;">✕</button>
         <h2 style="margin:0 0 8px;font-size:1.25rem;color:var(--navy);line-height:1.3;padding-right:24px;">${e.title || 'Event'}</h2>
-        <div style="font-size:0.92rem;color:var(--text);font-weight:600;">📅 ${dateStr}${!isNoon ? ' · ' + timeStr : ''}</div>
+        <div style="font-size:0.92rem;color:var(--text);font-weight:600;">📅 ${dateStr}${!isAllDay ? ' · ' + timeStr : ''}</div>
         ${locBlock}
         ${scoreSummary}
         ${linescoreBlock}

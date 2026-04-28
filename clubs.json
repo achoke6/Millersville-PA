@@ -470,8 +470,7 @@
     "name": "Club Cheerleading",
     "category": "Sports and Leisure",
     "categories": [
-      "Sports and Leisure",
-      "Meeting"
+      "Sports and Leisure"
     ],
     "shortName": "Club cheer",
     "id": "na"
@@ -693,12 +692,12 @@
   },
   {
     "name": "DMAX Club",
-    "category": "Social",
+    "category": "Service & Civic Engagement",
     "categories": [
-      "Social"
+      "Service & Civic Engagement"
     ],
     "shortName": "",
-    "id": ""
+    "id": "dmaxclub"
   },
   {
     "name": "Dr. Rita Smith-Wade-El Center for Intercultural Student Engagement",
@@ -1110,6 +1109,15 @@
     "categories": [],
     "shortName": "MiM",
     "id": "made-in-millersville"
+  },
+  {
+    "name": "Marauder Graphics",
+    "category": "Meeting",
+    "categories": [
+      "Meeting"
+    ],
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Marauder Graphics Club",
@@ -2026,8 +2034,10 @@
   },
   {
     "name": "West Village Residence Hall",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "",
     "id": ""
   },

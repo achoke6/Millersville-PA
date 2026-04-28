@@ -171,7 +171,7 @@ const feedSections = {
                 ]
             },
             borough: { label: 'Borough', icon: '🌳', headingStyle: true, audience: 'townie', subs: [{id:'borough-all',label:'All Borough Events',icon:'🌳'}] },
-            other: { label: 'Other', icon: '🎸', headingStyle: true, audience: 'townie', subs: [
+            other: { label: 'Other', icon: '🎯', headingStyle: true, audience: 'townie', subs: [
                 {id:'other-vfw',label:'VFW Events',icon:'🎖️'},{id:'other-phantom',label:'Phantom Power',icon:'🎵'},
                 {id:'other-community',label:'Community Events',icon:'📝'}
             ]},
@@ -205,7 +205,7 @@ const feedSections = {
                 subs: [{id:'borough-all',label:'All Borough Events',icon:'🌳'}]
             },
             other: {
-                label: 'Other', icon: '🎸', headingStyle: true,
+                label: 'Other', icon: '🎯', headingStyle: true,
                 subs: [
                     {id:'other-vfw',label:'VFW Events',icon:'🎖️'},
                     {id:'other-phantom',label:'Phantom Power',icon:'🎵'},
@@ -3701,7 +3701,26 @@ async function loadHomeSpecials(){
         const container = document.getElementById('home-specials');
         let cards = [];
 
+        // Campus Cupboard — marauder-only resource (free grocery store inside
+        // the HUB for MU students). Year-round, with auto-switching hours
+        // between academic-year (M-F 8am-8pm) and summer (M-F 9am-1pm).
+        // Summer pause is approximate — May 11 to Aug 24 — same window as
+        // HUB meal events. Card always shown to marauders, never to townies.
+        if (muAffiliation === 'student') {
+            const cupboardItems = buildCampusCupboardItems(dayName);
+            if (cupboardItems) {
+                cards.push(`<div class="home-special-card"><h4 class="home-special-name">🛒 Campus Cupboard</h4><p class="home-special-note">Free grocery store for MU students — inside The HUB</p>${cupboardItems.map(i=>`<p class="home-special-item">• ${i}</p>`).join('')}</div>`);
+            }
+        }
+
         for (const [restaurant, sp] of Object.entries(specials)) {
+            // VFW is members-only — hide from marauders by default. Townies
+            // (and marauders who explicitly favorite VFW) can still see it.
+            // The favorited-opt-in path is implicit: this loop only shows
+            // cards on the home special-deals strip; the picker provides
+            // the override route.
+            if (restaurant === 'VFW Post 7294' && muAffiliation === 'student') continue;
+
             const isWeekend = (dayName === 'Saturday' || dayName === 'Sunday');
             if (isWeekend && restaurant === 'VFW Post 7294') continue;
 
@@ -3724,6 +3743,22 @@ async function loadHomeSpecials(){
         }
         container.innerHTML = cards.length > 0 ? cards.join('') : '<p class="home-empty">No specials today</p>';
     } catch(e) { document.getElementById('home-specials').innerHTML = '<p class="home-empty">No specials today</p>'; }
+}
+
+// Build a list of items shown on the Campus Cupboard card based on current
+// day + season. Returns null if not open today (only Sat/Sun would match).
+// Hours: academic year M-F 8am-8pm, summer M-F 9am-1pm.
+function buildCampusCupboardItems(dayName) {
+    const isWeekday = ['Monday','Tuesday','Wednesday','Thursday','Friday'].includes(dayName);
+    const now = new Date();
+    const m = now.getMonth() + 1, d = now.getDate();
+    // Same summer window as HUB scrape (May 11 – Aug 24)
+    const isSummer = (m === 5 && d >= 11) || m === 6 || m === 7 || (m === 8 && d < 25);
+    if (isWeekday) {
+        const hours = isSummer ? '9am – 1pm' : '8am – 8pm';
+        return [`Open today: ${hours}`, 'Fresh produce, dairy, eggs, frozen, canned & dry goods, hygiene products', 'Bring student ID'];
+    }
+    return ['Closed today (open weekdays only)', 'Fresh produce, dairy, eggs, frozen, canned & dry goods, hygiene products', 'Bring student ID'];
 }
 
 /* ==================== WEATHER ==================== */
@@ -3928,10 +3963,37 @@ function renderPlaces(){
     // Sort: featured first, then food, then services
     filtered.sort((a,b) => (b.featured===true)-(a.featured===true) || (a.placeType==='food'?0:1)-(b.placeType==='food'?0:1));
 
-    pc.innerHTML = filtered.length ? filtered.map(p => {
+    // Campus Cupboard pinned card — marauders only, shown in All and Food & Drink
+    // views (it's a free grocery store inside the HUB). Skipped for townies
+    // and for filter views that exclude food (e.g. Services).
+    let cupboardCard = '';
+    if (muAffiliation === 'student' && (placesFilter === 'All' || placesFilter === 'Food & Drink')) {
+        cupboardCard = buildCampusCupboardCard(dayName);
+    }
+
+    const cards = filtered.map(p => {
         if (p.placeType === 'food') return buildFoodCard(p, specials, dayName);
         return buildServiceCard(p);
-    }).join('') : '<p class="empty-state">No places found in this category. Know a local business? <a href="#" onclick="event.preventDefault();openSubmitBusiness();">Add it here →</a></p>';
+    });
+    pc.innerHTML = (cupboardCard + cards.join('')) || '<p class="empty-state">No places found in this category. Know a local business? <a href="#" onclick="event.preventDefault();openSubmitBusiness();">Add it here →</a></p>';
+}
+
+// Build the Campus Cupboard card for the Places page. Mirrors the food-card
+// shape (header + meta + action button) but pulls hours from
+// buildCampusCupboardItems for season-aware display.
+function buildCampusCupboardCard(dayName) {
+    const items = buildCampusCupboardItems(dayName);
+    const isWeekday = ['Monday','Tuesday','Wednesday','Thursday','Friday'].includes(dayName);
+    const statusClass = isWeekday ? 'open' : 'closed';
+    const statusText = isWeekday ? items[0] : 'Closed today';
+    return `<div class="app-card" style="border-left:4px solid var(--gold);">
+        <div class="card-body">
+            <div class="card-heading"><span style="font-size:1.5rem;">🛒</span><h3 class="card-title">Campus Cupboard</h3></div>
+            <p class="card-meta">📍 Inside The HUB · MU students only</p>
+            <p class="card-meta status-${statusClass}">⏰ ${statusText}</p>
+            <p style="font-size:0.85rem;margin:8px 0;color:var(--text-muted);">Free grocery store with fresh produce, dairy, eggs, frozen, canned & dry goods, and hygiene products. Bring student ID.</p>
+        </div>
+    </div>`;
 }
 
 function buildFoodCard(p, specials, dayName) {

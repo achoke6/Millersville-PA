@@ -2724,6 +2724,110 @@ Focus on the most impressive deals a shopper would want to know about. Include m
     });
     console.log(`👨‍👩‍👧 Family-friendly tagged: ${famCount} of ${events.length} events`);
 
+    // ===== THE HUB — RECURRING FREE MEALS =====
+    // The HUB serves free meals to MU students Tue/Thu lunch 11am-1pm and
+    // Fri "French Toast Friday" 9pm-midnight during the academic year. Meal
+    // service pauses for summer (~May 11 – Aug 24); Campus Cupboard stays
+    // open year-round but is handled separately as a "place," not an event.
+    //
+    // We generate a rolling 4-week window so the timeline always shows the
+    // upcoming free meals. Past instances roll off naturally with the rest
+    // of the events.
+    //
+    // All events tagged audience: mu-only so townies don't see them on the
+    // home/events feed (food is members-only). Tagged Other for the picker
+    // category (under the Other section's heading-style group).
+    try {
+        const hubEvents = [];
+        const now = new Date();
+        const startDate = new Date(now); startDate.setHours(0, 0, 0, 0);
+        const endDate = new Date(now); endDate.setDate(endDate.getDate() + 28);
+
+        // Approximate term-window check. Spring ends ~May 10, fall starts
+        // ~Aug 25. Inside this summer pause, meal service is off (Campus
+        // Cupboard handled separately). Approximate; misses Thanksgiving
+        // and spring break, but those are minor mismatches — the event
+        // description tells students to bring student ID, so a confused
+        // visit during a break is recoverable.
+        const isHubMealServicePaused = (d) => {
+            const m = d.getMonth() + 1, day = d.getDate();
+            // Pause from May 11 through Aug 24 inclusive
+            if (m === 5 && day >= 11) return true;
+            if (m === 6 || m === 7) return true;
+            if (m === 8 && day < 25) return true;
+            return false;
+        };
+
+        // Same Eastern-offset ISO helper as community submissions to avoid
+        // the GitHub-Actions-runs-in-UTC timezone bug.
+        const isEasternDST = (y, monthIdx, dayOfMonth) => {
+            if (monthIdx < 2) return false;
+            if (monthIdx > 10) return false;
+            if (monthIdx > 2 && monthIdx < 10) return true;
+            if (monthIdx === 2) {
+                const firstOfMonth = new Date(Date.UTC(y, 2, 1)).getUTCDay();
+                const firstSunday = firstOfMonth === 0 ? 1 : (8 - firstOfMonth);
+                return dayOfMonth >= firstSunday + 7;
+            }
+            if (monthIdx === 10) {
+                const firstOfMonth = new Date(Date.UTC(y, 10, 1)).getUTCDay();
+                const firstSunday = firstOfMonth === 0 ? 1 : (8 - firstOfMonth);
+                return dayOfMonth < firstSunday;
+            }
+            return false;
+        };
+        const buildEternalISO = (y, mo, d, h, min) => {
+            const offset = isEasternDST(y, mo - 1, d) ? '-04:00' : '-05:00';
+            return `${y}-${String(mo).padStart(2,'0')}-${String(d).padStart(2,'0')}T${String(h).padStart(2,'0')}:${String(min).padStart(2,'0')}:00${offset}`;
+        };
+
+        let hubGenerated = 0, hubSkippedSummer = 0;
+        for (let cursor = new Date(startDate); cursor <= endDate; cursor.setDate(cursor.getDate() + 1)) {
+            if (isHubMealServicePaused(cursor)) { hubSkippedSummer++; continue; }
+            const dayOfWeek = cursor.getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
+            const y = cursor.getFullYear();
+            const mo = cursor.getMonth() + 1;
+            const d = cursor.getDate();
+
+            // Tue (2) or Thu (4): Free Lunch 11am-1pm
+            if (dayOfWeek === 2 || dayOfWeek === 4) {
+                const isoStart = buildEternalISO(y, mo, d, 11, 0);
+                hubEvents.push({
+                    title: 'Free Lunch @ The HUB',
+                    date: new Date(isoStart).toISOString(),
+                    location: 'The HUB',
+                    description: 'Free meal for all Millersville University students. Bring student ID. Service runs 11am – 1pm.',
+                    tags: ['MU', 'HUB', 'Free Food', 'Other'],
+                    audience: 'mu-only',
+                    sourceLink: 'https://www.millersville.edu/'
+                });
+                hubGenerated++;
+            }
+            // Fri (5): French Toast Friday 9pm-midnight
+            if (dayOfWeek === 5) {
+                const isoStart = buildEternalISO(y, mo, d, 21, 0);
+                hubEvents.push({
+                    title: 'French Toast Friday @ The HUB',
+                    date: new Date(isoStart).toISOString(),
+                    location: 'The HUB',
+                    description: 'Free French toast for all Millersville University students, 9pm – midnight. Bring student ID.',
+                    tags: ['MU', 'HUB', 'Free Food', 'Other'],
+                    audience: 'mu-only',
+                    sourceLink: 'https://www.millersville.edu/'
+                });
+                hubGenerated++;
+            }
+        }
+        if (hubGenerated > 0) {
+            events.push(...hubEvents);
+            console.log(`🥪 The HUB: ${hubGenerated} recurring free meals generated for next 4 weeks${hubSkippedSummer ? ` (${hubSkippedSummer} summer-paused days skipped)` : ''}`);
+        } else {
+            console.log(`🥪 The HUB: 0 events generated — within summer pause (May 11 – Aug 24)`);
+        }
+    } catch (e) {
+        console.log(`  ⚠️ HUB events error: ${e.message}`);
+    }
+
     // ===== PENN MANOR SCORES FROM MAXPREPS =====
     try {
         console.log("📡 Fetching Penn Manor scores from MaxPreps...");

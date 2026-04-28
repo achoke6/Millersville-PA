@@ -2823,13 +2823,15 @@ Focus on the most impressive deals a shopper would want to know about. Include m
             if (dayOfWeek === 2 || dayOfWeek === 4) {
                 const isoStart = buildEternalISO(y, mo, d, 11, 0);
                 hubEvents.push({
-                    title: 'Free Lunch @ The HUB',
+                    title: 'Free Lunch',
                     date: new Date(isoStart).toISOString(),
                     location: 'The HUB',
                     description: 'Free meal for all Millersville University students. Bring student ID. Service runs 11am – 1pm.',
                     tags: ['MU', 'HUB', 'Free Food', 'Other'],
                     audience: 'mu-only',
                     benefits: ['Free Food'],
+                    orgName: 'The HUB',
+                    orgShortName: 'The HUB',
                     sourceLink: 'https://www.millersville.edu/'
                 });
                 hubGenerated++;
@@ -2838,13 +2840,15 @@ Focus on the most impressive deals a shopper would want to know about. Include m
             if (dayOfWeek === 5) {
                 const isoStart = buildEternalISO(y, mo, d, 21, 0);
                 hubEvents.push({
-                    title: 'French Toast Friday @ The HUB',
+                    title: 'French Toast Friday',
                     date: new Date(isoStart).toISOString(),
                     location: 'The HUB',
                     description: 'Free French toast for all Millersville University students, 9pm – midnight. Bring student ID.',
                     tags: ['MU', 'HUB', 'Free Food', 'Other'],
                     audience: 'mu-only',
                     benefits: ['Free Food'],
+                    orgName: 'The HUB',
+                    orgShortName: 'The HUB',
                     sourceLink: 'https://www.millersville.edu/'
                 });
                 hubGenerated++;

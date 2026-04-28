@@ -3438,13 +3438,37 @@ function buildTimelineItem(e, now) {
     let title = e.title || '';
     title = title.replace(/^Millersville University\s*/i, '').replace(/ - (Girls|Boys)\s+(vs |@ )/i, ' $2');
 
+    // For marauders: when the org pill already shows the org name, strip the
+    // org name out of the title to avoid redundant display. The scraper's
+    // decorateGenericTitle prepends org names to bare titles like "Practice"
+    // or "Meeting" so they read sensibly when no pill is present — but on
+    // the marauder home view the pill IS the org, so showing the name twice
+    // is noise. Townies don't have org pills so they keep the full title.
+    if (muAffiliation === 'student' && e.orgName && e.orgShortName) {
+        const orgPattern = e.orgName
+            .replace(/[.*+?^${}()|[\]\\]/g, '\\$&')  // escape regex chars
+            .replace(/[''']/g, "[''']?")              // tolerate curly/straight quote variants
+            .replace(/\s+/g, '\\s+');                  // tolerate whitespace variants
+        const re = new RegExp(`(^|\\s)${orgPattern}(\\s|$)`, 'i');
+        const stripped = title.replace(re, ' ').replace(/\s{2,}/g, ' ').trim();
+        // Sanity guard — only use the stripped version if it's still
+        // meaningful (≥ 4 chars). Otherwise the title was probably JUST
+        // the org name and stripping would leave nothing useful.
+        if (stripped.length >= 4 && stripped !== title) {
+            title = stripped;
+        }
+    }
+
     // Append location to title in timeline view. Helps users at-a-glance
     // know where to go without opening the modal. Skipped for: empty/generic
-    // locations, locations already mentioned in the title, and very long
-    // locations (full street addresses) where appending would push the row.
+    // locations, locations already mentioned in the title, very long
+    // locations (full street addresses), and cases where the location
+    // matches the org name (the pill already conveys it — avoids "Free
+    // Lunch — The HUB" with [The HUB] pill, which is double display).
     const rawLoc = (e.location || '').trim();
     const genericLoc = /^(millersville university|campus|tba|tbd|online|virtual|zoom|n\/a)$/i;
-    if (rawLoc && rawLoc.length <= 35 && !genericLoc.test(rawLoc) && !title.toLowerCase().includes(rawLoc.toLowerCase())) {
+    const orgEqualsLoc = e.orgShortName && rawLoc.toLowerCase() === e.orgShortName.toLowerCase();
+    if (rawLoc && rawLoc.length <= 35 && !genericLoc.test(rawLoc) && !orgEqualsLoc && !title.toLowerCase().includes(rawLoc.toLowerCase())) {
         title = `${title} — ${rawLoc}`;
     }
 

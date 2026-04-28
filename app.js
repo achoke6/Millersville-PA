@@ -3198,12 +3198,18 @@ function cleanLocation(loc) {
     if (!loc) return '';
     let cleaned = loc.replace(/^AcCALEN$/i, 'Millersville University');
 
+    // Building-name abbreviations. Apply BEFORE the duplicate-prefix dedup so
+    // "Student Memorial Center" reduces to "SMC" first, then dedup catches
+    // any "SMC SMC Commons" that survives. Same for the Reighard room name —
+    // the long "Reighard Multi Purpose Room" wastes screen space on a phone
+    // when "Reighard MPR" is universally understood on campus.
+    cleaned = cleaned.replace(/\bStudent Memorial Center\b/gi, 'SMC')
+                     .replace(/\bReighard Multi Purpose Room\b/gi, 'Reighard MPR');
+
     // Strip duplicated building-code prefixes from MU calendar data. The
     // raw API returns strings like "SMC SMC Commons" or "WARE Ware Center"
     // where the building code is prepended even though the venue name
-    // already contains it. Two cases:
-    //   1) Identical repeat: "SMC SMC Commons" → "SMC Commons"
-    //   2) Code is a prefix of the next word: "WARE Ware Center" → "Ware Center"
+    // already contains it.
     const dupRepeat = /^([A-Z]{2,6})\s+\1\b/;
     if (dupRepeat.test(cleaned)) {
         cleaned = cleaned.replace(dupRepeat, '$1');
@@ -3214,6 +3220,11 @@ function cleanLocation(loc) {
             cleaned = cleaned.slice(m[1].length + 1);
         }
     }
+
+    // Specific room-name completions. The MU calendar API truncates some
+    // room names — "Robert Slabinski" should be "Robert Slabinski Atrium",
+    // for example. Add the missing suffix when we see the truncated form.
+    cleaned = cleaned.replace(/\bRobert Slabinski$/i, 'Robert Slabinski Atrium');
 
     // Specific cleanups kept as a safety net.
     cleaned = cleaned.replace(/^Ware Center\s+(?!,)/, 'Ware Center, ');
@@ -4123,9 +4134,10 @@ function buildCampusCupboardCard(dayName) {
     return `<div class="app-card" style="border-left:4px solid var(--gold);">
         <div class="card-body">
             <div class="card-heading"><span style="font-size:1.5rem;">🛒</span><h3 class="card-title">Campus Cupboard</h3></div>
-            <p class="card-meta">📍 Inside The HUB · MU students only</p>
+            <p class="card-meta">📍 Inside The HUB, 121 N George St · MU students only</p>
             <p class="card-meta status-${statusClass}">⏰ ${statusText}</p>
             <p style="font-size:0.85rem;margin:8px 0;color:var(--text-muted);">Free grocery store with fresh produce, dairy, eggs, frozen, canned & dry goods, and hygiene products. Bring student ID.</p>
+            <a href="https://www.hubmu.org/free-groceries" target="_blank" rel="noopener" class="btn btn-sm btn-outline" style="font-size:0.78rem;">More info ↗</a>
         </div>
     </div>`;
 }

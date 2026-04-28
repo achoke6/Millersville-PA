@@ -1291,6 +1291,21 @@ async function runScraper() {
 
         if (data.fields && Array.isArray(data.data)) {
             const fields = data.fields.split(',');
+            // ===== ONE-TIME DIAGNOSTIC =====
+            // Log the API's full field list and one sample row so we can see
+            // exactly what location info is available. Used to investigate
+            // location-quality bugs (DMAX showing "SMC Meeting Room" instead
+            // of "SMC Room 18", dance studio events missing locations, etc.).
+            // Adam: after this scrape, share the "🔍 MU Cal sample row" line
+            // from the Actions log and we'll know which field has the missing
+            // data. Safe to remove once we've identified the right fields.
+            console.log('🔍 MU Cal fields:', fields.join(' | '));
+            if (data.data.length > 0) {
+                const sampleRow = data.data[0];
+                const sampleObj = {};
+                fields.forEach((f, i) => { sampleObj[f] = sampleRow[i]; });
+                console.log('🔍 MU Cal sample row:', JSON.stringify(sampleObj, null, 2));
+            }
             const nameIdx = fields.indexOf('ActivityName');
             const startIdx = fields.indexOf('StartDateTime');
             const bldgIdx = fields.indexOf('BuildingCode');
@@ -2861,14 +2876,14 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 hubEvents.push({
                     title: 'Free Lunch',
                     date: new Date(isoStart).toISOString(),
-                    location: 'The HUB',
-                    description: 'Free meal for all Millersville University students. Bring student ID. Service runs 11am – 1pm.',
+                    location: '121 N George St, Millersville',
+                    description: 'Free meal for all Millersville University students at The HUB (121 N George St, across from the Dillworth Building). Bring student ID. Service runs 11am – 1pm.',
                     tags: ['MU', 'HUB', 'Free Food', 'Other'],
                     audience: 'mu-only',
                     benefits: ['Free Food'],
                     orgName: 'The HUB',
                     orgShortName: 'The HUB',
-                    sourceLink: 'https://www.millersville.edu/'
+                    sourceLink: 'https://www.hubmu.org/free-meals'
                 });
                 hubGenerated++;
             }
@@ -2878,14 +2893,14 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 hubEvents.push({
                     title: 'French Toast Friday',
                     date: new Date(isoStart).toISOString(),
-                    location: 'The HUB',
-                    description: 'Free French toast for all Millersville University students, 9pm – midnight. Bring student ID.',
+                    location: '121 N George St, Millersville',
+                    description: 'Free French toast & sausage for all Millersville University students at The HUB (121 N George St). 9pm – midnight, with live music.',
                     tags: ['MU', 'HUB', 'Free Food', 'Other'],
                     audience: 'mu-only',
                     benefits: ['Free Food'],
                     orgName: 'The HUB',
                     orgShortName: 'The HUB',
-                    sourceLink: 'https://www.millersville.edu/'
+                    sourceLink: 'https://www.hubmu.org/free-meals'
                 });
                 hubGenerated++;
             }

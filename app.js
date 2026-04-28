@@ -3196,10 +3196,28 @@ window.downloadICS = downloadICS;
 
 function cleanLocation(loc) {
     if (!loc) return '';
-    return loc.replace(/^AcCALEN$/i, 'Millersville University')
-              .replace(/^WARE Ware Center$/i, 'Ware Center')
-              .replace(/^WARE\b/, 'Ware Center')
-              .replace(/^Ware Center\s+(?!,)/, 'Ware Center, ');
+    let cleaned = loc.replace(/^AcCALEN$/i, 'Millersville University');
+
+    // Strip duplicated building-code prefixes from MU calendar data. The
+    // raw API returns strings like "SMC SMC Commons" or "WARE Ware Center"
+    // where the building code is prepended even though the venue name
+    // already contains it. Two cases:
+    //   1) Identical repeat: "SMC SMC Commons" → "SMC Commons"
+    //   2) Code is a prefix of the next word: "WARE Ware Center" → "Ware Center"
+    const dupRepeat = /^([A-Z]{2,6})\s+\1\b/;
+    if (dupRepeat.test(cleaned)) {
+        cleaned = cleaned.replace(dupRepeat, '$1');
+    } else {
+        const codePrefix = /^([A-Z]{2,6})\s+([A-Z][a-z]+)/;
+        const m = cleaned.match(codePrefix);
+        if (m && m[2].toLowerCase().startsWith(m[1].toLowerCase())) {
+            cleaned = cleaned.slice(m[1].length + 1);
+        }
+    }
+
+    // Specific cleanups kept as a safety net.
+    cleaned = cleaned.replace(/^Ware Center\s+(?!,)/, 'Ware Center, ');
+    return cleaned;
 }
 function buildEventCard(e,isSportsPage){
     const d=new Date(e.date), tags=e.tags||[];
@@ -3538,7 +3556,7 @@ function buildTimelineItem(e, now) {
     // locations (full street addresses), and cases where the location
     // matches the org name (the pill already conveys it — avoids "Free
     // Lunch — The HUB" with [The HUB] pill, which is double display).
-    const rawLoc = (e.location || '').trim();
+    const rawLoc = cleanLocation(e.location || '').trim();
     const genericLoc = /^(millersville university|campus|tba|tbd|online|virtual|zoom|n\/a)$/i;
     const orgEqualsLoc = e.orgShortName && rawLoc.toLowerCase() === e.orgShortName.toLowerCase();
     if (rawLoc && rawLoc.length <= 35 && !genericLoc.test(rawLoc) && !orgEqualsLoc && !title.toLowerCase().includes(rawLoc.toLowerCase())) {

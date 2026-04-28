@@ -14,6 +14,34 @@ const SCRAPE_HORIZON_DAYS = 60;
 
 const sportsList = ['Baseball', 'Softball', 'Track', 'Soccer', 'Lacrosse', 'Tennis', 'Volleyball', 'Wrestling', 'Basketball', 'Football', 'Field Hockey', 'Golf', 'Cross Country', 'Cheerleading', 'Swimming', 'Rugby', 'Fencing', 'Esports', 'Archery'];
 
+// Load shortnames-overlay.json once at startup. Used to populate event
+// orgShortName fields on the way out, so the marauder home pill can show
+// "IAEM" instead of "International Association of Emergency Managers"
+// without doing a clubs.json lookup at render time.
+let shortNameOverlay = {};
+try {
+    const overlayPath = path.join(__dirname, '../shortnames-overlay.json');
+    if (fs.existsSync(overlayPath)) {
+        const overlayData = JSON.parse(fs.readFileSync(overlayPath, 'utf8'));
+        shortNameOverlay = (overlayData && overlayData.overrides) || {};
+        console.log(`📛 Loaded ${Object.keys(shortNameOverlay).length} shortname overrides`);
+    }
+} catch (err) {
+    console.log(`  ⚠️ Shortname overlay load failed: ${err.message}`);
+}
+
+// Resolve an org's display short name. Returns the overlay value if present,
+// otherwise the original name if it's already short enough (<22 chars), or
+// empty string when there's nothing useful to show. The 22-char threshold
+// matches the audit threshold I used when building the overlay.
+function resolveOrgShortName(orgName) {
+    if (!orgName) return '';
+    const trimmed = orgName.trim();
+    if (shortNameOverlay[trimmed]) return shortNameOverlay[trimmed];
+    if (trimmed.length < 22) return trimmed;
+    return ''; // Long name with no overlay — frontend falls back to "MU" pill
+}
+
 const hGameClubSports = [
     'baseball', 'bowling', 'equestrian', 'fencing', 'ice hockey', 'mma',
     "men's basketball", "men's ice hockey", "men's lacrosse", "men's rugby",
@@ -1332,6 +1360,7 @@ async function runScraper() {
                     tags: [...new Set(tags)], price: pricing.price,
                     ticketLink: pricing.link, sourceLink,
                     description: descHtml,
+                    ...(calCustomerName ? { orgName: calCustomerName, orgShortName: resolveOrgShortName(calCustomerName) } : {}),
                     ...(audience ? { audience } : {})
                 });
                 muCount++;
@@ -1667,7 +1696,8 @@ async function runScraper() {
                 sourceLink: `https://getinvolved.millersville.edu/event/${item.id}`,
                 description: item.description || "",
                 benefits: benefits,
-                audience: audience
+                audience: audience,
+                ...(orgDisplayName ? { orgName: orgDisplayName, orgShortName: resolveOrgShortName(orgDisplayName) } : {})
             });
             clubCount++;
         });
@@ -2799,6 +2829,7 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                     description: 'Free meal for all Millersville University students. Bring student ID. Service runs 11am – 1pm.',
                     tags: ['MU', 'HUB', 'Free Food', 'Other'],
                     audience: 'mu-only',
+                    benefits: ['Free Food'],
                     sourceLink: 'https://www.millersville.edu/'
                 });
                 hubGenerated++;
@@ -2813,6 +2844,7 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                     description: 'Free French toast for all Millersville University students, 9pm – midnight. Bring student ID.',
                     tags: ['MU', 'HUB', 'Free Food', 'Other'],
                     audience: 'mu-only',
+                    benefits: ['Free Food'],
                     sourceLink: 'https://www.millersville.edu/'
                 });
                 hubGenerated++;
@@ -3295,7 +3327,7 @@ Focus on the most impressive deals a shopper would want to know about. Include m
     //
     // Don't touch: title, date, tags, audience, _dateMs (added at runtime
     // anyway, but harmless if scraper accidentally emits it).
-    const SLIM_FIELDS = ['image', 'location', 'ticketLink', 'streamLink', 'sourceLink', 'price', 'benefits', 'org', 'orgName', 'category', 'categories', 'kidFriendly', 'isLive', 'periodScores'];
+    const SLIM_FIELDS = ['image', 'location', 'ticketLink', 'streamLink', 'sourceLink', 'price', 'benefits', 'org', 'orgName', 'orgShortName', 'category', 'categories', 'kidFriendly', 'isLive', 'periodScores'];
     let beforeBytes = 0, afterBytes = 0;
     try { beforeBytes = JSON.stringify(deduped, null, 2).length; } catch(_) {}
     for (const ev of deduped) {
@@ -3466,6 +3498,32 @@ Focus on the most impressive deals a shopper would want to know about. Include m
         }
 
         let orgs = [...orgsMap.values()].sort((a, b) => a.name.localeCompare(b.name));
+
+        // ===== APPLY SHORTNAME OVERLAY =====
+        // shortnames-overlay.json maps full org names → curated short names.
+        // Applied AFTER orgsMap is populated so all sources (GetInvolved API,
+        // event-mined, manual seed) get the same treatment. Existing
+        // shortNames from the GetInvolved API are kept unless explicitly
+        // overridden in the overlay file. Missing file is not fatal — orgs
+        // without a shortName just won't have one (frontend falls back to
+        // name truncation or "MU" pill).
+        try {
+            const overlayPath = path.join(__dirname, '../shortnames-overlay.json');
+            if (fs.existsSync(overlayPath)) {
+                const overlay = JSON.parse(fs.readFileSync(overlayPath, 'utf8'));
+                const map = (overlay && overlay.overrides) || {};
+                let applied = 0;
+                for (const o of orgs) {
+                    if (map[o.name]) {
+                        o.shortName = map[o.name];
+                        applied++;
+                    }
+                }
+                console.log(`📛 Shortname overlay: applied ${applied} of ${Object.keys(map).length} mappings`);
+            }
+        } catch (err) {
+            console.log(`  ⚠️ Shortname overlay error: ${err.message}`);
+        }
 
         // ===== DEDUPE PASS =====
         // The GetInvolved directory + event-mined org list + manual seed often produce

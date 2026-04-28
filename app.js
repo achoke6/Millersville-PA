@@ -3415,9 +3415,17 @@ function buildTimelineItem(e, now) {
     const isSport = isSportEvent(e) || isPMSportByTitle(e);
     const isHome = tags.includes('Home Game Mode') || tags.includes('H Games');
 
-    // Source label
+    // Source label / org pill. For marauders only (muAffiliation === 'student')
+    // and when the event has an orgShortName, use that as the pill instead of
+    // the generic "MU" — most marauder home items are MU events, so the "MU"
+    // label conveys nothing. The org short name (e.g. "IAEM", "SGA", "Acacia")
+    // tells them which group is hosting at a glance. Falls back to standard
+    // logic when no orgShortName, or when townie (townies see PM/MU/Borough
+    // distinction as meaningful, so keep generic).
     let src = '';
-    if(tags.includes('VFW')) src = 'VFW';
+    if (muAffiliation === 'student' && e.orgShortName && !isSport) {
+        src = e.orgShortName;
+    } else if(tags.includes('VFW')) src = 'VFW';
     else if(tags.includes('Borough')) src = 'Borough';
     else if(tags.includes('PM') && isSport) src = 'PM';
     else if(tags.includes('PM')) src = 'PM';
@@ -3429,6 +3437,16 @@ function buildTimelineItem(e, now) {
     // Clean title — strip "Millersville University" prefix and redundant gender
     let title = e.title || '';
     title = title.replace(/^Millersville University\s*/i, '').replace(/ - (Girls|Boys)\s+(vs |@ )/i, ' $2');
+
+    // Append location to title in timeline view. Helps users at-a-glance
+    // know where to go without opening the modal. Skipped for: empty/generic
+    // locations, locations already mentioned in the title, and very long
+    // locations (full street addresses) where appending would push the row.
+    const rawLoc = (e.location || '').trim();
+    const genericLoc = /^(millersville university|campus|tba|tbd|online|virtual|zoom|n\/a)$/i;
+    if (rawLoc && rawLoc.length <= 35 && !genericLoc.test(rawLoc) && !title.toLowerCase().includes(rawLoc.toLowerCase())) {
+        title = `${title} — ${rawLoc}`;
+    }
 
     // Time
     const isNoon = d.getHours()===12 && d.getMinutes()===0;

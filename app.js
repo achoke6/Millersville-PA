@@ -3226,6 +3226,12 @@ function cleanLocation(loc) {
     // for example. Add the missing suffix when we see the truncated form.
     cleaned = cleaned.replace(/\bRobert Slabinski$/i, 'Robert Slabinski Atrium');
 
+    // Fix upstream typo. MU Athletics' Sidearm calendar consistently misspells
+    // Shippensburg as "Shippingsburg" (with extra 'i'). The town and the
+    // university are both Shippensburg. Normalize on output since we can't
+    // fix MU's data at the source.
+    cleaned = cleaned.replace(/\bShippingsburg\b/g, 'Shippensburg');
+
     // Specific cleanups kept as a safety net.
     cleaned = cleaned.replace(/^Ware Center\s+(?!,)/, 'Ware Center, ');
     return cleaned;

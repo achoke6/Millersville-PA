@@ -7,8 +7,8 @@ RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
-# For everything else, serve Index.html (SPA routing)
-RewriteRule ^ Index.html [L]
+# For everything else, serve index.html (SPA routing)
+RewriteRule ^ index.html [L]
 
 # =====================================================================
 # Cache-Control headers

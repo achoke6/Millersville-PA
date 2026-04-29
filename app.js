@@ -3323,7 +3323,14 @@ window.downloadICS = downloadICS;
 
 function cleanLocation(loc) {
     if (!loc) return '';
-    let cleaned = loc.replace(/^AcCALEN$/i, 'Millersville University');
+    let cleaned = loc;
+    // Strip the AcCALEN building code — MU uses it as a placeholder for
+    // campus-wide calendar markers without a real venue. Match anywhere in
+    // the string since the API returns variations: "AcCALEN", "AcCalen Spring".
+    if (/\bAccalen\b/i.test(cleaned)) {
+        cleaned = cleaned.replace(/\bAccalen\b\s*/gi, '').trim();
+        if (!cleaned) cleaned = 'Millersville University';
+    }
 
     // Building-name abbreviations. Apply BEFORE the duplicate-prefix dedup so
     // "Student Memorial Center" reduces to "SMC" first, then dedup catches

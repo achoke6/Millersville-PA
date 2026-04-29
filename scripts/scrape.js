@@ -67,8 +67,14 @@ function resolveOrgShortName(orgName) {
     if (!orgName) return '';
     const trimmed = orgName.trim();
     if (shortNameOverlay[trimmed]) return shortNameOverlay[trimmed];
-    if (trimmed.length < 22) return trimmed;
-    return ''; // Long name with no overlay — frontend falls back to "MU" pill
+    // Allow names up to 24 chars to flow through unchanged. Examples:
+    //   "Advancement Department" (22) — fits a pill cleanly
+    //   "Office of the Provost" (21) — fits a pill cleanly
+    // Longer names need an explicit overlay mapping or they'd produce
+    // awkwardly wide pills, so we return empty and let the frontend fall
+    // back to the generic "MU" pill.
+    if (trimmed.length <= 24) return trimmed;
+    return '';
 }
 
 const hGameClubSports = [
@@ -1353,8 +1359,16 @@ async function runScraper() {
                 const roomName = row[roomIdx] || '';
                 const roomNum = roomNumIdx !== -1 ? (row[roomNumIdx] || '') : '';
                 let eventLoc = [bldg, roomName, roomNum].filter(Boolean).join(' ').trim() || "Campus";
-                // Clean up building codes
-                if (eventLoc === 'AcCALEN') eventLoc = 'Millersville University';
+                // Clean up the AcCALEN building code. This is a placeholder MU
+                // uses for campus-wide calendar markers (semester evaluation
+                // periods, holidays, etc.) that don't have a real venue. Strip
+                // it so the location reads cleanly. The check is case-
+                // insensitive and matches ANYWHERE in the string since the API
+                // returns variations like "AcCalen Spring", "AcCALEN", etc.
+                if (/\bAccalen\b/i.test(eventLoc)) {
+                    eventLoc = eventLoc.replace(/\bAccalen\b\s*/gi, '').trim();
+                    if (!eventLoc) eventLoc = 'Millersville University';
+                }
                 eventLoc = eventLoc.replace(/^WARE Ware Center$/i, 'Ware Center')
                                    .replace(/^WARE\b/, 'Ware Center')
                                    .replace(/^Ware Center\s+/, 'Ware Center, ');
@@ -3334,6 +3348,27 @@ Focus on the most impressive deals a shopper would want to know about. Include m
             if (exactMatch) titleMatch = true;
             else if (isGeneric) titleMatch = false;
             else titleMatch = (substringMatch && shorter.length >= 8) || fuzzyMatch;
+
+            // Same-org-same-time-same-room rule: when two events share
+            // orgName + location + nearly-identical time, they're the same
+            // event regardless of title differences. Catches cases where one
+            // org publishes the same event twice with different naming
+            // conventions (e.g. "Co-Ed Bible Study" + "RUF Wednesday Night
+            // Bible Study", both hosted by RUF in the same room at the same
+            // time). Risk is low — a single org doesn't host two simultaneous
+            // events in the same room. Bypasses the title-match check entirely
+            // when this rule fires.
+            if (!titleMatch) {
+                const aOrg = (seed.event.orgName || '').toLowerCase().trim();
+                const bOrg = (ne.event.orgName || '').toLowerCase().trim();
+                const aLoc = (seed.event.location || '').toLowerCase().trim();
+                const bLoc = (ne.event.location || '').toLowerCase().trim();
+                const FIFTEEN_MIN_MS = 15 * 60 * 1000;
+                if (aOrg && aOrg === bOrg && aLoc && aLoc === bLoc &&
+                    Math.abs(seed.time - ne.time) <= FIFTEEN_MIN_MS) {
+                    titleMatch = true;
+                }
+            }
 
             if (!titleMatch) continue;
 

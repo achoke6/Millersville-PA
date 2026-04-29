@@ -787,7 +787,7 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .weather-bar-date { font-size: 0.85rem; font-weight: 600; opacity: 0.9; }
 
 .home-section { margin-bottom: 20px; }
-.home-section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.home-section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
 .home-section-title { font-size: 1.1rem; font-weight: 800; color: var(--text); margin: 0; }
 .home-more-link { font-size: 0.8rem; font-weight: 600; color: var(--navy); text-decoration: none; white-space: nowrap; }
 .home-more-link:hover { text-decoration: underline; }
@@ -1223,7 +1223,8 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     display: flex;
     align-items: center;
     gap: 6px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    min-width: 0;
 }
 .home-day-btn {
     background: var(--surface);
@@ -1231,6 +1232,7 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     border-radius: var(--radius-sm);
     width: 32px;
     height: 32px;
+    flex: 0 0 32px;
     font-size: 1.2rem;
     line-height: 1;
     color: var(--text);
@@ -1248,14 +1250,22 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     background: var(--gold-soft);
     border: 1px solid var(--gold);
     border-radius: var(--radius-sm);
-    padding: 6px 12px;
+    padding: 6px 10px;
     font-size: 0.78rem;
     font-weight: 600;
     color: var(--text);
     cursor: pointer;
     font-family: inherit;
     transition: background 0.12s;
-    margin-left: 4px;
+    margin-left: 2px;
+    flex: 0 0 auto;
+    white-space: nowrap;
 }
 .home-day-today-btn:hover { background: var(--gold); }
-.home-day-label { margin: 0; }
+.home-day-label {
+    margin: 0;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

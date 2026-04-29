@@ -1501,6 +1501,42 @@ window.resetHomeDay = function() {
     homeViewDate = todayMidnight();
     renderHomeUI();
 };
+
+// Swipe navigation for the home timeline. Listens on the timeline container
+// only — not the whole page — so vertical scroll inside other sections isn't
+// affected. Threshold logic is conservative on purpose:
+//   - X-delta must be >60px (a real swipe, not a tap-jitter)
+//   - X-delta must exceed Y-delta by 1.5× (ensures HORIZONTAL intent)
+//   - Total gesture must complete in <600ms (filters slow drags)
+// These together mean an accidental vertical-scroll-with-tilt won't trigger
+// day nav, but a deliberate sideways flick will.
+let swipeStartX = 0, swipeStartY = 0, swipeStartTime = 0;
+function attachHomeSwipeHandlers() {
+    const timeline = document.getElementById('home-timeline');
+    if (!timeline || timeline._swipeAttached) return;
+    timeline._swipeAttached = true;
+    timeline.addEventListener('touchstart', (e) => {
+        if (e.touches.length !== 1) return;
+        swipeStartX = e.touches[0].clientX;
+        swipeStartY = e.touches[0].clientY;
+        swipeStartTime = Date.now();
+    }, { passive: true });
+    timeline.addEventListener('touchend', (e) => {
+        if (!swipeStartTime) return;
+        const t = e.changedTouches[0];
+        const dx = t.clientX - swipeStartX;
+        const dy = t.clientY - swipeStartY;
+        const duration = Date.now() - swipeStartTime;
+        swipeStartTime = 0;
+        if (duration > 600) return;
+        if (Math.abs(dx) < 60) return;
+        if (Math.abs(dx) < Math.abs(dy) * 1.5) return;
+        // Left swipe (dx < 0) advances forward → next day
+        // Right swipe (dx > 0) goes back → previous day
+        if (dx < 0) shiftHomeDay(1);
+        else shiftHomeDay(-1);
+    }, { passive: true });
+}
 window.dismissWelcome = function() {
     localStorage.setItem('welcomeDismissed', '1');
     const wb = document.getElementById('welcome-banner');
@@ -1852,6 +1888,19 @@ document.addEventListener('keydown', (e) => {
     // Ignore if a modal/overlay is open
     if (document.getElementById('search-overlay') || document.getElementById('feed-settings-overlay')) return;
 
+    // Home view: arrow keys step through days on the timeline
+    const homeView = document.getElementById('view-home');
+    if (homeView && homeView.classList.contains('active')) {
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            if (typeof shiftHomeDay === 'function') shiftHomeDay(-1);
+        } else if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            if (typeof shiftHomeDay === 'function') shiftHomeDay(1);
+        }
+        return;
+    }
+
     const eventsView = document.getElementById('view-events');
     const sportsView = document.getElementById('view-sports');
     const onEvents = eventsView && eventsView.classList.contains('active');
@@ -1866,6 +1915,7 @@ async function initApp(){
     loadFeedPrefs();
     await Promise.allSettled([loadWeather(),loadSpecials(),loadEvents(),loadPlaces(),loadHousing(),loadNews(),loadBoard(),loadSponsors(),loadClubsDirectory()]);
     renderHomeFeed();
+    attachHomeSwipeHandlers();
     syncFilterArrows();
     loadEcwidStore(); // Load Ecwid early so cart widget renders in header
     setInterval(refreshCam,60000); refreshCam();
@@ -3413,7 +3463,7 @@ function renderHomeUI(){
     const dayLabelEl = document.getElementById('home-day-label');
     if (dayLabelEl) {
         const labelText = isToday ? 'Today' : fmtDateLabel(homeViewDate);
-        dayLabelEl.textContent = '📅 ' + labelText;
+        dayLabelEl.textContent = labelText;
     }
     const todayBtn = document.getElementById('home-day-today');
     if (todayBtn) todayBtn.style.display = isToday ? 'none' : '';

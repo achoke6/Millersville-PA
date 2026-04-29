@@ -9,3 +9,71 @@ RewriteRule ^ - [L]
 
 # For everything else, serve Index.html (SPA routing)
 RewriteRule ^ Index.html [L]
+
+# =====================================================================
+# Cache-Control headers
+# =====================================================================
+# Different file types get different cache lifetimes:
+#   - JSON data files (events, news, weather): NO CACHE — scraper refreshes
+#     these hourly and users should always see current data.
+#   - HTML/JS/CSS: 5-minute cache — short enough that code deploys propagate
+#     to users quickly, long enough to avoid hammering the server on every
+#     page load.
+#   - Images, fonts, favicon: 1 year — these rarely change.
+#
+# IfModule guards keep the file safe if a module isn't loaded (it would just
+# be ignored rather than throwing a 500). DreamHost has both modules enabled
+# by default.
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+
+    # JSON data files — never cache, always fresh from server
+    ExpiresByType application/json "access plus 0 seconds"
+
+    # HTML — 5 minutes (deploy propagation tradeoff)
+    ExpiresByType text/html "access plus 5 minutes"
+
+    # CSS / JS — 5 minutes
+    ExpiresByType text/css "access plus 5 minutes"
+    ExpiresByType application/javascript "access plus 5 minutes"
+    ExpiresByType text/javascript "access plus 5 minutes"
+
+    # Images & icons — 1 year (rarely change)
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    ExpiresByType image/vnd.microsoft.icon "access plus 1 year"
+
+    # Fonts — 1 year
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType application/font-woff "access plus 1 year"
+    ExpiresByType application/font-woff2 "access plus 1 year"
+</IfModule>
+
+# Add explicit Cache-Control headers (mod_expires only sets the Expires
+# header on older Apache versions; modern caches and CDNs respect
+# Cache-Control more reliably). The mod_headers rules below mirror the
+# mod_expires settings so both layers are covered.
+<IfModule mod_headers.c>
+    # JSON files: no caching at any layer
+    <FilesMatch "\.json$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+
+    # HTML/JS/CSS: short cache, allow revalidation
+    <FilesMatch "\.(html|css|js)$">
+        Header set Cache-Control "public, max-age=300, must-revalidate"
+    </FilesMatch>
+
+    # Images & fonts: long cache, immutable (won't change without a new URL)
+    <FilesMatch "\.(png|jpe?g|gif|webp|svg|ico|woff2?)$">
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+</IfModule>

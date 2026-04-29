@@ -1269,3 +1269,16 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
+/* Slide-animation containers used during day-nav transitions. The timeline
+   wraps a track containing two panels (outgoing + incoming) side-by-side;
+   JS animates the track's translateX to reveal the incoming panel. */
+.home-slide-track {
+    display: flex;
+    width: 200%;
+    will-change: transform;
+}
+.home-slide-panel {
+    width: 50%;
+    flex-shrink: 0;
+}

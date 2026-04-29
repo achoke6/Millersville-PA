@@ -1479,6 +1479,11 @@ function renderHomeFeed() {
 }
 // Day navigator on the home page. Selected day persists only for the current
 // view session — refresh always lands on today.
+// Tracks whether a slide animation is in progress so we can skip animating
+// when the user fires off rapid-fire arrow presses or swipes — without this
+// guard, multiple in-flight animations stack and produce visible jitter.
+let homeSlideAnimating = false;
+
 window.shiftHomeDay = function(direction) {
     if (!homeViewDate) homeViewDate = todayMidnight();
     const d = new Date(homeViewDate);
@@ -1490,13 +1495,85 @@ window.shiftHomeDay = function(direction) {
     const minDate = new Date(today); minDate.setDate(minDate.getDate() - 30);
     const maxDate = new Date(today); maxDate.setDate(maxDate.getDate() + 60);
     if (d < minDate || d > maxDate) return;
+
+    const timeline = document.getElementById('home-timeline');
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Skip animation if (a) user prefers reduced motion, (b) we're already
+    // animating (rapid-fire arrow press), or (c) timeline element is missing.
+    // In any of those cases, fall back to instant re-render.
+    if (reduceMotion || homeSlideAnimating || !timeline) {
+        homeViewDate = d;
+        renderHomeUI();
+        return;
+    }
+
+    // Capture outgoing HTML, then advance state and produce incoming HTML.
+    // We render the new HTML by temporarily setting homeViewDate, calling
+    // renderHomeUI which writes to the live timeline element, capturing the
+    // result, then orchestrating the slide. This means there's a brief moment
+    // where the live timeline holds the NEW content before we wrap it — but
+    // the wrapper happens synchronously in the same JS frame, so the user
+    // doesn't see that intermediate state.
+    const outgoingHTML = timeline.innerHTML;
+    const outgoingHeight = timeline.offsetHeight;
+
     homeViewDate = d;
     renderHomeUI();
-    // Scroll the timeline section into view if user is below it (in case
-    // nav was clicked from far down the page). Subtle UX nicety.
-    const sec = document.getElementById('home-timeline');
-    if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    const incomingHTML = timeline.innerHTML;
+
+    runHomeSlide(timeline, outgoingHTML, incomingHTML, outgoingHeight, direction);
 };
+
+function runHomeSlide(timeline, outgoingHTML, incomingHTML, outgoingHeight, direction) {
+    homeSlideAnimating = true;
+    // Build a slide track: a flex row containing two panels side by side.
+    // The track is wider than the timeline (each panel = 100% of timeline
+    // width), and we translate it to reveal the incoming panel.
+    // direction > 0 (forward): incoming on the right, slide left to reveal
+    // direction < 0 (backward): incoming on the left, slide right to reveal
+    const forward = direction > 0;
+    const trackInitialOffset = forward ? '0' : '-50%';
+    const trackFinalOffset = forward ? '-50%' : '0';
+    const leftPanelHTML = forward ? outgoingHTML : incomingHTML;
+    const rightPanelHTML = forward ? incomingHTML : outgoingHTML;
+
+    timeline.innerHTML = `
+        <div class="home-slide-track" style="transform: translateX(${trackInitialOffset});">
+            <div class="home-slide-panel">${leftPanelHTML}</div>
+            <div class="home-slide-panel">${rightPanelHTML}</div>
+        </div>
+    `;
+    // Lock height during animation so the page doesn't jump if outgoing
+    // and incoming panels have very different content heights.
+    timeline.style.minHeight = outgoingHeight + 'px';
+    timeline.style.overflow = 'hidden';
+
+    // Force a reflow so the browser commits the initial transform before
+    // we apply the transition + final transform. Without this, the browser
+    // can collapse both transforms into a single instant jump.
+    const track = timeline.querySelector('.home-slide-track');
+    void track.offsetWidth;
+    track.style.transition = 'transform 250ms ease-out';
+    track.style.transform = `translateX(${trackFinalOffset})`;
+
+    // After the slide finishes, settle on just the incoming content.
+    // Using transitionend is more accurate than a setTimeout but we add
+    // a fallback timeout in case the transitionend event doesn't fire
+    // (page hidden during animation, etc.).
+    let settled = false;
+    const settle = () => {
+        if (settled) return;
+        settled = true;
+        timeline.style.minHeight = '';
+        timeline.style.overflow = '';
+        timeline.innerHTML = incomingHTML;
+        homeSlideAnimating = false;
+    };
+    track.addEventListener('transitionend', settle, { once: true });
+    setTimeout(settle, 350);
+}
+
 window.resetHomeDay = function() {
     homeViewDate = todayMidnight();
     renderHomeUI();

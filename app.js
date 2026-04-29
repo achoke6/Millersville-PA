@@ -1867,7 +1867,7 @@ function matchesSportSource(tags, src) {
     return false;
 }
 
-const viewPaths={home:'/',news:'/news',events:'/events',sports:'/sports',places:'/places',board:'/board',weather:'/weather',store:'/store',advertise:'/advertise',analytics:'/analytics'};
+const viewPaths={home:'/',news:'/news',events:'/events',sports:'/sports',places:'/places',board:'/board',weather:'/weather',store:'/store',advertise:'/advertise'};
 const pathToView=Object.fromEntries(Object.entries(viewPaths).map(([k,v])=>[v,k]));
 // Legacy URL redirects
 pathToView['/food'] = 'places';
@@ -4684,7 +4684,6 @@ async function loadSponsors() {
         });
         renderHomeSponsors();
         startSponsorRotation();
-        renderAnalytics();
     } catch (e) { console.log('Sponsors load error:', e.message); renderHomeSponsors(); }
 }
 
@@ -4795,38 +4794,6 @@ function startSponsorRotation() {
     }, interval);
 }
 
-function renderAnalytics() {
-    const dash = document.getElementById('analytics-dashboard');
-    if (!dash) return;
-    const now = new Date();
-    let html = '';
-    sponsorData.sponsors.forEach(s => {
-        const stats = sponsorImpressions[s.id] || { impressions: 0, clicks: 0 };
-        const ctr = stats.impressions > 0 ? ((stats.clicks / stats.impressions) * 100).toFixed(1) : '0.0';
-        const endDate = s.endDate ? new Date(s.endDate) : null;
-        const daysLeft = endDate ? Math.ceil((endDate - now) / (1000*60*60*24)) : '∞';
-        html += `<div class="app-card" style="margin-bottom:12px;">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-                <div>
-                    <span class="card-tag">${s.tier}</span>
-                    <h3 class="card-title" style="margin-top:6px;">${s.name}</h3>
-                </div>
-                <span class="badge" style="background:var(--green);color:white;font-size:0.7rem;">Active</span>
-            </div>
-            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px;">
-                <div style="text-align:center;"><p style="font-size:1.2rem;font-weight:700;">${stats.impressions}</p><p style="font-size:0.7rem;color:var(--text-muted);">Impressions</p></div>
-                <div style="text-align:center;"><p style="font-size:1.2rem;font-weight:700;">${stats.clicks}</p><p style="font-size:0.7rem;color:var(--text-muted);">Clicks</p></div>
-                <div style="text-align:center;"><p style="font-size:1.2rem;font-weight:700;">${ctr}%</p><p style="font-size:0.7rem;color:var(--text-muted);">CTR</p></div>
-                <div style="text-align:center;"><p style="font-size:1.2rem;font-weight:700;">${daysLeft}</p><p style="font-size:0.7rem;color:var(--text-muted);">Days Left</p></div>
-            </div>
-            <div style="margin-top:12px;font-size:0.8rem;color:var(--text-muted);">
-                Placements: ${s.placements.join(', ')}
-            </div>
-        </div>`;
-    });
-    if (!html) html = '<p class="empty-state">No active sponsors.</p>';
-    dash.innerHTML = html;
-}
 // ==================== END SPONSOR SYSTEM ====================
 
 // Grocery deals popup

@@ -105,6 +105,60 @@ function roomSignature(location) {
     return `${bldg.toUpperCase()}|${room.toUpperCase()}`;
 }
 
+// Parse an event date string into an absolute UTC instant (ms since epoch),
+// timezone-aware. The cross-source dedupe needs both halves of a duplicate
+// pair to land at the same number even when upstream sources serialize
+// differently. Two formats show up in our data:
+//
+//   "2026-04-22T20:00:00"        — naive (no Z, no offset). MU Calendar emits
+//                                   these and intends Eastern Time wall-clock.
+//                                   On a UTC runner, `new Date(...)` would
+//                                   wrongly treat it as UTC.
+//   "2026-04-23T00:00:00.000Z"   — true UTC. GetInvolved emits these. The two
+//                                   examples above are the SAME event (8 PM ET
+//                                   on Apr 22 = 00:00 UTC on Apr 23).
+//
+// We detect a TZ marker (Z or ±HH:MM) and parse natively when present;
+// otherwise we treat the string as ET wall-clock and back out the ET offset
+// for that calendar moment via Intl (DST-aware — handles EDT/EST correctly).
+function parseEventInstant(s) {
+    if (!s) return NaN;
+    const str = String(s).trim();
+    if (/(?:Z|[+-]\d{2}:?\d{2})$/i.test(str)) {
+        return new Date(str).getTime();
+    }
+    const m = str.match(/^(\d{4})-(\d{2})-(\d{2})[T ](\d{2}):(\d{2})(?::(\d{2}))?/);
+    if (!m) return NaN;
+    const candidate = Date.UTC(+m[1], +m[2] - 1, +m[3], +m[4], +m[5], +(m[6] || 0));
+    const dt = new Date(candidate);
+    const fmt = (tz) => new Intl.DateTimeFormat('en-CA', {
+        timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+    });
+    const partsToMs = (parts) => {
+        const g = (t) => parts.find(p => p.type === t)?.value || '0';
+        return Date.UTC(+g('year'), +g('month') - 1, +g('day'),
+                        +g('hour') % 24, +g('minute'), +g('second'));
+    };
+    const offsetMs = partsToMs(fmt('America/New_York').formatToParts(dt))
+                   - partsToMs(fmt('UTC').formatToParts(dt));
+    return candidate - offsetMs;
+}
+
+// Derive the ET calendar day (YYYY-MM-DD) from a UTC instant. Used by the
+// dedupe pass to group events occurring on the same Millersville day even
+// when one source phrases them as "Apr 22 8pm ET" and another as
+// "Apr 23 00:00 UTC" (which crosses the calendar-day boundary in UTC).
+function deriveDayET(ms) {
+    if (isNaN(ms)) return '';
+    const parts = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'America/New_York',
+        year: 'numeric', month: '2-digit', day: '2-digit'
+    }).formatToParts(new Date(ms));
+    const g = (t) => parts.find(p => p.type === t)?.value;
+    return `${g('year')}-${g('month')}-${g('day')}`;
+}
+
 function resolveOrgShortName(orgName) {
     if (!orgName) return '';
     const trimmed = orgName.trim();
@@ -3325,14 +3379,24 @@ Focus on the most impressive deals a shopper would want to know about. Include m
         return 'other';
     };
 
-    const normalizedEvents = pass1.map((e, i) => ({
-        idx: i,
-        event: e,
-        norm: normalizeTitle(e.title),
-        day: (e.date || '').slice(0, 10),
-        time: new Date(e.date || 0).getTime(),
-        bucket: sourceBucket(e)
-    })).filter(n => n.norm && !CALENDAR_ARTIFACT_PATTERNS.test(n.norm));
+    const normalizedEvents = pass1.map((e, i) => {
+        // Resolve the absolute instant first, then derive day from it in ET.
+        // Doing both via parseEventInstant keeps naive-vs-Z duplicates aligned
+        // (see comment on parseEventInstant for the format mismatch we're
+        // accommodating). Falls back to the raw 0-10 slice if parsing fails,
+        // which preserves legacy behavior for anything we can't recognize.
+        const ms = parseEventInstant(e.date);
+        const day = !isNaN(ms) ? deriveDayET(ms) : (e.date || '').slice(0, 10);
+        const time = !isNaN(ms) ? ms : new Date(e.date || 0).getTime();
+        return {
+            idx: i,
+            event: e,
+            norm: normalizeTitle(e.title),
+            day,
+            time,
+            bucket: sourceBucket(e)
+        };
+    }).filter(n => n.norm && !CALENDAR_ARTIFACT_PATTERNS.test(n.norm));
 
     const groups2 = [];
 

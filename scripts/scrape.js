@@ -1423,12 +1423,18 @@ async function runScraper() {
                 // "Informational") with the customer/org name when available,
                 // producing clearer card labels like "Men's Rugby Club Practice".
                 // The customerIdx value is the row's associated org on MU Calendar.
-                // When MU left Customer empty (common — many events don't fill it),
+                // When MU left Customer empty (common — many events don't fill it)
+                // OR when the Customer value doesn't resolve to a useful shortname
+                // (e.g. "Office of Student Services" with no shortName mapping),
                 // try the title-pattern overrides as a fallback so the pill can
-                // still attribute the event to its actual host (GSA, RUF, etc.).
+                // attribute the event to its actual host (GSA, RUF, etc.).
                 let calCustomerName = (customerIdx !== -1 && row[customerIdx]) ? row[customerIdx].trim() : '';
-                if (!calCustomerName) {
-                    calCustomerName = resolveOrgFromTitle(eventTitle);
+                const titleOverride = resolveOrgFromTitle(eventTitle);
+                if (titleOverride) {
+                    // Title-pattern override always wins. The user curated this
+                    // mapping specifically, so it's more authoritative than
+                    // whatever generic customerName the MU calendar carries.
+                    calCustomerName = titleOverride;
                 }
                 const decoratedTitle = decorateGenericTitle(eventTitle, calCustomerName);
 
@@ -1682,7 +1688,13 @@ async function runScraper() {
             // Club Sports) are still added when the theme/category patterns
             // match.
             let tags = ["MU", "GetInvolved", "Clubs/Orgs"];
-            const orgDisplayName = (item.organizationName || '').trim();
+            let orgDisplayName = (item.organizationName || '').trim();
+            // Title-pattern override beats upstream organizationName — same
+            // reasoning as the MU Calendar path. Allows curated mappings like
+            // "Lavender Legacy" → "GSA" to work regardless of which scraper
+            // path the event arrives through.
+            const titleOverrideGI = resolveOrgFromTitle(item.name || '');
+            if (titleOverrideGI) orgDisplayName = titleOverrideGI;
             if (orgDisplayName) tags.push(orgDisplayName);
 
             // rawTags retained for classifyAudience (greek life, residence hall,

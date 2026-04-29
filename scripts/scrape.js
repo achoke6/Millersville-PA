@@ -3250,10 +3250,44 @@ Focus on the most impressive deals a shopper would want to know about. Include m
             const substringMatch = seed.norm.includes(ne.norm) || ne.norm.includes(seed.norm);
             const isGeneric = GENERIC_MEETING_TITLES.test(shorter);
 
+            // Fuzzy match: find the longest contiguous shared word run between
+            // the two normalized titles. Catches cases like
+            //   "kenston curtis lafleur the light in the dark"
+            //   "the light in the dark by kenston lafleur"
+            // where neither is a substring of the other but they share a 6-word
+            // distinctive phrase. Threshold: 4+ words AND ≥18 chars AND the
+            // shared run is mostly content words (not just stop words). Both
+            // conditions together are protective against false positives —
+            // two unrelated events on the same day from different sources
+            // essentially never share a phrase that distinctive.
+            let fuzzyMatch = false;
+            if (!exactMatch && !substringMatch && !isGeneric) {
+                const stopWords = new Set(['the','a','an','of','and','or','for','to','in','on','at','by','with','from']);
+                const seedWords = seed.norm.split(' ');
+                const neWords = ne.norm.split(' ');
+                let bestRun = '';
+                for (let i = 0; i < seedWords.length; i++) {
+                    for (let j = 0; j < neWords.length; j++) {
+                        let k = 0;
+                        while (i + k < seedWords.length && j + k < neWords.length && seedWords[i + k] === neWords[j + k]) k++;
+                        if (k >= 4) {
+                            const run = seedWords.slice(i, i + k).join(' ');
+                            if (run.length > bestRun.length) bestRun = run;
+                        }
+                    }
+                }
+                if (bestRun.length >= 18) {
+                    const runWords = bestRun.split(' ');
+                    const contentWords = runWords.filter(w => !stopWords.has(w));
+                    // Require at least 2 content words so "the of in and to a" can't pass
+                    if (contentWords.length >= 2) fuzzyMatch = true;
+                }
+            }
+
             let titleMatch;
             if (exactMatch) titleMatch = true;
             else if (isGeneric) titleMatch = false;
-            else titleMatch = substringMatch && shorter.length >= 8;
+            else titleMatch = (substringMatch && shorter.length >= 8) || fuzzyMatch;
 
             if (!titleMatch) continue;
 
@@ -3284,7 +3318,18 @@ Focus on the most impressive deals a shopper would want to know about. Include m
         if (candidates.length <= 1) return; // no duplicates in this group
         // Rank candidates — best first
         candidates.sort((a, b) => {
-            // Primary: source priority (MU Calendar > Clubs/Orgs > artsmu)
+            // Primary: prefer the version with a meaningfully richer description.
+            // When two sources have the same event but very different description
+            // depth (e.g. artsmu has 200-char gallery blurb, MU Calendar has 20
+            // chars), the user-visible value is richer with the longer one.
+            // Threshold: longer must be at least 3x the shorter to flip — small
+            // differences shouldn't beat source-priority ordering.
+            const aDescLen = (a.event.description || '').length;
+            const bDescLen = (b.event.description || '').length;
+            if (aDescLen > 50 && aDescLen > bDescLen * 3) return -1;
+            if (bDescLen > 50 && bDescLen > aDescLen * 3) return 1;
+
+            // Source priority (MU Calendar > Clubs/Orgs > artsmu)
             const rankDiff = sourceRank(b.event) - sourceRank(a.event);
             if (rankDiff !== 0) return rankDiff;
             // Tiebreaker: whichever has a ticketLink wins (more useful for users)

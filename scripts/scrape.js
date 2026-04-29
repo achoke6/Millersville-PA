@@ -63,6 +63,48 @@ function resolveOrgFromTitle(title) {
 // otherwise the original name if it's already short enough (<22 chars), or
 // empty string when there's nothing useful to show. The 22-char threshold
 // matches the audit threshold I used when building the overlay.
+// Compute a canonical "room signature" — building code + room number — used
+// to detect when two upstream sources reference the same room in different
+// formats. Returns "BLDG|ROOM" (e.g. "SMC|202") or empty string if either
+// piece can't be extracted. Empty signatures intentionally don't match each
+// other, so generic locations like "Quad" or "Brooks Field" won't get
+// accidentally merged with each other or with empty-location events.
+function roomSignature(location) {
+    if (!location) return '';
+    let s = String(location);
+    // Expand long-form building names to their short codes so both forms
+    // produce the same signature. Add new entries here as they surface.
+    const buildingAliases = [
+        [/\bStudent Memorial Center\b/i, 'SMC'],
+        [/\bWare Center\b/i, 'WARE']
+    ];
+    for (const [re, code] of buildingAliases) {
+        s = s.replace(re, code);
+    }
+    // Find building code. Try in priority order:
+    //   (1) Capitalized word at start of string ("Caputo 130", "McComsey 202").
+    //       Anchored to start so it's specific.
+    //   (2) All-caps acronym anywhere in string ("SMC Room 202", "WARE 100").
+    // Priority matters: "McComsey" must beat the "MC" prefix that the all-caps
+    // pattern would otherwise greedily match.
+    const capWordMatch = s.match(/^([A-Z][a-zA-Z]{2,})/);
+    let bldg = '';
+    if (capWordMatch) {
+        bldg = capWordMatch[1];
+    } else {
+        const upperMatch = s.match(/\b([A-Z]{2,6})\b/);
+        if (upperMatch) bldg = upperMatch[1];
+    }
+    if (!bldg) return '';
+    // Find room number: digit sequence, optionally with a trailing letter
+    // ("100A", "202B"). Pick the LAST one in the string since building codes
+    // sometimes have leading numbers we want to skip.
+    const roomMatches = s.match(/\b(\d{1,4}[A-Za-z]?)\b/g);
+    const room = roomMatches ? roomMatches[roomMatches.length - 1] : '';
+    if (!room) return '';
+    return `${bldg.toUpperCase()}|${room.toUpperCase()}`;
+}
+
 function resolveOrgShortName(orgName) {
     if (!orgName) return '';
     const trimmed = orgName.trim();
@@ -3350,21 +3392,27 @@ Focus on the most impressive deals a shopper would want to know about. Include m
             else titleMatch = (substringMatch && shorter.length >= 8) || fuzzyMatch;
 
             // Same-org-same-time-same-room rule: when two events share
-            // orgName + location + nearly-identical time, they're the same
-            // event regardless of title differences. Catches cases where one
-            // org publishes the same event twice with different naming
-            // conventions (e.g. "Co-Ed Bible Study" + "RUF Wednesday Night
-            // Bible Study", both hosted by RUF in the same room at the same
-            // time). Risk is low — a single org doesn't host two simultaneous
-            // events in the same room. Bypasses the title-match check entirely
-            // when this rule fires.
+            // orgName + location signature + nearly-identical time, they're
+            // the same event regardless of title differences. Catches cases
+            // where one org publishes the same event twice with different
+            // naming conventions (e.g. "Co-Ed Bible Study" + "RUF Wednesday
+            // Night Bible Study", both hosted by RUF in SMC Room 202 at 8pm).
+            //
+            // Location matching uses a canonical "room signature" (building
+            // code + room number) instead of string equality, since upstream
+            // sources express the same room differently:
+            //   "SMC Meeting Room 202" → "SMC|202"
+            //   "Student Memorial Center, Room 202" → "SMC|202"
+            //   "SMC, Room 202" → "SMC|202"
+            // Risk is low — a single org doesn't host two simultaneous events
+            // in the same room.
             if (!titleMatch) {
                 const aOrg = (seed.event.orgName || '').toLowerCase().trim();
                 const bOrg = (ne.event.orgName || '').toLowerCase().trim();
-                const aLoc = (seed.event.location || '').toLowerCase().trim();
-                const bLoc = (ne.event.location || '').toLowerCase().trim();
+                const aSig = roomSignature(seed.event.location);
+                const bSig = roomSignature(ne.event.location);
                 const FIFTEEN_MIN_MS = 15 * 60 * 1000;
-                if (aOrg && aOrg === bOrg && aLoc && aLoc === bLoc &&
+                if (aOrg && aOrg === bOrg && aSig && aSig === bSig &&
                     Math.abs(seed.time - ne.time) <= FIFTEEN_MIN_MS) {
                     titleMatch = true;
                 }

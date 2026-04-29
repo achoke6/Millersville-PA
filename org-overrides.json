@@ -1,0 +1,12 @@
+{
+  "_meta": {
+    "purpose": "Override orgName for MU Calendar events when the Customer field is empty. Many MU events leave the host org blank in the calendar API; this file fills the gap by matching the event title to a known host. Applied AFTER customerName check — explicit Customer values are not overridden.",
+    "rule": "Each entry: titlePattern (regex string, case-insensitive) + orgName. First match wins. Add new entries as you spot events with 'MU' pills that should be attributed to a specific host."
+  },
+  "overrides": [
+    { "titlePattern": "^Lavender Legacy", "orgName": "GSA" },
+    { "titlePattern": "^EPPIIC", "orgName": "Advancement Department" },
+    { "titlePattern": "Co-?Ed Bible Study", "orgName": "RUF" },
+    { "titlePattern": "RUF Wednesday Night Bible Study", "orgName": "RUF" }
+  ]
+}

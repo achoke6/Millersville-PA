@@ -3221,11 +3221,6 @@ function cleanLocation(loc) {
         }
     }
 
-    // Specific room-name completions. The MU calendar API truncates some
-    // room names — "Robert Slabinski" should be "Robert Slabinski Atrium",
-    // for example. Add the missing suffix when we see the truncated form.
-    cleaned = cleaned.replace(/\bRobert Slabinski$/i, 'Robert Slabinski Atrium');
-
     // Fix upstream typo. MU Athletics' Sidearm calendar consistently misspells
     // Shippensburg as "Shippingsburg" (with extra 'i'). The town and the
     // university are both Shippensburg. Normalize on output since we can't

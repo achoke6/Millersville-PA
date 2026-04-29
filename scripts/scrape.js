@@ -30,6 +30,35 @@ try {
     console.log(`  ⚠️ Shortname overlay load failed: ${err.message}`);
 }
 
+// Load org-overrides.json — title-pattern overrides for events that have
+// no Customer field set in MU's calendar API. Many events leave the host
+// org blank; this file maps event title patterns to their actual host so
+// the marauder home pill can show "GSA" instead of "MU" for Lavender
+// Legacy, etc. Applied ONLY when customerName is empty — explicit Customer
+// values always win.
+let orgOverrides = [];
+try {
+    const orgOverridesPath = path.join(__dirname, '../org-overrides.json');
+    if (fs.existsSync(orgOverridesPath)) {
+        const data = JSON.parse(fs.readFileSync(orgOverridesPath, 'utf8'));
+        const list = (data && data.overrides) || [];
+        orgOverrides = list.map(entry => ({
+            re: new RegExp(entry.titlePattern, 'i'),
+            orgName: entry.orgName
+        }));
+        console.log(`🏷️ Loaded ${orgOverrides.length} org-name overrides`);
+    }
+} catch (err) {
+    console.log(`  ⚠️ Org overrides load failed: ${err.message}`);
+}
+function resolveOrgFromTitle(title) {
+    if (!title) return '';
+    for (const o of orgOverrides) {
+        if (o.re.test(title)) return o.orgName;
+    }
+    return '';
+}
+
 // Resolve an org's display short name. Returns the overlay value if present,
 // otherwise the original name if it's already short enough (<22 chars), or
 // empty string when there's nothing useful to show. The 22-char threshold
@@ -1291,25 +1320,11 @@ async function runScraper() {
 
         if (data.fields && Array.isArray(data.data)) {
             const fields = data.fields.split(',');
-            // ===== ONE-TIME DIAGNOSTIC =====
-            // Log the API's full field list and one sample row so we can see
-            // exactly what location info is available. Used to investigate
-            // location-quality bugs (DMAX showing "SMC Meeting Room" instead
-            // of "SMC Room 18", dance studio events missing locations, etc.).
-            // Adam: after this scrape, share the "🔍 MU Cal sample row" line
-            // from the Actions log and we'll know which field has the missing
-            // data. Safe to remove once we've identified the right fields.
-            console.log('🔍 MU Cal fields:', fields.join(' | '));
-            if (data.data.length > 0) {
-                const sampleRow = data.data[0];
-                const sampleObj = {};
-                fields.forEach((f, i) => { sampleObj[f] = sampleRow[i]; });
-                console.log('🔍 MU Cal sample row:', JSON.stringify(sampleObj, null, 2));
-            }
             const nameIdx = fields.indexOf('ActivityName');
             const startIdx = fields.indexOf('StartDateTime');
             const bldgIdx = fields.indexOf('BuildingCode');
             const roomIdx = fields.indexOf('RoomName');
+            const roomNumIdx = fields.indexOf('RoomNumber');
             const descIdx = fields.indexOf('EventMeetingByActivityId.Event.Description');
             const linkIdx = fields.findIndex(f => f.toLowerCase().includes('url') || f.toLowerCase().includes('link'));
             const idIdx = fields.indexOf('ActivityId');
@@ -1324,7 +1339,20 @@ async function runScraper() {
                 // SKIP Athletic Competitions — we get those from Sidearm now
                 if (eventType === 'Athletic Competitions') return;
 
-                let eventLoc = `${row[bldgIdx] || ''} ${row[roomIdx] || ''}`.trim() || "Campus";
+                // Build location from BuildingCode + RoomName + RoomNumber.
+                // The API splits room info across two fields:
+                //   BuildingCode: "SMC"
+                //   RoomName:     "Robert Slabinski"  (or "Meeting Room", "Reighard Multi Purpose Room")
+                //   RoomNumber:   "Atrium"            (or "18", "118", or empty)
+                // Concatenating all three gives the complete venue:
+                //   "SMC Robert Slabinski Atrium"
+                //   "SMC Meeting Room 18"
+                //   "SMC Reighard Multi Purpose Room"  (RoomNumber empty)
+                // Empty pieces are dropped so we don't get awkward double-spaces.
+                const bldg = row[bldgIdx] || '';
+                const roomName = row[roomIdx] || '';
+                const roomNum = roomNumIdx !== -1 ? (row[roomNumIdx] || '') : '';
+                let eventLoc = [bldg, roomName, roomNum].filter(Boolean).join(' ').trim() || "Campus";
                 // Clean up building codes
                 if (eventLoc === 'AcCALEN') eventLoc = 'Millersville University';
                 eventLoc = eventLoc.replace(/^WARE Ware Center$/i, 'Ware Center')
@@ -1395,7 +1423,13 @@ async function runScraper() {
                 // "Informational") with the customer/org name when available,
                 // producing clearer card labels like "Men's Rugby Club Practice".
                 // The customerIdx value is the row's associated org on MU Calendar.
-                const calCustomerName = (customerIdx !== -1 && row[customerIdx]) ? row[customerIdx].trim() : '';
+                // When MU left Customer empty (common — many events don't fill it),
+                // try the title-pattern overrides as a fallback so the pill can
+                // still attribute the event to its actual host (GSA, RUF, etc.).
+                let calCustomerName = (customerIdx !== -1 && row[customerIdx]) ? row[customerIdx].trim() : '';
+                if (!calCustomerName) {
+                    calCustomerName = resolveOrgFromTitle(eventTitle);
+                }
                 const decoratedTitle = decorateGenericTitle(eventTitle, calCustomerName);
 
                 events.push({

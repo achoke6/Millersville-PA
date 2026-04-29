@@ -42,10 +42,8 @@
   },
   {
     "name": "All Greek Council",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -379,6 +377,7 @@
     "category": "Educational Program",
     "categories": [
       "Educational Program",
+      "Social",
       "Tabling"
     ],
     "shortName": "CHEP",
@@ -857,9 +856,9 @@
   },
   {
     "name": "Fraternity & Sorority Life",
-    "category": "Educational Program",
+    "category": "Meeting",
     "categories": [
-      "Educational Program"
+      "Meeting"
     ],
     "shortName": "FSL",
     "id": ""
@@ -1381,8 +1380,10 @@
   },
   {
     "name": "National Society of Black Engineers",
-    "category": "",
-    "categories": [],
+    "category": "Service",
+    "categories": [
+      "Service"
+    ],
     "shortName": "NSBE",
     "id": ""
   },
@@ -1803,9 +1804,9 @@
   },
   {
     "name": "Students for Life",
-    "category": "Meeting",
+    "category": "Tabling",
     "categories": [
-      "Meeting"
+      "Tabling"
     ],
     "shortName": "",
     "id": ""
@@ -1960,8 +1961,10 @@
   },
   {
     "name": "Turning Point Chapter",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "",
     "id": "tpusamville"
   },

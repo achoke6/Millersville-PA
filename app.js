@@ -1,6 +1,3 @@
-// Auto cache-bust .json fetches (hourly, matches scraper cron)
-(function(){const _f=window.fetch,_v=Math.floor(Date.now()/3600000);window.fetch=function(u,o){if(typeof u==='string'&&u.endsWith('.json'))u+=(/\?/.test(u)?'&':'?')+'_='+_v;return _f.call(this,u,o);}})();
-
 // Escape a value before it goes into innerHTML. Required for any field that
 // can be user-submitted: community board posts (board.json), community event
 // submissions (Google Sheet → events with tag 'Community'), business form

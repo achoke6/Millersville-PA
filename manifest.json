@@ -1,0 +1,26 @@
+{
+    "name": "Millersville.APP",
+    "short_name": "Millersville",
+    "description": "Events, sports, weather & community for Millersville, PA. Updated hourly.",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#ffffff",
+    "theme_color": "#1e3a8a",
+    "icons": [
+        {
+            "src": "/Mapp.png",
+            "sizes": "any",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "/Mapp.png",
+            "sizes": "any",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ],
+    "categories": ["news", "lifestyle", "education"]
+}

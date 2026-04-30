@@ -9,6 +9,16 @@
     <link rel="icon" type="image/png" href="/Mapp.png">
     <link rel="apple-touch-icon" href="/Mapp.png">
 
+    <!-- PWA manifest + theme. Matches navy hero color so the address bar
+         (mobile Chrome/Edge) and standalone-mode status bar share Millersville.APP's
+         palette. iOS-specific tags duplicate manifest properties because Safari
+         honors the legacy <meta> set rather than reading the manifest fully. -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#1e3a8a">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Millersville">
+
     <!-- Open Graph (Facebook, LinkedIn, Discord, Slack link previews) -->
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Millersville.APP">
@@ -494,5 +504,17 @@
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 <script src="app.js"></script>
+<script>
+    // Register the service worker for offline support and faster repeat
+    // loads. Deferred until the load event so it doesn't compete with
+    // first-paint resources. Fails silently if the browser doesn't support
+    // SW (older Safari, Firefox in private mode, etc.) — the site works
+    // identically without it, just without offline / instant-load benefits.
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').catch(() => {});
+        });
+    }
+</script>
 </body>
 </html>

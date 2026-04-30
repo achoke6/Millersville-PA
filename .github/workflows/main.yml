@@ -45,6 +45,34 @@ jobs:
             git push origin main
           }
 
+      # Minify app.js for production. Runs AFTER the git commit step on
+      # purpose — the source-of-truth in the repo stays unminified for
+      # diffability and local edits, but the file SFTP'd to DreamHost is
+      # the minified version. We overwrite the working-copy app.js in place
+      # so the deploy step picks it up automatically.
+      #
+      # Mangle is safe here: every HTML onclick handler references functions
+      # via `window.X` (string property lookup, never mangled). Top-level
+      # `function X()` declarations are only called internally so terser's
+      # default mangling won't break anything. If you ever add an HTML
+      # onclick that references a top-level function name directly, switch
+      # to `--keep-fnames` here to be safe.
+      #
+      # Also sed-replaces the __BUILD_VERSION__ placeholder in sw.js with
+      # this run's id so each deploy produces a byte-different service worker.
+      # The browser detects the change and triggers an update — no manual
+      # cache-version bumps. Sed on JS is fine; the rule "never sed HTML"
+      # (which truncated index.html in the past) doesn't apply to JS files
+      # without nested-bracket structure issues.
+      - name: Minify app.js and stamp SW version
+        run: |
+          npm install --no-save terser
+          npx terser app.js -o app.min.js -c -m
+          mv app.min.js app.js
+          echo "Minified app.js: $(wc -c < app.js) bytes"
+          sed -i "s|__BUILD_VERSION__|${{ github.run_id }}|" sw.js
+          echo "Stamped sw.js with build version ${{ github.run_id }}"
+
       - name: Deploy to DreamHost via SFTP
         run: |
           sudo apt-get install -y lftp

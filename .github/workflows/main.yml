@@ -15,6 +15,46 @@ jobs:
         with:
           fetch-depth: 0
 
+      # Validate hand-maintained JSON files before doing anything expensive.
+      # camps.json, sponsors.json, org-overrides.json, and shortnames-overlay.json
+      # are edited by hand — a missing comma or stray quote silently breaks the
+      # scraper (or worse, breaks app.js after deploy). Catching it here means
+      # PRs and pushes fail fast at the validation step, with a clear message
+      # pointing at the broken file, before we waste 60+ seconds running scrape.
+      #
+      # `jq empty` validates JSON syntax without producing output; a non-zero
+      # exit means parse failure. The shape checks below are intentionally
+      # minimal — just the fields the scraper actually requires — so we
+      # don't reject a perfectly fine file for missing optional metadata.
+      - name: Validate hand-maintained JSON
+        run: |
+          set -e
+          for f in camps.json sponsors.json org-overrides.json shortnames-overlay.json; do
+            if [ -f "$f" ]; then
+              echo "Checking $f..."
+              jq empty "$f" || { echo "❌ $f has invalid JSON syntax"; exit 1; }
+            else
+              echo "  (skip — $f not present)"
+            fi
+          done
+
+          # Shape checks for files the scraper depends on by structure, not
+          # just syntax. If these schemas drift, the scraper may run without
+          # erroring but produce wrong output (e.g. silent dropped events).
+          if [ -f camps.json ]; then
+            jq -e 'type == "array" and (length == 0 or (all(.title and .date)))' camps.json > /dev/null \
+              || { echo "❌ camps.json must be an array of objects, each with title + date"; exit 1; }
+          fi
+          if [ -f org-overrides.json ]; then
+            jq -e '.overrides | type == "array" and (length == 0 or (all(.titlePattern and .orgName)))' org-overrides.json > /dev/null \
+              || { echo "❌ org-overrides.json must have an .overrides array; each entry needs titlePattern + orgName"; exit 1; }
+          fi
+          if [ -f shortnames-overlay.json ]; then
+            jq -e '.overrides | type == "object"' shortnames-overlay.json > /dev/null \
+              || { echo "❌ shortnames-overlay.json must have an .overrides object (string→string map)"; exit 1; }
+          fi
+          echo "✓ All JSON files valid"
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -104,6 +144,99 @@ jobs:
               sleep 30
             }
           done
+
+      # Post-deploy smoke test. Catches the "deploy succeeded but site is
+      # actually broken" failure mode that source-health monitoring can't
+      # see — e.g. a JS syntax error from a typo making index.html render
+      # blank, or a corrupted events.json shipping zero events, or the
+      # scraper succeeding but writing a stale status.json from an aborted
+      # earlier run.
+      #
+      # Three checks against the live origin:
+      #   1. index.html responds 200 and contains the brand string
+      #   2. events.json is parseable and contains >100 entries
+      #   3. status.json exists and its generatedAt timestamp is within
+      #      the last 90 minutes (cron is hourly; 90min covers worst-case
+      #      runtime + clock skew between runner and DreamHost)
+      #
+      # 8-second sleep gives DreamHost a moment to settle after lftp's
+      # final TCP teardown — most deploys are visible immediately but
+      # occasionally there's a brief window where the freshly-uploaded
+      # file isn't yet served. Failing here flips the workflow red and
+      # triggers the existing healthchecks.io /fail ping below.
+      - name: Post-deploy smoke test
+        run: |
+          set -e
+          echo "Waiting 8s for DreamHost to settle..."
+          sleep 8
+
+          BASE="https://millersville.app"
+          FAILED=0
+
+          # 1. index.html
+          echo "▸ Checking index.html..."
+          STATUS=$(curl -s -o /tmp/index.html -w "%{http_code}" --max-time 15 "$BASE/")
+          if [ "$STATUS" != "200" ]; then
+            echo "  ❌ HTTP $STATUS"
+            FAILED=1
+          elif ! grep -q 'Millersville.APP' /tmp/index.html; then
+            echo "  ❌ 'Millersville.APP' not found in HTML — page may be rendering blank"
+            head -c 500 /tmp/index.html
+            FAILED=1
+          else
+            echo "  ✓ index.html OK"
+          fi
+
+          # 2. events.json
+          echo "▸ Checking events.json..."
+          STATUS=$(curl -s -o /tmp/events.json -w "%{http_code}" --max-time 15 "$BASE/events.json")
+          if [ "$STATUS" != "200" ]; then
+            echo "  ❌ HTTP $STATUS"
+            FAILED=1
+          else
+            COUNT=$(jq -r 'length // 0' /tmp/events.json 2>/dev/null || echo 0)
+            if [ "$COUNT" -lt 100 ]; then
+              echo "  ❌ events.json has only $COUNT entries (expected >100)"
+              FAILED=1
+            else
+              echo "  ✓ events.json has $COUNT entries"
+            fi
+          fi
+
+          # 3. status.json freshness
+          echo "▸ Checking status.json freshness..."
+          STATUS=$(curl -s -o /tmp/status.json -w "%{http_code}" --max-time 15 "$BASE/status.json")
+          if [ "$STATUS" != "200" ]; then
+            echo "  ❌ HTTP $STATUS"
+            FAILED=1
+          else
+            GEN=$(jq -r '.generatedAt // empty' /tmp/status.json)
+            if [ -z "$GEN" ]; then
+              echo "  ❌ status.json missing generatedAt"
+              FAILED=1
+            else
+              # Convert generatedAt (ISO-8601) to epoch seconds, compute
+              # delta in minutes. macOS-incompatible date flags are fine
+              # here since runners are Ubuntu.
+              GEN_EPOCH=$(date -d "$GEN" +%s)
+              NOW_EPOCH=$(date +%s)
+              AGE_MIN=$(( (NOW_EPOCH - GEN_EPOCH) / 60 ))
+              if [ "$AGE_MIN" -gt 90 ]; then
+                echo "  ❌ status.json is $AGE_MIN minutes old (limit 90)"
+                FAILED=1
+              else
+                echo "  ✓ status.json fresh ($AGE_MIN min ago)"
+              fi
+            fi
+          fi
+
+          if [ "$FAILED" -ne 0 ]; then
+            echo ""
+            echo "❌ Post-deploy smoke test FAILED — see checks above"
+            exit 1
+          fi
+          echo ""
+          echo "✓ All post-deploy checks passed"
 
       # Fast-fail alert. The scraper already pings HEALTHCHECK_URL on success
       # (see scrape.js). If the whole job crashes before that ping, healthchecks.io

@@ -3733,6 +3733,48 @@ Focus on the most impressive deals a shopper would want to know about. Include m
         };
         fs.writeFileSync(path.join(__dirname, '../status.json'), JSON.stringify(status, null, 2));
         console.log(`📊 Status file written (${status.totalEvents} events across ${Object.values(status.sources).filter(n => n > 0).length} active sources)`);
+
+        // Maintain a 7-day rolling history of per-source counts. Used by
+        // status.html to flag sources whose count silently dropped vs typical
+        // — a source returning 0 events while the overall scrape succeeds and
+        // the hero badge reads "Healthy" would otherwise hide a real upstream
+        // failure (auth break, schema change, blocked IP, etc).
+        //
+        // Schema: { lastUpdated, days: [{ date: 'YYYY-MM-DD', ts, totalEvents, sources }] }
+        // - One entry per ET calendar day. Hourly cron means we overwrite
+        //   today's entry each run with the latest snapshot.
+        // - Ordered chronologically, capped at 7 entries (older drop off).
+        // - ET-anchored day grouping via deriveDayET so the runner's UTC clock
+        //   doesn't fragment late-night runs into "tomorrow" prematurely.
+        try {
+            const historyPath = path.join(__dirname, '../status-history.json');
+            let history = { days: [] };
+            if (fs.existsSync(historyPath)) {
+                try {
+                    const parsed = JSON.parse(fs.readFileSync(historyPath, 'utf-8'));
+                    if (parsed && Array.isArray(parsed.days)) history = parsed;
+                } catch { /* corrupt file — start fresh */ }
+            }
+            const todayET = deriveDayET(Date.now());
+            const snapshot = {
+                date: todayET,
+                ts: status.generatedAt,
+                totalEvents: status.totalEvents,
+                sources: status.sources
+            };
+            const idx = history.days.findIndex(d => d.date === todayET);
+            if (idx >= 0) history.days[idx] = snapshot;
+            else history.days.push(snapshot);
+            // Sort chronologically and keep only the last 7 days.
+            history.days.sort((a, b) => a.date.localeCompare(b.date));
+            if (history.days.length > 7) history.days = history.days.slice(-7);
+            history.lastUpdated = status.generatedAt;
+            fs.writeFileSync(historyPath, JSON.stringify(history, null, 2));
+        } catch (histErr) {
+            // History is informational. Same defensive posture as the status
+            // block itself — never break a scrape over a stats failure.
+            console.log(`  ⚠️ Status history error: ${histErr.message}`);
+        }
     } catch (statsErr) {
         // Stats are informational — don't let a stats error break the scrape.
         console.log(`  ⚠️ Status file error: ${statsErr.message}`);

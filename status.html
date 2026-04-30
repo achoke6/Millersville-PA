@@ -29,6 +29,24 @@
     .status-meta { font-size: 0.82rem; color: var(--text-muted); text-align: center; padding: 20px 0; }
     .status-meta a { color: var(--navy); }
     .status-error { padding: 20px; background: #fee2e2; border: 1px solid #fca5a5; border-radius: var(--radius); color: #991b1b; }
+    /* Per-source degradation styling. Applied to rows in the "Events by
+       Source" card when today's count is well below the historical median.
+       The hint span shows the typical baseline so the user has context for
+       the drop without leaving the page. */
+    .status-metric.warn { background: #fffbeb; border-left: 3px solid #f59e0b; padding-left: 7px; }
+    .status-metric.err  { background: #fef2f2; border-left: 3px solid #dc2626; padding-left: 7px; }
+    .status-metric .status-metric-hint { display: block; font-size: 0.72rem; color: var(--text-muted); font-weight: 400; margin-top: 2px; font-variant-numeric: tabular-nums; }
+    .status-metric.warn .status-metric-value { color: #92400e; }
+    .status-metric.err  .status-metric-value { color: #991b1b; }
+    /* Sources-health pill below the hero. Different from the freshness badge
+       — that one only knows the timestamp; this one knows whether per-source
+       counts look reasonable. A scrape can be timestamp-fresh but have a
+       source quietly returning zero, which is the failure mode this catches. */
+    .status-health-row { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: var(--radius); margin-bottom: 16px; font-size: 0.86rem; }
+    .status-health-row.ok   { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+    .status-health-row.warn { background: #fffbeb; color: #92400e; border: 1px solid #fcd34d; }
+    .status-health-row.err  { background: #fef2f2; color: #991b1b; border: 1px solid #fca5a5; }
+    .status-health-row.muted { background: var(--surface); color: var(--text-muted); border: 1px solid var(--border); }
 </style>
 </head>
 <body>
@@ -48,6 +66,8 @@
             <div class="status-hero-label">Last scrape</div>
         </div>
     </div>
+
+    <div id="health-row" class="status-health-row muted" style="display:none;">Loading source health…</div>
 
     <div id="grid" class="status-grid"></div>
 
@@ -82,9 +102,44 @@ function metric(label, value, opts) {
     opts = opts || {};
     const valStr = value == null ? '—' : String(value);
     const isZero = value === 0;
-    return '<div class="status-metric"><span class="status-metric-label">' + label +
+    // opts.status is one of 'warn' | 'err' | undefined. Adds a class to the
+    // row and a colored value pill. opts.hint renders below the value in
+    // small muted text — typically used to show the historical baseline
+    // when today's count is degraded ("typical 87" alongside today's 0).
+    const rowClass = 'status-metric' + (opts.status ? ' ' + opts.status : '');
+    const hint = opts.hint ? '<span class="status-metric-hint">' + opts.hint + '</span>' : '';
+    return '<div class="' + rowClass + '"><span class="status-metric-label">' + label +
            '</span><span class="status-metric-value' + (isZero ? ' zero' : '') + '">' + valStr +
-           (opts.suffix || '') + '</span></div>';
+           (opts.suffix || '') + hint + '</span></div>';
+}
+
+// Median of a numeric array. Returns 0 for empty input. We don't bother
+// averaging the two middle elements on even-length arrays — for a 6-element
+// historical window the "high middle" is fine and simpler.
+function median(nums) {
+    if (!nums.length) return 0;
+    const sorted = [...nums].sort((a, b) => a - b);
+    return sorted[Math.floor(sorted.length / 2)];
+}
+
+// Compare today's value for a source against historical median, return
+// { status, hint } if degraded, or null if within tolerance / not enough
+// data. NOISE_FLOOR exists so naturally-low sources (VFW with 1-2 events
+// at a time, occasional Phantom Power gaps) don't trigger spurious alarms
+// — we only flag drops on sources that ROUTINELY have meaningful volume.
+const NOISE_FLOOR = 4;
+function compareSource(currentValue, history, sourceKey, todayDate) {
+    if (currentValue == null || !history || !Array.isArray(history.days)) return null;
+    // Exclude today's entry (history may already include it from this run).
+    const priorDays = history.days.filter(d => d.date !== todayDate);
+    if (priorDays.length < 2) return null;  // not enough baseline yet
+    const priorCounts = priorDays.map(d => (d.sources && d.sources[sourceKey]) || 0);
+    const med = median(priorCounts);
+    if (med < NOISE_FLOOR) return null;  // baseline too low to be diagnostic
+    const ratio = currentValue / med;
+    if (currentValue === 0 || ratio < 0.1) return { status: 'err',  hint: `↓ typical ${med}/day` };
+    if (ratio < 0.5)                       return { status: 'warn', hint: `↓ typical ${med}/day` };
+    return null;
 }
 
 function card(title, rows) {
@@ -92,14 +147,23 @@ function card(title, rows) {
 }
 
 async function render() {
-    let status;
+    let status, history = null;
     try {
         // Bust the cache explicitly — we want fresh numbers, not hourly CDN-
         // cached snapshots. The scraper writes these files as the last step
         // of each cron run so "just now" fetches should see new data.
-        const res = await fetch('status.json?' + Date.now(), { cache: 'no-store' });
-        if (!res.ok) throw new Error('status.json HTTP ' + res.status);
-        status = await res.json();
+        // Fetch status and history in parallel. History is informational —
+        // a 404 (e.g., first deploy before any cron has written it) just
+        // skips the comparison logic and renders raw counts as before.
+        const [statusRes, historyRes] = await Promise.all([
+            fetch('status.json?' + Date.now(), { cache: 'no-store' }),
+            fetch('status-history.json?' + Date.now(), { cache: 'no-store' }).catch(() => null)
+        ]);
+        if (!statusRes.ok) throw new Error('status.json HTTP ' + statusRes.status);
+        status = await statusRes.json();
+        if (historyRes && historyRes.ok) {
+            try { history = await historyRes.json(); } catch { /* malformed — ignore */ }
+        }
     } catch (err) {
         document.getElementById('grid').innerHTML =
             '<div class="status-error"><strong>Status file unavailable.</strong> Either the scraper hasn\'t run yet, or the status.json file is missing. Error: ' +
@@ -129,16 +193,59 @@ async function render() {
     const s = status.sources || {};
     const sp = status.sports || {};
 
-    const sourcesCard = card('Events by Source',
-        metric('MU Athletics', s.muAthletics) +
-        metric('MU Calendar', s.muCalendar) +
-        metric('MU GetInvolved', s.muGetInvolved) +
-        metric('Penn Manor', s.pennManor) +
-        metric('Borough', s.borough) +
-        metric('VFW', s.vfw) +
-        metric('Phantom Power', s.phantomPower) +
-        metric('Community submissions', s.community)
-    );
+    // Per-source degradation check. The same labels that appear on the
+    // dashboard map to the keys in status.sources. todayDate is derived in
+    // the browser but uses Intl.DateTimeFormat with America/New_York so it
+    // matches the deriveDayET key the scraper wrote — important for users
+    // viewing the page late at night when local time and ET disagree.
+    const todayDate = new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit'
+    }).format(new Date()).replace(/\//g, '-');
+    const sourceList = [
+        { label: 'MU Athletics',           key: 'muAthletics' },
+        { label: 'MU Calendar',            key: 'muCalendar' },
+        { label: 'MU GetInvolved',         key: 'muGetInvolved' },
+        { label: 'Penn Manor',             key: 'pennManor' },
+        { label: 'Borough',                key: 'borough' },
+        { label: 'VFW',                    key: 'vfw' },
+        { label: 'Phantom Power',          key: 'phantomPower' },
+        { label: 'Community submissions',  key: 'community' }
+    ];
+    const degraded = [];
+    const sourceRows = sourceList.map(({ label, key }) => {
+        const cmp = compareSource(s[key], history, key, todayDate);
+        if (cmp) degraded.push({ label, status: cmp.status });
+        return metric(label, s[key], cmp || {});
+    }).join('');
+
+    // Health row: summary of source health independent of timestamp freshness.
+    // Three states the user actually cares about:
+    //   - All sources within tolerance       → "All sources healthy"
+    //   - Some warns, no errors              → "N source(s) degraded"
+    //   - At least one error                 → "N source(s) failing" (red)
+    // Muted "Insufficient history" appears for the first ~2 days after deploy
+    // when there isn't enough baseline data to compare against.
+    const healthRow = document.getElementById('health-row');
+    const hasErr  = degraded.some(d => d.status === 'err');
+    const hasWarn = degraded.some(d => d.status === 'warn');
+    healthRow.style.display = '';
+    if (!history || (history.days || []).filter(d => d.date !== todayDate).length < 2) {
+        healthRow.className = 'status-health-row muted';
+        healthRow.textContent = '⏳ Building source-health baseline (need 2+ days of history to flag drops)';
+    } else if (hasErr) {
+        healthRow.className = 'status-health-row err';
+        const failing = degraded.filter(d => d.status === 'err').map(d => d.label);
+        healthRow.textContent = `🚨 ${failing.length} source${failing.length > 1 ? 's' : ''} failing: ${failing.join(', ')}`;
+    } else if (hasWarn) {
+        healthRow.className = 'status-health-row warn';
+        const warning = degraded.filter(d => d.status === 'warn').map(d => d.label);
+        healthRow.textContent = `⚠️ ${warning.length} source${warning.length > 1 ? 's' : ''} degraded: ${warning.join(', ')}`;
+    } else {
+        healthRow.className = 'status-health-row ok';
+        healthRow.textContent = '✓ All sources within typical range';
+    }
+
+    const sourcesCard = card('Events by Source', sourceRows);
 
     const sportsCard = card('Sports Results',
         metric('Total sport events', sp.total) +

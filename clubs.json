@@ -285,13 +285,12 @@
   },
   {
     "name": "Black Student Union",
-    "category": "Lecture or Speaker",
+    "category": "Identity-Based",
     "categories": [
-      "Lecture or Speaker",
-      "Meeting"
+      "Identity-Based"
     ],
-    "shortName": "",
-    "id": ""
+    "shortName": "BSU",
+    "id": "blackstudentunion"
   },
   {
     "name": "Board Game Club",
@@ -549,6 +548,15 @@
     "id": ""
   },
   {
+    "name": "Color of Teaching Mentoring Program",
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
+    "shortName": "",
+    "id": ""
+  },
+  {
     "name": "Commuter Services",
     "category": "Social",
     "categories": [
@@ -772,8 +780,10 @@
   },
   {
     "name": "Expressions Dance",
-    "category": "",
-    "categories": [],
+    "category": "Performance",
+    "categories": [
+      "Performance"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1831,12 +1841,12 @@
   },
   {
     "name": "Tau Kappa Epsilon",
-    "category": "Fraternity & Sorority Life",
+    "category": "Fundraiser",
     "categories": [
-      "Fraternity & Sorority Life"
+      "Fundraiser"
     ],
-    "shortName": "TKE",
-    "id": "taukappaepsilon"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "TCG Players of Millersville",

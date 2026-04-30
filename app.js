@@ -1,6 +1,16 @@
 // Auto cache-bust .json fetches (hourly, matches scraper cron)
 (function(){const _f=window.fetch,_v=Math.floor(Date.now()/3600000);window.fetch=function(u,o){if(typeof u==='string'&&u.endsWith('.json'))u+=(/\?/.test(u)?'&':'?')+'_='+_v;return _f.call(this,u,o);}})();
 
+// Escape a value before it goes into innerHTML. Required for any field that
+// can be user-submitted: community board posts (board.json), community event
+// submissions (Google Sheet → events with tag 'Community'), business form
+// submissions, and reviews. Also defensive for RSS-scraped fields where a
+// compromised upstream feed could inject markup. Coerces to string and
+// replaces the five HTML-significant characters; anything else (numbers,
+// booleans, null) becomes its safe string form.
+const escHtml = s => String(s ?? '').replace(/[&<>"']/g, c =>
+    ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
 let allEvents=[], currentNews=[], allRestaurants=[];
 
 // Date the home timeline is currently showing. Defaults to today (midnight),
@@ -1867,7 +1877,7 @@ function matchesSportSource(tags, src) {
     return false;
 }
 
-const viewPaths={home:'/',news:'/news',events:'/events',sports:'/sports',places:'/places',board:'/board',weather:'/weather',store:'/store',advertise:'/advertise'};
+const viewPaths={home:'/',news:'/news',events:'/events',sports:'/sports',places:'/places',board:'/board',weather:'/weather',store:'/store',advertise:'/advertise',analytics:'/analytics'};
 const pathToView=Object.fromEntries(Object.entries(viewPaths).map(([k,v])=>[v,k]));
 // Legacy URL redirects
 pathToView['/food'] = 'places';
@@ -3477,16 +3487,16 @@ function buildEventCard(e,isSportsPage){
     const desc = (e.description || '').trim();
     const PREVIEW_LEN = 180;
     if (desc && !isSportsPage) {
-        // Escape quotes for safe HTML attribute use; the full text is embedded in the DOM
-        // so the expand handler doesn't need to re-fetch. Preserve basic whitespace.
-        const escaped = desc.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        // Escape via the central escHtml helper. Same protection as before
+        // (the 5 HTML-significant chars), just one source of truth now.
+        const escaped = escHtml(desc);
         if (desc.length <= PREVIEW_LEN) {
             descBlock = `<div class="card-desc"><p class="card-desc-text">${escaped}</p></div>`;
         } else {
             // Cut at a word boundary near PREVIEW_LEN so we don't truncate mid-word.
             let cut = desc.lastIndexOf(' ', PREVIEW_LEN);
             if (cut < PREVIEW_LEN - 30) cut = PREVIEW_LEN; // no word break nearby, use hard cut
-            const preview = desc.substring(0, cut).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+            const preview = escHtml(desc.substring(0, cut));
             descBlock = `<div class="card-desc">
                 <p class="card-desc-text card-desc-preview">${preview}… <a href="#" class="card-desc-more" onclick="event.preventDefault();event.stopPropagation();this.closest('.card-desc').classList.add('expanded');">more</a></p>
                 <p class="card-desc-text card-desc-full">${escaped} <a href="#" class="card-desc-less" onclick="event.preventDefault();event.stopPropagation();this.closest('.card-desc').classList.remove('expanded');">less</a></p>
@@ -3522,9 +3532,9 @@ function buildEventCard(e,isSportsPage){
         : '';
 
     return `<div class="app-card${isCurrentlyLive?' card-live':''} ${cardResultClass}${favClass}" data-event-key="${cardKey}" style="position:relative;" ${cardOnclick}>${scoreBadge}<div class="card-body">
-        <div class="card-heading">${inlineFavBtn}<h3 class="card-title">${displayTitle}</h3></div>
+        <div class="card-heading">${inlineFavBtn}<h3 class="card-title">${escHtml(displayTitle)}</h3></div>
         <p class="card-meta">📅 ${formatDate(d)}${timeStr}</p>
-        <p class="card-meta">📍 ${cleanLocation(e.location)}</p>
+        <p class="card-meta">📍 ${escHtml(cleanLocation(e.location))}</p>
         ${tagHtml || liveBadge ? `<div class="card-tags card-tags-secondary">${tagHtml}${liveBadge}</div>` : ''}
         ${descBlock}
         ${perkBadges?`<div class="perk-row">${perkBadges}</div>`:''}
@@ -3622,7 +3632,7 @@ function renderHomeUI(){
         const sourceDisplay = {'Millersville News':'MU','The Snapper':'Snapper','MU Athletics':'MU Athletics','MU Review':'MU Review','Penn Manor News':'PM','Millersville Borough':'Borough'};
         newsContainer.innerHTML = latestNews.map(n => {
             const src = sourceDisplay[n.source] || n.source;
-            return `<a href="${n.link}" target="_blank" class="home-news-item"><span class="home-news-src">${src}</span><span class="home-news-title">${n.title}</span></a>`;
+            return `<a href="${escHtml(n.link)}" target="_blank" class="home-news-item"><span class="home-news-src">${escHtml(src)}</span><span class="home-news-title">${escHtml(n.title)}</span></a>`;
         }).join('');
     }
 
@@ -3635,7 +3645,7 @@ function renderHomeUI(){
         boardPreview.innerHTML = latest.map(p => {
             const catColors = {'Lost Pet':'#dc2626','Found Pet':'#16a34a','Yard Sale':'#d97706','Help Wanted':'#2563eb','For Sale':'#7c3aed','Free Stuff':'#059669','Community Notice':'#6b7280'};
             const color = catColors[p.category] || 'var(--text-muted)';
-            return `<div class="home-board-item" onclick="switchView('board')"><span class="home-board-cat" style="color:${color};">${p.category}</span> <span class="home-board-title">${p.title}</span></div>`;
+            return `<div class="home-board-item" onclick="switchView('board')"><span class="home-board-cat" style="color:${color};">${escHtml(p.category)}</span> <span class="home-board-title">${escHtml(p.title)}</span></div>`;
         }).join('');
     } else {
         boardSection.style.display = 'none';
@@ -3832,12 +3842,12 @@ window.openEventDetails = function(key) {
 
     const description = (e.description || '').trim();
     const descBlock = description
-        ? `<div style="margin-top:12px;font-size:0.9rem;line-height:1.5;color:var(--text);">${description}</div>`
+        ? `<div style="margin-top:12px;font-size:0.9rem;line-height:1.5;color:var(--text);">${escHtml(description)}</div>`
         : '';
 
     const location = (e.location || '').trim();
     const locBlock = location
-        ? `<div style="margin-top:10px;font-size:0.88rem;color:var(--text-muted);">📍 ${location}</div>`
+        ? `<div style="margin-top:10px;font-size:0.88rem;color:var(--text-muted);">📍 ${escHtml(location)}</div>`
         : '';
 
     // Game score summary for past sports events. We store the score as "4-2"
@@ -3958,7 +3968,7 @@ window.openEventDetails = function(key) {
     modal.style.cssText = 'background:var(--surface);border-radius:var(--radius);max-width:540px;width:100%;padding:24px;position:relative;box-shadow:0 10px 40px rgba(0,0,0,0.2);';
     modal.innerHTML = `
         <button onclick="this.closest('.event-details-overlay').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);padding:4px 8px;">✕</button>
-        <h2 style="margin:0 0 8px;font-size:1.25rem;color:var(--navy);line-height:1.3;padding-right:24px;">${e.title || 'Event'}</h2>
+        <h2 style="margin:0 0 8px;font-size:1.25rem;color:var(--navy);line-height:1.3;padding-right:24px;">${escHtml(e.title || 'Event')}</h2>
         <div style="font-size:0.92rem;color:var(--text);font-weight:600;">📅 ${dateStr}${!isAllDay ? ' · ' + timeStr : ''}</div>
         ${locBlock}
         ${scoreSummary}
@@ -4110,7 +4120,7 @@ function buildNewsCard(n) {
     if(n.subCategory && !tags.includes(n.subCategory)) tags.push(n.subCategory);
     if(n.tags) n.tags.forEach(t=>{if(!tags.includes(t)) tags.push(t);});
     const tagHtml=tags.length?`<div class="card-tags">${tags.map(t=>`<span class="card-tag">${t}</span>`).join('')}</div>`:'';
-    return `<div class="app-card">${tagHtml}<p class="card-meta">${n.date}</p><h3 class="card-title">${n.title}</h3><a href="${n.link}" target="_blank" class="btn btn-sm btn-outline" style="margin-top:12px;">Read ➔</a></div>`;
+    return `<div class="app-card">${tagHtml}<p class="card-meta">${escHtml(n.date)}</p><h3 class="card-title">${escHtml(n.title)}</h3><a href="${escHtml(n.link)}" target="_blank" class="btn btn-sm btn-outline" style="margin-top:12px;">Read ➔</a></div>`;
 }
 
 // Hide PM/Borough news source pills for marauders who haven't favorited them.
@@ -4382,9 +4392,12 @@ function renderBoard(){
     c.innerHTML=filtered.map(p=>{
         const catIcons={'Yard Sale':'🏷️','Lost Pet':'🐾','Found Pet':'🐾','Help Wanted':'💼','For Sale':'🛒','Free Stuff':'🎁','Community Notice':'📢'};
         const icon=catIcons[p.category]||'📋';
-        const img=p.image?`<div class="card-img-wrap"><img src="${p.image}" alt="" loading="lazy" class="card-img"></div>`:'';
-        const contact=p.contact?`<p style="font-size:0.85rem;margin-top:8px;">📧 ${p.contact}</p>`:'';
-        const loc=p.location?`<p class="card-meta">📍 ${p.location}</p>`:'';
+        // Image URL goes into an attribute, so escape it the same way as text.
+        // A bare quote in p.image would otherwise close the src=" early and
+        // anything after would be interpreted as new attributes.
+        const img=p.image?`<div class="card-img-wrap"><img src="${escHtml(p.image)}" alt="" loading="lazy" class="card-img"></div>`:'';
+        const contact=p.contact?`<p style="font-size:0.85rem;margin-top:8px;">📧 ${escHtml(p.contact)}</p>`:'';
+        const loc=p.location?`<p class="card-meta">📍 ${escHtml(p.location)}</p>`:'';
         const urgentClass=(p.category==='Lost Pet')?'style="border-left:4px solid #dc2626;"':'';
 
         // Age + expiry badges. Scraper now writes postedAt/expiresAt as ISO
@@ -4430,9 +4443,9 @@ function renderBoard(){
         // wait for a scraper-regen to show anything at all.
         const footerMeta = (ageBadge || expiryBadge)
             ? `<div class="board-meta-row">${ageBadge}${expiryBadge}</div>`
-            : (p.date ? `<p style="font-size:0.7rem;color:var(--text-muted);margin-top:6px;">${p.date}</p>` : '');
+            : (p.date ? `<p style="font-size:0.7rem;color:var(--text-muted);margin-top:6px;">${escHtml(p.date)}</p>` : '');
 
-        return `<div class="app-card" ${urgentClass}>${img}<span class="card-tag">${icon} ${p.category}</span><h3 class="card-title">${p.title}</h3>${loc}<p style="font-size:0.85rem;color:var(--text-muted);margin:6px 0;">${p.description||''}</p>${contact}${footerMeta}</div>`;
+        return `<div class="app-card" ${urgentClass}>${img}<span class="card-tag">${icon} ${escHtml(p.category)}</span><h3 class="card-title">${escHtml(p.title)}</h3>${loc}<p style="font-size:0.85rem;color:var(--text-muted);margin:6px 0;">${escHtml(p.description||'')}</p>${contact}${footerMeta}</div>`;
     }).join('');
 }
 
@@ -4684,6 +4697,7 @@ async function loadSponsors() {
         });
         renderHomeSponsors();
         startSponsorRotation();
+        renderAnalytics();
     } catch (e) { console.log('Sponsors load error:', e.message); renderHomeSponsors(); }
 }
 
@@ -4794,6 +4808,38 @@ function startSponsorRotation() {
     }, interval);
 }
 
+function renderAnalytics() {
+    const dash = document.getElementById('analytics-dashboard');
+    if (!dash) return;
+    const now = new Date();
+    let html = '';
+    sponsorData.sponsors.forEach(s => {
+        const stats = sponsorImpressions[s.id] || { impressions: 0, clicks: 0 };
+        const ctr = stats.impressions > 0 ? ((stats.clicks / stats.impressions) * 100).toFixed(1) : '0.0';
+        const endDate = s.endDate ? new Date(s.endDate) : null;
+        const daysLeft = endDate ? Math.ceil((endDate - now) / (1000*60*60*24)) : '∞';
+        html += `<div class="app-card" style="margin-bottom:12px;">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                <div>
+                    <span class="card-tag">${s.tier}</span>
+                    <h3 class="card-title" style="margin-top:6px;">${s.name}</h3>
+                </div>
+                <span class="badge" style="background:var(--green);color:white;font-size:0.7rem;">Active</span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px;">
+                <div style="text-align:center;"><p style="font-size:1.2rem;font-weight:700;">${stats.impressions}</p><p style="font-size:0.7rem;color:var(--text-muted);">Impressions</p></div>
+                <div style="text-align:center;"><p style="font-size:1.2rem;font-weight:700;">${stats.clicks}</p><p style="font-size:0.7rem;color:var(--text-muted);">Clicks</p></div>
+                <div style="text-align:center;"><p style="font-size:1.2rem;font-weight:700;">${ctr}%</p><p style="font-size:0.7rem;color:var(--text-muted);">CTR</p></div>
+                <div style="text-align:center;"><p style="font-size:1.2rem;font-weight:700;">${daysLeft}</p><p style="font-size:0.7rem;color:var(--text-muted);">Days Left</p></div>
+            </div>
+            <div style="margin-top:12px;font-size:0.8rem;color:var(--text-muted);">
+                Placements: ${s.placements.join(', ')}
+            </div>
+        </div>`;
+    });
+    if (!html) html = '<p class="empty-state">No active sponsors.</p>';
+    dash.innerHTML = html;
+}
 // ==================== END SPONSOR SYSTEM ====================
 
 // Grocery deals popup

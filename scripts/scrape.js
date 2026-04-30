@@ -159,6 +159,26 @@ function deriveDayET(ms) {
     return `${g('year')}-${g('month')}-${g('day')}`;
 }
 
+// Build a TZ-correct dedup key for camps and arts events: title-prefix + ET
+// calendar day. Both halves resolved via parseEventInstant + deriveDayET so
+// that an existing event with naive ET date "2026-07-15T20:00:00" and a
+// freshly-built UTC ISO "2026-07-16T00:00:00.000Z" map to the SAME key
+// (they're the same wall-clock instant on the same Millersville day). The
+// original logic mixed `(e.date||'').slice(0,10)` against
+// `toISOString().slice(0,10)`, so any 8pm+ ET event would slip past dedup
+// and double-add. Used by both the artsmu camps pass and the camps.json
+// hand-maintained pass since they share the same dedup shape.
+//
+// `dateRef` accepts either a Date object (when callers have already built
+// one) or a date string. Falls back to a raw 10-char slice for unparseable
+// inputs to preserve legacy behavior.
+function buildCampDedupKey(title, dateRef) {
+    const ms = dateRef instanceof Date ? dateRef.getTime() : parseEventInstant(dateRef);
+    const day = !isNaN(ms) ? deriveDayET(ms)
+              : (typeof dateRef === 'string' ? dateRef.slice(0, 10) : '');
+    return (title || '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 40) + '|' + day;
+}
+
 function resolveOrgShortName(orgName) {
     if (!orgName) return '';
     const trimmed = orgName.trim();
@@ -1596,8 +1616,11 @@ async function runScraper() {
 
         // Stage 2: Fetch each event page and parse structured data
         const monthMap = {January:0,February:1,March:2,April:3,May:4,June:5,July:6,August:7,September:8,October:9,November:10,December:11};
-        let artsCount = 0, artsSkipped = 0, artsFailed = 0;
-        const existingKeys = new Set(events.map(e => (e.title || '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 40) + '|' + (e.date || '').slice(0, 10)));
+        let artsCount = 0, artsFailed = 0, artsSkipped = 0;
+        // Dedup against MU Calendar entries already in `events`. Uses the
+        // shared buildCampDedupKey helper (module scope) so artsmu and
+        // camps.json apply identical TZ-aware key logic.
+        const existingKeys = new Set(events.map(e => buildCampDedupKey(e.title, e.date)));
 
         for (const eventUrl of eventUrls) {
             try {
@@ -1666,8 +1689,8 @@ async function runScraper() {
                 const descMatch = evHtml.match(/<div[^>]*class="[^"]*event[_-]?description[^"]*"[^>]*>([\s\S]*?)<\/div>/i);
                 if (descMatch) description = descMatch[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 500);
 
-                // Dedupe against MU Calendar entries
-                const key = title.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 40) + '|' + eventDate.toISOString().slice(0, 10);
+                // Dedupe against MU Calendar entries (TZ-aware via buildCampDedupKey)
+                const key = buildCampDedupKey(title, eventDate);
                 if (existingKeys.has(key)) { artsSkipped++; continue; }
 
                 // Tag: art exhibit events are different from performances
@@ -1697,13 +1720,17 @@ async function runScraper() {
             const campsData = JSON.parse(fs.readFileSync(campsPath, 'utf-8'));
             if (Array.isArray(campsData)) {
                 let campCount = 0, campSkipped = 0;
-                const existingKeys4 = new Set(events.map(e => (e.title || '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 40) + '|' + (e.date || '').slice(0, 10)));
+                // Same dedup shape as artsmu — shared helper keeps both passes
+                // aligned. Critical for camps where existing events from MU
+                // Calendar arrive as naive ET strings and the new Date()
+                // we build below resolves to a UTC instant.
+                const existingKeys4 = new Set(events.map(e => buildCampDedupKey(e.title, e.date)));
                 for (const camp of campsData) {
                     if (!camp.title || !camp.date) { campSkipped++; continue; }
                     const campDate = new Date(camp.date);
                     if (isNaN(campDate.getTime())) { campSkipped++; continue; }
                     if (campDate < pastDate || campDate >= futureDate) { campSkipped++; continue; }
-                    const key = camp.title.toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 40) + '|' + campDate.toISOString().slice(0, 10);
+                    const key = buildCampDedupKey(camp.title, campDate);
                     if (existingKeys4.has(key)) { campSkipped++; continue; }
                     events.push({
                         title: camp.title,
@@ -3324,13 +3351,21 @@ Focus on the most impressive deals a shopper would want to know about. Include m
 
     const hasBenefits = e => (e.benefits && e.benefits.length > 0);
 
-    // Pass 1: exact-match dedupe (unchanged legacy)
+    // Pass 1: exact-match dedupe. The date component runs through
+    // parseEventInstant so that the SAME wall-clock event from the SAME source
+    // formatted two different ways (naive ET vs UTC Z) collapses correctly —
+    // same root cause as the RUF Bible Study Pass 2 bug, just at the earlier
+    // pass. Uses ms-since-epoch as the key fragment instead of the raw string;
+    // collisions on the same instant always indicate a true duplicate.
+    // Falls back to the raw string for unparseable dates (preserves legacy).
     const seen = new Set();
     const exactDupes = [];
     let pass1 = events.filter(e => {
-        const key = `${(e.title||'').trim().toLowerCase()}-${e.date}-${(e.location || '').trim().toLowerCase()}`;
+        const ms = parseEventInstant(e.date);
+        const dateKey = !isNaN(ms) ? String(ms) : (e.date || '');
+        const key = `${(e.title||'').trim().toLowerCase()}-${dateKey}-${(e.location || '').trim().toLowerCase()}`;
         if (seen.has(key)) {
-            exactDupes.push({ title: e.title, date: e.date.substring(0,10), source: (e.tags||[])[0] || 'Unknown' });
+            exactDupes.push({ title: e.title, date: (e.date || '').substring(0,10), source: (e.tags||[])[0] || 'Unknown' });
             return false;
         }
         seen.add(key);

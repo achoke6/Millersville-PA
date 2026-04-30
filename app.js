@@ -2285,14 +2285,10 @@ function renderLastUpdated(iso) {
     else label = `Updated ${Math.floor(diffMin / (24 * 60))} days ago`;
     const stale = diffMin > 180;
     const suffix = stale ? ' ⚠️' : '';
-    // Home page pill — only on home view, top-of-feed position
-    const homeEl = document.getElementById('home-last-updated');
-    if (homeEl) {
-        homeEl.textContent = label + suffix;
-        homeEl.classList.toggle('stale', stale);
-        homeEl.style.display = 'block';
-    }
-    // Footer — visible across all views, dimmer styling
+    // Footer indicator — visible across all views. (Previously also written
+    // to a #home-last-updated pill on the home view, but that duplicated the
+    // footer message in close visual proximity. Footer is the canonical
+    // location now since it's seen on every page.)
     const footerEl = document.getElementById('footer-last-updated');
     if (footerEl) {
         footerEl.textContent = label + suffix;

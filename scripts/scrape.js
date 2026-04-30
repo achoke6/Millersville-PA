@@ -1276,17 +1276,39 @@ async function runScraper() {
     } catch (e) { console.log(`  ⚠️ Hudl broadcast check error: ${e.message}`); }
 
     // ===== 2c. HUDL BROADCAST CHECK (Millersville University Athletics) =====
-    // MU broadcasts on PSAC Sports Digital Network, which is powered by Hudl TV
-    // (BlueFrame was acquired by Hudl in 2022). MU's Hudl schoolId is derived
-    // from org ID 12060: base64("School12060") = "U2Nob29sMTIwNjA=".
     //
-    // The user-facing PSAC URL is
+    // Hoisted outside the try-block so it survives partial failures (we still
+    // record "0 broadcasts matched" in status.sources, which the dashboard's
+    // degradation detector compares against the rolling 7-day median to flag
+    // silent breakage — same mechanism that protects the per-source counts).
+    let muHudlMatchCount = 0;
+    //
+    // MU broadcasts on PSAC Sports Digital Network (https://psacsportsdigitalnetwork.com/
+    // millersvilleathletics/), which is powered by Hudl TV (BlueFrame became Hudl in
+    // 2022). The user-facing per-game URL is:
+    //
     //   https://psacsportsdigitalnetwork.com/millersvilleathletics/?B=<broadcastId>
-    // where <broadcastId> is the numeric BlueFrame broadcast ID. We haven't
-    // verified the mapping from Hudl's `id` or `internalId` to that BlueFrame
-    // ID, so we use the same fan.hudl.com URL pattern as the PM block — known
-    // to work because BlueFrame's player ultimately embeds vcloud.hudl.com, so
-    // both front-ends resolve the same underlying broadcast.
+    //
+    // where <broadcastId> is the numeric ID returned by Hudl's `internalId` field
+    // on the Broadcast record.
+    //
+    // PRIOR APPROACH (broken Apr 2026): we joined `scheduleEntryPublicSummaries`
+    // items to events by date+sport+gender, then built a `fan.hudl.com/.../&s=<id>`
+    // URL. Two failures:
+    //   1. The schedule-entries query started returning empty for MU. PSAC
+    //      registers broadcasts directly without back-linking to scheduled entries
+    //      (scheduleEntryId is null on every MU broadcast we've seen), so this
+    //      query was never going to be a reliable source.
+    //   2. Even if it had returned data, the `s=<id>` URL pointed at fan.hudl.com,
+    //      not the PSAC-branded site users expect.
+    //
+    // CURRENT APPROACH: query the broadcasts list directly. We pull all current
+    // (LIVE + UPCOMING) broadcasts in one page and a date-bounded page of
+    // ARCHIVED broadcasts, parse each broadcast's `title` for sport + opponent +
+    // game-number, and match against MU events by (date, sport). Doubleheaders
+    // are handled by sorting both broadcasts and events for a given date+sport,
+    // then assigning earliest-to-earliest. The output URL is the PSAC-branded
+    // form with the `internalId` as the `?B=` value.
     //
     // This block OVERRIDES the Sidearm streamLink for MU games when Hudl has a
     // broadcast entry. Combined with the earlier defensive filter (which strips
@@ -1296,127 +1318,233 @@ async function runScraper() {
     // the same as before, improved by specific archive URLs where available.
     try {
         console.log("📡 Checking Hudl broadcasts for MU games...");
-        const muHudlQuery = `query Web_Fan_GetScheduleEntrySummaries_r1($input: GetScheduleEntryPublicSummariesInput!) {
-  scheduleEntryPublicSummaries(input: $input) {
-    items {
-      gameType genderId id internalId
-      opponentDetails { name shortName __typename }
-      scheduleEntryId scheduleEntryLocation scheduleEntryOutcome
-      score1 score2 sportId teamId timeUtc broadcastStatus
+        const muBroadcastQuery = `query Web_Fan_GetBroadcasts_r1($input: GetBroadcastsPaginatedInput!) {
+  broadcasts(input: $input) {
+    edges {
+      node {
+        broadcastDateUtc
+        broadcastId
+        internalId
+        siteId
+        status
+        title
+        __typename
+      }
+      cursor
       __typename
     }
-    totalCount __typename
+    pageInfo { endCursor hasNextPage __typename }
+    totalCount
+    __typename
   }
 }`;
-        const muHudlBroadcasts = new Map();  // key -> { id, timeUtc }
-        const muHudlAllEntries = new Map();  // key -> { id, timeUtc } (for past highlights)
-        let muTotalEntries = 0, muBroadcastCount = 0;
 
-        // Same 30-day paginated chunking as PM block
-        const muChunkSize = 30 * 24 * 60 * 60 * 1000;
-        let muStart = pastDate.getTime();
-        const muEnd = futureDate.getTime();
+        // Fetch one page of the broadcasts list. The Hudl API tightened in early
+        // 2026 and now requires `x-hudl-usehotchocolate: 100` plus a browser-like
+        // origin/referer; without those it returns empty results silently. We
+        // send the same headers fan.hudl.com sends.
+        const fetchBroadcastPage = async (statusFilter, cursor) => {
+            const inputVars = {
+                first: 100,
+                sortByAscending: false,
+                sortType: 'BROADCAST_DATE',
+                schoolIds: ['U2Nob29sMTIwNjA='],
+                teamIds: [],
+                broadcastStatusFilter: statusFilter
+            };
+            if (cursor) inputVars.after = cursor;
 
-        while (muStart < muEnd) {
-            const chunkEnd = Math.min(muStart + muChunkSize, muEnd);
-            let cursor = null;
-            let hasMore = true;
-            while (hasMore) {
-                const inputVars = {
-                    sortType: 'SCHEDULE_ENTRY_DATE',
-                    schoolIds: ['U2Nob29sMTIwNjA='],
-                    filterStartDate: new Date(muStart).toISOString(),
-                    filterEndDate: new Date(chunkEnd).toISOString(),
-                    sortByAscending: true,
-                    first: 100
-                };
-                if (cursor) inputVars.after = cursor;
+            const res = await fetch('https://www.hudl.com/api/public/graphql/query', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-hudl-usehotchocolate': '100',
+                    'origin': 'https://fan.hudl.com',
+                    'referer': 'https://fan.hudl.com/',
+                    'user-agent': 'Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Mobile Safari/537.36'
+                },
+                body: JSON.stringify({
+                    operationName: 'Web_Fan_GetBroadcasts_r1',
+                    variables: { input: inputVars },
+                    query: muBroadcastQuery
+                })
+            });
+            if (!res.ok) return null;
+            return await res.json();
+        };
 
-                const res = await fetch('https://www.hudl.com/api/public/graphql/query', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        operationName: 'Web_Fan_GetScheduleEntrySummaries_r1',
-                        variables: { input: inputVars },
-                        query: muHudlQuery
-                    })
-                });
-                if (!res.ok) { hasMore = false; break; }
-                const data = await res.json();
-                const result = data?.data?.scheduleEntryPublicSummaries;
-                const items = result?.items || [];
-                muTotalEntries += items.length;
-
-                for (const item of items) {
-                    const gameDate = new Date(item.timeUtc).toISOString().split('T')[0];
-                    const key = `${gameDate}|${item.sportId}|${item.genderId}`;
-                    if (!muHudlAllEntries.has(key)) {
-                        muHudlAllEntries.set(key, { id: item.id, timeUtc: item.timeUtc });
-                    }
-                    if (item.broadcastStatus !== null && item.broadcastStatus !== undefined) {
-                        muHudlBroadcasts.set(key, { id: item.id, timeUtc: item.timeUtc });
-                        muBroadcastCount++;
-                    }
-                }
-                hasMore = result?.pageInfo?.hasNextPage || false;
-                cursor = result?.pageInfo?.endCursor || null;
-                if (items.length === 0) hasMore = false;
+        // Parse a broadcast title into the sport name. Hudl's title format we've
+        // observed:
+        //   "Baseball vs. West Chester (Game 1)"
+        //   "Softball vs. Bloomsburg (Game 2)"
+        //   "Lacrosse vs. Bloomsburg"
+        //   "Baseball vs. Wilmington "                 (note trailing space)
+        //   "Millersville Invite"                      (track meet — no opponent)
+        //
+        // Returns the lowercased sport word, or null if the title doesn't fit any
+        // expected shape. The sport word is matched against event tags in the
+        // assignment loop below — anything we can't parse just doesn't get a link.
+        const parseBroadcastTitle = (title) => {
+            if (!title) return null;
+            const t = title.trim();
+            // Match "Sport vs. Opponent" / "Sport at Opponent" / "Sport vs Opponent"
+            const m = t.match(/^([A-Za-z][A-Za-z ]*?)\s+(?:vs\.?|at)\s+/i);
+            if (m) {
+                const sport = m[1].trim().toLowerCase();
+                // Common multi-word sports — collapse to single canonical token
+                if (sport.includes('field hockey'))  return 'field hockey';
+                if (sport.includes('cross country')) return 'cross country';
+                if (sport.includes('track'))         return 'track';
+                return sport;
             }
-            muStart = chunkEnd;
+            // Fallbacks for sports without "vs." in the title (track meets, etc).
+            // Order matters — check more-specific tokens first.
+            const lower = t.toLowerCase();
+            if (/\b(invitational|invite|relays|championships?)\b/.test(lower)) {
+                if (/\bswim/.test(lower))             return 'swimming';
+                if (/\bcross[- ]country/.test(lower)) return 'cross country';
+                if (/\btrack/.test(lower))            return 'track';
+                // Generic invite/meet — assume track since that's the most common
+                return 'track';
+            }
+            return null;
+        };
+
+        // Pull broadcasts in two passes: current (LIVE/UPCOMING — we always want
+        // ALL of these, the count should be small) and ARCHIVED (we cap to our
+        // pastDate window so we don't fetch 600+ historical broadcasts each run).
+        // ARCHIVED comes back sorted newest-first, so we stop paginating as
+        // soon as we cross pastDate.
+        const broadcasts = [];   // { sport, dateUtc, internalId, status, title }
+        const pastCutoff = pastDate.getTime();
+        const futureCutoff = futureDate.getTime();
+        let muTotalBroadcasts = 0;
+
+        // Pass 1: anything currently live or scheduled. The set is tiny (typically
+        // 0–5 entries) so a single page is enough.
+        for (const status of ['LIVE', 'UPCOMING']) {
+            const data = await fetchBroadcastPage(status, null);
+            const edges = data?.data?.broadcasts?.edges || [];
+            for (const edge of edges) {
+                muTotalBroadcasts++;
+                const node = edge.node;
+                const ms = new Date(node.broadcastDateUtc).getTime();
+                if (isNaN(ms) || ms < pastCutoff || ms > futureCutoff) continue;
+                const sport = parseBroadcastTitle(node.title);
+                if (!sport || !node.internalId) continue;
+                broadcasts.push({
+                    sport,
+                    dateUtc: node.broadcastDateUtc,
+                    ms,
+                    internalId: node.internalId,
+                    status: node.status,
+                    title: node.title
+                });
+            }
         }
-        console.log(`  📺 MU Hudl: ${muTotalEntries} schedule entries, ${muBroadcastCount} with broadcasts`);
 
-        // Reuse the sport mapping from the PM block via global (set at line above).
-        // If for some reason the PM block failed and didn't set it, derive ours here.
-        const muSportToHudlId = global._hudlSportToId || (() => {
-            const m = { 1:'football', 2:'basketball', 3:'soccer', 4:'volleyball',
-                        5:'baseball', 6:'softball', 7:'lacrosse', 8:'field hockey',
-                        9:'wrestling', 10:'tennis', 11:'track', 12:'swimming' };
-            const out = {};
-            for (const [id, name] of Object.entries(m)) out[name] = parseInt(id);
-            return out;
-        })();
+        // Pass 2: archived broadcasts within our pastDate window. Paginate until
+        // we cross the cutoff (broadcasts come back newest-first, so once we see
+        // one older than pastDate we're done — everything after will be older).
+        let archCursor = null;
+        let archHasMore = true;
+        let archPagesFetched = 0;
+        const ARCH_PAGE_CAP = 10;  // safety: 100 broadcasts/page × 10 = 1000 max
+        while (archHasMore && archPagesFetched < ARCH_PAGE_CAP) {
+            const data = await fetchBroadcastPage('ARCHIVED', archCursor);
+            archPagesFetched++;
+            const result = data?.data?.broadcasts;
+            const edges = result?.edges || [];
+            if (edges.length === 0) break;
+            let crossedCutoff = false;
+            for (const edge of edges) {
+                muTotalBroadcasts++;
+                const node = edge.node;
+                const ms = new Date(node.broadcastDateUtc).getTime();
+                if (isNaN(ms)) continue;
+                if (ms < pastCutoff) { crossedCutoff = true; continue; }
+                if (ms > futureCutoff) continue;  // shouldn't happen for archived but defensive
+                const sport = parseBroadcastTitle(node.title);
+                if (!sport || !node.internalId) continue;
+                broadcasts.push({
+                    sport,
+                    dateUtc: node.broadcastDateUtc,
+                    ms,
+                    internalId: node.internalId,
+                    status: node.status,
+                    title: node.title
+                });
+            }
+            archHasMore = (result?.pageInfo?.hasNextPage && !crossedCutoff) || false;
+            archCursor = result?.pageInfo?.endCursor || null;
+        }
+        console.log(`  📺 MU Hudl: ${muTotalBroadcasts} broadcasts queried, ${broadcasts.length} matched our window`);
 
-        // Apply MU Hudl broadcasts to MU Athletic Competitions events already in
-        // the events array (Sidearm MU block ran earlier in section 2).
-        let muMatchCount = 0, muHighlightCount = 0;
+        // Group broadcasts by ET calendar day + sport. ET-anchored grouping
+        // matters because doubleheaders that start at e.g. 4 PM and 7 PM ET on
+        // the same Millersville evening would split across UTC days otherwise.
+        const broadcastsByDaySport = new Map();  // "2026-04-30|baseball" -> [b, b, ...]
+        for (const b of broadcasts) {
+            const day = deriveDayET(b.ms);
+            const key = `${day}|${b.sport}`;
+            if (!broadcastsByDaySport.has(key)) broadcastsByDaySport.set(key, []);
+            broadcastsByDaySport.get(key).push(b);
+        }
+        // Sort each bucket by time ascending so doubleheader assignment is stable
+        // (earliest event gets earliest broadcast — usually Game 1).
+        for (const list of broadcastsByDaySport.values()) {
+            list.sort((a, b) => a.ms - b.ms);
+        }
+
+        // Group MU athletic events by ET day + sport in the same shape, then
+        // sort each bucket by start time. Walking both lists in parallel order
+        // gives correct doubleheader pairing without needing to parse "(Game 1)"
+        // or "(Game 2)" out of titles.
+        const eventsByDaySport = new Map();
         for (const ev of events) {
             if (!ev.tags || !ev.tags.includes('MU')) continue;
             if (!ev.tags.includes('Athletic Competitions')) continue;
-            const sportTag = ev.tags.find(t => muSportToHudlId[t.toLowerCase()]);
+            const sportTag = ev.tags.find(t =>
+                ['Baseball','Softball','Lacrosse','Volleyball','Football','Basketball',
+                 'Soccer','Field Hockey','Tennis','Track','Golf','Swimming','Cross Country',
+                 'Wrestling'].includes(t)
+            );
             if (!sportTag) continue;
-            const evDate = new Date(ev.date).toISOString().split('T')[0];
-            // MU tag convention is Women's / Men's (not Girls / Boys like PM)
-            const gender = ev.tags.includes("Women's") ? 1 : 0;
-            const sportId = muSportToHudlId[sportTag.toLowerCase()];
-            const key = `${evDate}|${sportId}|${gender}`;
+            const evMs = parseEventInstant(ev.date);
+            if (isNaN(evMs)) continue;
+            const day = deriveDayET(evMs);
+            const key = `${day}|${sportTag.toLowerCase()}`;
+            if (!eventsByDaySport.has(key)) eventsByDaySport.set(key, []);
+            eventsByDaySport.get(key).push({ ev, ms: evMs });
+        }
+        for (const list of eventsByDaySport.values()) {
+            list.sort((a, b) => a.ms - b.ms);
+        }
 
-            const broadcast = muHudlBroadcasts.get(key);
-            if (broadcast) {
-                const watchDate = new Date(broadcast.timeUtc).toISOString();
-                ev.streamLink = `https://fan.hudl.com/usa/pa/millersville/organization/12060/millersville/schedule?date=${encodeURIComponent(watchDate)}&range=Day&s=${encodeURIComponent(broadcast.id)}`;
-                muMatchCount++;
-            } else if (new Date(ev.date) < now) {
-                // Past game with no broadcast — link to team schedule day view for
-                // any highlight reels that may be available
-                const entry = muHudlAllEntries.get(key);
-                if (entry) {
-                    const watchDate = new Date(entry.timeUtc).toISOString();
-                    ev.streamLink = `https://fan.hudl.com/usa/pa/millersville/organization/12060/millersville/schedule?date=${encodeURIComponent(watchDate)}&range=Day&s=${encodeURIComponent(entry.id)}`;
-                    muHighlightCount++;
-                }
-            }
+        // Assign broadcasts to events. For each (day, sport) bucket, walk the
+        // sorted event list and assign the next available broadcast in the
+        // matching broadcast bucket.
+        for (const [key, eventList] of eventsByDaySport) {
+            const broadcastList = broadcastsByDaySport.get(key);
+            if (!broadcastList || broadcastList.length === 0) continue;
+            const pairings = Math.min(eventList.length, broadcastList.length);
+            for (let i = 0; i < pairings; i++) {
+                const { ev } = eventList[i];
+                const b = broadcastList[i];
+                ev.streamLink = `https://psacsportsdigitalnetwork.com/millersvilleathletics/?B=${b.internalId}`;
+                muHudlMatchCount++;
 
-            // Re-evaluate isLive now that streamLink may have been added
-            if (ev.streamLink && !ev.isLive) {
-                const evStart = new Date(ev.date);
-                const evEnd = new Date(evStart.getTime() + 3 * 60 * 60 * 1000);
-                if (now >= evStart && now <= evEnd && !ev.gameResult) {
-                    ev.isLive = true;
+                // Re-evaluate isLive now that streamLink may have been added
+                if (!ev.isLive) {
+                    const evStart = new Date(ev.date);
+                    const evEnd = new Date(evStart.getTime() + 3 * 60 * 60 * 1000);
+                    if (now >= evStart && now <= evEnd && !ev.gameResult) {
+                        ev.isLive = true;
+                    }
                 }
             }
         }
-        console.log(`  📺 MU matched ${muMatchCount} broadcasts, ${muHighlightCount} past highlight links`);
+        console.log(`  📺 MU matched ${muHudlMatchCount} broadcasts to events`);
     } catch (e) { console.log(`  ⚠️ MU Hudl broadcast check error: ${e.message}`); }
 
     // ===== 3. MU CALENDAR (NON-SPORT EVENTS ONLY) =====
@@ -3718,7 +3846,15 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 borough: bySourceCount('Borough'),
                 vfw: bySourceCount('VFW'),
                 phantomPower: bySourceCount('Phantom Power'),
-                community: bySourceCount('Community')
+                community: bySourceCount('Community'),
+                // Enrichment count (not events). Number of MU athletic events
+                // that got a Hudl/PSAC streamLink this run. Watched by the
+                // status dashboard's per-source degradation detector — the
+                // entire Hudl block silently broke once already (returned 0
+                // schedule entries for months) and the existing source-count
+                // monitors couldn't catch it because Hudl is enrichment, not
+                // a source. This metric closes that blind spot.
+                muHudlBroadcasts: muHudlMatchCount
             },
             sports: {
                 total: deduped.filter(e =>

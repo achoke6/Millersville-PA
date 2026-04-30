@@ -209,7 +209,13 @@ async function render() {
         { label: 'Borough',                key: 'borough' },
         { label: 'VFW',                    key: 'vfw' },
         { label: 'Phantom Power',          key: 'phantomPower' },
-        { label: 'Community submissions',  key: 'community' }
+        { label: 'Community submissions',  key: 'community' },
+        // Enrichment row, not a source — counts MU athletic events that got
+        // a Hudl/PSAC streamLink this run. Same compareSource() degradation
+        // logic flags it if the count drops well below the 7-day median, so
+        // a silent Hudl API change (like the one that broke this for months)
+        // gets caught next cron instead of next baseball season.
+        { label: 'MU Hudl broadcasts',     key: 'muHudlBroadcasts' }
     ];
     const degraded = [];
     const sourceRows = sourceList.map(({ label, key }) => {

@@ -989,6 +989,15 @@ window.openFeedSettings = function() {
             </div>
         </div>
         <div id="feed-options">${sectionsHtml}</div>
+        <!-- Calendar subscription card. Lets the user grab a personalized iCal
+             feed URL containing their current favorites. Sits between the
+             favorites picker and the affiliation footer because subscribing
+             is the natural next step after picking what they care about. -->
+        <div style="margin-top:14px;padding:14px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);">
+            <div style="font-size:0.92rem;font-weight:700;margin-bottom:4px;">📅 Add to Your Calendar</div>
+            <div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:10px;">Subscribe to a calendar feed of just your favorites. Auto-updates with new events.</div>
+            <button onclick="window.openCalendarSubscribe()" class="btn btn-sm btn-outline" style="width:100%;font-size:0.85rem;">🔗 Get my subscription URL</button>
+        </div>
         <!-- Small affiliation opt-out/opt-in link at the bottom. Mirrors the welcome banner's
              "Not a student? I'm a townie →" pattern. Text flips depending on current affiliation
              so users can switch back if they mis-picked. Unset users see the townie opt-out. -->
@@ -1000,6 +1009,112 @@ window.openFeedSettings = function() {
         </div>`;
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
+};
+
+// Calendar subscription modal — opened from the "Get my subscription URL"
+// button inside the favorites settings modal. Builds a /events.ics URL
+// containing the user's current favorites in the ?p= query string and
+// shows three paths to subscribe:
+//   1. webcal:// link — Apple Calendar / iOS / macOS / Outlook desktop
+//      tap-to-subscribe. Strip https:// → webcal:// since calendar apps
+//      treat that scheme as "subscribe to read-only calendar".
+//   2. Google Calendar deep-link — pre-fills Google's "Add by URL" form.
+//   3. Copy URL — universal fallback for any other client.
+//
+// Calendar apps re-fetch on their own schedule (typically every few hours),
+// so subscribers get fresh events automatically once added.
+//
+// Note: the URL is stateless — favorites travel in the URL itself. If the
+// user changes their favorites later, the existing subscription keeps the
+// OLD favorites until they re-subscribe with a fresh URL. We surface this
+// in the modal so it's not a surprise.
+window.openCalendarSubscribe = function() {
+    const favs = (feedPrefs && feedPrefs.length > 0) ? feedPrefs : [];
+
+    const origin = window.location.origin;
+    // Comma-joined CSV in ?p=. encodeURIComponent handles the colons in
+    // "club:RUF" style prefs and any spaces in club tag names.
+    const httpsUrl = favs.length > 0
+        ? `${origin}/events.ics?p=${encodeURIComponent(favs.join(','))}`
+        : `${origin}/events.ics`;
+    // webcal:// triggers the OS-level "subscribe to calendar" handler on
+    // Apple platforms and Outlook. Same URL path as https — the protocol
+    // swap is what calendar apps key off of.
+    const webcalUrl = httpsUrl.replace(/^https?:\/\//, 'webcal://');
+    // Google Calendar's add-by-URL deep link. cid is just URL-encoded.
+    const gcalUrl = `https://calendar.google.com/calendar/u/0/r?cid=${encodeURIComponent(httpsUrl)}`;
+
+    // Estimate how many events will appear in the subscription. Useful so
+    // users can sanity-check before adding ("0 matches" → they probably
+    // need to set more favorites first). Uses the same eventMatchesFeed
+    // function the rendering uses, so the count matches reality.
+    let countLabel;
+    if (favs.length === 0) {
+        countLabel = '<strong>No favorites set</strong> — your subscription will be empty. Pick some favorites above first.';
+    } else if (Array.isArray(allEvents) && allEvents.length > 0) {
+        const matches = allEvents.filter(e => eventMatchesFeed(e)).length;
+        countLabel = matches > 0
+            ? `<strong>${matches}</strong> upcoming event${matches === 1 ? '' : 's'} match your favorites.`
+            : '0 events currently match your favorites — try adding more selections.';
+    } else {
+        countLabel = `Subscription will include events matching your ${favs.length} favorite${favs.length === 1 ? '' : 's'}.`;
+    }
+
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:10000;display:flex;align-items:center;justify-content:center;padding:16px;';
+    overlay.onclick = function(ev) { if (ev.target === overlay) overlay.remove(); };
+
+    const modal = document.createElement('div');
+    modal.style.cssText = 'background:var(--surface);border-radius:var(--radius);max-width:480px;width:100%;max-height:90vh;overflow-y:auto;padding:24px;position:relative;';
+    modal.innerHTML = `
+        <button onclick="this.closest('div[style*=fixed]').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);">✕</button>
+        <h3 style="margin:0 0 4px;">📅 Subscribe to Your Calendar</h3>
+        <p style="font-size:0.82rem;color:var(--text-muted);margin:0 0 14px;">${countLabel}</p>
+
+        <div style="display:grid;gap:10px;margin-bottom:14px;">
+            <a href="${escHtml(webcalUrl)}" class="btn btn-ticket" style="text-align:center;font-size:0.9rem;text-decoration:none;padding:12px;">
+                📱 Apple Calendar / iOS / Outlook
+            </a>
+            <a href="${escHtml(gcalUrl)}" target="_blank" rel="noopener" class="btn btn-outline" style="text-align:center;font-size:0.9rem;text-decoration:none;padding:12px;">
+                🟢 Google Calendar
+            </a>
+        </div>
+
+        <div style="font-size:0.78rem;font-weight:700;margin-bottom:4px;">Or copy URL for any other app:</div>
+        <div style="display:flex;gap:6px;margin-bottom:14px;">
+            <input id="cal-url-input" type="text" readonly value="${escHtml(httpsUrl)}" onclick="this.select()" style="flex:1;padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:monospace;font-size:0.72rem;background:var(--bg);color:var(--text);overflow:hidden;text-overflow:ellipsis;">
+            <button onclick="window.copyCalendarUrl(this)" class="btn btn-sm btn-outline" style="font-size:0.78rem;white-space:nowrap;">Copy</button>
+        </div>
+
+        <p style="font-size:0.72rem;color:var(--text-muted);margin:0;line-height:1.5;">
+            <strong>Note:</strong> If you change your favorites later, you'll need to re-subscribe with a new URL.
+            Calendar apps refresh in the background every few hours.
+        </p>
+    `;
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+};
+
+// Clipboard copy helper for the calendar subscription URL. Tries the
+// modern Clipboard API first (HTTPS, modern browsers), falls back to
+// the legacy execCommand path (older browsers, non-secure contexts).
+// The button's textContent flips to "✓ Copied" briefly as feedback.
+window.copyCalendarUrl = function(btn) {
+    const input = document.getElementById('cal-url-input');
+    if (!input) return;
+    const url = input.value;
+    const done = () => {
+        const orig = btn.textContent;
+        btn.textContent = '✓ Copied';
+        setTimeout(() => { btn.textContent = orig; }, 1500);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(done).catch(() => {
+            input.select(); document.execCommand('copy'); done();
+        });
+    } else {
+        input.select(); document.execCommand('copy'); done();
+    }
 };
 
 window.toggleFeedGroup = function(groupCb) {

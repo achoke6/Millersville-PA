@@ -7,6 +7,13 @@ RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
+# iCal subscription endpoint. /events.ics is a clean URL that calendar
+# apps recognize by extension; the rewrite hands it to the PHP handler
+# which filters by ?p= favorites and emits an iCal feed. QSA preserves
+# the query string. The pretty URL also makes future implementation
+# changes (PHP → static, etc.) transparent to subscribers.
+RewriteRule ^events\.ics$ events.ics.php [L,QSA]
+
 # For everything else, serve index.html (SPA routing)
 RewriteRule ^ index.html [L]
 

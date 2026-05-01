@@ -39,26 +39,52 @@ if (file_exists($cachePath) && (time() - filemtime($cachePath)) < CACHE_TTL_SECO
     exit;
 }
 
-// Fetch fresh from upstream. Suppress the upstream's Set-Cookie header by
-// not forwarding it (we don't read $http_response_header, only the body).
-$ctx = stream_context_create([
-    'http' => [
-        'timeout' => FETCH_TIMEOUT_SECONDS,
-        'follow_location' => 1,
-        'user_agent' => 'Mozilla/5.0 (compatible; MillersvilleApp/1.0; +https://millersville.app)',
-        'header' => "Accept: image/jpeg,image/*\r\n",
-        'ignore_errors' => true  // so we can inspect non-200 responses ourselves
-    ],
-    'ssl' => [
-        'verify_peer' => true,
-        'verify_peer_name' => true
-    ]
-]);
-
-$body = @file_get_contents(UPSTREAM, false, $ctx);
+// Fetch fresh from upstream via cURL. Originally used file_get_contents with
+// a stream context, but DreamHost shared hosting often has allow_url_fopen=Off
+// for HTTPS, which fails silently and falls through to the placeholder. cURL
+// is always available regardless of php.ini and gives us better error
+// signaling. Cookies from the upstream response are intentionally ignored —
+// we serve the body bytes only, so they never reach the client.
+$body = false;
+$httpCode = 0;
+$curlErr = '';
+if (function_exists('curl_init')) {
+    $ch = curl_init(UPSTREAM);
+    curl_setopt_array($ch, [
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_MAXREDIRS => 3,
+        CURLOPT_TIMEOUT => FETCH_TIMEOUT_SECONDS,
+        CURLOPT_CONNECTTIMEOUT => 5,
+        CURLOPT_USERAGENT => 'Mozilla/5.0 (compatible; MillersvilleApp/1.0; +https://millersville.app)',
+        CURLOPT_HTTPHEADER => ['Accept: image/jpeg,image/*'],
+        CURLOPT_SSL_VERIFYPEER => true,
+        CURLOPT_SSL_VERIFYHOST => 2
+    ]);
+    $body = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    if ($body === false) $curlErr = curl_error($ch);
+    curl_close($ch);
+} else {
+    // Last-resort fallback for environments without cURL. Will fail on hosts
+    // with allow_url_fopen=Off; that's expected and we'll log it below.
+    $ctx = stream_context_create([
+        'http' => [
+            'timeout' => FETCH_TIMEOUT_SECONDS,
+            'follow_location' => 1,
+            'user_agent' => 'Mozilla/5.0 (compatible; MillersvilleApp/1.0; +https://millersville.app)',
+            'header' => "Accept: image/jpeg,image/*\r\n",
+            'ignore_errors' => true
+        ],
+        'ssl' => ['verify_peer' => true, 'verify_peer_name' => true]
+    ]);
+    $body = @file_get_contents(UPSTREAM, false, $ctx);
+    $httpCode = $body !== false ? 200 : 0;
+}
 
 // Validate. Need: non-empty, JPEG magic bytes (FF D8 FF), reasonable size.
 $looksValid = ($body !== false)
+    && ($httpCode >= 200 && $httpCode < 300)
     && (strlen($body) > 1000)
     && (substr($body, 0, 3) === "\xFF\xD8\xFF");
 
@@ -70,6 +96,19 @@ if ($looksValid) {
     echo $body;
     exit;
 }
+
+// Log enough diagnostic info to debug the failure mode without exposing
+// sensitive details. http=403 means upstream blocked us; http=0 with a
+// curl error usually means DNS or SSL issue; bad-magic-bytes means we
+// got HTML (e.g. an error page) instead of an image.
+$diag = sprintf(
+    'wxcam.php upstream FAILED: http=%d, bytes=%d, magic=%s, curlErr=%s',
+    $httpCode,
+    is_string($body) ? strlen($body) : -1,
+    is_string($body) && strlen($body) >= 3 ? bin2hex(substr($body, 0, 3)) : 'n/a',
+    $curlErr ?: 'none'
+);
+error_log($diag);
 
 // Upstream failed. If we have ANY cached copy (even stale), serve that —
 // stale image is much better than a broken one for the user. Only fall back

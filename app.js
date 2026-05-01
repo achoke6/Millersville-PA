@@ -2241,10 +2241,6 @@ window.switchView=function(view,skipPush){
     if(!skipPush && window.location.pathname.replace(/\/$/,'')!==path){
         history.pushState({view},'',path);
     }
-    // Track SPA page view in Google Analytics
-    if(typeof gtag === 'function'){
-        gtag('event', 'page_view', { page_path: path, page_title: 'Millersville.APP ' + (viewLabels[view]||'') });
-    }
     // Lazy-load Ecwid when store is first visited
     if(view==='store') loadEcwidStore();
 };
@@ -4812,17 +4808,11 @@ async function loadSponsors() {
 function trackImpression(sponsorId, placement) {
     if (!sponsorImpressions[sponsorId]) sponsorImpressions[sponsorId] = { impressions: 0, clicks: 0 };
     sponsorImpressions[sponsorId].impressions++;
-    if (typeof gtag === 'function') {
-        gtag('event', 'ad_impression', { sponsor_id: sponsorId, placement: placement, sponsor_name: sponsorData.sponsors.find(s => s.id === sponsorId)?.name || sponsorId });
-    }
 }
 
 function trackClick(sponsorId, placement) {
     if (!sponsorImpressions[sponsorId]) sponsorImpressions[sponsorId] = { impressions: 0, clicks: 0 };
     sponsorImpressions[sponsorId].clicks++;
-    if (typeof gtag === 'function') {
-        gtag('event', 'ad_click', { sponsor_id: sponsorId, placement: placement, sponsor_name: sponsorData.sponsors.find(s => s.id === sponsorId)?.name || sponsorId });
-    }
 }
 
 function buildSponsorCard(s, placement) {

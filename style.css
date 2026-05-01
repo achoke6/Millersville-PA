@@ -5,15 +5,19 @@
     --bg: #f0f2f5;
     --surface: #ffffff;
     --text: #0f172a;
-    --text-muted: #64748b;
+    --text-muted: #475569;
     --border: #e2e8f0;
     --border-hover: #cbd5e1;
     --gold: #eaab00;
+    /* Darker gold for text-only uses (logo dot, timestamps).
+       --gold stays as the decorative/accent color for borders, soft tints,
+       hover states, etc. — see WCAG contrast notes in style.css history. */
+    --gold-text: #946000;
     --gold-soft: rgba(234, 171, 0, 0.12);
     --navy: #1e3a8a;
     --navy-soft: rgba(30, 58, 138, 0.08);
-    --green: #059669;
-    --green-soft: rgba(5, 150, 105, 0.1);
+    --green: #047857;
+    --green-soft: rgba(4, 120, 87, 0.1);
     --red-soft: #fef2f2;
     --red: #dc2626;
     --radius: 14px;
@@ -55,7 +59,7 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .header-container { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; }
 .logo-block h1 { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.5px; color: var(--text); line-height: 1; user-select: none; display: flex; align-items: baseline; }
 .logo-link { cursor: pointer; }
-.logo-dot { color: var(--gold); }
+.logo-dot { color: var(--gold-text); }
 .header-page-title { font-size: 1.15rem; font-weight: 600; color: var(--text-muted); margin-left: 2px; pointer-events: none; cursor: default; }
 
 /* =========================================================
@@ -803,7 +807,7 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
    provenance isn't lost. */
 .tl-fav { background: rgba(216, 163, 46, 0.08); }
 .tl-fav:hover { background: var(--gold-soft); }
-.tl-time { font-size: 0.78rem; font-weight: 700; color: var(--gold); min-width: 60px; flex-shrink: 0; padding-top: 1px; }
+.tl-time { font-size: 0.78rem; font-weight: 700; color: var(--gold-text); min-width: 60px; flex-shrink: 0; padding-top: 1px; }
 /* 3-column flex row: [MU pill] [title (grows/wraps)] [badges (right-anchored)].
    Critical: flex-wrap: nowrap prevents badges from dropping to a new line
    beneath the title on narrow viewports — instead the title itself wraps

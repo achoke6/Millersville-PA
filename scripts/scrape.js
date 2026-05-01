@@ -14,6 +14,35 @@ const SCRAPE_HORIZON_DAYS = 60;
 
 const sportsList = ['Baseball', 'Softball', 'Track', 'Soccer', 'Lacrosse', 'Tennis', 'Volleyball', 'Wrestling', 'Basketball', 'Football', 'Field Hockey', 'Golf', 'Cross Country', 'Cheerleading', 'Swimming', 'Rugby', 'Fencing', 'Esports', 'Archery'];
 
+// Resolve an event's end time for events.json serialization. Returns an ISO
+// string when the source carries an explicit end that should be persisted;
+// otherwise returns undefined and the consumer (app.js getEventEndTime,
+// events_ics.php) falls back to a sport/type default at render time. Rules:
+//   - Non-all-day: pass through any explicit end > start.
+//   - All-day: skip unless iCal end is materially after start (>25h). Single-
+//     day all-day events have iCal end = next-day-midnight per RFC 5545
+//     exclusive-end semantics, which would falsely flag them as multi-day on
+//     the frontend (where the rule is duration > 12h). True multi-day all-day
+//     events (festivals, art shows) sail past the 25h cutoff and pass through.
+// For recurring events pass the *occurrence's* start as `instanceStart` and
+// the original duration is computed from origStart/origEnd. For non-recurring
+// events, instanceStart === origStart and the helper just normalizes the
+// existing ev.end into ISO. Returns undefined defensively whenever any input
+// is missing or NaN, never throws.
+function resolveEndTime({ origStart, origEnd, instanceStart, isAllDay = false }) {
+    if (!origEnd || !origStart || !instanceStart) return undefined;
+    const startMs = new Date(origStart).getTime();
+    const endMs = new Date(origEnd).getTime();
+    if (!Number.isFinite(startMs) || !Number.isFinite(endMs)) return undefined;
+    const durationMs = endMs - startMs;
+    if (durationMs <= 0) return undefined;
+    if (isAllDay && durationMs <= 25 * 3600 * 1000) return undefined;
+    const end = new Date(new Date(instanceStart).getTime() + durationMs);
+    if (isNaN(end.getTime())) return undefined;
+    return end.toISOString();
+}
+
+
 // Load shortnames-overlay.json once at startup. Used to populate event
 // orgShortName fields on the way out, so the marauder home pill can show
 // "IAEM" instead of "International Association of Emergency Managers"
@@ -874,6 +903,7 @@ async function runScraper() {
             events.push({
                 title: cleanTitle,
                 date: eventDate.toISOString(),
+                endTime: resolveEndTime({ origStart: ev.start, origEnd: ev.end, instanceStart: eventDate }),
                 location: loc || "TBD",
                 tags: [...new Set(tags)],
                 price: ticketLink ? "Ticket Required" : "Free",
@@ -1064,7 +1094,9 @@ async function runScraper() {
                 const pmIsLive = now >= eventDate && now <= eventEnd && !!pmStreamLink;
 
                 events.push({
-                    title, date: eventDate.toISOString(), location: loc,
+                    title, date: eventDate.toISOString(),
+                    endTime: resolveEndTime({ origStart: ev.start, origEnd: ev.end, instanceStart: eventDate }),
+                    location: loc,
                     tags: [...new Set(tags)], price: "Free", ticketLink: "",
                     sourceLink: ev.url || "https://www.pennmanor.net/calendar/",
                     gameResult: '', gameScore: '',
@@ -1095,7 +1127,9 @@ async function runScraper() {
                 const pmBoardStream = /board/i.test(lt) ? 'https://www.youtube.com/@PennManorSchoolDistrict/streams' : '';
 
                 events.push({
-                    title, date: eventDate.toISOString(), location: loc,
+                    title, date: eventDate.toISOString(),
+                    endTime: resolveEndTime({ origStart: ev.start, origEnd: ev.end, instanceStart: eventDate }),
+                    location: loc,
                     tags: [...new Set(tags)], price: "Free", ticketLink: "",
                     sourceLink: ev.url || "https://www.pennmanor.net/calendar/",
                     streamLink: pmBoardStream
@@ -2316,6 +2350,7 @@ async function runScraper() {
                             events.push({
                                 title: modTitle,
                                 date: new Date(mod.start).toISOString(),
+                                endTime: resolveEndTime({ origStart: mod.start, origEnd: mod.end, instanceStart: mod.start, isAllDay }),
                                 location: mod.location || loc,
                                 tags: ['Borough'],
                                 price: 'Free', ticketLink: '',
@@ -2327,6 +2362,7 @@ async function runScraper() {
                             events.push({
                                 title,
                                 date: eventDate.toISOString(),
+                                endTime: resolveEndTime({ origStart: ev.start, origEnd: ev.end, instanceStart: eventDate, isAllDay }),
                                 location: loc,
                                 tags: ['Borough'],
                                 price: 'Free', ticketLink: '',
@@ -2356,6 +2392,7 @@ async function runScraper() {
                 events.push({
                     title,
                     date: eventDate.toISOString(),
+                    endTime: resolveEndTime({ origStart: ev.start, origEnd: ev.end, instanceStart: eventDate, isAllDay: singleIsAllDay }),
                     location: loc,
                     tags: ['Borough'],
                     price: 'Free', ticketLink: '',

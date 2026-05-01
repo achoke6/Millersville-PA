@@ -5438,7 +5438,7 @@ function runSearch(q) {
     results.innerHTML = html;
 }
 
-window.refreshCam=function(){const cam=document.getElementById('cam-img');if(cam)cam.src=`https://snowball.millersville.edu/~cws/wxcam/latest.jpeg?t=${Date.now()}`;const t=document.getElementById('cam-time');if(t)t.textContent=`Updated: ${new Date().toLocaleTimeString()}`;};
+window.refreshCam=function(){const cam=document.getElementById('cam-img');if(cam)cam.src=`/wxcam.php?t=${Date.now()}`;const t=document.getElementById('cam-time');if(t)t.textContent=`Updated: ${new Date().toLocaleTimeString()}`;};
 
 // Advertise Form
 window.openAdvertiseForm = function() {

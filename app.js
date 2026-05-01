@@ -1982,6 +1982,84 @@ function matchesSource(tags,src){
 function formatDate(d){return d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});}
 function formatTime(d){return d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});}
 
+// ==================== EVENT DURATION / END-TIME RESOLUTION ====================
+// Sport-specific default duration in hours. Used at render time when an event
+// has no explicit endTime from the source (Borough/PM iCal DTEND, Hudl
+// durationSeconds, VFW Vision JSON, user submission). The scraper never
+// persists these defaults to events.json — that keeps the "scraped value
+// always wins" invariant honest and lets us hot-tune defaults without
+// re-scraping. Mirrored (with the same numbers) in events_ics.php for the
+// iCal subscription feed.
+const SPORT_DEFAULTS = {
+    'baseball': 3, 'softball': 3,
+    'football': 3, 'wrestling': 3, 'track': 6,
+    'basketball': 2, 'soccer': 2, 'tennis': 2, 'lacrosse': 2,
+    'field hockey': 2, 'cross country': 2,
+    'volleyball': 1.5,
+    'swimming': 3, 'golf': 5
+};
+// Non-sport type defaults — Phantom Power live music, Etix concerts/lectures,
+// generic performances. Keys match against tags AND title substrings (case-
+// insensitive) so we catch both "Live Music" tagged events and "An Evening
+// with X" titles. 'live music' is the catch-all for Phantom Power.
+const TYPE_DEFAULTS = {
+    'live music': 4, 'concert': 2.5, 'performance': 2.5,
+    'theater': 2.5, 'theatre': 2.5,
+    'lecture': 2, 'film': 2
+};
+const DEFAULT_DURATION_HOURS = 2;
+
+// Resolve an event's end time. Order:
+//   1. e.endTime (ISO string from scraper) wins always
+//   2. SPORT_DEFAULTS lookup (tag match, then title keyword)
+//   3. TYPE_DEFAULTS lookup (Phantom Power, Etix, etc.)
+//   4. DEFAULT_DURATION_HOURS as final fallback
+// Pure function — safe to call repeatedly during render.
+function getEventEndTime(e) {
+    if (!e) return null;
+    if (e.endTime) {
+        const parsed = new Date(e.endTime);
+        if (!isNaN(parsed.getTime())) return parsed;
+    }
+    const start = new Date(e.date);
+    if (isNaN(start.getTime())) return null;
+
+    const lowerTags = (e.tags || []).map(t => String(t).toLowerCase());
+    const title = (e.title || '').toLowerCase();
+    const addHours = h => new Date(start.getTime() + h * 3600 * 1000);
+
+    // Sport defaults — tag match first (cheaper, more reliable), then title.
+    for (const [sport, hours] of Object.entries(SPORT_DEFAULTS)) {
+        if (lowerTags.includes(sport)) return addHours(hours);
+    }
+    for (const [sport, hours] of Object.entries(SPORT_DEFAULTS)) {
+        if (title.includes(sport)) return addHours(hours);
+    }
+    // Phantom Power → live music default. Tag-based detection.
+    if (lowerTags.includes('phantom power')) return addHours(TYPE_DEFAULTS['live music']);
+    // Other type defaults — tag match, then title keyword.
+    for (const [type, hours] of Object.entries(TYPE_DEFAULTS)) {
+        if (lowerTags.includes(type) || title.includes(type)) return addHours(hours);
+    }
+    return addHours(DEFAULT_DURATION_HOURS);
+}
+
+// True if event spans more than one daytime period — drives (a) date-range
+// display in the popup ("Apr 28 – Apr 30") and (b) the "never live" rule for
+// live badges. Uses a 12-hour duration threshold rather than "different
+// calendar day" so a Phantom Power show running 8pm–midnight (which crosses
+// a calendar boundary but is one continuous event) is correctly NOT flagged.
+// Festivals, multi-day track meets, art shows reliably exceed 12h.
+function isMultiDay(e) {
+    if (!e) return false;
+    const start = new Date(e.date);
+    const end = getEventEndTime(e);
+    if (!start || !end || isNaN(start.getTime()) || isNaN(end.getTime())) return false;
+    return (end.getTime() - start.getTime()) > 12 * 3600 * 1000;
+}
+// ==============================================================================
+
+
 function matchesSportSource(tags, src) {
     if(src==='MU') return tags.includes('MU')&&(tags.includes('Athletic Competitions')||tags.includes('Athletics'));
     if(src==='Clubs') return tags.includes('Clubs/Orgs')&&(tags.includes('Club Sports')||sportsList.some(s=>tags.includes(s)));
@@ -3513,10 +3591,13 @@ function buildEventCard(e,isSportsPage){
         scoreBadge=`<div class="score-corner ${isWin?'score-win':isLoss?'score-loss':'score-tie'}"><span class="score-result">${e.gameResult}</span><span class="score-value">${e.gameScore}</span></div>`;
     }
 
-    // Dynamic live check (doesn't rely on scraper's hourly isLive flag)
+    // Dynamic live check (doesn't rely on scraper's hourly isLive flag).
+    // Multi-day events (festivals, multi-day track meets) are never "live" —
+    // displaying a 72-hour LIVE badge is misleading. v1: per-day windows
+    // would require day-by-day scrapes; for now, multi-day = never live.
     const now = new Date();
-    const eventEnd = new Date(d.getTime() + 3*60*60*1000); // assume ~3hr game
-    const isCurrentlyLive = isSportsPage && e.streamLink && d <= now && now <= eventEnd && !e.gameResult;
+    const eventEnd = getEventEndTime(e) || new Date(d.getTime() + 3*60*60*1000);
+    const isCurrentlyLive = isSportsPage && e.streamLink && d <= now && now <= eventEnd && !e.gameResult && !isMultiDay(e);
     const isPast = isSportsPage && d < now && !isCurrentlyLive;
 
     // Live badge
@@ -3836,9 +3917,9 @@ function buildTimelineItem(e, now) {
     if (benefits.includes('Free Food')) badges += '<span class="tl-badge tl-perk">🍕</span>';
     if (benefits.includes('Free Stuff')) badges += '<span class="tl-badge tl-perk">🎁</span>';
 
-    // Live / Score
-    const _end = new Date(d.getTime() + 3*60*60*1000);
-    const _live = isSport && e.streamLink && d <= now && now <= _end && !e.gameResult;
+    // Live / Score — same end-time + multi-day rules as card render.
+    const _end = getEventEndTime(e) || new Date(d.getTime() + 3*60*60*1000);
+    const _live = isSport && e.streamLink && d <= now && now <= _end && !e.gameResult && !isMultiDay(e);
     if (_live) badges += '<span class="badge badge-live" style="font-size:0.6rem;padding:1px 6px;">LIVE</span>';
     if (e.gameResult && e.gameScore) {
         const cls = e.gameResult==='W' ? 'tl-win' : e.gameResult==='L' ? 'tl-loss' : 'tl-tie';
@@ -3911,8 +3992,31 @@ window.openEventDetails = function(key) {
     const isSport = isSportEvent(e) || isPMSportByTitle(e);
     const isHome = tags.includes('Home Game Mode') || tags.includes('H Games');
     const isAllDay = e.allDay === true;
-    const timeStr = isAllDay ? 'All Day' : formatTime(d);
-    const dateStr = d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+    // Build the time/date display. Three shapes:
+    //   - Multi-day: "Apr 28 – Apr 30" (no clock times — dates only).
+    //   - Same-day with end time: "Friday, May 1, 2026 · 5:00 PM – 7:00 PM"
+    //   - All-day: "Friday, May 1, 2026 · All Day"
+    // End time may come from the scraper (real DTEND/durationSeconds) or fall
+    // back to a sport/type default; consumer doesn't care which.
+    const endD = getEventEndTime(e);
+    const multiDay = isMultiDay(e);
+    let timeStr, dateStr;
+    if (multiDay && endD) {
+        // Date range only — clock times rarely meaningful for festivals/meets.
+        const startDateLabel = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        const endDateLabel = endD.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        dateStr = `${startDateLabel} – ${endDateLabel}`;
+        timeStr = '';
+    } else {
+        dateStr = d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+        if (isAllDay) {
+            timeStr = 'All Day';
+        } else if (endD && endD.getTime() > d.getTime()) {
+            timeStr = `${formatTime(d)} – ${formatTime(endD)}`;
+        } else {
+            timeStr = formatTime(d);
+        }
+    }
 
     // Source label (reuse logic from buildTimelineItem)
     let src = '';
@@ -4035,9 +4139,9 @@ window.openEventDetails = function(key) {
         // that a future streamLink is a scheduled broadcast, not something
         // you can tune into right now.
         const streamD = new Date(e.date);
-        const streamEnd = new Date(streamD.getTime() + 3*60*60*1000);
+        const streamEnd = getEventEndTime(e) || new Date(streamD.getTime() + 3*60*60*1000);
         const streamNow = new Date();
-        const isLiveNow = isSport && streamD <= streamNow && streamNow <= streamEnd && !e.gameResult;
+        const isLiveNow = isSport && streamD <= streamNow && streamNow <= streamEnd && !e.gameResult && !multiDay;
         let streamLabel;
         if (isLiveNow) streamLabel = '🔴 Watch Live';
         else if (e.gameResult) streamLabel = '📺 Replay';
@@ -4073,7 +4177,7 @@ window.openEventDetails = function(key) {
     modal.innerHTML = `
         <button onclick="this.closest('.event-details-overlay').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);padding:4px 8px;">✕</button>
         <h2 style="margin:0 0 8px;font-size:1.25rem;color:var(--navy);line-height:1.3;padding-right:24px;">${escHtml(e.title || 'Event')}</h2>
-        <div style="font-size:0.92rem;color:var(--text);font-weight:600;">📅 ${dateStr}${!isAllDay ? ' · ' + timeStr : ''}</div>
+        <div style="font-size:0.92rem;color:var(--text);font-weight:600;">📅 ${dateStr}${timeStr ? ' · ' + timeStr : ''}</div>
         ${locBlock}
         ${scoreSummary}
         ${linescoreBlock}
@@ -4103,7 +4207,7 @@ async function loadHomeSpecials(){
         if (muAffiliation === 'student') {
             const cupboardItems = buildCampusCupboardItems(dayName);
             if (cupboardItems) {
-                cards.push(`<div class="home-special-card"><h4 class="home-special-name">🛒 Campus Cupboard</h4><p class="home-special-note">Free grocery store for MU students — inside The HUB</p>${cupboardItems.map(i=>`<p class="home-special-item">• ${i}</p>`).join('')}</div>`);
+                cards.push(`<div class="home-special-card"><h3 class="home-special-name">🛒 Campus Cupboard</h3><p class="home-special-note">Free grocery store for MU students — inside The HUB</p>${cupboardItems.map(i=>`<p class="home-special-item">• ${i}</p>`).join('')}</div>`);
             }
         }
 
@@ -4132,7 +4236,7 @@ async function loadHomeSpecials(){
 
             if(items.length > 0){
                 const note = sp.note || '';
-                cards.push(`<div class="home-special-card"><h4 class="home-special-name">${restaurant}</h4><p class="home-special-note">${note}</p>${items.map(i=>`<p class="home-special-item">• ${i}</p>`).join('')}</div>`);
+                cards.push(`<div class="home-special-card"><h3 class="home-special-name">${restaurant}</h3><p class="home-special-note">${note}</p>${items.map(i=>`<p class="home-special-item">• ${i}</p>`).join('')}</div>`);
             }
         }
         container.innerHTML = cards.length > 0 ? cards.join('') : '<p class="home-empty">No specials today</p>';
@@ -4823,7 +4927,7 @@ function buildSponsorCard(s, placement) {
     const target = s.internal ? '' : 'target="_blank"';
     return `<a href="${href}" ${target} class="sponsor-card ${s.tierClass||'sponsor-featured'}" onclick="${clickHandler}" data-sponsor="${s.id}" data-placement="${placement}">
         <span class="sponsor-tier">${s.tier}</span>
-        <h4 class="sponsor-name">${s.name}</h4>
+        <h3 class="sponsor-name">${s.name}</h3>
         <span class="sponsor-cta">${s.cta}</span>
     </a>`;
 }

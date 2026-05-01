@@ -1381,7 +1381,6 @@ async function runScraper() {
       node {
         broadcastDateUtc
         broadcastId
-        durationSeconds
         internalId
         siteId
         status
@@ -1427,8 +1426,22 @@ async function runScraper() {
                     query: muBroadcastQuery
                 })
             });
-            if (!res.ok) return null;
-            return await res.json();
+            if (!res.ok) {
+                const body = await res.text().catch(() => '');
+                console.log(`  ⚠️ MU Hudl HTTP ${res.status} on ${statusFilter}: ${body.substring(0, 200)}`);
+                return null;
+            }
+            const json = await res.json();
+            // GraphQL endpoints return 200 OK even on schema errors. The errors
+            // appear in the body's `errors` array. Without logging this, a
+            // schema rejection (e.g. removing `durationSeconds` because it
+            // wasn't really on the Broadcast type) silently produces zero
+            // results — the same shape as "no broadcasts available."
+            if (json?.errors?.length) {
+                const summary = json.errors.map(e => e.message || JSON.stringify(e)).join(' | ');
+                console.log(`  ⚠️ MU Hudl GraphQL errors on ${statusFilter}: ${summary.substring(0, 300)}`);
+            }
+            return json;
         };
 
         // Parse a broadcast title into the sport name. Hudl's title format we've
@@ -1556,8 +1569,16 @@ async function runScraper() {
             archCursor = result?.pageInfo?.endCursor || null;
         }
         console.log(`  📺 MU Hudl: ${muTotalBroadcasts} broadcasts queried, ${broadcasts.length} matched our window`);
+        // Note: durationSeconds isn't exposed on Hudl's Broadcast GraphQL type
+        // (verified empirically when adding the field broke the whole query).
+        // We capture rawDur defensively in case the schema changes and starts
+        // exposing it later; until then, b.endMs is always null and step 7's
+        // interval-overlap pairing uses sport-default durations as fallback —
+        // which works fine, just slightly less precise than real durations.
         const withDuration = broadcasts.filter(b => b.durationSeconds !== null).length;
-        console.log(`  ⏱️  MU Hudl durations: ${withDuration}/${broadcasts.length} broadcasts carry durationSeconds (UPCOMING typically null until airing)`);
+        if (withDuration > 0) {
+            console.log(`  ⏱️  MU Hudl durations: ${withDuration}/${broadcasts.length} broadcasts carry durationSeconds`);
+        }
 
         // Group broadcasts by sport only. Day grouping was previously used as
         // a coarse first-cut filter, but it dropped multi-day events: a track

@@ -2360,7 +2360,12 @@ async function initApp(){
     renderHomeFeed();
     attachHomeSwipeHandlers();
     syncFilterArrows();
-    loadEcwidStore(); // Load Ecwid early so cart widget renders in header
+    // Ecwid is now loaded lazily — first time the user visits /store, or
+    // clicks the cart widget. Eager loading saved one round-trip when a
+    // visitor went to the store, but cost EVERY visitor ~200KB of Ecwid
+    // bundle + Stripe.js + Datadog RUM (Ecwid's vendor analytics) on
+    // initial page load, plus the resulting third-party cookies. The vast
+    // majority of millersville.app visitors never click into the store.
     setInterval(refreshCam,60000); refreshCam();
     // Route to correct view based on URL
     let p=window.location.pathname.replace(/\/$/,'');
@@ -2411,7 +2416,7 @@ window.toggleMobileMenu=function(){
 const viewLabels={home:'',news:'/ News',events:'/ Events',sports:'/ Sports',places:'/ Places',board:'/ Board',weather:'/ Weather',store:'/ Store',advertise:'/ Advertise'};
 
 let ecwidLoaded = false;
-function loadEcwidStore(){
+window.loadEcwidStore = function(){
     if(ecwidLoaded) return;
     ecwidLoaded = true;
     const s = document.createElement('script');
@@ -2459,7 +2464,7 @@ function loadEcwidStore(){
         }
     };
     document.body.appendChild(s);
-}
+};
 
 function injectEcwidCSS(){
     function resizeCategoryCards(){

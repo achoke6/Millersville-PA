@@ -58,8 +58,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+          # Caches ~/.npm (the global download cache, keyed off package-lock.json)
+          # so npm ci doesn't re-download dependencies on every cron run. With
+          # the lockfile pinned, this typically cuts dep install from ~30s to
+          # ~5s — at 24 runs/day that compounds to ~70 hours of CI/year.
+          cache: 'npm'
 
-      - run: npm install
+      # `npm ci` instead of `npm install`: faster on cached runs (skips
+      # dependency resolution, installs exactly what the lockfile says) and
+      # deterministic — refuses to run if package.json and package-lock.json
+      # have drifted, which protects against accidental dependency surprises
+      # on the production scraper.
+      - run: npm ci
 
       - run: node scripts/scrape.js
         env:
@@ -104,9 +114,12 @@ jobs:
       # cache-version bumps. Sed on JS is fine; the rule "never sed HTML"
       # (which truncated index.html in the past) doesn't apply to JS files
       # without nested-bracket structure issues.
+      #
+      # terser is installed via `npm ci` above (devDependencies in package.json
+      # pin it to ^5.46.1) so we don't redownload it each run and the version
+      # is reproducible across runs.
       - name: Minify app.js and stamp SW version
         run: |
-          npm install --no-save terser
           npx terser app.js -o app.min.js -c -m
           mv app.min.js app.js
           echo "Minified app.js: $(wc -c < app.js) bytes"

@@ -7,5 +7,8 @@
   },
   "dependencies": {
     "node-ical": "^0.20.1"
+  },
+  "devDependencies": {
+    "terser": "^5.46.1"
   }
 }

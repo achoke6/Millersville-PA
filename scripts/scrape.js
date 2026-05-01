@@ -2889,14 +2889,14 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                             // (cache stale, ANTHROPIC_KEY set, print page
                             // fetched OK, Claude returned 200) but extracted
                             // ZERO deals, something's broken: store ID might
-                            // have rotated (print page empty), Freshop may
-                            // have changed its image CDN pattern breaking our
-                            // regex, or the circular layout drifted enough
-                            // that Claude can't parse it. Fire /fail so we
-                            // hear about it within the hour. This is distinct
-                            // from cache-miss (handled by outer try/catch as
-                            // transient) and the "cache is warm" path (which
-                            // skips this block entirely).
+                            // have rotated (print page empty), the shoptocook
+                            // image CDN may have changed its URL pattern
+                            // breaking our regex, or the circular layout
+                            // drifted enough that Claude can't parse it. Fire
+                            // /fail so we hear about it within the hour. This
+                            // is distinct from cache-miss (handled by outer
+                            // try/catch as transient) and the "cache is warm"
+                            // path (which skips this block entirely).
                             if (groceryDeals.length === 0) {
                                 console.warn(`⚠️  DATA QUALITY: John Herr's Vision pipeline ran but extracted 0 deals. Likely store ID rotation, CDN change, or circular layout drift.`);
                                 const healthUrl = process.env.HEALTHCHECK_URL;

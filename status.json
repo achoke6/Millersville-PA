@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-05-01T22:50:57.820Z",
-  "totalEvents": 1069,
+  "generatedAt": "2026-05-01T23:52:58.228Z",
+  "totalEvents": 1068,
   "withDescription": 401,
   "withImage": 121,
   "familyFriendly": 41,
@@ -8,7 +8,7 @@
     "muAthletics": 124,
     "muCalendar": 157,
     "muGetInvolved": 352,
-    "pennManor": 209,
+    "pennManor": 208,
     "borough": 213,
     "vfw": 1,
     "phantomPower": 12,
@@ -29,8 +29,8 @@
       "latest": "2027-04-28T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-04-07T22:00:00.000Z",
-      "latest": "2026-06-08T23:00:00.000Z"
+      "earliest": "2026-04-07T23:00:00.000Z",
+      "latest": "2026-06-22T23:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-02-02T12:00:00.000Z",
@@ -50,10 +50,10 @@
     }
   },
   "sports": {
-    "total": 300,
-    "scored": 100,
+    "total": 298,
+    "scored": 101,
     "wins": 41,
-    "losses": 59,
+    "losses": 60,
     "ties": 0,
     "boxScoresParsed": 0
   }

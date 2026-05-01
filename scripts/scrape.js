@@ -1559,27 +1559,37 @@ async function runScraper() {
         const withDuration = broadcasts.filter(b => b.durationSeconds !== null).length;
         console.log(`  ⏱️  MU Hudl durations: ${withDuration}/${broadcasts.length} broadcasts carry durationSeconds (UPCOMING typically null until airing)`);
 
-        // Group broadcasts by ET calendar day + sport. ET-anchored grouping
-        // matters because doubleheaders that start at e.g. 4 PM and 7 PM ET on
-        // the same Millersville evening would split across UTC days otherwise.
-        const broadcastsByDaySport = new Map();  // "2026-04-30|baseball" -> [b, b, ...]
+        // Group broadcasts by sport only. Day grouping was previously used as
+        // a coarse first-cut filter, but it dropped multi-day events: a track
+        // meet with DTSTART Apr 28 + DTEND Apr 30 (single event from Sidearm)
+        // would land in the Apr 28 bucket, while an Apr 29 broadcast landed
+        // in Apr 29's bucket — no pairing. Interval overlap (below) handles
+        // multi-day natively, so we drop the day axis entirely.
+        const broadcastsBySport = new Map();  // "baseball" -> [b, b, ...]
         for (const b of broadcasts) {
-            const day = deriveDayET(b.ms);
-            const key = `${day}|${b.sport}`;
-            if (!broadcastsByDaySport.has(key)) broadcastsByDaySport.set(key, []);
-            broadcastsByDaySport.get(key).push(b);
+            if (!broadcastsBySport.has(b.sport)) broadcastsBySport.set(b.sport, []);
+            broadcastsBySport.get(b.sport).push(b);
         }
-        // Sort each bucket by time ascending so doubleheader assignment is stable
-        // (earliest event gets earliest broadcast — usually Game 1).
-        for (const list of broadcastsByDaySport.values()) {
+        for (const list of broadcastsBySport.values()) {
             list.sort((a, b) => a.ms - b.ms);
         }
 
-        // Group MU athletic events by ET day + sport in the same shape, then
-        // sort each bucket by start time. Walking both lists in parallel order
-        // gives correct doubleheader pairing without needing to parse "(Game 1)"
-        // or "(Game 2)" out of titles.
-        const eventsByDaySport = new Map();
+        // Sport-default duration in ms — kept in lockstep with SPORT_DEFAULTS
+        // in app.js (and ICS_SPORT_DEFAULTS in events_ics.php). Used here only
+        // when an event has no explicit endTime; provides a reasonable interval
+        // for the overlap test below.
+        const SPORT_DURATION_HOURS = {
+            'baseball': 3, 'softball': 3, 'football': 3, 'wrestling': 3, 'track': 6,
+            'basketball': 2, 'soccer': 2, 'tennis': 2, 'lacrosse': 2,
+            'field hockey': 2, 'cross country': 2, 'volleyball': 1.5,
+            'swimming': 3, 'golf': 5
+        };
+        const sportDurationMs = (sport) => (SPORT_DURATION_HOURS[sport] || 2) * 3600 * 1000;
+
+        // Group MU sport events by sport, with start/end ms precomputed for
+        // the pairing pass. Event end resolves from explicit endTime (set in
+        // step 3 via Sidearm DTEND) when present, otherwise sport-default.
+        const eventsBySport = new Map();
         for (const ev of events) {
             if (!ev.tags || !ev.tags.includes('MU')) continue;
             if (!ev.tags.includes('Athletic Competitions')) continue;
@@ -1591,37 +1601,87 @@ async function runScraper() {
             if (!sportTag) continue;
             const evMs = parseEventInstant(ev.date);
             if (isNaN(evMs)) continue;
-            const day = deriveDayET(evMs);
-            const key = `${day}|${sportTag.toLowerCase()}`;
-            if (!eventsByDaySport.has(key)) eventsByDaySport.set(key, []);
-            eventsByDaySport.get(key).push({ ev, ms: evMs });
+            const sport = sportTag.toLowerCase();
+            let evEndMs;
+            if (ev.endTime) {
+                const e = parseEventInstant(ev.endTime);
+                if (!isNaN(e) && e > evMs) evEndMs = e;
+            }
+            if (evEndMs === undefined) evEndMs = evMs + sportDurationMs(sport);
+            if (!eventsBySport.has(sport)) eventsBySport.set(sport, []);
+            eventsBySport.get(sport).push({ ev, ms: evMs, endMs: evEndMs });
         }
-        for (const list of eventsByDaySport.values()) {
+        for (const list of eventsBySport.values()) {
             list.sort((a, b) => a.ms - b.ms);
         }
 
-        // Assign broadcasts to events. For each (day, sport) bucket, walk the
-        // sorted event list and assign the next available broadcast in the
-        // matching broadcast bucket.
-        for (const [key, eventList] of eventsByDaySport) {
-            const broadcastList = broadcastsByDaySport.get(key);
-            if (!broadcastList || broadcastList.length === 0) continue;
-            const pairings = Math.min(eventList.length, broadcastList.length);
-            for (let i = 0; i < pairings; i++) {
-                const { ev } = eventList[i];
-                const b = broadcastList[i];
-                ev.streamLink = `https://psacsportsdigitalnetwork.com/millersvilleathletics/?B=${b.internalId}`;
-                muHudlMatchCount++;
+        // Interval-overlap pairing per sport. Walking BROADCASTS in start-time
+        // order (not events), each broadcast claims the closest unpaired event
+        // whose interval overlaps. Broadcast-centric iteration is the right
+        // direction for the cross-contamination case: a multi-day MU Invite
+        // (Apr 28–30) and a same-sport single-day PSU game (Apr 29) both
+        // overlap an Apr 29 broadcast, but the broadcast is "for" the closer
+        // event by start time. Walking events would have the multi-day event
+        // greedily claim the broadcast first (events sort by start, MU Invite
+        // is earlier) and starve the actually-correct PSU pairing.
+        //
+        // Half-open interval overlap: [aStart, aEnd) ∩ [bStart, bEnd) ≠ ∅
+        //   ⟺  aStart < bEnd  AND  bStart < aEnd
+        //
+        // Multi-day events with multiple overlapping broadcasts get exactly
+        // one streamLink — the first (earliest) broadcast wins, since later
+        // broadcasts find the event already paired and skip. The event card
+        // thus links to the meet's first session; visitors during later days
+        // click through and Hudl auto-features the active broadcast at watch
+        // time. Future enhancement: array of broadcasts per event.
+        const pairedEvents = new WeakSet();
+        for (const [sport, broadcastList] of broadcastsBySport) {
+            const eventList = eventsBySport.get(sport);
+            if (!eventList || !eventList.length) continue;
+            const fbDur = sportDurationMs(sport);
+            for (const b of broadcastList) {
+                const bEndMs = b.endMs ?? (b.ms + fbDur);
+                let best = null;
+                let bestDelta = Infinity;
+                for (const er of eventList) {
+                    if (pairedEvents.has(er.ev)) continue;
+                    if (er.ms < bEndMs && b.ms < er.endMs) {
+                        const delta = Math.abs(b.ms - er.ms);
+                        if (delta < bestDelta) { best = er; bestDelta = delta; }
+                    }
+                }
+                if (best) {
+                    best.ev.streamLink = `https://psacsportsdigitalnetwork.com/millersvilleathletics/?B=${b.internalId}`;
+                    pairedEvents.add(best.ev);
+                    muHudlMatchCount++;
 
-                // Re-evaluate isLive now that streamLink may have been added
-                if (!ev.isLive) {
-                    const evStart = new Date(ev.date);
-                    const evEnd = new Date(evStart.getTime() + 3 * 60 * 60 * 1000);
-                    if (now >= evStart && now <= evEnd && !ev.gameResult) {
-                        ev.isLive = true;
+                    // Re-evaluate isLive using the precomputed event interval
+                    // (may include real endTime from step 3) instead of the old
+                    // hardcoded +3h.
+                    if (!best.ev.isLive) {
+                        const nowMs = now.getTime();
+                        if (nowMs >= best.ms && nowMs <= best.endMs && !best.ev.gameResult) {
+                            best.ev.isLive = true;
+                        }
                     }
                 }
             }
+        }
+        // Count unpaired broadcasts for the cron log — useful for spotting
+        // schema drift (e.g., parseBroadcastTitle starts returning a sport
+        // word that no event ever uses) or genuine away-game broadcasts that
+        // we don't have an event record for.
+        let unpairedSportBroadcasts = 0;
+        for (const [sport, broadcastList] of broadcastsBySport) {
+            const eventList = eventsBySport.get(sport) || [];
+            for (const b of broadcastList) {
+                const matched = eventList.some(er => er.ev.streamLink &&
+                    er.ev.streamLink.includes(`?B=${b.internalId}`));
+                if (!matched) unpairedSportBroadcasts++;
+            }
+        }
+        if (unpairedSportBroadcasts > 0) {
+            console.log(`  ⚠️  MU Hudl: ${unpairedSportBroadcasts} broadcasts had no overlapping event (away games or schema drift)`);
         }
         console.log(`  📺 MU matched ${muHudlMatchCount} broadcasts to events`);
     } catch (e) { console.log(`  ⚠️ MU Hudl broadcast check error: ${e.message}`); }

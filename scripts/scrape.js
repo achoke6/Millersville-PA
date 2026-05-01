@@ -558,11 +558,22 @@ function extractEventbriteEvents(ldData, eventsArray, now, futureLimit, override
                 // Prefer the override (we know exactly which event page we fetched);
                 // fall back to the url embedded in the LD-JSON; last resort the organizer.
                 const url = overrideUrl || ldData.url || "https://www.eventbrite.com/o/phantom-power-29187724817";
+                // schema.org Event.image can be a string URL, an array of URLs,
+                // or an ImageObject ({url:...}). Take the first usable form.
+                let image = '';
+                const rawImg = ldData.image;
+                if (typeof rawImg === 'string') image = rawImg;
+                else if (Array.isArray(rawImg) && rawImg.length) {
+                    image = typeof rawImg[0] === 'string' ? rawImg[0] : (rawImg[0]?.url || '');
+                } else if (rawImg && typeof rawImg === 'object') {
+                    image = rawImg.url || '';
+                }
                 eventsArray.push({
                     title: ldData.name, date: eventDate.toISOString(), location: "Phantom Power",
                     tags: ["Other", "Live Music"], price: "Ticket Required",
                     ticketLink: url,
-                    sourceLink: url
+                    sourceLink: url,
+                    ...(image ? { image } : {})
                 });
             }
         } else {
@@ -619,10 +630,18 @@ function extractPhantomPowerEventFromHTML(html, url, eventsArray, now, futureLim
     }
     if (!title) return 0;
 
+    // og:image: most Eventbrite pages set this even when LD-JSON has been
+    // stripped from the page. Cheap fallback for the HTML-regex path so we
+    // get image coverage equivalent to the JSON-LD path above.
+    let image = '';
+    const ogImageMatch = html.match(/<meta\s+property="og:image"\s+content="([^"]+)"/i);
+    if (ogImageMatch) image = ogImageMatch[1];
+
     eventsArray.push({
         title, date: eventDate.toISOString(), location: "Phantom Power",
         tags: ["Other", "Live Music"], price: "Ticket Required",
-        ticketLink: url, sourceLink: url
+        ticketLink: url, sourceLink: url,
+        ...(image ? { image } : {})
     });
     return 1;
 }
@@ -2079,6 +2098,21 @@ async function runScraper() {
         //  so deriving from events is the reliable alternative).
         if (!global._orgsFromEvents) global._orgsFromEvents = new Map();
         const orgsMap = global._orgsFromEvents;
+        // === ONE-TIME FIELD PROBE — DELETE AFTER NEXT SUCCESSFUL SCRAPE ===
+        // The discovery API isn't documented and CORS-blocked from the browser,
+        // so we can't probe interactively. This dumps the first item's keys
+        // plus anything resembling an image URL so we know which field to read
+        // (imagePath / cdnImagePath / image / something else). After the next
+        // cron run reports the answer in the log, this block can be removed.
+        if (giItems[0]) {
+            const sample = giItems[0];
+            console.log('  🔍 GI probe: item keys =', Object.keys(sample).join(', '));
+            const imgLike = Object.entries(sample).filter(([k, v]) =>
+                typeof v === 'string' && (k.toLowerCase().includes('image') || k.toLowerCase().includes('photo') || k.toLowerCase().includes('cdn') || (typeof v === 'string' && /\.(jpg|jpeg|png|webp|gif)/i.test(v)))
+            );
+            console.log('  🔍 GI probe: image-like =', imgLike.length ? JSON.stringify(imgLike) : '(none found)');
+        }
+        // === END PROBE ===
         // Record every org seen in giItems regardless of event date, so orgs with
         // only old events still appear in the directory.
         // Also include the deep-past org-discovery items to catch orgs that host events rarely.
@@ -2209,6 +2243,14 @@ async function runScraper() {
                 ticketLink: "",
                 sourceLink: `https://getinvolved.millersville.edu/event/${item.id}`,
                 description: item.description || "",
+                // Image URL: CampusLabs/Anthology Engage's discovery API exposes
+                // event imagery under at least three different field names
+                // depending on response variant (`imagePath` for newer events,
+                // `cdnImagePath` for CDN-served thumbnails, `image` as a generic
+                // fallback some endpoints emit). Try each in order and keep the
+                // first non-empty value. Empty/missing → field omitted by the
+                // SLIM_FIELDS pass downstream.
+                image: item.imagePath || item.cdnImagePath || item.image || '',
                 benefits: benefits,
                 audience: audience,
                 ...(orgDisplayName ? { orgName: orgDisplayName, orgShortName: resolveOrgShortName(orgDisplayName) } : {})
@@ -2769,6 +2811,12 @@ Respond with ONLY the JSON object.`;
                         date: new Date(startMs).toISOString(),
                         endTime: !isNaN(endMs) ? new Date(endMs).toISOString() : undefined,
                         location: 'VFW Post 7294, 219 Walnut Hill Rd',
+                        // The flyer image itself, courtesy of the Google Sheet
+                        // upload pipeline. Stored even though the frontend
+                        // doesn't render images on event cards yet — gets us a
+                        // real withImage% on the status dashboard, and unlocks
+                        // future image-rendering UI without re-scraping.
+                        image: si.url || '',
                         tags: ['Other', 'VFW'], price: priceTag, ticketLink: '', sourceLink: postLink,
                         gameResult: '', gameScore: '', streamLink: '', isLive: false, kidFriendly: false
                     });

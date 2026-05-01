@@ -822,10 +822,10 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .tl-badges { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
 .tl-badges:empty { display: none; }
 .tl-badge { font-size: 0.65rem; flex-shrink: 0; }
-.tl-win { color: #16a34a; font-weight: 700; }
-.tl-loss { color: #dc2626; font-weight: 700; }
-.tl-tie { color: #d97706; font-weight: 700; }
-.tl-home { color: #16a34a; }
+.tl-win { color: #166534; font-weight: 700; }
+.tl-loss { color: #b91c1c; font-weight: 700; }
+.tl-tie { color: #92400e; font-weight: 700; }
+.tl-home { color: #166534; }
 .tl-family { color: #92400e; }
 .tl-stream { font-size: 0.85rem; text-decoration: none; flex-shrink: 0; }
 .tl-ticket { font-size: 0.85rem; text-decoration: none; flex-shrink: 0; cursor: pointer; transition: transform 0.1s; }

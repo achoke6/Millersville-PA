@@ -142,6 +142,26 @@ function compareSource(currentValue, history, sourceKey, todayDate) {
     return null;
 }
 
+// Format a date range from sourceDateRanges into a compact human label.
+// Same year: "Mar 4 → Apr 28". Cross-year: "Sep 15, 2025 → Aug 30, 2026".
+// Returns null if the range is missing or invalid (caller renders no hint).
+// Single-day ranges (earliest === latest) collapse to one date — rare for
+// real sources but happens for VFW when only one flyer is current.
+function formatDateRange(range) {
+    if (!range || !range.earliest || !range.latest) return null;
+    const start = new Date(range.earliest);
+    const end = new Date(range.latest);
+    if (isNaN(start.getTime()) || isNaN(end.getTime())) return null;
+    const sameYear = start.getFullYear() === end.getFullYear();
+    const fmtSame = { month: 'short', day: 'numeric' };
+    const fmtCross = { month: 'short', day: 'numeric', year: 'numeric' };
+    const opts = sameYear ? fmtSame : fmtCross;
+    const startStr = start.toLocaleDateString('en-US', opts);
+    const endStr = end.toLocaleDateString('en-US', opts);
+    if (startStr === endStr) return startStr;
+    return `${startStr} → ${endStr}`;
+}
+
 function card(title, rows) {
     return '<div class="status-card"><h2>' + title + '</h2>' + rows + '</div>';
 }
@@ -218,10 +238,20 @@ async function render() {
         { label: 'MU Hudl broadcasts',     key: 'muHudlBroadcasts' }
     ];
     const degraded = [];
+    const sourceRanges = status.sourceDateRanges || {};
     const sourceRows = sourceList.map(({ label, key }) => {
         const cmp = compareSource(s[key], history, key, todayDate);
         if (cmp) degraded.push({ label, status: cmp.status });
-        return metric(label, s[key], cmp || {});
+        // Combine degradation hint with date-range hint. Degradation wins
+        // visual priority (the row is colored warn/err) but we still want
+        // the user to know what time window the count covers. muHudlBroadcasts
+        // has no date range (it's an enrichment count) and skips this hint.
+        const rangeStr = formatDateRange(sourceRanges[key]);
+        const opts = cmp ? { ...cmp } : {};
+        if (rangeStr) {
+            opts.hint = opts.hint ? `${opts.hint} · ${rangeStr}` : rangeStr;
+        }
+        return metric(label, s[key], opts);
     }).join('');
 
     // Health row: summary of source health independent of timestamp freshness.
@@ -253,8 +283,26 @@ async function render() {
 
     const sourcesCard = card('Events by Source', sourceRows);
 
+    // Overall date range across all sport events (MU + PM + Clubs combined).
+    // sources.muAthletics has its own range above; this one annotates the
+    // Sports Results card's "Total sport events" line so the same "what
+    // window does 247 cover?" question is answered there too.
+    const allSportRanges = ['muAthletics', 'pennManor'].map(k => sourceRanges[k]).filter(Boolean);
+    let sportTotalRange = null;
+    if (allSportRanges.length > 0) {
+        // Approximate: union of MU athletics and Penn Manor ranges. Doesn't
+        // perfectly capture Clubs/Orgs sport events (those live under MU
+        // Clubs/Orgs umbrella with a Sports tag) but covers the bulk and is
+        // good enough for a status-page hint.
+        sportTotalRange = {
+            earliest: allSportRanges.map(r => r.earliest).sort()[0],
+            latest: allSportRanges.map(r => r.latest).sort().pop()
+        };
+    }
+    const sportRangeStr = formatDateRange(sportTotalRange);
+
     const sportsCard = card('Sports Results',
-        metric('Total sport events', sp.total) +
+        metric('Total sport events', sp.total, sportRangeStr ? { hint: sportRangeStr } : {}) +
         metric('Scored (past games)', sp.scored) +
         metric('Wins', sp.wins) +
         metric('Losses', sp.losses) +

@@ -200,6 +200,26 @@ jobs:
             echo "  ✓ index.html OK"
           fi
 
+          # 1b. SPA route rewrite. Loading /events directly (not /) requires
+          # mod_rewrite to match line 18 of .htaccess and serve index.html.
+          # This silently broke for ~2 weeks once when the file on DreamHost
+          # got renamed to Index.html (capital I) by some filesystem-case
+          # confusion — the rewrite pointed at lowercase, which didn't exist,
+          # and only the home page (served via DirectoryIndex matching either
+          # case) kept working. The previous smoke test only hit "$BASE/" so
+          # nothing flagged it. This catches the regression.
+          # We use /events specifically because that route also has shareable
+          # URL filter state (?kid=1, ?src=Borough, etc.) — if /events serves
+          # index.html, the rest of the SPA routes will too.
+          echo "▸ Checking /events SPA route..."
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 15 "$BASE/events")
+          if [ "$STATUS" != "200" ]; then
+            echo "  ❌ /events returned HTTP $STATUS — SPA rewrite broken (check .htaccess and that index.html is lowercase on the server)"
+            FAILED=1
+          else
+            echo "  ✓ /events route OK"
+          fi
+
           # 2. events.json
           echo "▸ Checking events.json..."
           STATUS=$(curl -s -o /tmp/events.json -w "%{http_code}" --max-time 15 "$BASE/events.json")

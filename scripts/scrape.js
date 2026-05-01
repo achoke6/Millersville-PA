@@ -4014,6 +4014,33 @@ Focus on the most impressive deals a shopper would want to know about. Include m
     try {
         const bySourceCount = (sourceTag, extraFilter = () => true) =>
             deduped.filter(e => (e.tags || []).includes(sourceTag) && extraFilter(e)).length;
+        // Per-source date range. For each source filter, find the earliest and
+        // latest event start date and emit ISO date strings. Powers the
+        // "what time window does this number cover?" annotation on the status
+        // dashboard — "351 events" is opaque, "351 events from Sep 15 → Aug
+        // 30" tells you whether a source is providing 11 months of forward
+        // visibility or just last week.
+        // Returns null when no events match the filter (so the dashboard can
+        // skip the line cleanly rather than rendering "—" placeholders).
+        // Note: parses e.date here rather than reading a precomputed _dateMs
+        // because _dateMs is an app.js runtime annotation, not part of the
+        // events.json schema. The N=~1500 events make this trivial.
+        const dateRangeFor = (sourceTag, extraFilter = () => true) => {
+            const matched = deduped.filter(e => (e.tags || []).includes(sourceTag) && extraFilter(e));
+            if (matched.length === 0) return null;
+            let minMs = Infinity, maxMs = -Infinity;
+            for (const e of matched) {
+                const ms = new Date(e.date).getTime();
+                if (!Number.isFinite(ms)) continue;
+                if (ms < minMs) minMs = ms;
+                if (ms > maxMs) maxMs = ms;
+            }
+            if (!Number.isFinite(minMs)) return null;
+            return {
+                earliest: new Date(minMs).toISOString(),
+                latest: new Date(maxMs).toISOString()
+            };
+        };
         const pastSports = deduped.filter(e =>
             (e.tags || []).includes('Athletics') || (e.tags || []).includes('Athletic Competitions')
         ).filter(e => e.gameResult && e.gameScore);
@@ -4048,6 +4075,29 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 // monitors couldn't catch it because Hudl is enrichment, not
                 // a source. This metric closes that blind spot.
                 muHudlBroadcasts: muHudlMatchCount
+            },
+            // Per-source date ranges — earliest and latest event start in each
+            // source. Keys mirror `sources` above so the status dashboard can
+            // join them by key. muHudlBroadcasts is excluded since it's an
+            // enrichment count, not a set of events with their own dates.
+            sourceDateRanges: {
+                muAthletics: dateRangeFor('MU', e => (e.tags || []).includes('Athletics') || (e.tags || []).includes('Athletic Competitions')),
+                muCalendar: dateRangeFor('MU', e => !(e.tags || []).includes('Athletics') && !(e.tags || []).includes('Clubs/Orgs')),
+                muGetInvolved: dateRangeFor('Clubs/Orgs'),
+                pennManor: dateRangeFor('PM'),
+                borough: dateRangeFor('Borough'),
+                vfw: dateRangeFor('VFW'),
+                phantomPower: (() => {
+                    const m = deduped.filter(e => e.location === 'Phantom Power');
+                    if (m.length === 0) return null;
+                    const stamps = m.map(e => new Date(e.date).getTime()).filter(Number.isFinite);
+                    if (stamps.length === 0) return null;
+                    return {
+                        earliest: new Date(Math.min(...stamps)).toISOString(),
+                        latest: new Date(Math.max(...stamps)).toISOString()
+                    };
+                })(),
+                community: dateRangeFor('Community')
             },
             sports: {
                 total: deduped.filter(e =>

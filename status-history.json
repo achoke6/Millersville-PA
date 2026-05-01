@@ -2,20 +2,36 @@
   "days": [
     {
       "date": "2026-04-30",
-      "ts": "2026-04-30T19:31:37.415Z",
-      "totalEvents": 1096,
+      "ts": "2026-05-01T02:57:13.335Z",
+      "totalEvents": 1076,
       "sources": {
-        "muAthletics": 129,
-        "muCalendar": 158,
-        "muGetInvolved": 364,
-        "pennManor": 219,
-        "borough": 212,
+        "muAthletics": 128,
+        "muCalendar": 157,
+        "muGetInvolved": 351,
+        "pennManor": 213,
+        "borough": 213,
         "vfw": 1,
         "phantomPower": 0,
         "community": 1,
         "muHudlBroadcasts": 28
       }
+    },
+    {
+      "date": "2026-05-01",
+      "ts": "2026-05-01T12:00:36.649Z",
+      "totalEvents": 1073,
+      "sources": {
+        "muAthletics": 125,
+        "muCalendar": 157,
+        "muGetInvolved": 351,
+        "pennManor": 213,
+        "borough": 213,
+        "vfw": 1,
+        "phantomPower": 0,
+        "community": 1,
+        "muHudlBroadcasts": 26
+      }
     }
   ],
-  "lastUpdated": "2026-04-30T19:31:37.415Z"
+  "lastUpdated": "2026-05-01T12:00:36.649Z"
 }

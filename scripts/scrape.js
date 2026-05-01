@@ -3845,7 +3845,14 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 pennManor: bySourceCount('PM'),
                 borough: bySourceCount('Borough'),
                 vfw: bySourceCount('VFW'),
-                phantomPower: bySourceCount('Phantom Power'),
+                // Phantom Power events are tagged ['Other', 'Live Music'] — there's
+                // no 'Phantom Power' tag. Count by `location === 'Phantom Power'`
+                // instead, which is how the scraper actually identifies them
+                // (set in both the Eventbrite-LD-JSON and JamBase emit sites).
+                // This used to incorrectly read 0 because we were looking for a
+                // tag that doesn't exist; the events were always being scraped,
+                // just not counted on the dashboard.
+                phantomPower: deduped.filter(e => e.location === 'Phantom Power').length,
                 community: bySourceCount('Community'),
                 // Enrichment count (not events). Number of MU athletic events
                 // that got a Hudl/PSAC streamLink this run. Watched by the

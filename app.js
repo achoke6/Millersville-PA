@@ -2069,6 +2069,172 @@ function matchesSportSource(tags, src) {
 
 const viewPaths={home:'/',news:'/news',events:'/events',sports:'/sports',places:'/places',board:'/board',weather:'/weather',store:'/store',advertise:'/advertise',analytics:'/analytics'};
 const pathToView=Object.fromEntries(Object.entries(viewPaths).map(([k,v])=>[v,k]));
+
+// ==================== URL STATE (shareable filter URLs) ====================
+// Persists Events and Sports filter state to URL query params so views can be
+// linked, bookmarked, and indexed. v1 scope: events + sports views only.
+//
+// Param contract — keep stable for backward compat with any shared links:
+//
+// Events (/events?...):
+//   src=Borough,MU      Comma-separated subset of MU/PM/Borough/Other.
+//                       Absent or all-listed → "All sources" (evAllMode = true).
+//   tag=Music%2FArts    Comma-separated sub-tags (URL-encoded; tags can have /).
+//                       Absent → no sub-tag filter.
+//   kid=1               Kid-friendly toggle. Absent or 0 → off.
+//   food=1              Free Food perk. Marauder-only filter; honored even for
+//                       townies on shared links to keep URLs deterministic.
+//   stuff=1             Free Stuff perk. Same.
+//
+// Sports (/sports?...):
+//   src=MU              Comma-separated subset of MU/PM/Clubs.
+//                       Absent or all-listed → "All sources" (spAllMode = true).
+//   sport=Baseball      Single sport name (case-insensitive match against
+//                       sportsList; canonical form preserved on write).
+//                       Absent → no sport-tag filter.
+//   home=1              Home Games only toggle.
+//   past=1              Past games view (vs upcoming).
+//
+// Design calls (locked):
+//   - URL wins over localStorage on initial load. A shared link should produce
+//     the same view for everyone clicking it.
+//   - replaceState (not pushState) on filter clicks — back button shouldn't
+//     have to undo individual filter taps.
+//   - View changes still pushState (handled by switchView) so back button
+//     navigates between views, not within them.
+//   - On view change, query params drop (switchView builds path-only URLs).
+
+const URL_STATE_VIEWS = new Set(['events', 'sports']);
+
+// Apply URL params to the relevant filter state. Idempotent — calling with
+// the same URL twice produces the same state. Missing params resolve to
+// "default off" so going from /events?kid=1 to /events fully clears the filter.
+function applyURLStateToView(view) {
+    if (!URL_STATE_VIEWS.has(view)) return;
+    const params = new URLSearchParams(window.location.search);
+
+    if (view === 'events') {
+        const srcParam = params.get('src');
+        const requested = srcParam ? srcParam.split(',').map(s => s.trim()).filter(Boolean) : [];
+        const valid = requested.filter(s => allEvSources.includes(s));
+        if (valid.length > 0 && valid.length < allEvSources.length) {
+            evActiveSources = new Set(valid);
+            evAllMode = false;
+        } else {
+            evActiveSources = new Set(allEvSources);
+            evAllMode = true;
+        }
+        evTags.clear();
+        const tagParam = params.get('tag');
+        if (tagParam) {
+            tagParam.split(',').map(t => t.trim()).filter(Boolean).forEach(t => evTags.add(t));
+        }
+        evKidMode      = params.get('kid')   === '1';
+        evFreeFoodMode = params.get('food')  === '1';
+        evFreeStuffMode= params.get('stuff') === '1';
+    } else if (view === 'sports') {
+        const validSpSrc = ['PM', 'MU', 'Clubs'];
+        const srcParam = params.get('src');
+        const requested = srcParam ? srcParam.split(',').map(s => s.trim()).filter(Boolean) : [];
+        const valid = requested.filter(s => validSpSrc.includes(s));
+        if (valid.length > 0 && valid.length < validSpSrc.length) {
+            spActiveSources = new Set(valid);
+            spAllMode = false;
+        } else {
+            spActiveSources = new Set(validSpSrc);
+            spAllMode = true;
+        }
+        // Sport name: case-insensitive match → canonical form from sportsList.
+        // Unknown sport → null (treated as "no sport filter").
+        const sportParam = params.get('sport');
+        spSportTag = sportParam
+            ? (sportsList.find(s => s.toLowerCase() === sportParam.trim().toLowerCase()) || null)
+            : null;
+        spHomeOnly = params.get('home') === '1';
+        spTimeView = params.get('past') === '1' ? 'past' : 'upcoming';
+    }
+    updatePageTitleForView(view);
+}
+
+// Serialize current filter state to URL query string. Uses replaceState so
+// each filter click doesn't add a history entry — only view changes do.
+function writeURLStateForView(view) {
+    if (!URL_STATE_VIEWS.has(view)) return;
+    const params = new URLSearchParams();
+
+    if (view === 'events') {
+        if (!evAllMode && evActiveSources.size > 0 && evActiveSources.size < allEvSources.length) {
+            // Emit in canonical allEvSources order so URLs are stable across
+            // Set-iteration order (sharing the same filter combo always yields
+            // the same URL string — better for caching and indexing).
+            const ordered = allEvSources.filter(s => evActiveSources.has(s));
+            params.set('src', ordered.join(','));
+        }
+        if (evTags.size > 0) {
+            params.set('tag', Array.from(evTags).sort().join(','));
+        }
+        if (evKidMode)       params.set('kid', '1');
+        if (evFreeFoodMode)  params.set('food', '1');
+        if (evFreeStuffMode) params.set('stuff', '1');
+    } else if (view === 'sports') {
+        const canonicalSpSrc = ['PM', 'MU', 'Clubs'];
+        if (!spAllMode && spActiveSources.size > 0 && spActiveSources.size < canonicalSpSrc.length) {
+            const ordered = canonicalSpSrc.filter(s => spActiveSources.has(s));
+            params.set('src', ordered.join(','));
+        }
+        if (spSportTag) params.set('sport', spSportTag);
+        if (spHomeOnly) params.set('home', '1');
+        if (spTimeView === 'past') params.set('past', '1');
+    }
+
+    const path = viewPaths[view] || '/';
+    const qs = params.toString();
+    const newUrl = path + (qs ? '?' + qs : '');
+    if (window.location.pathname + window.location.search !== newUrl) {
+        history.replaceState({ view }, '', newUrl);
+    }
+    updatePageTitleForView(view);
+}
+
+// Set <title> based on view + active filters. Helps with browser tabs,
+// social previews, and SEO snippets when shared links get indexed.
+function updatePageTitleForView(view) {
+    const base = 'Millersville.APP';
+    let prefix = '';
+
+    if (view === 'events') {
+        const parts = [];
+        if (evKidMode)       parts.push('Kid-Friendly');
+        if (evFreeFoodMode)  parts.push('Free Food');
+        if (evFreeStuffMode) parts.push('Free Stuff');
+        if (!evAllMode && evActiveSources.size > 0 && evActiveSources.size < allEvSources.length) {
+            const ordered = allEvSources.filter(s => evActiveSources.has(s));
+            parts.push(ordered.join('/'));
+        }
+        if (evTags.size > 0) parts.push(Array.from(evTags).sort().join(', '));
+        parts.push('Events');
+        prefix = parts.join(' ');
+    } else if (view === 'sports') {
+        const parts = [];
+        if (spTimeView === 'past') parts.push('Past');
+        if (!spAllMode && spActiveSources.size > 0 && spActiveSources.size < 3) {
+            const canonical = ['PM', 'MU', 'Clubs'];
+            parts.push(canonical.filter(s => spActiveSources.has(s)).join('/'));
+        }
+        if (spSportTag) parts.push(spSportTag);
+        if (spHomeOnly) parts.push('Home Games');
+        if (parts.length === 0) parts.push('Sports');
+        else if (!spSportTag) parts.push('Sports');
+        prefix = parts.join(' ');
+    } else {
+        // Other views — restore default site title.
+        document.title = base + ' — Events, Sports, Weather & Community for Millersville, PA';
+        return;
+    }
+
+    document.title = prefix + ' · ' + base;
+}
+// ==========================================================================
 // Legacy URL redirects
 pathToView['/food'] = 'places';
 pathToView['/services'] = 'places';
@@ -2216,6 +2382,24 @@ window.addEventListener('popstate',function(){
     const p=window.location.pathname.replace(/\/$/,'');
     const view=pathToView[p]||'home';
     switchView(view,true);
+    // Re-apply URL filter state for events/sports views — covers the case of
+    // navigating back to a filtered URL after switching views, or forward to
+    // a previously-filtered state. applyURLStateToView is idempotent and
+    // resets defaults when params are absent, so it's safe to call regardless.
+    if (view === 'events' || view === 'sports') {
+        applyURLStateToView(view);
+        if (view === 'events') {
+            if (typeof updateEventsUI === 'function') updateEventsUI();
+            if (typeof renderEvSubFilters === 'function') renderEvSubFilters();
+            if (typeof renderEvents === 'function') renderEvents();
+        } else {
+            if (typeof updateSportsUI === 'function') updateSportsUI();
+            if (typeof renderSports === 'function') renderSports();
+        }
+    } else {
+        // Other views — restore default page title.
+        updatePageTitleForView(view);
+    }
 });
 
 window.toggleMobileMenu=function(){
@@ -2319,6 +2503,10 @@ window.switchView=function(view,skipPush){
     if(!skipPush && window.location.pathname.replace(/\/$/,'')!==path){
         history.pushState({view},'',path);
     }
+    // Sync document.title with the new view (filter-aware for events/sports,
+    // default site title elsewhere). Called after the pushState so the URL is
+    // already correct when the title resolves.
+    updatePageTitleForView(view);
     // Lazy-load Ecwid when store is first visited
     if(view==='store') loadEcwidStore();
 };
@@ -2339,6 +2527,15 @@ async function loadEvents(){
         ev._dateMs = isNaN(t) ? 0 : t;
     }
     allEvents.sort((a, b) => a._dateMs - b._dateMs);
+    // Apply URL filter params if the user landed on /events or /sports with
+    // a query string (deep link, bookmark, shared link). Done BEFORE the first
+    // render so the result reflects the URL on initial paint — no flash of
+    // unfiltered content.
+    const _initialPath = window.location.pathname.replace(/\/$/, '');
+    const _initialView = pathToView[_initialPath];
+    if (_initialView === 'events' || _initialView === 'sports') {
+        applyURLStateToView(_initialView);
+    }
     renderEvents(); renderSports();
     if (currentNews.length > 0) renderNewsUI();
     decorateFeedStars();
@@ -2492,6 +2689,7 @@ window.setEventSourceAll=function(){
     evTags.clear();
     updateEventsUI();
     renderEvents();
+    writeURLStateForView('events');
 };
 window.toggleEventSource=function(src){
     evAllMode = false;
@@ -2514,6 +2712,7 @@ window.toggleEventSource=function(src){
     evTags.clear();
     updateEventsUI();
     renderEvents();
+    writeURLStateForView('events');
 };
 function updateEventsUI(){
     const allBtn = document.getElementById('ev-src-all');
@@ -2599,6 +2798,7 @@ window.toggleEventSub = function(tag){
     else evTags.add(tag);
     renderEvSubFilters();
     renderEvents();
+    writeURLStateForView('events');
 };
 window.setEvMode = function(){};
 // Legacy no-op stubs — the Events/Sports toolbars no longer have prev/next nav
@@ -2611,18 +2811,21 @@ window.toggleKidFriendly=function(){
     document.getElementById('ev-kid-toggle').classList.toggle('active',evKidMode);
     updateEventsUI();
     renderEvents();
+    writeURLStateForView('events');
 };
 window.toggleFreeFood=function(){
     evFreeFoodMode=!evFreeFoodMode;
     document.getElementById('ev-freefood-toggle').classList.toggle('active',evFreeFoodMode);
     updateEventsUI();
     renderEvents();
+    writeURLStateForView('events');
 };
 window.toggleFreeStuff=function(){
     evFreeStuffMode=!evFreeStuffMode;
     document.getElementById('ev-freestuff-toggle').classList.toggle('active',evFreeStuffMode);
     updateEventsUI();
     renderEvents();
+    writeURLStateForView('events');
 };
 window.clearEventFilters=function(){
     evTags.clear(); evAllMode=true; evActiveSources=new Set(allEvSources);
@@ -2636,6 +2839,7 @@ window.clearEventFilters=function(){
     if(fs) fs.classList.remove('active');
     updateEventsUI();
     renderEvents();
+    writeURLStateForView('events');
     // Scroll to top so the user sees the reset fresh state
     window.scrollTo({ top: 0, behavior: 'smooth' });
 };
@@ -3006,6 +3210,7 @@ window.setSportsSourceAll=function(btn){
     spSportTag = null;
     updateSportsUI();
     renderSports();
+    writeURLStateForView('sports');
 };
 
 window.toggleSportsSource=function(src){
@@ -3032,6 +3237,7 @@ window.toggleSportsSource=function(src){
     spSportTag=null;
     updateSportsUI();
     renderSports();
+    writeURLStateForView('sports');
 };
 
 function updateSportsUI(){
@@ -3068,6 +3274,7 @@ window.toggleHomeGameMode=function(){
     spHomeOnly=!spHomeOnly;
     updateSportsUI();
     renderSports();
+    writeURLStateForView('sports');
 };
 window.clearSportsFilters=function(){
     spSportTag=null; spHomeOnly=false; spAllMode=true;
@@ -3079,6 +3286,7 @@ window.clearSportsFilters=function(){
     // Past-toggle button's active class is refreshed by updateSportsUI below
     updateSportsUI();
     renderSports();
+    writeURLStateForView('sports');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
@@ -3260,6 +3468,7 @@ window.toggleSportsPast = function() {
     if (newView === 'upcoming') spPastDaysVisible = INITIAL_DAYS_PAST;
     else spDaysVisible = INITIAL_DAYS;
     renderSports();
+    writeURLStateForView('sports');
     window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
@@ -3288,6 +3497,7 @@ function renderSportTypeTags(baseEvents){
 window.setSportType=function(sport){
     spSportTag=(spSportTag===sport)?null:sport;
     renderSports();
+    writeURLStateForView('sports');
 };
 
 /* ==================== CARD BUILDER ==================== */

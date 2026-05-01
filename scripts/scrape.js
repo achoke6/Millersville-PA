@@ -2098,21 +2098,6 @@ async function runScraper() {
         //  so deriving from events is the reliable alternative).
         if (!global._orgsFromEvents) global._orgsFromEvents = new Map();
         const orgsMap = global._orgsFromEvents;
-        // === ONE-TIME FIELD PROBE — DELETE AFTER NEXT SUCCESSFUL SCRAPE ===
-        // The discovery API isn't documented and CORS-blocked from the browser,
-        // so we can't probe interactively. This dumps the first item's keys
-        // plus anything resembling an image URL so we know which field to read
-        // (imagePath / cdnImagePath / image / something else). After the next
-        // cron run reports the answer in the log, this block can be removed.
-        if (giItems[0]) {
-            const sample = giItems[0];
-            console.log('  🔍 GI probe: item keys =', Object.keys(sample).join(', '));
-            const imgLike = Object.entries(sample).filter(([k, v]) =>
-                typeof v === 'string' && (k.toLowerCase().includes('image') || k.toLowerCase().includes('photo') || k.toLowerCase().includes('cdn') || (typeof v === 'string' && /\.(jpg|jpeg|png|webp|gif)/i.test(v)))
-            );
-            console.log('  🔍 GI probe: image-like =', imgLike.length ? JSON.stringify(imgLike) : '(none found)');
-        }
-        // === END PROBE ===
         // Record every org seen in giItems regardless of event date, so orgs with
         // only old events still appear in the directory.
         // Also include the deep-past org-discovery items to catch orgs that host events rarely.
@@ -2243,14 +2228,17 @@ async function runScraper() {
                 ticketLink: "",
                 sourceLink: `https://getinvolved.millersville.edu/event/${item.id}`,
                 description: item.description || "",
-                // Image URL: CampusLabs/Anthology Engage's discovery API exposes
-                // event imagery under at least three different field names
-                // depending on response variant (`imagePath` for newer events,
-                // `cdnImagePath` for CDN-served thumbnails, `image` as a generic
-                // fallback some endpoints emit). Try each in order and keep the
-                // first non-empty value. Empty/missing → field omitted by the
-                // SLIM_FIELDS pass downstream.
-                image: item.imagePath || item.cdnImagePath || item.image || '',
+                // CampusLabs CDN URL. The discovery API returns just a bare
+                // filename in `imagePath` (e.g. "62a129db-...PNG"), not a
+                // resolvable URL. The canonical CDN path is
+                //   https://se-images.campuslabs.com/clink/images/<filename>
+                // The `?preset=med-w` query gets the 600×300 medium-width
+                // variant — renders inline as an <img> rather than the
+                // 1300×780 original which downloads as a file. Empty when
+                // imagePath is missing; SLIM_FIELDS strips it downstream.
+                image: item.imagePath
+                    ? `https://se-images.campuslabs.com/clink/images/${item.imagePath}?preset=med-w`
+                    : '',
                 benefits: benefits,
                 audience: audience,
                 ...(orgDisplayName ? { orgName: orgDisplayName, orgShortName: resolveOrgShortName(orgDisplayName) } : {})

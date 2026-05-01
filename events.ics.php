@@ -123,6 +123,83 @@ function parseInstant($s) {
     }
 }
 
+// =====================================================================
+// SPORT/TYPE END-TIME DEFAULTS
+//
+// MUST stay in lockstep with SPORT_DEFAULTS / TYPE_DEFAULTS / DEFAULT_
+// DURATION_HOURS in app.js. Same values, same lookup order. The app uses
+// these at render time; this file uses them when emitting the iCal feed.
+// If you change the JS map, change this map — calendar subscribers see
+// the wrong end times otherwise.
+// =====================================================================
+const ICS_SPORT_DEFAULTS = [
+    'baseball'      => 3,   'softball'      => 3,
+    'football'      => 3,   'wrestling'     => 3,   'track' => 6,
+    'basketball'    => 2,   'soccer'        => 2,   'tennis' => 2,
+    'lacrosse'      => 2,   'field hockey'  => 2,   'cross country' => 2,
+    'volleyball'    => 1.5,
+    'swimming'      => 3,   'golf'          => 5,
+];
+const ICS_TYPE_DEFAULTS = [
+    'live music'   => 4,
+    'concert'      => 2.5,  'performance' => 2.5,
+    'theater'      => 2.5,  'theatre'     => 2.5,
+    'lecture'      => 2,    'film'        => 2,
+];
+const ICS_DEFAULT_DURATION_HOURS = 2;
+
+/**
+ * Resolve an event's end time. Order:
+ *   1. $e['endTime'] (ISO from scraper) — wins always.
+ *   2. SPORT_DEFAULTS lookup against tags (case-insensitive), then title.
+ *   3. Phantom Power tag → live music default.
+ *   4. TYPE_DEFAULTS lookup (concert, lecture, etc.).
+ *   5. ICS_DEFAULT_DURATION_HOURS as final fallback.
+ * Returns a DateTime in UTC. Fractional hours (volleyball 1.5, concert 2.5)
+ * are converted to minutes so DateTime::modify gets an integer.
+ */
+function resolveEventEndTime($e, DateTime $startUtc) {
+    // 1. Real source endTime — winner.
+    if (!empty($e['endTime'])) {
+        $endDt = parseInstant((string)$e['endTime']);
+        if ($endDt) {
+            $endDt->setTimezone(new DateTimeZone('UTC'));
+            return $endDt;
+        }
+    }
+
+    $tags = isset($e['tags']) && is_array($e['tags']) ? $e['tags'] : [];
+    $lowerTags = array_map(function($t) { return strtolower((string)$t); }, $tags);
+    $title = strtolower(isset($e['title']) ? (string)$e['title'] : '');
+    $addMinutes = function($hours) use ($startUtc) {
+        $m = (int) round($hours * 60);
+        return (clone $startUtc)->modify('+' . $m . ' minutes');
+    };
+
+    // 2. Sport — tags then title.
+    foreach (ICS_SPORT_DEFAULTS as $sport => $hours) {
+        if (in_array($sport, $lowerTags, true)) return $addMinutes($hours);
+    }
+    foreach (ICS_SPORT_DEFAULTS as $sport => $hours) {
+        if (strpos($title, $sport) !== false) return $addMinutes($hours);
+    }
+
+    // 3. Phantom Power → live music.
+    if (in_array('phantom power', $lowerTags, true)) {
+        return $addMinutes(ICS_TYPE_DEFAULTS['live music']);
+    }
+
+    // 4. Other type defaults — tags then title.
+    foreach (ICS_TYPE_DEFAULTS as $type => $hours) {
+        if (in_array($type, $lowerTags, true) || strpos($title, $type) !== false) {
+            return $addMinutes($hours);
+        }
+    }
+
+    // 5. Final fallback.
+    return $addMinutes(ICS_DEFAULT_DURATION_HOURS);
+}
+
 /**
  * Build the VEVENT block for one event. Returns array of lines (unfolded)
  * or null if the event lacks essential data.
@@ -141,14 +218,11 @@ function buildVevent($e) {
     $dt->setTimezone(new DateTimeZone('UTC'));
     $dtstart = $dt->format('Ymd\THis\Z');
 
-    // Default duration: 2 hours for athletic events (games tend to run
-    // longer than 1 hour), 1 hour otherwise. events.json doesn't carry
-    // explicit end times so this is a heuristic.
-    $tags = isset($e['tags']) && is_array($e['tags']) ? $e['tags'] : [];
-    $isAthletic = in_array('Athletics', $tags, true) || in_array('Athletic Competitions', $tags, true);
-    $durationHours = $isAthletic ? 2 : 1;
-    $dtEnd = clone $dt;
-    $dtEnd->modify('+' . $durationHours . ' hours');
+    // Resolve end time: real $e['endTime'] from the scraper wins; otherwise
+    // sport/type/generic default via resolveEventEndTime. Mirrors getEvent
+    // EndTime in app.js so calendar subscribers see the same end time as
+    // visitors to millersville.app for any given event.
+    $dtEnd = resolveEventEndTime($e, $dt);
     $dtend = $dtEnd->format('Ymd\THis\Z');
 
     // Stable UID so calendar clients deduplicate across refreshes and update

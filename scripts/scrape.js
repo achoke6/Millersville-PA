@@ -174,6 +174,29 @@ function parseEventInstant(s) {
     return candidate - offsetMs;
 }
 
+// Combine an ISO date ("2026-05-03") with a human clock string ("1:00 PM",
+// "10:30am", "5 PM") into a naive ET wall-clock ISO ("2026-05-03T13:00:00")
+// suitable for parseEventInstant. Used by VFW Vision extraction where flyers
+// publish times like "Bingo 1:00 PM – 5:00 PM" — the date comes from one
+// field, the time from another. Returns null on parse failure (caller falls
+// back to whatever default the source uses).
+function combineDateAndClockTime(dateStr, clockStr) {
+    if (!dateStr || !clockStr) return null;
+    const s = String(clockStr).trim();
+    // Accept "1:00 PM", "1 PM", "13:00", "10:30am", etc.
+    const m = s.match(/^(\d{1,2})(?::(\d{2}))?\s*(AM|PM|am|pm)?$/);
+    if (!m) return null;
+    let hours = parseInt(m[1], 10);
+    const minutes = parseInt(m[2] || '0', 10);
+    const ampm = (m[3] || '').toUpperCase();
+    if (ampm === 'PM' && hours < 12) hours += 12;
+    else if (ampm === 'AM' && hours === 12) hours = 0;
+    if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59) return null;
+    // No Z / no offset — parseEventInstant treats this as ET wall-clock and
+    // applies the DST-correct offset (EDT or EST as appropriate for the date).
+    return `${dateStr}T${String(hours).padStart(2,'0')}:${String(minutes).padStart(2,'0')}:00`;
+}
+
 // Derive the ET calendar day (YYYY-MM-DD) from a UTC instant. Used by the
 // dedupe pass to group events occurring on the same Millersville day even
 // when one source phrases them as "Apr 22 8pm ET" and another as
@@ -1358,6 +1381,7 @@ async function runScraper() {
       node {
         broadcastDateUtc
         broadcastId
+        durationSeconds
         internalId
         siteId
         status
@@ -1466,10 +1490,21 @@ async function runScraper() {
                 if (isNaN(ms) || ms < pastCutoff || ms > futureCutoff) continue;
                 const sport = parseBroadcastTitle(node.title);
                 if (!sport || !node.internalId) continue;
+                // durationSeconds may be null/0 for UPCOMING broadcasts (length
+                // unknown until the broadcast actually airs). endMs is null in
+                // that case; step 7's interval-overlap pairing will fall back
+                // to a sport-default duration when endMs is null. We store the
+                // raw value (preserving null vs 0 vs missing) for debugging —
+                // Number(null) === 0 in JS, so we check rawDur first.
+                const rawDur = node.durationSeconds;
+                const durSec = (rawDur === null || rawDur === undefined) ? null : Number(rawDur);
+                const endMs = (Number.isFinite(durSec) && durSec > 0) ? ms + durSec * 1000 : null;
                 broadcasts.push({
                     sport,
                     dateUtc: node.broadcastDateUtc,
                     ms,
+                    endMs,
+                    durationSeconds: durSec,
                     internalId: node.internalId,
                     status: node.status,
                     title: node.title
@@ -1500,10 +1535,18 @@ async function runScraper() {
                 if (ms > futureCutoff) continue;  // shouldn't happen for archived but defensive
                 const sport = parseBroadcastTitle(node.title);
                 if (!sport || !node.internalId) continue;
+                // ARCHIVED broadcasts have an actual recorded duration. Defensive
+                // fallback to null if Hudl returns an unexpected shape — step 7
+                // pairing degrades to sport-default duration when null.
+                const rawDur = node.durationSeconds;
+                const durSec = (rawDur === null || rawDur === undefined) ? null : Number(rawDur);
+                const endMs = (Number.isFinite(durSec) && durSec > 0) ? ms + durSec * 1000 : null;
                 broadcasts.push({
                     sport,
                     dateUtc: node.broadcastDateUtc,
                     ms,
+                    endMs,
+                    durationSeconds: durSec,
                     internalId: node.internalId,
                     status: node.status,
                     title: node.title
@@ -1513,6 +1556,8 @@ async function runScraper() {
             archCursor = result?.pageInfo?.endCursor || null;
         }
         console.log(`  📺 MU Hudl: ${muTotalBroadcasts} broadcasts queried, ${broadcasts.length} matched our window`);
+        const withDuration = broadcasts.filter(b => b.durationSeconds !== null).length;
+        console.log(`  ⏱️  MU Hudl durations: ${withDuration}/${broadcasts.length} broadcasts carry durationSeconds (UPCOMING typically null until airing)`);
 
         // Group broadcasts by ET calendar day + sport. ET-anchored grouping
         // matters because doubleheaders that start at e.g. 4 PM and 7 PM ET on
@@ -2512,7 +2557,9 @@ If it's a WEEKLY SPECIALS flyer:
 Extract food item names, prices, and whether they are Friday-only.
 
 If it's an EVENT FLYER/ANNOUNCEMENT:
-{"type":"event","name":"Meat Tray Bingo","date":"2026-05-03","time":"1:00 PM","details":"Doors open 12:00 PM, Starter Packs $25","openToPublic":true}
+{"type":"event","name":"Meat Tray Bingo","date":"2026-05-03","time":"1:00 PM","endTime":"5:00 PM","details":"Doors open 12:00 PM, Starter Packs $25","openToPublic":true}
+- "time" is the start time when shown (use "H:MM AM/PM" format).
+- "endTime" is the end time, ONLY when explicitly shown on the flyer (e.g. "5pm-9pm", "from 6 to 10", "1:00 PM - 5:00 PM"). Use the same "H:MM AM/PM" format. Omit the field entirely if no end time is shown — do NOT guess or estimate.
 
 Respond with ONLY the JSON object.`;
 
@@ -2614,17 +2661,38 @@ Respond with ONLY the JSON object.`;
             // ===== EVENT FLYER =====
             } else if (parsed.type === 'event' && parsed.name) {
                 const evDateStr = parsed.date || '';
-                const evDate = evDateStr ? new Date(evDateStr + 'T16:00:00Z') : null;
-                if (evDate && !isNaN(evDate.getTime()) && evDate >= pastDate && evDate < futureDate) {
+                // Prefer the flyer's stated start time when present; fall back to
+                // the noon-ET placeholder used for date-only events. Same pattern
+                // for end time: only set endTime when the flyer explicitly shows
+                // an end time (Vision is told not to guess).
+                const startStrET = combineDateAndClockTime(evDateStr, parsed.time);
+                const startMs = startStrET ? parseEventInstant(startStrET)
+                                           : (evDateStr ? new Date(evDateStr + 'T16:00:00Z').getTime() : NaN);
+                let endMs = NaN;
+                if (parsed.endTime) {
+                    const endStrET = combineDateAndClockTime(evDateStr, parsed.endTime);
+                    if (endStrET) {
+                        endMs = parseEventInstant(endStrET);
+                        // Cross-midnight handling: a flyer that says "10pm-1am"
+                        // means the end is on the next calendar day. If endMs
+                        // isn't strictly after startMs, bump 24h.
+                        if (!isNaN(endMs) && !isNaN(startMs) && endMs <= startMs) {
+                            endMs += 24 * 3600 * 1000;
+                        }
+                    }
+                }
+                if (!isNaN(startMs) && startMs >= pastDate.getTime() && startMs < futureDate.getTime()) {
                     const priceTag = parsed.openToPublic ? 'Open to Public' : 'Members Only';
                     events.push({
-                        title: parsed.name, date: evDate.toISOString(),
+                        title: parsed.name,
+                        date: new Date(startMs).toISOString(),
+                        endTime: !isNaN(endMs) ? new Date(endMs).toISOString() : undefined,
                         location: 'VFW Post 7294, 219 Walnut Hill Rd',
                         tags: ['Other', 'VFW'], price: priceTag, ticketLink: '', sourceLink: postLink,
                         gameResult: '', gameScore: '', streamLink: '', isLive: false, kidFriendly: false
                     });
                     vfwEventCount++;
-                    console.log(`    📌 Event: "${parsed.name}" on ${evDateStr}${parsed.time ? ' at ' + parsed.time : ''}`);
+                    console.log(`    📌 Event: "${parsed.name}" on ${evDateStr}${parsed.time ? ' at ' + parsed.time : ''}${parsed.endTime ? '–' + parsed.endTime : ''}`);
                 }
             }
 

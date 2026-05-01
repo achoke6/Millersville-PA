@@ -3,7 +3,8 @@
     "name": "Acacia",
     "category": "Service",
     "categories": [
-      "Service"
+      "Service",
+      "Fundraiser"
     ],
     "shortName": "",
     "id": ""
@@ -376,8 +377,7 @@
     "category": "Educational Program",
     "categories": [
       "Educational Program",
-      "Social",
-      "Tabling"
+      "Social"
     ],
     "shortName": "CHEP",
     "id": ""
@@ -770,13 +770,13 @@
   },
   {
     "name": "Equestrian Club",
-    "category": "Service",
+    "category": "Sports and Leisure",
     "categories": [
-      "Service",
+      "Sports and Leisure",
       "Meeting"
     ],
-    "shortName": "",
-    "id": ""
+    "shortName": "Equestrian",
+    "id": "equestrian"
   },
   {
     "name": "Expressions Dance",
@@ -1273,10 +1273,12 @@
   },
   {
     "name": "Mentoring Educators for Tomorrow",
-    "category": "",
-    "categories": [],
+    "category": "Academic",
+    "categories": [
+      "Academic"
+    ],
     "shortName": "MET",
-    "id": ""
+    "id": "thecolorofteachingmentoringprogram"
   },
   {
     "name": "Millersville Concerned Women",
@@ -1475,12 +1477,12 @@
   },
   {
     "name": "Panhellenic Council",
-    "category": "Fraternity & Sorority Life",
+    "category": "Social",
     "categories": [
-      "Fraternity & Sorority Life"
+      "Social"
     ],
-    "shortName": "NPC",
-    "id": "panhellenic"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Paws On Deck",
@@ -1841,10 +1843,8 @@
   },
   {
     "name": "Tau Kappa Epsilon",
-    "category": "Fundraiser",
-    "categories": [
-      "Fundraiser"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },

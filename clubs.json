@@ -793,9 +793,7 @@
     "name": "Fencing Guild",
     "category": "Sports and Leisure",
     "categories": [
-      "Sports and Leisure",
-      "Social",
-      "Sporting"
+      "Sports and Leisure"
     ],
     "shortName": "MUFG",
     "id": "fencing"
@@ -1154,12 +1152,13 @@
   },
   {
     "name": "Math Club",
-    "category": "Social",
+    "category": "Academic",
     "categories": [
+      "Academic",
       "Social"
     ],
     "shortName": "",
-    "id": ""
+    "id": "mathclub"
   },
   {
     "name": "Mathematics Educators",

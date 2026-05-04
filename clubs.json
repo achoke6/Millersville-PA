@@ -715,9 +715,8 @@
   },
   {
     "name": "Early Childhood Organization",
-    "category": "Service",
+    "category": "Meeting",
     "categories": [
-      "Service",
       "Meeting",
       "Social"
     ],
@@ -943,9 +942,9 @@
   },
   {
     "name": "Honors College Student Association",
-    "category": "Social",
+    "category": "Fundraiser",
     "categories": [
-      "Social"
+      "Fundraiser"
     ],
     "shortName": "HCSA",
     "id": ""
@@ -1044,9 +1043,10 @@
   },
   {
     "name": "Kappa Alpha Psi Fraternity Incorporated",
-    "category": "Fundraiser",
+    "category": "Movie or Film",
     "categories": [
-      "Fundraiser"
+      "Movie or Film",
+      "Social"
     ],
     "shortName": "Kappa Alpha Psi",
     "id": ""
@@ -1310,6 +1310,16 @@
     ],
     "shortName": "\"Marauder\" Marching Band",
     "id": "mummb"
+  },
+  {
+    "name": "Millersville University Television Station Channel 99",
+    "category": "Meeting",
+    "categories": [
+      "Meeting",
+      "Movie or Film"
+    ],
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Mixed Martial Arts Club",
@@ -2014,10 +2024,12 @@
   },
   {
     "name": "Ville Sports Officials Association Club",
-    "category": "",
-    "categories": [],
+    "category": "Sports and Leisure",
+    "categories": [
+      "Sports and Leisure"
+    ],
     "shortName": "VSOAC",
-    "id": ""
+    "id": "vsoa"
   },
   {
     "name": "VilleHarmonics",

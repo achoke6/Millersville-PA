@@ -802,6 +802,50 @@ async function runScraper() {
         );
         let muAthCount = 0;
 
+        // === ONE-TIME DIAGNOSTIC: doubleheader detection ===
+        // We've seen Game 1 of a doubleheader publish a score while Game 2
+        // stays empty (https://millersville.app shows only the first game's
+        // result). Suspect: Sidearm publishes both games but something in our
+        // pipeline collapses them. Three possible failure points:
+        //   1. node-ical parses both VEVENTs but assigns the same key (UID
+        //      collision) → second overwrites first in the parsed object →
+        //      Object.values returns only one. Symptom: rawCount === 1.
+        //   2. Both events parse fine, both push, but Pass 1 dedupe collapses
+        //      them. Symptom: rawCount === 2, postPushCount === 2, but final
+        //      events.json has only one. (Pass 1 keys on title|ms|location;
+        //      different times shouldn't collide — but worth confirming.)
+        //   3. Sidearm only publishes one VEVENT per doubleheader, with the
+        //      score attached to whichever game finishes first in the data.
+        //      Symptom: rawCount === 1 but with the WRONG score for Game 2.
+        // Group VEVENTs by `${title}|${YYYY-MM-DD}` and log any group with >1
+        // occurrence, plus their UIDs and times. Remove after diagnosis.
+        {
+            const dhProbe = new Map();
+            for (const ev of Object.values(muAthData)) {
+                if (ev.type !== 'VEVENT') continue;
+                const start = new Date(ev.start);
+                if (isNaN(start.getTime())) continue;
+                const day = start.toISOString().slice(0, 10);
+                const title = (ev.summary || '').replace(/^\[.\]\s*/, '').trim();
+                const key = `${title}|${day}`;
+                if (!dhProbe.has(key)) dhProbe.set(key, []);
+                dhProbe.get(key).push({
+                    uid: ev.uid || '(no-uid)',
+                    start: start.toISOString(),
+                    summary: ev.summary || ''
+                });
+            }
+            for (const [key, list] of dhProbe) {
+                if (list.length > 1) {
+                    console.log(`  🔍 DOUBLEHEADER: ${list.length}× "${key}"`);
+                    for (const e of list) {
+                        console.log(`      uid=${e.uid.substring(0, 50)} start=${e.start} sum="${e.summary.substring(0, 60)}"`);
+                    }
+                }
+            }
+        }
+        // === END PROBE ===
+
         for (const ev of Object.values(muAthData)) {
             if (ev.type !== 'VEVENT') continue;
             const eventDate = new Date(ev.start);

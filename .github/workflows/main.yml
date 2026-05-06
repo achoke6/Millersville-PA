@@ -150,6 +150,7 @@ jobs:
                 --exclude ^vfw-cache\.json$ \
                 --exclude ^grocery-cache\.json$ \
                 --exclude ^subscriptions\.json$ \
+                --exclude ^notifications-status\.json$ \
                 ./ ${{ secrets.DREAMHOST_DIR }};
               put -O ${{ secrets.DREAMHOST_DIR }} .htaccess;
               quit;

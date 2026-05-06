@@ -62,6 +62,10 @@
             <div class="status-hero-label">Events live</div>
         </div>
         <div>
+            <div id="hero-today" class="status-hero-big">—</div>
+            <div class="status-hero-label">Today</div>
+        </div>
+        <div>
             <div id="hero-time" class="status-hero-big" style="font-size:1rem;line-height:1.4;">—</div>
             <div class="status-hero-label">Last scrape</div>
         </div>
@@ -167,7 +171,7 @@ function card(title, rows) {
 }
 
 async function render() {
-    let status, history = null;
+    let status, history = null, notifStatus = null;
     try {
         // Bust the cache explicitly — we want fresh numbers, not hourly CDN-
         // cached snapshots. The scraper writes these files as the last step
@@ -175,14 +179,19 @@ async function render() {
         // Fetch status and history in parallel. History is informational —
         // a 404 (e.g., first deploy before any cron has written it) just
         // skips the comparison logic and renders raw counts as before.
-        const [statusRes, historyRes] = await Promise.all([
+        // Notifications status is also optional (404 if cron hasn't run yet).
+        const [statusRes, historyRes, notifRes] = await Promise.all([
             fetch('status.json?' + Date.now(), { cache: 'no-store' }),
-            fetch('status-history.json?' + Date.now(), { cache: 'no-store' }).catch(() => null)
+            fetch('status-history.json?' + Date.now(), { cache: 'no-store' }).catch(() => null),
+            fetch('notifications-status.json?' + Date.now(), { cache: 'no-store' }).catch(() => null)
         ]);
         if (!statusRes.ok) throw new Error('status.json HTTP ' + statusRes.status);
         status = await statusRes.json();
         if (historyRes && historyRes.ok) {
             try { history = await historyRes.json(); } catch { /* malformed — ignore */ }
+        }
+        if (notifRes && notifRes.ok) {
+            try { notifStatus = await notifRes.json(); } catch { /* malformed — ignore */ }
         }
     } catch (err) {
         document.getElementById('grid').innerHTML =
@@ -195,6 +204,7 @@ async function render() {
 
     // Hero: event count + last-updated + freshness badge
     document.getElementById('hero-events').textContent = status.totalEvents.toLocaleString();
+    document.getElementById('hero-today').textContent = (status.eventsToday != null ? status.eventsToday : '—');
     document.getElementById('hero-time').textContent = formatRelative(status.generatedAt);
     const minAgo = Math.round((Date.now() - new Date(status.generatedAt).getTime()) / 60000);
     const badge = document.getElementById('freshness-badge');
@@ -237,8 +247,29 @@ async function render() {
         // gets caught next cron instead of next baseball season.
         { label: 'MU Hudl broadcasts',     key: 'muHudlBroadcasts' }
     ];
+    // Per-source thresholds for stale-detection. The metric is "days since
+    // newest event date last advanced" — if a source's furthest-future event
+    // hasn't budged in this many days, the underlying feed has likely stopped
+    // publishing. Tuned to expected publishing cadence so quiet-but-healthy
+    // sources don't trigger warnings during their natural dry spells.
+    //
+    // Sparse sources (VFW publishes weekly flyers, Community submissions are
+    // per-user) get longer windows. Active sources (campus calendars publish
+    // daily during semester) get tighter ones.
+    const STALE_THRESHOLDS = {
+        muAthletics:    21,   // schedule publishes seasonally
+        muCalendar:     14,   // active during semester
+        muGetInvolved:  14,   // student orgs post regularly
+        pennManor:      14,   // school events publish weekly+
+        borough:        21,   // borough meetings monthly+
+        vfw:            45,   // VFW flyers come weekly but small set
+        phantomPower:   30,   // shows announced ~monthly cadence
+        community:      90    // user submissions can go quiet legitimately
+    };
     const degraded = [];
+    const stale = [];
     const sourceRanges = status.sourceDateRanges || {};
+    const staleness = status.staleness || {};
     const sourceRows = sourceList.map(({ label, key }) => {
         const cmp = compareSource(s[key], history, key, todayDate);
         if (cmp) degraded.push({ label, status: cmp.status });
@@ -251,6 +282,20 @@ async function render() {
         if (rangeStr) {
             opts.hint = opts.hint ? `${opts.hint} · ${rangeStr}` : rangeStr;
         }
+        // Stale-source check. Only flagged if degraded didn't already warn —
+        // a degraded source is already loud, no need to also call it stale
+        // (often the same root cause). We surface stale as warn-level since
+        // the source might be legitimately quiet, but past the threshold
+        // it's worth investigating.
+        const staleInfo = staleness[key];
+        const threshold = STALE_THRESHOLDS[key];
+        if (!cmp && staleInfo && typeof staleInfo.daysSinceMoved === 'number'
+            && threshold != null && staleInfo.daysSinceMoved >= threshold) {
+            stale.push({ label, days: staleInfo.daysSinceMoved });
+            opts.status = 'warn';
+            const staleHint = `newest unchanged ${staleInfo.daysSinceMoved}d`;
+            opts.hint = opts.hint ? `${opts.hint} · ${staleHint}` : staleHint;
+        }
         return metric(label, s[key], opts);
     }).join('');
 
@@ -259,11 +304,15 @@ async function render() {
     //   - All sources within tolerance       → "All sources healthy"
     //   - Some warns, no errors              → "N source(s) degraded"
     //   - At least one error                 → "N source(s) failing" (red)
+    // Stale-source flagging gets folded in alongside count-degradation so
+    // there's a single summary line. Stale shows as warn-level in the summary
+    // when no count-based err is also firing.
     // Muted "Insufficient history" appears for the first ~2 days after deploy
     // when there isn't enough baseline data to compare against.
     const healthRow = document.getElementById('health-row');
     const hasErr  = degraded.some(d => d.status === 'err');
     const hasWarn = degraded.some(d => d.status === 'warn');
+    const hasStale = stale.length > 0;
     healthRow.style.display = '';
     if (!history || (history.days || []).filter(d => d.date !== todayDate).length < 2) {
         healthRow.className = 'status-health-row muted';
@@ -272,10 +321,13 @@ async function render() {
         healthRow.className = 'status-health-row err';
         const failing = degraded.filter(d => d.status === 'err').map(d => d.label);
         healthRow.textContent = `🚨 ${failing.length} source${failing.length > 1 ? 's' : ''} failing: ${failing.join(', ')}`;
-    } else if (hasWarn) {
+    } else if (hasWarn || hasStale) {
         healthRow.className = 'status-health-row warn';
+        const parts = [];
         const warning = degraded.filter(d => d.status === 'warn').map(d => d.label);
-        healthRow.textContent = `⚠️ ${warning.length} source${warning.length > 1 ? 's' : ''} degraded: ${warning.join(', ')}`;
+        if (warning.length) parts.push(`${warning.length} degraded: ${warning.join(', ')}`);
+        if (stale.length) parts.push(`${stale.length} stale: ${stale.map(s => s.label + ' (' + s.days + 'd)').join(', ')}`);
+        healthRow.textContent = `⚠️ ${parts.join(' · ')}`;
     } else {
         healthRow.className = 'status-health-row ok';
         healthRow.textContent = '✓ All sources within typical range';
@@ -306,9 +358,7 @@ async function render() {
         metric('Scored (past games)', sp.scored) +
         metric('Wins', sp.wins) +
         metric('Losses', sp.losses) +
-        metric('Ties / Neutral', sp.ties) +
-        metric('Box scores parsed', sp.boxScoresParsed,
-            { suffix: sp.scored ? ' / ' + sp.scored + ' (' + Math.round(sp.boxScoresParsed / sp.scored * 100) + '%)' : '' })
+        metric('Ties / Neutral', sp.ties)
     );
 
     const contentCard = card('Content Coverage',
@@ -319,7 +369,40 @@ async function render() {
         metric('Family-friendly tagged', status.familyFriendly)
     );
 
-    document.getElementById('grid').innerHTML = sourcesCard + sportsCard + contentCard;
+    // Push notifications health. Always render the card (so the first deploy
+    // shows the "no runs yet" state rather than just hiding the feature) but
+    // adapt content based on whether we have a notif-status file. The cron
+    // runs once daily after DST guard, so a healthy run leaves data ~24h old
+    // by definition — staleness is judged against 30h, giving one full cron
+    // cycle of slack before flagging "cron seems broken."
+    let notifCard;
+    if (notifStatus) {
+        const lastRunAgo = Math.round((Date.now() - new Date(notifStatus.lastRunAt).getTime()) / 60000);
+        const hoursSince = lastRunAgo / 60;
+        const cronStale = hoursSince > 30;
+        const subsLabel = notifStatus.subscribers === 1 ? '1 device' : notifStatus.subscribers + ' devices';
+        notifCard = card('Push Notifications',
+            metric('Subscribers', notifStatus.subscribers,
+                { suffix: ' (' + subsLabel + ')' }) +
+            metric('Last run', formatRelative(notifStatus.lastRunAt),
+                cronStale ? { status: 'warn', hint: '7am cron may have skipped' } : {}) +
+            metric('Sent last run', notifStatus.lastRunSent) +
+            metric('Skipped (no matches)', notifStatus.lastRunSkipped) +
+            (notifStatus.lastRunPruned > 0
+                ? metric('Pruned (dead subs)', notifStatus.lastRunPruned, { hint: 'expired or unsubscribed' })
+                : '')
+        );
+    } else {
+        // First deploy / cron hasn't run yet. Show a placeholder card so users
+        // know the feature exists and is awaiting first execution. Removed
+        // automatically once the cron writes its first status file.
+        notifCard = card('Push Notifications',
+            '<div class="status-metric muted"><span class="status-metric-label">No runs yet</span>' +
+            '<span class="status-metric-hint">Cron writes status after first 7am ET run</span></div>'
+        );
+    }
+
+    document.getElementById('grid').innerHTML = sourcesCard + sportsCard + contentCard + notifCard;
 }
 
 render();

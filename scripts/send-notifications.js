@@ -390,4 +390,37 @@ async function sendPush(subscription, payload) {
             // can retry tomorrow. Logging is enough.
         }
     }
+
+    // Write a small status file so the /status.html dashboard can show
+    // notification health (subscriber count, last run time, last run results).
+    // The status page polls every minute; this file changes only when the
+    // cron runs (once daily after DST guard), so the dashboard naturally
+    // reflects "data is N hours old" via the lastRunAt timestamp.
+    //
+    // Failure here is non-fatal — pushes already went out, the dashboard
+    // just won't see updated stats this run. Cron retries tomorrow.
+    try {
+        const statusPayload = {
+            lastRunAt: new Date().toISOString(),
+            subscribers: survivors.length,
+            lastRunSent: sent,
+            lastRunSkipped: skipped,
+            lastRunPruned: pruned
+        };
+        const statusLocalPath = '/tmp/notifications-status.json';
+        fs.writeFileSync(statusLocalPath, JSON.stringify(statusPayload, null, 2));
+        const remotePath = `${FTP_DIR}/notifications-status.json`;
+        const cmd = `lftp -c "
+            set sftp:auto-confirm yes;
+            set net:max-retries 3;
+            set net:timeout 30;
+            open -u '${FTP_USER}','${FTP_PASS}' sftp://${FTP_HOST};
+            put '${statusLocalPath}' -o '${remotePath}';
+            quit;
+        "`;
+        execSync(cmd, { stdio: 'pipe' });
+        console.log(`📤 Wrote notifications-status.json`);
+    } catch (err) {
+        console.error(`⚠️  Failed to write notification status: ${err.message}`);
+    }
 })();

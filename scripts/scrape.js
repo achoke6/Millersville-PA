@@ -4086,6 +4086,20 @@ Focus on the most impressive deals a shopper would want to know about. Include m
             withDescription: deduped.filter(e => e.description).length,
             withImage: deduped.filter(e => e.image).length,
             familyFriendly: deduped.filter(e => e.kidFriendly).length,
+            // Events happening TODAY in Eastern Time. Surfaces what users see
+            // when they open the app right now — useful sanity check after a
+            // scrape ("did Friday's slate land?") and a more operationally
+            // meaningful number than a 1-year forward count for daily ops.
+            // Computed via deriveDayET so the cutoff matches user-facing date
+            // logic (no UTC drift on late-night runs).
+            eventsToday: (() => {
+                const todayET = deriveDayET(Date.now());
+                return deduped.filter(e => {
+                    const ms = parseEventInstant(e.date);
+                    if (isNaN(ms)) return false;
+                    return deriveDayET(ms) === todayET;
+                }).length;
+            })(),
             // Per-source counts (after dedupe)
             sources: {
                 muAthletics: bySourceCount('MU', e => (e.tags || []).includes('Athletics') || (e.tags || []).includes('Athletic Competitions')),
@@ -4135,6 +4149,50 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 })(),
                 community: dateRangeFor('Community')
             },
+            // Stale-source detection. For each source, compute the newest event
+            // date currently in the data, then compare against the same source's
+            // newest date from prior days in status-history.json. If it hasn't
+            // moved in N days, the source has likely stopped publishing — even
+            // though count-based monitoring (compareSource above) is still
+            // happy because the count itself is steady.
+            //
+            // This catches the failure mode where Borough's iCal feed stops
+            // updating but already had 200+ events in the buffer: count stays
+            // at 200, every count-based monitor reads "healthy", but in fact
+            // no new events have appeared in weeks and the source is dead.
+            //
+            // Per-source thresholds tuned to expected publish cadence — sparse
+            // sources get longer windows so they don't false-positive during
+            // their natural dry spells. Tuning is conservative; better to miss
+            // a slow real-world stall than nag about VFW being quiet for a few
+            // weeks (it normally is).
+            //
+            // Returns null entries for sources with no events (avoids divide-by-
+            // missing-data edge cases in status.html). status.html renders the
+            // value as a hint when daysSinceMoved exceeds the threshold.
+            staleness: (() => {
+                const out = {};
+                const newestPerSource = {
+                    muAthletics: dateRangeFor('MU', e => (e.tags || []).includes('Athletics') || (e.tags || []).includes('Athletic Competitions'))?.latest,
+                    muCalendar: dateRangeFor('MU', e => !(e.tags || []).includes('Athletics') && !(e.tags || []).includes('Clubs/Orgs'))?.latest,
+                    muGetInvolved: dateRangeFor('Clubs/Orgs')?.latest,
+                    pennManor: dateRangeFor('PM')?.latest,
+                    borough: dateRangeFor('Borough')?.latest,
+                    vfw: dateRangeFor('VFW')?.latest,
+                    phantomPower: (() => {
+                        const m = deduped.filter(e => e.location === 'Phantom Power');
+                        if (m.length === 0) return null;
+                        const stamps = m.map(e => new Date(e.date).getTime()).filter(Number.isFinite);
+                        return stamps.length === 0 ? null : new Date(Math.max(...stamps)).toISOString();
+                    })(),
+                    community: dateRangeFor('Community')?.latest
+                };
+                for (const [key, latestIso] of Object.entries(newestPerSource)) {
+                    if (!latestIso) { out[key] = null; continue; }
+                    out[key] = { newest: latestIso.slice(0, 10) };
+                }
+                return out;
+            })(),
             sports: {
                 total: deduped.filter(e =>
                     (e.tags || []).includes('Athletics') || (e.tags || []).includes('Athletic Competitions')
@@ -4142,8 +4200,7 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 scored: pastSports.length,
                 wins: pastSports.filter(e => e.gameResult === 'W').length,
                 losses: pastSports.filter(e => e.gameResult === 'L').length,
-                ties: pastSports.filter(e => e.gameResult === 'T' || e.gameResult === 'N').length,
-                boxScoresParsed: pastSports.filter(e => e.periodScores).length
+                ties: pastSports.filter(e => e.gameResult === 'T' || e.gameResult === 'N').length
             }
         };
         fs.writeFileSync(path.join(__dirname, '../status.json'), JSON.stringify(status, null, 2));
@@ -4171,20 +4228,74 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 } catch { /* corrupt file — start fresh */ }
             }
             const todayET = deriveDayET(Date.now());
+            // Capture today's newest-event-date per source for stale-source
+            // detection. We persist this alongside counts so future runs can
+            // compare and surface "newest event hasn't moved in N days." The
+            // value is just the YYYY-MM-DD slice of the latest event per
+            // source — exactly what status.staleness already computed.
+            const newestDates = {};
+            for (const [key, info] of Object.entries(status.staleness || {})) {
+                if (info && info.newest) newestDates[key] = info.newest;
+            }
             const snapshot = {
                 date: todayET,
                 ts: status.generatedAt,
                 totalEvents: status.totalEvents,
-                sources: status.sources
+                sources: status.sources,
+                newestDates
             };
             const idx = history.days.findIndex(d => d.date === todayET);
             if (idx >= 0) history.days[idx] = snapshot;
             else history.days.push(snapshot);
-            // Sort chronologically and keep only the last 7 days.
+            // Sort chronologically and keep only the last 90 days. Cap exists
+            // so the file doesn't grow unbounded, but we need enough history
+            // for stale-source detection thresholds (up to 90d for sparse
+            // sources like Community submissions). At ~600 bytes/day this
+            // tops out around 55KB — trivial.
             history.days.sort((a, b) => a.date.localeCompare(b.date));
-            if (history.days.length > 7) history.days = history.days.slice(-7);
+            if (history.days.length > 90) history.days = history.days.slice(-90);
             history.lastUpdated = status.generatedAt;
             fs.writeFileSync(historyPath, JSON.stringify(history, null, 2));
+
+            // Now that history is updated, compute "days since newest event
+            // date moved" for each source. Walks backward through history's
+            // days array — each entry stores the newest-event-date as it was
+            // ON that day. We find the most recent day where the value
+            // differed from today's, then the gap (in days) is how long it's
+            // been static. If history has only one day or all days agree, we
+            // record null (not enough data to be diagnostic). If a source's
+            // newest date matches one observed many days ago, the source is
+            // probably stalled.
+            //
+            // Status.html applies the per-source threshold and renders a hint.
+            // We don't apply the threshold here so the threshold can change
+            // without re-running the scrape.
+            try {
+                for (const [key, info] of Object.entries(status.staleness || {})) {
+                    if (!info || !info.newest) continue;
+                    const todayNewest = info.newest;
+                    // Walk history oldest → newest, find the earliest day
+                    // whose newestDates[key] is the SAME as today's newest.
+                    // Days since that day == days since the source last moved.
+                    let earliestSameDay = null;
+                    for (const day of history.days) {
+                        const dn = day.newestDates && day.newestDates[key];
+                        if (dn === todayNewest) { earliestSameDay = day.date; break; }
+                    }
+                    if (!earliestSameDay) {
+                        info.daysSinceMoved = 0;
+                        continue;
+                    }
+                    const earliestMs = new Date(earliestSameDay + 'T00:00:00Z').getTime();
+                    const todayMs = new Date(todayET + 'T00:00:00Z').getTime();
+                    const days = Math.round((todayMs - earliestMs) / 86400000);
+                    info.daysSinceMoved = days;
+                }
+                // Re-write status.json with daysSinceMoved fields back-filled.
+                fs.writeFileSync(path.join(__dirname, '../status.json'), JSON.stringify(status, null, 2));
+            } catch (staleErr) {
+                console.log(`  ⚠️ Stale-source computation error: ${staleErr.message}`);
+            }
         } catch (histErr) {
             // History is informational. Same defensive posture as the status
             // block itself — never break a scrape over a stats failure.

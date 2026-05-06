@@ -1,1 +1,9 @@
 node_modules/
+
+# Push notification subscriptions — written/read by cron via FTP only.
+# Lives only on DreamHost. NEVER commit to git.
+subscriptions.json
+
+# Notifications run-status snapshot — written by send-notifications.js cron,
+# read by status.html. Lives only on DreamHost.
+notifications-status.json

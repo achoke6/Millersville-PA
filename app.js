@@ -1237,7 +1237,23 @@ window.openFeedSettings = function() {
     modal.innerHTML = `
         <button onclick="this.closest('div[style*=fixed]').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);z-index:2;">✕</button>
         <div style="position:sticky;top:0;background:var(--surface);z-index:1;padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:12px;">
-            <h3 style="margin-bottom:4px;">⭐ My Favorites</h3>
+            <!-- Title row: heading on the left, affiliation toggle on the right.
+                 The toggle used to live at the bottom of the modal, below the
+                 calendar and notification cards, but it got buried — users
+                 couldn't easily switch their student/townie status without
+                 scrolling. Putting it next to the title keeps it discoverable
+                 while still feeling like secondary action (smaller text,
+                 muted color). Flex-wrap lets the link drop below the heading
+                 on very narrow screens rather than colliding. -->
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap;margin-bottom:4px;">
+                <h3 style="margin:0;">⭐ My Favorites</h3>
+                <div style="font-size:0.78rem;color:var(--text-muted);white-space:nowrap;padding-top:4px;">
+                    ${muAffiliation === 'townie'
+                        ? 'Actually a Marauder? <a href="#" onclick="event.preventDefault();this.closest(\'div[style*=fixed]\').remove();window.pickAffiliation(\'student\');openFeedSettings();" style="color:var(--navy);font-weight:600;text-decoration:underline;">I\'m a student →</a>'
+                        : 'Not a student? <a href="#" onclick="event.preventDefault();this.closest(\'div[style*=fixed]\').remove();window.pickAffiliation(\'townie\');openFeedSettings();" style="color:var(--navy);font-weight:600;text-decoration:underline;">I\'m a townie →</a>'
+                    }
+                </div>
+            </div>
             <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:10px;">Pick what shows on your homepage and defaults on Events & Sports pages.</p>
             <div style="display:flex;gap:8px;align-items:stretch;">
                 <button onclick="saveFeedFromModal();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-ticket" style="flex:2;padding:10px 8px;font-size:0.88rem;white-space:nowrap;">💾 Save</button>
@@ -1266,15 +1282,6 @@ window.openFeedSettings = function() {
             <div style="font-size:0.92rem;font-weight:700;margin-bottom:4px;">🔔 Daily Notifications</div>
             <div id="notif-card-desc" style="font-size:0.78rem;color:var(--text-muted);margin-bottom:10px;">Get a 7am morning summary of today's events from your favorites.</div>
             <button id="notif-card-btn" onclick="window.toggleNotifications(this)" class="btn btn-sm btn-outline" style="width:100%;font-size:0.85rem;"></button>
-        </div>
-        <!-- Small affiliation opt-out/opt-in link at the bottom. Mirrors the welcome banner's
-             "Not a student? I'm a townie →" pattern. Text flips depending on current affiliation
-             so users can switch back if they mis-picked. Unset users see the townie opt-out. -->
-        <div style="margin-top:16px;padding-top:12px;border-top:1px dashed var(--border);font-size:0.78rem;color:var(--text-muted);text-align:center;">
-            ${muAffiliation === 'townie'
-                ? 'Actually a Marauder? <a href="#" onclick="event.preventDefault();this.closest(\'div[style*=fixed]\').remove();window.pickAffiliation(\'student\');openFeedSettings();" style="color:var(--navy);font-weight:600;text-decoration:underline;">I\'m a student →</a>'
-                : 'Not a student? <a href="#" onclick="event.preventDefault();this.closest(\'div[style*=fixed]\').remove();window.pickAffiliation(\'townie\');openFeedSettings();" style="color:var(--navy);font-weight:600;text-decoration:underline;">I\'m a townie →</a>'
-            }
         </div>`;
     overlay.appendChild(modal);
     document.body.appendChild(overlay);

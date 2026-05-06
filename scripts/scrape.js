@@ -751,16 +751,30 @@ async function runScraper() {
             const res = await fetch(url, { headers: baseHeaders, signal: ctrl.signal });
             if (!res.ok) return;
             const html = await res.text();
-            // Per-row markup is wild and varies; a robust approach is to find every recap
-            // anchor and then walk back from it to find the nearest date label. But the
-            // date labels in the rendered HTML look like `Feb 7(Sat) 1:00 PM` and the recap
-            // URL has the date baked in (`/news/2026/2/7/...`). Since we only need to match
-            // on date + sport, we can just extract dates directly from the recap URLs.
-            // URL pattern: /news/YYYY/M/D/slug
-            const recapRegex = /href="(\/news\/(\d{4})\/(\d{1,2})\/(\d{1,2})\/[^"]+?)"[^>]*>Recap<\/a>/gi;
+            // Match every anchor whose href is a Sidearm news article URL, then post-filter
+            // to keep only the ones whose visible text is the schedule's "Recap" button.
+            //
+            // Regex changes vs. the previous version:
+            //   - href accepts both relative (/news/...) and absolute (https://...millersvilleathletics.com/news/...).
+            //     Sidearm switched to absolute URLs at some point and the old regex silently
+            //     started returning 0 matches across all 21 sports — a finished game's "Recap"
+            //     button on our site fell back to the team's schedule page link.
+            //   - inner content uses `[\s\S]*?` instead of `[^>]*` so "Recap" text wrapped in
+            //     a child element (e.g. <span>Recap</span>) still gets recognized.
+            //
+            // Post-filter on innerText is what distinguishes the schedule's small "Recap"
+            // button (innerText is literally "Recap", maybe with a trailing arrow) from
+            // news cards elsewhere on the page that happen to contain "Recap" in a headline
+            // ("Baseball Recap: Marauders dispatch Vulcans"). The 30-char ceiling is generous
+            // for the button case and excludes any headline.
+            const recapAnchorRegex = /<a\s[^>]*href="(?:https?:\/\/[^"\/]*millersvilleathletics\.com)?(\/news\/(\d{4})\/(\d{1,2})\/(\d{1,2})\/[^"]+?)"[^>]*>([\s\S]*?)<\/a>/gi;
             let match;
-            while ((match = recapRegex.exec(html)) !== null) {
-                const [, relHref, yr, mo, dy] = match;
+            while ((match = recapAnchorRegex.exec(html)) !== null) {
+                const [, relHref, yr, mo, dy, innerHtml] = match;
+                // Strip tags, collapse whitespace
+                const innerText = innerHtml.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+                if (!/\bRecap\b/i.test(innerText)) continue;
+                if (innerText.length > 30) continue;  // exclude headlines that contain "Recap"
                 const key = `${scheduleSlug}|${parseInt(yr,10)}-${parseInt(mo,10)}-${parseInt(dy,10)}`;
                 const fullUrl = 'https://millersvilleathletics.com' + relHref;
                 // First one wins if multiple games share a date (doubleheaders share the recap)

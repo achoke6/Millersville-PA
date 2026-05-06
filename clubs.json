@@ -11,22 +11,19 @@
   },
   {
     "name": "ADAPT",
-    "category": "Service",
+    "category": "University Departments ",
     "categories": [
-      "Service",
-      "Competition",
-      "Fundraiser",
-      "Social",
-      "Tabling"
+      "University Departments "
     ],
-    "shortName": "",
-    "id": ""
+    "shortName": "MUADAPT",
+    "id": "adaptatmillervilleuniversity"
   },
   {
     "name": "African Caribbean Student Association",
     "category": "Social",
     "categories": [
-      "Social"
+      "Social",
+      "Performance"
     ],
     "shortName": "ACSA",
     "id": ""
@@ -231,10 +228,12 @@
   },
   {
     "name": "Athletics",
-    "category": "",
-    "categories": [],
+    "category": "University Departments ",
+    "categories": [
+      "University Departments "
+    ],
     "shortName": "",
-    "id": ""
+    "id": "athletics"
   },
   {
     "name": "Bard Hall Residence Hall",
@@ -343,8 +342,7 @@
     "name": "Campus Life",
     "category": "Social",
     "categories": [
-      "Social",
-      "Sporting"
+      "Social"
     ],
     "shortName": "",
     "id": ""
@@ -540,12 +538,10 @@
   },
   {
     "name": "College of Graduate Studies and Adult Learning",
-    "category": "Educational Program",
-    "categories": [
-      "Educational Program"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "Graduate Studies",
-    "id": ""
+    "id": "cgsal"
   },
   {
     "name": "Color of Teaching Mentoring Program",
@@ -644,13 +640,12 @@
   },
   {
     "name": "Cultural Greek Council",
-    "category": "Service",
+    "category": "Fraternity & Sorority Life",
     "categories": [
-      "Service",
-      "Social"
+      "Fraternity & Sorority Life"
     ],
     "shortName": "CGC",
-    "id": ""
+    "id": "wwwnphchqorg"
   },
   {
     "name": "Dance Team",
@@ -720,9 +715,8 @@
   },
   {
     "name": "Early Childhood Organization",
-    "category": "Service",
+    "category": "Meeting",
     "categories": [
-      "Service",
       "Meeting",
       "Social"
     ],
@@ -798,9 +792,7 @@
     "name": "Fencing Guild",
     "category": "Sports and Leisure",
     "categories": [
-      "Sports and Leisure",
-      "Social",
-      "Sporting"
+      "Sports and Leisure"
     ],
     "shortName": "MUFG",
     "id": "fencing"
@@ -950,9 +942,9 @@
   },
   {
     "name": "Honors College Student Association",
-    "category": "Social",
+    "category": "Fundraiser",
     "categories": [
-      "Social"
+      "Fundraiser"
     ],
     "shortName": "HCSA",
     "id": ""
@@ -1051,9 +1043,10 @@
   },
   {
     "name": "Kappa Alpha Psi Fraternity Incorporated",
-    "category": "Fundraiser",
+    "category": "Movie or Film",
     "categories": [
-      "Fundraiser"
+      "Movie or Film",
+      "Social"
     ],
     "shortName": "Kappa Alpha Psi",
     "id": ""
@@ -1159,12 +1152,13 @@
   },
   {
     "name": "Math Club",
-    "category": "Social",
+    "category": "Academic",
     "categories": [
+      "Academic",
       "Social"
     ],
     "shortName": "",
-    "id": ""
+    "id": "mathclub"
   },
   {
     "name": "Mathematics Educators",
@@ -1282,13 +1276,12 @@
   },
   {
     "name": "Millersville Concerned Women",
-    "category": "Lecture or Speaker",
+    "category": "University Departments ",
     "categories": [
-      "Lecture or Speaker",
-      "Movie or Film"
+      "University Departments "
     ],
     "shortName": "MCW",
-    "id": ""
+    "id": "mcw"
   },
   {
     "name": "Millersville Scholars Program",
@@ -1316,6 +1309,16 @@
     ],
     "shortName": "\"Marauder\" Marching Band",
     "id": "mummb"
+  },
+  {
+    "name": "Millersville University Television Station Channel 99",
+    "category": "Meeting",
+    "categories": [
+      "Meeting",
+      "Movie or Film"
+    ],
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Mixed Martial Arts Club",
@@ -1389,6 +1392,15 @@
     ],
     "shortName": "NAACP",
     "id": "naacp"
+  },
+  {
+    "name": "National Science Teachers Association",
+    "category": "Academic",
+    "categories": [
+      "Academic"
+    ],
+    "shortName": "NSTA MU",
+    "id": "nsta-mu"
   },
   {
     "name": "National Society of Black Engineers",
@@ -1645,12 +1657,12 @@
   },
   {
     "name": "Sigma Gamma Rho Sorority, Inc.",
-    "category": "Social",
+    "category": "Fraternity & Sorority Life",
     "categories": [
-      "Social"
+      "Fraternity & Sorority Life"
     ],
     "shortName": "Sigma Gamma Rho",
-    "id": ""
+    "id": "lambdaalphasgrho"
   },
   {
     "name": "Slip & Score Society",
@@ -1672,12 +1684,10 @@
   },
   {
     "name": "Sneakers to Stilettos Modeling Troupe",
-    "category": "Arts & Culture",
-    "categories": [
-      "Arts & Culture"
-    ],
-    "shortName": "S2S",
-    "id": "sneakers2stilettos"
+    "category": "",
+    "categories": [],
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Society of Manufacturing Engineers",
@@ -2019,15 +2029,18 @@
   },
   {
     "name": "Ville Sports Officials Association Club",
-    "category": "",
-    "categories": [],
+    "category": "Sports and Leisure",
+    "categories": [
+      "Sports and Leisure"
+    ],
     "shortName": "VSOAC",
-    "id": ""
+    "id": "vsoa"
   },
   {
     "name": "VilleHarmonics",
-    "category": "Performance",
+    "category": "Fundraiser",
     "categories": [
+      "Fundraiser",
       "Performance"
     ],
     "shortName": "",

@@ -14,6 +14,11 @@ on:
     - cron: '0 12 * * *'  # 12:00 UTC = 7am EST (winter)
   workflow_dispatch:       # manual trigger for testing
 
+# See main.yml for explanation. Silences the Node 20 actions deprecation
+# warning. GitHub auto-flips this June 2, 2026; safe to remove afterward.
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 jobs:
   send:
     runs-on: ubuntu-latest

@@ -46,7 +46,263 @@ function saveFeedPrefs(prefs) {
     feedPrefs = prefs;
     localStorage.setItem(FEED_KEY, JSON.stringify(prefs));
     setFeedDotVisible(!!prefs);
+    // If the user has push notifications enabled, the server has a stale
+    // copy of their feedPrefs. Re-POST so tomorrow's morning push uses
+    // the new prefs. Fire-and-forget — we don't surface failures to the
+    // user since prefs already saved locally and the resend will retry
+    // on next save anyway.
+    if (typeof window.resendNotificationPrefs === 'function') {
+        window.resendNotificationPrefs().catch(() => {});
+    }
 }
+
+// ============================================================================
+// PUSH NOTIFICATIONS
+// ============================================================================
+// Daily 7am ET digest of events matching the user's feedPrefs.
+//
+// Architecture: subscribe.php and unsubscribe.php on DreamHost persist the
+// browser's PushSubscription object + the user's current feedPrefs.
+// scripts/send-notifications.js runs on GitHub Actions cron, FTP-pulls the
+// subscriptions list, sends pushes via web-push library. SW handlers in
+// sw.js receive the push and show the OS notification.
+//
+// Public VAPID key — the private one only ever exists in GitHub secrets.
+// This key authenticates that pushes are coming from us. Generated once
+// per project; if rotated, all existing subscriptions become dead and
+// users would need to resubscribe.
+const VAPID_PUBLIC_KEY = 'BMS4BleklCKi4xhaBiH33Hszdp9YzBqewQWxgsl9LF5T8tLXT7Bojm8kMfk-jgTu66UYMhWqHuB7xgsxAxjWGJU';
+const NOTIF_KEY = 'mvapp_notif_endpoint';  // localStorage marker for the active subscription
+
+// Convert URL-safe base64 (the VAPID format) to the Uint8Array that
+// PushManager.subscribe wants. Standard incantation lifted from MDN.
+function urlBase64ToUint8Array(base64) {
+    const padding = '='.repeat((4 - base64.length % 4) % 4);
+    const b64 = (base64 + padding).replace(/-/g, '+').replace(/_/g, '/');
+    const raw = atob(b64);
+    const out = new Uint8Array(raw.length);
+    for (let i = 0; i < raw.length; i++) out[i] = raw.charCodeAt(i);
+    return out;
+}
+
+// Capability detection. Notifications need: SW support, PushManager, and
+// Notification API. iOS Safari has all three but ONLY when running as an
+// installed PWA (display-mode: standalone) — in a regular Safari tab the
+// PushManager.subscribe() call silently fails. We detect that case
+// separately so we can surface the install nudge instead of an error.
+function notificationsSupported() {
+    return 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
+}
+function isIOS() {
+    // Includes iPadOS which (since 13) reports as Mac in UA but has
+    // touch capability. Worth-detecting because iOS-PWA flow is unique.
+    const ua = navigator.userAgent;
+    return /iPad|iPhone|iPod/.test(ua)
+        || (ua.includes('Macintosh') && 'ontouchend' in document);
+}
+function isStandalonePWA() {
+    return window.matchMedia('(display-mode: standalone)').matches
+        || window.navigator.standalone === true;  // older iOS Safari quirk
+}
+
+// Show the iOS-install instructional modal. Triggered when an iOS user
+// tries to enable notifications from a non-PWA Safari tab — Apple doesn't
+// expose beforeinstallprompt, so the only way for them to get pushes is
+// to manually Add to Home Screen via the share sheet.
+window.showIOSInstallNudge = function() {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:10001;display:flex;align-items:center;justify-content:center;padding:16px;';
+    overlay.onclick = (ev) => { if (ev.target === overlay) overlay.remove(); };
+    const modal = document.createElement('div');
+    modal.style.cssText = 'background:var(--surface);border-radius:var(--radius);max-width:420px;width:100%;padding:24px;position:relative;';
+    modal.innerHTML = `
+        <button onclick="this.closest('div[style*=fixed]').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);">✕</button>
+        <h3 style="margin:0 0 10px;">📱 Install Millersville.APP first</h3>
+        <p style="font-size:0.9rem;line-height:1.5;margin:0 0 14px;color:var(--text-muted);">
+            iPhone and iPad need the app installed to your home screen before they can receive notifications.
+            It's quick:
+        </p>
+        <ol style="padding-left:20px;margin:0 0 16px;font-size:0.92rem;line-height:1.7;">
+            <li>Tap the <strong>Share</strong> button <span style="display:inline-block;border:1px solid var(--border);border-radius:4px;padding:0 5px;font-size:0.85rem;">⬆︎</span> at the bottom of Safari.</li>
+            <li>Scroll down and tap <strong>Add to Home Screen</strong>.</li>
+            <li>Tap <strong>Add</strong> in the top-right.</li>
+            <li>Open the app from your home screen and come back here to enable notifications.</li>
+        </ol>
+        <p style="font-size:0.78rem;color:var(--text-muted);margin:0;font-style:italic;">
+            (This only works in Safari. If you're in Chrome or another browser, switch to Safari first.)
+        </p>
+    `;
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+};
+
+/**
+ * Subscribe the current browser to push notifications.
+ * Walks: SW ready → permission prompt → PushManager.subscribe →
+ * POST /subscribe.php with the subscription + current feedPrefs.
+ * Returns { ok: bool, reason?: string } so the UI can surface failures.
+ */
+window.enableNotifications = async function() {
+    if (!notificationsSupported()) {
+        return { ok: false, reason: 'unsupported' };
+    }
+    // iOS-Safari-not-installed: skip the permission prompt (it would
+    // succeed but PushManager.subscribe would silently fail) and surface
+    // the install nudge instead.
+    if (isIOS() && !isStandalonePWA()) {
+        showIOSInstallNudge();
+        return { ok: false, reason: 'ios-needs-install' };
+    }
+
+    // Permission flow. requestPermission resolves to 'granted' / 'denied' /
+    // 'default' (closed without choosing). Browsers may auto-deny if the
+    // user has previously dismissed the prompt several times.
+    const perm = await Notification.requestPermission();
+    if (perm !== 'granted') {
+        return { ok: false, reason: 'permission-' + perm };
+    }
+
+    // SW must be registered. We register it on app load (see initApp), but
+    // if for some reason it isn't ready, .ready waits indefinitely — bound
+    // it with a timeout so the UI doesn't hang forever.
+    const reg = await Promise.race([
+        navigator.serviceWorker.ready,
+        new Promise((_, rej) => setTimeout(() => rej(new Error('sw-timeout')), 8000))
+    ]);
+
+    // Subscribe. userVisibleOnly is required by every browser — silent
+    // pushes aren't allowed for web. applicationServerKey is the VAPID
+    // public key in raw bytes form.
+    let sub;
+    try {
+        sub = await reg.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
+        });
+    } catch (err) {
+        console.error('PushManager.subscribe failed:', err);
+        return { ok: false, reason: 'subscribe-failed' };
+    }
+
+    // POST to subscribe.php with the subscription object and current prefs.
+    // Server file is the source of truth — localStorage just remembers the
+    // endpoint URL so we can unsubscribe later from this same browser.
+    const subJSON = sub.toJSON();
+    try {
+        const res = await fetch('/subscribe.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                subscription: subJSON,
+                feedPrefs: feedPrefs || []
+            })
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+    } catch (err) {
+        // If server registration fails, undo the browser subscribe so we
+        // don't end up with a "subscribed locally but server doesn't know"
+        // ghost state.
+        await sub.unsubscribe().catch(() => {});
+        console.error('subscribe.php POST failed:', err);
+        return { ok: false, reason: 'server-failed' };
+    }
+
+    localStorage.setItem(NOTIF_KEY, subJSON.endpoint);
+    // Show the user a confirmation notification immediately. This is
+    // a nice UX touch (proves it's working) and saves us from needing
+    // a separate test endpoint.
+    try {
+        await reg.showNotification('🔔 Notifications enabled', {
+            body: "You'll get a daily 7am summary of events from your favorites.",
+            icon: '/Mapp.png',
+            badge: '/Mapp.png',
+            tag: 'mvapp-welcome'
+        });
+    } catch (_) { /* non-fatal */ }
+
+    return { ok: true };
+};
+
+/**
+ * Unsubscribe this browser from push notifications. Walks the inverse:
+ * PushManager unsubscribe + POST /unsubscribe.php to remove the server entry.
+ * Returns { ok } — failures are non-fatal (worst case: stale entry on the
+ * server that the cron will reap on next 410 Gone).
+ */
+window.disableNotifications = async function() {
+    const endpoint = localStorage.getItem(NOTIF_KEY);
+    localStorage.removeItem(NOTIF_KEY);
+    if (!notificationsSupported()) return { ok: true };  // nothing to do
+    try {
+        const reg = await navigator.serviceWorker.ready;
+        const sub = await reg.pushManager.getSubscription();
+        if (sub) {
+            await sub.unsubscribe();
+            // Notify the server. Best-effort — if this fails, the cron's
+            // 410-Gone handler will clean up automatically next morning.
+            await fetch('/unsubscribe.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ endpoint: sub.endpoint })
+            }).catch(() => {});
+        }
+    } catch (err) {
+        console.error('disableNotifications:', err);
+    }
+    return { ok: true };
+};
+
+/**
+ * Resend the user's current feedPrefs to subscribe.php so the cron uses
+ * fresh prefs for tomorrow's push. Called from saveFeedPrefs whenever the
+ * user changes their selections. No-op if the user isn't subscribed.
+ */
+window.resendNotificationPrefs = async function() {
+    const endpoint = localStorage.getItem(NOTIF_KEY);
+    if (!endpoint) return;
+    if (!notificationsSupported()) return;
+    try {
+        const reg = await navigator.serviceWorker.ready;
+        const sub = await reg.pushManager.getSubscription();
+        if (!sub) {
+            // Browser dropped the subscription out from under us. Drop our
+            // local marker too so we don't keep retrying.
+            localStorage.removeItem(NOTIF_KEY);
+            return;
+        }
+        await fetch('/subscribe.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                subscription: sub.toJSON(),
+                feedPrefs: feedPrefs || []
+            })
+        });
+    } catch (err) {
+        console.error('resendNotificationPrefs:', err);
+    }
+};
+
+/**
+ * Snapshot of current notification state, used to render the toggle UI
+ * with the right initial state. Returns:
+ *   'unsupported' — browser doesn't support push (older Safari, etc)
+ *   'ios-blocked' — iOS Safari not installed as PWA
+ *   'denied'      — user previously denied permission
+ *   'enabled'     — actively subscribed
+ *   'disabled'    — supported but not subscribed
+ */
+window.notificationStatus = function() {
+    if (!notificationsSupported()) return 'unsupported';
+    if (isIOS() && !isStandalonePWA()) return 'ios-blocked';
+    if (Notification.permission === 'denied') return 'denied';
+    if (localStorage.getItem(NOTIF_KEY)) return 'enabled';
+    return 'disabled';
+};
+
+// ============================================================================
+// END PUSH NOTIFICATIONS
+// ============================================================================
 window.setMuAffiliation = function(value) {
     if (value !== 'student' && value !== 'townie') return;
     muAffiliation = value;
@@ -992,11 +1248,24 @@ window.openFeedSettings = function() {
         <!-- Calendar subscription card. Lets the user grab a personalized iCal
              feed URL containing their current favorites. Sits between the
              favorites picker and the affiliation footer because subscribing
-             is the natural next step after picking what they care about. -->
+             is the natural next step after picking what they care about.
+             The button saves prefs first via saveAndOpenCalendar() so users
+             never get a calendar feed with stale prefs. -->
         <div style="margin-top:14px;padding:14px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);">
             <div style="font-size:0.92rem;font-weight:700;margin-bottom:4px;">📅 Add to Your Calendar</div>
             <div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:10px;">Subscribe to a calendar feed of just your favorites. Auto-updates with new events.</div>
-            <button onclick="window.openCalendarSubscribe()" class="btn btn-sm btn-outline" style="width:100%;font-size:0.85rem;">🔗 Get my subscription URL</button>
+            <button onclick="window.saveAndOpenCalendar()" class="btn btn-sm btn-outline" style="width:100%;font-size:0.85rem;">🔗 Get my subscription URL</button>
+        </div>
+        <!-- Push notifications card. Daily 7am digest of events matching the
+             user's feedPrefs. Same save-first guard as calendar — toggle handler
+             persists current prefs before subscribing so the server stores
+             accurate prefs from the start. Initial label/style is set from
+             notificationStatus() because state varies (unsupported, denied,
+             enabled, etc) and we want the toggle to reflect reality on open. -->
+        <div id="notif-card" style="margin-top:10px;padding:14px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);">
+            <div style="font-size:0.92rem;font-weight:700;margin-bottom:4px;">🔔 Daily Notifications</div>
+            <div id="notif-card-desc" style="font-size:0.78rem;color:var(--text-muted);margin-bottom:10px;">Get a 7am morning summary of today's events from your favorites.</div>
+            <button id="notif-card-btn" onclick="window.toggleNotifications(this)" class="btn btn-sm btn-outline" style="width:100%;font-size:0.85rem;"></button>
         </div>
         <!-- Small affiliation opt-out/opt-in link at the bottom. Mirrors the welcome banner's
              "Not a student? I'm a townie →" pattern. Text flips depending on current affiliation
@@ -1009,6 +1278,112 @@ window.openFeedSettings = function() {
         </div>`;
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
+    // Render the notifications button with the right initial label/state.
+    // Done after appendChild so the element is in the DOM and queryable.
+    if (typeof window.refreshNotifButton === 'function') window.refreshNotifButton();
+};
+
+// Save current modal selections, then open the calendar subscription dialog.
+// Wrapper for the "Get my subscription URL" button — without this, clicking
+// the button before hitting Save uses stale localStorage prefs and the
+// resulting iCal feed is wrong. Closing the modal here is intentional too;
+// the calendar dialog opens its own modal on top.
+window.saveAndOpenCalendar = function() {
+    if (typeof saveFeedFromModal === 'function') saveFeedFromModal();
+    const settingsModal = document.querySelector('div[style*="z-index:9999"]');
+    if (settingsModal) settingsModal.remove();
+    window.openCalendarSubscribe();
+};
+
+// Notification card button: state-aware. Reads notificationStatus(), wires
+// the right action and label. Save-first guard inside the enable branch
+// ensures the user's CURRENT modal selections are persisted before we
+// hand them to the server, even if they haven't hit Save yet.
+window.refreshNotifButton = function() {
+    const btn = document.getElementById('notif-card-btn');
+    const desc = document.getElementById('notif-card-desc');
+    if (!btn || !desc) return;
+    const status = window.notificationStatus();
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    btn.style.cursor = 'pointer';
+    switch (status) {
+        case 'enabled':
+            btn.textContent = '🔕 Turn off notifications';
+            desc.textContent = "You'll get a 7am morning summary of today's favorited events.";
+            break;
+        case 'disabled':
+            btn.textContent = '🔔 Enable daily notifications';
+            desc.textContent = "Get a 7am morning summary of today's events from your favorites.";
+            break;
+        case 'denied':
+            btn.textContent = '🚫 Notifications blocked in browser';
+            btn.disabled = true;
+            btn.style.opacity = '0.6';
+            btn.style.cursor = 'not-allowed';
+            desc.innerHTML = "You blocked notifications. To re-enable, find Millersville.APP in your browser's site settings and allow notifications.";
+            break;
+        case 'ios-blocked':
+            btn.textContent = '📱 Install app to enable notifications';
+            desc.textContent = 'Notifications need the app installed to your home screen on iPhone/iPad.';
+            break;
+        case 'unsupported':
+            btn.textContent = '⚠️ Not supported in this browser';
+            btn.disabled = true;
+            btn.style.opacity = '0.6';
+            btn.style.cursor = 'not-allowed';
+            desc.textContent = 'This browser doesn\'t support push notifications. Try Chrome, Firefox, or Safari.';
+            break;
+    }
+};
+
+// Click handler for the notification card button. Branches on the current
+// status. Save-first happens here for the enable case so the user's modal
+// selections (which may differ from saved feedPrefs if they haven't hit
+// Save) get sent to the server with the new subscription.
+window.toggleNotifications = async function(btn) {
+    const status = window.notificationStatus();
+    if (status === 'enabled') {
+        btn.textContent = 'Turning off…';
+        btn.disabled = true;
+        await window.disableNotifications();
+        window.refreshNotifButton();
+        return;
+    }
+    if (status === 'disabled') {
+        // Save current modal selections first — the user may have changed
+        // checkboxes without hitting "Save" yet, and we want those reflected
+        // in what we send to the server. saveFeedFromModal updates feedPrefs
+        // in-place; enableNotifications then reads the fresh value.
+        if (typeof saveFeedFromModal === 'function') saveFeedFromModal();
+        btn.textContent = 'Enabling…';
+        btn.disabled = true;
+        const result = await window.enableNotifications();
+        if (!result.ok) {
+            // Restore the button and surface the failure inline.
+            window.refreshNotifButton();
+            const desc = document.getElementById('notif-card-desc');
+            if (desc) {
+                if (result.reason === 'permission-denied') {
+                    desc.innerHTML = '<span style="color:var(--danger);">You denied permission. Re-enable in your browser site settings.</span>';
+                } else if (result.reason === 'permission-default') {
+                    desc.innerHTML = '<span style="color:var(--danger);">You closed the permission dialog. Click the button to try again.</span>';
+                } else if (result.reason === 'ios-needs-install') {
+                    // Already shown the install nudge modal; nothing more to say.
+                } else {
+                    desc.innerHTML = '<span style="color:var(--danger);">Couldn\'t enable notifications (' + (result.reason || 'unknown') + '). Try again later.</span>';
+                }
+            }
+            return;
+        }
+        window.refreshNotifButton();
+        return;
+    }
+    if (status === 'ios-blocked') {
+        window.showIOSInstallNudge();
+        return;
+    }
+    // 'denied' and 'unsupported' have disabled buttons already, shouldn't reach here.
 };
 
 // Calendar subscription modal — opened from the "Get my subscription URL"

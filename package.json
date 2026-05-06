@@ -6,7 +6,8 @@
     "scrape": "node scripts/scrape.js"
   },
   "dependencies": {
-    "node-ical": "^0.20.1"
+    "node-ical": "^0.20.1",
+    "web-push": "^3.6.7"
   },
   "devDependencies": {
     "terser": "^5.46.1"

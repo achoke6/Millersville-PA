@@ -133,3 +133,53 @@ self.addEventListener('fetch', event => {
         })
     );
 });
+
+// ============================================================================
+// PUSH NOTIFICATIONS
+// ============================================================================
+// Daily morning digest received from the GitHub Actions cron via Web Push.
+// Payload schema (set by scripts/send-notifications.js):
+//   { title: string, body: string, url: string }
+// `title` and `body` show in the OS notification tray; `url` is the
+// destination when the user taps. Falls back to defaults if payload is
+// malformed or absent — browsers will sometimes deliver a wakeup with no
+// payload (rare, but specced).
+self.addEventListener('push', event => {
+    let payload = {};
+    try {
+        if (event.data) payload = event.data.json();
+    } catch (_) { /* fall through to defaults */ }
+
+    const title = payload.title || 'Millersville.APP';
+    const options = {
+        body: payload.body || "Today's events are ready.",
+        icon: '/Mapp.png',           // 192px+ icon shown in the tray
+        badge: '/Mapp.png',          // monochrome dot on Android
+        tag: 'mvapp-daily',          // collapse multiple pushes into one entry
+        renotify: true,              // but still vibrate/buzz on the new one
+        data: { url: payload.url || 'https://millersville.app/events' }
+    };
+    event.waitUntil(self.registration.showNotification(title, options));
+});
+
+// Tap handler. Tries to focus an existing app tab if one's open (so users
+// don't accumulate duplicate Millersville tabs every morning), otherwise
+// opens a new one. The URL on `notification.data.url` carries the user's
+// filter prefs in query-string form per the shareable-URL contract.
+self.addEventListener('notificationclick', event => {
+    event.notification.close();
+    const targetUrl = (event.notification.data && event.notification.data.url) || '/events';
+    event.waitUntil(
+        self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(windows => {
+            // Prefer focusing any existing millersville.app tab. Match by
+            // origin only — the user might be on /home, not /events, but
+            // we want to navigate them to the filtered view.
+            for (const win of windows) {
+                if (new URL(win.url).origin === self.location.origin && 'focus' in win) {
+                    return win.navigate(targetUrl).then(() => win.focus());
+                }
+            }
+            return self.clients.openWindow(targetUrl);
+        })
+    );
+});

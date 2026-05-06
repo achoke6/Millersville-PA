@@ -1,0 +1,68 @@
+name: Daily Push Notifications
+
+# DST-aware scheduling. We want pushes at exactly 7am Eastern year-round,
+# but cron runs in UTC and Eastern shifts between EST (-5) and EDT (-4).
+#
+# Two entries fire daily — one at 11:00 UTC (matches 7am EDT, March-November)
+# and one at 12:00 UTC (matches 7am EST, November-March). The job itself
+# checks whether the CURRENT local-ET hour is 7am; if not, it exits early.
+# Only one of the two cron firings will pass the check on any given day,
+# so users get exactly one notification at 7am their time year-round.
+on:
+  schedule:
+    - cron: '0 11 * * *'  # 11:00 UTC = 7am EDT (summer)
+    - cron: '0 12 * * *'  # 12:00 UTC = 7am EST (winter)
+  workflow_dispatch:       # manual trigger for testing
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      # DST disambiguation: bail out if the local-ET hour isn't 7. The
+      # `date -d` tool with TZ env var reads the actual zone rules from
+      # tzdata, so it's correct across DST transitions automatically.
+      # Manual workflow_dispatch runs always proceed (no schedule check).
+      - name: Check if it's 7am ET
+        id: dst_check
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "Manual run — proceeding."
+            echo "proceed=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          ET_HOUR=$(TZ=America/New_York date +%H)
+          echo "Local ET hour: $ET_HOUR"
+          if [ "$ET_HOUR" = "07" ]; then
+            echo "proceed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "Not 7am ET — DST guard skipping."
+            echo "proceed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.dst_check.outputs.proceed == 'true'
+
+      - uses: actions/setup-node@v4
+        if: steps.dst_check.outputs.proceed == 'true'
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        if: steps.dst_check.outputs.proceed == 'true'
+        run: npm ci
+
+      - name: Install lftp (for subscription FTP)
+        if: steps.dst_check.outputs.proceed == 'true'
+        run: sudo apt-get install -y lftp
+
+      - name: Send daily push notifications
+        if: steps.dst_check.outputs.proceed == 'true'
+        run: node scripts/send-notifications.js
+        env:
+          VAPID_PUBLIC_KEY: ${{ secrets.VAPID_PUBLIC_KEY }}
+          VAPID_PRIVATE_KEY: ${{ secrets.VAPID_PRIVATE_KEY }}
+          DREAMHOST_USERNAME: ${{ secrets.DREAMHOST_USERNAME }}
+          DREAMHOST_PASSWORD: ${{ secrets.DREAMHOST_PASSWORD }}
+          DREAMHOST_SERVER: ${{ secrets.DREAMHOST_SERVER }}
+          DREAMHOST_DIR: ${{ secrets.DREAMHOST_DIR }}

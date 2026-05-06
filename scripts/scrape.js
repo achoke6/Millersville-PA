@@ -3472,12 +3472,19 @@ Focus on the most impressive deals a shopper would want to know about. Include m
             { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/field-hockey/schedule/', sport: 'Field Hockey', gender: 'Girls' },
             { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/wrestling/schedule/', sport: 'Wrestling', gender: 'Boys' },
             { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/golf/schedule/', sport: 'Golf', gender: 'Boys' },
-            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/cross-country/schedule/', sport: 'Cross Country', gender: 'Boys' },
-            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/cross-country/girls/schedule/', sport: 'Cross Country', gender: 'Girls' },
-            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/swimming/schedule/', sport: 'Swimming', gender: 'Boys' },
-            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/swimming/girls/schedule/', sport: 'Swimming', gender: 'Girls' },
-            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/track-and-field/schedule/', sport: 'Track', gender: 'Boys' },
-            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/track-and-field/girls/schedule/', sport: 'Track', gender: 'Girls' },
+            // Cross Country and Swimming intentionally OMITTED — Penn Manor
+            // doesn't run varsity teams in those sports on MaxPreps. The
+            // school's MaxPreps team page lists Baseball, Basketball, Football,
+            // Golf, Lacrosse, Soccer, Tennis, Track & Field, Volleyball,
+            // Wrestling for boys (and the equivalent girls set). Hitting the
+            // CC/Swimming URLs returned HTTP 500 every cron — MaxPreps'
+            // misleading way of saying "no team here" — and produced log
+            // noise for data that was never going to appear. Dropped 2026-05-06.
+            // If Penn Manor adds these teams later, MaxPreps will provide a
+            // page at /cross-country/schedule/ and /swimming/schedule/ and
+            // we can re-add the entries here.
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/track-field/schedule/', sport: 'Track', gender: 'Boys' },
+            { url: 'https://www.maxpreps.com/pa/millersville/penn-manor-comets/track-field/girls/schedule/', sport: 'Track', gender: 'Girls' },
         ];
 
         let pmScoreCount = 0;

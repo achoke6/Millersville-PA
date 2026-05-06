@@ -4,8 +4,10 @@
 //   1. Shell cache (HTML, JS, CSS, icon) — cache-first, served instantly
 //      after first visit. Updates when CACHE_VERSION changes (every deploy
 //      via __BUILD_VERSION__ replacement in main.yml).
-//   2. Data cache (*.json) — network-first with cache fallback. Online
-//      users get fresh hourly data; offline users get the last-fetched copy.
+//   2. Data cache (*.json) — stale-while-revalidate. Cached copy returns
+//      instantly, network refresh happens in the background. Page loads are
+//      always fast; data lags by at most one page load when online. Falls
+//      back to cache when offline.
 //
 // CACHE_VERSION is rewritten on each deploy by the GitHub Actions workflow,
 // which sed-replaces __BUILD_VERSION__ with the current run id. That makes
@@ -69,11 +71,24 @@ self.addEventListener('fetch', event => {
     // SW updates via its own protocol and we don't want stale copies.
     if (url.pathname === '/sw.js' || url.pathname === '/manifest.json') return;
 
-    // Network-first for JSON data: tries network, falls back to cache.
-    // On success, also updates the cache so the offline copy stays current.
+    // JSON data: stale-while-revalidate. Returns cached copy IMMEDIATELY
+    // (instant page paint), then fetches fresh from network in background and
+    // updates the cache for next load. Two fixes from the previous network-
+    // first implementation:
+    //   1. No more "page hangs while SW waits on slow network" — cache wins
+    //      first, network race happens behind the scenes.
+    //   2. No more multi-day-stale data risk — the background refresh runs
+    //      every page load when online, so cache freshness lags by exactly
+    //      one page load (vs unbounded staleness if a fetch ever timed out
+    //      and the cache then never refreshed).
+    // Also bypasses the HTTP cache via `cache: 'no-store'` — without this,
+    // browsers can layer their own caching on top of the SW cache, producing
+    // staleness even after the SW cache updates. We want the SW to be the
+    // single source of truth for data freshness.
     if (url.pathname.endsWith('.json')) {
-        event.respondWith(
-            fetch(req)
+        event.respondWith((async () => {
+            const cached = await caches.match(req);
+            const networkFetch = fetch(req, { cache: 'no-store' })
                 .then(response => {
                     if (response && response.ok) {
                         const copy = response.clone();
@@ -81,8 +96,23 @@ self.addEventListener('fetch', event => {
                     }
                     return response;
                 })
-                .catch(() => caches.match(req))
-        );
+                .catch(() => null);
+            // Cache hit → return it instantly, let network refresh race
+            // behind it. Cache miss → must wait for network (no choice).
+            if (cached) {
+                event.waitUntil(networkFetch);
+                return cached;
+            }
+            const fresh = await networkFetch;
+            if (fresh) return fresh;
+            // No cache, no network — return a synthetic empty response so
+            // app.js's `if (!res.ok) return` short-circuits cleanly rather
+            // than throwing an unhandled fetch rejection.
+            return new Response('null', {
+                status: 503,
+                headers: { 'Content-Type': 'application/json' }
+            });
+        })());
         return;
     }
 

@@ -1041,8 +1041,14 @@ window.openCalendarSubscribe = function() {
     // Apple platforms and Outlook. Same URL path as https — the protocol
     // swap is what calendar apps key off of.
     const webcalUrl = httpsUrl.replace(/^https?:\/\//, 'webcal://');
-    // Google Calendar's add-by-URL deep link. cid is just URL-encoded.
-    const gcalUrl = `https://calendar.google.com/calendar/u/0/r?cid=${encodeURIComponent(httpsUrl)}`;
+    // Google Calendar's add-by-URL deep link. The cid parameter MUST use the
+    // webcal:// scheme — passing https:// makes Google interpret it as a
+    // one-shot import and fail with "unable to add calendar." webcal:// is
+    // what triggers the actual subscription flow. (Counter-intuitively,
+    // Google still fetches the feed over HTTPS internally; webcal:// is just
+    // the cue to subscribe rather than import.) See Simon Willison's TIL on
+    // ICS subscription URLs for the canonical reference.
+    const gcalUrl = `https://calendar.google.com/calendar/u/0/r?cid=${encodeURIComponent(webcalUrl)}`;
 
     // Estimate how many events will appear in the subscription. Useful so
     // users can sanity-check before adding ("0 matches" → they probably

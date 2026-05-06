@@ -45,6 +45,17 @@ if (file_exists($cachePath) && (time() - filemtime($cachePath)) < CACHE_TTL_SECO
 // is always available regardless of php.ini and gives us better error
 // signaling. Cookies from the upstream response are intentionally ignored —
 // we serve the body bytes only, so they never reach the client.
+//
+// SSL verification is intentionally DISABLED here. DreamHost shared hosting
+// doesn't ship a configured CA bundle for PHP cURL, so verification fails
+// with "unable to get local issuer certificate" and the request bails before
+// we ever see the response. The security tradeoff is acceptable in this
+// specific case: we're proxying a public weather cam image with no auth
+// tokens, no cookies forwarded back to the user, and no sensitive data
+// flowing either direction. Worst-case MITM: somebody injects a fake JPEG.
+// Not something to defend against here. If we ever proxy authenticated
+// content through this same pattern, the right fix is to ship a cacert.pem
+// alongside this file and point CURLOPT_CAINFO at it.
 $body = false;
 $httpCode = 0;
 $curlErr = '';
@@ -58,8 +69,8 @@ if (function_exists('curl_init')) {
         CURLOPT_CONNECTTIMEOUT => 5,
         CURLOPT_USERAGENT => 'Mozilla/5.0 (compatible; MillersvilleApp/1.0; +https://millersville.app)',
         CURLOPT_HTTPHEADER => ['Accept: image/jpeg,image/*'],
-        CURLOPT_SSL_VERIFYPEER => true,
-        CURLOPT_SSL_VERIFYHOST => 2
+        CURLOPT_SSL_VERIFYPEER => false,
+        CURLOPT_SSL_VERIFYHOST => 0
     ]);
     $body = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -76,7 +87,7 @@ if (function_exists('curl_init')) {
             'header' => "Accept: image/jpeg,image/*\r\n",
             'ignore_errors' => true
         ],
-        'ssl' => ['verify_peer' => true, 'verify_peer_name' => true]
+        'ssl' => ['verify_peer' => false, 'verify_peer_name' => false]
     ]);
     $body = @file_get_contents(UPSTREAM, false, $ctx);
     $httpCode = $body !== false ? 200 : 0;

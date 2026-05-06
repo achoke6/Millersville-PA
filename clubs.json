@@ -228,10 +228,12 @@
   },
   {
     "name": "Athletics",
-    "category": "",
-    "categories": [],
+    "category": "University Departments ",
+    "categories": [
+      "University Departments "
+    ],
     "shortName": "",
-    "id": ""
+    "id": "athletics"
   },
   {
     "name": "Bard Hall Residence Hall",
@@ -338,8 +340,10 @@
   },
   {
     "name": "Campus Life",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -534,12 +538,10 @@
   },
   {
     "name": "College of Graduate Studies and Adult Learning",
-    "category": "Educational Program",
-    "categories": [
-      "Educational Program"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "Graduate Studies",
-    "id": ""
+    "id": "cgsal"
   },
   {
     "name": "Color of Teaching Mentoring Program",
@@ -1274,13 +1276,12 @@
   },
   {
     "name": "Millersville Concerned Women",
-    "category": "Lecture or Speaker",
+    "category": "University Departments ",
     "categories": [
-      "Lecture or Speaker",
-      "Movie or Film"
+      "University Departments "
     ],
     "shortName": "MCW",
-    "id": ""
+    "id": "mcw"
   },
   {
     "name": "Millersville Scholars Program",
@@ -1656,13 +1657,12 @@
   },
   {
     "name": "Sigma Gamma Rho Sorority, Inc.",
-    "category": "Fundraiser",
+    "category": "Fraternity & Sorority Life",
     "categories": [
-      "Fundraiser",
-      "Social"
+      "Fraternity & Sorority Life"
     ],
     "shortName": "Sigma Gamma Rho",
-    "id": ""
+    "id": "lambdaalphasgrho"
   },
   {
     "name": "Slip & Score Society",
@@ -1684,12 +1684,10 @@
   },
   {
     "name": "Sneakers to Stilettos Modeling Troupe",
-    "category": "Arts & Culture",
-    "categories": [
-      "Arts & Culture"
-    ],
-    "shortName": "S2S",
-    "id": "sneakers2stilettos"
+    "category": "",
+    "categories": [],
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Society of Manufacturing Engineers",

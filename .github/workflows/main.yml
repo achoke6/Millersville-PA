@@ -57,7 +57,13 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # Node.js 22 (Active LTS, EOL April 2027). Bumped from Node 20 in
+          # May 2026 because Node 20 reached EOL on April 30, 2026 — no more
+          # security patches upstream. Node 22 is a drop-in for our use:
+          # built-in fetch (we already use it), web-push and terser both
+          # support 22+, no native modules that need rebuilding. The deploy
+          # smoke test will catch any regression at the post-deploy step.
+          node-version: 22
           # Caches ~/.npm (the global download cache, keyed off package-lock.json)
           # so npm ci doesn't re-download dependencies on every cron run. With
           # the lockfile pinned, this typically cuts dep install from ~30s to

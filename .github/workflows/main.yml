@@ -5,21 +5,13 @@ on:
   push:
     branches: [ main ]
   workflow_dispatch:
-# Opt-in to Node 24 for JavaScript actions (actions/checkout, actions/setup-node).
-# This is unrelated to the Node version that runs OUR scraper (set via setup-node
-# below) — this is the runtime GitHub uses for the actions themselves. Without
-# this var, every run logs a deprecation warning saying "actions are running on
-# Node 20." GitHub auto-flips this default on June 2, 2026; we set it explicitly
-# to silence the warning preemptively. Safe to remove after that date.
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
@@ -63,7 +55,7 @@ jobs:
           fi
           echo "✓ All JSON files valid"
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           # Node.js 22 (Active LTS, EOL April 2027). Bumped from Node 20 in
           # May 2026 because Node 20 reached EOL on April 30, 2026 — no more

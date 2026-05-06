@@ -14,11 +14,6 @@ on:
     - cron: '0 12 * * *'  # 12:00 UTC = 7am EST (winter)
   workflow_dispatch:       # manual trigger for testing
 
-# See main.yml for explanation. Silences the Node 20 actions deprecation
-# warning. GitHub auto-flips this June 2, 2026; safe to remove afterward.
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
-
 jobs:
   send:
     runs-on: ubuntu-latest
@@ -44,10 +39,10 @@ jobs:
             echo "proceed=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         if: steps.dst_check.outputs.proceed == 'true'
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         if: steps.dst_check.outputs.proceed == 'true'
         with:
           # Match scraper workflow — Node 22 LTS, Node 20 EOL April 2026.

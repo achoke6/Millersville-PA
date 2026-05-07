@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-05-06T20:06:16.092Z",
-  "totalEvents": 1001,
-  "withDescription": 366,
-  "withImage": 110,
+  "generatedAt": "2026-05-07T11:48:47.205Z",
+  "totalEvents": 994,
+  "withDescription": 362,
+  "withImage": 108,
   "familyFriendly": 32,
-  "eventsToday": 12,
+  "eventsToday": 13,
   "sources": {
     "muAthletics": 111,
     "muCalendar": 150,
-    "muGetInvolved": 320,
-    "pennManor": 195,
+    "muGetInvolved": 316,
+    "pennManor": 192,
     "borough": 211,
     "vfw": 1,
     "phantomPower": 12,
@@ -26,12 +26,12 @@
       "latest": "2027-01-01T00:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-02-05T16:00:00.000Z",
+      "earliest": "2026-02-06T00:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-04-10T20:15:00.000Z",
-      "latest": "2026-08-26T20:00:00.000Z"
+      "earliest": "2026-04-13T04:00:00.000Z",
+      "latest": "2026-09-01T23:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-02-09T12:00:00.000Z",
@@ -53,41 +53,41 @@
   "staleness": {
     "muAthletics": {
       "newest": "2026-11-14",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "muCalendar": {
       "newest": "2027-01-01",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "pennManor": {
-      "newest": "2026-08-26",
-      "daysSinceMoved": 0
+      "newest": "2026-09-01",
+      "daysSinceMoved": 1
     },
     "borough": {
       "newest": "2027-05-03",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "vfw": {
       "newest": "2026-05-02",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "phantomPower": {
       "newest": "2026-05-28",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "community": {
       "newest": "2026-04-27",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     }
   },
   "sports": {
-    "total": 275,
-    "scored": 95,
-    "wins": 40,
+    "total": 273,
+    "scored": 94,
+    "wins": 39,
     "losses": 55,
     "ties": 0
   }

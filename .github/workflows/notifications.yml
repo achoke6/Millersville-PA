@@ -1,43 +1,87 @@
 name: Daily Push Notifications
 
-# DST-aware scheduling. We want pushes at exactly 7am Eastern year-round,
-# but cron runs in UTC and Eastern shifts between EST (-5) and EDT (-4).
+# Goal: send push notifications once per day at roughly 7am Eastern, year-round.
 #
-# Two entries fire daily — one at 11:00 UTC (matches 7am EDT, March-November)
-# and one at 12:00 UTC (matches 7am EST, November-March). The job itself
-# checks whether the CURRENT local-ET hour is 7am; if not, it exits early.
-# Only one of the two cron firings will pass the check on any given day,
-# so users get exactly one notification at 7am their time year-round.
+# Two challenges:
+#   1. GitHub Actions cron is unreliable. Crons scheduled at :00 minutes during
+#      peak hours (top of every hour, weekday mornings) routinely run 30-60+
+#      minutes late OR get skipped entirely. We've already lost one morning's
+#      notifications to this — May 7 2026, the 11:00 UTC cron didn't fire and
+#      the 12:00 UTC backup hit the DST guard reading "08" and bailed.
+#   2. Daylight Saving Time means 7am ET shifts between 11:00 UTC (EDT) and
+#      12:00 UTC (EST) twice a year, so we can't just hard-code one cron.
+#
+# Strategy:
+#   - Schedule on the half-hour (10:30 + 11:30 UTC) which is dramatically
+#     more reliable than top-of-hour on GitHub's free runners.
+#   - Widen the DST guard to accept any ET hour in 06-08 (handles up to 2hrs
+#     of cron delay without dropping a day).
+#   - Add idempotency check via notifications-status.json on DreamHost: if
+#     we already ran today (in ET date), skip. This prevents both crons from
+#     firing on the same day during DST overlap or if both happen to run.
+#
+# Net result: as long as ONE of the two cron firings lands within a 6am-9am ET
+# window on any given day, users get exactly one notification.
 on:
   schedule:
-    - cron: '0 11 * * *'  # 11:00 UTC = 7am EDT (summer)
-    - cron: '0 12 * * *'  # 12:00 UTC = 7am EST (winter)
+    - cron: '30 10 * * *'  # 10:30 UTC = 6:30am EDT / 5:30am EST
+    - cron: '30 11 * * *'  # 11:30 UTC = 7:30am EDT / 6:30am EST
   workflow_dispatch:       # manual trigger for testing
+
+env:
+  # The DreamHost-hosted status file the cron writes after each successful run.
+  # Used here for idempotency — if today's already done, don't run twice.
+  NOTIFICATIONS_STATUS_URL: https://millersville.app/notifications-status.json
 
 jobs:
   send:
     runs-on: ubuntu-latest
     steps:
-      # DST disambiguation: bail out if the local-ET hour isn't 7. The
-      # `date -d` tool with TZ env var reads the actual zone rules from
-      # tzdata, so it's correct across DST transitions automatically.
-      # Manual workflow_dispatch runs always proceed (no schedule check).
-      - name: Check if it's 7am ET
+      - name: Check ET hour and idempotency
         id: dst_check
         run: |
+          # Manual workflow_dispatch always proceeds (testing is testing).
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             echo "Manual run — proceeding."
             echo "proceed=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
+
+          # Wide ET-hour gate: 6am-8am inclusive. GitHub's cron can be 60+ min
+          # late on the free tier. With crons set at :30 and a 3-hour acceptance
+          # window we tolerate most delays without dropping the day.
           ET_HOUR=$(TZ=America/New_York date +%H)
-          echo "Local ET hour: $ET_HOUR"
-          if [ "$ET_HOUR" = "07" ]; then
-            echo "proceed=true" >> "$GITHUB_OUTPUT"
+          ET_DATE=$(TZ=America/New_York date +%Y-%m-%d)
+          echo "Local ET: $ET_DATE $ET_HOUR:00"
+          case "$ET_HOUR" in
+            06|07|08) echo "  ✓ within 6am-8am ET window" ;;
+            *) echo "  ✗ outside 6am-8am ET window — skipping" ; echo "proceed=false" >> "$GITHUB_OUTPUT" ; exit 0 ;;
+          esac
+
+          # Idempotency: did we already run today (ET)? Fetch the status file
+          # the previous successful run wrote and compare its lastRunAt's ET
+          # date to today's ET date. A 404 (file doesn't exist yet) or any
+          # parse failure means "no, we haven't run today" — proceed.
+          STATUS=$(curl -sf -m 10 "$NOTIFICATIONS_STATUS_URL" || true)
+          if [ -n "$STATUS" ]; then
+            LAST_RUN_AT=$(echo "$STATUS" | jq -r '.lastRunAt // empty')
+            if [ -n "$LAST_RUN_AT" ]; then
+              # Convert lastRunAt to ET date. `date -d` reads the ISO string,
+              # TZ env var picks the output zone.
+              LAST_RUN_ET_DATE=$(TZ=America/New_York date -d "$LAST_RUN_AT" +%Y-%m-%d 2>/dev/null || echo "")
+              echo "Last successful run (ET): $LAST_RUN_ET_DATE"
+              if [ "$LAST_RUN_ET_DATE" = "$ET_DATE" ]; then
+                echo "  ✗ already ran today — skipping (idempotent)"
+                echo "proceed=false" >> "$GITHUB_OUTPUT"
+                exit 0
+              fi
+            fi
           else
-            echo "Not 7am ET — DST guard skipping."
-            echo "proceed=false" >> "$GITHUB_OUTPUT"
+            echo "  (no prior status file — first run today)"
           fi
+
+          echo "  ✓ proceeding with push notifications"
+          echo "proceed=true" >> "$GITHUB_OUTPUT"
 
       - uses: actions/checkout@v5
         if: steps.dst_check.outputs.proceed == 'true'

@@ -7,3 +7,7 @@ subscriptions.json
 # Notifications run-status snapshot — written by send-notifications.js cron,
 # read by status.html. Lives only on DreamHost.
 notifications-status.json
+
+# Weekly auto-scraper output — written by scrape-monthly.js cron via FTP,
+# fetched at runtime by hourly scrape.js. Lives only on DreamHost.
+auto-events.json

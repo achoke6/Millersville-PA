@@ -3840,6 +3840,30 @@ Focus on the most impressive deals a shopper would want to know about. Include m
             const substringMatch = seed.norm.includes(ne.norm) || ne.norm.includes(seed.norm);
             const isGeneric = GENERIC_MEETING_TITLES.test(shorter);
 
+            // Whitespace-insensitive equality. Catches cases like "Teatime"
+            // vs "Tea time" — same event, source-side typesetting difference.
+            // After collapsing whitespace, both normalize to "teatimeandslime"
+            // and match. Cheaper than Levenshtein and more conservative
+            // (only fires when the letter sequences are IDENTICAL modulo
+            // whitespace).
+            const seedNoWs = seed.norm.replace(/\s+/g, '');
+            const neNoWs   = ne.norm.replace(/\s+/g, '');
+            const noWsMatch = seedNoWs === neNoWs && seedNoWs.length >= 8;
+
+            // Sorted-significant-words equality. Catches word-order reorderings
+            // like "Mentorship Recruitment and Recognition Day" vs "Mentorship
+            // Recognition and Recruitment Day" — same event, sources just
+            // listed components in different order. We compare sets of words
+            // with length ≥ 4 (filters stop words and generic short tokens
+            // that could collide on unrelated events). Requires ≥3 words to
+            // fire — pairs of 1-2 word titles are too fragile to merge this
+            // way.
+            const sortedDistinctive = norm => norm.split(' ').filter(w => w.length >= 4).sort().join(' ');
+            const seedSorted = sortedDistinctive(seed.norm);
+            const neSorted = sortedDistinctive(ne.norm);
+            const sortedWordCount = seedSorted.split(' ').filter(Boolean).length;
+            const sortedMatch = seedSorted && seedSorted === neSorted && sortedWordCount >= 3;
+
             // Fuzzy match: find the longest contiguous shared word run between
             // the two normalized titles. Catches cases like
             //   "kenston curtis lafleur the light in the dark"
@@ -3875,7 +3899,7 @@ Focus on the most impressive deals a shopper would want to know about. Include m
             }
 
             let titleMatch;
-            if (exactMatch) titleMatch = true;
+            if (exactMatch || noWsMatch || sortedMatch) titleMatch = true;
             else if (isGeneric) titleMatch = false;
             else titleMatch = (substringMatch && shorter.length >= 8) || fuzzyMatch;
 
@@ -3915,7 +3939,12 @@ Focus on the most impressive deals a shopper would want to know about. Include m
             //       enough that same-day match is almost certainly the same event. Sources often
             //       list different times for the same event (doors-open vs performance-start),
             //       so allow merging regardless of time gap.
-            if (!exactMatch) {
+            //
+            // noWsMatch and sortedMatch are skipped entirely — those are
+            // letter-identical or word-set-identical, strong enough to
+            // cross-source merge regardless of time gap (different sources
+            // legitimately publish the same event with different start times).
+            if (!exactMatch && !noWsMatch && !sortedMatch) {
                 const timeDiff = Math.abs(ne.time - seed.time);
                 if (shorter.length < 10 && timeDiff > ONE_HALF_HOUR_MS) continue;
             }

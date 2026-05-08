@@ -2053,9 +2053,20 @@ async function runScraper() {
                     if (campDate < pastDate || campDate >= futureDate) { campSkipped++; continue; }
                     const key = buildCampDedupKey(camp.title, campDate);
                     if (existingKeys4.has(key)) { campSkipped++; continue; }
+                    // Pass through endTime if specified — needed for non-camp events
+                    // (like the Summer Fun Series, which are 6-7pm slots, not full-day
+                    // camps that fallback durations would handle correctly). Field is
+                    // optional; when absent, the same TYPE_DEFAULTS fallback used for
+                    // every other source applies.
+                    let resolvedEndTime;
+                    if (camp.endTime) {
+                        const endDate = new Date(camp.endTime);
+                        if (!isNaN(endDate.getTime())) resolvedEndTime = endDate.toISOString();
+                    }
                     events.push({
                         title: camp.title,
                         date: campDate.toISOString(),
+                        endTime: resolvedEndTime,
                         location: camp.location || 'Millersville University',
                         tags: Array.isArray(camp.tags) ? camp.tags : ['MU', 'Summer Camp'],
                         price: camp.price || '',
@@ -3657,7 +3668,14 @@ Focus on the most impressive deals a shopper would want to know about. Include m
             if (!tags.includes('MU')) return false;
             if (!ev.gameResult || !ev.gameScore) return false;   // must be past + scored
             if (!ev.sourceLink) return false;
-            if (!/athletics\.millersville\.edu/i.test(ev.sourceLink)) return false;
+            // Match Sidearm news article URLs only. Two earlier mistakes corrected here:
+            //   1. Hostname was `athletics.millersville.edu` — an EDU subdomain MU doesn't
+            //      actually use. The Sidearm-hosted athletics site is `millersvilleathletics.com`.
+            //      The mismatch silently rejected every MU game and reported 0/0 parsed forever.
+            //   2. Path narrowed to /news/ — only recap articles carry inline linescores;
+            //      schedule pages (the fallback when no recap exists) would never yield one,
+            //      so fetching them was wasted budget against BOX_SCORE_FETCH_CAP.
+            if (!/millersvilleathletics\.com\/news\//i.test(ev.sourceLink)) return false;
             return true;
         });
 

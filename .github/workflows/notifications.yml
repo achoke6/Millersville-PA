@@ -60,10 +60,22 @@ jobs:
 
           # Idempotency: did we already run today (ET)? Fetch the status file
           # the previous successful run wrote and compare its lastRunAt's ET
-          # date to today's ET date. A 404 (file doesn't exist yet) or any
-          # parse failure means "no, we haven't run today" — proceed.
+          # date to today's ET date. The check is best-effort — any failure
+          # (404, malformed JSON, network error) falls back to "proceed" so
+          # we don't drop a day's notifications because the idempotency
+          # guard itself broke.
+          #
+          # Why this matters: DreamHost serves an HTML 404 page with a 200
+          # OK status when files are missing in some configurations, which
+          # defeats `curl -sf` and feeds HTML to jq. We saw that fail once
+          # (May 8 2026) — jq exited with code 5, set -e killed the step,
+          # the workflow's `if: proceed == 'true'` saw an unset output and
+          # silently skipped. Pushes never sent.
           STATUS=$(curl -sf -m 10 "$NOTIFICATIONS_STATUS_URL" || true)
-          if [ -n "$STATUS" ]; then
+          # Verify it's actually JSON before parsing. `jq -e empty` exits 0
+          # only on valid JSON; redirect both stdout and stderr so a parse
+          # failure doesn't bleed into the log.
+          if [ -n "$STATUS" ] && echo "$STATUS" | jq -e empty >/dev/null 2>&1; then
             LAST_RUN_AT=$(echo "$STATUS" | jq -r '.lastRunAt // empty')
             if [ -n "$LAST_RUN_AT" ]; then
               # Convert lastRunAt to ET date. `date -d` reads the ISO string,
@@ -77,7 +89,10 @@ jobs:
               fi
             fi
           else
-            echo "  (no prior status file — first run today)"
+            # Either no response, or response wasn't JSON. Treat as "no prior
+            # run" and proceed — the cost of an extra send (and a 410/404
+            # prune cleanup) is much lower than the cost of a dropped day.
+            echo "  (no usable prior status — proceeding as first run today)"
           fi
 
           echo "  ✓ proceeding with push notifications"

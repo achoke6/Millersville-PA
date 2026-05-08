@@ -70,16 +70,6 @@
     "kidFriendly": true
   },
   {
-    "title": "CNC Woodworking Camp (Grades 5+)",
-    "date": "2026-06-22T09:00:00-04:00",
-    "location": "Millersville University (Tech & Engineering)",
-    "tags": ["MU", "Summer Camp", "Educational"],
-    "price": "$225",
-    "registrationUrl": "https://millersvilletechcamps.com/product/machining-for-kids/",
-    "description": "Design It. Program It. Build It. Morning session, week of 6/22-6/26. Grades 5+.",
-    "kidFriendly": true
-  },
-  {
     "title": "3D Printing with SolidWorks (Grades 5+)",
     "date": "2026-06-22T09:00:00-04:00",
     "location": "Millersville University (Tech & Engineering)",
@@ -147,16 +137,6 @@
     "price": "$260",
     "registrationUrl": "https://millersvilletechcamps.com/product/makeyourownmerch/",
     "description": "Morning session, week of 7/6-7/10. Grades 3-6.",
-    "kidFriendly": true
-  },
-  {
-    "title": "The Maplewood Shop — Morning (Grades 3+)",
-    "date": "2026-07-06T09:00:00-04:00",
-    "location": "Millersville University (Tech & Engineering)",
-    "tags": ["MU", "Summer Camp", "Educational"],
-    "price": "$240",
-    "registrationUrl": "https://millersvilletechcamps.com/product/the-maplewood-shop-7-6-7-10/",
-    "description": "Morning session, week of 7/6-7/10. Grades 3+.",
     "kidFriendly": true
   },
   {
@@ -250,6 +230,28 @@
     "kidFriendly": true
   },
   {
+    "title": "Jewelry by You: Wearable Art (Grades 4+)",
+    "date": "2026-06-22T09:00:00-04:00",
+    "endTime": "2026-06-22T12:00:00-04:00",
+    "location": "Millersville University (Tech & Engineering)",
+    "tags": ["MU", "Summer Camp", "Educational"],
+    "price": "$225",
+    "registrationUrl": "https://millersvilletechcamps.com/product/jewelry-by-you/",
+    "description": "Morning session, 9am-12pm, week of 6/22-6/26. Grades 4+. Design and make jewelry from polymer, glass, ceramic, metal, and wood — pendants, beaded necklaces, and rings.",
+    "kidFriendly": true
+  },
+  {
+    "title": "From Waste to Wow: Recycled Plastics (Grades 4+)",
+    "date": "2026-07-06T13:00:00-04:00",
+    "endTime": "2026-07-06T16:00:00-04:00",
+    "location": "Millersville University (Tech & Engineering)",
+    "tags": ["MU", "Summer Camp", "Educational"],
+    "price": "$225",
+    "registrationUrl": "https://millersvilletechcamps.com/product/from-waste-to-wow/",
+    "description": "Afternoon session, 1pm-4pm, week of 7/6-7/10. Grades 4+. Sort and process plastics, then use injection molding, vacuum forming, and CNC machining to make keychains, pendants, pens, and small containers.",
+    "kidFriendly": true
+  },
+  {
     "title": "Summer Fun Series: Happily Ever Crafter & Lancaster Public Library Storytime",
     "date": "2026-06-11T18:00:00-04:00",
     "endTime": "2026-06-11T19:00:00-04:00",
@@ -335,6 +337,101 @@
     "price": "Free",
     "registrationUrl": "https://www.millersville.edu/alumni/events/summer_fun/",
     "description": "End-of-summer celebration on the Alumni House lawn — the final Summer Fun Series event. Activity and storytime hosted by Everlasting Wishes. Additional activities, prizes, and a festive atmosphere. Children who attended all 8 events earn a special \"Summer Marauder\" prize. No registration required.",
+    "kidFriendly": true
+  },
+  {
+    "title": "'Ville at the Mill",
+    "date": "2026-05-27T17:30:00-04:00",
+    "endTime": "2026-05-27T20:30:00-04:00",
+    "location": "Sickman's Mill (Lancaster)",
+    "tags": ["MU", "Alumni Event", "GOLD"],
+    "price": "$5",
+    "registrationUrl": "https://www.millersville.edu/alumni/events/gold/",
+    "description": "GOLD (Graduates of the Last Decade) alumni gathering at Sickman's Mill, 5:30-8:30 PM. Optional behind-the-scenes Jimmy Juice's Millersville production facility tour 4:00-5:00 PM. 21+.",
+    "kidFriendly": false
+  },
+  {
+    "title": "College of Education & Human Services Grandview Vineyards Gathering",
+    "date": "2026-05-29T18:00:00-04:00",
+    "endTime": "2026-05-29T20:00:00-04:00",
+    "location": "Grandview Vineyards",
+    "tags": ["MU", "Alumni Event"],
+    "price": "See registration page",
+    "registrationUrl": "https://www.millersville.edu/alumni/events/edhs/",
+    "description": "College of Education & Human Services alumni gathering at Grandview Vineyards, 6-8 PM. Hosted by the Office of Alumni Engagement.",
+    "kidFriendly": false
+  },
+  {
+    "title": "Philadelphia Union Millersville Takeover",
+    "date": "2026-07-25T19:30:00-04:00",
+    "location": "Subaru Park, Chester PA",
+    "tags": ["MU", "Alumni Event"],
+    "price": "See registration page",
+    "registrationUrl": "https://www.millersville.edu/alumni/events/sports/",
+    "description": "Millersville night at the Philadelphia Union. Game time 7:30 PM at Subaru Park, Chester, PA.",
+    "kidFriendly": true
+  },
+  {
+    "title": "Annual Candle Lighting Ceremony",
+    "date": "2026-08-21T19:30:00-04:00",
+    "endTime": "2026-08-21T21:00:00-04:00",
+    "location": "Millersville University (Pond)",
+    "tags": ["MU", "Alumni Event"],
+    "price": "Free",
+    "registrationUrl": "https://www.millersville.edu/alumni/events/candle-lighting/",
+    "description": "Annual Candle Lighting Ceremony at the Pond, 7:30-9 PM. 7:30 PM arrival, 8:00 PM Marauder Marching Band prelude, 8:15 PM welcome and ceremony.",
+    "kidFriendly": true
+  },
+  {
+    "title": "Homecoming 2026",
+    "date": "2026-10-17T18:00:00-04:00",
+    "location": "Millersville University",
+    "tags": ["MU", "Alumni Event"],
+    "price": "See registration page",
+    "registrationUrl": "https://www.millersville.edu/alumni/events/homecoming/",
+    "description": "93rd Annual Homecoming Celebration at Millersville University. Specific schedule TBD — check the registration page closer to the date.",
+    "kidFriendly": true
+  },
+  {
+    "title": "Veteran's Day Event: Salute to Service",
+    "date": "2026-11-12T11:30:00-05:00",
+    "endTime": "2026-11-12T13:30:00-05:00",
+    "location": "Millersville University",
+    "tags": ["MU", "Alumni Event"],
+    "price": "See registration page",
+    "registrationUrl": "https://www.millersville.edu/alumni/events/veterans-day/",
+    "description": "Salute to Service event honoring veterans, 11:30 AM - 1:30 PM at Millersville University. Note: detail page text references 2025 — confirm current-year date with organizers before publishing.",
+    "kidFriendly": true
+  },
+  {
+    "title": "Glorious Sounds of the Season",
+    "date": "2026-12-05T18:00:00-05:00",
+    "location": "Millersville University",
+    "tags": ["MU", "Alumni Event"],
+    "price": "See registration page",
+    "registrationUrl": "https://www.millersville.edu/alumni/events/holidays/",
+    "description": "Annual holiday concert at Millersville University. Specific time TBD — check the registration page. Related Dec 6 holiday events at the maker's market and tree lighting (3-7 PM).",
+    "kidFriendly": true
+  },
+  {
+    "title": "Wreaths Across America Wreath Laying Ceremony",
+    "date": "2026-12-13T12:00:00-05:00",
+    "location": "Civil War Monument (10 N George St, Lancaster)",
+    "tags": ["MU", "Alumni Event"],
+    "price": "Free",
+    "registrationUrl": "https://www.millersville.edu/alumni/events/wreath_laying/",
+    "description": "Wreaths Across America wreath laying ceremony, 12 PM at the Civil War Monument, 10 N George St, Lancaster.",
+    "kidFriendly": true
+  },
+  {
+    "title": "Millersville University Family Egg Hunt",
+    "date": "2027-04-03T10:00:00-04:00",
+    "endTime": "2027-04-03T12:00:00-04:00",
+    "location": "Millersville University (Alumni House)",
+    "tags": ["MU", "Alumni Event"],
+    "price": "See registration page",
+    "registrationUrl": "https://www.millersville.edu/alumni/events/egg_hunt/",
+    "description": "Family egg hunt at the Alumni House, 10 AM - 12 PM. Two age-appropriate hunts: ages 0-3 (parent-assisted) and ages 4-7 (structured). Photos with Skully, Lancaster Public Library card sign-up van, inflatable games, take-home tote bags. Note: detail page text references March 28th — confirm date with organizers before publishing.",
     "kidFriendly": true
   }
 ]

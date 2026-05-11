@@ -21,24 +21,17 @@
  * (e.g. zero subscriptions, or zero users had matching events). Distinct
  * from "ran but everything failed" which exits 1.
  *
- * ============================================================================
- * WARNING — eventMatchesFeed is duplicated from app.js
- * ============================================================================
- * The function below mirrors the logic of `eventMatchesFeed` in app.js. They
- * MUST stay in lockstep. If you add a new feed type, sport mapping, or
- * cs-* / mu-* / pm-* prefix to one, update the other in the same commit.
- * Acceptable-but-real drift risk; the alternative was extracting both files'
- * shared logic into a module, which would have required a non-trivial app.js
- * refactor (it's currently a single global-state file). Future enhancement:
- * extract to lib/eventMatch.js when next opportunity arises.
- * Last sync: 2026-05-06.
- * ============================================================================
+ * eventMatchesFeed is imported from ../lib/eventMatch.js (shared with
+ * app.js via a UMD-style export). One source of truth — no more lockstep
+ * comments. The PHP port in events_ics.php is NOT covered by the shared
+ * lib (different language); see comment in that file.
  */
 
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 const webpush = require('web-push');
+const { eventMatchesFeed } = require('../lib/eventMatch.js');
 
 const EVENTS_URL = 'https://millersville.app/events.json';
 const SUBSCRIPTIONS_REMOTE_PATH = 'subscriptions.json';
@@ -68,92 +61,8 @@ if (!FTP_USER || !FTP_PASS || !FTP_HOST || !FTP_DIR) {
 
 webpush.setVapidDetails(VAPID_SUBJECT, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
 
-// ============================================================================
-// eventMatchesFeed — KEEP IN LOCKSTEP WITH app.js (see warning above)
-// ============================================================================
-function eventMatchesFeed(e, feedPrefs) {
-    if (!feedPrefs || feedPrefs.length === 0) return true;
-    const tags = e.tags || [];
-
-    if (feedPrefs.includes('family-events') && e.kidFriendly) return true;
-
-    const sportMap = {baseball:'baseball',softball:'softball',lacrosse:'lacrosse',volleyball:'volleyball',
-        football:'football',basketball:'basketball',soccer:'soccer','field hockey':'fieldhockey',
-        tennis:'tennis',track:'track',golf:'golf',swimming:'swimming','cross country':'crosscountry'};
-
-    if (tags.includes('PM') && (tags.includes('Athletics') || tags.includes('Athletic Competitions'))) {
-        for (const [sport, feedSuffix] of Object.entries(sportMap)) {
-            if (tags.some(t => t.toLowerCase() === sport) && feedPrefs.includes('pm-' + feedSuffix)) return true;
-        }
-        return false;
-    }
-    if (tags.includes('PM')) {
-        if (tags.includes('Music/Arts') && feedPrefs.includes('pm-music')) return true;
-        if (tags.includes('Board/PTO') && feedPrefs.includes('pm-board')) return true;
-        if ((tags.includes('School Events') || tags.includes('Health/Wellness') || tags.includes('Meetings')) && feedPrefs.includes('pm-board')) return true;
-        return false;
-    }
-
-    if (tags.includes('MU') && (tags.includes('Athletics') || tags.includes('Athletic Competitions'))) {
-        for (const [sport, feedSuffix] of Object.entries(sportMap)) {
-            if (tags.some(t => t.toLowerCase() === sport) && feedPrefs.includes('mu-' + feedSuffix)) return true;
-        }
-        if (feedPrefs.includes('mu-arts') || feedPrefs.includes('mu-public')) return false;
-        return false;
-    }
-
-    if (tags.includes('Clubs/Orgs')) {
-        if (feedPrefs.includes('clubs-all')) return true;
-        if (feedPrefs.includes('clubs-social') && tags.includes('Social')) return true;
-        if (feedPrefs.includes('clubs-arts') && tags.includes('Arts')) return true;
-        if (feedPrefs.includes('clubs-sports') && tags.includes('Club Sports')) return true;
-        if (feedPrefs.includes('clubs-greek') && tags.includes('Greek Life')) return true;
-        if (feedPrefs.includes('clubs-service') && (tags.includes('Service') || tags.includes('Cultural'))) return true;
-        if (tags.includes('Club Sports')) {
-            if (feedPrefs.includes('cs-baseball') && tags.includes('Baseball')) return true;
-            if (feedPrefs.includes('cs-bowling') && /bowling/i.test(e.title || '')) return true;
-            if (feedPrefs.includes('cs-equestrian') && /equestrian/i.test(e.title || '')) return true;
-            if (feedPrefs.includes('cs-fencing') && tags.includes('Fencing')) return true;
-            if (feedPrefs.includes('cs-icehockey') && /ice hockey/i.test(e.title || '')) return true;
-            if (feedPrefs.includes('cs-mma') && /\bmma\b/i.test(e.title || '')) return true;
-            if (feedPrefs.includes('cs-basketball-mens') && tags.includes('Basketball') && tags.includes("Men's")) return true;
-            if (feedPrefs.includes('cs-basketball-womens') && tags.includes('Basketball') && tags.includes("Women's")) return true;
-            if (feedPrefs.includes('cs-lacrosse') && tags.includes('Lacrosse')) return true;
-            if (feedPrefs.includes('cs-rugby-mens') && tags.includes('Rugby') && tags.includes("Men's")) return true;
-            if (feedPrefs.includes('cs-rugby-womens') && tags.includes('Rugby') && tags.includes("Women's")) return true;
-            if (feedPrefs.includes('cs-soccer-mens') && tags.includes('Soccer') && tags.includes("Men's")) return true;
-            if (feedPrefs.includes('cs-soccer-womens') && tags.includes('Soccer') && tags.includes("Women's")) return true;
-            if (feedPrefs.includes('cs-volleyball-mens') && tags.includes('Volleyball') && tags.includes("Men's")) return true;
-            if (feedPrefs.includes('cs-volleyball-womens') && tags.includes('Volleyball') && tags.includes("Women's")) return true;
-            if (feedPrefs.includes('cs-dance') && /dance team/i.test(e.title || '')) return true;
-            if (feedPrefs.includes('cs-running') && /\brunning\b/i.test(e.title || '')) return true;
-            if (feedPrefs.includes('cs-softball') && tags.includes('Softball')) return true;
-            if (feedPrefs.includes('cs-tennis') && tags.includes('Tennis')) return true;
-            if (feedPrefs.includes('cs-frisbee') && /ultimate frisbee/i.test(e.title || '')) return true;
-        }
-        for (const pref of feedPrefs) {
-            if (pref.startsWith('club:') && tags.includes(pref.substring(5))) return true;
-        }
-        return false;
-    }
-
-    if (tags.includes('MU')) {
-        if (tags.includes('Arts Concert / Performance') && feedPrefs.includes('mu-arts')) return true;
-        if (tags.includes('Public Event') && feedPrefs.includes('mu-public')) return true;
-        return false;
-    }
-
-    if (tags.includes('Borough') && feedPrefs.includes('borough-all')) return true;
-
-    if (tags.includes('VFW') && feedPrefs.includes('other-vfw')) return true;
-    if (tags.includes('Live Music') && feedPrefs.includes('other-phantom')) return true;
-    if (tags.includes('Community') && feedPrefs.includes('other-community')) return true;
-
-    return false;
-}
-// ============================================================================
-// END LOCKSTEP REGION
-// ============================================================================
+// eventMatchesFeed is imported from ../lib/eventMatch.js — single source
+// of truth shared with app.js. Pure function; pass (event, feedPrefs).
 
 /**
  * Fetch events.json from production. Bails the whole script on failure —

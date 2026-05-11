@@ -828,102 +828,16 @@ window.toggleCardFavorite = function(prefId, btnEl) {
     });
 };
 
-function eventMatchesFeed(e) {
-    if (!feedPrefs || feedPrefs.length === 0) return true;
-    const tags = e.tags || [];
-    const title = (e.title || '').toLowerCase();
+// 1-arg wrapper around the shared lib (lib/eventMatch.js). The lib is
+// loaded by a <script> tag in index.html before app.js, so window.event-
+// MatchModule is available here. We close over the module-scope feedPrefs
+// so existing call sites in this file stay as eventMatchesFeed(e).
+//
+// Source of truth lives in lib/eventMatch.js — edit there for both this
+// caller AND scripts/send-notifications.js. The PHP port in events_ics.php
+// has its own copy that must be hand-synced (different language).
+const eventMatchesFeed = (e) => window.eventMatchModule.eventMatchesFeed(e, feedPrefs);
 
-    // Family Friendly — matches any event with kidFriendly flag
-    if (feedPrefs.includes('family-events') && e.kidFriendly) return true;
-
-    const sportMap = {baseball:'baseball',softball:'softball',lacrosse:'lacrosse',volleyball:'volleyball',
-        football:'football',basketball:'basketball',soccer:'soccer','field hockey':'fieldhockey',
-        tennis:'tennis',track:'track',golf:'golf',swimming:'swimming','cross country':'crosscountry'};
-
-    // PM sports
-    if (tags.includes('PM') && (tags.includes('Athletics') || tags.includes('Athletic Competitions'))) {
-        for (const [sport, feedSuffix] of Object.entries(sportMap)) {
-            if (tags.some(t => t.toLowerCase() === sport) && feedPrefs.includes('pm-' + feedSuffix)) return true;
-        }
-        return false;
-    }
-    // PM non-sport: only match specific non-sport feeds
-    if (tags.includes('PM')) {
-        if (tags.includes('Music/Arts') && feedPrefs.includes('pm-music')) return true;
-        if (tags.includes('Board/PTO') && feedPrefs.includes('pm-board')) return true;
-        if ((tags.includes('School Events') || tags.includes('Health/Wellness') || tags.includes('Meetings')) && feedPrefs.includes('pm-board')) return true;
-        return false;
-    }
-
-    // MU sports
-    if (tags.includes('MU') && (tags.includes('Athletics') || tags.includes('Athletic Competitions'))) {
-        for (const [sport, feedSuffix] of Object.entries(sportMap)) {
-            if (tags.some(t => t.toLowerCase() === sport) && feedPrefs.includes('mu-' + feedSuffix)) return true;
-        }
-        // Also match if any broad MU pref exists
-        if (feedPrefs.includes('mu-arts') || feedPrefs.includes('mu-public')) return false;
-        return false;
-    }
-
-    // Clubs/Orgs (GetInvolved) — check BEFORE generic MU because GetInvolved events
-    // now carry both 'MU' and 'Clubs/Orgs' tags. The more specific check wins.
-    if (tags.includes('Clubs/Orgs')) {
-        if (feedPrefs.includes('clubs-all')) return true;
-        if (feedPrefs.includes('clubs-social') && tags.includes('Social')) return true;
-        if (feedPrefs.includes('clubs-arts') && tags.includes('Arts')) return true;
-        if (feedPrefs.includes('clubs-sports') && tags.includes('Club Sports')) return true;
-        if (feedPrefs.includes('clubs-greek') && tags.includes('Greek Life')) return true;
-        if (feedPrefs.includes('clubs-service') && (tags.includes('Service') || tags.includes('Cultural'))) return true;
-        // Per-sport club matchers. The Club Sports umbrella tag is required so
-        // these prefs don't accidentally match a Sidearm varsity event that
-        // happens to share the same sport tag (e.g. "Baseball"). cs-* IDs
-        // distinguish from mu-* (varsity) and pm-* (Penn Manor) prefs.
-        if (tags.includes('Club Sports')) {
-            if (feedPrefs.includes('cs-baseball') && tags.includes('Baseball')) return true;
-            if (feedPrefs.includes('cs-bowling') && /bowling/i.test(e.title || '')) return true;
-            if (feedPrefs.includes('cs-equestrian') && /equestrian/i.test(e.title || '')) return true;
-            if (feedPrefs.includes('cs-fencing') && tags.includes('Fencing')) return true;
-            if (feedPrefs.includes('cs-icehockey') && /ice hockey/i.test(e.title || '')) return true;
-            if (feedPrefs.includes('cs-mma') && /\bmma\b/i.test(e.title || '')) return true;
-            if (feedPrefs.includes('cs-basketball-mens') && tags.includes('Basketball') && tags.includes("Men's")) return true;
-            if (feedPrefs.includes('cs-basketball-womens') && tags.includes('Basketball') && tags.includes("Women's")) return true;
-            if (feedPrefs.includes('cs-lacrosse') && tags.includes('Lacrosse')) return true;
-            if (feedPrefs.includes('cs-rugby-mens') && tags.includes('Rugby') && tags.includes("Men's")) return true;
-            if (feedPrefs.includes('cs-rugby-womens') && tags.includes('Rugby') && tags.includes("Women's")) return true;
-            if (feedPrefs.includes('cs-soccer-mens') && tags.includes('Soccer') && tags.includes("Men's")) return true;
-            if (feedPrefs.includes('cs-soccer-womens') && tags.includes('Soccer') && tags.includes("Women's")) return true;
-            if (feedPrefs.includes('cs-volleyball-mens') && tags.includes('Volleyball') && tags.includes("Men's")) return true;
-            if (feedPrefs.includes('cs-volleyball-womens') && tags.includes('Volleyball') && tags.includes("Women's")) return true;
-            if (feedPrefs.includes('cs-dance') && /dance team/i.test(e.title || '')) return true;
-            if (feedPrefs.includes('cs-running') && /\brunning\b/i.test(e.title || '')) return true;
-            if (feedPrefs.includes('cs-softball') && tags.includes('Softball')) return true;
-            if (feedPrefs.includes('cs-tennis') && tags.includes('Tennis')) return true;
-            if (feedPrefs.includes('cs-frisbee') && /ultimate frisbee/i.test(e.title || '')) return true;
-        }
-        // Individual club matches
-        for (const pref of feedPrefs) {
-            if (pref.startsWith('club:') && tags.includes(pref.substring(5))) return true;
-        }
-        return false;
-    }
-
-    // MU non-sport events (MU Calendar proper — Clubs/Orgs already handled above)
-    if (tags.includes('MU')) {
-        if (tags.includes('Arts Concert / Performance') && feedPrefs.includes('mu-arts')) return true;
-        if (tags.includes('Public Event') && feedPrefs.includes('mu-public')) return true;
-        return false;
-    }
-
-    // Borough
-    if (tags.includes('Borough') && feedPrefs.includes('borough-all')) return true;
-
-    // Other
-    if (tags.includes('VFW') && feedPrefs.includes('other-vfw')) return true;
-    if (tags.includes('Live Music') && feedPrefs.includes('other-phantom')) return true;
-    if (tags.includes('Community') && feedPrefs.includes('other-community')) return true;
-
-    return false;
-}
 
 function newsMatchesFeed(n) {
     if (!feedPrefs || feedPrefs.length === 0) return true;
@@ -1237,23 +1151,7 @@ window.openFeedSettings = function() {
     modal.innerHTML = `
         <button onclick="this.closest('div[style*=fixed]').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);z-index:2;">✕</button>
         <div style="position:sticky;top:0;background:var(--surface);z-index:1;padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:12px;">
-            <!-- Title row: heading on the left, affiliation toggle on the right.
-                 The toggle used to live at the bottom of the modal, below the
-                 calendar and notification cards, but it got buried — users
-                 couldn't easily switch their student/townie status without
-                 scrolling. Putting it next to the title keeps it discoverable
-                 while still feeling like secondary action (smaller text,
-                 muted color). Flex-wrap lets the link drop below the heading
-                 on very narrow screens rather than colliding. -->
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap;margin-bottom:4px;">
-                <h3 style="margin:0;">⭐ My Favorites</h3>
-                <div style="font-size:0.78rem;color:var(--text-muted);white-space:nowrap;padding-top:4px;">
-                    ${muAffiliation === 'townie'
-                        ? 'Actually a Marauder? <a href="#" onclick="event.preventDefault();this.closest(\'div[style*=fixed]\').remove();window.pickAffiliation(\'student\');openFeedSettings();" style="color:var(--navy);font-weight:600;text-decoration:underline;">I\'m a student →</a>'
-                        : 'Not a student? <a href="#" onclick="event.preventDefault();this.closest(\'div[style*=fixed]\').remove();window.pickAffiliation(\'townie\');openFeedSettings();" style="color:var(--navy);font-weight:600;text-decoration:underline;">I\'m a townie →</a>'
-                    }
-                </div>
-            </div>
+            <h3 style="margin-bottom:4px;">⭐ My Favorites</h3>
             <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:10px;">Pick what shows on your homepage and defaults on Events & Sports pages.</p>
             <div style="display:flex;gap:8px;align-items:stretch;">
                 <button onclick="saveFeedFromModal();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-ticket" style="flex:2;padding:10px 8px;font-size:0.88rem;white-space:nowrap;">💾 Save</button>
@@ -1282,6 +1180,15 @@ window.openFeedSettings = function() {
             <div style="font-size:0.92rem;font-weight:700;margin-bottom:4px;">🔔 Daily Notifications</div>
             <div id="notif-card-desc" style="font-size:0.78rem;color:var(--text-muted);margin-bottom:10px;">Get a 7am morning summary of today's events from your favorites.</div>
             <button id="notif-card-btn" onclick="window.toggleNotifications(this)" class="btn btn-sm btn-outline" style="width:100%;font-size:0.85rem;"></button>
+        </div>
+        <!-- Small affiliation opt-out/opt-in link at the bottom. Mirrors the welcome banner's
+             "Not a student? I'm a townie →" pattern. Text flips depending on current affiliation
+             so users can switch back if they mis-picked. Unset users see the townie opt-out. -->
+        <div style="margin-top:16px;padding-top:12px;border-top:1px dashed var(--border);font-size:0.78rem;color:var(--text-muted);text-align:center;">
+            ${muAffiliation === 'townie'
+                ? 'Actually a Marauder? <a href="#" onclick="event.preventDefault();this.closest(\'div[style*=fixed]\').remove();window.pickAffiliation(\'student\');openFeedSettings();" style="color:var(--navy);font-weight:600;text-decoration:underline;">I\'m a student →</a>'
+                : 'Not a student? <a href="#" onclick="event.preventDefault();this.closest(\'div[style*=fixed]\').remove();window.pickAffiliation(\'townie\');openFeedSettings();" style="color:var(--navy);font-weight:600;text-decoration:underline;">I\'m a townie →</a>'
+            }
         </div>`;
     overlay.appendChild(modal);
     document.body.appendChild(overlay);

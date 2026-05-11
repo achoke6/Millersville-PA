@@ -364,135 +364,23 @@ function decorateGenericTitle(title, orgName) {
     return `${o} ${t}`;
 }
 
-// Extract a linescore (box score) from a Sidearm recap page's HTML. Scans
-// every <table> in the document and returns the first one that looks like
-// a linescore, defined as:
+// Extract a linescore (box score) from a Sidearm recap page's HTML.
+// REMOVED 2026-05-09: Sidearm changed markup such that this returned 0/0 for
+// every cron for an extended period. Status dashboard tile for box scores
+// was removed first. Then we discovered the underlying recap-URL extraction
+// was itself broken (regex mismatch with new Sidearm template); fixed that
+// 2026-05-08, but the box score parser still didn't yield results because
+// Sidearm's recap pages no longer ship StatCrew linescore tables in the
+// HTML — they're rendered client-side now.
 //
-//   - Has a header row whose trailing columns are totals: "R/H/E" (baseball,
-//     softball), or "T"/"TOT"/"F"/"Final" (basketball, soccer, etc.)
-//   - Has exactly 2 body rows (the two teams)
-//   - Numeric period columns in between (1-N, or "1H/2H" for halves)
-//
-// We match team names against the event's title (to identify which row is
-// Millersville vs opponent) and against "vs"/"@" in the title (to identify
-// which is home vs away). Returns normalized shape or null on no match.
-//
-// Not perfect — some sports render linescores inside <div> layouts rather
-// than <table> — but covers baseball/softball/basketball/lacrosse/volleyball
-// well since they all ship StatCrew-generated tables.
-function parseLinescoreFromHTML(html, event) {
-    if (!html || !event || !event.title) return null;
-
-    // Rough extractor: find all table blocks, then for each, split by <tr>.
-    // Non-greedy + dot-includes-newline for robustness against formatted HTML.
-    const tableBlocks = html.match(/<table[^>]*>[\s\S]*?<\/table>/gi) || [];
-    if (tableBlocks.length === 0) return null;
-
-    const stripTags = s => s.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&#\d+;/g, '').replace(/\s+/g, ' ').trim();
-    const isNumericLabel = s => /^\d+$/.test(s);
-    const isTotalLabel = s => /^(r|h|e|t|tot|final|f|pts)$/i.test(s);
-    const isHalfLabel = s => /^(1h|2h|1st|2nd|3rd|4th|ot\d*|ot)$/i.test(s);
-    const isValidLabel = s => isNumericLabel(s) || isTotalLabel(s) || isHalfLabel(s);
-
-    // Extract opponent name from event title — we'll use this to identify
-    // which team row is MU and which is the opponent. "Softball vs Kutztown"
-    // → "Kutztown". "Baseball at Hempfield" → "Hempfield". Title formatting
-    // varies, so we fall back to a lax match.
-    const oppMatch = event.title.match(/\s(?:vs\.?|@|at)\s+(.+?)(?:\s+(?:-|·|–).*)?$/i);
-    const opponent = oppMatch ? oppMatch[1].trim().toLowerCase() : '';
-    const titleHasVs = /\bvs\b/i.test(event.title);
-
-    for (const tableHtml of tableBlocks) {
-        const rowMatches = tableHtml.match(/<tr[^>]*>[\s\S]*?<\/tr>/gi) || [];
-        if (rowMatches.length < 3) continue;  // need header + 2 teams
-
-        // Parse each row into { tag: 'th'|'td'|'mixed', cells: [text,...] }
-        const rows = rowMatches.map(r => {
-            const cellMatches = r.match(/<t[hd][^>]*>[\s\S]*?<\/t[hd]>/gi) || [];
-            return cellMatches.map(c => stripTags(c));
-        }).filter(row => row.length > 0);
-
-        if (rows.length < 3) continue;
-
-        // Identify the header row — first row whose non-first cells are
-        // mostly valid period/total labels. Some tables have a "Game Info"
-        // caption row above the real header; allow up to 2 rows of skip.
-        let headerIdx = -1;
-        for (let i = 0; i < Math.min(3, rows.length - 2); i++) {
-            const candidate = rows[i];
-            if (candidate.length < 3) continue;
-            // Non-first cells should all be valid labels
-            const labelCells = candidate.slice(1);
-            if (labelCells.length < 2) continue;
-            const validCount = labelCells.filter(isValidLabel).length;
-            if (validCount / labelCells.length < 0.7) continue;
-
-            // REJECT player stats tables. A stats table has headers like
-            // "Player, AB, R, H, RBI" — our valid-label regex accepts R/H
-            // as total-style labels, which gives a false positive. The
-            // distinguishing signal: a real linescore has at least one
-            // sequential numeric period (1, 2, 3...) or a half label
-            // (1H/2H/1st/2nd/OT). A stats table has no periods at all.
-            const periodCells = labelCells.filter(c => isNumericLabel(c) || isHalfLabel(c));
-            if (periodCells.length < 2) continue;
-
-            // Also require the first-column header cell to be empty (the
-            // conventional linescore corner cell) rather than a label like
-            // "Player" or "Starters" which would indicate a stats table.
-            const cornerCell = candidate[0].trim();
-            if (cornerCell.length > 0 && cornerCell.length < 20) continue;
-
-            headerIdx = i;
-            break;
-        }
-        if (headerIdx < 0) continue;
-
-        const labels = rows[headerIdx].slice(1);
-        const teamRows = rows.slice(headerIdx + 1).filter(r => r.length === rows[headerIdx].length);
-        if (teamRows.length < 2) continue;  // need at least 2 team rows matching the header width
-
-        // Take the first 2 rows. StatCrew tables render "Visitor" then "Home"
-        // by convention — the first team row is the away/visitor side.
-        const awayRow = teamRows[0];
-        const homeRow = teamRows[1];
-
-        const awayName = awayRow[0];
-        const homeName = homeRow[0];
-        const awayValues = awayRow.slice(1);
-        const homeValues = homeRow.slice(1);
-
-        // Sanity check: at least half of the score cells should be numeric
-        // (or "X"/"-" for skipped-inning placeholders). If they're mostly
-        // text, this isn't a linescore — probably a team-stats table.
-        const isDataCell = v => /^(\d+|x|-|—|\.\d+)$/i.test((v || '').trim());
-        const allValues = [...awayValues, ...homeValues];
-        const numericRatio = allValues.filter(isDataCell).length / (allValues.length || 1);
-        if (numericRatio < 0.7) continue;
-
-        // Determine which row is Millersville. Match on name substring.
-        const isMU = s => /millersville|marauders/i.test(s);
-        let ourTeamSide;
-        if (isMU(awayName) && !isMU(homeName)) ourTeamSide = 'away';
-        else if (isMU(homeName) && !isMU(awayName)) ourTeamSide = 'home';
-        else if (opponent) {
-            // Fallback: match opponent to one of the team names.
-            if (awayName.toLowerCase().includes(opponent)) ourTeamSide = 'home';
-            else if (homeName.toLowerCase().includes(opponent)) ourTeamSide = 'away';
-            // Still unknown — use title's vs/at to decide (MU vs OPP = MU home)
-            else ourTeamSide = titleHasVs ? 'home' : 'away';
-        } else {
-            ourTeamSide = titleHasVs ? 'home' : 'away';
-        }
-
-        return {
-            labels,
-            home: { team: homeName, values: homeValues },
-            away: { team: awayName, values: awayValues },
-            ourTeamSide
-        };
-    }
-    return null;
-}
+// Rather than rewrite a parser that has very low ROI (a recap link is
+// already on the event card and clicking through is one tap), the whole
+// feature was retired. The status dashboard tile that surfaced "X/Y box
+// scores parsed" was removed earlier; this is the corresponding cleanup
+// on the scraper side. The `periodScores` field still flows through the
+// frontend rendering code (kept harmless when undefined) so legacy
+// events.json files with cached values don't break — they just stop
+// being refreshed.
 
 function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tags = [], benefits = [] }) {
     if (benefits.includes('Credit')) return 'mu-only';
@@ -3718,66 +3606,13 @@ Focus on the most impressive deals a shopper would want to know about. Include m
         }
     } catch (e) { console.log(`  ⚠️ Hudl scores error: ${e.message}`); }
 
-    // ===== BOX SCORES (MU via Sidearm recap pages) =====
-    // For past MU sport events with a final score and a Sidearm recap URL,
-    // fetch the recap page and try to extract the inline linescore (box
-    // score) table. We attach it to event.periodScores with a normalized
-    // shape { labels, home, away, ourTeamSide } so the frontend can render
-    // a clean table regardless of whether it's baseball (1-9 innings + R/H/E)
-    // or basketball (1-4 quarters + T) etc.
-    //
-    // Capped at BOX_SCORE_FETCH_CAP fetches per scrape run to avoid blowing
-    // past cron time budget if we have 100+ past games. Silent failure when
-    // a page doesn't contain a parseable linescore — periodScores simply
-    // stays undefined and the frontend falls back to the summary block.
-    try {
-        console.log("📡 Fetching MU box scores from Sidearm recap pages...");
-        const BOX_SCORE_FETCH_CAP = 30;
-        let bsFetched = 0, bsMatched = 0, bsSkipped = 0;
-
-        const pastMUGames = events.filter(ev => {
-            const tags = ev.tags || [];
-            if (!tags.includes('MU')) return false;
-            if (!ev.gameResult || !ev.gameScore) return false;   // must be past + scored
-            if (!ev.sourceLink) return false;
-            // Match Sidearm news article URLs only. Two earlier mistakes corrected here:
-            //   1. Hostname was `athletics.millersville.edu` — an EDU subdomain MU doesn't
-            //      actually use. The Sidearm-hosted athletics site is `millersvilleathletics.com`.
-            //      The mismatch silently rejected every MU game and reported 0/0 parsed forever.
-            //   2. Path narrowed to /news/ — only recap articles carry inline linescores;
-            //      schedule pages (the fallback when no recap exists) would never yield one,
-            //      so fetching them was wasted budget against BOX_SCORE_FETCH_CAP.
-            if (!/millersvilleathletics\.com\/news\//i.test(ev.sourceLink)) return false;
-            return true;
-        });
-
-        // Most-recent-first ordering so if we hit the cap, we get fresh box
-        // scores rather than stale ones from months ago.
-        pastMUGames.sort((a, b) => new Date(b.date) - new Date(a.date));
-
-        for (const ev of pastMUGames) {
-            if (bsFetched >= BOX_SCORE_FETCH_CAP) { bsSkipped++; continue; }
-            try {
-                const res = await fetch(ev.sourceLink, {
-                    headers: baseHeaders,
-                    signal: AbortSignal.timeout(8000)
-                });
-                bsFetched++;
-                if (!res.ok) continue;
-                const html = await res.text();
-                const ps = parseLinescoreFromHTML(html, ev);
-                if (ps) {
-                    ev.periodScores = ps;
-                    bsMatched++;
-                }
-            } catch (err) {
-                // Individual page fetch failures are routine (timeouts,
-                // redirects to nonexistent pages, etc.) — swallow silently,
-                // the outer try/catch only catches catastrophic errors.
-            }
-        }
-        console.log(`  📋 Box scores: ${bsMatched}/${bsFetched} parsed (${bsSkipped} over cap)`);
-    } catch (e) { console.log(`  ⚠️ Box score fetch error: ${e.message}`); }
+    // ===== BOX SCORES (retired) =====
+    // Sidearm changed recap-page markup so the inline linescore tables we
+    // used to parse no longer exist as static HTML. The feature was retired
+    // 2026-05-09 along with the parseLinescoreFromHTML function above. The
+    // status dashboard tile that showed "X/Y parsed" was removed earlier.
+    // Users still get the recap link via event.sourceLink and can tap it
+    // to see the full recap on millersvilleathletics.com.
 
     // ===== DEDUPLICATION & SAVE =====
     // Two-pass dedupe:

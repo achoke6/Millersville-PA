@@ -487,7 +487,7 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .welcome-banner { background: linear-gradient(135deg, var(--gold-soft), #fff8e1); border: 1.5px solid var(--gold); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 16px; }
 .welcome-banner strong { font-size: 0.95rem; color: var(--navy); }
 .affiliation-btn { background: white; border: 1.5px solid var(--gold); color: var(--navy); padding: 8px 14px; border-radius: var(--radius-sm); font-weight: 600; font-size: 0.88rem; cursor: pointer; font-family: inherit; transition: var(--transition); white-space: nowrap; }
-.affiliation-btn:hover { background: var(--gold); color: white; transform: translateY(-1px); }
+.affiliation-btn:hover { background: var(--gold); color: var(--navy); transform: translateY(-1px); }  /* navy-on-gold = 5.09:1 (was white-on-gold 2.03, failed AA) */
 .aff-chip { background: white; border: 1px solid var(--border); color: var(--text); padding: 6px 12px; border-radius: var(--radius-sm); font-weight: 600; font-size: 0.82rem; cursor: pointer; font-family: inherit; transition: var(--transition); flex: 1; }
 .aff-chip:hover { border-color: var(--gold); }
 .aff-chip.active { background: var(--navy); color: white; border-color: var(--navy); }
@@ -586,7 +586,7 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
    score IS the thing users want to see at a glance in past view. W/L takes a bright bg color
    that pops against the card surface. Score value is large so it's scannable while scrolling. */
 .score-corner { position: absolute; top: 0; right: 0; padding: 12px 16px; border-radius: 0 var(--radius) 0 var(--radius); text-align: center; line-height: 1; min-width: 64px; z-index: 1; }
-.score-win { background: #16a34a; color: white; }
+.score-win { background: #15803d; color: white; }  /* green-700 — bumped from green-600 #16a34a for WCAG AA contrast (3.30 → 5.02) */
 .score-loss { background: #dc2626; color: white; }
 .score-tie { background: #64748b; color: white; }
 .score-result { display: block; font-size: 0.78rem; font-weight: 800; letter-spacing: 1.5px; opacity: 0.95; margin-bottom: 4px; }

@@ -104,3 +104,79 @@ self.addEventListener('fetch', event => {
         })
     );
 });
+
+// Push event handler — fires when the push service (Apple, Mozilla, Google)
+// delivers a notification to this client. Without this handler the push
+// silently drops; the SW receives it but there's nothing to display, which
+// is the failure mode we hit before this was added.
+//
+// Payload format (set by scripts/send-notifications.js → buildPayload):
+//   { title: string, body: string, url: string }
+//
+// Fallbacks: if the data arrives missing or malformed, we still show a
+// generic notification rather than dropping it on the floor. Logging in
+// the console (visible via chrome://serviceworker-internals) helps debug
+// future schema drift.
+self.addEventListener('push', event => {
+    let data = {};
+    try {
+        if (event.data) data = event.data.json();
+    } catch (_) {
+        // Payload wasn't JSON. Try plain text, else fall through to defaults.
+        try { data = { body: event.data.text() }; } catch (__) { /* */ }
+    }
+
+    const title = data.title || '📅 Millersville.APP';
+    const options = {
+        body: data.body || 'New events in your favorites',
+        icon: '/Mapp.png',
+        badge: '/Mapp.png',
+        // tag dedupes — re-sending the same tag replaces an existing
+        // unread notification instead of stacking. 'mvapp-daily' for the
+        // morning summary; a malformed payload still gets a tag so it
+        // doesn't pile up across attempts.
+        tag: data.tag || 'mvapp-daily',
+        // data is preserved on the NotificationEvent for the click handler
+        // to read — that's how we get the URL back when the user taps.
+        data: { url: data.url || 'https://millersville.app/' }
+    };
+
+    // waitUntil keeps the SW alive until the notification is shown.
+    // Without it the SW could be terminated mid-flight on slow devices.
+    event.waitUntil(self.registration.showNotification(title, options));
+});
+
+// Notification click handler — when the user taps a notification, open the
+// stored URL. If a tab on millersville.app is already open, focus it (and
+// navigate to the new URL); otherwise open a new tab. Standard PWA pattern.
+self.addEventListener('notificationclick', event => {
+    event.notification.close();
+    const targetUrl = (event.notification.data && event.notification.data.url) || 'https://millersville.app/';
+
+    event.waitUntil(
+        self.clients.matchAll({ type: 'window', includeUncontrolled: true })
+            .then(clientList => {
+                // Look for an already-open millersville.app tab; reuse it
+                // rather than opening a duplicate. Compare origin only —
+                // /events and / are the same "app".
+                for (const client of clientList) {
+                    try {
+                        const clientUrl = new URL(client.url);
+                        if (clientUrl.origin === self.location.origin && 'focus' in client) {
+                            // navigate() to update the URL with filter state,
+                            // then focus. Some browsers don't have navigate()
+                            // (older Safari) — focus alone is the fallback.
+                            if (client.navigate) {
+                                return client.navigate(targetUrl).then(c => c && c.focus()).catch(() => client.focus());
+                            }
+                            return client.focus();
+                        }
+                    } catch (_) { /* malformed client URL — skip */ }
+                }
+                // No matching tab — open a new one.
+                if (self.clients.openWindow) {
+                    return self.clients.openWindow(targetUrl);
+                }
+            })
+    );
+});

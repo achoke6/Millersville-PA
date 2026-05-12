@@ -166,5 +166,72 @@
     "time": "11:00 AM till GONE",
     "details": "Rain or Shine, Carry Out, $10 Half, $15 Dinner, Proceeds support veterans and community programs",
     "openToPublic": true
+  },
+  "https://drive.google.com/file/d/16ZbCwJUUtVAqyj5BScup8j1PQgUYaYb6/view?usp=drive_link": {
+    "type": "specials",
+    "dateRange": "Tuesday, May 12 through Saturday, May 16",
+    "items": [
+      {
+        "name": "Buffalo Chx Cheesesteak",
+        "price": "$13.95",
+        "fridayOnly": false
+      },
+      {
+        "name": "Sausage and Pierogies",
+        "price": "$13.95",
+        "fridayOnly": false
+      },
+      {
+        "name": "Fried Catfish",
+        "price": "$14.95",
+        "fridayOnly": true
+      }
+    ]
+  },
+  "https://drive.google.com/file/d/1zZJtQTAMonNWdrUqf-IHBt94KzwZeMFr/view?usp=drive_link": {
+    "type": "specials",
+    "dateRange": "Appetizer of the Month",
+    "items": [
+      {
+        "name": "Coconut Shrimp",
+        "price": "$7.95",
+        "fridayOnly": false
+      }
+    ]
+  },
+  "https://drive.google.com/file/d/1Wcc-f24r95tMwVki6WMoo6JZaDaHaDad/view?usp=drive_link": {
+    "type": "calendar",
+    "month": "May",
+    "year": 2026,
+    "events": [
+      {
+        "name": "Cinco de Mayo",
+        "date": "2026-05-05"
+      },
+      {
+        "name": "Auxiliary Meeting",
+        "date": "2026-05-06"
+      },
+      {
+        "name": "Music Bingo",
+        "date": "2026-05-08"
+      },
+      {
+        "name": "Chicken BBQ",
+        "date": "2026-05-02"
+      },
+      {
+        "name": "Memorial Day Ceremony and Brunch",
+        "date": "2026-05-24"
+      },
+      {
+        "name": "Trivia",
+        "date": "2026-05-27"
+      },
+      {
+        "name": "Post Meeting",
+        "date": "2026-05-27"
+      }
+    ]
   }
 }

@@ -1591,6 +1591,12 @@ async function runScraper() {
         // click through and Hudl auto-features the active broadcast at watch
         // time. Future enhancement: array of broadcasts per event.
         const pairedEvents = new WeakSet();
+        // Diagnostic: count broadcasts that overlap an already-paired event
+        // (typical of Day-2+ broadcasts for multi-day meets like PSAC track
+        // championships). High counts here would justify shifting from
+        // single-streamLink to a streamLinks[] array per event. See followup
+        // list — currently we accept that multi-day events only link to Day 1.
+        const multiDaySkips = []; // [{evTitle, evDate, dayNumber, totalDays}]
         for (const [sport, broadcastList] of broadcastsBySport) {
             const eventList = eventsBySport.get(sport);
             if (!eventList || !eventList.length) continue;
@@ -1599,8 +1605,17 @@ async function runScraper() {
                 const bEndMs = b.endMs ?? (b.ms + fbDur);
                 let best = null;
                 let bestDelta = Infinity;
+                // Track if this broadcast overlaps an already-paired event —
+                // signal for "would have wanted multiple streamLinks here."
+                let overlappedPairedEvent = null;
                 for (const er of eventList) {
-                    if (pairedEvents.has(er.ev)) continue;
+                    if (pairedEvents.has(er.ev)) {
+                        // Check if this paired event overlaps the broadcast
+                        if (er.ms < bEndMs && b.ms < er.endMs) {
+                            overlappedPairedEvent = er;
+                        }
+                        continue;
+                    }
                     if (er.ms < bEndMs && b.ms < er.endMs) {
                         const delta = Math.abs(b.ms - er.ms);
                         if (delta < bestDelta) { best = er; bestDelta = delta; }
@@ -1620,7 +1635,30 @@ async function runScraper() {
                             best.ev.isLive = true;
                         }
                     }
+                } else if (overlappedPairedEvent) {
+                    // No fresh event to pair, but this broadcast overlapped
+                    // an event we already paired — that's the multi-day case.
+                    const eventSpanMs = overlappedPairedEvent.endMs - overlappedPairedEvent.ms;
+                    const eventDays = Math.max(1, Math.round(eventSpanMs / (24 * 60 * 60 * 1000)));
+                    multiDaySkips.push({
+                        evTitle: overlappedPairedEvent.ev.title || '(untitled)',
+                        evDate: new Date(overlappedPairedEvent.ms).toISOString().split('T')[0],
+                        eventDays,
+                        sport
+                    });
                 }
+            }
+        }
+        if (multiDaySkips.length > 0) {
+            console.log(`  ℹ️  MU Hudl: ${multiDaySkips.length} broadcast(s) overlapped an already-paired multi-day event (Day 2+/championship coverage):`);
+            // Group by event title for a cleaner log
+            const byEvent = {};
+            for (const m of multiDaySkips) {
+                const k = `${m.evTitle} (${m.evDate}, ${m.eventDays}d)`;
+                byEvent[k] = (byEvent[k] || 0) + 1;
+            }
+            for (const [evLabel, count] of Object.entries(byEvent)) {
+                console.log(`     +${count} skipped: ${evLabel}`);
             }
         }
         // Count unpaired broadcasts for the cron log — useful for spotting

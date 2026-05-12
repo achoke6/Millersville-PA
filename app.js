@@ -799,7 +799,7 @@ window.toggleCardFavorite = function(prefId, btnEl) {
     // rather than scanning the whole array per card. Built once per toggle call.
     const eventByKey = new Map();
     for (const ev of allEvents) {
-        const k = ev.sourceLink || (ev.title + '|' + ev.date);
+        const k = getEventKey(ev);
         eventByKey.set(k, ev);
     }
     document.querySelectorAll('[data-event-key]').forEach(el => {
@@ -837,6 +837,22 @@ window.toggleCardFavorite = function(prefId, btnEl) {
 // caller AND scripts/send-notifications.js. The PHP port in events_ics.php
 // has its own copy that must be hand-synced (different language).
 const eventMatchesFeed = (e) => window.eventMatchModule.eventMatchesFeed(e, feedPrefs);
+
+// Stable, unique-per-event key for use in click handlers, DOM data-attrs,
+// favorite lookups, and iCal UIDs. Previously was `sourceLink || title+date`
+// which broke for Borough events — every Borough event ships with the same
+// shared sourceLink (millersvilleborough.org/resident-info/calendar/), so
+// the array find would always return the FIRST Borough event in the list
+// regardless of which card the user clicked.
+//
+// title+date is reliable because (a) the same event always has the same
+// title and start time across scrape runs, (b) two real events never share
+// BOTH exact title AND exact start time. The `|` separator is unlikely to
+// appear inside an event title; even if it did, false-collisions would be
+// extraordinarily rare.
+function getEventKey(e) {
+    return (e.title || '') + '|' + (e.date || '');
+}
 
 
 function newsMatchesFeed(n) {
@@ -3828,7 +3844,12 @@ function buildICS(e) {
     const esc = (s) => (s || '').replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\r?\n/g, '\\n');
     // Long lines should be folded at 75 octets per RFC 5545, but most clients accept
     // unfolded lines. Skipping fold logic for minimalism.
-    const uid = (e.sourceLink || (e.title + '-' + e.date)).replace(/[^\w@.-]/g, '').substring(0, 200) + '@millersville.app';
+    // UID format: <title>-<date>@millersville.app, sanitized to allowed chars.
+    // Previously was sourceLink-based, which collided for Borough events
+    // (all sharing the same calendar-page URL) — calendar clients dedupe by
+    // UID, so multiple Borough events would overwrite each other in
+    // subscriber calendars. title+date is unique per event.
+    const uid = (e.title + '-' + e.date).replace(/[^\w@.-]/g, '').substring(0, 200) + '@millersville.app';
     const summary = esc((e.title || 'Event').substring(0, 250));
     const location = esc((e.location || '').substring(0, 250));
     const description = esc(((e.description || '') + (e.sourceLink ? '\n\n' + e.sourceLink : '')).substring(0, 1500));
@@ -3898,7 +3919,7 @@ function isMobile() {
 window.addToCalendar = function(btn) {
     const key = btn.dataset.cardkey;
     if (!key) return;
-    const e = (allEvents || []).find(ev => (ev.sourceLink || (ev.title + '|' + ev.date)) === key);
+    const e = (allEvents || []).find(ev => getEventKey(ev) === key);
     if (!e) return;
     if (isMobile()) {
         showCalendarChooser(e);
@@ -3914,7 +3935,7 @@ window.addToCalendar = function(btn) {
 window.shareEvent = function(btn) {
     const key = btn.dataset.cardkey;
     if (!key) return;
-    const e = (allEvents || []).find(ev => (ev.sourceLink || (ev.title + '|' + ev.date)) === key);
+    const e = (allEvents || []).find(ev => getEventKey(ev) === key);
     if (!e) return;
 
     const d = new Date(e.date);
@@ -4202,7 +4223,7 @@ function buildEventCard(e,isSportsPage){
     // Card-level identifier that addToCalendar uses to find the event in allEvents.
     // Uses sourceLink when available; otherwise title+date as a fallback (matches the
     // composite key strategy used by openEventDetails and search hit-handling).
-    const cardKey = (e.sourceLink || (e.title + '|' + e.date)).replace(/"/g, '&quot;');
+    const cardKey = getEventKey(e).replace(/"/g, '&quot;');
     const calBtn = `<button class="btn-cal" data-cardkey="${cardKey}" onclick="event.stopPropagation();addToCalendar(this)" title="Add to calendar" aria-label="Add to calendar">📥</button>`;
     // Share button — uses Web Share API on mobile (native share sheet with
     // iMessage/AirDrop/Slack/etc.) and falls back to clipboard copy on
@@ -4469,7 +4490,7 @@ function buildTimelineItem(e, now) {
 
     // Use event's sourceLink as unique identifier for the detail modal lookup.
     // Falls back to title+date composite for events without sourceLink.
-    const eventKey = e.sourceLink || (e.title + '|' + e.date);
+    const eventKey = getEventKey(e);
     const typeClass = isSport ? ' tl-sport' : ' tl-event';
     // Add fav class so favorited events get the gold accent on the timeline
     // immediately at render time. Surgical updates in toggleCardFavorite
@@ -4494,7 +4515,7 @@ function buildTimelineItem(e, now) {
 // description/tags/benefits, and provides buttons to open source link or tickets.
 window.openEventDetails = function(key) {
     if (!key) return;
-    const e = allEvents.find(ev => (ev.sourceLink || (ev.title + '|' + ev.date)) === key);
+    const e = allEvents.find(ev => getEventKey(ev) === key);
     if (!e) return;
 
     const d = new Date(e.date);
@@ -4659,7 +4680,7 @@ window.openEventDetails = function(key) {
         actions += `<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-outline" style="text-decoration:none;">${streamLabel}</a>`;
     }
     // Calendar action — uses the same key scheme as card buttons so addToCalendar can find it
-    const modalCardKey = (e.sourceLink || (e.title + '|' + e.date)).replace(/"/g, '&quot;');
+    const modalCardKey = getEventKey(e).replace(/"/g, '&quot;');
     actions += `<button class="btn btn-sm btn-outline" data-cardkey="${modalCardKey}" onclick="addToCalendar(this)" style="cursor:pointer;">📅 Add to Calendar</button>`;
     actions += `<button class="btn btn-sm btn-outline" data-cardkey="${modalCardKey}" onclick="shareEvent(this)" style="cursor:pointer;">🔗 Share</button>`;
     // Source link labeling: for past sports games, promote it to "Game Recap
@@ -5638,7 +5659,7 @@ function runSearch(q) {
         eventHits.forEach(e => {
             const d = new Date(e.date);
             const src = (e.tags||[])[0] || '';
-            const eventKey = (e.sourceLink || (e.title + '|' + e.date)).replace(/"/g, '&quot;').replace(/'/g, "\\'");
+            const eventKey = getEventKey(e).replace(/"/g, '&quot;').replace(/'/g, "\\'");
             const clickAction = `document.getElementById('search-overlay').remove();window.openEventDetails('${eventKey}');`;
             // Student-only badge + "not in your feed" note for townies
             const hiddenForMe = isHiddenForTownie(e);
@@ -5671,7 +5692,7 @@ function runSearch(q) {
         sportHits.forEach(e => {
             const d = new Date(e.date);
             const src = (e.tags||[])[0] || '';
-            const eventKey = (e.sourceLink || (e.title + '|' + e.date)).replace(/"/g, '&quot;').replace(/'/g, "\\'");
+            const eventKey = getEventKey(e).replace(/"/g, '&quot;').replace(/'/g, "\\'");
             const clickAction = `document.getElementById('search-overlay').remove();window.openEventDetails('${eventKey}');`;
             html += `<div class="search-result" onclick="${clickAction}">
                 <span style="font-size:0.7rem;color:var(--text-muted);">${src}</span>

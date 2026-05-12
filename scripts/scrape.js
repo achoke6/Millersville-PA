@@ -2053,42 +2053,54 @@ async function runScraper() {
             signal: AbortSignal.timeout(15000)
         });
         if (autoRes.ok) {
-            const autoData = await autoRes.json();
-            if (Array.isArray(autoData)) {
-                let autoCount = 0, autoSkipped = 0;
-                // Reuse the same dedup set populated by the camps.json loader
-                // above (existingKeys4) so collisions across both manual and
-                // auto sources are handled uniformly.
-                for (const camp of autoData) {
-                    if (!camp.title || !camp.date) { autoSkipped++; continue; }
-                    const campDate = new Date(camp.date);
-                    if (isNaN(campDate.getTime())) { autoSkipped++; continue; }
-                    if (campDate < pastDate || campDate >= futureDate) { autoSkipped++; continue; }
-                    const key = buildCampDedupKey(camp.title, campDate);
-                    if (existingKeys4.has(key)) { autoSkipped++; continue; }
-                    let resolvedEndTime;
-                    if (camp.endTime) {
-                        const endDate = new Date(camp.endTime);
-                        if (!isNaN(endDate.getTime())) resolvedEndTime = endDate.toISOString();
-                    }
-                    events.push({
-                        title: camp.title,
-                        date: campDate.toISOString(),
-                        endTime: resolvedEndTime,
-                        location: camp.location || 'Millersville University',
-                        tags: Array.isArray(camp.tags) ? camp.tags : ['MU'],
-                        price: camp.price || '',
-                        ticketLink: camp.registrationUrl || camp.ticketLink || '',
-                        sourceLink: camp.sourceLink || camp.registrationUrl || '',
-                        description: camp.description || '',
-                        kidFriendly: camp.kidFriendly === true  // default false unless explicit
-                    });
-                    existingKeys4.add(key);
-                    autoCount++;
-                }
-                console.log(`✅ Auto-events: ${autoCount} loaded from auto-events.json (${autoSkipped} skipped)`);
+            // DreamHost serves an HTML 404 page with 200 OK status when the
+            // file is missing — same failure mode we hit on notifications-
+            // status.json. Validate the body looks like JSON before parsing
+            // so we don't log a spurious "Unexpected token <" error every run.
+            const bodyText = await autoRes.text();
+            const trimmed = bodyText.trimStart();
+            if (!trimmed.startsWith('[') && !trimmed.startsWith('{')) {
+                console.log(`ℹ️  auto-events.json not yet published (got HTML, weekly scraper hasn't successfully run)`);
             } else {
-                console.log(`ℹ️  auto-events.json had non-array shape — skipping`);
+                let autoData;
+                try { autoData = JSON.parse(bodyText); }
+                catch (e) { console.log(`⚠️  auto-events.json parse error: ${e.message}`); autoData = null; }
+                if (Array.isArray(autoData)) {
+                    let autoCount = 0, autoSkipped = 0;
+                    // Reuse the same dedup set populated by the camps.json loader
+                    // above (existingKeys4) so collisions across both manual and
+                    // auto sources are handled uniformly.
+                    for (const camp of autoData) {
+                        if (!camp.title || !camp.date) { autoSkipped++; continue; }
+                        const campDate = new Date(camp.date);
+                        if (isNaN(campDate.getTime())) { autoSkipped++; continue; }
+                        if (campDate < pastDate || campDate >= futureDate) { autoSkipped++; continue; }
+                        const key = buildCampDedupKey(camp.title, campDate);
+                        if (existingKeys4.has(key)) { autoSkipped++; continue; }
+                        let resolvedEndTime;
+                        if (camp.endTime) {
+                            const endDate = new Date(camp.endTime);
+                            if (!isNaN(endDate.getTime())) resolvedEndTime = endDate.toISOString();
+                        }
+                        events.push({
+                            title: camp.title,
+                            date: campDate.toISOString(),
+                            endTime: resolvedEndTime,
+                            location: camp.location || 'Millersville University',
+                            tags: Array.isArray(camp.tags) ? camp.tags : ['MU'],
+                            price: camp.price || '',
+                            ticketLink: camp.registrationUrl || camp.ticketLink || '',
+                            sourceLink: camp.sourceLink || camp.registrationUrl || '',
+                            description: camp.description || '',
+                            kidFriendly: camp.kidFriendly === true  // default false unless explicit
+                        });
+                        existingKeys4.add(key);
+                        autoCount++;
+                    }
+                    console.log(`✅ Auto-events: ${autoCount} loaded from auto-events.json (${autoSkipped} skipped)`);
+                } else if (autoData !== null) {
+                    console.log(`ℹ️  auto-events.json had non-array shape — skipping`);
+                }
             }
         } else if (autoRes.status === 404) {
             console.log(`ℹ️  auto-events.json not yet published (HTTP 404) — weekly scraper hasn't run yet`);

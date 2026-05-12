@@ -158,6 +158,7 @@ jobs:
                 --exclude ^subscriptions\.json$ \
                 --exclude ^notifications-status\.json$ \
                 --exclude ^auto-events\.json$ \
+                --exclude ^auto-events-status\.json$ \
                 ./ ${{ secrets.DREAMHOST_DIR }};
               put -O ${{ secrets.DREAMHOST_DIR }} .htaccess;
               quit;

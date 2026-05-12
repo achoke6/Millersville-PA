@@ -260,45 +260,87 @@ async function fetchTechCamps() {
 
 // ---- Output ----
 
-async function uploadAutoEvents(events) {
-    const localPath = '/tmp/auto-events.json';
-    fs.writeFileSync(localPath, JSON.stringify(events, null, 2));
-    const remotePath = `${FTP_DIR}/auto-events.json`;
+async function uploadAutoEvents(events, status) {
+    const localEventsPath = '/tmp/auto-events.json';
+    const localStatusPath = '/tmp/auto-events-status.json';
+    fs.writeFileSync(localEventsPath, JSON.stringify(events, null, 2));
+    fs.writeFileSync(localStatusPath, JSON.stringify(status, null, 2));
+    const remoteEventsPath = `${FTP_DIR}/auto-events.json`;
+    const remoteStatusPath = `${FTP_DIR}/auto-events-status.json`;
 
+    // Single FTP session uploads both files. If the second put fails the
+    // first one still landed (DreamHost has no transactional semantics
+    // across FTP commands) — that's fine; the status file is informational
+    // and the next run will overwrite both.
     const cmd = `lftp -c "
         set sftp:auto-confirm yes;
         set net:max-retries 3;
         set net:timeout 30;
         open -u '${FTP_USER}','${FTP_PASS}' sftp://${FTP_HOST};
-        put '${localPath}' -o '${remotePath}';
+        put '${localEventsPath}' -o '${remoteEventsPath}';
+        put '${localStatusPath}' -o '${remoteStatusPath}';
         quit;
     "`;
     try {
         execSync(cmd, { stdio: 'pipe' });
-        console.log(`📤 Uploaded auto-events.json (${events.length} events, ${fs.statSync(localPath).size} bytes)`);
+        console.log(`📤 Uploaded auto-events.json (${events.length} events, ${fs.statSync(localEventsPath).size} bytes)`);
+        console.log(`📤 Uploaded auto-events-status.json`);
     } catch (err) {
         console.error(`❌ FTP upload failed: ${err.message}`);
         process.exit(1);
     }
 }
 
+// Upload only the status file. Used when the empty-result safety triggers —
+// we don't want to overwrite auto-events.json with an empty array, but we
+// DO want the dashboard to show that we tried and failed.
+async function uploadStatusOnly(status) {
+    const localStatusPath = '/tmp/auto-events-status.json';
+    fs.writeFileSync(localStatusPath, JSON.stringify(status, null, 2));
+    const remoteStatusPath = `${FTP_DIR}/auto-events-status.json`;
+    const cmd = `lftp -c "
+        set sftp:auto-confirm yes;
+        set net:max-retries 3;
+        set net:timeout 30;
+        open -u '${FTP_USER}','${FTP_PASS}' sftp://${FTP_HOST};
+        put '${localStatusPath}' -o '${remoteStatusPath}';
+        quit;
+    "`;
+    try {
+        execSync(cmd, { stdio: 'pipe' });
+        console.log(`📤 Uploaded auto-events-status.json (events file skipped — empty result)`);
+    } catch (err) {
+        console.error(`⚠️  Status FTP upload failed: ${err.message}`);
+        // Don't exit non-zero here — the main empty-result handler already does
+    }
+}
+
 (async () => {
     console.log('🚀 Starting weekly auto-events scraper...\n');
+    const runStartedAt = new Date().toISOString();
     const allEvents = [];
+    // Per-parser status — surfaced in auto-events-status.json so the status
+    // dashboard can show "alumni: 0 events (last error: HTTP 404)" instead
+    // of just an opaque "no recent run." Each entry has { name, count,
+    // error? } where error is the message if the parser threw.
+    const parsers = [];
 
-    // Each parser is independent — failure of one doesn't kill the other
     try {
         const alumni = await fetchAlumniEvents();
         allEvents.push(...alumni);
+        parsers.push({ name: 'alumni', count: alumni.length });
     } catch (err) {
         console.error(`⚠️  Alumni parser threw: ${err.message}`);
+        parsers.push({ name: 'alumni', count: 0, error: err.message });
     }
 
     try {
         const techCamps = await fetchTechCamps();
         allEvents.push(...techCamps);
+        parsers.push({ name: 'techCamps', count: techCamps.length });
     } catch (err) {
         console.error(`⚠️  Tech Camps parser threw: ${err.message}`);
+        parsers.push({ name: 'techCamps', count: 0, error: err.message });
     }
 
     console.log(`\n📊 Total: ${allEvents.length} events from auto-scraping`);
@@ -308,12 +350,23 @@ async function uploadAutoEvents(events) {
     // implausible). Refuse to overwrite the existing auto-events.json with
     // an empty array — let the previous week's data stand until the parsers
     // recover. The hourly scraper will keep working with stale-but-real data.
+    //
+    // We DO still write the status file in this case — the dashboard needs
+    // to surface the failure to operators.
+    const status = {
+        lastRunAt: runStartedAt,
+        eventCount: allEvents.length,
+        parsers,
+        skippedUpload: allEvents.length === 0
+    };
+
     if (allEvents.length === 0) {
-        console.error('❌ Both parsers returned 0 events — refusing to overwrite. Investigate parser breakage.');
+        console.error('❌ Both parsers returned 0 events — refusing to overwrite auto-events.json. Investigate parser breakage.');
+        await uploadStatusOnly(status);
         process.exit(1);
     }
 
-    await uploadAutoEvents(allEvents);
+    await uploadAutoEvents(allEvents, status);
     console.log('\n✓ Weekly scrape complete.');
 })().catch(err => {
     console.error(`💥 Fatal: ${err.message}`);

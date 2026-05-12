@@ -1584,18 +1584,27 @@ async function runScraper() {
         // Half-open interval overlap: [aStart, aEnd) ∩ [bStart, bEnd) ≠ ∅
         //   ⟺  aStart < bEnd  AND  bStart < aEnd
         //
-        // Multi-day events with multiple overlapping broadcasts get exactly
-        // one streamLink — the first (earliest) broadcast wins, since later
-        // broadcasts find the event already paired and skip. The event card
-        // thus links to the meet's first session; visitors during later days
-        // click through and Hudl auto-features the active broadcast at watch
-        // time. Future enhancement: array of broadcasts per event.
+        // Multi-day events (PSAC track championships, multi-day wrestling
+        // tournaments, etc.) get exactly ONE streamLink — the first overlap-
+        // ping broadcast wins, since later broadcasts find the event already
+        // paired and skip. Result: the card always links to Day 1's broadcast.
+        //
+        // Whether Hudl auto-redirects a Day-1 broadcast ID to the active
+        // session on Days 2+ is unverified. Anecdotally, broadcasts get
+        // archived independently, so clicking a Day-1 link mid-Day-2 likely
+        // lands on Day 1's archive rather than the live Day-2 stream.
+        //
+        // We don't fix this yet because we don't know how often it actually
+        // matters. The diagnostic block immediately below tracks how many
+        // broadcasts get skipped due to multi-day already-paired events, so
+        // a few weeks of cron logs will tell us whether moving to a
+        // streamLinks[] array (one per session) is worth the engineering.
         const pairedEvents = new WeakSet();
         // Diagnostic: count broadcasts that overlap an already-paired event
         // (typical of Day-2+ broadcasts for multi-day meets like PSAC track
-        // championships). High counts here would justify shifting from
-        // single-streamLink to a streamLinks[] array per event. See followup
-        // list — currently we accept that multi-day events only link to Day 1.
+        // championships). High counts here = "users would benefit from
+        // streamLinks[] per event"; low counts = current single-link is fine.
+        // Decision will be made from cron log data, not speculation.
         const multiDaySkips = []; // [{evTitle, evDate, dayNumber, totalDays}]
         for (const [sport, broadcastList] of broadcastsBySport) {
             const eventList = eventsBySport.get(sport);

@@ -135,6 +135,11 @@ jobs:
       - name: Deploy to DreamHost via SFTP
         run: |
           sudo apt-get install -y lftp
+          # NOTE on excludes below: lftp --exclude treats matched files as
+          # absent from BOTH source and destination, so already-present files
+          # on the server (e.g. old sync-report-*.md) stay there until removed
+          # manually via FTP. Adding a new exclude pattern stops future
+          # transfers but does NOT clean up what's already there.
           for attempt in 1 2 3; do
             echo "Deploy attempt $attempt..."
             lftp -c "
@@ -159,6 +164,7 @@ jobs:
                 --exclude ^notifications-status\.json$ \
                 --exclude ^auto-events\.json$ \
                 --exclude ^auto-events-status\.json$ \
+                --exclude ^sync-report-.+\.md$ \
                 ./ ${{ secrets.DREAMHOST_DIR }};
               put -O ${{ secrets.DREAMHOST_DIR }} .htaccess;
               quit;

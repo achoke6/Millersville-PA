@@ -1144,6 +1144,15 @@ async function runScraper() {
 
                 if (res.ok) {
                     const data = await res.json();
+                    // GraphQL endpoints return 200 OK even on schema errors. The
+                    // errors appear in the body's `errors` array. Without logging
+                    // this, a schema rejection silently produces zero results —
+                    // same shape as "no games scheduled this week." Matches the
+                    // pattern used for MU Hudl below.
+                    if (data?.errors?.length) {
+                        const summary = data.errors.map(e => e.message || JSON.stringify(e)).join(' | ');
+                        console.log(`  ⚠️ PM Hudl GraphQL errors: ${summary.substring(0, 300)}`);
+                    }
                     const result = data?.data?.scheduleEntryPublicSummaries;
                     const items = result?.items || [];
                     totalHudlEntries += items.length;
@@ -1191,6 +1200,11 @@ async function runScraper() {
                     cursor = result?.pageInfo?.endCursor || null;
                     if (items.length === 0) hasMore = false;
                 } else {
+                    // Non-2xx response. Log status + a snippet of the body so
+                    // schema/auth changes don't silently disappear. Matches
+                    // the MU Hudl error-logging pattern below.
+                    const body = await res.text().catch(() => '');
+                    console.log(`  ⚠️ PM Hudl HTTP ${res.status}: ${body.substring(0, 200)}`);
                     hasMore = false;
                 }
             }

@@ -3212,17 +3212,61 @@ function formatDayHeader(d) {
 
 // Group a flat sorted list of events into [{dateKey, dateObj, events: [...]}, ...]
 // Preserves the caller's sort order within each day.
+//
+// Multi-day handling: events that span >12h get added to EVERY day they cover,
+// not just their start day. A 3-day track meet appears on Day 1, Day 2, and
+// Day 3. Each repeat references the SAME underlying event object — favoriting
+// from any day stars the original; clicking opens the same modal. To let card
+// builders show "Day 2 of 3"-style badges, we annotate each group's events
+// with `_dayNumber` and `_totalDays`. Single-day events get no annotation.
+//
+// The annotation lives on a shallow clone (Object.assign) so we don't mutate
+// the source event — important because the same event may appear in multiple
+// groups with different day numbers, and we don't want the last-written
+// value to leak across groups.
 function groupEventsByDay(events) {
     const groups = new Map();
-    for (const e of events) {
-        const d = new Date(e.date);
-        const key = toDateStr(d); // YYYY-MM-DD
+    const getOrCreate = (key, dateObj) => {
         if (!groups.has(key)) {
-            groups.set(key, { dateKey: key, dateObj: new Date(d.getFullYear(), d.getMonth(), d.getDate()), events: [] });
+            groups.set(key, { dateKey: key, dateObj, events: [] });
         }
-        groups.get(key).events.push(e);
+        return groups.get(key);
+    };
+
+    for (const e of events) {
+        const start = new Date(e.date);
+        if (isNaN(start.getTime())) continue;
+        const isMulti = isMultiDay(e);
+
+        if (!isMulti) {
+            const key = toDateStr(start);
+            const grp = getOrCreate(key, new Date(start.getFullYear(), start.getMonth(), start.getDate()));
+            grp.events.push(e);
+            continue;
+        }
+
+        // Multi-day: enumerate every calendar day from start through end,
+        // inclusive. Cap at 14 days defensively in case a bad endTime gives
+        // us a 6-month span (e.g. an open-ended exhibit) — repeating a card
+        // every day for half a year would clobber the UI.
+        const end = getEventEndTime(e) || start;
+        const startDay = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+        const endDay = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+        const dayCount = Math.min(14, Math.round((endDay - startDay) / 86400000) + 1);
+        for (let i = 0; i < dayCount; i++) {
+            const d = new Date(startDay.getFullYear(), startDay.getMonth(), startDay.getDate() + i);
+            const key = toDateStr(d);
+            const grp = getOrCreate(key, d);
+            // Shallow-clone so the annotation doesn't leak between groups.
+            // The clone shares references for sourceLink, image, etc., so
+            // memory cost is minimal — just one new wrapper object per day.
+            grp.events.push(Object.assign({}, e, {
+                _dayNumber: i + 1,
+                _totalDays: dayCount
+            }));
+        }
     }
-    return [...groups.values()];
+    return [...groups.values()].sort((a, b) => a.dateKey.localeCompare(b.dateKey));
 }
 
 // Build HTML for a single day group: a sticky header + its card list
@@ -4110,6 +4154,14 @@ function buildEventCard(e,isSportsPage){
     const relabelForTownie = (tag) => (muAffiliation === 'townie' && tag === 'GetInvolved') ? 'Community' : tag;
     const displayTags=tags.filter(t=>!hiddenTags.includes(t)).map(relabelForTownie);
     let tagHtml=sourceLabel?`<span class="card-tag">${sourceLabel}</span>`:'';
+    // Multi-day pill — annotated by groupEventsByDay when an event appears on
+    // a day other than its start (or on Day 1 of a multi-day span). Helps
+    // users distinguish "this event continues" from "this is a fresh event".
+    // Only the day in question varies — the card otherwise renders identically
+    // across all days the event covers.
+    if (e._dayNumber && e._totalDays > 1) {
+        tagHtml += `<span class="card-tag card-tag-multiday">Day ${e._dayNumber} of ${e._totalDays}</span>`;
+    }
     tagHtml+=displayTags.map(t=>`<span class="card-tag">${t}</span>`).join('');
 
     // Score badge for completed games — large, top-right corner
@@ -4447,6 +4499,12 @@ function buildTimelineItem(e, now) {
     const benefits = e.benefits || [];
     if (benefits.includes('Free Food')) badges += '<span class="tl-badge tl-perk">🍕</span>';
     if (benefits.includes('Free Stuff')) badges += '<span class="tl-badge tl-perk">🎁</span>';
+    // Multi-day annotation (Day 2 of 3, etc.) — set by groupEventsByDay when
+    // an event spans multiple calendar days. Renders before LIVE/score so the
+    // user sees "this is part of a multi-day event" first.
+    if (e._dayNumber && e._totalDays > 1) {
+        badges += `<span class="tl-badge tl-multiday">Day ${e._dayNumber}/${e._totalDays}</span>`;
+    }
 
     // Live / Score — same end-time + multi-day rules as card render.
     const _end = getEventEndTime(e) || new Date(d.getTime() + 3*60*60*1000);

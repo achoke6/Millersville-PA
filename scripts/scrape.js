@@ -2620,11 +2620,194 @@ async function runScraper() {
             }
         }
         console.log(`✅ Borough Calendar: ${boroughCount} events (${boroughRecurring} from recurring)`);
+
+        // Apply hand-maintained borough-overrides.json. Format:
+        //   {"overrides": [{
+        //       "date": "2026-06-22T18:00:00-04:00",
+        //       "matchTitle": "Reserve Public Meeting Room",
+        //       "newTitle": "Conestoga River Community Lecture",
+        //       "description": "...",
+        //       "sourceLink": "https://millersvilleborough.org/conestoga-river-community-lecture/"
+        //   }]}
+        //
+        // Maintained weekly via Claude Cowork — scan borough's blog/news for
+        // upcoming events whose iCal entry uses a generic placeholder title
+        // like "Reserve Public Meeting Room", add an override entry to fix
+        // the in-app display. Lightweight curation beats the alternative of
+        // building a fuzzy-matching enrichment pipeline that we'd only use
+        // a handful of times per year.
+        //
+        // Matching: same calendar-day in ET, time within ±60 minutes, title
+        // contains matchTitle (case-insensitive). Two conditions guard
+        // against the override accidentally hitting an unrelated event with
+        // the same generic title on a different day or time.
+        //
+        // Stale entries (date >30 days past) are skipped — no need to prune
+        // manually, but the file can be cleaned up during the same weekly
+        // session if it grows unwieldy.
+        try {
+            const overridesPath = path.join(__dirname, '../borough-overrides.json');
+            let overridesData = null;
+            try {
+                overridesData = JSON.parse(fs.readFileSync(overridesPath, 'utf8'));
+            } catch (_) { /* no overrides file — that's the default state */ }
+
+            if (overridesData && Array.isArray(overridesData.overrides)) {
+                const now = new Date();
+                const cutoff = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+                let applied = 0, stale = 0, unmatched = 0;
+
+                for (const ov of overridesData.overrides) {
+                    if (!ov.date || !ov.matchTitle || !ov.newTitle) continue;
+                    const ovDate = new Date(ov.date);
+                    if (isNaN(ovDate.getTime())) continue;
+                    if (ovDate < cutoff) { stale++; continue; }
+
+                    // Find the Borough event(s) in the day's window. We
+                    // iterate `events` (the final flat list) rather than a
+                    // borough-specific subset because by the time this code
+                    // runs the borough events have already been pushed.
+                    const matchLower = ov.matchTitle.toLowerCase();
+                    let matchedThisOverride = false;
+                    for (const e of events) {
+                        if (!e.tags || !e.tags.includes('Borough')) continue;
+                        if (!(e.title || '').toLowerCase().includes(matchLower)) continue;
+                        const eDate = new Date(e.date);
+                        if (isNaN(eDate.getTime())) continue;
+                        const minDiff = Math.abs(eDate.getTime() - ovDate.getTime()) / 60000;
+                        if (minDiff > 60) continue;  // outside ±60min window
+
+                        // Match found — apply override fields. Preserve
+                        // everything else (date, location, tags, etc.) since
+                        // those come from the authoritative iCal feed.
+                        e.title = ov.newTitle;
+                        if (ov.description) e.description = ov.description;
+                        if (ov.sourceLink) e.sourceLink = ov.sourceLink;
+                        if (ov.image) e.image = ov.image;
+                        matchedThisOverride = true;
+                        applied++;
+                        break;  // one override → one event, even if multiple match
+                    }
+
+                    if (!matchedThisOverride) unmatched++;
+                }
+
+                if (applied > 0 || unmatched > 0) {
+                    console.log(`  ✅ Borough overrides: ${applied} applied, ${unmatched} unmatched, ${stale} stale`);
+                }
+                if (unmatched > 0) {
+                    // Detail unmatched entries so the next Cowork session
+                    // can see which overrides got out of sync with the iCal.
+                    // Common causes: borough renamed the calendar entry,
+                    // moved the event to a different date, or the override
+                    // typo-ed the date.
+                    for (const ov of overridesData.overrides) {
+                        if (!ov.date || !ov.matchTitle || !ov.newTitle) continue;
+                        const ovDate = new Date(ov.date);
+                        if (isNaN(ovDate.getTime()) || ovDate < cutoff) continue;
+                        const matchLower = ov.matchTitle.toLowerCase();
+                        const found = events.some(e =>
+                            (e.tags || []).includes('Borough') &&
+                            (e.title || '').toLowerCase().includes(matchLower) &&
+                            !isNaN(new Date(e.date).getTime()) &&
+                            Math.abs(new Date(e.date).getTime() - ovDate.getTime()) / 60000 <= 60
+                        );
+                        if (!found) {
+                            console.log(`     ⚠️  unmatched override: "${ov.newTitle}" expected on ${ov.date}`);
+                        }
+                    }
+                }
+            }
+        } catch (e) { console.log(`  ⚠️ Borough overrides error: ${e.message}`); }
     } catch (e) { console.error("❌ Borough Calendar error:", e.message); }
 
 
-    // ===== 7. VFW POST 7294 (Google Sheet + Anthropic Claude Vision) =====
+    // ===== 7. VFW POST 7294 — hand-maintained via vfw.json + Cowork =====
+    //
+    // PREVIOUSLY: Google Sheet of image URLs → Anthropic Vision API extracted
+    // structured event/specials data → cached in vfw-cache.json. The Vision
+    // pipeline worked but had recurring edge cases (expired specials slipping
+    // through, calendar images returning useless event lists, dollar-cost
+    // creep) and required Adam to manually post images to the sheet weekly
+    // anyway. The simpler answer is to skip the API call entirely and
+    // transcribe the data from the VFW blog (https://www.vfwpost7294.org/)
+    // during the same weekly Cowork session.
+    //
+    // The Vision code is preserved below in `if (false) { ... }` rather than
+    // deleted — easy to re-enable if Cowork doesn't pan out. To fully remove
+    // later: delete the dead block, delete vfw-cache.json, remove
+    // VFW_SHEET_ID / GOOGLE_VISION_API_KEY secrets from GitHub Actions.
     try {
+        let vfwEventCount = 0;
+        let vfwWeeklySpecials = [], vfwSpecialsDateRange = '';
+
+        // ===== HAND-MAINTAINED LOADER (active path) =====
+        try {
+            const vfwPath = path.join(__dirname, '../vfw.json');
+            const vfwData = JSON.parse(fs.readFileSync(vfwPath, 'utf8'));
+
+            // Weekly specials: only show if still valid. validThrough is an
+            // exclusive end date (the day AFTER the last day specials are
+            // good for) so the entry disappears at midnight ET the morning
+            // after expiration. If validThrough is missing, treat as
+            // permanently expired — better to show nothing than stale data.
+            if (vfwData.weeklySpecials && Array.isArray(vfwData.weeklySpecials.items)) {
+                const validThrough = vfwData.weeklySpecials.validThrough
+                    ? new Date(vfwData.weeklySpecials.validThrough + 'T00:00:00-04:00')
+                    : null;
+                const isCurrent = validThrough && new Date() < validThrough;
+                if (isCurrent) {
+                    vfwSpecialsDateRange = vfwData.weeklySpecials.dateRange || '';
+                    // Parse "Item Name – $Price (Fri only)" → { name, price, fridayOnly }.
+                    // The dash is the en-dash (–), matching what the Vision
+                    // pipeline used to produce. Plain hyphen is also accepted.
+                    vfwWeeklySpecials = vfwData.weeklySpecials.items.map(line => {
+                        const fridayOnly = /\((Fri|Friday)\s+only\)/i.test(line);
+                        const cleaned = line.replace(/\((Fri|Friday)\s+only\)/i, '').trim();
+                        const m = cleaned.match(/^(.+?)\s*[–-]\s*(\$?[\d.,]+)\s*$/);
+                        if (m) return { name: m[1].trim(), price: m[2].trim(), fridayOnly };
+                        // Couldn't parse price — keep whole string as name, no price
+                        return { name: cleaned, price: '', fridayOnly };
+                    });
+                    console.log(`  🍽️ VFW specials: ${vfwWeeklySpecials.length} items (${vfwData.weeklySpecials.dateRange})`);
+                } else if (validThrough) {
+                    console.log(`  ⏭️  VFW specials expired (validThrough ${vfwData.weeklySpecials.validThrough}) — skipping`);
+                }
+            }
+
+            // Events: each entry becomes a future event in the main feed,
+            // filtered by date window. Tags are ['Other', 'VFW'] matching
+            // the old Vision pipeline so frontend filtering stays consistent.
+            const vfwEventsArr = Array.isArray(vfwData.events) ? vfwData.events : [];
+            for (const ev of vfwEventsArr) {
+                if (!ev.title || !ev.date) continue;
+                const evDate = new Date(ev.date);
+                if (isNaN(evDate.getTime())) continue;
+                if (evDate < pastDate || evDate >= futureDate) continue;
+                const evEnd = ev.endTime && !isNaN(new Date(ev.endTime).getTime())
+                    ? new Date(ev.endTime).toISOString()
+                    : undefined;
+                events.push({
+                    title: ev.title,
+                    date: evDate.toISOString(),
+                    endTime: evEnd,
+                    location: 'VFW Post 7294, 219 Walnut Hill Rd',
+                    tags: ['Other', 'VFW'],
+                    price: ev.price || 'Free',
+                    ticketLink: '',
+                    sourceLink: 'https://www.vfwpost7294.org/',
+                    description: ev.description || '',
+                    gameResult: '', gameScore: '', streamLink: '', isLive: false
+                });
+                vfwEventCount++;
+            }
+            console.log(`✅ VFW: ${vfwEventCount} events from vfw.json (Cowork-maintained)`);
+        } catch (e) {
+            console.error(`❌ VFW vfw.json load error: ${e.message}`);
+        }
+
+        // ===== LEGACY VISION PIPELINE (disabled, preserved for reference) =====
+        if (false) {
         console.log("📡 Fetching VFW Post 7294 images from Google Sheet...");
         const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY;
         if (!ANTHROPIC_KEY) throw new Error('ANTHROPIC_API_KEY not set');
@@ -2877,6 +3060,7 @@ Respond with ONLY the JSON object.`;
         // Save cache + specials
         fs.writeFileSync(cachePath, JSON.stringify(vfwCache, null, 2));
         console.log(`✅ VFW: ${vfwEventCount} events (${vfwApiCalls} API calls, ${Object.keys(vfwCache).length} cached)`);
+        } // ===== END LEGACY VISION PIPELINE =====
 
         // ===== JOHN HERR'S WEEKLY GROCERY DEALS =====
         let groceryDeals = [];

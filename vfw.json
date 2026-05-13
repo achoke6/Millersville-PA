@@ -1,0 +1,51 @@
+{
+    "_comment": "Hand-maintained VFW Post 7294 specials + events. Maintained weekly via Claude Cowork — check https://www.vfwpost7294.org/ for new posts (typically published weekly by McKayla Herman) and transcribe specials/events here.",
+    "_format": "weeklySpecials: { dateRange (human-readable), validThrough (ISO date — last day specials are valid, exclusive), items (array of strings, optional ' (Fri only)' or ' (Friday only)' suffix). events: array of { title, date (ISO with TZ), endTime (optional ISO with TZ), description (optional), price (optional) }. Date/time uses America/New_York offset.",
+    "weeklySpecials": {
+        "dateRange": "Tuesday, May 12 through Saturday, May 16",
+        "validThrough": "2026-05-17",
+        "items": [
+            "Buffalo Chx Cheesesteak – $13.95",
+            "Sausage and Pierogies – $13.95",
+            "Fried Catfish – $14.95 (Fri only)"
+        ]
+    },
+    "events": [
+        {
+            "title": "Music Bingo",
+            "date": "2026-05-08T18:00:00-04:00",
+            "endTime": "2026-05-08T20:00:00-04:00",
+            "description": "Music Bingo Night! Mixing your favorite songs with the excitement of bingo — listen for the hits, mark your card, and win awesome prizes. Grab your friends, enjoy great food and drinks, and sing along while you play."
+        },
+        {
+            "title": "Trivia Night",
+            "date": "2026-05-27T18:00:00-04:00",
+            "endTime": "2026-05-27T20:00:00-04:00",
+            "description": "Wednesday Night Trivia at the Post. Rack your brain and have some fun — win some great prizes!"
+        },
+        {
+            "title": "Memorial Day Ceremony and Brunch",
+            "date": "2026-05-24T10:00:00-04:00",
+            "endTime": "2026-05-24T13:00:00-04:00",
+            "description": "Annual Memorial Day ceremony and brunch at VFW Post 7294. All are welcome."
+        },
+        {
+            "title": "Auxiliary Meeting",
+            "date": "2026-05-06T19:00:00-04:00",
+            "endTime": "2026-05-06T20:00:00-04:00",
+            "description": "VFW Auxiliary monthly meeting."
+        },
+        {
+            "title": "Post Meeting",
+            "date": "2026-05-27T19:00:00-04:00",
+            "endTime": "2026-05-27T20:00:00-04:00",
+            "description": "VFW Post 7294 monthly meeting."
+        },
+        {
+            "title": "Cinco de Mayo",
+            "date": "2026-05-05T17:00:00-04:00",
+            "endTime": "2026-05-05T21:00:00-04:00",
+            "description": "Cinco de Mayo celebration at the Post."
+        }
+    ]
+}

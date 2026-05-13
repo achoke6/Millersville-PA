@@ -29,7 +29,7 @@ jobs:
       - name: Validate hand-maintained JSON
         run: |
           set -e
-          for f in camps.json sponsors.json org-overrides.json shortnames-overlay.json; do
+          for f in camps.json sponsors.json org-overrides.json shortnames-overlay.json borough-overrides.json vfw.json; do
             if [ -f "$f" ]; then
               echo "Checking $f..."
               jq empty "$f" || { echo "❌ $f has invalid JSON syntax"; exit 1; }
@@ -52,6 +52,16 @@ jobs:
           if [ -f shortnames-overlay.json ]; then
             jq -e '.overrides | type == "object"' shortnames-overlay.json > /dev/null \
               || { echo "❌ shortnames-overlay.json must have an .overrides object (string→string map)"; exit 1; }
+          fi
+          if [ -f borough-overrides.json ]; then
+            jq -e '.overrides | type == "array" and (length == 0 or (all(.date and .matchTitle and .newTitle)))' borough-overrides.json > /dev/null \
+              || { echo "❌ borough-overrides.json must have an .overrides array; each entry needs date + matchTitle + newTitle"; exit 1; }
+          fi
+          if [ -f vfw.json ]; then
+            jq -e '(.events // []) | type == "array" and (length == 0 or (all(.title and .date)))' vfw.json > /dev/null \
+              || { echo "❌ vfw.json .events must be an array; each entry needs title + date"; exit 1; }
+            jq -e '(.weeklySpecials // {}) | type == "object" and (.items == null or (.items | type == "array"))' vfw.json > /dev/null \
+              || { echo "❌ vfw.json .weeklySpecials.items must be an array if present"; exit 1; }
           fi
           echo "✓ All JSON files valid"
 

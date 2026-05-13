@@ -1,0 +1,13 @@
+{
+    "_comment": "Hand-maintained borough event enrichments. The borough's iCal feed sometimes serializes specific events as generic titles like 'Reserve Public Meeting Room'. Add entries here to replace those with the real event name, description, and source URL. Maintained weekly via Claude Cowork — scan https://millersvilleborough.org/news/ for upcoming community events and match them to bland iCal entries by date.",
+    "_format": "Each override needs: date (ISO with TZ), matchTitle (case-insensitive substring), newTitle (replacement), and optionally description, sourceLink, image. Matching window is ±60 minutes on the same date. Entries older than 30 days are skipped silently.",
+    "overrides": [
+        {
+            "date": "2026-06-22T18:00:00-04:00",
+            "matchTitle": "Public Meeting Room",
+            "newTitle": "Conestoga River Community Lecture",
+            "description": "Sponsored in partnership with Millersville University and the Conestoga River Club, this event seeks to present the history and importance of the Conestoga River, while highlighting the ongoing work to conserve and improve this important waterway. All are welcome!",
+            "sourceLink": "https://millersvilleborough.org/conestoga-river-community-lecture/"
+        }
+    ]
+}

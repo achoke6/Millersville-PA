@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-05-13T20:47:12.083Z",
-  "totalEvents": 984,
+  "generatedAt": "2026-05-13T22:11:33.029Z",
+  "totalEvents": 985,
   "withDescription": 365,
   "withImage": 107,
   "familyFriendly": 41,
@@ -9,7 +9,7 @@
     "muAthletics": 96,
     "muCalendar": 164,
     "muGetInvolved": 295,
-    "pennManor": 203,
+    "pennManor": 204,
     "borough": 210,
     "vfw": 3,
     "phantomPower": 12,
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-04-17T13:00:00.000Z",
-      "latest": "2026-09-15T20:45:00.000Z"
+      "latest": "2026-09-15T21:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-02-14T14:00:00.000Z",
@@ -85,13 +85,20 @@
     }
   },
   "sports": {
-    "total": 276,
+    "total": 277,
     "scored": 76,
     "wins": 38,
     "losses": 38,
     "ties": 0
   },
   "recentlyAdded": [
+    {
+      "key": "Girls 7/8th Field Hockey @ Hempfield Senior High School|2026-09-15T21:00:00.000Z",
+      "firstSeenAt": "2026-05-13T22:11:33.026Z",
+      "title": "Girls 7/8th Field Hockey @ Hempfield Senior High School",
+      "source": "PM",
+      "date": "2026-09-15T21:00:00.000Z"
+    },
     {
       "key": "Boys Varsity Cross Country @ Manheim Township High School|2026-09-15T20:45:00.000Z",
       "firstSeenAt": "2026-05-13T20:47:12.082Z",

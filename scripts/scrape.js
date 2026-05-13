@@ -3063,7 +3063,79 @@ Respond with ONLY the JSON object.`;
         } // ===== END LEGACY VISION PIPELINE =====
 
         // ===== JOHN HERR'S WEEKLY GROCERY DEALS =====
+        //
+        // PREVIOUSLY: print page → image downloads → Anthropic Vision API
+        // extracted top 15-20 deals as structured JSON → cached weekly in
+        // grocery-cache.json with a Thursday refresh trigger. The pipeline
+        // worked but cost one Vision call per week (~$0.15-$0.40 per run)
+        // and was the LAST Vision call in the scraper after VFW switched
+        // to hand-maintained data.
+        //
+        // NOW: hand-maintained grocery.json populated via Cowork. Transcribe
+        // ~15 top deals from the weekly circular into the JSON. Same
+        // dateRange + validThrough auto-expiry pattern as vfw.json.
+        //
+        // Vision pipeline preserved below in `if (false)` for easy
+        // re-enable if Cowork doesn't pan out. To fully remove later:
+        // delete the dead block, delete grocery-cache.json, optionally
+        // remove ANTHROPIC_API_KEY from secrets (also used by no other
+        // scraper paths after this change — verify before removal).
         let groceryDeals = [];
+
+        // ===== HAND-MAINTAINED LOADER (active path) =====
+        try {
+            const groceryPath = path.join(__dirname, '../grocery.json');
+            const groceryData = JSON.parse(fs.readFileSync(groceryPath, 'utf8'));
+
+            // Only show deals if still valid. validThrough is the exclusive
+            // end date — deals disappear at midnight ET the day after.
+            const validThrough = groceryData.validThrough
+                ? new Date(groceryData.validThrough + 'T00:00:00-04:00')
+                : null;
+            const isCurrent = validThrough && new Date() < validThrough;
+
+            if (isCurrent && Array.isArray(groceryData.deals) && groceryData.deals.length > 0) {
+                const dateRange = groceryData.dateRange || '';
+                // The downstream specials.json writer expects each deal to
+                // have a dateRange field on the object itself (not on a
+                // parent). Spread + add to match the Vision pipeline shape.
+                groceryDeals = groceryData.deals.map(d => ({
+                    item: d.item || '',
+                    salePrice: d.salePrice || '',
+                    regularPrice: d.regularPrice || '',
+                    savings: d.savings || '',
+                    dateRange
+                }));
+                console.log(`✅ John Herr's: ${groceryDeals.length} deals from grocery.json (${dateRange})`);
+            } else {
+                // grocery.json missing, empty, or expired. Try the legacy
+                // Vision-pipeline cache as a fallback so the site doesn't
+                // go blank between deploy and first Cowork update. The cache
+                // file ages out naturally once it stops being refreshed;
+                // when it expires we honestly have nothing to show, which
+                // is the right state to surface (rather than stale prices).
+                try {
+                    const legacyCache = JSON.parse(fs.readFileSync(path.join(__dirname, '../grocery-cache.json'), 'utf8'));
+                    if (legacyCache.deals && legacyCache.deals.length > 0) {
+                        groceryDeals = legacyCache.deals;
+                        console.log(`  📦 John Herr's: ${groceryDeals.length} deals from legacy cache (grocery.json ${validThrough ? 'expired' : 'empty'} — Cowork update needed)`);
+                    }
+                } catch (_) { /* no legacy cache — silent */ }
+
+                if (groceryDeals.length === 0) {
+                    if (validThrough) {
+                        console.log(`  ⏭️  John Herr's deals expired (validThrough ${groceryData.validThrough}), no legacy cache — skipping`);
+                    } else {
+                        console.log(`  ⏭️  John Herr's deals missing validThrough, no legacy cache — skipping (Cowork update needed)`);
+                    }
+                }
+            }
+        } catch (e) {
+            console.log(`  ⚠️ John Herr's grocery.json load error: ${e.message}`);
+        }
+
+        // ===== LEGACY VISION PIPELINE (disabled, preserved for reference) =====
+        if (false) {
         try {
             const groceryCachePath = path.join(__dirname, '../grocery-cache.json');
             let groceryCache = {};
@@ -3215,6 +3287,7 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 }
             }
         } catch (e) { console.log(`  ⚠️ John Herr's error: ${e.message}`); }
+        } // ===== END LEGACY VISION PIPELINE =====
 
         const specials = {
             "House of Pizza": {

@@ -29,7 +29,7 @@ jobs:
       - name: Validate hand-maintained JSON
         run: |
           set -e
-          for f in camps.json sponsors.json org-overrides.json shortnames-overlay.json borough-overrides.json vfw.json; do
+          for f in camps.json sponsors.json org-overrides.json shortnames-overlay.json borough-overrides.json vfw.json grocery.json; do
             if [ -f "$f" ]; then
               echo "Checking $f..."
               jq empty "$f" || { echo "❌ $f has invalid JSON syntax"; exit 1; }
@@ -62,6 +62,10 @@ jobs:
               || { echo "❌ vfw.json .events must be an array; each entry needs title + date"; exit 1; }
             jq -e '(.weeklySpecials // {}) | type == "object" and (.items == null or (.items | type == "array"))' vfw.json > /dev/null \
               || { echo "❌ vfw.json .weeklySpecials.items must be an array if present"; exit 1; }
+          fi
+          if [ -f grocery.json ]; then
+            jq -e '(.deals // []) | type == "array" and (length == 0 or (all(.item)))' grocery.json > /dev/null \
+              || { echo "❌ grocery.json .deals must be an array; each entry needs item"; exit 1; }
           fi
           echo "✓ All JSON files valid"
 

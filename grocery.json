@@ -1,0 +1,8 @@
+{
+    "_comment": "Hand-maintained John Herr's Village Market weekly deals. Maintained weekly via Claude Cowork — circular runs Thursday-Wednesday. Transcribe ~15 top deals from the weekly circular. Update validThrough to one day past the last valid day so deals auto-disappear when the new week starts (Thursday morning).",
+    "_format": "dateRange: human-readable string shown in UI (e.g. 'Thursday, May 7 through Wednesday, May 13'). validThrough: ISO date (YYYY-MM-DD), exclusive end. deals: array of { item, salePrice, regularPrice (optional), savings (optional) }. salePrice can be flexible — '$2.99/lb', '2 for $5', 'BOGO Free', etc.",
+    "_source": "Circular page typically at https://www.familyownedmarkets.com/print-weekly-specials/?circularstoreidentifier=54348 or via the store's main page.",
+    "dateRange": "Pending — populate via next Cowork session",
+    "validThrough": "2026-05-14",
+    "deals": []
+}

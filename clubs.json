@@ -1,14 +1,13 @@
 [
   {
     "name": "Acacia",
-    "category": "Service & Civic Engagement",
+    "category": "Service",
     "categories": [
-      "Service & Civic Engagement",
-      "Fraternity & Sorority Life",
+      "Service",
       "Fundraiser"
     ],
     "shortName": "",
-    "id": "acacia"
+    "id": ""
   },
   {
     "name": "ADAPT",
@@ -21,14 +20,13 @@
   },
   {
     "name": "African Caribbean Student Association",
-    "category": "Identity-Based",
+    "category": "Social",
     "categories": [
-      "Identity-Based",
-      "Performance",
-      "Social"
+      "Social",
+      "Performance"
     ],
     "shortName": "ACSA",
-    "id": "acsa"
+    "id": ""
   },
   {
     "name": "AI & Technology Society",
@@ -84,8 +82,13 @@
   },
   {
     "name": "Alpha Xi Delta",
-    "category": "",
-    "categories": [],
+    "category": "Competition",
+    "categories": [
+      "Competition",
+      "Fundraiser",
+      "Performance",
+      "Social"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -129,7 +132,9 @@
     "name": "American Meteorological Society",
     "category": "Educational Program",
     "categories": [
-      "Educational Program"
+      "Educational Program",
+      "Social",
+      "Tabling"
     ],
     "shortName": "AMS",
     "id": ""
@@ -156,15 +161,14 @@
   },
   {
     "name": "AniMU: The Anime and Video Gaming Club",
-    "category": "Sports and Leisure",
+    "category": "Meeting",
     "categories": [
-      "Sports and Leisure",
       "Meeting",
       "Movie or Film",
       "Social"
     ],
     "shortName": "AniMU",
-    "id": "animu"
+    "id": ""
   },
   {
     "name": "Anthropology Club",
@@ -197,13 +201,12 @@
   },
   {
     "name": "Art Club",
-    "category": "Arts & Culture",
+    "category": "Meeting",
     "categories": [
-      "Arts & Culture",
       "Meeting"
     ],
     "shortName": "",
-    "id": "artclub"
+    "id": ""
   },
   {
     "name": "Asian Student Inclusivity Association",
@@ -234,10 +237,8 @@
   },
   {
     "name": "Bard Hall Residence Hall",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "Bard Hall",
     "id": ""
   },
@@ -259,12 +260,8 @@
   },
   {
     "name": "Best Buddies",
-    "category": "Service",
-    "categories": [
-      "Service",
-      "Meeting",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -297,8 +294,10 @@
   },
   {
     "name": "Board Game Club",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -341,9 +340,9 @@
   },
   {
     "name": "Campus Life",
-    "category": "Final Stretch",
+    "category": "Social",
     "categories": [
-      "Final Stretch"
+      "Social"
     ],
     "shortName": "",
     "id": ""
@@ -376,8 +375,7 @@
     "category": "Educational Program",
     "categories": [
       "Educational Program",
-      "Social",
-      "Final Stretch"
+      "Social"
     ],
     "shortName": "CHEP",
     "id": ""
@@ -501,14 +499,13 @@
   },
   {
     "name": "Coding Club",
-    "category": "Academic",
+    "category": "Meeting",
     "categories": [
-      "Academic",
       "Meeting",
       "Social"
     ],
-    "shortName": "Coding Club",
-    "id": "codingclub"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "College Bible Fellowship",
@@ -529,9 +526,12 @@
   },
   {
     "name": "College of Education and Human Services",
-    "category": "Social",
+    "category": "Service",
     "categories": [
-      "Social"
+      "Service",
+      "Educational Program",
+      "Social",
+      "Tabling"
     ],
     "shortName": "CEHS",
     "id": ""
@@ -665,12 +665,12 @@
   },
   {
     "name": "Delta Sigma Theta Sorority, Inc.",
-    "category": "Fraternity & Sorority Life",
+    "category": "Meeting",
     "categories": [
-      "Fraternity & Sorority Life"
+      "Meeting"
     ],
-    "shortName": "DST",
-    "id": "deltasigmatheta"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Delta Zeta",
@@ -858,9 +858,9 @@
   },
   {
     "name": "Fraternity & Sorority Life",
-    "category": "Educational Program",
+    "category": "Meeting",
     "categories": [
-      "Educational Program"
+      "Meeting"
     ],
     "shortName": "FSL",
     "id": ""
@@ -876,10 +876,9 @@
   },
   {
     "name": "Gender and Sexuality Alliance",
-    "category": "Lecture or Speaker",
+    "category": "Social",
     "categories": [
-      "Lecture or Speaker",
-      "Meeting"
+      "Social"
     ],
     "shortName": "GSA",
     "id": ""
@@ -952,12 +951,12 @@
   },
   {
     "name": "Horror Movies and Media",
-    "category": "Arts & Culture",
+    "category": "Movie or Film",
     "categories": [
-      "Arts & Culture"
+      "Movie or Film"
     ],
     "shortName": "Horror Movies",
-    "id": "hmm"
+    "id": ""
   },
   {
     "name": "Housing & Residential Programs",
@@ -977,12 +976,10 @@
   },
   {
     "name": "Identity Based Organization Council",
-    "category": "University Sponsored",
-    "categories": [
-      "University Sponsored"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "IBOC",
-    "id": "iboc"
+    "id": ""
   },
   {
     "name": "Inter-Fraternity Council",
@@ -1055,12 +1052,10 @@
   },
   {
     "name": "Kappa Alpha Psi Fraternity, Inc.",
-    "category": "Fraternity & Sorority Life",
-    "categories": [
-      "Fraternity & Sorority Life"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "Kappa Alpha Psi",
-    "id": "kappaalphapsi"
+    "id": ""
   },
   {
     "name": "Korea Defense Veterans Association Campus Club",
@@ -1122,12 +1117,12 @@
   },
   {
     "name": "Marauder Graphics Club",
-    "category": "Arts & Culture",
+    "category": "Meeting",
     "categories": [
-      "Arts & Culture"
+      "Meeting"
     ],
     "shortName": "MGC",
-    "id": "maraudergraphics"
+    "id": ""
   },
   {
     "name": "Marauder Music",
@@ -1138,12 +1133,12 @@
   },
   {
     "name": "Marauder Music Productions",
-    "category": "Arts & Culture",
+    "category": "Meeting",
     "categories": [
-      "Arts & Culture"
+      "Meeting"
     ],
     "shortName": "MMP",
-    "id": "mm"
+    "id": ""
   },
   {
     "name": "Mascot Team",
@@ -1201,19 +1196,23 @@
   },
   {
     "name": "Men's Club Lacrosse",
-    "category": "",
-    "categories": [],
+    "category": "Competition",
+    "categories": [
+      "Competition",
+      "Sporting"
+    ],
     "shortName": "",
     "id": ""
   },
   {
     "name": "Men's Club Soccer",
-    "category": "Sports and Leisure",
+    "category": "Competition",
     "categories": [
-      "Sports and Leisure"
+      "Competition",
+      "Sporting"
     ],
     "shortName": "Men's Club Soccer",
-    "id": "mensclubsoccer"
+    "id": ""
   },
   {
     "name": "Men's Club Volleyball",
@@ -1241,15 +1240,15 @@
     "id": ""
   },
   {
-    "name": "Men's Rugby Club",
-    "category": "Sports and Leisure",
+    "name": "Men's Rugby Club of Millersville University",
+    "category": "Competition",
     "categories": [
-      "Sports and Leisure",
       "Competition",
-      "Sporting"
+      "Sporting",
+      "Meeting"
     ],
-    "shortName": "Men's rugby",
-    "id": "rugbymens"
+    "shortName": "Men's Rugby Club",
+    "id": ""
   },
   {
     "name": "Men's Soccer",
@@ -1292,12 +1291,13 @@
   },
   {
     "name": "Millersville University Cable Station",
-    "category": "Academic",
+    "category": "Meeting",
     "categories": [
-      "Academic"
+      "Meeting",
+      "Movie or Film"
     ],
     "shortName": "MUCS",
-    "id": "mutv99"
+    "id": ""
   },
   {
     "name": "Millersville University Marauder Marching Band",
@@ -1330,30 +1330,31 @@
   },
   {
     "name": "Mock Trial Club",
-    "category": "Academic",
+    "category": "Competition",
     "categories": [
-      "Academic",
-      "Sports and Leisure",
+      "Competition",
+      "Educational Program",
       "Meeting",
+      "Performance",
       "Social"
     ],
-    "shortName": "Millersville Mock Trial",
-    "id": "mumocktrial"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Moose Ultimate",
-    "category": "Fundraiser",
+    "category": "Meeting",
     "categories": [
-      "Fundraiser"
+      "Meeting"
     ],
     "shortName": "",
     "id": ""
   },
   {
     "name": "Music Production Club",
-    "category": "Competition",
+    "category": "Meeting",
     "categories": [
-      "Competition"
+      "Meeting"
     ],
     "shortName": "",
     "id": ""
@@ -1655,8 +1656,10 @@
   },
   {
     "name": "Shenks Residence Hall",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1680,12 +1683,12 @@
   },
   {
     "name": "Slip n' Score Society",
-    "category": "Arts & Culture",
+    "category": "Meeting",
     "categories": [
-      "Arts & Culture"
+      "Meeting"
     ],
     "shortName": "",
-    "id": "slip-and-score-society"
+    "id": ""
   },
   {
     "name": "Sneakers to Stilettos Modeling Troupe",
@@ -1748,9 +1751,9 @@
   },
   {
     "name": "Spanish Club",
-    "category": "Meeting",
+    "category": "Social",
     "categories": [
-      "Meeting"
+      "Social"
     ],
     "shortName": "",
     "id": ""
@@ -1774,11 +1777,8 @@
   },
   {
     "name": "Student Business Association",
-    "category": "Lecture or Speaker",
-    "categories": [
-      "Lecture or Speaker",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "SBA",
     "id": ""
   },
@@ -1800,8 +1800,10 @@
   },
   {
     "name": "Student Government Association",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "SGA",
     "id": ""
   },
@@ -1832,10 +1834,12 @@
   },
   {
     "name": "Students for Life",
-    "category": "",
-    "categories": [],
-    "shortName": "SFL at Millersville",
-    "id": "studentsforlife"
+    "category": "Tabling",
+    "categories": [
+      "Tabling"
+    ],
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Super Smash Club",
@@ -1944,12 +1948,10 @@
   },
   {
     "name": "The Snapper",
-    "category": "University Sponsored",
-    "categories": [
-      "University Sponsored"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
-    "id": "thesnapper"
+    "id": ""
   },
   {
     "name": "Ticket Office",
@@ -2005,8 +2007,8 @@
     "name": "University College",
     "category": "",
     "categories": [],
-    "shortName": "SSN",
-    "id": "ssn"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "University Theatre",
@@ -2054,10 +2056,8 @@
   },
   {
     "name": "Visual & Performing Arts",
-    "category": "Performance",
-    "categories": [
-      "Performance"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "VPA",
     "id": ""
   },
@@ -2072,12 +2072,10 @@
   },
   {
     "name": "WIXQ 91.7 FM",
-    "category": "University Sponsored",
-    "categories": [
-      "University Sponsored"
-    ],
-    "shortName": "WIXQ",
-    "id": "wixq"
+    "category": "",
+    "categories": [],
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Woman's Club Lacrosse",
@@ -2187,10 +2185,12 @@
   },
   {
     "name": "Yoga Club",
-    "category": "",
-    "categories": [],
+    "category": "Meeting",
+    "categories": [
+      "Meeting"
+    ],
     "shortName": "",
-    "id": "yogaclubmu"
+    "id": ""
   },
   {
     "name": "Young Democratic Socialists of America",

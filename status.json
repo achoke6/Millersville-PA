@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-05-13T00:10:56.923Z",
-  "totalEvents": 901,
-  "withDescription": 274,
-  "withImage": 44,
+  "generatedAt": "2026-05-13T04:43:58.328Z",
+  "totalEvents": 986,
+  "withDescription": 361,
+  "withImage": 108,
   "familyFriendly": 41,
-  "eventsToday": 6,
+  "eventsToday": 3,
   "sources": {
     "muAthletics": 96,
-    "muCalendar": 165,
-    "muGetInvolved": 208,
+    "muCalendar": 163,
+    "muGetInvolved": 295,
     "pennManor": 202,
     "borough": 210,
     "vfw": 7,
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-04-16T22:00:00.000Z",
-      "latest": "2026-09-14T22:45:00.000Z"
+      "latest": "2026-09-15T20:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-02-14T14:00:00.000Z",
@@ -53,35 +53,35 @@
   "staleness": {
     "muAthletics": {
       "newest": "2026-11-14",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     },
     "pennManor": {
-      "newest": "2026-09-14",
+      "newest": "2026-09-15",
       "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2027-05-10",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "vfw": {
       "newest": "2026-05-27",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "phantomPower": {
       "newest": "2026-06-03",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "community": {
       "newest": "2026-04-27",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     }
   },
   "sports": {

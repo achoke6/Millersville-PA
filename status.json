@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-05-13T22:11:33.029Z",
-  "totalEvents": 985,
+  "generatedAt": "2026-05-13T23:58:24.393Z",
+  "totalEvents": 987,
   "withDescription": 365,
   "withImage": 107,
   "familyFriendly": 41,
@@ -9,7 +9,7 @@
     "muAthletics": 96,
     "muCalendar": 164,
     "muGetInvolved": 295,
-    "pennManor": 204,
+    "pennManor": 206,
     "borough": 210,
     "vfw": 3,
     "phantomPower": 12,
@@ -30,8 +30,8 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-04-17T13:00:00.000Z",
-      "latest": "2026-09-15T21:00:00.000Z"
+      "earliest": "2026-04-17T20:00:00.000Z",
+      "latest": "2026-09-15T22:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-02-14T14:00:00.000Z",
@@ -85,13 +85,34 @@
     }
   },
   "sports": {
-    "total": 277,
+    "total": 280,
     "scored": 76,
     "wins": 38,
     "losses": 38,
     "ties": 0
   },
   "recentlyAdded": [
+    {
+      "key": "Girls 7/8th Volleyball @ Hempfield Senior High School|2026-09-15T21:00:00.000Z",
+      "firstSeenAt": "2026-05-13T23:58:24.391Z",
+      "title": "Girls 7/8th Volleyball @ Hempfield Senior High School",
+      "source": "PM",
+      "date": "2026-09-15T21:00:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Cross Country @ Manheim Township High School|2026-09-15T21:15:00.000Z",
+      "firstSeenAt": "2026-05-13T23:58:24.391Z",
+      "title": "Girls Varsity Cross Country @ Manheim Township High School",
+      "source": "PM",
+      "date": "2026-09-15T21:15:00.000Z"
+    },
+    {
+      "key": "Girls JV Volleyball @ Hempfield Senior High School|2026-09-15T22:00:00.000Z",
+      "firstSeenAt": "2026-05-13T23:58:24.391Z",
+      "title": "Girls JV Volleyball @ Hempfield Senior High School",
+      "source": "PM",
+      "date": "2026-09-15T22:00:00.000Z"
+    },
     {
       "key": "Girls 7/8th Field Hockey @ Hempfield Senior High School|2026-09-15T21:00:00.000Z",
       "firstSeenAt": "2026-05-13T22:11:33.026Z",
@@ -107,5 +128,5 @@
       "date": "2026-09-15T20:45:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 3
 }

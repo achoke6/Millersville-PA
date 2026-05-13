@@ -405,7 +405,49 @@ async function render() {
         );
     }
 
-    document.getElementById('grid').innerHTML = sourcesCard + sportsCard + contentCard + notificationsCard + autoScraperCard;
+    // Recent Additions card — operator self-check. Shows events the scraper
+    // found in the last few cron runs. Useful for confirming the pipeline is
+    // actively finding fresh content. addedLastRun shows the count of brand-
+    // new events in the most recent cron specifically. recentlyAdded shows
+    // a rolling 7-day window of additions (most recent first, up to 10).
+    //
+    // The recentlyAdded array is built incrementally by the scraper from
+    // events-snapshot.json — a per-cron diff that ages out after 7 days. If
+    // status.recentlyAdded is missing (e.g. status.json was written before
+    // this feature shipped, or the diff tracking errored), the card just
+    // doesn't render.
+    let recentAddedCard = '';
+    if (Array.isArray(status.recentlyAdded)) {
+        const items = status.recentlyAdded.slice(0, 6);
+        const itemRows = items.length === 0
+            ? '<div class="status-metric muted"><span class="status-metric-label">No additions in last 7 days</span></div>'
+            : items.map(item => {
+                // Truncate long titles so the row stays compact. Source pill
+                // goes on the right via the value slot. Time-relative hint
+                // ("3h ago") goes below as the metric hint.
+                const title = (item.title || '(untitled)').length > 50
+                    ? item.title.substring(0, 47) + '…'
+                    : (item.title || '(untitled)');
+                const when = item.firstSeenAt ? formatRelative(item.firstSeenAt) : '';
+                return metric(title, item.source || 'Other', { hint: when });
+            }).join('');
+
+        // The "Added in this run" count is the top-line metric. 0 is normal
+        // most hours (no new events). A high number is a healthy signal of
+        // active scraping.
+        const lastRunOpts = {};
+        if (status.addedLastRun === 0) {
+            // Don't flag — most hours genuinely have 0 new events. But a
+            // hint here would be misleading either way. Leave as just '0'.
+        }
+
+        recentAddedCard = card('Recent Additions (7d)',
+            metric('Added in this run', status.addedLastRun ?? 0, lastRunOpts) +
+            itemRows
+        );
+    }
+
+    document.getElementById('grid').innerHTML = sourcesCard + sportsCard + contentCard + notificationsCard + autoScraperCard + recentAddedCard;
 }
 
 render();

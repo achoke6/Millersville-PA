@@ -4346,6 +4346,99 @@ Focus on the most impressive deals a shopper would want to know about. Include m
     }, null, 2));
     console.log(`📊 Total events saved: ${deduped.length} (${deduped.filter(e=>e.image).length} with images, ${deduped.filter(e=>e.description).length} with descriptions)`);
 
+    // ===== EVENT DIFF TRACKING (operator self-check) =====
+    // Track what's new run-over-run. Each cron compares current event keys
+    // against the previous run's snapshot; truly new keys get added to a
+    // rolling 7-day "recently added" list with the source + start date so the
+    // status dashboard can show "the scraper is actively finding new stuff."
+    //
+    // Storage: events-snapshot.json (gitignored from deploy via excludes —
+    // it's runtime state, not source). Schema:
+    //   {
+    //     lastSnapshotAt: ISO,
+    //     currentKeys: [string],
+    //     recentlyAdded: [{ key, firstSeenAt, title, source, date }]
+    //   }
+    //
+    // First-run handling: if no snapshot file exists, we record the current
+    // snapshot but skip the diff — otherwise the very first deploy would
+    // falsely report all ~1000 events as "new." A `firstSeenAt: snapshot
+    // creation time` is fine for later runs since at that point everything
+    // older than 7 days falls out of the window naturally.
+    let recentlyAddedForStatus = [];
+    let addedThisRun = 0;
+    try {
+        const snapshotPath = path.join(__dirname, '../events-snapshot.json');
+        const evKey = (e) => (e.title || '') + '|' + (e.date || '');
+
+        let previous = null;
+        try {
+            previous = JSON.parse(fs.readFileSync(snapshotPath, 'utf8'));
+            if (!previous || !Array.isArray(previous.currentKeys)) previous = null;
+        } catch (_) { /* first run or corrupt — fall through */ }
+
+        const currentKeys = deduped.map(evKey);
+        const currentKeySet = new Set(currentKeys);
+
+        // Carry forward recentlyAdded entries that are still within the
+        // 7-day window AND still present in the current scrape (i.e. haven't
+        // been deduped away or rolled past their date). Prune the rest.
+        const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+        const carryForward = (previous?.recentlyAdded || []).filter(entry => {
+            if (!entry.firstSeenAt || !entry.key) return false;
+            const seenMs = new Date(entry.firstSeenAt).getTime();
+            if (isNaN(seenMs) || seenMs < sevenDaysAgo) return false;
+            return currentKeySet.has(entry.key);
+        });
+
+        // Compute deltas. New keys = current - previous. Skip on first run.
+        let newEntries = [];
+        if (previous) {
+            const previousKeySet = new Set(previous.currentKeys);
+            const carriedKeys = new Set(carryForward.map(c => c.key));
+            const nowIso = new Date().toISOString();
+            for (const ev of deduped) {
+                const k = evKey(ev);
+                if (previousKeySet.has(k) || carriedKeys.has(k)) continue;
+                // Determine source for display. First tag is usually the
+                // canonical source (MU/PM/Borough/etc.); fall back to
+                // 'Other' if no tags.
+                const source = (ev.tags && ev.tags[0]) || 'Other';
+                newEntries.push({
+                    key: k,
+                    firstSeenAt: nowIso,
+                    title: ev.title || '(untitled)',
+                    source,
+                    date: ev.date || null
+                });
+            }
+            addedThisRun = newEntries.length;
+            if (newEntries.length > 0) {
+                console.log(`📥 ${newEntries.length} new event(s) since last cron`);
+            }
+        } else {
+            console.log(`📥 First run — recording baseline snapshot (no diff)`);
+        }
+
+        // Merge carried-forward + new, sorted newest-first.
+        const merged = [...newEntries, ...carryForward];
+        merged.sort((a, b) => (b.firstSeenAt || '').localeCompare(a.firstSeenAt || ''));
+
+        // Persist for next run. Keep top 200 recently-added entries to
+        // bound file size; at ~150 bytes each that's ~30KB.
+        const snapshot = {
+            lastSnapshotAt: new Date().toISOString(),
+            currentKeys,
+            recentlyAdded: merged.slice(0, 200)
+        };
+        fs.writeFileSync(snapshotPath, JSON.stringify(snapshot));
+
+        // Pass top 10 to the status writer below for dashboard display.
+        recentlyAddedForStatus = merged.slice(0, 10);
+    } catch (e) {
+        console.log(`  ⚠️ Event diff tracking error: ${e.message}`);
+    }
+
     // ===== STATUS DASHBOARD DATA =====
     // Companion stats file consumed by /status.html. Computed from the final
     // deduped array so it reflects the TRUE state shipped to users, not raw
@@ -4506,7 +4599,14 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 wins: pastSports.filter(e => e.gameResult === 'W').length,
                 losses: pastSports.filter(e => e.gameResult === 'L').length,
                 ties: pastSports.filter(e => e.gameResult === 'T' || e.gameResult === 'N').length
-            }
+            },
+            // Event diff tracking — operator self-check. recentlyAdded is up
+            // to 10 events first seen in the last 7 days (most recent first).
+            // addedLastRun is the count of events new since the previous cron
+            // run, useful for spotting a stuck scraper (consistently 0 across
+            // many runs = something probably broken upstream).
+            recentlyAdded: recentlyAddedForStatus,
+            addedLastRun: addedThisRun
         };
         fs.writeFileSync(path.join(__dirname, '../status.json'), JSON.stringify(status, null, 2));
         console.log(`📊 Status file written (${status.totalEvents} events across ${Object.values(status.sources).filter(n => n > 0).length} active sources)`);

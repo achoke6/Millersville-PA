@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-05-14T17:01:27.786Z",
-  "totalEvents": 984,
+  "generatedAt": "2026-05-14T19:01:39.479Z",
+  "totalEvents": 980,
   "withDescription": 363,
   "withImage": 107,
   "familyFriendly": 41,
@@ -9,7 +9,7 @@
     "muAthletics": 95,
     "muCalendar": 164,
     "muGetInvolved": 291,
-    "pennManor": 208,
+    "pennManor": 204,
     "borough": 210,
     "vfw": 3,
     "phantomPower": 12,
@@ -30,7 +30,7 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-04-17T20:00:00.000Z",
+      "earliest": "2026-04-18T15:00:00.000Z",
       "latest": "2026-09-16T17:00:00.000Z"
     },
     "borough": {
@@ -85,13 +85,27 @@
     }
   },
   "sports": {
-    "total": 281,
-    "scored": 76,
-    "wins": 38,
-    "losses": 38,
+    "total": 277,
+    "scored": 74,
+    "wins": 37,
+    "losses": 37,
     "ties": 0
   },
   "recentlyAdded": [
+    {
+      "key": "Millersville University Baseball vs Charleston|2026-05-14T18:00:00.000Z",
+      "firstSeenAt": "2026-05-14T19:01:39.477Z",
+      "title": "Millersville University Baseball vs Charleston",
+      "source": "MU",
+      "date": "2026-05-14T18:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Baseball vs Seton Hill|2026-05-15T16:00:00.000Z",
+      "firstSeenAt": "2026-05-14T19:01:39.477Z",
+      "title": "Millersville University Baseball vs Seton Hill",
+      "source": "MU",
+      "date": "2026-05-15T16:00:00.000Z"
+    },
     {
       "key": "Boys Varsity Golf @ Hempfield Senior High School|2026-09-16T17:00:00.000Z",
       "firstSeenAt": "2026-05-14T11:53:16.155Z",
@@ -142,5 +156,5 @@
       "date": "2026-09-15T20:45:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

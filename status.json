@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-14T20:42:23.566Z",
+  "generatedAt": "2026-05-14T22:11:39.444Z",
   "totalEvents": 978,
   "withDescription": 363,
   "withImage": 107,
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-04-18T15:00:00.000Z",
-      "latest": "2026-09-15T22:00:00.000Z"
+      "latest": "2026-09-15T23:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-02-14T14:00:00.000Z",
@@ -86,12 +86,19 @@
   },
   "sports": {
     "total": 275,
-    "scored": 74,
-    "wins": 37,
+    "scored": 75,
+    "wins": 38,
     "losses": 37,
     "ties": 0
   },
   "recentlyAdded": [
+    {
+      "key": "Girls Varsity Volleyball @ Hempfield Senior High School|2026-09-15T23:00:00.000Z",
+      "firstSeenAt": "2026-05-14T22:11:39.442Z",
+      "title": "Girls Varsity Volleyball @ Hempfield Senior High School",
+      "source": "PM",
+      "date": "2026-09-15T23:00:00.000Z"
+    },
     {
       "key": "Millersville University Baseball vs Charleston|2026-05-14T18:00:00.000Z",
       "firstSeenAt": "2026-05-14T19:01:39.477Z",
@@ -142,5 +149,5 @@
       "date": "2026-09-15T20:45:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

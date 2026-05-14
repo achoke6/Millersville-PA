@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-05-14T03:47:15.630Z",
-  "totalEvents": 983,
+  "generatedAt": "2026-05-14T06:46:48.872Z",
+  "totalEvents": 984,
   "withDescription": 363,
   "withImage": 107,
   "familyFriendly": 41,
@@ -9,7 +9,7 @@
     "muAthletics": 96,
     "muCalendar": 164,
     "muGetInvolved": 291,
-    "pennManor": 206,
+    "pennManor": 207,
     "borough": 210,
     "vfw": 3,
     "phantomPower": 12,
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-04-17T20:00:00.000Z",
-      "latest": "2026-09-15T22:00:00.000Z"
+      "latest": "2026-09-15T23:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-02-14T14:00:00.000Z",
@@ -53,45 +53,52 @@
   "staleness": {
     "muAthletics": {
       "newest": "2026-11-14",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "pennManor": {
       "newest": "2026-09-15",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "borough": {
       "newest": "2027-05-10",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "vfw": {
       "newest": "2026-05-27",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "phantomPower": {
       "newest": "2026-06-03",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "community": {
       "newest": "2026-04-27",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     }
   },
   "sports": {
-    "total": 280,
+    "total": 281,
     "scored": 76,
     "wins": 38,
     "losses": 38,
     "ties": 0
   },
   "recentlyAdded": [
+    {
+      "key": "Girls Varsity Volleyball @ Hempfield Senior High School|2026-09-15T23:00:00.000Z",
+      "firstSeenAt": "2026-05-14T06:46:48.870Z",
+      "title": "Girls Varsity Volleyball @ Hempfield Senior High School",
+      "source": "PM",
+      "date": "2026-09-15T23:00:00.000Z"
+    },
     {
       "key": "Girls 7/8th Volleyball @ Hempfield Senior High School|2026-09-15T21:00:00.000Z",
       "firstSeenAt": "2026-05-13T23:58:24.391Z",
@@ -128,5 +135,5 @@
       "date": "2026-09-15T20:45:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

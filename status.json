@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-05-14T19:01:39.479Z",
-  "totalEvents": 980,
+  "generatedAt": "2026-05-14T20:42:23.566Z",
+  "totalEvents": 978,
   "withDescription": 363,
   "withImage": 107,
   "familyFriendly": 41,
@@ -9,7 +9,7 @@
     "muAthletics": 95,
     "muCalendar": 164,
     "muGetInvolved": 291,
-    "pennManor": 204,
+    "pennManor": 202,
     "borough": 210,
     "vfw": 3,
     "phantomPower": 12,
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-04-18T15:00:00.000Z",
-      "latest": "2026-09-16T17:00:00.000Z"
+      "latest": "2026-09-15T22:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-02-14T14:00:00.000Z",
@@ -64,8 +64,8 @@
       "daysSinceMoved": 8
     },
     "pennManor": {
-      "newest": "2026-09-16",
-      "daysSinceMoved": 0
+      "newest": "2026-09-15",
+      "daysSinceMoved": 1
     },
     "borough": {
       "newest": "2027-05-10",
@@ -85,7 +85,7 @@
     }
   },
   "sports": {
-    "total": 277,
+    "total": 275,
     "scored": 74,
     "wins": 37,
     "losses": 37,
@@ -105,20 +105,6 @@
       "title": "Millersville University Baseball vs Seton Hill",
       "source": "MU",
       "date": "2026-05-15T16:00:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Golf @ Hempfield Senior High School|2026-09-16T17:00:00.000Z",
-      "firstSeenAt": "2026-05-14T11:53:16.155Z",
-      "title": "Boys Varsity Golf @ Hempfield Senior High School",
-      "source": "PM",
-      "date": "2026-09-16T17:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Volleyball @ Hempfield Senior High School|2026-09-15T23:00:00.000Z",
-      "firstSeenAt": "2026-05-14T06:46:48.870Z",
-      "title": "Girls Varsity Volleyball @ Hempfield Senior High School",
-      "source": "PM",
-      "date": "2026-09-15T23:00:00.000Z"
     },
     {
       "key": "Girls 7/8th Volleyball @ Hempfield Senior High School|2026-09-15T21:00:00.000Z",
@@ -156,5 +142,5 @@
       "date": "2026-09-15T20:45:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 0
 }

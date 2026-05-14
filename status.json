@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-05-14T09:35:10.173Z",
+  "generatedAt": "2026-05-14T11:53:16.157Z",
   "totalEvents": 984,
   "withDescription": 363,
   "withImage": 107,
   "familyFriendly": 41,
   "eventsToday": 3,
   "sources": {
-    "muAthletics": 96,
+    "muAthletics": 95,
     "muCalendar": 164,
     "muGetInvolved": 291,
-    "pennManor": 207,
+    "pennManor": 208,
     "borough": 210,
     "vfw": 3,
     "phantomPower": 12,
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-04-17T20:00:00.000Z",
-      "latest": "2026-09-15T23:00:00.000Z"
+      "latest": "2026-09-16T17:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-02-14T14:00:00.000Z",
@@ -64,8 +64,8 @@
       "daysSinceMoved": 8
     },
     "pennManor": {
-      "newest": "2026-09-15",
-      "daysSinceMoved": 1
+      "newest": "2026-09-16",
+      "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2027-05-10",
@@ -92,6 +92,13 @@
     "ties": 0
   },
   "recentlyAdded": [
+    {
+      "key": "Boys Varsity Golf @ Hempfield Senior High School|2026-09-16T17:00:00.000Z",
+      "firstSeenAt": "2026-05-14T11:53:16.155Z",
+      "title": "Boys Varsity Golf @ Hempfield Senior High School",
+      "source": "PM",
+      "date": "2026-09-16T17:00:00.000Z"
+    },
     {
       "key": "Girls Varsity Volleyball @ Hempfield Senior High School|2026-09-15T23:00:00.000Z",
       "firstSeenAt": "2026-05-14T06:46:48.870Z",
@@ -135,5 +142,5 @@
       "date": "2026-09-15T20:45:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

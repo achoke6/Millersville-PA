@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-05-15T13:46:29.349Z",
-  "totalEvents": 974,
-  "withDescription": 358,
-  "withImage": 108,
+  "generatedAt": "2026-05-15T13:51:21.926Z",
+  "totalEvents": 889,
+  "withDescription": 271,
+  "withImage": 44,
   "familyFriendly": 41,
   "eventsToday": 3,
   "sources": {
     "muAthletics": 95,
-    "muCalendar": 163,
-    "muGetInvolved": 287,
+    "muCalendar": 165,
+    "muGetInvolved": 200,
     "pennManor": 202,
     "borough": 210,
     "vfw": 3,
@@ -93,6 +93,34 @@
   },
   "recentlyAdded": [
     {
+      "key": "Mentorship Recruitment and Recognition Day|2026-04-23T11:00:00",
+      "firstSeenAt": "2026-05-15T13:51:21.924Z",
+      "title": "Mentorship Recruitment and Recognition Day",
+      "source": "MU",
+      "date": "2026-04-23T11:00:00"
+    },
+    {
+      "key": "Public Weather Awareness Day (PWAD)|2026-04-26T11:00:00",
+      "firstSeenAt": "2026-05-15T13:51:21.924Z",
+      "title": "Public Weather Awareness Day (PWAD)",
+      "source": "MU",
+      "date": "2026-04-26T11:00:00"
+    },
+    {
+      "key": "End of Year Celebration|2026-04-28T15:00:00",
+      "firstSeenAt": "2026-05-15T13:51:21.924Z",
+      "title": "End of Year Celebration",
+      "source": "MU",
+      "date": "2026-04-28T15:00:00"
+    },
+    {
+      "key": "Teatime & Slime|2026-05-05T09:30:00",
+      "firstSeenAt": "2026-05-15T13:51:21.924Z",
+      "title": "Teatime & Slime",
+      "source": "MU",
+      "date": "2026-05-05T09:30:00"
+    },
+    {
       "key": "Hexbelt|2026-06-06T00:00:00.000Z",
       "firstSeenAt": "2026-05-15T11:57:00.715Z",
       "title": "Hexbelt",
@@ -133,35 +161,7 @@
       "title": "Girls Varsity Volleyball @ Hempfield Senior High School",
       "source": "PM",
       "date": "2026-09-15T23:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Baseball vs Charleston|2026-05-14T18:00:00.000Z",
-      "firstSeenAt": "2026-05-14T19:01:39.477Z",
-      "title": "Millersville University Baseball vs Charleston",
-      "source": "MU",
-      "date": "2026-05-14T18:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Baseball vs Seton Hill|2026-05-15T16:00:00.000Z",
-      "firstSeenAt": "2026-05-14T19:01:39.477Z",
-      "title": "Millersville University Baseball vs Seton Hill",
-      "source": "MU",
-      "date": "2026-05-15T16:00:00.000Z"
-    },
-    {
-      "key": "Girls 7/8th Volleyball @ Hempfield Senior High School|2026-09-15T21:00:00.000Z",
-      "firstSeenAt": "2026-05-13T23:58:24.391Z",
-      "title": "Girls 7/8th Volleyball @ Hempfield Senior High School",
-      "source": "PM",
-      "date": "2026-09-15T21:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Cross Country @ Manheim Township High School|2026-09-15T21:15:00.000Z",
-      "firstSeenAt": "2026-05-13T23:58:24.391Z",
-      "title": "Girls Varsity Cross Country @ Manheim Township High School",
-      "source": "PM",
-      "date": "2026-09-15T21:15:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 4
 }

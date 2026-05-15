@@ -1369,10 +1369,12 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     margin-bottom: 10px;
 }
 .em-iframe-wrap-tall { height: 560px; }
+.em-iframe-wrap-short { height: 220px; }
 .em-iframe { width: 100%; height: 100%; border: 0; display: block; }
 @media (max-width: 600px) {
     .em-iframe-wrap { height: 360px; }
     .em-iframe-wrap-tall { height: 460px; }
+    .em-iframe-wrap-short { height: 200px; }
 }
 
 /* Sibling fallback link — always visible regardless of whether the iframe

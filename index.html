@@ -515,23 +515,27 @@
             <a href="https://millersville.omnilert.net/subscriber.php?command=show_signup" target="_blank" rel="noopener" class="em-cta-btn">Sign Up for MU Alert →</a>
         </div>
 
-        <!-- MU Emergency Status: live status from millersville.edu. Iframe
-             may be blocked by X-Frame-Options; the "view on site" link
-             below always works regardless. -->
+        <!-- MU Emergency Status: served via our server-side proxy at
+             mu-status-proxy.php. The proxy fetches millersville.edu's
+             emergency-status.php, extracts only the "Campus Emergency
+             Status" section, and serves a clean HTML chunk styled to
+             match our site. This avoids the cookie banner, MU nav chrome,
+             and X-Frame-Options issues that would come from iframing
+             millersville.edu directly. The proxy caches for 5 minutes
+             and auto-refreshes the iframe contents on the same interval. -->
         <div class="em-card">
             <div class="em-card-head">
                 <h3 class="em-card-title">Current MU Status</h3>
-                <span class="em-card-sub">Live status from millersville.edu</span>
+                <span class="em-card-sub">Live status from millersville.edu, refreshed every 5 minutes</span>
             </div>
-            <div class="em-iframe-wrap">
+            <div class="em-iframe-wrap em-iframe-wrap-short">
                 <iframe
-                    src="https://www.millersville.edu/emergency-status.php"
+                    src="/mu-status-proxy.php"
                     title="MU Emergency Status"
                     loading="lazy"
-                    sandbox="allow-same-origin allow-scripts allow-popups"
                     class="em-iframe em-iframe-status"></iframe>
             </div>
-            <a href="https://www.millersville.edu/emergency-status.php" target="_blank" rel="noopener" class="em-fallback-link">View on millersville.edu →</a>
+            <a href="https://www.millersville.edu/emergency-status.php" target="_blank" rel="noopener" class="em-fallback-link">View full page on millersville.edu →</a>
         </div>
 
         <!-- PulsePoint: live fire/EMS dispatch data for Lancaster County.

@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-05-15T20:17:42.825Z",
-  "totalEvents": 973,
+  "generatedAt": "2026-05-15T21:59:42.176Z",
+  "totalEvents": 975,
   "withDescription": 358,
   "withImage": 108,
   "familyFriendly": 41,
   "eventsToday": 3,
   "sources": {
-    "muAthletics": 91,
+    "muAthletics": 92,
     "muCalendar": 163,
     "muGetInvolved": 287,
-    "pennManor": 205,
+    "pennManor": 206,
     "borough": 210,
     "vfw": 3,
     "phantomPower": 13,
     "community": 1,
-    "muHudlBroadcasts": 19
+    "muHudlBroadcasts": 20
   },
   "sourceDateRanges": {
     "muAthletics": {
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-04-20T20:00:00.000Z",
-      "latest": "2026-09-16T23:00:00.000Z"
+      "latest": "2026-09-17T20:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-02-14T14:00:00.000Z",
@@ -64,8 +64,8 @@
       "daysSinceMoved": 9
     },
     "pennManor": {
-      "newest": "2026-09-16",
-      "daysSinceMoved": 1
+      "newest": "2026-09-17",
+      "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2027-05-10",
@@ -85,13 +85,27 @@
     }
   },
   "sports": {
-    "total": 274,
-    "scored": 69,
+    "total": 276,
+    "scored": 70,
     "wins": 35,
-    "losses": 34,
+    "losses": 35,
     "ties": 0
   },
   "recentlyAdded": [
+    {
+      "key": "Millersville University Women's Lacrosse vs Kutztown|2026-04-15T20:00:00.000Z",
+      "firstSeenAt": "2026-05-15T21:59:42.174Z",
+      "title": "Millersville University Women's Lacrosse vs Kutztown",
+      "source": "MU",
+      "date": "2026-04-15T20:00:00.000Z"
+    },
+    {
+      "key": "Girls 7/8/9th Field Hockey @ Cedar Crest High School|2026-09-17T20:00:00.000Z",
+      "firstSeenAt": "2026-05-15T21:59:42.174Z",
+      "title": "Girls 7/8/9th Field Hockey @ Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-09-17T20:00:00.000Z"
+    },
     {
       "key": "Millersville University Baseball vs Seton Hill|2026-05-16T15:00:00.000Z",
       "firstSeenAt": "2026-05-15T19:28:08.122Z",
@@ -147,21 +161,7 @@
       "title": "Girls 7/8/9th Soccer @ Ephrata High School",
       "source": "PM",
       "date": "2026-09-16T20:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Tennis @ Manheim Township High School|2026-09-16T20:00:00.000Z",
-      "firstSeenAt": "2026-05-15T03:54:26.036Z",
-      "title": "Girls Varsity Tennis @ Manheim Township High School",
-      "source": "PM",
-      "date": "2026-09-16T20:00:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Golf @ Hempfield Senior High School|2026-09-16T17:00:00.000Z",
-      "firstSeenAt": "2026-05-14T23:58:47.042Z",
-      "title": "Boys Varsity Golf @ Hempfield Senior High School",
-      "source": "PM",
-      "date": "2026-09-16T17:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

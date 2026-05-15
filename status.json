@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-05-14T23:58:47.045Z",
-  "totalEvents": 978,
-  "withDescription": 363,
+  "generatedAt": "2026-05-15T03:54:26.039Z",
+  "totalEvents": 972,
+  "withDescription": 358,
   "withImage": 107,
   "familyFriendly": 41,
   "eventsToday": 3,
   "sources": {
     "muAthletics": 95,
-    "muCalendar": 164,
-    "muGetInvolved": 291,
-    "pennManor": 202,
+    "muCalendar": 163,
+    "muGetInvolved": 287,
+    "pennManor": 201,
     "borough": 210,
     "vfw": 3,
     "phantomPower": 12,
@@ -22,16 +22,16 @@
       "latest": "2026-11-14T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-02-13T19:30:00.000Z",
+      "earliest": "2026-02-14T19:30:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-02-13T11:30:00.000Z",
+      "earliest": "2026-02-15T14:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-04-18T15:30:00.000Z",
-      "latest": "2026-09-16T17:00:00.000Z"
+      "earliest": "2026-04-20T20:00:00.000Z",
+      "latest": "2026-09-16T20:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-02-14T14:00:00.000Z",
@@ -85,13 +85,27 @@
     }
   },
   "sports": {
-    "total": 275,
-    "scored": 74,
-    "wins": 37,
+    "total": 274,
+    "scored": 73,
+    "wins": 36,
     "losses": 37,
     "ties": 0
   },
   "recentlyAdded": [
+    {
+      "key": "Girls 7/8/9th Soccer @ Ephrata High School|2026-09-16T20:00:00.000Z",
+      "firstSeenAt": "2026-05-15T03:54:26.036Z",
+      "title": "Girls 7/8/9th Soccer @ Ephrata High School",
+      "source": "PM",
+      "date": "2026-09-16T20:00:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Tennis @ Manheim Township High School|2026-09-16T20:00:00.000Z",
+      "firstSeenAt": "2026-05-15T03:54:26.036Z",
+      "title": "Girls Varsity Tennis @ Manheim Township High School",
+      "source": "PM",
+      "date": "2026-09-16T20:00:00.000Z"
+    },
     {
       "key": "Boys Varsity Golf @ Hempfield Senior High School|2026-09-16T17:00:00.000Z",
       "firstSeenAt": "2026-05-14T23:58:47.042Z",
@@ -147,14 +161,7 @@
       "title": "Girls 7/8th Field Hockey @ Hempfield Senior High School",
       "source": "PM",
       "date": "2026-09-15T21:00:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Cross Country @ Manheim Township High School|2026-09-15T20:45:00.000Z",
-      "firstSeenAt": "2026-05-13T20:47:12.082Z",
-      "title": "Boys Varsity Cross Country @ Manheim Township High School",
-      "source": "PM",
-      "date": "2026-09-15T20:45:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 2
 }

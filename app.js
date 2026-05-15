@@ -4816,7 +4816,7 @@ function renderNewsUI(){
     }
     injectInlineAds('news-container','news');
 }
-let allPlaces=[], placesFilter='All';
+let allPlaces=[], placesFilter='All', placesMGMode=false;
 
 function renderStars(rating) {
     if (!rating) return '';
@@ -4858,11 +4858,49 @@ window.setPlacesFilter=function(cat,btn){
     renderPlaces();
 };
 
+// Marauder Gold filter — ANDs with the category chip. When active, only entries
+// flagged `marauderGold:true` show, split into On Campus / Off Campus sections.
+// Housing is hidden entirely since apartments don't accept MG for rent.
+window.togglePlacesMarauderGold=function(){
+    placesMGMode=!placesMGMode;
+    const btn=document.getElementById('places-mg-toggle');
+    if(btn) btn.classList.toggle('active', placesMGMode);
+    renderPlaces();
+};
+
 function renderPlaces(){
     const hc=document.getElementById('housing-container');
     const pc=document.getElementById('places-container');
     const specials = window._placesSpecials || {};
     const dayName = new Date().toLocaleDateString('en-US',{weekday:'long'});
+
+    // Marauder Gold mode short-circuits the normal flow. Housing is hidden
+    // (no MG-accepting apartments), the Campus Cupboard pin is skipped (not an
+    // MG vendor), and the remaining MG-accepting places are grouped into
+    // labeled On Campus / Off Campus sections. The category chip still applies
+    // — MG ANDs with whatever category is selected (Food, Education, etc.).
+    if(placesMGMode){
+        hc.style.display='none';
+        pc.style.display='';
+        let mgFiltered = allPlaces.filter(p => p.marauderGold === true);
+        if(placesFilter !== 'All'){
+            mgFiltered = mgFiltered.filter(p => p.category === placesFilter);
+        }
+        const buildCard = p => (p.placeType==='food') ? buildFoodCard(p, specials, dayName) : buildServiceCard(p);
+        const onCampus  = mgFiltered.filter(p => p.onCampus === true);
+        const offCampus = mgFiltered.filter(p => p.onCampus !== true);
+        let html = '';
+        if(onCampus.length){
+            html += `<div class="day-group-header">On Campus<span class="day-count">${onCampus.length} place${onCampus.length===1?'':'s'}</span></div>`;
+            html += onCampus.map(buildCard).join('');
+        }
+        if(offCampus.length){
+            html += `<div class="day-group-header">Off Campus<span class="day-count">${offCampus.length} place${offCampus.length===1?'':'s'}</span></div>`;
+            html += offCampus.map(buildCard).join('');
+        }
+        pc.innerHTML = html || '<p class="empty-state">No Marauder Gold places match this filter.</p>';
+        return;
+    }
 
     // Housing visibility
     if(placesFilter==='All' || placesFilter==='Housing'){

@@ -2227,7 +2227,7 @@ function matchesSportSource(tags, src) {
     return false;
 }
 
-const viewPaths={home:'/',news:'/news',events:'/events',sports:'/sports',places:'/places',board:'/board',weather:'/weather',store:'/store',advertise:'/advertise',analytics:'/analytics'};
+const viewPaths={home:'/',news:'/news',events:'/events',sports:'/sports',places:'/places',board:'/board',weather:'/weather',store:'/store',advertise:'/advertise',emergency:'/emergency',analytics:'/analytics'};
 const pathToView=Object.fromEntries(Object.entries(viewPaths).map(([k,v])=>[v,k]));
 
 // ==================== URL STATE (shareable filter URLs) ====================
@@ -2386,6 +2386,12 @@ function updatePageTitleForView(view) {
         if (parts.length === 0) parts.push('Sports');
         else if (!spSportTag) parts.push('Sports');
         prefix = parts.join(' ');
+    } else if (view === 'emergency') {
+        // Distinct SEO title for the emergency resources page. Helps with
+        // bookmark labels, browser history, and search indexing of the
+        // page when users search for "Millersville emergency".
+        document.title = 'Emergency — ' + base;
+        return;
     } else {
         // Other views — restore default site title.
         document.title = base + ' — Events, Sports, Weather & Community for Millersville, PA';
@@ -2573,7 +2579,7 @@ window.toggleMobileMenu=function(){
     if(nav.classList.contains('open')){nav.classList.remove('open');overlay.classList.remove('open');setTimeout(()=>{if(!nav.classList.contains('open'))nav.style.display='';},300);}
     else{nav.style.display='flex';void nav.offsetWidth;nav.classList.add('open');overlay.classList.add('open');}
 };
-const viewLabels={home:'',news:'/ News',events:'/ Events',sports:'/ Sports',places:'/ Places',board:'/ Board',weather:'/ Weather',store:'/ Store',advertise:'/ Advertise'};
+const viewLabels={home:'',news:'/ News',events:'/ Events',sports:'/ Sports',places:'/ Places',board:'/ Board',weather:'/ Weather',store:'/ Store',advertise:'/ Advertise',emergency:'/ Emergency'};
 
 let ecwidLoaded = false;
 window.loadEcwidStore = function(){

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-05-15T03:54:26.039Z",
-  "totalEvents": 972,
+  "generatedAt": "2026-05-15T06:55:55.257Z",
+  "totalEvents": 973,
   "withDescription": 358,
   "withImage": 107,
   "familyFriendly": 41,
@@ -9,7 +9,7 @@
     "muAthletics": 95,
     "muCalendar": 163,
     "muGetInvolved": 287,
-    "pennManor": 201,
+    "pennManor": 202,
     "borough": 210,
     "vfw": 3,
     "phantomPower": 12,
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-04-20T20:00:00.000Z",
-      "latest": "2026-09-16T20:00:00.000Z"
+      "latest": "2026-09-16T21:15:00.000Z"
     },
     "borough": {
       "earliest": "2026-02-14T14:00:00.000Z",
@@ -53,45 +53,52 @@
   "staleness": {
     "muAthletics": {
       "newest": "2026-11-14",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 9
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 9
     },
     "pennManor": {
       "newest": "2026-09-16",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "borough": {
       "newest": "2027-05-10",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "vfw": {
       "newest": "2026-05-27",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "phantomPower": {
       "newest": "2026-06-03",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "community": {
       "newest": "2026-04-27",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 9
     }
   },
   "sports": {
-    "total": 274,
+    "total": 275,
     "scored": 73,
     "wins": 36,
     "losses": 37,
     "ties": 0
   },
   "recentlyAdded": [
+    {
+      "key": "Girls 7/8th Soccer @ Ephrata High School|2026-09-16T21:15:00.000Z",
+      "firstSeenAt": "2026-05-15T06:55:55.254Z",
+      "title": "Girls 7/8th Soccer @ Ephrata High School",
+      "source": "PM",
+      "date": "2026-09-16T21:15:00.000Z"
+    },
     {
       "key": "Girls 7/8/9th Soccer @ Ephrata High School|2026-09-16T20:00:00.000Z",
       "firstSeenAt": "2026-05-15T03:54:26.036Z",
@@ -154,14 +161,7 @@
       "title": "Girls JV Volleyball @ Hempfield Senior High School",
       "source": "PM",
       "date": "2026-09-15T22:00:00.000Z"
-    },
-    {
-      "key": "Girls 7/8th Field Hockey @ Hempfield Senior High School|2026-09-15T21:00:00.000Z",
-      "firstSeenAt": "2026-05-13T22:11:33.026Z",
-      "title": "Girls 7/8th Field Hockey @ Hempfield Senior High School",
-      "source": "PM",
-      "date": "2026-09-15T21:00:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 1
 }

@@ -1339,6 +1339,16 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .em-mualert { background: var(--navy-soft); border-color: var(--navy); }
 .em-mualert .em-card-title { color: var(--navy); }
 
+/* Sub-heading within the combined MU card. Sits between the CTA button
+   and the status iframe; smaller weight than the main card title but
+   still navy-toned to read as part of the same card. */
+.em-card-subhead {
+    color: var(--navy);
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin: 18px 0 8px 0;
+}
+
 /* Primary CTA button — matches the rounded-pill look used elsewhere on
    the site for primary actions. inline-block so the link width matches
    its text rather than spanning the full card. */

@@ -1693,7 +1693,6 @@ window.saveFeedFromModal = function() {
     saveFeedPrefs(allPrefs);
     renderHomeFeed();
     renderEvents(); renderSports(); renderNewsUI();
-    decorateFeedStars();
 };
 
 // Visual feedback when a composite sub (linkedIds checkbox) is toggled.
@@ -1722,7 +1721,6 @@ window.clearFeedPrefs = function() {
     setFeedDotVisible(false);
     renderHomeFeed();
     renderEvents(); renderSports(); renderNewsUI();
-    decorateFeedStars();
 };
 
 // Clear just the favorites list but keep the Marauder/Townie affiliation
@@ -1732,7 +1730,6 @@ window.clearFavoritesOnly = function() {
     setFeedDotVisible(false);
     renderHomeFeed();
     renderEvents(); renderSports(); renderNewsUI();
-    decorateFeedStars();
 };
 
 // Reset everything: favorites AND affiliation. Next page load will re-prompt.
@@ -1745,154 +1742,7 @@ window.resetEverything = function() {
     setFeedDotVisible(false);
     renderHomeFeed();
     renderEvents(); renderSports(); renderNewsUI();
-    decorateFeedStars();
 };
-
-// ==================== FEED STAR DECORATION ====================
-function decorateFeedStars() {
-    document.querySelectorAll('[data-feed]').forEach(btn => {
-        const existingStar = btn.querySelector('.feed-star');
-        if (existingStar) existingStar.remove();
-
-        if (!feedPrefs || feedPrefs.length === 0) return;
-
-        const feedKey = btn.dataset.feed;
-        // Determine context — which page is this button on?
-        const onEventsPage = !!btn.closest('#view-events');
-        const onSportsPage = !!btn.closest('#view-sports');
-        // Filter prefs by context
-        const contextPrefs = onEventsPage ? feedPrefs.filter(p => eventFeedIds.has(p) || p.startsWith('club:'))
-                           : onSportsPage ? feedPrefs.filter(p => sportFeedIds.has(p))
-                           : feedPrefs;
-
-        let isInFeed = false;
-        if (feedKey.startsWith('sport-')) {
-            const suffix = feedKey.replace('sport-', '');
-            isInFeed = contextPrefs.some(p => p === 'pm-' + suffix || p === 'mu-' + suffix);
-        } else if (feedKey.endsWith('-')) {
-            isInFeed = contextPrefs.some(p => p.startsWith(feedKey));
-        } else {
-            isInFeed = contextPrefs.includes(feedKey);
-        }
-
-        if (isInFeed) {
-            const star = document.createElement('span');
-            star.className = 'feed-star';
-            star.textContent = '★';
-            star.style.cssText = 'color:var(--navy);font-size:0.7rem;position:absolute;top:-5px;right:-5px;pointer-events:none;text-shadow:0 0 2px rgba(255,255,255,0.8);line-height:1;';
-            btn.style.position = 'relative';
-            btn.appendChild(star);
-        }
-    });
-    showFavTipToast();
-}
-
-// Double-tap/click to toggle favorites (works on both desktop and mobile)
-(function() {
-    let lastTapTime = 0;
-    let lastTapBtn = null;
-    let singleTapTimer = null;
-
-    // Intercept clicks on data-feed buttons in capture phase (before inline onclick)
-    document.addEventListener('click', function(e) {
-        const btn = e.target.closest('[data-feed]');
-        if (!btn || (!btn.classList.contains('src-btn') && !btn.classList.contains('sport-pill') && !btn.classList.contains('btn') && !btn.classList.contains('family-toggle'))) return;
-
-        const now = Date.now();
-        const isDoubleTap = (lastTapBtn === btn && now - lastTapTime < 400);
-
-        if (isDoubleTap) {
-            // Double-tap: toggle favorite, cancel the pending single tap
-            e.stopImmediatePropagation();
-            e.preventDefault();
-            clearTimeout(singleTapTimer);
-            lastTapBtn = null;
-            lastTapTime = 0;
-            if (window.getSelection) window.getSelection().removeAllRanges();
-            toggleFeedFromButton(btn);
-        } else {
-            // First tap: delay the normal click action
-            e.stopImmediatePropagation();
-            e.preventDefault();
-            lastTapBtn = btn;
-            lastTapTime = now;
-            clearTimeout(singleTapTimer);
-            // Store the onclick to fire after delay
-            const onclickAttr = btn.getAttribute('onclick');
-            singleTapTimer = setTimeout(function() {
-                lastTapBtn = null;
-                lastTapTime = 0;
-                // Execute the original onclick
-                if (onclickAttr) {
-                    try { new Function(onclickAttr).call(btn); } catch(ex) {}
-                }
-            }, 350);
-        }
-    }, true); // capture phase
-})();
-
-function toggleFeedFromButton(btn) {
-    const feedKey = btn.dataset.feed;
-    if (!feedKey) return;
-
-    let prefs = feedPrefs ? [...feedPrefs] : [];
-    const isPrefix = feedKey.endsWith('-');
-    const isSportPill = feedKey.startsWith('sport-');
-
-    if (isSportPill) {
-        // Sport pill: toggle both pm-{sport} and mu-{sport}
-        const suffix = feedKey.replace('sport-', '');
-        const ids = ['pm-' + suffix, 'mu-' + suffix];
-        const allIn = ids.every(id => prefs.includes(id));
-        if (allIn) {
-            prefs = prefs.filter(p => !ids.includes(p));
-        } else {
-            ids.forEach(id => { if (!prefs.includes(id)) prefs.push(id); });
-        }
-    } else if (isPrefix) {
-        // Get all feed IDs that match this prefix, filtered by page context
-        const onEventsPage = !!btn.closest('#view-events');
-        const onSportsPage = !!btn.closest('#view-sports');
-        const allIds = [];
-        for (const group of Object.values(feedOptions)) {
-            group.subs.forEach(s => {
-                if (!s.id.startsWith(feedKey)) return;
-                if (onEventsPage && !eventFeedIds.has(s.id)) return;
-                if (onSportsPage && !sportFeedIds.has(s.id)) return;
-                allIds.push(s.id);
-            });
-        }
-        const allIn = allIds.every(id => prefs.includes(id));
-        if (allIn) {
-            // Remove all matching
-            prefs = prefs.filter(p => !p.startsWith(feedKey));
-        } else {
-            // Add all matching
-            allIds.forEach(id => { if (!prefs.includes(id)) prefs.push(id); });
-        }
-    } else {
-        // Toggle single feed ID
-        if (prefs.includes(feedKey)) {
-            prefs = prefs.filter(p => p !== feedKey);
-        } else {
-            prefs.push(feedKey);
-        }
-    }
-
-    if (prefs.length === 0) {
-        clearFeedPrefs();
-    } else {
-        saveFeedPrefs(prefs);
-        renderHomeFeed();
-        renderEvents(); renderSports(); renderNewsUI();
-        decorateFeedStars();
-    }
-
-    // Brief visual feedback
-    btn.style.transition = 'transform 0.15s';
-    btn.style.transform = 'scale(1.15)';
-    setTimeout(() => { btn.style.transform = ''; }, 200);
-}
 
 function renderHomeFeed() {
     const hasFeed = feedPrefs && feedPrefs.length > 0;
@@ -2098,7 +1948,6 @@ window.pickAffiliation = function(value) {
     if (typeof renderEvents === 'function') renderEvents();
     if (typeof renderSports === 'function') renderSports();
     if (typeof renderNewsUI === 'function') renderNewsUI();
-    if (typeof decorateFeedStars === 'function') decorateFeedStars();
 };
 
 // Called after affiliation changes. Cleans up state that may be invalid under the new
@@ -2854,7 +2703,6 @@ async function loadEvents(){
     }
     renderEvents(); renderSports();
     if (currentNews.length > 0) renderNewsUI();
-    decorateFeedStars();
     // Inject schema.org Event structured data for the next ~20 upcoming public
     // events. Helps Google, Bing, and social-media crawlers understand what's
     // scheduled. Runs once per load — enough for SEO discovery.
@@ -3182,20 +3030,6 @@ function syncFilterArrows(){
         const arrow = document.getElementById(p+'-filter-arrow');
         if(wrap && arrow) arrow.textContent = getComputedStyle(wrap).display === 'none' ? '▸' : '▾';
     });
-}
-
-// Favorites tip — one-time toast notification
-function showFavTipToast(){
-    if (localStorage.getItem('favTipShown')) return;
-    if (feedPrefs && feedPrefs.length > 0) return;
-    const toast = document.createElement('div');
-    toast.className = 'fav-toast';
-    toast.innerHTML = '★ <strong>Tip:</strong> Double-tap any source button to add it to your favorites';
-    toast.onclick = function(){ toast.remove(); };
-    document.body.appendChild(toast);
-    setTimeout(() => toast.classList.add('fav-toast-visible'), 100);
-    setTimeout(() => { toast.classList.remove('fav-toast-visible'); setTimeout(() => toast.remove(), 400); }, 5000);
-    localStorage.setItem('favTipShown', '1');
 }
 
 // ===== Day grouping helpers =====
@@ -3852,7 +3686,6 @@ function renderSportTypeTags(baseEvents){
         html+=`<button class="sport-pill ${spSportTag===s?'active':''}" data-feed="sport-${feedSuffix}" onclick="setSportType('${s}')">${s}</button>`;
     });
     row.innerHTML=html;
-    decorateFeedStars();
 }
 window.setSportType=function(sport){
     spSportTag=(spSportTag===sport)?null:sport;

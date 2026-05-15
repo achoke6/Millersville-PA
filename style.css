@@ -669,8 +669,6 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .filter-toggle:hover { border-color: var(--gold); }
 .toolbar-compact .clear-btn { position: static; }
 .filters-collapsible { }
-.fav-toast { position: fixed; bottom: -60px; left: 50%; transform: translateX(-50%); background: var(--navy); color: white; padding: 10px 20px; border-radius: var(--radius); font-size: 0.82rem; z-index: 9998; transition: bottom 0.3s ease; cursor: pointer; white-space: nowrap; box-shadow: var(--shadow); }
-.fav-toast-visible { bottom: 24px; }
 .fab-submit { position: sticky; bottom: 20px; left: 16px; width: 48px; height: 48px; border-radius: 50%; background: var(--navy); color: white; border: none; font-size: 1.3rem; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.25); z-index: 100; display: flex; align-items: center; justify-content: center; transition: transform 0.2s, box-shadow 0.2s; float: left; margin-top: 12px; }
 .fab-submit:hover { transform: scale(1.1); box-shadow: 0 6px 16px rgba(0,0,0,0.3); }
 @media (max-width: 768px) {

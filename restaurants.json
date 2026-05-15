@@ -7,7 +7,9 @@
     "status": "App Required",
     "link": "https://play.google.com/store/apps/details?id=com.blackboard.mobileorder&hl=en_US",
     "iosLink": "https://apps.apple.com/us/app/transact-mobile-ordering/id1494719529",
-    "featured": true
+    "featured": true,
+    "marauderGold": true,
+    "onCampus": true
   },
   {
     "name": "Koshary Station",
@@ -15,7 +17,8 @@
     "description": "Authentic Egyptian dishes — falafel, shawarma, koshary & more",
     "address": "4 S Prince St, Millersville, PA 17551",
     "status": "View Menu",
-    "link": "https://www.kosharystation.com"
+    "link": "https://www.kosharystation.com",
+    "onCampus": false
   },
   {
     "name": "Cactus Café",
@@ -23,7 +26,8 @@
     "description": "Community favorite café with a warm atmosphere",
     "address": "12 S George St, Millersville, PA 17551",
     "status": "View Menu",
-    "link": "https://www.cactuscafemillersville.com/"
+    "link": "https://www.cactuscafemillersville.com/",
+    "onCampus": false
   },
   {
     "name": "Jack's Family Tavern & Restaurant",
@@ -31,7 +35,8 @@
     "description": "Family-friendly American tavern with classic fare and great fries",
     "address": "20 S George St, Millersville, PA 17551",
     "status": "View Menu",
-    "link": "https://www.jacksfamilytavern.com/"
+    "link": "https://www.jacksfamilytavern.com/",
+    "onCampus": false
   },
   {
     "name": "Sugar Bowl Millersville",
@@ -39,7 +44,9 @@
     "description": "Known for their stromboli and large menu",
     "address": "2 E Frederick St, Millersville, PA 17551",
     "status": "Order Online",
-    "link": "https://orderonlinemenu.com/SugarBowlMillersville"
+    "link": "https://orderonlinemenu.com/SugarBowlMillersville",
+    "marauderGold": true,
+    "onCampus": false
   },
   {
     "name": "Poke Bowl Station",
@@ -47,7 +54,8 @@
     "description": "Fresh poke bowls with customizable toppings",
     "address": "4 S George St, Millersville, PA 17551",
     "status": "View Menu",
-    "link": "https://www.pokebowlstationmillersville.com/"
+    "link": "https://www.pokebowlstationmillersville.com/",
+    "onCampus": false
   },
   {
     "name": "House of Pizza",
@@ -55,7 +63,8 @@
     "description": "Local pizza shop serving slices and pies",
     "address": "242 N George St, Millersville, PA 17551",
     "status": "View Menu",
-    "link": "https://www.houseofpizzamillersville.com/menu.html"
+    "link": "https://www.houseofpizzamillersville.com/menu.html",
+    "onCampus": false
   },
   {
     "name": "Two Cousins Pizza Millersville",
@@ -63,7 +72,8 @@
     "description": "Casual Italian dining and pizza",
     "address": "115 Manor Ave, Millersville, PA 17551",
     "status": "Order Online",
-    "link": "https://order.toasttab.com/online/two-cousins-pizza-millersville-115-manor-avenue-ogxls"
+    "link": "https://order.toasttab.com/online/two-cousins-pizza-millersville-115-manor-avenue-ogxls",
+    "onCampus": false
   },
   {
     "name": "Nino's New York Style Pizza",
@@ -71,7 +81,8 @@
     "description": "Specialty pies and classic NY-style slices",
     "address": "14 S George St, Millersville, PA 17551",
     "status": "Order Online",
-    "link": "https://www.ninospizzamillersville.com/order"
+    "link": "https://www.ninospizzamillersville.com/order",
+    "onCampus": false
   },
   {
     "name": "Wayback Burgers",
@@ -79,7 +90,9 @@
     "description": "Classic and specialty burgers",
     "address": "120 Crossgates Dr, Millersville, PA 17551",
     "status": "Order Online",
-    "link": "https://order.waybackburgers.com/menu/millersville"
+    "link": "https://order.waybackburgers.com/menu/millersville",
+    "marauderGold": true,
+    "onCampus": false
   },
   {
     "name": "China Wok Chinese Restaurant",
@@ -87,7 +100,8 @@
     "description": "Chinese takeout and dine-in",
     "address": "230 N George St, Millersville, PA 17551",
     "status": "View Menu",
-    "link": "https://www.google.com/maps/search/China+Wok+Millersville+PA"
+    "link": "https://www.google.com/maps/search/China+Wok+Millersville+PA",
+    "onCampus": false
   },
   {
     "name": "The Bunker at Crossgates",
@@ -95,7 +109,8 @@
     "description": "Bar and grill located at the golf course",
     "address": "1 Crossland Pass, Millersville, PA 17551",
     "status": "View Menu",
-    "link": "https://www.crossgatesgolf.com/"
+    "link": "https://www.crossgatesgolf.com/",
+    "onCampus": false
   },
   {
     "name": "Evergreen Cafe",
@@ -103,7 +118,9 @@
     "description": "Coffee shop located on MU campus",
     "address": "Millersville University Campus",
     "status": "View Menu",
-    "link": "https://www.millersville.edu/dining/"
+    "link": "https://www.millersville.edu/dining/",
+    "marauderGold": true,
+    "onCampus": true
   },
   {
     "name": "VFW Post 7294",
@@ -111,7 +128,8 @@
     "description": "Weekly food specials and events. Members Only.",
     "address": "219 Walnut Hill Rd, Millersville, PA 17551",
     "status": "Members Only",
-    "link": "https://www.vfwpost7294.org/"
+    "link": "https://www.vfwpost7294.org/",
+    "onCampus": false
   },
   {
     "name": "John Herr's Village Market",
@@ -119,6 +137,78 @@
     "address": "20 Crossgates Dr, Millersville, PA 17551",
     "description": "Local grocery store with a full deli, bakery, and weekly deals",
     "status": "View Menu",
-    "link": "https://www.johnherrsvillagemarket.com/weekly-ad"
+    "link": "https://www.johnherrsvillagemarket.com/weekly-ad",
+    "marauderGold": true,
+    "onCampus": false
+  },
+  {
+    "name": "Sheetz #544",
+    "cuisine": "Convenience, MTO",
+    "description": "Made-to-order food, coffee, and convenience items. Nearest Sheetz to campus.",
+    "address": "1790 Millersville Rd, Lancaster, PA 17603",
+    "status": "View Menu",
+    "link": "https://www.sheetz.com/",
+    "marauderGold": true,
+    "onCampus": false
+  },
+  {
+    "name": "The Anchor",
+    "cuisine": "Dining hall",
+    "description": "Main residential dining hall in Gordinier Hall. Buffet-style meals.",
+    "address": "Gordinier Hall, Millersville University Campus",
+    "status": "View Menu",
+    "link": "https://www.millersville.edu/dining/",
+    "marauderGold": true,
+    "onCampus": true
+  },
+  {
+    "name": "The Galley",
+    "cuisine": "Dining, Marketplace",
+    "description": "Dining marketplace in the Student Memorial Center with multiple food stations.",
+    "address": "Student Memorial Center, Millersville University Campus",
+    "status": "View Menu",
+    "link": "https://www.millersville.edu/dining/",
+    "marauderGold": true,
+    "onCampus": true
+  },
+  {
+    "name": "The Cove",
+    "cuisine": "Café",
+    "description": "Café and snack location in Lyle Hall.",
+    "address": "Lyle Hall, Millersville University Campus",
+    "status": "View Menu",
+    "link": "https://www.millersville.edu/dining/",
+    "marauderGold": true,
+    "onCampus": true
+  },
+  {
+    "name": "Upper Deck",
+    "cuisine": "Dining",
+    "description": "Casual dining option upstairs in Gordinier Hall.",
+    "address": "Gordinier Hall, Millersville University Campus",
+    "status": "View Menu",
+    "link": "https://www.millersville.edu/dining/",
+    "marauderGold": true,
+    "onCampus": true
+  },
+  {
+    "name": "Starbucks (McNairy Library)",
+    "cuisine": "Coffee, Café",
+    "description": "Starbucks coffee shop inside McNairy Library.",
+    "address": "McNairy Library, Millersville University Campus",
+    "status": "View Menu",
+    "link": "https://www.millersville.edu/dining/",
+    "marauderGold": true,
+    "onCampus": true
+  },
+  {
+    "name": "Pucillo & Stadium Concessions",
+    "cuisine": "Concessions",
+    "description": "Game-day concessions at Pucillo Gymnasium and Chryst Field. Hours vary by event schedule.",
+    "address": "Pucillo Gymnasium / Chryst Field, Millersville University Campus",
+    "status": "Event Hours",
+    "link": "https://www.millersville.edu/dining/",
+    "marauderGold": true,
+    "onCampus": true
   }
 ]

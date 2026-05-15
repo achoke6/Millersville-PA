@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-05-15T21:59:42.176Z",
-  "totalEvents": 975,
+  "generatedAt": "2026-05-15T23:03:54.894Z",
+  "totalEvents": 974,
   "withDescription": 358,
   "withImage": 108,
   "familyFriendly": 41,
   "eventsToday": 3,
   "sources": {
-    "muAthletics": 92,
+    "muAthletics": 91,
     "muCalendar": 163,
     "muGetInvolved": 287,
     "pennManor": 206,
@@ -14,7 +14,7 @@
     "vfw": 3,
     "phantomPower": 13,
     "community": 1,
-    "muHudlBroadcasts": 20
+    "muHudlBroadcasts": 19
   },
   "sourceDateRanges": {
     "muAthletics": {
@@ -85,20 +85,13 @@
     }
   },
   "sports": {
-    "total": 276,
+    "total": 275,
     "scored": 70,
     "wins": 35,
-    "losses": 35,
-    "ties": 0
+    "losses": 34,
+    "ties": 1
   },
   "recentlyAdded": [
-    {
-      "key": "Millersville University Women's Lacrosse vs Kutztown|2026-04-15T20:00:00.000Z",
-      "firstSeenAt": "2026-05-15T21:59:42.174Z",
-      "title": "Millersville University Women's Lacrosse vs Kutztown",
-      "source": "MU",
-      "date": "2026-04-15T20:00:00.000Z"
-    },
     {
       "key": "Girls 7/8/9th Field Hockey @ Cedar Crest High School|2026-09-17T20:00:00.000Z",
       "firstSeenAt": "2026-05-15T21:59:42.174Z",
@@ -161,7 +154,14 @@
       "title": "Girls 7/8/9th Soccer @ Ephrata High School",
       "source": "PM",
       "date": "2026-09-16T20:00:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Tennis @ Manheim Township High School|2026-09-16T20:00:00.000Z",
+      "firstSeenAt": "2026-05-15T03:54:26.036Z",
+      "title": "Girls Varsity Tennis @ Manheim Township High School",
+      "source": "PM",
+      "date": "2026-09-16T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 0
 }

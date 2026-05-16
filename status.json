@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-05-16T10:15:07.057Z",
-  "totalEvents": 970,
+  "generatedAt": "2026-05-16T11:51:14.318Z",
+  "totalEvents": 971,
   "withDescription": 357,
-  "withImage": 106,
+  "withImage": 107,
   "familyFriendly": 41,
   "eventsToday": 3,
   "sources": {
@@ -12,7 +12,7 @@
     "pennManor": 206,
     "borough": 209,
     "vfw": 3,
-    "phantomPower": 11,
+    "phantomPower": 12,
     "community": 1,
     "muHudlBroadcasts": 19
   },
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-04-20T23:00:00.000Z",
-      "latest": "2026-09-19T15:30:00.000Z"
+      "latest": "2026-09-19T14:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-02-16T12:00:00.000Z",
@@ -43,7 +43,7 @@
     },
     "phantomPower": {
       "earliest": "2026-05-16T23:30:00.000Z",
-      "latest": "2026-06-06T00:00:00.000Z"
+      "latest": "2026-06-14T21:30:00.000Z"
     },
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
@@ -76,8 +76,8 @@
       "daysSinceMoved": 4
     },
     "phantomPower": {
-      "newest": "2026-06-06",
-      "daysSinceMoved": 1
+      "newest": "2026-06-14",
+      "daysSinceMoved": 0
     },
     "community": {
       "newest": "2026-04-27",
@@ -92,6 +92,20 @@
     "ties": 1
   },
   "recentlyAdded": [
+    {
+      "key": "Boys Varsity Lacrosse - Boys vs New Oxford High School|2026-05-19T23:00:00.000Z",
+      "firstSeenAt": "2026-05-16T11:51:14.315Z",
+      "title": "Boys Varsity Lacrosse - Boys vs New Oxford High School",
+      "source": "PM",
+      "date": "2026-05-19T23:00:00.000Z"
+    },
+    {
+      "key": "Upon A Burning Body|2026-06-14T21:30:00.000Z",
+      "firstSeenAt": "2026-05-16T11:51:14.315Z",
+      "title": "Upon A Burning Body",
+      "source": "Other",
+      "date": "2026-06-14T21:30:00.000Z"
+    },
     {
       "key": "Girls 7/8th Field Hockey @ Cedar Crest High School|2026-09-17T21:00:00.000Z",
       "firstSeenAt": "2026-05-16T05:55:35.392Z",
@@ -142,26 +156,12 @@
       "date": "2026-09-19T14:00:00.000Z"
     },
     {
-      "key": "Boys JV Soccer @ Central York High School|2026-09-19T15:30:00.000Z",
-      "firstSeenAt": "2026-05-16T05:55:35.392Z",
-      "title": "Boys JV Soccer @ Central York High School",
-      "source": "PM",
-      "date": "2026-09-19T15:30:00.000Z"
-    },
-    {
       "key": "Girls 7/8/9th Field Hockey @ Cedar Crest High School|2026-09-17T20:00:00.000Z",
       "firstSeenAt": "2026-05-15T21:59:42.174Z",
       "title": "Girls 7/8/9th Field Hockey @ Cedar Crest High School",
       "source": "PM",
       "date": "2026-09-17T20:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Baseball vs Seton Hill|2026-05-16T15:00:00.000Z",
-      "firstSeenAt": "2026-05-15T19:28:08.122Z",
-      "title": "Millersville University Baseball vs Seton Hill",
-      "source": "MU",
-      "date": "2026-05-16T15:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

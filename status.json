@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-05-16T05:55:35.394Z",
-  "totalEvents": 971,
+  "generatedAt": "2026-05-16T08:04:11.437Z",
+  "totalEvents": 970,
   "withDescription": 357,
-  "withImage": 107,
+  "withImage": 106,
   "familyFriendly": 41,
   "eventsToday": 3,
   "sources": {
@@ -12,7 +12,7 @@
     "pennManor": 206,
     "borough": 209,
     "vfw": 3,
-    "phantomPower": 12,
+    "phantomPower": 11,
     "community": 1,
     "muHudlBroadcasts": 19
   },
@@ -43,7 +43,7 @@
     },
     "phantomPower": {
       "earliest": "2026-05-16T23:30:00.000Z",
-      "latest": "2026-06-14T21:30:00.000Z"
+      "latest": "2026-06-06T00:00:00.000Z"
     },
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
@@ -76,8 +76,8 @@
       "daysSinceMoved": 4
     },
     "phantomPower": {
-      "newest": "2026-06-14",
-      "daysSinceMoved": 0
+      "newest": "2026-06-06",
+      "daysSinceMoved": 1
     },
     "community": {
       "newest": "2026-04-27",
@@ -92,13 +92,6 @@
     "ties": 1
   },
   "recentlyAdded": [
-    {
-      "key": "Upon A Burning Body|2026-06-14T21:30:00.000Z",
-      "firstSeenAt": "2026-05-16T05:55:35.392Z",
-      "title": "Upon A Burning Body",
-      "source": "Other",
-      "date": "2026-06-14T21:30:00.000Z"
-    },
     {
       "key": "Girls 7/8th Field Hockey @ Cedar Crest High School|2026-09-17T21:00:00.000Z",
       "firstSeenAt": "2026-05-16T05:55:35.392Z",
@@ -161,7 +154,14 @@
       "title": "Girls 7/8/9th Field Hockey @ Cedar Crest High School",
       "source": "PM",
       "date": "2026-09-17T20:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Baseball vs Seton Hill|2026-05-16T15:00:00.000Z",
+      "firstSeenAt": "2026-05-15T19:28:08.122Z",
+      "title": "Millersville University Baseball vs Seton Hill",
+      "source": "MU",
+      "date": "2026-05-16T15:00:00.000Z"
     }
   ],
-  "addedLastRun": 9
+  "addedLastRun": 0
 }

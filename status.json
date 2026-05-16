@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-05-16T19:03:33.223Z",
-  "totalEvents": 970,
+  "generatedAt": "2026-05-16T20:44:57.322Z",
+  "totalEvents": 971,
   "withDescription": 357,
   "withImage": 107,
   "familyFriendly": 41,
   "eventsToday": 2,
   "sources": {
-    "muAthletics": 90,
+    "muAthletics": 91,
     "muCalendar": 162,
     "muGetInvolved": 287,
     "pennManor": 206,
@@ -85,13 +85,27 @@
     }
   },
   "sports": {
-    "total": 274,
+    "total": 275,
     "scored": 69,
     "wins": 34,
     "losses": 34,
     "ties": 1
   },
   "recentlyAdded": [
+    {
+      "key": "Millersville University Baseball vs West Chester|2026-05-21T00:00:00.000Z",
+      "firstSeenAt": "2026-05-16T20:44:57.320Z",
+      "title": "Millersville University Baseball vs West Chester",
+      "source": "MU",
+      "date": "2026-05-21T00:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Baseball vs West Chester|2026-05-22T00:00:00.000Z",
+      "firstSeenAt": "2026-05-16T20:44:57.320Z",
+      "title": "Millersville University Baseball vs West Chester",
+      "source": "MU",
+      "date": "2026-05-22T00:00:00.000Z"
+    },
     {
       "key": "Boys Varsity Lacrosse - Boys vs New Oxford High School|2026-05-19T23:00:00.000Z",
       "firstSeenAt": "2026-05-16T11:51:14.315Z",
@@ -147,21 +161,7 @@
       "title": "Boys Varsity Football @ Reading Senior High School",
       "source": "PM",
       "date": "2026-09-18T23:00:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Soccer @ Central York High School|2026-09-19T14:00:00.000Z",
-      "firstSeenAt": "2026-05-16T05:55:35.392Z",
-      "title": "Boys Varsity Soccer @ Central York High School",
-      "source": "PM",
-      "date": "2026-09-19T14:00:00.000Z"
-    },
-    {
-      "key": "Girls 7/8/9th Field Hockey @ Cedar Crest High School|2026-09-17T20:00:00.000Z",
-      "firstSeenAt": "2026-05-15T21:59:42.174Z",
-      "title": "Girls 7/8/9th Field Hockey @ Cedar Crest High School",
-      "source": "PM",
-      "date": "2026-09-17T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

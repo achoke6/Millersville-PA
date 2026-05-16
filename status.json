@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-05-16T02:49:31.059Z",
-  "totalEvents": 970,
+  "generatedAt": "2026-05-16T05:55:35.394Z",
+  "totalEvents": 971,
   "withDescription": 357,
-  "withImage": 106,
+  "withImage": 107,
   "familyFriendly": 41,
-  "eventsToday": 2,
+  "eventsToday": 3,
   "sources": {
     "muAthletics": 91,
     "muCalendar": 162,
@@ -12,7 +12,7 @@
     "pennManor": 206,
     "borough": 209,
     "vfw": 3,
-    "phantomPower": 11,
+    "phantomPower": 12,
     "community": 1,
     "muHudlBroadcasts": 19
   },
@@ -30,8 +30,8 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-04-20T20:00:00.000Z",
-      "latest": "2026-09-17T20:00:00.000Z"
+      "earliest": "2026-04-20T23:00:00.000Z",
+      "latest": "2026-09-19T15:30:00.000Z"
     },
     "borough": {
       "earliest": "2026-02-16T12:00:00.000Z",
@@ -43,7 +43,7 @@
     },
     "phantomPower": {
       "earliest": "2026-05-16T23:30:00.000Z",
-      "latest": "2026-06-06T00:00:00.000Z"
+      "latest": "2026-06-14T21:30:00.000Z"
     },
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
@@ -53,115 +53,115 @@
   "staleness": {
     "muAthletics": {
       "newest": "2026-11-14",
-      "daysSinceMoved": 9
+      "daysSinceMoved": 10
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 9
+      "daysSinceMoved": 10
     },
     "pennManor": {
-      "newest": "2026-09-17",
+      "newest": "2026-09-19",
       "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2027-05-10",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     },
     "vfw": {
       "newest": "2026-05-27",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "phantomPower": {
-      "newest": "2026-06-06",
+      "newest": "2026-06-14",
       "daysSinceMoved": 0
     },
     "community": {
       "newest": "2026-04-27",
-      "daysSinceMoved": 9
+      "daysSinceMoved": 10
     }
   },
   "sports": {
     "total": 275,
-    "scored": 70,
-    "wins": 35,
+    "scored": 68,
+    "wins": 33,
     "losses": 34,
     "ties": 1
   },
   "recentlyAdded": [
+    {
+      "key": "Upon A Burning Body|2026-06-14T21:30:00.000Z",
+      "firstSeenAt": "2026-05-16T05:55:35.392Z",
+      "title": "Upon A Burning Body",
+      "source": "Other",
+      "date": "2026-06-14T21:30:00.000Z"
+    },
+    {
+      "key": "Girls 7/8th Field Hockey @ Cedar Crest High School|2026-09-17T21:00:00.000Z",
+      "firstSeenAt": "2026-05-16T05:55:35.392Z",
+      "title": "Girls 7/8th Field Hockey @ Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-09-17T21:00:00.000Z"
+    },
+    {
+      "key": "Girls JV Soccer @ Ephrata High School|2026-09-17T21:30:00.000Z",
+      "firstSeenAt": "2026-05-16T05:55:35.392Z",
+      "title": "Girls JV Soccer @ Ephrata High School",
+      "source": "PM",
+      "date": "2026-09-17T21:30:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Soccer @ Ephrata High School|2026-09-17T23:00:00.000Z",
+      "firstSeenAt": "2026-05-16T05:55:35.392Z",
+      "title": "Girls Varsity Soccer @ Ephrata High School",
+      "source": "PM",
+      "date": "2026-09-17T23:00:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Field Hockey @ Conestoga Valley Senior High School|2026-09-18T20:00:00.000Z",
+      "firstSeenAt": "2026-05-16T05:55:35.392Z",
+      "title": "Girls Varsity Field Hockey @ Conestoga Valley Senior High School",
+      "source": "PM",
+      "date": "2026-09-18T20:00:00.000Z"
+    },
+    {
+      "key": "Girls JV Field Hockey @ Conestoga Valley Senior High School|2026-09-18T21:30:00.000Z",
+      "firstSeenAt": "2026-05-16T05:55:35.392Z",
+      "title": "Girls JV Field Hockey @ Conestoga Valley Senior High School",
+      "source": "PM",
+      "date": "2026-09-18T21:30:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Football @ Reading Senior High School|2026-09-18T23:00:00.000Z",
+      "firstSeenAt": "2026-05-16T05:55:35.392Z",
+      "title": "Boys Varsity Football @ Reading Senior High School",
+      "source": "PM",
+      "date": "2026-09-18T23:00:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Soccer @ Central York High School|2026-09-19T14:00:00.000Z",
+      "firstSeenAt": "2026-05-16T05:55:35.392Z",
+      "title": "Boys Varsity Soccer @ Central York High School",
+      "source": "PM",
+      "date": "2026-09-19T14:00:00.000Z"
+    },
+    {
+      "key": "Boys JV Soccer @ Central York High School|2026-09-19T15:30:00.000Z",
+      "firstSeenAt": "2026-05-16T05:55:35.392Z",
+      "title": "Boys JV Soccer @ Central York High School",
+      "source": "PM",
+      "date": "2026-09-19T15:30:00.000Z"
+    },
     {
       "key": "Girls 7/8/9th Field Hockey @ Cedar Crest High School|2026-09-17T20:00:00.000Z",
       "firstSeenAt": "2026-05-15T21:59:42.174Z",
       "title": "Girls 7/8/9th Field Hockey @ Cedar Crest High School",
       "source": "PM",
       "date": "2026-09-17T20:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Baseball vs Seton Hill|2026-05-16T15:00:00.000Z",
-      "firstSeenAt": "2026-05-15T19:28:08.122Z",
-      "title": "Millersville University Baseball vs Seton Hill",
-      "source": "MU",
-      "date": "2026-05-16T15:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Baseball vs Seton Hill (if necessary)|2026-05-16T18:00:00.000Z",
-      "firstSeenAt": "2026-05-15T19:28:08.122Z",
-      "title": "Millersville University Baseball vs Seton Hill (if necessary)",
-      "source": "MU",
-      "date": "2026-05-16T18:00:00.000Z"
-    },
-    {
-      "key": "Girls JV Field Hockey @ Cedar Crest High School|2026-09-16T21:30:00.000Z",
-      "firstSeenAt": "2026-05-15T18:23:24.450Z",
-      "title": "Girls JV Field Hockey @ Cedar Crest High School",
-      "source": "PM",
-      "date": "2026-09-16T21:30:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Field Hockey @ Cedar Crest High School|2026-09-16T23:00:00.000Z",
-      "firstSeenAt": "2026-05-15T18:23:24.450Z",
-      "title": "Girls Varsity Field Hockey @ Cedar Crest High School",
-      "source": "PM",
-      "date": "2026-09-16T23:00:00.000Z"
-    },
-    {
-      "key": "Boys 7/8/9th Football @ Manheim Central High School|2026-09-16T23:00:00.000Z",
-      "firstSeenAt": "2026-05-15T18:23:24.450Z",
-      "title": "Boys 7/8/9th Football @ Manheim Central High School",
-      "source": "PM",
-      "date": "2026-09-16T23:00:00.000Z"
-    },
-    {
-      "key": "Hexbelt|2026-06-06T00:00:00.000Z",
-      "firstSeenAt": "2026-05-15T11:57:00.715Z",
-      "title": "Hexbelt",
-      "source": "Other",
-      "date": "2026-06-06T00:00:00.000Z"
-    },
-    {
-      "key": "Girls 7/8th Soccer @ Ephrata High School|2026-09-16T21:15:00.000Z",
-      "firstSeenAt": "2026-05-15T06:55:55.254Z",
-      "title": "Girls 7/8th Soccer @ Ephrata High School",
-      "source": "PM",
-      "date": "2026-09-16T21:15:00.000Z"
-    },
-    {
-      "key": "Girls 7/8/9th Soccer @ Ephrata High School|2026-09-16T20:00:00.000Z",
-      "firstSeenAt": "2026-05-15T03:54:26.036Z",
-      "title": "Girls 7/8/9th Soccer @ Ephrata High School",
-      "source": "PM",
-      "date": "2026-09-16T20:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Tennis @ Manheim Township High School|2026-09-16T20:00:00.000Z",
-      "firstSeenAt": "2026-05-15T03:54:26.036Z",
-      "title": "Girls Varsity Tennis @ Manheim Township High School",
-      "source": "PM",
-      "date": "2026-09-16T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 9
 }

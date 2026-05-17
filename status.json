@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-05-17T09:05:48.674Z",
-  "totalEvents": 965,
+  "generatedAt": "2026-05-17T11:06:31.507Z",
+  "totalEvents": 966,
   "withDescription": 353,
-  "withImage": 106,
+  "withImage": 107,
   "familyFriendly": 41,
   "eventsToday": 1,
   "sources": {
@@ -12,7 +12,7 @@
     "pennManor": 206,
     "borough": 208,
     "vfw": 3,
-    "phantomPower": 11,
+    "phantomPower": 12,
     "community": 1,
     "muHudlBroadcasts": 19
   },
@@ -43,7 +43,7 @@
     },
     "phantomPower": {
       "earliest": "2026-05-17T23:00:00.000Z",
-      "latest": "2026-06-14T21:30:00.000Z"
+      "latest": "2026-06-16T23:00:00.000Z"
     },
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
@@ -76,8 +76,8 @@
       "daysSinceMoved": 5
     },
     "phantomPower": {
-      "newest": "2026-06-14",
-      "daysSinceMoved": 1
+      "newest": "2026-06-16",
+      "daysSinceMoved": 0
     },
     "community": {
       "newest": "2026-04-27",
@@ -92,6 +92,13 @@
     "ties": 1
   },
   "recentlyAdded": [
+    {
+      "key": "Jeffrey Lewis & The Voltage|2026-06-16T23:00:00.000Z",
+      "firstSeenAt": "2026-05-17T11:06:31.505Z",
+      "title": "Jeffrey Lewis & The Voltage",
+      "source": "Other",
+      "date": "2026-06-16T23:00:00.000Z"
+    },
     {
       "key": "Boys JV Soccer @ Central York High School|2026-09-19T15:30:00.000Z",
       "firstSeenAt": "2026-05-17T06:26:23.968Z",
@@ -154,14 +161,7 @@
       "title": "Girls Varsity Field Hockey @ Conestoga Valley Senior High School",
       "source": "PM",
       "date": "2026-09-18T20:00:00.000Z"
-    },
-    {
-      "key": "Girls JV Field Hockey @ Conestoga Valley Senior High School|2026-09-18T21:30:00.000Z",
-      "firstSeenAt": "2026-05-16T05:55:35.392Z",
-      "title": "Girls JV Field Hockey @ Conestoga Valley Senior High School",
-      "source": "PM",
-      "date": "2026-09-18T21:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

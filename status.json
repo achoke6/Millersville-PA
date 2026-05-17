@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-05-17T17:06:00.014Z",
-  "totalEvents": 964,
+  "generatedAt": "2026-05-17T19:08:30.740Z",
+  "totalEvents": 963,
   "withDescription": 353,
   "withImage": 107,
   "familyFriendly": 41,
   "eventsToday": 1,
   "sources": {
-    "muAthletics": 89,
+    "muAthletics": 88,
     "muCalendar": 162,
     "muGetInvolved": 283,
     "pennManor": 206,
@@ -14,7 +14,7 @@
     "vfw": 3,
     "phantomPower": 12,
     "community": 1,
-    "muHudlBroadcasts": 18
+    "muHudlBroadcasts": 17
   },
   "sourceDateRanges": {
     "muAthletics": {
@@ -85,13 +85,34 @@
     }
   },
   "sports": {
-    "total": 273,
-    "scored": 66,
+    "total": 272,
+    "scored": 64,
     "wins": 33,
-    "losses": 32,
+    "losses": 30,
     "ties": 1
   },
   "recentlyAdded": [
+    {
+      "key": "Millersville University Baseball vs West Chester|2026-05-21T17:00:00.000Z",
+      "firstSeenAt": "2026-05-17T19:08:30.738Z",
+      "title": "Millersville University Baseball vs West Chester",
+      "source": "MU",
+      "date": "2026-05-21T17:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Baseball vs West Chester|2026-05-22T17:00:00.000Z",
+      "firstSeenAt": "2026-05-17T19:08:30.738Z",
+      "title": "Millersville University Baseball vs West Chester",
+      "source": "MU",
+      "date": "2026-05-22T17:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Baseball vs West Chester (If necessary)|2026-05-23T17:00:00.000Z",
+      "firstSeenAt": "2026-05-17T19:08:30.738Z",
+      "title": "Millersville University Baseball vs West Chester (If necessary)",
+      "source": "MU",
+      "date": "2026-05-23T17:00:00.000Z"
+    },
     {
       "key": "Jeffrey Lewis & The Voltage|2026-06-16T23:00:00.000Z",
       "firstSeenAt": "2026-05-17T11:06:31.505Z",
@@ -105,20 +126,6 @@
       "title": "Boys JV Soccer @ Central York High School",
       "source": "PM",
       "date": "2026-09-19T15:30:00.000Z"
-    },
-    {
-      "key": "Millersville University Baseball vs West Chester|2026-05-21T00:00:00.000Z",
-      "firstSeenAt": "2026-05-16T20:44:57.320Z",
-      "title": "Millersville University Baseball vs West Chester",
-      "source": "MU",
-      "date": "2026-05-21T00:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Baseball vs West Chester|2026-05-22T00:00:00.000Z",
-      "firstSeenAt": "2026-05-16T20:44:57.320Z",
-      "title": "Millersville University Baseball vs West Chester",
-      "source": "MU",
-      "date": "2026-05-22T00:00:00.000Z"
     },
     {
       "key": "Boys Varsity Lacrosse - Boys vs New Oxford High School|2026-05-19T23:00:00.000Z",
@@ -154,14 +161,7 @@
       "title": "Girls Varsity Soccer @ Ephrata High School",
       "source": "PM",
       "date": "2026-09-17T23:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Field Hockey @ Conestoga Valley Senior High School|2026-09-18T20:00:00.000Z",
-      "firstSeenAt": "2026-05-16T05:55:35.392Z",
-      "title": "Girls Varsity Field Hockey @ Conestoga Valley Senior High School",
-      "source": "PM",
-      "date": "2026-09-18T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 3
 }

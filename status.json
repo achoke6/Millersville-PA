@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-05-17T20:51:35.630Z",
-  "totalEvents": 966,
+  "generatedAt": "2026-05-17T21:55:18.451Z",
+  "totalEvents": 963,
   "withDescription": 353,
   "withImage": 107,
   "familyFriendly": 41,
   "eventsToday": 1,
   "sources": {
-    "muAthletics": 91,
+    "muAthletics": 88,
     "muCalendar": 162,
     "muGetInvolved": 283,
     "pennManor": 206,
@@ -14,7 +14,7 @@
     "vfw": 3,
     "phantomPower": 12,
     "community": 1,
-    "muHudlBroadcasts": 19
+    "muHudlBroadcasts": 17
   },
   "sourceDateRanges": {
     "muAthletics": {
@@ -85,54 +85,33 @@
     }
   },
   "sports": {
-    "total": 275,
-    "scored": 68,
-    "wins": 34,
-    "losses": 33,
+    "total": 272,
+    "scored": 64,
+    "wins": 33,
+    "losses": 30,
     "ties": 1
   },
   "recentlyAdded": [
     {
-      "key": "Millersville University Baseball at Mansfield|2026-04-17T17:00:00.000Z",
-      "firstSeenAt": "2026-05-17T20:51:35.628Z",
-      "title": "Millersville University Baseball at Mansfield",
-      "source": "MU",
-      "date": "2026-04-17T17:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Softball vs East Stroudsburg University|2026-04-17T17:00:00.000Z",
-      "firstSeenAt": "2026-05-17T20:51:35.628Z",
-      "title": "Millersville University Softball vs East Stroudsburg University",
-      "source": "MU",
-      "date": "2026-04-17T17:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Softball vs East Stroudsburg University|2026-04-17T19:00:00.000Z",
-      "firstSeenAt": "2026-05-17T20:51:35.628Z",
-      "title": "Millersville University Softball vs East Stroudsburg University",
-      "source": "MU",
-      "date": "2026-04-17T19:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Baseball at Mansfield|2026-04-17T19:00:00.000Z",
-      "firstSeenAt": "2026-05-17T20:51:35.628Z",
-      "title": "Millersville University Baseball at Mansfield",
-      "source": "MU",
-      "date": "2026-04-17T19:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Baseball vs West Chester|2026-05-21T00:00:00.000Z",
-      "firstSeenAt": "2026-05-17T20:51:35.628Z",
+      "key": "Millersville University Baseball vs West Chester|2026-05-21T17:00:00.000Z",
+      "firstSeenAt": "2026-05-17T21:55:18.448Z",
       "title": "Millersville University Baseball vs West Chester",
       "source": "MU",
-      "date": "2026-05-21T00:00:00.000Z"
+      "date": "2026-05-21T17:00:00.000Z"
     },
     {
-      "key": "Millersville University Baseball vs West Chester|2026-05-22T00:00:00.000Z",
-      "firstSeenAt": "2026-05-17T20:51:35.628Z",
+      "key": "Millersville University Baseball vs West Chester|2026-05-22T17:00:00.000Z",
+      "firstSeenAt": "2026-05-17T21:55:18.448Z",
       "title": "Millersville University Baseball vs West Chester",
       "source": "MU",
-      "date": "2026-05-22T00:00:00.000Z"
+      "date": "2026-05-22T17:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Baseball vs West Chester (If necessary)|2026-05-23T17:00:00.000Z",
+      "firstSeenAt": "2026-05-17T21:55:18.448Z",
+      "title": "Millersville University Baseball vs West Chester (If necessary)",
+      "source": "MU",
+      "date": "2026-05-23T17:00:00.000Z"
     },
     {
       "key": "Jeffrey Lewis & The Voltage|2026-06-16T23:00:00.000Z",
@@ -161,7 +140,28 @@
       "title": "Upon A Burning Body",
       "source": "Other",
       "date": "2026-06-14T21:30:00.000Z"
+    },
+    {
+      "key": "Girls 7/8th Field Hockey @ Cedar Crest High School|2026-09-17T21:00:00.000Z",
+      "firstSeenAt": "2026-05-16T05:55:35.392Z",
+      "title": "Girls 7/8th Field Hockey @ Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-09-17T21:00:00.000Z"
+    },
+    {
+      "key": "Girls JV Soccer @ Ephrata High School|2026-09-17T21:30:00.000Z",
+      "firstSeenAt": "2026-05-16T05:55:35.392Z",
+      "title": "Girls JV Soccer @ Ephrata High School",
+      "source": "PM",
+      "date": "2026-09-17T21:30:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Soccer @ Ephrata High School|2026-09-17T23:00:00.000Z",
+      "firstSeenAt": "2026-05-16T05:55:35.392Z",
+      "title": "Girls Varsity Soccer @ Ephrata High School",
+      "source": "PM",
+      "date": "2026-09-17T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 6
+  "addedLastRun": 3
 }

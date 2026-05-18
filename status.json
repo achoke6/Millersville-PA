@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-05-18T03:57:50.823Z",
-  "totalEvents": 958,
+  "generatedAt": "2026-05-18T08:08:28.727Z",
+  "totalEvents": 959,
   "withDescription": 349,
-  "withImage": 106,
+  "withImage": 107,
   "familyFriendly": 41,
-  "eventsToday": 0,
+  "eventsToday": 4,
   "sources": {
     "muAthletics": 88,
     "muCalendar": 162,
@@ -12,7 +12,7 @@
     "pennManor": 206,
     "borough": 208,
     "vfw": 3,
-    "phantomPower": 11,
+    "phantomPower": 12,
     "community": 1,
     "muHudlBroadcasts": 17
   },
@@ -43,7 +43,7 @@
     },
     "phantomPower": {
       "earliest": "2026-05-19T23:00:00.000Z",
-      "latest": "2026-06-16T23:00:00.000Z"
+      "latest": "2026-06-20T00:00:00.000Z"
     },
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
@@ -53,35 +53,35 @@
   "staleness": {
     "muAthletics": {
       "newest": "2026-11-14",
-      "daysSinceMoved": 11
+      "daysSinceMoved": 12
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 9
+      "daysSinceMoved": 10
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 11
+      "daysSinceMoved": 12
     },
     "pennManor": {
       "newest": "2026-09-19",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "borough": {
       "newest": "2027-05-17",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "vfw": {
       "newest": "2026-05-27",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     },
     "phantomPower": {
-      "newest": "2026-06-16",
+      "newest": "2026-06-20",
       "daysSinceMoved": 0
     },
     "community": {
       "newest": "2026-04-27",
-      "daysSinceMoved": 11
+      "daysSinceMoved": 12
     }
   },
   "sports": {
@@ -92,6 +92,13 @@
     "ties": 1
   },
   "recentlyAdded": [
+    {
+      "key": "Caitlynne Curtis|2026-06-20T00:00:00.000Z",
+      "firstSeenAt": "2026-05-18T08:08:28.725Z",
+      "title": "Caitlynne Curtis",
+      "source": "Other",
+      "date": "2026-06-20T00:00:00.000Z"
+    },
     {
       "key": "Regular Trash & Recycling Collection |2027-05-17T12:00:00.000Z",
       "firstSeenAt": "2026-05-18T03:57:50.821Z",
@@ -154,13 +161,6 @@
       "title": "Girls 7/8th Field Hockey @ Cedar Crest High School",
       "source": "PM",
       "date": "2026-09-17T21:00:00.000Z"
-    },
-    {
-      "key": "Girls JV Soccer @ Ephrata High School|2026-09-17T21:30:00.000Z",
-      "firstSeenAt": "2026-05-16T05:55:35.392Z",
-      "title": "Girls JV Soccer @ Ephrata High School",
-      "source": "PM",
-      "date": "2026-09-17T21:30:00.000Z"
     }
   ],
   "addedLastRun": 1

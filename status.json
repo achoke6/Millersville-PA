@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-05-17T23:58:02.132Z",
-  "totalEvents": 963,
-  "withDescription": 353,
-  "withImage": 107,
+  "generatedAt": "2026-05-18T03:57:50.823Z",
+  "totalEvents": 958,
+  "withDescription": 349,
+  "withImage": 106,
   "familyFriendly": 41,
-  "eventsToday": 1,
+  "eventsToday": 0,
   "sources": {
     "muAthletics": 88,
     "muCalendar": 162,
-    "muGetInvolved": 283,
+    "muGetInvolved": 279,
     "pennManor": 206,
     "borough": 208,
     "vfw": 3,
-    "phantomPower": 12,
+    "phantomPower": 11,
     "community": 1,
     "muHudlBroadcasts": 17
   },
@@ -26,7 +26,7 @@
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-02-16T08:00:00.000Z",
+      "earliest": "2026-02-17T11:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
@@ -34,15 +34,15 @@
       "latest": "2026-09-19T15:30:00.000Z"
     },
     "borough": {
-      "earliest": "2026-02-16T23:00:00.000Z",
-      "latest": "2027-05-10T12:00:00.000Z"
+      "earliest": "2026-02-17T15:00:00.000Z",
+      "latest": "2027-05-17T12:00:00.000Z"
     },
     "vfw": {
       "earliest": "2026-05-24T14:00:00.000Z",
       "latest": "2026-05-27T23:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-05-17T23:00:00.000Z",
+      "earliest": "2026-05-19T23:00:00.000Z",
       "latest": "2026-06-16T23:00:00.000Z"
     },
     "community": {
@@ -68,8 +68,8 @@
       "daysSinceMoved": 1
     },
     "borough": {
-      "newest": "2027-05-10",
-      "daysSinceMoved": 7
+      "newest": "2027-05-17",
+      "daysSinceMoved": 0
     },
     "vfw": {
       "newest": "2026-05-27",
@@ -92,6 +92,13 @@
     "ties": 1
   },
   "recentlyAdded": [
+    {
+      "key": "Regular Trash & Recycling Collection |2027-05-17T12:00:00.000Z",
+      "firstSeenAt": "2026-05-18T03:57:50.821Z",
+      "title": "Regular Trash & Recycling Collection ",
+      "source": "Borough",
+      "date": "2027-05-17T12:00:00.000Z"
+    },
     {
       "key": "Millersville University Baseball vs West Chester|2026-05-21T17:00:00.000Z",
       "firstSeenAt": "2026-05-17T21:55:18.448Z",
@@ -154,14 +161,7 @@
       "title": "Girls JV Soccer @ Ephrata High School",
       "source": "PM",
       "date": "2026-09-17T21:30:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Soccer @ Ephrata High School|2026-09-17T23:00:00.000Z",
-      "firstSeenAt": "2026-05-16T05:55:35.392Z",
-      "title": "Girls Varsity Soccer @ Ephrata High School",
-      "source": "PM",
-      "date": "2026-09-17T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

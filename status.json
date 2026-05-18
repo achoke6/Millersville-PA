@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-18T16:23:03.016Z",
+  "generatedAt": "2026-05-18T18:51:35.108Z",
   "totalEvents": 937,
   "withDescription": 349,
   "withImage": 107,
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-04-20T23:00:00.000Z",
-      "latest": "2026-09-15T20:15:00.000Z"
+      "latest": "2026-09-15T20:45:00.000Z"
     },
     "borough": {
       "earliest": "2026-02-17T15:00:00.000Z",
@@ -86,12 +86,19 @@
   },
   "sports": {
     "total": 249,
-    "scored": 64,
+    "scored": 63,
     "wins": 33,
-    "losses": 30,
+    "losses": 29,
     "ties": 1
   },
   "recentlyAdded": [
+    {
+      "key": "Boys Varsity Cross Country @ Manheim Township High School|2026-09-15T20:45:00.000Z",
+      "firstSeenAt": "2026-05-18T18:51:35.106Z",
+      "title": "Boys Varsity Cross Country @ Manheim Township High School",
+      "source": "PM",
+      "date": "2026-09-15T20:45:00.000Z"
+    },
     {
       "key": "ESH End of Year Assembly|2026-06-03T13:15:00.000Z",
       "firstSeenAt": "2026-05-18T16:23:03.014Z",
@@ -154,13 +161,6 @@
       "title": "Upon A Burning Body",
       "source": "Other",
       "date": "2026-06-14T21:30:00.000Z"
-    },
-    {
-      "key": "Millersville University Baseball vs Seton Hill|2026-05-16T15:00:00.000Z",
-      "firstSeenAt": "2026-05-15T19:28:08.122Z",
-      "title": "Millersville University Baseball vs Seton Hill",
-      "source": "MU",
-      "date": "2026-05-16T15:00:00.000Z"
     }
   ],
   "addedLastRun": 1

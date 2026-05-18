@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-05-18T18:51:35.108Z",
-  "totalEvents": 937,
+  "generatedAt": "2026-05-18T20:24:56.216Z",
+  "totalEvents": 936,
   "withDescription": 349,
   "withImage": 107,
   "familyFriendly": 41,
   "eventsToday": 4,
   "sources": {
-    "muAthletics": 87,
+    "muAthletics": 85,
     "muCalendar": 162,
     "muGetInvolved": 279,
-    "pennManor": 185,
+    "pennManor": 186,
     "borough": 208,
     "vfw": 3,
     "phantomPower": 12,
     "community": 1,
-    "muHudlBroadcasts": 17
+    "muHudlBroadcasts": 16
   },
   "sourceDateRanges": {
     "muAthletics": {
@@ -30,8 +30,8 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-04-20T23:00:00.000Z",
-      "latest": "2026-09-15T20:45:00.000Z"
+      "earliest": "2026-04-21T20:00:00.000Z",
+      "latest": "2026-09-15T21:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-02-17T15:00:00.000Z",
@@ -86,12 +86,26 @@
   },
   "sports": {
     "total": 249,
-    "scored": 63,
+    "scored": 62,
     "wins": 33,
-    "losses": 29,
+    "losses": 28,
     "ties": 1
   },
   "recentlyAdded": [
+    {
+      "key": "Girls 7/8th Field Hockey @ Hempfield Senior High School|2026-09-15T21:00:00.000Z",
+      "firstSeenAt": "2026-05-18T20:24:56.214Z",
+      "title": "Girls 7/8th Field Hockey @ Hempfield Senior High School",
+      "source": "PM",
+      "date": "2026-09-15T21:00:00.000Z"
+    },
+    {
+      "key": "Girls 7/8th Volleyball @ Hempfield Senior High School|2026-09-15T21:00:00.000Z",
+      "firstSeenAt": "2026-05-18T20:24:56.214Z",
+      "title": "Girls 7/8th Volleyball @ Hempfield Senior High School",
+      "source": "PM",
+      "date": "2026-09-15T21:00:00.000Z"
+    },
     {
       "key": "Boys Varsity Cross Country @ Manheim Township High School|2026-09-15T20:45:00.000Z",
       "firstSeenAt": "2026-05-18T18:51:35.106Z",
@@ -147,21 +161,7 @@
       "title": "Jeffrey Lewis & The Voltage",
       "source": "Other",
       "date": "2026-06-16T23:00:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Lacrosse - Boys vs New Oxford High School|2026-05-19T23:00:00.000Z",
-      "firstSeenAt": "2026-05-16T11:51:14.315Z",
-      "title": "Boys Varsity Lacrosse - Boys vs New Oxford High School",
-      "source": "PM",
-      "date": "2026-05-19T23:00:00.000Z"
-    },
-    {
-      "key": "Upon A Burning Body|2026-06-14T21:30:00.000Z",
-      "firstSeenAt": "2026-05-16T11:51:14.315Z",
-      "title": "Upon A Burning Body",
-      "source": "Other",
-      "date": "2026-06-14T21:30:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 2
 }

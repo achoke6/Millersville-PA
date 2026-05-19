@@ -1,45 +1,41 @@
-# camps.json sync report — 2026-05-18
+# camps.json sync report — 2026-05-18 (updated with Chrome verification)
 
-Automated scheduled run. **No changes have been written to `camps.json`.** This is a diff-only report — review and apply the desired edits manually.
-
-## Why no auto-write
-
-The task spec calls for an interactive AskUserQuestion confirmation step before any writes. This run was kicked off by the scheduler with no user present, so following the spec's safety rule ("when in doubt, produce a report"), I'm surfacing the diff for you to apply rather than editing the JSON unattended.
+Automated scheduled run, re-run with Chrome MCP available. **No changes have been written to `camps.json`** — the task spec requires AskUserQuestion approval; this report is for you to review and apply manually.
 
 ## Source load status
 
+All 9 sources successfully scraped this pass.
+
 | # | Source | URL | Status |
 |---|---|---|---|
-| 1 | Tech camps shop | millersvilletechcamps.com/shop/ | OK — 23 products across 2 pages |
-| 2 | Alumni events listing | millersville.edu/alumni/events/ | OK — 9 upcoming events |
-| 3 | Summer Fun Series | millersville.edu/alumni/events/summer_fun/ | OK — 8 Thursday dates Jun 11 – Jul 30 |
-| 4 | Baseball camp | shehanbaseballcamps.totalcamps.com | HTTP 200, empty SPA shell — Chrome MCP not connected, can't render JS |
-| 5 | Field Hockey camp | millersvillefieldhockey.totalcamps.com | HTTP 200, empty SPA shell — Chrome MCP not connected, can't render JS |
-| 6 | Men's Soccer camp | millersvillemenssoccer.totalcamps.com | HTTP 200, empty SPA shell — Chrome MCP not connected, can't render JS |
-| 7 | Football camp | millersvillefootball.totalcamps.com | HTTP 200, empty SPA shell — Chrome MCP not connected, can't render JS |
-| 8 | Basketball camp | millersvillebasketball.totalcamps.com | HTTP 200, empty SPA shell — Chrome MCP not connected, can't render JS |
-| 9 | Women's Soccer camp | millersvillewomenssoccercamps.com | HTTP 200, empty SPA shell — Chrome MCP not connected, can't render JS |
-
-The 6 athletic camp pages all return HTTP 200 (domains alive, SPAs loading), but their session contents come from JS. Without an interactive Chrome session, I can't read the calendars to verify dates/prices.
+| 1 | Tech camps shop | millersvilletechcamps.com/shop/ | OK (web_fetch) — 23 products across 2 pages |
+| 2 | Alumni events listing | millersville.edu/alumni/events/ | OK (web_fetch) — 9 upcoming events |
+| 3 | Summer Fun Series | millersville.edu/alumni/events/summer_fun/ | OK (web_fetch) — 8 Thursday dates Jun 11 – Jul 30 |
+| 4 | Baseball camp | shehanbaseballcamps.totalcamps.com | OK (Chrome) — 13 sessions, $260–$1,900 |
+| 5 | Field Hockey camp | millersvillefieldhockey.totalcamps.com | OK (Chrome) — 3 clinics |
+| 6 | Men's Soccer camp | millersvillemenssoccer.totalcamps.com | OK (Chrome) — 2 camps starting 7/12 |
+| 7 | Football camp | millersvillefootball.totalcamps.com | OK (Chrome) — 2 sessions (5/21 and 5/29) |
+| 8 | Basketball camp | millersvillebasketball.totalcamps.com | OK (Chrome) — 2 sessions (5/30 and 5/31) |
+| 9 | Women's Soccer camp | millersvillewomenssoccercamps.com | OK (Chrome) — 2 clinics (6/29 and 7/20) |
 
 ## Summary
 
 | Bucket | Count |
 |---|---|
-| NEW (to add) | 3 |
-| MATCH with proposed changes | 0 |
-| MATCH clean | 36 |
+| NEW (to add) | 3 tech camps |
+| MATCH with proposed changes | 1 (Women's Soccer date) |
+| MATCH clean | 41 |
 | REMOVED (no longer in source) | 0 |
-| ATHLETIC FLAGS (couldn't verify) | 6 (all preserved per task rule) |
-| Date discrepancy noted | 1 (existing camps.json is correct, no action) |
+| ATHLETIC FLAGS (additional sessions not in camps.json) | 2 (Football #2, Basketball Coach Stitzel) |
+| Date discrepancy noted | 1 (Screen Printing — existing JSON correct, no action) |
 
 ## NEW — 3 tech camps to add
 
-These three WooCommerce products are live on the shop page but not yet in `camps.json`. All times/dates were pulled from the product detail pages and confirmed against the slug.
+These three WooCommerce products are live on the shop page but not yet in `camps.json`. Dates/times pulled from product detail pages.
 
 ### 1. The Maplewood Shop — Morning (Grades 3+)
 
-Companion to the existing "The Maplewood Shop — Afternoon" entry. Same week, same instructor, different time slot.
+Companion to the existing "The Maplewood Shop — Afternoon" entry — same week, same instructor, different time slot.
 
 ```json
 {
@@ -57,7 +53,7 @@ Companion to the existing "The Maplewood Shop — Afternoon" entry. Same week, s
 
 ### 2. Wood, Tools & Mastery: Build Something Beautiful (Grades 5+)
 
-New camp from instructor Alex Johnson. Hardwood box build, focus on joinery and finishing.
+Instructor Alex Johnson. Hardwood box build, focus on joinery and finishing.
 
 ```json
 {
@@ -75,7 +71,7 @@ New camp from instructor Alex Johnson. Hardwood box build, focus on joinery and 
 
 ### 3. YouTube Studio Camp (Grades 3-6)
 
-Afternoon companion to the 6/22 morning slate. Note: detail page currently shows "Out of stock" — confirm with tech camps whether registration will reopen or whether the session is canceled before publishing.
+Afternoon companion to the 6/22 morning slate. Detail page currently shows "Out of stock" — confirm with tech camps whether registration will reopen before publishing.
 
 ```json
 {
@@ -91,74 +87,75 @@ Afternoon companion to the 6/22 morning slate. Note: detail page currently shows
 }
 ```
 
-## MATCH clean (no changes proposed) — 36 entries
+## MATCH with proposed change — 1
 
-| Source slot | camps.json entry |
-|---|---|
-| Tech: build-your-own-robot-6-22-6-26 | Build Your Own Robot (Grades 7+) |
-| Tech: intro-to-solidworks | 3D Printing with SolidWorks (Grades 5+) |
-| Tech: intro-to-lego-robotics-6-22-6-26 | Intro to LEGO Robotics (Grades 3+) |
-| Tech: video-game-design | Intro to Video Game Design (Grades 6+) |
-| Tech: tech-adventure-camp | Tech Adventure Camp: D&D Theme (Grades 3-6) |
-| Tech: get-graphic | Get Graphic: Make Your Own Comic! (Grades 3+) |
-| Tech: intro-to-lego-robotics-7-6-7-10... | Intro to LEGO Robotics — Week 2 (Grades 3+) |
-| Tech: makeyourownmerch | Make Your Own Merch: Printing Exploration! (Grades 3-6) |
-| Tech: the-maplewood-shop-7-6-...-copy | The Maplewood Shop — Afternoon (Grades 3+) |
-| Tech: residentialwiring | Residential Wiring by Doing! (Grades 6+) |
-| Tech: advances-lego-robotics | Advanced LEGO Robotics (Grades 6+) |
-| Tech: aquaphonics-camp | Aquaponics Camp — NEW! (Grades 3+) |
-| Tech: cnc-machining-for-kids-7-13 | CNC Machining for Kids (Grades 6+) |
-| Tech: intro-to-fusion360 | 3D Engineering with Fusion 360 (Grades 5+) |
-| Tech: engineering-camp | Engineering Camp (Grades 5+) |
-| Tech: make-your-own-merch-printing-exploration | Make Your Own Merch: Screen Printing (Grades 6+) — see discrepancy note below |
-| Tech: robot-arm-construction | Robot Arm Construction (Grades 5+) |
-| Tech: jewelry-by-you | Jewelry by You: Wearable Art (Grades 4+) |
-| Tech: from-waste-to-wow | From Waste to Wow: Recycled Plastics (Grades 4+) |
-| Summer Fun: Jun 11 | Summer Fun Series: Happily Ever Crafter & Lancaster Public Library Storytime |
-| Summer Fun: Jun 18 | Summer Fun Series: Raven Ridge Wildlife Center & Author Beth Roberts |
-| Summer Fun: Jun 25 | Summer Fun Series: Children's Dyslexia Center & Author Sheila Jones |
-| Summer Fun: Jul 2 | Summer Fun Series: Corn Doll Husk Making with Mary Kendall & Author Lucinda Hughes '01 |
-| Summer Fun: Jul 9 | Summer Fun Series: Blue Rock Regional Fire District & Alumna Amy Hoffman |
-| Summer Fun: Jul 16 | Summer Fun Series: Partners TBD (source still shows "Looking for Partners!") |
-| Summer Fun: Jul 23 | Summer Fun Series: MU Alumni Association & Alumna Rachel Mark '25 |
-| Summer Fun: Jul 30 | Summer Fun Series Finale: Everlasting Wishes |
-| Alumni: gold (May 27) | 'Ville at the Mill |
-| Alumni: edhs (May 29) | College of Education & Human Services Grandview Vineyards Gathering |
-| Alumni: sports (Jul 25) | Philadelphia Union Millersville Takeover |
-| Alumni: candle-lighting (Aug 21) | Annual Candle Lighting Ceremony |
-| Alumni: homecoming (Oct 17) | Homecoming 2026 |
-| Alumni: veterans-day (Nov 12) | Veteran's Day Event: Salute to Service |
-| Alumni: holidays (Dec 5) | Glorious Sounds of the Season |
-| Alumni: wreath_laying (Dec 13) | Wreaths Across America Wreath Laying Ceremony |
-| Alumni: egg_hunt (Apr 3, 2027) | Millersville University Family Egg Hunt |
+### MU Women's Soccer Summer Camp — date update 6/22 → 6/29
+
+The current entry shows `2026-06-22T09:00:00`, but the Totalcamps registration page shows the **earliest 2026 clinic is Monday, June 29** (followed by Monday, July 20). The 6/22 date appears stale — the website's "About Us" page hints at 6/22 in body copy, but the actual shop/EVENT page lists 6/29 and 7/20.
+
+Proposed change (only `date` and `endTime` fields; title, registrationUrl, kidFriendly preserved per athletic-camp rules):
+
+```diff
+   {
+     "title": "MU Women's Soccer Summer Camp",
+-    "date": "2026-06-22T09:00:00-04:00",
+-    "endTime": "2026-06-22T11:30:00-04:00",
++    "date": "2026-06-29T09:00:00-04:00",
++    "endTime": "2026-06-29T11:30:00-04:00",
+     "location": "Millersville University (Chryst Field)",
+     ...
+   }
+```
+
+The clinic price tier ($100 early / $110 regular / $120 late) is visible now — you could optionally tighten `"price": "See registration page"` to `"$100-$120"`, but I'm leaving the existing string since it's still accurate.
+
+## MATCH clean — 41 entries
+
+### Tech camps (19 matches)
+
+All 19 existing tech camp entries match by slug. No field changes proposed for any of them.
+
+### Summer Fun Series (8 matches)
+
+All 8 entries (Jun 11, Jun 18, Jun 25, Jul 2, Jul 9, Jul 16 "Partners TBD", Jul 23, Jul 30 Finale) match source exactly.
+
+### Alumni events (9 matches)
+
+All 9 entries match the listing page: 'Ville at the Mill (5/27), Grandview Vineyards (5/29), Phila. Union (7/25), Candle Lighting (8/21), Homecoming (10/17), Veteran's Day (11/12), Glorious Sounds (12/5), Wreath Laying (12/13), Egg Hunt (4/3/27).
+
+### Athletic camps (5 matches — confirmed via Chrome)
+
+| Camp | Existing date in camps.json | Source-verified | Verdict |
+|---|---|---|---|
+| MU Baseball Summer Camp | 2026-06-23 09:00 | 6/23 College Coaches Clinic 1 (earliest non-sold-out) | Match (note: sold-out Team Camp #1 starts 6/12, but 6/23 is the better consumer-facing date — kept as-is) |
+| MU Field Hockey Summer Camp | 2026-05-30 09:00-13:45, $225 | 5/30 RAD Talent ID, 9:00-1:45pm, $225 | Exact match |
+| MU Men's Soccer Summer Camp | 2026-07-12 09:00 | 7/12 Boys Summer Residential Camp | Match |
+| MU Football Summer Camp | 2026-05-21 16:00-20:30, $60 | 5/21 Drew Folmar Camp #1, 4:00-8:30 PM, $60 | Exact match |
+| MU Basketball Summer Camp | 2026-05-30 09:00 | 5/30 Spring Team Camp | Match |
+
+## ATHLETIC FLAGS — 2 additional sessions not in camps.json
+
+These are extra sessions of camps that are already represented by another entry. Adam may have intentionally chosen to list only the first session — flagging for awareness, not auto-adding.
+
+1. **Football Camp #2** — 5/29/26, 4:00-8:30 PM, $60 (second of the Drew Folmar Camps). camps.json lists Camp #1 on 5/21 only.
+2. **Basketball Coach Stitzel Spring Elite Camp** — 5/31/26, $125 (high-intensity exposure camp for 9th-12th grade). camps.json lists the 5/30 Spring Team Camp only.
+
+If you want either added, I can draft entries on the next pass — but they're optional per the existing one-entry-per-camp convention.
 
 ## REMOVED — 0
 
-No entries appear in `camps.json` but missing from sources.
+No `camps.json` entries are missing from sources.
 
-## ATHLETIC FLAGS — 6 (all preserved)
+## Date discrepancy noted — 1 (no action)
 
-Per task rules, athletic camp entries are never auto-removed even when their source can't be verified. All 6 entries remain in `camps.json` as-is.
-
-| Entry | URL | Verification status |
-|---|---|---|
-| MU Baseball Summer Camp | shehanbaseballcamps.totalcamps.com | Domain alive (HTTP 200), session content not verifiable without Chrome |
-| MU Field Hockey Summer Camp | millersvillefieldhockey.totalcamps.com | Domain alive (HTTP 200), session content not verifiable without Chrome |
-| MU Men's Soccer Summer Camp | millersvillemenssoccer.totalcamps.com | Domain alive (HTTP 200), session content not verifiable without Chrome |
-| MU Football Summer Camp | millersvillefootball.totalcamps.com | Domain alive (HTTP 200), session content not verifiable without Chrome |
-| MU Basketball Summer Camp | millersvillebasketball.totalcamps.com | Domain alive (HTTP 200), session content not verifiable without Chrome |
-| MU Women's Soccer Summer Camp | millersvillewomenssoccercamps.com | Domain alive (HTTP 200), session content not verifiable without Chrome |
-
-Notable: the Football entry's existing date is `2026-05-21T16:00:00` — that's **this Thursday, 3 days from today (2026-05-18)**. If that date is correct, the camp opens this week and is worth a manual spot-check on the registration site. The other athletic camp dates in `camps.json` are also nearing — Field Hockey 5/30, Basketball 5/30 — so a one-time human review pass would be helpful before they pass.
-
-To re-run this task with full Totalcamps verification, connect the Chrome extension before running. The task spec is correct that those SPAs need JS rendering.
-
-## Date discrepancy noted — 1 (no action needed)
-
-**Make Your Own Merch: Screen Printing** — the shop listing title reads `7/13-7/22` but the product detail page body and `og:description` both say `July 13 to 17, 2026 – 9:00-12:00`. The existing `camps.json` entry already uses 7/13–7/17, which matches the detail page. The shop-page title appears to be a typo. **No change needed.** If the user wants to be defensive, the description could mention "confirm with organizers" — but the detail page is unambiguous.
+**Make Your Own Merch: Screen Printing** — shop listing title reads "7/13-7/22" but the product detail page body and `og:description` both say "July 13 to 17, 2026 – 9:00-12:00". Existing `camps.json` entry already uses 7/13-7/17, matching the detail page. The shop title is a typo. **No change needed.**
 
 ## How to apply the changes
 
-If you want to add the 3 new tech camp entries, insert them into `camps.json` immediately after the existing tech camp block (between the "From Waste to Wow" entry on line 256 and the first Summer Fun Series entry on line 258) to preserve the current ordering convention: athletic camps → tech camps → Summer Fun Series → Alumni events.
+1. **Add the 3 new tech camp entries** — insert immediately after the existing tech camp block (right before the first Summer Fun Series entry) to preserve the current ordering: athletic → tech → Summer Fun → Alumni.
 
-After editing, validate with the same jq shape checks that `.github/workflows/main.yml` enforces (or just `node -e "JSON.parse(require('fs').readFileSync('camps.json','utf8'))"`).
+2. **Update the Women's Soccer date** — change `2026-06-22` → `2026-06-29` in both `date` and `endTime` (camps.json lines 46-47).
+
+3. **Validate** after editing with `node -e "JSON.parse(require('fs').readFileSync('camps.json','utf8'))"` or the jq checks in `.github/workflows/main.yml`.
+
+4. (Optional) Decide whether to add the Football #2 and Basketball Coach Stitzel additional sessions.

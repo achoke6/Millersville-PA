@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-05-19T16:10:39.746Z",
-  "totalEvents": 931,
+  "generatedAt": "2026-05-19T16:19:23.406Z",
+  "totalEvents": 932,
   "withDescription": 350,
-  "withImage": 107,
+  "withImage": 108,
   "familyFriendly": 44,
   "eventsToday": 4,
   "sources": {
@@ -12,7 +12,7 @@
     "pennManor": 187,
     "borough": 207,
     "vfw": 3,
-    "phantomPower": 12,
+    "phantomPower": 13,
     "community": 1,
     "muHudlBroadcasts": 12
   },
@@ -43,7 +43,7 @@
     },
     "phantomPower": {
       "earliest": "2026-05-19T23:00:00.000Z",
-      "latest": "2026-06-20T00:00:00.000Z"
+      "latest": "2026-06-16T23:00:00.000Z"
     },
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
@@ -76,8 +76,8 @@
       "daysSinceMoved": 7
     },
     "phantomPower": {
-      "newest": "2026-06-20",
-      "daysSinceMoved": 1
+      "newest": "2026-06-16",
+      "daysSinceMoved": 2
     },
     "community": {
       "newest": "2026-04-27",
@@ -92,6 +92,20 @@
     "ties": 1
   },
   "recentlyAdded": [
+    {
+      "key": "The Big Do 3 w. Skipping Stones|2026-05-31T19:00:00.000Z",
+      "firstSeenAt": "2026-05-19T16:19:23.404Z",
+      "title": "The Big Do 3 w. Skipping Stones",
+      "source": "Other",
+      "date": "2026-05-31T19:00:00.000Z"
+    },
+    {
+      "key": "The Big Do 3|2026-05-31T19:00:00.000Z",
+      "firstSeenAt": "2026-05-19T16:19:23.404Z",
+      "title": "The Big Do 3",
+      "source": "Other",
+      "date": "2026-05-31T19:00:00.000Z"
+    },
     {
       "key": "YouTube Studio Camp (Grades 3-6)|2026-06-22T17:00:00.000Z",
       "firstSeenAt": "2026-05-19T16:10:39.743Z",
@@ -147,21 +161,7 @@
       "title": "Boys Varsity Cross Country @ Manheim Township High School",
       "source": "PM",
       "date": "2026-09-15T20:45:00.000Z"
-    },
-    {
-      "key": "ESH End of Year Assembly|2026-06-03T13:15:00.000Z",
-      "firstSeenAt": "2026-05-18T16:23:03.014Z",
-      "title": "ESH End of Year Assembly",
-      "source": "PM",
-      "date": "2026-06-03T13:15:00.000Z"
-    },
-    {
-      "key": "Caitlynne Curtis|2026-06-20T00:00:00.000Z",
-      "firstSeenAt": "2026-05-18T08:08:28.725Z",
-      "title": "Caitlynne Curtis",
-      "source": "Other",
-      "date": "2026-06-20T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 4
+  "addedLastRun": 2
 }

@@ -4198,7 +4198,25 @@ function renderHomeUI(){
             ? 'Nothing scheduled today.'
             : 'Nothing scheduled on ' + fmtDateLabel(homeViewDate) + '.';
         if (upcoming.length > 0) {
-            timeline.innerHTML = '<p class="home-empty">' + noneCopy + ' Coming up next:</p>' + upcoming.map(e => buildTimelineItem(e, now)).join('');
+            // Build the "Coming up next" list with day-of-week subheadings.
+            // Each event already has its time displayed, but without date
+            // context, a list of "1:00 PM, 4:00 PM, 4:30 PM" looks like
+            // a single day's schedule when it's actually events scattered
+            // across the next several days/weeks. Inserting a small day
+            // header whenever the date changes between consecutive events
+            // gives users the temporal context to scan the list.
+            let html = '<p class="home-empty">' + noneCopy + ' Coming up next:</p>';
+            let lastDateStr = null;
+            for (const e of upcoming) {
+                const evDate = new Date(e._dateMs);
+                const dStr = toDateStr(evDate);
+                if (dStr !== lastDateStr) {
+                    html += '<div class="tl-day-divider">' + fmtDateLabel(evDate) + '</div>';
+                    lastDateStr = dStr;
+                }
+                html += buildTimelineItem(e, now);
+            }
+            timeline.innerHTML = html;
         } else {
             timeline.innerHTML = '<p class="home-empty">' + noneCopy + '</p>';
         }

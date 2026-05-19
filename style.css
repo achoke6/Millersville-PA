@@ -873,6 +873,29 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .home-special-item { font-size: 0.8rem; color: var(--text); margin: 2px 0; }
 .home-empty { font-size: 0.85rem; color: var(--text-muted); font-style: italic; padding: 12px 0; }
 
+/* Day-of-week subheading inserted into the home-page "Coming up next"
+   list whenever consecutive events span different dates. Gives the
+   user date context for what would otherwise be a list of times
+   detached from any anchor day. Navy-tinted so it reads as an
+   organizational heading rather than secondary muted text. First-child
+   selector removes the top spacing when this is the first thing in
+   the list (no event item preceding it to separate from). */
+.tl-day-divider {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--navy);
+    text-transform: none;
+    letter-spacing: 0.01em;
+    padding: 10px 0 4px;
+    margin-top: 6px;
+    border-top: 1px solid var(--border);
+}
+.tl-day-divider:first-of-type {
+    border-top: 0;
+    margin-top: 0;
+    padding-top: 6px;
+}
+
 /* Sponsors Banner */
 .sponsors-banner { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
 .sponsors-banner::-webkit-scrollbar { height: 4px; }

@@ -9,6 +9,17 @@ Options -MultiViews +FollowSymLinks
 RewriteEngine On
 RewriteBase /
 
+# Force HTTPS. Any request that came in over plain HTTP gets a permanent
+# (301) redirect to the same path on HTTPS. %{HTTPS} reads "off" when the
+# connection isn't TLS — the canonical Apache pattern. Paired with the
+# Strict-Transport-Security header below, this means a returning visitor's
+# browser won't even attempt HTTP after their first successful HTTPS visit.
+# 301 is intentional: browsers cache it and search engines update indexed
+# URLs. If you ever need to roll this back, change to 302 first so it's
+# not cached forever.
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
 # If the request is for an existing file (JS, CSS, JSON, images), serve it directly
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
@@ -87,9 +98,25 @@ RewriteRule ^ index.html [L]
     # strict-origin-when-cross-origin: when a user clicks an outbound link,
     #   the destination only learns we're a millersville.app domain, not
     #   the specific page/path they were on. Privacy default.
+    # HSTS: tells browsers to always use HTTPS for this domain (and
+    #   subdomains) for the next 6 months. Paired with the HTTP->HTTPS
+    #   rewrite above, this means a returning visitor's browser refuses
+    #   to even attempt HTTP. CAUTION: this is "sticky" — if HTTPS ever
+    #   breaks (cert expiry, renewal failure), users can't bypass the
+    #   error. Let's Encrypt auto-renews on DreamHost so cert outages are
+    #   rare, but if you ever need to roll back, change max-age to 0 and
+    #   wait the 6 months for existing browsers to forget the policy.
+    #   Starting at 6 months (15768000s); consider bumping to 1 year
+    #   (31536000) or 2 years after a few weeks of confirmed stability.
+    # Permissions-Policy: disables browser features we don't use. Empty
+    #   parens () means "no origin including this one can use this feature."
+    #   We deliberately leave notifications and service-worker stuff
+    #   unmentioned — those are features we DO use for push notifications.
     Header set X-Content-Type-Options "nosniff"
     Header set X-Frame-Options "SAMEORIGIN"
     Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set Strict-Transport-Security "max-age=15768000; includeSubDomains"
+    Header set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=(), serial=(), accelerometer=(), gyroscope=(), magnetometer=(), midi=()"
 
     # JSON files & HTML: no caching at any layer. JSON for data freshness,
     # HTML so code deploys pick up instantly.

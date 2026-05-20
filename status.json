@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-05-19T22:16:41.345Z",
-  "totalEvents": 933,
-  "withDescription": 350,
-  "withImage": 108,
+  "generatedAt": "2026-05-20T00:05:39.408Z",
+  "totalEvents": 927,
+  "withDescription": 347,
+  "withImage": 107,
   "familyFriendly": 44,
-  "eventsToday": 4,
+  "eventsToday": 3,
   "sources": {
     "muAthletics": 80,
-    "muCalendar": 164,
-    "muGetInvolved": 277,
+    "muCalendar": 161,
+    "muGetInvolved": 275,
     "pennManor": 188,
     "borough": 207,
     "vfw": 3,
-    "phantomPower": 13,
+    "phantomPower": 12,
     "community": 1,
     "muHudlBroadcasts": 12
   },
@@ -22,11 +22,11 @@
       "latest": "2026-11-14T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-02-18T00:00:00.000Z",
+      "earliest": "2026-02-19T11:30:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-02-18T17:00:00.000Z",
+      "earliest": "2026-02-19T18:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
@@ -42,7 +42,7 @@
       "latest": "2026-05-27T23:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-05-19T23:00:00.000Z",
+      "earliest": "2026-05-22T00:00:00.000Z",
       "latest": "2026-06-14T21:30:00.000Z"
     },
     "community": {
@@ -163,5 +163,5 @@
       "date": "2026-09-15T21:00:00.000Z"
     }
   ],
-  "addedLastRun": 3
+  "addedLastRun": 0
 }

@@ -2,12 +2,12 @@
     "_comment": "Hand-maintained VFW Post 7294 specials + events. Maintained weekly via Claude Cowork — check https://www.vfwpost7294.org/ for new posts (typically published weekly by McKayla Herman) and transcribe specials/events here.",
     "_format": "weeklySpecials: { dateRange (human-readable), validThrough (ISO date — last day specials are valid, exclusive), items (array of strings, optional ' (Fri only)' or ' (Friday only)' suffix). events: array of { title, date (ISO with TZ), endTime (optional ISO with TZ), description (optional), price (optional) }. Date/time uses America/New_York offset.",
     "weeklySpecials": {
-        "dateRange": "Tuesday, May 12 through Saturday, May 16",
-        "validThrough": "2026-05-17",
+        "dateRange": "Tuesday, May 19 through Saturday, May 23",
+        "validThrough": "2026-05-24",
         "items": [
-            "Buffalo Chx Cheesesteak – $13.95",
-            "Sausage and Pierogies – $13.95",
-            "Fried Catfish – $14.95 (Fri only)"
+            "Pastrami & Swiss on Rye – $13.95",
+            "Shrimp Stir Fry – $13.95",
+            "Yellowfin Tuna – $14.95 (Fri only)"
         ]
     },
     "events": [

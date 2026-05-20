@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-05-20T09:32:04.655Z",
+  "generatedAt": "2026-05-20T12:24:32.844Z",
   "totalEvents": 929,
   "withDescription": 347,
-  "withImage": 107,
+  "withImage": 108,
   "familyFriendly": 44,
   "eventsToday": 0,
   "sources": {
     "muAthletics": 80,
     "muCalendar": 161,
     "muGetInvolved": 275,
-    "pennManor": 190,
+    "pennManor": 189,
     "borough": 207,
     "vfw": 3,
-    "phantomPower": 12,
+    "phantomPower": 13,
     "community": 1,
     "muHudlBroadcasts": 12
   },
@@ -43,7 +43,7 @@
     },
     "phantomPower": {
       "earliest": "2026-05-22T00:00:00.000Z",
-      "latest": "2026-06-14T21:30:00.000Z"
+      "latest": "2026-06-16T23:00:00.000Z"
     },
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
@@ -76,8 +76,8 @@
       "daysSinceMoved": 8
     },
     "phantomPower": {
-      "newest": "2026-06-14",
-      "daysSinceMoved": 4
+      "newest": "2026-06-16",
+      "daysSinceMoved": 3
     },
     "community": {
       "newest": "2026-04-27",
@@ -85,13 +85,20 @@
     }
   },
   "sports": {
-    "total": 249,
+    "total": 248,
     "scored": 57,
     "wins": 29,
     "losses": 27,
     "ties": 1
   },
   "recentlyAdded": [
+    {
+      "key": "Jeffrey Lewis & The Voltage|2026-06-16T23:00:00.000Z",
+      "firstSeenAt": "2026-05-20T12:24:32.842Z",
+      "title": "Jeffrey Lewis & The Voltage",
+      "source": "Other",
+      "date": "2026-06-16T23:00:00.000Z"
+    },
     {
       "key": "Girls Varsity Volleyball @ Hempfield Senior High School|2026-09-15T23:00:00.000Z",
       "firstSeenAt": "2026-05-20T05:04:39.308Z",
@@ -110,13 +117,6 @@
       "key": "Girls 7/8/9th Soccer @ Ephrata High School|2026-09-16T20:00:00.000Z",
       "firstSeenAt": "2026-05-20T05:04:39.308Z",
       "title": "Girls 7/8/9th Soccer @ Ephrata High School",
-      "source": "PM",
-      "date": "2026-09-16T20:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Tennis @ Manheim Township High School|2026-09-16T20:00:00.000Z",
-      "firstSeenAt": "2026-05-20T05:04:39.308Z",
-      "title": "Girls Varsity Tennis @ Manheim Township High School",
       "source": "PM",
       "date": "2026-09-16T20:00:00.000Z"
     },
@@ -163,5 +163,5 @@
       "date": "2026-06-29T13:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

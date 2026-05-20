@@ -117,6 +117,15 @@ If you add a new file that shouldn't be on the live site, add it to the lftp exc
 
 **Note about lftp excludes:** `--exclude` treats matched files as absent from BOTH local and remote, so adding a new exclude pattern does NOT delete what's already on the server. Files uploaded before an exclude was added must be manually removed via SFTP if you want them gone from production.
 
+**`.htaccess` (deployed via a separate `put` after the mirror).** Lives at repo root, served from web root. Contents and rationale:
+- `Options -MultiViews` — stops Apache from auto-matching `/sports` etc. against same-named files and bypassing the SPA rewrite. (Related to a past incident where `index.html` got renamed `Index.html` on the server and SPA routes silently 404'd.)
+- HTTP→HTTPS 301 redirect (early in the file, before SPA routing).
+- SPA fallback: `RewriteRule ^ index.html [L]` after a real-file/dir check, plus an `events.ics` → `events_ics.php` rewrite.
+- Cache policy: JSON + HTML `no-cache` (data freshness + instant deploy pickup); CSS/JS 5 min (filenames aren't hashed, so can't cache longer); images/fonts 1 year immutable.
+- Security headers: `X-Content-Type-Options: nosniff`, `X-Frame-Options: SAMEORIGIN`, `Referrer-Policy: strict-origin-when-cross-origin`, `Strict-Transport-Security: max-age=15768000; includeSubDomains`, and a `Permissions-Policy` disabling unused features (camera/mic/geo/payment/usb/etc). Scores **A** on securityheaders.com.
+- **CSP is intentionally NOT set yet** — it's the only missing header (would be A+) but is high-risk: needs every script/iframe/SW/push source scoped and report-only testing first. Deferred to its own session. Don't add a CSP casually.
+- **HSTS caution:** the `Strict-Transport-Security` header is sticky — once a browser sees it, it refuses HTTP for this domain for 6 months and won't let users click through a cert error. DreamHost's Let's Encrypt auto-renews so this is normally fine, but if you ever need to roll back HTTPS, set `max-age=0` and wait for browsers to re-fetch before doing anything that breaks TLS.
+
 ## Patterns and conventions
 
 ### Adam's working style
@@ -178,6 +187,8 @@ If you add a new file that shouldn't be on the live site, add it to the lftp exc
 - **Cache invalidation:** `sw.js` precaches the app shell with a version number that changes per deploy. Users on old service workers may see stale data until they reload — usually fixes itself within a session, but if testing a fresh deploy, hard-reload + check DevTools Application → Service Workers to verify the new SW is active.
 - **MU Hudl auth:** requires `x-hudl-usehotchocolate: 100` header (current as of April 2026). If MU broadcasts suddenly drop to 0, this header may have rotated.
 - **GitHub Actions IPs are blocked by Cloudflare** on several target sources (MU alumni events, MU tech camps). These can't be re-enabled — use Cowork/Claude Code session for those.
+- **Deleting a file doesn't always look deleted (SPA fallback masks 404s):** when you `git rm` a file and deploy, `lftp mirror --delete` *does* remove it from DreamHost. BUT requesting the deleted path can still return HTTP **200**, because the `.htaccess` SPA fallback (`RewriteRule ^ index.html [L]`) serves `index.html` for any path that isn't a real file. A 200 does NOT prove the file still exists. To actually verify a deletion: (a) check via SFTP directly, or (b) confirm the response body is the app shell (contains `Millersville.APP` / matches index.html's byte size) rather than the file's real content. A past session burned time chasing a "phantom" `mu-status-proxy.php` that was already correctly deleted — the 200 was just the SPA fallback. Don't repeat that diagnosis.
+- **Cowork-maintained files auto-expire:** `vfw.json` (weekly specials) and `grocery.json` (weekly deals) gate their specials/deals on a `validThrough` date. Once past it, VFW specials are hidden and grocery falls back to the legacy `grocery-cache.json` (showing stale deals). Events inside `vfw.json` still display regardless — only the date-gated specials/deals block goes empty. If the site shows missing or stale specials, the fix is a Cowork refresh of these files, not a code change.
 
 ## When something breaks
 

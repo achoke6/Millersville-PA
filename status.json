@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-05-20T12:24:32.844Z",
-  "totalEvents": 929,
+  "generatedAt": "2026-05-20T16:25:39.878Z",
+  "totalEvents": 930,
   "withDescription": 347,
-  "withImage": 108,
-  "familyFriendly": 44,
+  "withImage": 109,
+  "familyFriendly": 45,
   "eventsToday": 0,
   "sources": {
     "muAthletics": 80,
-    "muCalendar": 161,
+    "muCalendar": 162,
     "muGetInvolved": 275,
-    "pennManor": 189,
+    "pennManor": 188,
     "borough": 207,
     "vfw": 3,
-    "phantomPower": 13,
+    "phantomPower": 14,
     "community": 1,
     "muHudlBroadcasts": 12
   },
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-04-21T20:00:00.000Z",
-      "latest": "2026-09-16T20:00:00.000Z"
+      "latest": "2026-09-16T17:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-02-23T12:00:00.000Z",
@@ -43,7 +43,7 @@
     },
     "phantomPower": {
       "earliest": "2026-05-22T00:00:00.000Z",
-      "latest": "2026-06-16T23:00:00.000Z"
+      "latest": "2026-07-17T23:00:00.000Z"
     },
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
@@ -76,8 +76,8 @@
       "daysSinceMoved": 8
     },
     "phantomPower": {
-      "newest": "2026-06-16",
-      "daysSinceMoved": 3
+      "newest": "2026-07-17",
+      "daysSinceMoved": 0
     },
     "community": {
       "newest": "2026-04-27",
@@ -85,13 +85,27 @@
     }
   },
   "sports": {
-    "total": 248,
+    "total": 247,
     "scored": 57,
     "wins": 29,
     "losses": 27,
     "ties": 1
   },
   "recentlyAdded": [
+    {
+      "key": "Arts Smarts 2026 – Week 2: VISUAL ART Morning Session – Grades K-2|2026-07-13T13:00:00.000Z",
+      "firstSeenAt": "2026-05-20T16:25:39.876Z",
+      "title": "Arts Smarts 2026 – Week 2: VISUAL ART Morning Session – Grades K-2",
+      "source": "MU",
+      "date": "2026-07-13T13:00:00.000Z"
+    },
+    {
+      "key": "The Ex-Faces|2026-07-17T23:00:00.000Z",
+      "firstSeenAt": "2026-05-20T16:25:39.876Z",
+      "title": "The Ex-Faces",
+      "source": "Other",
+      "date": "2026-07-17T23:00:00.000Z"
+    },
     {
       "key": "Jeffrey Lewis & The Voltage|2026-06-16T23:00:00.000Z",
       "firstSeenAt": "2026-05-20T12:24:32.842Z",
@@ -112,13 +126,6 @@
       "title": "Boys Varsity Golf @ Hempfield Senior High School",
       "source": "PM",
       "date": "2026-09-16T17:00:00.000Z"
-    },
-    {
-      "key": "Girls 7/8/9th Soccer @ Ephrata High School|2026-09-16T20:00:00.000Z",
-      "firstSeenAt": "2026-05-20T05:04:39.308Z",
-      "title": "Girls 7/8/9th Soccer @ Ephrata High School",
-      "source": "PM",
-      "date": "2026-09-16T20:00:00.000Z"
     },
     {
       "key": "The Big Do 3 w. Skipping Stones|2026-05-31T19:00:00.000Z",
@@ -154,14 +161,7 @@
       "title": "YouTube Studio Camp (Grades 3-6)",
       "source": "MU",
       "date": "2026-06-22T17:00:00.000Z"
-    },
-    {
-      "key": "MU Women's Soccer Summer Camp|2026-06-29T13:00:00.000Z",
-      "firstSeenAt": "2026-05-19T16:10:39.743Z",
-      "title": "MU Women's Soccer Summer Camp",
-      "source": "MU",
-      "date": "2026-06-29T13:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 2
 }

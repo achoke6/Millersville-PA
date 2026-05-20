@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-05-20T00:05:39.408Z",
-  "totalEvents": 927,
+  "generatedAt": "2026-05-20T05:04:39.310Z",
+  "totalEvents": 929,
   "withDescription": 347,
   "withImage": 107,
   "familyFriendly": 44,
-  "eventsToday": 3,
+  "eventsToday": 0,
   "sources": {
     "muAthletics": 80,
     "muCalendar": 161,
     "muGetInvolved": 275,
-    "pennManor": 188,
+    "pennManor": 190,
     "borough": 207,
     "vfw": 3,
     "phantomPower": 12,
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-04-21T20:00:00.000Z",
-      "latest": "2026-09-15T22:00:00.000Z"
+      "latest": "2026-09-16T20:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-02-23T12:00:00.000Z",
@@ -53,45 +53,73 @@
   "staleness": {
     "muAthletics": {
       "newest": "2026-11-14",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 14
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 11
+      "daysSinceMoved": 12
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 14
     },
     "pennManor": {
-      "newest": "2026-09-15",
+      "newest": "2026-09-16",
       "daysSinceMoved": 6
     },
     "borough": {
       "newest": "2027-05-17",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "vfw": {
       "newest": "2026-05-27",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "phantomPower": {
       "newest": "2026-06-14",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "community": {
       "newest": "2026-04-27",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 14
     }
   },
   "sports": {
-    "total": 246,
+    "total": 249,
     "scored": 57,
-    "wins": 30,
-    "losses": 26,
+    "wins": 29,
+    "losses": 27,
     "ties": 1
   },
   "recentlyAdded": [
+    {
+      "key": "Girls Varsity Volleyball @ Hempfield Senior High School|2026-09-15T23:00:00.000Z",
+      "firstSeenAt": "2026-05-20T05:04:39.308Z",
+      "title": "Girls Varsity Volleyball @ Hempfield Senior High School",
+      "source": "PM",
+      "date": "2026-09-15T23:00:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Golf @ Hempfield Senior High School|2026-09-16T17:00:00.000Z",
+      "firstSeenAt": "2026-05-20T05:04:39.308Z",
+      "title": "Boys Varsity Golf @ Hempfield Senior High School",
+      "source": "PM",
+      "date": "2026-09-16T17:00:00.000Z"
+    },
+    {
+      "key": "Girls 7/8/9th Soccer @ Ephrata High School|2026-09-16T20:00:00.000Z",
+      "firstSeenAt": "2026-05-20T05:04:39.308Z",
+      "title": "Girls 7/8/9th Soccer @ Ephrata High School",
+      "source": "PM",
+      "date": "2026-09-16T20:00:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Tennis @ Manheim Township High School|2026-09-16T20:00:00.000Z",
+      "firstSeenAt": "2026-05-20T05:04:39.308Z",
+      "title": "Girls Varsity Tennis @ Manheim Township High School",
+      "source": "PM",
+      "date": "2026-09-16T20:00:00.000Z"
+    },
     {
       "key": "The Big Do 3 w. Skipping Stones|2026-05-31T19:00:00.000Z",
       "firstSeenAt": "2026-05-19T22:16:41.343Z",
@@ -133,35 +161,7 @@
       "title": "MU Women's Soccer Summer Camp",
       "source": "MU",
       "date": "2026-06-29T13:00:00.000Z"
-    },
-    {
-      "key": "The Maplewood Shop — Morning (Grades 3+)|2026-07-06T13:00:00.000Z",
-      "firstSeenAt": "2026-05-19T16:10:39.743Z",
-      "title": "The Maplewood Shop — Morning (Grades 3+)",
-      "source": "MU",
-      "date": "2026-07-06T13:00:00.000Z"
-    },
-    {
-      "key": "Wood, Tools & Mastery: Build Something Beautiful (Grades 5+)|2026-07-06T13:00:00.000Z",
-      "firstSeenAt": "2026-05-19T16:10:39.743Z",
-      "title": "Wood, Tools & Mastery: Build Something Beautiful (Grades 5+)",
-      "source": "MU",
-      "date": "2026-07-06T13:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Cross Country @ Manheim Township High School|2026-09-15T21:15:00.000Z",
-      "firstSeenAt": "2026-05-19T05:00:33.329Z",
-      "title": "Girls Varsity Cross Country @ Manheim Township High School",
-      "source": "PM",
-      "date": "2026-09-15T21:15:00.000Z"
-    },
-    {
-      "key": "Girls 7/8th Field Hockey @ Hempfield Senior High School|2026-09-15T21:00:00.000Z",
-      "firstSeenAt": "2026-05-18T20:24:56.214Z",
-      "title": "Girls 7/8th Field Hockey @ Hempfield Senior High School",
-      "source": "PM",
-      "date": "2026-09-15T21:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 4
 }

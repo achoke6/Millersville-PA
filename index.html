@@ -26,13 +26,26 @@
     <meta property="og:description" content="Your daily guide to Millersville, PA. Events, MU Marauders & Penn Manor Comets sports, news, weather, restaurants. Free and ad-free.">
     <meta property="og:url" content="https://millersville.app/">
     <meta property="og:image" content="https://millersville.app/Mapp.png">
+    <!-- Image dimensions, type, and alt help link-preview crawlers render
+         the card reliably. Mapp.png is the 512x512 app icon — works as a
+         small thumbnail. A landscape 1200x630 social card would render
+         larger previews on Twitter/Discord but requires a design asset
+         we don't have yet. -->
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:alt" content="Millersville.APP — community aggregator for Millersville, PA">
     <meta property="og:locale" content="en_US">
 
-    <!-- Twitter Card -->
+    <!-- Twitter Card. Using 'summary' (small square thumbnail) rather than
+         'summary_large_image' (wide landscape card) because our og:image is
+         a 512x512 app icon, not a 1200x630 card. Switch to summary_large_image
+         if/when a proper landscape social card image is produced. -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Millersville.APP">
     <meta name="twitter:description" content="Events, sports, news & community for Millersville, PA — free and ad-free.">
     <meta name="twitter:image" content="https://millersville.app/Mapp.png">
+    <meta name="twitter:image:alt" content="Millersville.APP — community aggregator for Millersville, PA">
 
     <!-- Schema.org WebSite entity — helps Google understand the site's scope
          and enables the SERP site-search box. -->

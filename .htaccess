@@ -1,4 +1,11 @@
-Options +FollowSymLinks
+# Disable MultiViews to prevent Apache from doing implicit filename matching.
+# On Apache (DreamHost), if /sports is requested and a file or folder named
+# "sports" exists nearby, MultiViews can negotiate the match itself and
+# bypass our SPA rewrite below, causing 404s or wrong-file responses. This
+# is the same class of bug as a past incident where index.html got renamed
+# to Index.html on the server and the SPA broke silently. Disabling
+# MultiViews ensures the rewrite rule always wins.
+Options -MultiViews +FollowSymLinks
 RewriteEngine On
 RewriteBase /
 
@@ -21,11 +28,16 @@ RewriteRule ^ index.html [L]
 # Cache-Control headers
 # =====================================================================
 # Different file types get different cache lifetimes:
-#   - JSON data files (events, news, weather): NO CACHE — scraper refreshes
-#     these hourly and users should always see current data.
-#   - HTML/JS/CSS: 5-minute cache — short enough that code deploys propagate
-#     to users quickly, long enough to avoid hammering the server on every
-#     page load.
+#   - JSON data files: NO CACHE — scraper refreshes hourly, users always
+#     see fresh data.
+#   - HTML (index.html): NO CACHE — when we ship a code change, the next
+#     visit needs to pick up the new app.js immediately. Caching HTML
+#     even briefly delays deploy pickup with no real benefit (HTML is
+#     tiny).
+#   - CSS / JS: 5-minute cache — short enough that code deploys propagate
+#     quickly, long enough to avoid hammering the server on every page
+#     load. Our build doesn't hash filenames, so we can't safely cache
+#     longer.
 #   - Images, fonts, favicon: 1 year — these rarely change.
 #
 # IfModule guards keep the file safe if a module isn't loaded (it would just
@@ -38,8 +50,8 @@ RewriteRule ^ index.html [L]
     # JSON data files — never cache, always fresh from server
     ExpiresByType application/json "access plus 0 seconds"
 
-    # HTML — 5 minutes (deploy propagation tradeoff)
-    ExpiresByType text/html "access plus 5 minutes"
+    # HTML — never cache (so code deploys pick up immediately on next visit)
+    ExpiresByType text/html "access plus 0 seconds"
 
     # CSS / JS — 5 minutes
     ExpiresByType text/css "access plus 5 minutes"
@@ -62,20 +74,34 @@ RewriteRule ^ index.html [L]
     ExpiresByType application/font-woff2 "access plus 1 year"
 </IfModule>
 
-# Add explicit Cache-Control headers (mod_expires only sets the Expires
-# header on older Apache versions; modern caches and CDNs respect
-# Cache-Control more reliably). The mod_headers rules below mirror the
-# mod_expires settings so both layers are covered.
+# Cache-Control + security headers. mod_headers is more reliably respected
+# by modern caches/CDNs than mod_expires alone, so we set both. Security
+# headers ship here too rather than in a separate block — same module guard.
 <IfModule mod_headers.c>
-    # JSON files: no caching at any layer
-    <FilesMatch "\.json$">
+    # Security headers — apply to all responses.
+    # nosniff: prevents browsers from second-guessing the Content-Type
+    #   header we send (a small XSS vector if we ever serve user content).
+    # SAMEORIGIN: prevents other sites from iframing millersville.app for
+    #   clickjacking. We iframe our own /mu-status-proxy.php from /emergency
+    #   which is same-origin, so this doesn't break anything we do.
+    # strict-origin-when-cross-origin: when a user clicks an outbound link,
+    #   the destination only learns we're a millersville.app domain, not
+    #   the specific page/path they were on. Privacy default.
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # JSON files & HTML: no caching at any layer. JSON for data freshness,
+    # HTML so code deploys pick up instantly.
+    <FilesMatch "\.(json|html)$">
         Header set Cache-Control "no-cache, no-store, must-revalidate"
         Header set Pragma "no-cache"
         Header set Expires "0"
     </FilesMatch>
 
-    # HTML/JS/CSS: short cache, allow revalidation
-    <FilesMatch "\.(html|css|js)$">
+    # CSS/JS: short cache, allow revalidation. Our build doesn't hash
+    # filenames so we can't safely go longer.
+    <FilesMatch "\.(css|js)$">
         Header set Cache-Control "public, max-age=300, must-revalidate"
     </FilesMatch>
 

@@ -2703,7 +2703,7 @@ async function loadEvents(){
     }
     renderEvents(); renderSports();
     if (currentNews.length > 0) renderNewsUI();
-    // Inject schema.org Event structured data for the next ~20 upcoming public
+    // Inject schema.org Event structured data for the next ~50 upcoming public
     // events. Helps Google, Bing, and social-media crawlers understand what's
     // scheduled. Runs once per load — enough for SEO discovery.
     if (typeof emitEventsStructuredData === 'function') emitEventsStructuredData();
@@ -2721,7 +2721,9 @@ async function loadEvents(){
 
 // Emit schema.org Event JSON-LD for upcoming public events. We skip student-
 // only (mu-only) content since that's irrelevant to general web search, and
-// we cap at 20 to keep the payload reasonable. Google's Event rich results
+// we cap at 50 to keep the payload reasonable. Events are mapped to a
+// schema.org subtype (SportsEvent / MusicEvent) where the tags make it
+// unambiguous, otherwise generic Event. Google's Event rich results
 // require: @type, name, startDate, location (with @type Place + name). We
 // also include endDate (estimated) and eventStatus, which are recommended.
 function emitEventsStructuredData() {
@@ -2742,7 +2744,7 @@ function emitEventsStructuredData() {
                 if ((e.tags || []).includes('Clubs/Orgs') && e.audience !== 'public') return false;
                 return true;
             })
-            .slice(0, 20);
+            .slice(0, 50);
         if (upcoming.length === 0) return;
 
         const cleanLoc = (loc) => {
@@ -2757,10 +2759,23 @@ function emitEventsStructuredData() {
             // and it's closer to reality than omitting endDate entirely.
             const tags = e.tags || [];
             const isSport = tags.includes('Athletics') || tags.includes('Athletic Competitions');
+            // Map to a schema.org Event subtype where the tag vocabulary makes
+            // it unambiguous. SportsEvent and MusicEvent are well-supported in
+            // Google's rich results and help categorize for "sports near me" /
+            // "concerts near me" surfaces. EducationEvent is intentionally NOT
+            // mapped — there's no clean tag that reliably means "educational"
+            // (MU calendar lectures, workshops, etc. share tags with general
+            // community events), and an incorrect subtype is worse for SEO than
+            // an accurate generic Event. Anything not clearly sport or music
+            // falls through to the base Event type.
+            const isMusic = tags.includes('Live Music')
+                || tags.includes('Music/Arts')
+                || tags.includes('Arts Concert / Performance');
+            const eventType = isSport ? 'SportsEvent' : (isMusic ? 'MusicEvent' : 'Event');
             const endD = new Date(d.getTime() + (isSport ? 3 : 2) * 60 * 60 * 1000);
             const item = {
                 "@context": "https://schema.org",
-                "@type": "Event",
+                "@type": eventType,
                 "name": e.title || 'Millersville event',
                 "startDate": d.toISOString(),
                 "endDate": endD.toISOString(),

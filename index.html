@@ -97,7 +97,6 @@
             <button id="nav-places" class="nav-link" onclick="switchView('places'); toggleMobileMenu();">Places</button>
             <button id="nav-board" class="nav-link" onclick="switchView('board'); toggleMobileMenu();">Board</button>
             <button id="nav-weather" class="nav-link" onclick="switchView('weather'); toggleMobileMenu();">Weather</button>
-            <button id="nav-emergency" class="nav-link nav-emergency" onclick="switchView('emergency'); toggleMobileMenu();">Emergency</button>
             <button id="nav-store" class="nav-link" onclick="switchView('store'); toggleMobileMenu();">Store</button>
             <div class="nav-cart-widget" onclick="loadEcwidStore(); switchView('store');" title="View cart"><div class="ec-cart-widget"></div></div>
             <button id="nav-advertise" class="nav-link nav-advertise" onclick="switchView('advertise'); toggleMobileMenu();">Advertise</button>
@@ -494,112 +493,6 @@
                 <summary>Can I update my listing or specials myself?</summary>
                 <p>We handle all updates for you. Just send us the changes and we'll have them live within hours. Restaurant specials can be updated weekly.</p>
             </details>
-        </div>
-    </section>
-
-    <!-- EMERGENCY -->
-    <!-- Top-level resource page surfacing emergency-related signups, embeds,
-         and contacts. Content is intentionally mostly static — incident data
-         comes via iframes from authoritative sources (PulsePoint, MU's
-         emergency-status page) rather than our hourly cron, since incident
-         freshness matters in minutes and our cron only runs hourly.
-         Iframes are paired with sibling "view on site" links so the page
-         stays useful even if a source blocks framing via X-Frame-Options. -->
-    <section id="view-emergency" class="app-view">
-        <!-- 911 banner: most prominent element. Always-visible reminder that
-             dial 911 is the primary action, not anything on this page. -->
-        <div class="em-911-banner">
-            <div class="em-911-icon">🚨</div>
-            <div class="em-911-text">
-                <strong>In an emergency, dial 911</strong>
-                <span>This page is for resources and notifications — not a substitute for emergency services.</span>
-            </div>
-        </div>
-
-        <!-- Combined MU card: signup CTA on top, live status below. The
-             Sign Up button is the primary action; the live status below
-             gives context for why someone would want alerts. Merging two
-             previously-separate cards reduces visual sprawl on a page
-             where each section needs to feel deliberate, not duplicative. -->
-        <div class="em-card em-mualert">
-            <div class="em-card-head">
-                <h3 class="em-card-title">MU | Alert &amp; Current Status</h3>
-                <span class="em-card-sub">Free emergency notifications from Millersville University Police</span>
-            </div>
-            <p class="em-card-body">MU Alert sends text and email notifications for active threats, gas leaks, fires, weather closings, and other on-campus emergencies. <strong>Free to sign up — open to community members, not just MU students.</strong></p>
-            <a href="https://millersville.omnilert.net/subscriber.php?command=show_signup" target="_blank" rel="noopener" class="em-cta-btn">Sign Up for MU Alert →</a>
-
-            <!-- Current status sub-section — served via our server-side
-                 proxy at mu-status-proxy.php which extracts the "Campus
-                 Emergency Status" section from millersville.edu/emergency-status.php
-                 and serves it cookie-banner-free, styled to match. -->
-            <h4 class="em-card-subhead">Current MU Status</h4>
-            <div class="em-iframe-wrap em-iframe-wrap-short">
-                <iframe
-                    src="/mu-status-proxy.php"
-                    title="MU Emergency Status"
-                    loading="lazy"
-                    class="em-iframe em-iframe-status"></iframe>
-            </div>
-            <a href="https://www.millersville.edu/emergency-status.php" target="_blank" rel="noopener" class="em-fallback-link">View full page on millersville.edu →</a>
-        </div>
-
-        <!-- PulsePoint: live fire/EMS dispatch data. The ?agencies= URL
-             param skips the "configure your feed" setup that the unfiltered
-             web.pulsepoint.org page would otherwise show. Agency ID comes
-             from PulsePoint's registry — see pulsepoint.org/respond-embed-example
-             for the official embed pattern documentation.
-             EMS1584 is Lancaster County's PulsePoint agency (LCWC dispatch). -->
-        <div class="em-card">
-            <div class="em-card-head">
-                <h3 class="em-card-title">Lancaster County Active Incidents</h3>
-                <span class="em-card-sub">Live fire and EMS dispatch data from PulsePoint</span>
-            </div>
-            <div class="em-iframe-wrap em-iframe-wrap-tall">
-                <iframe
-                    src="https://web.pulsepoint.org/?agencies=EMS1584"
-                    title="PulsePoint live incidents"
-                    loading="lazy"
-                    sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-                    class="em-iframe em-iframe-pulsepoint"></iframe>
-            </div>
-            <a href="https://web.pulsepoint.org/?agencies=EMS1584" target="_blank" rel="noopener" class="em-fallback-link">View on PulsePoint →</a>
-            <p class="em-disclaimer">Data from PulsePoint. PulsePoint shows public dispatches only and may not include all incidents. For real emergencies, dial 911.</p>
-        </div>
-
-        <!-- Static emergency contact list. tel: links work as tap-to-call
-             on mobile and on desktop via dialer integrations. -->
-        <div class="em-card">
-            <div class="em-card-head">
-                <h3 class="em-card-title">Emergency Contacts</h3>
-            </div>
-            <ul class="em-contacts">
-                <li class="em-contact em-contact-911">
-                    <span class="em-contact-label">Emergency (police, fire, EMS)</span>
-                    <a href="tel:911" class="em-contact-num">911</a>
-                </li>
-                <li class="em-contact">
-                    <span class="em-contact-label">MU University Police (non-emergency)</span>
-                    <a href="tel:18009572677" class="em-contact-num">1-800-957-2677</a>
-                </li>
-                <li class="em-contact">
-                    <span class="em-contact-label">Millersville Borough Police (non-emergency)</span>
-                    <a href="tel:7178729111" class="em-contact-num">(717) 872-9111</a>
-                </li>
-            </ul>
-        </div>
-
-        <!-- Additional resources: official sources for residents who want
-             to dig deeper or set up additional alerts. -->
-        <div class="em-card">
-            <div class="em-card-head">
-                <h3 class="em-card-title">More Resources</h3>
-            </div>
-            <ul class="em-resources">
-                <li><a href="https://lcwc911.us/" target="_blank" rel="noopener">Lancaster County 911 (LCWC) →</a></li>
-                <li><a href="https://co.lancaster.pa.us/168/Department-of-Public-Safety" target="_blank" rel="noopener">Lancaster County Department of Public Safety →</a></li>
-                <li><a href="https://www.millersville.edu/cdre/student-emergency-preparedness/" target="_blank" rel="noopener">MU Emergency Preparedness Guide →</a></li>
-            </ul>
         </div>
     </section>
 </main>

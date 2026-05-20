@@ -93,8 +93,8 @@ RewriteRule ^ index.html [L]
     # nosniff: prevents browsers from second-guessing the Content-Type
     #   header we send (a small XSS vector if we ever serve user content).
     # SAMEORIGIN: prevents other sites from iframing millersville.app for
-    #   clickjacking. We iframe our own /mu-status-proxy.php from /emergency
-    #   which is same-origin, so this doesn't break anything we do.
+    #   clickjacking. We don't embed our own pages cross-origin, so this
+    #   is a safe default.
     # strict-origin-when-cross-origin: when a user clicks an outbound link,
     #   the destination only learns we're a millersville.app domain, not
     #   the specific page/path they were on. Privacy default.

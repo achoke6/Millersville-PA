@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-05-21T03:36:22.328Z",
+  "generatedAt": "2026-05-21T07:52:07.466Z",
   "totalEvents": 927,
   "withDescription": 344,
   "withImage": 109,
   "familyFriendly": 45,
-  "eventsToday": 0,
+  "eventsToday": 5,
   "sources": {
     "muAthletics": 80,
     "muCalendar": 160,
@@ -53,35 +53,35 @@
   "staleness": {
     "muAthletics": {
       "newest": "2026-11-14",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 15
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 12
+      "daysSinceMoved": 13
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 15
     },
     "pennManor": {
       "newest": "2026-09-16",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     },
     "borough": {
       "newest": "2027-05-17",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "vfw": {
       "newest": "2026-05-27",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 9
     },
     "phantomPower": {
       "newest": "2026-07-17",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "community": {
       "newest": "2026-04-27",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 15
     }
   },
   "sports": {
@@ -93,6 +93,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Girls Varsity Tennis @ Manheim Township High School|2026-09-16T20:00:00.000Z",
+      "firstSeenAt": "2026-05-21T07:52:07.464Z",
+      "title": "Girls Varsity Tennis @ Manheim Township High School",
+      "source": "PM",
+      "date": "2026-09-16T20:00:00.000Z"
+    },
+    {
       "key": "Girls 7/8/9th Track & Field - Outdoor vs LANCASTER Wheatland Middle School|2026-04-21T20:00:00.000Z",
       "firstSeenAt": "2026-05-20T23:13:33.484Z",
       "title": "Girls 7/8/9th Track & Field - Outdoor vs LANCASTER Wheatland Middle School",
@@ -103,13 +110,6 @@
       "key": "Boys 7/8/9th Track & Field - Outdoor vs LANCASTER Wheatland Middle School|2026-04-21T20:00:00.000Z",
       "firstSeenAt": "2026-05-20T23:13:33.484Z",
       "title": "Boys 7/8/9th Track & Field - Outdoor vs LANCASTER Wheatland Middle School",
-      "source": "PM",
-      "date": "2026-04-21T20:00:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Tennis vs Manheim Central High School|2026-04-21T20:00:00.000Z",
-      "firstSeenAt": "2026-05-20T23:13:33.484Z",
-      "title": "Boys Varsity Tennis vs Manheim Central High School",
       "source": "PM",
       "date": "2026-04-21T20:00:00.000Z"
     },
@@ -163,5 +163,5 @@
       "date": "2026-04-22T20:15:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

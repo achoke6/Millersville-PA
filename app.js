@@ -4397,17 +4397,18 @@ function buildTimelineItem(e, now) {
         }
     }
 
-    // Ticket icon for events with a purchase link. Suppressed for marauders on
-    // MU athletic events because MU students get in free with their student ID
-    // (the icon would just cause confusion / unnecessary clicks). Townies always
-    // see the icon when a ticket link exists — they pay for everything. Unset
-    // affiliation defaults to marauder behavior (the app's default audience).
+    // Ticket icon for events with a purchase link. The presence of a ticket
+    // link is itself the signal that tickets are actually for sale: MU's iCal
+    // only includes a "Tickets:" URL on games that charge admission (postseason
+    // / NCAA tournament games, special events), which students pay for too.
+    // Regular free home games carry no ticket link, so they never show an icon
+    // regardless of audience. We previously suppressed the icon for marauders
+    // on all MU athletic events assuming "students get in free" — but that only
+    // ever hid the icon on genuinely paid games, which was actively unhelpful.
     // Click opens the ticket link directly and stops propagation so the card's
     // modal doesn't also fire; title attribute hints at the action on hover.
     let ticketBtn = '';
-    const isMUAthletic = isSport && tags.includes('MU');
-    const hideTicketForMarauder = (muAffiliation !== 'townie') && isMUAthletic;
-    if (e.ticketLink && e.ticketLink.trim() && !hideTicketForMarauder) {
+    if (e.ticketLink && e.ticketLink.trim()) {
         const safeUrl = e.ticketLink.replace(/"/g, '&quot;');
         ticketBtn = `<a href="${safeUrl}" target="_blank" rel="noopener" class="tl-ticket" title="Buy tickets" onclick="event.stopPropagation();">🎟️</a>`;
     }

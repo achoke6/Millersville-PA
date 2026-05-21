@@ -793,22 +793,28 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .weather-bar-cond { font-size: 0.85rem; opacity: 0.85; }
 .weather-bar-date { font-size: 0.85rem; font-weight: 600; opacity: 0.9; }
 
-/* MBA Featured-member spotlight — sits in the weather bar's right slot (navy
-   gradient bg), rotating among paid spotlight members. Light card to pop on
-   navy. Width-constrained so it stays roughly a third of the bar. */
-.home-spotlight { display: flex; justify-content: flex-end; align-items: center; max-width: 46%; flex-shrink: 0; }
-.spotlight-card { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; text-decoration: none; background: rgba(255,255,255,0.95); border-radius: var(--radius-sm); padding: 6px 10px; max-width: 100%; transition: opacity 0.4s ease; animation: spotlight-fade 0.5s ease; }
-.spotlight-card:hover { background: #fff; }
-.spotlight-kicker { font-size: 0.58rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gold); line-height: 1; }
-.spotlight-logo { max-height: 30px; max-width: 130px; object-fit: contain; display: block; }
-.spotlight-name { font-size: 0.82rem; font-weight: 800; color: var(--navy); text-align: right; line-height: 1.1; }
-.spotlight-tagline { font-size: 0.62rem; color: var(--text-muted); text-align: right; line-height: 1.15; max-width: 150px; }
+/* Home top row: weather (2/3) + MBA spotlight (1/3) as two separate rounded
+   cards side by side. When there's no spotlight to show, .home-spotlight is
+   hidden and the weather bar fills the row. */
+.home-top-row { display: flex; gap: 10px; align-items: stretch; }
+.home-top-row .weather-bar { flex: 2; }
+.home-spotlight { flex: 1; display: flex; min-width: 0; }
+.home-spotlight:empty { display: none; }
+
+/* The spotlight card — its own navy rounded rectangle matching the weather bar,
+   rotating among paid MBA spotlight members. */
+.spotlight-card { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 3px; width: 100%; text-decoration: none; background: linear-gradient(135deg, var(--navy) 0%, #1e40af 100%); border-radius: var(--radius); padding: 10px 12px; transition: opacity 0.4s ease; animation: spotlight-fade 0.5s ease; overflow: hidden; }
+.spotlight-card:hover { filter: brightness(1.08); }
+.spotlight-kicker { font-size: 0.56rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gold); line-height: 1; text-align: center; }
+.spotlight-logo { max-height: 34px; max-width: 100%; object-fit: contain; display: block; background: rgba(255,255,255,0.95); border-radius: 4px; padding: 3px 5px; }
+.spotlight-name { font-size: 0.8rem; font-weight: 800; color: #fff; text-align: center; line-height: 1.1; }
+.spotlight-tagline { font-size: 0.6rem; color: rgba(255,255,255,0.85); text-align: center; line-height: 1.15; }
 @keyframes spotlight-fade { from { opacity: 0; } to { opacity: 1; } }
-/* On narrow phones, drop the tagline so the card stays compact next to weather. */
-@media (max-width: 420px) {
+/* On narrow phones keep it compact: drop the tagline, shrink the logo. */
+@media (max-width: 480px) {
     .spotlight-tagline { display: none; }
-    .spotlight-logo { max-height: 26px; max-width: 100px; }
-    .home-spotlight { max-width: 42%; }
+    .spotlight-logo { max-height: 28px; }
+    .spotlight-kicker { font-size: 0.5rem; }
 }
 
 .home-section { margin-bottom: 20px; }

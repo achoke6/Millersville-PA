@@ -4722,14 +4722,17 @@ function buildCampusCupboardItems(dayName) {
 async function loadWeather(){
     try{const data=await(await fetch('weather.json')).json();
     const icon=data.icon||'🌡️';
-    // Home page compact weather bar. The right slot, which used to show the
-    // date, now hosts the MBA spotlight rotation (date moved to the events
-    // header). renderSpotlight() fills #home-spotlight after this runs.
-    document.getElementById('home-weather-bar').innerHTML=`<div class="weather-bar">
-        <div class="weather-bar-left">
-            <span class="weather-bar-icon">${icon}</span>
-            <span class="weather-bar-temp">${data.temp}°F</span>
-            <span class="weather-bar-cond">${data.condition}</span>
+    // Home page: weather bar (2/3) and MBA spotlight (1/3) as two SEPARATE
+    // rounded cards in a flex row — siblings, not nested. The date moved to the
+    // events header. renderSpotlight() fills #home-spotlight after this runs;
+    // if there's no spotlight to show, the row collapses to weather full-width.
+    document.getElementById('home-weather-bar').innerHTML=`<div class="home-top-row">
+        <div class="weather-bar" onclick="switchView('weather')" style="cursor:pointer;">
+            <div class="weather-bar-left">
+                <span class="weather-bar-icon">${icon}</span>
+                <span class="weather-bar-temp">${data.temp}°F</span>
+                <span class="weather-bar-cond">${data.condition}</span>
+            </div>
         </div>
         <div id="home-spotlight" class="home-spotlight" aria-label="Featured local member"></div>
     </div>`;

@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-05-20T19:35:23.353Z",
-  "totalEvents": 930,
-  "withDescription": 347,
+  "generatedAt": "2026-05-21T11:23:39.040Z",
+  "totalEvents": 927,
+  "withDescription": 344,
   "withImage": 109,
   "familyFriendly": 45,
-  "eventsToday": 0,
+  "eventsToday": 5,
   "sources": {
     "muAthletics": 80,
-    "muCalendar": 162,
-    "muGetInvolved": 275,
+    "muCalendar": 160,
+    "muGetInvolved": 274,
     "pennManor": 188,
     "borough": 207,
     "vfw": 3,
@@ -22,16 +22,16 @@
       "latest": "2026-11-14T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-02-19T11:30:00.000Z",
+      "earliest": "2026-02-21T09:00:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-02-19T18:00:00.000Z",
+      "earliest": "2026-02-20T15:30:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
       "earliest": "2026-04-21T20:00:00.000Z",
-      "latest": "2026-09-16T17:00:00.000Z"
+      "latest": "2026-09-16T20:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-02-23T12:00:00.000Z",
@@ -53,35 +53,35 @@
   "staleness": {
     "muAthletics": {
       "newest": "2026-11-14",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 15
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 12
+      "daysSinceMoved": 13
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 15
     },
     "pennManor": {
       "newest": "2026-09-16",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     },
     "borough": {
       "newest": "2027-05-17",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "vfw": {
       "newest": "2026-05-27",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 9
     },
     "phantomPower": {
       "newest": "2026-07-17",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "community": {
       "newest": "2026-04-27",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 15
     }
   },
   "sports": {
@@ -93,74 +93,74 @@
   },
   "recentlyAdded": [
     {
-      "key": "Millersville University Baseball vs West Chester|2026-05-21T20:00:00.000Z",
-      "firstSeenAt": "2026-05-20T17:05:20.403Z",
-      "title": "Millersville University Baseball vs West Chester",
-      "source": "MU",
-      "date": "2026-05-21T20:00:00.000Z"
-    },
-    {
-      "key": "Arts Smarts 2026 – Week 2: VISUAL ART Morning Session – Grades K-2|2026-07-13T13:00:00.000Z",
-      "firstSeenAt": "2026-05-20T16:25:39.876Z",
-      "title": "Arts Smarts 2026 – Week 2: VISUAL ART Morning Session – Grades K-2",
-      "source": "MU",
-      "date": "2026-07-13T13:00:00.000Z"
-    },
-    {
-      "key": "The Ex-Faces|2026-07-17T23:00:00.000Z",
-      "firstSeenAt": "2026-05-20T16:25:39.876Z",
-      "title": "The Ex-Faces",
-      "source": "Other",
-      "date": "2026-07-17T23:00:00.000Z"
-    },
-    {
-      "key": "Jeffrey Lewis & The Voltage|2026-06-16T23:00:00.000Z",
-      "firstSeenAt": "2026-05-20T12:24:32.842Z",
-      "title": "Jeffrey Lewis & The Voltage",
-      "source": "Other",
-      "date": "2026-06-16T23:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Volleyball @ Hempfield Senior High School|2026-09-15T23:00:00.000Z",
-      "firstSeenAt": "2026-05-20T05:04:39.308Z",
-      "title": "Girls Varsity Volleyball @ Hempfield Senior High School",
+      "key": "Girls Varsity Tennis @ Manheim Township High School|2026-09-16T20:00:00.000Z",
+      "firstSeenAt": "2026-05-21T07:52:07.464Z",
+      "title": "Girls Varsity Tennis @ Manheim Township High School",
       "source": "PM",
-      "date": "2026-09-15T23:00:00.000Z"
+      "date": "2026-09-16T20:00:00.000Z"
     },
     {
-      "key": "Boys Varsity Golf @ Hempfield Senior High School|2026-09-16T17:00:00.000Z",
-      "firstSeenAt": "2026-05-20T05:04:39.308Z",
-      "title": "Boys Varsity Golf @ Hempfield Senior High School",
+      "key": "Girls 7/8/9th Track & Field - Outdoor vs LANCASTER Wheatland Middle School|2026-04-21T20:00:00.000Z",
+      "firstSeenAt": "2026-05-20T23:13:33.484Z",
+      "title": "Girls 7/8/9th Track & Field - Outdoor vs LANCASTER Wheatland Middle School",
       "source": "PM",
-      "date": "2026-09-16T17:00:00.000Z"
+      "date": "2026-04-21T20:00:00.000Z"
     },
     {
-      "key": "The Big Do 3 w. Skipping Stones|2026-05-31T19:00:00.000Z",
-      "firstSeenAt": "2026-05-19T22:16:41.343Z",
-      "title": "The Big Do 3 w. Skipping Stones",
-      "source": "Other",
-      "date": "2026-05-31T19:00:00.000Z"
-    },
-    {
-      "key": "The Big Do 3|2026-05-31T19:00:00.000Z",
-      "firstSeenAt": "2026-05-19T22:16:41.343Z",
-      "title": "The Big Do 3",
-      "source": "Other",
-      "date": "2026-05-31T19:00:00.000Z"
-    },
-    {
-      "key": "Casual Cruelty w. Marrowed + more|2026-06-05T00:00:00.000Z",
-      "firstSeenAt": "2026-05-19T22:16:41.343Z",
-      "title": "Casual Cruelty w. Marrowed + more",
-      "source": "Other",
-      "date": "2026-06-05T00:00:00.000Z"
-    },
-    {
-      "key": "Girls JV Volleyball @ Hempfield Senior High School|2026-09-15T22:00:00.000Z",
-      "firstSeenAt": "2026-05-19T20:49:37.757Z",
-      "title": "Girls JV Volleyball @ Hempfield Senior High School",
+      "key": "Boys 7/8/9th Track & Field - Outdoor vs LANCASTER Wheatland Middle School|2026-04-21T20:00:00.000Z",
+      "firstSeenAt": "2026-05-20T23:13:33.484Z",
+      "title": "Boys 7/8/9th Track & Field - Outdoor vs LANCASTER Wheatland Middle School",
       "source": "PM",
-      "date": "2026-09-15T22:00:00.000Z"
+      "date": "2026-04-21T20:00:00.000Z"
+    },
+    {
+      "key": "Girls 7/8/9th Track & Field - Outdoor|2026-04-21T21:00:00.000Z",
+      "firstSeenAt": "2026-05-20T23:13:33.484Z",
+      "title": "Girls 7/8/9th Track & Field - Outdoor",
+      "source": "PM",
+      "date": "2026-04-21T21:00:00.000Z"
+    },
+    {
+      "key": "Girls JV Lacrosse - Girls @ Ephrata High School|2026-04-21T21:30:00.000Z",
+      "firstSeenAt": "2026-05-20T23:13:33.484Z",
+      "title": "Girls JV Lacrosse - Girls @ Ephrata High School",
+      "source": "PM",
+      "date": "2026-04-21T21:30:00.000Z"
+    },
+    {
+      "key": "Boys JV Lacrosse - Boys vs Ephrata High School|2026-04-21T21:30:00.000Z",
+      "firstSeenAt": "2026-05-20T23:13:33.484Z",
+      "title": "Boys JV Lacrosse - Boys vs Ephrata High School",
+      "source": "PM",
+      "date": "2026-04-21T21:30:00.000Z"
+    },
+    {
+      "key": "HB PTO Mtg|2026-04-21T22:30:00.000Z",
+      "firstSeenAt": "2026-05-20T23:13:33.484Z",
+      "title": "HB PTO Mtg",
+      "source": "PM",
+      "date": "2026-04-21T22:30:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Lacrosse - Girls @ Ephrata High School|2026-04-21T23:00:00.000Z",
+      "firstSeenAt": "2026-05-20T23:13:33.484Z",
+      "title": "Girls Varsity Lacrosse - Girls @ Ephrata High School",
+      "source": "PM",
+      "date": "2026-04-21T23:00:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Baseball @ JP McCaskey High School Campus|2026-04-22T20:15:00.000Z",
+      "firstSeenAt": "2026-05-20T23:13:33.484Z",
+      "title": "Boys Varsity Baseball @ JP McCaskey High School Campus",
+      "source": "PM",
+      "date": "2026-04-22T20:15:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Softball vs JP McCaskey High School Campus|2026-04-22T20:15:00.000Z",
+      "firstSeenAt": "2026-05-20T23:13:33.484Z",
+      "title": "Girls Varsity Softball vs JP McCaskey High School Campus",
+      "source": "PM",
+      "date": "2026-04-22T20:15:00.000Z"
     }
   ],
   "addedLastRun": 0

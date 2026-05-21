@@ -3032,6 +3032,13 @@ window.toggleEvFilters=function(){
     wrap.style.display = isVisible ? 'none' : 'block';
     arrow.textContent = isVisible ? '▸' : '▾';
 };
+window.togglePlacesFilters=function(){
+    const wrap = document.getElementById('places-filters-wrap');
+    const arrow = document.getElementById('places-filter-arrow');
+    const isVisible = getComputedStyle(wrap).display !== 'none';
+    wrap.style.display = isVisible ? 'none' : 'block';
+    arrow.textContent = isVisible ? '▸' : '▾';
+};
 window.toggleSpFilters=function(){
     const wrap = document.getElementById('sp-filters-wrap');
     const arrow = document.getElementById('sp-filter-arrow');
@@ -4951,6 +4958,7 @@ function mbaBadge(placeName){
 let spotlightTimer = null;
 let spotlightIndex = 0;
 let spotlightPool = [];
+let spotlightStarted = false;
 const SPOTLIGHT_ROTATE_MS = 6000;
 
 function renderSpotlight(){
@@ -4979,19 +4987,27 @@ function renderSpotlight(){
     }
     el.style.display = '';
 
-    // Randomize the starting member once per load so exposure is fair.
-    if (spotlightTimer === null){
+    // Clear any prior timer — we always (re)establish a single clean rotation
+    // below. This avoids orphaned/duplicate timers across the loadWeather +
+    // loadAssociation double-call and any later weather-bar re-renders.
+    if (spotlightTimer){ clearInterval(spotlightTimer); spotlightTimer = null; }
+
+    // Randomize the starting member so exposure is fair, but keep the index in
+    // range if we're re-rendering an existing rotation.
+    if (spotlightIndex >= spotlightPool.length) spotlightIndex = 0;
+    if (!spotlightStarted){
         spotlightIndex = Math.floor(Math.random() * spotlightPool.length);
+        spotlightStarted = true;
     }
 
     paintSpotlight(el);
 
-    // Start rotation only if more than one member and not already running.
-    if (spotlightPool.length > 1 && spotlightTimer === null){
+    // Rotate only when there's more than one member to show.
+    if (spotlightPool.length > 1){
         spotlightTimer = setInterval(() => {
-            spotlightIndex = (spotlightIndex + 1) % spotlightPool.length;
             const node = document.getElementById('home-spotlight');
             if (!node){ clearInterval(spotlightTimer); spotlightTimer = null; return; }
+            spotlightIndex = (spotlightIndex + 1) % spotlightPool.length;
             paintSpotlight(node);
         }, SPOTLIGHT_ROTATE_MS);
     }
@@ -5049,7 +5065,10 @@ async function loadPlaces(){try{
 
 window.setPlacesFilter=function(cat,btn){
     placesFilter=cat;
-    btn.closest('.filter-group').querySelectorAll('.src-btn').forEach(b=>b.classList.remove('active'));
+    // Filter buttons now live in two groups (top row + collapsible panel), so
+    // clear active state across both, then mark the clicked one.
+    document.querySelectorAll('#places-top-group .src-btn, #places-filter-group .src-btn')
+        .forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     renderPlaces();
 };

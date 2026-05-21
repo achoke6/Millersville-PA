@@ -288,30 +288,37 @@
 
     <!-- PLACES -->
     <section id="view-places" class="app-view">
-        <div class="filter-bar">
-            <div class="filter-group" id="places-filter-group">
+        <div class="toolbar-compact">
+            <div class="filter-group" id="places-top-group">
                 <button class="src-btn active" onclick="setPlacesFilter('All', this)">All</button>
                 <button class="src-btn" onclick="setPlacesFilter('Food & Drink', this)">🍴 Food</button>
                 <button class="src-btn" onclick="setPlacesFilter('Housing', this)">🏠 Housing</button>
-                <button class="src-btn" onclick="setPlacesFilter('Mechanic', this)">🔧 Auto</button>
-                <button class="src-btn" onclick="setPlacesFilter('Gas Station', this)">⛽ Gas</button>
                 <button class="src-btn" onclick="setPlacesFilter('Shopping', this)">🛒 Shopping</button>
-                <button class="src-btn" onclick="setPlacesFilter('Health', this)">🏥 Health</button>
-                <button class="src-btn" onclick="setPlacesFilter('Recreation', this)">🏞 Recreation</button>
-                <button class="src-btn" onclick="setPlacesFilter('Education', this)">📚 Education</button>
-                <button class="src-btn" onclick="setPlacesFilter('Beauty/Grooming', this)">💈 Beauty</button>
-                <button class="src-btn" onclick="setPlacesFilter('Government', this)">🏛 Government</button>
-                <button class="src-btn" onclick="setPlacesFilter('Finance', this)">🏦 Finance</button>
-                <button class="src-btn" onclick="setPlacesFilter('Transport', this)">🚌 Transport</button>
-                <button class="src-btn" onclick="setPlacesFilter('Entertainment', this)">🎵 Entertainment</button>
-                <button class="src-btn" onclick="setPlacesFilter('Home Services', this)">🔨 Home Services</button>
-                <button class="src-btn" onclick="setPlacesFilter('Real Estate', this)">🏘 Real Estate</button>
-                <button class="src-btn" onclick="setPlacesFilter('Lodging', this)">🛏 Lodging</button>
-                <button class="src-btn" onclick="setPlacesFilter('Student Housing', this)">🎓 Student Housing</button>
-                <button class="src-btn" onclick="setPlacesFilter('Venue', this)">🎉 Venue</button>
-                <button class="src-btn" onclick="setPlacesFilter('Shipping', this)">📦 Shipping</button>
-                <button class="src-btn" onclick="setPlacesFilter('Services', this)">🛠 Services</button>
+            </div>
+            <div class="toolbar-right">
                 <button class="family-toggle" id="places-mg-toggle" onclick="togglePlacesMarauderGold()" title="Marauder Gold accepted">🪙</button>
+                <button id="places-filter-toggle" class="filter-toggle" onclick="togglePlacesFilters()">More <span id="places-filter-arrow">▾</span></button>
+            </div>
+        </div>
+        <div id="places-filters-wrap" class="filters-collapsible">
+            <div class="filter-bar">
+                <div class="filter-group" id="places-filter-group">
+                    <button class="src-btn" onclick="setPlacesFilter('Health', this)">🏥 Health</button>
+                    <button class="src-btn" onclick="setPlacesFilter('Recreation', this)">🏞 Recreation</button>
+                    <button class="src-btn" onclick="setPlacesFilter('Education', this)">📚 Education</button>
+                    <button class="src-btn" onclick="setPlacesFilter('Beauty/Grooming', this)">💈 Beauty</button>
+                    <button class="src-btn" onclick="setPlacesFilter('Government', this)">🏛 Government</button>
+                    <button class="src-btn" onclick="setPlacesFilter('Finance', this)">🏦 Finance</button>
+                    <button class="src-btn" onclick="setPlacesFilter('Transport', this)">🚌 Transport</button>
+                    <button class="src-btn" onclick="setPlacesFilter('Entertainment', this)">🎵 Entertainment</button>
+                    <button class="src-btn" onclick="setPlacesFilter('Home Services', this)">🔨 Home Services</button>
+                    <button class="src-btn" onclick="setPlacesFilter('Real Estate', this)">🏘 Real Estate</button>
+                    <button class="src-btn" onclick="setPlacesFilter('Lodging', this)">🛏 Lodging</button>
+                    <button class="src-btn" onclick="setPlacesFilter('Student Housing', this)">🎓 Student Housing</button>
+                    <button class="src-btn" onclick="setPlacesFilter('Venue', this)">🎉 Venue</button>
+                    <button class="src-btn" onclick="setPlacesFilter('Shipping', this)">📦 Shipping</button>
+                    <button class="src-btn" onclick="setPlacesFilter('Services', this)">🛠 Services</button>
+                </div>
             </div>
         </div>
         <div id="housing-container" class="card-grid"></div>

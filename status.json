@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-21T12:17:15.190Z",
+  "generatedAt": "2026-05-21T13:36:42.073Z",
   "totalEvents": 927,
   "withDescription": 344,
   "withImage": 109,
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-04-21T20:00:00.000Z",
-      "latest": "2026-09-16T20:00:00.000Z"
+      "latest": "2026-09-16T21:15:00.000Z"
     },
     "borough": {
       "earliest": "2026-02-23T12:00:00.000Z",
@@ -93,18 +93,18 @@
   },
   "recentlyAdded": [
     {
+      "key": "Girls 7/8th Soccer @ Ephrata High School|2026-09-16T21:15:00.000Z",
+      "firstSeenAt": "2026-05-21T13:36:42.071Z",
+      "title": "Girls 7/8th Soccer @ Ephrata High School",
+      "source": "PM",
+      "date": "2026-09-16T21:15:00.000Z"
+    },
+    {
       "key": "Girls Varsity Tennis @ Manheim Township High School|2026-09-16T20:00:00.000Z",
       "firstSeenAt": "2026-05-21T07:52:07.464Z",
       "title": "Girls Varsity Tennis @ Manheim Township High School",
       "source": "PM",
       "date": "2026-09-16T20:00:00.000Z"
-    },
-    {
-      "key": "Girls 7/8/9th Track & Field - Outdoor vs LANCASTER Wheatland Middle School|2026-04-21T20:00:00.000Z",
-      "firstSeenAt": "2026-05-20T23:13:33.484Z",
-      "title": "Girls 7/8/9th Track & Field - Outdoor vs LANCASTER Wheatland Middle School",
-      "source": "PM",
-      "date": "2026-04-21T20:00:00.000Z"
     },
     {
       "key": "Boys 7/8/9th Track & Field - Outdoor vs LANCASTER Wheatland Middle School|2026-04-21T20:00:00.000Z",
@@ -163,5 +163,5 @@
       "date": "2026-04-22T20:15:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

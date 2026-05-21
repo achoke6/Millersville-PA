@@ -4894,6 +4894,25 @@ function getMembership(placeName){
     return mbaMembers[placeName] || null;
 }
 
+// Did this place buy the Featured Spotlight add-on? Returns the spotlight
+// entry (logo, tagline, link, liveFeed) or null. Spotlight entries are keyed
+// by member name; a place's listing name may differ, so we match against both
+// the listing name and the roster member's canonical name.
+function getSpotlight(placeName){
+    if (!mbaSpotlight || !mbaSpotlight.length) return null;
+    // Direct match on the spotlight entry name.
+    let hit = mbaSpotlight.find(s => s.name === placeName);
+    if (hit) return hit;
+    // The listing might be matched to a roster member whose name differs from
+    // the listing name (via matchListing). Resolve through the roster.
+    const member = getMembership(placeName);
+    if (member) {
+        hit = mbaSpotlight.find(s => s.name === member.name);
+        if (hit) return hit;
+    }
+    return null;
+}
+
 // Audience visibility for a member listing. Returns true if the member should
 // be visible to the CURRENT viewer given their muAffiliation.
 //
@@ -4987,7 +5006,6 @@ function paintSpotlight(el){
     const tagline = s.tagline ? `<span class="spotlight-tagline">${s.tagline}</span>` : '';
     // Compact card: "Featured" kicker, logo (or name fallback), tagline.
     el.innerHTML = `<a class="spotlight-card" href="${link}" target="_blank" rel="noopener" title="${(s.name||'').replace(/"/g,'&quot;')}">
-        <span class="spotlight-kicker">★ Featured Member</span>
         ${logo || `<span class="spotlight-name">${s.name||''}</span>`}
         ${tagline}
     </a>`;
@@ -5103,7 +5121,13 @@ function renderPlaces(){
     filtered = filtered.filter(p => mbaAudienceVisible(getMembership(p.name)));
 
     // Sort: featured first, then food, then services
-    filtered.sort((a,b) => (b.featured===true)-(a.featured===true) || (a.placeType==='food'?0:1)-(b.placeType==='food'?0:1));
+    // Sort: Featured Spotlight buyers first (they paid for prominence), then
+    // featured, then food before services.
+    filtered.sort((a,b) =>
+        ((getSpotlight(b.name)?1:0) - (getSpotlight(a.name)?1:0)) ||
+        ((b.featured===true)-(a.featured===true)) ||
+        ((a.placeType==='food'?0:1)-(b.placeType==='food'?0:1))
+    );
 
     // Campus Cupboard pinned card — marauders only, shown in All and Food & Drink
     // views (it's a free grocery store inside the HUB). Skipped for townies
@@ -5207,6 +5231,43 @@ function buildServiceCard(p) {
     const phone = p.phone ? `<a href="tel:${p.phone.replace(/[^+\d]/g,'')}" style="font-weight:600;font-size:0.85rem;color:var(--text);text-decoration:none;">📞 ${p.phone}</a>` : '';
     const site = p.gasLink ? `<a href="${p.gasLink}" target="_blank" class="btn btn-sm btn-outline" style="font-size:0.75rem;">⛽ Prices</a>` :
                  p.link ? `<a href="${p.link}" target="_blank" class="btn btn-sm btn-outline" style="font-size:0.75rem;">🌐 Visit</a>` : '';
+
+    // Enhanced listing for Featured Spotlight buyers: logo header, marketing
+    // tagline, gold-accented card, and a hook for live-feed content (scraped
+    // specials/deals — built per business where feasible; null for now).
+    const spot = getSpotlight(p.name);
+    if (spot) {
+        const logoHtml = spot.logo
+            ? `<img src="${spot.logo}" alt="${(p.name||'').replace(/"/g,'&quot;')} logo" class="enhanced-logo" loading="lazy">`
+            : '';
+        const taglineHtml = spot.tagline
+            ? `<p class="enhanced-tagline">${spot.tagline}</p>` : '';
+        // liveFeed hook: when a scraped feed is configured for this member,
+        // render it here. Empty for now — wired when per-business scraping ships.
+        const liveFeedHtml = '';  // placeholder for future spot.liveFeed rendering
+        return `<div class="app-card card-spotlight">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                <span class="card-tag">${icon} ${p.category}</span>
+                ${mba}
+            </div>
+            ${logoHtml}
+            <h3 class="card-title" style="margin-top:6px;">${p.name}</h3>
+            ${taglineHtml}
+            ${ratingRow}
+            <p class="card-meta" style="margin-bottom:4px;">📍 ${p.address}</p>
+            ${hours}
+            <p style="font-size:0.85rem;color:var(--text-muted);margin:8px 0;">${p.description}</p>
+            ${liveFeedHtml}
+            <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                ${phone}
+                <div style="display:flex;gap:6px;align-items:center;">
+                    <button onclick="openReviewModal('${p.name.replace(/'/g,"\\'")}')" class="btn btn-sm btn-outline" style="font-size:0.75rem;">⭐ Review</button>
+                    ${site}
+                </div>
+            </div>
+        </div>`;
+    }
+
     return `<div class="app-card">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;">
             <span class="card-tag">${icon} ${p.category}</span>

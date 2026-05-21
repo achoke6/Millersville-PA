@@ -567,6 +567,11 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 /* Verified MBA (Millersville Business Association) member — identical for both
    tiers. Navy pill with gold check; sits in the card-tag row, right-aligned. */
 .badge-mba { display: inline-flex; align-items: center; gap: 3px; flex-shrink: 0; background: var(--navy); color: var(--gold); font-size: 0.62rem; font-weight: 700; padding: 3px 8px; border-radius: var(--radius-pill); text-transform: uppercase; letter-spacing: 0.4px; white-space: nowrap; }
+/* Enhanced Directory listing for Featured Spotlight buyers — prominent gold
+   accent, logo header, marketing tagline. */
+.card-spotlight { border: 1.5px solid var(--gold); box-shadow: 0 2px 10px rgba(184,134,11,0.12); }
+.enhanced-logo { max-height: 48px; max-width: 60%; object-fit: contain; display: block; margin: 8px 0 2px; }
+.enhanced-tagline { font-size: 0.82rem; font-style: italic; color: var(--navy); font-weight: 600; margin: 2px 0 6px; }
 .home-indicator, .away-indicator { display: inline-block; font-size: 0.75rem; font-weight: 700; margin-left: 6px; padding: 1px 6px; border-radius: 4px; }
 .home-indicator { background: var(--green-soft); color: var(--green); }
 .away-indicator { background: var(--navy-soft); color: var(--navy); }
@@ -801,20 +806,19 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .home-spotlight { flex: 1; display: flex; min-width: 0; }
 .home-spotlight:empty { display: none; }
 
-/* The spotlight card — its own navy rounded rectangle matching the weather bar,
-   rotating among paid MBA spotlight members. */
-.spotlight-card { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 3px; width: 100%; text-decoration: none; background: linear-gradient(135deg, var(--navy) 0%, #1e40af 100%); border-radius: var(--radius); padding: 10px 12px; transition: opacity 0.4s ease; animation: spotlight-fade 0.5s ease; overflow: hidden; }
-.spotlight-card:hover { filter: brightness(1.08); }
-.spotlight-kicker { font-size: 0.56rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gold); line-height: 1; text-align: center; }
-.spotlight-logo { max-height: 34px; max-width: 100%; object-fit: contain; display: block; background: rgba(255,255,255,0.95); border-radius: 4px; padding: 3px 5px; }
-.spotlight-name { font-size: 0.8rem; font-weight: 800; color: #fff; text-align: center; line-height: 1.1; }
-.spotlight-tagline { font-size: 0.6rem; color: rgba(255,255,255,0.85); text-align: center; line-height: 1.15; }
+/* The spotlight card — transparent, just the member's logo (or name) and an
+   optional tagline, sitting beside the weather bar. Rotates among paid MBA
+   spotlight members. */
+.spotlight-card { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 3px; width: 100%; height: 100%; text-decoration: none; padding: 6px 8px; transition: opacity 0.4s ease; animation: spotlight-fade 0.5s ease; overflow: hidden; }
+.spotlight-card:hover { opacity: 0.85; }
+.spotlight-logo { max-height: 44px; max-width: 100%; object-fit: contain; display: block; }
+.spotlight-name { font-size: 0.85rem; font-weight: 800; color: var(--navy); text-align: center; line-height: 1.1; }
+.spotlight-tagline { font-size: 0.62rem; color: var(--text-muted); text-align: center; line-height: 1.15; }
 @keyframes spotlight-fade { from { opacity: 0; } to { opacity: 1; } }
-/* On narrow phones keep it compact: drop the tagline, shrink the logo. */
+/* On narrow phones keep it compact: drop the tagline. */
 @media (max-width: 480px) {
     .spotlight-tagline { display: none; }
-    .spotlight-logo { max-height: 28px; }
-    .spotlight-kicker { font-size: 0.5rem; }
+    .spotlight-logo { max-height: 38px; }
 }
 
 .home-section { margin-bottom: 20px; }

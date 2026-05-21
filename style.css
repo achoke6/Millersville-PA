@@ -806,11 +806,11 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .home-spotlight { flex: 1; display: flex; min-width: 0; }
 .home-spotlight:empty { display: none; }
 
-/* The spotlight card — transparent, just the member's logo (or name) and an
-   optional tagline, sitting beside the weather bar. Rotates among paid MBA
-   spotlight members. */
-.spotlight-card { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 3px; width: 100%; height: 100%; text-decoration: none; padding: 6px 8px; transition: opacity 0.4s ease; animation: spotlight-fade 0.5s ease; overflow: hidden; }
-.spotlight-card:hover { opacity: 0.85; }
+/* The spotlight card — white rounded rectangle matching the weather bar, so
+   the two read as an aligned pair. Holds the member's logo (or name) and an
+   optional tagline. Rotates among paid MBA spotlight members. */
+.spotlight-card { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 3px; width: 100%; height: 100%; text-decoration: none; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 12px; box-sizing: border-box; transition: box-shadow 0.2s ease, opacity 0.4s ease; animation: spotlight-fade 0.5s ease; overflow: hidden; }
+.spotlight-card:hover { box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
 .spotlight-logo { max-height: 44px; max-width: 100%; object-fit: contain; display: block; }
 .spotlight-name { font-size: 0.85rem; font-weight: 800; color: var(--navy); text-align: center; line-height: 1.1; }
 .spotlight-tagline { font-size: 0.62rem; color: var(--text-muted); text-align: center; line-height: 1.15; }

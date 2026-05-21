@@ -2227,7 +2227,7 @@ function matchesSportSource(tags, src) {
     return false;
 }
 
-const viewPaths={home:'/',news:'/news',events:'/events',sports:'/sports',places:'/places',board:'/board',weather:'/weather',store:'/store',advertise:'/advertise',analytics:'/analytics'};
+const viewPaths={home:'/',news:'/news',events:'/events',sports:'/sports',places:'/directory',board:'/board',weather:'/weather',store:'/store',advertise:'/advertise',analytics:'/analytics'};
 const pathToView=Object.fromEntries(Object.entries(viewPaths).map(([k,v])=>[v,k]));
 
 // ==================== URL STATE (shareable filter URLs) ====================
@@ -2399,6 +2399,7 @@ function updatePageTitleForView(view) {
 pathToView['/food'] = 'places';
 pathToView['/services'] = 'places';
 pathToView['/directory'] = 'places';
+pathToView['/places'] = 'places';   // legacy alias — old links keep working
 
 // Runtime header-height measurement. The secondary sticky nav bar (events/
 // sports pages) uses --header-h to position flush below the main header. A
@@ -2516,7 +2517,7 @@ document.addEventListener('keydown', (e) => {
 
 async function initApp(){
     loadFeedPrefs();
-    await Promise.allSettled([loadWeather(),loadSpecials(),loadEvents(),loadPlaces(),loadHousing(),loadNews(),loadBoard(),loadSponsors(),loadClubsDirectory()]);
+    await Promise.allSettled([loadWeather(),loadSpecials(),loadEvents(),loadPlaces(),loadHousing(),loadNews(),loadBoard(),loadClubsDirectory()]);
     renderHomeFeed();
     attachHomeSwipeHandlers();
     syncFilterArrows();
@@ -2573,7 +2574,7 @@ window.toggleMobileMenu=function(){
     if(nav.classList.contains('open')){nav.classList.remove('open');overlay.classList.remove('open');setTimeout(()=>{if(!nav.classList.contains('open'))nav.style.display='';},300);}
     else{nav.style.display='flex';void nav.offsetWidth;nav.classList.add('open');overlay.classList.add('open');}
 };
-const viewLabels={home:'',news:'/ News',events:'/ Events',sports:'/ Sports',places:'/ Places',board:'/ Board',weather:'/ Weather',store:'/ Store',advertise:'/ Advertise'};
+const viewLabels={home:'',news:'/ News',events:'/ Events',sports:'/ Sports',places:'/ Directory',board:'/ Board',weather:'/ Weather',store:'/ Store',advertise:'/ Advertise'};
 
 let ecwidLoaded = false;
 window.loadEcwidStore = function(){
@@ -5141,7 +5142,7 @@ function renderPlaces(){
         if (p.placeType === 'food') return buildFoodCard(p, specials, dayName);
         return buildServiceCard(p);
     });
-    pc.innerHTML = (cupboardCard + cards.join('')) || '<p class="empty-state">No places found in this category. Know a local business? <a href="#" onclick="event.preventDefault();openSubmitBusiness();">Add it here →</a></p>';
+    pc.innerHTML = (cupboardCard + cards.join('')) || '<p class="empty-state">No listings found in this category. Know a local business? <a href="#" onclick="event.preventDefault();openSubmitBusiness();">Add it here →</a></p>';
 }
 
 // Build the Campus Cupboard card for the Places page. Mirrors the food-card
@@ -5221,7 +5222,7 @@ function buildFoodCard(p, specials, dayName) {
 }
 
 function buildServiceCard(p) {
-    const catIcons={'Government':'🏛','Health':'🏥','Beauty/Grooming':'💈','Shopping':'🛒','Recreation':'🏞','Transport':'🚌','Finance':'🏦','Shipping':'📦','Entertainment':'🎵','Education':'📚','Mechanic':'🔧','Gas Station':'⛽','EV Charging':'🔌','Housing':'🏠','Home Services':'🔨','Real Estate':'🏘','Venue':'🎉','Lodging':'🛏','Services':'🛠'};
+    const catIcons={'Government':'🏛','Health':'🏥','Beauty/Grooming':'💈','Shopping':'🛒','Recreation':'🏞','Transport':'🚌','Finance':'🏦','Shipping':'📦','Entertainment':'🎵','Education':'📚','Mechanic':'🔧','Gas Station':'⛽','EV Charging':'🔌','Housing':'🏠','Home Services':'🔨','Real Estate':'🏘','Venue':'🎉','Lodging':'🛏','Services':'🛠','Student Housing':'🎓'};
     const icon = catIcons[p.category] || '🏢';
     const mba = mbaBadge(p.name);
     const stars = p.rating ? renderStars(p.rating) : '';

@@ -94,7 +94,7 @@
             <button id="nav-news" class="nav-link" onclick="switchView('news'); toggleMobileMenu();">News</button>
             <button id="nav-events" class="nav-link" onclick="switchView('events'); toggleMobileMenu();">Events</button>
             <button id="nav-sports" class="nav-link" onclick="switchView('sports'); toggleMobileMenu();">Sports</button>
-            <button id="nav-places" class="nav-link" onclick="switchView('places'); toggleMobileMenu();">Places</button>
+            <button id="nav-places" class="nav-link" onclick="switchView('places'); toggleMobileMenu();">Directory</button>
             <button id="nav-board" class="nav-link" onclick="switchView('board'); toggleMobileMenu();">Board</button>
             <button id="nav-weather" class="nav-link" onclick="switchView('weather'); toggleMobileMenu();">Weather</button>
             <button id="nav-store" class="nav-link" onclick="switchView('store'); toggleMobileMenu();">Store</button>
@@ -190,7 +190,7 @@
         <div class="home-section">
             <div class="home-section-header">
                 <h2 class="home-section-title">🍴 Today's Specials & Deals</h2>
-                <a href="#" onclick="event.preventDefault();switchView('places');" class="home-more-link">All Places →</a>
+                <a href="#" onclick="event.preventDefault();switchView('places');" class="home-more-link">Directory →</a>
             </div>
             <div id="home-specials" class="home-scroll-row"></div>
         </div>
@@ -211,15 +211,6 @@
                 <a href="#" onclick="event.preventDefault();switchView('board');" class="home-more-link">View All →</a>
             </div>
             <div id="home-board-preview"></div>
-        </div>
-
-        <!-- Sponsors -->
-        <div class="home-section" style="margin-top:8px;">
-            <div class="home-section-header">
-                <h2 class="home-section-title">⭐ Our Sponsors</h2>
-                <a href="#" onclick="event.preventDefault();switchView('advertise');" class="home-more-link">Become a Sponsor →</a>
-            </div>
-            <div id="home-sponsors" class="sponsors-banner"></div>
         </div>
 
         <!-- Feed CTA (bottom, for new users) -->
@@ -316,6 +307,7 @@
                 <button class="src-btn" onclick="setPlacesFilter('Home Services', this)">🔨 Home Services</button>
                 <button class="src-btn" onclick="setPlacesFilter('Real Estate', this)">🏘 Real Estate</button>
                 <button class="src-btn" onclick="setPlacesFilter('Lodging', this)">🛏 Lodging</button>
+                <button class="src-btn" onclick="setPlacesFilter('Student Housing', this)">🎓 Student Housing</button>
                 <button class="src-btn" onclick="setPlacesFilter('Venue', this)">🎉 Venue</button>
                 <button class="src-btn" onclick="setPlacesFilter('Shipping', this)">📦 Shipping</button>
                 <button class="src-btn" onclick="setPlacesFilter('Services', this)">🛠 Services</button>
@@ -398,79 +390,65 @@
     <!-- ADVERTISE -->
     <section id="view-advertise" class="app-view">
         <div class="adv-hero">
-            <h2 class="adv-hero-title">Grow Your Business in Millersville</h2>
-            <p class="adv-hero-sub">Reach students, families, and residents where they already look — the community's #1 local hub.</p>
+            <h2 class="adv-hero-title">Get Your Business Seen in Millersville</h2>
+            <p class="adv-hero-sub">Millersville.APP is the community's daily hub — and a member benefit of the Millersville Business Association. Reach students, families, and residents where they already look.</p>
             <div class="adv-stats">
-                <div class="adv-stat"><span class="adv-stat-num">8</span><span class="adv-stat-label">Sources</span></div>
+                <div class="adv-stat"><span class="adv-stat-num">12+</span><span class="adv-stat-label">Sources</span></div>
                 <div class="adv-stat"><span class="adv-stat-num">24/7</span><span class="adv-stat-label">Updated</span></div>
                 <div class="adv-stat"><span class="adv-stat-num">1</span><span class="adv-stat-label">Hub</span></div>
             </div>
         </div>
 
-        <!-- Tier grid -->
-        <h3 class="adv-section-title">Sponsorship Tiers</h3>
+        <!-- How it works: MBA membership + Spotlight -->
+        <h3 class="adv-section-title">In Partnership With the MBA</h3>
+        <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:16px;max-width:640px;">Millersville.APP partners with the Millersville Business Association. Being seen on the app is a benefit of MBA membership — and members who want maximum visibility can add the Featured Spotlight.</p>
         <div class="adv-grid">
+            <div class="adv-tier">
+                <div class="adv-tier-badge" style="background:var(--navy);color:white;">MBA Member</div>
+                <div class="adv-tier-icon">✓</div>
+                <h4 class="adv-tier-name">Included With Membership</h4>
+                <p class="adv-tier-desc">Every Millersville Business Association member is featured on the app at no cost beyond their dues.</p>
+                <div class="adv-tier-perks">
+                    <span>✓ "Verified MBA Member" badge</span>
+                    <span>✓ Listing in the app Directory</span>
+                    <span>✓ Choose your audience — locals, students, or both</span>
+                </div>
+            </div>
             <div class="adv-tier adv-tier-premium">
-                <div class="adv-tier-badge">Best Value</div>
+                <div class="adv-tier-badge">Featured Spotlight</div>
                 <div class="adv-tier-icon">⭐</div>
-                <h4 class="adv-tier-name">Premium</h4>
-                <p class="adv-tier-desc">Maximum visibility across the entire site — homepage banner, inline ads on every page, and top rotation priority.</p>
+                <h4 class="adv-tier-name">Premium Add-On</h4>
+                <p class="adv-tier-desc">For members who want the most visibility — the spotlight is the premium placement on the app, available for an annual fee.</p>
                 <div class="adv-tier-perks">
-                    <span>✓ Homepage sponsor banner</span>
-                    <span>✓ Inline ads on all pages</span>
-                    <span>✓ Top rotation priority</span>
-                    <span>✓ Custom call-to-action</span>
-                    <span>✓ Impression & click analytics</span>
-                    <span>✓ Priority support</span>
-                </div>
-            </div>
-            <div class="adv-tier">
-                <div class="adv-tier-badge" style="background:var(--green);color:white;">Popular</div>
-                <div class="adv-tier-icon">📢</div>
-                <h4 class="adv-tier-name">Standard</h4>
-                <p class="adv-tier-desc">Homepage banner plus inline ads on pages you choose — Events, Sports, Food, News, or Directory.</p>
-                <div class="adv-tier-perks">
-                    <span>✓ Homepage sponsor banner</span>
-                    <span>✓ Inline ads on selected pages</span>
-                    <span>✓ Custom call-to-action</span>
-                    <span>✓ Impression & click analytics</span>
-                </div>
-            </div>
-            <div class="adv-tier">
-                <div class="adv-tier-icon">📌</div>
-                <h4 class="adv-tier-name">Basic</h4>
-                <p class="adv-tier-desc">Inline ads on the pages that matter most to your business — a targeted, affordable way to reach locals.</p>
-                <div class="adv-tier-perks">
-                    <span>✓ Inline ads on assigned pages</span>
-                    <span>✓ Custom call-to-action</span>
-                    <span>✓ Impression & click analytics</span>
+                    <span>✓ Home-page spotlight rotation</span>
+                    <span>✓ Enhanced listing — logo, tagline, top placement</span>
+                    <span>✓ Live content (weekly ads / specials, where feasible)</span>
+                    <span>✓ Everything in MBA membership</span>
                 </div>
             </div>
             <div class="adv-tier adv-tier-cta-card">
                 <div class="adv-tier-icon">💬</div>
-                <h4 class="adv-tier-name">Not sure what fits?</h4>
-                <p class="adv-tier-desc">We'll help you find the right tier and placements for your business and budget.</p>
+                <h4 class="adv-tier-name">Questions?</h4>
+                <p class="adv-tier-desc">Not an MBA member yet, or want to know more about the Featured Spotlight? We'll help you figure out what fits.</p>
                 <button onclick="openAdvertiseForm()" class="btn btn-gold" style="margin-top:12px;display:block;text-align:center;width:100%;border:none;cursor:pointer;">Let's Talk →</button>
             </div>
         </div>
 
-        <!-- Placement options -->
-        <h3 class="adv-section-title" style="margin-top:32px;">Available Placements</h3>
+        <!-- Where you appear -->
+        <h3 class="adv-section-title" style="margin-top:32px;">Where Members Appear</h3>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:24px;">
-            <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;"><span style="font-size:1.2rem;">🏠</span><p style="font-size:0.82rem;font-weight:600;margin-top:4px;">Homepage</p></div>
-            <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;"><span style="font-size:1.2rem;">📅</span><p style="font-size:0.82rem;font-weight:600;margin-top:4px;">Events</p></div>
-            <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;"><span style="font-size:1.2rem;">🏆</span><p style="font-size:0.82rem;font-weight:600;margin-top:4px;">Sports</p></div>
-            <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;"><span style="font-size:1.2rem;">🍴</span><p style="font-size:0.82rem;font-weight:600;margin-top:4px;">Food</p></div>
-            <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;"><span style="font-size:1.2rem;">📰</span><p style="font-size:0.82rem;font-weight:600;margin-top:4px;">News</p></div>
             <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;"><span style="font-size:1.2rem;">🏢</span><p style="font-size:0.82rem;font-weight:600;margin-top:4px;">Directory</p></div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;"><span style="font-size:1.2rem;">🏠</span><p style="font-size:0.82rem;font-weight:600;margin-top:4px;">Home spotlight</p></div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;"><span style="font-size:1.2rem;">🔖</span><p style="font-size:0.82rem;font-weight:600;margin-top:4px;">Member badge</p></div>
+            <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;"><span style="font-size:1.2rem;">🎯</span><p style="font-size:0.82rem;font-weight:600;margin-top:4px;">Audience targeting</p></div>
         </div>
 
         <!-- CTA -->
         <div class="adv-cta">
-            <h3 class="adv-cta-title">Ready to get started?</h3>
-            <p class="adv-cta-sub">Tell us about your business and we'll get back to you within 24 hours.</p>
-            <button onclick="openAdvertiseForm()" class="btn btn-gold btn-lg" style="border:none;cursor:pointer;">Submit Your Business →</button>
-            <p class="adv-cta-note">Or email us at <a href="mailto:admin@millersville.app?subject=Advertising%20inquiry">admin@millersville.app</a></p>
+            <h3 class="adv-cta-title">Want to be featured?</h3>
+            <p class="adv-cta-sub">Tell us about your business and we'll walk you through MBA membership and the Featured Spotlight.</p>
+            <button onclick="openAdvertiseForm()" class="btn btn-gold btn-lg" style="border:none;cursor:pointer;">Get Featured →</button>
+            <p class="adv-cta-note">Or email us at <a href="mailto:admin@millersville.app?subject=Millersville.APP%20%2B%20MBA%20inquiry">admin@millersville.app</a></p>
         </div>
 
         <!-- FAQ Accordions -->
@@ -478,31 +456,35 @@
         <div class="adv-accordions">
             <details class="adv-accordion">
                 <summary>How does pricing work?</summary>
-                <p>We offer flexible monthly plans tailored to your business size and goals. Contact us for a custom quote — no commitment required.</p>
+                <p>Being featured on Millersville.APP is a benefit of Millersville Business Association membership — it's included with your MBA dues. The optional Featured Spotlight has a separate annual fee set by the MBA. Reach out and we'll walk you through it.</p>
             </details>
             <details class="adv-accordion">
                 <summary>Can I submit a free community event?</summary>
-                <p>Yes! Community events from established local organizations are included at no cost. Business promotions and commercial events are part of our paid options.</p>
+                <p>Yes! Community events from established local organizations are included at no cost. Use the "Submit an Event" option anytime.</p>
             </details>
             <details class="adv-accordion">
                 <summary>How quickly will my listing go live?</summary>
-                <p>Most listings go live within 24 hours of approval. Featured placements update automatically every hour through our data pipeline.</p>
+                <p>Most listings go live within 24 hours of being set up. Featured Spotlight content updates automatically every hour through our data pipeline.</p>
             </details>
             <details class="adv-accordion">
-                <summary>What's the difference between tiers?</summary>
-                <p>Premium gets you maximum visibility — homepage banner plus inline ads on every page. Standard includes the homepage banner plus inline ads on pages you choose. Basic gives you targeted inline ads on your selected pages. All tiers include impression and click analytics.</p>
+                <summary>What's the difference between membership and the Featured Spotlight?</summary>
+                <p>Every MBA member gets a "Verified MBA Member" badge, a listing in the app Directory, and audience targeting — included with membership. The Featured Spotlight is a premium add-on: your business rotates on the home page, gets an enhanced listing with your logo and tagline at the top of the Directory, and can show live content like weekly specials.</p>
+            </details>
+            <details class="adv-accordion">
+                <summary>What is audience targeting?</summary>
+                <p>You choose who sees your listing — local residents, Millersville University students, or both — so you reach the customers who matter most to your business.</p>
             </details>
             <details class="adv-accordion">
                 <summary>I'm a restaurant but I'm not listed yet. Can I be added?</summary>
-                <p>Absolutely! Submit your details and we'll add you to the Food page. Any tier lets you place ads on the Food page to reach hungry students and residents.</p>
+                <p>Absolutely! Submit your details and we'll add you to the Directory. MBA members get the member badge and can choose their audience.</p>
             </details>
             <details class="adv-accordion">
                 <summary>What makes this different from Facebook or Google ads?</summary>
-                <p>Your listing lives where Millersville residents already go for local info — events, games, food, and news. It's hyper-local, always visible, and not buried in a social media feed.</p>
+                <p>Your listing lives where Millersville residents and students already go for local info — events, games, food, and news. It's hyper-local, always visible, and not buried in a social media feed.</p>
             </details>
             <details class="adv-accordion">
                 <summary>Can I update my listing or specials myself?</summary>
-                <p>We handle all updates for you. Just send us the changes and we'll have them live within hours. Restaurant specials can be updated weekly.</p>
+                <p>We handle updates for you. Just send us the changes and we'll have them live within hours. Featured Spotlight members with live content have their specials refreshed automatically where feasible.</p>
             </details>
         </div>
     </section>

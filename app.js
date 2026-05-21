@@ -4852,6 +4852,66 @@ function renderNewsUI(){
 }
 let allPlaces=[], placesFilter='All', placesMGMode=false;
 
+// --- MBA (Millersville Business Association) membership integration ----------
+// association.json is the SINGLE SOURCE OF TRUTH for membership. We load it
+// once, build a name->member lookup, and derive badge + audience visibility at
+// render time. Place listings carry NO membership fields — this avoids drift
+// (edit the roster in one place; the Directory follows).
+let mbaMembers = {};          // name -> roster entry
+let mbaSpotlight = [];         // spotlight buyers (rotation content)
+let mbaLoaded = false;
+
+async function loadAssociation(){
+    try {
+        const data = await (await fetch('association.json')).json();
+        mbaMembers = {};
+        (data.members || []).forEach(m => {
+            // Key by the name that appears in the Directory listing: matchListing
+            // when present (member's listing has a different display name),
+            // otherwise the member name itself.
+            const key = m.matchListing || m.name;
+            mbaMembers[key] = m;
+        });
+        mbaSpotlight = data.spotlight || [];
+        mbaLoaded = true;
+    } catch(e){ console.error('association.json load failed:', e); mbaLoaded = false; }
+}
+
+// Is this place an MBA member? Returns the roster entry or null.
+function getMembership(placeName){
+    return mbaMembers[placeName] || null;
+}
+
+// Audience visibility for a member listing. Returns true if the member should
+// be visible to the CURRENT viewer given their muAffiliation.
+//
+// IMPORTANT — Directory-specific convention: unset affiliation is treated as
+// TOWNIE here, which is DELIBERATELY different from the rest of app.js (where
+// unset is treated as 'student'/marauder, see effectiveAffiliation). Rationale:
+// the Directory's purpose is local-business findability, every member wants
+// locals, and the MBA partnership benefits from undecided visitors seeing the
+// full local roster. So an undecided visitor sees everything a townie sees.
+//
+// Non-members (no roster entry) are always visible — audience targeting is an
+// MBA-member benefit only.
+function mbaAudienceVisible(member){
+    if (!member) return true;                 // non-member: always visible
+    const aud = member.audience || 'both';     // members default to 'both'
+    if (aud === 'both') return true;
+    // Directory rule: treat unset as townie (local).
+    const viewerIsStudent = (muAffiliation === 'student');
+    if (aud === 'locals')    return !viewerIsStudent;  // townies + undecided
+    if (aud === 'marauders') return viewerIsStudent;   // confirmed students only
+    return true;
+}
+
+// The "MBA Member" badge — identical for both tiers (tier is an internal MBA
+// dues matter, not something residents need to see). Returns '' for non-members.
+function mbaBadge(placeName){
+    return getMembership(placeName) ? '<span class="badge-mba">✓ MBA Member</span>' : '';
+}
+
+
 function renderStars(rating) {
     if (!rating) return '';
     rating = parseFloat(rating);
@@ -4870,7 +4930,8 @@ async function loadPlaces(){try{
     const [restaurants, services, specials] = await Promise.all([
         fetch('restaurants.json').then(r=>r.json()).catch(()=>[]),
         fetch('services.json').then(r=>r.json()).catch(()=>[]),
-        fetch('specials.json').then(r=>r.json()).catch(()=>({}))
+        fetch('specials.json').then(r=>r.json()).catch(()=>({})),
+        loadAssociation()   // populate mbaMembers/mbaSpotlight before render
     ]);
     // Store grocery deals for popup
     const jh = specials["John Herr's Village Market"];
@@ -4920,6 +4981,8 @@ function renderPlaces(){
         if(placesFilter !== 'All'){
             mgFiltered = mgFiltered.filter(p => p.category === placesFilter);
         }
+        // Respect MBA audience targeting here too.
+        mgFiltered = mgFiltered.filter(p => mbaAudienceVisible(getMembership(p.name)));
         const buildCard = p => (p.placeType==='food') ? buildFoodCard(p, specials, dayName) : buildServiceCard(p);
         const onCampus  = mgFiltered.filter(p => p.onCampus === true);
         const offCampus = mgFiltered.filter(p => p.onCampus !== true);
@@ -4949,8 +5012,13 @@ function renderPlaces(){
     }
     pc.style.display='';
 
-    // Filter places
-    const filtered = placesFilter==='All' ? allPlaces : allPlaces.filter(p=>p.category===placesFilter);
+    // Filter places by category
+    let filtered = placesFilter==='All' ? allPlaces : allPlaces.filter(p=>p.category===placesFilter);
+
+    // MBA audience targeting: drop member listings whose audience excludes the
+    // current viewer. Non-members always pass. Unset affiliation is treated as
+    // townie here (see mbaAudienceVisible — Directory-specific convention).
+    filtered = filtered.filter(p => mbaAudienceVisible(getMembership(p.name)));
 
     // Sort: featured first, then food, then services
     filtered.sort((a,b) => (b.featured===true)-(a.featured===true) || (a.placeType==='food'?0:1)-(b.placeType==='food'?0:1));
@@ -5034,7 +5102,7 @@ function buildFoodCard(p, specials, dayName) {
     }
 
     return `<div class="app-card ${p.featured?'card-featured':''}" style="position:relative;">${membersBadge}${featuredBadge}
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;"><span class="card-tag">🍴 ${p.cuisine || 'Food & Drink'}</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;"><span class="card-tag">🍴 ${p.cuisine || 'Food & Drink'}</span>${mbaBadge(p.name)}</div>
         <h3 class="card-title" style="margin-top:6px;">${p.name}</h3>
         ${ratingRow}${addr}
         <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:8px;">${p.description||''}</p>
@@ -5047,8 +5115,9 @@ function buildFoodCard(p, specials, dayName) {
 }
 
 function buildServiceCard(p) {
-    const catIcons={'Government':'🏛','Health':'🏥','Beauty/Grooming':'💈','Shopping':'🛒','Recreation':'🏞','Transport':'🚌','Finance':'🏦','Shipping':'📦','Entertainment':'🎵','Education':'📚','Mechanic':'🔧','Gas Station':'⛽','EV Charging':'🔌','Housing':'🏠'};
+    const catIcons={'Government':'🏛','Health':'🏥','Beauty/Grooming':'💈','Shopping':'🛒','Recreation':'🏞','Transport':'🚌','Finance':'🏦','Shipping':'📦','Entertainment':'🎵','Education':'📚','Mechanic':'🔧','Gas Station':'⛽','EV Charging':'🔌','Housing':'🏠','Home Services':'🔨','Real Estate':'🏘','Venue':'🎉','Lodging':'🛏','Services':'🛠'};
     const icon = catIcons[p.category] || '🏢';
+    const mba = mbaBadge(p.name);
     const stars = p.rating ? renderStars(p.rating) : '';
     const reviews = p.reviewCount ? `<span style="font-size:0.75rem;color:var(--text-muted);margin-left:4px;">(${p.reviewCount} review${p.reviewCount>1?'s':''})</span>` : '';
     const ratingRow = stars ? `<div style="margin:4px 0 6px;">${stars}${reviews}</div>` : '';
@@ -5059,6 +5128,7 @@ function buildServiceCard(p) {
     return `<div class="app-card">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;">
             <span class="card-tag">${icon} ${p.category}</span>
+            ${mba}
         </div>
         <h3 class="card-title" style="margin-top:6px;">${p.name}</h3>
         ${ratingRow}

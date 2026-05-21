@@ -564,6 +564,9 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .badge-free { background: var(--navy); color: var(--gold); }
 .badge-door { background: var(--bg); border: 1px solid var(--border); color: var(--text); }
 .badge-premium { background: var(--gold); color: #000; font-size: 0.65rem; text-transform: uppercase; margin-bottom: 8px; }
+/* Verified MBA (Millersville Business Association) member — identical for both
+   tiers. Navy pill with gold check; sits in the card-tag row, right-aligned. */
+.badge-mba { display: inline-flex; align-items: center; gap: 3px; flex-shrink: 0; background: var(--navy); color: var(--gold); font-size: 0.62rem; font-weight: 700; padding: 3px 8px; border-radius: var(--radius-pill); text-transform: uppercase; letter-spacing: 0.4px; white-space: nowrap; }
 .home-indicator, .away-indicator { display: inline-block; font-size: 0.75rem; font-weight: 700; margin-left: 6px; padding: 1px 6px; border-radius: 4px; }
 .home-indicator { background: var(--green-soft); color: var(--green); }
 .away-indicator { background: var(--navy-soft); color: var(--navy); }

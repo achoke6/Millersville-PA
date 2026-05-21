@@ -4169,10 +4169,13 @@ function renderHomeUI(){
     // Update the day-navigator label and Today-snap-back visibility. The
     // label uses fmtDateLabel for consistent formatting ("Today, Apr 28" vs
     // "Tue, Apr 29"). Today button hidden when already on today since it
-    // would be a no-op.
+    // would be a no-op. When on today we show "Today – Fri, May 21" — the date
+    // moved here from the weather bar (whose right slot now holds the MBA
+    // spotlight rotation).
     const dayLabelEl = document.getElementById('home-day-label');
     if (dayLabelEl) {
-        const labelText = isToday ? 'Today' : fmtDateLabel(homeViewDate);
+        const todayDateStr = homeViewDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+        const labelText = isToday ? ('Today – ' + todayDateStr) : fmtDateLabel(homeViewDate);
         dayLabelEl.textContent = labelText;
     }
     const todayBtn = document.getElementById('home-day-today');
@@ -4719,16 +4722,18 @@ function buildCampusCupboardItems(dayName) {
 async function loadWeather(){
     try{const data=await(await fetch('weather.json')).json();
     const icon=data.icon||'🌡️';
-    const todayDate = new Date().toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'});
-    // Home page compact weather bar
+    // Home page compact weather bar. The right slot, which used to show the
+    // date, now hosts the MBA spotlight rotation (date moved to the events
+    // header). renderSpotlight() fills #home-spotlight after this runs.
     document.getElementById('home-weather-bar').innerHTML=`<div class="weather-bar">
         <div class="weather-bar-left">
             <span class="weather-bar-icon">${icon}</span>
             <span class="weather-bar-temp">${data.temp}°F</span>
             <span class="weather-bar-cond">${data.condition}</span>
         </div>
-        <span class="weather-bar-date">${todayDate}</span>
+        <div id="home-spotlight" class="home-spotlight" aria-label="Featured local member"></div>
     </div>`;
+    renderSpotlight();
     // Weather page
     document.getElementById('w-icon').textContent=icon;
     document.getElementById('w-temp').textContent=`${data.temp}°F`;
@@ -4874,6 +4879,10 @@ async function loadAssociation(){
         });
         mbaSpotlight = data.spotlight || [];
         mbaLoaded = true;
+        // The weather bar (which hosts the spotlight slot) and this loader run
+        // in parallel. Whichever finishes last should paint the spotlight, so
+        // trigger a render here too; it no-ops if the slot isn't in the DOM yet.
+        if (typeof renderSpotlight === 'function') renderSpotlight();
     } catch(e){ console.error('association.json load failed:', e); mbaLoaded = false; }
 }
 
@@ -4909,6 +4918,76 @@ function mbaAudienceVisible(member){
 // dues matter, not something residents need to see). Returns '' for non-members.
 function mbaBadge(placeName){
     return getMembership(placeName) ? '<span class="badge-mba">✓ MBA Member</span>' : '';
+}
+
+// --- Homepage spotlight rotation --------------------------------------------
+// The weather bar's right slot rotates through MBA members who bought the paid
+// Featured Spotlight add-on. Audience-filtered with the same townie-default
+// rule as the Directory (see mbaAudienceVisible). Rotates on a timer with a
+// randomized starting index so the same member isn't always shown first.
+let spotlightTimer = null;
+let spotlightIndex = 0;
+let spotlightPool = [];
+const SPOTLIGHT_ROTATE_MS = 6000;
+
+function renderSpotlight(){
+    const el = document.getElementById('home-spotlight');
+    if (!el) return;  // weather bar not rendered yet — will be called again
+
+    // Build the eligible pool: spotlight buyers visible to the current viewer.
+    // We match each spotlight entry to its roster member to read audience.
+    spotlightPool = (mbaSpotlight || []).filter(s => {
+        const member = getMembership(s.name) || mbaMembers[s.name] || null;
+        // Spotlight entries may be spotlightOnly institutions (MU/Borough/PM)
+        // whose roster entry has no matchListing; look them up by name too.
+        const rosterEntry = member || (mbaMembers[s.name]) || { audience: s.audience };
+        // Prefer the audience on the spotlight entry itself; fall back to roster.
+        const audienceCarrier = { audience: s.audience || (rosterEntry && rosterEntry.audience) || 'both' };
+        return mbaAudienceVisible(audienceCarrier);
+    });
+
+    if (spotlightPool.length === 0){
+        // Nothing to show (no buyers, or none visible to this viewer). Hide the
+        // slot gracefully so the weather bar just shows weather.
+        el.innerHTML = '';
+        el.style.display = 'none';
+        if (spotlightTimer){ clearInterval(spotlightTimer); spotlightTimer = null; }
+        return;
+    }
+    el.style.display = '';
+
+    // Randomize the starting member once per load so exposure is fair.
+    if (spotlightTimer === null){
+        spotlightIndex = Math.floor(Math.random() * spotlightPool.length);
+    }
+
+    paintSpotlight(el);
+
+    // Start rotation only if more than one member and not already running.
+    if (spotlightPool.length > 1 && spotlightTimer === null){
+        spotlightTimer = setInterval(() => {
+            spotlightIndex = (spotlightIndex + 1) % spotlightPool.length;
+            const node = document.getElementById('home-spotlight');
+            if (!node){ clearInterval(spotlightTimer); spotlightTimer = null; return; }
+            paintSpotlight(node);
+        }, SPOTLIGHT_ROTATE_MS);
+    }
+}
+
+function paintSpotlight(el){
+    const s = spotlightPool[spotlightIndex % spotlightPool.length];
+    if (!s) return;
+    const link = s.link || '#';
+    const logo = s.logo
+        ? `<img src="${s.logo}" alt="${(s.name||'').replace(/"/g,'&quot;')}" class="spotlight-logo" loading="lazy">`
+        : '';
+    const tagline = s.tagline ? `<span class="spotlight-tagline">${s.tagline}</span>` : '';
+    // Compact card: "Featured" kicker, logo (or name fallback), tagline.
+    el.innerHTML = `<a class="spotlight-card" href="${link}" target="_blank" rel="noopener" title="${(s.name||'').replace(/"/g,'&quot;')}">
+        <span class="spotlight-kicker">★ Featured Member</span>
+        ${logo || `<span class="spotlight-name">${s.name||''}</span>`}
+        ${tagline}
+    </a>`;
 }
 
 

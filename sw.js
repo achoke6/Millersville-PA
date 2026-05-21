@@ -28,7 +28,6 @@ const SHELL_URLS = [
     '/',
     '/index.html',
     '/app.js',
-    '/lib/eventMatch.js',
     '/style.css',
     '/Mapp.png',
     '/manifest.json'
@@ -105,78 +104,73 @@ self.addEventListener('fetch', event => {
     );
 });
 
-// Push event handler — fires when the push service (Apple, Mozilla, Google)
-// delivers a notification to this client. Without this handler the push
-// silently drops; the SW receives it but there's nothing to display, which
-// is the failure mode we hit before this was added.
+// ---------------------------------------------------------------------------
+// Push notifications
 //
-// Payload format (set by scripts/send-notifications.js → buildPayload):
-//   { title: string, body: string, url: string }
+// CRITICAL: without this 'push' listener, FCM-delivered pushes are received
+// by the service worker and SILENTLY DROPPED — the server's webpush send
+// succeeds (reports "Sent: N"), FCM accepts and delivers, but nothing ever
+// appears on the device. This is distinct from the in-app "test" notification,
+// which app.js fires via registration.showNotification() in the PAGE context
+// and therefore works even when this handler is missing. If you're debugging
+// "server says sent but phone shows nothing," this handler is the first thing
+// to verify exists in the DEPLOYED sw.js (not just the repo).
 //
-// Fallbacks: if the data arrives missing or malformed, we still show a
-// generic notification rather than dropping it on the floor. Logging in
-// the console (visible via chrome://serviceworker-internals) helps debug
-// future schema drift.
+// Payload contract: scripts/send-notifications.js sends
+//   JSON.stringify({ title, body, url })
+// Keep this parser in sync with buildPayload() there.
 self.addEventListener('push', event => {
-    let data = {};
-    try {
-        if (event.data) data = event.data.json();
-    } catch (_) {
-        // Payload wasn't JSON. Try plain text, else fall through to defaults.
-        try { data = { body: event.data.text() }; } catch (__) { /* */ }
+    // Parse the JSON payload defensively. A push with no data, or non-JSON
+    // data, must still surface SOMETHING rather than throwing (a thrown
+    // handler = silently dropped push = the exact bug this handler fixes).
+    let payload = {};
+    if (event.data) {
+        try {
+            payload = event.data.json();
+        } catch (e) {
+            // Not JSON — fall back to using the raw text as the body.
+            try { payload = { body: event.data.text() }; } catch (e2) { payload = {}; }
+        }
     }
 
-    const title = data.title || '📅 Millersville.APP';
+    const title = payload.title || 'Millersville.APP';
     const options = {
-        body: data.body || 'New events in your favorites',
+        body: payload.body || 'Tap to see what\'s happening today.',
         icon: '/Mapp.png',
         badge: '/Mapp.png',
-        // tag dedupes — re-sending the same tag replaces an existing
-        // unread notification instead of stacking. 'mvapp-daily' for the
-        // morning summary; a malformed payload still gets a tag so it
-        // doesn't pile up across attempts.
-        tag: data.tag || 'mvapp-daily',
-        // data is preserved on the NotificationEvent for the click handler
-        // to read — that's how we get the URL back when the user taps.
-        data: { url: data.url || 'https://millersville.app/' }
+        // Stash the click-target URL so notificationclick can read it. Falls
+        // back to the events page if the payload didn't include one.
+        data: { url: payload.url || 'https://millersville.app/events' },
+        // A stable tag means a second push replaces the first in the tray
+        // rather than stacking duplicates if two fire close together.
+        tag: 'mvapp-daily',
+        renotify: true
     };
 
-    // waitUntil keeps the SW alive until the notification is shown.
-    // Without it the SW could be terminated mid-flight on slow devices.
+    // waitUntil keeps the SW alive until the notification is shown. Without
+    // it, the SW may be killed before showNotification() resolves.
     event.waitUntil(self.registration.showNotification(title, options));
 });
 
-// Notification click handler — when the user taps a notification, open the
-// stored URL. If a tab on millersville.app is already open, focus it (and
-// navigate to the new URL); otherwise open a new tab. Standard PWA pattern.
+// Handle taps on the notification: focus an already-open Millersville.APP
+// tab if one exists (and navigate it to the target), otherwise open a new
+// window at the target URL.
 self.addEventListener('notificationclick', event => {
     event.notification.close();
-    const targetUrl = (event.notification.data && event.notification.data.url) || 'https://millersville.app/';
+    const target = (event.notification.data && event.notification.data.url)
+        || 'https://millersville.app/events';
 
     event.waitUntil(
-        self.clients.matchAll({ type: 'window', includeUncontrolled: true })
-            .then(clientList => {
-                // Look for an already-open millersville.app tab; reuse it
-                // rather than opening a duplicate. Compare origin only —
-                // /events and / are the same "app".
-                for (const client of clientList) {
-                    try {
-                        const clientUrl = new URL(client.url);
-                        if (clientUrl.origin === self.location.origin && 'focus' in client) {
-                            // navigate() to update the URL with filter state,
-                            // then focus. Some browsers don't have navigate()
-                            // (older Safari) — focus alone is the fallback.
-                            if (client.navigate) {
-                                return client.navigate(targetUrl).then(c => c && c.focus()).catch(() => client.focus());
-                            }
-                            return client.focus();
-                        }
-                    } catch (_) { /* malformed client URL — skip */ }
+        clients.matchAll({ type: 'window', includeUncontrolled: true }).then(windowClients => {
+            // Reuse an existing tab on our origin if there is one.
+            for (const client of windowClients) {
+                if (client.url.indexOf(self.location.origin) === 0 && 'focus' in client) {
+                    client.navigate(target);
+                    return client.focus();
                 }
-                // No matching tab — open a new one.
-                if (self.clients.openWindow) {
-                    return self.clients.openWindow(targetUrl);
-                }
-            })
+            }
+            // No existing tab — open a fresh one.
+            if (clients.openWindow) return clients.openWindow(target);
+        })
     );
 });

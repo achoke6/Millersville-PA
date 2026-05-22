@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-22T16:25:55.348Z",
+  "generatedAt": "2026-05-22T18:54:32.976Z",
   "totalEvents": 921,
   "withDescription": 343,
   "withImage": 109,
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-04-21T23:00:00.000Z",
-      "latest": "2026-09-17T21:30:00.000Z"
+      "latest": "2026-09-17T21:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-02-23T12:00:00.000Z",
@@ -93,6 +93,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Boys Varsity Football vs Upper Dublin High School|2026-09-04T23:00:00.000Z",
+      "firstSeenAt": "2026-05-22T18:54:32.974Z",
+      "title": "Boys Varsity Football vs Upper Dublin High School",
+      "source": "PM",
+      "date": "2026-09-04T23:00:00.000Z"
+    },
+    {
       "key": "Caitlynne Curtis|2026-06-20T00:00:00.000Z",
       "firstSeenAt": "2026-05-22T10:51:00.443Z",
       "title": "Caitlynne Curtis",
@@ -119,13 +126,6 @@
       "title": "Girls 7/8th Field Hockey @ Cedar Crest High School",
       "source": "PM",
       "date": "2026-09-17T21:00:00.000Z"
-    },
-    {
-      "key": "Girls JV Soccer @ Ephrata High School|2026-09-17T21:30:00.000Z",
-      "firstSeenAt": "2026-05-22T07:44:34.982Z",
-      "title": "Girls JV Soccer @ Ephrata High School",
-      "source": "PM",
-      "date": "2026-09-17T21:30:00.000Z"
     },
     {
       "key": "Boys 7/8/9th Football @ Manheim Central High School|2026-09-16T23:00:00.000Z",
@@ -163,5 +163,5 @@
       "date": "2026-05-28T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

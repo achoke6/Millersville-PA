@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-05-22T22:07:45.165Z",
-  "totalEvents": 919,
-  "withDescription": 343,
+  "generatedAt": "2026-05-23T00:07:07.735Z",
+  "totalEvents": 914,
+  "withDescription": 341,
   "withImage": 109,
   "familyFriendly": 44,
   "eventsToday": 2,
   "sources": {
     "muAthletics": 73,
-    "muCalendar": 159,
-    "muGetInvolved": 273,
+    "muCalendar": 157,
+    "muGetInvolved": 270,
     "pennManor": 189,
     "borough": 207,
     "vfw": 3,
@@ -22,11 +22,11 @@
       "latest": "2026-11-14T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-02-21T09:00:00.000Z",
+      "earliest": "2026-02-24T17:00:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-02-21T11:00:00.000Z",
+      "earliest": "2026-02-22T10:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
@@ -93,6 +93,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Hexbelt plus, Mean Gene Machine|2026-06-06T00:00:00.000Z",
+      "firstSeenAt": "2026-05-23T00:07:07.733Z",
+      "title": "Hexbelt plus, Mean Gene Machine",
+      "source": "Other",
+      "date": "2026-06-06T00:00:00.000Z"
+    },
+    {
       "key": "Boys Varsity Football vs Upper Dublin High School|2026-09-04T23:00:00.000Z",
       "firstSeenAt": "2026-05-22T18:54:32.974Z",
       "title": "Boys Varsity Football vs Upper Dublin High School",
@@ -154,14 +161,7 @@
       "title": "Zoning Hearing Board - Cancelled",
       "source": "Borough",
       "date": "2026-05-28T22:30:00.000Z"
-    },
-    {
-      "key": "The Fall Of Troy w. Lofting & Santosha|2026-05-28T23:00:00.000Z",
-      "firstSeenAt": "2026-05-21T20:07:21.303Z",
-      "title": "The Fall Of Troy w. Lofting & Santosha",
-      "source": "Other",
-      "date": "2026-05-28T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

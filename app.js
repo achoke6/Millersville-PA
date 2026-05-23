@@ -5041,7 +5041,7 @@ function renderStars(rating) {
         '</span> <span style="font-size:0.8rem;color:var(--text-muted);">' + rating.toFixed(1) + '</span>';
 }
 
-async function loadHousing(){try{const data=await(await fetch('housing.json')).json();const c=document.getElementById('housing-container');data.sort((a,b)=>(b.featured===true)-(a.featured===true));c.innerHTML=data.map(p=>{const badge=p.featured?'<span class="badge badge-premium">Featured</span>':'';return `<div class="app-card ${p.featured?'card-featured':''}">${badge}<h3 class="card-title">${p.name}</h3><p class="card-meta" style="font-weight:bold;text-transform:uppercase;margin-bottom:8px;">${p.landlord}</p><p style="font-size:0.9rem;margin-bottom:16px;">${p.description}</p><div class="card-footer"><a href="${p.link}" target="_blank" class="btn btn-sm ${p.featured?'btn-dark':'btn-outline'}" style="display:block;text-align:center;">View Property</a></div></div>`;}).join('');}catch(e){}}
+async function loadHousing(){try{const data=await(await fetch('housing.json')).json();const c=document.getElementById('housing-container');data.sort((a,b)=>(b.featured===true)-(a.featured===true));c.innerHTML=data.map(p=>{return `<div class="app-card"><h3 class="card-title">${p.name}</h3><p class="card-meta" style="font-weight:bold;text-transform:uppercase;margin-bottom:8px;">${p.landlord}</p><p style="font-size:0.9rem;margin-bottom:16px;">${p.description}</p><div class="card-footer"><a href="${p.link}" target="_blank" class="btn btn-sm btn-outline" style="display:block;text-align:center;">View Property</a></div></div>`;}).join('');}catch(e){}}
 
 async function loadPlaces(){try{
     const [restaurants, services, specials] = await Promise.all([
@@ -5186,12 +5186,11 @@ function buildCampusCupboardCard(dayName) {
 function buildFoodCard(p, specials, dayName) {
     // Action buttons
     let actionBtn='';
-    if(p.status==='App Required') actionBtn=`<div style="display:flex;gap:8px;"><a href="${p.iosLink||'#'}" target="_blank" class="btn btn-sm ${p.featured?'btn-dark':'btn-outline'}" style="flex:1;text-align:center;">🍎 iOS</a><a href="${p.link||'#'}" target="_blank" class="btn btn-sm ${p.featured?'btn-dark':'btn-outline'}" style="flex:1;text-align:center;">🤖 Android</a></div>`;
+    if(p.status==='App Required') actionBtn=`<div style="display:flex;gap:8px;"><a href="${p.iosLink||'#'}" target="_blank" class="btn btn-sm btn-outline" style="flex:1;text-align:center;">🍎 iOS</a><a href="${p.link||'#'}" target="_blank" class="btn btn-sm btn-outline" style="flex:1;text-align:center;">🤖 Android</a></div>`;
     else if(p.status==='Order Online') actionBtn=`<a href="${p.link}" target="_blank" class="btn btn-sm btn-ticket" style="display:block;text-align:center;">🛒 Order Online</a>`;
     else actionBtn=`<a href="${p.link}" target="_blank" class="btn btn-sm btn-outline" style="display:block;text-align:center;">📄 View Menu</a>`;
 
     const membersBadge = p.status==='Members Only' ? '<span class="badge-members-only">Members Only</span>' : '';
-    const featuredBadge = p.featured ? '<span class="badge badge-premium">Featured</span>' : '';
     const addr = p.address ? `<p class="card-meta" style="margin-bottom:4px;">📍 ${p.address}</p>` : '';
     const stars = p.rating ? renderStars(p.rating) : '';
     const reviews = p.reviewCount ? `<span style="font-size:0.75rem;color:var(--text-muted);margin-left:4px;">(${p.reviewCount} review${p.reviewCount>1?'s':''})</span>` : '';
@@ -5227,7 +5226,7 @@ function buildFoodCard(p, specials, dayName) {
         }
     }
 
-    return `<div class="app-card ${p.featured?'card-featured':''}" style="position:relative;">${membersBadge}${featuredBadge}
+    return `<div class="app-card" style="position:relative;">${membersBadge}
         <div style="display:flex;justify-content:space-between;align-items:flex-start;"><span class="card-tag">🍴 ${p.cuisine || 'Food & Drink'}</span>${mbaBadge(p.name)}</div>
         <h3 class="card-title" style="margin-top:6px;">${p.name}</h3>
         ${ratingRow}${addr}

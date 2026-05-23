@@ -33,7 +33,7 @@ These files are curated by Adam via weekly Cowork or Claude Code sessions. Treat
 | File | Purpose | Cadence |
 |---|---|---|
 | `camps.json` | Summer camps + tech camps | Monthly-ish |
-| `vfw.json` | VFW weekly specials + events | Weekly (Tuesdays) |
+| `vfw.json` | VFW weekly specials + events | Twice weekly (Tue/Fri, auto via `vfw-facebook-sync` scheduled task — see below) |
 | `grocery.json` | John Herr's weekly deals | Weekly (Thursdays) |
 | `borough-overrides.json` | Enrichments for bland Borough iCal entries | Ad hoc |
 | `sponsors.json` | Premium/standard/basic sponsors | Rare |
@@ -42,8 +42,10 @@ These files are curated by Adam via weekly Cowork or Claude Code sessions. Treat
 
 When editing these:
 - Validate shape after editing (`main.yml` has jq checks; replicate locally to verify)
-- Don't regenerate from scraping — they're authored, not extracted
+- Don't regenerate from scraping — they're authored, not extracted. (Exception: `vfw.json` is now refreshed by the `vfw-facebook-sync` scheduled task, which scrapes facebook.com/VFWPost7294 and proposes a diff for operator approval before writing — incremental + reviewed, not a wholesale regen.)
 - Past-dated entries are mostly auto-skipped by the scraper; light cleanup welcome but not required
+
+`vfw-facebook-sync` runs Tuesday and Friday at ~9:09 AM local. It drives Adam's signed-in personal Chrome via the Claude-in-Chrome MCP, transcribes the weekly-specials image, decodes the monthly events-calendar image into individual events, captures one-off event posts, asks Adam to approve the diff, and opens GitHub Desktop for the commit. SKILL.md lives at `C:\Users\AdamHoke\Documents\Claude\Scheduled\vfw-facebook-sync\SKILL.md`. If Facebook ever changes its DOM or blocks the session, fall back to manual Cowork updates of `vfw.json` — the file format and downstream consumption are unchanged.
 
 ### `lib/eventMatch.js` is canonical filter logic
 
@@ -188,7 +190,7 @@ If you add a new file that shouldn't be on the live site, add it to the lftp exc
 - **MU Hudl auth:** requires `x-hudl-usehotchocolate: 100` header (current as of April 2026). If MU broadcasts suddenly drop to 0, this header may have rotated.
 - **GitHub Actions IPs are blocked by Cloudflare** on several target sources (MU alumni events, MU tech camps). These can't be re-enabled — use Cowork/Claude Code session for those.
 - **Deleting a file doesn't always look deleted (SPA fallback masks 404s):** when you `git rm` a file and deploy, `lftp mirror --delete` *does* remove it from DreamHost. BUT requesting the deleted path can still return HTTP **200**, because the `.htaccess` SPA fallback (`RewriteRule ^ index.html [L]`) serves `index.html` for any path that isn't a real file. A 200 does NOT prove the file still exists. To actually verify a deletion: (a) check via SFTP directly, or (b) confirm the response body is the app shell (contains `Millersville.APP` / matches index.html's byte size) rather than the file's real content. A past session burned time chasing a "phantom" `mu-status-proxy.php` that was already correctly deleted — the 200 was just the SPA fallback. Don't repeat that diagnosis.
-- **Cowork-maintained files auto-expire:** `vfw.json` (weekly specials) and `grocery.json` (weekly deals) gate their specials/deals on a `validThrough` date. Once past it, VFW specials are hidden and grocery falls back to the legacy `grocery-cache.json` (showing stale deals). Events inside `vfw.json` still display regardless — only the date-gated specials/deals block goes empty. If the site shows missing or stale specials, the fix is a Cowork refresh of these files, not a code change.
+- **Cowork-maintained files auto-expire:** `vfw.json` (weekly specials) and `grocery.json` (weekly deals) gate their specials/deals on a `validThrough` date. Once past it, VFW specials are hidden and grocery falls back to the legacy `grocery-cache.json` (showing stale deals). Events inside `vfw.json` still display regardless — only the date-gated specials/deals block goes empty. If the site shows missing or stale specials, the fix is to refresh these files. `vfw.json` is refreshed automatically by the `vfw-facebook-sync` scheduled task (Tue/Fri ~9:09 AM); `grocery.json` by `weekly-grocery-circular` (Thu ~7:39 AM). Manual Cowork refresh is the fallback if a scheduled run fails or surfaces an unclassified post.
 
 ## When something breaks
 

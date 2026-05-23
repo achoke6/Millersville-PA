@@ -1,6 +1,14 @@
 {
     "_comment": "VFW Post 7294 specials + events. Maintained weekly via a scheduled Claude Cowork task that reads the VFW Post 7294 Facebook page and transcribes specials/events into this file. (Previously sourced from vfwpost7294.org.)",
-    "_format": "weeklySpecials: { dateRange (human-readable), validThrough (ISO date — last day specials are valid, exclusive), items (array of strings, optional ' (Fri only)' or ' (Friday only)' suffix). events: array of { title, date (ISO with TZ), endTime (optional ISO with TZ), description (optional), price (optional) }. Date/time uses America/New_York offset.",
+    "_format": "weeklySpecials: { dateRange (human-readable), validThrough (ISO date — last day specials are valid, exclusive), items (array of strings, optional ' (Fri only)' or ' (Friday only)' suffix). events: array of { title, date (ISO with TZ), endTime (optional ISO with TZ), description (optional), price (optional) }. recurring: stable day→name map of nightly themes (rarely changes — Cowork need not touch). note: stable members/guests note. Date/time uses America/New_York offset. NOTE: this file is the SINGLE SOURCE for VFW specials — the app reads weekly specials + recurring from here, not from specials.json.",
+    "note": "Members & Guests · Weekly specials change each week",
+    "recurring": {
+        "Tuesday": "Shrimp Night",
+        "Wednesday": "Wing Night",
+        "Thursday": "Taco Night",
+        "Friday": "Special (varies weekly)",
+        "Saturday": "Burger Night"
+    },
     "weeklySpecials": {
         "dateRange": "Tuesday, May 19 through Saturday, May 23",
         "validThrough": "2026-05-24",

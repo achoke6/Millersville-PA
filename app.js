@@ -8,6 +8,20 @@
 const escHtml = s => String(s ?? '').replace(/[&<>"']/g, c =>
     ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
+// Some feeds pre-encode characters as HTML entities (e.g. an en-dash arrives as
+// "&#8211;"). Decode those back to real characters BEFORE escHtml, so titles
+// render correctly instead of showing the literal entity text. Handles numeric
+// (&#8211; / &#x2013;) and the common named entities feeds emit.
+const NAMED_ENTITIES = {
+    amp:'&', lt:'<', gt:'>', quot:'"', apos:"'", nbsp:'\u00A0',
+    ndash:'\u2013', mdash:'\u2014', lsquo:'\u2018', rsquo:'\u2019',
+    ldquo:'\u201C', rdquo:'\u201D', hellip:'\u2026', amp38:'&'
+};
+const decodeEntities = s => String(s ?? '')
+    .replace(/&#x([0-9a-fA-F]+);/g, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+    .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(parseInt(d, 10)))
+    .replace(/&([a-zA-Z]+);/g, (m, name) => (name in NAMED_ENTITIES ? NAMED_ENTITIES[name] : m));
+
 let allEvents=[], currentNews=[], allRestaurants=[];
 
 // Date the home timeline is currently showing. Defaults to today (midnight),
@@ -4277,7 +4291,7 @@ function renderHomeUI(){
         const sourceDisplay = {'Millersville News':'MU','The Snapper':'Snapper','MU Athletics':'MU Athletics','MU Review':'MU Review','Penn Manor News':'PM','Millersville Borough':'Borough'};
         newsContainer.innerHTML = latestNews.map(n => {
             const src = sourceDisplay[n.source] || n.source;
-            return `<a href="${escHtml(n.link)}" target="_blank" class="home-news-item"><span class="home-news-src">${escHtml(src)}</span><span class="home-news-title">${escHtml(n.title)}</span></a>`;
+            return `<a href="${escHtml(n.link)}" target="_blank" class="home-news-item"><span class="home-news-src">${escHtml(src)}</span><span class="home-news-title">${escHtml(decodeEntities(n.title))}</span></a>`;
         }).join('');
     }
 
@@ -4662,6 +4676,21 @@ window.openEventDetails = function(key) {
 async function loadHomeSpecials(){
     try {
         const specials = await fetch('specials.json').then(r=>r.json());
+        // VFW specials come from vfw.json (the single source maintained by the
+        // weekly Cowork task). Synthesize the specials-shaped entry from it so
+        // the rendering below is unchanged. This overrides any VFW block that
+        // might still exist in specials.json.
+        try {
+            const vfw = await fetch('vfw.json').then(r=>r.json());
+            if (vfw && vfw.weeklySpecials) {
+                specials['VFW Post 7294'] = {
+                    note: vfw.note || '',
+                    weekly: vfw.weeklySpecials.items || [],
+                    weeklyDateRange: vfw.weeklySpecials.dateRange || '',
+                    recurring: vfw.recurring || {}
+                };
+            }
+        } catch(e){ /* vfw.json optional — fall back to specials.json if present */ }
         const dayName = new Date().toLocaleDateString('en-US',{weekday:'long'});
         const container = document.getElementById('home-specials');
         let cards = [];
@@ -4686,8 +4715,10 @@ async function loadHomeSpecials(){
             // the override route.
             if (restaurant === 'VFW Post 7294' && muAffiliation === 'student') continue;
 
-            const isWeekend = (dayName === 'Saturday' || dayName === 'Sunday');
-            if (isWeekend && restaurant === 'VFW Post 7294') continue;
+            // VFW kitchen runs Tue–Sat. Hide the specials card on Sun & Mon
+            // (kitchen closed / specials not relevant). Saturday still shows,
+            // but the Friday-only item is dropped (handled below).
+            if (restaurant === 'VFW Post 7294' && (dayName === 'Sunday' || dayName === 'Monday')) continue;
 
             let items = [];
             if(sp.daily && sp.daily[dayName]) items = sp.daily[dayName];
@@ -4696,6 +4727,10 @@ async function loadHomeSpecials(){
             if (restaurant === 'VFW Post 7294') {
                 if(sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
                 if(sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
+                // On Saturday, drop Friday-only items — they're no longer offered.
+                if(dayName === 'Saturday'){
+                    items = items.filter(i => !/\((?:Fri|Friday)(?:\s+only)?\)/i.test(i));
+                }
             } else {
                 if(sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
                 if(sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
@@ -4800,7 +4835,7 @@ function buildNewsCard(n) {
     if(n.subCategory && !tags.includes(n.subCategory)) tags.push(n.subCategory);
     if(n.tags) n.tags.forEach(t=>{if(!tags.includes(t)) tags.push(t);});
     const tagHtml=tags.length?`<div class="card-tags">${tags.map(t=>`<span class="card-tag">${t}</span>`).join('')}</div>`:'';
-    return `<div class="app-card">${tagHtml}<p class="card-meta">${escHtml(n.date)}</p><h3 class="card-title">${escHtml(n.title)}</h3><a href="${escHtml(n.link)}" target="_blank" class="btn btn-sm btn-outline" style="margin-top:12px;">Read ➔</a></div>`;
+    return `<div class="app-card">${tagHtml}<p class="card-meta">${escHtml(n.date)}</p><h3 class="card-title">${escHtml(decodeEntities(n.title))}</h3><a href="${escHtml(n.link)}" target="_blank" class="btn btn-sm btn-outline" style="margin-top:12px;">Read ➔</a></div>`;
 }
 
 // Hide PM/Borough news source pills for marauders who haven't favorited them.
@@ -5044,12 +5079,24 @@ function renderStars(rating) {
 async function loadHousing(){try{const data=await(await fetch('housing.json')).json();const c=document.getElementById('housing-container');data.sort((a,b)=>(b.featured===true)-(a.featured===true));c.innerHTML=data.map(p=>{return `<div class="app-card"><h3 class="card-title">${p.name}</h3><p class="card-meta" style="font-weight:bold;text-transform:uppercase;margin-bottom:8px;">${p.landlord}</p><p style="font-size:0.9rem;margin-bottom:16px;">${p.description}</p><div class="card-footer"><a href="${p.link}" target="_blank" class="btn btn-sm btn-outline" style="display:block;text-align:center;">View Property</a></div></div>`;}).join('');}catch(e){}}
 
 async function loadPlaces(){try{
-    const [restaurants, services, specials] = await Promise.all([
+    const [restaurants, services, specials, vfw] = await Promise.all([
         fetch('restaurants.json').then(r=>r.json()).catch(()=>[]),
         fetch('services.json').then(r=>r.json()).catch(()=>[]),
         fetch('specials.json').then(r=>r.json()).catch(()=>({})),
+        fetch('vfw.json').then(r=>r.json()).catch(()=>null),
         loadAssociation()   // populate mbaMembers/mbaSpotlight before render
     ]);
+    // VFW specials come from vfw.json (single source, maintained by the weekly
+    // Cowork task). Synthesize the specials-shaped entry so buildFoodCard works
+    // unchanged. Overrides any stale VFW block in specials.json.
+    if (vfw && vfw.weeklySpecials) {
+        specials['VFW Post 7294'] = {
+            note: vfw.note || '',
+            weekly: vfw.weeklySpecials.items || [],
+            weeklyDateRange: vfw.weeklySpecials.dateRange || '',
+            recurring: vfw.recurring || {}
+        };
+    }
     // Store grocery deals for popup
     const jh = specials["John Herr's Village Market"];
     if(jh && jh.rawDeals) { allGroceryDeals = jh.rawDeals; }
@@ -5199,13 +5246,17 @@ function buildFoodCard(p, specials, dayName) {
     // Build specials section
     let specialsHtml='';
     const sp = specials[p.name];
-    const isWeekend = (dayName === 'Saturday' || dayName === 'Sunday');
-    if(sp && !(isWeekend && p.name === 'VFW Post 7294')){
+    const vfwClosedDay = (dayName === 'Sunday' || dayName === 'Monday');
+    if(sp && !(vfwClosedDay && p.name === 'VFW Post 7294')){
         let items=[];
         if(sp.daily && sp.daily[dayName]) items = sp.daily[dayName];
         if (p.name === 'VFW Post 7294') {
             if(sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
             if(sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
+            // On Saturday, drop Friday-only items — no longer offered.
+            if(dayName === 'Saturday'){
+                items = items.filter(i => !/\((?:Fri|Friday)(?:\s+only)?\)/i.test(i));
+            }
         } else {
             if(sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
             if(sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
@@ -5910,7 +5961,7 @@ function runSearch(q) {
         newsHits.forEach(n => {
             html += `<div class="search-result" onclick="window.open('${n.link}','_blank')">
                 <span style="font-size:0.7rem;color:var(--text-muted);">${n.source}</span>
-                <p style="font-weight:600;margin:2px 0;">${n.title}</p>
+                <p style="font-weight:600;margin:2px 0;">${escHtml(decodeEntities(n.title))}</p>
                 <span style="font-size:0.8rem;color:var(--text-muted);">${n.date || ''}</span>
             </div>`;
         });

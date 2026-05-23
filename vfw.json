@@ -1,5 +1,5 @@
 {
-    "_comment": "Hand-maintained VFW Post 7294 specials + events. Maintained weekly via Claude Cowork — check https://www.vfwpost7294.org/ for new posts (typically published weekly by McKayla Herman) and transcribe specials/events here.",
+    "_comment": "VFW Post 7294 specials + events. Maintained weekly via a scheduled Claude Cowork task that reads the VFW Post 7294 Facebook page and transcribes specials/events into this file. (Previously sourced from vfwpost7294.org.)",
     "_format": "weeklySpecials: { dateRange (human-readable), validThrough (ISO date — last day specials are valid, exclusive), items (array of strings, optional ' (Fri only)' or ' (Friday only)' suffix). events: array of { title, date (ISO with TZ), endTime (optional ISO with TZ), description (optional), price (optional) }. Date/time uses America/New_York offset.",
     "weeklySpecials": {
         "dateRange": "Tuesday, May 19 through Saturday, May 23",
@@ -13,9 +13,9 @@
     "events": [
         {
             "title": "Memorial Day Ceremony and Brunch",
-            "date": "2026-05-24T10:00:00-04:00",
-            "endTime": "2026-05-24T13:00:00-04:00",
-            "description": "Annual Memorial Day ceremony and brunch at VFW Post 7294. All are welcome."
+            "date": "2026-05-24T11:00:00-04:00",
+            "endTime": "2026-05-24T14:00:00-04:00",
+            "description": "Annual Memorial Day Service at the Post 7294 Pavilion, with brunch to follow. All members of the community are welcome."
         },
         {
             "title": "Trivia Night",
@@ -25,8 +25,8 @@
         },
         {
             "title": "Post Meeting",
-            "date": "2026-05-27T19:00:00-04:00",
-            "endTime": "2026-05-27T20:00:00-04:00",
+            "date": "2026-05-27T18:00:00-04:00",
+            "endTime": "2026-05-27T19:00:00-04:00",
             "description": "VFW Post 7294 monthly meeting."
         }
     ]

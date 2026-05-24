@@ -405,6 +405,38 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .family-toggle.mba-toggle:not(.active):hover { background: var(--bg); }
 .mba-toggle-label { font-size: 0.78rem; }
 
+/* Scrollable single-row category strip on the Directory. Pills sit on one row,
+   scroll horizontally (touch drag native; mouse drag via JS), scrollbar hidden,
+   and the row fades to transparent at the right edge to signal there's more. */
+.cat-scroll-wrap {
+    margin-top: 6px;
+    /* Right-edge fade: the strip's content fades out over the last 32px. */
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent 100%);
+            mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent 100%);
+}
+.cat-scroll-row {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 6px;
+    padding-right: 36px;       /* room so the last pill can clear the fade */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;      /* Firefox */
+    cursor: grab;
+}
+.cat-scroll-row::-webkit-scrollbar { display: none; }   /* WebKit */
+.cat-scroll-row.dragging { cursor: grabbing; scroll-behavior: auto; }
+.cat-scroll-row .src-btn { flex-shrink: 0; }
+/* Expanded: the same row wraps into a full grid; drop the edge fade and let it
+   flow to multiple lines. (.cat-scroll-row is removed by JS when expanded, so
+   the group reverts to the default wrapping .filter-group behavior.) */
+.cat-scroll-wrap.expanded {
+    -webkit-mask-image: none;
+            mask-image: none;
+}
+.cat-scroll-wrap.expanded .filter-group { flex-wrap: wrap; overflow: visible; padding-right: 0; cursor: default; }
+
 /* Mobile: hide the text, keep just the star/icon. Desktop shows the full label. */
 @media (max-width: 768px) {
     .fav-toggle-label, .past-toggle-label { display: none; }

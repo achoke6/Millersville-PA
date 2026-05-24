@@ -1885,6 +1885,37 @@ window.resetHomeDay = function() {
 // These together mean an accidental vertical-scroll-with-tilt won't trigger
 // day nav, but a deliberate sideways flick will.
 let swipeStartX = 0, swipeStartY = 0, swipeStartTime = 0;
+// Mouse drag-to-scroll for the Directory category strip (touch scrolls
+// natively via overflow-x). Tracks drag distance and suppresses the click on
+// a pill if the user was actually dragging, so a drag doesn't fire a filter.
+function attachCatStripDrag() {
+    const row = document.getElementById('places-strip-group');
+    if (!row || row._dragAttached) return;
+    row._dragAttached = true;
+    let isDown = false, startX = 0, startScroll = 0, moved = 0;
+    row.addEventListener('mousedown', (e) => {
+        isDown = true; moved = 0;
+        startX = e.pageX; startScroll = row.scrollLeft;
+        row.classList.add('dragging');
+    });
+    window.addEventListener('mouseup', () => {
+        if (!isDown) return;
+        isDown = false;
+        row.classList.remove('dragging');
+    });
+    row.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        const dx = e.pageX - startX;
+        moved += Math.abs(dx);
+        row.scrollLeft = startScroll - dx;
+    });
+    // If the pointer moved more than a few px, treat it as a drag and cancel
+    // the click so we don't accidentally select a category.
+    row.addEventListener('click', (e) => {
+        if (moved > 6) { e.preventDefault(); e.stopPropagation(); }
+    }, true);
+}
+
 function attachHomeSwipeHandlers() {
     const timeline = document.getElementById('home-timeline');
     if (!timeline || timeline._swipeAttached) return;
@@ -2534,6 +2565,7 @@ async function initApp(){
     await Promise.allSettled([loadWeather(),loadSpecials(),loadEvents(),loadPlaces(),loadHousing(),loadNews(),loadBoard(),loadClubsDirectory()]);
     renderHomeFeed();
     attachHomeSwipeHandlers();
+    attachCatStripDrag();
     syncFilterArrows();
     // Ecwid is now loaded lazily — first time the user visits /store, or
     // clicks the cart widget. Eager loading saved one round-trip when a
@@ -3047,11 +3079,12 @@ window.toggleEvFilters=function(){
     arrow.textContent = isVisible ? '▸' : '▾';
 };
 window.togglePlacesFilters=function(){
-    const wrap = document.getElementById('places-filters-wrap');
+    const wrap = document.getElementById('places-scroll-strip');
+    const row = document.getElementById('places-strip-group');
     const arrow = document.getElementById('places-filter-arrow');
-    const isVisible = getComputedStyle(wrap).display !== 'none';
-    wrap.style.display = isVisible ? 'none' : 'block';
-    arrow.textContent = isVisible ? '▸' : '▾';
+    const expanded = wrap.classList.toggle('expanded');
+    if (row) row.classList.toggle('cat-scroll-row', !expanded);  // scroll only when collapsed
+    arrow.textContent = expanded ? '▴' : '▾';
 };
 window.toggleSpFilters=function(){
     const wrap = document.getElementById('sp-filters-wrap');
@@ -5122,9 +5155,8 @@ async function loadPlaces(){try{
 
 window.setPlacesFilter=function(cat,btn){
     placesFilter=cat;
-    // Single filter group now (all categories live in the dropdown). Clear
-    // active state, then mark the clicked one.
-    document.querySelectorAll('#places-filter-group .src-btn').forEach(b=>b.classList.remove('active'));
+    // One pill set now (the strip, which expands in place). Clear active, mark clicked.
+    document.querySelectorAll('#places-strip-group .src-btn').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     renderPlaces();
 };

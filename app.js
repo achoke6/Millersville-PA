@@ -4981,7 +4981,18 @@ function mbaAudienceVisible(member){
 // The "MBA Member" badge — identical for both tiers (tier is an internal MBA
 // dues matter, not something residents need to see). Returns '' for non-members.
 function mbaBadge(placeName){
-    return getMembership(placeName) ? '<span class="badge-mba">✓ MBA Member</span>' : '';
+    if (!getMembership(placeName)) return '';
+    // Shield-style MBA member emblem (navy shield, gold trim, MBA wordmark) with
+    // a small "Member" label. The shield reads as a verified/trust badge.
+    return `<span class="badge-mba" title="Verified MBA Member">
+        <svg class="badge-mba-shield" viewBox="0 0 24 28" aria-hidden="true">
+            <path d="M12 1 L22 5 V13 C22 20 17 25 12 27 C7 25 2 20 2 13 V5 Z"
+                  fill="var(--navy)" stroke="var(--gold)" stroke-width="1.5"/>
+            <text x="12" y="16" text-anchor="middle" fill="var(--gold)"
+                  font-size="7" font-weight="800" font-family="Arial, sans-serif">MBA</text>
+        </svg>
+        <span class="badge-mba-label">Member</span>
+    </span>`;
 }
 
 // --- Homepage spotlight rotation --------------------------------------------
@@ -5111,10 +5122,9 @@ async function loadPlaces(){try{
 
 window.setPlacesFilter=function(cat,btn){
     placesFilter=cat;
-    // Filter buttons now live in two groups (top row + collapsible panel), so
-    // clear active state across both, then mark the clicked one.
-    document.querySelectorAll('#places-top-group .src-btn, #places-filter-group .src-btn')
-        .forEach(b=>b.classList.remove('active'));
+    // Single filter group now (all categories live in the dropdown). Clear
+    // active state, then mark the clicked one.
+    document.querySelectorAll('#places-filter-group .src-btn').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
     renderPlaces();
 };

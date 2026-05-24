@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-05-24T11:16:59.039Z",
-  "totalEvents": 907,
+  "generatedAt": "2026-05-24T13:24:54.801Z",
+  "totalEvents": 908,
   "withDescription": 338,
-  "withImage": 107,
+  "withImage": 108,
   "familyFriendly": 44,
   "eventsToday": 1,
   "sources": {
@@ -12,7 +12,7 @@
     "pennManor": 193,
     "borough": 206,
     "vfw": 3,
-    "phantomPower": 13,
+    "phantomPower": 14,
     "community": 1,
     "muHudlBroadcasts": 5
   },
@@ -42,7 +42,7 @@
       "latest": "2026-05-27T22:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-05-24T01:00:00.000Z",
+      "earliest": "2026-05-28T23:00:00.000Z",
       "latest": "2026-07-17T23:00:00.000Z"
     },
     "community": {
@@ -93,11 +93,18 @@
   },
   "recentlyAdded": [
     {
-      "key": "I Love Bad Drag! - A Comedy/Drag Event|2026-05-24T01:00:00.000Z",
-      "firstSeenAt": "2026-05-24T09:25:18.622Z",
-      "title": "I Love Bad Drag! - A Comedy/Drag Event",
+      "key": "Brotality w. Quantifier, Making A Mockery, & New Damage|2026-06-24T23:00:00.000Z",
+      "firstSeenAt": "2026-05-24T13:24:54.799Z",
+      "title": "Brotality w. Quantifier, Making A Mockery, & New Damage",
       "source": "Other",
-      "date": "2026-05-24T01:00:00.000Z"
+      "date": "2026-06-24T23:00:00.000Z"
+    },
+    {
+      "key": "Stone Horses w. The Blues Vultures|2026-06-27T00:00:00.000Z",
+      "firstSeenAt": "2026-05-24T13:24:54.799Z",
+      "title": "Stone Horses w. The Blues Vultures",
+      "source": "Other",
+      "date": "2026-06-27T00:00:00.000Z"
     },
     {
       "key": "Battle Of Millersville Vol.1 - Tribute Fest|2026-06-21T00:00:00.000Z",
@@ -154,14 +161,7 @@
       "title": "Memorial Day Ceremony and Brunch",
       "source": "Other",
       "date": "2026-05-24T15:00:00.000Z"
-    },
-    {
-      "key": "Post Meeting|2026-05-27T22:00:00.000Z",
-      "firstSeenAt": "2026-05-23T01:04:34.077Z",
-      "title": "Post Meeting",
-      "source": "Other",
-      "date": "2026-05-27T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

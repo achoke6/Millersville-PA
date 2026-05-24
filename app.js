@@ -2565,8 +2565,17 @@ async function initApp(){
     await Promise.allSettled([loadWeather(),loadSpecials(),loadEvents(),loadPlaces(),loadHousing(),loadNews(),loadBoard(),loadClubsDirectory()]);
     renderHomeFeed();
     attachHomeSwipeHandlers();
-    attachCatStripDrag();
     syncFilterArrows();
+    // Close the Directory filter dropdown when tapping outside it.
+    document.addEventListener('click', (e) => {
+        const menu = document.getElementById('places-filter-menu');
+        const btn = document.getElementById('places-filter-toggle');
+        if (!menu || menu.style.display === 'none') return;
+        if (menu.contains(e.target) || (btn && btn.contains(e.target))) return;
+        menu.style.display = 'none';
+        const arrow = document.getElementById('places-filter-arrow');
+        if (arrow) arrow.textContent = '▾';
+    });
     // Ecwid is now loaded lazily — first time the user visits /store, or
     // clicks the cart widget. Eager loading saved one round-trip when a
     // visitor went to the store, but cost EVERY visitor ~200KB of Ecwid
@@ -3079,12 +3088,11 @@ window.toggleEvFilters=function(){
     arrow.textContent = isVisible ? '▸' : '▾';
 };
 window.togglePlacesFilters=function(){
-    const wrap = document.getElementById('places-scroll-strip');
-    const row = document.getElementById('places-strip-group');
+    const menu = document.getElementById('places-filter-menu');
     const arrow = document.getElementById('places-filter-arrow');
-    const expanded = wrap.classList.toggle('expanded');
-    if (row) row.classList.toggle('cat-scroll-row', !expanded);  // scroll only when collapsed
-    arrow.textContent = expanded ? '▴' : '▾';
+    const open = menu.style.display === 'none';
+    menu.style.display = open ? 'block' : 'none';
+    if (arrow) arrow.textContent = open ? '▴' : '▾';
 };
 window.toggleSpFilters=function(){
     const wrap = document.getElementById('sp-filters-wrap');
@@ -5015,16 +5023,14 @@ function mbaAudienceVisible(member){
 // dues matter, not something residents need to see). Returns '' for non-members.
 function mbaBadge(placeName){
     if (!getMembership(placeName)) return '';
-    // Shield-style MBA member emblem (navy shield, gold trim, MBA wordmark) with
-    // a small "Member" label. The shield reads as a verified/trust badge.
-    return `<span class="badge-mba" title="Verified MBA Member">
+    // Shield-style MBA member emblem (navy shield, gold trim, MBA wordmark).
+    return `<span class="badge-mba" title="Verified Millersville Business Association member">
         <svg class="badge-mba-shield" viewBox="0 0 24 28" aria-hidden="true">
             <path d="M12 1 L22 5 V13 C22 20 17 25 12 27 C7 25 2 20 2 13 V5 Z"
                   fill="var(--navy)" stroke="var(--gold)" stroke-width="1.5"/>
             <text x="12" y="16" text-anchor="middle" fill="var(--gold)"
                   font-size="7" font-weight="800" font-family="Arial, sans-serif">MBA</text>
         </svg>
-        <span class="badge-mba-label">Member</span>
     </span>`;
 }
 
@@ -5155,20 +5161,39 @@ async function loadPlaces(){try{
 
 window.setPlacesFilter=function(cat,btn){
     placesFilter=cat;
-    // One pill set now (the strip, which expands in place). Clear active, mark clicked.
-    document.querySelectorAll('#places-strip-group .src-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
+    // Highlight the chosen menu item.
+    document.querySelectorAll('#places-filter-menu .filter-menu-item').forEach(b=>b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    // Reflect the active category on the Filter button (e.g. "Food ▾") so the
+    // current filter is visible without a category row. "All" → plain "Filter".
+    const label = document.getElementById('places-filter-toggle');
+    if (label){
+        const txt = (cat === 'All') ? 'Filter' : (btn ? btn.textContent.trim() : cat);
+        label.innerHTML = `${txt} <span id="places-filter-arrow">▾</span>`;
+    }
+    // Close the menu after choosing.
+    const menu = document.getElementById('places-filter-menu');
+    if (menu) menu.style.display = 'none';
     renderPlaces();
 };
 
 // Marauder Gold filter — ANDs with the category chip. When active, only entries
 // flagged `marauderGold:true` show, split into On Campus / Off Campus sections.
 // Housing is hidden entirely since apartments don't accept MG for rent.
+function updatePlacesFilterNote(){
+    const note = document.getElementById('places-filter-note');
+    if (!note) return;
+    if (placesMBAMode) note.textContent = 'Showing only Millersville Business Association members.';
+    else if (placesMGMode) note.textContent = 'Showing only businesses that accept Marauder Gold.';
+    else note.textContent = '';
+}
+
 window.togglePlacesMarauderGold=function(){
     placesMGMode=!placesMGMode;
     if(placesMGMode){ placesMBAMode=false; const m=document.getElementById('places-mba-toggle'); if(m) m.classList.remove('active'); }
     const btn=document.getElementById('places-mg-toggle');
     if(btn) btn.classList.toggle('active', placesMGMode);
+    updatePlacesFilterNote();
     renderPlaces();
 };
 
@@ -5177,6 +5202,7 @@ window.togglePlacesMBA=function(){
     if(placesMBAMode){ placesMGMode=false; const g=document.getElementById('places-mg-toggle'); if(g) g.classList.remove('active'); }
     const btn=document.getElementById('places-mba-toggle');
     if(btn) btn.classList.toggle('active', placesMBAMode);
+    updatePlacesFilterNote();
     renderPlaces();
 };
 

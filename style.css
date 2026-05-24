@@ -405,37 +405,55 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .family-toggle.mba-toggle:not(.active):hover { background: var(--bg); }
 .mba-toggle-label { font-size: 0.78rem; }
 
-/* Scrollable single-row category strip on the Directory. Pills sit on one row,
-   scroll horizontally (touch drag native; mouse drag via JS), scrollbar hidden,
-   and the row fades to transparent at the right edge to signal there's more. */
-.cat-scroll-wrap {
-    margin-top: 6px;
-    /* Right-edge fade: the strip's content fades out over the last 32px. */
-    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent 100%);
-            mask-image: linear-gradient(to right, #000 calc(100% - 32px), transparent 100%);
+/* Marauder Gold toggle now shows the MU coin image instead of an emoji. */
+.mg-coin-img { width: 22px; height: 22px; display: block; object-fit: contain; }
+.family-toggle.mg-toggle.active { background: var(--gold-soft, #fdf6e3); border-color: var(--gold); }
+
+/* Subtle note shown below the toolbar when a lens filter (MBA / Marauder Gold)
+   is active, telling the user what's being filtered. */
+.filter-note {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    background: var(--gold-soft, #fdf6e3);
+    border-left: 3px solid var(--gold);
+    padding: 6px 10px;
+    border-radius: 4px;
+    margin: 6px 0 0;
 }
-.cat-scroll-row {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    gap: 6px;
-    padding-right: 36px;       /* room so the last pill can clear the fade */
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;      /* Firefox */
-    cursor: grab;
+.filter-note:empty { display: none; }
+
+/* Category filter dropdown menu — a floating vertical list under "Filter ▾".
+   Right-aligned to sit under the button; scrolls if taller than the cap. */
+.sticky-nav-bar { position: sticky; }   /* ensure stacking context for the menu */
+.filter-menu {
+    position: absolute;
+    right: 16px;
+    z-index: 50;
+    margin-top: 2px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    padding: 6px;
+    max-height: 60vh;
+    overflow-y: auto;
+    min-width: 190px;
 }
-.cat-scroll-row::-webkit-scrollbar { display: none; }   /* WebKit */
-.cat-scroll-row.dragging { cursor: grabbing; scroll-behavior: auto; }
-.cat-scroll-row .src-btn { flex-shrink: 0; }
-/* Expanded: the same row wraps into a full grid; drop the edge fade and let it
-   flow to multiple lines. (.cat-scroll-row is removed by JS when expanded, so
-   the group reverts to the default wrapping .filter-group behavior.) */
-.cat-scroll-wrap.expanded {
-    -webkit-mask-image: none;
-            mask-image: none;
+.filter-menu-item {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 9px 12px;
+    font-size: 0.9rem;
+    color: var(--text);
+    border-radius: 5px;
+    cursor: pointer;
+    white-space: nowrap;
 }
-.cat-scroll-wrap.expanded .filter-group { flex-wrap: wrap; overflow: visible; padding-right: 0; cursor: default; }
+.filter-menu-item:hover { background: var(--bg); }
+.filter-menu-item.active { background: var(--navy); color: #fff; font-weight: 700; }
 
 /* Mobile: hide the text, keep just the star/icon. Desktop shows the full label. */
 @media (max-width: 768px) {

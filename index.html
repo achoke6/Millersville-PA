@@ -296,8 +296,9 @@
                 <button class="src-btn" onclick="setPlacesFilter('Shopping', this)">🛒 Shopping</button>
             </div>
             <div class="toolbar-right">
+                <button class="family-toggle mba-toggle" id="places-mba-toggle" onclick="togglePlacesMBA()" title="Show MBA member businesses">✓ <span class="mba-toggle-label">MBA</span></button>
                 <button class="family-toggle" id="places-mg-toggle" onclick="togglePlacesMarauderGold()" title="Marauder Gold accepted">🪙</button>
-                <button id="places-filter-toggle" class="filter-toggle" onclick="togglePlacesFilters()">More <span id="places-filter-arrow">▾</span></button>
+                <button id="places-filter-toggle" class="filter-toggle" onclick="togglePlacesFilters()">Filter <span id="places-filter-arrow">▾</span></button>
             </div>
         </div>
         <div id="places-filters-wrap" class="filters-collapsible">
@@ -458,39 +459,27 @@
         <div class="adv-accordions">
             <details class="adv-accordion">
                 <summary>How does pricing work?</summary>
-                <p>Being featured on Millersville.APP is a benefit of Millersville Business Association membership — it's included with your MBA dues. The optional Featured Spotlight has a separate annual fee set by the MBA. Reach out and we'll walk you through it.</p>
-            </details>
-            <details class="adv-accordion">
-                <summary>Can I submit a free community event?</summary>
-                <p>Yes! Community events from established local organizations are included at no cost. Use the "Submit an Event" option anytime.</p>
-            </details>
-            <details class="adv-accordion">
-                <summary>How quickly will my listing go live?</summary>
-                <p>Most listings go live within 24 hours of being set up. Featured Spotlight content updates automatically every hour through our data pipeline.</p>
-            </details>
-            <details class="adv-accordion">
-                <summary>What's the difference between membership and the Featured Spotlight?</summary>
-                <p>Every MBA member gets a "Verified MBA Member" badge, a listing in the app Directory, and audience targeting — included with membership. The Featured Spotlight is a premium add-on: your business rotates on the home page, gets an enhanced listing with your logo and tagline at the top of the Directory, and can show live content like weekly specials.</p>
-            </details>
-            <details class="adv-accordion">
-                <summary>What is audience targeting?</summary>
-                <p>You choose who sees your listing — local residents, Millersville University students, or both — so you reach the customers who matter most to your business.</p>
-            </details>
-            <details class="adv-accordion">
-                <summary>I'm a restaurant but I'm not listed yet. Can I be added?</summary>
-                <p>Absolutely! Submit your details and we'll add you to the Directory. MBA members get the member badge and can choose their audience.</p>
-            </details>
-            <details class="adv-accordion">
-                <summary>What makes this different from Facebook or Google ads?</summary>
-                <p>Your listing lives where Millersville residents and students already go for local info — events, games, food, and news. It's hyper-local, always visible, and not buried in a social media feed.</p>
+                <p>The listing comes free with your MBA membership. The Featured Spotlight is an optional annual add-on, priced by the MBA. Reach out and we'll sort it out with you.</p>
             </details>
             <details class="adv-accordion">
                 <summary>How do my events and specials get on the app?</summary>
-                <p>However you already share them. We can pull in your Facebook posts, digest a weekly specials sheet or flyer, read a shared Google Calendar of your events, or take updates by email — whatever's easiest for you. We handle the setup and keep it current.</p>
+                <p>However you already share them — Facebook, a specials sheet, a shared calendar, or just an email. We wire it up once and keep it current. No new busywork for you.</p>
             </details>
             <details class="adv-accordion">
-                <summary>Can I update my listing or specials myself?</summary>
-                <p>You don't have to lift a finger beyond what you already do. If you post specials on Facebook or keep a calendar, we pull from there automatically where feasible. Otherwise just send us changes and we'll have them live within hours.</p>
+                <summary>What is audience targeting?</summary>
+                <p>You pick who sees your listing — locals, MU students, or both — so you're reaching the right crowd.</p>
+            </details>
+            <details class="adv-accordion">
+                <summary>I'm not listed yet. Can I be added?</summary>
+                <p>Absolutely. Send us your details and we'll get you on the Directory. Join the MBA and you'll get the member badge and audience targeting too.</p>
+            </details>
+            <details class="adv-accordion">
+                <summary>How is this different from Facebook or Google ads?</summary>
+                <p>You live where people already come for local info — not buried in a feed, not fighting an algorithm. Always there, always local.</p>
+            </details>
+            <details class="adv-accordion">
+                <summary>How fast does my listing go live?</summary>
+                <p>Usually within 24 hours of setup. Spotlight content refreshes automatically every hour after that.</p>
             </details>
         </div>
     </section>

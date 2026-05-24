@@ -11,9 +11,9 @@
     { "name": "Charles F. Snyder Funeral Home & Crematory", "tier": "executive", "category": "Services" },
     { "name": "Enders Insurance Agency", "tier": "executive", "category": "Finance" },
     { "name": "Gamber Physical Therapy & Fitness", "tier": "executive", "category": "Health" },
-    { "name": "Heritage Monuments, LLC", "tier": "executive", "category": "Shopping", "directoryFile": "services" },
+    { "name": "Heritage Monuments", "tier": "executive", "category": "Shopping", "directoryFile": "services" },
     { "name": "Kerr Forestry", "tier": "general", "category": "Home Services", "directoryFile": "services" },
-    { "name": "MBC Building and Remodeling, LLC", "tier": "general", "category": "Home Services", "directoryFile": "services" },
+    { "name": "MBC Building and Remodeling", "tier": "general", "category": "Home Services", "directoryFile": "services" },
     { "name": "Prospect Leasing & Management", "tier": "general", "category": "Real Estate", "directoryFile": "services" },
     { "name": "John Herr's Village Market", "tier": "executive", "category": "Grocery & Deli", "matchListing": "John Herr's Village Market", "directoryFile": "restaurants" },
     { "name": "Members 1st Federal Credit Union", "tier": "executive", "category": "Finance", "matchListing": "Members 1st Federal Credit Union", "directoryFile": "services" },
@@ -30,7 +30,9 @@
     { "name": "The Mill at Manor Falls", "tier": "general", "category": "Recreation" },
     { "name": "Millersville Borough", "tier": "general", "spotlightOnly": true },
     { "name": "Penn Manor School District", "tier": "general", "spotlightOnly": true },
-    { "name": "Scheid Produce", "tier": "general", "category": "Shopping" }
+    { "name": "Scheid Produce", "tier": "general", "category": "Shopping" },
+    { "name": "The University Store", "tier": "executive", "category": "Education", "matchListing": "The University Store", "directoryFile": "services" },
+    { "name": "Student Lodging, Inc.", "tier": "executive", "category": "Student Housing", "matchListing": "Student Lodging, Inc.", "directoryFile": "services" }
   ],
 
   "_spotlightComment": "Members who purchased the paid Featured Spotlight add-on. Only these appear in the homepage rotation. name must match a roster entry. audience targets the rotation per above. tagline is one short line. logo is a path under /img or similar (optional; falls back to styled name). link is the tap target (their site or their Directory anchor). liveFeed (optional) names a scraped data integration like John Herr's weekly ad — built per-business, where feasible.",
@@ -41,6 +43,22 @@
       "tagline": "Local banking that puts members first.",
       "logo": "/img/members1st-logo.png",
       "link": "https://www.members1st.org",
+      "liveFeed": null
+    },
+    {
+      "name": "The University Store",
+      "audience": "both",
+      "tagline": "Your campus store for textbooks, MU gear & more.",
+      "logo": "/img/university-store-logo.png",
+      "link": "https://millersville.store",
+      "liveFeed": null
+    },
+    {
+      "name": "Student Lodging, Inc.",
+      "audience": "marauders",
+      "tagline": "Student apartments steps from campus.",
+      "logo": "/img/student-lodging-logo.png",
+      "link": "https://studentlodginginc.com",
       "liveFeed": null
     }
   ]

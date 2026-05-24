@@ -4746,19 +4746,18 @@ async function loadHomeSpecials(){
 }
 
 // Build a list of items shown on the Campus Cupboard card based on current
-// day + season. Returns null if not open today (only Sat/Sun would match).
+// day + season. Returns null when closed (weekends) so the card is hidden
+// entirely rather than showing a "closed" message.
 // Hours: academic year M-F 8am-8pm, summer M-F 9am-1pm.
 function buildCampusCupboardItems(dayName) {
     const isWeekday = ['Monday','Tuesday','Wednesday','Thursday','Friday'].includes(dayName);
+    if (!isWeekday) return null;   // closed weekends — hide the card
     const now = new Date();
     const m = now.getMonth() + 1, d = now.getDate();
     // Same summer window as HUB scrape (May 11 – Aug 24)
     const isSummer = (m === 5 && d >= 11) || m === 6 || m === 7 || (m === 8 && d < 25);
-    if (isWeekday) {
-        const hours = isSummer ? '9am – 1pm' : '8am – 8pm';
-        return [`Open today: ${hours}`, 'Fresh produce, dairy, eggs, frozen, canned & dry goods, hygiene products', 'Bring student ID'];
-    }
-    return ['Closed today (open weekdays only)', 'Fresh produce, dairy, eggs, frozen, canned & dry goods, hygiene products', 'Bring student ID'];
+    const hours = isSummer ? '9am – 1pm' : '8am – 8pm';
+    return [`Open today: ${hours}`, 'Fresh produce, dairy, eggs, frozen, canned & dry goods, hygiene products', 'Bring student ID'];
 }
 
 /* ==================== WEATHER ==================== */
@@ -4901,7 +4900,7 @@ function renderNewsUI(){
     }
     injectInlineAds('news-container','news');
 }
-let allPlaces=[], placesFilter='All', placesMGMode=false;
+let allPlaces=[], placesFilter='All', placesMGMode=false, placesMBAMode=false;
 
 // --- MBA (Millersville Business Association) membership integration ----------
 // association.json is the SINGLE SOURCE OF TRUTH for membership. We load it
@@ -5125,8 +5124,17 @@ window.setPlacesFilter=function(cat,btn){
 // Housing is hidden entirely since apartments don't accept MG for rent.
 window.togglePlacesMarauderGold=function(){
     placesMGMode=!placesMGMode;
+    if(placesMGMode){ placesMBAMode=false; const m=document.getElementById('places-mba-toggle'); if(m) m.classList.remove('active'); }
     const btn=document.getElementById('places-mg-toggle');
     if(btn) btn.classList.toggle('active', placesMGMode);
+    renderPlaces();
+};
+
+window.togglePlacesMBA=function(){
+    placesMBAMode=!placesMBAMode;
+    if(placesMBAMode){ placesMGMode=false; const g=document.getElementById('places-mg-toggle'); if(g) g.classList.remove('active'); }
+    const btn=document.getElementById('places-mba-toggle');
+    if(btn) btn.classList.toggle('active', placesMBAMode);
     renderPlaces();
 };
 
@@ -5167,7 +5175,7 @@ function renderPlaces(){
     }
 
     // Housing visibility
-    if(placesFilter==='All' || placesFilter==='Housing'){
+    if((placesFilter==='All' || placesFilter==='Housing') && !placesMBAMode){
         hc.style.display='';
     } else {
         hc.style.display='none';
@@ -5181,6 +5189,11 @@ function renderPlaces(){
 
     // Filter places by category
     let filtered = placesFilter==='All' ? allPlaces : allPlaces.filter(p=>p.category===placesFilter);
+
+    // MBA member lens: when active, show only businesses that are MBA members.
+    if(placesMBAMode){
+        filtered = filtered.filter(p => getMembership(p.name));
+    }
 
     // MBA audience targeting: drop member listings whose audience excludes the
     // current viewer. Non-members always pass. Unset affiliation is treated as
@@ -5200,7 +5213,7 @@ function renderPlaces(){
     // views (it's a free grocery store inside the HUB). Skipped for townies
     // and for filter views that exclude food (e.g. Services).
     let cupboardCard = '';
-    if (muAffiliation === 'student' && (placesFilter === 'All' || placesFilter === 'Food & Drink')) {
+    if (!placesMBAMode && muAffiliation === 'student' && (placesFilter === 'All' || placesFilter === 'Food & Drink')) {
         cupboardCard = buildCampusCupboardCard(dayName);
     }
 
@@ -5208,7 +5221,10 @@ function renderPlaces(){
         if (p.placeType === 'food') return buildFoodCard(p, specials, dayName);
         return buildServiceCard(p);
     });
-    pc.innerHTML = (cupboardCard + cards.join('')) || '<p class="empty-state">No listings found in this category. Know a local business? <a href="#" onclick="event.preventDefault();openSubmitBusiness();">Add it here →</a></p>';
+    const emptyMsg = placesMBAMode
+        ? '<p class="empty-state">No MBA member businesses match this filter.</p>'
+        : '<p class="empty-state">No listings found in this category. Know a local business? <a href="#" onclick="event.preventDefault();openSubmitBusiness();">Add it here →</a></p>';
+    pc.innerHTML = (cupboardCard + cards.join('')) || emptyMsg;
 }
 
 // Build the Campus Cupboard card for the Places page. Mirrors the food-card
@@ -5216,14 +5232,13 @@ function renderPlaces(){
 // buildCampusCupboardItems for season-aware display.
 function buildCampusCupboardCard(dayName) {
     const items = buildCampusCupboardItems(dayName);
-    const isWeekday = ['Monday','Tuesday','Wednesday','Thursday','Friday'].includes(dayName);
-    const statusClass = isWeekday ? 'open' : 'closed';
-    const statusText = isWeekday ? items[0] : 'Closed today';
+    if (!items) return '';   // closed today (weekend) — hide the card entirely
+    const statusText = items[0];
     return `<div class="app-card" style="border-left:4px solid var(--gold);">
         <div class="card-body">
             <div class="card-heading"><span style="font-size:1.5rem;">🛒</span><h3 class="card-title">Campus Cupboard</h3></div>
             <p class="card-meta">📍 Inside The HUB, 121 N George St · MU students only</p>
-            <p class="card-meta status-${statusClass}">⏰ ${statusText}</p>
+            <p class="card-meta status-open">⏰ ${statusText}</p>
             <p style="font-size:0.85rem;margin:8px 0;color:var(--text-muted);">Free grocery store with fresh produce, dairy, eggs, frozen, canned & dry goods, and hygiene products. Bring student ID.</p>
             <a href="https://www.hubmu.org/free-groceries" target="_blank" rel="noopener" class="btn btn-sm btn-outline" style="font-size:0.78rem;">More info ↗</a>
         </div>

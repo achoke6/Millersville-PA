@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-05-25T18:25:43.881Z",
-  "totalEvents": 904,
+  "generatedAt": "2026-05-25T20:23:38.371Z",
+  "totalEvents": 907,
   "withDescription": 337,
   "withImage": 108,
   "familyFriendly": 44,
   "eventsToday": 4,
   "sources": {
-    "muAthletics": 63,
+    "muAthletics": 64,
     "muCalendar": 157,
     "muGetInvolved": 266,
-    "pennManor": 193,
+    "pennManor": 195,
     "borough": 207,
     "vfw": 3,
     "phantomPower": 14,
     "community": 1,
-    "muHudlBroadcasts": 4
+    "muHudlBroadcasts": 5
   },
   "sourceDateRanges": {
     "muAthletics": {
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-04-22T20:15:00.000Z",
-      "latest": "2026-09-18T23:00:00.000Z"
+      "latest": "2026-09-19T15:30:00.000Z"
     },
     "borough": {
       "earliest": "2026-02-24T23:00:00.000Z",
@@ -64,8 +64,8 @@
       "daysSinceMoved": 19
     },
     "pennManor": {
-      "newest": "2026-09-18",
-      "daysSinceMoved": 2
+      "newest": "2026-09-19",
+      "daysSinceMoved": 9
     },
     "borough": {
       "newest": "2027-05-24",
@@ -85,13 +85,34 @@
     }
   },
   "sports": {
-    "total": 236,
-    "scored": 46,
-    "wins": 19,
+    "total": 239,
+    "scored": 47,
+    "wins": 20,
     "losses": 26,
     "ties": 1
   },
   "recentlyAdded": [
+    {
+      "key": "Millersville University Women's Lacrosse vs Bloomsburg|2026-04-25T16:00:00.000Z",
+      "firstSeenAt": "2026-05-25T20:23:38.369Z",
+      "title": "Millersville University Women's Lacrosse vs Bloomsburg",
+      "source": "MU",
+      "date": "2026-04-25T16:00:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Soccer @ Central York High School|2026-09-19T14:00:00.000Z",
+      "firstSeenAt": "2026-05-25T20:23:38.369Z",
+      "title": "Boys Varsity Soccer @ Central York High School",
+      "source": "PM",
+      "date": "2026-09-19T14:00:00.000Z"
+    },
+    {
+      "key": "Boys JV Soccer @ Central York High School|2026-09-19T15:30:00.000Z",
+      "firstSeenAt": "2026-05-25T20:23:38.369Z",
+      "title": "Boys JV Soccer @ Central York High School",
+      "source": "PM",
+      "date": "2026-09-19T15:30:00.000Z"
+    },
     {
       "key": "Regular Trash & Recycling Collection |2027-05-24T12:00:00.000Z",
       "firstSeenAt": "2026-05-25T00:05:55.006Z",
@@ -140,28 +161,7 @@
       "title": "Girls Varsity Soccer @ Ephrata High School",
       "source": "PM",
       "date": "2026-09-17T23:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Field Hockey @ Conestoga Valley Senior High School|2026-09-18T20:00:00.000Z",
-      "firstSeenAt": "2026-05-23T04:41:02.303Z",
-      "title": "Girls Varsity Field Hockey @ Conestoga Valley Senior High School",
-      "source": "PM",
-      "date": "2026-09-18T20:00:00.000Z"
-    },
-    {
-      "key": "Girls JV Field Hockey @ Conestoga Valley Senior High School|2026-09-18T21:30:00.000Z",
-      "firstSeenAt": "2026-05-23T04:41:02.303Z",
-      "title": "Girls JV Field Hockey @ Conestoga Valley Senior High School",
-      "source": "PM",
-      "date": "2026-09-18T21:30:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Football @ Reading Senior High School|2026-09-18T23:00:00.000Z",
-      "firstSeenAt": "2026-05-23T04:41:02.303Z",
-      "title": "Boys Varsity Football @ Reading Senior High School",
-      "source": "PM",
-      "date": "2026-09-18T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 3
 }

@@ -5023,13 +5023,14 @@ function mbaAudienceVisible(member){
 // dues matter, not something residents need to see). Returns '' for non-members.
 function mbaBadge(placeName){
     if (!getMembership(placeName)) return '';
-    // Shield-style MBA member emblem (navy shield, gold trim, MBA wordmark).
-    return `<span class="badge-mba" title="Verified Millersville Business Association member">
+    // Verified-business shield (navy shield, gold trim, checkmark). Granted to
+    // businesses on a paid Millersville.APP listing. (Independent of the MBA.)
+    return `<span class="badge-mba" title="Verified business">
         <svg class="badge-mba-shield" viewBox="0 0 24 28" aria-hidden="true">
             <path d="M12 1 L22 5 V13 C22 20 17 25 12 27 C7 25 2 20 2 13 V5 Z"
                   fill="var(--navy)" stroke="var(--gold)" stroke-width="1.5"/>
-            <text x="12" y="16" text-anchor="middle" fill="var(--gold)"
-                  font-size="7" font-weight="800" font-family="Arial, sans-serif">MBA</text>
+            <path d="M7.5 14 L10.5 17 L16.5 10.5" fill="none" stroke="var(--gold)"
+                  stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
     </span>`;
 }
@@ -5183,7 +5184,7 @@ window.setPlacesFilter=function(cat,btn){
 function updatePlacesFilterNote(){
     const note = document.getElementById('places-filter-note');
     if (!note) return;
-    if (placesMBAMode) note.textContent = 'Showing only Millersville Business Association members.';
+    if (placesMBAMode) note.textContent = 'Showing only verified businesses.';
     else if (placesMGMode) note.textContent = 'Showing only businesses that accept Marauder Gold.';
     else note.textContent = '';
 }

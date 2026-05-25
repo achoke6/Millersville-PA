@@ -291,7 +291,7 @@
         <div class="sticky-nav-bar">
             <div class="toolbar-compact">
                 <div class="toolbar-right">
-                    <button class="family-toggle mba-toggle" id="places-mba-toggle" onclick="togglePlacesMBA()" title="Only Millersville Business Association members displayed"><span class="mba-toggle-label">MBA</span></button>
+                    <button class="family-toggle mba-toggle" id="places-mba-toggle" onclick="togglePlacesMBA()" title="Show only verified businesses"><span class="mba-toggle-label">✓ Verified</span></button>
                     <button class="family-toggle mg-toggle" id="places-mg-toggle" onclick="togglePlacesMarauderGold()" title="Businesses that accept Marauder Gold"><img src="/img/mu-coin.png" alt="Marauder Gold" class="mg-coin-img"></button>
                     <button id="places-filter-toggle" class="filter-toggle" onclick="togglePlacesFilters()">Filter <span id="places-filter-arrow">▾</span></button>
                 </div>
@@ -406,52 +406,25 @@
         <h3 class="adv-section-title">Expand Your Audience</h3>
         <p style="font-size:0.95rem;color:var(--text-muted);margin-bottom:18px;max-width:620px;">Advertising your daily specials or specific events shouldn't be hard. Millersville.APP can integrate with your current system without adding any manual labor. We can push your content to the University community or townies — it's up to you.</p>
         <div class="adv-grid">
-            <div class="adv-tier">
-                <div class="adv-tier-badge" style="background:var(--navy);color:white;">MBA Member</div>
-                <div class="adv-tier-icon">✓</div>
-                <h4 class="adv-tier-name">Included With Membership</h4>
-                <p class="adv-tier-desc">Comes with every membership — no extra cost beyond your dues.</p>
-                <div class="adv-tier-perks">
-                    <span>✓ "Verified MBA Member" badge</span>
-                    <span>✓ Listing in the app Directory</span>
-                    <span>✓ Choose your audience — locals, students, or both</span>
-                </div>
-            </div>
-            <div class="adv-tier adv-tier-premium">
-                <div class="adv-tier-badge">Featured Spotlight</div>
+            <div class="adv-tier adv-tier-premium" style="grid-column:1 / -1;max-width:520px;">
+                <div class="adv-tier-badge">What You Get</div>
                 <div class="adv-tier-icon">⭐</div>
-                <h4 class="adv-tier-name">Premium Add-On</h4>
-                <p class="adv-tier-desc">Want the spotlight? It's the top placement on the app, for an annual fee.</p>
+                <h4 class="adv-tier-name">Your Business on Millersville.APP</h4>
+                <p class="adv-tier-desc">One simple annual listing that puts your business in front of the people already using the app every day.</p>
                 <div class="adv-tier-perks">
-                    <span>✓ Home-page spotlight rotation</span>
-                    <span>✓ Enhanced listing — logo, tagline, top placement</span>
-                    <span>✓ Your events &amp; specials pulled in automatically</span>
-                    <span>✓ Everything in MBA membership</span>
+                    <span>✓ <strong>Choose your audience</strong> — reach the University community, local townies, or both</span>
+                    <span>✓ <strong>Events &amp; specials integration</strong> — we pull your content from wherever you already post it, no manual work</span>
+                    <span>✓ <strong>Verified directory listing</strong> — your business, front and center with logo, tagline, and direct links</span>
                 </div>
             </div>
-            <div class="adv-tier adv-tier-cta-card">
-                <div class="adv-tier-icon">💬</div>
-                <h4 class="adv-tier-name">Questions?</h4>
-                <p class="adv-tier-desc">Not an MBA member yet, or want to know more about the Featured Spotlight? We'll help you figure out what fits.</p>
-                <button onclick="openAdvertiseForm()" class="btn btn-gold" style="margin-top:12px;display:block;text-align:center;width:100%;border:none;cursor:pointer;">Let's Talk →</button>
-            </div>
         </div>
 
-        <!-- Where you appear -->
-        <h3 class="adv-section-title" style="margin-top:32px;">Where Members Appear</h3>
-        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:24px;">
-            <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;"><span style="font-size:1.2rem;">🏢</span><p style="font-size:0.82rem;font-weight:600;margin-top:4px;">Directory</p></div>
-            <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;"><span style="font-size:1.2rem;">🏠</span><p style="font-size:0.82rem;font-weight:600;margin-top:4px;">Home spotlight</p></div>
-            <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;"><span style="font-size:1.2rem;">🔖</span><p style="font-size:0.82rem;font-weight:600;margin-top:4px;">Member badge</p></div>
-            <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;text-align:center;"><span style="font-size:1.2rem;">🎯</span><p style="font-size:0.82rem;font-weight:600;margin-top:4px;">Audience targeting</p></div>
-        </div>
-
-        <!-- CTA -->
+        <!-- CTA / contact -->
         <div class="adv-cta">
-            <h3 class="adv-cta-title">Ready to get on the map?</h3>
+            <h3 class="adv-cta-title">Interested?</h3>
             <p class="adv-cta-sub">Tell us about your business — we'll take it from there.</p>
-            <button onclick="openAdvertiseForm()" class="btn btn-gold btn-lg" style="border:none;cursor:pointer;">Get Featured →</button>
-            <p class="adv-cta-note">Or email us at <a href="mailto:admin@millersville.app?subject=Millersville.APP%20%2B%20MBA%20inquiry">admin@millersville.app</a></p>
+            <button onclick="openAdvertiseForm()" class="btn btn-gold btn-lg" style="border:none;cursor:pointer;">Get Listed →</button>
+            <p class="adv-cta-note">Or email us at <a href="mailto:admin@millersville.app?subject=Millersville.APP%20listing%20inquiry">admin@millersville.app</a></p>
         </div>
 
         <!-- FAQ Accordions -->
@@ -459,19 +432,23 @@
         <div class="adv-accordions">
             <details class="adv-accordion">
                 <summary>How does pricing work?</summary>
-                <p>The listing comes free with your MBA membership. The Featured Spotlight is an optional annual add-on, priced by the MBA. Reach out and we'll sort it out with you.</p>
+                <p>It's a simple annual fee for your listing — including events and specials integration and audience targeting. Reach out and we'll go over the details with you.</p>
             </details>
             <details class="adv-accordion">
                 <summary>How do my events and specials get on the app?</summary>
                 <p>However you already share them — Facebook, a specials sheet, a shared calendar, or just an email. We wire it up once and keep it current. No new busywork for you.</p>
             </details>
             <details class="adv-accordion">
+                <summary>Can I submit a one-off event myself?</summary>
+                <p>Yes — anyone can submit an event right from the app using the event submission form. A paid listing is for businesses that want their specials and events kept current automatically, plus audience targeting and a verified spot in the Directory.</p>
+            </details>
+            <details class="adv-accordion">
                 <summary>What is audience targeting?</summary>
-                <p>You pick who sees your listing — locals, MU students, or both — so you're reaching the right crowd.</p>
+                <p>You pick who sees your listing — local townies, MU students, or both — so you're reaching the right crowd.</p>
             </details>
             <details class="adv-accordion">
                 <summary>I'm not listed yet. Can I be added?</summary>
-                <p>Absolutely. Send us your details and we'll get you on the Directory. Join the MBA and you'll get the member badge and audience targeting too.</p>
+                <p>Absolutely. Send us your details and we'll get you set up with a verified listing.</p>
             </details>
             <details class="adv-accordion">
                 <summary>How is this different from Facebook or Google ads?</summary>
@@ -479,7 +456,7 @@
             </details>
             <details class="adv-accordion">
                 <summary>How fast does my listing go live?</summary>
-                <p>Usually within 24 hours of setup. Spotlight content refreshes automatically every hour after that.</p>
+                <p>Usually within 24 hours of setup. Your events and specials refresh automatically after that.</p>
             </details>
         </div>
     </section>

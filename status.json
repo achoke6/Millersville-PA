@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-05-24T22:59:04.054Z",
+  "generatedAt": "2026-05-25T00:05:55.009Z",
   "totalEvents": 906,
-  "withDescription": 338,
+  "withDescription": 337,
   "withImage": 108,
   "familyFriendly": 44,
   "eventsToday": 1,
   "sources": {
     "muAthletics": 65,
     "muCalendar": 157,
-    "muGetInvolved": 267,
+    "muGetInvolved": 266,
     "pennManor": 193,
-    "borough": 206,
+    "borough": 207,
     "vfw": 3,
     "phantomPower": 14,
     "community": 1,
@@ -26,7 +26,7 @@
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-02-23T11:30:00.000Z",
+      "earliest": "2026-02-24T09:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
@@ -35,7 +35,7 @@
     },
     "borough": {
       "earliest": "2026-02-24T23:00:00.000Z",
-      "latest": "2027-05-17T12:00:00.000Z"
+      "latest": "2027-05-24T12:00:00.000Z"
     },
     "vfw": {
       "earliest": "2026-05-24T15:00:00.000Z",
@@ -68,8 +68,8 @@
       "daysSinceMoved": 1
     },
     "borough": {
-      "newest": "2027-05-17",
-      "daysSinceMoved": 7
+      "newest": "2027-05-24",
+      "daysSinceMoved": 0
     },
     "vfw": {
       "newest": "2026-05-27",
@@ -92,6 +92,13 @@
     "ties": 1
   },
   "recentlyAdded": [
+    {
+      "key": "Regular Trash & Recycling Collection |2027-05-24T12:00:00.000Z",
+      "firstSeenAt": "2026-05-25T00:05:55.006Z",
+      "title": "Regular Trash & Recycling Collection ",
+      "source": "Borough",
+      "date": "2027-05-24T12:00:00.000Z"
+    },
     {
       "key": "Brotality w. Quantifier, Making A Mockery, & New Damage|2026-06-24T23:00:00.000Z",
       "firstSeenAt": "2026-05-24T13:24:54.799Z",
@@ -154,14 +161,7 @@
       "title": "Boys Varsity Football @ Reading Senior High School",
       "source": "PM",
       "date": "2026-09-18T23:00:00.000Z"
-    },
-    {
-      "key": "Memorial Day Ceremony and Brunch|2026-05-24T15:00:00.000Z",
-      "firstSeenAt": "2026-05-23T01:04:34.077Z",
-      "title": "Memorial Day Ceremony and Brunch",
-      "source": "Other",
-      "date": "2026-05-24T15:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

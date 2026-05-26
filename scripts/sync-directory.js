@@ -16,10 +16,12 @@
  * site stays fast and has no live Google dependency.
  *
  * SHEET COLUMNS (header row, exact names, case-insensitive match):
- *   name, type, category, cuisine, address, phone, website, iosLink, status,
- *   onCampus, marauderGold, verified, audience, spotlight, tagline, logo,
- *   description
+ *   name, active, type, category, cuisine, address, phone, website, iosLink,
+ *   status, onCampus, marauderGold, verified, audience, spotlight, tagline,
+ *   logo, description
  *
+ *   active:      non-blank (e.g. "X") = listed; blank = hidden/skipped entirely.
+ *                (If the column is absent, all rows are treated as active.)
  *   type:        food | service | institution
  *                (institution = spotlight-only, no directory card — e.g. MU)
  *   onCampus / marauderGold / verified / spotlight: "yes" (anything else = no)
@@ -108,6 +110,14 @@ async function main() {
     const row = rows[r];
     const name = get(row, 'name');
     if (!name) continue;
+
+    // Active gate: a row is only included if its "Active" cell is non-blank
+    // (an X, or any value). Blank = inactive → skipped entirely: no directory
+    // listing, no verified status, no spotlight. Lets you hide a business
+    // without deleting its row. If there's no Active column at all, treat
+    // every row as active (backward-compatible).
+    if (idx('active') !== -1 && !get(row, 'active')) continue;
+
     if (seenNames.has(name)) { console.warn(`  ⚠ duplicate name skipped: ${name}`); warnings++; continue; }
     seenNames.add(name);
 

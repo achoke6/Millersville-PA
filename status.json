@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-05-26T00:05:28.228Z",
-  "totalEvents": 901,
+  "generatedAt": "2026-05-26T05:03:48.667Z",
+  "totalEvents": 903,
   "withDescription": 333,
   "withImage": 108,
   "familyFriendly": 44,
-  "eventsToday": 4,
+  "eventsToday": 1,
   "sources": {
     "muAthletics": 63,
     "muCalendar": 156,
     "muGetInvolved": 263,
-    "pennManor": 195,
+    "pennManor": 197,
     "borough": 206,
     "vfw": 3,
     "phantomPower": 14,
@@ -30,8 +30,8 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-04-22T20:15:00.000Z",
-      "latest": "2026-09-19T15:30:00.000Z"
+      "earliest": "2026-04-24T20:00:00.000Z",
+      "latest": "2026-09-21T21:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-02-26T23:30:00.000Z",
@@ -53,115 +53,115 @@
   "staleness": {
     "muAthletics": {
       "newest": "2026-11-14",
-      "daysSinceMoved": 19
+      "daysSinceMoved": 20
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 17
+      "daysSinceMoved": 18
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 19
+      "daysSinceMoved": 20
     },
     "pennManor": {
-      "newest": "2026-09-19",
-      "daysSinceMoved": 9
+      "newest": "2026-09-21",
+      "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2027-05-24",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "vfw": {
       "newest": "2026-05-27",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 14
     },
     "phantomPower": {
       "newest": "2026-07-17",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     },
     "community": {
       "newest": "2026-04-27",
-      "daysSinceMoved": 19
+      "daysSinceMoved": 20
     }
   },
   "sports": {
-    "total": 238,
-    "scored": 46,
-    "wins": 19,
-    "losses": 26,
+    "total": 240,
+    "scored": 43,
+    "wins": 17,
+    "losses": 25,
     "ties": 1
   },
   "recentlyAdded": [
+    {
+      "key": "Girls Varsity Field Hockey @ Parkland High School|2026-09-19T17:00:00.000Z",
+      "firstSeenAt": "2026-05-26T05:03:48.665Z",
+      "title": "Girls Varsity Field Hockey @ Parkland High School",
+      "source": "PM",
+      "date": "2026-09-19T17:00:00.000Z"
+    },
+    {
+      "key": "Girls JV Field Hockey @ Parkland High School|2026-09-19T18:30:00.000Z",
+      "firstSeenAt": "2026-05-26T05:03:48.665Z",
+      "title": "Girls JV Field Hockey @ Parkland High School",
+      "source": "PM",
+      "date": "2026-09-19T18:30:00.000Z"
+    },
+    {
+      "key": "Girls 7/8/9th Volleyball @ Cocalico Senior High School|2026-09-21T19:45:00.000Z",
+      "firstSeenAt": "2026-05-26T05:03:48.665Z",
+      "title": "Girls 7/8/9th Volleyball @ Cocalico Senior High School",
+      "source": "PM",
+      "date": "2026-09-21T19:45:00.000Z"
+    },
+    {
+      "key": "Girls 7/8/9th Field Hockey @ Conestoga Valley Senior High School|2026-09-21T20:00:00.000Z",
+      "firstSeenAt": "2026-05-26T05:03:48.665Z",
+      "title": "Girls 7/8/9th Field Hockey @ Conestoga Valley Senior High School",
+      "source": "PM",
+      "date": "2026-09-21T20:00:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Soccer @ Hempfield Senior High School|2026-09-21T20:00:00.000Z",
+      "firstSeenAt": "2026-05-26T05:03:48.665Z",
+      "title": "Boys Varsity Soccer @ Hempfield Senior High School",
+      "source": "PM",
+      "date": "2026-09-21T20:00:00.000Z"
+    },
+    {
+      "key": "Boys JV Soccer @ Hempfield Senior High School|2026-09-21T20:00:00.000Z",
+      "firstSeenAt": "2026-05-26T05:03:48.665Z",
+      "title": "Boys JV Soccer @ Hempfield Senior High School",
+      "source": "PM",
+      "date": "2026-09-21T20:00:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Tennis @ Cedar Crest High School|2026-09-21T20:00:00.000Z",
+      "firstSeenAt": "2026-05-26T05:03:48.665Z",
+      "title": "Girls Varsity Tennis @ Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-09-21T20:00:00.000Z"
+    },
+    {
+      "key": "Girls 7/8th Volleyball @ Cocalico Senior High School|2026-09-21T20:45:00.000Z",
+      "firstSeenAt": "2026-05-26T05:03:48.665Z",
+      "title": "Girls 7/8th Volleyball @ Cocalico Senior High School",
+      "source": "PM",
+      "date": "2026-09-21T20:45:00.000Z"
+    },
+    {
+      "key": "Girls 7/8th Field Hockey @ Conestoga Valley Senior High School|2026-09-21T21:00:00.000Z",
+      "firstSeenAt": "2026-05-26T05:03:48.665Z",
+      "title": "Girls 7/8th Field Hockey @ Conestoga Valley Senior High School",
+      "source": "PM",
+      "date": "2026-09-21T21:00:00.000Z"
+    },
     {
       "key": "Boys Varsity Soccer @ Central York High School|2026-09-19T14:00:00.000Z",
       "firstSeenAt": "2026-05-25T20:23:38.369Z",
       "title": "Boys Varsity Soccer @ Central York High School",
       "source": "PM",
       "date": "2026-09-19T14:00:00.000Z"
-    },
-    {
-      "key": "Boys JV Soccer @ Central York High School|2026-09-19T15:30:00.000Z",
-      "firstSeenAt": "2026-05-25T20:23:38.369Z",
-      "title": "Boys JV Soccer @ Central York High School",
-      "source": "PM",
-      "date": "2026-09-19T15:30:00.000Z"
-    },
-    {
-      "key": "Regular Trash & Recycling Collection |2027-05-24T12:00:00.000Z",
-      "firstSeenAt": "2026-05-25T00:05:55.006Z",
-      "title": "Regular Trash & Recycling Collection ",
-      "source": "Borough",
-      "date": "2027-05-24T12:00:00.000Z"
-    },
-    {
-      "key": "Brotality w. Quantifier, Making A Mockery, & New Damage|2026-06-24T23:00:00.000Z",
-      "firstSeenAt": "2026-05-24T13:24:54.799Z",
-      "title": "Brotality w. Quantifier, Making A Mockery, & New Damage",
-      "source": "Other",
-      "date": "2026-06-24T23:00:00.000Z"
-    },
-    {
-      "key": "Stone Horses w. The Blues Vultures|2026-06-27T00:00:00.000Z",
-      "firstSeenAt": "2026-05-24T13:24:54.799Z",
-      "title": "Stone Horses w. The Blues Vultures",
-      "source": "Other",
-      "date": "2026-06-27T00:00:00.000Z"
-    },
-    {
-      "key": "Battle Of Millersville Vol.1 - Tribute Fest|2026-06-21T00:00:00.000Z",
-      "firstSeenAt": "2026-05-23T13:23:56.998Z",
-      "title": "Battle Of Millersville Vol.1 - Tribute Fest",
-      "source": "Other",
-      "date": "2026-06-21T00:00:00.000Z"
-    },
-    {
-      "key": "Hexbelt plus, Mean Gene Machine|2026-06-06T00:00:00.000Z",
-      "firstSeenAt": "2026-05-23T04:41:02.303Z",
-      "title": "Hexbelt plus, Mean Gene Machine",
-      "source": "Other",
-      "date": "2026-06-06T00:00:00.000Z"
-    },
-    {
-      "key": "Girls JV Soccer @ Ephrata High School|2026-09-17T21:30:00.000Z",
-      "firstSeenAt": "2026-05-23T04:41:02.303Z",
-      "title": "Girls JV Soccer @ Ephrata High School",
-      "source": "PM",
-      "date": "2026-09-17T21:30:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Soccer @ Ephrata High School|2026-09-17T23:00:00.000Z",
-      "firstSeenAt": "2026-05-23T04:41:02.303Z",
-      "title": "Girls Varsity Soccer @ Ephrata High School",
-      "source": "PM",
-      "date": "2026-09-17T23:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Field Hockey @ Conestoga Valley Senior High School|2026-09-18T20:00:00.000Z",
-      "firstSeenAt": "2026-05-23T04:41:02.303Z",
-      "title": "Girls Varsity Field Hockey @ Conestoga Valley Senior High School",
-      "source": "PM",
-      "date": "2026-09-18T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 9
 }

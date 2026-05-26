@@ -4065,7 +4065,7 @@ function buildEventCard(e,isSportsPage){
     else if(tags.includes('PM')) sourceLabel='PM';
     else if(tags.includes('MU')) sourceLabel='MU';
 
-    const hiddenTags=[...topSources,...sportMetaTags,'MU Calendar','Penn Manor','Clubs/Orgs','Phantom Power','VFW','Live Music','Other','Human Resources','Office of the Provost','Office of VP for Finance and Administration'];
+    const hiddenTags=[...topSources,...sportMetaTags,'MU Calendar','Penn Manor','Clubs/Orgs','Phantom Power','VFW','Live Music','Other','Human Resources','Office of the Provost','Office of VP for Finance and Administration','Advancement Department'];
     // Townie-friendly label swap: "GetInvolved" is MU-internal jargon. Only actual townies
     // see it as "Community" — unset/Marauder users see the original label since the default
     // is now Marauder mode.
@@ -4380,7 +4380,7 @@ function buildTimelineItem(e, now) {
     // they're not student-facing host orgs (unlike "SGA" or "IAEM"). Events like
     // holidays, breaks, and fiscal-year markers carry these as orgName, and
     // showing "Human Resources" as a pill is wrong; these should read "MU".
-    const ADMIN_ORGS = /^(Human Resources|Office of the Provost|Office of VP|Registrar|Office of Grants|Advancement Department|SMC Operations|Cultural Affairs)/i;
+    const ADMIN_ORGS = /^(Human Resources|Office of the Provost|Office of VP|Registrar|Office of Grants|Advancement Department|Advancement|SMC Operations|Cultural Affairs)/i;
     const orgIsAdmin = ADMIN_ORGS.test(e.orgShortName || e.orgName || '');
 
     let src = '';
@@ -4580,7 +4580,7 @@ window.openEventDetails = function(key) {
 
     // Tag chips (exclude noisy internal markers). Only townies get the Community relabel
     // (unset/Marauder users see "GetInvolved" since default is now Marauder mode).
-    const hiddenTags = new Set(['MU','PM','Borough','Other','VFW','Clubs/Orgs','Live Music','H Games','Home Game Mode','Athletic Competitions','Athletics','Phantom Power','Human Resources','Office of the Provost','Office of VP for Finance and Administration']);
+    const hiddenTags = new Set(['MU','PM','Borough','Other','VFW','Clubs/Orgs','Live Music','H Games','Home Game Mode','Athletic Competitions','Athletics','Phantom Power','Human Resources','Office of the Provost','Office of VP for Finance and Administration','Advancement Department']);
     const relabelForTownie = (tag) => (muAffiliation === 'townie' && tag === 'GetInvolved') ? 'Community' : tag;
     const displayTags = tags.filter(t => !hiddenTags.has(t)).map(relabelForTownie).slice(0, 6);
 

@@ -4002,6 +4002,13 @@ window.downloadICS = downloadICS;
 function cleanLocation(loc) {
     if (!loc) return '';
     let cleaned = loc;
+    // "ACampus Campuswide ALL" (and close variants) is a scraper artifact where
+    // MU's audience/location codes get concatenated for events with no real
+    // venue — campus-wide markers like holidays, evaluation periods, and
+    // fiscal-year dates. Normalize the whole thing to a clean "Campus Wide".
+    if (/campus\s*wide/i.test(cleaned)) {
+        return 'Campus Wide';
+    }
     // Strip the AcCALEN building code — MU uses it as a placeholder for
     // campus-wide calendar markers without a real venue. Match anywhere in
     // the string since the API returns variations: "AcCALEN", "AcCalen Spring".
@@ -4058,7 +4065,7 @@ function buildEventCard(e,isSportsPage){
     else if(tags.includes('PM')) sourceLabel='PM';
     else if(tags.includes('MU')) sourceLabel='MU';
 
-    const hiddenTags=[...topSources,...sportMetaTags,'MU Calendar','Penn Manor','Clubs/Orgs','Phantom Power','VFW','Live Music','Other'];
+    const hiddenTags=[...topSources,...sportMetaTags,'MU Calendar','Penn Manor','Clubs/Orgs','Phantom Power','VFW','Live Music','Other','Human Resources','Office of the Provost','Office of VP for Finance and Administration'];
     // Townie-friendly label swap: "GetInvolved" is MU-internal jargon. Only actual townies
     // see it as "Community" — unset/Marauder users see the original label since the default
     // is now Marauder mode.
@@ -4369,8 +4376,15 @@ function buildTimelineItem(e, now) {
     // tells them which group is hosting at a glance. Falls back to standard
     // logic when no orgShortName, or when townie (townies see PM/MU/Borough
     // distinction as meaningful, so keep generic).
+    // Administrative/department org names that should NOT be used as the pill —
+    // they're not student-facing host orgs (unlike "SGA" or "IAEM"). Events like
+    // holidays, breaks, and fiscal-year markers carry these as orgName, and
+    // showing "Human Resources" as a pill is wrong; these should read "MU".
+    const ADMIN_ORGS = /^(Human Resources|Office of the Provost|Office of VP|Registrar|Office of Grants|Advancement Department|SMC Operations|Cultural Affairs)/i;
+    const orgIsAdmin = ADMIN_ORGS.test(e.orgShortName || e.orgName || '');
+
     let src = '';
-    if (muAffiliation === 'student' && e.orgShortName && !isSport) {
+    if (muAffiliation === 'student' && e.orgShortName && !isSport && !orgIsAdmin) {
         src = e.orgShortName;
     } else if(tags.includes('VFW')) src = 'VFW';
     else if(tags.includes('Borough')) src = 'Borough';
@@ -4566,7 +4580,7 @@ window.openEventDetails = function(key) {
 
     // Tag chips (exclude noisy internal markers). Only townies get the Community relabel
     // (unset/Marauder users see "GetInvolved" since default is now Marauder mode).
-    const hiddenTags = new Set(['MU','PM','Borough','Other','VFW','Clubs/Orgs','Live Music','H Games','Home Game Mode','Athletic Competitions','Athletics','Phantom Power']);
+    const hiddenTags = new Set(['MU','PM','Borough','Other','VFW','Clubs/Orgs','Live Music','H Games','Home Game Mode','Athletic Competitions','Athletics','Phantom Power','Human Resources','Office of the Provost','Office of VP for Finance and Administration']);
     const relabelForTownie = (tag) => (muAffiliation === 'townie' && tag === 'GetInvolved') ? 'Community' : tag;
     const displayTags = tags.filter(t => !hiddenTags.has(t)).map(relabelForTownie).slice(0, 6);
 

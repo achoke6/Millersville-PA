@@ -11,7 +11,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -29,7 +29,7 @@ jobs:
       - name: Validate hand-maintained JSON
         run: |
           set -e
-          for f in camps.json sponsors.json org-overrides.json shortnames-overlay.json borough-overrides.json vfw.json grocery.json; do
+          for f in camps.json sponsors.json org-overrides.json shortnames-overlay.json; do
             if [ -f "$f" ]; then
               echo "Checking $f..."
               jq empty "$f" || { echo "❌ $f has invalid JSON syntax"; exit 1; }
@@ -53,31 +53,11 @@ jobs:
             jq -e '.overrides | type == "object"' shortnames-overlay.json > /dev/null \
               || { echo "❌ shortnames-overlay.json must have an .overrides object (string→string map)"; exit 1; }
           fi
-          if [ -f borough-overrides.json ]; then
-            jq -e '.overrides | type == "array" and (length == 0 or (all(.date and .matchTitle and .newTitle)))' borough-overrides.json > /dev/null \
-              || { echo "❌ borough-overrides.json must have an .overrides array; each entry needs date + matchTitle + newTitle"; exit 1; }
-          fi
-          if [ -f vfw.json ]; then
-            jq -e '(.events // []) | type == "array" and (length == 0 or (all(.title and .date)))' vfw.json > /dev/null \
-              || { echo "❌ vfw.json .events must be an array; each entry needs title + date"; exit 1; }
-            jq -e '(.weeklySpecials // {}) | type == "object" and (.items == null or (.items | type == "array"))' vfw.json > /dev/null \
-              || { echo "❌ vfw.json .weeklySpecials.items must be an array if present"; exit 1; }
-          fi
-          if [ -f grocery.json ]; then
-            jq -e '(.deals // []) | type == "array" and (length == 0 or (all(.item)))' grocery.json > /dev/null \
-              || { echo "❌ grocery.json .deals must be an array; each entry needs item"; exit 1; }
-          fi
           echo "✓ All JSON files valid"
 
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@v4
         with:
-          # Node.js 22 (Active LTS, EOL April 2027). Bumped from Node 20 in
-          # May 2026 because Node 20 reached EOL on April 30, 2026 — no more
-          # security patches upstream. Node 22 is a drop-in for our use:
-          # built-in fetch (we already use it), web-push and terser both
-          # support 22+, no native modules that need rebuilding. The deploy
-          # smoke test will catch any regression at the post-deploy step.
-          node-version: 22
+          node-version: 20
           # Caches ~/.npm (the global download cache, keyed off package-lock.json)
           # so npm ci doesn't re-download dependencies on every cron run. With
           # the lockfile pinned, this typically cuts dep install from ~30s to
@@ -97,6 +77,22 @@ jobs:
           VFW_SHEET_ID: ${{ secrets.VFW_SHEET_ID }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           HEALTHCHECK_URL: ${{ secrets.HEALTHCHECK_URL }}
+
+      # Sync the business Directory from its Google Sheet (single source of
+      # truth, maintained by hand in Sheets). Regenerates restaurants.json,
+      # services.json, and association.json from one flat sheet — see
+      # scripts/sync-directory.js. The commit step below picks these up via
+      # `git add *.json` like any other data file.
+      #
+      # continue-on-error: a transient Google outage or a malformed sheet must
+      # NOT fail the whole hourly deploy. The script itself fails safe — on any
+      # fetch/parse/empty error it exits non-zero WITHOUT writing, so the last
+      # good committed JSON stays in place and the site is unaffected.
+      - name: Sync directory from Google Sheet
+        continue-on-error: true
+        run: node scripts/sync-directory.js
+        env:
+          DIRECTORY_SHEET_CSV_URL: ${{ secrets.DIRECTORY_SHEET_CSV_URL }}
 
       - name: Commit and push updated data
         run: |
@@ -149,11 +145,6 @@ jobs:
       - name: Deploy to DreamHost via SFTP
         run: |
           sudo apt-get install -y lftp
-          # NOTE on excludes below: lftp --exclude treats matched files as
-          # absent from BOTH source and destination, so already-present files
-          # on the server (e.g. old sync-report-*.md) stay there until removed
-          # manually via FTP. Adding a new exclude pattern stops future
-          # transfers but does NOT clean up what's already there.
           for attempt in 1 2 3; do
             echo "Deploy attempt $attempt..."
             lftp -c "
@@ -174,13 +165,6 @@ jobs:
                 --exclude ^404\.html$ \
                 --exclude ^vfw-cache\.json$ \
                 --exclude ^grocery-cache\.json$ \
-                --exclude ^subscriptions\.json$ \
-                --exclude ^notifications-status\.json$ \
-                --exclude ^auto-events\.json$ \
-                --exclude ^auto-events-status\.json$ \
-                --exclude ^events-snapshot\.json$ \
-                --exclude ^sync-report-.+\.md$ \
-                --exclude ^CLAUDE\.md$ \
                 ./ ${{ secrets.DREAMHOST_DIR }};
               put -O ${{ secrets.DREAMHOST_DIR }} .htaccess;
               quit;

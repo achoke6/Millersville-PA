@@ -8,6 +8,8 @@
  *
  *   - restaurants.json   (type=food rows)
  *   - services.json      (type=service rows)
+ *   - housing.json       (type=housing rows)
+ *   - campus-cupboard.json (type=cupboard row — static info; hours logic in app.js)
  *   - association.json   (verified members + spotlight rotation, derived from
  *                         the verified/spotlight/audience columns)
  *
@@ -16,14 +18,19 @@
  * site stays fast and has no live Google dependency.
  *
  * SHEET COLUMNS (header row, exact names, case-insensitive match):
- *   name, active, type, category, cuisine, address, phone, website, iosLink,
- *   status, onCampus, marauderGold, verified, audience, spotlight, tagline,
- *   logo, description
+ *   name, active, type, category, cuisine, landlord, address, phone, website,
+ *   iosLink, status, onCampus, marauderGold, verified, audience, spotlight,
+ *   tagline, logo, description
  *
  *   active:      non-blank (e.g. "X") = listed; blank = hidden/skipped entirely.
  *                (If the column is absent, all rows are treated as active.)
- *   type:        food | service | institution
- *                (institution = spotlight-only, no directory card — e.g. MU)
+ *   type:        food | service | housing | cupboard | institution
+ *                  food/service = normal directory cards
+ *                  housing      = apartment cards (uses name, landlord, website, description)
+ *                  cupboard     = the Campus Cupboard resource (static info here;
+ *                                 hours/open-closed logic stays in app.js)
+ *                  institution  = spotlight-only, no directory card (e.g. MU)
+ *   landlord:    (housing only) leasing company shown as the card subtitle
  *   onCampus / marauderGold / verified / spotlight: "yes" (anything else = no)
  *   audience:    locals | students | both   (blank = both)
  *
@@ -102,7 +109,7 @@ async function main() {
   }
   const get = (row, col) => { const i = idx(col); return i === -1 ? '' : clean(row[i]); };
 
-  const restaurants = [], services = [], members = [], spotlight = [];
+  const restaurants = [], services = [], housing = [], cupboard = [], members = [], spotlight = [];
   const seenNames = new Set();
   let warnings = 0;
 
@@ -143,6 +150,18 @@ async function main() {
       if (yes(get(row, 'marauderGold'))) o.marauderGold = true;
       if (yes(get(row, 'onCampus'))) o.onCampus = true;
       services.push(o);
+    } else if (type === 'housing') {
+      const o = { name, landlord: get(row, 'landlord'), description: get(row, 'description') };
+      const website = get(row, 'website'); if (website) o.link = website;
+      housing.push(o);
+    } else if (type === 'cupboard') {
+      // Static info only — the open/closed + seasonal-hours logic lives in
+      // app.js (buildCampusCupboardItems). This row controls whether the
+      // resource appears at all and its description/location text.
+      cupboard.push({
+        name, description: get(row, 'description'), address: get(row, 'address'),
+        onCampus: yes(get(row, 'onCampus'))
+      });
     } else if (type === 'institution') {
       // No directory card — only eligible for the spotlight rotation.
     } else {
@@ -185,6 +204,8 @@ async function main() {
   const writes = [
     ['restaurants.json', JSON.stringify(restaurants, null, 2) + '\n'],
     ['services.json', JSON.stringify(services, null, 2) + '\n'],
+    ['housing.json', JSON.stringify(housing, null, 2) + '\n'],
+    ['campus-cupboard.json', JSON.stringify(cupboard[0] || null, null, 2) + '\n'],
     ['association.json', JSON.stringify(association, null, 2) + '\n'],
   ];
   for (const [file, content] of writes) {
@@ -194,6 +215,8 @@ async function main() {
   console.log('✓ directory sync complete');
   console.log(`  restaurants.json: ${restaurants.length}`);
   console.log(`  services.json:    ${services.length}`);
+  console.log(`  housing.json:     ${housing.length}`);
+  console.log(`  campus-cupboard:  ${cupboard.length ? 'present' : 'none'}`);
   console.log(`  association.json: ${members.length} verified, ${spotlight.length} spotlight`);
   if (warnings) console.log(`  ⚠ ${warnings} warning(s) above`);
 }

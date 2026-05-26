@@ -4791,6 +4791,9 @@ async function loadHomeSpecials(){
 // entirely rather than showing a "closed" message.
 // Hours: academic year M-F 8am-8pm, summer M-F 9am-1pm.
 function buildCampusCupboardItems(dayName) {
+    // Sheet control: if the cupboard row was removed/deactivated in the sheet,
+    // window._cupboard is null → hide the resource entirely.
+    if (window._cupboard === null) return null;
     const isWeekday = ['Monday','Tuesday','Wednesday','Thursday','Friday'].includes(dayName);
     if (!isWeekday) return null;   // closed weekends — hide the card
     const now = new Date();
@@ -4798,7 +4801,11 @@ function buildCampusCupboardItems(dayName) {
     // Same summer window as HUB scrape (May 11 – Aug 24)
     const isSummer = (m === 5 && d >= 11) || m === 6 || m === 7 || (m === 8 && d < 25);
     const hours = isSummer ? '9am – 1pm' : '8am – 8pm';
-    return [`Open today: ${hours}`, 'Fresh produce, dairy, eggs, frozen, canned & dry goods, hygiene products', 'Bring student ID'];
+    // Description text comes from the sheet-synced file when available, else
+    // the built-in default. (Hours/open-closed stay code-driven.)
+    const desc = (window._cupboard && window._cupboard.description)
+        || 'Fresh produce, dairy, eggs, frozen, canned & dry goods, hygiene products. Bring student ID.';
+    return [`Open today: ${hours}`, desc];
 }
 
 /* ==================== WEATHER ==================== */
@@ -5129,13 +5136,18 @@ function renderStars(rating) {
 async function loadHousing(){try{const data=await(await fetch('housing.json')).json();const c=document.getElementById('housing-container');data.sort((a,b)=>(b.featured===true)-(a.featured===true));c.innerHTML=data.map(p=>{return `<div class="app-card"><h3 class="card-title">${p.name}</h3><p class="card-meta" style="font-weight:bold;text-transform:uppercase;margin-bottom:8px;">${p.landlord}</p><p style="font-size:0.9rem;margin-bottom:16px;">${p.description}</p><div class="card-footer"><a href="${p.link}" target="_blank" class="btn btn-sm btn-outline" style="display:block;text-align:center;">View Property</a></div></div>`;}).join('');}catch(e){}}
 
 async function loadPlaces(){try{
-    const [restaurants, services, specials, vfw] = await Promise.all([
+    const [restaurants, services, specials, vfw, cupboardData] = await Promise.all([
         fetch('restaurants.json').then(r=>r.json()).catch(()=>[]),
         fetch('services.json').then(r=>r.json()).catch(()=>[]),
         fetch('specials.json').then(r=>r.json()).catch(()=>({})),
         fetch('vfw.json').then(r=>r.json()).catch(()=>null),
+        fetch('campus-cupboard.json').then(r=>r.json()).catch(()=>undefined),
         loadAssociation()   // populate mbaMembers/mbaSpotlight before render
     ]);
+    // Campus Cupboard static info from the sheet-synced file. undefined = fetch
+    // failed (fall back to built-in text); null = no cupboard row in the sheet
+    // (hide the resource entirely). An object = use its description/address.
+    if (cupboardData !== undefined) window._cupboard = cupboardData;
     // VFW specials come from vfw.json (single source, maintained by the weekly
     // Cowork task). Synthesize the specials-shaped entry so buildFoodCard works
     // unchanged. Overrides any stale VFW block in specials.json.
@@ -5272,10 +5284,13 @@ function renderPlaces(){
     // Sort: featured first, then food, then services
     // Sort: Featured Spotlight buyers first (they paid for prominence), then
     // featured, then food before services.
+    // Neutral directory order: food before services, then alphabetical.
+    // Spotlight buyers still get an enhanced card (logo, gold border) via
+    // getSpotlight() in the card builders, but are NOT forced to the top —
+    // the directory stays a fair, predictable listing.
     filtered.sort((a,b) =>
-        ((getSpotlight(b.name)?1:0) - (getSpotlight(a.name)?1:0)) ||
-        ((b.featured===true)-(a.featured===true)) ||
-        ((a.placeType==='food'?0:1)-(b.placeType==='food'?0:1))
+        ((a.placeType==='food'?0:1)-(b.placeType==='food'?0:1)) ||
+        a.name.localeCompare(b.name)
     );
 
     // Campus Cupboard pinned card — marauders only, shown in All and Food & Drink

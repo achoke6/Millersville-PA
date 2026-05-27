@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-05-27T03:41:48.487Z",
-  "totalEvents": 895,
+  "generatedAt": "2026-05-27T08:03:50.863Z",
+  "totalEvents": 896,
   "withDescription": 329,
   "withImage": 108,
   "familyFriendly": 44,
-  "eventsToday": 1,
+  "eventsToday": 3,
   "sources": {
     "muAthletics": 61,
     "muCalendar": 156,
     "muGetInvolved": 257,
-    "pennManor": 197,
+    "pennManor": 198,
     "borough": 206,
     "vfw": 3,
     "phantomPower": 14,
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-04-24T20:00:00.000Z",
-      "latest": "2026-09-21T21:00:00.000Z"
+      "latest": "2026-09-21T23:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-02-26T23:30:00.000Z",
@@ -53,35 +53,35 @@
   "staleness": {
     "muAthletics": {
       "newest": "2026-11-14",
-      "daysSinceMoved": 20
+      "daysSinceMoved": 21
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 18
+      "daysSinceMoved": 19
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 20
+      "daysSinceMoved": 21
     },
     "pennManor": {
       "newest": "2026-09-21",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "borough": {
       "newest": "2027-05-24",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "vfw": {
       "newest": "2026-05-27",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 15
     },
     "phantomPower": {
       "newest": "2026-07-17",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     },
     "community": {
       "newest": "2026-04-27",
-      "daysSinceMoved": 20
+      "daysSinceMoved": 21
     }
   },
   "sports": {
@@ -92,6 +92,13 @@
     "ties": 1
   },
   "recentlyAdded": [
+    {
+      "key": "School Board Meeting|2026-09-21T23:00:00.000Z",
+      "firstSeenAt": "2026-05-27T08:03:50.861Z",
+      "title": "School Board Meeting",
+      "source": "PM",
+      "date": "2026-09-21T23:00:00.000Z"
+    },
     {
       "key": "Morimvr w. Scarlet Meridian, Illusion of Solace, and Skinmag|2026-06-13T00:00:00.000Z",
       "firstSeenAt": "2026-05-27T03:41:48.485Z",
@@ -154,13 +161,6 @@
       "title": "Girls Varsity Tennis @ Dallastown Area High School",
       "source": "PM",
       "date": "2026-09-03T20:00:00.000Z"
-    },
-    {
-      "key": "Girls 7/8th Soccer @ Lampeter Strasburg High School|2026-09-03T21:00:00.000Z",
-      "firstSeenAt": "2026-05-26T19:22:16.737Z",
-      "title": "Girls 7/8th Soccer @ Lampeter Strasburg High School",
-      "source": "PM",
-      "date": "2026-09-03T21:00:00.000Z"
     }
   ],
   "addedLastRun": 1

@@ -1,6 +1,6 @@
 {
-    "_comment": "Hand-maintained borough event enrichments. The borough's iCal feed sometimes serializes specific events as generic titles like 'Reserve Public Meeting Room'. Add entries here to replace those with the real event name, description, and source URL. Maintained weekly via Claude Cowork — scan https://millersvilleborough.org/news/ for upcoming community events and match them to bland iCal entries by date.",
-    "_format": "Each override needs: date (ISO with TZ), matchTitle (case-insensitive substring), newTitle (replacement), and optionally description, sourceLink, image. Matching window is ±60 minutes on the same date. Entries older than 30 days are skipped silently.",
+    "_comment": "Hand-maintained borough event enrichments AND standalone creations. The borough's iCal feed sometimes serializes specific events as generic titles like 'Reserve Public Meeting Room' (use an enrichment override to fix those). Other events appear ONLY in a blog post and never on the iCal at all (use a create override for those). Maintained weekly via Claude Cowork — scan https://millersvilleborough.org/news/ for upcoming community events.",
+    "_format": "ENRICHMENT override (fixes an existing iCal event): date (ISO w/ TZ), matchTitle (case-insensitive substring of the iCal title), newTitle, and optionally description/sourceLink/image. Matches within +/-60 min on the same date. CREATE override (adds an event not on the iCal): set \"create\": true, plus date + newTitle, and optionally endTime/location/description/sourceLink/image (no matchTitle needed). A create override that happens to match an existing event will enrich it instead of duplicating. Entries older than 30 days are skipped silently.",
     "overrides": [
         {
             "date": "2026-06-22T18:00:00-04:00",
@@ -8,6 +8,15 @@
             "newTitle": "Conestoga River Community Lecture",
             "description": "Sponsored in partnership with Millersville University and the Conestoga River Club, this event seeks to present the history and importance of the Conestoga River, while highlighting the ongoing work to conserve and improve this important waterway. All are welcome!",
             "sourceLink": "https://millersvilleborough.org/conestoga-river-community-lecture/"
+        },
+        {
+            "date": "2026-08-04T18:00:00-04:00",
+            "create": true,
+            "newTitle": "National Night Out",
+            "location": "Charles F. Snyder Funeral Home parking lot (N. George St.) and Borough Municipal Building parking lot, 100 Municipal Drive, Millersville, PA",
+            "endTime": "2026-08-04T20:00:00-04:00",
+            "description": "Millersville Borough's 3rd Annual National Night Out, hosted by the Civil Service Commission. Activities include tours of the police station, interacting with first responders, free hotdogs, live music, games, and giveaways. Rain date: August 5, 2026.",
+            "sourceLink": "https://millersvilleborough.org/national-night-out-august-4-2026/"
         }
     ]
 }

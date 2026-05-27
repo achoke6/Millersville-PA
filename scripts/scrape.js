@@ -2655,10 +2655,14 @@ async function runScraper() {
             if (overridesData && Array.isArray(overridesData.overrides)) {
                 const now = new Date();
                 const cutoff = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-                let applied = 0, stale = 0, unmatched = 0;
+                let applied = 0, stale = 0, unmatched = 0, created = 0;
 
                 for (const ov of overridesData.overrides) {
-                    if (!ov.date || !ov.matchTitle || !ov.newTitle) continue;
+                    // Enrichment overrides need date + matchTitle + newTitle.
+                    // Create-mode overrides (create:true) don't match anything,
+                    // so they only need date + newTitle.
+                    if (!ov.date || !ov.newTitle) continue;
+                    if (!ov.create && !ov.matchTitle) continue;
                     const ovDate = new Date(ov.date);
                     if (isNaN(ovDate.getTime())) continue;
                     if (ovDate < cutoff) { stale++; continue; }
@@ -2667,9 +2671,11 @@ async function runScraper() {
                     // iterate `events` (the final flat list) rather than a
                     // borough-specific subset because by the time this code
                     // runs the borough events have already been pushed.
-                    const matchLower = ov.matchTitle.toLowerCase();
+                    const matchLower = (ov.matchTitle || '').toLowerCase();
                     let matchedThisOverride = false;
-                    for (const e of events) {
+                    // Only attempt enrichment-matching when there's a matchTitle.
+                    // Create-mode entries skip straight to the creation branch.
+                    if (matchLower) for (const e of events) {
                         if (!e.tags || !e.tags.includes('Borough')) continue;
                         if (!(e.title || '').toLowerCase().includes(matchLower)) continue;
                         const eDate = new Date(e.date);
@@ -2689,11 +2695,39 @@ async function runScraper() {
                         break;  // one override → one event, even if multiple match
                     }
 
-                    if (!matchedThisOverride) unmatched++;
+                    if (!matchedThisOverride) {
+                        // Creation mode: an override flagged `create: true` that
+                        // matched nothing is treated as a standalone event that
+                        // lives ONLY in a borough blog post (never on the iCal) —
+                        // e.g. National Night Out. Push it as a real Borough event
+                        // from the override's own fields. Requires date + newTitle
+                        // (already validated above). Without the explicit flag, an
+                        // unmatched override stays a harmless no-op, so a renamed
+                        // enrichment entry can never accidentally spawn a phantom.
+                        if (ov.create === true) {
+                            const createdDate = new Date(ov.date);
+                            events.push({
+                                title: ov.newTitle,
+                                date: createdDate.toISOString(),
+                                endTime: ov.endTime ? new Date(ov.endTime).toISOString() : '',
+                                location: ov.location || 'Millersville Borough',
+                                tags: ['Borough'],
+                                price: 'Free', ticketLink: '',
+                                sourceLink: ov.sourceLink || 'https://millersvilleborough.org/news/',
+                                gameResult: '', gameScore: '', streamLink: '', isLive: false,
+                                ...(ov.description ? { description: ov.description } : {}),
+                                ...(ov.image ? { image: ov.image } : {})
+                            });
+                            created++;
+                            console.log(`  ➕ Borough override CREATED standalone event: "${ov.newTitle}" (${ov.date})`);
+                        } else {
+                            unmatched++;
+                        }
+                    }
                 }
 
-                if (applied > 0 || unmatched > 0) {
-                    console.log(`  ✅ Borough overrides: ${applied} applied, ${unmatched} unmatched, ${stale} stale`);
+                if (applied > 0 || unmatched > 0 || created > 0) {
+                    console.log(`  ✅ Borough overrides: ${applied} applied, ${created} created, ${unmatched} unmatched, ${stale} stale`);
                 }
                 if (unmatched > 0) {
                     // Detail unmatched entries so the next Cowork session

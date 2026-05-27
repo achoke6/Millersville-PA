@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-05-27T12:21:12.482Z",
-  "totalEvents": 896,
-  "withDescription": 329,
+  "generatedAt": "2026-05-27T15:33:20.331Z",
+  "totalEvents": 897,
+  "withDescription": 330,
   "withImage": 108,
   "familyFriendly": 44,
   "eventsToday": 3,
@@ -10,7 +10,7 @@
     "muCalendar": 156,
     "muGetInvolved": 257,
     "pennManor": 198,
-    "borough": 206,
+    "borough": 207,
     "vfw": 3,
     "phantomPower": 14,
     "community": 1,
@@ -93,6 +93,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "National Night Out|2026-08-04T22:00:00.000Z",
+      "firstSeenAt": "2026-05-27T15:33:20.328Z",
+      "title": "National Night Out",
+      "source": "Borough",
+      "date": "2026-08-04T22:00:00.000Z"
+    },
+    {
       "key": "School Board Meeting|2026-09-21T23:00:00.000Z",
       "firstSeenAt": "2026-05-27T08:03:50.861Z",
       "title": "School Board Meeting",
@@ -154,14 +161,7 @@
       "title": "Girls 7/8/9th Soccer @ Lampeter Strasburg High School",
       "source": "PM",
       "date": "2026-09-03T20:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Tennis @ Dallastown Area High School|2026-09-03T20:00:00.000Z",
-      "firstSeenAt": "2026-05-26T19:22:16.737Z",
-      "title": "Girls Varsity Tennis @ Dallastown Area High School",
-      "source": "PM",
-      "date": "2026-09-03T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

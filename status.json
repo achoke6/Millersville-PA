@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-05-26T23:10:33.298Z",
-  "totalEvents": 901,
-  "withDescription": 333,
+  "generatedAt": "2026-05-27T03:41:48.487Z",
+  "totalEvents": 895,
+  "withDescription": 329,
   "withImage": 108,
   "familyFriendly": 44,
   "eventsToday": 1,
   "sources": {
     "muAthletics": 61,
     "muCalendar": 156,
-    "muGetInvolved": 263,
+    "muGetInvolved": 257,
     "pennManor": 197,
     "borough": 206,
     "vfw": 3,
@@ -26,7 +26,7 @@
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-02-25T11:30:00.000Z",
+      "earliest": "2026-02-26T12:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
@@ -93,6 +93,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Morimvr w. Scarlet Meridian, Illusion of Solace, and Skinmag|2026-06-13T00:00:00.000Z",
+      "firstSeenAt": "2026-05-27T03:41:48.485Z",
+      "title": "Morimvr w. Scarlet Meridian, Illusion of Solace, and Skinmag",
+      "source": "Other",
+      "date": "2026-06-13T00:00:00.000Z"
+    },
+    {
       "key": "Boys Varsity Football vs Octorara Area High School|2026-08-22T15:00:00.000Z",
       "firstSeenAt": "2026-05-26T19:22:16.737Z",
       "title": "Boys Varsity Football vs Octorara Area High School",
@@ -154,14 +161,7 @@
       "title": "Girls 7/8th Soccer @ Lampeter Strasburg High School",
       "source": "PM",
       "date": "2026-09-03T21:00:00.000Z"
-    },
-    {
-      "key": "Girls JV Volleyball @ Ephrata Area High School|2026-09-03T22:00:00.000Z",
-      "firstSeenAt": "2026-05-26T19:22:16.737Z",
-      "title": "Girls JV Volleyball @ Ephrata Area High School",
-      "source": "PM",
-      "date": "2026-09-03T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

@@ -71,6 +71,27 @@ jobs:
       # on the production scraper.
       - run: npm ci
 
+      # Sync curated event candidates from the "Event Candidates" Google Sheet
+      # BEFORE scrape.js, because scrape.js READS the override files this
+      # generates (borough-overrides.json, penn-manor-overrides.json,
+      # youth-sports-registration.json). If this ran after the scrape, the
+      # scraper would use stale overrides until the next hourly run.
+      #
+      # Only Approved-X'd rows are published; routes by the Source column.
+      # continue-on-error + fail-safe script: a transient Google outage or bad
+      # sheet never breaks the deploy, and the script exits without writing on
+      # any error so the last-good committed JSON stays in place.
+      #
+      # NOTE: this OWNS the create-mode borough entries, all PM community
+      # events, and all youth sports registrations — it overwrites those from
+      # the sheet. Hand-maintained borough ENRICHMENT overrides (matchTitle
+      # entries) are preserved by the script and still edited directly in JSON.
+      - name: Sync event candidates from Google Sheet
+        continue-on-error: true
+        run: node scripts/sync-candidates.js
+        env:
+          CANDIDATES_SHEET_CSV_URL: ${{ secrets.CANDIDATES_SHEET_CSV_URL }}
+
       - run: node scripts/scrape.js
         env:
           GOOGLE_VISION_API_KEY: ${{ secrets.GOOGLE_VISION_API_KEY }}

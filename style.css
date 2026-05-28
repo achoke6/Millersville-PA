@@ -572,6 +572,7 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .perk-food { background: #fef3c7; color: #92400e; border: 1px solid #fbbf24; }
 .perk-stuff { background: #dbeafe; color: #1e40af; border: 1px solid #60a5fa; }
 .perk-credit { background: #d1fae5; color: #065f46; border: 1px solid #34d399; }
+.perk-registration { background: #fef9c3; color: #854d0e; border: 1px solid #ca8a04; }
 .tl-perk { font-size: 0.8rem; }
 
 /* Modal-scoped perk row: Free Food / Free Stuff are often the primary draw

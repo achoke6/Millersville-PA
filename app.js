@@ -4070,7 +4070,10 @@ function buildEventCard(e,isSportsPage){
     // see it as "Community" — unset/Marauder users see the original label since the default
     // is now Marauder mode.
     const relabelForTownie = (tag) => (muAffiliation === 'townie' && tag === 'GetInvolved') ? 'Community' : tag;
-    const displayTags=tags.filter(t=>!hiddenTags.includes(t)).map(relabelForTownie);
+    // Collapse specific residence halls to the generic category (see source-pill
+    // note): if "Residence Halls" is present, drop any specific-hall tag.
+    const hideResHall = (t) => tags.includes('Residence Halls') && t !== 'Residence Halls' && /residence hall/i.test(t);
+    const displayTags=tags.filter(t=>!hiddenTags.includes(t) && !hideResHall(t)).map(relabelForTownie);
     let tagHtml=sourceLabel?`<span class="card-tag">${sourceLabel}</span>`:'';
     // Multi-day pill — annotated by groupEventsByDay when an event appears on
     // a day other than its start (or on Day 1 of a multi-day span). Helps
@@ -4146,6 +4149,11 @@ function buildEventCard(e,isSportsPage){
     if (benefits.includes('Free Food')) perkBadges += '<span class="perk-badge perk-food">🍕 Free Food</span>';
     if (benefits.includes('Free Stuff')) perkBadges += '<span class="perk-badge perk-stuff">🎁 Free Stuff</span>';
     if (benefits.includes('Credit')) perkBadges += '<span class="perk-badge perk-credit">📚 Credit</span>';
+    // Registration-required warning. Distinct from perks — this tells the user
+    // "you can't just show up; check the linked source first." Shown on events
+    // where Cowork flagged registrationRequired but no firm deadline was known.
+    // (When a deadline IS known, scrape.js auto-hides the event past it.)
+    if (e.registrationRequired === true) perkBadges += '<span class="perk-badge perk-registration">📝 Registration required</span>';
 
     // Clean title
     const displayTitle = (e.title || '').replace(/^Millersville University\s*/i, '').replace(/ - (Girls|Boys)\s+(vs |@ )/i, ' $2');
@@ -4383,8 +4391,16 @@ function buildTimelineItem(e, now) {
     const ADMIN_ORGS = /^(Human Resources|Office of the Provost|Office of VP|Registrar|Office of Grants|Advancement Department|Advancement|SMC Operations|Cultural Affairs)/i;
     const orgIsAdmin = ADMIN_ORGS.test(e.orgShortName || e.orgName || '');
 
+    // Residence-hall events: the specific hall (e.g. "Shenks Residence Hall")
+    // is often the wrong org — staff pick a building/wing org by mistake when
+    // creating the event. When the generic "Residence Halls" category tag is
+    // present, prefer that vaguer-but-accurate label over the specific hall.
+    const isResHall = tags.includes('Residence Halls');
+
     let src = '';
-    if (muAffiliation === 'student' && e.orgShortName && !isSport && !orgIsAdmin) {
+    if (muAffiliation === 'student' && isResHall) {
+        src = 'Residence Halls';
+    } else if (muAffiliation === 'student' && e.orgShortName && !isSport && !orgIsAdmin) {
         src = e.orgShortName;
     } else if(tags.includes('VFW')) src = 'VFW';
     else if(tags.includes('Borough')) src = 'Borough';
@@ -4445,6 +4461,7 @@ function buildTimelineItem(e, now) {
     const benefits = e.benefits || [];
     if (benefits.includes('Free Food')) badges += '<span class="tl-badge tl-perk">🍕</span>';
     if (benefits.includes('Free Stuff')) badges += '<span class="tl-badge tl-perk">🎁</span>';
+    if (e.registrationRequired === true) badges += '<span class="tl-badge tl-registration" title="Registration required">📝</span>';
     // Multi-day annotation (Day 2 of 3, etc.) — set by groupEventsByDay when
     // an event spans multiple calendar days. Renders before LIVE/score so the
     // user sees "this is part of a multi-day event" first.
@@ -4582,7 +4599,8 @@ window.openEventDetails = function(key) {
     // (unset/Marauder users see "GetInvolved" since default is now Marauder mode).
     const hiddenTags = new Set(['MU','PM','Borough','Other','VFW','Clubs/Orgs','Live Music','H Games','Home Game Mode','Athletic Competitions','Athletics','Phantom Power','Human Resources','Office of the Provost','Office of VP for Finance and Administration','Advancement Department']);
     const relabelForTownie = (tag) => (muAffiliation === 'townie' && tag === 'GetInvolved') ? 'Community' : tag;
-    const displayTags = tags.filter(t => !hiddenTags.has(t)).map(relabelForTownie).slice(0, 6);
+    const hideResHall = (t) => tags.includes('Residence Halls') && t !== 'Residence Halls' && /residence hall/i.test(t);
+    const displayTags = tags.filter(t => !hiddenTags.has(t) && !hideResHall(t)).map(relabelForTownie).slice(0, 6);
 
     const description = (e.description || '').trim();
     const descBlock = description

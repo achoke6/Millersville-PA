@@ -2756,6 +2756,97 @@ async function runScraper() {
     } catch (e) { console.error("❌ Borough Calendar error:", e.message); }
 
 
+    // ===== 6b. PENN MANOR COMMUNITY EVENTS — hand-curated overrides =====
+    //
+    // Penn Manor's community page (https://www.pennmanor.net/community/) lists
+    // datebound community events as prose announcements with no machine-readable
+    // calendar feed. These are community-aggregated events (Girl Scouts, soccer
+    // camps, Bible2School, etc.) — not Penn Manor School District proper — so
+    // they tag as "Other" alongside the concerts/trivia bucket, not "PM" which
+    // is reserved for school district content (school events, board, athletics).
+    //
+    // Cowork weekly reads that page, extracts candidate events, and opens a PR
+    // adding them to penn-manor-overrides.json with status: "pending". User
+    // reviews the PR on GitHub mobile, flips the status to "approved" (or
+    // rejects by closing the PR) before merging.
+    //
+    // ONLY entries with status: "approved" become real events. Anything else —
+    // "pending", missing, "rejected", typo'd — is silently skipped. This makes
+    // the file safe to have unreviewed candidates sitting in it; merging a PR
+    // with status:"pending" still adds nothing to the site.
+    //
+    // Stale entries (>30 days past) are auto-skipped, same as Borough.
+    try {
+        const pmPath = path.join(__dirname, '../penn-manor-overrides.json');
+        let pmData = null;
+        try {
+            pmData = JSON.parse(fs.readFileSync(pmPath, 'utf8'));
+        } catch (_) { /* file may not exist yet — that's fine */ }
+
+        if (pmData && Array.isArray(pmData.events)) {
+            const now = new Date();
+            const cutoff = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+            let added = 0, pending = 0, stale = 0, skipped = 0;
+
+            for (const ev of pmData.events) {
+                if (!ev.date || !ev.title) { skipped++; continue; }
+                const evDate = new Date(ev.date);
+                if (isNaN(evDate.getTime())) { skipped++; continue; }
+                if (evDate < cutoff) { stale++; continue; }
+
+                // The approval gate.
+                if (ev.status !== 'approved') {
+                    if (ev.status === 'pending') pending++;
+                    else skipped++;
+                    continue;
+                }
+
+                // Registration deadline gate: if a deadline is set and has
+                // passed, hide the event entirely. The whole reason this exists
+                // is so users don't see camps/classes after registration closed
+                // and click through to a dead end. Use end-of-deadline-day in
+                // ET so "register by June 1" doesn't expire at midnight UTC
+                // (which is 8pm ET the previous evening).
+                if (ev.registrationDeadline) {
+                    const deadline = new Date(ev.registrationDeadline);
+                    if (!isNaN(deadline.getTime()) && deadline < now) {
+                        skipped++;
+                        console.log(`     ⏰ skipping "${ev.title}" — registration closed ${ev.registrationDeadline}`);
+                        continue;
+                    }
+                }
+
+                const pushed = {
+                    title: ev.title,
+                    date: evDate.toISOString(),
+                    endTime: ev.endTime ? new Date(ev.endTime).toISOString() : '',
+                    location: ev.location || 'Penn Manor',
+                    tags: ['Other'],
+                    price: ev.price || 'Free',
+                    ticketLink: '',
+                    sourceLink: ev.sourceLink || 'https://www.pennmanor.net/community/',
+                    gameResult: '', gameScore: '', streamLink: '', isLive: false,
+                    ...(ev.description ? { description: ev.description } : {}),
+                    ...(ev.image ? { image: ev.image } : {})
+                };
+                // Pass through the registrationRequired flag if set, so the
+                // card render layer can display the "Registration required"
+                // badge. The field is intentionally a top-level boolean (not
+                // hidden in description) so the front-end can style it.
+                if (ev.registrationRequired === true) {
+                    pushed.registrationRequired = true;
+                }
+                events.push(pushed);
+                added++;
+            }
+
+            if (added > 0 || pending > 0 || stale > 0 || skipped > 0) {
+                console.log(`  ✅ Penn Manor community: ${added} added, ${pending} pending review, ${stale} stale, ${skipped} skipped`);
+            }
+        }
+    } catch (e) { console.log(`  ⚠️ Penn Manor overrides error: ${e.message}`); }
+
+
     // ===== 7. VFW POST 7294 — hand-maintained via vfw.json + Cowork =====
     //
     // PREVIOUSLY: Google Sheet of image URLs → Anthropic Vision API extracted

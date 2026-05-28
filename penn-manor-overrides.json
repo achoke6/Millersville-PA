@@ -1,0 +1,28 @@
+{
+    "_comment": "Hand-curated Penn Manor community events. Cowork weekly scans https://www.pennmanor.net/community/ for datebound community events and opens a PR proposing candidates as status:'pending' entries here. User reviews the PR on GitHub (mobile or web), changes status to 'approved' for events to publish, then merges. Only status:'approved' entries become real events on the site; everything else (pending, rejected, missing status) is silently ignored.",
+    "_format": "Each entry: title (required), date (ISO with Eastern offset, required), status ('pending' | 'approved' | 'rejected', defaults to skip), endTime (optional, ISO), location (optional, defaults to 'Penn Manor'), description (optional), sourceLink (optional, defaults to the community page), image (optional), price (optional, defaults to 'Free'), registrationRequired (optional bool — shows 'Registration required' badge on card), registrationDeadline (optional ISO with Eastern offset — event auto-hides past this time). Stale entries (>30 days past) auto-skipped — no need to prune.",
+    "_skipped": "Volleyball camp June 8-11: skipped during first curation pass. The community page only gave dates and 'entering 6th-9th grade'; the linked source is a JPEG (not extractable here) and the announcement page doesn't include time, location, cost, or registration details. Re-add when those are known.",
+    "events": [
+        {
+            "status": "approved",
+            "title": "Girl Scouts Info Session — Become a Daisy",
+            "date": "2026-06-02T17:30:00-04:00",
+            "endTime": "2026-06-02T19:00:00-04:00",
+            "location": "Redeemer Lutheran Church",
+            "description": "Recruitment session for prospective Daisy Girl Scouts and their parents. Activities for kids, info for parents on the program. RSVP requested via the linked flyer.",
+            "sourceLink": "https://www.pennmanor.net/wp-content/uploads/2026/05/Bee-a-Girl-Scout-Lancaster.pdf",
+            "registrationRequired": true
+        },
+        {
+            "status": "approved",
+            "title": "Ambassadors Soccer Camp",
+            "date": "2026-07-07T09:00:00-04:00",
+            "endTime": "2026-07-10T14:00:00-04:00",
+            "location": "Mission Church, 651 Lampeter Rd, Lancaster",
+            "price": "$180 per camper",
+            "description": "Four-day soccer camp for kids ages 6-14 (all skill levels), Tue Jul 7 through Fri Jul 10, 9am-2pm daily, plus an optional Family Day on Sat Jul 11 from 9am-12pm. Includes t-shirt, soccer ball, daily lunch, and Christian mentor coaching. Not affiliated with Penn Manor School District. See flyer to register.",
+            "sourceLink": "https://www.pennmanor.net/wp-content/uploads/2026/05/Ambassadors-Soccer-Camp-Flyer-PM.pdf",
+            "registrationRequired": true
+        }
+    ]
+}

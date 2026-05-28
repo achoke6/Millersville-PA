@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-28T07:57:33.049Z",
+  "generatedAt": "2026-05-28T11:40:42.744Z",
   "totalEvents": 891,
   "withDescription": 328,
   "withImage": 108,
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-04-24T20:15:00.000Z",
-      "latest": "2026-09-22T20:00:00.000Z"
+      "latest": "2026-09-22T21:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-03-02T12:00:00.000Z",
@@ -92,6 +92,13 @@
     "ties": 1
   },
   "recentlyAdded": [
+    {
+      "key": "Boys 7/8th Soccer @ Hempfield High School|2026-09-22T21:00:00.000Z",
+      "firstSeenAt": "2026-05-28T11:40:42.742Z",
+      "title": "Boys 7/8th Soccer @ Hempfield High School",
+      "source": "PM",
+      "date": "2026-09-22T21:00:00.000Z"
+    },
     {
       "key": "School Board Meeting|2026-09-21T23:00:00.000Z",
       "firstSeenAt": "2026-05-28T07:57:33.046Z",
@@ -154,14 +161,7 @@
       "title": "Girls Varsity Field Hockey @ Palmyra Area High School",
       "source": "PM",
       "date": "2026-08-29T14:00:00.000Z"
-    },
-    {
-      "key": "Girls JV Field Hockey @ Palmyra Area High School|2026-08-29T15:30:00.000Z",
-      "firstSeenAt": "2026-05-26T19:22:16.737Z",
-      "title": "Girls JV Field Hockey @ Palmyra Area High School",
-      "source": "PM",
-      "date": "2026-08-29T15:30:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 1
 }

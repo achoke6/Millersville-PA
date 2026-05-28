@@ -957,6 +957,16 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .home-board-item:last-child { border-bottom: none; }
 .home-board-cat { font-weight: 700; font-size: 0.78rem; }
 .home-board-title { color: var(--text); }
+.home-signup-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--border); text-decoration: none; }
+.home-signup-item:last-child { border-bottom: none; }
+.home-signup-main { display: flex; flex-direction: column; min-width: 0; }
+.home-signup-org { font-weight: 700; font-size: 0.9rem; color: var(--text); }
+.home-signup-sub { font-size: 0.78rem; color: var(--text-muted); }
+.home-signup-deadline { display: flex; flex-direction: column; align-items: flex-end; flex-shrink: 0; }
+.home-signup-by { font-weight: 700; font-size: 0.85rem; color: var(--navy); }
+.home-signup-days { font-size: 0.74rem; color: var(--text-muted); }
+.home-signup-urgent .home-signup-by { color: #b45309; }
+.home-signup-urgent .home-signup-days { color: #b45309; font-weight: 600; }
 
 /* Feed CTA */
 .home-feed-cta-box { background: linear-gradient(135deg, var(--navy), #1e3a5f); border-radius: var(--radius); padding: 16px 20px; text-align: center; color: white; cursor: pointer; transition: var(--transition); }

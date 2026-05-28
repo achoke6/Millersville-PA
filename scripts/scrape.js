@@ -2847,6 +2847,70 @@ async function runScraper() {
     } catch (e) { console.log(`  ⚠️ Penn Manor overrides error: ${e.message}`); }
 
 
+    // ===== 6c. YOUTH SPORTS REGISTRATION DEADLINES =====
+    //
+    // Local youth sports orgs (Penn Manor Youth Baseball/Softball, Penn Manor
+    // Soccer Club, etc.) have registration windows that townies with kids care
+    // about. youth-sports-registration.json holds these; each ACTIVE entry whose
+    // deadline hasn't passed becomes an event dated ON the deadline, titled
+    // "Register by <date>: <org>", so it reads unambiguously on the calendar
+    // (it's a deadline, not an event you attend). registrationDeadline auto-hides
+    // it the moment the deadline passes. The homepage "Upcoming Signups" section
+    // reads the SAME file client-side (see app.js renderHomeUI) to surface these
+    // to townies starting 2 weeks out — that part is front-end, not here.
+    try {
+        const ysrPath = path.join(__dirname, '../youth-sports-registration.json');
+        let ysrData = null;
+        try { ysrData = JSON.parse(fs.readFileSync(ysrPath, 'utf8')); } catch (_) {}
+
+        if (ysrData && Array.isArray(ysrData.registrations)) {
+            const now = new Date();
+            let added = 0, closed = 0, skipped = 0;
+            for (const reg of ysrData.registrations) {
+                if (reg.status !== 'active') { skipped++; continue; }
+                if (!reg.deadline || !reg.org) { skipped++; continue; }
+                const dl = new Date(reg.deadline);
+                if (isNaN(dl.getTime())) { skipped++; continue; }
+                if (dl < now) { closed++; continue; }  // deadline passed — don't create
+
+                // Format the deadline date for the title (e.g. "Feb 28").
+                const dlLabel = dl.toLocaleDateString('en-US', {
+                    month: 'short', day: 'numeric', timeZone: 'America/New_York'
+                });
+                // Only append the sport if the org name doesn't already say it
+                // (avoids "Youth Baseball & Softball Baseball & Softball").
+                const orgLower = (reg.org || '').toLowerCase();
+                const sportPart = (reg.sport && !orgLower.includes(reg.sport.toLowerCase()))
+                    ? ` (${reg.sport})` : '';
+                events.push({
+                    title: `Register by ${dlLabel}: ${reg.org}${sportPart}`,
+                    date: dl.toISOString(),
+                    endTime: '',
+                    location: reg.org,
+                    tags: ['Other'],
+                    price: 'Free',
+                    ticketLink: reg.registerLink || '',
+                    sourceLink: reg.registerLink || 'https://www.pennmanor.net/community/',
+                    gameResult: '', gameScore: '', streamLink: '', isLive: false,
+                    registrationRequired: true,
+                    registrationDeadline: reg.deadline,
+                    kidFriendly: true,
+                    description: [
+                        reg.season ? `${reg.season} season.` : '',
+                        reg.ageRange ? `${reg.ageRange}.` : '',
+                        reg.note || '',
+                        `Registration closes ${dlLabel}. Sign up via the link.`
+                    ].filter(Boolean).join(' ')
+                });
+                added++;
+            }
+            if (added > 0 || closed > 0 || skipped > 0) {
+                console.log(`  ✅ Youth sports registration: ${added} open, ${closed} closed, ${skipped} skipped`);
+            }
+        }
+    } catch (e) { console.log(`  ⚠️ Youth sports registration error: ${e.message}`); }
+
+
     // ===== 7. VFW POST 7294 — hand-maintained via vfw.json + Cowork =====
     //
     // PREVIOUSLY: Google Sheet of image URLs → Anthropic Vision API extracted

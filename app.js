@@ -2562,7 +2562,7 @@ document.addEventListener('keydown', (e) => {
 
 async function initApp(){
     loadFeedPrefs();
-    await Promise.allSettled([loadWeather(),loadSpecials(),loadEvents(),loadPlaces(),loadHousing(),loadNews(),loadBoard(),loadClubsDirectory()]);
+    await Promise.allSettled([loadWeather(),loadSpecials(),loadEvents(),loadPlaces(),loadHousing(),loadNews(),loadBoard(),loadSignups(),loadClubsDirectory()]);
     renderHomeFeed();
     attachHomeSwipeHandlers();
     syncFilterArrows();
@@ -4366,6 +4366,45 @@ function renderHomeUI(){
         boardSection.style.display = 'none';
     }
 
+    // Upcoming Signups — youth sports registration deadlines, surfaced to
+    // TOWNIES starting 2 weeks before each deadline. Hidden for marauders/
+    // students (local family content) and when nothing is within the window.
+    const signupsSection = document.getElementById('home-signups-section');
+    const signupsList = document.getElementById('home-signups-list');
+    if (signupsSection && signupsList) {
+        const nowMs = Date.now();
+        const TWO_WEEKS = 14 * 24 * 60 * 60 * 1000;
+        const upcoming = (muAffiliation === 'townie' ? allSignups : [])
+            .filter(s => s && s.status === 'active' && s.deadline)
+            .map(s => ({ ...s, _dl: new Date(s.deadline).getTime() }))
+            .filter(s => !isNaN(s._dl) && s._dl >= nowMs && (s._dl - nowMs) <= TWO_WEEKS)
+            .sort((a, b) => a._dl - b._dl);
+
+        if (upcoming.length > 0) {
+            signupsSection.style.display = '';
+            signupsList.innerHTML = upcoming.map(s => {
+                const dlLabel = new Date(s._dl).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                const daysLeft = Math.ceil((s._dl - nowMs) / (24 * 60 * 60 * 1000));
+                const urgency = daysLeft <= 3 ? ' home-signup-urgent' : '';
+                const daysText = daysLeft <= 0 ? 'closes today' : daysLeft === 1 ? '1 day left' : `${daysLeft} days left`;
+                const sub = [s.sport, s.season, s.ageRange].filter(Boolean).join(' · ');
+                const link = escHtml(s.registerLink || '#');
+                return `<a href="${link}" target="_blank" rel="noopener" class="home-signup-item${urgency}">
+                    <div class="home-signup-main">
+                        <span class="home-signup-org">${escHtml(s.org || '')}</span>
+                        ${sub ? `<span class="home-signup-sub">${escHtml(sub)}</span>` : ''}
+                    </div>
+                    <div class="home-signup-deadline">
+                        <span class="home-signup-by">by ${dlLabel}</span>
+                        <span class="home-signup-days">${daysText}</span>
+                    </div>
+                </a>`;
+            }).join('');
+        } else {
+            signupsSection.style.display = 'none';
+        }
+    }
+
     // ===== FEED CTA =====
     const feedCta = document.getElementById('home-feed-cta');
     if (feedCta) feedCta.style.display = hasFeed ? 'none' : 'block';
@@ -5490,6 +5529,8 @@ function buildServiceCard(p) {
 }
 // ==================== COMMUNITY BOARD ====================
 let allBoardPosts=[], boardFilter='All';
+let allSignups=[]; // youth sports registration windows (homepage Upcoming Signups)
+async function loadSignups(){try{const d=await(await fetch('youth-sports-registration.json')).json();allSignups=(d&&d.registrations)?d.registrations:[];}catch(e){allSignups=[];}}
 async function loadBoard(){try{allBoardPosts=await(await fetch('board.json')).json();renderBoard();}catch(e){
     document.getElementById('board-container').innerHTML='<p class="empty-state">No community posts yet. Be the first to post!</p>';
 }}

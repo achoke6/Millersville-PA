@@ -644,8 +644,8 @@
     },
     {
       "date": "2026-05-27",
-      "ts": "2026-05-28T01:40:23.605Z",
-      "totalEvents": 889,
+      "ts": "2026-05-28T03:30:25.572Z",
+      "totalEvents": 891,
       "sources": {
         "muAthletics": 59,
         "muCalendar": 156,
@@ -667,7 +667,33 @@
         "phantomPower": "2026-07-17",
         "community": "2026-04-27"
       }
+    },
+    {
+      "date": "2026-05-28",
+      "ts": "2026-05-28T11:40:42.744Z",
+      "totalEvents": 891,
+      "sources": {
+        "muAthletics": 59,
+        "muCalendar": 156,
+        "muGetInvolved": 253,
+        "pennManor": 197,
+        "borough": 206,
+        "vfw": 3,
+        "phantomPower": 14,
+        "community": 1,
+        "muHudlBroadcasts": 4
+      },
+      "newestDates": {
+        "muAthletics": "2026-11-14",
+        "muCalendar": "2027-04-03",
+        "muGetInvolved": "2027-05-05",
+        "pennManor": "2026-09-22",
+        "borough": "2027-05-24",
+        "vfw": "2026-05-27",
+        "phantomPower": "2026-07-17",
+        "community": "2026-04-27"
+      }
     }
   ],
-  "lastUpdated": "2026-05-28T01:40:23.605Z"
+  "lastUpdated": "2026-05-28T11:40:42.744Z"
 }

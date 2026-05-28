@@ -1,5 +1,14 @@
 {
   "_comment": "Local youth sports registration windows (Penn Manor Youth Baseball/Softball, Penn Manor Soccer Club, etc.). Maintained by hand / via Cowork. Two consumers: (1) scrape.js creates an event dated on each deadline ('Register by <date>: <org>') that auto-hides once the deadline passes; (2) the homepage 'Upcoming Signups' section surfaces each entry to TOWNIES starting 2 weeks before its deadline. Marauders/students don't see the signups section (it's local family content).",
   "_format": "Each entry: org (required, e.g. 'Penn Manor Youth Baseball'), sport (required, e.g. 'Baseball & Softball'), deadline (required, ISO 8601 with Eastern offset — the registration CLOSE date/time), registerLink (required, URL to sign up), opens (optional ISO — when registration opened, for display), season (optional, e.g. 'Spring 2026'), ageRange (optional, e.g. 'Ages 5-14'), note (optional, short extra detail), status ('active' | 'draft' — only 'active' is used; anything else skipped). Entries are auto-skipped once their deadline passes (no pruning needed).",
-  "registrations": []
+  "registrations": [
+    {
+      "status": "active",
+      "org": "Penn Manor Youth Baseball & Softball",
+      "sport": "Baseball & Softball",
+      "deadline": "2026-06-30T18:00:00.000Z",
+      "registerLink": "https://www.pennmanoryouthbaseball.com/Default.aspx?tabid=1189979",
+      "note": "Fall rec league registration"
+    }
+  ]
 }

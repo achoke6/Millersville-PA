@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-05-28T18:36:32.934Z",
-  "totalEvents": 892,
-  "withDescription": 327,
+  "generatedAt": "2026-05-28T21:12:09.630Z",
+  "totalEvents": 893,
+  "withDescription": 328,
   "withImage": 108,
-  "familyFriendly": 44,
+  "familyFriendly": 45,
   "eventsToday": 3,
   "sources": {
     "muAthletics": 59,
@@ -30,8 +30,8 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-04-24T20:15:00.000Z",
-      "latest": "2026-09-21T23:00:00.000Z"
+      "earliest": "2026-04-24T21:30:00.000Z",
+      "latest": "2026-09-22T20:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-03-02T12:00:00.000Z",
@@ -64,8 +64,8 @@
       "daysSinceMoved": 22
     },
     "pennManor": {
-      "newest": "2026-09-21",
-      "daysSinceMoved": 2
+      "newest": "2026-09-22",
+      "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2027-05-24",
@@ -86,12 +86,26 @@
   },
   "sports": {
     "total": 234,
-    "scored": 39,
-    "wins": 16,
+    "scored": 38,
+    "wins": 15,
     "losses": 22,
     "ties": 1
   },
   "recentlyAdded": [
+    {
+      "key": "Register by Jun 30: Penn Manor Youth Baseball & Softball|2026-06-30T18:00:00.000Z",
+      "firstSeenAt": "2026-05-28T21:12:09.628Z",
+      "title": "Register by Jun 30: Penn Manor Youth Baseball & Softball",
+      "source": "Other",
+      "date": "2026-06-30T18:00:00.000Z"
+    },
+    {
+      "key": "Boys 7/8/9th Soccer @ Hempfield High School|2026-09-22T20:00:00.000Z",
+      "firstSeenAt": "2026-05-28T21:12:09.628Z",
+      "title": "Boys 7/8/9th Soccer @ Hempfield High School",
+      "source": "PM",
+      "date": "2026-09-22T20:00:00.000Z"
+    },
     {
       "key": "Upcoming Renewal Scheduled for Your Subscription|2026-05-29T03:47:31.000Z",
       "firstSeenAt": "2026-05-28T15:52:19.189Z",
@@ -147,21 +161,7 @@
       "title": "Morimvr w. Scarlet Meridian, Illusion of Solace, and Skinmag",
       "source": "Other",
       "date": "2026-06-13T00:00:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Football vs Octorara Area High School|2026-08-22T15:00:00.000Z",
-      "firstSeenAt": "2026-05-26T19:22:16.737Z",
-      "title": "Boys Varsity Football vs Octorara Area High School",
-      "source": "PM",
-      "date": "2026-08-22T15:00:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Football vs Red Lion Area High School|2026-08-28T23:00:00.000Z",
-      "firstSeenAt": "2026-05-26T19:22:16.737Z",
-      "title": "Boys Varsity Football vs Red Lion Area High School",
-      "source": "PM",
-      "date": "2026-08-28T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

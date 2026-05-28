@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-05-27T23:17:30.786Z",
-  "totalEvents": 895,
-  "withDescription": 330,
+  "generatedAt": "2026-05-28T01:07:17.499Z",
+  "totalEvents": 891,
+  "withDescription": 328,
   "withImage": 108,
-  "familyFriendly": 44,
+  "familyFriendly": 46,
   "eventsToday": 3,
   "sources": {
-    "muAthletics": 60,
+    "muAthletics": 59,
     "muCalendar": 156,
-    "muGetInvolved": 257,
+    "muGetInvolved": 253,
     "pennManor": 197,
-    "borough": 207,
+    "borough": 206,
     "vfw": 3,
     "phantomPower": 14,
     "community": 1,
@@ -18,7 +18,7 @@
   },
   "sourceDateRanges": {
     "muAthletics": {
-      "earliest": "2026-02-26T00:00:00.000Z",
+      "earliest": "2026-03-28T06:00:00.000Z",
       "latest": "2026-11-14T00:00:00.000Z"
     },
     "muCalendar": {
@@ -26,7 +26,7 @@
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-02-26T12:00:00.000Z",
+      "earliest": "2026-02-27T11:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
@@ -34,7 +34,7 @@
       "latest": "2026-09-21T21:00:00.000Z"
     },
     "borough": {
-      "earliest": "2026-02-26T23:30:00.000Z",
+      "earliest": "2026-03-02T12:00:00.000Z",
       "latest": "2027-05-24T12:00:00.000Z"
     },
     "vfw": {
@@ -85,13 +85,27 @@
     }
   },
   "sports": {
-    "total": 237,
+    "total": 236,
     "scored": 40,
     "wins": 17,
     "losses": 22,
     "ties": 1
   },
   "recentlyAdded": [
+    {
+      "key": "Girl Scouts Info Session — Become a Daisy|2026-06-02T21:30:00.000Z",
+      "firstSeenAt": "2026-05-28T01:07:17.497Z",
+      "title": "Girl Scouts Info Session — Become a Daisy",
+      "source": "Other",
+      "date": "2026-06-02T21:30:00.000Z"
+    },
+    {
+      "key": "Ambassadors Soccer Camp|2026-07-07T13:00:00.000Z",
+      "firstSeenAt": "2026-05-28T01:07:17.497Z",
+      "title": "Ambassadors Soccer Camp",
+      "source": "Other",
+      "date": "2026-07-07T13:00:00.000Z"
+    },
     {
       "key": "National Night Out|2026-08-04T22:00:00.000Z",
       "firstSeenAt": "2026-05-27T15:33:20.328Z",
@@ -147,21 +161,7 @@
       "title": "Girls Varsity Soccer vs Warwick High School",
       "source": "PM",
       "date": "2026-09-02T23:00:00.000Z"
-    },
-    {
-      "key": "Girls 7/8/9th Soccer @ Lampeter Strasburg High School|2026-09-03T20:00:00.000Z",
-      "firstSeenAt": "2026-05-26T19:22:16.737Z",
-      "title": "Girls 7/8/9th Soccer @ Lampeter Strasburg High School",
-      "source": "PM",
-      "date": "2026-09-03T20:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Tennis @ Dallastown Area High School|2026-09-03T20:00:00.000Z",
-      "firstSeenAt": "2026-05-26T19:22:16.737Z",
-      "title": "Girls Varsity Tennis @ Dallastown Area High School",
-      "source": "PM",
-      "date": "2026-09-03T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

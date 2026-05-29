@@ -4853,6 +4853,46 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 losses: pastSports.filter(e => e.gameResult === 'L').length,
                 ties: pastSports.filter(e => e.gameResult === 'T' || e.gameResult === 'N').length
             },
+            // Open registrations — youth sports signups + PM community events
+            // that carry a registrationDeadline. The scraper has already dropped
+            // any whose deadline passed, so every one of these is currently open.
+            // `next2Weeks` mirrors exactly what the homepage "Upcoming Signups"
+            // section surfaces to townies, so a 0 here when signups are expected
+            // is an early warning that the upstream source (the Event Candidates
+            // sheet / youth-sports-registration.json) went empty.
+            registrations: (() => {
+                const now = Date.now();
+                const TWO_WEEKS = 14 * 24 * 60 * 60 * 1000;
+                const regs = deduped
+                    .filter(e => e.registrationDeadline)
+                    .map(e => new Date(e.registrationDeadline).getTime())
+                    .filter(Number.isFinite);
+                const next2Weeks = regs.filter(dl => dl >= now && (dl - now) <= TWO_WEEKS).length;
+                const nextClose = regs.length
+                    ? new Date(Math.min(...regs)).toISOString().slice(0, 10)
+                    : null;
+                return { open: regs.length, next2Weeks, nextClose };
+            })(),
+            // Review queue — read from candidates-status.json, which
+            // sync-candidates.js writes earlier in this same cron (sync runs
+            // before scrape). Lets the dashboard show how many Event Candidates
+            // sheet rows await approval and how many past-dated rows are clutter.
+            // Reading it here (and folding into status.json) means the dashboard
+            // never depends on candidates-status.json being deployed. If the
+            // file is missing (sync skipped/failed this run) the field is null
+            // and the dashboard hides the card.
+            reviewQueue: (() => {
+                try {
+                    const cs = JSON.parse(fs.readFileSync(path.join(__dirname, '../candidates-status.json'), 'utf8'));
+                    return {
+                        pendingFuture: cs.pendingFuture ?? null,
+                        pendingPast: cs.pendingPast ?? null,
+                        pendingBySource: cs.pendingBySource || {},
+                        stalePast: cs.stalePast ?? null,
+                        lastSyncAt: cs.lastRunAt || null
+                    };
+                } catch (_) { return null; }
+            })(),
             // Event diff tracking — operator self-check. recentlyAdded is up
             // to 10 events first seen in the last 7 days (most recent first).
             // addedLastRun is the count of events new since the previous cron

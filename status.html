@@ -128,6 +128,21 @@ function median(nums) {
 // at a time, occasional Phantom Power gaps) don't trigger spurious alarms
 // — we only flag drops on sources that ROUTINELY have meaningful volume.
 const NOISE_FLOOR = 4;
+
+// Sources that legitimately go quiet in certain months — their count cratering
+// then is expected, not a failure. During these months we don't escalate to a
+// red "failing" alarm: a severe drop shows as a yellow "seasonal lull" note
+// instead, and a moderate dip is suppressed entirely. The 7-day rolling median
+// self-corrects within a week of a seasonal transition, so this really only
+// matters for that ~1-week window when the median still reflects the busy
+// season. Months are 1-indexed (Jun=6, Jul=7, Aug=8). Add sources/months as
+// you learn each source's natural calendar.
+const SEASONAL_LOW = {
+    muGetInvolved:    [6, 7, 8],  // student clubs — summer break, near-zero events
+    muCalendar:       [6, 7, 8],  // campus calendar — much quieter over summer
+    muHudlBroadcasts: [6, 7, 8]   // no athletic broadcasts outside the seasons
+};
+
 function compareSource(currentValue, history, sourceKey, todayDate) {
     if (currentValue == null || !history || !Array.isArray(history.days)) return null;
     // Exclude today's entry (history may already include it from this run).
@@ -137,8 +152,20 @@ function compareSource(currentValue, history, sourceKey, todayDate) {
     const med = median(priorCounts);
     if (med < NOISE_FLOOR) return null;  // baseline too low to be diagnostic
     const ratio = currentValue / med;
-    if (currentValue === 0 || ratio < 0.1) return { status: 'err',  hint: `↓ typical ${med}/day` };
-    if (ratio < 0.5)                       return { status: 'warn', hint: `↓ typical ${med}/day` };
+    // todayDate is 'YYYY-MM-DD' in ET; take the 1-indexed month so the seasonal
+    // check lines up with the user-facing "site time".
+    const month = parseInt(todayDate.slice(5, 7), 10);
+    const seasonalLow = (SEASONAL_LOW[sourceKey] || []).includes(month);
+    if (currentValue === 0 || ratio < 0.1) {
+        return seasonalLow
+            ? { status: 'warn', hint: `↓ typical ${med}/day · seasonal lull` }
+            : { status: 'err',  hint: `↓ typical ${med}/day` };
+    }
+    if (ratio < 0.5) {
+        // Moderate dip: expected in a known seasonal-low month, so don't even
+        // flag it yellow.
+        return seasonalLow ? null : { status: 'warn', hint: `↓ typical ${med}/day` };
+    }
     return null;
 }
 
@@ -330,9 +357,7 @@ async function render() {
         metric('Scored (past games)', sp.scored) +
         metric('Wins', sp.wins) +
         metric('Losses', sp.losses) +
-        metric('Ties / Neutral', sp.ties) +
-        metric('Box scores parsed', sp.boxScoresParsed,
-            { suffix: sp.scored ? ' / ' + sp.scored + ' (' + Math.round(sp.boxScoresParsed / sp.scored * 100) + '%)' : '' })
+        metric('Ties / Neutral', sp.ties)
     );
 
     const contentCard = card('Content Coverage',
@@ -342,6 +367,49 @@ async function render() {
             { suffix: ' / ' + status.totalEvents + ' (' + Math.round(status.withImage / status.totalEvents * 100) + '%)' }) +
         metric('Family-friendly tagged', status.familyFriendly)
     );
+
+    // Open Registrations card — youth sports signups + PM community events with
+    // a registration deadline (computed in status.json from the live event set).
+    // Optional: a 404 / older status.json without the field just omits the card.
+    // "Closing within 2 weeks" matches the homepage Upcoming Signups window, so
+    // it's the quickest place to confirm that section will actually show
+    // something — a 0 when signups are expected points at an empty upstream.
+    let registrationsCard = '';
+    if (status.registrations) {
+        const r = status.registrations;
+        const nextCloseLabel = r.nextClose
+            ? new Date(r.nextClose + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+            : '—';
+        registrationsCard = card('Open Registrations',
+            metric('Open signups', r.open ?? 0) +
+            metric('Closing within 2 weeks', r.next2Weeks ?? 0) +
+            metric('Next deadline', nextCloseLabel)
+        );
+    }
+
+    // Review Queue card — Event Candidates sheet backlog, folded into
+    // status.json by scrape.js from candidates-status.json. Optional: omitted
+    // if the field is absent (sync didn't run / older status.json).
+    //   - "Awaiting approval" = un-X'd rows still ahead of their date (the
+    //     actual backlog). Warn — not err — once it piles up; a backlog is a
+    //     to-do, not a failure.
+    //   - "Past-dated rows" = sheet clutter Adam can safely delete (the bot
+    //     only appends, so old rows accumulate until pruned by hand).
+    let reviewQueueCard = '';
+    if (status.reviewQueue) {
+        const rq = status.reviewQueue;
+        const bySrc = Object.entries(rq.pendingBySource || {})
+            .map(([k, v]) => `${k}: ${v}`).join(' · ');
+        const pendOpts = (rq.pendingFuture || 0) >= 10 ? { status: 'warn' } : {};
+        if (bySrc) pendOpts.hint = bySrc;
+        const syncRel = rq.lastSyncAt ? formatRelative(rq.lastSyncAt) : '—';
+        reviewQueueCard = card('Review Queue (Candidate Sheet)',
+            metric('Awaiting approval', rq.pendingFuture ?? 0, pendOpts) +
+            metric('Past-dated rows', rq.stalePast ?? 0,
+                (rq.stalePast || 0) > 0 ? { hint: 'safe to delete from the sheet' } : {}) +
+            metric('Last sheet sync', syncRel)
+        );
+    }
 
     // Notifications card — daily 7am ET push cron. Cadence: every day, so a
     // run older than ~36 hours means at least one day was skipped. The cron's
@@ -447,7 +515,7 @@ async function render() {
         );
     }
 
-    document.getElementById('grid').innerHTML = sourcesCard + sportsCard + contentCard + notificationsCard + autoScraperCard + recentAddedCard;
+    document.getElementById('grid').innerHTML = sourcesCard + sportsCard + contentCard + registrationsCard + reviewQueueCard + notificationsCard + autoScraperCard + recentAddedCard;
 }
 
 render();

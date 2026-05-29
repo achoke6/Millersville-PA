@@ -74,6 +74,16 @@ function parseCSV(text) {
 const clean = v => String(v == null ? '' : v).trim();
 const yes = v => clean(v) !== '';
 
+// Map a raw Source cell to the canonical label used in the dashboard's
+// pending-by-source breakdown.
+const sourceLabel = raw => {
+  const s = clean(raw).toLowerCase();
+  if (s === 'borough') return 'Borough';
+  if (s === 'youth sports') return 'Youth Sports';
+  if (s === 'pm community' || s === 'penn manor' || s === 'pm') return 'PM Community';
+  return raw ? clean(raw) : 'Unknown';
+};
+
 // Parse a Date (+ optional Time) cell into a JS Date. Returns null if unusable.
 // If the Date has no time component and a Time is given, merge them. Default
 // time is 18:00. We DON'T force a timezone here — if the cell carries an
@@ -137,23 +147,61 @@ async function main() {
   const boroughOverrides = [];
   const pmEvents = [];
   const youthRegs = [];
-  let approved = 0, pendingRows = 0, badRows = 0;
+  let approved = 0, badRows = 0;
+  // Review-backlog + sheet-hygiene counters (surfaced on the status dashboard).
+  // pendingFuture = un-X'd rows still ahead of their date (the real backlog);
+  // pendingPast = un-X'd rows already past (dead — safe to delete);
+  // stalePast = ANY row (approved or not) whose date has passed (sheet clutter).
+  let pendingTotal = 0, pendingFuture = 0, pendingPast = 0, stalePast = 0, staleApprovedSkipped = 0;
+  const pendingBySource = {};
+  const nowMs = Date.now();
 
   for (let r = 1; r < rows.length; r++) {
     const row = rows[r];
     const title = col(row, 'title');
     if (!title) continue;
 
-    // Approval gate.
-    if (!yes(col(row, 'approved'))) { pendingRows++; continue; }
-
     const source = col(row, 'source').toLowerCase();
+    const dt = parseDateTime(col(row, 'date'), col(row, 'time'));
+    const deadlineDt = parseDateTime(col(row, 'deadline'), '');
+
+    // The date that decides whether a row is still relevant: Youth Sports keys
+    // off Deadline (it has no Date column), everything else off Date. A row
+    // whose date is already in the PAST won't produce a visible event (the
+    // scraper/frontend hide past items) — it's just clutter sitting in the sheet.
+    const whenDt = (source === 'youth sports') ? deadlineDt : dt;
+    const isPastRow = !!(whenDt && whenDt.getTime() < nowMs);
+    if (isPastRow) stalePast++;
+
+    // Approval gate. Track the un-X'd rows so the dashboard can show a review
+    // backlog, split into still-relevant (future) vs already-past (deletable).
+    if (!yes(col(row, 'approved'))) {
+      pendingTotal++;
+      if (isPastRow) {
+        pendingPast++;
+      } else {
+        pendingFuture++;
+        const lbl = sourceLabel(source);
+        pendingBySource[lbl] = (pendingBySource[lbl] || 0) + 1;
+      }
+      continue;
+    }
+
+    // Sheet hygiene: an APPROVED row whose date is well in the past (>24h)
+    // would only produce an event the site already hides — emitting it just
+    // bloats events.json (and the override files) with dead entries. Skip it.
+    // The 24h grace keeps anything happening today (incl. all-day events) live
+    // for the full day; registration events are also dropped by scrape.js once
+    // their deadline passes, so this is belt-and-suspenders for those.
+    if (whenDt && (nowMs - whenDt.getTime()) > 24 * 60 * 60 * 1000) {
+      staleApprovedSkipped++;
+      continue;
+    }
+
     const family = yes(col(row, 'family'));
     const link = col(row, 'link');
     const description = col(row, 'description');
     const location = col(row, 'location');
-    const dt = parseDateTime(col(row, 'date'), col(row, 'time'));
-    const deadlineDt = parseDateTime(col(row, 'deadline'), '');
 
     if (source === 'youth sports') {
       // Youth sports registration: Deadline is the key field. We pass the
@@ -238,12 +286,34 @@ async function main() {
   fs.writeFileSync(path.join(OUT_DIR, 'penn-manor-overrides.json'), JSON.stringify(pmFile, null, 2) + '\n');
   fs.writeFileSync(youthPath, JSON.stringify(youthFile, null, 2) + '\n');
 
+  // Review-queue / hygiene metrics for the status dashboard. scrape.js reads
+  // this file later in the SAME cron (sync runs before scrape) and folds the
+  // numbers into status.json, so the dashboard never depends on this file
+  // being deployed. Runtime-only — add it to the lftp excludes in main.yml so
+  // it isn't published.
+  const candidatesStatus = {
+    lastRunAt: new Date().toISOString(),
+    approved,
+    pendingTotal,
+    pendingFuture,
+    pendingPast,
+    pendingBySource,
+    stalePast,
+    staleApprovedSkipped,
+    totalRows: Math.max(0, rows.length - 1)   // exclude the header row
+  };
+  try {
+    fs.writeFileSync(path.join(OUT_DIR, 'candidates-status.json'), JSON.stringify(candidatesStatus, null, 2) + '\n');
+  } catch (e) { console.warn('  ⚠ could not write candidates-status.json:', e.message); }
+
   console.log('✓ candidate sync complete');
   console.log(`  approved rows:    ${approved}`);
   console.log(`  borough create:   ${boroughOverrides.length} (+${keptEnrichment.length} enrichment kept)`);
   console.log(`  pm community:     ${pmEvents.length}`);
   console.log(`  youth sports:     ${youthRegs.length}`);
-  console.log(`  pending (no X):   ${pendingRows}`);
+  console.log(`  pending (no X):   ${pendingTotal} (${pendingFuture} upcoming, ${pendingPast} past)`);
+  if (staleApprovedSkipped) console.log(`  ⏭️ stale approved rows skipped (not emitted): ${staleApprovedSkipped}`);
+  if (stalePast) console.log(`  ⚠ stale rows (past-dated, prunable): ${stalePast}`);
   if (badRows) console.log(`  ⚠ skipped (bad/unknown): ${badRows}`);
 }
 

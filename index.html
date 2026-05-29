@@ -186,6 +186,16 @@
             </div>
         </div>
 
+        <!-- Upcoming Signups — registration deadlines within 2 weeks (townies).
+             Sits directly below the daily event list as a standing reminder. -->
+        <div class="home-section" id="home-signups-section" style="display:none;">
+            <div class="home-section-header">
+                <h2 class="home-section-title">📝 Upcoming Signups</h2>
+                <a href="#" onclick="event.preventDefault();switchView('events');" class="home-more-link">All Events →</a>
+            </div>
+            <div id="home-signups-list"></div>
+        </div>
+
         <!-- Today's Specials -->
         <div class="home-section">
             <div class="home-section-header">
@@ -202,15 +212,6 @@
                 <a href="#" onclick="event.preventDefault();switchView('news');" class="home-more-link">All News →</a>
             </div>
             <div id="home-news-list"></div>
-        </div>
-
-        <!-- Upcoming Signups (youth sports registration — townies, 2 weeks out) -->
-        <div class="home-section" id="home-signups-section" style="display:none;">
-            <div class="home-section-header">
-                <h2 class="home-section-title">📝 Upcoming Signups</h2>
-                <a href="#" onclick="event.preventDefault();switchView('events');" class="home-more-link">All Events →</a>
-            </div>
-            <div id="home-signups-list"></div>
         </div>
 
         <!-- Community Board -->

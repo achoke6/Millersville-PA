@@ -4462,6 +4462,54 @@ Focus on the most impressive deals a shopper would want to know about. Include m
 
     const deduped = pass1.filter((_, i) => kept.has(i));
 
+    // Prefix-title dedup for same-venue + same-datetime events. Some sources
+    // (notably Eventbrite) list one show twice — a plain title and a
+    // "<title> w. <opener>" variant — with different IDs, so ID-based dedup
+    // misses them. When two events share venue+datetime AND one title is a
+    // clean prefix of the other (followed by a separator or "w."/"with"/
+    // "feat"), they're the same event; keep the longer, more descriptive one.
+    // Scoped tightly to the prefix relationship so legitimate same-slot pairs
+    // (Varsity/JV, Boys/Girls, trash/yard-waste) are NOT merged.
+    const prefixDupeIdx = new Set();
+    const isPrefixDupe = (a, b) => {
+        const x = (a || '').trim().toLowerCase(), y = (b || '').trim().toLowerCase();
+        if (!x || !y) return false;
+        if (x === y) return true;
+        const short = x.length <= y.length ? x : y;
+        const long = x.length <= y.length ? y : x;
+        return long.startsWith(short) &&
+            /^[\s:\-–(]*(w[.\/]|with\b|feat|ft\.|$)/i.test(long.slice(short.length));
+    };
+    const venueGroups = {};
+    deduped.forEach((ev, i) => {
+        if (!ev.location || !ev.date) return;
+        const k = ev.location + '|' + ev.date;
+        (venueGroups[k] = venueGroups[k] || []).push(i);
+    });
+    let prefixMerged = 0;
+    Object.values(venueGroups).forEach(idxs => {
+        for (let a = 0; a < idxs.length; a++) {
+            for (let b = a + 1; b < idxs.length; b++) {
+                const i = idxs[a], j = idxs[b];
+                if (prefixDupeIdx.has(i) || prefixDupeIdx.has(j)) continue;
+                if (isPrefixDupe(deduped[i].title, deduped[j].title)) {
+                    // Drop the shorter-titled one (less descriptive).
+                    const drop = (deduped[i].title || '').length < (deduped[j].title || '').length ? i : j;
+                    prefixDupeIdx.add(drop);
+                    prefixMerged++;
+                    console.log(`   ✕ prefix-dupe: "${deduped[drop].title}" (kept the longer variant)`);
+                }
+            }
+        }
+    });
+    if (prefixMerged > 0) {
+        console.log(`🔗 Removed ${prefixMerged} prefix-title duplicate(s)`);
+    }
+    // Rebuild deduped without the prefix dupes.
+    const dedupedFinal = deduped.filter((_, i) => !prefixDupeIdx.has(i));
+    deduped.length = 0;
+    Array.prototype.push.apply(deduped, dedupedFinal);
+
     if (exactDupes.length > 0) {
         console.log(`⚠️ Removed ${exactDupes.length} exact duplicates:`);
         exactDupes.forEach(d => console.log(`   ✕ [${d.source}] ${d.title} (${d.date})`));

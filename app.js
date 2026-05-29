@@ -4366,32 +4366,41 @@ function renderHomeUI(){
         boardSection.style.display = 'none';
     }
 
-    // Upcoming Signups — youth sports registration deadlines, surfaced to
-    // TOWNIES starting 2 weeks before each deadline. Hidden for marauders/
-    // students (local family content) and when nothing is within the window.
+    // Upcoming Signups — any event with a registration deadline in the next
+    // 2 weeks, surfaced to TOWNIES as a reminder regardless of which day
+    // they're viewing. Sourced from the events array (events carry
+    // registrationDeadline from the scraper), so it covers youth sports AND
+    // PM community events with deadlines, and stays in sync with the timeline.
+    // The events themselves still appear on their deadline day in the calendar;
+    // this is an additional standing reminder. Hidden for marauders/students
+    // and when nothing is within the window.
     const signupsSection = document.getElementById('home-signups-section');
     const signupsList = document.getElementById('home-signups-list');
     if (signupsSection && signupsList) {
         const nowMs = Date.now();
         const TWO_WEEKS = 14 * 24 * 60 * 60 * 1000;
-        const upcoming = (muAffiliation === 'townie' ? allSignups : [])
-            .filter(s => s && s.status === 'active' && s.deadline)
-            .map(s => ({ ...s, _dl: new Date(s.deadline).getTime() }))
-            .filter(s => !isNaN(s._dl) && s._dl >= nowMs && (s._dl - nowMs) <= TWO_WEEKS)
+        const upcoming = (muAffiliation === 'townie' ? (allEvents || []) : [])
+            .filter(e => e && e.registrationDeadline)
+            .map(e => ({ ...e, _dl: new Date(e.registrationDeadline).getTime() }))
+            .filter(e => !isNaN(e._dl) && e._dl >= nowMs && (e._dl - nowMs) <= TWO_WEEKS)
             .sort((a, b) => a._dl - b._dl);
 
         if (upcoming.length > 0) {
             signupsSection.style.display = '';
-            signupsList.innerHTML = upcoming.map(s => {
-                const dlLabel = new Date(s._dl).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                const daysLeft = Math.ceil((s._dl - nowMs) / (24 * 60 * 60 * 1000));
+            signupsList.innerHTML = upcoming.map(e => {
+                const dlLabel = new Date(e._dl).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                const daysLeft = Math.ceil((e._dl - nowMs) / (24 * 60 * 60 * 1000));
                 const urgency = daysLeft <= 3 ? ' home-signup-urgent' : '';
                 const daysText = daysLeft <= 0 ? 'closes today' : daysLeft === 1 ? '1 day left' : `${daysLeft} days left`;
-                const sub = [s.sport, s.season, s.ageRange].filter(Boolean).join(' · ');
-                const link = escHtml(s.registerLink || '#');
+                // Strip the "Register by <date>: " prefix the scraper adds to
+                // youth sports titles, so the reminder reads cleanly.
+                const cleanTitle = (e.title || '').replace(/^Register by [^:]+:\s*/i, '');
+                const sub = e.location && !cleanTitle.toLowerCase().includes(e.location.toLowerCase())
+                    ? e.location : '';
+                const link = escHtml(e.ticketLink || e.sourceLink || '#');
                 return `<a href="${link}" target="_blank" rel="noopener" class="home-signup-item${urgency}">
                     <div class="home-signup-main">
-                        <span class="home-signup-org">${escHtml(s.org || '')}</span>
+                        <span class="home-signup-org">${escHtml(cleanTitle)}</span>
                         ${sub ? `<span class="home-signup-sub">${escHtml(sub)}</span>` : ''}
                     </div>
                     <div class="home-signup-deadline">

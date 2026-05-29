@@ -2852,9 +2852,10 @@ async function runScraper() {
     // Local youth sports orgs (Penn Manor Youth Baseball/Softball, Penn Manor
     // Soccer Club, etc.) have registration windows that townies with kids care
     // about. youth-sports-registration.json holds these; each ACTIVE entry whose
-    // deadline hasn't passed becomes an event dated ON the deadline, titled
-    // "Register by <date>: <org>", so it reads unambiguously on the calendar
-    // (it's a deadline, not an event you attend). registrationDeadline auto-hides
+    // deadline hasn't passed becomes an event dated ON the deadline, using the
+    // entry's human title (e.g. "Junior Comets Football & Cheerleading"). It's a
+    // signup deadline, not an event you attend — the 📝 "Registration required"
+    // badge and "Register Now" button make that clear. registrationDeadline auto-hides
     // it the moment the deadline passes. The homepage "Upcoming Signups" section
     // reads the SAME file client-side (see app.js renderHomeUI) to surface these
     // to townies starting 2 weeks out — that part is front-end, not here.
@@ -2873,23 +2874,38 @@ async function runScraper() {
                 if (isNaN(dl.getTime())) { skipped++; continue; }
                 if (dl < now) { closed++; continue; }  // deadline passed — don't create
 
-                // Format the deadline date for the title (e.g. "Feb 28").
+                // Human-readable deadline date (e.g. "Feb 28") for the description.
                 const dlLabel = dl.toLocaleDateString('en-US', {
                     month: 'short', day: 'numeric', timeZone: 'America/New_York'
                 });
-                // Only append the sport if the org name doesn't already say it
-                // (avoids "Youth Baseball & Softball Baseball & Softball").
+                // Title: prefer an explicit, human-written title from the entry
+                // (the sheet's Title column flows into reg.title via
+                // sync-candidates.js). Otherwise fall back to the org name plus
+                // the sport, appending the sport only when the org doesn't
+                // already say it (avoids "Youth Baseball & Softball Baseball &
+                // Softball"). We deliberately DON'T prefix "Register by <date>:"
+                // anymore — the deadline is already communicated by the 📝
+                // "Registration required" badge, the homepage "Upcoming Signups"
+                // reminder, and the "Register Now" button — so repeating it in
+                // the title just made these titles long.
                 const orgLower = (reg.org || '').toLowerCase();
                 const sportPart = (reg.sport && !orgLower.includes(reg.sport.toLowerCase()))
-                    ? ` (${reg.sport})` : '';
+                    ? ` ${reg.sport}` : '';
+                const eventTitle = (reg.title && reg.title.trim())
+                    ? reg.title.trim()
+                    : `${reg.org}${sportPart}`;
                 events.push({
-                    title: `Register by ${dlLabel}: ${reg.org}${sportPart}`,
+                    title: eventTitle,
                     date: dl.toISOString(),
                     endTime: '',
                     location: reg.org,
                     tags: ['Other'],
                     price: 'Free',
-                    ticketLink: reg.registerLink || '',
+                    // Registration events carry a dedicated registerLink (NOT a
+                    // ticketLink) so the UI renders "📝 Register Now" → signup
+                    // page rather than a "🎟 Tickets" affordance. sourceLink
+                    // mirrors it as a harmless fallback for older consumers.
+                    registerLink: reg.registerLink || '',
                     sourceLink: reg.registerLink || 'https://www.pennmanor.net/community/',
                     gameResult: '', gameScore: '', streamLink: '', isLive: false,
                     registrationRequired: true,

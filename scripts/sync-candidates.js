@@ -156,12 +156,21 @@ async function main() {
     const deadlineDt = parseDateTime(col(row, 'deadline'), '');
 
     if (source === 'youth sports') {
-      // Youth sports registration: deadline is the key field. The scraper
-      // builds the title ("Register by <date>: <org>") and always marks these
-      // kidFriendly, so we just supply org/deadline/link/note here.
+      // Youth sports registration: Deadline is the key field. We pass the
+      // sheet's Title through as the display title and always mark these
+      // kidFriendly; scrape.js dates the event on the deadline and adds the
+      // registration badge/button.
       if (!deadlineDt) { console.warn(`  ⚠ youth-sports "${title}" missing/invalid Deadline — skipped`); badRows++; continue; }
       youthRegs.push({
         status: 'active',
+        // Human display title for the signup event — the sheet's Title column.
+        // scrape.js uses this verbatim (no "Register by <date>:" prefix); when
+        // blank it falls back to org + sport. Keep it short and readable
+        // (e.g. "Junior Comets Football & Cheerleading").
+        title: title,
+        // org stays the full org name (the Location column) — it's used as the
+        // event location and the homepage Upcoming Signups sub-line, so it can
+        // legitimately differ from the short display title above.
         org: location || title,
         sport: col(row, 'notes') || '',   // optional sport detail from Notes
         deadline: deadlineDt.toISOString(),

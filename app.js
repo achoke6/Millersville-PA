@@ -868,6 +868,18 @@ function getEventKey(e) {
     return (e.title || '') + '|' + (e.date || '');
 }
 
+// A registration event (youth sports signups; PM community events that carry a
+// deadline) asks people to REGISTER, not buy a ticket — so the UI shows a
+// "📝 Register Now" button pointing at the signup page instead of a ticket
+// link. The register URL lives on registerLink (set by the scraper), with
+// sourceLink/ticketLink as fallbacks for older cached events.
+function isRegistrationEvent(e) {
+    return !!(e && (e.registrationRequired === true || e.registrationDeadline));
+}
+function getRegisterUrl(e) {
+    return (e && (e.registerLink || e.sourceLink || e.ticketLink)) || '';
+}
+
 
 function newsMatchesFeed(n) {
     if (!feedPrefs || feedPrefs.length === 0) return true;
@@ -4121,6 +4133,11 @@ function buildEventCard(e,isSportsPage){
         actionHtml=`<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-outline">📺 Replay</a>`;
     } else if(!isSportsPage && e.streamLink){
         actionHtml=`<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-outline">📺 Stream</a>`;
+    } else if(isRegistrationEvent(e) && getRegisterUrl(e)){
+        // Registration event → "Register Now" (signup page), not a ticket link.
+        // Reuses .btn-ticket styling (green CTA); stopPropagation so the click
+        // opens the signup page instead of the card's detail modal.
+        actionHtml=`<a href="${escHtml(getRegisterUrl(e))}" target="_blank" rel="noopener" class="btn btn-sm btn-ticket" onclick="event.stopPropagation();">📝 Register Now</a>`;
     } else if(hasLink){
         actionHtml=`<a href="${e.ticketLink}" target="_blank" class="btn btn-sm btn-ticket">🎟 Tickets</a>`;
     } else if(!isFree){
@@ -4392,13 +4409,19 @@ function renderHomeUI(){
                 const daysLeft = Math.ceil((e._dl - nowMs) / (24 * 60 * 60 * 1000));
                 const urgency = daysLeft <= 3 ? ' home-signup-urgent' : '';
                 const daysText = daysLeft <= 0 ? 'closes today' : daysLeft === 1 ? '1 day left' : `${daysLeft} days left`;
-                // Strip the "Register by <date>: " prefix the scraper adds to
-                // youth sports titles, so the reminder reads cleanly.
+                // The scraper no longer prefixes youth titles with "Register
+                // by <date>: ", but keep this strip as a defensive no-op so any
+                // older cached event still reads cleanly here.
                 const cleanTitle = (e.title || '').replace(/^Register by [^:]+:\s*/i, '');
                 const sub = e.location && !cleanTitle.toLowerCase().includes(e.location.toLowerCase())
                     ? e.location : '';
-                const link = escHtml(e.ticketLink || e.sourceLink || '#');
-                return `<a href="${link}" target="_blank" rel="noopener" class="home-signup-item${urgency}">
+                // Open the same event detail modal the timeline/cards use,
+                // instead of jumping straight to the signup link — the modal's
+                // "Register Now" button is the path to the signup page. Kept as
+                // an <a> (with preventDefault) so existing styling and native
+                // keyboard focus/activation are preserved.
+                const signupKey = getEventKey(e);
+                return `<a href="#" class="home-signup-item${urgency}" onclick="event.preventDefault();window.openEventDetails(${JSON.stringify(signupKey).replace(/"/g, '&quot;')})">
                     <div class="home-signup-main">
                         <span class="home-signup-org">${escHtml(cleanTitle)}</span>
                         ${sub ? `<span class="home-signup-sub">${escHtml(sub)}</span>` : ''}
@@ -4735,7 +4758,12 @@ window.openEventDetails = function(key) {
 
     // Action buttons
     let actions = '';
-    if (e.ticketLink) actions += `<a href="${e.ticketLink}" target="_blank" class="btn btn-sm btn-ticket" style="text-decoration:none;">🎟️ Buy Tickets</a>`;
+    if (isRegistrationEvent(e) && getRegisterUrl(e)) {
+        // Registration event → "Register Now" (signup page), not "Buy Tickets".
+        actions += `<a href="${escHtml(getRegisterUrl(e))}" target="_blank" rel="noopener" class="btn btn-sm btn-ticket" style="text-decoration:none;">📝 Register Now</a>`;
+    } else if (e.ticketLink) {
+        actions += `<a href="${e.ticketLink}" target="_blank" class="btn btn-sm btn-ticket" style="text-decoration:none;">🎟️ Buy Tickets</a>`;
+    }
     if (e.streamLink) {
         // State-aware label — same three cases as the card buttons. Clarifies
         // that a future streamLink is a scheduled broadcast, not something
@@ -4757,8 +4785,11 @@ window.openEventDetails = function(key) {
     // Source link labeling: for past sports games, promote it to "Game Recap
     // & Box Score" since the target URL is the MaxPreps/MU Athletics recap
     // page where inning/quarter box scores and recap articles live. Other
-    // contexts keep the generic "View Source" label.
-    if (e.sourceLink) {
+    // contexts keep the generic "View Source" label. Skip it entirely for a
+    // registration event whose source IS the signup page — "Register Now"
+    // already links there, so a second button to the same URL is just noise.
+    const regDupesSource = isRegistrationEvent(e) && e.sourceLink && e.sourceLink === getRegisterUrl(e);
+    if (e.sourceLink && !regDupesSource) {
         const isPastGame = isSport && e.gameResult && e.gameScore;
         const isMUSport = isSport && tags.includes('MU');
         let srcLabel;

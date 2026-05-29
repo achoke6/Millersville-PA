@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-05-29T19:17:40.740Z",
-  "totalEvents": 894,
+  "generatedAt": "2026-05-29T20:01:53.557Z",
+  "totalEvents": 903,
   "withDescription": 327,
   "withImage": 107,
   "familyFriendly": 47,
   "eventsToday": 3,
   "sources": {
-    "muAthletics": 59,
+    "muAthletics": 68,
     "muCalendar": 155,
     "muGetInvolved": 249,
     "pennManor": 199,
@@ -19,7 +19,7 @@
   "sourceDateRanges": {
     "muAthletics": {
       "earliest": "2026-03-28T06:00:00.000Z",
-      "latest": "2026-11-14T00:00:00.000Z"
+      "latest": "2026-12-12T15:00:00.000Z"
     },
     "muCalendar": {
       "earliest": "2026-02-28T18:00:00.000Z",
@@ -52,8 +52,8 @@
   },
   "staleness": {
     "muAthletics": {
-      "newest": "2026-11-14",
-      "daysSinceMoved": 23
+      "newest": "2026-12-12",
+      "daysSinceMoved": 0
     },
     "muCalendar": {
       "newest": "2027-04-03",
@@ -85,83 +85,97 @@
     }
   },
   "sports": {
-    "total": 234,
+    "total": 243,
     "scored": 38,
     "wins": 15,
     "losses": 22,
     "ties": 1
   },
+  "registrations": {
+    "open": 2,
+    "next2Weeks": 1,
+    "nextClose": "2026-05-31"
+  },
+  "reviewQueue": {
+    "pendingFuture": 1,
+    "pendingPast": 0,
+    "pendingBySource": {
+      "PM Community": 1
+    },
+    "stalePast": 0,
+    "lastSyncAt": "2026-05-29T20:00:29.992Z"
+  },
   "recentlyAdded": [
     {
-      "key": "Penn Manor Junior Comets - Football & Cheerleading Registration|2026-05-31T18:00:00.000Z",
-      "firstSeenAt": "2026-05-29T19:17:40.738Z",
-      "title": "Penn Manor Junior Comets - Football & Cheerleading Registration",
+      "key": "Junior Comets Football & Cheerleading|2026-05-31T18:00:00.000Z",
+      "firstSeenAt": "2026-05-29T20:01:53.554Z",
+      "title": "Junior Comets Football & Cheerleading",
       "source": "Other",
       "date": "2026-05-31T18:00:00.000Z"
     },
     {
-      "key": "EMO NIGHT Dance Party|2026-06-13T01:00:00.000Z",
-      "firstSeenAt": "2026-05-29T19:17:40.738Z",
+      "key": "EMO NIGHT Dance Party|2026-06-14T01:00:00.000Z",
+      "firstSeenAt": "2026-05-29T20:01:53.554Z",
       "title": "EMO NIGHT Dance Party",
       "source": "Other",
-      "date": "2026-06-13T01:00:00.000Z"
+      "date": "2026-06-14T01:00:00.000Z"
     },
     {
-      "key": "Penn Manor Youth Baseball Fall|2026-06-30T18:00:00.000Z",
-      "firstSeenAt": "2026-05-29T19:17:40.738Z",
-      "title": "Penn Manor Youth Baseball Fall",
-      "source": "Other",
-      "date": "2026-06-30T18:00:00.000Z"
+      "key": "Millersville University Women's Swimming vs Black and Gold Meet|2026-09-26T17:00:00.000Z",
+      "firstSeenAt": "2026-05-29T20:01:53.554Z",
+      "title": "Millersville University Women's Swimming vs Black and Gold Meet",
+      "source": "MU",
+      "date": "2026-09-26T17:00:00.000Z"
     },
     {
-      "key": "Girls 7/8/9th Volleyball @ Cocalico High School|2026-09-21T19:45:00.000Z",
-      "firstSeenAt": "2026-05-29T18:32:51.036Z",
-      "title": "Girls 7/8/9th Volleyball @ Cocalico High School",
-      "source": "PM",
-      "date": "2026-09-21T19:45:00.000Z"
+      "key": "Millersville University Men's Tennis at ITA Regional|2026-10-16T00:00:00.000Z",
+      "firstSeenAt": "2026-05-29T20:01:53.554Z",
+      "title": "Millersville University Men's Tennis at ITA Regional",
+      "source": "MU",
+      "date": "2026-10-16T00:00:00.000Z"
     },
     {
-      "key": "Girls 7/8/9th Field Hockey @ Conestoga Valley High School|2026-09-21T20:00:00.000Z",
-      "firstSeenAt": "2026-05-29T18:32:51.036Z",
-      "title": "Girls 7/8/9th Field Hockey @ Conestoga Valley High School",
-      "source": "PM",
-      "date": "2026-09-21T20:00:00.000Z"
+      "key": "Millersville University Women's Tennis at ITA Regional|2026-10-16T00:00:00.000Z",
+      "firstSeenAt": "2026-05-29T20:01:53.554Z",
+      "title": "Millersville University Women's Tennis at ITA Regional",
+      "source": "MU",
+      "date": "2026-10-16T00:00:00.000Z"
     },
     {
-      "key": "Boys Varsity Soccer @ Hempfield High School|2026-09-21T20:00:00.000Z",
-      "firstSeenAt": "2026-05-29T18:32:51.036Z",
-      "title": "Boys Varsity Soccer @ Hempfield High School",
-      "source": "PM",
-      "date": "2026-09-21T20:00:00.000Z"
+      "key": "Millersville University Women's Swimming at Saint Francis University|2026-10-23T20:00:00.000Z",
+      "firstSeenAt": "2026-05-29T20:01:53.554Z",
+      "title": "Millersville University Women's Swimming at Saint Francis University",
+      "source": "MU",
+      "date": "2026-10-23T20:00:00.000Z"
     },
     {
-      "key": "Bee a Girl Scout Info Session|2026-06-02T21:30:00.000Z",
-      "firstSeenAt": "2026-05-29T15:21:27.125Z",
-      "title": "Bee a Girl Scout Info Session",
-      "source": "Other",
-      "date": "2026-06-02T21:30:00.000Z"
+      "key": "Millersville University Women's Swimming vs East Stroudsburg University|2026-10-31T17:00:00.000Z",
+      "firstSeenAt": "2026-05-29T20:01:53.554Z",
+      "title": "Millersville University Women's Swimming vs East Stroudsburg University",
+      "source": "MU",
+      "date": "2026-10-31T17:00:00.000Z"
     },
     {
-      "key": "PEQ - Color the Playground with the PTO|2026-06-25T22:00:00.000Z",
-      "firstSeenAt": "2026-05-29T15:21:27.125Z",
-      "title": "PEQ - Color the Playground with the PTO",
-      "source": "PM",
-      "date": "2026-06-25T22:00:00.000Z"
+      "key": "Millersville University Women's Swimming at Franklin and Marshall College|2026-11-07T18:00:00.000Z",
+      "firstSeenAt": "2026-05-29T20:01:53.554Z",
+      "title": "Millersville University Women's Swimming at Franklin and Marshall College",
+      "source": "MU",
+      "date": "2026-11-07T18:00:00.000Z"
     },
     {
-      "key": "PEQ - Picnic on the Playground with the PTO|2026-07-15T22:00:00.000Z",
-      "firstSeenAt": "2026-05-29T15:21:27.125Z",
-      "title": "PEQ - Picnic on the Playground with the PTO",
-      "source": "PM",
-      "date": "2026-07-15T22:00:00.000Z"
+      "key": "Millersville University Women's Swimming vs F&M Invitational|2026-11-20T15:00:00.000Z",
+      "firstSeenAt": "2026-05-29T20:01:53.554Z",
+      "title": "Millersville University Women's Swimming vs F&M Invitational",
+      "source": "MU",
+      "date": "2026-11-20T15:00:00.000Z"
     },
     {
-      "key": "Popsicles on the playground|2026-08-19T19:00:00.000Z",
-      "firstSeenAt": "2026-05-29T15:21:27.125Z",
-      "title": "Popsicles on the playground",
-      "source": "PM",
-      "date": "2026-08-19T19:00:00.000Z"
+      "key": "Millersville University Women's Swimming at Lock Haven University|2026-12-04T23:00:00.000Z",
+      "firstSeenAt": "2026-05-29T20:01:53.554Z",
+      "title": "Millersville University Women's Swimming at Lock Haven University",
+      "source": "MU",
+      "date": "2026-12-04T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 3
+  "addedLastRun": 11
 }

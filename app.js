@@ -848,7 +848,7 @@ window.toggleCardFavorite = function(prefId, btnEl) {
 // so existing call sites in this file stay as eventMatchesFeed(e).
 //
 // Source of truth lives in lib/eventMatch.js — edit there for both this
-// caller AND scripts/send-notifications.js. The PHP port in events_ics.php
+// caller AND scripts/send-notifications.js. The PHP port in events.ics.php
 // has its own copy that must be hand-synced (different language).
 const eventMatchesFeed = (e) => window.eventMatchModule.eventMatchesFeed(e, feedPrefs);
 
@@ -2193,7 +2193,7 @@ function formatTime(d){return d.toLocaleTimeString('en-US',{hour:'numeric',minut
 // durationSeconds, VFW Vision JSON, user submission). The scraper never
 // persists these defaults to events.json — that keeps the "scraped value
 // always wins" invariant honest and lets us hot-tune defaults without
-// re-scraping. Mirrored (with the same numbers) in events_ics.php for the
+// re-scraping. Mirrored (with the same numbers) in events.ics.php for the
 // iCal subscription feed.
 const SPORT_DEFAULTS = {
     'baseball': 3, 'softball': 3,

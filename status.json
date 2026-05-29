@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-05-29T15:51:29.066Z",
-  "totalEvents": 895,
+  "generatedAt": "2026-05-29T18:32:51.038Z",
+  "totalEvents": 894,
   "withDescription": 327,
   "withImage": 107,
   "familyFriendly": 47,
@@ -9,7 +9,7 @@
     "muAthletics": 59,
     "muCalendar": 155,
     "muGetInvolved": 249,
-    "pennManor": 200,
+    "pennManor": 199,
     "borough": 210,
     "vfw": 3,
     "phantomPower": 13,
@@ -30,8 +30,8 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-04-27T20:00:00.000Z",
-      "latest": "2026-09-19T18:30:00.000Z"
+      "earliest": "2026-04-27T20:15:00.000Z",
+      "latest": "2026-09-21T20:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-03-02T12:00:00.000Z",
@@ -64,8 +64,8 @@
       "daysSinceMoved": 23
     },
     "pennManor": {
-      "newest": "2026-09-19",
-      "daysSinceMoved": 13
+      "newest": "2026-09-21",
+      "daysSinceMoved": 3
     },
     "borough": {
       "newest": "2027-05-24",
@@ -85,13 +85,41 @@
     }
   },
   "sports": {
-    "total": 235,
+    "total": 234,
     "scored": 38,
     "wins": 15,
     "losses": 22,
     "ties": 1
   },
   "recentlyAdded": [
+    {
+      "key": "EMO NIGHT Dance Party|2026-06-13T01:00:00.000Z",
+      "firstSeenAt": "2026-05-29T18:32:51.036Z",
+      "title": "EMO NIGHT Dance Party",
+      "source": "Other",
+      "date": "2026-06-13T01:00:00.000Z"
+    },
+    {
+      "key": "Girls 7/8/9th Volleyball @ Cocalico High School|2026-09-21T19:45:00.000Z",
+      "firstSeenAt": "2026-05-29T18:32:51.036Z",
+      "title": "Girls 7/8/9th Volleyball @ Cocalico High School",
+      "source": "PM",
+      "date": "2026-09-21T19:45:00.000Z"
+    },
+    {
+      "key": "Girls 7/8/9th Field Hockey @ Conestoga Valley High School|2026-09-21T20:00:00.000Z",
+      "firstSeenAt": "2026-05-29T18:32:51.036Z",
+      "title": "Girls 7/8/9th Field Hockey @ Conestoga Valley High School",
+      "source": "PM",
+      "date": "2026-09-21T20:00:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Soccer @ Hempfield High School|2026-09-21T20:00:00.000Z",
+      "firstSeenAt": "2026-05-29T18:32:51.036Z",
+      "title": "Boys Varsity Soccer @ Hempfield High School",
+      "source": "PM",
+      "date": "2026-09-21T20:00:00.000Z"
+    },
     {
       "key": "Register by May 31: Penn Manor Junior Comets (Football & Cheerleading. Register at PMJuniorComets.com. Deadline is very close (today is May 29).)|2026-05-31T18:00:00.000Z",
       "firstSeenAt": "2026-05-29T15:21:27.125Z",
@@ -114,13 +142,6 @@
       "date": "2026-06-25T22:00:00.000Z"
     },
     {
-      "key": "Stone Horses w. The Blues Vultures|2026-06-27T00:00:00.000Z",
-      "firstSeenAt": "2026-05-29T15:21:27.125Z",
-      "title": "Stone Horses w. The Blues Vultures",
-      "source": "Other",
-      "date": "2026-06-27T00:00:00.000Z"
-    },
-    {
       "key": "PEQ - Picnic on the Playground with the PTO|2026-07-15T22:00:00.000Z",
       "firstSeenAt": "2026-05-29T15:21:27.125Z",
       "title": "PEQ - Picnic on the Playground with the PTO",
@@ -140,28 +161,7 @@
       "title": "PEQ - Popsicles on the Playground with the PTO",
       "source": "PM",
       "date": "2026-08-20T22:00:00.000Z"
-    },
-    {
-      "key": "Penn Manor Youth Rallyball Tennis - Fall Program|2026-09-27T18:00:00.000Z",
-      "firstSeenAt": "2026-05-29T15:21:27.125Z",
-      "title": "Penn Manor Youth Rallyball Tennis - Fall Program",
-      "source": "Other",
-      "date": "2026-09-27T18:00:00.000Z"
-    },
-    {
-      "key": "Girls JV Soccer vs Warwick High School|2026-09-02T21:30:00.000Z",
-      "firstSeenAt": "2026-05-29T03:30:57.806Z",
-      "title": "Girls JV Soccer vs Warwick High School",
-      "source": "PM",
-      "date": "2026-09-02T21:30:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Soccer vs Lampeter Strasburg High School|2026-09-04T04:01:00.000Z",
-      "firstSeenAt": "2026-05-29T03:30:57.806Z",
-      "title": "Boys Varsity Soccer vs Lampeter Strasburg High School",
-      "source": "PM",
-      "date": "2026-09-04T04:01:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 4
 }

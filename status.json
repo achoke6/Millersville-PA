@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-05-29T11:29:27.166Z",
-  "totalEvents": 894,
-  "withDescription": 323,
-  "withImage": 107,
-  "familyFriendly": 45,
+  "generatedAt": "2026-05-29T15:27:05.643Z",
+  "totalEvents": 896,
+  "withDescription": 327,
+  "withImage": 108,
+  "familyFriendly": 47,
   "eventsToday": 3,
   "sources": {
     "muAthletics": 59,
     "muCalendar": 155,
     "muGetInvolved": 249,
-    "pennManor": 203,
-    "borough": 209,
+    "pennManor": 200,
+    "borough": 210,
     "vfw": 3,
-    "phantomPower": 13,
+    "phantomPower": 14,
     "community": 1,
     "muHudlBroadcasts": 4
   },
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-04-27T20:00:00.000Z",
-      "latest": "2026-09-21T21:00:00.000Z"
+      "latest": "2026-09-19T18:30:00.000Z"
     },
     "borough": {
       "earliest": "2026-03-02T12:00:00.000Z",
@@ -64,8 +64,8 @@
       "daysSinceMoved": 23
     },
     "pennManor": {
-      "newest": "2026-09-21",
-      "daysSinceMoved": 3
+      "newest": "2026-09-19",
+      "daysSinceMoved": 13
     },
     "borough": {
       "newest": "2027-05-24",
@@ -85,7 +85,7 @@
     }
   },
   "sports": {
-    "total": 242,
+    "total": 235,
     "scored": 38,
     "wins": 15,
     "losses": 22,
@@ -93,32 +93,60 @@
   },
   "recentlyAdded": [
     {
-      "key": "Boys Varsity Soccer @ Hempfield High School|2026-09-21T20:00:00.000Z",
-      "firstSeenAt": "2026-05-29T07:55:49.697Z",
-      "title": "Boys Varsity Soccer @ Hempfield High School",
-      "source": "PM",
-      "date": "2026-09-21T20:00:00.000Z"
+      "key": "Register by May 31: Penn Manor Junior Comets (Football & Cheerleading. Register at PMJuniorComets.com. Deadline is very close (today is May 29).)|2026-05-31T18:00:00.000Z",
+      "firstSeenAt": "2026-05-29T15:21:27.125Z",
+      "title": "Register by May 31: Penn Manor Junior Comets (Football & Cheerleading. Register at PMJuniorComets.com. Deadline is very close (today is May 29).)",
+      "source": "Other",
+      "date": "2026-05-31T18:00:00.000Z"
     },
     {
-      "key": "Girls Varsity Tennis @ Cedar Crest High School|2026-09-21T20:00:00.000Z",
-      "firstSeenAt": "2026-05-29T07:55:49.697Z",
-      "title": "Girls Varsity Tennis @ Cedar Crest High School",
-      "source": "PM",
-      "date": "2026-09-21T20:00:00.000Z"
+      "key": "Bee a Girl Scout Info Session|2026-06-02T21:30:00.000Z",
+      "firstSeenAt": "2026-05-29T15:21:27.125Z",
+      "title": "Bee a Girl Scout Info Session",
+      "source": "Other",
+      "date": "2026-06-02T21:30:00.000Z"
     },
     {
-      "key": "Girls 7/8th Volleyball @ Cocalico High School|2026-09-21T20:45:00.000Z",
-      "firstSeenAt": "2026-05-29T07:55:49.697Z",
-      "title": "Girls 7/8th Volleyball @ Cocalico High School",
+      "key": "PEQ - Color the Playground with the PTO|2026-06-25T22:00:00.000Z",
+      "firstSeenAt": "2026-05-29T15:21:27.125Z",
+      "title": "PEQ - Color the Playground with the PTO",
       "source": "PM",
-      "date": "2026-09-21T20:45:00.000Z"
+      "date": "2026-06-25T22:00:00.000Z"
     },
     {
-      "key": "Girls 7/8th Field Hockey @ Conestoga Valley High School|2026-09-21T21:00:00.000Z",
-      "firstSeenAt": "2026-05-29T07:55:49.697Z",
-      "title": "Girls 7/8th Field Hockey @ Conestoga Valley High School",
+      "key": "Stone Horses w. The Blues Vultures|2026-06-27T00:00:00.000Z",
+      "firstSeenAt": "2026-05-29T15:21:27.125Z",
+      "title": "Stone Horses w. The Blues Vultures",
+      "source": "Other",
+      "date": "2026-06-27T00:00:00.000Z"
+    },
+    {
+      "key": "PEQ - Picnic on the Playground with the PTO|2026-07-15T22:00:00.000Z",
+      "firstSeenAt": "2026-05-29T15:21:27.125Z",
+      "title": "PEQ - Picnic on the Playground with the PTO",
       "source": "PM",
-      "date": "2026-09-21T21:00:00.000Z"
+      "date": "2026-07-15T22:00:00.000Z"
+    },
+    {
+      "key": "Popsicles on the playground|2026-08-19T19:00:00.000Z",
+      "firstSeenAt": "2026-05-29T15:21:27.125Z",
+      "title": "Popsicles on the playground",
+      "source": "PM",
+      "date": "2026-08-19T19:00:00.000Z"
+    },
+    {
+      "key": "PEQ - Popsicles on the Playground with the PTO|2026-08-20T22:00:00.000Z",
+      "firstSeenAt": "2026-05-29T15:21:27.125Z",
+      "title": "PEQ - Popsicles on the Playground with the PTO",
+      "source": "PM",
+      "date": "2026-08-20T22:00:00.000Z"
+    },
+    {
+      "key": "Penn Manor Youth Rallyball Tennis - Fall Program|2026-09-27T18:00:00.000Z",
+      "firstSeenAt": "2026-05-29T15:21:27.125Z",
+      "title": "Penn Manor Youth Rallyball Tennis - Fall Program",
+      "source": "Other",
+      "date": "2026-09-27T18:00:00.000Z"
     },
     {
       "key": "Girls JV Soccer vs Warwick High School|2026-09-02T21:30:00.000Z",
@@ -133,34 +161,6 @@
       "title": "Boys Varsity Soccer vs Lampeter Strasburg High School",
       "source": "PM",
       "date": "2026-09-04T04:01:00.000Z"
-    },
-    {
-      "key": "Boys JV Soccer vs Lampeter Strasburg High School|2026-09-04T04:01:00.000Z",
-      "firstSeenAt": "2026-05-29T03:30:57.806Z",
-      "title": "Boys JV Soccer vs Lampeter Strasburg High School",
-      "source": "PM",
-      "date": "2026-09-04T04:01:00.000Z"
-    },
-    {
-      "key": "Girls JV Soccer vs Cedar Crest High School|2026-09-09T23:00:00.000Z",
-      "firstSeenAt": "2026-05-29T03:30:57.806Z",
-      "title": "Girls JV Soccer vs Cedar Crest High School",
-      "source": "PM",
-      "date": "2026-09-09T23:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Soccer vs Cedar Crest High School|2026-09-09T23:00:00.000Z",
-      "firstSeenAt": "2026-05-29T03:30:57.806Z",
-      "title": "Girls Varsity Soccer vs Cedar Crest High School",
-      "source": "PM",
-      "date": "2026-09-09T23:00:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Soccer vs Manheim Township High School|2026-09-11T20:00:00.000Z",
-      "firstSeenAt": "2026-05-29T03:30:57.806Z",
-      "title": "Boys Varsity Soccer vs Manheim Township High School",
-      "source": "PM",
-      "date": "2026-09-11T20:00:00.000Z"
     }
   ],
   "addedLastRun": 0

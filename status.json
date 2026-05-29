@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-05-29T03:30:57.809Z",
-  "totalEvents": 890,
+  "generatedAt": "2026-05-29T07:55:49.699Z",
+  "totalEvents": 894,
   "withDescription": 323,
   "withImage": 107,
   "familyFriendly": 45,
-  "eventsToday": 2,
+  "eventsToday": 3,
   "sources": {
     "muAthletics": 59,
     "muCalendar": 155,
     "muGetInvolved": 249,
-    "pennManor": 199,
+    "pennManor": 203,
     "borough": 209,
     "vfw": 3,
     "phantomPower": 13,
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-04-27T20:00:00.000Z",
-      "latest": "2026-09-21T20:00:00.000Z"
+      "latest": "2026-09-21T21:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-03-02T12:00:00.000Z",
@@ -53,45 +53,73 @@
   "staleness": {
     "muAthletics": {
       "newest": "2026-11-14",
-      "daysSinceMoved": 22
+      "daysSinceMoved": 23
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 20
+      "daysSinceMoved": 21
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 22
+      "daysSinceMoved": 23
     },
     "pennManor": {
       "newest": "2026-09-21",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "borough": {
       "newest": "2027-05-24",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "vfw": {
       "newest": "2026-05-27",
-      "daysSinceMoved": 16
+      "daysSinceMoved": 17
     },
     "phantomPower": {
       "newest": "2026-07-17",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 9
     },
     "community": {
       "newest": "2026-04-27",
-      "daysSinceMoved": 22
+      "daysSinceMoved": 23
     }
   },
   "sports": {
-    "total": 238,
+    "total": 242,
     "scored": 38,
     "wins": 15,
     "losses": 22,
     "ties": 1
   },
   "recentlyAdded": [
+    {
+      "key": "Boys Varsity Soccer @ Hempfield High School|2026-09-21T20:00:00.000Z",
+      "firstSeenAt": "2026-05-29T07:55:49.697Z",
+      "title": "Boys Varsity Soccer @ Hempfield High School",
+      "source": "PM",
+      "date": "2026-09-21T20:00:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Tennis @ Cedar Crest High School|2026-09-21T20:00:00.000Z",
+      "firstSeenAt": "2026-05-29T07:55:49.697Z",
+      "title": "Girls Varsity Tennis @ Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-09-21T20:00:00.000Z"
+    },
+    {
+      "key": "Girls 7/8th Volleyball @ Cocalico High School|2026-09-21T20:45:00.000Z",
+      "firstSeenAt": "2026-05-29T07:55:49.697Z",
+      "title": "Girls 7/8th Volleyball @ Cocalico High School",
+      "source": "PM",
+      "date": "2026-09-21T20:45:00.000Z"
+    },
+    {
+      "key": "Girls 7/8th Field Hockey @ Conestoga Valley High School|2026-09-21T21:00:00.000Z",
+      "firstSeenAt": "2026-05-29T07:55:49.697Z",
+      "title": "Girls 7/8th Field Hockey @ Conestoga Valley High School",
+      "source": "PM",
+      "date": "2026-09-21T21:00:00.000Z"
+    },
     {
       "key": "Girls JV Soccer vs Warwick High School|2026-09-02T21:30:00.000Z",
       "firstSeenAt": "2026-05-29T03:30:57.806Z",
@@ -133,35 +161,7 @@
       "title": "Boys Varsity Soccer vs Manheim Township High School",
       "source": "PM",
       "date": "2026-09-11T20:00:00.000Z"
-    },
-    {
-      "key": "Boys JV Soccer vs Manheim Township High School|2026-09-11T20:00:00.000Z",
-      "firstSeenAt": "2026-05-29T03:30:57.806Z",
-      "title": "Boys JV Soccer vs Manheim Township High School",
-      "source": "PM",
-      "date": "2026-09-11T20:00:00.000Z"
-    },
-    {
-      "key": "Boys JV Soccer vs Warwick High School|2026-09-15T21:30:00.000Z",
-      "firstSeenAt": "2026-05-29T03:30:57.806Z",
-      "title": "Boys JV Soccer vs Warwick High School",
-      "source": "PM",
-      "date": "2026-09-15T21:30:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Soccer vs Warwick High School|2026-09-15T23:00:00.000Z",
-      "firstSeenAt": "2026-05-29T03:30:57.806Z",
-      "title": "Boys Varsity Soccer vs Warwick High School",
-      "source": "PM",
-      "date": "2026-09-15T23:00:00.000Z"
-    },
-    {
-      "key": "Boys JV Soccer vs J P McCaskey High School|2026-09-17T21:30:00.000Z",
-      "firstSeenAt": "2026-05-29T03:30:57.806Z",
-      "title": "Boys JV Soccer vs J P McCaskey High School",
-      "source": "PM",
-      "date": "2026-09-17T21:30:00.000Z"
     }
   ],
-  "addedLastRun": 11
+  "addedLastRun": 4
 }

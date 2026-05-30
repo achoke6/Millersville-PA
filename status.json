@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-05-29T23:12:20.131Z",
-  "totalEvents": 907,
-  "withDescription": 327,
+  "generatedAt": "2026-05-30T02:57:09.373Z",
+  "totalEvents": 905,
+  "withDescription": 326,
   "withImage": 107,
   "familyFriendly": 47,
   "eventsToday": 3,
   "sources": {
     "muAthletics": 72,
-    "muCalendar": 155,
+    "muCalendar": 153,
     "muGetInvolved": 249,
     "pennManor": 199,
     "borough": 210,
@@ -22,7 +22,7 @@
       "latest": "2027-02-09T15:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-02-28T18:00:00.000Z",
+      "earliest": "2026-03-01T14:30:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
@@ -86,9 +86,9 @@
   },
   "sports": {
     "total": 247,
-    "scored": 38,
+    "scored": 37,
     "wins": 15,
-    "losses": 22,
+    "losses": 21,
     "ties": 1
   },
   "registrations": {
@@ -103,9 +103,23 @@
       "PM Community": 1
     },
     "stalePast": 0,
-    "lastSyncAt": "2026-05-29T23:11:05.196Z"
+    "lastSyncAt": "2026-05-30T02:55:54.890Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Boys JV Soccer @ Hempfield High School|2026-09-21T20:00:00.000Z",
+      "firstSeenAt": "2026-05-30T02:57:09.371Z",
+      "title": "Boys JV Soccer @ Hempfield High School",
+      "source": "PM",
+      "date": "2026-09-21T20:00:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Tennis @ Cedar Crest High School|2026-09-21T20:00:00.000Z",
+      "firstSeenAt": "2026-05-30T02:57:09.371Z",
+      "title": "Girls Varsity Tennis @ Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-09-21T20:00:00.000Z"
+    },
     {
       "key": "EMO NIGHT Dance Party|2026-06-14T01:00:00.000Z",
       "firstSeenAt": "2026-05-29T23:12:20.128Z",
@@ -161,21 +175,7 @@
       "title": "Millersville University Men's Tennis at ITA Regional",
       "source": "MU",
       "date": "2026-10-16T00:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Tennis at ITA Regional|2026-10-16T00:00:00.000Z",
-      "firstSeenAt": "2026-05-29T20:01:53.554Z",
-      "title": "Millersville University Women's Tennis at ITA Regional",
-      "source": "MU",
-      "date": "2026-10-16T00:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Swimming at Saint Francis University|2026-10-23T20:00:00.000Z",
-      "firstSeenAt": "2026-05-29T20:01:53.554Z",
-      "title": "Millersville University Women's Swimming at Saint Francis University",
-      "source": "MU",
-      "date": "2026-10-23T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 2
 }

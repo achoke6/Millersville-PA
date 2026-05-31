@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-05-31T18:01:59.678Z",
-  "totalEvents": 899,
+  "generatedAt": "2026-05-31T20:07:20.697Z",
+  "totalEvents": 898,
   "withDescription": 323,
   "withImage": 107,
   "familyFriendly": 47,
   "eventsToday": 1,
   "sources": {
-    "muAthletics": 70,
+    "muAthletics": 69,
     "muCalendar": 152,
     "muGetInvolved": 248,
     "pennManor": 199,
@@ -14,7 +14,7 @@
     "vfw": 3,
     "phantomPower": 13,
     "community": 1,
-    "muHudlBroadcasts": 3
+    "muHudlBroadcasts": 2
   },
   "sourceDateRanges": {
     "muAthletics": {
@@ -85,9 +85,9 @@
     }
   },
   "sports": {
-    "total": 244,
-    "scored": 34,
-    "wins": 14,
+    "total": 243,
+    "scored": 33,
+    "wins": 13,
     "losses": 19,
     "ties": 1
   },
@@ -103,16 +103,9 @@
       "PM Community": 1
     },
     "stalePast": 1,
-    "lastSyncAt": "2026-05-31T18:00:31.504Z"
+    "lastSyncAt": "2026-05-31T20:05:48.456Z"
   },
   "recentlyAdded": [
-    {
-      "key": "Millersville University Baseball vs West Chester|2026-04-30T19:00:00.000Z",
-      "firstSeenAt": "2026-05-31T04:46:39.006Z",
-      "title": "Millersville University Baseball vs West Chester",
-      "source": "MU",
-      "date": "2026-04-30T19:00:00.000Z"
-    },
     {
       "key": "Stone Horses w. The Blues Vultures|2026-06-27T00:00:00.000Z",
       "firstSeenAt": "2026-05-30T09:15:24.207Z",
@@ -175,6 +168,13 @@
       "title": "Millersville University Women's Swimming vs Arcadia University",
       "source": "MU",
       "date": "2027-01-08T18:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Swimming at Kean University|2027-01-16T19:00:00.000Z",
+      "firstSeenAt": "2026-05-29T21:07:52.715Z",
+      "title": "Millersville University Women's Swimming at Kean University",
+      "source": "MU",
+      "date": "2027-01-16T19:00:00.000Z"
     }
   ],
   "addedLastRun": 0

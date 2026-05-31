@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-05-31T00:00:43.190Z",
-  "totalEvents": 903,
-  "withDescription": 326,
-  "withImage": 108,
+  "generatedAt": "2026-05-31T04:46:39.008Z",
+  "totalEvents": 901,
+  "withDescription": 324,
+  "withImage": 107,
   "familyFriendly": 47,
   "eventsToday": 2,
   "sources": {
-    "muAthletics": 69,
-    "muCalendar": 153,
-    "muGetInvolved": 249,
+    "muAthletics": 71,
+    "muCalendar": 152,
+    "muGetInvolved": 248,
     "pennManor": 199,
-    "borough": 210,
+    "borough": 209,
     "vfw": 3,
-    "phantomPower": 14,
+    "phantomPower": 13,
     "community": 1,
-    "muHudlBroadcasts": 2
+    "muHudlBroadcasts": 4
   },
   "sourceDateRanges": {
     "muAthletics": {
@@ -22,11 +22,11 @@
       "latest": "2027-02-09T15:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-03-01T14:30:00.000Z",
+      "earliest": "2026-03-03T19:00:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-03-01T16:30:00.000Z",
+      "earliest": "2026-03-02T11:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
@@ -34,7 +34,7 @@
       "latest": "2026-09-21T23:00:00.000Z"
     },
     "borough": {
-      "earliest": "2026-03-02T12:00:00.000Z",
+      "earliest": "2026-03-02T23:00:00.000Z",
       "latest": "2027-05-24T12:00:00.000Z"
     },
     "vfw": {
@@ -42,7 +42,7 @@
       "latest": "2026-05-27T22:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-05-30T00:00:00.000Z",
+      "earliest": "2026-05-31T19:00:00.000Z",
       "latest": "2026-07-17T23:00:00.000Z"
     },
     "community": {
@@ -53,42 +53,42 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-02-09",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 22
+      "daysSinceMoved": 23
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 24
+      "daysSinceMoved": 25
     },
     "pennManor": {
       "newest": "2026-09-21",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "borough": {
       "newest": "2027-05-24",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     },
     "vfw": {
       "newest": "2026-05-27",
-      "daysSinceMoved": 18
+      "daysSinceMoved": 19
     },
     "phantomPower": {
       "newest": "2026-07-17",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 11
     },
     "community": {
       "newest": "2026-04-27",
-      "daysSinceMoved": 24
+      "daysSinceMoved": 25
     }
   },
   "sports": {
-    "total": 243,
-    "scored": 33,
-    "wins": 13,
-    "losses": 19,
+    "total": 245,
+    "scored": 35,
+    "wins": 14,
+    "losses": 20,
     "ties": 1
   },
   "registrations": {
@@ -103,9 +103,23 @@
       "PM Community": 1
     },
     "stalePast": 0,
-    "lastSyncAt": "2026-05-30T23:59:17.510Z"
+    "lastSyncAt": "2026-05-31T04:45:09.434Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Millersville University Baseball vs West Chester|2026-04-30T17:00:00.000Z",
+      "firstSeenAt": "2026-05-31T04:46:39.006Z",
+      "title": "Millersville University Baseball vs West Chester",
+      "source": "MU",
+      "date": "2026-04-30T17:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Baseball vs West Chester|2026-04-30T19:00:00.000Z",
+      "firstSeenAt": "2026-05-31T04:46:39.006Z",
+      "title": "Millersville University Baseball vs West Chester",
+      "source": "MU",
+      "date": "2026-04-30T19:00:00.000Z"
+    },
     {
       "key": "Stone Horses w. The Blues Vultures|2026-06-27T00:00:00.000Z",
       "firstSeenAt": "2026-05-30T09:15:24.207Z",
@@ -161,21 +175,7 @@
       "title": "EMO NIGHT Dance Party",
       "source": "Other",
       "date": "2026-06-14T01:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Swimming vs Arcadia University|2027-01-08T18:00:00.000Z",
-      "firstSeenAt": "2026-05-29T21:07:52.715Z",
-      "title": "Millersville University Women's Swimming vs Arcadia University",
-      "source": "MU",
-      "date": "2027-01-08T18:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Swimming at Kean University|2027-01-16T19:00:00.000Z",
-      "firstSeenAt": "2026-05-29T21:07:52.715Z",
-      "title": "Millersville University Women's Swimming at Kean University",
-      "source": "MU",
-      "date": "2027-01-16T19:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

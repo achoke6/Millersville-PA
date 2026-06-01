@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-05-31T23:08:07.132Z",
-  "totalEvents": 898,
-  "withDescription": 323,
-  "withImage": 107,
+  "generatedAt": "2026-06-01T03:58:10.877Z",
+  "totalEvents": 894,
+  "withDescription": 320,
+  "withImage": 106,
   "familyFriendly": 47,
-  "eventsToday": 1,
+  "eventsToday": 0,
   "sources": {
     "muAthletics": 69,
     "muCalendar": 152,
-    "muGetInvolved": 248,
+    "muGetInvolved": 245,
     "pennManor": 199,
     "borough": 209,
     "vfw": 3,
-    "phantomPower": 13,
+    "phantomPower": 12,
     "community": 1,
     "muHudlBroadcasts": 2
   },
@@ -26,7 +26,7 @@
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-03-02T11:00:00.000Z",
+      "earliest": "2026-03-03T16:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
@@ -34,15 +34,15 @@
       "latest": "2026-09-21T23:00:00.000Z"
     },
     "borough": {
-      "earliest": "2026-03-02T23:00:00.000Z",
-      "latest": "2027-05-24T12:00:00.000Z"
+      "earliest": "2026-03-04T23:30:00.000Z",
+      "latest": "2027-05-31T12:00:00.000Z"
     },
     "vfw": {
       "earliest": "2026-05-24T15:00:00.000Z",
       "latest": "2026-05-27T22:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-05-31T19:00:00.000Z",
+      "earliest": "2026-06-03T23:00:00.000Z",
       "latest": "2026-07-17T23:00:00.000Z"
     },
     "community": {
@@ -68,8 +68,8 @@
       "daysSinceMoved": 5
     },
     "borough": {
-      "newest": "2027-05-24",
-      "daysSinceMoved": 7
+      "newest": "2027-05-31",
+      "daysSinceMoved": 0
     },
     "vfw": {
       "newest": "2026-05-27",
@@ -103,9 +103,16 @@
       "PM Community": 1
     },
     "stalePast": 1,
-    "lastSyncAt": "2026-05-31T23:06:33.868Z"
+    "lastSyncAt": "2026-06-01T03:56:53.546Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Regular Trash & Recycling Collection |2027-05-31T12:00:00.000Z",
+      "firstSeenAt": "2026-06-01T03:58:10.874Z",
+      "title": "Regular Trash & Recycling Collection ",
+      "source": "Borough",
+      "date": "2027-05-31T12:00:00.000Z"
+    },
     {
       "key": "Stone Horses w. The Blues Vultures|2026-06-27T00:00:00.000Z",
       "firstSeenAt": "2026-05-30T09:15:24.207Z",
@@ -168,14 +175,7 @@
       "title": "Millersville University Women's Swimming vs Arcadia University",
       "source": "MU",
       "date": "2027-01-08T18:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Swimming at Kean University|2027-01-16T19:00:00.000Z",
-      "firstSeenAt": "2026-05-29T21:07:52.715Z",
-      "title": "Millersville University Women's Swimming at Kean University",
-      "source": "MU",
-      "date": "2027-01-16T19:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

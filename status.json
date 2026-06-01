@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-01T15:52:11.629Z",
+  "generatedAt": "2026-06-01T15:56:18.421Z",
   "totalEvents": 895,
   "withDescription": 320,
   "withImage": 107,
@@ -98,13 +98,14 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 1,
+    "pendingFuture": 2,
     "pendingPast": 0,
     "pendingBySource": {
-      "PM Community": 1
+      "PM Community": 1,
+      "Youth Sports": 1
     },
     "stalePast": 1,
-    "lastSyncAt": "2026-06-01T15:50:43.634Z"
+    "lastSyncAt": "2026-06-01T15:55:11.906Z"
   },
   "recentlyAdded": [
     {
@@ -178,5 +179,5 @@
       "date": "2026-09-21T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 0
 }

@@ -4385,7 +4385,7 @@ function renderHomeUI(){
 
     // Upcoming Signups — surfaced to TOWNIES as a standing reminder regardless
     // of which day they're viewing. Two sources: (1) events with a
-    // registrationDeadline in the next 2 weeks (youth sports + PM community
+    // registrationDeadline within ~1 month (youth sports + PM community
     // events with deadlines), shown with a countdown and also present on the
     // calendar; (2) open-ended youth registrations flagged closesTBA (open now,
     // no announced close date), shown without a countdown and reminder-only.
@@ -4394,15 +4394,21 @@ function renderHomeUI(){
     const signupsList = document.getElementById('home-signups-list');
     if (signupsSection && signupsList) {
         const nowMs = Date.now();
-        const TWO_WEEKS = 14 * 24 * 60 * 60 * 1000;
+        // How far ahead of a registration's deadline we start showing it in
+        // Upcoming Signups. ~1 month gives townies enough lead time to act on a
+        // signup without surfacing it so early it's irrelevant (e.g. a winter
+        // sport's deadline shouldn't appear in summer). Applies only to
+        // deadline-based signups below; closesTBA entries have no deadline to
+        // anchor a window, so they show whenever active (see note on tbaSignups).
+        const SIGNUP_LEAD_MS = 30 * 24 * 60 * 60 * 1000;
         const isTownie = muAffiliation === 'townie';
         // (1) Deadline-based signups — events carrying registrationDeadline
-        // within the next 2 weeks. These also appear on the calendar (dated on
+        // within the lead window. These also appear on the calendar (dated on
         // the deadline); here they're a standing reminder with a countdown.
         const upcoming = (isTownie ? (allEvents || []) : [])
             .filter(e => e && e.registrationDeadline)
             .map(e => ({ ...e, _dl: new Date(e.registrationDeadline).getTime() }))
-            .filter(e => !isNaN(e._dl) && e._dl >= nowMs && (e._dl - nowMs) <= TWO_WEEKS)
+            .filter(e => !isNaN(e._dl) && e._dl >= nowMs && (e._dl - nowMs) <= SIGNUP_LEAD_MS)
             .sort((a, b) => a._dl - b._dl);
         // (2) Open-ended signups — youth registrations flagged closesTBA (open
         // now, no announced close date). Sourced from the raw registrations

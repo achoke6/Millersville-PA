@@ -371,9 +371,10 @@ async function render() {
     // Open Registrations card — youth sports signups + PM community events with
     // a registration deadline (computed in status.json from the live event set).
     // Optional: a 404 / older status.json without the field just omits the card.
-    // "Closing within 2 weeks" matches the homepage Upcoming Signups window, so
-    // it's the quickest place to confirm that section will actually show
-    // something — a 0 when signups are expected points at an empty upstream.
+    // "Closing within 2 weeks" is a deliberately tight "closing soon" urgency
+    // count — it's intentionally narrower than the homepage Upcoming Signups
+    // display window (~1 month), to flag registrations about to lapse. "Open
+    // signups" at 0 when signups are expected points at an empty upstream.
     let registrationsCard = '';
     if (status.registrations) {
         const r = status.registrations;

@@ -1,10 +1,9 @@
 {
-  "_comment": "Local youth sports registration windows (Penn Manor Youth Baseball/Softball, Penn Manor Soccer Club, etc.). Maintained by hand / via Cowork (or regenerated from the Event Candidates sheet by scripts/sync-candidates.js — if that sync is live for Youth Sports, edit the SHEET, not this file). Two consumers: (1) scrape.js creates an event dated on each deadline that auto-hides once the deadline passes; (2) the homepage 'Upcoming Signups' section surfaces each entry to TOWNIES starting 2 weeks before its deadline. Marauders/students don't see the signups section (it's local family content).",
+  "_comment": "Local youth sports registration windows (Penn Manor Youth Baseball/Softball, Penn Manor Soccer Club, etc.). Maintained by hand / via Cowork (or regenerated from the Event Candidates sheet by scripts/sync-candidates.js — if that sync is live for Youth Sports, edit the SHEET, not this file). Two consumers: (1) scrape.js creates an event dated on each deadline that auto-hides once the deadline passes; (2) the homepage 'Upcoming Signups' section surfaces each entry to TOWNIES starting about a month before its deadline. Marauders/students don't see the signups section (it's local family content).",
   "_format": "Each entry: org (required, e.g. 'Penn Manor Youth Baseball' — used as the event location and the Upcoming Signups sub-line), sport (optional, e.g. 'Baseball & Softball'), deadline (required UNLESS closesTBA is set, ISO 8601 with Eastern offset — the registration CLOSE date/time), closesTBA (optional bool — set true for an OPEN-ENDED registration that is live but has no announced close date; such an entry has NO deadline, creates NO calendar event, and is shown reminder-only in Upcoming Signups as 'Open now / closes TBA' until its row is removed), registerLink (required, URL to sign up), title (optional — the human display title for the event card/timeline, e.g. 'Junior Comets Football & Cheerleading'; if omitted scrape.js falls back to org + sport), opens (optional ISO), season (optional, e.g. 'Spring 2026'), ageRange (optional, e.g. 'Ages 5-14'), note (optional, short extra detail — do NOT repeat 'Registration closes <date>'; scrape.js appends that line automatically), status ('active' | 'draft' — only 'active' is used). Entries auto-skip once their deadline passes.",
   "registrations": [
     {
       "status": "active",
-      "title": "Penn Manor Youth Baseball Fall",
       "org": "Penn Manor Youth Baseball & Softball",
       "sport": "Baseball & Softball",
       "deadline": "2026-06-30T18:00:00.000Z",
@@ -15,10 +14,10 @@
       "status": "active",
       "title": "Junior Comets Football & Cheerleading",
       "org": "Penn Manor Junior Comets",
-      "sport": "Football & Cheerleading. Register at PMJuniorComets.com. Deadline is very close (today is May 29).",
+      "sport": "Football & Cheerleading",
       "deadline": "2026-05-31T18:00:00.000Z",
-      "registerLink": "https://www.pennmanor.net/wp-content/uploads/2026/02/2026-PMJC-School-Flyer.pdf",
-      "note": "2026 Penn Manor Junior Comets registration for football (ages 7-12) and cheerleading (K-8). Registration closes May 31. Not affiliated with Penn Manor School District."
+      "registerLink": "https://www.pmjuniorcomets.com/",
+      "note": "2026 Penn Manor Junior Comets registration for football (ages 7-12) and cheerleading (K-8). Not affiliated with Penn Manor School District."
     }
   ]
 }

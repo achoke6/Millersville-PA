@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-01T13:38:54.751Z",
+  "generatedAt": "2026-06-01T15:52:11.629Z",
   "totalEvents": 895,
   "withDescription": 320,
   "withImage": 107,
@@ -8,8 +8,8 @@
   "sources": {
     "muAthletics": 69,
     "muCalendar": 152,
-    "muGetInvolved": 245,
-    "pennManor": 199,
+    "muGetInvolved": 246,
+    "pennManor": 198,
     "borough": 209,
     "vfw": 3,
     "phantomPower": 13,
@@ -30,7 +30,7 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-04-27T21:00:00.000Z",
+      "earliest": "2026-04-27T21:30:00.000Z",
       "latest": "2026-09-21T23:00:00.000Z"
     },
     "borough": {
@@ -85,7 +85,7 @@
     }
   },
   "sports": {
-    "total": 243,
+    "total": 242,
     "scored": 33,
     "wins": 13,
     "losses": 19,
@@ -94,7 +94,8 @@
   "registrations": {
     "open": 1,
     "next2Weeks": 0,
-    "nextClose": "2026-06-30"
+    "nextClose": "2026-06-30",
+    "openNoDeadline": 0
   },
   "reviewQueue": {
     "pendingFuture": 1,
@@ -103,9 +104,16 @@
       "PM Community": 1
     },
     "stalePast": 1,
-    "lastSyncAt": "2026-06-01T13:37:25.480Z"
+    "lastSyncAt": "2026-06-01T15:50:43.634Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Spring 2027 Job & Internship Fair|2027-03-31T11:00:00",
+      "firstSeenAt": "2026-06-01T15:52:11.626Z",
+      "title": "Spring 2027 Job & Internship Fair",
+      "source": "MU",
+      "date": "2027-03-31T11:00:00"
+    },
     {
       "key": "MU Women's Soccer Summer Camp|2026-06-29T13:00:00.000Z",
       "firstSeenAt": "2026-06-01T13:38:54.748Z",
@@ -166,13 +174,6 @@
       "key": "Boys JV Soccer @ Hempfield High School|2026-09-21T20:00:00.000Z",
       "firstSeenAt": "2026-05-30T02:57:09.371Z",
       "title": "Boys JV Soccer @ Hempfield High School",
-      "source": "PM",
-      "date": "2026-09-21T20:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Tennis @ Cedar Crest High School|2026-09-21T20:00:00.000Z",
-      "firstSeenAt": "2026-05-30T02:57:09.371Z",
-      "title": "Girls Varsity Tennis @ Cedar Crest High School",
       "source": "PM",
       "date": "2026-09-21T20:00:00.000Z"
     }

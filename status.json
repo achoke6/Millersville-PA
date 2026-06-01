@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-06-01T15:56:18.421Z",
-  "totalEvents": 895,
+  "generatedAt": "2026-06-01T18:36:35.023Z",
+  "totalEvents": 891,
   "withDescription": 320,
   "withImage": 107,
   "familyFriendly": 47,
   "eventsToday": 3,
   "sources": {
-    "muAthletics": 69,
+    "muAthletics": 67,
     "muCalendar": 152,
     "muGetInvolved": 246,
-    "pennManor": 198,
-    "borough": 209,
+    "pennManor": 197,
+    "borough": 207,
     "vfw": 3,
     "phantomPower": 13,
     "community": 1,
@@ -30,7 +30,7 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-04-27T21:30:00.000Z",
+      "earliest": "2026-04-27T21:45:00.000Z",
       "latest": "2026-09-21T23:00:00.000Z"
     },
     "borough": {
@@ -85,29 +85,42 @@
     }
   },
   "sports": {
-    "total": 242,
-    "scored": 33,
+    "total": 239,
+    "scored": 31,
     "wins": 13,
-    "losses": 19,
+    "losses": 17,
     "ties": 1
   },
   "registrations": {
-    "open": 1,
+    "open": 2,
     "next2Weeks": 0,
     "nextClose": "2026-06-30",
-    "openNoDeadline": 0
+    "openNoDeadline": 1
   },
   "reviewQueue": {
-    "pendingFuture": 2,
+    "pendingFuture": 1,
     "pendingPast": 0,
     "pendingBySource": {
-      "PM Community": 1,
-      "Youth Sports": 1
+      "PM Community": 1
     },
     "stalePast": 1,
-    "lastSyncAt": "2026-06-01T15:55:11.906Z"
+    "lastSyncAt": "2026-06-01T18:35:08.969Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Planning Commission - Cancelled|2026-06-03T22:30:00.000Z",
+      "firstSeenAt": "2026-06-01T18:36:35.020Z",
+      "title": "Planning Commission - Cancelled",
+      "source": "Borough",
+      "date": "2026-06-03T22:30:00.000Z"
+    },
+    {
+      "key": "Penn Manor Soccer Club - Fall 2026 Registration|2026-08-22T18:00:00.000Z",
+      "firstSeenAt": "2026-06-01T18:36:35.020Z",
+      "title": "Penn Manor Soccer Club - Fall 2026 Registration",
+      "source": "Other",
+      "date": "2026-08-22T18:00:00.000Z"
+    },
     {
       "key": "Spring 2027 Job & Internship Fair|2027-03-31T11:00:00",
       "firstSeenAt": "2026-06-01T15:52:11.626Z",
@@ -163,21 +176,7 @@
       "title": "Girls JV Soccer vs Hempfield High School",
       "source": "PM",
       "date": "2026-09-21T21:30:00.000Z"
-    },
-    {
-      "key": "School Board Meeting|2026-09-21T23:00:00.000Z",
-      "firstSeenAt": "2026-05-30T06:25:40.875Z",
-      "title": "School Board Meeting",
-      "source": "PM",
-      "date": "2026-09-21T23:00:00.000Z"
-    },
-    {
-      "key": "Boys JV Soccer @ Hempfield High School|2026-09-21T20:00:00.000Z",
-      "firstSeenAt": "2026-05-30T02:57:09.371Z",
-      "title": "Boys JV Soccer @ Hempfield High School",
-      "source": "PM",
-      "date": "2026-09-21T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

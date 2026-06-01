@@ -2707,6 +2707,11 @@ async function runScraper() {
                         if (ov.create === true) {
                             const createdDate = new Date(ov.date);
                             events.push({
+                                // Internal marker (stripped before write): flags
+                                // this as a create-override so the override-
+                                // collision dedupe pass lets it absorb a matching
+                                // event the borough may LATER add to its iCal.
+                                _overrideCreated: true,
                                 title: ov.newTitle,
                                 date: createdDate.toISOString(),
                                 endTime: ov.endTime ? new Date(ov.endTime).toISOString() : '',
@@ -4525,6 +4530,64 @@ Focus on the most impressive deals a shopper would want to know about. Include m
     const dedupedFinal = deduped.filter((_, i) => !prefixDupeIdx.has(i));
     deduped.length = 0;
     Array.prototype.push.apply(deduped, dedupedFinal);
+
+    // Override-collision dedupe. A create-mode borough override is the curated
+    // source of truth for an event that originated in a blog post (e.g.
+    // National Night Out, created before it was on any calendar). When the
+    // borough LATER adds that same event to its Google Calendar, the iCal feed
+    // produces a second copy — and because BOTH copies are tagged Borough
+    // (same source), neither the exact pass (different time and/or location)
+    // nor the cross-source pass (which only merges across DIFFERENT sources)
+    // removes it. So we resolve it here: for each create-override event, drop
+    // any OTHER event on the same ET day whose title the override "absorbs" —
+    // exact normalized match, OR the feed title is the override title followed
+    // by a trailing suffix (e.g. "National Night Out" absorbs "National Night
+    // Out 6-8pm"). The override wins, so its curated title, time, and location
+    // survive (this is also why NNO keeps its correct 6 PM time instead of the
+    // iCal copy's all-day-artifact time). Guardrails keep it safe: only
+    // create-override events trigger it; only same-ET-day matches are removed;
+    // a non-exact (prefix) absorb requires the override title to be multi-word
+    // so a short/generic override can't swallow unrelated events; and another
+    // create-override is never dropped. Legitimate separate same-day events
+    // (trash vs yard-waste collection, back-to-back meetings) are untouched
+    // because none of them is a create-override and none shares a title.
+    const overrideCollisionIdx = new Set();
+    const titleAbsorbs = (ovTitle, otherTitle) => {
+        const o = normalizeTitle(ovTitle), x = normalizeTitle(otherTitle);
+        if (!o || !x) return false;
+        if (o === x) return true;
+        // Feed title == override title + trailing suffix. Require the override
+        // title to be multi-word so e.g. a "Concert" override can't absorb
+        // "Concert Band Showcase".
+        return o.includes(' ') && x.startsWith(o + ' ');
+    };
+    const collisionDay = e => {
+        const ms = parseEventInstant(e.date);
+        return !isNaN(ms) ? deriveDayET(ms) : (e.date || '').slice(0, 10);
+    };
+    const overrideCollisions = [];
+    deduped.forEach((ovEv, oi) => {
+        if (!ovEv._overrideCreated) return;
+        const ovDay = collisionDay(ovEv);
+        deduped.forEach((other, xi) => {
+            if (xi === oi || other._overrideCreated) return;     // skip self + other overrides
+            if (overrideCollisionIdx.has(xi)) return;
+            if (collisionDay(other) !== ovDay) return;
+            if (titleAbsorbs(ovEv.title, other.title)) {
+                overrideCollisionIdx.add(xi);
+                overrideCollisions.push({ dropped: other.title, kept: ovEv.title, day: ovDay });
+            }
+        });
+    });
+    if (overrideCollisions.length > 0) {
+        console.log(`🔗 Removed ${overrideCollisions.length} override-collision duplicate(s):`);
+        overrideCollisions.forEach(c => console.log(`   ✕ [Borough] "${c.dropped}" (${c.day}) → kept curated "${c.kept}"`));
+        const afterCollision = deduped.filter((_, i) => !overrideCollisionIdx.has(i));
+        deduped.length = 0;
+        Array.prototype.push.apply(deduped, afterCollision);
+    }
+    // Strip the internal marker so it never lands in events.json.
+    deduped.forEach(e => { if (e._overrideCreated) delete e._overrideCreated; });
 
     if (exactDupes.length > 0) {
         console.log(`⚠️ Removed ${exactDupes.length} exact duplicates:`);

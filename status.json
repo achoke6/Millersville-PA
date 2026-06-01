@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-01T19:54:07.542Z",
+  "generatedAt": "2026-06-01T20:17:28.510Z",
   "totalEvents": 890,
   "withDescription": 320,
   "withImage": 107,
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-04-28T20:00:00.000Z",
-      "latest": "2026-09-22T21:00:00.000Z"
+      "latest": "2026-09-21T23:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-03-04T23:30:00.000Z",
@@ -64,8 +64,8 @@
       "daysSinceMoved": 26
     },
     "pennManor": {
-      "newest": "2026-09-22",
-      "daysSinceMoved": 0
+      "newest": "2026-09-21",
+      "daysSinceMoved": 6
     },
     "borough": {
       "newest": "2027-05-31",
@@ -95,38 +95,39 @@
     "open": 2,
     "next2Weeks": 0,
     "nextClose": "2026-06-30",
-    "openNoDeadline": 1
+    "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 1,
+    "pendingFuture": 2,
     "pendingPast": 0,
     "pendingBySource": {
-      "PM Community": 1
+      "PM Community": 1,
+      "Youth Sports": 1
     },
     "stalePast": 1,
-    "lastSyncAt": "2026-06-01T19:52:43.582Z"
+    "lastSyncAt": "2026-06-01T20:16:04.459Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Boys JV Soccer vs Daniel Boone High School|2026-09-02T18:30:00.000Z",
+      "firstSeenAt": "2026-06-01T20:17:28.508Z",
+      "title": "Boys JV Soccer vs Daniel Boone High School",
+      "source": "PM",
+      "date": "2026-09-02T18:30:00.000Z"
+    },
+    {
+      "key": "Boys JV Soccer vs Daniel Boone High School|2026-09-02T20:00:00.000Z",
+      "firstSeenAt": "2026-06-01T20:17:28.508Z",
+      "title": "Boys JV Soccer vs Daniel Boone High School",
+      "source": "PM",
+      "date": "2026-09-02T20:00:00.000Z"
+    },
     {
       "key": "Girls Varsity Soccer vs Hempfield High School|2026-09-21T23:00:00.000Z",
       "firstSeenAt": "2026-06-01T19:54:07.539Z",
       "title": "Girls Varsity Soccer vs Hempfield High School",
       "source": "PM",
       "date": "2026-09-21T23:00:00.000Z"
-    },
-    {
-      "key": "Boys 7/8/9th Soccer @ Hempfield High School|2026-09-22T20:00:00.000Z",
-      "firstSeenAt": "2026-06-01T19:54:07.539Z",
-      "title": "Boys 7/8/9th Soccer @ Hempfield High School",
-      "source": "PM",
-      "date": "2026-09-22T20:00:00.000Z"
-    },
-    {
-      "key": "Boys 7/8th Soccer @ Hempfield High School|2026-09-22T21:00:00.000Z",
-      "firstSeenAt": "2026-06-01T19:54:07.539Z",
-      "title": "Boys 7/8th Soccer @ Hempfield High School",
-      "source": "PM",
-      "date": "2026-09-22T21:00:00.000Z"
     },
     {
       "key": "Planning Commission - Cancelled|2026-06-03T22:30:00.000Z",
@@ -178,5 +179,5 @@
       "date": "2026-06-27T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 3
+  "addedLastRun": 2
 }

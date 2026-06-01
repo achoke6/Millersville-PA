@@ -204,28 +204,52 @@ async function main() {
     const location = col(row, 'location');
 
     if (source === 'youth sports') {
-      // Youth sports registration: Deadline is the key field. We pass the
-      // sheet's Title through as the display title and always mark these
-      // kidFriendly; scrape.js dates the event on the deadline and adds the
-      // registration badge/button.
-      if (!deadlineDt) { console.warn(`  ⚠ youth-sports "${title}" missing/invalid Deadline — skipped`); badRows++; continue; }
-      youthRegs.push({
-        status: 'active',
-        // Human display title for the signup event — the sheet's Title column.
-        // scrape.js uses this verbatim (no "Register by <date>:" prefix); when
-        // blank it falls back to org + sport. Keep it short and readable
-        // (e.g. "Junior Comets Football & Cheerleading").
-        title: title,
-        // org stays the full org name (the Location column) — it's used as the
-        // event location and the homepage Upcoming Signups sub-line, so it can
-        // legitimately differ from the short display title above.
-        org: location || title,
-        sport: col(row, 'notes') || '',   // optional sport detail from Notes
-        deadline: deadlineDt.toISOString(),
-        registerLink: link || 'https://www.pennmanor.net/community/',
-        note: description || ''
-      });
-      approved++;
+      // Youth sports registration. Deadline drives behavior:
+      //   - a real date  -> dated registration (event on the deadline + countdown)
+      //   - "TBA"/"open"  -> open-ended: registration is live but no close date
+      //     is published. closesTBA:true, no deadline. The site shows it in
+      //     Upcoming Signups as "Open now / closes TBA" (reminder-only, no
+      //     calendar event) until the row is removed.
+      //   - blank/garbage -> skipped (covers a forgotten deadline; "never guess
+      //     a deadline" — but "TBA" is an explicit "no date", not a guess).
+      // We pass the sheet's Title through as the display title and always mark
+      // these kidFriendly.
+      const deadlineRaw = col(row, 'deadline');
+      const isTBA = /^(tba|tbd|open|open[-\s]?ended|rolling|ongoing|none)$/i.test(deadlineRaw);
+      if (deadlineDt) {
+        youthRegs.push({
+          status: 'active',
+          // Human display title for the signup event — the sheet's Title column.
+          // scrape.js uses this verbatim (no "Register by <date>:" prefix); when
+          // blank it falls back to org + sport. Keep it short and readable
+          // (e.g. "Junior Comets Football & Cheerleading").
+          title: title,
+          // org stays the full org name (the Location column) — it's used as the
+          // event location and the homepage Upcoming Signups sub-line, so it can
+          // legitimately differ from the short display title above.
+          org: location || title,
+          sport: col(row, 'notes') || '',   // optional sport detail from Notes
+          deadline: deadlineDt.toISOString(),
+          registerLink: link || 'https://www.pennmanor.net/community/',
+          note: description || ''
+        });
+        approved++;
+      } else if (isTBA) {
+        youthRegs.push({
+          status: 'active',
+          closesTBA: true,          // open now, no close date — reminder-only
+          title: title,
+          org: location || title,
+          sport: col(row, 'notes') || '',
+          registerLink: link || 'https://www.pennmanor.net/community/',
+          note: description || ''
+        });
+        approved++;
+      } else {
+        console.warn(`  ⚠ youth-sports "${title}" missing/invalid Deadline (use a date, or "TBA" for open-ended) — skipped`);
+        badRows++;
+        continue;
+      }
     } else if (source === 'pm community' || source === 'penn manor' || source === 'pm') {
       if (!dt) { console.warn(`  ⚠ PM "${title}" missing/invalid Date — skipped`); badRows++; continue; }
       const e = {

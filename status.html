@@ -383,7 +383,13 @@ async function render() {
         registrationsCard = card('Open Registrations',
             metric('Open signups', r.open ?? 0) +
             metric('Closing within 2 weeks', r.next2Weeks ?? 0) +
-            metric('Next deadline', nextCloseLabel)
+            metric('Next deadline', nextCloseLabel) +
+            // Open-ended (closesTBA) regs only show when present — they're
+            // reminder-only and never auto-expire, so a non-zero count is a
+            // cue to check whether any have quietly ended.
+            ((r.openNoDeadline ?? 0) > 0
+                ? metric('Open, no close date', r.openNoDeadline, { hint: 'shown until removed from the sheet' })
+                : '')
         );
     }
 

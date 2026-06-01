@@ -4383,28 +4383,41 @@ function renderHomeUI(){
         boardSection.style.display = 'none';
     }
 
-    // Upcoming Signups — any event with a registration deadline in the next
-    // 2 weeks, surfaced to TOWNIES as a reminder regardless of which day
-    // they're viewing. Sourced from the events array (events carry
-    // registrationDeadline from the scraper), so it covers youth sports AND
-    // PM community events with deadlines, and stays in sync with the timeline.
-    // The events themselves still appear on their deadline day in the calendar;
-    // this is an additional standing reminder. Hidden for marauders/students
-    // and when nothing is within the window.
+    // Upcoming Signups — surfaced to TOWNIES as a standing reminder regardless
+    // of which day they're viewing. Two sources: (1) events with a
+    // registrationDeadline in the next 2 weeks (youth sports + PM community
+    // events with deadlines), shown with a countdown and also present on the
+    // calendar; (2) open-ended youth registrations flagged closesTBA (open now,
+    // no announced close date), shown without a countdown and reminder-only.
+    // Hidden for marauders/students and when both sources are empty.
     const signupsSection = document.getElementById('home-signups-section');
     const signupsList = document.getElementById('home-signups-list');
     if (signupsSection && signupsList) {
         const nowMs = Date.now();
         const TWO_WEEKS = 14 * 24 * 60 * 60 * 1000;
-        const upcoming = (muAffiliation === 'townie' ? (allEvents || []) : [])
+        const isTownie = muAffiliation === 'townie';
+        // (1) Deadline-based signups — events carrying registrationDeadline
+        // within the next 2 weeks. These also appear on the calendar (dated on
+        // the deadline); here they're a standing reminder with a countdown.
+        const upcoming = (isTownie ? (allEvents || []) : [])
             .filter(e => e && e.registrationDeadline)
             .map(e => ({ ...e, _dl: new Date(e.registrationDeadline).getTime() }))
             .filter(e => !isNaN(e._dl) && e._dl >= nowMs && (e._dl - nowMs) <= TWO_WEEKS)
             .sort((a, b) => a._dl - b._dl);
+        // (2) Open-ended signups — youth registrations flagged closesTBA (open
+        // now, no announced close date). Sourced from the raw registrations
+        // (allSignups), NOT the events array: with no deadline there's no
+        // calendar date to place them on, so they're reminder-only here. No
+        // countdown, and they show until the sheet row is removed. The
+        // closesTBA filter also means deadline-based youth regs (which lack the
+        // flag) never double-render in this section.
+        const tbaSignups = (isTownie ? (allSignups || []) : [])
+            .filter(r => r && r.status === 'active' && r.closesTBA === true && r.registerLink)
+            .sort((a, b) => (a.title || a.org || '').localeCompare(b.title || b.org || ''));
 
-        if (upcoming.length > 0) {
+        if (upcoming.length > 0 || tbaSignups.length > 0) {
             signupsSection.style.display = '';
-            signupsList.innerHTML = upcoming.map(e => {
+            const deadlineHtml = upcoming.map(e => {
                 const dlLabel = new Date(e._dl).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
                 const daysLeft = Math.ceil((e._dl - nowMs) / (24 * 60 * 60 * 1000));
                 const urgency = daysLeft <= 3 ? ' home-signup-urgent' : '';
@@ -4432,6 +4445,24 @@ function renderHomeUI(){
                     </div>
                 </a>`;
             }).join('');
+            // Open-ended rows: no calendar event exists to open a modal for, so
+            // these link straight to the registration page. "Open now / closes
+            // TBA" replaces the date/countdown.
+            const tbaHtml = tbaSignups.map(r => {
+                const titleText = (r.title && r.title.trim()) ? r.title.trim() : (r.org || 'Registration');
+                const sub = r.org && !titleText.toLowerCase().includes(r.org.toLowerCase()) ? r.org : '';
+                return `<a href="${escHtml(r.registerLink)}" target="_blank" rel="noopener" class="home-signup-item">
+                    <div class="home-signup-main">
+                        <span class="home-signup-org">${escHtml(titleText)}</span>
+                        ${sub ? `<span class="home-signup-sub">${escHtml(sub)}</span>` : ''}
+                    </div>
+                    <div class="home-signup-deadline">
+                        <span class="home-signup-by">Open now</span>
+                        <span class="home-signup-days">closes TBA</span>
+                    </div>
+                </a>`;
+            }).join('');
+            signupsList.innerHTML = deadlineHtml + tbaHtml;
         } else {
             signupsSection.style.display = 'none';
         }

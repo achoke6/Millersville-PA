@@ -4871,7 +4871,17 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 const nextClose = regs.length
                     ? new Date(Math.min(...regs)).toISOString().slice(0, 10)
                     : null;
-                return { open: regs.length, next2Weeks, nextClose };
+                // Open-ended registrations (closesTBA) aren't events, so they're
+                // not in `deduped` — count them straight from the registrations
+                // file. These never auto-expire (no deadline), so surfacing the
+                // count keeps evergreen entries from being forgotten in the sheet.
+                let openNoDeadline = 0;
+                try {
+                    const ysr = JSON.parse(fs.readFileSync(path.join(__dirname, '../youth-sports-registration.json'), 'utf8'));
+                    openNoDeadline = (ysr.registrations || [])
+                        .filter(r => r && r.status === 'active' && r.closesTBA === true).length;
+                } catch (_) {}
+                return { open: regs.length, next2Weeks, nextClose, openNoDeadline };
             })(),
             // Review queue — read from candidates-status.json, which
             // sync-candidates.js writes earlier in this same cron (sync runs

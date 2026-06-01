@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-06-01T03:58:10.877Z",
-  "totalEvents": 894,
+  "generatedAt": "2026-06-01T09:30:19.170Z",
+  "totalEvents": 895,
   "withDescription": 320,
-  "withImage": 106,
+  "withImage": 107,
   "familyFriendly": 47,
-  "eventsToday": 0,
+  "eventsToday": 3,
   "sources": {
     "muAthletics": 69,
     "muCalendar": 152,
@@ -12,7 +12,7 @@
     "pennManor": 199,
     "borough": 209,
     "vfw": 3,
-    "phantomPower": 12,
+    "phantomPower": 13,
     "community": 1,
     "muHudlBroadcasts": 2
   },
@@ -53,35 +53,35 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-02-09",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 23
+      "daysSinceMoved": 24
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 25
+      "daysSinceMoved": 26
     },
     "pennManor": {
       "newest": "2026-09-21",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     },
     "borough": {
       "newest": "2027-05-31",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "vfw": {
       "newest": "2026-05-27",
-      "daysSinceMoved": 19
+      "daysSinceMoved": 20
     },
     "phantomPower": {
       "newest": "2026-07-17",
-      "daysSinceMoved": 11
+      "daysSinceMoved": 12
     },
     "community": {
       "newest": "2026-04-27",
-      "daysSinceMoved": 25
+      "daysSinceMoved": 26
     }
   },
   "sports": {
@@ -103,9 +103,16 @@
       "PM Community": 1
     },
     "stalePast": 1,
-    "lastSyncAt": "2026-06-01T03:56:53.546Z"
+    "lastSyncAt": "2026-06-01T09:28:42.540Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Bit Brigade Performs \"Mega Man X\" LIVE w. Super Guitar Bros.|2026-06-28T00:00:00.000Z",
+      "firstSeenAt": "2026-06-01T09:30:19.168Z",
+      "title": "Bit Brigade Performs \"Mega Man X\" LIVE w. Super Guitar Bros.",
+      "source": "Other",
+      "date": "2026-06-28T00:00:00.000Z"
+    },
     {
       "key": "Regular Trash & Recycling Collection |2027-05-31T12:00:00.000Z",
       "firstSeenAt": "2026-06-01T03:58:10.874Z",
@@ -168,13 +175,6 @@
       "title": "EMO NIGHT Dance Party",
       "source": "Other",
       "date": "2026-06-14T01:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Swimming vs Arcadia University|2027-01-08T18:00:00.000Z",
-      "firstSeenAt": "2026-05-29T21:07:52.715Z",
-      "title": "Millersville University Women's Swimming vs Arcadia University",
-      "source": "MU",
-      "date": "2027-01-08T18:00:00.000Z"
     }
   ],
   "addedLastRun": 1

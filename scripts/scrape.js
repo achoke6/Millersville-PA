@@ -4709,7 +4709,7 @@ Focus on the most impressive deals a shopper would want to know about. Include m
         } else {
             const before = html.slice(0, sIdx + START.length);
             const after = html.slice(eIdx);
-            const injected = before + '\n    ' + jsonld + '\n    ' + after;
+			const injected = before + '\n    <script type="application/ld+json" id="events-jsonld">' + jsonld + '</script>\n    ' + after;
             fs.writeFileSync(idxPath, injected);
             const count = (jsonld.match(/"@type":"Event"/g) || []).length;
             console.log(`🔎 JSON-LD: injected ${count} upcoming events into index.html (${(Buffer.byteLength(jsonld, 'utf8') / 1024).toFixed(1)} KB)`);

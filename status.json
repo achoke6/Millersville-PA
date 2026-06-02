@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-06-02T01:59:50.963Z",
-  "totalEvents": 789,
+  "generatedAt": "2026-06-02T03:53:33.300Z",
+  "totalEvents": 633,
   "withDescription": 317,
   "withImage": 107,
-  "familyFriendly": 47,
+  "familyFriendly": 46,
   "eventsToday": 1,
   "sources": {
     "muAthletics": 65,
     "muCalendar": 151,
     "muGetInvolved": 243,
-    "pennManor": 198,
+    "pennManor": 42,
     "borough": 110,
     "vfw": 3,
     "phantomPower": 13,
@@ -30,8 +30,8 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-04-28T20:00:00.000Z",
-      "latest": "2026-09-21T23:00:00.000Z"
+      "earliest": "2026-06-03T04:00:00.000Z",
+      "latest": "2026-09-04T19:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-03-04T23:30:00.000Z",
@@ -64,8 +64,8 @@
       "daysSinceMoved": 26
     },
     "pennManor": {
-      "newest": "2026-09-21",
-      "daysSinceMoved": 6
+      "newest": "2026-09-04",
+      "daysSinceMoved": 25
     },
     "borough": {
       "newest": "2027-05-08",
@@ -85,11 +85,11 @@
     }
   },
   "sports": {
-    "total": 238,
-    "scored": 28,
-    "wins": 13,
-    "losses": 14,
-    "ties": 1
+    "total": 95,
+    "scored": 11,
+    "wins": 7,
+    "losses": 4,
+    "ties": 0
   },
   "registrations": {
     "open": 2,
@@ -105,7 +105,7 @@
       "Youth Sports": 1
     },
     "stalePast": 1,
-    "lastSyncAt": "2026-06-02T01:58:27.775Z"
+    "lastSyncAt": "2026-06-02T03:52:42.074Z"
   },
   "recentlyAdded": [
     {
@@ -121,13 +121,6 @@
       "title": "Boys JV Soccer vs Daniel Boone High School",
       "source": "PM",
       "date": "2026-09-02T20:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Soccer vs Hempfield High School|2026-09-21T23:00:00.000Z",
-      "firstSeenAt": "2026-06-01T19:54:07.539Z",
-      "title": "Girls Varsity Soccer vs Hempfield High School",
-      "source": "PM",
-      "date": "2026-09-21T23:00:00.000Z"
     },
     {
       "key": "Planning Commission - Cancelled|2026-06-03T22:30:00.000Z",
@@ -172,11 +165,18 @@
       "date": "2026-06-27T00:00:00.000Z"
     },
     {
-      "key": "Girls 7/8th Volleyball @ Cocalico High School|2026-09-21T20:45:00.000Z",
-      "firstSeenAt": "2026-05-30T06:25:40.875Z",
-      "title": "Girls 7/8th Volleyball @ Cocalico High School",
-      "source": "PM",
-      "date": "2026-09-21T20:45:00.000Z"
+      "key": "EMO NIGHT Dance Party|2026-06-14T01:00:00.000Z",
+      "firstSeenAt": "2026-05-29T23:12:20.128Z",
+      "title": "EMO NIGHT Dance Party",
+      "source": "Other",
+      "date": "2026-06-14T01:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Swimming vs Arcadia University|2027-01-08T18:00:00.000Z",
+      "firstSeenAt": "2026-05-29T21:07:52.715Z",
+      "title": "Millersville University Women's Swimming vs Arcadia University",
+      "source": "MU",
+      "date": "2027-01-08T18:00:00.000Z"
     }
   ],
   "addedLastRun": 0

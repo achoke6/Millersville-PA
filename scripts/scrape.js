@@ -2948,6 +2948,64 @@ async function runScraper() {
             }
         }
     } catch (e) { console.log(`  ⚠️ Youth sports registration error: ${e.message}`); }
+	
+	// ===== 6c-2. INTRAMURAL SIGNUPS (imleagues.json) =====
+    //
+    // MU intramural signups, scraped manually via scripts/scrape-imleagues.js
+    // (IMLeagues is an Angular SPA that blocks GHA IPs, so it can't run in this
+    // cron — run locally, commit imleagues.json). Same model as youth sports
+    // above: each ACTIVE entry whose deadline hasn't passed becomes an event
+    // dated ON the deadline, with the 📝 "Registration required" badge. Unlike
+    // youth sports these are MU-student events (kidFriendly:false). Season +
+    // registration window live in the description.
+    //
+    // imleagues.json is a flat array of:
+    //   { status:"active", sport, league, title, deadline (ISO Z),
+    //     registrationWindow, season, registerLink }
+    try {
+        const imlPath = path.join(__dirname, '../imleagues.json');
+        let imlData = null;
+        try { imlData = JSON.parse(fs.readFileSync(imlPath, 'utf8')); } catch (_) {}
+
+        if (Array.isArray(imlData)) {
+            const now = new Date();
+            let added = 0, closed = 0, skipped = 0;
+            for (const reg of imlData) {
+                if (reg.status !== 'active') { skipped++; continue; }
+                if (!reg.deadline || !reg.title) { skipped++; continue; }
+                const dl = new Date(reg.deadline);
+                if (isNaN(dl.getTime())) { skipped++; continue; }
+                if (dl < now) { closed++; continue; }   // deadline passed — don't create
+
+                const dlLabel = dl.toLocaleDateString('en-US', {
+                    month: 'short', day: 'numeric', timeZone: 'America/New_York'
+                });
+                events.push({
+                    title: reg.title,
+                    date: dl.toISOString(),
+                    endTime: '',
+                    location: 'Millersville University',
+                    tags: ['Other'],
+                    price: 'Free',
+                    registerLink: reg.registerLink || '',
+                    sourceLink: reg.registerLink || 'https://imleagues.com/millersville',
+                    gameResult: '', gameScore: '', streamLink: '', isLive: false,
+                    registrationRequired: true,
+                    registrationDeadline: reg.deadline,
+                    kidFriendly: false,
+                    description: [
+                        reg.season ? `Season runs ${reg.season}.` : '',
+                        reg.registrationWindow ? `Registration ${reg.registrationWindow}.` : '',
+                        `Registration closes ${dlLabel}. Sign up at IMLeagues.`
+                    ].filter(Boolean).join(' ')
+                });
+                added++;
+            }
+            if (added > 0 || closed > 0 || skipped > 0) {
+                console.log(`  ✅ Intramural signups: ${added} open, ${closed} closed, ${skipped} skipped`);
+            }
+        }
+    } catch (e) { console.log(`  ⚠️ Intramural signups (imleagues.json) error: ${e.message}`); }
 
 
     // ===== 7. VFW POST 7294 — hand-maintained via vfw.json + Cowork =====

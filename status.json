@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-06-02T03:53:33.300Z",
-  "totalEvents": 633,
+  "generatedAt": "2026-06-02T08:29:43.135Z",
+  "totalEvents": 789,
   "withDescription": 317,
   "withImage": 107,
-  "familyFriendly": 46,
+  "familyFriendly": 47,
   "eventsToday": 1,
   "sources": {
     "muAthletics": 65,
     "muCalendar": 151,
     "muGetInvolved": 243,
-    "pennManor": 42,
+    "pennManor": 198,
     "borough": 110,
     "vfw": 3,
     "phantomPower": 13,
@@ -30,8 +30,8 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-06-03T04:00:00.000Z",
-      "latest": "2026-09-04T19:00:00.000Z"
+      "earliest": "2026-04-28T20:00:00.000Z",
+      "latest": "2026-09-21T23:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-03-04T23:30:00.000Z",
@@ -53,43 +53,43 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-02-09",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 24
+      "daysSinceMoved": 25
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 26
+      "daysSinceMoved": 27
     },
     "pennManor": {
-      "newest": "2026-09-04",
-      "daysSinceMoved": 25
+      "newest": "2026-09-21",
+      "daysSinceMoved": 7
     },
     "borough": {
       "newest": "2027-05-08",
-      "daysSinceMoved": 24
+      "daysSinceMoved": 25
     },
     "vfw": {
       "newest": "2026-05-27",
-      "daysSinceMoved": 20
+      "daysSinceMoved": 21
     },
     "phantomPower": {
       "newest": "2026-07-17",
-      "daysSinceMoved": 12
+      "daysSinceMoved": 13
     },
     "community": {
       "newest": "2026-04-27",
-      "daysSinceMoved": 26
+      "daysSinceMoved": 27
     }
   },
   "sports": {
-    "total": 95,
-    "scored": 11,
-    "wins": 7,
-    "losses": 4,
-    "ties": 0
+    "total": 238,
+    "scored": 28,
+    "wins": 13,
+    "losses": 14,
+    "ties": 1
   },
   "registrations": {
     "open": 2,
@@ -105,79 +105,79 @@
       "Youth Sports": 1
     },
     "stalePast": 1,
-    "lastSyncAt": "2026-06-02T03:52:42.074Z"
+    "lastSyncAt": "2026-06-02T08:28:20.368Z"
   },
   "recentlyAdded": [
     {
-      "key": "Boys JV Soccer vs Daniel Boone High School|2026-09-02T18:30:00.000Z",
-      "firstSeenAt": "2026-06-01T20:17:28.508Z",
-      "title": "Boys JV Soccer vs Daniel Boone High School",
+      "key": "Coed Unified Track & Field - Outdoor @ Manheim Central High School|2026-04-28T20:00:00.000Z",
+      "firstSeenAt": "2026-06-02T08:29:43.132Z",
+      "title": "Coed Unified Track & Field - Outdoor @ Manheim Central High School",
       "source": "PM",
-      "date": "2026-09-02T18:30:00.000Z"
+      "date": "2026-04-28T20:00:00.000Z"
     },
     {
-      "key": "Boys JV Soccer vs Daniel Boone High School|2026-09-02T20:00:00.000Z",
-      "firstSeenAt": "2026-06-01T20:17:28.508Z",
-      "title": "Boys JV Soccer vs Daniel Boone High School",
+      "key": "Boys JV Volleyball @ Hempfield Senior High School|2026-04-28T22:00:00.000Z",
+      "firstSeenAt": "2026-06-02T08:29:43.132Z",
+      "title": "Boys JV Volleyball @ Hempfield Senior High School",
       "source": "PM",
-      "date": "2026-09-02T20:00:00.000Z"
+      "date": "2026-04-28T22:00:00.000Z"
     },
     {
-      "key": "Planning Commission - Cancelled|2026-06-03T22:30:00.000Z",
-      "firstSeenAt": "2026-06-01T18:36:35.020Z",
-      "title": "Planning Commission - Cancelled",
-      "source": "Borough",
-      "date": "2026-06-03T22:30:00.000Z"
+      "key": "Boys Varsity Volleyball @ Hempfield Senior High School|2026-04-28T23:00:00.000Z",
+      "firstSeenAt": "2026-06-02T08:29:43.132Z",
+      "title": "Boys Varsity Volleyball @ Hempfield Senior High School",
+      "source": "PM",
+      "date": "2026-04-28T23:00:00.000Z"
     },
     {
-      "key": "Penn Manor Soccer Club - Fall 2026 Registration|2026-08-22T18:00:00.000Z",
-      "firstSeenAt": "2026-06-01T18:36:35.020Z",
-      "title": "Penn Manor Soccer Club - Fall 2026 Registration",
-      "source": "Other",
-      "date": "2026-08-22T18:00:00.000Z"
+      "key": "Boys JV Baseball @ Twin Valley High School|2026-04-30T20:00:00.000Z",
+      "firstSeenAt": "2026-06-02T08:29:43.132Z",
+      "title": "Boys JV Baseball @ Twin Valley High School",
+      "source": "PM",
+      "date": "2026-04-30T20:00:00.000Z"
     },
     {
-      "key": "Spring 2027 Job & Internship Fair|2027-03-31T11:00:00",
-      "firstSeenAt": "2026-06-01T15:52:11.626Z",
-      "title": "Spring 2027 Job & Internship Fair",
-      "source": "MU",
-      "date": "2027-03-31T11:00:00"
+      "key": "Boys 7/8/9th Track & Field - Outdoor @ Cedar Crest High School|2026-04-30T20:00:00.000Z",
+      "firstSeenAt": "2026-06-02T08:29:43.132Z",
+      "title": "Boys 7/8/9th Track & Field - Outdoor @ Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-04-30T20:00:00.000Z"
     },
     {
-      "key": "MU Women's Soccer Summer Camp|2026-06-29T13:00:00.000Z",
-      "firstSeenAt": "2026-06-01T13:38:54.748Z",
-      "title": "MU Women's Soccer Summer Camp",
-      "source": "MU",
-      "date": "2026-06-29T13:00:00.000Z"
+      "key": "Girls 7/8/9th Track & Field - Outdoor @ Cedar Crest High School|2026-04-30T20:00:00.000Z",
+      "firstSeenAt": "2026-06-02T08:29:43.132Z",
+      "title": "Girls 7/8/9th Track & Field - Outdoor @ Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-04-30T20:00:00.000Z"
     },
     {
-      "key": "Bit Brigade Performs \"Mega Man X\" LIVE w. Super Guitar Bros.|2026-06-28T00:00:00.000Z",
-      "firstSeenAt": "2026-06-01T09:30:19.168Z",
-      "title": "Bit Brigade Performs \"Mega Man X\" LIVE w. Super Guitar Bros.",
-      "source": "Other",
-      "date": "2026-06-28T00:00:00.000Z"
+      "key": "Boys JV Baseball vs Manheim Township High School|2026-04-30T20:15:00.000Z",
+      "firstSeenAt": "2026-06-02T08:29:43.132Z",
+      "title": "Boys JV Baseball vs Manheim Township High School",
+      "source": "PM",
+      "date": "2026-04-30T20:15:00.000Z"
     },
     {
-      "key": "Stone Horses w. The Blues Vultures|2026-06-27T00:00:00.000Z",
-      "firstSeenAt": "2026-05-30T09:15:24.207Z",
-      "title": "Stone Horses w. The Blues Vultures",
-      "source": "Other",
-      "date": "2026-06-27T00:00:00.000Z"
+      "key": "Boys Varsity Baseball vs Manheim Township High School|2026-04-30T20:15:00.000Z",
+      "firstSeenAt": "2026-06-02T08:29:43.132Z",
+      "title": "Boys Varsity Baseball vs Manheim Township High School",
+      "source": "PM",
+      "date": "2026-04-30T20:15:00.000Z"
     },
     {
-      "key": "EMO NIGHT Dance Party|2026-06-14T01:00:00.000Z",
-      "firstSeenAt": "2026-05-29T23:12:20.128Z",
-      "title": "EMO NIGHT Dance Party",
-      "source": "Other",
-      "date": "2026-06-14T01:00:00.000Z"
+      "key": "Girls Varsity Softball @ Manheim Township High School|2026-04-30T20:15:00.000Z",
+      "firstSeenAt": "2026-06-02T08:29:43.132Z",
+      "title": "Girls Varsity Softball @ Manheim Township High School",
+      "source": "PM",
+      "date": "2026-04-30T20:15:00.000Z"
     },
     {
-      "key": "Millersville University Women's Swimming vs Arcadia University|2027-01-08T18:00:00.000Z",
-      "firstSeenAt": "2026-05-29T21:07:52.715Z",
-      "title": "Millersville University Women's Swimming vs Arcadia University",
-      "source": "MU",
-      "date": "2027-01-08T18:00:00.000Z"
+      "key": "Girls JV Softball @ Manheim Township High School|2026-04-30T21:45:00.000Z",
+      "firstSeenAt": "2026-06-02T08:29:43.132Z",
+      "title": "Girls JV Softball @ Manheim Township High School",
+      "source": "PM",
+      "date": "2026-04-30T21:45:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 156
 }

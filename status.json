@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-06-02T17:22:58.244Z",
-  "totalEvents": 791,
+  "generatedAt": "2026-06-02T18:21:23.394Z",
+  "totalEvents": 668,
   "withDescription": 318,
-  "withImage": 106,
+  "withImage": 107,
   "familyFriendly": 47,
   "eventsToday": 2,
   "sources": {
     "muAthletics": 64,
     "muCalendar": 151,
     "muGetInvolved": 243,
-    "pennManor": 201,
+    "pennManor": 76,
     "borough": 111,
     "vfw": 4,
     "phantomPower": 13,
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-04-28T20:00:00.000Z",
-      "latest": "2026-09-22T21:00:00.000Z"
+      "latest": "2026-06-03T13:15:00.000Z"
     },
     "borough": {
       "earliest": "2026-03-04T23:30:00.000Z",
@@ -64,7 +64,7 @@
       "daysSinceMoved": 27
     },
     "pennManor": {
-      "newest": "2026-09-22",
+      "newest": "2026-06-03",
       "daysSinceMoved": 0
     },
     "borough": {
@@ -85,7 +85,7 @@
     }
   },
   "sports": {
-    "total": 238,
+    "total": 127,
     "scored": 28,
     "wins": 13,
     "losses": 14,
@@ -105,7 +105,7 @@
       "Youth Sports": 1
     },
     "stalePast": 1,
-    "lastSyncAt": "2026-06-02T17:21:20.577Z"
+    "lastSyncAt": "2026-06-02T18:20:25.426Z"
   },
   "recentlyAdded": [
     {
@@ -137,47 +137,47 @@
       "date": "2026-07-01T00:00:00"
     },
     {
-      "key": "Boys Freshman Football @ Middletown Area High School|2026-09-09T21:00:00.000Z",
+      "key": "9/11 Golf Outing 2026|2026-09-11T17:00:00.000Z",
       "firstSeenAt": "2026-06-02T13:36:12.776Z",
-      "title": "Boys Freshman Football @ Middletown Area High School",
-      "source": "PM",
-      "date": "2026-09-09T21:00:00.000Z"
+      "title": "9/11 Golf Outing 2026",
+      "source": "Other",
+      "date": "2026-09-11T17:00:00.000Z"
     },
     {
-      "key": "Boys Varsity Soccer @ Cedar Crest High School|2026-09-09T23:00:00.000Z",
-      "firstSeenAt": "2026-06-02T13:36:12.776Z",
-      "title": "Boys Varsity Soccer @ Cedar Crest High School",
-      "source": "PM",
-      "date": "2026-09-09T23:00:00.000Z"
+      "key": "Account Overview Information Notice|2026-06-03T01:05:54.000Z",
+      "firstSeenAt": "2026-06-02T12:32:08.666Z",
+      "title": "Account Overview Information Notice",
+      "source": "Borough",
+      "date": "2026-06-03T01:05:54.000Z"
     },
     {
-      "key": "Girls Varsity Soccer vs Cedar Crest High School|2026-09-09T23:00:00.000Z",
-      "firstSeenAt": "2026-06-02T13:36:12.776Z",
-      "title": "Girls Varsity Soccer vs Cedar Crest High School",
+      "key": "Coed Unified Track & Field - Outdoor @ Manheim Central High School|2026-04-28T20:00:00.000Z",
+      "firstSeenAt": "2026-06-02T08:29:43.132Z",
+      "title": "Coed Unified Track & Field - Outdoor @ Manheim Central High School",
       "source": "PM",
-      "date": "2026-09-09T23:00:00.000Z"
+      "date": "2026-04-28T20:00:00.000Z"
     },
     {
-      "key": "Girls 7/8/9th Volleyball @ Northern Lebanon HS/MS|2026-09-10T19:45:00.000Z",
-      "firstSeenAt": "2026-06-02T13:36:12.776Z",
-      "title": "Girls 7/8/9th Volleyball @ Northern Lebanon HS/MS",
+      "key": "Boys JV Volleyball @ Hempfield Senior High School|2026-04-28T22:00:00.000Z",
+      "firstSeenAt": "2026-06-02T08:29:43.132Z",
+      "title": "Boys JV Volleyball @ Hempfield Senior High School",
       "source": "PM",
-      "date": "2026-09-10T19:45:00.000Z"
+      "date": "2026-04-28T22:00:00.000Z"
     },
     {
-      "key": "Girls 7/8/9th Soccer @ Manheim Township High School|2026-09-10T20:00:00.000Z",
-      "firstSeenAt": "2026-06-02T13:36:12.776Z",
-      "title": "Girls 7/8/9th Soccer @ Manheim Township High School",
+      "key": "Boys Varsity Volleyball @ Hempfield Senior High School|2026-04-28T23:00:00.000Z",
+      "firstSeenAt": "2026-06-02T08:29:43.132Z",
+      "title": "Boys Varsity Volleyball @ Hempfield Senior High School",
       "source": "PM",
-      "date": "2026-09-10T20:00:00.000Z"
+      "date": "2026-04-28T23:00:00.000Z"
     },
     {
-      "key": "Girls 7/8th Volleyball @ Northern Lebanon HS/MS|2026-09-10T20:45:00.000Z",
-      "firstSeenAt": "2026-06-02T13:36:12.776Z",
-      "title": "Girls 7/8th Volleyball @ Northern Lebanon HS/MS",
+      "key": "Boys JV Baseball @ Twin Valley High School|2026-04-30T20:00:00.000Z",
+      "firstSeenAt": "2026-06-02T08:29:43.132Z",
+      "title": "Boys JV Baseball @ Twin Valley High School",
       "source": "PM",
-      "date": "2026-09-10T20:45:00.000Z"
+      "date": "2026-04-30T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 4
+  "addedLastRun": 0
 }

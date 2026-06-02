@@ -10,12 +10,12 @@
         "Saturday": "Burger Night"
     },
     "weeklySpecials": {
-        "dateRange": "Tuesday, May 26 through Saturday, May 30",
-        "validThrough": "2026-05-31",
+        "dateRange": "Tuesday, June 2 through Saturday, June 6",
+        "validThrough": "2026-06-07",
         "items": [
-            "Chief Cleary Chili Cheese Dog – $7.95",
-            "Half Rack BBQ Ribs – $15.95",
-            "Chef's Choice Cod – $13.95 (Fri only)"
+            "Ham Salad Sandwich – $11.95",
+            "Chicken Parmesan – $14.95",
+            "Prime Rib – 12 oz. Queen Cut $17.95 or 16 oz. King Cut $21.95 (Fri only)"
         ]
     },
     "events": [
@@ -36,6 +36,12 @@
             "date": "2026-05-27T18:00:00-04:00",
             "endTime": "2026-05-27T19:00:00-04:00",
             "description": "VFW Post 7294 monthly meeting."
+        },
+        {
+            "title": "9/11 Golf Outing 2026",
+            "date": "2026-09-11T13:00:00-04:00",
+            "endTime": "2026-09-11T17:00:00-04:00",
+            "description": "Millersville-Manor VFW Post 7294 annual golf outing fundraiser at Crossgates GC. Shotgun start at 1 PM, BBQ dinner and awards at 5 PM. Limited to the first 10 teams; registration payments due by August 9, 2026. Proceeds support veterans of foreign wars and Tunnels to Towers."
         }
     ]
 }

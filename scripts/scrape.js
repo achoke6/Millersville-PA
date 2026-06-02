@@ -4666,6 +4666,12 @@ Focus on the most impressive deals a shopper would want to know about. Include m
     }
     const slimJson = JSON.stringify(deduped);  // No pretty-print — wire format
     afterBytes = slimJson.length;
+	// Strip C0/C1 control chars from all event string fields before writing.
+	// A stray char like U+0002 (a mangled "multi-day") is valid once JSON-escaped,
+	// but Google's structured-data parser rejects it ("Incorrect value type"), and
+	// it renders as a gap on cards. Keep tab/newline/CR.
+	const CTRL = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F]/g;
+	for (const ev of events) for (const k in ev) if (typeof ev[k] === 'string') ev[k] = ev[k].replace(CTRL, ' ');
     fs.writeFileSync(path.join(__dirname, '../events.json'), slimJson);
     if (beforeBytes > 0) {
         const reductionPct = Math.round((1 - afterBytes / beforeBytes) * 100);

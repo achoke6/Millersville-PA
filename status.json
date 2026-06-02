@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-06-02T16:09:07.424Z",
-  "totalEvents": 792,
+  "generatedAt": "2026-06-02T17:22:58.244Z",
+  "totalEvents": 791,
   "withDescription": 318,
   "withImage": 107,
   "familyFriendly": 47,
   "eventsToday": 2,
   "sources": {
-    "muAthletics": 65,
+    "muAthletics": 64,
     "muCalendar": 151,
     "muGetInvolved": 243,
     "pennManor": 199,
@@ -14,7 +14,7 @@
     "vfw": 4,
     "phantomPower": 13,
     "community": 1,
-    "muHudlBroadcasts": 2
+    "muHudlBroadcasts": 1
   },
   "sourceDateRanges": {
     "muAthletics": {
@@ -85,10 +85,10 @@
     }
   },
   "sports": {
-    "total": 239,
-    "scored": 29,
+    "total": 238,
+    "scored": 28,
     "wins": 13,
-    "losses": 15,
+    "losses": 14,
     "ties": 1
   },
   "registrations": {
@@ -105,9 +105,37 @@
       "Youth Sports": 1
     },
     "stalePast": 1,
-    "lastSyncAt": "2026-06-02T16:07:43.078Z"
+    "lastSyncAt": "2026-06-02T17:21:20.577Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Summer Session 1 ENDS|2026-06-05T00:00:00",
+      "firstSeenAt": "2026-06-02T17:22:58.242Z",
+      "title": "Summer Session 1 ENDS",
+      "source": "MU",
+      "date": "2026-06-05T00:00:00"
+    },
+    {
+      "key": "Summer Session 2 BEGINS|2026-06-08T00:00:00",
+      "firstSeenAt": "2026-06-02T17:22:58.242Z",
+      "title": "Summer Session 2 BEGINS",
+      "source": "MU",
+      "date": "2026-06-08T00:00:00"
+    },
+    {
+      "key": "End of Fiscal Year 2025-2026|2026-06-30T00:00:00",
+      "firstSeenAt": "2026-06-02T17:22:58.242Z",
+      "title": "End of Fiscal Year 2025-2026",
+      "source": "MU",
+      "date": "2026-06-30T00:00:00"
+    },
+    {
+      "key": "Start of Fiscal Year 2026-2027|2026-07-01T00:00:00",
+      "firstSeenAt": "2026-06-02T17:22:58.242Z",
+      "title": "Start of Fiscal Year 2026-2027",
+      "source": "MU",
+      "date": "2026-07-01T00:00:00"
+    },
     {
       "key": "Boys Freshman Football @ Middletown Area High School|2026-09-09T21:00:00.000Z",
       "firstSeenAt": "2026-06-02T13:36:12.776Z",
@@ -149,35 +177,7 @@
       "title": "Girls 7/8th Volleyball @ Northern Lebanon HS/MS",
       "source": "PM",
       "date": "2026-09-10T20:45:00.000Z"
-    },
-    {
-      "key": "Girls 7/8th Soccer @ Manheim Township High School|2026-09-10T21:00:00.000Z",
-      "firstSeenAt": "2026-06-02T13:36:12.776Z",
-      "title": "Girls 7/8th Soccer @ Manheim Township High School",
-      "source": "PM",
-      "date": "2026-09-10T21:00:00.000Z"
-    },
-    {
-      "key": "Girls JV Volleyball @ Elizabethtown Area High School|2026-09-10T22:00:00.000Z",
-      "firstSeenAt": "2026-06-02T13:36:12.776Z",
-      "title": "Girls JV Volleyball @ Elizabethtown Area High School",
-      "source": "PM",
-      "date": "2026-09-10T22:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Volleyball @ Elizabethtown Area High School|2026-09-10T23:00:00.000Z",
-      "firstSeenAt": "2026-06-02T13:36:12.776Z",
-      "title": "Girls Varsity Volleyball @ Elizabethtown Area High School",
-      "source": "PM",
-      "date": "2026-09-10T23:00:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Golf @ Manheim Township High School|2026-09-11T16:30:00.000Z",
-      "firstSeenAt": "2026-06-02T13:36:12.776Z",
-      "title": "Boys Varsity Golf @ Manheim Township High School",
-      "source": "PM",
-      "date": "2026-09-11T16:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 4
 }

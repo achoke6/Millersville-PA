@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-06-01T18:36:35.023Z",
-  "totalEvents": 891,
+  "generatedAt": "2026-06-01T23:01:59.023Z",
+  "totalEvents": 890,
   "withDescription": 320,
   "withImage": 107,
   "familyFriendly": 47,
   "eventsToday": 3,
   "sources": {
-    "muAthletics": 67,
+    "muAthletics": 65,
     "muCalendar": 152,
     "muGetInvolved": 246,
-    "pennManor": 197,
+    "pennManor": 198,
     "borough": 207,
     "vfw": 3,
     "phantomPower": 13,
@@ -30,7 +30,7 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-04-27T21:45:00.000Z",
+      "earliest": "2026-04-28T20:00:00.000Z",
       "latest": "2026-09-21T23:00:00.000Z"
     },
     "borough": {
@@ -85,28 +85,50 @@
     }
   },
   "sports": {
-    "total": 239,
-    "scored": 31,
+    "total": 238,
+    "scored": 28,
     "wins": 13,
-    "losses": 17,
+    "losses": 14,
     "ties": 1
   },
   "registrations": {
     "open": 2,
     "next2Weeks": 0,
     "nextClose": "2026-06-30",
-    "openNoDeadline": 1
+    "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 1,
+    "pendingFuture": 2,
     "pendingPast": 0,
     "pendingBySource": {
-      "PM Community": 1
+      "PM Community": 1,
+      "Youth Sports": 1
     },
     "stalePast": 1,
-    "lastSyncAt": "2026-06-01T18:35:08.969Z"
+    "lastSyncAt": "2026-06-01T23:00:32.963Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Boys JV Soccer vs Daniel Boone High School|2026-09-02T18:30:00.000Z",
+      "firstSeenAt": "2026-06-01T20:17:28.508Z",
+      "title": "Boys JV Soccer vs Daniel Boone High School",
+      "source": "PM",
+      "date": "2026-09-02T18:30:00.000Z"
+    },
+    {
+      "key": "Boys JV Soccer vs Daniel Boone High School|2026-09-02T20:00:00.000Z",
+      "firstSeenAt": "2026-06-01T20:17:28.508Z",
+      "title": "Boys JV Soccer vs Daniel Boone High School",
+      "source": "PM",
+      "date": "2026-09-02T20:00:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Soccer vs Hempfield High School|2026-09-21T23:00:00.000Z",
+      "firstSeenAt": "2026-06-01T19:54:07.539Z",
+      "title": "Girls Varsity Soccer vs Hempfield High School",
+      "source": "PM",
+      "date": "2026-09-21T23:00:00.000Z"
+    },
     {
       "key": "Planning Commission - Cancelled|2026-06-03T22:30:00.000Z",
       "firstSeenAt": "2026-06-01T18:36:35.020Z",
@@ -155,28 +177,7 @@
       "title": "Stone Horses w. The Blues Vultures",
       "source": "Other",
       "date": "2026-06-27T00:00:00.000Z"
-    },
-    {
-      "key": "Girls 7/8th Volleyball @ Cocalico High School|2026-09-21T20:45:00.000Z",
-      "firstSeenAt": "2026-05-30T06:25:40.875Z",
-      "title": "Girls 7/8th Volleyball @ Cocalico High School",
-      "source": "PM",
-      "date": "2026-09-21T20:45:00.000Z"
-    },
-    {
-      "key": "Girls 7/8th Field Hockey @ Conestoga Valley High School|2026-09-21T21:00:00.000Z",
-      "firstSeenAt": "2026-05-30T06:25:40.875Z",
-      "title": "Girls 7/8th Field Hockey @ Conestoga Valley High School",
-      "source": "PM",
-      "date": "2026-09-21T21:00:00.000Z"
-    },
-    {
-      "key": "Girls JV Soccer vs Hempfield High School|2026-09-21T21:30:00.000Z",
-      "firstSeenAt": "2026-05-30T06:25:40.875Z",
-      "title": "Girls JV Soccer vs Hempfield High School",
-      "source": "PM",
-      "date": "2026-09-21T21:30:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 0
 }

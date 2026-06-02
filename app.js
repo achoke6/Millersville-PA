@@ -2771,10 +2771,6 @@ async function loadEvents(){
     }
     renderEvents(); renderSports();
     if (currentNews.length > 0) renderNewsUI();
-    // Inject schema.org Event structured data for the next ~50 upcoming public
-    // events. Helps Google, Bing, and social-media crawlers understand what's
-    // scheduled. Runs once per load — enough for SEO discovery.
-    if (typeof emitEventsStructuredData === 'function') emitEventsStructuredData();
     // Load sibling meta for the "last updated" indicator. Failing quietly is fine —
     // the file may not exist on first deploy before the scraper has run.
     try {
@@ -2785,120 +2781,6 @@ async function loadEvents(){
         }
     } catch (_) { /* silent */ }
     }catch(e){console.error('Events load error:',e);}
-}
-
-// Emit schema.org Event JSON-LD for upcoming public events. We skip student-
-// only (mu-only) content since that's irrelevant to general web search, and
-// we cap at 50 to keep the payload reasonable. Events are mapped to a
-// schema.org subtype (SportsEvent / MusicEvent) where the tags make it
-// unambiguous, otherwise generic Event. Google's Event rich results
-// require: @type, name, startDate, location (with @type Place + name). We
-// also include endDate (estimated) and eventStatus, which are recommended.
-function emitEventsStructuredData() {
-    try {
-        // Remove any prior injection — avoids duplicates if called twice.
-        const prior = document.getElementById('mapp-events-ld');
-        if (prior) prior.remove();
-
-        const now = new Date();
-        const nowMs = now.getTime();
-        const upcoming = (allEvents || [])
-            .filter(e => {
-                if (!e.date || (e._dateMs || 0) < nowMs) return false;
-                // Public-facing only: skip mu-student-only content and
-                // GetInvolved-internal events (not useful for townie web
-                // searchers, and mostly require MU credentials anyway).
-                if (e.audience === 'mu-only') return false;
-                if ((e.tags || []).includes('Clubs/Orgs') && e.audience !== 'public') return false;
-                return true;
-            })
-            .slice(0, 50);
-        if (upcoming.length === 0) return;
-
-        const cleanLoc = (loc) => {
-            if (!loc) return 'Millersville, PA';
-            return loc.replace(/^\s+|\s+$/g, '').substring(0, 200);
-        };
-
-        const ldArray = upcoming.map(e => {
-            const d = new Date(e.date);
-            // End time: most of our events don't have an explicit end; assume
-            // 2 hours for events, 3 for sport games. Schema.org accepts this
-            // and it's closer to reality than omitting endDate entirely.
-            const tags = e.tags || [];
-            const isSport = tags.includes('Athletics') || tags.includes('Athletic Competitions');
-            // Map to a schema.org Event subtype where the tag vocabulary makes
-            // it unambiguous. SportsEvent and MusicEvent are well-supported in
-            // Google's rich results and help categorize for "sports near me" /
-            // "concerts near me" surfaces. EducationEvent is intentionally NOT
-            // mapped — there's no clean tag that reliably means "educational"
-            // (MU calendar lectures, workshops, etc. share tags with general
-            // community events), and an incorrect subtype is worse for SEO than
-            // an accurate generic Event. Anything not clearly sport or music
-            // falls through to the base Event type.
-            const isMusic = tags.includes('Live Music')
-                || tags.includes('Music/Arts')
-                || tags.includes('Arts Concert / Performance');
-            const eventType = isSport ? 'SportsEvent' : (isMusic ? 'MusicEvent' : 'Event');
-            const endD = new Date(d.getTime() + (isSport ? 3 : 2) * 60 * 60 * 1000);
-            const item = {
-                "@context": "https://schema.org",
-                "@type": eventType,
-                "name": e.title || 'Millersville event',
-                "startDate": d.toISOString(),
-                "endDate": endD.toISOString(),
-                "eventStatus": "https://schema.org/EventScheduled",
-                "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-                "location": {
-                    "@type": "Place",
-                    "name": cleanLoc(e.location),
-                    "address": {
-                        "@type": "PostalAddress",
-                        "addressLocality": "Millersville",
-                        "addressRegion": "PA",
-                        "addressCountry": "US"
-                    }
-                }
-            };
-            if (e.description) {
-                // Google allows up to ~500 chars for description in rich
-                // results. Strip any HTML that may have leaked in.
-                item.description = e.description.replace(/<[^>]+>/g, '').substring(0, 500);
-            }
-            if (e.image) item.image = [e.image];
-            if (e.ticketLink) {
-                item.offers = {
-                    "@type": "Offer",
-                    "url": e.ticketLink,
-                    "availability": "https://schema.org/InStock"
-                };
-                if (e.price && e.price.toLowerCase() !== 'free') {
-                    // Only set price if we have numeric extraction from "$X";
-                    // pure strings like "Free entry" or "Members only" get
-                    // skipped to avoid schema validation warnings.
-                    const priceNum = (e.price.match(/\$?([\d.]+)/) || [])[1];
-                    if (priceNum) {
-                        item.offers.price = priceNum;
-                        item.offers.priceCurrency = "USD";
-                    }
-                } else {
-                    item.offers.price = "0";
-                    item.offers.priceCurrency = "USD";
-                }
-            }
-            if (e.sourceLink) item.url = e.sourceLink;
-            return item;
-        });
-
-        const script = document.createElement('script');
-        script.id = 'mapp-events-ld';
-        script.type = 'application/ld+json';
-        script.textContent = JSON.stringify(ldArray);
-        document.head.appendChild(script);
-    } catch (err) {
-        // SEO injection is informational — never break the app if it fails.
-        console.warn('Structured data injection failed:', err);
-    }
 }
 
 // Render the homepage's "updated X ago" line. Reads from the scraper-written

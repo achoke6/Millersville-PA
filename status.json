@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-06-02T12:41:19.491Z",
-  "totalEvents": 726,
-  "withDescription": 317,
+  "generatedAt": "2026-06-02T13:36:12.779Z",
+  "totalEvents": 792,
+  "withDescription": 318,
   "withImage": 107,
   "familyFriendly": 47,
   "eventsToday": 2,
@@ -9,9 +9,9 @@
     "muAthletics": 65,
     "muCalendar": 151,
     "muGetInvolved": 243,
-    "pennManor": 134,
+    "pennManor": 199,
     "borough": 111,
-    "vfw": 3,
+    "vfw": 4,
     "phantomPower": 13,
     "community": 1,
     "muHudlBroadcasts": 2
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-04-28T20:00:00.000Z",
-      "latest": "2026-09-09T23:00:00.000Z"
+      "latest": "2026-09-21T23:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-03-04T23:30:00.000Z",
@@ -39,7 +39,7 @@
     },
     "vfw": {
       "earliest": "2026-05-24T15:00:00.000Z",
-      "latest": "2026-05-27T22:00:00.000Z"
+      "latest": "2026-09-11T17:00:00.000Z"
     },
     "phantomPower": {
       "earliest": "2026-06-03T23:00:00.000Z",
@@ -64,16 +64,16 @@
       "daysSinceMoved": 27
     },
     "pennManor": {
-      "newest": "2026-09-09",
-      "daysSinceMoved": 0
+      "newest": "2026-09-21",
+      "daysSinceMoved": 7
     },
     "borough": {
       "newest": "2027-05-08",
       "daysSinceMoved": 25
     },
     "vfw": {
-      "newest": "2026-05-27",
-      "daysSinceMoved": 21
+      "newest": "2026-09-11",
+      "daysSinceMoved": 0
     },
     "phantomPower": {
       "newest": "2026-07-17",
@@ -85,10 +85,10 @@
     }
   },
   "sports": {
-    "total": 175,
-    "scored": 28,
+    "total": 239,
+    "scored": 29,
     "wins": 13,
-    "losses": 14,
+    "losses": 15,
     "ties": 1
   },
   "registrations": {
@@ -105,79 +105,79 @@
       "Youth Sports": 1
     },
     "stalePast": 1,
-    "lastSyncAt": "2026-06-02T12:39:59.006Z"
+    "lastSyncAt": "2026-06-02T13:34:57.609Z"
   },
   "recentlyAdded": [
     {
-      "key": "Account Overview Information Notice|2026-06-03T01:05:54.000Z",
-      "firstSeenAt": "2026-06-02T12:32:08.666Z",
-      "title": "Account Overview Information Notice",
-      "source": "Borough",
-      "date": "2026-06-03T01:05:54.000Z"
+      "key": "Boys Freshman Football @ Middletown Area High School|2026-09-09T21:00:00.000Z",
+      "firstSeenAt": "2026-06-02T13:36:12.776Z",
+      "title": "Boys Freshman Football @ Middletown Area High School",
+      "source": "PM",
+      "date": "2026-09-09T21:00:00.000Z"
     },
     {
-      "key": "Coed Unified Track & Field - Outdoor @ Manheim Central High School|2026-04-28T20:00:00.000Z",
-      "firstSeenAt": "2026-06-02T08:29:43.132Z",
-      "title": "Coed Unified Track & Field - Outdoor @ Manheim Central High School",
+      "key": "Boys Varsity Soccer @ Cedar Crest High School|2026-09-09T23:00:00.000Z",
+      "firstSeenAt": "2026-06-02T13:36:12.776Z",
+      "title": "Boys Varsity Soccer @ Cedar Crest High School",
       "source": "PM",
-      "date": "2026-04-28T20:00:00.000Z"
+      "date": "2026-09-09T23:00:00.000Z"
     },
     {
-      "key": "Boys JV Volleyball @ Hempfield Senior High School|2026-04-28T22:00:00.000Z",
-      "firstSeenAt": "2026-06-02T08:29:43.132Z",
-      "title": "Boys JV Volleyball @ Hempfield Senior High School",
+      "key": "Girls Varsity Soccer vs Cedar Crest High School|2026-09-09T23:00:00.000Z",
+      "firstSeenAt": "2026-06-02T13:36:12.776Z",
+      "title": "Girls Varsity Soccer vs Cedar Crest High School",
       "source": "PM",
-      "date": "2026-04-28T22:00:00.000Z"
+      "date": "2026-09-09T23:00:00.000Z"
     },
     {
-      "key": "Boys Varsity Volleyball @ Hempfield Senior High School|2026-04-28T23:00:00.000Z",
-      "firstSeenAt": "2026-06-02T08:29:43.132Z",
-      "title": "Boys Varsity Volleyball @ Hempfield Senior High School",
+      "key": "Girls 7/8/9th Volleyball @ Northern Lebanon HS/MS|2026-09-10T19:45:00.000Z",
+      "firstSeenAt": "2026-06-02T13:36:12.776Z",
+      "title": "Girls 7/8/9th Volleyball @ Northern Lebanon HS/MS",
       "source": "PM",
-      "date": "2026-04-28T23:00:00.000Z"
+      "date": "2026-09-10T19:45:00.000Z"
     },
     {
-      "key": "Boys JV Baseball @ Twin Valley High School|2026-04-30T20:00:00.000Z",
-      "firstSeenAt": "2026-06-02T08:29:43.132Z",
-      "title": "Boys JV Baseball @ Twin Valley High School",
+      "key": "Girls 7/8/9th Soccer @ Manheim Township High School|2026-09-10T20:00:00.000Z",
+      "firstSeenAt": "2026-06-02T13:36:12.776Z",
+      "title": "Girls 7/8/9th Soccer @ Manheim Township High School",
       "source": "PM",
-      "date": "2026-04-30T20:00:00.000Z"
+      "date": "2026-09-10T20:00:00.000Z"
     },
     {
-      "key": "Boys 7/8/9th Track & Field - Outdoor @ Cedar Crest High School|2026-04-30T20:00:00.000Z",
-      "firstSeenAt": "2026-06-02T08:29:43.132Z",
-      "title": "Boys 7/8/9th Track & Field - Outdoor @ Cedar Crest High School",
+      "key": "Girls 7/8th Volleyball @ Northern Lebanon HS/MS|2026-09-10T20:45:00.000Z",
+      "firstSeenAt": "2026-06-02T13:36:12.776Z",
+      "title": "Girls 7/8th Volleyball @ Northern Lebanon HS/MS",
       "source": "PM",
-      "date": "2026-04-30T20:00:00.000Z"
+      "date": "2026-09-10T20:45:00.000Z"
     },
     {
-      "key": "Girls 7/8/9th Track & Field - Outdoor @ Cedar Crest High School|2026-04-30T20:00:00.000Z",
-      "firstSeenAt": "2026-06-02T08:29:43.132Z",
-      "title": "Girls 7/8/9th Track & Field - Outdoor @ Cedar Crest High School",
+      "key": "Girls 7/8th Soccer @ Manheim Township High School|2026-09-10T21:00:00.000Z",
+      "firstSeenAt": "2026-06-02T13:36:12.776Z",
+      "title": "Girls 7/8th Soccer @ Manheim Township High School",
       "source": "PM",
-      "date": "2026-04-30T20:00:00.000Z"
+      "date": "2026-09-10T21:00:00.000Z"
     },
     {
-      "key": "Boys JV Baseball vs Manheim Township High School|2026-04-30T20:15:00.000Z",
-      "firstSeenAt": "2026-06-02T08:29:43.132Z",
-      "title": "Boys JV Baseball vs Manheim Township High School",
+      "key": "Girls JV Volleyball @ Elizabethtown Area High School|2026-09-10T22:00:00.000Z",
+      "firstSeenAt": "2026-06-02T13:36:12.776Z",
+      "title": "Girls JV Volleyball @ Elizabethtown Area High School",
       "source": "PM",
-      "date": "2026-04-30T20:15:00.000Z"
+      "date": "2026-09-10T22:00:00.000Z"
     },
     {
-      "key": "Boys Varsity Baseball vs Manheim Township High School|2026-04-30T20:15:00.000Z",
-      "firstSeenAt": "2026-06-02T08:29:43.132Z",
-      "title": "Boys Varsity Baseball vs Manheim Township High School",
+      "key": "Girls Varsity Volleyball @ Elizabethtown Area High School|2026-09-10T23:00:00.000Z",
+      "firstSeenAt": "2026-06-02T13:36:12.776Z",
+      "title": "Girls Varsity Volleyball @ Elizabethtown Area High School",
       "source": "PM",
-      "date": "2026-04-30T20:15:00.000Z"
+      "date": "2026-09-10T23:00:00.000Z"
     },
     {
-      "key": "Girls Varsity Softball @ Manheim Township High School|2026-04-30T20:15:00.000Z",
-      "firstSeenAt": "2026-06-02T08:29:43.132Z",
-      "title": "Girls Varsity Softball @ Manheim Township High School",
+      "key": "Boys Varsity Golf @ Manheim Township High School|2026-09-11T16:30:00.000Z",
+      "firstSeenAt": "2026-06-02T13:36:12.776Z",
+      "title": "Boys Varsity Golf @ Manheim Township High School",
       "source": "PM",
-      "date": "2026-04-30T20:15:00.000Z"
+      "date": "2026-09-11T16:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 66
 }

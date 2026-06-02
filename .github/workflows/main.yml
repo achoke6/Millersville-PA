@@ -187,6 +187,7 @@ jobs:
                 --exclude ^vfw-cache\.json$ \
                 --exclude ^grocery-cache\.json$ \
                 --exclude ^candidates-status\.json$ \
+                --exclude ^lib/eventJsonLd\.js$ \
                 ./ ${{ secrets.DREAMHOST_DIR }};
               put -O ${{ secrets.DREAMHOST_DIR }} .htaccess;
               quit;

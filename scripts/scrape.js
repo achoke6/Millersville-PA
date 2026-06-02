@@ -2515,12 +2515,29 @@ async function runScraper() {
         );
         let boroughCount = 0;
         let boroughRecurring = 0;
+        let boroughCollectionSkipped = 0;
+
+        // Recurring municipal collection days (trash/recycling, woody yard waste,
+        // appliance/tire) are intentionally NOT surfaced on the app — Adam's
+        // call. We drop them here at the source so they never enter events.json
+        // (this also keeps them out of the iCal feed, the dashboard counts, and
+        // the JSON-LD). Matched narrowly by title so borough MEETINGS, office
+        // closings, elections, and park reservations are unaffected. This is
+        // anchored on the exact recurring titles from the borough calendar:
+        //   "Regular Trash & Recycling Collection"
+        //   "Woody Yard Waste Collection"
+        //   "Appliance/Tire Collection"
+        const BOROUGH_COLLECTION_RE = /\b(trash\s*&?\s*recycling|woody\s*yard\s*waste|appliance\s*\/?\s*tire)\b.*\bcollection\b|\bcollection\b.*\b(trash|recycling|yard waste|appliance|tire)\b/i;
 
         for (const ev of Object.values(boroughData)) {
             if (ev.type !== 'VEVENT') continue;
 
             const title = ev.summary || 'Borough Event';
             const loc = ev.location || 'Millersville Borough';
+
+            // Skip the recurring collection days (see note above). One check
+            // here covers BOTH the RRULE-expansion and single-event paths below.
+            if (BOROUGH_COLLECTION_RE.test(title)) { boroughCollectionSkipped++; continue; }
 
             // Handle recurring events (RRULE)
             if (ev.rrule) {
@@ -2620,6 +2637,7 @@ async function runScraper() {
             }
         }
         console.log(`✅ Borough Calendar: ${boroughCount} events (${boroughRecurring} from recurring)`);
+        if (boroughCollectionSkipped) console.log(`  ⏭️ skipped ${boroughCollectionSkipped} recurring collection day(s) (trash/yard-waste/appliance — intentionally hidden)`);
 
         // Apply hand-maintained borough-overrides.json. Format:
         //   {"overrides": [{
@@ -4652,6 +4670,47 @@ Focus on the most impressive deals a shopper would want to know about. Include m
     if (beforeBytes > 0) {
         const reductionPct = Math.round((1 - afterBytes / beforeBytes) * 100);
         console.log(`💾 events.json: ${(afterBytes/1024).toFixed(1)}KB (${reductionPct}% smaller than pretty-printed)`);
+    }
+
+    // --- schema.org Event JSON-LD for Google rich results -----------------
+    // Generate an ItemList of upcoming events and bake it into index.html
+    // between the <!-- JSONLD:START --> / <!-- JSONLD:END --> markers. We do
+    // this at build time (not in app.js) because Google needs the structured
+    // data present in the served HTML — the client-side render isn't reliably
+    // crawled. Marker-bounded string replacement ONLY: we never sed/regex the
+    // whole HTML (a prior sed incident truncated tags), and if the markers are
+    // missing we log and skip rather than touching the file, so a future
+    // index.html edit that drops the markers can't corrupt the page or fail
+    // the deploy.
+    try {
+        const { generateEventJsonLd } = require('../lib/eventJsonLd.js');
+        const jsonld = generateEventJsonLd(deduped, { now: Date.now() });
+        const idxPath = path.join(__dirname, '../index.html');
+        const START = '<!-- JSONLD:START -->';
+        const END = '<!-- JSONLD:END -->';
+        let html = fs.readFileSync(idxPath, 'utf8');
+        const sIdx = html.indexOf(START);
+        const eIdx = html.indexOf(END);
+        if (sIdx === -1 || eIdx === -1 || eIdx < sIdx) {
+            console.warn('⚠ JSON-LD markers not found in index.html — skipped (no events markup injected)');
+        } else if (!jsonld) {
+            console.warn('⚠ no qualifying events for JSON-LD — leaving markers empty');
+            // Clear any stale content between markers.
+            const before = html.slice(0, sIdx + START.length);
+            const after = html.slice(eIdx);
+            const cleared = before + '\n    ' + after;
+            if (cleared !== html) fs.writeFileSync(idxPath, cleared);
+        } else {
+            const before = html.slice(0, sIdx + START.length);
+            const after = html.slice(eIdx);
+            const injected = before + '\n    ' + jsonld + '\n    ' + after;
+            fs.writeFileSync(idxPath, injected);
+            const count = (jsonld.match(/"@type":"Event"/g) || []).length;
+            console.log(`🔎 JSON-LD: injected ${count} upcoming events into index.html (${(Buffer.byteLength(jsonld, 'utf8') / 1024).toFixed(1)} KB)`);
+        }
+    } catch (e) {
+        // Never let SEO markup break the scrape/deploy.
+        console.warn('⚠ JSON-LD generation/injection failed (continuing):', e.message);
     }
     // Sibling metadata file for the frontend's "last updated" display. Kept separate so we
     // don't have to change the events.json array-shape that tons of code reads from.

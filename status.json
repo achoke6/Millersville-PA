@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-06-03T21:49:10.579Z",
-  "totalEvents": 794,
+  "generatedAt": "2026-06-03T23:43:25.137Z",
+  "totalEvents": 781,
   "withDescription": 314,
-  "withImage": 107,
+  "withImage": 94,
   "familyFriendly": 46,
-  "eventsToday": 6,
+  "eventsToday": 5,
   "sources": {
     "muAthletics": 63,
     "muCalendar": 149,
@@ -12,7 +12,7 @@
     "pennManor": 211,
     "borough": 108,
     "vfw": 4,
-    "phantomPower": 13,
+    "phantomPower": 0,
     "community": 1,
     "muHudlBroadcasts": 0
   },
@@ -41,10 +41,7 @@
       "earliest": "2026-05-24T15:00:00.000Z",
       "latest": "2026-09-11T17:00:00.000Z"
     },
-    "phantomPower": {
-      "earliest": "2026-06-03T23:00:00.000Z",
-      "latest": "2026-07-17T23:00:00.000Z"
-    },
+    "phantomPower": null,
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2026-04-27T21:00:00.000Z"
@@ -75,10 +72,7 @@
       "newest": "2026-09-11",
       "daysSinceMoved": 1
     },
-    "phantomPower": {
-      "newest": "2026-07-17",
-      "daysSinceMoved": 14
-    },
+    "phantomPower": null,
     "community": {
       "newest": "2026-04-27",
       "daysSinceMoved": 28
@@ -86,9 +80,9 @@
   },
   "sports": {
     "total": 249,
-    "scored": 27,
+    "scored": 25,
     "wins": 13,
-    "losses": 13,
+    "losses": 11,
     "ties": 1
   },
   "registrations": {
@@ -105,7 +99,7 @@
       "Youth Sports": 1
     },
     "stalePast": 2,
-    "lastSyncAt": "2026-06-03T21:47:45.415Z"
+    "lastSyncAt": "2026-06-03T23:42:13.569Z"
   },
   "recentlyAdded": [
     {
@@ -179,5 +173,5 @@
       "date": "2026-04-30T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 0
 }

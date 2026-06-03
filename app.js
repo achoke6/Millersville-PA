@@ -4512,7 +4512,8 @@ function buildTimelineItem(e, now) {
         src = 'Residence Halls';
     } else if (muAffiliation === 'student' && e.orgShortName && !isSport && !orgIsAdmin) {
         src = e.orgShortName;
-    } else if(tags.includes('VFW')) src = 'VFW';
+    } else if ((e.location||'').trim() === 'Phantom Power' || tags.includes('Phantom Power')) src = 'Phantom Power';
+    else if(tags.includes('VFW')) src = 'VFW';
     else if(tags.includes('Borough')) src = 'Borough';
     else if(tags.includes('PM') && isSport) src = 'PM';
     else if(tags.includes('PM')) src = 'PM';
@@ -4553,7 +4554,7 @@ function buildTimelineItem(e, now) {
     // matches the org name (the pill already conveys it — avoids "Free
     // Lunch — The HUB" with [The HUB] pill, which is double display).
     const rawLoc = cleanLocation(e.location || '').trim();
-    const genericLoc = /^(millersville university|campus|tba|tbd|online|virtual|zoom|n\/a)$/i;
+    const genericLoc = /^(millersville university|millersville borough|phantom power|campus|tba|tbd|online|virtual|zoom|n\/a|pa)$/i;
     const orgEqualsLoc = e.orgShortName && rawLoc.toLowerCase() === e.orgShortName.toLowerCase();
     if (rawLoc && rawLoc.length <= 35 && !genericLoc.test(rawLoc) && !orgEqualsLoc && !title.toLowerCase().includes(rawLoc.toLowerCase())) {
         title = `${title} — ${rawLoc}`;

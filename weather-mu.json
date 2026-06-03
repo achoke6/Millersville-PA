@@ -1,10 +1,10 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Wednesday, June 03, 2026 at 08:59 AM (Kyle Elliott, Meteorologist)",
+    "issued": "Wednesday, June 03, 2026 at 12:06 PM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "Today",
+        "period": "This afternoon",
         "text": "Sunny, warmer and beautiful with low humidity. High: 82-86"
       },
       {
@@ -126,7 +126,74 @@
       }
     ]
   },
-  "observations": [],
+  "observations": [
+    {
+      "time": "14:00",
+      "temp": "81",
+      "dewpoint": "42",
+      "rh": "26",
+      "windDir": "NNW",
+      "windSpeed": "6",
+      "precip": "0.00",
+      "visibility": "9.1",
+      "condition": "None"
+    },
+    {
+      "time": "13:00",
+      "temp": "80",
+      "dewpoint": "42",
+      "rh": "26",
+      "windDir": "N",
+      "windSpeed": "7",
+      "precip": "0.00",
+      "visibility": "9.1",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "79",
+      "dewpoint": "42",
+      "rh": "27",
+      "windDir": "N",
+      "windSpeed": "7",
+      "precip": "0.00",
+      "visibility": "9.5",
+      "condition": "None"
+    },
+    {
+      "time": "11:00",
+      "temp": "77",
+      "dewpoint": "43",
+      "rh": "30",
+      "windDir": "N",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "10.0",
+      "condition": "None"
+    },
+    {
+      "time": "10:00",
+      "temp": "74",
+      "dewpoint": "46",
+      "rh": "37",
+      "windDir": "NNE",
+      "windSpeed": "6",
+      "precip": "0.00",
+      "visibility": "10.3",
+      "condition": "None"
+    },
+    {
+      "time": "09:00",
+      "temp": "69",
+      "dewpoint": "45",
+      "rh": "42",
+      "windDir": "NNW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "10.2",
+      "condition": "None"
+    }
+  ],
   "discussion": {
     "headline": "Sunny, dry and tranquil first week of meteorological summer",
     "dateLine": "11:30 a.m. Tuesday, June 2, 2026",
@@ -168,5 +235,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-06-03T16:00:29.458Z"
+  "updated": "2026-06-03T18:23:03.140Z"
 }

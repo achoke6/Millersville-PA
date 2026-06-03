@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-03T14:24:38.967Z",
-  "totalEvents": 789,
+  "generatedAt": "2026-06-03T15:31:53.560Z",
+  "totalEvents": 790,
   "withDescription": 313,
   "withImage": 107,
   "familyFriendly": 47,
@@ -9,7 +9,7 @@
     "muAthletics": 63,
     "muCalendar": 149,
     "muGetInvolved": 239,
-    "pennManor": 207,
+    "pennManor": 208,
     "borough": 108,
     "vfw": 4,
     "phantomPower": 13,
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-04-30T20:00:00.000Z",
-      "latest": "2026-09-23T21:30:00.000Z"
+      "latest": "2026-09-23T23:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-03-09T23:00:00.000Z",
@@ -85,7 +85,7 @@
     }
   },
   "sports": {
-    "total": 245,
+    "total": 246,
     "scored": 27,
     "wins": 13,
     "losses": 13,
@@ -105,9 +105,16 @@
       "Youth Sports": 1
     },
     "stalePast": 2,
-    "lastSyncAt": "2026-06-03T14:23:05.940Z"
+    "lastSyncAt": "2026-06-03T15:29:35.255Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Boys Varsity Soccer vs Cedar Crest High School|2026-09-23T23:00:00.000Z",
+      "firstSeenAt": "2026-06-03T15:31:53.558Z",
+      "title": "Boys Varsity Soccer vs Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-09-23T23:00:00.000Z"
+    },
     {
       "key": "Girls JV Soccer @ Cedar Crest High School|2026-09-23T21:30:00.000Z",
       "firstSeenAt": "2026-06-03T14:24:38.965Z",
@@ -170,13 +177,6 @@
       "title": "PEQ - Picnic on the Playground with the PTO",
       "source": "PM",
       "date": "2026-07-15T22:00:00.000Z"
-    },
-    {
-      "key": "School Board Meeting|2026-07-20T23:00:00.000Z",
-      "firstSeenAt": "2026-06-02T18:55:26.836Z",
-      "title": "School Board Meeting",
-      "source": "PM",
-      "date": "2026-07-20T23:00:00.000Z"
     }
   ],
   "addedLastRun": 1

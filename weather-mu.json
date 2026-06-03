@@ -1,0 +1,239 @@
+{
+  "forecast": {
+    "synopsis": "",
+    "issued": "Wednesday, June 03, 2026 at 08:59 AM (Kyle Elliott, Meteorologist)",
+    "periods": [
+      {
+        "period": "Today",
+        "text": "Sunny, warmer and beautiful with low humidity. High: 82-86"
+      },
+      {
+        "period": "Tonight",
+        "text": "Clear and comfortable. Low: 52-56"
+      },
+      {
+        "period": "Thursday",
+        "text": "Mostly sunny and warm with low humidity. High: 86-90"
+      },
+      {
+        "period": "Thursday Night",
+        "text": "Mainly clear and comfortable. Low: 56-60"
+      },
+      {
+        "period": "Friday",
+        "text": "Hot but not humid with sunshine and a few clouds. High: 88-92"
+      }
+    ]
+  },
+  "sevenDay": {
+    "issued": "Wednesday, June 03, 2026 at 08:59 AM (Kyle Elliott)",
+    "days": [
+      {
+        "period": "Wednesday",
+        "sky": "Sunny",
+        "weather": "Warmer",
+        "pop": "<10%",
+        "temp": "84",
+        "conf": "5"
+      },
+      {
+        "period": "Wednesday night",
+        "sky": "Clear Skies",
+        "weather": "Fair",
+        "pop": "<10%",
+        "temp": "54",
+        "conf": "5"
+      },
+      {
+        "period": "Thursday",
+        "sky": "Mostly Sunny",
+        "weather": "Warm",
+        "pop": "<10%",
+        "temp": "88",
+        "conf": "5"
+      },
+      {
+        "period": "Thursday night",
+        "sky": "Mainly Clear",
+        "weather": "Fair",
+        "pop": "<10%",
+        "temp": "58",
+        "conf": "5"
+      },
+      {
+        "period": "Friday",
+        "sky": "Mostly Sunny",
+        "weather": "Hot",
+        "pop": "<10%",
+        "temp": "90",
+        "conf": "5"
+      },
+      {
+        "period": "Friday night",
+        "sky": "Mainly Clear",
+        "weather": "Warm",
+        "pop": "<10%",
+        "temp": "64",
+        "conf": "5"
+      },
+      {
+        "period": "Saturday",
+        "sky": "Partly Sunny",
+        "weather": "Hot",
+        "pop": "<10%",
+        "temp": "92",
+        "conf": "4"
+      },
+      {
+        "period": "Saturday night",
+        "sky": "Partly Cloudy",
+        "weather": "Chc. of Showers",
+        "pop": "30%",
+        "temp": "66",
+        "conf": "3"
+      },
+      {
+        "period": "Sunday",
+        "sky": "Clouds & Sun",
+        "weather": "Chc. of Showers",
+        "pop": "40%",
+        "temp": "86",
+        "conf": "3"
+      },
+      {
+        "period": "Sunday night",
+        "sky": "Partly Cloudy",
+        "weather": "Mild",
+        "pop": "20%",
+        "temp": "62",
+        "conf": "3"
+      },
+      {
+        "period": "Monday",
+        "sky": "Partly Sunny",
+        "weather": "Cooler",
+        "pop": "<10%",
+        "temp": "upper 70s",
+        "conf": "3"
+      },
+      {
+        "period": "Tuesday",
+        "sky": "Mostly Sunny",
+        "weather": "Seasonable",
+        "pop": "<10%",
+        "temp": "upper 70s",
+        "conf": "3"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "time": "11:00",
+      "temp": "77",
+      "dewpoint": "43",
+      "rh": "30",
+      "windDir": "N",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "10.0",
+      "condition": "None"
+    },
+    {
+      "time": "10:00",
+      "temp": "74",
+      "dewpoint": "46",
+      "rh": "37",
+      "windDir": "NNE",
+      "windSpeed": "6",
+      "precip": "0.00",
+      "visibility": "10.3",
+      "condition": "None"
+    },
+    {
+      "time": "09:00",
+      "temp": "69",
+      "dewpoint": "45",
+      "rh": "42",
+      "windDir": "NNW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "10.2",
+      "condition": "None"
+    },
+    {
+      "time": "08:00",
+      "temp": "63",
+      "dewpoint": "46",
+      "rh": "54",
+      "windDir": "NNW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "10.3",
+      "condition": "None"
+    },
+    {
+      "time": "07:00",
+      "temp": "54",
+      "dewpoint": "51",
+      "rh": "90",
+      "windDir": "WSW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "10.4",
+      "condition": "None"
+    },
+    {
+      "time": "06:00",
+      "temp": "51",
+      "dewpoint": "50",
+      "rh": "97",
+      "windDir": "NNW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "10.0",
+      "condition": "None"
+    }
+  ],
+  "discussion": {
+    "headline": "Sunny, dry and tranquil first week of meteorological summer",
+    "dateLine": "11:30 a.m. Tuesday, June 2, 2026",
+    "excerpt": "May ended on a sunny and beautiful note Sunday with high temperatures in the mid-to-upper 70s across the Lower Susquehanna Valley. However, the month was nothing short of volatile in terms of massive temperature swings. The season's first heatwave occurred from May 18-20 with a new record high of 96°F set at Millersville University on May 18. Just five days later, a wind-driven, soaking rain accompanied temperatures in the low 50s on the Saturday of Memorial Day Weekend. …",
+    "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
+  },
+  "images": {
+    "radar": "https://sirocco.accuweather.com/nx_mosaic_640x480c/RE/inmaREPA_.gif",
+    "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
+  },
+  "videos": [
+    {
+      "title": "Short Term Forecast 06/02/2026",
+      "videoId": "Onil_ULAZKE",
+      "url": "https://www.youtube.com/watch?v=Onil_ULAZKE",
+      "published": "2026-06-02T15:27:56+00:00",
+      "thumbnail": "https://i4.ytimg.com/vi/Onil_ULAZKE/hqdefault.jpg"
+    },
+    {
+      "title": "Medium Range Forecast 06/01/2026",
+      "videoId": "aiB0nzgYe68",
+      "url": "https://www.youtube.com/watch?v=aiB0nzgYe68",
+      "published": "2026-06-01T13:59:39+00:00",
+      "thumbnail": "https://i2.ytimg.com/vi/aiB0nzgYe68/hqdefault.jpg"
+    },
+    {
+      "title": "Short Term Forecast 06/01/2026",
+      "videoId": "uCj4m3pnM9Q",
+      "url": "https://www.youtube.com/watch?v=uCj4m3pnM9Q",
+      "published": "2026-06-01T13:32:51+00:00",
+      "thumbnail": "https://i2.ytimg.com/vi/uCj4m3pnM9Q/hqdefault.jpg"
+    },
+    {
+      "title": "Medium Range Forecast 05/26/2026",
+      "videoId": "oNVf0F2dWZw",
+      "url": "https://www.youtube.com/watch?v=oNVf0F2dWZw",
+      "published": "2026-05-26T13:34:55+00:00",
+      "thumbnail": "https://i4.ytimg.com/vi/oNVf0F2dWZw/hqdefault.jpg"
+    }
+  ],
+  "sourceUrl": "https://www.millersville.edu/weathercenter/",
+  "updated": "2026-06-03T15:29:36.298Z"
+}

@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-06-03T18:24:24.241Z",
-  "totalEvents": 792,
-  "withDescription": 313,
+  "generatedAt": "2026-06-03T19:47:58.696Z",
+  "totalEvents": 795,
+  "withDescription": 315,
   "withImage": 107,
   "familyFriendly": 47,
   "eventsToday": 4,
@@ -9,7 +9,7 @@
     "muAthletics": 63,
     "muCalendar": 149,
     "muGetInvolved": 239,
-    "pennManor": 210,
+    "pennManor": 211,
     "borough": 108,
     "vfw": 4,
     "phantomPower": 13,
@@ -85,16 +85,16 @@
     }
   },
   "sports": {
-    "total": 248,
+    "total": 249,
     "scored": 27,
     "wins": 13,
     "losses": 13,
     "ties": 1
   },
   "registrations": {
-    "open": 2,
+    "open": 4,
     "next2Weeks": 0,
-    "nextClose": "2026-06-30",
+    "nextClose": "2026-06-18",
     "openNoDeadline": 0
   },
   "reviewQueue": {
@@ -105,9 +105,37 @@
       "Youth Sports": 1
     },
     "stalePast": 2,
-    "lastSyncAt": "2026-06-03T18:23:02.449Z"
+    "lastSyncAt": "2026-06-03T19:46:38.844Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Intramural Sunset Cornhole — Registration Open|2026-06-18T03:59:00.000Z",
+      "firstSeenAt": "2026-06-03T19:47:58.693Z",
+      "title": "Intramural Sunset Cornhole — Registration Open",
+      "source": "Other",
+      "date": "2026-06-18T03:59:00.000Z"
+    },
+    {
+      "key": "Intramural 3v3 Basketball — Registration Open|2026-06-25T03:59:00.000Z",
+      "firstSeenAt": "2026-06-03T19:47:58.693Z",
+      "title": "Intramural 3v3 Basketball — Registration Open",
+      "source": "Other",
+      "date": "2026-06-25T03:59:00.000Z"
+    },
+    {
+      "key": "Mentalia's Stupid Drag Show|2026-06-26T00:00:00.000Z",
+      "firstSeenAt": "2026-06-03T19:47:58.693Z",
+      "title": "Mentalia's Stupid Drag Show",
+      "source": "Other",
+      "date": "2026-06-26T00:00:00.000Z"
+    },
+    {
+      "key": "Girls 7/8/9th Volleyball @ Manheim Township High School|2026-09-24T20:00:00.000Z",
+      "firstSeenAt": "2026-06-03T19:47:58.693Z",
+      "title": "Girls 7/8/9th Volleyball @ Manheim Township High School",
+      "source": "PM",
+      "date": "2026-09-24T20:00:00.000Z"
+    },
     {
       "key": "Girls Varsity Soccer @ Cedar Crest High School|2026-09-23T23:00:00.000Z",
       "firstSeenAt": "2026-06-03T18:24:24.239Z",
@@ -149,35 +177,7 @@
       "title": "Boys JV Soccer vs Spring Grove Area High School",
       "source": "PM",
       "date": "2026-08-25T04:01:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Soccer vs Spring Grove Area High School|2026-08-25T04:01:00.000Z",
-      "firstSeenAt": "2026-06-03T13:24:15.609Z",
-      "title": "Boys Varsity Soccer vs Spring Grove Area High School",
-      "source": "PM",
-      "date": "2026-08-25T04:01:00.000Z"
-    },
-    {
-      "key": "Boys JV Soccer vs Cedar Crest High School|2026-09-23T21:30:00.000Z",
-      "firstSeenAt": "2026-06-02T20:16:39.305Z",
-      "title": "Boys JV Soccer vs Cedar Crest High School",
-      "source": "PM",
-      "date": "2026-09-23T21:30:00.000Z"
-    },
-    {
-      "key": "ESH PTO-Sponsored Splash Party|2026-06-04T04:00:00.000Z",
-      "firstSeenAt": "2026-06-02T18:55:26.836Z",
-      "title": "ESH PTO-Sponsored Splash Party",
-      "source": "PM",
-      "date": "2026-06-04T04:00:00.000Z"
-    },
-    {
-      "key": "School Board Meeting|2026-06-08T23:00:00.000Z",
-      "firstSeenAt": "2026-06-02T18:55:26.836Z",
-      "title": "School Board Meeting",
-      "source": "PM",
-      "date": "2026-06-08T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 4
 }

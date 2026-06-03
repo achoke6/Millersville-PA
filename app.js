@@ -5568,7 +5568,7 @@ function buildCampusCupboardCard(dayName) {
     const items = buildCampusCupboardItems(dayName);
     if (!items) return '';   // closed today (weekend) — hide the card entirely
     const statusText = items[0];
-    return `<div class="app-card" style="border-left:4px solid var(--gold);">
+    return `<div class="app-card" style="border-left:4px solid var(--gold);display:flex;flex-direction:column;justify-content:flex-start;">
         <div class="card-body">
             <div class="card-heading"><span style="font-size:1.5rem;">🛒</span><h3 class="card-title">Campus Cupboard</h3></div>
             <p class="card-meta">📍 Inside The HUB, 121 N George St · MU students only</p>
@@ -5626,13 +5626,13 @@ function buildFoodCard(p, specials, dayName) {
         }
     }
 
-    return `<div class="app-card" style="position:relative;">${membersBadge}
+    return `<div class="app-card" style="position:relative;display:flex;flex-direction:column;justify-content:flex-start;">${membersBadge}
         <div style="display:flex;justify-content:space-between;align-items:flex-start;"><span class="card-tag">🍴 ${p.cuisine || 'Food & Drink'}</span>${mbaBadge(p.name)}</div>
         <h3 class="card-title" style="margin-top:6px;">${p.name}</h3>
         ${ratingRow}${addr}
         <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:8px;">${p.description||''}</p>
         ${specialsHtml}
-        <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+        <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:auto;">
             <button onclick="openReviewModal('${p.name.replace(/'/g,"\\'")}')" class="btn btn-sm btn-outline" style="font-size:0.75rem;">⭐ Review</button>
             <div style="flex:1;">${actionBtn}</div>
         </div>
@@ -5664,7 +5664,7 @@ function buildServiceCard(p) {
         // liveFeed hook: when a scraped feed is configured for this member,
         // render it here. Empty for now — wired when per-business scraping ships.
         const liveFeedHtml = '';  // placeholder for future spot.liveFeed rendering
-        return `<div class="app-card card-spotlight">
+        return `<div class="app-card card-spotlight" style="display:flex;flex-direction:column;justify-content:flex-start;">
             <div style="display:flex;justify-content:space-between;align-items:flex-start;">
                 <span class="card-tag">${icon} ${p.category}</span>
                 ${mba}
@@ -5677,7 +5677,7 @@ function buildServiceCard(p) {
             ${hours}
             <p style="font-size:0.85rem;color:var(--text-muted);margin:8px 0;">${p.description}</p>
             ${liveFeedHtml}
-            <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+            <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:auto;">
                 ${phone}
                 <div style="display:flex;gap:6px;align-items:center;">
                     <button onclick="openReviewModal('${p.name.replace(/'/g,"\\'")}')" class="btn btn-sm btn-outline" style="font-size:0.75rem;">⭐ Review</button>
@@ -5687,7 +5687,7 @@ function buildServiceCard(p) {
         </div>`;
     }
 
-    return `<div class="app-card">
+    return `<div class="app-card" style="display:flex;flex-direction:column;justify-content:flex-start;">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;">
             <span class="card-tag">${icon} ${p.category}</span>
             ${mba}
@@ -5697,7 +5697,7 @@ function buildServiceCard(p) {
         <p class="card-meta" style="margin-bottom:4px;">📍 ${p.address}</p>
         ${hours}
         <p style="font-size:0.85rem;color:var(--text-muted);margin:8px 0;">${p.description}</p>
-        <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+        <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:auto;">
             ${phone}
             <div style="display:flex;gap:6px;align-items:center;">
                 <button onclick="openReviewModal('${p.name.replace(/'/g,"\\'")}')" class="btn btn-sm btn-outline" style="font-size:0.75rem;">⭐ Review</button>

@@ -1294,6 +1294,15 @@ window.openFeedSettings = function() {
                 <button onclick="clearFavoritesOnly();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-outline" style="flex:1;padding:10px 8px;font-size:0.82rem;white-space:nowrap;">Clear Favs</button>
             </div>
         </div>
+        ${!muAffiliation ? `
+        <div style="margin-bottom:16px;padding:16px;border:2px solid var(--gold);border-radius:var(--radius-sm);background:var(--gold-soft);">
+            <div style="font-weight:700;font-size:0.98rem;margin-bottom:4px;">👋 First — are you a Marauder?</div>
+            <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:12px;">This tailors your whole experience — which events, sports, and local listings show up. You can change it anytime.</div>
+            <div style="display:flex;gap:8px;">
+                <button onclick="window.pickAffiliation('student');this.closest('div[style*=fixed]').remove();openFeedSettings();" class="btn btn-sm btn-ticket" style="flex:1;padding:12px 8px;font-size:0.9rem;font-weight:700;">🎓 I'm a Marauder</button>
+                <button onclick="window.pickAffiliation('townie');this.closest('div[style*=fixed]').remove();openFeedSettings();" class="btn btn-sm btn-outline" style="flex:1;padding:12px 8px;font-size:0.9rem;font-weight:700;">🌳 I'm a Townie</button>
+            </div>
+        </div>` : ''}
         <div id="feed-options">${sectionsHtml}</div>
         <!-- Calendar subscription card. Lets the user grab a personalized iCal
              feed URL containing their current favorites. Sits between the
@@ -1320,12 +1329,12 @@ window.openFeedSettings = function() {
         <!-- Small affiliation opt-out/opt-in link at the bottom. Mirrors the welcome banner's
              "Not a student? I'm a townie →" pattern. Text flips depending on current affiliation
              so users can switch back if they mis-picked. Unset users see the townie opt-out. -->
-        <div style="margin-top:16px;padding-top:12px;border-top:1px dashed var(--border);font-size:0.78rem;color:var(--text-muted);text-align:center;">
+        ${muAffiliation ? `<div style="margin-top:16px;padding-top:12px;border-top:1px dashed var(--border);font-size:0.78rem;color:var(--text-muted);text-align:center;">
             ${muAffiliation === 'townie'
                 ? 'Actually a Marauder? <a href="#" onclick="event.preventDefault();this.closest(\'div[style*=fixed]\').remove();window.pickAffiliation(\'student\');openFeedSettings();" style="color:var(--navy);font-weight:600;text-decoration:underline;">I\'m a student →</a>'
                 : 'Not a student? <a href="#" onclick="event.preventDefault();this.closest(\'div[style*=fixed]\').remove();window.pickAffiliation(\'townie\');openFeedSettings();" style="color:var(--navy);font-weight:600;text-decoration:underline;">I\'m a townie →</a>'
             }
-        </div>`;
+        </div>` : ''}`;
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
     // Render the notifications button with the right initial label/state.
@@ -2085,6 +2094,7 @@ window.pickAffiliation = function(value) {
             if (typeof renderEvents === 'function') renderEvents();
             if (typeof renderSports === 'function') renderSports();
             if (typeof renderNewsUI === 'function') renderNewsUI();
+            if (typeof renderPlaces === 'function') renderPlaces();
             return;
         }
         // User confirmed — clear favorites and reopen modal
@@ -2099,6 +2109,7 @@ window.pickAffiliation = function(value) {
     if (typeof renderEvents === 'function') renderEvents();
     if (typeof renderSports === 'function') renderSports();
     if (typeof renderNewsUI === 'function') renderNewsUI();
+    if (typeof renderPlaces === 'function') renderPlaces();
 };
 
 // Called after affiliation changes. Cleans up state that may be invalid under the new
@@ -2162,6 +2173,9 @@ function pruneStaleStateForAffiliation() {
     evKidMode = false;
     evFreeFoodMode = false;
     evFreeStuffMode = false;
+    // Marauder Gold is a student-only directory filter — drop it on any change
+    // (renderPlaces re-syncs the button visibility for the new affiliation).
+    placesMGMode = false;
 }
 // ==================== END MY FEED ====================
 
@@ -5356,6 +5370,18 @@ window.togglePlacesMBA=function(){
 };
 
 function renderPlaces(){
+    // Marauder Gold is an MU campus payment card, so its filter toggle is only
+    // relevant to confirmed students. Hide it for townies and undeclared
+    // viewers; if such a viewer somehow had MG mode active, drop it so they're
+    // not stuck in a filtered view with no visible toggle to turn off.
+    const mgBtn = document.getElementById('places-mg-toggle');
+    const showMG = (muAffiliation === 'student');
+    if (mgBtn) mgBtn.style.display = showMG ? '' : 'none';
+    if (!showMG && placesMGMode) {
+        placesMGMode = false;
+        if (mgBtn) mgBtn.classList.remove('active');
+    }
+
     const hc=document.getElementById('housing-container');
     const pc=document.getElementById('places-container');
     const specials = window._placesSpecials || {};

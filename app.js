@@ -5074,9 +5074,30 @@ async function loadWeatherMU(){
 
     sections.push(`<p class="card-meta" style="text-align:center;margin:8px 0 4px;">Forecast, observations & discussion courtesy of the <a href="${esc(data.sourceUrl||'https://www.millersville.edu/weathercenter/')}" target="_blank" rel="noopener" style="color:var(--navy);">MU Weather Information Center</a></p>`);
 
+    // Spacing: match whatever vertical rhythm the existing weather cards use
+    // (their margin-bottom, or the parent container's grid/flex gap) and apply
+    // it uniformly via the wrapper's flex `gap`. We also zero each MU card's own
+    // margin so the gap is the SOLE spacer — otherwise the card's CSS margin
+    // stacks on top of the gap and the MU section spaces wider than the rest of
+    // the page (the inconsistency being fixed here).
+    let gap = '16px';
+    const sample = [...host.querySelectorAll('.app-card')].find(c => !c.closest('#mu-weather-extra'));
+    if (sample) {
+        const cs = getComputedStyle(sample);
+        const pcs = sample.parentElement ? getComputedStyle(sample.parentElement) : null;
+        const mb = cs.marginBottom;
+        const pg = pcs ? (pcs.rowGap && pcs.rowGap !== 'normal' ? pcs.rowGap : pcs.gap) : '';
+        if (mb && mb !== '0px') gap = mb;
+        else if (pg && pg !== 'normal' && pg !== '0px') gap = pg;
+    }
     let extra = document.getElementById('mu-weather-extra');
-    if(!extra){ extra = document.createElement('div'); extra.id='mu-weather-extra'; extra.style.marginTop='16px'; host.appendChild(extra); }
+    if(!extra){ extra = document.createElement('div'); extra.id='mu-weather-extra'; host.appendChild(extra); }
+    extra.style.display = 'flex';
+    extra.style.flexDirection = 'column';
+    extra.style.gap = gap;
+    extra.style.marginTop = gap;
     extra.innerHTML = sections.join('');
+    extra.querySelectorAll('.app-card').forEach(c => { c.style.marginTop = '0'; c.style.marginBottom = '0'; });
 }
 async function loadNews(){try{currentNews=await(await fetch('news.json')).json();renderNewsSubFilters();renderNewsUI();}catch(e){}}
 
@@ -5457,6 +5478,32 @@ window.togglePlacesMBA=function(){
     renderPlaces();
 };
 
+// Let each directory card size to its own content instead of stretching to the
+// tallest card in its row — that row-stretch is what left a plain card with a
+// big empty body when it sat next to a card with a tall specials/deals box.
+// IMPORTANT: only do this when the container lays out in a ROW (CSS grid, or
+// flex-wrap row) — i.e. desktop/tablet. On a single-column mobile flex-column,
+// align-items controls the horizontal axis, so forcing 'start' there would
+// shrink cards off full-width. We detect the current layout and re-check on
+// resize so switching between breakpoints stays correct.
+let _placesFitResizeBound = false;
+function applyPlacesCardFit(pc){
+    if (!pc) return;
+    const cs = getComputedStyle(pc);
+    const isGrid = cs.display.indexOf('grid') !== -1;
+    const isRowFlex = cs.display.indexOf('flex') !== -1 && cs.flexDirection.indexOf('column') === -1;
+    if (isGrid || isRowFlex) pc.style.alignItems = 'start';
+    else pc.style.removeProperty('align-items'); // mobile column — keep full-width stretch
+    if (!_placesFitResizeBound) {
+        _placesFitResizeBound = true;
+        let t;
+        window.addEventListener('resize', () => {
+            clearTimeout(t);
+            t = setTimeout(() => applyPlacesCardFit(document.getElementById('places-container')), 150);
+        });
+    }
+}
+
 function renderPlaces(){
     // Marauder Gold is an MU campus payment card, so its filter toggle is only
     // relevant to confirmed students. Hide it for townies and undeclared
@@ -5472,6 +5519,7 @@ function renderPlaces(){
 
     const hc=document.getElementById('housing-container');
     const pc=document.getElementById('places-container');
+    applyPlacesCardFit(pc);
     const specials = window._placesSpecials || {};
     const dayName = new Date().toLocaleDateString('en-US',{weekday:'long'});
 
@@ -5559,6 +5607,13 @@ function renderPlaces(){
         ? '<p class="empty-state">No MBA member businesses match this filter.</p>'
         : '<p class="empty-state">No listings found in this category. Know a local business? <a href="#" onclick="event.preventDefault();openSubmitBusiness();">Add it here →</a></p>';
     pc.innerHTML = (cupboardCard + cards.join('')) || emptyMsg;
+    // Let each card size to its own content instead of stretching to the tallest
+    // card in its row. Equal-height rows looked fine until a card with a big
+    // specials/deals box forced its short row-mates to match, leaving an ugly
+    // empty void. align-items:start gives the natural-height flow desktop was
+    // missing (mobile already had it, being single-column). Works for both grid
+    // and flex-wrap layouts; harmless if the container is neither.
+    pc.style.alignItems = 'start';
 }
 
 // Build the Campus Cupboard card for the Places page. Mirrors the food-card

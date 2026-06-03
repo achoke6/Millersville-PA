@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-03T15:31:53.560Z",
-  "totalEvents": 790,
+  "generatedAt": "2026-06-03T18:24:24.241Z",
+  "totalEvents": 792,
   "withDescription": 313,
   "withImage": 107,
   "familyFriendly": 47,
@@ -9,7 +9,7 @@
     "muAthletics": 63,
     "muCalendar": 149,
     "muGetInvolved": 239,
-    "pennManor": 208,
+    "pennManor": 210,
     "borough": 108,
     "vfw": 4,
     "phantomPower": 13,
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-04-30T20:00:00.000Z",
-      "latest": "2026-09-23T23:00:00.000Z"
+      "latest": "2026-09-24T20:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-03-09T23:00:00.000Z",
@@ -64,8 +64,8 @@
       "daysSinceMoved": 28
     },
     "pennManor": {
-      "newest": "2026-09-23",
-      "daysSinceMoved": 1
+      "newest": "2026-09-24",
+      "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2027-05-08",
@@ -85,7 +85,7 @@
     }
   },
   "sports": {
-    "total": 246,
+    "total": 248,
     "scored": 27,
     "wins": 13,
     "losses": 13,
@@ -105,9 +105,30 @@
       "Youth Sports": 1
     },
     "stalePast": 2,
-    "lastSyncAt": "2026-06-03T15:29:35.255Z"
+    "lastSyncAt": "2026-06-03T18:23:02.449Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Girls Varsity Soccer @ Cedar Crest High School|2026-09-23T23:00:00.000Z",
+      "firstSeenAt": "2026-06-03T18:24:24.239Z",
+      "title": "Girls Varsity Soccer @ Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-09-23T23:00:00.000Z"
+    },
+    {
+      "key": "Girls 7/8/9th Soccer @ Cedar Crest High School|2026-09-24T20:00:00.000Z",
+      "firstSeenAt": "2026-06-03T18:24:24.239Z",
+      "title": "Girls 7/8/9th Soccer @ Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-09-24T20:00:00.000Z"
+    },
+    {
+      "key": "MOVED: Voices of Migration|2026-06-05T22:30:00.000Z",
+      "firstSeenAt": "2026-06-03T16:02:07.039Z",
+      "title": "MOVED: Voices of Migration",
+      "source": "MU",
+      "date": "2026-06-05T22:30:00.000Z"
+    },
     {
       "key": "Boys Varsity Soccer vs Cedar Crest High School|2026-09-23T23:00:00.000Z",
       "firstSeenAt": "2026-06-03T15:31:53.558Z",
@@ -156,28 +177,7 @@
       "title": "School Board Meeting",
       "source": "PM",
       "date": "2026-06-08T23:00:00.000Z"
-    },
-    {
-      "key": "School Board Meeting|2026-06-22T23:00:00.000Z",
-      "firstSeenAt": "2026-06-02T18:55:26.836Z",
-      "title": "School Board Meeting",
-      "source": "PM",
-      "date": "2026-06-22T23:00:00.000Z"
-    },
-    {
-      "key": "PEQ - Color the Playground with the PTO|2026-06-25T22:00:00.000Z",
-      "firstSeenAt": "2026-06-02T18:55:26.836Z",
-      "title": "PEQ - Color the Playground with the PTO",
-      "source": "PM",
-      "date": "2026-06-25T22:00:00.000Z"
-    },
-    {
-      "key": "PEQ - Picnic on the Playground with the PTO|2026-07-15T22:00:00.000Z",
-      "firstSeenAt": "2026-06-02T18:55:26.836Z",
-      "title": "PEQ - Picnic on the Playground with the PTO",
-      "source": "PM",
-      "date": "2026-07-15T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 2
 }

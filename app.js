@@ -150,6 +150,100 @@ window.showIOSInstallNudge = function() {
     document.body.appendChild(overlay);
 };
 
+// ==================== INSTALL PROMPT (Add to Home Screen) ====================
+// A custom A2HS nudge that beats the browser default. On Android/Chrome we
+// capture beforeinstallprompt (which suppresses the tiny native mini-infobar)
+// and fire our own button on the user's terms; on iOS Safari — which has no
+// install API at all — we reuse showIOSInstallNudge()'s share-sheet steps.
+// Engagement-gated (2nd+ visit), dismissible with a multi-week snooze, and
+// never shown to someone already running the installed app.
+const INSTALL_SNOOZE_KEY = 'mapp_install_snooze_until'; // epoch ms
+const VISIT_KEY = 'mapp_visit_count';
+let deferredInstallPrompt = null; // the captured beforeinstallprompt event (Android/Chrome)
+
+// Chrome/Edge/Android fire this before showing their own banner.
+// preventDefault() suppresses the native mini-infobar so we can prompt our way.
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredInstallPrompt = e;
+    try { maybeShowInstallBanner(); } catch (_) {}
+});
+// If they install (our button OR the browser menu), tear down our UI.
+window.addEventListener('appinstalled', () => {
+    deferredInstallPrompt = null;
+    const b = document.getElementById('mapp-install-banner');
+    if (b) b.remove();
+});
+
+function installSnoozed() {
+    const until = parseInt(localStorage.getItem(INSTALL_SNOOZE_KEY) || '0', 10);
+    return !isNaN(until) && Date.now() < until;
+}
+function snoozeInstall(days) {
+    try { localStorage.setItem(INSTALL_SNOOZE_KEY, String(Date.now() + days * 864e5)); } catch (_) {}
+}
+// Count app loads; used to hold the prompt back until someone returns.
+function bumpVisitCount() {
+    let n = parseInt(localStorage.getItem(VISIT_KEY) || '0', 10);
+    n = isNaN(n) ? 1 : n + 1;
+    try { localStorage.setItem(VISIT_KEY, String(n)); } catch (_) {}
+    return n;
+}
+
+// Decide whether to surface the custom install banner on this load.
+function maybeShowInstallBanner() {
+    if (isStandalonePWA()) return;                               // already installed
+    if (installSnoozed()) return;                                // recently dismissed
+    if (document.getElementById('mapp-install-banner')) return;  // already showing
+    // Don't compete with the first-run welcome banner — let that resolve first.
+    const wb = document.getElementById('welcome-banner');
+    if (wb && wb.style.display !== 'none' && wb.offsetParent !== null) return;
+
+    const visits = parseInt(localStorage.getItem(VISIT_KEY) || '0', 10);
+    if (isNaN(visits) || visits < 2) return;                     // wait for a return visit
+
+    const ios = isIOS();
+    // Android/Chrome need the captured event; iOS Safari can always show steps.
+    // Any other browser without the event (e.g. desktop Firefox) → skip silently.
+    if (!ios && !deferredInstallPrompt) return;
+
+    showInstallBanner(ios);
+}
+
+function showInstallBanner(ios) {
+    const bar = document.createElement('div');
+    bar.id = 'mapp-install-banner';
+    bar.style.cssText = 'position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:10000;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:0 6px 28px rgba(0,0,0,0.22);padding:14px 16px;display:flex;align-items:center;gap:12px;max-width:calc(100% - 24px);width:380px;';
+    bar.innerHTML = `
+        <img src="/Mapp.png" alt="" width="40" height="40" style="border-radius:9px;flex:0 0 auto;">
+        <div style="flex:1;min-width:0;">
+            <div style="font-weight:700;font-size:0.92rem;color:var(--navy);">Install Millersville.APP</div>
+            <div style="font-size:0.8rem;color:var(--text-muted);line-height:1.35;">Add it to your home screen for one-tap access and game-day alerts.</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;flex:0 0 auto;">
+            <button id="mapp-install-go" style="background:var(--gold);color:var(--navy);border:none;border-radius:999px;padding:7px 14px;font-weight:700;font-size:0.82rem;cursor:pointer;white-space:nowrap;">Install</button>
+            <button id="mapp-install-dismiss" style="background:none;border:none;color:var(--text-muted);font-size:0.74rem;cursor:pointer;">Not now</button>
+        </div>
+    `;
+    document.body.appendChild(bar);
+
+    document.getElementById('mapp-install-dismiss').onclick = () => {
+        snoozeInstall(21); // ~3 weeks before we ask again
+        bar.remove();
+    };
+    document.getElementById('mapp-install-go').onclick = async () => {
+        bar.remove();
+        if (ios) { showIOSInstallNudge(); return; }   // share-sheet instructions
+        if (!deferredInstallPrompt) return;
+        deferredInstallPrompt.prompt();
+        try {
+            const choice = await deferredInstallPrompt.userChoice;
+            if (choice && choice.outcome === 'dismissed') snoozeInstall(21);
+        } catch (_) {}
+        deferredInstallPrompt = null;
+    };
+}
+
 /**
  * Subscribe the current browser to push notifications.
  * Walks: SW ready → permission prompt → PushManager.subscribe →
@@ -2518,6 +2612,15 @@ document.addEventListener("DOMContentLoaded",()=>{
         }
     } catch (_) { /* localStorage blocked → banner stays hidden, no-op */ }
 
+    // Install prompt (Add to Home Screen). Bump the visit counter, then decide
+    // whether to surface our custom install banner. Engagement-gated so it never
+    // fires on a first visit; Android/Chrome also re-trigger this via the
+    // captured beforeinstallprompt event, while iOS relies on this call.
+    try {
+        bumpVisitCount();
+        maybeShowInstallBanner();
+    } catch (_) { /* localStorage blocked / unsupported → no install nudge */ }
+
     initApp();
 
     // Re-measure on viewport resize (covers mobile→desktop breakpoint flips
@@ -2864,16 +2967,19 @@ function updateEventsUI(){
     });
 
     // Toolbar toggle swap based on affiliation:
-    //   Townies (default) → show 👨‍👩‍👧 family toggle; hide 🍕/🎁 perks
-    //   Marauder (default) → hide family toggle; show 🍕 Free Food + 🎁 Free Stuff
-    //   Townie → show 👨‍👩‍👧 family toggle; hide perk toggles
+    //   Marauder ('student')  → show 🍕 Free Food + 🎁 Free Stuff perks; hide 👨‍👩‍👧 family
+    //   Townie ('townie')     → show 👨‍👩‍👧 family toggle; hide perks
+    //   Unset (no choice yet) → hide BOTH. The gold Marauder perk toggles appear
+    //                           ONLY after someone explicitly picks Marauder, so
+    //                           undeclared visitors and townies never see them.
     const kidBtn = document.getElementById('ev-kid-toggle');
     const foodBtn = document.getElementById('ev-freefood-toggle');
     const stuffBtn = document.getElementById('ev-freestuff-toggle');
-    const isTownie = muAffiliation === 'townie';  // unset treated as Marauder for toolbar
+    const isTownie = muAffiliation === 'townie';
+    const isMarauder = muAffiliation === 'student'; // explicit only — unset is NOT treated as Marauder here
     if (kidBtn) kidBtn.style.display = isTownie ? '' : 'none';
-    if (foodBtn) foodBtn.style.display = isTownie ? 'none' : '';
-    if (stuffBtn) stuffBtn.style.display = isTownie ? 'none' : '';
+    if (foodBtn) foodBtn.style.display = isMarauder ? '' : 'none';
+    if (stuffBtn) stuffBtn.style.display = isMarauder ? '' : 'none';
     // If affiliation changed to Townie, clear any stale perk-toggle state
     if (isTownie && (evFreeFoodMode || evFreeStuffMode)) {
         evFreeFoodMode = false; evFreeStuffMode = false;

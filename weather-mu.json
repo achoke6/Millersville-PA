@@ -126,74 +126,7 @@
       }
     ]
   },
-  "observations": [
-    {
-      "time": "11:00",
-      "temp": "77",
-      "dewpoint": "43",
-      "rh": "30",
-      "windDir": "N",
-      "windSpeed": "5",
-      "precip": "0.00",
-      "visibility": "10.0",
-      "condition": "None"
-    },
-    {
-      "time": "10:00",
-      "temp": "74",
-      "dewpoint": "46",
-      "rh": "37",
-      "windDir": "NNE",
-      "windSpeed": "6",
-      "precip": "0.00",
-      "visibility": "10.3",
-      "condition": "None"
-    },
-    {
-      "time": "09:00",
-      "temp": "69",
-      "dewpoint": "45",
-      "rh": "42",
-      "windDir": "NNW",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "10.2",
-      "condition": "None"
-    },
-    {
-      "time": "08:00",
-      "temp": "63",
-      "dewpoint": "46",
-      "rh": "54",
-      "windDir": "NNW",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "10.3",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "54",
-      "dewpoint": "51",
-      "rh": "90",
-      "windDir": "WSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "10.4",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "51",
-      "dewpoint": "50",
-      "rh": "97",
-      "windDir": "NNW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "10.0",
-      "condition": "None"
-    }
-  ],
+  "observations": [],
   "discussion": {
     "headline": "Sunny, dry and tranquil first week of meteorological summer",
     "dateLine": "11:30 a.m. Tuesday, June 2, 2026",
@@ -235,5 +168,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-06-03T15:29:36.298Z"
+  "updated": "2026-06-03T16:00:29.458Z"
 }

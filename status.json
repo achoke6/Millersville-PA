@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-06-02T23:02:30.814Z",
-  "totalEvents": 795,
-  "withDescription": 318,
+  "generatedAt": "2026-06-03T04:00:17.463Z",
+  "totalEvents": 788,
+  "withDescription": 313,
   "withImage": 107,
   "familyFriendly": 47,
-  "eventsToday": 2,
+  "eventsToday": 4,
   "sources": {
     "muAthletics": 63,
-    "muCalendar": 151,
-    "muGetInvolved": 243,
+    "muCalendar": 149,
+    "muGetInvolved": 239,
     "pennManor": 204,
-    "borough": 111,
+    "borough": 110,
     "vfw": 4,
     "phantomPower": 13,
     "community": 1,
@@ -22,11 +22,11 @@
       "latest": "2027-02-09T15:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-03-04T00:00:00.000Z",
+      "earliest": "2026-03-05T19:00:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-03-04T18:00:00.000Z",
+      "earliest": "2026-03-06T15:30:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
@@ -34,7 +34,7 @@
       "latest": "2026-09-23T21:30:00.000Z"
     },
     "borough": {
-      "earliest": "2026-03-04T23:30:00.000Z",
+      "earliest": "2026-03-09T23:00:00.000Z",
       "latest": "2027-05-08T14:00:00.000Z"
     },
     "vfw": {
@@ -53,35 +53,35 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-02-09",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 25
+      "daysSinceMoved": 26
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 27
+      "daysSinceMoved": 28
     },
     "pennManor": {
       "newest": "2026-09-23",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "borough": {
       "newest": "2027-05-08",
-      "daysSinceMoved": 25
+      "daysSinceMoved": 26
     },
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "phantomPower": {
       "newest": "2026-07-17",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 14
     },
     "community": {
       "newest": "2026-04-27",
-      "daysSinceMoved": 27
+      "daysSinceMoved": 28
     }
   },
   "sports": {
@@ -105,7 +105,7 @@
       "Youth Sports": 1
     },
     "stalePast": 2,
-    "lastSyncAt": "2026-06-02T23:01:12.486Z"
+    "lastSyncAt": "2026-06-03T03:58:47.131Z"
   },
   "recentlyAdded": [
     {

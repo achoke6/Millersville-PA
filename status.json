@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-06-02T18:55:26.838Z",
-  "totalEvents": 796,
-  "withDescription": 318,
+  "generatedAt": "2026-06-03T13:24:15.614Z",
+  "totalEvents": 788,
+  "withDescription": 313,
   "withImage": 107,
   "familyFriendly": 47,
-  "eventsToday": 2,
+  "eventsToday": 4,
   "sources": {
-    "muAthletics": 64,
-    "muCalendar": 151,
-    "muGetInvolved": 243,
-    "pennManor": 204,
-    "borough": 111,
+    "muAthletics": 63,
+    "muCalendar": 149,
+    "muGetInvolved": 239,
+    "pennManor": 206,
+    "borough": 108,
     "vfw": 4,
     "phantomPower": 13,
     "community": 1,
-    "muHudlBroadcasts": 1
+    "muHudlBroadcasts": 0
   },
   "sourceDateRanges": {
     "muAthletics": {
@@ -22,19 +22,19 @@
       "latest": "2027-02-09T15:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-03-04T00:00:00.000Z",
+      "earliest": "2026-03-05T19:00:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-03-04T18:00:00.000Z",
+      "earliest": "2026-03-06T15:30:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-04-28T23:00:00.000Z",
-      "latest": "2026-09-23T20:00:00.000Z"
+      "earliest": "2026-04-30T20:00:00.000Z",
+      "latest": "2026-09-23T21:30:00.000Z"
     },
     "borough": {
-      "earliest": "2026-03-04T23:30:00.000Z",
+      "earliest": "2026-03-09T23:00:00.000Z",
       "latest": "2027-05-08T14:00:00.000Z"
     },
     "vfw": {
@@ -53,42 +53,42 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-02-09",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 25
+      "daysSinceMoved": 26
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 27
+      "daysSinceMoved": 28
     },
     "pennManor": {
       "newest": "2026-09-23",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "borough": {
       "newest": "2027-05-08",
-      "daysSinceMoved": 25
+      "daysSinceMoved": 26
     },
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "phantomPower": {
       "newest": "2026-07-17",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 14
     },
     "community": {
       "newest": "2026-04-27",
-      "daysSinceMoved": 27
+      "daysSinceMoved": 28
     }
   },
   "sports": {
-    "total": 243,
-    "scored": 28,
+    "total": 244,
+    "scored": 27,
     "wins": 13,
-    "losses": 14,
+    "losses": 13,
     "ties": 1
   },
   "registrations": {
@@ -104,10 +104,31 @@
       "PM Community": 1,
       "Youth Sports": 1
     },
-    "stalePast": 1,
-    "lastSyncAt": "2026-06-02T18:54:04.875Z"
+    "stalePast": 2,
+    "lastSyncAt": "2026-06-03T13:22:43.935Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Boys JV Soccer vs Spring Grove Area High School|2026-08-25T04:01:00.000Z",
+      "firstSeenAt": "2026-06-03T13:24:15.609Z",
+      "title": "Boys JV Soccer vs Spring Grove Area High School",
+      "source": "PM",
+      "date": "2026-08-25T04:01:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Soccer vs Spring Grove Area High School|2026-08-25T04:01:00.000Z",
+      "firstSeenAt": "2026-06-03T13:24:15.609Z",
+      "title": "Boys Varsity Soccer vs Spring Grove Area High School",
+      "source": "PM",
+      "date": "2026-08-25T04:01:00.000Z"
+    },
+    {
+      "key": "Boys JV Soccer vs Cedar Crest High School|2026-09-23T21:30:00.000Z",
+      "firstSeenAt": "2026-06-02T20:16:39.305Z",
+      "title": "Boys JV Soccer vs Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-09-23T21:30:00.000Z"
+    },
     {
       "key": "ESH PTO-Sponsored Splash Party|2026-06-04T04:00:00.000Z",
       "firstSeenAt": "2026-06-02T18:55:26.836Z",
@@ -156,28 +177,7 @@
       "title": "School Board Meeting",
       "source": "PM",
       "date": "2026-08-03T23:00:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Golf @ Elizabethtown Area High School|2026-08-17T12:00:00.000Z",
-      "firstSeenAt": "2026-06-02T18:55:26.836Z",
-      "title": "Boys Varsity Golf @ Elizabethtown Area High School",
-      "source": "PM",
-      "date": "2026-08-17T12:00:00.000Z"
-    },
-    {
-      "key": "School Board Meeting|2026-08-17T23:00:00.000Z",
-      "firstSeenAt": "2026-06-02T18:55:26.836Z",
-      "title": "School Board Meeting",
-      "source": "PM",
-      "date": "2026-08-17T23:00:00.000Z"
-    },
-    {
-      "key": "Popsicles on the playground|2026-08-19T19:00:00.000Z",
-      "firstSeenAt": "2026-06-02T18:55:26.836Z",
-      "title": "Popsicles on the playground",
-      "source": "PM",
-      "date": "2026-08-19T19:00:00.000Z"
     }
   ],
-  "addedLastRun": 130
+  "addedLastRun": 2
 }

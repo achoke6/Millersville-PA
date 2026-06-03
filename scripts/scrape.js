@@ -617,6 +617,156 @@ async function runScraper() {
         }, null, 2));
         console.log(`✅ Weather saved: ${muTemp || '--'}°F, ${condition}`);
     } catch (e) { console.error("❌ Weather error:", e.message); }
+    // ===== MU WEATHER CENTER (forecast, 7-day, observations, discussion, images, videos) =====
+    // Scrapes the Millersville University Weather Information Center — plain
+    // server-rendered HTML with stable table IDs — and writes weather-mu.json
+    // for the weather page to render. Radar/surface-analysis are stable public
+    // image URLs (embedded directly, no scrape). Discussion is EXCERPTED with a
+    // link back (it's the meteorologist's authored prose — we don't republish it
+    // wholesale). All failures are non-fatal so weather-mu.json degrades section
+    // by section rather than blocking the cron.
+    try {
+        const WX_BASE = 'https://www.millersville.edu/weathercenter';
+        const wxClean = (s) => (s || '')
+            .replace(/<[^>]+>/g, ' ')
+            .replace(/&#160;|&nbsp;/g, ' ')
+            .replace(/&#176;|&deg;/g, '\u00B0')
+            .replace(/&rsquo;|&#8217;/g, "'").replace(/&ldquo;|&rdquo;/g, '"')
+            .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+            .replace(/\s+/g, ' ').trim();
+        const wxRows = (html, id) => {
+            const tbl = html.match(new RegExp(`<table[^>]*id="${id}"[^>]*>([\\s\\S]*?)</table>`, 'i'));
+            if (!tbl) return [];
+            const bm = tbl[1].match(/<tbody[^>]*>([\s\S]*?)<\/tbody>/i);
+            const body = bm ? bm[1] : tbl[1];
+            const rows = []; let tr; const trRe = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
+            while ((tr = trRe.exec(body)) !== null) {
+                const cells = []; let td; const tdRe = /<td[^>]*>([\s\S]*?)<\/td>/gi;
+                while ((td = tdRe.exec(tr[1])) !== null) cells.push(wxClean(td[1]));
+                if (cells.length) rows.push(cells);
+            }
+            return rows;
+        };
+        const wxIssued = (html) => { const m = html.match(/Issued:\s*([^<]+?)\s*(?:<|$)/i); return m ? wxClean(m[1]) : ''; };
+
+        const muWx = {
+            forecast: { synopsis: '', issued: '', periods: [] },
+            sevenDay: { issued: '', days: [] },
+            observations: [],
+            discussion: { headline: '', dateLine: '', excerpt: '', url: `${WX_BASE}/forecasts/weather-discussion.php` },
+            images: {
+                radar: 'https://sirocco.accuweather.com/nx_mosaic_640x480c/RE/inmaREPA_.gif',
+                surfaceAnalysis: 'https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif'
+            },
+            videos: [],
+            sourceUrl: `${WX_BASE}/`,
+            updated: new Date().toISOString()
+        };
+
+        // --- Forecast (synopsis + 2-col table) from the main center page ---
+        try {
+            const r = await fetch(`${WX_BASE}/`, { headers: baseHeaders });
+            if (r.ok) {
+                const html = await r.text();
+                muWx.forecast.periods = wxRows(html, 'forecast-table')
+                    .map(c => ({ period: c[0], text: c[1] })).filter(x => x.period && x.text);
+                muWx.forecast.issued = wxIssued(html);
+                const before = html.split(/id="forecast-table"/i)[0];
+                const ps = [...before.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi)];
+                if (ps.length) muWx.forecast.synopsis = wxClean(ps[ps.length - 1][1]);
+                console.log(`  ✅ MU forecast: ${muWx.forecast.periods.length} periods`);
+            }
+        } catch (e) { console.log(`  ⚠️ MU forecast unavailable: ${e.message}`); }
+
+        // --- 7-day outlook ---
+        try {
+            const r = await fetch(`${WX_BASE}/forecasts/7-day-forecast.php`, { headers: baseHeaders });
+            if (r.ok) {
+                const html = await r.text();
+                const cols = ['period', 'sky', 'weather', 'pop', 'temp', 'conf'];
+                muWx.sevenDay.days = wxRows(html, 'sevenday-table').filter(c => c.length >= 6)
+                    .map(c => Object.fromEntries(cols.map((k, i) => [k, c[i]])));
+                muWx.sevenDay.issued = wxIssued(html);
+                console.log(`  ✅ MU 7-day: ${muWx.sevenDay.days.length} rows`);
+            }
+        } catch (e) { console.log(`  ⚠️ MU 7-day unavailable: ${e.message}`); }
+
+        // --- Observations (past 6 hours) ---
+        try {
+            const r = await fetch(`${WX_BASE}/observations.php`, { headers: baseHeaders });
+            if (r.ok) {
+                const html = await r.text();
+                const cols = ['time', 'temp', 'dewpoint', 'rh', 'windDir', 'windSpeed', 'precip', 'visibility', 'condition'];
+                muWx.observations = wxRows(html, 'obs-table').filter(c => c.length >= 9)
+                    .map(c => Object.fromEntries(cols.map((k, i) => [k, c[i]])));
+                console.log(`  ✅ MU observations: ${muWx.observations.length} rows`);
+            }
+        } catch (e) { console.log(`  ⚠️ MU observations unavailable: ${e.message}`); }
+
+        // --- Weather discussion (EXCERPT + link, tweets/scripts stripped) ---
+        try {
+            const r = await fetch(`${WX_BASE}/forecasts/weather-discussion.php`, { headers: baseHeaders });
+            if (r.ok) {
+                const html = await r.text();
+                let block = (html.match(/<div class="user-markup">([\s\S]*?)<\/div>\s*(?:<\/div>|$)/i) || [null, html])[1]
+                    .replace(/<blockquote[\s\S]*?<\/blockquote>/gi, '')
+                    .replace(/<script[\s\S]*?<\/script>/gi, '');
+                const h3 = block.match(/<h3[^>]*>([\s\S]*?)<\/h3>/i);
+                muWx.discussion.headline = h3 ? wxClean(h3[1]).replace(/^\*\s*a?\s*/i, '').replace(/\s*\*$/, '').trim() : '';
+                const paras = [...block.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi)].map(m => wxClean(m[1])).filter(Boolean);
+                let start = 0;
+                if (paras.length && paras[0].length < 60 && /(a\.m\.|p\.m\.|\d{4})/i.test(paras[0])) {
+                    muWx.discussion.dateLine = paras[0].replace(/:\s*$/, ''); start = 1;
+                }
+                const MAX = 480; let ex = '';
+                for (let i = start; i < paras.length; i++) {
+                    if (ex && ex.length + paras[i].length > MAX) break;
+                    ex += (ex ? ' ' : '') + paras[i];
+                    if (ex.length >= MAX) break;
+                }
+                if (ex.length > MAX) {
+                    const cut = ex.slice(0, MAX);
+                    const stop = Math.max(cut.lastIndexOf('. '), cut.lastIndexOf('! '), cut.lastIndexOf('? '));
+                    ex = (stop > MAX * 0.5 ? cut.slice(0, stop + 1) : cut.trim()) + ' \u2026';
+                } else if (start < paras.length) { ex += ' \u2026'; }
+                muWx.discussion.excerpt = ex;
+                console.log(`  ✅ MU discussion: "${muWx.discussion.headline.slice(0, 40)}..."`);
+            }
+        } catch (e) { console.log(`  ⚠️ MU discussion unavailable: ${e.message}`); }
+
+        // --- Latest videos via the channel's RSS feed (resolve channelId from the handle) ---
+        try {
+            const ch = await fetch('https://www.youtube.com/@MUweather', { headers: baseHeaders });
+            if (ch.ok) {
+                const chHtml = await ch.text();
+                const idM = chHtml.match(/"(?:channelId|externalId)":"(UC[\w-]+)"/)
+                    || chHtml.match(/\/channel\/(UC[\w-]+)/);
+                if (idM) {
+                    const rss = await fetch(`https://www.youtube.com/feeds/videos.xml?channel_id=${idM[1]}`, { headers: baseHeaders });
+                    if (rss.ok) {
+                        const xml = await rss.text();
+                        const entries = [...xml.matchAll(/<entry>([\s\S]*?)<\/entry>/g)].slice(0, 4);
+                        muWx.videos = entries.map(e => {
+                            const g = (re) => { const m = e[1].match(re); return m ? m[1] : ''; };
+                            const vid = g(/<yt:videoId>([^<]+)<\/yt:videoId>/);
+                            return {
+                                title: wxClean(g(/<title>([^<]+)<\/title>/)),
+                                videoId: vid,
+                                url: vid ? `https://www.youtube.com/watch?v=${vid}` : '',
+                                published: g(/<published>([^<]+)<\/published>/),
+                                thumbnail: g(/<media:thumbnail[^>]*url="([^"]+)"/)
+                            };
+                        }).filter(v => v.videoId);
+                        console.log(`  ✅ MU videos: ${muWx.videos.length}`);
+                    }
+                }
+            }
+        } catch (e) { console.log(`  ⚠️ MU videos unavailable: ${e.message}`); }
+
+        fs.writeFileSync(path.join(__dirname, '../weather-mu.json'), JSON.stringify(muWx, null, 2));
+        console.log(`✅ MU Weather Center saved (forecast ${muWx.forecast.periods.length}, 7-day ${muWx.sevenDay.days.length}, obs ${muWx.observations.length}, videos ${muWx.videos.length})`);
+    } catch (e) { console.error('❌ MU Weather Center error:', e.message); }
+
 
     let events = [];
 

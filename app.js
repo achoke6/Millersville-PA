@@ -2691,7 +2691,7 @@ document.addEventListener('keydown', (e) => {
 
 async function initApp(){
     loadFeedPrefs();
-    await Promise.allSettled([loadWeather(),loadSpecials(),loadEvents(),loadPlaces(),loadHousing(),loadNews(),loadBoard(),loadSignups(),loadClubsDirectory()]);
+    await Promise.allSettled([loadWeather(),loadWeatherMU(),loadSpecials(),loadEvents(),loadPlaces(),loadHousing(),loadNews(),loadBoard(),loadSignups(),loadClubsDirectory()]);
     renderHomeFeed();
     attachHomeSwipeHandlers();
     syncFilterArrows();
@@ -4990,6 +4990,94 @@ async function loadWeather(){
     }catch(e){console.error('Weather load error:',e);}
 }
 async function loadSpecials(){ await loadHomeSpecials(); }
+
+// Render the MU Weather Center detail (forecast, 7-day, radar/surface images,
+// observations, discussion excerpt, videos) into the weather view. Data comes
+// from weather-mu.json (written by scrape.js). Injected as #mu-weather-extra
+// appended to #view-weather, so no index.html container is needed. Fails quietly
+// if the file is missing — the current-conditions card still shows.
+async function loadWeatherMU(){
+    const host = document.getElementById('view-weather');
+    if(!host) return;
+    let data;
+    try { data = await (await fetch('weather-mu.json')).json(); }
+    catch(e){ return; }
+    const esc = (typeof escHtml === 'function') ? escHtml : (s)=>String(s==null?'':s);
+    const sections = [];
+
+    const f = data.forecast || {};
+    if (f.synopsis || (f.periods||[]).length) {
+        const rows = (f.periods||[]).map(p=>`<tr><td style="font-weight:600;white-space:nowrap;padding:6px 12px 6px 0;vertical-align:top;">${esc(p.period)}</td><td style="padding:6px 0;">${esc(p.text)}</td></tr>`).join('');
+        sections.push(`<div class="app-card">
+            <h3 class="card-title">📋 Latest Forecast</h3>
+            ${f.synopsis?`<p style="font-size:0.88rem;line-height:1.55;color:var(--text-muted);margin:8px 0 12px;">${esc(f.synopsis)}</p>`:''}
+            ${rows?`<table style="width:100%;border-collapse:collapse;font-size:0.86rem;">${rows}</table>`:''}
+            ${f.issued?`<p class="card-meta" style="margin-top:10px;">${esc(f.issued)}</p>`:''}
+        </div>`);
+    }
+
+    const sd = data.sevenDay || {};
+    if ((sd.days||[]).length) {
+        const head = `<tr style="text-align:left;border-bottom:2px solid var(--border);"><th style="padding:6px 8px 6px 0;">Period</th><th style="padding:6px 8px;">Sky</th><th style="padding:6px 8px;">Weather</th><th style="padding:6px 8px;">PoP</th><th style="padding:6px 8px;">Temp</th></tr>`;
+        const body = sd.days.map(x=>`<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 8px 6px 0;font-weight:600;white-space:nowrap;">${esc(x.period)}</td><td style="padding:6px 8px;">${esc(x.sky)}</td><td style="padding:6px 8px;">${esc(x.weather)}</td><td style="padding:6px 8px;">${esc(x.pop)}</td><td style="padding:6px 8px;font-weight:600;">${esc(x.temp)}°</td></tr>`).join('');
+        sections.push(`<div class="app-card">
+            <h3 class="card-title">📅 7-Day Outlook</h3>
+            <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:0.84rem;margin-top:8px;">${head}${body}</table></div>
+            ${sd.issued?`<p class="card-meta" style="margin-top:10px;">${esc(sd.issued)}</p>`:''}
+        </div>`);
+    }
+
+    const im = data.images || {};
+    if (im.radar || im.surfaceAnalysis) {
+        const fig = (src,label,credit)=>src?`<figure style="margin:0;flex:1;min-width:260px;">
+            <div style="font-weight:600;font-size:0.85rem;margin-bottom:6px;">${label}</div>
+            <img src="${esc(src)}" alt="${esc(label)}" loading="lazy" style="width:100%;height:auto;border:1px solid var(--border);border-radius:var(--radius-sm);">
+            <figcaption class="card-meta" style="margin-top:4px;">${credit}</figcaption></figure>`:'';
+        sections.push(`<div class="app-card">
+            <h3 class="card-title">🛰️ Radar & Surface Analysis</h3>
+            <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;">
+                ${fig(im.radar,'Local Radar','© AccuWeather.com')}
+                ${fig(im.surfaceAnalysis,'Surface Analysis','© NOAA')}
+            </div></div>`);
+    }
+
+    if ((data.observations||[]).length) {
+        const head = `<tr style="text-align:left;border-bottom:2px solid var(--border);"><th style="padding:6px 6px 6px 0;">Time</th><th style="padding:6px;">Temp</th><th style="padding:6px;">Dew</th><th style="padding:6px;">RH</th><th style="padding:6px;">Wind</th><th style="padding:6px;">Cond.</th></tr>`;
+        const body = data.observations.map(o=>`<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 6px 6px 0;font-weight:600;">${esc(o.time)}</td><td style="padding:6px;">${esc(o.temp)}°</td><td style="padding:6px;">${esc(o.dewpoint)}°</td><td style="padding:6px;">${esc(o.rh)}%</td><td style="padding:6px;white-space:nowrap;">${esc(o.windDir)} ${esc(o.windSpeed)}</td><td style="padding:6px;">${esc(o.condition)}</td></tr>`).join('');
+        sections.push(`<div class="app-card">
+            <h3 class="card-title">📊 Recent Observations</h3>
+            <p class="card-meta" style="margin:2px 0 8px;">Past 6 hours · Millersville University station</p>
+            <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:0.82rem;">${head}${body}</table></div>
+        </div>`);
+    }
+
+    const ds = data.discussion || {};
+    if (ds.excerpt) {
+        sections.push(`<div class="app-card" style="border-left:4px solid var(--gold);">
+            <h3 class="card-title">📝 Weather Discussion</h3>
+            ${ds.headline?`<p style="font-weight:700;margin:6px 0 2px;">${esc(ds.headline)}</p>`:''}
+            ${ds.dateLine?`<p class="card-meta" style="margin:0 0 8px;">${esc(ds.dateLine)}</p>`:''}
+            <p style="font-size:0.88rem;line-height:1.55;">${esc(ds.excerpt)}</p>
+            <a href="${esc(ds.url||'https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php')}" target="_blank" rel="noopener" class="btn btn-sm btn-outline" style="margin-top:10px;">Read the full discussion ➔</a>
+        </div>`);
+    }
+
+    if ((data.videos||[]).length) {
+        const cards = data.videos.map(v=>`<a href="${esc(v.url)}" target="_blank" rel="noopener" style="flex:1;min-width:150px;max-width:220px;text-decoration:none;color:inherit;">
+            ${v.thumbnail?`<img src="${esc(v.thumbnail)}" alt="" loading="lazy" style="width:100%;height:auto;border-radius:var(--radius-sm);border:1px solid var(--border);">`:''}
+            <div style="font-size:0.8rem;font-weight:600;margin-top:6px;line-height:1.3;">${esc(v.title)}</div></a>`).join('');
+        sections.push(`<div class="app-card">
+            <h3 class="card-title">🎥 Latest Videos</h3>
+            <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:10px;">${cards}</div>
+        </div>`);
+    }
+
+    sections.push(`<p class="card-meta" style="text-align:center;margin:8px 0 4px;">Forecast, observations & discussion courtesy of the <a href="${esc(data.sourceUrl||'https://www.millersville.edu/weathercenter/')}" target="_blank" rel="noopener" style="color:var(--navy);">MU Weather Information Center</a></p>`);
+
+    let extra = document.getElementById('mu-weather-extra');
+    if(!extra){ extra = document.createElement('div'); extra.id='mu-weather-extra'; extra.style.marginTop='16px'; host.appendChild(extra); }
+    extra.innerHTML = sections.join('');
+}
 async function loadNews(){try{currentNews=await(await fetch('news.json')).json();renderNewsSubFilters();renderNewsUI();}catch(e){}}
 
 let newsSource='All', newsSubFilter=null;

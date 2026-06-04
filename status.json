@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-06-04T08:21:49.501Z",
-  "totalEvents": 794,
+  "generatedAt": "2026-06-04T11:53:38.815Z",
+  "totalEvents": 795,
   "withDescription": 311,
   "withImage": 107,
   "familyFriendly": 46,
-  "eventsToday": 2,
+  "eventsToday": 3,
   "sources": {
     "muAthletics": 63,
     "muCalendar": 148,
     "muGetInvolved": 239,
     "pennManor": 214,
-    "borough": 108,
+    "borough": 109,
     "vfw": 4,
     "phantomPower": 13,
     "community": 1,
@@ -105,9 +105,16 @@
       "Youth Sports": 1
     },
     "stalePast": 2,
-    "lastSyncAt": "2026-06-04T08:20:14.488Z"
+    "lastSyncAt": "2026-06-04T11:52:01.148Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Just keeping you informed|2026-06-05T00:09:02.000Z",
+      "firstSeenAt": "2026-06-04T11:53:38.813Z",
+      "title": "Just keeping you informed",
+      "source": "Borough",
+      "date": "2026-06-05T00:09:02.000Z"
+    },
     {
       "key": "Bit Brigade Performs \"Mega Man X\" LIVE w. Super Guitar Bros.|2026-06-28T00:00:00.000Z",
       "firstSeenAt": "2026-06-04T08:21:49.499Z",
@@ -170,14 +177,7 @@
       "title": "Boys 7/8/9th Soccer @ Cocalico High School",
       "source": "PM",
       "date": "2026-09-25T20:00:00.000Z"
-    },
-    {
-      "key": "Casual Cruelty w. Marrowed + more|2026-06-05T00:00:00.000Z",
-      "firstSeenAt": "2026-06-04T03:55:13.163Z",
-      "title": "Casual Cruelty w. Marrowed + more",
-      "source": "Other",
-      "date": "2026-06-05T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 9
+  "addedLastRun": 1
 }

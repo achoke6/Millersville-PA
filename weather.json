@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "temp": 84,
   "feelsLike": 87,
   "condition": "Clear sky",
@@ -7,5 +8,15 @@
   "humidity": "29%",
   "stationUpdate": "Updated 06/04/26 at 13:04",
   "lastUpdated": "1:05 PM",
+=======
+  "temp": 74,
+  "feelsLike": 74,
+  "condition": "Unknown",
+  "icon": "🌡️",
+  "wind": "5 mph NW",
+  "humidity": "46%",
+  "stationUpdate": "Updated 06/04/26 at 09:32",
+  "lastUpdated": "9:33 AM",
+>>>>>>> parent of 43cb356 (Merge branch 'main' of https://github.com/achoke6/Millersville-PA)
   "source": "MU Weather Station + Open-Meteo"
 }

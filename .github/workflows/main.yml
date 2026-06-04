@@ -74,6 +74,14 @@ jobs:
       # have drifted, which protects against accidental dependency surprises
       # on the production scraper.
       - run: npm ci
+        # Playwright is a devDependency used ONLY by the manual, local IMLeagues
+        # scraper (scripts/scrape-imleagues.js) — the cron never invokes it.
+        # Skip its ~130MB browser (Chromium) download here: runners are
+        # ephemeral and the browser binaries live in ~/.cache/ms-playwright,
+        # which the npm cache (~/.npm) doesn't cover — so without this, every
+        # hourly run would re-download a browser it never uses.
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
 
       # Sync curated event candidates from the "Event Candidates" Google Sheet
       # BEFORE scrape.js, because scrape.js READS the override files this

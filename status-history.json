@@ -852,8 +852,13 @@
     },
     {
       "date": "2026-06-04",
+<<<<<<< HEAD
       "ts": "2026-06-04T17:06:53.984Z",
       "totalEvents": 805,
+=======
+      "ts": "2026-06-04T13:34:58.448Z",
+      "totalEvents": 794,
+>>>>>>> parent of 43cb356 (Merge branch 'main' of https://github.com/achoke6/Millersville-PA)
       "sources": {
         "muAthletics": 72,
         "muCalendar": 148,
@@ -861,7 +866,7 @@
         "pennManor": 214,
         "borough": 109,
         "vfw": 4,
-        "phantomPower": 13,
+        "phantomPower": 12,
         "community": 1,
         "muHudlBroadcasts": 0
       },
@@ -877,5 +882,9 @@
       }
     }
   ],
+<<<<<<< HEAD
   "lastUpdated": "2026-06-04T17:06:53.984Z"
+=======
+  "lastUpdated": "2026-06-04T13:34:58.448Z"
+>>>>>>> parent of 43cb356 (Merge branch 'main' of https://github.com/achoke6/Millersville-PA)
 }

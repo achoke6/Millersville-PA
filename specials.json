@@ -47,120 +47,155 @@
     }
   },
   "John Herr's Village Market": {
-    "note": "Weekly deals: Thursday, May 28 through Wednesday, June 3",
+    "note": "Weekly deals: Thu Apr 30 - Wed May 6, 2026",
     "weekly": [
-      "Coke Products (6-pk/16.9-oz bottles, selected) – Buy 2 Get 1 Free",
-      "Fresh Ground Sirloin (Value Pack, Our Own Store Made, Choice Beef) – $6.99/lb ($1/lb less)",
-      "Boneless Chuck Roast (Certified Angus Beef) – $6.99/lb",
-      "Boneless Skinless Chicken Thighs (Value Pack) – $2.99/lb",
-      "Eastern Peaches (first of season) – $1.69/lb"
+      "General Mills Cereal – $1.98 ea (Final price after rebate)",
+      "Throwback Thursdays Digital Coupons – Various items $1.28-$2.48 (Final prices after digital coupons)",
+      "Buy One Get One Free Sara Lee Bread – Free with purchase (BOGO)",
+      "Buy One Get One Free On The Border Tortilla Chips – Free with purchase (BOGO)",
+      "Buy One Get One Free Entenmann's Mini Muffins – Free with purchase (BOGO)"
     ],
-    "weeklyDateRange": "Thursday, May 28 through Wednesday, June 3",
+    "weeklyDateRange": "Thu Apr 30 - Wed May 6, 2026",
     "rawDeals": [
       {
-        "item": "Coke Products (6-pk/16.9-oz bottles, selected)",
-        "salePrice": "Buy 2 Get 1 Free",
+        "item": "General Mills Cereal",
+        "salePrice": "$1.98 ea",
         "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, May 28 through Wednesday, June 3"
+        "savings": "Final price after rebate",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
       },
       {
-        "item": "Fresh Ground Sirloin (Value Pack, Our Own Store Made, Choice Beef)",
-        "salePrice": "$6.99/lb",
+        "item": "Throwback Thursdays Digital Coupons",
+        "salePrice": "Various items $1.28-$2.48",
         "regularPrice": "",
-        "savings": "$1/lb less",
-        "dateRange": "Thursday, May 28 through Wednesday, June 3"
+        "savings": "Final prices after digital coupons",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
       },
       {
-        "item": "Boneless Chuck Roast (Certified Angus Beef)",
-        "salePrice": "$6.99/lb",
+        "item": "Buy One Get One Free Sara Lee Bread",
+        "salePrice": "Free with purchase",
         "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, May 28 through Wednesday, June 3"
+        "savings": "BOGO",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
       },
       {
-        "item": "Boneless Skinless Chicken Thighs (Value Pack)",
-        "salePrice": "$2.99/lb",
+        "item": "Buy One Get One Free On The Border Tortilla Chips",
+        "salePrice": "Free with purchase",
         "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, May 28 through Wednesday, June 3"
+        "savings": "BOGO",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
       },
       {
-        "item": "Eastern Peaches (first of season)",
+        "item": "Buy One Get One Free Entenmann's Mini Muffins",
+        "salePrice": "Free with purchase",
+        "regularPrice": "",
+        "savings": "BOGO",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Boneless Chuck Roast",
+        "salePrice": "$7.99/lb",
+        "regularPrice": "",
+        "savings": "Certified Angus Beef",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Boneless Top Sirloin Steaks",
+        "salePrice": "$8.99/lb",
+        "regularPrice": "",
+        "savings": "Value Pack",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Fresh Ground Italian Sausage",
+        "salePrice": "$2.49/lb",
+        "regularPrice": "",
+        "savings": "Less Amount $5.99/lb",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Bone-in Center Cut Pork Chops",
+        "salePrice": "$2.49/lb",
+        "regularPrice": "",
+        "savings": "Value Pack",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Hass Avocados",
+        "salePrice": "$0.98 ea",
+        "regularPrice": "$1.50 ea",
+        "savings": "Digital coupon",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Vidalia Onions",
+        "salePrice": "$1.48/lb",
+        "regularPrice": "",
+        "savings": "Digital coupon",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Sargento Shredded Cheese",
+        "salePrice": "$0.98",
+        "regularPrice": "$1.78",
+        "savings": "Digital coupon",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Margaritaville Salsa",
+        "salePrice": "$2.14",
+        "regularPrice": "",
+        "savings": "Digital coupon",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Food Club Cottage Cheese",
+        "salePrice": "$1.68",
+        "regularPrice": "",
+        "savings": "16 oz Selected",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Food Club Whipped Topping",
+        "salePrice": "$1.88",
+        "regularPrice": "",
+        "savings": "16 oz",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Banquet Stuffed Enchiladas",
+        "salePrice": "$7.98",
+        "regularPrice": "",
+        "savings": "26 oz Selected",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Simply Done Paper Bowls",
+        "salePrice": "$2.98",
+        "regularPrice": "",
+        "savings": "20 ct",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Green Cabbage",
+        "salePrice": "$0.69/lb",
+        "regularPrice": "",
+        "savings": "Fresh produce",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Organic Sweet Corn",
+        "salePrice": "$4.99",
+        "regularPrice": "",
+        "savings": "Bi-color 4 ct",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Bartlett Pears",
         "salePrice": "$1.69/lb",
         "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, May 28 through Wednesday, June 3"
-      },
-      {
-        "item": "Boneless Pork Sirloin Chops (Value Pack)",
-        "salePrice": "$2.49/lb",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, May 28 through Wednesday, June 3"
-      },
-      {
-        "item": "Canada Dry, 7-Up, A&W Root Beer or Sunkist Orange (selected 2-liter)",
-        "salePrice": "Buy 1 Get 1 Free",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, May 28 through Wednesday, June 3"
-      },
-      {
-        "item": "Utz Specialty Pretzels (10 to 16-oz, selected)",
-        "salePrice": "Buy 1 Get 1 Free",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, May 28 through Wednesday, June 3"
-      },
-      {
-        "item": "Martin's Popcorn (7 to 19.5-oz, selected)",
-        "salePrice": "Buy 1 Get 1 Free",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, May 28 through Wednesday, June 3"
-      },
-      {
-        "item": "Entenmann's Mini's Assorted Snacks (8.25 to 12.7-oz, selected)",
-        "salePrice": "Buy 1 Get 1 Free",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, May 28 through Wednesday, June 3"
-      },
-      {
-        "item": "Large Red Seedless Grapes",
-        "salePrice": "$2.49/lb",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, May 28 through Wednesday, June 3"
-      },
-      {
-        "item": "Athena Cantaloupes (first of season)",
-        "salePrice": "$3.99 ea",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, May 28 through Wednesday, June 3"
-      },
-      {
-        "item": "Hatfield Dry Rub Marinated Pork Loin Fillets (Door Buster)",
-        "salePrice": "$5.88",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, May 28 through Wednesday, June 3"
-      },
-      {
-        "item": "Jenny Martin Butter Quarters (1-lb, Door Buster)",
-        "salePrice": "$2.88",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, May 28 through Wednesday, June 3"
-      },
-      {
-        "item": "Tillamook Ice Cream (1.5-qt, selected)",
-        "salePrice": "$5.99",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, May 28 through Wednesday, June 3"
+        "savings": "Fresh produce",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
       }
     ]
   }

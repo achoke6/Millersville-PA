@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-06-03T23:43:25.137Z",
-  "totalEvents": 781,
-  "withDescription": 314,
-  "withImage": 94,
+  "generatedAt": "2026-06-04T03:55:13.166Z",
+  "totalEvents": 792,
+  "withDescription": 313,
+  "withImage": 106,
   "familyFriendly": 46,
   "eventsToday": 5,
   "sources": {
     "muAthletics": 63,
-    "muCalendar": 149,
+    "muCalendar": 148,
     "muGetInvolved": 239,
     "pennManor": 211,
     "borough": 108,
     "vfw": 4,
-    "phantomPower": 0,
+    "phantomPower": 12,
     "community": 1,
     "muHudlBroadcasts": 0
   },
@@ -22,7 +22,7 @@
       "latest": "2027-02-09T15:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-03-05T19:00:00.000Z",
+      "earliest": "2026-03-06T17:00:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
@@ -41,7 +41,10 @@
       "earliest": "2026-05-24T15:00:00.000Z",
       "latest": "2026-09-11T17:00:00.000Z"
     },
-    "phantomPower": null,
+    "phantomPower": {
+      "earliest": "2026-06-05T00:00:00.000Z",
+      "latest": "2026-07-17T23:00:00.000Z"
+    },
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2026-04-27T21:00:00.000Z"
@@ -72,7 +75,10 @@
       "newest": "2026-09-11",
       "daysSinceMoved": 1
     },
-    "phantomPower": null,
+    "phantomPower": {
+      "newest": "2026-07-17",
+      "daysSinceMoved": 14
+    },
     "community": {
       "newest": "2026-04-27",
       "daysSinceMoved": 28
@@ -80,9 +86,9 @@
   },
   "sports": {
     "total": 249,
-    "scored": 25,
+    "scored": 27,
     "wins": 13,
-    "losses": 11,
+    "losses": 13,
     "ties": 1
   },
   "registrations": {
@@ -99,79 +105,79 @@
       "Youth Sports": 1
     },
     "stalePast": 2,
-    "lastSyncAt": "2026-06-03T23:42:13.569Z"
+    "lastSyncAt": "2026-06-04T03:53:57.061Z"
   },
   "recentlyAdded": [
     {
-      "key": "Boys JV Soccer vs Spring Grove Area High School|2026-08-26T04:01:00.000Z",
-      "firstSeenAt": "2026-06-03T21:49:10.577Z",
-      "title": "Boys JV Soccer vs Spring Grove Area High School",
-      "source": "PM",
-      "date": "2026-08-26T04:01:00.000Z"
+      "key": "Casual Cruelty w. Marrowed + more|2026-06-05T00:00:00.000Z",
+      "firstSeenAt": "2026-06-04T03:55:13.163Z",
+      "title": "Casual Cruelty w. Marrowed + more",
+      "source": "Other",
+      "date": "2026-06-05T00:00:00.000Z"
     },
     {
-      "key": "Boys Varsity Soccer vs Spring Grove Area High School|2026-08-26T20:00:00.000Z",
-      "firstSeenAt": "2026-06-03T21:49:10.577Z",
-      "title": "Boys Varsity Soccer vs Spring Grove Area High School",
-      "source": "PM",
-      "date": "2026-08-26T20:00:00.000Z"
+      "key": "Hexbelt plus, Mean Gene Machine|2026-06-06T00:00:00.000Z",
+      "firstSeenAt": "2026-06-04T03:55:13.163Z",
+      "title": "Hexbelt plus, Mean Gene Machine",
+      "source": "Other",
+      "date": "2026-06-06T00:00:00.000Z"
     },
     {
-      "key": "Boys JV Baseball @ Twin Valley High School|2026-04-30T20:00:00.000Z",
-      "firstSeenAt": "2026-06-03T20:05:31.359Z",
-      "title": "Boys JV Baseball @ Twin Valley High School",
-      "source": "PM",
-      "date": "2026-04-30T20:00:00.000Z"
+      "key": "Morimvr w. Scarlet Meridian, Illusion of Solace, and Skinmag|2026-06-13T00:00:00.000Z",
+      "firstSeenAt": "2026-06-04T03:55:13.163Z",
+      "title": "Morimvr w. Scarlet Meridian, Illusion of Solace, and Skinmag",
+      "source": "Other",
+      "date": "2026-06-13T00:00:00.000Z"
     },
     {
-      "key": "Boys 7/8/9th Track & Field - Outdoor @ Cedar Crest High School|2026-04-30T20:00:00.000Z",
-      "firstSeenAt": "2026-06-03T20:05:31.359Z",
-      "title": "Boys 7/8/9th Track & Field - Outdoor @ Cedar Crest High School",
-      "source": "PM",
-      "date": "2026-04-30T20:00:00.000Z"
+      "key": "EMO NIGHT Dance Party|2026-06-14T01:00:00.000Z",
+      "firstSeenAt": "2026-06-04T03:55:13.163Z",
+      "title": "EMO NIGHT Dance Party",
+      "source": "Other",
+      "date": "2026-06-14T01:00:00.000Z"
     },
     {
-      "key": "Girls 7/8/9th Track & Field - Outdoor @ Cedar Crest High School|2026-04-30T20:00:00.000Z",
-      "firstSeenAt": "2026-06-03T20:05:31.359Z",
-      "title": "Girls 7/8/9th Track & Field - Outdoor @ Cedar Crest High School",
-      "source": "PM",
-      "date": "2026-04-30T20:00:00.000Z"
+      "key": "Upon A Burning Body|2026-06-14T21:30:00.000Z",
+      "firstSeenAt": "2026-06-04T03:55:13.163Z",
+      "title": "Upon A Burning Body",
+      "source": "Other",
+      "date": "2026-06-14T21:30:00.000Z"
     },
     {
-      "key": "Boys JV Baseball vs Manheim Township High School|2026-04-30T20:15:00.000Z",
-      "firstSeenAt": "2026-06-03T20:05:31.359Z",
-      "title": "Boys JV Baseball vs Manheim Township High School",
-      "source": "PM",
-      "date": "2026-04-30T20:15:00.000Z"
+      "key": "Jeffrey Lewis & The Voltage|2026-06-16T23:00:00.000Z",
+      "firstSeenAt": "2026-06-04T03:55:13.163Z",
+      "title": "Jeffrey Lewis & The Voltage",
+      "source": "Other",
+      "date": "2026-06-16T23:00:00.000Z"
     },
     {
-      "key": "Boys Varsity Baseball vs Manheim Township High School|2026-04-30T20:15:00.000Z",
-      "firstSeenAt": "2026-06-03T20:05:31.359Z",
-      "title": "Boys Varsity Baseball vs Manheim Township High School",
-      "source": "PM",
-      "date": "2026-04-30T20:15:00.000Z"
+      "key": "Caitlynne Curtis|2026-06-20T00:00:00.000Z",
+      "firstSeenAt": "2026-06-04T03:55:13.163Z",
+      "title": "Caitlynne Curtis",
+      "source": "Other",
+      "date": "2026-06-20T00:00:00.000Z"
     },
     {
-      "key": "Girls Varsity Softball @ Manheim Township High School|2026-04-30T20:15:00.000Z",
-      "firstSeenAt": "2026-06-03T20:05:31.359Z",
-      "title": "Girls Varsity Softball @ Manheim Township High School",
-      "source": "PM",
-      "date": "2026-04-30T20:15:00.000Z"
+      "key": "Battle Of Millersville Vol.1 - Tribute Fest|2026-06-21T00:00:00.000Z",
+      "firstSeenAt": "2026-06-04T03:55:13.163Z",
+      "title": "Battle Of Millersville Vol.1 - Tribute Fest",
+      "source": "Other",
+      "date": "2026-06-21T00:00:00.000Z"
     },
     {
-      "key": "Girls JV Softball @ Manheim Township High School|2026-04-30T21:45:00.000Z",
-      "firstSeenAt": "2026-06-03T20:05:31.359Z",
-      "title": "Girls JV Softball @ Manheim Township High School",
-      "source": "PM",
-      "date": "2026-04-30T21:45:00.000Z"
+      "key": "Brotality w. Quantifier, Making A Mockery, & New Damage|2026-06-24T23:00:00.000Z",
+      "firstSeenAt": "2026-06-04T03:55:13.163Z",
+      "title": "Brotality w. Quantifier, Making A Mockery, & New Damage",
+      "source": "Other",
+      "date": "2026-06-24T23:00:00.000Z"
     },
     {
-      "key": "Boys JV Volleyball @ Elizabethtown Area High School|2026-04-30T22:00:00.000Z",
-      "firstSeenAt": "2026-06-03T20:05:31.359Z",
-      "title": "Boys JV Volleyball @ Elizabethtown Area High School",
-      "source": "PM",
-      "date": "2026-04-30T22:00:00.000Z"
+      "key": "Mentalia's Stupid Drag Show|2026-06-26T00:00:00.000Z",
+      "firstSeenAt": "2026-06-04T03:55:13.163Z",
+      "title": "Mentalia's Stupid Drag Show",
+      "source": "Other",
+      "date": "2026-06-26T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 12
 }

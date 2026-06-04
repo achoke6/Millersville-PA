@@ -424,7 +424,18 @@ window.setMuAffiliation = function(value) {
 // and townies explicitly opt in via the welcome banner or Feed settings.
 function isHiddenForTownie(e) {
     if (muAffiliation !== 'townie') return false; // Marauder and unset both see everything
-    return e && e.audience === 'mu-only';
+    return e && (e.audience === 'mu-only' || isIntramural(e));
+}
+// Intramural signups (scraped from IMLeagues into events.json) are a MARAUDER-
+// only thing — townies can't join MU intramural leagues. We identify them by
+// their IMLeagues registration/source link (or an explicit 'Intramural' tag, if
+// the scraper ever adds one). Used to (a) hide them from townies everywhere and
+// (b) route them into the marauder "Upcoming Signups" box instead of the townie one.
+function isIntramural(e) {
+    if (!e) return false;
+    if ((e.tags || []).includes('Intramural')) return true;
+    const s = ((e.sourceLink || '') + ' ' + (e.registerLink || '')).toLowerCase();
+    return s.includes('imleagues');
 }
 
 // Feed subscription tokens and their display config
@@ -4405,20 +4416,23 @@ function renderHomeUI(){
         const SIGNUP_LEAD_MS = 30 * 24 * 60 * 60 * 1000;
         const isTownie = muAffiliation === 'townie';
         // (1) Deadline-based signups — events carrying registrationDeadline
-        // within the lead window. These also appear on the calendar (dated on
-        // the deadline); here they're a standing reminder with a countdown.
-        const upcoming = (isTownie ? (allEvents || []) : [])
+        // within the lead window. AUDIENCE SPLIT: intramural signups go to
+        // marauders (and unset, which defaults to marauder behavior); youth /
+        // community signups go to townies. Both also appear on the calendar
+        // (dated on the deadline); here they're a standing reminder w/ countdown.
+        const upcoming = (allEvents || [])
             .filter(e => e && e.registrationDeadline)
+            .filter(e => isTownie ? !isIntramural(e) : isIntramural(e))
             .map(e => ({ ...e, _dl: new Date(e.registrationDeadline).getTime() }))
             .filter(e => !isNaN(e._dl) && e._dl >= nowMs && (e._dl - nowMs) <= SIGNUP_LEAD_MS)
             .sort((a, b) => a._dl - b._dl);
         // (2) Open-ended signups — youth registrations flagged closesTBA (open
-        // now, no announced close date). Sourced from the raw registrations
-        // (allSignups), NOT the events array: with no deadline there's no
-        // calendar date to place them on, so they're reminder-only here. No
-        // countdown, and they show until the sheet row is removed. The
-        // closesTBA filter also means deadline-based youth regs (which lack the
-        // flag) never double-render in this section.
+        // now, no announced close date). Townie-only: these are community youth
+        // registrations with no intramural equivalent. Sourced from the raw
+        // registrations (allSignups), NOT the events array: with no deadline
+        // there's no calendar date to place them on, so they're reminder-only
+        // here. The closesTBA filter also means deadline-based youth regs (which
+        // lack the flag) never double-render in this section.
         const tbaSignups = (isTownie ? (allSignups || []) : [])
             .filter(r => r && r.status === 'active' && r.closesTBA === true && r.registerLink)
             .sort((a, b) => (a.title || a.org || '').localeCompare(b.title || b.org || ''));

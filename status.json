@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-06-04T17:48:44.473Z",
-  "totalEvents": 814,
-  "withDescription": 312,
-  "withImage": 94,
-  "familyFriendly": 46,
-  "eventsToday": 2,
+  "generatedAt": "2026-06-04T20:05:35.172Z",
+  "totalEvents": 859,
+  "withDescription": 311,
+  "withImage": 107,
+  "familyFriendly": 45,
+  "eventsToday": 3,
   "sources": {
-    "muAthletics": 94,
+    "muAthletics": 127,
     "muCalendar": 148,
     "muGetInvolved": 239,
     "pennManor": 214,
     "borough": 109,
     "vfw": 4,
-    "phantomPower": 0,
-    "community": 1,
+    "phantomPower": 13,
+    "community": 0,
     "muHudlBroadcasts": 0
   },
   "sourceDateRanges": {
@@ -30,7 +30,7 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-04-30T22:00:00.000Z",
+      "earliest": "2026-04-30T23:00:00.000Z",
       "latest": "2026-09-25T21:00:00.000Z"
     },
     "borough": {
@@ -41,11 +41,11 @@
       "earliest": "2026-05-24T15:00:00.000Z",
       "latest": "2026-09-11T17:00:00.000Z"
     },
-    "phantomPower": null,
-    "community": {
-      "earliest": "2026-04-27T21:00:00.000Z",
-      "latest": "2026-04-27T21:00:00.000Z"
-    }
+    "phantomPower": {
+      "earliest": "2026-06-05T00:00:00.000Z",
+      "latest": "2026-07-17T23:00:00.000Z"
+    },
+    "community": null
   },
   "staleness": {
     "muAthletics": {
@@ -72,17 +72,17 @@
       "newest": "2026-09-11",
       "daysSinceMoved": 0
     },
-    "phantomPower": null,
-    "community": {
-      "newest": "2026-04-27",
+    "phantomPower": {
+      "newest": "2026-07-17",
       "daysSinceMoved": 0
-    }
+    },
+    "community": null
   },
   "sports": {
-    "total": 283,
-    "scored": 23,
+    "total": 316,
+    "scored": 25,
     "wins": 12,
-    "losses": 10,
+    "losses": 12,
     "ties": 1
   },
   "registrations": {
@@ -99,8 +99,79 @@
       "Youth Sports": 1
     },
     "stalePast": 2,
-    "lastSyncAt": "2026-06-04T17:47:22.357Z"
+    "lastSyncAt": "2026-06-04T20:04:15.540Z"
   },
-  "recentlyAdded": [],
-  "addedLastRun": 0
+  "recentlyAdded": [
+    {
+      "key": "Casual Cruelty w. Marrowed + more|2026-06-05T00:00:00.000Z",
+      "firstSeenAt": "2026-06-04T20:05:35.170Z",
+      "title": "Casual Cruelty w. Marrowed + more",
+      "source": "Other",
+      "date": "2026-06-05T00:00:00.000Z"
+    },
+    {
+      "key": "Hexbelt plus, Mean Gene Machine|2026-06-06T00:00:00.000Z",
+      "firstSeenAt": "2026-06-04T20:05:35.170Z",
+      "title": "Hexbelt plus, Mean Gene Machine",
+      "source": "Other",
+      "date": "2026-06-06T00:00:00.000Z"
+    },
+    {
+      "key": "Morimvr w. Scarlet Meridian, Illusion of Solace, and Skinmag|2026-06-13T00:00:00.000Z",
+      "firstSeenAt": "2026-06-04T20:05:35.170Z",
+      "title": "Morimvr w. Scarlet Meridian, Illusion of Solace, and Skinmag",
+      "source": "Other",
+      "date": "2026-06-13T00:00:00.000Z"
+    },
+    {
+      "key": "EMO NIGHT Dance Party|2026-06-14T01:00:00.000Z",
+      "firstSeenAt": "2026-06-04T20:05:35.170Z",
+      "title": "EMO NIGHT Dance Party",
+      "source": "Other",
+      "date": "2026-06-14T01:00:00.000Z"
+    },
+    {
+      "key": "Upon A Burning Body|2026-06-14T21:30:00.000Z",
+      "firstSeenAt": "2026-06-04T20:05:35.170Z",
+      "title": "Upon A Burning Body",
+      "source": "Other",
+      "date": "2026-06-14T21:30:00.000Z"
+    },
+    {
+      "key": "Jeffrey Lewis & The Voltage|2026-06-16T23:00:00.000Z",
+      "firstSeenAt": "2026-06-04T20:05:35.170Z",
+      "title": "Jeffrey Lewis & The Voltage",
+      "source": "Other",
+      "date": "2026-06-16T23:00:00.000Z"
+    },
+    {
+      "key": "Caitlynne Curtis|2026-06-20T00:00:00.000Z",
+      "firstSeenAt": "2026-06-04T20:05:35.170Z",
+      "title": "Caitlynne Curtis",
+      "source": "Other",
+      "date": "2026-06-20T00:00:00.000Z"
+    },
+    {
+      "key": "Battle Of Millersville Vol.1 - Tribute Fest|2026-06-21T00:00:00.000Z",
+      "firstSeenAt": "2026-06-04T20:05:35.170Z",
+      "title": "Battle Of Millersville Vol.1 - Tribute Fest",
+      "source": "Other",
+      "date": "2026-06-21T00:00:00.000Z"
+    },
+    {
+      "key": "Brotality w. Quantifier, Making A Mockery, & New Damage|2026-06-24T23:00:00.000Z",
+      "firstSeenAt": "2026-06-04T20:05:35.170Z",
+      "title": "Brotality w. Quantifier, Making A Mockery, & New Damage",
+      "source": "Other",
+      "date": "2026-06-24T23:00:00.000Z"
+    },
+    {
+      "key": "Mentalia's Stupid Drag Show|2026-06-26T00:00:00.000Z",
+      "firstSeenAt": "2026-06-04T20:05:35.170Z",
+      "title": "Mentalia's Stupid Drag Show",
+      "source": "Other",
+      "date": "2026-06-26T00:00:00.000Z"
+    }
+  ],
+  "addedLastRun": 47
 }

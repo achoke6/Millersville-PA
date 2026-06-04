@@ -4407,25 +4407,47 @@ function renderHomeUI(){
     const signupsList = document.getElementById('home-signups-list');
     if (signupsSection && signupsList) {
         const nowMs = Date.now();
-        // How far ahead of a registration's deadline we start showing it in
-        // Upcoming Signups. ~1 month gives townies enough lead time to act on a
-        // signup without surfacing it so early it's irrelevant (e.g. a winter
-        // sport's deadline shouldn't appear in summer). Applies only to
-        // deadline-based signups below; closesTBA entries have no deadline to
-        // anchor a window, so they show whenever active (see note on tbaSignups).
+        // How far ahead of a registration's DEADLINE we start showing an
+        // already-open signup. ~1 month gives enough lead time to act without
+        // surfacing it so early it's irrelevant (e.g. a winter sport's deadline
+        // shouldn't appear in summer). Applies to open signups; closesTBA entries
+        // (no deadline) show whenever active (see note on tbaSignups).
         const SIGNUP_LEAD_MS = 30 * 24 * 60 * 60 * 1000;
+        // How far ahead of its OPEN date we start showing a not-yet-open signup,
+        // as an "Opens <date>" heads-up (no countdown). ~1 week of "mark your
+        // calendar" lead before registration actually opens.
+        const OPEN_LEAD_MS = 7 * 24 * 60 * 60 * 1000;
         const isTownie = muAffiliation === 'townie';
-        // (1) Deadline-based signups — events carrying registrationDeadline
-        // within the lead window. AUDIENCE SPLIT: intramural signups go to
-        // marauders (and unset, which defaults to marauder behavior); youth /
-        // community signups go to townies. Both also appear on the calendar
-        // (dated on the deadline); here they're a standing reminder w/ countdown.
+        // (1) Deadline-based signups — events carrying registrationDeadline.
+        // AUDIENCE SPLIT: intramural signups go to marauders (and unset, which
+        // defaults to marauder behavior); youth / community signups go to townies.
+        // Three states via the optional registrationOpens field: not-yet-open
+        // (shown up to OPEN_LEAD_MS early as "Opens <date>"), open-now (shown
+        // within SIGNUP_LEAD_MS of the deadline with a countdown), and closed
+        // (deadline passed → hidden). Missing registrationOpens = treat as open
+        // now (prior behavior). All also appear on the calendar, dated on the deadline.
         const upcoming = (allEvents || [])
             .filter(e => e && e.registrationDeadline)
             .filter(e => isTownie ? !isIntramural(e) : isIntramural(e))
-            .map(e => ({ ...e, _dl: new Date(e.registrationDeadline).getTime() }))
-            .filter(e => !isNaN(e._dl) && e._dl >= nowMs && (e._dl - nowMs) <= SIGNUP_LEAD_MS)
-            .sort((a, b) => a._dl - b._dl);
+            .map(e => {
+                const _dl = new Date(e.registrationDeadline).getTime();
+                const _opRaw = e.registrationOpens ? new Date(e.registrationOpens).getTime() : NaN;
+                return { ...e, _dl, _op: isNaN(_opRaw) ? null : _opRaw };
+            })
+            .filter(e => {
+                if (isNaN(e._dl) || e._dl < nowMs) return false;            // invalid or closed
+                const notYetOpen = e._op !== null && e._op > nowMs;
+                return notYetOpen
+                    ? (e._op - nowMs) <= OPEN_LEAD_MS                       // opens within the heads-up window
+                    : (e._dl - nowMs) <= SIGNUP_LEAD_MS;                    // open now, deadline within window
+            })
+            // Order by the most relevant upcoming moment: a not-yet-open signup
+            // by when it opens, an open one by when it closes.
+            .sort((a, b) => {
+                const ak = (a._op !== null && a._op > nowMs) ? a._op : a._dl;
+                const bk = (b._op !== null && b._op > nowMs) ? b._op : b._dl;
+                return ak - bk;
+            });
         // (2) Open-ended signups — youth registrations flagged closesTBA (open
         // now, no announced close date). Townie-only: these are community youth
         // registrations with no intramural equivalent. Sourced from the raw
@@ -4440,10 +4462,23 @@ function renderHomeUI(){
         if (upcoming.length > 0 || tbaSignups.length > 0) {
             signupsSection.style.display = '';
             const deadlineHtml = upcoming.map(e => {
-                const dlLabel = new Date(e._dl).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                const daysLeft = Math.ceil((e._dl - nowMs) / (24 * 60 * 60 * 1000));
-                const urgency = daysLeft <= 3 ? ' home-signup-urgent' : '';
-                const daysText = daysLeft <= 0 ? 'closes today' : daysLeft === 1 ? '1 day left' : `${daysLeft} days left`;
+                // Not-yet-open signups show an "Opens <date>" heads-up counting
+                // up to the open date (no urgency styling — nothing's closing).
+                // Open signups keep the deadline + closing countdown.
+                const notYetOpen = e._op !== null && e._op > nowMs;
+                let byLabel, daysText, urgency = '';
+                if (notYetOpen) {
+                    const opLabel = new Date(e._op).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    const daysToOpen = Math.ceil((e._op - nowMs) / (24 * 60 * 60 * 1000));
+                    byLabel = `Opens ${opLabel}`;
+                    daysText = daysToOpen <= 0 ? 'opens today' : daysToOpen === 1 ? 'opens tomorrow' : `in ${daysToOpen} days`;
+                } else {
+                    const dlLabel = new Date(e._dl).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    const daysLeft = Math.ceil((e._dl - nowMs) / (24 * 60 * 60 * 1000));
+                    urgency = daysLeft <= 3 ? ' home-signup-urgent' : '';
+                    byLabel = `by ${dlLabel}`;
+                    daysText = daysLeft <= 0 ? 'closes today' : daysLeft === 1 ? '1 day left' : `${daysLeft} days left`;
+                }
                 // The scraper no longer prefixes youth titles with "Register
                 // by <date>: ", but keep this strip as a defensive no-op so any
                 // older cached event still reads cleanly here.
@@ -4462,7 +4497,7 @@ function renderHomeUI(){
                         ${sub ? `<span class="home-signup-sub">${escHtml(sub)}</span>` : ''}
                     </div>
                     <div class="home-signup-deadline">
-                        <span class="home-signup-by">by ${dlLabel}</span>
+                        <span class="home-signup-by">${byLabel}</span>
                         <span class="home-signup-days">${daysText}</span>
                     </div>
                 </a>`;

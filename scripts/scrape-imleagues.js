@@ -27,8 +27,9 @@
  *   (Playwright already installed from the discovery step.)
  *
  * OUTPUT: imleagues.json — an array of signup entries (status/sport/league/
- * title/deadline/registrationWindow/season/registerLink). scrape.js's loader
- * turns each active entry into an event dated on its registration deadline.
+ * title/deadline/registrationWindow/season/registerLink, plus optional `opens`
+ * when registration has a start date). scrape.js's loader turns each active
+ * entry into an event dated on its registration deadline.
  */
 
 const { chromium } = require('playwright');
@@ -196,6 +197,11 @@ const toZ = (dt) => dt ? dt.toISOString() : null;
       title: `Intramural ${r.sport}: ${r.league}`,
       // registration close is the signup gate; fall back to season start.
       deadline: toZ(reg.end || sea.start),
+      // Registration OPEN date — the start of the registration window. Only
+      // emitted when the window is a real range (start AND end), so a single
+      // ambiguous date isn't mistaken for an open date. Optional: scrape.js's
+      // loader treats a missing opens as "already open" (prior behavior).
+      ...(reg.start && reg.end ? { opens: toZ(reg.start) } : {}),
       registrationWindow: r.registration || '',          // human label for the description
       season: r.season || '',                            // human label for the description
       registerLink: r.sportId
@@ -206,7 +212,7 @@ const toZ = (dt) => dt ? dt.toISOString() : null;
 
   fs.writeFileSync(OUT_FILE, JSON.stringify(registrations, null, 2));
   console.log(`\nWrote ${registrations.length} signup entr(y/ies) → ${OUT_FILE}`);
-  registrations.forEach(x => console.log(`  • ${x.title}  [deadline ${x.deadline}]`));
+  registrations.forEach(x => console.log(`  • ${x.title}  [${x.opens ? 'opens ' + x.opens + ', ' : ''}deadline ${x.deadline}]`));
   console.log('\nReview imleagues.json; the scrape.js loader turns each into a dated signup event.');
 
   await browser.close();

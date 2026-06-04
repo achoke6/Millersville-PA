@@ -3009,6 +3009,14 @@ async function runScraper() {
                 if (ev.registrationRequired === true) {
                     pushed.registrationRequired = true;
                 }
+                // Carry the registration close/open dates through so PM Community
+                // registrations behave like full signups: they surface in Upcoming
+                // Signups with a countdown (and the three-state "Opens <date>" when
+                // a future open date is set). The deadline skip-check above already
+                // hides the event once registration has closed, so anything pushed
+                // here is still open (or has no deadline at all).
+                if (ev.registrationDeadline) pushed.registrationDeadline = ev.registrationDeadline;
+                if (ev.registrationOpens) pushed.registrationOpens = ev.registrationOpens;
                 events.push(pushed);
                 added++;
             }
@@ -3083,6 +3091,7 @@ async function runScraper() {
                     gameResult: '', gameScore: '', streamLink: '', isLive: false,
                     registrationRequired: true,
                     registrationDeadline: reg.deadline,
+                    ...(reg.opens ? { registrationOpens: reg.opens } : {}),
                     kidFriendly: true,
                     description: [
                         reg.season ? `${reg.season} season.` : '',
@@ -3142,6 +3151,7 @@ async function runScraper() {
                     gameResult: '', gameScore: '', streamLink: '', isLive: false,
                     registrationRequired: true,
                     registrationDeadline: reg.deadline,
+                    ...(reg.opens ? { registrationOpens: reg.opens } : {}),
                     kidFriendly: false,
                     description: [
                         reg.season ? `Season runs ${reg.season}.` : '',

@@ -17,8 +17,8 @@
  * get populated (sheet sync instead of hand-editing / PRs).
  *
  * SHEET COLUMNS (header row, case-insensitive, position-independent):
- *   Approved, Family, Source, Title, Date, Time, Location, Deadline, Link,
- *   Description, Notes
+ *   Approved, Family, Source, Title, Date, Time, Location, Opens, Deadline,
+ *   Link, Description, Notes
  *
  *   Approved:    non-blank (X) = publish; blank = skip (still a candidate).
  *   Family:      non-blank (X) = kidFriendly:true on the generated event.
@@ -27,6 +27,9 @@
  *                plain date (2026-08-04) — if no time, Time column is used.
  *   Time:        optional "6:00 PM" style; merged with Date when Date has no
  *                time component. If both absent, defaults to 18:00 ET.
+ *   Opens:       (optional) registration-open date, ISO or plain date. When set
+ *                and still in the future, the signup shows early as "Opens <date>";
+ *                blank = treated as already open (prior behavior).
  *   Deadline:    (Youth Sports + any registration) ISO or plain date; the
  *                registration close date. For Youth Sports this is required.
  *   Link:        register/source URL.
@@ -164,6 +167,7 @@ async function main() {
     const source = col(row, 'source').toLowerCase();
     const dt = parseDateTime(col(row, 'date'), col(row, 'time'));
     const deadlineDt = parseDateTime(col(row, 'deadline'), '');
+    const opensDt = parseDateTime(col(row, 'opens'), '');   // optional registration-open date
 
     // The date that decides whether a row is still relevant: Youth Sports keys
     // off Deadline (it has no Date column), everything else off Date. A row
@@ -230,6 +234,7 @@ async function main() {
           org: location || title,
           sport: col(row, 'notes') || '',   // optional sport detail from Notes
           deadline: deadlineDt.toISOString(),
+          ...(opensDt ? { opens: opensDt.toISOString() } : {}),
           registerLink: link || 'https://www.pennmanor.net/community/',
           note: description || ''
         });
@@ -261,7 +266,7 @@ async function main() {
       };
       if (description) e.description = description;
       if (family) e.kidFriendly = true;
-      if (deadlineDt) { e.registrationRequired = true; e.registrationDeadline = deadlineDt.toISOString(); }
+      if (deadlineDt) { e.registrationRequired = true; e.registrationDeadline = deadlineDt.toISOString(); if (opensDt) e.registrationOpens = opensDt.toISOString(); }
       else if (/registration|register|sign\s*up|rsvp/i.test(description + ' ' + title)) e.registrationRequired = true;
       pmEvents.push(e);
       approved++;

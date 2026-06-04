@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-06-04T13:34:58.448Z",
-  "totalEvents": 794,
+  "generatedAt": "2026-06-04T13:39:14.366Z",
+  "totalEvents": 782,
   "withDescription": 311,
-  "withImage": 106,
+  "withImage": 94,
   "familyFriendly": 46,
-  "eventsToday": 3,
+  "eventsToday": 2,
   "sources": {
     "muAthletics": 63,
     "muCalendar": 148,
@@ -12,7 +12,7 @@
     "pennManor": 214,
     "borough": 109,
     "vfw": 4,
-    "phantomPower": 12,
+    "phantomPower": 0,
     "community": 1,
     "muHudlBroadcasts": 0
   },
@@ -41,10 +41,7 @@
       "earliest": "2026-05-24T15:00:00.000Z",
       "latest": "2026-09-11T17:00:00.000Z"
     },
-    "phantomPower": {
-      "earliest": "2026-06-05T00:00:00.000Z",
-      "latest": "2026-07-17T23:00:00.000Z"
-    },
+    "phantomPower": null,
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2026-04-27T21:00:00.000Z"
@@ -75,10 +72,7 @@
       "newest": "2026-09-11",
       "daysSinceMoved": 2
     },
-    "phantomPower": {
-      "newest": "2026-07-17",
-      "daysSinceMoved": 15
-    },
+    "phantomPower": null,
     "community": {
       "newest": "2026-04-27",
       "daysSinceMoved": 29
@@ -86,9 +80,9 @@
   },
   "sports": {
     "total": 252,
-    "scored": 25,
+    "scored": 23,
     "wins": 12,
-    "losses": 12,
+    "losses": 10,
     "ties": 1
   },
   "registrations": {
@@ -105,7 +99,7 @@
       "Youth Sports": 1
     },
     "stalePast": 2,
-    "lastSyncAt": "2026-06-04T13:33:32.819Z"
+    "lastSyncAt": "2026-06-04T13:38:08.590Z"
   },
   "recentlyAdded": [
     {
@@ -172,11 +166,11 @@
       "date": "2026-09-25T20:00:00.000Z"
     },
     {
-      "key": "Casual Cruelty w. Marrowed + more|2026-06-05T00:00:00.000Z",
-      "firstSeenAt": "2026-06-04T03:55:13.163Z",
-      "title": "Casual Cruelty w. Marrowed + more",
-      "source": "Other",
-      "date": "2026-06-05T00:00:00.000Z"
+      "key": "Boys JV Soccer vs Spring Grove Area High School|2026-08-26T04:01:00.000Z",
+      "firstSeenAt": "2026-06-03T21:49:10.577Z",
+      "title": "Boys JV Soccer vs Spring Grove Area High School",
+      "source": "PM",
+      "date": "2026-08-26T04:01:00.000Z"
     }
   ],
   "addedLastRun": 0

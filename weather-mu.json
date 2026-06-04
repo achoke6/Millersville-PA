@@ -128,7 +128,6 @@
   },
   "observations": [
     {
-<<<<<<< HEAD
       "time": "13:00",
       "temp": "83",
       "dewpoint": "50",
@@ -173,8 +172,6 @@
       "condition": "None"
     },
     {
-=======
->>>>>>> parent of 43cb356 (Merge branch 'main' of https://github.com/achoke6/Millersville-PA)
       "time": "09:00",
       "temp": "71",
       "dewpoint": "53",
@@ -195,53 +192,6 @@
       "precip": "0.00",
       "visibility": "9.8",
       "condition": "None"
-<<<<<<< HEAD
-=======
-    },
-    {
-      "time": "07:00",
-      "temp": "55",
-      "dewpoint": "53",
-      "rh": "94",
-      "windDir": "SSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "10.3",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "53",
-      "dewpoint": "52",
-      "rh": "97",
-      "windDir": "SSW",
-      "windSpeed": "0",
-      "precip": "0.00",
-      "visibility": "9.7",
-      "condition": "None"
-    },
-    {
-      "time": "05:00",
-      "temp": "53",
-      "dewpoint": "52",
-      "rh": "97",
-      "windDir": "WSW",
-      "windSpeed": "0",
-      "precip": "0.00",
-      "visibility": "9.8",
-      "condition": "None"
-    },
-    {
-      "time": "04:00",
-      "temp": "54",
-      "dewpoint": "53",
-      "rh": "96",
-      "windDir": "WSW",
-      "windSpeed": "0",
-      "precip": "0.00",
-      "visibility": "6.3",
-      "condition": "None"
->>>>>>> parent of 43cb356 (Merge branch 'main' of https://github.com/achoke6/Millersville-PA)
     }
   ],
   "discussion": {
@@ -285,9 +235,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-<<<<<<< HEAD
-  "updated": "2026-06-04T17:05:28.633Z"
-=======
-  "updated": "2026-06-04T13:33:38.307Z"
->>>>>>> parent of 43cb356 (Merge branch 'main' of https://github.com/achoke6/Millersville-PA)
+  "updated": "2026-06-04T17:36:15.425Z"
 }

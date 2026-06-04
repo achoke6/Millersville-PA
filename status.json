@@ -1,32 +1,25 @@
 {
-<<<<<<< HEAD
-  "generatedAt": "2026-06-04T17:06:53.984Z",
-  "totalEvents": 805,
+  "generatedAt": "2026-06-04T17:37:45.153Z",
+  "totalEvents": 827,
   "withDescription": 312,
   "withImage": 107,
-=======
-  "generatedAt": "2026-06-04T13:34:58.448Z",
-  "totalEvents": 794,
-  "withDescription": 311,
-  "withImage": 106,
->>>>>>> parent of 43cb356 (Merge branch 'main' of https://github.com/achoke6/Millersville-PA)
   "familyFriendly": 46,
   "eventsToday": 3,
   "sources": {
-    "muAthletics": 72,
+    "muAthletics": 94,
     "muCalendar": 148,
     "muGetInvolved": 239,
     "pennManor": 214,
     "borough": 109,
     "vfw": 4,
-    "phantomPower": 12,
+    "phantomPower": 13,
     "community": 1,
     "muHudlBroadcasts": 0
   },
   "sourceDateRanges": {
     "muAthletics": {
       "earliest": "2026-03-28T06:00:00.000Z",
-      "latest": "2027-02-09T15:00:00.000Z"
+      "latest": "2027-03-12T00:00:00.000Z"
     },
     "muCalendar": {
       "earliest": "2026-03-06T17:00:00.000Z",
@@ -37,13 +30,8 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-<<<<<<< HEAD
       "earliest": "2026-04-30T22:00:00.000Z",
       "latest": "2026-09-25T21:00:00.000Z"
-=======
-      "earliest": "2026-04-30T20:15:00.000Z",
-      "latest": "2026-09-25T20:00:00.000Z"
->>>>>>> parent of 43cb356 (Merge branch 'main' of https://github.com/achoke6/Millersville-PA)
     },
     "borough": {
       "earliest": "2026-03-09T23:00:00.000Z",
@@ -64,16 +52,16 @@
   },
   "staleness": {
     "muAthletics": {
-      "newest": "2027-02-09",
-      "daysSinceMoved": 6
+      "newest": "2027-03-12",
+      "daysSinceMoved": 0
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 27
+      "daysSinceMoved": 0
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 29
+      "daysSinceMoved": 0
     },
     "pennManor": {
       "newest": "2026-09-25",
@@ -81,23 +69,23 @@
     },
     "borough": {
       "newest": "2027-05-08",
-      "daysSinceMoved": 27
+      "daysSinceMoved": 0
     },
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 0
     },
     "phantomPower": {
       "newest": "2026-07-17",
-      "daysSinceMoved": 15
+      "daysSinceMoved": 0
     },
     "community": {
       "newest": "2026-04-27",
-      "daysSinceMoved": 29
+      "daysSinceMoved": 0
     }
   },
   "sports": {
-    "total": 261,
+    "total": 283,
     "scored": 25,
     "wins": 12,
     "losses": 12,
@@ -117,157 +105,8 @@
       "Youth Sports": 1
     },
     "stalePast": 2,
-<<<<<<< HEAD
-    "lastSyncAt": "2026-06-04T17:05:27.771Z"
+    "lastSyncAt": "2026-06-04T17:36:14.412Z"
   },
-  "recentlyAdded": [
-    {
-      "key": "Intramural Cornhole: Sunset Cornhole|2026-09-09T03:59:00.000Z",
-      "firstSeenAt": "2026-06-04T17:06:53.981Z",
-      "title": "Intramural Cornhole: Sunset Cornhole",
-      "source": "Other",
-      "date": "2026-09-09T03:59:00.000Z"
-    },
-    {
-      "key": "Millersville University Football vs California (PA)|2026-09-12T16:00:00.000Z",
-      "firstSeenAt": "2026-06-04T17:06:53.981Z",
-      "title": "Millersville University Football vs California (PA)",
-      "source": "MU",
-      "date": "2026-09-12T16:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Football vs Slippery Rock|2026-09-19T16:00:00.000Z",
-      "firstSeenAt": "2026-06-04T17:06:53.981Z",
-      "title": "Millersville University Football vs Slippery Rock",
-      "source": "MU",
-      "date": "2026-09-19T16:00:00.000Z"
-    },
-    {
-      "key": "Boys 7/8th Soccer @ Cocalico High School|2026-09-25T21:00:00.000Z",
-      "firstSeenAt": "2026-06-04T17:06:53.981Z",
-      "title": "Boys 7/8th Soccer @ Cocalico High School",
-      "source": "PM",
-      "date": "2026-09-25T21:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Football at West Chester|2026-09-26T18:00:00.000Z",
-      "firstSeenAt": "2026-06-04T17:06:53.981Z",
-      "title": "Millersville University Football at West Chester",
-      "source": "MU",
-      "date": "2026-09-26T18:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Football at Shepherd|2026-10-03T16:00:00.000Z",
-      "firstSeenAt": "2026-06-04T17:06:53.981Z",
-      "title": "Millersville University Football at Shepherd",
-      "source": "MU",
-      "date": "2026-10-03T16:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Football vs Shippensburg|2026-10-10T16:00:00.000Z",
-      "firstSeenAt": "2026-06-04T17:06:53.981Z",
-      "title": "Millersville University Football vs Shippensburg",
-      "source": "MU",
-      "date": "2026-10-10T16:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Football vs Kutztown|2026-10-17T18:00:00.000Z",
-      "firstSeenAt": "2026-06-04T17:06:53.981Z",
-      "title": "Millersville University Football vs Kutztown",
-      "source": "MU",
-      "date": "2026-10-17T18:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Football at Bloomsburg|2026-10-24T18:00:00.000Z",
-      "firstSeenAt": "2026-06-04T17:06:53.981Z",
-      "title": "Millersville University Football at Bloomsburg",
-      "source": "MU",
-      "date": "2026-10-24T18:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Football at Lackawanna College|2026-10-31T17:00:00.000Z",
-      "firstSeenAt": "2026-06-04T17:06:53.981Z",
-      "title": "Millersville University Football at Lackawanna College",
-      "source": "MU",
-      "date": "2026-10-31T17:00:00.000Z"
-    }
-  ],
-  "addedLastRun": 21
-=======
-    "lastSyncAt": "2026-06-04T13:33:32.819Z"
-  },
-  "recentlyAdded": [
-    {
-      "key": "Just keeping you informed|2026-06-05T00:09:02.000Z",
-      "firstSeenAt": "2026-06-04T11:53:38.813Z",
-      "title": "Just keeping you informed",
-      "source": "Borough",
-      "date": "2026-06-05T00:09:02.000Z"
-    },
-    {
-      "key": "Girls 7/8th Soccer @ Cedar Crest High School|2026-09-24T21:00:00.000Z",
-      "firstSeenAt": "2026-06-04T08:21:49.499Z",
-      "title": "Girls 7/8th Soccer @ Cedar Crest High School",
-      "source": "PM",
-      "date": "2026-09-24T21:00:00.000Z"
-    },
-    {
-      "key": "Girls 7/8th Volleyball @ Manheim Township High School|2026-09-24T21:00:00.000Z",
-      "firstSeenAt": "2026-06-04T08:21:49.499Z",
-      "title": "Girls 7/8th Volleyball @ Manheim Township High School",
-      "source": "PM",
-      "date": "2026-09-24T21:00:00.000Z"
-    },
-    {
-      "key": "Girls JV Field Hockey vs Warwick High School|2026-09-24T21:30:00.000Z",
-      "firstSeenAt": "2026-06-04T08:21:49.499Z",
-      "title": "Girls JV Field Hockey vs Warwick High School",
-      "source": "PM",
-      "date": "2026-09-24T21:30:00.000Z"
-    },
-    {
-      "key": "Girls JV Volleyball vs Manheim Township High School|2026-09-24T22:00:00.000Z",
-      "firstSeenAt": "2026-06-04T08:21:49.499Z",
-      "title": "Girls JV Volleyball vs Manheim Township High School",
-      "source": "PM",
-      "date": "2026-09-24T22:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Field Hockey vs Warwick High School|2026-09-24T23:00:00.000Z",
-      "firstSeenAt": "2026-06-04T08:21:49.499Z",
-      "title": "Girls Varsity Field Hockey vs Warwick High School",
-      "source": "PM",
-      "date": "2026-09-24T23:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Volleyball vs Manheim Township High School|2026-09-24T23:00:00.000Z",
-      "firstSeenAt": "2026-06-04T08:21:49.499Z",
-      "title": "Girls Varsity Volleyball vs Manheim Township High School",
-      "source": "PM",
-      "date": "2026-09-24T23:00:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Football vs J P McCaskey High School|2026-09-25T04:01:00.000Z",
-      "firstSeenAt": "2026-06-04T08:21:49.499Z",
-      "title": "Boys Varsity Football vs J P McCaskey High School",
-      "source": "PM",
-      "date": "2026-09-25T04:01:00.000Z"
-    },
-    {
-      "key": "Boys 7/8/9th Soccer @ Cocalico High School|2026-09-25T20:00:00.000Z",
-      "firstSeenAt": "2026-06-04T08:21:49.499Z",
-      "title": "Boys 7/8/9th Soccer @ Cocalico High School",
-      "source": "PM",
-      "date": "2026-09-25T20:00:00.000Z"
-    },
-    {
-      "key": "Casual Cruelty w. Marrowed + more|2026-06-05T00:00:00.000Z",
-      "firstSeenAt": "2026-06-04T03:55:13.163Z",
-      "title": "Casual Cruelty w. Marrowed + more",
-      "source": "Other",
-      "date": "2026-06-05T00:00:00.000Z"
-    }
-  ],
+  "recentlyAdded": [],
   "addedLastRun": 0
->>>>>>> parent of 43cb356 (Merge branch 'main' of https://github.com/achoke6/Millersville-PA)
 }

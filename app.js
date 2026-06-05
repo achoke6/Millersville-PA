@@ -5339,6 +5339,25 @@ function mbaAudienceVisible(member){
     return true;
 }
 
+// Per-listing audience visibility for Directory cards. Unlike mbaAudienceVisible
+// (MBA members only), this honors an `audience` field on the listing ITSELF, so
+// non-member listings — campus resources, student-only services — can be hidden
+// from townies. Precedence: the listing's own audience → its MBA member audience
+// → 'both'. Same Directory townie-default convention (unset affiliation = local).
+// Accepts the events sheet's vocabulary too ('townies' == 'locals').
+function placeAudienceVisible(place){
+    if (!place) return true;
+    const member = getMembership(place.name);
+    let aud = String(place.audience || (member && member.audience) || 'both').toLowerCase().trim();
+    if (aud === 'townie' || aud === 'townies') aud = 'locals';
+    if (aud === 'marauder' || aud === 'student' || aud === 'students') aud = 'marauders';
+    if (aud === 'both' || aud === 'all' || aud === 'public' || aud === '') return true;
+    const viewerIsStudent = (muAffiliation === 'student');
+    if (aud === 'locals')    return !viewerIsStudent;  // townies + undecided
+    if (aud === 'marauders') return viewerIsStudent;    // confirmed students only
+    return true;  // unknown value → fail open (visible)
+}
+
 // The "MBA Member" badge — identical for both tiers (tier is an internal MBA
 // dues matter, not something residents need to see). Returns '' for non-members.
 function mbaBadge(placeName){
@@ -5589,8 +5608,8 @@ function renderPlaces(){
         if(placesFilter !== 'All'){
             mgFiltered = mgFiltered.filter(p => p.category === placesFilter);
         }
-        // Respect MBA audience targeting here too.
-        mgFiltered = mgFiltered.filter(p => mbaAudienceVisible(getMembership(p.name)));
+        // Respect audience targeting here too (listing's own, else MBA member).
+        mgFiltered = mgFiltered.filter(p => placeAudienceVisible(p));
         const buildCard = p => (p.placeType==='food') ? buildFoodCard(p, specials, dayName) : buildServiceCard(p);
         const onCampus  = mgFiltered.filter(p => p.onCampus === true);
         const offCampus = mgFiltered.filter(p => p.onCampus !== true);
@@ -5628,10 +5647,11 @@ function renderPlaces(){
         filtered = filtered.filter(p => getMembership(p.name));
     }
 
-    // MBA audience targeting: drop member listings whose audience excludes the
-    // current viewer. Non-members always pass. Unset affiliation is treated as
-    // townie here (see mbaAudienceVisible — Directory-specific convention).
-    filtered = filtered.filter(p => mbaAudienceVisible(getMembership(p.name)));
+    // Audience targeting: drop listings whose audience excludes the current
+    // viewer. A listing's own `audience` wins; otherwise its MBA member audience
+    // applies; non-targeted listings always pass. Unset affiliation is treated as
+    // townie here (Directory-specific convention — see placeAudienceVisible).
+    filtered = filtered.filter(p => placeAudienceVisible(p));
 
     // Sort: featured first, then food, then services
     // Sort: Featured Spotlight buyers first (they paid for prominence), then

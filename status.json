@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-06-04T22:21:21.436Z",
-  "totalEvents": 859,
-  "withDescription": 311,
+  "generatedAt": "2026-06-05T00:07:37.359Z",
+  "totalEvents": 855,
+  "withDescription": 307,
   "withImage": 107,
-  "familyFriendly": 45,
+  "familyFriendly": 44,
   "eventsToday": 3,
   "sources": {
     "muAthletics": 127,
-    "muCalendar": 148,
-    "muGetInvolved": 239,
+    "muCalendar": 145,
+    "muGetInvolved": 238,
     "pennManor": 214,
     "borough": 109,
     "vfw": 4,
@@ -22,16 +22,16 @@
       "latest": "2027-03-12T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-03-06T17:00:00.000Z",
+      "earliest": "2026-03-07T19:00:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-03-06T15:30:00.000Z",
+      "earliest": "2026-03-07T00:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-04-30T23:00:00.000Z",
-      "latest": "2026-09-25T21:00:00.000Z"
+      "earliest": "2026-05-01T20:15:00.000Z",
+      "latest": "2026-09-26T14:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-03-09T23:00:00.000Z",
@@ -61,7 +61,7 @@
       "daysSinceMoved": 0
     },
     "pennManor": {
-      "newest": "2026-09-25",
+      "newest": "2026-09-26",
       "daysSinceMoved": 0
     },
     "borough": {
@@ -99,9 +99,16 @@
       "Youth Sports": 1
     },
     "stalePast": 2,
-    "lastSyncAt": "2026-06-04T22:20:03.167Z"
+    "lastSyncAt": "2026-06-05T00:06:03.636Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Girls JV Soccer vs Wilson High School|2026-09-26T14:00:00.000Z",
+      "firstSeenAt": "2026-06-05T00:07:37.357Z",
+      "title": "Girls JV Soccer vs Wilson High School",
+      "source": "PM",
+      "date": "2026-09-26T14:00:00.000Z"
+    },
     {
       "key": "Casual Cruelty w. Marrowed + more|2026-06-05T00:00:00.000Z",
       "firstSeenAt": "2026-06-04T20:05:35.170Z",
@@ -164,14 +171,7 @@
       "title": "Brotality w. Quantifier, Making A Mockery, & New Damage",
       "source": "Other",
       "date": "2026-06-24T23:00:00.000Z"
-    },
-    {
-      "key": "Mentalia's Stupid Drag Show|2026-06-26T00:00:00.000Z",
-      "firstSeenAt": "2026-06-04T20:05:35.170Z",
-      "title": "Mentalia's Stupid Drag Show",
-      "source": "Other",
-      "date": "2026-06-26T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

@@ -3837,6 +3837,40 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 if (cur) allRows.push(cur);
             }
 
+            // Resolve columns by HEADER NAME, not fixed position. The response
+            // sheet's columns track the Google Form's question order, so adding
+            // or reordering questions silently shifts fixed indices and makes us
+            // read the wrong cells (this happened when the Audience / children /
+            // end-date-time questions were added). Matching the header row
+            // survives that. Names are normalized (lowercased, whitespace-
+            // collapsed), matched exact-first then by substring as a fallback.
+            const headerCells = parseCSVLine(allRows[0] || '');
+            const norm = s => (s || '').toLowerCase().replace(/\s+/g, ' ').trim();
+            const findCol = (...names) => {
+                for (const n of names) {
+                    const i = headerCells.findIndex(h => norm(h) === norm(n));
+                    if (i !== -1) return i;
+                }
+                for (const n of names) {
+                    const i = headerCells.findIndex(h => norm(h).includes(norm(n)));
+                    if (i !== -1) return i;
+                }
+                return -1;
+            };
+            const COL = {
+                name:     findCol('Event Name'),
+                desc:     findCol('Description'),
+                audience: findCol('Audience'),
+                kids:     findCol('Is this an event for children?', 'children'),
+                date:     findCol('Start Date', 'Date'),
+                time:     findCol('Start Time', 'Time'),
+                endDate:  findCol('End Date'),
+                endTime:  findCol('End Time'),
+                location: findCol('Location'),
+                link:     findCol('Website/Link', 'Website', 'Link'),
+                status:   findCol('Approved', 'Status', 'Approve', 'Publish'),
+            };
+
             const rows = allRows.slice(1); // skip header
             let communityCount = 0;
             let skippedNoStatus = 0;
@@ -3846,15 +3880,18 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 if (!row.trim()) continue;
                 const cols = parseCSVLine(row);
                 if (cols.length < 2) continue;
-                // Safer destructuring — don't bail just because cols.length < 9; status might be in col 8
-                // but other fields may be present even if status is missing/short.
-                const eventName = (cols[1] || '').trim();
-                const dateStr = (cols[2] || '').trim();
-                const timeStr = (cols[3] || '').trim();
-                const location = (cols[4] || '').trim();
-                const description = (cols[5] || '').trim();
-                const link = (cols[7] || '').trim();
-                const status = (cols[8] || '').trim();
+                const get = i => (i >= 0 && i < cols.length ? (cols[i] || '').trim() : '');
+                const eventName = get(COL.name);
+                const dateStr = get(COL.date);
+                const timeStr = get(COL.time);
+                const location = get(COL.location);
+                const description = get(COL.desc);
+                const link = get(COL.link);
+                const status = get(COL.status);
+                const audienceRaw = get(COL.audience);
+                const kidsRaw = get(COL.kids);
+                const endDateStr = get(COL.endDate);
+                const endTimeStr = get(COL.endTime);
 
                 // Accept multiple "approved" signals: Approved, Yes, Y, ✓, true, 1
                 const statusApproved = /^(approved|yes|y|true|1|✓|✔)$/i.test(status);
@@ -3971,6 +4008,37 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 // Skip events outside our date range
                 if (eventDate < pastDate || eventDate >= futureDate) { skippedOutOfRange++; continue; }
 
+                // ── Audience: map the Form answer to the site's event model.
+                //   'mu-only'     → students only, hidden from townies.
+                //   'townie-only' → community only, hidden from marauders.
+                //   'public'      → everyone ("Both").
+                let audience = '';
+                const audLow = audienceRaw.toLowerCase();
+                if (audLow.includes('marauder')) audience = 'mu-only';
+                else if (audLow.includes('townie')) audience = 'townie-only';
+                else if (audienceRaw) audience = 'public';   // Both (or any other non-empty answer)
+
+                // ── End time: build an ISO end moment when an end TIME is given
+                // (end date defaults to the start date if blank). Same Eastern-
+                // offset construction as the start, so DST is handled.
+                let endTimeIso = '';
+                if (endTimeStr) {
+                    const etm = endTimeStr.match(/(\d{1,2}):(\d{2})(?::\d{2})?\s*(AM|PM)?/i);
+                    if (etm) {
+                        let eh = parseInt(etm[1]); const emin = parseInt(etm[2]);
+                        const eap = (etm[3] || '').toUpperCase();
+                        if (eap === 'PM' && eh < 12) eh += 12;
+                        else if (eap === 'AM' && eh === 12) eh = 0;
+                        let ey = yyyy, emo = mm, ed = dd;
+                        const edm = endDateStr.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+                        if (edm) { ey = parseInt(edm[3]); emo = parseInt(edm[1]); ed = parseInt(edm[2]); }
+                        else if (endDateStr) { const fd = new Date(endDateStr); if (!isNaN(fd.getTime())) { ey = fd.getFullYear(); emo = fd.getMonth() + 1; ed = fd.getDate(); } }
+                        const eoff = isEasternDST(ey, emo - 1, ed) ? '-04:00' : '-05:00';
+                        const cand = `${ey}-${String(emo).padStart(2,'0')}-${String(ed).padStart(2,'0')}T${String(eh).padStart(2,'0')}:${String(emin).padStart(2,'0')}:00${eoff}`;
+                        if (!isNaN(new Date(cand).getTime())) endTimeIso = cand;
+                    }
+                }
+
                 events.push({
                     title: eventName,
                     date: eventDate.toISOString(),
@@ -3980,6 +4048,9 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                     ticketLink: '',
                     sourceLink: link || '',
                     description: description || '',
+                    ...(audience ? { audience } : {}),
+                    ...(/^yes$/i.test(kidsRaw) ? { kidFriendly: true } : {}),
+                    ...(endTimeIso ? { endTime: endTimeIso } : {}),
                     ...(timeProvided ? {} : { allDay: true })
                 });
                 communityCount++;

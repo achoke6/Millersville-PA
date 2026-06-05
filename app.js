@@ -419,12 +419,16 @@ window.setMuAffiliation = function(value) {
     if (typeof renderHomeFeed === 'function') renderHomeFeed();
     if (typeof renderEvents === 'function') renderEvents();
 };
-// An event is hidden from a townie's feed if it's MU-student-only.
-// Default (unset affiliation) is Marauder behavior — users see everything by default
-// and townies explicitly opt in via the welcome banner or Feed settings.
-function isHiddenForTownie(e) {
-    if (muAffiliation !== 'townie') return false; // Marauder and unset both see everything
-    return e && (e.audience === 'mu-only' || isIntramural(e));
+// Whether an event is hidden from the current viewer's feed, based on the
+// event's audience and the viewer's affiliation. Symmetric:
+//   • Townies don't see MU-student-only events or intramural signups.
+//   • Marauders don't see townie/community-only events (audience 'townie-only').
+// Unset affiliation = Marauder default: see everything (users opt into townie
+// behavior, or stay default, via the welcome banner / Feed settings).
+function isHiddenForViewer(e) {
+    if (muAffiliation === 'townie') return !!(e && (e.audience === 'mu-only' || isIntramural(e)));
+    if (muAffiliation === 'student') return !!(e && e.audience === 'townie-only');
+    return false; // unset → see everything
 }
 // Intramural signups (scraped from IMLeagues into events.json) are a MARAUDER-
 // only thing — townies can't join MU intramural leagues. We identify them by
@@ -3260,7 +3264,7 @@ function renderEvents(){
     const filterEvent = (e) => {
         if (isSportEvent(e)) return false;
         if (isPMSportByTitle(e)) return false;
-        if (isHiddenForTownie(e)) return false;
+        if (isHiddenForViewer(e)) return false;
         if (isEventFromHiddenSource(e)) return false;
         const tags = e.tags || [];
         if (!Array.from(evActiveSources).some(src => matchesSource(tags, src))) return false;
@@ -4294,7 +4298,7 @@ function renderHomeUI(){
     // source filtering as before — date is the only thing that changes.
     const dayEvents = allEvents.filter(e => {
         if(localDateStr(e.date) !== viewDateStr) return false;
-        if(isHiddenForTownie(e)) return false;
+        if(isHiddenForViewer(e)) return false;
         if(isEventFromHiddenSource(e)) return false;
         if(isSportsEventFromHiddenSource(e)) return false;
         if((e.tags||[]).includes('Clubs/Orgs') && e.audience !== 'public' && muAffiliation === 'townie') return false;
@@ -4308,7 +4312,7 @@ function renderHomeUI(){
         const upcoming = allEvents.filter(e => {
             const d = localDateStr(e.date);
             if (d <= viewDateStr) return false;
-            if (isHiddenForTownie(e)) return false;
+            if (isHiddenForViewer(e)) return false;
             if (isEventFromHiddenSource(e)) return false;
             if (isSportsEventFromHiddenSource(e)) return false;
             if ((e.tags||[]).includes('Clubs/Orgs') && e.audience !== 'public' && muAffiliation === 'townie') return false;
@@ -6363,13 +6367,19 @@ function runSearch(q) {
             const src = (e.tags||[])[0] || '';
             const eventKey = getEventKey(e).replace(/"/g, '&quot;').replace(/'/g, "\\'");
             const clickAction = `document.getElementById('search-overlay').remove();window.openEventDetails('${eventKey}');`;
-            // Student-only badge + "not in your feed" note for townies
-            const hiddenForMe = isHiddenForTownie(e);
+            // "Not in your feed" badge + note, accurate to the viewer's side:
+            // student-only (hidden from townies) vs townie-only (hidden from marauders).
+            const hiddenForMe = isHiddenForViewer(e);
+            const townieView = muAffiliation === 'townie';
             const muOnlyBadge = hiddenForMe
-                ? '<span style="display:inline-block;background:var(--gold-soft);color:var(--navy);border:1px solid var(--gold);font-size:0.68rem;font-weight:600;padding:1px 6px;border-radius:10px;margin-left:6px;vertical-align:1px;">🎓 MU students only</span>'
+                ? (townieView
+                    ? '<span style="display:inline-block;background:var(--gold-soft);color:var(--navy);border:1px solid var(--gold);font-size:0.68rem;font-weight:600;padding:1px 6px;border-radius:10px;margin-left:6px;vertical-align:1px;">🎓 MU students only</span>'
+                    : '<span style="display:inline-block;background:var(--gold-soft);color:var(--navy);border:1px solid var(--gold);font-size:0.68rem;font-weight:600;padding:1px 6px;border-radius:10px;margin-left:6px;vertical-align:1px;">🏘️ Townies only</span>')
                 : '';
             const hiddenNote = hiddenForMe
-                ? '<div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;font-style:italic;">Not shown in your feed — you marked yourself as a townie</div>'
+                ? (townieView
+                    ? '<div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;font-style:italic;">Not shown in your feed — you marked yourself as a townie</div>'
+                    : '<div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;font-style:italic;">Not shown in your feed — you marked yourself as a Marauder</div>')
                 : '';
             html += `<div class="search-result" onclick="${clickAction}">
                 <span style="font-size:0.7rem;color:var(--text-muted);">${src}</span>${muOnlyBadge}
@@ -6566,21 +6576,47 @@ window.openSubmitEvent = function() {
             <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Event Name *</label>
             <input id="se-name" type="text" placeholder="e.g. Spring Community Festival" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;margin-bottom:12px;background:var(--bg);color:var(--text);">
 
+            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Who is this event for? *</label>
+            <select id="se-audience" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;margin-bottom:12px;background:var(--bg);color:var(--text);">
+                <option value="">Choose…</option>
+                <option value="Millersville Marauders">Millersville Marauders (MU students)</option>
+                <option value="Townies">Townies (local community)</option>
+                <option value="Both">Both</option>
+            </select>
+
+            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Is this an event for children? *</label>
+            <select id="se-kids" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;margin-bottom:12px;background:var(--bg);color:var(--text);">
+                <option value="">Choose…</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+
             <div style="display:flex;gap:12px;margin-bottom:12px;">
                 <div style="flex:1;">
-                    <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Date *</label>
+                    <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Start Date *</label>
                     <input id="se-date" type="date" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;background:var(--bg);color:var(--text);">
                 </div>
                 <div style="flex:1;">
-                    <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Time</label>
+                    <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Start Time *</label>
                     <input id="se-time" type="time" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;background:var(--bg);color:var(--text);">
+                </div>
+            </div>
+
+            <div style="display:flex;gap:12px;margin-bottom:12px;">
+                <div style="flex:1;">
+                    <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">End Date</label>
+                    <input id="se-end-date" type="date" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;background:var(--bg);color:var(--text);">
+                </div>
+                <div style="flex:1;">
+                    <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">End Time</label>
+                    <input id="se-end-time" type="time" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;background:var(--bg);color:var(--text);">
                 </div>
             </div>
 
             <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Location *</label>
             <input id="se-location" type="text" placeholder="e.g. Millersville Borough Park" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;margin-bottom:12px;background:var(--bg);color:var(--text);">
 
-            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Description</label>
+            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Description *</label>
             <textarea id="se-desc" rows="3" placeholder="Tell us about the event..." style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;margin-bottom:12px;resize:vertical;background:var(--bg);color:var(--text);"></textarea>
 
             <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Contact Email *</label>
@@ -6604,13 +6640,22 @@ window.submitEvent = function() {
     const name = document.getElementById('se-name').value.trim();
     const date = document.getElementById('se-date').value;
     const time = document.getElementById('se-time').value;
+    const endDate = document.getElementById('se-end-date').value;
+    const endTime = document.getElementById('se-end-time').value;
     const location = document.getElementById('se-location').value.trim();
     const desc = document.getElementById('se-desc').value.trim();
     const email = document.getElementById('se-email').value.trim();
     const link = document.getElementById('se-link').value.trim();
+    const audience = document.getElementById('se-audience').value;
+    const kids = document.getElementById('se-kids').value;
 
-    if(!name || !date || !location || !email) {
-        alert('Please fill in the required fields: Event Name, Date, Location, and Contact Email.');
+    // Mirror the REQUIRED questions on the Google Form. The POST is mode:'no-cors',
+    // so the browser can't see a rejection — if a Form-required field is missing,
+    // Google silently discards the whole submission while the user still sees the
+    // success screen. The client must enforce the same required set, or submissions
+    // vanish without a trace.
+    if(!name || !desc || !audience || !kids || !date || !time || !location || !email) {
+        alert('Please fill in all required fields: Event Name, Description, Audience, whether it\u2019s for children, Start Date, Start Time, Location, and Contact Email.');
         return;
     }
 
@@ -6618,27 +6663,39 @@ window.submitEvent = function() {
     btn.textContent = 'Submitting...';
     btn.disabled = true;
 
-    // Parse date and time for Google Form
+    // Split into Google's composite date/time params (entry.NNN_year/_month/_day,
+    // entry.NNN_hour/_minute). <input type="date|time"> values are already
+    // "YYYY-MM-DD" and 24-hour "HH:MM", so hour goes through as-is (0–23) — the
+    // earlier code subtracted 12 without sending AM/PM, which sank every PM time
+    // by 12 hours (5pm → 5am).
     const [year, month, day] = date.split('-');
-    let hour = '', minute = '';
-    if(time) {
-        const [h, m] = time.split(':');
-        const h24 = parseInt(h);
-        hour = String(h24 > 12 ? h24 - 12 : (h24 === 0 ? 12 : h24));
-        minute = m;
-    }
+    const [sh, sm] = time.split(':');
+    const hour = String(parseInt(sh, 10));
+    const minute = sm;
+    let eYear = '', eMonth = '', eDay = '', eHour = '', eMinute = '';
+    if(endDate) { [eYear, eMonth, eDay] = endDate.split('-'); }
+    if(endTime) { const [h, m] = endTime.split(':'); eHour = String(parseInt(h, 10)); eMinute = m; }
 
     const formData = new URLSearchParams();
     formData.append('entry.490875700', name);
+    formData.append('entry.1500961889', desc);
+    formData.append('entry.912188599', audience);        // Audience: Millersville Marauders | Townies | Both
+    formData.append('entry.1083341292', kids);           // Is this an event for children? Yes | No
     formData.append('entry.885260694_year', year);
     formData.append('entry.885260694_month', month);
     formData.append('entry.885260694_day', day);
-    if(hour) {
-        formData.append('entry.499967239_hour', hour);
-        formData.append('entry.499967239_minute', minute);
+    formData.append('entry.499967239_hour', hour);
+    formData.append('entry.499967239_minute', minute);
+    if(endDate) {
+        formData.append('entry.884959691_year', eYear);
+        formData.append('entry.884959691_month', eMonth);
+        formData.append('entry.884959691_day', eDay);
+    }
+    if(endTime) {
+        formData.append('entry.1349393568_hour', eHour);
+        formData.append('entry.1349393568_minute', eMinute);
     }
     formData.append('entry.461670075', location);
-    formData.append('entry.1500961889', desc);
     formData.append('entry.6546809', email);
     formData.append('entry.946075783', link);
 

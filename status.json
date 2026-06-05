@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-06-05T00:07:37.359Z",
-  "totalEvents": 855,
-  "withDescription": 307,
+  "generatedAt": "2026-06-05T01:19:44.932Z",
+  "totalEvents": 856,
+  "withDescription": 308,
   "withImage": 107,
-  "familyFriendly": 44,
+  "familyFriendly": 45,
   "eventsToday": 3,
   "sources": {
     "muAthletics": 127,
@@ -13,7 +13,7 @@
     "borough": 109,
     "vfw": 4,
     "phantomPower": 13,
-    "community": 0,
+    "community": 1,
     "muHudlBroadcasts": 0
   },
   "sourceDateRanges": {
@@ -45,7 +45,10 @@
       "earliest": "2026-06-05T00:00:00.000Z",
       "latest": "2026-07-17T23:00:00.000Z"
     },
-    "community": null
+    "community": {
+      "earliest": "2026-04-27T21:00:00.000Z",
+      "latest": "2026-04-27T21:00:00.000Z"
+    }
   },
   "staleness": {
     "muAthletics": {
@@ -76,7 +79,10 @@
       "newest": "2026-07-17",
       "daysSinceMoved": 0
     },
-    "community": null
+    "community": {
+      "newest": "2026-04-27",
+      "daysSinceMoved": 0
+    }
   },
   "sports": {
     "total": 316,
@@ -99,9 +105,16 @@
       "Youth Sports": 1
     },
     "stalePast": 2,
-    "lastSyncAt": "2026-06-05T00:06:03.636Z"
+    "lastSyncAt": "2026-06-05T01:18:16.700Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Preschool Open House|2026-04-27T21:00:00.000Z",
+      "firstSeenAt": "2026-06-05T01:19:44.930Z",
+      "title": "Preschool Open House",
+      "source": "Community",
+      "date": "2026-04-27T21:00:00.000Z"
+    },
     {
       "key": "Girls JV Soccer vs Wilson High School|2026-09-26T14:00:00.000Z",
       "firstSeenAt": "2026-06-05T00:07:37.357Z",
@@ -164,13 +177,6 @@
       "title": "Battle Of Millersville Vol.1 - Tribute Fest",
       "source": "Other",
       "date": "2026-06-21T00:00:00.000Z"
-    },
-    {
-      "key": "Brotality w. Quantifier, Making A Mockery, & New Damage|2026-06-24T23:00:00.000Z",
-      "firstSeenAt": "2026-06-04T20:05:35.170Z",
-      "title": "Brotality w. Quantifier, Making A Mockery, & New Damage",
-      "source": "Other",
-      "date": "2026-06-24T23:00:00.000Z"
     }
   ],
   "addedLastRun": 1

@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-06-05T01:19:44.932Z",
-  "totalEvents": 856,
+  "generatedAt": "2026-06-05T05:16:58.024Z",
+  "totalEvents": 862,
   "withDescription": 308,
   "withImage": 107,
   "familyFriendly": 45,
-  "eventsToday": 3,
+  "eventsToday": 5,
   "sources": {
     "muAthletics": 127,
     "muCalendar": 145,
     "muGetInvolved": 238,
-    "pennManor": 214,
+    "pennManor": 220,
     "borough": 109,
     "vfw": 4,
     "phantomPower": 13,
@@ -30,8 +30,8 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-05-01T20:15:00.000Z",
-      "latest": "2026-09-26T14:00:00.000Z"
+      "earliest": "2026-05-04T20:00:00.000Z",
+      "latest": "2026-09-30T20:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-03-09T23:00:00.000Z",
@@ -53,42 +53,42 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-03-12",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "pennManor": {
-      "newest": "2026-09-26",
+      "newest": "2026-09-30",
       "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2027-05-08",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "phantomPower": {
       "newest": "2026-07-17",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "community": {
       "newest": "2026-04-27",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     }
   },
   "sports": {
-    "total": 316,
-    "scored": 25,
-    "wins": 12,
-    "losses": 12,
+    "total": 322,
+    "scored": 22,
+    "wins": 11,
+    "losses": 10,
     "ties": 1
   },
   "registrations": {
@@ -105,79 +105,79 @@
       "Youth Sports": 1
     },
     "stalePast": 2,
-    "lastSyncAt": "2026-06-05T01:18:16.700Z"
+    "lastSyncAt": "2026-06-05T05:15:37.861Z"
   },
   "recentlyAdded": [
     {
-      "key": "Preschool Open House|2026-04-27T21:00:00.000Z",
-      "firstSeenAt": "2026-06-05T01:19:44.930Z",
-      "title": "Preschool Open House",
-      "source": "Community",
-      "date": "2026-04-27T21:00:00.000Z"
-    },
-    {
-      "key": "Girls JV Soccer vs Wilson High School|2026-09-26T14:00:00.000Z",
-      "firstSeenAt": "2026-06-05T00:07:37.357Z",
-      "title": "Girls JV Soccer vs Wilson High School",
+      "key": "Boys 7/8/9th Soccer @ Manheim Township High School|2026-09-28T20:00:00.000Z",
+      "firstSeenAt": "2026-06-05T05:16:58.022Z",
+      "title": "Boys 7/8/9th Soccer @ Manheim Township High School",
       "source": "PM",
-      "date": "2026-09-26T14:00:00.000Z"
+      "date": "2026-09-28T20:00:00.000Z"
     },
     {
-      "key": "Casual Cruelty w. Marrowed + more|2026-06-05T00:00:00.000Z",
-      "firstSeenAt": "2026-06-04T20:05:35.170Z",
-      "title": "Casual Cruelty w. Marrowed + more",
-      "source": "Other",
-      "date": "2026-06-05T00:00:00.000Z"
+      "key": "Girls Varsity Field Hockey @ Manheim Township High School|2026-09-28T20:00:00.000Z",
+      "firstSeenAt": "2026-06-05T05:16:58.022Z",
+      "title": "Girls Varsity Field Hockey @ Manheim Township High School",
+      "source": "PM",
+      "date": "2026-09-28T20:00:00.000Z"
     },
     {
-      "key": "Hexbelt plus, Mean Gene Machine|2026-06-06T00:00:00.000Z",
-      "firstSeenAt": "2026-06-04T20:05:35.170Z",
-      "title": "Hexbelt plus, Mean Gene Machine",
-      "source": "Other",
-      "date": "2026-06-06T00:00:00.000Z"
+      "key": "Boys 7/8th Soccer @ Manheim Township High School|2026-09-28T21:00:00.000Z",
+      "firstSeenAt": "2026-06-05T05:16:58.022Z",
+      "title": "Boys 7/8th Soccer @ Manheim Township High School",
+      "source": "PM",
+      "date": "2026-09-28T21:00:00.000Z"
     },
     {
-      "key": "Morimvr w. Scarlet Meridian, Illusion of Solace, and Skinmag|2026-06-13T00:00:00.000Z",
-      "firstSeenAt": "2026-06-04T20:05:35.170Z",
-      "title": "Morimvr w. Scarlet Meridian, Illusion of Solace, and Skinmag",
-      "source": "Other",
-      "date": "2026-06-13T00:00:00.000Z"
+      "key": "Girls JV Field Hockey @ Manheim Township High School|2026-09-28T21:30:00.000Z",
+      "firstSeenAt": "2026-06-05T05:16:58.022Z",
+      "title": "Girls JV Field Hockey @ Manheim Township High School",
+      "source": "PM",
+      "date": "2026-09-28T21:30:00.000Z"
     },
     {
-      "key": "EMO NIGHT Dance Party|2026-06-14T01:00:00.000Z",
-      "firstSeenAt": "2026-06-04T20:05:35.170Z",
-      "title": "EMO NIGHT Dance Party",
-      "source": "Other",
-      "date": "2026-06-14T01:00:00.000Z"
+      "key": "Girls JV Volleyball vs Cocalico High School|2026-09-28T22:00:00.000Z",
+      "firstSeenAt": "2026-06-05T05:16:58.022Z",
+      "title": "Girls JV Volleyball vs Cocalico High School",
+      "source": "PM",
+      "date": "2026-09-28T22:00:00.000Z"
     },
     {
-      "key": "Upon A Burning Body|2026-06-14T21:30:00.000Z",
-      "firstSeenAt": "2026-06-04T20:05:35.170Z",
-      "title": "Upon A Burning Body",
-      "source": "Other",
-      "date": "2026-06-14T21:30:00.000Z"
+      "key": "Girls Varsity Volleyball vs Cocalico High School|2026-09-28T23:00:00.000Z",
+      "firstSeenAt": "2026-06-05T05:16:58.022Z",
+      "title": "Girls Varsity Volleyball vs Cocalico High School",
+      "source": "PM",
+      "date": "2026-09-28T23:00:00.000Z"
     },
     {
-      "key": "Jeffrey Lewis & The Voltage|2026-06-16T23:00:00.000Z",
-      "firstSeenAt": "2026-06-04T20:05:35.170Z",
-      "title": "Jeffrey Lewis & The Voltage",
-      "source": "Other",
-      "date": "2026-06-16T23:00:00.000Z"
+      "key": "Girls 7/8/9th Field Hockey @ Manheim Township High School|2026-09-29T20:00:00.000Z",
+      "firstSeenAt": "2026-06-05T05:16:58.022Z",
+      "title": "Girls 7/8/9th Field Hockey @ Manheim Township High School",
+      "source": "PM",
+      "date": "2026-09-29T20:00:00.000Z"
     },
     {
-      "key": "Caitlynne Curtis|2026-06-20T00:00:00.000Z",
-      "firstSeenAt": "2026-06-04T20:05:35.170Z",
-      "title": "Caitlynne Curtis",
-      "source": "Other",
-      "date": "2026-06-20T00:00:00.000Z"
+      "key": "Boys Varsity Soccer @ Manheim Township High School|2026-09-29T20:00:00.000Z",
+      "firstSeenAt": "2026-06-05T05:16:58.022Z",
+      "title": "Boys Varsity Soccer @ Manheim Township High School",
+      "source": "PM",
+      "date": "2026-09-29T20:00:00.000Z"
     },
     {
-      "key": "Battle Of Millersville Vol.1 - Tribute Fest|2026-06-21T00:00:00.000Z",
-      "firstSeenAt": "2026-06-04T20:05:35.170Z",
-      "title": "Battle Of Millersville Vol.1 - Tribute Fest",
-      "source": "Other",
-      "date": "2026-06-21T00:00:00.000Z"
+      "key": "Boys JV Soccer @ Manheim Township High School|2026-09-29T20:00:00.000Z",
+      "firstSeenAt": "2026-06-05T05:16:58.022Z",
+      "title": "Boys JV Soccer @ Manheim Township High School",
+      "source": "PM",
+      "date": "2026-09-29T20:00:00.000Z"
+    },
+    {
+      "key": "Girls 7/8th Field Hockey @ Manheim Township High School|2026-09-29T21:00:00.000Z",
+      "firstSeenAt": "2026-06-05T05:16:58.022Z",
+      "title": "Girls 7/8th Field Hockey @ Manheim Township High School",
+      "source": "PM",
+      "date": "2026-09-29T21:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 16
 }

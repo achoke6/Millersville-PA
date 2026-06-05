@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-06-05T19:13:12.466Z",
-  "totalEvents": 870,
+  "generatedAt": "2026-06-05T19:23:19.211Z",
+  "totalEvents": 883,
   "withDescription": 322,
-  "withImage": 94,
+  "withImage": 107,
   "familyFriendly": 47,
-  "eventsToday": 4,
+  "eventsToday": 5,
   "sources": {
     "muAthletics": 127,
     "muCalendar": 145,
@@ -12,7 +12,7 @@
     "pennManor": 228,
     "borough": 108,
     "vfw": 6,
-    "phantomPower": 0,
+    "phantomPower": 13,
     "community": 13,
     "muHudlBroadcasts": 0
   },
@@ -41,7 +41,10 @@
       "earliest": "2026-05-24T15:00:00.000Z",
       "latest": "2026-09-11T17:00:00.000Z"
     },
-    "phantomPower": null,
+    "phantomPower": {
+      "earliest": "2026-06-06T00:00:00.000Z",
+      "latest": "2026-07-17T23:00:00.000Z"
+    },
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
@@ -72,7 +75,10 @@
       "newest": "2026-09-11",
       "daysSinceMoved": 1
     },
-    "phantomPower": null,
+    "phantomPower": {
+      "newest": "2026-07-17",
+      "daysSinceMoved": 1
+    },
     "community": {
       "newest": "2027-04-16",
       "daysSinceMoved": 0
@@ -80,9 +86,9 @@
   },
   "sports": {
     "total": 323,
-    "scored": 20,
+    "scored": 22,
     "wins": 11,
-    "losses": 8,
+    "losses": 10,
     "ties": 1
   },
   "registrations": {
@@ -99,79 +105,79 @@
       "Youth Sports": 1
     },
     "stalePast": 2,
-    "lastSyncAt": "2026-06-05T19:11:59.241Z"
+    "lastSyncAt": "2026-06-05T19:21:52.766Z"
   },
   "recentlyAdded": [
     {
-      "key": "Music Bingo|2026-06-12T22:00:00.000Z",
-      "firstSeenAt": "2026-06-05T19:13:12.464Z",
-      "title": "Music Bingo",
+      "key": "Hexbelt plus, Mean Gene Machine|2026-06-06T00:00:00.000Z",
+      "firstSeenAt": "2026-06-05T19:23:19.209Z",
+      "title": "Hexbelt plus, Mean Gene Machine",
       "source": "Other",
-      "date": "2026-06-12T22:00:00.000Z"
+      "date": "2026-06-06T00:00:00.000Z"
     },
     {
-      "key": "Trivia Night|2026-06-17T22:00:00.000Z",
-      "firstSeenAt": "2026-06-05T19:13:12.464Z",
-      "title": "Trivia Night",
+      "key": "Morimvr w. Scarlet Meridian, Illusion of Solace, and Skinmag|2026-06-13T00:00:00.000Z",
+      "firstSeenAt": "2026-06-05T19:23:19.209Z",
+      "title": "Morimvr w. Scarlet Meridian, Illusion of Solace, and Skinmag",
       "source": "Other",
-      "date": "2026-06-17T22:00:00.000Z"
+      "date": "2026-06-13T00:00:00.000Z"
     },
     {
-      "key": "Art Camp (Preschool Express)|2026-06-15T13:00:00.000Z",
-      "firstSeenAt": "2026-06-05T19:04:18.952Z",
-      "title": "Art Camp (Preschool Express)",
-      "source": "Community",
-      "date": "2026-06-15T13:00:00.000Z"
+      "key": "EMO NIGHT Dance Party|2026-06-14T01:00:00.000Z",
+      "firstSeenAt": "2026-06-05T19:23:19.209Z",
+      "title": "EMO NIGHT Dance Party",
+      "source": "Other",
+      "date": "2026-06-14T01:00:00.000Z"
     },
     {
-      "key": "Music Camp (Preschool Express)|2026-06-22T13:00:00.000Z",
-      "firstSeenAt": "2026-06-05T19:04:18.952Z",
-      "title": "Music Camp (Preschool Express)",
-      "source": "Community",
-      "date": "2026-06-22T13:00:00.000Z"
+      "key": "Upon A Burning Body|2026-06-14T21:30:00.000Z",
+      "firstSeenAt": "2026-06-05T19:23:19.209Z",
+      "title": "Upon A Burning Body",
+      "source": "Other",
+      "date": "2026-06-14T21:30:00.000Z"
     },
     {
-      "key": "Boys 7/8/9th Soccer @ Warwick High School|2026-09-30T20:00:00.000Z",
-      "firstSeenAt": "2026-06-05T19:04:18.952Z",
-      "title": "Boys 7/8/9th Soccer @ Warwick High School",
-      "source": "PM",
-      "date": "2026-09-30T20:00:00.000Z"
+      "key": "Jeffrey Lewis & The Voltage|2026-06-16T23:00:00.000Z",
+      "firstSeenAt": "2026-06-05T19:23:19.209Z",
+      "title": "Jeffrey Lewis & The Voltage",
+      "source": "Other",
+      "date": "2026-06-16T23:00:00.000Z"
     },
     {
-      "key": "Toddler Time (Preschool Express)|2026-10-02T13:15:00.000Z",
-      "firstSeenAt": "2026-06-05T19:04:18.952Z",
-      "title": "Toddler Time (Preschool Express)",
-      "source": "Community",
-      "date": "2026-10-02T13:15:00.000Z"
+      "key": "Caitlynne Curtis|2026-06-20T00:00:00.000Z",
+      "firstSeenAt": "2026-06-05T19:23:19.209Z",
+      "title": "Caitlynne Curtis",
+      "source": "Other",
+      "date": "2026-06-20T00:00:00.000Z"
     },
     {
-      "key": "Toddler Time (Preschool Express)|2026-10-16T13:15:00.000Z",
-      "firstSeenAt": "2026-06-05T19:04:18.952Z",
-      "title": "Toddler Time (Preschool Express)",
-      "source": "Community",
-      "date": "2026-10-16T13:15:00.000Z"
+      "key": "Battle Of Millersville Vol.1 - Tribute Fest|2026-06-21T00:00:00.000Z",
+      "firstSeenAt": "2026-06-05T19:23:19.209Z",
+      "title": "Battle Of Millersville Vol.1 - Tribute Fest",
+      "source": "Other",
+      "date": "2026-06-21T00:00:00.000Z"
     },
     {
-      "key": "Toddler Time (Preschool Express)|2026-11-06T14:15:00.000Z",
-      "firstSeenAt": "2026-06-05T19:04:18.952Z",
-      "title": "Toddler Time (Preschool Express)",
-      "source": "Community",
-      "date": "2026-11-06T14:15:00.000Z"
+      "key": "Brotality w. Quantifier, Making A Mockery, & New Damage|2026-06-24T23:00:00.000Z",
+      "firstSeenAt": "2026-06-05T19:23:19.209Z",
+      "title": "Brotality w. Quantifier, Making A Mockery, & New Damage",
+      "source": "Other",
+      "date": "2026-06-24T23:00:00.000Z"
     },
     {
-      "key": "Toddler Time (Preschool Express)|2026-11-20T14:15:00.000Z",
-      "firstSeenAt": "2026-06-05T19:04:18.952Z",
-      "title": "Toddler Time (Preschool Express)",
-      "source": "Community",
-      "date": "2026-11-20T14:15:00.000Z"
+      "key": "Mentalia's Stupid Drag Show|2026-06-26T00:00:00.000Z",
+      "firstSeenAt": "2026-06-05T19:23:19.209Z",
+      "title": "Mentalia's Stupid Drag Show",
+      "source": "Other",
+      "date": "2026-06-26T00:00:00.000Z"
     },
     {
-      "key": "Toddler Time (Preschool Express)|2026-12-04T14:15:00.000Z",
-      "firstSeenAt": "2026-06-05T19:04:18.952Z",
-      "title": "Toddler Time (Preschool Express)",
-      "source": "Community",
-      "date": "2026-12-04T14:15:00.000Z"
+      "key": "Stone Horses w. The Blues Vultures|2026-06-27T00:00:00.000Z",
+      "firstSeenAt": "2026-06-05T19:23:19.209Z",
+      "title": "Stone Horses w. The Blues Vultures",
+      "source": "Other",
+      "date": "2026-06-27T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 13
 }

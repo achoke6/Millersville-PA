@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-06-05T19:04:18.955Z",
-  "totalEvents": 881,
-  "withDescription": 320,
-  "withImage": 107,
+  "generatedAt": "2026-06-05T19:13:12.466Z",
+  "totalEvents": 870,
+  "withDescription": 322,
+  "withImage": 94,
   "familyFriendly": 47,
-  "eventsToday": 5,
+  "eventsToday": 4,
   "sources": {
     "muAthletics": 127,
     "muCalendar": 145,
     "muGetInvolved": 238,
     "pennManor": 228,
     "borough": 108,
-    "vfw": 4,
-    "phantomPower": 13,
+    "vfw": 6,
+    "phantomPower": 0,
     "community": 13,
     "muHudlBroadcasts": 0
   },
@@ -41,10 +41,7 @@
       "earliest": "2026-05-24T15:00:00.000Z",
       "latest": "2026-09-11T17:00:00.000Z"
     },
-    "phantomPower": {
-      "earliest": "2026-06-06T00:00:00.000Z",
-      "latest": "2026-07-17T23:00:00.000Z"
-    },
+    "phantomPower": null,
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
@@ -75,10 +72,7 @@
       "newest": "2026-09-11",
       "daysSinceMoved": 1
     },
-    "phantomPower": {
-      "newest": "2026-07-17",
-      "daysSinceMoved": 1
-    },
+    "phantomPower": null,
     "community": {
       "newest": "2027-04-16",
       "daysSinceMoved": 0
@@ -86,9 +80,9 @@
   },
   "sports": {
     "total": 323,
-    "scored": 22,
+    "scored": 20,
     "wins": 11,
-    "losses": 10,
+    "losses": 8,
     "ties": 1
   },
   "registrations": {
@@ -105,9 +99,23 @@
       "Youth Sports": 1
     },
     "stalePast": 2,
-    "lastSyncAt": "2026-06-05T19:03:00.130Z"
+    "lastSyncAt": "2026-06-05T19:11:59.241Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Music Bingo|2026-06-12T22:00:00.000Z",
+      "firstSeenAt": "2026-06-05T19:13:12.464Z",
+      "title": "Music Bingo",
+      "source": "Other",
+      "date": "2026-06-12T22:00:00.000Z"
+    },
+    {
+      "key": "Trivia Night|2026-06-17T22:00:00.000Z",
+      "firstSeenAt": "2026-06-05T19:13:12.464Z",
+      "title": "Trivia Night",
+      "source": "Other",
+      "date": "2026-06-17T22:00:00.000Z"
+    },
     {
       "key": "Art Camp (Preschool Express)|2026-06-15T13:00:00.000Z",
       "firstSeenAt": "2026-06-05T19:04:18.952Z",
@@ -163,21 +171,7 @@
       "title": "Toddler Time (Preschool Express)",
       "source": "Community",
       "date": "2026-12-04T14:15:00.000Z"
-    },
-    {
-      "key": "Toddler Time (Preschool Express)|2027-01-15T14:15:00.000Z",
-      "firstSeenAt": "2026-06-05T19:04:18.952Z",
-      "title": "Toddler Time (Preschool Express)",
-      "source": "Community",
-      "date": "2027-01-15T14:15:00.000Z"
-    },
-    {
-      "key": "Toddler Time (Preschool Express)|2027-02-05T14:15:00.000Z",
-      "firstSeenAt": "2026-06-05T19:04:18.952Z",
-      "title": "Toddler Time (Preschool Express)",
-      "source": "Community",
-      "date": "2027-02-05T14:15:00.000Z"
     }
   ],
-  "addedLastRun": 13
+  "addedLastRun": 2
 }

@@ -189,6 +189,7 @@ jobs:
               mirror --reverse --delete --verbose \
                 --exclude ^\.git/ \
                 --exclude ^\.github/ \
+                --exclude ^\.claude/ \
                 --exclude ^node_modules/ \
                 --exclude ^scripts/ \
                 --exclude ^package\.json$ \

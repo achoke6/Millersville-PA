@@ -1,14 +1,15 @@
 node_modules/
-
+# Claude Code / Cowork local tooling config (permission allow-lists, etc.).
+# Local-only like an editor dotfolder — active for scheduled tasks without
+# being committed, and may hold tokens/paths, so it never belongs in the repo
+# (the lftp deploy also excludes it as belt-and-suspenders).
+.claude/
 # Push notification subscriptions — written/read by cron via FTP only.
 # Lives only on DreamHost. NEVER commit to git.
 subscriptions.json
-
 # Notifications run-status snapshot — written by send-notifications.js cron,
 # read by status.html. Lives only on DreamHost.
 notifications-status.json
-
 # Weekly auto-scraper output — written by scrape-monthly.js cron via FTP,
 # fetched at runtime by hourly scrape.js. Lives only on DreamHost.
 auto-events.json
-

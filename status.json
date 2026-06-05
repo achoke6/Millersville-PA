@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-06-05T09:47:51.436Z",
-  "totalEvents": 862,
+  "generatedAt": "2026-06-05T12:37:20.015Z",
+  "totalEvents": 849,
   "withDescription": 308,
-  "withImage": 107,
+  "withImage": 94,
   "familyFriendly": 45,
-  "eventsToday": 5,
+  "eventsToday": 4,
   "sources": {
     "muAthletics": 127,
     "muCalendar": 145,
@@ -12,7 +12,7 @@
     "pennManor": 220,
     "borough": 109,
     "vfw": 4,
-    "phantomPower": 13,
+    "phantomPower": 0,
     "community": 1,
     "muHudlBroadcasts": 0
   },
@@ -41,10 +41,7 @@
       "earliest": "2026-05-24T15:00:00.000Z",
       "latest": "2026-09-11T17:00:00.000Z"
     },
-    "phantomPower": {
-      "earliest": "2026-06-06T00:00:00.000Z",
-      "latest": "2026-07-17T23:00:00.000Z"
-    },
+    "phantomPower": null,
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2026-04-27T21:00:00.000Z"
@@ -75,10 +72,7 @@
       "newest": "2026-09-11",
       "daysSinceMoved": 1
     },
-    "phantomPower": {
-      "newest": "2026-07-17",
-      "daysSinceMoved": 1
-    },
+    "phantomPower": null,
     "community": {
       "newest": "2026-04-27",
       "daysSinceMoved": 1
@@ -86,9 +80,9 @@
   },
   "sports": {
     "total": 322,
-    "scored": 22,
+    "scored": 20,
     "wins": 11,
-    "losses": 10,
+    "losses": 8,
     "ties": 1
   },
   "registrations": {
@@ -105,16 +99,9 @@
       "Youth Sports": 1
     },
     "stalePast": 2,
-    "lastSyncAt": "2026-06-05T09:46:10.573Z"
+    "lastSyncAt": "2026-06-05T12:36:00.699Z"
   },
   "recentlyAdded": [
-    {
-      "key": "The Rumours w. Clownvis Presley|2026-06-28T23:00:00.000Z",
-      "firstSeenAt": "2026-06-05T09:47:51.434Z",
-      "title": "The Rumours w. Clownvis Presley",
-      "source": "Other",
-      "date": "2026-06-28T23:00:00.000Z"
-    },
     {
       "key": "Boys 7/8/9th Soccer @ Manheim Township High School|2026-09-28T20:00:00.000Z",
       "firstSeenAt": "2026-06-05T05:16:58.022Z",
@@ -177,7 +164,14 @@
       "title": "Boys JV Soccer @ Manheim Township High School",
       "source": "PM",
       "date": "2026-09-29T20:00:00.000Z"
+    },
+    {
+      "key": "Girls 7/8th Field Hockey @ Manheim Township High School|2026-09-29T21:00:00.000Z",
+      "firstSeenAt": "2026-06-05T05:16:58.022Z",
+      "title": "Girls 7/8th Field Hockey @ Manheim Township High School",
+      "source": "PM",
+      "date": "2026-09-29T21:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 0
 }

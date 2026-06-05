@@ -3356,6 +3356,12 @@ function renderEvents(){
     }
 
     let html = '';
+    // Family-friendly mode note — mirrors the Directory's Marauder Gold blurb so
+    // the active filter is explained inline. Shown on the has-results path; the
+    // no-results path above carries its own family-mode empty message.
+    if (evKidMode) {
+        html += '<div class="ev-filter-blurb" style="background:var(--gold-soft);border:1px solid var(--gold);border-radius:var(--radius-sm);padding:8px 12px;margin-bottom:12px;font-size:0.82rem;color:var(--navy);">👨‍👩‍👧 Family-friendly mode is on — showing only events suitable for kids and families. Tap the 👨‍👩‍👧 button again to see everything.</div>';
+    }
     let dayItems = filtered;
 
     // Setup hint (shown only when user has no prefs at all — not a filter chip, just guidance)

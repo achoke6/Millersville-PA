@@ -4145,7 +4145,7 @@ function buildEventCard(e,isSportsPage){
     if(isCurrentlyLive && e.streamLink){
         actionHtml=`<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-live">📺 Watch</a>`;
     } else if(isFuture && e.streamLink){
-        actionHtml=`<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-outline" style="border-color:var(--gold);color:var(--gold);">📺 Will Stream</a>`;
+        actionHtml=`<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-outline" style="border-color:var(--gold);color:var(--gold);">📺 Live Stream</a>`;
     } else if(isPast && e.streamLink){
         actionHtml=`<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-outline">📺 Replay</a>`;
     } else if(!isSportsPage && e.streamLink){
@@ -4868,7 +4868,7 @@ window.openEventDetails = function(key) {
         let streamLabel;
         if (isLiveNow) streamLabel = '🔴 Watch Live';
         else if (e.gameResult) streamLabel = '📺 Replay';
-        else streamLabel = '📺 Will Stream';
+        else streamLabel = '📺 Live Stream';
         actions += `<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-outline" style="text-decoration:none;">${streamLabel}</a>`;
     }
     // Calendar action — uses the same key scheme as card buttons so addToCalendar can find it

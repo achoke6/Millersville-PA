@@ -1212,6 +1212,10 @@ async function runScraper() {
                 else if (/field trip|downtown trip|trip to/i.test(lt)) tags.push('Field Trips');
                 else if (/gotr|girls on the run|heart & sole|physicals|health/i.test(lt)) tags.push('Health/Wellness');
                 else if (/book fair|food fair|picture|assembly|appreciation|librarian/i.test(lt)) tags.push('School Events');
+                // End-of-year ceremonies & recognition events families attend (commencement,
+                // graduation, senior awards/walk, moving-up, honors night). Without this branch
+                // they match no keyword, fall to 'Other' below, and get skipped.
+                else if (/commencement|graduation|baccalaureate|senior (awards?|walk|breakfast)|awards? (ceremony|night)|moving[- ]?up|promotion ceremony|class night|honors? (night|ceremony)/i.test(lt)) tags.push('School Events');
                 else if (/sap meeting|team leader|lunch\s*&?\s*learn|house meeting/i.test(lt)) tags.push('Meetings');
                 else tags.push('Other');
 

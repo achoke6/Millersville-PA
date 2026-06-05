@@ -1126,11 +1126,27 @@ async function runScraper() {
 
         let pmAthCount = 0, pmGenCount = 0;
 
+        // Hand-curated YouTube replay links for PM events streamed live and posted
+        // afterward. We can't catch the stream beforehand, so these are added after the
+        // fact and render as a "Replay" button once the event is past. Keyed by a title
+        // regex + the event's ET date (YYYY-MM-DD) so a recurring title — e.g. next
+        // year's Commencement — can't inherit the wrong video. To add one: title pattern,
+        // Eastern date, URL.  ⚠️ VERIFY the two URLs below are paired to the right event.
+        const PM_REPLAY_LINKS = [
+            { match: /commencement/i,  date: '2026-06-03', url: 'https://www.youtube.com/watch?v=Vlpy3RsmlW4' },
+            { match: /senior awards/i, date: '2026-05-21', url: 'https://www.youtube.com/watch?v=R7PBpOK-ws8' },
+        ];
+
         for (const ev of Object.values(pmData)) {
             const eventDate = new Date(ev.start);
             if (isNaN(eventDate.getTime()) || eventDate < pastDate || eventDate >= futureDate) continue;
 
-            const title = ev.summary || 'Penn Manor Event';
+            // Strip a redundant trailing "@6:30pm" style time from the title —
+            // the event row already shows the start time in its own column. Only
+            // matches @ followed by a time, so away-game "@ <School>" titles are safe.
+            const title = (ev.summary || 'Penn Manor Event')
+                .replace(/\s*@\s*\d{1,2}(?::\d{2})?\s*[ap]\.?m\.?\s*$/i, '')
+                .trim();
             const lowerTitle = title.toLowerCase();
             const desc = ev.description || '';
             const loc = ev.location || 'Penn Manor School District';
@@ -1222,7 +1238,14 @@ async function runScraper() {
                 // Skip PM-Other events (uncategorized, not useful)
                 if (tags.includes('Other')) continue;
 
-                const pmBoardStream = /board/i.test(lt) ? 'https://www.youtube.com/@PennManorSchoolDistrict/streams' : '';
+                // Stream link: a specific hand-curated replay wins; otherwise board
+                // meetings get the channel's streams page (live + archived board videos).
+                // ET-or-UTC date check tolerates how all-day events land across timezones.
+                const pmDayET = deriveDayET(eventDate.getTime());
+                const pmDayUTC = eventDate.toISOString().slice(0, 10);
+                const pmReplay = PM_REPLAY_LINKS.find(r => r.match.test(lt) && (r.date === pmDayET || r.date === pmDayUTC));
+                const pmBoardStream = pmReplay ? pmReplay.url
+                    : (/board/i.test(lt) ? 'https://www.youtube.com/@PennManorSchoolDistrict/streams' : '');
 
                 events.push({
                     title, date: eventDate.toISOString(),

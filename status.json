@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-06-06T17:14:01.933Z",
-  "totalEvents": 869,
+  "generatedAt": "2026-06-06T19:22:25.232Z",
+  "totalEvents": 881,
   "withDescription": 316,
-  "withImage": 94,
+  "withImage": 106,
   "familyFriendly": 44,
   "eventsToday": 1,
   "sources": {
@@ -12,7 +12,7 @@
     "pennManor": 235,
     "borough": 108,
     "vfw": 6,
-    "phantomPower": 0,
+    "phantomPower": 12,
     "community": 14,
     "muHudlBroadcasts": 0
   },
@@ -41,7 +41,10 @@
       "earliest": "2026-05-24T15:00:00.000Z",
       "latest": "2026-09-11T17:00:00.000Z"
     },
-    "phantomPower": null,
+    "phantomPower": {
+      "earliest": "2026-06-13T00:00:00.000Z",
+      "latest": "2026-07-17T23:00:00.000Z"
+    },
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
@@ -72,7 +75,10 @@
       "newest": "2026-09-11",
       "daysSinceMoved": 2
     },
-    "phantomPower": null,
+    "phantomPower": {
+      "newest": "2026-07-17",
+      "daysSinceMoved": 2
+    },
     "community": {
       "newest": "2027-04-16",
       "daysSinceMoved": 1
@@ -80,9 +86,9 @@
   },
   "sports": {
     "total": 329,
-    "scored": 19,
+    "scored": 21,
     "wins": 10,
-    "losses": 8,
+    "losses": 10,
     "ties": 1
   },
   "registrations": {
@@ -99,79 +105,79 @@
       "Youth Sports": 1
     },
     "stalePast": 2,
-    "lastSyncAt": "2026-06-06T17:12:35.657Z"
+    "lastSyncAt": "2026-06-06T19:20:46.416Z"
   },
   "recentlyAdded": [
     {
-      "key": "Boys 7/8/9th Football @ Solanco High School|2026-09-30T20:00:00.000Z",
-      "firstSeenAt": "2026-06-06T06:52:44.669Z",
-      "title": "Boys 7/8/9th Football @ Solanco High School",
-      "source": "PM",
-      "date": "2026-09-30T20:00:00.000Z"
-    },
-    {
-      "key": "Boys 7/8th Soccer @ Warwick High School|2026-09-30T21:00:00.000Z",
-      "firstSeenAt": "2026-06-06T06:52:44.669Z",
-      "title": "Boys 7/8th Soccer @ Warwick High School",
-      "source": "PM",
-      "date": "2026-09-30T21:00:00.000Z"
-    },
-    {
-      "key": "Girls 7/8/9th Volleyball @ Conestoga Valley High School|2026-10-01T19:45:00.000Z",
-      "firstSeenAt": "2026-06-06T06:52:44.669Z",
-      "title": "Girls 7/8/9th Volleyball @ Conestoga Valley High School",
-      "source": "PM",
-      "date": "2026-10-01T19:45:00.000Z"
-    },
-    {
-      "key": "Girls 7/8th Volleyball @ Conestoga Valley High School|2026-10-01T20:45:00.000Z",
-      "firstSeenAt": "2026-06-06T06:52:44.669Z",
-      "title": "Girls 7/8th Volleyball @ Conestoga Valley High School",
-      "source": "PM",
-      "date": "2026-10-01T20:45:00.000Z"
-    },
-    {
-      "key": "Boys JV Soccer @ Warwick High School|2026-10-01T21:30:00.000Z",
-      "firstSeenAt": "2026-06-06T06:52:44.669Z",
-      "title": "Boys JV Soccer @ Warwick High School",
-      "source": "PM",
-      "date": "2026-10-01T21:30:00.000Z"
-    },
-    {
-      "key": "Girls JV Volleyball @ Conestoga Valley High School|2026-10-01T22:00:00.000Z",
-      "firstSeenAt": "2026-06-06T06:52:44.669Z",
-      "title": "Girls JV Volleyball @ Conestoga Valley High School",
-      "source": "PM",
-      "date": "2026-10-01T22:00:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Soccer @ Warwick High School|2026-10-01T23:00:00.000Z",
-      "firstSeenAt": "2026-06-06T06:52:44.669Z",
-      "title": "Boys Varsity Soccer @ Warwick High School",
-      "source": "PM",
-      "date": "2026-10-01T23:00:00.000Z"
-    },
-    {
-      "key": "Yard Sale Springdale Farms|2026-06-06T11:00:00.000Z",
-      "firstSeenAt": "2026-06-06T03:23:39.475Z",
-      "title": "Yard Sale Springdale Farms",
-      "source": "Community",
-      "date": "2026-06-06T11:00:00.000Z"
-    },
-    {
-      "key": "Summer Fun Series (July 16)|2026-07-16T22:00:00.000Z",
-      "firstSeenAt": "2026-06-05T20:01:40.207Z",
-      "title": "Summer Fun Series (July 16)",
-      "source": "MU",
-      "date": "2026-07-16T22:00:00.000Z"
-    },
-    {
-      "key": "Music Bingo|2026-06-12T22:00:00.000Z",
-      "firstSeenAt": "2026-06-05T19:13:12.464Z",
-      "title": "Music Bingo",
+      "key": "Morimvr w. Scarlet Meridian, Illusion of Solace, and Skinmag|2026-06-13T00:00:00.000Z",
+      "firstSeenAt": "2026-06-06T19:22:25.230Z",
+      "title": "Morimvr w. Scarlet Meridian, Illusion of Solace, and Skinmag",
       "source": "Other",
-      "date": "2026-06-12T22:00:00.000Z"
+      "date": "2026-06-13T00:00:00.000Z"
+    },
+    {
+      "key": "EMO NIGHT Dance Party|2026-06-14T01:00:00.000Z",
+      "firstSeenAt": "2026-06-06T19:22:25.230Z",
+      "title": "EMO NIGHT Dance Party",
+      "source": "Other",
+      "date": "2026-06-14T01:00:00.000Z"
+    },
+    {
+      "key": "Upon A Burning Body|2026-06-14T21:30:00.000Z",
+      "firstSeenAt": "2026-06-06T19:22:25.230Z",
+      "title": "Upon A Burning Body",
+      "source": "Other",
+      "date": "2026-06-14T21:30:00.000Z"
+    },
+    {
+      "key": "Jeffrey Lewis & The Voltage|2026-06-16T23:00:00.000Z",
+      "firstSeenAt": "2026-06-06T19:22:25.230Z",
+      "title": "Jeffrey Lewis & The Voltage",
+      "source": "Other",
+      "date": "2026-06-16T23:00:00.000Z"
+    },
+    {
+      "key": "Caitlynne Curtis|2026-06-20T00:00:00.000Z",
+      "firstSeenAt": "2026-06-06T19:22:25.230Z",
+      "title": "Caitlynne Curtis",
+      "source": "Other",
+      "date": "2026-06-20T00:00:00.000Z"
+    },
+    {
+      "key": "Battle Of Millersville Vol.1 - Tribute Fest|2026-06-21T00:00:00.000Z",
+      "firstSeenAt": "2026-06-06T19:22:25.230Z",
+      "title": "Battle Of Millersville Vol.1 - Tribute Fest",
+      "source": "Other",
+      "date": "2026-06-21T00:00:00.000Z"
+    },
+    {
+      "key": "Brotality w. Quantifier, Making A Mockery, & New Damage|2026-06-24T23:00:00.000Z",
+      "firstSeenAt": "2026-06-06T19:22:25.230Z",
+      "title": "Brotality w. Quantifier, Making A Mockery, & New Damage",
+      "source": "Other",
+      "date": "2026-06-24T23:00:00.000Z"
+    },
+    {
+      "key": "Mentalia's Stupid Drag Show|2026-06-26T00:00:00.000Z",
+      "firstSeenAt": "2026-06-06T19:22:25.230Z",
+      "title": "Mentalia's Stupid Drag Show",
+      "source": "Other",
+      "date": "2026-06-26T00:00:00.000Z"
+    },
+    {
+      "key": "Stone Horses w. The Blues Vultures|2026-06-27T00:00:00.000Z",
+      "firstSeenAt": "2026-06-06T19:22:25.230Z",
+      "title": "Stone Horses w. The Blues Vultures",
+      "source": "Other",
+      "date": "2026-06-27T00:00:00.000Z"
+    },
+    {
+      "key": "Bit Brigade Performs \"Mega Man X\" LIVE w. Super Guitar Bros.|2026-06-28T00:00:00.000Z",
+      "firstSeenAt": "2026-06-06T19:22:25.230Z",
+      "title": "Bit Brigade Performs \"Mega Man X\" LIVE w. Super Guitar Bros.",
+      "source": "Other",
+      "date": "2026-06-28T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 12
 }

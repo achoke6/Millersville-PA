@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-06-06T03:23:39.477Z",
-  "totalEvents": 876,
+  "generatedAt": "2026-06-06T06:52:44.671Z",
+  "totalEvents": 883,
   "withDescription": 316,
   "withImage": 107,
   "familyFriendly": 44,
-  "eventsToday": 5,
+  "eventsToday": 1,
   "sources": {
     "muAthletics": 127,
     "muCalendar": 138,
     "muGetInvolved": 237,
-    "pennManor": 228,
+    "pennManor": 235,
     "borough": 108,
     "vfw": 6,
     "phantomPower": 13,
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-05-04T20:00:00.000Z",
-      "latest": "2026-09-30T20:00:00.000Z"
+      "latest": "2026-10-01T23:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-03-09T23:00:00.000Z",
@@ -53,39 +53,39 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-03-12",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "pennManor": {
-      "newest": "2026-09-30",
+      "newest": "2026-10-01",
       "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2027-05-08",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "phantomPower": {
       "newest": "2026-07-17",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     }
   },
   "sports": {
-    "total": 323,
+    "total": 330,
     "scored": 22,
     "wins": 11,
     "losses": 10,
@@ -105,9 +105,58 @@
       "Youth Sports": 1
     },
     "stalePast": 2,
-    "lastSyncAt": "2026-06-06T03:22:08.396Z"
+    "lastSyncAt": "2026-06-06T06:51:24.090Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Boys 7/8/9th Football @ Solanco High School|2026-09-30T20:00:00.000Z",
+      "firstSeenAt": "2026-06-06T06:52:44.669Z",
+      "title": "Boys 7/8/9th Football @ Solanco High School",
+      "source": "PM",
+      "date": "2026-09-30T20:00:00.000Z"
+    },
+    {
+      "key": "Boys 7/8th Soccer @ Warwick High School|2026-09-30T21:00:00.000Z",
+      "firstSeenAt": "2026-06-06T06:52:44.669Z",
+      "title": "Boys 7/8th Soccer @ Warwick High School",
+      "source": "PM",
+      "date": "2026-09-30T21:00:00.000Z"
+    },
+    {
+      "key": "Girls 7/8/9th Volleyball @ Conestoga Valley High School|2026-10-01T19:45:00.000Z",
+      "firstSeenAt": "2026-06-06T06:52:44.669Z",
+      "title": "Girls 7/8/9th Volleyball @ Conestoga Valley High School",
+      "source": "PM",
+      "date": "2026-10-01T19:45:00.000Z"
+    },
+    {
+      "key": "Girls 7/8th Volleyball @ Conestoga Valley High School|2026-10-01T20:45:00.000Z",
+      "firstSeenAt": "2026-06-06T06:52:44.669Z",
+      "title": "Girls 7/8th Volleyball @ Conestoga Valley High School",
+      "source": "PM",
+      "date": "2026-10-01T20:45:00.000Z"
+    },
+    {
+      "key": "Boys JV Soccer @ Warwick High School|2026-10-01T21:30:00.000Z",
+      "firstSeenAt": "2026-06-06T06:52:44.669Z",
+      "title": "Boys JV Soccer @ Warwick High School",
+      "source": "PM",
+      "date": "2026-10-01T21:30:00.000Z"
+    },
+    {
+      "key": "Girls JV Volleyball @ Conestoga Valley High School|2026-10-01T22:00:00.000Z",
+      "firstSeenAt": "2026-06-06T06:52:44.669Z",
+      "title": "Girls JV Volleyball @ Conestoga Valley High School",
+      "source": "PM",
+      "date": "2026-10-01T22:00:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Soccer @ Warwick High School|2026-10-01T23:00:00.000Z",
+      "firstSeenAt": "2026-06-06T06:52:44.669Z",
+      "title": "Boys Varsity Soccer @ Warwick High School",
+      "source": "PM",
+      "date": "2026-10-01T23:00:00.000Z"
+    },
     {
       "key": "Yard Sale Springdale Farms|2026-06-06T11:00:00.000Z",
       "firstSeenAt": "2026-06-06T03:23:39.475Z",
@@ -128,56 +177,7 @@
       "title": "Hexbelt plus, Mean Gene Machine",
       "source": "Other",
       "date": "2026-06-06T00:00:00.000Z"
-    },
-    {
-      "key": "Morimvr w. Scarlet Meridian, Illusion of Solace, and Skinmag|2026-06-13T00:00:00.000Z",
-      "firstSeenAt": "2026-06-05T19:23:19.209Z",
-      "title": "Morimvr w. Scarlet Meridian, Illusion of Solace, and Skinmag",
-      "source": "Other",
-      "date": "2026-06-13T00:00:00.000Z"
-    },
-    {
-      "key": "EMO NIGHT Dance Party|2026-06-14T01:00:00.000Z",
-      "firstSeenAt": "2026-06-05T19:23:19.209Z",
-      "title": "EMO NIGHT Dance Party",
-      "source": "Other",
-      "date": "2026-06-14T01:00:00.000Z"
-    },
-    {
-      "key": "Upon A Burning Body|2026-06-14T21:30:00.000Z",
-      "firstSeenAt": "2026-06-05T19:23:19.209Z",
-      "title": "Upon A Burning Body",
-      "source": "Other",
-      "date": "2026-06-14T21:30:00.000Z"
-    },
-    {
-      "key": "Jeffrey Lewis & The Voltage|2026-06-16T23:00:00.000Z",
-      "firstSeenAt": "2026-06-05T19:23:19.209Z",
-      "title": "Jeffrey Lewis & The Voltage",
-      "source": "Other",
-      "date": "2026-06-16T23:00:00.000Z"
-    },
-    {
-      "key": "Caitlynne Curtis|2026-06-20T00:00:00.000Z",
-      "firstSeenAt": "2026-06-05T19:23:19.209Z",
-      "title": "Caitlynne Curtis",
-      "source": "Other",
-      "date": "2026-06-20T00:00:00.000Z"
-    },
-    {
-      "key": "Battle Of Millersville Vol.1 - Tribute Fest|2026-06-21T00:00:00.000Z",
-      "firstSeenAt": "2026-06-05T19:23:19.209Z",
-      "title": "Battle Of Millersville Vol.1 - Tribute Fest",
-      "source": "Other",
-      "date": "2026-06-21T00:00:00.000Z"
-    },
-    {
-      "key": "Brotality w. Quantifier, Making A Mockery, & New Damage|2026-06-24T23:00:00.000Z",
-      "firstSeenAt": "2026-06-05T19:23:19.209Z",
-      "title": "Brotality w. Quantifier, Making A Mockery, & New Damage",
-      "source": "Other",
-      "date": "2026-06-24T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 7
 }

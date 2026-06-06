@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-06-05T23:09:05.745Z",
-  "totalEvents": 878,
-  "withDescription": 317,
+  "generatedAt": "2026-06-06T03:23:39.477Z",
+  "totalEvents": 876,
+  "withDescription": 316,
   "withImage": 107,
   "familyFriendly": 44,
   "eventsToday": 5,
   "sources": {
     "muAthletics": 127,
-    "muCalendar": 140,
-    "muGetInvolved": 238,
+    "muCalendar": 138,
+    "muGetInvolved": 237,
     "pennManor": 228,
     "borough": 108,
     "vfw": 6,
     "phantomPower": 13,
-    "community": 13,
+    "community": 14,
     "muHudlBroadcasts": 0
   },
   "sourceDateRanges": {
@@ -22,11 +22,11 @@
       "latest": "2027-03-12T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-03-07T19:00:00.000Z",
+      "earliest": "2026-03-13T19:30:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-03-07T00:00:00.000Z",
+      "earliest": "2026-03-08T00:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
@@ -105,9 +105,16 @@
       "Youth Sports": 1
     },
     "stalePast": 2,
-    "lastSyncAt": "2026-06-05T23:07:45.787Z"
+    "lastSyncAt": "2026-06-06T03:22:08.396Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Yard Sale Springdale Farms|2026-06-06T11:00:00.000Z",
+      "firstSeenAt": "2026-06-06T03:23:39.475Z",
+      "title": "Yard Sale Springdale Farms",
+      "source": "Community",
+      "date": "2026-06-06T11:00:00.000Z"
+    },
     {
       "key": "Summer Fun Series (July 16)|2026-07-16T22:00:00.000Z",
       "firstSeenAt": "2026-06-05T20:01:40.207Z",
@@ -170,14 +177,7 @@
       "title": "Brotality w. Quantifier, Making A Mockery, & New Damage",
       "source": "Other",
       "date": "2026-06-24T23:00:00.000Z"
-    },
-    {
-      "key": "Mentalia's Stupid Drag Show|2026-06-26T00:00:00.000Z",
-      "firstSeenAt": "2026-06-05T19:23:19.209Z",
-      "title": "Mentalia's Stupid Drag Show",
-      "source": "Other",
-      "date": "2026-06-26T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

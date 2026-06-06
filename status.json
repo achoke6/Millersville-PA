@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-06-06T15:15:23.641Z",
-  "totalEvents": 881,
+  "generatedAt": "2026-06-06T17:14:01.933Z",
+  "totalEvents": 869,
   "withDescription": 316,
-  "withImage": 106,
+  "withImage": 94,
   "familyFriendly": 44,
   "eventsToday": 1,
   "sources": {
@@ -12,7 +12,7 @@
     "pennManor": 235,
     "borough": 108,
     "vfw": 6,
-    "phantomPower": 12,
+    "phantomPower": 0,
     "community": 14,
     "muHudlBroadcasts": 0
   },
@@ -41,10 +41,7 @@
       "earliest": "2026-05-24T15:00:00.000Z",
       "latest": "2026-09-11T17:00:00.000Z"
     },
-    "phantomPower": {
-      "earliest": "2026-06-13T00:00:00.000Z",
-      "latest": "2026-07-17T23:00:00.000Z"
-    },
+    "phantomPower": null,
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
@@ -75,10 +72,7 @@
       "newest": "2026-09-11",
       "daysSinceMoved": 2
     },
-    "phantomPower": {
-      "newest": "2026-07-17",
-      "daysSinceMoved": 2
-    },
+    "phantomPower": null,
     "community": {
       "newest": "2027-04-16",
       "daysSinceMoved": 1
@@ -86,9 +80,9 @@
   },
   "sports": {
     "total": 329,
-    "scored": 21,
+    "scored": 19,
     "wins": 10,
-    "losses": 10,
+    "losses": 8,
     "ties": 1
   },
   "registrations": {
@@ -105,7 +99,7 @@
       "Youth Sports": 1
     },
     "stalePast": 2,
-    "lastSyncAt": "2026-06-06T15:13:59.437Z"
+    "lastSyncAt": "2026-06-06T17:12:35.657Z"
   },
   "recentlyAdded": [
     {
@@ -172,11 +166,11 @@
       "date": "2026-07-16T22:00:00.000Z"
     },
     {
-      "key": "Morimvr w. Scarlet Meridian, Illusion of Solace, and Skinmag|2026-06-13T00:00:00.000Z",
-      "firstSeenAt": "2026-06-05T19:23:19.209Z",
-      "title": "Morimvr w. Scarlet Meridian, Illusion of Solace, and Skinmag",
+      "key": "Music Bingo|2026-06-12T22:00:00.000Z",
+      "firstSeenAt": "2026-06-05T19:13:12.464Z",
+      "title": "Music Bingo",
       "source": "Other",
-      "date": "2026-06-13T00:00:00.000Z"
+      "date": "2026-06-12T22:00:00.000Z"
     }
   ],
   "addedLastRun": 0

@@ -1,29 +1,8 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Thursday, June 04, 2026 at 12:29 PM (Kyle Elliott, Meteorologist)",
-    "periods": [
-      {
-        "period": "This afternoon",
-        "text": "Mostly sunny and very warm with low humidity. High: 86-90"
-      },
-      {
-        "period": "Tonight",
-        "text": "Mainly clear and comfortable. Low: 54-58"
-      },
-      {
-        "period": "Friday",
-        "text": "Hot but not humid with sunshine and a few clouds. High: 88-92"
-      },
-      {
-        "period": "Friday Night",
-        "text": "Mainly clear and warm. Low: 62-66"
-      },
-      {
-        "period": "Saturday",
-        "text": "Partly sunny, breezy, hot and turning slightly more humid. High: 90-94"
-      }
-    ]
+    "issued": "",
+    "periods": []
   },
   "sevenDay": {
     "issued": "Thursday, June 04, 2026 at 09:03 AM (Kyle Elliott )",
@@ -128,6 +107,28 @@
   },
   "observations": [
     {
+      "time": "13:00",
+      "temp": "84",
+      "dewpoint": "63",
+      "rh": "49",
+      "windDir": "SW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "9.8",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "83",
+      "dewpoint": "61",
+      "rh": "48",
+      "windDir": "SW",
+      "windSpeed": "9",
+      "precip": "0.00",
+      "visibility": "10.3",
+      "condition": "None"
+    },
+    {
       "time": "11:00",
       "temp": "80",
       "dewpoint": "61",
@@ -169,28 +170,6 @@
       "windSpeed": "2",
       "precip": "0.00",
       "visibility": "8.7",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "65",
-      "dewpoint": "62",
-      "rh": "88",
-      "windDir": "SSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "8.0",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "63",
-      "dewpoint": "60",
-      "rh": "92",
-      "windDir": "SW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "7.4",
       "condition": "None"
     }
   ],
@@ -235,5 +214,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-06-06T15:14:00.293Z"
+  "updated": "2026-06-06T17:12:36.704Z"
 }

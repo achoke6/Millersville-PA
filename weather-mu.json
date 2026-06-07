@@ -5,107 +5,32 @@
     "periods": []
   },
   "sevenDay": {
-    "issued": "Thursday, June 04, 2026 at 09:03 AM (Kyle Elliott )",
-    "days": [
-      {
-        "period": "Thursday",
-        "sky": "Mostly Sunny",
-        "weather": "Warm",
-        "pop": "<10%",
-        "temp": "88",
-        "conf": "5"
-      },
-      {
-        "period": "Thursday night",
-        "sky": "Mainly Clear",
-        "weather": "Fair",
-        "pop": "<10%",
-        "temp": "58",
-        "conf": "5"
-      },
-      {
-        "period": "Friday",
-        "sky": "Mostly Sunny",
-        "weather": "Hot",
-        "pop": "<10%",
-        "temp": "90",
-        "conf": "5"
-      },
-      {
-        "period": "Friday night",
-        "sky": "Mainly Clear",
-        "weather": "Warm",
-        "pop": "<10%",
-        "temp": "64",
-        "conf": "5"
-      },
-      {
-        "period": "Saturday",
-        "sky": "Partly Sunny",
-        "weather": "Hot",
-        "pop": "20%",
-        "temp": "92",
-        "conf": "4"
-      },
-      {
-        "period": "Saturday night",
-        "sky": "Partly Cloudy",
-        "weather": "Evening Showers",
-        "pop": "40%",
-        "temp": "66",
-        "conf": "4"
-      },
-      {
-        "period": "Sunday",
-        "sky": "Mostly Sunny",
-        "weather": "Warm",
-        "pop": "20%",
-        "temp": "86",
-        "conf": "4"
-      },
-      {
-        "period": "Sunday night",
-        "sky": "Mainly Clear",
-        "weather": "Mild",
-        "pop": "<10%",
-        "temp": "62",
-        "conf": "4"
-      },
-      {
-        "period": "Monday",
-        "sky": "Mostly Sunny",
-        "weather": "Seasonable",
-        "pop": "<10%",
-        "temp": "82",
-        "conf": "4"
-      },
-      {
-        "period": "Monday night",
-        "sky": "Mainly Clear",
-        "weather": "Fair",
-        "pop": "<10%",
-        "temp": "56",
-        "conf": "4"
-      },
-      {
-        "period": "Tuesday",
-        "sky": "Mostly Sunny",
-        "weather": "Pleasant",
-        "pop": "<10%",
-        "temp": "upper 70s",
-        "conf": "3"
-      },
-      {
-        "period": "Wednesday",
-        "sky": "Mostly Sunny",
-        "weather": "Warmer",
-        "pop": "<10%",
-        "temp": "mid 80s",
-        "conf": "3"
-      }
-    ]
+    "issued": "",
+    "days": []
   },
   "observations": [
+    {
+      "time": "10:00",
+      "temp": "78",
+      "dewpoint": "67",
+      "rh": "68",
+      "windDir": "WNW",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "9.3",
+      "condition": "None"
+    },
+    {
+      "time": "09:00",
+      "temp": "76",
+      "dewpoint": "67",
+      "rh": "74",
+      "windDir": "W",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "10.7",
+      "condition": "None"
+    },
     {
       "time": "08:00",
       "temp": "73",
@@ -148,28 +73,6 @@
       "windSpeed": "1",
       "precip": "0.00",
       "visibility": "5.0",
-      "condition": "None"
-    },
-    {
-      "time": "04:00",
-      "temp": "64",
-      "dewpoint": "63",
-      "rh": "98",
-      "windDir": "SW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "7.0",
-      "condition": "None"
-    },
-    {
-      "time": "03:00",
-      "temp": "65",
-      "dewpoint": "63",
-      "rh": "93",
-      "windDir": "NW",
-      "windSpeed": "1",
-      "precip": "0.01",
-      "visibility": "8.0",
       "condition": "None"
     }
   ],
@@ -214,5 +117,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-06-07T12:19:52.825Z"
+  "updated": "2026-06-07T14:50:58.095Z"
 }

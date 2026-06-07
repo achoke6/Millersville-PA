@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-06-07T03:48:20.630Z",
+  "generatedAt": "2026-06-07T07:55:15.432Z",
   "totalEvents": 880,
   "withDescription": 316,
   "withImage": 106,
   "familyFriendly": 44,
-  "eventsToday": 1,
+  "eventsToday": 0,
   "sources": {
     "muAthletics": 126,
     "muCalendar": 138,
@@ -53,35 +53,35 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-03-12",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "pennManor": {
       "newest": "2026-10-01",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "borough": {
       "newest": "2027-05-08",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "phantomPower": {
       "newest": "2026-07-17",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     }
   },
   "sports": {
@@ -105,7 +105,7 @@
       "Youth Sports": 1
     },
     "stalePast": 2,
-    "lastSyncAt": "2026-06-07T03:46:54.880Z"
+    "lastSyncAt": "2026-06-07T07:53:57.693Z"
   },
   "recentlyAdded": [
     {
@@ -179,5 +179,5 @@
       "date": "2026-05-05T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 53
+  "addedLastRun": 0
 }

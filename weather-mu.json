@@ -1,11 +1,11 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Monday, June 08, 2026 at 07:56 AM (Kyle Elliott, Meteorologist)",
+    "issued": "Monday, June 08, 2026 at 01:11 PM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "Today",
-        "text": "Cooler and pleasant with a mix of clouds and sun. High: 78-82"
+        "period": "This afternoon",
+        "text": "Mostly cloudy and cooler. High: 76-80"
       },
       {
         "period": "Tonight",
@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "13:00",
+      "temp": "72",
+      "dewpoint": "58",
+      "rh": "63",
+      "windDir": "SSW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "9.7",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "70",
+      "dewpoint": "58",
+      "rh": "66",
+      "windDir": "ESE",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "10.0",
+      "condition": "None"
+    },
+    {
       "time": "11:00",
       "temp": "67",
       "dewpoint": "58",
@@ -169,28 +191,6 @@
       "windSpeed": "5",
       "precip": "0.00",
       "visibility": "9.9",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "65",
-      "dewpoint": "58",
-      "rh": "77",
-      "windDir": "ENE",
-      "windSpeed": "5",
-      "precip": "0.00",
-      "visibility": "8.4",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "61",
-      "dewpoint": "57",
-      "rh": "89",
-      "windDir": "NNE",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "8.0",
       "condition": "None"
     }
   ],
@@ -235,5 +235,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-06-08T15:15:01.696Z"
+  "updated": "2026-06-08T17:51:31.706Z"
 }

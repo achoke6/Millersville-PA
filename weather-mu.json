@@ -1,11 +1,11 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Monday, June 08, 2026 at 07:56 AM (Kyle Elliott, Meteorologist)",
+    "issued": "Monday, June 08, 2026 at 01:11 PM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "Today",
-        "text": "Cooler and pleasant with a mix of clouds and sun. High: 78-82"
+        "period": "This afternoon",
+        "text": "Mostly cloudy and cooler. High: 76-80"
       },
       {
         "period": "Tonight",
@@ -126,7 +126,74 @@
       }
     ]
   },
-  "observations": [],
+  "observations": [
+    {
+      "time": "13:00",
+      "temp": "72",
+      "dewpoint": "58",
+      "rh": "63",
+      "windDir": "SSW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "9.7",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "70",
+      "dewpoint": "58",
+      "rh": "66",
+      "windDir": "ESE",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "10.0",
+      "condition": "None"
+    },
+    {
+      "time": "11:00",
+      "temp": "67",
+      "dewpoint": "58",
+      "rh": "73",
+      "windDir": "SE",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "10.1",
+      "condition": "None"
+    },
+    {
+      "time": "10:00",
+      "temp": "66",
+      "dewpoint": "58",
+      "rh": "75",
+      "windDir": "E",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "9.8",
+      "condition": "None"
+    },
+    {
+      "time": "09:00",
+      "temp": "68",
+      "dewpoint": "59",
+      "rh": "72",
+      "windDir": "ESE",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "10.5",
+      "condition": "None"
+    },
+    {
+      "time": "08:00",
+      "temp": "67",
+      "dewpoint": "58",
+      "rh": "72",
+      "windDir": "E",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "9.9",
+      "condition": "None"
+    }
+  ],
   "discussion": {
     "headline": "Sunny, dry and tranquil first week of meteorological summer",
     "dateLine": "11:30 a.m. Tuesday, June 2, 2026",
@@ -168,5 +235,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-06-08T15:01:38.506Z"
+  "updated": "2026-06-08T17:51:31.706Z"
 }

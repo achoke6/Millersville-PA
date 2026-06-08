@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-08T17:53:05.250Z",
-  "totalEvents": 904,
+  "generatedAt": "2026-06-08T19:04:36.355Z",
+  "totalEvents": 905,
   "withDescription": 316,
   "withImage": 106,
   "familyFriendly": 44,
@@ -9,7 +9,7 @@
     "muAthletics": 153,
     "muCalendar": 138,
     "muGetInvolved": 234,
-    "pennManor": 233,
+    "pennManor": 234,
     "borough": 109,
     "vfw": 6,
     "phantomPower": 12,
@@ -98,14 +98,13 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 2,
-    "pendingPast": 0,
+    "pendingFuture": 1,
+    "pendingPast": 1,
     "pendingBySource": {
-      "PM Community": 1,
       "Youth Sports": 1
     },
-    "stalePast": 2,
-    "lastSyncAt": "2026-06-08T17:51:30.379Z"
+    "stalePast": 3,
+    "lastSyncAt": "2026-06-08T19:03:10.203Z"
   },
   "recentlyAdded": [
     {
@@ -179,5 +178,5 @@
       "date": "2026-11-07T16:15:00.000Z"
     }
   ],
-  "addedLastRun": 4
+  "addedLastRun": 0
 }

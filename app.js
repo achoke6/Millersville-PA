@@ -4250,11 +4250,12 @@ function buildEventCard(e,isSportsPage){
         actionHtml=`<a href="${e.ticketLink}" target="_blank" class="btn btn-sm btn-ticket">🎟 Tickets</a>`;
     } else if(!isFree){
         actionHtml=`<span class="badge badge-door">${priceText}</span>`;
-    } else if(!isSportsPage && eventIsFree(e)){
-        // Explicitly-free non-sports events: a positive "Free" badge where the
-        // (removed) ticket icon used to sit — flags no-cost community events.
-        // Keyed to an explicit "Free" price (eventIsFree) so no-price items like
-        // meetings stay unbadged. Sports skip it (default free admission).
+    } else if(!isSportsPage && eventIsFree(e) && hasLink){
+        // Free non-sports events that ALSO have a ticket/info link — events that
+        // otherwise look ticketed (Summer Fun Series et al.). Keying on price alone
+        // floods it (~600/677 default to "Free"), so the link is the signal that
+        // this is a real event worth flagging as no-cost rather than a routine
+        // meeting/lecture. Sports skip it (default free admission).
         actionHtml=`<span class="badge badge-free" style="background:var(--green);color:#fff;">Free</span>`;
     }
 
@@ -4767,12 +4768,13 @@ function buildTimelineItem(e, now) {
         const safeUrl = e.ticketLink.replace(/"/g, '&quot;');
         ticketBtn = `<a href="${safeUrl}" target="_blank" rel="noopener" class="tl-ticket" title="Buy tickets" onclick="event.stopPropagation();">🎟️</a>`;
     }
-    // "Free" badge for free non-sport events — advertises no-cost community events
-    // right on the homepage timeline instead of a misleading ticket icon. Keyed to
-    // an explicit "Free" price so it targets real events, not no-price meetings.
-    // Sports default to free admission, so skip them to avoid badging every game.
+    // "Free" badge ONLY for free non-sport events that ALSO carry a ticket/info
+    // link — i.e. events that otherwise look ticketed (Summer Fun Series, Candle
+    // Lighting, Wreaths Across America) and are worth flagging as no-cost. Keying
+    // on price alone floods it: ~600 of 677 events default to price "Free", most
+    // of them routine meetings/lectures with no link that shouldn't be badged.
     let freeBadge = '';
-    if (!isSport && eventIsFree(e)) {
+    if (!isSport && eventIsFree(e) && hasTicket) {
         freeBadge = `<span class="tl-free" title="Free event" style="background:var(--green);color:#fff;font-size:0.62rem;font-weight:700;padding:1px 6px;border-radius:8px;">Free</span>`;
     }
 

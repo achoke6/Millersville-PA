@@ -55,6 +55,23 @@ function loadFeedPrefs() {
     setFeedDotVisible(!!feedPrefs);
     try { muAffiliation = localStorage.getItem(AFFILIATION_KEY); } catch(e) { muAffiliation = null; }
     if (muAffiliation !== 'student' && muAffiliation !== 'townie') muAffiliation = null;
+    // Shareable affiliation link: ?aud=townie (aliases: local/locals) or ?aud=mu
+    // (aliases: student/marauder). ONLY sets affiliation when none is set yet, so a
+    // launch link drops new locals into the local view but never overrides — or
+    // silently wipes the favorites of — a returning user who already chose. Strips
+    // the param either way so it can't re-fire on later loads.
+    try {
+        const _u = new URL(window.location.href);
+        const _aud = (_u.searchParams.get('aud') || '').toLowerCase();
+        if (_aud) {
+            const mapped = (_aud === 'townie' || _aud === 'local' || _aud === 'locals') ? 'townie'
+                : (_aud === 'mu' || _aud === 'student' || _aud === 'marauder' || _aud === 'marauders') ? 'student'
+                : null;
+            if (mapped && !muAffiliation) { muAffiliation = mapped; localStorage.setItem(AFFILIATION_KEY, mapped); }
+            _u.searchParams.delete('aud');
+            history.replaceState(null, '', _u.pathname + _u.search + _u.hash);
+        }
+    } catch(e) {}
 }
 function saveFeedPrefs(prefs) {
     feedPrefs = prefs;
@@ -999,10 +1016,58 @@ function newsMatchesFeed(n) {
     return feedPrefs.includes(sourceMap[n.source] || '');
 }
 
+// Lightweight styled confirm/choice dialog — replaces native confirm() so the
+// prompts match the app and can offer more than two options. Renders above the
+// settings modal (z-index 10000). Each button: {label, cls, style, onClick}.
+// Clicking the backdrop dismisses with no action.
+window.mappDialog = function(opts) {
+    const ov = document.createElement('div');
+    ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:10000;display:flex;align-items:center;justify-content:center;padding:24px;';
+    const box = document.createElement('div');
+    box.style.cssText = 'background:var(--surface);border-radius:var(--radius);max-width:380px;width:100%;padding:22px;box-shadow:0 12px 44px rgba(0,0,0,0.28);';
+    const btns = (opts.buttons || []).map((b, i) =>
+        `<button data-i="${i}" class="btn btn-sm ${b.cls || 'btn-outline'}" style="width:100%;padding:11px;font-size:0.88rem;${b.style || ''}">${b.label}</button>`
+    ).join('');
+    box.innerHTML = `<div style="font-weight:700;font-size:1.02rem;margin-bottom:6px;color:var(--navy);">${opts.title || ''}</div>
+        <div style="font-size:0.85rem;color:var(--text-muted);line-height:1.45;margin-bottom:16px;">${opts.message || ''}</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">${btns}</div>`;
+    ov.appendChild(box);
+    document.body.appendChild(ov);
+    box.querySelectorAll('button[data-i]').forEach(btn => {
+        btn.onclick = () => { const i = +btn.dataset.i; ov.remove(); const cb = (opts.buttons[i] || {}).onClick; if (typeof cb === 'function') cb(); };
+    });
+    ov.onclick = e => { if (e.target === ov) ov.remove(); };
+};
+
+// Close the favorites/settings modal if open (overlay carries a stable id).
+window.closeFeedModal = function() {
+    const o = document.getElementById('feed-settings-overlay');
+    if (o) o.remove();
+};
+
+// Clear Favs button → styled confirm (it's a total wipe; easy to hit by accident).
+// Keeps the Local / MU Student setting intact. Reopens the modal so the pickers
+// reflect the now-empty state.
+window.confirmClearFavs = function() {
+    if (!feedPrefs || feedPrefs.length === 0) return; // nothing to clear
+    window.mappDialog({
+        title: 'Clear all favorites?',
+        message: "This removes every event, sport, and news favorite you've picked. Your Local / MU Student setting stays the same.",
+        buttons: [
+            { label: 'Clear favorites', cls: 'btn-outline', style: 'color:#dc2626;border-color:#dc2626;', onClick: () => {
+                window.clearFavoritesOnly();
+                if (document.getElementById('feed-settings-overlay')) { window.closeFeedModal(); window.openFeedSettings(); }
+            }},
+            { label: 'Cancel', cls: 'btn-outline', style: 'color:var(--text-muted);', onClick: () => {} }
+        ]
+    });
+};
+
 window.openFeedSettings = function() {
     loadFeedPrefs();
     const current = feedPrefs || [];
     const overlay = document.createElement('div');
+    overlay.id = 'feed-settings-overlay';
     overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;overflow-y:auto;';
     overlay.onclick = function(ev){ if(ev.target===overlay) overlay.remove(); };
     const modal = document.createElement('div');
@@ -1300,24 +1365,23 @@ window.openFeedSettings = function() {
     window._individualClubs = sortedClubs.map(([name]) => name);
 
     modal.innerHTML = `
-        <button onclick="this.closest('div[style*=fixed]').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);z-index:2;">✕</button>
-        <div style="position:sticky;top:0;background:var(--surface);z-index:1;padding-bottom:12px;border-bottom:1px solid var(--border);margin-bottom:12px;">
+        <button onclick="window.closeFeedModal()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);z-index:2;">✕</button>
+        <div style="margin-bottom:14px;">
             <h3 style="margin-bottom:4px;">⭐ My Favorites</h3>
-            <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:10px;">Pick what shows on your homepage and defaults on Events & Sports pages.</p>
-            <div style="display:flex;gap:8px;align-items:stretch;">
-                <button onclick="saveFeedFromModal();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-ticket" style="flex:2;padding:10px 8px;font-size:0.88rem;white-space:nowrap;">💾 Save</button>
-                <button onclick="clearFavoritesOnly();this.closest('div[style*=fixed]').remove();" class="btn btn-sm btn-outline" style="flex:1;padding:10px 8px;font-size:0.82rem;white-space:nowrap;">Clear Favs</button>
-            </div>
+            <p style="font-size:0.8rem;color:var(--text-muted);">Pick your favorites to personalize your experience.</p>
         </div>
-        ${!muAffiliation ? `
-        <div style="margin-bottom:16px;padding:16px;border:2px solid var(--gold);border-radius:var(--radius-sm);background:var(--gold-soft);">
-            <div style="font-weight:700;font-size:0.98rem;margin-bottom:4px;">👋 First — are you a Marauder?</div>
-            <div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:12px;">This tailors your whole experience — which events, sports, and local listings show up. You can change it anytime.</div>
+        <!-- Mode selector band: plain Local / MU Student labels (with flavor) showing
+             the current mode and letting users switch. Doubles as the first-run prompt
+             for unset users (gold highlight + nudge copy). Switching while favorites
+             exist pops a keep / start-fresh / cancel choice via pickAffiliation. -->
+        <div style="margin-bottom:16px;padding:14px;border-radius:var(--radius-sm);border:${muAffiliation ? '1px solid var(--border)' : '2px solid var(--gold)'};background:${muAffiliation ? 'var(--bg)' : 'var(--gold-soft)'};">
+            <div style="font-weight:700;font-size:0.9rem;margin-bottom:8px;">${muAffiliation ? "You're viewing as" : '👋 First — who are you?'}</div>
             <div style="display:flex;gap:8px;">
-                <button onclick="window.pickAffiliation('student');this.closest('div[style*=fixed]').remove();openFeedSettings();" class="btn btn-sm btn-ticket" style="flex:1;padding:12px 8px;font-size:0.9rem;font-weight:700;">🎓 I'm a Marauder</button>
-                <button onclick="window.pickAffiliation('townie');this.closest('div[style*=fixed]').remove();openFeedSettings();" class="btn btn-sm btn-outline" style="flex:1;padding:12px 8px;font-size:0.9rem;font-weight:700;">🌳 I'm a Townie</button>
+                <button onclick="window.pickAffiliation('townie')" class="btn btn-sm" style="flex:1;padding:11px 8px;font-size:0.88rem;font-weight:700;${muAffiliation === 'townie' ? 'background:var(--navy);color:#fff;border:1px solid var(--navy);' : 'background:transparent;color:var(--navy);border:1px solid var(--border);'}">🌳 Local</button>
+                <button onclick="window.pickAffiliation('student')" class="btn btn-sm" style="flex:1;padding:11px 8px;font-size:0.88rem;font-weight:700;${muAffiliation === 'student' ? 'background:var(--navy);color:#fff;border:1px solid var(--navy);' : 'background:transparent;color:var(--navy);border:1px solid var(--border);'}">🏴‍☠️ MU Student</button>
             </div>
-        </div>` : ''}
+            <div style="font-size:0.76rem;color:var(--text-muted);margin-top:8px;">${muAffiliation ? 'Local shows community events & deals; MU Student adds campus life.' : 'Pick one to tailor your events, sports, and local listings — change it anytime.'}</div>
+        </div>
         <div id="feed-options">${sectionsHtml}</div>
         <!-- Calendar subscription card. Lets the user grab a personalized iCal
              feed URL containing their current favorites. Sits between the
@@ -1341,15 +1405,13 @@ window.openFeedSettings = function() {
             <div id="notif-card-desc" style="font-size:0.78rem;color:var(--text-muted);margin-bottom:10px;">Get a 7am morning summary of today's events from your favorites.</div>
             <button id="notif-card-btn" onclick="window.toggleNotifications(this)" class="btn btn-sm btn-outline" style="width:100%;font-size:0.85rem;"></button>
         </div>
-        <!-- Small affiliation opt-out/opt-in link at the bottom. Mirrors the welcome banner's
-             "Not a student? I'm a townie →" pattern. Text flips depending on current affiliation
-             so users can switch back if they mis-picked. Unset users see the townie opt-out. -->
-        ${muAffiliation ? `<div style="margin-top:16px;padding-top:12px;border-top:1px dashed var(--border);font-size:0.78rem;color:var(--text-muted);text-align:center;">
-            ${muAffiliation === 'townie'
-                ? 'Actually a Marauder? <a href="#" onclick="event.preventDefault();this.closest(\'div[style*=fixed]\').remove();window.pickAffiliation(\'student\');openFeedSettings();" style="color:var(--navy);font-weight:600;text-decoration:underline;">I\'m a student →</a>'
-                : 'Not a student? <a href="#" onclick="event.preventDefault();this.closest(\'div[style*=fixed]\').remove();window.pickAffiliation(\'townie\');openFeedSettings();" style="color:var(--navy);font-weight:600;text-decoration:underline;">I\'m a townie →</a>'
-            }
-        </div>` : ''}`;
+        <!-- Sticky footer: Clear Favs (left, secondary) + Save (right, primary).
+             Pinned so Save stays reachable without scrolling this tall modal on
+             mobile. Negative margins bleed it to the modal edges. -->
+        <div style="position:sticky;bottom:0;background:var(--surface);border-top:1px solid var(--border);margin:16px -28px -28px;padding:14px 28px;display:flex;gap:10px;z-index:1;">
+            <button onclick="window.confirmClearFavs()" class="btn btn-sm btn-outline" style="flex:1;padding:11px 8px;font-size:0.82rem;white-space:nowrap;">Clear Favs</button>
+            <button onclick="window.saveFeedFromModal();window.closeFeedModal();" class="btn btn-sm btn-ticket" style="flex:2;padding:11px 8px;font-size:0.9rem;white-space:nowrap;">💾 Save</button>
+        </div>`;
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
     // Render the notifications button with the right initial label/state.
@@ -1863,6 +1925,7 @@ window.clearFeedPrefs = function() {
     localStorage.removeItem(FEED_KEY);
     feedPrefs = null;
     setFeedDotVisible(false);
+    if (typeof window.resendNotificationPrefs === 'function') window.resendNotificationPrefs().catch(() => {});
     renderHomeFeed();
     renderEvents(); renderSports(); renderNewsUI();
 };
@@ -1872,6 +1935,7 @@ window.clearFavoritesOnly = function() {
     localStorage.removeItem(FEED_KEY);
     feedPrefs = null;
     setFeedDotVisible(false);
+    if (typeof window.resendNotificationPrefs === 'function') window.resendNotificationPrefs().catch(() => {});
     renderHomeFeed();
     renderEvents(); renderSports(); renderNewsUI();
 };
@@ -2096,36 +2160,48 @@ window.welcomeIdentifyAsTownie = function() {
 };
 window.pickAffiliation = function(value) {
     if (value !== 'student' && value !== 'townie') return;
-    const prev = muAffiliation;
-    const changingExisting = prev && prev !== value && feedPrefs && feedPrefs.length > 0;
-    if (changingExisting) {
-        const label = value === 'student' ? 'Marauder' : 'Townie';
-        if (!confirm(`Reset your favorites to ${label} defaults? Your current favorites will be cleared.`)) {
-            // User declined — just update affiliation, keep favorites (but still prune stale state below)
-            muAffiliation = value;
-            localStorage.setItem(AFFILIATION_KEY, value);
-            pruneStaleStateForAffiliation();
-            renderHomeFeed();
-            if (typeof renderEvents === 'function') renderEvents();
-            if (typeof renderSports === 'function') renderSports();
-            if (typeof renderNewsUI === 'function') renderNewsUI();
-            if (typeof renderPlaces === 'function') renderPlaces();
-            return;
-        }
-        // User confirmed — clear favorites and reopen modal
+    if (value === muAffiliation) return; // tapping the current mode is a no-op
+    // Unset, or switching with no favorites to lose → just apply it.
+    if (!muAffiliation || !feedPrefs || feedPrefs.length === 0) { applyAffiliation(value, false); return; }
+    // Switching an established identity that HAS favorites → offer a real choice:
+    // keep them, start fresh, or cancel the switch entirely.
+    const label = value === 'student' ? '🏴‍☠️ MU Student' : '🌳 Local';
+    window.mappDialog({
+        title: `Switch to ${label}?`,
+        message: `Your saved favorites were picked for your current view. Keep them, or start fresh with ${label} defaults?`,
+        buttons: [
+            { label: 'Keep my favorites', cls: 'btn-ticket', onClick: () => applyAffiliation(value, false) },
+            { label: 'Start fresh', cls: 'btn-outline', onClick: () => applyAffiliation(value, true) },
+            { label: 'Cancel', cls: 'btn-outline', style: 'color:var(--text-muted);', onClick: () => {} }
+        ]
+    });
+};
+
+// Apply an affiliation change (optionally wiping favorites), prune now-invalid
+// state, re-render, and — if the settings modal is open — reopen it so the mode
+// band and pickers reflect the new identity. Used by the first-run prompt and
+// in-app switches alike.
+function applyAffiliation(value, clearFavs) {
+    muAffiliation = value;
+    localStorage.setItem(AFFILIATION_KEY, value);
+    if (clearFavs) {
         localStorage.removeItem(FEED_KEY);
         feedPrefs = null;
         setFeedDotVisible(false);
+        // Keep the 7am digest / calendar feed in sync with the now-empty favorites.
+        if (typeof window.resendNotificationPrefs === 'function') window.resendNotificationPrefs().catch(() => {});
     }
-    muAffiliation = value;
-    localStorage.setItem(AFFILIATION_KEY, value);
     pruneStaleStateForAffiliation();
     renderHomeFeed();
     if (typeof renderEvents === 'function') renderEvents();
     if (typeof renderSports === 'function') renderSports();
     if (typeof renderNewsUI === 'function') renderNewsUI();
     if (typeof renderPlaces === 'function') renderPlaces();
-};
+    if (document.getElementById('feed-settings-overlay')) {
+        window.closeFeedModal();
+        if (typeof window.openFeedSettings === 'function') window.openFeedSettings();
+    }
+}
 
 // Called after affiliation changes. Cleans up state that may be invalid under the new
 // affiliation. Specifically:
@@ -4085,6 +4161,15 @@ function cleanLocation(loc) {
     cleaned = cleaned.replace(/^Ware Center\s+(?!,)/, 'Ware Center, ');
     return cleaned;
 }
+// Whether an event is free admission. Lets us tell a real purchase link
+// ("Buy Tickets") apart from an info/RSVP page that a free event happens to
+// carry in ticketLink. Free community events (price "Free") were wrongly showing
+// a ticket icon + "Buy Tickets" just because they had an info link.
+function eventIsFree(e){
+    const p = String((e && e.price) || '').trim().toLowerCase();
+    return p === 'free' || p === 'free entry' || p === 'free admission' || p === 'free!' || /^\$?0(\.0+)?$/.test(p);
+}
+
 function buildEventCard(e,isSportsPage){
     const d=new Date(e.date), tags=e.tags||[];
     const priceText=e.price?e.price.toString():"Free";
@@ -4161,10 +4246,16 @@ function buildEventCard(e,isSportsPage){
         // Reuses .btn-ticket styling (green CTA); stopPropagation so the click
         // opens the signup page instead of the card's detail modal.
         actionHtml=`<a href="${escHtml(getRegisterUrl(e))}" target="_blank" rel="noopener" class="btn btn-sm btn-ticket" onclick="event.stopPropagation();">📝 Register Now</a>`;
-    } else if(hasLink){
+    } else if(hasLink && !isFree){
         actionHtml=`<a href="${e.ticketLink}" target="_blank" class="btn btn-sm btn-ticket">🎟 Tickets</a>`;
     } else if(!isFree){
         actionHtml=`<span class="badge badge-door">${priceText}</span>`;
+    } else if(!isSportsPage){
+        // Free non-sports events: a positive "Free" badge where the (removed)
+        // ticket icon used to sit — actively flags no-cost community events
+        // instead of showing nothing. Sports default to free admission, so we
+        // skip it there to avoid badging every game card.
+        actionHtml=`<span class="badge badge-free" style="background:var(--green);color:#fff;">Free</span>`;
     }
 
     // Game location badge (lower-left corner for sports) / Family badge for events
@@ -4860,7 +4951,9 @@ window.openEventDetails = function(key) {
     if (isRegistrationEvent(e) && getRegisterUrl(e)) {
         // Registration event → "Register Now" (signup page), not "Buy Tickets".
         actions += `<a href="${escHtml(getRegisterUrl(e))}" target="_blank" rel="noopener" class="btn btn-sm btn-ticket" style="text-decoration:none;">📝 Register Now</a>`;
-    } else if (e.ticketLink) {
+    } else if (e.ticketLink && !eventIsFree(e)) {
+        // Paid/ticketed only. A free event never shows "Buy Tickets" — its link is
+        // an info page, surfaced as "More Info" via the source button below.
         actions += `<a href="${e.ticketLink}" target="_blank" class="btn btn-sm btn-ticket" style="text-decoration:none;">🎟️ Buy Tickets</a>`;
     }
     if (e.streamLink) {
@@ -4887,15 +4980,20 @@ window.openEventDetails = function(key) {
     // contexts keep the generic "View Source" label. Skip it entirely for a
     // registration event whose source IS the signup page — "Register Now"
     // already links there, so a second button to the same URL is just noise.
-    const regDupesSource = isRegistrationEvent(e) && e.sourceLink && e.sourceLink === getRegisterUrl(e);
-    if (e.sourceLink && !regDupesSource) {
+    // Info/source link. For a free event, fall back to its ticketLink (an info
+    // page, not a purchase) so the link still surfaces, and label it "More Info"
+    // rather than the generic "View Source".
+    const infoUrl = e.sourceLink || (eventIsFree(e) ? e.ticketLink : '');
+    const regDupesSource = isRegistrationEvent(e) && infoUrl && infoUrl === getRegisterUrl(e);
+    if (infoUrl && !regDupesSource) {
         const isPastGame = isSport && e.gameResult && e.gameScore;
         const isMUSport = isSport && tags.includes('MU');
         let srcLabel;
         if (isPastGame) srcLabel = '📊 Game Recap & Box Score';
+        else if (eventIsFree(e) && !isSport) srcLabel = 'ℹ️ More Info';
         else if (isMUSport && !e.ticketLink) srcLabel = '🎟️ View on MU Athletics';
         else srcLabel = '🔗 View Source';
-        actions += `<a href="${e.sourceLink}" target="_blank" class="btn btn-sm btn-outline" style="text-decoration:none;">${srcLabel}</a>`;
+        actions += `<a href="${infoUrl}" target="_blank" class="btn btn-sm btn-outline" style="text-decoration:none;">${srcLabel}</a>`;
     }
 
     // Build modal

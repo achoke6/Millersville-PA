@@ -149,25 +149,26 @@
         </div>
 
         <div id="welcome-banner" class="welcome-banner" style="display:none;">
-            <!-- Unified welcome: assumes Marauder by default (the majority of MU.APP users are
-                 MU students). Offers Set Up Favorites as the primary CTA, Skip to dismiss,
-                 and a smaller "I'm a townie" opt-out link for the minority of users who
-                 should see the townie view instead. -->
+            <!-- Balanced first-run identity pick: two equal-weight buttons (student /
+                 local) set the viewer's affiliation up front, then open the favorites
+                 modal. A quiet "show me everything" link skips the choice (affiliation
+                 stays unset = sees all events). Symmetric with the student/townie
+                 filtering in app.js. -->
             <div id="welcome-prompt">
                 <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
                     <span style="font-size:1.5rem;">⭐</span>
                     <div style="flex:1;min-width:220px;">
                         <strong>Welcome to Millersville.APP!</strong>
-                        <p style="font-size:0.82rem;color:var(--text-muted);margin:2px 0 0;">Set up your favorites to see what matters to you.</p>
+                        <p style="font-size:0.82rem;color:var(--text-muted);margin:2px 0 0;">See what's relevant to you — are you here as a student or a local?</p>
                     </div>
                     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-                        <button onclick="welcomeSetupFavorites()" class="btn btn-sm btn-ticket" style="white-space:nowrap;">Set Up Favorites</button>
-                        <button onclick="dismissWelcome()" style="background:none;border:1.5px solid var(--border);padding:6px 12px;border-radius:var(--radius-sm);font-size:0.82rem;color:var(--text-muted);cursor:pointer;font-family:inherit;">Skip for now</button>
+                        <button onclick="welcomeIdentifyAsStudent()" class="btn btn-sm btn-ticket" style="white-space:nowrap;">🏴‍☠️ I'm a student</button>
+                        <button onclick="welcomeIdentifyAsTownie()" class="btn btn-sm btn-ticket" style="white-space:nowrap;">🌳 I'm a local</button>
                     </div>
                 </div>
-                <!-- Secondary opt-out: smaller, less prominent than the primary CTA -->
+                <!-- Tertiary: skip the choice and just browse (affiliation stays unset = sees all) -->
                 <div style="margin-top:10px;padding-top:8px;border-top:1px dashed var(--border);font-size:0.78rem;color:var(--text-muted);text-align:right;">
-                    Not a student? <a href="#" onclick="event.preventDefault();welcomeIdentifyAsTownie();" style="color:var(--navy);font-weight:600;text-decoration:underline;">I'm a townie →</a>
+                    <a href="#" onclick="event.preventDefault();dismissWelcome();" style="color:var(--text-muted);font-weight:600;text-decoration:underline;">Just browsing — show me everything →</a>
                 </div>
             </div>
         </div>
@@ -256,11 +257,11 @@
                     <span id="ev-current-day-label" class="current-day-label">Today</span>
                 </div>
                 <div class="toolbar-right">
-                    <button id="ev-clear-btn" class="clear-btn" onclick="clearEventFilters()" title="Clear filters">✕</button>
+                    <button id="ev-clear-btn" class="clear-btn" onclick="clearEventFilters()" title="Clear filters" aria-label="Clear filters">✕</button>
                     <button class="family-toggle fav-toggle" id="ev-fav-toggle" onclick="evToggleFavOnly()" title="Jump to your favorites" style="display:none;">⭐ <span class="fav-toggle-label">Favs</span></button>
-                    <button class="family-toggle" id="ev-kid-toggle" data-feed="family-events" onclick="toggleKidFriendly()" title="Family Friendly Events">👨‍👩‍👧</button>
-                    <button class="family-toggle" id="ev-freefood-toggle" onclick="toggleFreeFood()" title="Free Food Events" style="display:none;">🍕</button>
-                    <button class="family-toggle" id="ev-freestuff-toggle" onclick="toggleFreeStuff()" title="Free Stuff Events" style="display:none;">🎁</button>
+                    <button class="family-toggle has-label" id="ev-kid-toggle" data-feed="family-events" onclick="toggleKidFriendly()" title="Family Friendly Events" aria-label="Family-friendly events">👨‍👩‍👧 <span class="family-toggle-label">Family</span></button>
+                    <button class="family-toggle has-label" id="ev-freefood-toggle" onclick="toggleFreeFood()" title="Free Food Events" aria-label="Free food events" style="display:none;">🍕 <span class="family-toggle-label">Free Food</span></button>
+                    <button class="family-toggle has-label" id="ev-freestuff-toggle" onclick="toggleFreeStuff()" title="Free Stuff Events" aria-label="Free stuff events" style="display:none;">🎁 <span class="family-toggle-label">Free Stuff</span></button>
                     <button id="ev-filter-toggle" class="filter-toggle" onclick="toggleEvFilters()">Filter <span id="ev-filter-arrow">▾</span></button>
                 </div>
             </div>
@@ -289,11 +290,11 @@
                     <span id="sp-current-day-label" class="current-day-label">Today</span>
                 </div>
                 <div class="toolbar-right">
-                    <button id="sp-clear-btn" class="clear-btn" onclick="clearSportsFilters()" title="Clear filters">✕</button>
+                    <button id="sp-clear-btn" class="clear-btn" onclick="clearSportsFilters()" title="Clear filters" aria-label="Clear filters">✕</button>
                     <button class="family-toggle fav-toggle" id="sp-fav-toggle" onclick="spToggleFavOnly()" title="Jump to your favorites" style="display:none;">⭐ <span class="fav-toggle-label">Favs</span></button>
                     <button class="family-toggle past-toggle" id="sp-past-toggle" onclick="toggleSportsPast()" title="Show past games with scores">⏮ <span class="past-toggle-label">Past</span></button>
-                    <button class="home-toggle" id="hgame-toggle" onclick="toggleHomeGameMode()" title="Home Games Only">
-                        <svg width="20" height="20"><use href="#icon-house"/></svg>
+                    <button class="home-toggle" id="hgame-toggle" onclick="toggleHomeGameMode()" title="Home Games Only" aria-label="Home games only">
+                        <svg width="20" height="20" aria-hidden="true"><use href="#icon-house"/></svg>
                     </button>
                     <button id="sp-filter-toggle" class="filter-toggle" onclick="toggleSpFilters()">Filter <span id="sp-filter-arrow">▾</span></button>
                 </div>
@@ -329,25 +330,25 @@
                  opens this vertical list. Picking a category applies it and
                  closes the menu. No category row clutters the default view. -->
             <div id="places-filter-menu" class="filter-menu" style="display:none;">
-                <button class="filter-menu-item" onclick="setPlacesFilter('All', this)">All Categories</button>
-                <button class="filter-menu-item" onclick="setPlacesFilter('Food & Drink', this)">🍴 Food &amp; Drink</button>
-                <button class="filter-menu-item" onclick="setPlacesFilter('Housing', this)">🏠 Housing</button>
-                <button class="filter-menu-item" onclick="setPlacesFilter('Student Housing', this)">🎓 Student Housing</button>
-                <button class="filter-menu-item" onclick="setPlacesFilter('Shopping', this)">🛒 Shopping</button>
-                <button class="filter-menu-item" onclick="setPlacesFilter('Health', this)">🏥 Health</button>
-                <button class="filter-menu-item" onclick="setPlacesFilter('Beauty/Grooming', this)">💈 Beauty</button>
-                <button class="filter-menu-item" onclick="setPlacesFilter('Finance', this)">🏦 Finance</button>
-                <button class="filter-menu-item" onclick="setPlacesFilter('Real Estate', this)">🏘 Real Estate</button>
-                <button class="filter-menu-item" onclick="setPlacesFilter('Home Services', this)">🔨 Home Services</button>
-                <button class="filter-menu-item" onclick="setPlacesFilter('Services', this)">🛠 Services</button>
-                <button class="filter-menu-item" onclick="setPlacesFilter('Government', this)">🏛 Government</button>
-                <button class="filter-menu-item" onclick="setPlacesFilter('Education', this)">📚 Education</button>
-                <button class="filter-menu-item" onclick="setPlacesFilter('Recreation', this)">🏞 Recreation</button>
-                <button class="filter-menu-item" onclick="setPlacesFilter('Entertainment', this)">🎵 Entertainment</button>
-                <button class="filter-menu-item" onclick="setPlacesFilter('Venue', this)">🎉 Venue</button>
-                <button class="filter-menu-item" onclick="setPlacesFilter('Lodging', this)">🛏 Lodging</button>
-                <button class="filter-menu-item" onclick="setPlacesFilter('Transport', this)">🚌 Transport</button>
-                <button class="filter-menu-item" onclick="setPlacesFilter('Shipping', this)">📦 Shipping</button>
+                <button class="filter-menu-item" data-cat="All" onclick="setPlacesFilter('All', this)">All Categories</button>
+                <button class="filter-menu-item" data-cat="Food & Drink" onclick="setPlacesFilter('Food & Drink', this)">🍴 Food &amp; Drink</button>
+                <button class="filter-menu-item" data-cat="Housing" onclick="setPlacesFilter('Housing', this)">🏠 Housing</button>
+                <button class="filter-menu-item" data-cat="Student Housing" onclick="setPlacesFilter('Student Housing', this)">🎓 Student Housing</button>
+                <button class="filter-menu-item" data-cat="Shopping" onclick="setPlacesFilter('Shopping', this)">🛒 Shopping</button>
+                <button class="filter-menu-item" data-cat="Health" onclick="setPlacesFilter('Health', this)">🏥 Health</button>
+                <button class="filter-menu-item" data-cat="Beauty/Grooming" onclick="setPlacesFilter('Beauty/Grooming', this)">💈 Beauty</button>
+                <button class="filter-menu-item" data-cat="Finance" onclick="setPlacesFilter('Finance', this)">🏦 Finance</button>
+                <button class="filter-menu-item" data-cat="Real Estate" onclick="setPlacesFilter('Real Estate', this)">🏘 Real Estate</button>
+                <button class="filter-menu-item" data-cat="Home Services" onclick="setPlacesFilter('Home Services', this)">🔨 Home Services</button>
+                <button class="filter-menu-item" data-cat="Services" onclick="setPlacesFilter('Services', this)">🛠 Services</button>
+                <button class="filter-menu-item" data-cat="Government" onclick="setPlacesFilter('Government', this)">🏛 Government</button>
+                <button class="filter-menu-item" data-cat="Education" onclick="setPlacesFilter('Education', this)">📚 Education</button>
+                <button class="filter-menu-item" data-cat="Recreation" onclick="setPlacesFilter('Recreation', this)">🏞 Recreation</button>
+                <button class="filter-menu-item" data-cat="Entertainment" onclick="setPlacesFilter('Entertainment', this)">🎵 Entertainment</button>
+                <button class="filter-menu-item" data-cat="Venue" onclick="setPlacesFilter('Venue', this)">🎉 Venue</button>
+                <button class="filter-menu-item" data-cat="Lodging" onclick="setPlacesFilter('Lodging', this)">🛏 Lodging</button>
+                <button class="filter-menu-item" data-cat="Transport" onclick="setPlacesFilter('Transport', this)">🚌 Transport</button>
+                <button class="filter-menu-item" data-cat="Shipping" onclick="setPlacesFilter('Shipping', this)">📦 Shipping</button>
             </div>
         </div>
         <div id="housing-container" class="card-grid"></div>

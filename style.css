@@ -390,6 +390,12 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .family-toggle.past-toggle:not(.active):hover { background: var(--bg); }
 .past-toggle-label { font-size: 0.78rem; }
 
+/* Labeled family toggles (Family / Free Food / Free Stuff) — same auto-width
+   layout as the Favs/Past toggles so the text label fits on desktop, keeping the
+   green family-toggle accent. Label hides on mobile (icon-only), like Favs/Past. */
+.family-toggle.has-label { width: auto; padding: 0 10px; gap: 4px; font-size: 0.78rem; font-weight: 700; }
+.family-toggle-label { font-size: 0.78rem; }
+
 /* MBA member lens toggle — navy accent matching the "✓ MBA Member" badge. The
    short "MBA" label stays visible even on mobile (a bare ✓ would be unclear). */
 .family-toggle.mba-toggle {
@@ -457,8 +463,8 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 
 /* Mobile: hide the text, keep just the star/icon. Desktop shows the full label. */
 @media (max-width: 768px) {
-    .fav-toggle-label, .past-toggle-label { display: none; }
-    .family-toggle.fav-toggle, .family-toggle.past-toggle { padding: 0; width: 36px; gap: 0; }
+    .fav-toggle-label, .past-toggle-label, .family-toggle-label { display: none; }
+    .family-toggle.fav-toggle, .family-toggle.past-toggle, .family-toggle.has-label { padding: 0; width: 36px; gap: 0; }
 }
 
 /* Clear filters button — compact X-only so the toolbar has room for more items.

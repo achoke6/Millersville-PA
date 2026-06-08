@@ -2141,9 +2141,12 @@ window.dismissWelcome = function() {
     const wb = document.getElementById('welcome-banner');
     if (wb) wb.style.display = 'none';
 };
-// Primary CTA: user wants to set up favorites. Dismiss the banner and open the feed modal.
-// Affiliation stays unset → treated as Marauder (the app default).
-window.welcomeSetupFavorites = function() {
+// Identity pick — student. Mirror of welcomeIdentifyAsTownie below: set the
+// viewer's affiliation, dismiss the banner, then open the favorites modal so they
+// can refine their feed. (Replaces the old "Set Up Favorites" CTA, which left the
+// viewer unset/Marauder — the welcome now asks affiliation up front.)
+window.welcomeIdentifyAsStudent = function() {
+    pickAffiliation('student');
     localStorage.setItem('welcomeDismissed', '1');
     const wb = document.getElementById('welcome-banner');
     if (wb) wb.style.display = 'none';
@@ -2783,6 +2786,7 @@ document.addEventListener('keydown', (e) => {
 async function initApp(){
     loadFeedPrefs();
     await Promise.allSettled([loadWeather(),loadWeatherMU(),loadSpecials(),loadEvents(),loadPlaces(),loadHousing(),loadNews(),loadBoard(),loadSignups(),loadClubsDirectory()]);
+    pruneEmptyPlaceCategories();   // directory + housing are loaded now — drop empty category chips
     renderHomeFeed();
     attachHomeSwipeHandlers();
     syncFilterArrows();
@@ -5614,6 +5618,26 @@ async function loadPlaces(){try{
     window._placesSpecials = specials;
     renderPlaces();
 }catch(e){console.error('Places error:',e);}}
+
+// Hide directory category chips that have no listings at all, so the Filter menu
+// reflects what's actually in the directory instead of ~18 categories (many empty).
+// Data-level only: a category stays if ANY loaded place has it (or, for Housing, if
+// housing.json produced cards). Audience/MBA/Marauder-Gold emptiness is NOT considered
+// here — those still surface the friendly "Add it here" empty-state — so the menu
+// doesn't flicker as the viewer toggles modes. Reads each button's data-cat (set in
+// index.html). Idempotent; called once after the parallel data load in initApp().
+function pruneEmptyPlaceCategories(){
+    const menu = document.getElementById('places-filter-menu');
+    if (!menu) return;
+    const present = new Set((allPlaces || []).map(p => p && p.category).filter(Boolean));
+    const hc = document.getElementById('housing-container');
+    if (hc && hc.children.length) present.add('Housing');
+    menu.querySelectorAll('.filter-menu-item').forEach(b => {
+        const cat = b.dataset.cat;
+        if (!cat || cat === 'All') return;          // never hide "All Categories"
+        b.style.display = present.has(cat) ? '' : 'none';
+    });
+}
 
 window.setPlacesFilter=function(cat,btn){
     placesFilter=cat;

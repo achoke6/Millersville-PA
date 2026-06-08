@@ -4250,11 +4250,11 @@ function buildEventCard(e,isSportsPage){
         actionHtml=`<a href="${e.ticketLink}" target="_blank" class="btn btn-sm btn-ticket">🎟 Tickets</a>`;
     } else if(!isFree){
         actionHtml=`<span class="badge badge-door">${priceText}</span>`;
-    } else if(!isSportsPage){
-        // Free non-sports events: a positive "Free" badge where the (removed)
-        // ticket icon used to sit — actively flags no-cost community events
-        // instead of showing nothing. Sports default to free admission, so we
-        // skip it there to avoid badging every game card.
+    } else if(!isSportsPage && eventIsFree(e)){
+        // Explicitly-free non-sports events: a positive "Free" badge where the
+        // (removed) ticket icon used to sit — flags no-cost community events.
+        // Keyed to an explicit "Free" price (eventIsFree) so no-price items like
+        // meetings stay unbadged. Sports skip it (default free admission).
         actionHtml=`<span class="badge badge-free" style="background:var(--green);color:#fff;">Free</span>`;
     }
 
@@ -4755,20 +4755,25 @@ function buildTimelineItem(e, now) {
         }
     }
 
-    // Ticket icon for events with a purchase link. The presence of a ticket
-    // link is itself the signal that tickets are actually for sale: MU's iCal
-    // only includes a "Tickets:" URL on games that charge admission (postseason
-    // / NCAA tournament games, special events), which students pay for too.
-    // Regular free home games carry no ticket link, so they never show an icon
-    // regardless of audience. We previously suppressed the icon for marauders
-    // on all MU athletic events assuming "students get in free" — but that only
-    // ever hid the icon on genuinely paid games, which was actively unhelpful.
-    // Click opens the ticket link directly and stops propagation so the card's
-    // modal doesn't also fire; title attribute hints at the action on hover.
+    // Ticket icon ONLY for genuinely ticketed events: a ticket link AND a non-free
+    // price. For sports, MU's iCal only attaches a "Tickets:" URL to paid games, so
+    // the link alone is a reliable signal there. But free non-sport events (e.g. the
+    // Summer Fun Series) carry an info-page link in ticketLink and must NOT look like
+    // a paid event — hence the eventIsFree() gate. Click opens the link and stops
+    // propagation so the card's modal doesn't also fire.
+    const hasTicket = !!(e.ticketLink && e.ticketLink.trim());
     let ticketBtn = '';
-    if (e.ticketLink && e.ticketLink.trim()) {
+    if (hasTicket && !eventIsFree(e)) {
         const safeUrl = e.ticketLink.replace(/"/g, '&quot;');
         ticketBtn = `<a href="${safeUrl}" target="_blank" rel="noopener" class="tl-ticket" title="Buy tickets" onclick="event.stopPropagation();">🎟️</a>`;
+    }
+    // "Free" badge for free non-sport events — advertises no-cost community events
+    // right on the homepage timeline instead of a misleading ticket icon. Keyed to
+    // an explicit "Free" price so it targets real events, not no-price meetings.
+    // Sports default to free admission, so skip them to avoid badging every game.
+    let freeBadge = '';
+    if (!isSport && eventIsFree(e)) {
+        freeBadge = `<span class="tl-free" title="Free event" style="background:var(--green);color:#fff;font-size:0.62rem;font-weight:700;padding:1px 6px;border-radius:8px;">Free</span>`;
     }
 
     // Use event's sourceLink as unique identifier for the detail modal lookup.
@@ -4788,7 +4793,7 @@ function buildTimelineItem(e, now) {
         <div class="tl-content">
             <span class="tl-src${isSport?'':' tl-src-event'}">${src}</span>
             <span class="tl-title">${title}</span>
-            <span class="tl-badges">${badges}${streamBtn}${ticketBtn}</span>
+            <span class="tl-badges">${badges}${freeBadge}${streamBtn}${ticketBtn}</span>
         </div>
     </div>`;
 }

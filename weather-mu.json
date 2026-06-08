@@ -128,6 +128,17 @@
   },
   "observations": [
     {
+      "time": "10:00",
+      "temp": "66",
+      "dewpoint": "58",
+      "rh": "75",
+      "windDir": "E",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "9.8",
+      "condition": "None"
+    },
+    {
       "time": "09:00",
       "temp": "68",
       "dewpoint": "59",
@@ -181,17 +192,6 @@
       "precip": "0.00",
       "visibility": "7.6",
       "condition": "None"
-    },
-    {
-      "time": "04:00",
-      "temp": "63",
-      "dewpoint": "56",
-      "rh": "79",
-      "windDir": "SSW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "9.0",
-      "condition": "None"
     }
   ],
   "discussion": {
@@ -205,6 +205,13 @@
     "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
   },
   "videos": [
+    {
+      "title": "Short Term Forecast 06/08/2026",
+      "videoId": "Eu7BP1Lu6kw",
+      "url": "https://www.youtube.com/watch?v=Eu7BP1Lu6kw",
+      "published": "2026-06-08T14:37:29+00:00",
+      "thumbnail": "https://i2.ytimg.com/vi/Eu7BP1Lu6kw/hqdefault.jpg"
+    },
     {
       "title": "Short Term Forecast 06/02/2026",
       "videoId": "Onil_ULAZKE",
@@ -225,15 +232,8 @@
       "url": "https://www.youtube.com/watch?v=uCj4m3pnM9Q",
       "published": "2026-06-01T13:32:51+00:00",
       "thumbnail": "https://i2.ytimg.com/vi/uCj4m3pnM9Q/hqdefault.jpg"
-    },
-    {
-      "title": "Medium Range Forecast 05/26/2026",
-      "videoId": "oNVf0F2dWZw",
-      "url": "https://www.youtube.com/watch?v=oNVf0F2dWZw",
-      "published": "2026-05-26T13:34:55+00:00",
-      "thumbnail": "https://i4.ytimg.com/vi/oNVf0F2dWZw/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-06-08T13:48:44.725Z"
+  "updated": "2026-06-08T14:47:23.977Z"
 }

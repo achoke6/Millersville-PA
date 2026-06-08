@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-06-08T13:50:21.360Z",
-  "totalEvents": 899,
+  "generatedAt": "2026-06-08T14:48:58.924Z",
+  "totalEvents": 907,
   "withDescription": 316,
   "withImage": 106,
   "familyFriendly": 44,
-  "eventsToday": 3,
+  "eventsToday": 4,
   "sources": {
-    "muAthletics": 147,
+    "muAthletics": 154,
     "muCalendar": 138,
     "muGetInvolved": 235,
     "pennManor": 235,
-    "borough": 107,
+    "borough": 108,
     "vfw": 6,
     "phantomPower": 12,
     "community": 14,
@@ -85,7 +85,7 @@
     }
   },
   "sports": {
-    "total": 350,
+    "total": 357,
     "scored": 20,
     "wins": 9,
     "losses": 10,
@@ -105,9 +105,65 @@
       "Youth Sports": 1
     },
     "stalePast": 2,
-    "lastSyncAt": "2026-06-08T13:48:43.605Z"
+    "lastSyncAt": "2026-06-08T14:47:22.838Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Welcome Back! Your Membership Has Been Renewed|2026-06-09T03:38:54.000Z",
+      "firstSeenAt": "2026-06-08T14:48:58.922Z",
+      "title": "Welcome Back! Your Membership Has Been Renewed",
+      "source": "Borough",
+      "date": "2026-06-09T03:38:54.000Z"
+    },
+    {
+      "key": "Millersville University Women's Cross Country at Dutchmen Invitational|2026-09-05T14:15:00.000Z",
+      "firstSeenAt": "2026-06-08T14:48:58.922Z",
+      "title": "Millersville University Women's Cross Country at Dutchmen Invitational",
+      "source": "MU",
+      "date": "2026-09-05T14:15:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Cross Country at Lock Haven Invitational|2026-09-26T14:45:00.000Z",
+      "firstSeenAt": "2026-06-08T14:48:58.922Z",
+      "title": "Millersville University Women's Cross Country at Lock Haven Invitational",
+      "source": "MU",
+      "date": "2026-09-26T14:45:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Cross Country at Bloomsburg Invitational|2026-10-17T15:00:00.000Z",
+      "firstSeenAt": "2026-06-08T14:48:58.922Z",
+      "title": "Millersville University Women's Cross Country at Bloomsburg Invitational",
+      "source": "MU",
+      "date": "2026-10-17T15:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Cross Country at Last Chance Run Fast Invitational|2026-10-23T19:00:00.000Z",
+      "firstSeenAt": "2026-06-08T14:48:58.922Z",
+      "title": "Millersville University Women's Cross Country at Last Chance Run Fast Invitational",
+      "source": "MU",
+      "date": "2026-10-23T19:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Cross Country vs PSAC Championships|2026-11-07T16:15:00.000Z",
+      "firstSeenAt": "2026-06-08T14:48:58.922Z",
+      "title": "Millersville University Women's Cross Country vs PSAC Championships",
+      "source": "MU",
+      "date": "2026-11-07T16:15:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Cross Country vs NCAA Atlantic Regional|2026-11-21T16:15:00.000Z",
+      "firstSeenAt": "2026-06-08T14:48:58.922Z",
+      "title": "Millersville University Women's Cross Country vs NCAA Atlantic Regional",
+      "source": "MU",
+      "date": "2026-11-21T16:15:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Cross Country vs NCAA Championship|2026-12-04T00:00:00.000Z",
+      "firstSeenAt": "2026-06-08T14:48:58.922Z",
+      "title": "Millersville University Women's Cross Country vs NCAA Championship",
+      "source": "MU",
+      "date": "2026-12-04T00:00:00.000Z"
+    },
     {
       "key": "Historic Commission - Cancelled|2026-06-08T23:00:00.000Z",
       "firstSeenAt": "2026-06-08T13:50:21.358Z",
@@ -121,63 +177,7 @@
       "title": "Millersville University Field Hockey vs Dominican",
       "source": "MU",
       "date": "2026-09-03T20:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Field Hockey vs Pace|2026-09-09T22:00:00.000Z",
-      "firstSeenAt": "2026-06-08T13:50:21.358Z",
-      "title": "Millersville University Field Hockey vs Pace",
-      "source": "MU",
-      "date": "2026-09-09T22:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Field Hockey at Assumption|2026-09-11T20:00:00.000Z",
-      "firstSeenAt": "2026-06-08T13:50:21.358Z",
-      "title": "Millersville University Field Hockey at Assumption",
-      "source": "MU",
-      "date": "2026-09-11T20:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Field Hockey at American International|2026-09-12T20:00:00.000Z",
-      "firstSeenAt": "2026-06-08T13:50:21.358Z",
-      "title": "Millersville University Field Hockey at American International",
-      "source": "MU",
-      "date": "2026-09-12T20:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Field Hockey at West Chester|2026-09-17T20:00:00.000Z",
-      "firstSeenAt": "2026-06-08T13:50:21.358Z",
-      "title": "Millersville University Field Hockey at West Chester",
-      "source": "MU",
-      "date": "2026-09-17T20:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Field Hockey vs Kutztown|2026-09-23T22:00:00.000Z",
-      "firstSeenAt": "2026-06-08T13:50:21.358Z",
-      "title": "Millersville University Field Hockey vs Kutztown",
-      "source": "MU",
-      "date": "2026-09-23T22:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Field Hockey vs Molloy|2026-09-26T16:00:00.000Z",
-      "firstSeenAt": "2026-06-08T13:50:21.358Z",
-      "title": "Millersville University Field Hockey vs Molloy",
-      "source": "MU",
-      "date": "2026-09-26T16:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Field Hockey at Shippensburg|2026-09-30T20:00:00.000Z",
-      "firstSeenAt": "2026-06-08T13:50:21.358Z",
-      "title": "Millersville University Field Hockey at Shippensburg",
-      "source": "MU",
-      "date": "2026-09-30T20:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Field Hockey vs Slippery Rock|2026-10-03T16:00:00.000Z",
-      "firstSeenAt": "2026-06-08T13:50:21.358Z",
-      "title": "Millersville University Field Hockey vs Slippery Rock",
-      "source": "MU",
-      "date": "2026-10-03T16:00:00.000Z"
     }
   ],
-  "addedLastRun": 24
+  "addedLastRun": 8
 }

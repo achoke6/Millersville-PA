@@ -1023,6 +1023,19 @@ function isProgramSignup(e) {
     return false;
 }
 
+// Expand/collapse the overflow rows in the homepage Upcoming Signups box. The box
+// renders SIGNUPS_COLLAPSED_COUNT rows on load and hides the rest so Today's
+// Specials peeks above the fold and invites a scroll; this reveals them on tap.
+// Display flip + label swap, mirroring the clubs-browser toggle.
+window.toggleSignupsMore = function(btn) {
+    const more = document.getElementById('home-signups-more');
+    if (!more || !btn) return;
+    const expand = more.style.display === 'none';
+    more.style.display = expand ? 'block' : 'none';
+    btn.setAttribute('aria-expanded', expand ? 'true' : 'false');
+    btn.textContent = expand ? '▴ Show less' : (btn.dataset.moreLabel || 'Show more');
+};
+
 
 function newsMatchesFeed(n) {
     if (!feedPrefs || feedPrefs.length === 0) return true;
@@ -4545,6 +4558,10 @@ function renderHomeUI(){
         // start and show them within this window. 60d gives seasonal summer camps
         // real lead time; widen/narrow here (Infinity = show all upcoming).
         const PROGRAM_LEAD_MS = 60 * 24 * 60 * 60 * 1000;
+        // How many signup rows to show before a "Show N more" toggle. Keeps the
+        // box short on load so Today's Specials peeks above the fold and invites a
+        // scroll; the toggle reveals the rest. Counts across all row types.
+        const SIGNUPS_COLLAPSED_COUNT = 4;
         const isTownie = muAffiliation === 'townie';
         // (1) Deadline-based signups — events carrying registrationDeadline.
         // AUDIENCE SPLIT: intramural signups go to marauders (and unset, which
@@ -4621,7 +4638,7 @@ function renderHomeUI(){
 
         if (upcoming.length > 0 || programSignups.length > 0 || tbaSignups.length > 0) {
             signupsSection.style.display = '';
-            const deadlineHtml = upcoming.map(e => {
+            const deadlineRows = upcoming.map(e => {
                 // Not-yet-open signups show an "Opens <date>" heads-up counting
                 // up to the open date (no urgency styling — nothing's closing).
                 // Open signups keep the deadline + closing countdown.
@@ -4661,11 +4678,11 @@ function renderHomeUI(){
                         <span class="home-signup-days">${daysText}</span>
                     </div>
                 </a>`;
-            }).join('');
+            });
             // Open-ended rows: no calendar event exists to open a modal for, so
             // these link straight to the registration page. "Open now / closes
             // TBA" replaces the date/countdown.
-            const tbaHtml = tbaSignups.map(r => {
+            const tbaRows = tbaSignups.map(r => {
                 const titleText = (r.title && r.title.trim()) ? r.title.trim() : (r.org || 'Registration');
                 const sub = r.org && !titleText.toLowerCase().includes(r.org.toLowerCase()) ? r.org : '';
                 return `<a href="${escHtml(r.registerLink)}" target="_blank" rel="noopener" class="home-signup-item">
@@ -4678,9 +4695,9 @@ function renderHomeUI(){
                         <span class="home-signup-days">closes TBA</span>
                     </div>
                 </a>`;
-            }).join('');
+            });
             // Program rows: dated by START, linked straight to the register page.
-            const programHtml = programRender.map(e => {
+            const programRows = programRender.map(e => {
                 const startLabel = new Date(e._start).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
                 const daysToStart = Math.ceil((e._start - nowMs) / (24 * 60 * 60 * 1000));
                 const startsText = daysToStart <= 0 ? 'starts today' : daysToStart === 1 ? 'starts tomorrow' : `starts in ${daysToStart} days`;
@@ -4697,8 +4714,19 @@ function renderHomeUI(){
                         <span class="home-signup-days">${startsText}</span>
                     </div>
                 </a>`;
-            }).join('');
-            signupsList.innerHTML = deadlineHtml + programHtml + tbaHtml;
+            });
+            // Render order matches the prior concat: deadline, program, tba.
+            const rows = [...deadlineRows, ...programRows, ...tbaRows];
+            if (rows.length <= SIGNUPS_COLLAPSED_COUNT) {
+                signupsList.innerHTML = rows.join('');
+            } else {
+                const moreCount = rows.length - SIGNUPS_COLLAPSED_COUNT;
+                const moreLabel = `▾ Show ${moreCount} more`;
+                signupsList.innerHTML =
+                    rows.slice(0, SIGNUPS_COLLAPSED_COUNT).join('')
+                    + `<div id="home-signups-more" style="display:none;">${rows.slice(SIGNUPS_COLLAPSED_COUNT).join('')}</div>`
+                    + `<button type="button" class="btn btn-sm btn-outline" aria-expanded="false" aria-controls="home-signups-more" data-more-label="${moreLabel}" style="width:100%;margin-top:8px;font-size:0.8rem;" onclick="window.toggleSignupsMore(this)">${moreLabel}</button>`;
+            }
         } else {
             signupsSection.style.display = 'none';
         }

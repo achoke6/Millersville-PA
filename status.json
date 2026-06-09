@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-06-08T22:26:42.262Z",
-  "totalEvents": 926,
+  "generatedAt": "2026-06-09T00:05:58.265Z",
+  "totalEvents": 925,
   "withDescription": 316,
   "withImage": 106,
   "familyFriendly": 44,
   "eventsToday": 3,
   "sources": {
-    "muAthletics": 176,
+    "muAthletics": 177,
     "muCalendar": 138,
-    "muGetInvolved": 234,
+    "muGetInvolved": 233,
     "pennManor": 234,
-    "borough": 107,
+    "borough": 106,
     "vfw": 6,
     "phantomPower": 12,
     "community": 14,
@@ -26,7 +26,7 @@
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-03-10T00:00:00.000Z",
+      "earliest": "2026-03-11T00:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
@@ -34,7 +34,7 @@
       "latest": "2026-10-01T23:00:00.000Z"
     },
     "borough": {
-      "earliest": "2026-03-10T23:00:00.000Z",
+      "earliest": "2026-03-14T14:00:00.000Z",
       "latest": "2027-05-08T14:00:00.000Z"
     },
     "vfw": {
@@ -85,7 +85,7 @@
     }
   },
   "sports": {
-    "total": 378,
+    "total": 379,
     "scored": 19,
     "wins": 8,
     "losses": 10,
@@ -104,9 +104,16 @@
       "Youth Sports": 1
     },
     "stalePast": 3,
-    "lastSyncAt": "2026-06-08T22:25:19.377Z"
+    "lastSyncAt": "2026-06-09T00:04:28.219Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Millersville University Women's Soccer at York College of Pennsylvania|2026-08-22T23:00:00.000Z",
+      "firstSeenAt": "2026-06-09T00:05:58.262Z",
+      "title": "Millersville University Women's Soccer at York College of Pennsylvania",
+      "source": "MU",
+      "date": "2026-08-22T23:00:00.000Z"
+    },
     {
       "key": "Millersville University Women's Soccer at Jefferson|2026-08-15T16:00:00.000Z",
       "firstSeenAt": "2026-06-08T22:26:42.259Z",
@@ -169,14 +176,7 @@
       "title": "Millersville University Men's Soccer vs East Stroudsburg University",
       "source": "MU",
       "date": "2026-09-19T20:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Men's Soccer vs Georgian Court University|2026-09-23T20:00:00.000Z",
-      "firstSeenAt": "2026-06-08T22:26:42.259Z",
-      "title": "Millersville University Men's Soccer vs Georgian Court University",
-      "source": "MU",
-      "date": "2026-09-23T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 23
+  "addedLastRun": 1
 }

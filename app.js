@@ -4599,6 +4599,26 @@ function renderHomeUI(){
             .filter(e => !isNaN(e._start) && e._start >= nowMs && (e._start - nowMs) <= PROGRAM_LEAD_MS)
             .sort((a, b) => a._start - b._start);
 
+        // Collapse the Millersville Tech & Engineering catalog (20+ weekly camps,
+        // one provider: millersvilletechcamps.com) into a single row so it doesn't
+        // bury the rest of the box. Grouped only at 2+; a lone tech camp renders
+        // individually. The synthetic row flows through the same map below
+        // (title / location / _start, with a registerLink to the catalog root).
+        const isTechCamp = e => {
+            const u = getRegisterUrl(e);
+            return u.includes('millersvilletechcamps.com') || (e.location || '').includes('Tech & Engineering');
+        };
+        const techCamps = programSignups.filter(isTechCamp);
+        let programRender = programSignups;
+        if (techCamps.length >= 2) {
+            let catalog = getRegisterUrl(techCamps[0]);          // earliest; list is start-sorted
+            try { catalog = new URL(catalog).origin + '/'; } catch (_) {}
+            programRender = programSignups
+                .filter(e => !isTechCamp(e))
+                .concat([{ _start: techCamps[0]._start, title: 'MU Tech & Engineering Camps', location: `${techCamps.length} summer camps`, registerLink: catalog }])
+                .sort((a, b) => a._start - b._start);
+        }
+
         if (upcoming.length > 0 || programSignups.length > 0 || tbaSignups.length > 0) {
             signupsSection.style.display = '';
             const deadlineHtml = upcoming.map(e => {
@@ -4660,7 +4680,7 @@ function renderHomeUI(){
                 </a>`;
             }).join('');
             // Program rows: dated by START, linked straight to the register page.
-            const programHtml = programSignups.map(e => {
+            const programHtml = programRender.map(e => {
                 const startLabel = new Date(e._start).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
                 const daysToStart = Math.ceil((e._start - nowMs) / (24 * 60 * 60 * 1000));
                 const startsText = daysToStart <= 0 ? 'starts today' : daysToStart === 1 ? 'starts tomorrow' : `starts in ${daysToStart} days`;

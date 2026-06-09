@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-06-09T00:05:58.265Z",
-  "totalEvents": 925,
+  "generatedAt": "2026-06-09T05:05:49.196Z",
+  "totalEvents": 930,
   "withDescription": 316,
-  "withImage": 106,
+  "withImage": 94,
   "familyFriendly": 44,
-  "eventsToday": 3,
+  "eventsToday": 1,
   "sources": {
-    "muAthletics": 177,
+    "muAthletics": 194,
     "muCalendar": 138,
     "muGetInvolved": 233,
     "pennManor": 234,
     "borough": 106,
     "vfw": 6,
-    "phantomPower": 12,
+    "phantomPower": 0,
     "community": 14,
     "muHudlBroadcasts": 0
   },
@@ -30,8 +30,8 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-05-04T20:15:00.000Z",
-      "latest": "2026-10-01T23:00:00.000Z"
+      "earliest": "2026-05-04T21:30:00.000Z",
+      "latest": "2026-10-02T20:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-03-14T14:00:00.000Z",
@@ -41,10 +41,7 @@
       "earliest": "2026-05-24T15:00:00.000Z",
       "latest": "2026-09-11T17:00:00.000Z"
     },
-    "phantomPower": {
-      "earliest": "2026-06-13T00:00:00.000Z",
-      "latest": "2026-07-17T23:00:00.000Z"
-    },
+    "phantomPower": null,
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
@@ -53,42 +50,39 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-03-12",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "pennManor": {
-      "newest": "2026-10-01",
-      "daysSinceMoved": 2
+      "newest": "2026-10-02",
+      "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2027-05-08",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
-    "phantomPower": {
-      "newest": "2026-07-17",
-      "daysSinceMoved": 4
-    },
+    "phantomPower": null,
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     }
   },
   "sports": {
-    "total": 379,
-    "scored": 19,
+    "total": 396,
+    "scored": 16,
     "wins": 8,
-    "losses": 10,
+    "losses": 7,
     "ties": 1
   },
   "registrations": {
@@ -104,79 +98,79 @@
       "Youth Sports": 1
     },
     "stalePast": 3,
-    "lastSyncAt": "2026-06-09T00:04:28.219Z"
+    "lastSyncAt": "2026-06-09T05:04:26.382Z"
   },
   "recentlyAdded": [
     {
-      "key": "Millersville University Women's Soccer at York College of Pennsylvania|2026-08-22T23:00:00.000Z",
-      "firstSeenAt": "2026-06-09T00:05:58.262Z",
-      "title": "Millersville University Women's Soccer at York College of Pennsylvania",
+      "key": "Millersville University Women's Soccer vs Lock Haven University|2026-08-27T20:00:00.000Z",
+      "firstSeenAt": "2026-06-09T05:05:49.194Z",
+      "title": "Millersville University Women's Soccer vs Lock Haven University",
       "source": "MU",
-      "date": "2026-08-22T23:00:00.000Z"
+      "date": "2026-08-27T20:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Soccer at Jefferson|2026-08-15T16:00:00.000Z",
-      "firstSeenAt": "2026-06-08T22:26:42.259Z",
-      "title": "Millersville University Women's Soccer at Jefferson",
+      "key": "Millersville University Women's Soccer at East Stroudsburg University|2026-08-29T17:00:00.000Z",
+      "firstSeenAt": "2026-06-09T05:05:49.194Z",
+      "title": "Millersville University Women's Soccer at East Stroudsburg University",
       "source": "MU",
-      "date": "2026-08-15T16:00:00.000Z"
+      "date": "2026-08-29T17:00:00.000Z"
     },
     {
-      "key": "Millersville University Men's Soccer vs Holy Family University|2026-08-27T23:00:00.000Z",
-      "firstSeenAt": "2026-06-08T22:26:42.259Z",
-      "title": "Millersville University Men's Soccer vs Holy Family University",
+      "key": "Millersville University Women's Soccer vs Bloomsburg|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-06-09T05:05:49.194Z",
+      "title": "Millersville University Women's Soccer vs Bloomsburg",
       "source": "MU",
-      "date": "2026-08-27T23:00:00.000Z"
+      "date": "2026-09-02T23:00:00.000Z"
     },
     {
-      "key": "Millersville University Men's Soccer vs Ashland University|2026-08-30T17:00:00.000Z",
-      "firstSeenAt": "2026-06-08T22:26:42.259Z",
-      "title": "Millersville University Men's Soccer vs Ashland University",
+      "key": "Millersville University Women's Soccer at Mansfield University|2026-09-05T18:00:00.000Z",
+      "firstSeenAt": "2026-06-09T05:05:49.194Z",
+      "title": "Millersville University Women's Soccer at Mansfield University",
       "source": "MU",
-      "date": "2026-08-30T17:00:00.000Z"
+      "date": "2026-09-05T18:00:00.000Z"
     },
     {
-      "key": "Millersville University Men's Soccer at California (PA)|2026-09-02T18:00:00.000Z",
-      "firstSeenAt": "2026-06-08T22:26:42.259Z",
-      "title": "Millersville University Men's Soccer at California (PA)",
+      "key": "Millersville University Women's Soccer vs Shippensburg University|2026-09-09T23:00:00.000Z",
+      "firstSeenAt": "2026-06-09T05:05:49.194Z",
+      "title": "Millersville University Women's Soccer vs Shippensburg University",
       "source": "MU",
-      "date": "2026-09-02T18:00:00.000Z"
+      "date": "2026-09-09T23:00:00.000Z"
     },
     {
-      "key": "Millersville University Men's Soccer at Salem University|2026-09-04T18:30:00.000Z",
-      "firstSeenAt": "2026-06-08T22:26:42.259Z",
-      "title": "Millersville University Men's Soccer at Salem University",
-      "source": "MU",
-      "date": "2026-09-04T18:30:00.000Z"
-    },
-    {
-      "key": "Millersville University Men's Soccer at Shepherd University|2026-09-09T19:30:00.000Z",
-      "firstSeenAt": "2026-06-08T22:26:42.259Z",
-      "title": "Millersville University Men's Soccer at Shepherd University",
-      "source": "MU",
-      "date": "2026-09-09T19:30:00.000Z"
-    },
-    {
-      "key": "Millersville University Men's Soccer at Lackawanna College|2026-09-12T17:00:00.000Z",
-      "firstSeenAt": "2026-06-08T22:26:42.259Z",
-      "title": "Millersville University Men's Soccer at Lackawanna College",
+      "key": "Millersville University Women's Soccer vs Lackawanna College|2026-09-12T17:00:00.000Z",
+      "firstSeenAt": "2026-06-09T05:05:49.194Z",
+      "title": "Millersville University Women's Soccer vs Lackawanna College",
       "source": "MU",
       "date": "2026-09-12T17:00:00.000Z"
     },
     {
-      "key": "Millersville University Men's Soccer vs West Chester|2026-09-16T23:00:00.000Z",
-      "firstSeenAt": "2026-06-08T22:26:42.259Z",
-      "title": "Millersville University Men's Soccer vs West Chester",
+      "key": "Millersville University Women's Soccer at West Chester|2026-09-16T18:00:00.000Z",
+      "firstSeenAt": "2026-06-09T05:05:49.194Z",
+      "title": "Millersville University Women's Soccer at West Chester",
       "source": "MU",
-      "date": "2026-09-16T23:00:00.000Z"
+      "date": "2026-09-16T18:00:00.000Z"
     },
     {
-      "key": "Millersville University Men's Soccer vs East Stroudsburg University|2026-09-19T20:00:00.000Z",
-      "firstSeenAt": "2026-06-08T22:26:42.259Z",
-      "title": "Millersville University Men's Soccer vs East Stroudsburg University",
+      "key": "Millersville University Women's Soccer vs Shepherd University|2026-09-23T23:00:00.000Z",
+      "firstSeenAt": "2026-06-09T05:05:49.194Z",
+      "title": "Millersville University Women's Soccer vs Shepherd University",
       "source": "MU",
-      "date": "2026-09-19T20:00:00.000Z"
+      "date": "2026-09-23T23:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Soccer at Kutztown University|2026-09-30T23:00:00.000Z",
+      "firstSeenAt": "2026-06-09T05:05:49.194Z",
+      "title": "Millersville University Women's Soccer at Kutztown University",
+      "source": "MU",
+      "date": "2026-09-30T23:00:00.000Z"
+    },
+    {
+      "key": "Girls JV Soccer @ Cocalico High School|2026-10-02T20:00:00.000Z",
+      "firstSeenAt": "2026-06-09T05:05:49.194Z",
+      "title": "Girls JV Soccer @ Cocalico High School",
+      "source": "PM",
+      "date": "2026-10-02T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 18
 }

@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-06-09T14:02:36.459Z",
-  "totalEvents": 938,
-  "withDescription": 315,
+  "generatedAt": "2026-06-09T15:25:20.694Z",
+  "totalEvents": 939,
+  "withDescription": 316,
   "withImage": 106,
   "familyFriendly": 44,
   "eventsToday": 1,
@@ -98,15 +98,23 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 1,
+    "pendingFuture": 2,
     "pendingPast": 1,
     "pendingBySource": {
-      "Youth Sports": 1
+      "Youth Sports": 1,
+      "PM Community": 1
     },
     "stalePast": 3,
-    "lastSyncAt": "2026-06-09T14:01:11.293Z"
+    "lastSyncAt": "2026-06-09T15:24:00.781Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Boys Basketball Summer League (Grades 3-5)|2026-06-16T13:00:00.000Z",
+      "firstSeenAt": "2026-06-09T15:25:20.691Z",
+      "title": "Boys Basketball Summer League (Grades 3-5)",
+      "source": "Other",
+      "date": "2026-06-16T13:00:00.000Z"
+    },
     {
       "key": "Morimvr w. Scarlet Meridian, Illusion of Solace, and Skinmag|2026-06-13T00:00:00.000Z",
       "firstSeenAt": "2026-06-09T09:42:19.894Z",
@@ -169,14 +177,7 @@
       "title": "Stone Horses w. The Blues Vultures",
       "source": "Other",
       "date": "2026-06-27T00:00:00.000Z"
-    },
-    {
-      "key": "Bit Brigade Performs \"Mega Man X\" LIVE w. Super Guitar Bros.|2026-06-28T00:00:00.000Z",
-      "firstSeenAt": "2026-06-09T09:42:19.894Z",
-      "title": "Bit Brigade Performs \"Mega Man X\" LIVE w. Super Guitar Bros.",
-      "source": "Other",
-      "date": "2026-06-28T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

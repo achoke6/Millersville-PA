@@ -1006,6 +1006,23 @@ function getRegisterUrl(e) {
     return (e && (e.registerLink || e.sourceLink || e.ticketLink)) || '';
 }
 
+// A "program signup" is an open-registration program that lives in the events
+// array as a normal dated event (no registrationDeadline) but that townies
+// should be reminded to sign up for: youth/community camps (camps.json, tagged
+// "Summer Camp"/"Athletic Camp") and Arts Smarts (artsmu.com; matched by title
+// because its tag is the generic "Arts Concert / Performance"). TOWNIE-only in
+// the Upcoming Signups box: the renderer gates the list on isTownie, and we
+// exclude intramurals defensively. No deadline, so it's anchored on the start
+// date; the register link is getRegisterUrl(e) — ticketLink for camps, sourceLink
+// for Arts Smarts.
+function isProgramSignup(e) {
+    if (!e || e.registrationDeadline || isIntramural(e)) return false;
+    const tags = e.tags || [];
+    if (tags.includes('Summer Camp') || tags.includes('Athletic Camp')) return true;
+    if (/arts\s*smarts?/i.test(e.title || '')) return true;
+    return false;
+}
+
 
 function newsMatchesFeed(n) {
     if (!feedPrefs || feedPrefs.length === 0) return true;
@@ -4523,6 +4540,11 @@ function renderHomeUI(){
         // as an "Opens <date>" heads-up (no countdown). ~1 week of "mark your
         // calendar" lead before registration actually opens.
         const OPEN_LEAD_MS = 7 * 24 * 60 * 60 * 1000;
+        // How far ahead of a program's START date we surface its (open) signup.
+        // Programs (camps, Arts Smarts) carry no deadline, so we anchor on the
+        // start and show them within this window. 60d gives seasonal summer camps
+        // real lead time; widen/narrow here (Infinity = show all upcoming).
+        const PROGRAM_LEAD_MS = 60 * 24 * 60 * 60 * 1000;
         const isTownie = muAffiliation === 'townie';
         // (1) Deadline-based signups — events carrying registrationDeadline.
         // AUDIENCE SPLIT: intramural signups go to marauders (and unset, which
@@ -4565,7 +4587,19 @@ function renderHomeUI(){
             .filter(r => r && r.status === 'active' && r.closesTBA === true && r.registerLink)
             .sort((a, b) => (a.title || a.org || '').localeCompare(b.title || b.org || ''));
 
-        if (upcoming.length > 0 || tbaSignups.length > 0) {
+        // (3) Program signups — open-registration programs that live in the
+        // events array with no deadline (camps + Arts Smarts; see isProgramSignup).
+        // TOWNIE-only: not intramural, no MU-student equivalent. Anchored on the
+        // START date and shown when upcoming within PROGRAM_LEAD_MS. Linked straight
+        // to the register page (getRegisterUrl) like the closesTBA rows — their
+        // event-detail modal CTA is a ticket/price badge, not a signup path.
+        const programSignups = (isTownie ? (allEvents || []) : [])
+            .filter(isProgramSignup)
+            .map(e => ({ ...e, _start: new Date(e.date).getTime() }))
+            .filter(e => !isNaN(e._start) && e._start >= nowMs && (e._start - nowMs) <= PROGRAM_LEAD_MS)
+            .sort((a, b) => a._start - b._start);
+
+        if (upcoming.length > 0 || programSignups.length > 0 || tbaSignups.length > 0) {
             signupsSection.style.display = '';
             const deadlineHtml = upcoming.map(e => {
                 // Not-yet-open signups show an "Opens <date>" heads-up counting
@@ -4625,7 +4659,26 @@ function renderHomeUI(){
                     </div>
                 </a>`;
             }).join('');
-            signupsList.innerHTML = deadlineHtml + tbaHtml;
+            // Program rows: dated by START, linked straight to the register page.
+            const programHtml = programSignups.map(e => {
+                const startLabel = new Date(e._start).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                const daysToStart = Math.ceil((e._start - nowMs) / (24 * 60 * 60 * 1000));
+                const startsText = daysToStart <= 0 ? 'starts today' : daysToStart === 1 ? 'starts tomorrow' : `starts in ${daysToStart} days`;
+                const cleanTitle = (e.title || '');
+                const sub = e.location && !cleanTitle.toLowerCase().includes(e.location.toLowerCase()) ? e.location : '';
+                const url = getRegisterUrl(e);
+                return `<a href="${escHtml(url)}" target="_blank" rel="noopener" class="home-signup-item">
+                    <div class="home-signup-main">
+                        <span class="home-signup-org">${escHtml(cleanTitle)}</span>
+                        ${sub ? `<span class="home-signup-sub">${escHtml(sub)}</span>` : ''}
+                    </div>
+                    <div class="home-signup-deadline">
+                        <span class="home-signup-by">Starts ${startLabel}</span>
+                        <span class="home-signup-days">${startsText}</span>
+                    </div>
+                </a>`;
+            }).join('');
+            signupsList.innerHTML = deadlineHtml + programHtml + tbaHtml;
         } else {
             signupsSection.style.display = 'none';
         }

@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-06-09T05:05:49.196Z",
-  "totalEvents": 930,
+  "generatedAt": "2026-06-09T09:42:19.896Z",
+  "totalEvents": 942,
   "withDescription": 316,
-  "withImage": 94,
+  "withImage": 106,
   "familyFriendly": 44,
   "eventsToday": 1,
   "sources": {
@@ -12,7 +12,7 @@
     "pennManor": 234,
     "borough": 106,
     "vfw": 6,
-    "phantomPower": 0,
+    "phantomPower": 12,
     "community": 14,
     "muHudlBroadcasts": 0
   },
@@ -41,7 +41,10 @@
       "earliest": "2026-05-24T15:00:00.000Z",
       "latest": "2026-09-11T17:00:00.000Z"
     },
-    "phantomPower": null,
+    "phantomPower": {
+      "earliest": "2026-06-13T00:00:00.000Z",
+      "latest": "2026-07-17T23:00:00.000Z"
+    },
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
@@ -72,7 +75,10 @@
       "newest": "2026-09-11",
       "daysSinceMoved": 5
     },
-    "phantomPower": null,
+    "phantomPower": {
+      "newest": "2026-07-17",
+      "daysSinceMoved": 5
+    },
     "community": {
       "newest": "2027-04-16",
       "daysSinceMoved": 4
@@ -80,9 +86,9 @@
   },
   "sports": {
     "total": 396,
-    "scored": 16,
+    "scored": 18,
     "wins": 8,
-    "losses": 7,
+    "losses": 9,
     "ties": 1
   },
   "registrations": {
@@ -98,79 +104,79 @@
       "Youth Sports": 1
     },
     "stalePast": 3,
-    "lastSyncAt": "2026-06-09T05:04:26.382Z"
+    "lastSyncAt": "2026-06-09T09:40:49.267Z"
   },
   "recentlyAdded": [
     {
-      "key": "Millersville University Women's Soccer vs Lock Haven University|2026-08-27T20:00:00.000Z",
-      "firstSeenAt": "2026-06-09T05:05:49.194Z",
-      "title": "Millersville University Women's Soccer vs Lock Haven University",
-      "source": "MU",
-      "date": "2026-08-27T20:00:00.000Z"
+      "key": "Morimvr w. Scarlet Meridian, Illusion of Solace, and Skinmag|2026-06-13T00:00:00.000Z",
+      "firstSeenAt": "2026-06-09T09:42:19.894Z",
+      "title": "Morimvr w. Scarlet Meridian, Illusion of Solace, and Skinmag",
+      "source": "Other",
+      "date": "2026-06-13T00:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Soccer at East Stroudsburg University|2026-08-29T17:00:00.000Z",
-      "firstSeenAt": "2026-06-09T05:05:49.194Z",
-      "title": "Millersville University Women's Soccer at East Stroudsburg University",
-      "source": "MU",
-      "date": "2026-08-29T17:00:00.000Z"
+      "key": "EMO NIGHT Dance Party|2026-06-14T01:00:00.000Z",
+      "firstSeenAt": "2026-06-09T09:42:19.894Z",
+      "title": "EMO NIGHT Dance Party",
+      "source": "Other",
+      "date": "2026-06-14T01:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Soccer vs Bloomsburg|2026-09-02T23:00:00.000Z",
-      "firstSeenAt": "2026-06-09T05:05:49.194Z",
-      "title": "Millersville University Women's Soccer vs Bloomsburg",
-      "source": "MU",
-      "date": "2026-09-02T23:00:00.000Z"
+      "key": "Upon A Burning Body|2026-06-14T21:30:00.000Z",
+      "firstSeenAt": "2026-06-09T09:42:19.894Z",
+      "title": "Upon A Burning Body",
+      "source": "Other",
+      "date": "2026-06-14T21:30:00.000Z"
     },
     {
-      "key": "Millersville University Women's Soccer at Mansfield University|2026-09-05T18:00:00.000Z",
-      "firstSeenAt": "2026-06-09T05:05:49.194Z",
-      "title": "Millersville University Women's Soccer at Mansfield University",
-      "source": "MU",
-      "date": "2026-09-05T18:00:00.000Z"
+      "key": "Jeffrey Lewis & The Voltage|2026-06-16T23:00:00.000Z",
+      "firstSeenAt": "2026-06-09T09:42:19.894Z",
+      "title": "Jeffrey Lewis & The Voltage",
+      "source": "Other",
+      "date": "2026-06-16T23:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Soccer vs Shippensburg University|2026-09-09T23:00:00.000Z",
-      "firstSeenAt": "2026-06-09T05:05:49.194Z",
-      "title": "Millersville University Women's Soccer vs Shippensburg University",
-      "source": "MU",
-      "date": "2026-09-09T23:00:00.000Z"
+      "key": "Caitlynne Curtis|2026-06-20T00:00:00.000Z",
+      "firstSeenAt": "2026-06-09T09:42:19.894Z",
+      "title": "Caitlynne Curtis",
+      "source": "Other",
+      "date": "2026-06-20T00:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Soccer vs Lackawanna College|2026-09-12T17:00:00.000Z",
-      "firstSeenAt": "2026-06-09T05:05:49.194Z",
-      "title": "Millersville University Women's Soccer vs Lackawanna College",
-      "source": "MU",
-      "date": "2026-09-12T17:00:00.000Z"
+      "key": "Battle Of Millersville Vol.1 - Tribute Fest|2026-06-21T00:00:00.000Z",
+      "firstSeenAt": "2026-06-09T09:42:19.894Z",
+      "title": "Battle Of Millersville Vol.1 - Tribute Fest",
+      "source": "Other",
+      "date": "2026-06-21T00:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Soccer at West Chester|2026-09-16T18:00:00.000Z",
-      "firstSeenAt": "2026-06-09T05:05:49.194Z",
-      "title": "Millersville University Women's Soccer at West Chester",
-      "source": "MU",
-      "date": "2026-09-16T18:00:00.000Z"
+      "key": "Brotality w. Quantifier, Making A Mockery, & New Damage|2026-06-24T23:00:00.000Z",
+      "firstSeenAt": "2026-06-09T09:42:19.894Z",
+      "title": "Brotality w. Quantifier, Making A Mockery, & New Damage",
+      "source": "Other",
+      "date": "2026-06-24T23:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Soccer vs Shepherd University|2026-09-23T23:00:00.000Z",
-      "firstSeenAt": "2026-06-09T05:05:49.194Z",
-      "title": "Millersville University Women's Soccer vs Shepherd University",
-      "source": "MU",
-      "date": "2026-09-23T23:00:00.000Z"
+      "key": "Mentalia's Stupid Drag Show|2026-06-26T00:00:00.000Z",
+      "firstSeenAt": "2026-06-09T09:42:19.894Z",
+      "title": "Mentalia's Stupid Drag Show",
+      "source": "Other",
+      "date": "2026-06-26T00:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Soccer at Kutztown University|2026-09-30T23:00:00.000Z",
-      "firstSeenAt": "2026-06-09T05:05:49.194Z",
-      "title": "Millersville University Women's Soccer at Kutztown University",
-      "source": "MU",
-      "date": "2026-09-30T23:00:00.000Z"
+      "key": "Stone Horses w. The Blues Vultures|2026-06-27T00:00:00.000Z",
+      "firstSeenAt": "2026-06-09T09:42:19.894Z",
+      "title": "Stone Horses w. The Blues Vultures",
+      "source": "Other",
+      "date": "2026-06-27T00:00:00.000Z"
     },
     {
-      "key": "Girls JV Soccer @ Cocalico High School|2026-10-02T20:00:00.000Z",
-      "firstSeenAt": "2026-06-09T05:05:49.194Z",
-      "title": "Girls JV Soccer @ Cocalico High School",
-      "source": "PM",
-      "date": "2026-10-02T20:00:00.000Z"
+      "key": "Bit Brigade Performs \"Mega Man X\" LIVE w. Super Guitar Bros.|2026-06-28T00:00:00.000Z",
+      "firstSeenAt": "2026-06-09T09:42:19.894Z",
+      "title": "Bit Brigade Performs \"Mega Man X\" LIVE w. Super Guitar Bros.",
+      "source": "Other",
+      "date": "2026-06-28T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 18
+  "addedLastRun": 12
 }

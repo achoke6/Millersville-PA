@@ -1,10 +1,10 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Tuesday, June 09, 2026 at 07:15 AM (Kyle Elliott, Meteorologist)",
+    "issued": "Tuesday, June 09, 2026 at 12:18 PM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "Today",
+        "period": "This afternoon",
         "text": "Seasonable with clouds giving way to partial sunshine. High: 76-80"
       },
       {
@@ -128,6 +128,39 @@
   },
   "observations": [
     {
+      "time": "14:00",
+      "temp": "76",
+      "dewpoint": "58",
+      "rh": "54",
+      "windDir": "SSW",
+      "windSpeed": "6",
+      "precip": "0.00",
+      "visibility": "9.2",
+      "condition": "None"
+    },
+    {
+      "time": "13:00",
+      "temp": "74",
+      "dewpoint": "56",
+      "rh": "54",
+      "windDir": "SSW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "9.3",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "71",
+      "dewpoint": "54",
+      "rh": "56",
+      "windDir": "SW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "9.4",
+      "condition": "None"
+    },
+    {
       "time": "11:00",
       "temp": "68",
       "dewpoint": "54",
@@ -159,45 +192,12 @@
       "precip": "0.00",
       "visibility": "10.0",
       "condition": "None"
-    },
-    {
-      "time": "08:00",
-      "temp": "63",
-      "dewpoint": "51",
-      "rh": "66",
-      "windDir": "SSW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "10.0",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "62",
-      "dewpoint": "49",
-      "rh": "64",
-      "windDir": "S",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "9.7",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "60",
-      "dewpoint": "47",
-      "rh": "61",
-      "windDir": "SSW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "9.3",
-      "condition": "None"
     }
   ],
   "discussion": {
-    "headline": "Sunny, dry and tranquil first week of meteorological summer",
-    "dateLine": "11:30 a.m. Tuesday, June 2, 2026",
-    "excerpt": "May ended on a sunny and beautiful note Sunday with high temperatures in the mid-to-upper 70s across the Lower Susquehanna Valley. However, the month was nothing short of volatile in terms of massive temperature swings. The season's first heatwave occurred from May 18-20 with a new record high of 96°F set at Millersville University on May 18. Just five days later, a wind-driven, soaking rain accompanied temperatures in the low 50s on the Saturday of Memorial Day Weekend. …",
+    "headline": "dangerous heat, humidity with multiple rounds of storms late this week",
+    "dateLine": "2:00 p.m. Tuesday, June 9, 2026",
+    "excerpt": "The second week of June kicked off on a mostly cloudy, cooler and less humid note across northern MD, southeastern PA and the Lower Susquehanna Valley, and this afternoon is turning out to be quite similar. Moist, southeasterly flow off the Atlantic caused a relatively narrow band of low clouds to develop along the eastern slopes of the Appalachians from northern PA through the Delmarva Region on Monday, and those clouds hung tough this morning. …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -235,5 +235,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-06-09T15:53:52.419Z"
+  "updated": "2026-06-09T18:03:30.895Z"
 }

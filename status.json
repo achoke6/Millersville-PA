@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-06-09T15:55:16.122Z",
-  "totalEvents": 939,
-  "withDescription": 316,
+  "generatedAt": "2026-06-09T18:04:55.468Z",
+  "totalEvents": 938,
+  "withDescription": 317,
   "withImage": 106,
   "familyFriendly": 44,
   "eventsToday": 1,
   "sources": {
-    "muAthletics": 194,
+    "muAthletics": 193,
     "muCalendar": 138,
-    "muGetInvolved": 233,
-    "pennManor": 231,
+    "muGetInvolved": 234,
+    "pennManor": 230,
     "borough": 106,
     "vfw": 5,
     "phantomPower": 12,
@@ -85,9 +85,9 @@
     }
   },
   "sports": {
-    "total": 393,
-    "scored": 18,
-    "wins": 8,
+    "total": 391,
+    "scored": 17,
+    "wins": 7,
     "losses": 9,
     "ties": 1
   },
@@ -104,9 +104,16 @@
       "Youth Sports": 1
     },
     "stalePast": 3,
-    "lastSyncAt": "2026-06-09T15:53:51.514Z"
+    "lastSyncAt": "2026-06-09T18:03:30.213Z"
   },
   "recentlyAdded": [
+    {
+      "key": "50th Anniversary Celebration!|2026-09-27T15:00:00.000Z",
+      "firstSeenAt": "2026-06-09T18:04:55.466Z",
+      "title": "50th Anniversary Celebration!",
+      "source": "MU",
+      "date": "2026-09-27T15:00:00.000Z"
+    },
     {
       "key": "Boys Basketball Summer League (Grades 3-7)|2026-06-16T13:00:00.000Z",
       "firstSeenAt": "2026-06-09T15:55:16.120Z",
@@ -169,13 +176,6 @@
       "title": "Mentalia's Stupid Drag Show",
       "source": "Other",
       "date": "2026-06-26T00:00:00.000Z"
-    },
-    {
-      "key": "Stone Horses w. The Blues Vultures|2026-06-27T00:00:00.000Z",
-      "firstSeenAt": "2026-06-09T09:42:19.894Z",
-      "title": "Stone Horses w. The Blues Vultures",
-      "source": "Other",
-      "date": "2026-06-27T00:00:00.000Z"
     }
   ],
   "addedLastRun": 1

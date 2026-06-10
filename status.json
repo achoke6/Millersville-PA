@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-06-10T14:27:01.461Z",
+  "generatedAt": "2026-06-10T15:01:10.946Z",
   "totalEvents": 949,
-  "withDescription": 327,
+  "withDescription": 325,
   "withImage": 106,
-  "familyFriendly": 54,
+  "familyFriendly": 52,
   "eventsToday": 0,
   "sources": {
     "muAthletics": 195,
@@ -104,9 +104,30 @@
       "Youth Sports": 1
     },
     "stalePast": 3,
-    "lastSyncAt": "2026-06-10T14:25:30.761Z"
+    "lastSyncAt": "2026-06-10T14:59:46.025Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Summer Fun Series Finale|2026-07-30T18:00:00",
+      "firstSeenAt": "2026-06-10T15:01:10.943Z",
+      "title": "Summer Fun Series Finale",
+      "source": "MU",
+      "date": "2026-07-30T18:00:00"
+    },
+    {
+      "key": "HOMECOMING|2026-10-16T00:00:00",
+      "firstSeenAt": "2026-06-10T15:01:10.943Z",
+      "title": "HOMECOMING",
+      "source": "MU",
+      "date": "2026-10-16T00:00:00"
+    },
+    {
+      "key": "HOMECOMING|2026-10-17T00:00:00",
+      "firstSeenAt": "2026-06-10T15:01:10.943Z",
+      "title": "HOMECOMING",
+      "source": "MU",
+      "date": "2026-10-17T00:00:00"
+    },
     {
       "key": "Summer Fun Series|2026-06-11T18:00:00",
       "firstSeenAt": "2026-06-10T14:27:01.459Z",
@@ -155,28 +176,7 @@
       "title": "Summer Fun Series",
       "source": "MU",
       "date": "2026-07-23T18:00:00"
-    },
-    {
-      "key": "Summer Fun Series|2026-07-30T18:00:00",
-      "firstSeenAt": "2026-06-10T14:27:01.459Z",
-      "title": "Summer Fun Series",
-      "source": "MU",
-      "date": "2026-07-30T18:00:00"
-    },
-    {
-      "key": "Summer Fun Series|2026-08-06T18:00:00",
-      "firstSeenAt": "2026-06-10T14:27:01.459Z",
-      "title": "Summer Fun Series",
-      "source": "MU",
-      "date": "2026-08-06T18:00:00"
-    },
-    {
-      "key": "Summer Fun Series|2026-08-13T18:00:00",
-      "firstSeenAt": "2026-06-10T14:27:01.459Z",
-      "title": "Summer Fun Series",
-      "source": "MU",
-      "date": "2026-08-13T18:00:00"
     }
   ],
-  "addedLastRun": 10
+  "addedLastRun": 3
 }

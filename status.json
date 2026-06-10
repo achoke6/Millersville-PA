@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-06-10T00:13:37.937Z",
-  "totalEvents": 937,
+  "generatedAt": "2026-06-10T05:18:13.498Z",
+  "totalEvents": 939,
   "withDescription": 317,
   "withImage": 106,
   "familyFriendly": 44,
-  "eventsToday": 1,
+  "eventsToday": 0,
   "sources": {
-    "muAthletics": 193,
+    "muAthletics": 195,
     "muCalendar": 138,
     "muGetInvolved": 233,
     "pennManor": 230,
@@ -53,39 +53,39 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-03-12",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     },
     "pennManor": {
       "newest": "2026-10-01",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "borough": {
       "newest": "2027-05-08",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     },
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     },
     "phantomPower": {
       "newest": "2026-07-17",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     }
   },
   "sports": {
-    "total": 391,
+    "total": 393,
     "scored": 17,
     "wins": 7,
     "losses": 9,
@@ -104,9 +104,30 @@
       "Youth Sports": 1
     },
     "stalePast": 3,
-    "lastSyncAt": "2026-06-10T00:12:01.033Z"
+    "lastSyncAt": "2026-06-10T05:16:42.609Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Millersville University Women's Soccer vs PSAC Championship|2026-10-31T00:00:00.000Z",
+      "firstSeenAt": "2026-06-10T05:18:13.495Z",
+      "title": "Millersville University Women's Soccer vs PSAC Championship",
+      "source": "MU",
+      "date": "2026-10-31T00:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Soccer vs PSAC Championship|2026-11-03T00:00:00.000Z",
+      "firstSeenAt": "2026-06-10T05:18:13.495Z",
+      "title": "Millersville University Women's Soccer vs PSAC Championship",
+      "source": "MU",
+      "date": "2026-11-03T00:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Soccer vs PSAC Championship|2026-11-06T00:00:00.000Z",
+      "firstSeenAt": "2026-06-10T05:18:13.495Z",
+      "title": "Millersville University Women's Soccer vs PSAC Championship",
+      "source": "MU",
+      "date": "2026-11-06T00:00:00.000Z"
+    },
     {
       "key": "50th Anniversary Celebration!|2026-09-27T15:00:00.000Z",
       "firstSeenAt": "2026-06-09T18:04:55.466Z",
@@ -155,28 +176,7 @@
       "title": "Caitlynne Curtis",
       "source": "Other",
       "date": "2026-06-20T00:00:00.000Z"
-    },
-    {
-      "key": "Battle Of Millersville Vol.1 - Tribute Fest|2026-06-21T00:00:00.000Z",
-      "firstSeenAt": "2026-06-09T09:42:19.894Z",
-      "title": "Battle Of Millersville Vol.1 - Tribute Fest",
-      "source": "Other",
-      "date": "2026-06-21T00:00:00.000Z"
-    },
-    {
-      "key": "Brotality w. Quantifier, Making A Mockery, & New Damage|2026-06-24T23:00:00.000Z",
-      "firstSeenAt": "2026-06-09T09:42:19.894Z",
-      "title": "Brotality w. Quantifier, Making A Mockery, & New Damage",
-      "source": "Other",
-      "date": "2026-06-24T23:00:00.000Z"
-    },
-    {
-      "key": "Mentalia's Stupid Drag Show|2026-06-26T00:00:00.000Z",
-      "firstSeenAt": "2026-06-09T09:42:19.894Z",
-      "title": "Mentalia's Stupid Drag Show",
-      "source": "Other",
-      "date": "2026-06-26T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 3
 }

@@ -2956,6 +2956,61 @@ async function runScraper() {
     } catch (e) { console.error("❌ Borough Calendar error:", e.message); }
 
 
+    // ===== 6d. MANOR TOWNSHIP (The Events Calendar iCal — municipal meetings) =====
+    // Manor Township is the other municipality covering part of the area; its public
+    // calendar is government meetings (Supervisors, Planning Commission, Zoning Hearing
+    // Board, Traffic Commission) — townie-side civic content. Same Events Calendar
+    // platform as Penn Manor, so we reuse the paginated iCal pattern, simplified:
+    // upcoming only, single 'Manor' tag (the frontend gates it to townies and renders
+    // the "Manor Twp." source pill). NOTE: if recurring meetings only show their next
+    // instance, the feed is exporting an RRULE instead of expanded VEVENTs — add
+    // recurrence expansion here (mirrors the Borough expansion block above).
+    try {
+        console.log("📡 Fetching Manor Township iCal...");
+        let allManorEvents = {};
+        const manorUrl = 'https://manortownship.net/calendar/list/?ical=1&tribe_event_display=list&tribe_paged=';
+        const manorMaxPages = 10;
+        for (let page = 1; page <= manorMaxPages; page++) {
+            try {
+                const pageData = await ical.async.fromURL(manorUrl + page, { headers: baseHeaders });
+                const pageEvents = Object.values(pageData).filter(e => e.type === 'VEVENT');
+                console.log(`  → Manor page ${page}: ${pageEvents.length} VEVENTs`);
+                if (pageEvents.length === 0) break;
+                let newCount = 0;
+                for (const [key, val] of Object.entries(pageData)) {
+                    if (val.type === 'VEVENT') {
+                        const uid = val.uid || key;
+                        if (!allManorEvents[uid]) newCount++;
+                        allManorEvents[uid] = val;
+                    }
+                }
+                if (pageEvents.length < 30 || newCount === 0) break;  // partial/last page or all dupes
+            } catch (err) {
+                console.log(`  → Manor page ${page} failed: ${err.message}`);
+                break;
+            }
+        }
+
+        let manorCount = 0;
+        for (const ev of Object.values(allManorEvents)) {
+            const eventDate = new Date(ev.start);
+            if (isNaN(eventDate.getTime()) || eventDate < pastDate || eventDate >= futureDate) continue;
+            const title = (ev.summary || 'Manor Township Event').trim();
+            events.push({
+                title,
+                date: eventDate.toISOString(),
+                endTime: resolveEndTime({ origStart: ev.start, origEnd: ev.end, instanceStart: eventDate }),
+                location: ev.location || 'Manor Township Municipal Building',
+                description: ev.description || '',
+                tags: ['Manor'], price: "Free", ticketLink: "",
+                sourceLink: ev.url || "https://manortownship.net/calendar/"
+            });
+            manorCount++;
+        }
+        console.log(`✅ Manor Township: ${manorCount} events`);
+    } catch (e) { console.error("❌ Manor Township error:", e.message); }
+
+
     // ===== 6b. PENN MANOR COMMUNITY EVENTS — hand-curated overrides =====
     //
     // Penn Manor's community page (https://www.pennmanor.net/community/) lists

@@ -4632,7 +4632,7 @@ function renderHomeUI(){
             try { catalog = new URL(catalog).origin + '/'; } catch (_) {}
             programRender = programSignups
                 .filter(e => !isTechCamp(e))
-                .concat([{ _start: techCamps[0]._start, title: 'MU Tech & Engineering Camps', location: `${techCamps.length} summer camps`, registerLink: catalog }])
+                .concat([{ _synthetic: true, _start: techCamps[0]._start, title: 'MU Tech & Engineering Camps', location: `${techCamps.length} summer camps`, registerLink: catalog }])
                 .sort((a, b) => a._start - b._start);
         }
 
@@ -4704,7 +4704,13 @@ function renderHomeUI(){
                 const cleanTitle = (e.title || '');
                 const sub = e.location && !cleanTitle.toLowerCase().includes(e.location.toLowerCase()) ? e.location : '';
                 const url = getRegisterUrl(e);
-                return `<a href="${escHtml(url)}" target="_blank" rel="noopener" class="home-signup-item">
+                // Real program events open the same popup card as the timeline (its CTA
+                // is "Register Now" — see openEventDetails). The synthetic Tech-Camps
+                // rollup has no backing event, so it keeps linking to the catalog.
+                const openTag = e._synthetic
+                    ? `<a href="${escHtml(url)}" target="_blank" rel="noopener" class="home-signup-item">`
+                    : `<a href="#" class="home-signup-item" onclick="event.preventDefault();window.openEventDetails(${JSON.stringify(getEventKey(e)).replace(/"/g, '&quot;')})">`;
+                return `${openTag}
                     <div class="home-signup-main">
                         <span class="home-signup-org">${escHtml(cleanTitle)}</span>
                         ${sub ? `<span class="home-signup-sub">${escHtml(sub)}</span>` : ''}
@@ -5060,7 +5066,7 @@ window.openEventDetails = function(key) {
 
     // Action buttons
     let actions = '';
-    if (isRegistrationEvent(e) && getRegisterUrl(e)) {
+    if ((isRegistrationEvent(e) || isProgramSignup(e)) && getRegisterUrl(e)) {
         // Registration event → "Register Now" (signup page), not "Buy Tickets".
         actions += `<a href="${escHtml(getRegisterUrl(e))}" target="_blank" rel="noopener" class="btn btn-sm btn-ticket" style="text-decoration:none;">📝 Register Now</a>`;
     } else if (e.ticketLink && !eventIsFree(e)) {
@@ -5096,7 +5102,7 @@ window.openEventDetails = function(key) {
     // page, not a purchase) so the link still surfaces, and label it "More Info"
     // rather than the generic "View Source".
     const infoUrl = e.sourceLink || (eventIsFree(e) ? e.ticketLink : '');
-    const regDupesSource = isRegistrationEvent(e) && infoUrl && infoUrl === getRegisterUrl(e);
+    const regDupesSource = (isRegistrationEvent(e) || isProgramSignup(e)) && infoUrl && infoUrl === getRegisterUrl(e);
     if (infoUrl && !regDupesSource) {
         const isPastGame = isSport && e.gameResult && e.gameScore;
         const isMUSport = isSport && tags.includes('MU');

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-10T16:58:37.301Z",
+  "generatedAt": "2026-06-10T18:30:56.845Z",
   "totalEvents": 950,
   "withDescription": 327,
   "withImage": 106,
@@ -31,7 +31,7 @@
     },
     "pennManor": {
       "earliest": "2026-05-04T21:30:00.000Z",
-      "latest": "2026-10-01T21:30:00.000Z"
+      "latest": "2026-10-01T20:45:00.000Z"
     },
     "borough": {
       "earliest": "2026-03-14T14:00:00.000Z",
@@ -104,9 +104,16 @@
       "Youth Sports": 1
     },
     "stalePast": 3,
-    "lastSyncAt": "2026-06-10T16:57:13.661Z"
+    "lastSyncAt": "2026-06-10T18:29:36.862Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Boys Varsity Golf @ Ephrata Area High School|2026-08-25T17:00:00.000Z",
+      "firstSeenAt": "2026-06-10T18:30:56.842Z",
+      "title": "Boys Varsity Golf @ Ephrata Area High School",
+      "source": "PM",
+      "date": "2026-08-25T17:00:00.000Z"
+    },
     {
       "key": "Alumni Night at the Philadelphia Union|2026-07-25T19:30:00",
       "firstSeenAt": "2026-06-10T16:03:54.143Z",
@@ -169,14 +176,7 @@
       "title": "Summer Fun Series",
       "source": "MU",
       "date": "2026-06-25T18:00:00"
-    },
-    {
-      "key": "Summer Fun Series|2026-07-02T18:00:00",
-      "firstSeenAt": "2026-06-10T14:27:01.459Z",
-      "title": "Summer Fun Series",
-      "source": "MU",
-      "date": "2026-07-02T18:00:00"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

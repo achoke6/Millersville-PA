@@ -2986,9 +2986,47 @@ window.switchView=function(view,skipPush){
     if(view==='store') loadEcwidStore();
 };
 
+// Cross-feed event de-duplication. getEventKey() is title+date, which assumes
+// one event keeps one title across scrape runs. That breaks when a second feed
+// (e.g. the MU calendar) publishes its own copy of an event we already carry:
+// the two titles differ, so both render as duplicates. We collapse events that
+// share the SAME start instant AND the SAME title "head" — the part before the
+// first separator (— – : | ·), normalized — which is a tight match (two genuinely
+// distinct events almost never share both). On a collision we keep the richer
+// copy (ticket/register link, benefits, description, longer title) so a well-
+// formed, Free-badged listing wins over a bare calendar duplicate. Events with
+// no usable start time or too-short a head pass through untouched (never dropped).
+function dedupeEvents(list) {
+    if (!Array.isArray(list)) return list;
+    const sigOf = e => ((e && e.title) || '').split(/[—–:|·]/)[0].toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+    const richness = e => {
+        let s = 0;
+        if (e.ticketLink) s += 4;
+        if (e.registerLink) s += 2;
+        if (Array.isArray(e.benefits) && e.benefits.length) s += 2;
+        if (e.description) s += 1;
+        return s + Math.min((e.title || '').length, 120) / 120;
+    };
+    const byKey = new Map();
+    const passthrough = [];
+    for (const e of list) {
+        const start = new Date(e && e.date).getTime();
+        const sig = sigOf(e);
+        if (isNaN(start) || sig.length < 3) { passthrough.push(e); continue; }
+        const key = start + '|' + sig;
+        const prev = byKey.get(key);
+        if (!prev || richness(e) > richness(prev)) byKey.set(key, e);
+    }
+    return passthrough.concat(Array.from(byKey.values()));
+}
+
 async function loadEvents(){
     try{const res=await fetch('events.json'); if(!res.ok) return;
     allEvents=await res.json();
+    // Collapse cross-feed duplicates (e.g. the MU calendar adding its own copy
+    // of an event we already carry under a different title) before anything else
+    // touches the array — see dedupeEvents.
+    allEvents = dedupeEvents(allEvents);
     // Pre-parse date strings to millisecond timestamps once, attached as
     // _dateMs. Filter and sort hot paths reference _dateMs instead of
     // calling `new Date(e.date)` (which allocates a Date and reparses the

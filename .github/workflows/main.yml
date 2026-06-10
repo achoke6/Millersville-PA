@@ -11,7 +11,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
@@ -59,7 +59,7 @@ jobs:
           fi
           echo "✓ All JSON files valid"
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 20
           # Caches ~/.npm (the global download cache, keyed off package-lock.json)

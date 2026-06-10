@@ -1175,9 +1175,15 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 
 .adv-section-title { font-size: 1.1rem; font-weight: 800; color: var(--text); margin: 0 0 14px 0; }
 
-/* Tier Grid — 2 columns on desktop, 1 on mobile */
+/* Tier Grid  */
 .adv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 24px; }
 @media (max-width: 600px) { .adv-grid { grid-template-columns: 1fr; } }
+
+/* Advertise is a single-tier marketing page — render it as one centered, readable
+   column on desktop so the lone card doesn't sit left with dead space beside it.
+   Mobile is already single-column and narrower than the cap, so this is desktop-only. */
+#view-advertise { max-width: 680px; margin-left: auto; margin-right: auto; }
+#view-advertise .adv-grid { grid-template-columns: 1fr; justify-items: center; }
 
 .adv-tier { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; position: relative; display: flex; flex-direction: column; }
 .adv-tier-premium { border: 2px solid var(--gold); background: linear-gradient(160deg, #fffbeb 0%, var(--surface) 50%, #fffdf5 100%); }

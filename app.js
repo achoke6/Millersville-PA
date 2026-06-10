@@ -5601,6 +5601,24 @@ let spotlightPool = [];
 let spotlightStarted = false;
 const SPOTLIGHT_ROTATE_MS = 6000;
 
+// --- Spotlight analytics (GA4) ----------------------------------------------
+// Fire impression/click events for Featured Spotlight buyers so we can show a
+// business its real reach + click-through before pitching a paid listing.
+// Impressions are de-duped to once per buyer per page-load (the rotation would
+// otherwise re-count every SPOTLIGHT_ROTATE_MS); clicks always fire. The
+// `audience` param splits MU vs townie engagement. Guards on gtag so it no-ops
+// if the GA tag is blocked/absent.
+let spotlightSeen = {};
+function trackSpotlight(action, s){
+    if (typeof gtag !== 'function' || !s || !s.name) return;
+    if (action === 'spotlight_impression'){
+        if (spotlightSeen[s.name]) return;
+        spotlightSeen[s.name] = true;
+    }
+    const aud = (typeof muAffiliation !== 'undefined' && muAffiliation === 'student') ? 'marauders' : 'townies';
+    gtag('event', action, { sponsor_name: s.name, audience: aud });
+}
+
 function renderSpotlight(){
     const el = document.getElementById('home-spotlight');
     if (!el) return;  // weather bar not rendered yet — will be called again
@@ -5656,6 +5674,7 @@ function renderSpotlight(){
 function paintSpotlight(el){
     const s = spotlightPool[spotlightIndex % spotlightPool.length];
     if (!s) return;
+    trackSpotlight('spotlight_impression', s);
     const link = s.link || '#';
     const logo = s.logo
         ? `<img src="${s.logo}" alt="${(s.name||'').replace(/"/g,'&quot;')}" class="spotlight-logo" loading="lazy">`
@@ -5666,6 +5685,8 @@ function paintSpotlight(el){
         ${logo || `<span class="spotlight-name">${s.name||''}</span>`}
         ${tagline}
     </a>`;
+    const card = el.querySelector('.spotlight-card');
+    if (card) card.addEventListener('click', () => trackSpotlight('spotlight_click', s));
 }
 
 
@@ -6818,7 +6839,7 @@ window.submitAdvertise = function() {
 };
 
 // Submit Event Form
-window.openSubmitEvent = function() {
+window.openSubmitEvent = function(preselectType) {
     const overlay = document.createElement('div');
     overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;overflow-y:auto;';
     overlay.onclick = function(ev){ if(ev.target===overlay) overlay.remove(); };
@@ -6826,10 +6847,16 @@ window.openSubmitEvent = function() {
     modal.style.cssText = 'background:var(--surface);border-radius:var(--radius);max-width:520px;width:100%;max-height:90vh;overflow-y:auto;padding:28px;position:relative;';
     modal.innerHTML = `
         <button onclick="this.closest('div[style*=fixed]').remove()" class="modal-close-btn">✕</button>
-        <h3 style="margin-bottom:4px;">📝 Submit an Event</h3>
-        <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:16px;">Share a community event with Millersville. Submissions are reviewed before publishing.</p>
+        <h3 style="margin-bottom:4px;">📝 Submit an Event or Signup</h3>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:16px;">Share a community event or registration with Millersville. Submissions are reviewed before publishing.</p>
         <div id="submit-event-form">
-            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Event Name *</label>
+            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">What are you submitting? *</label>
+            <select id="se-type" onchange="document.getElementById('se-deadline-row').style.display = this.value==='Signup or Registration' ? 'block' : 'none';" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;margin-bottom:12px;background:var(--bg);color:var(--text);">
+                <option value="Event">Event</option>
+                <option value="Signup or Registration">Signup or Registration</option>
+            </select>
+
+            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Event / Program Name *</label>
             <input id="se-name" type="text" placeholder="e.g. Spring Community Festival" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;margin-bottom:12px;background:var(--bg);color:var(--text);">
 
             <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Who is this event for? *</label>
@@ -6846,6 +6873,11 @@ window.openSubmitEvent = function() {
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
             </select>
+
+            <div id="se-deadline-row" style="display:none;">
+                <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Registration Deadline *</label>
+                <input id="se-deadline" type="text" placeholder="e.g. 2026-09-08, or TBA / open" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;margin-bottom:12px;background:var(--bg);color:var(--text);">
+            </div>
 
             <div style="display:flex;gap:12px;margin-bottom:12px;">
                 <div style="flex:1;">
@@ -6890,6 +6922,14 @@ window.openSubmitEvent = function() {
         </div>`;
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
+    if (preselectType) {
+        const typeSel = document.getElementById('se-type');
+        if (typeSel) {
+            typeSel.value = preselectType;
+            const dr = document.getElementById('se-deadline-row');
+            if (dr) dr.style.display = preselectType === 'Signup or Registration' ? 'block' : 'none';
+        }
+    }
 };
 
 window.submitEvent = function() {
@@ -6904,6 +6944,8 @@ window.submitEvent = function() {
     const link = document.getElementById('se-link').value.trim();
     const audience = document.getElementById('se-audience').value;
     const kids = document.getElementById('se-kids').value;
+    const type = document.getElementById('se-type') ? document.getElementById('se-type').value : 'Event';
+    const deadline = document.getElementById('se-deadline') ? document.getElementById('se-deadline').value.trim() : '';
 
     // Mirror the REQUIRED questions on the Google Form. The POST is mode:'no-cors',
     // so the browser can't see a rejection — if a Form-required field is missing,
@@ -6912,6 +6954,11 @@ window.submitEvent = function() {
     // vanish without a trace.
     if(!name || !desc || !audience || !kids || !date || !time || !location || !email) {
         alert('Please fill in all required fields: Event Name, Description, Audience, whether it\u2019s for children, Start Date, Start Time, Location, and Contact Email.');
+        return;
+    }
+
+    if (type === 'Signup or Registration' && !deadline) {
+        alert('For a signup or registration, please enter the Registration Deadline (a date, or TBA / open).');
         return;
     }
 
@@ -6954,6 +7001,8 @@ window.submitEvent = function() {
     formData.append('entry.461670075', location);
     formData.append('entry.6546809', email);
     formData.append('entry.946075783', link);
+    formData.append('entry.992070299', type);            // Type: Event | Signup or Registration
+    if (deadline) formData.append('entry.1625050499', deadline);  // Registration deadline (signups)
 
     fetch('https://docs.google.com/forms/d/e/1FAIpQLSeBPjHbqbhZ9YTYK4s5xZzi3nxfPcID_zDKq5HkUlhuh7LWfw/formResponse', {
         method: 'POST',

@@ -61,6 +61,7 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .logo-link { cursor: pointer; }
 .logo-dot { color: var(--gold-text); }
 .header-page-title { font-size: 1.15rem; font-weight: 600; color: var(--text-muted); margin-left: 2px; pointer-events: none; cursor: default; }
+@media (max-width: 400px) { .header-page-title { display: none; } }
 
 /* =========================================================
    3. NAVIGATION

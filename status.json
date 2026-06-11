@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-06-11T14:59:09.047Z",
-  "totalEvents": 999,
+  "generatedAt": "2026-06-11T18:12:52.145Z",
+  "totalEvents": 1000,
   "withDescription": 327,
   "withImage": 106,
-  "familyFriendly": 53,
+  "familyFriendly": 54,
   "eventsToday": 2,
   "sources": {
     "muAthletics": 204,
-    "muCalendar": 150,
+    "muCalendar": 151,
     "muGetInvolved": 232,
     "pennManor": 228,
     "borough": 106,
@@ -102,9 +102,16 @@
     "pendingPast": 0,
     "pendingBySource": {},
     "stalePast": 1,
-    "lastSyncAt": "2026-06-11T14:57:33.654Z"
+    "lastSyncAt": "2026-06-11T18:11:19.535Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Arts Smarts Camps|2026-07-06T09:00:00",
+      "firstSeenAt": "2026-06-11T17:56:36.347Z",
+      "title": "Arts Smarts Camps",
+      "source": "MU",
+      "date": "2026-07-06T09:00:00"
+    },
     {
       "key": "Stabbing Westward: 30 Years of Wither Blister Burn + Peel|2026-07-21T23:00:00.000Z",
       "firstSeenAt": "2026-06-11T10:22:44.345Z",
@@ -167,13 +174,6 @@
       "title": "Millersville University Wrestling at Wilkes Open",
       "source": "MU",
       "date": "2026-12-22T15:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Wrestling at David H. Lehman Open|2027-01-08T14:00:00.000Z",
-      "firstSeenAt": "2026-06-11T05:28:48.499Z",
-      "title": "Millersville University Wrestling at David H. Lehman Open",
-      "source": "MU",
-      "date": "2027-01-08T14:00:00.000Z"
     }
   ],
   "addedLastRun": 0

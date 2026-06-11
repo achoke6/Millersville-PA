@@ -6252,7 +6252,7 @@ window.openBoardPost=function(){
     overlay.onclick=function(ev){if(ev.target===overlay)overlay.remove();};
     const modal=document.createElement('div');
     modal.style.cssText='background:var(--surface);border-radius:var(--radius);max-width:520px;width:100%;max-height:90vh;overflow-y:auto;padding:28px;position:relative;';
-    const cats=['Yard Sale','Lost Pet','Found Pet','Help Wanted','For Sale','Free Stuff','Community Notice'];
+    const cats=['Yard Sale','Lost/Found Pet','Help Wanted','For Sale','Free Stuff','Community Notice'];
     modal.innerHTML=`
         <button onclick="this.closest('div[style*=fixed]').remove()" class="modal-close-btn">✕</button>
         <h3 style="margin-bottom:4px;">📋 Post to Community Board</h3>
@@ -6952,7 +6952,7 @@ window.openSubmitEvent = function(preselectType) {
 
             <div id="se-deadline-row" style="display:none;">
                 <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Registration Deadline *</label>
-                <input id="se-deadline" type="text" placeholder="e.g. 2026-09-08, or TBA / open" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;margin-bottom:12px;background:var(--bg);color:var(--text);">
+                <input id="se-deadline" type="date" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;margin-bottom:12px;background:var(--bg);color:var(--text);">
             </div>
 
             <div style="display:flex;gap:12px;margin-bottom:12px;">
@@ -7034,7 +7034,7 @@ window.submitEvent = function() {
     }
 
     if (type === 'Signup or Registration' && !deadline) {
-        alert('For a signup or registration, please enter the Registration Deadline (a date, or TBA / open).');
+        alert('For a signup or registration, please enter the Registration Deadline.');
         return;
     }
 

@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-06-10T19:37:25.165Z",
-  "totalEvents": 949,
+  "generatedAt": "2026-06-11T10:22:44.347Z",
+  "totalEvents": 999,
   "withDescription": 327,
   "withImage": 106,
   "familyFriendly": 53,
-  "eventsToday": 0,
+  "eventsToday": 2,
   "sources": {
-    "muAthletics": 195,
+    "muAthletics": 204,
     "muCalendar": 150,
-    "muGetInvolved": 233,
+    "muGetInvolved": 232,
     "pennManor": 228,
     "borough": 106,
     "vfw": 5,
@@ -26,7 +26,7 @@
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-03-12T00:00:00.000Z",
+      "earliest": "2026-03-13T00:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
@@ -43,7 +43,7 @@
     },
     "phantomPower": {
       "earliest": "2026-06-13T00:00:00.000Z",
-      "latest": "2026-07-17T23:00:00.000Z"
+      "latest": "2026-07-21T23:00:00.000Z"
     },
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
@@ -53,39 +53,39 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-03-12",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     },
     "pennManor": {
       "newest": "2026-10-01",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "borough": {
       "newest": "2027-05-08",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     },
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     },
     "phantomPower": {
-      "newest": "2026-07-17",
-      "daysSinceMoved": 6
+      "newest": "2026-07-21",
+      "daysSinceMoved": 0
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     }
   },
   "sports": {
-    "total": 391,
+    "total": 400,
     "scored": 17,
     "wins": 7,
     "losses": 9,
@@ -104,79 +104,79 @@
       "Youth Sports": 1
     },
     "stalePast": 3,
-    "lastSyncAt": "2026-06-10T19:36:04.585Z"
+    "lastSyncAt": "2026-06-11T10:21:00.180Z"
   },
   "recentlyAdded": [
     {
-      "key": "Traffic Commission Meeting|2026-06-24T12:30:00.000Z",
-      "firstSeenAt": "2026-06-10T19:38:29.784Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-06-24T12:30:00.000Z"
+      "key": "Stabbing Westward: 30 Years of Wither Blister Burn + Peel|2026-07-21T23:00:00.000Z",
+      "firstSeenAt": "2026-06-11T10:22:44.345Z",
+      "title": "Stabbing Westward: 30 Years of Wither Blister Burn + Peel",
+      "source": "Other",
+      "date": "2026-07-21T23:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-07-01T23:00:00.000Z",
-      "firstSeenAt": "2026-06-10T19:38:29.784Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-07-01T23:00:00.000Z"
+      "key": "Millersville University Wrestling at Glenville Open|2026-11-01T14:00:00.000Z",
+      "firstSeenAt": "2026-06-11T05:28:48.499Z",
+      "title": "Millersville University Wrestling at Glenville Open",
+      "source": "MU",
+      "date": "2026-11-01T14:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-07-06T23:00:00.000Z",
-      "firstSeenAt": "2026-06-10T19:38:29.784Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-07-06T23:00:00.000Z"
+      "key": "Millersville University Wrestling vs Black and Gold Dual|2026-11-07T21:00:00.000Z",
+      "firstSeenAt": "2026-06-11T05:28:48.499Z",
+      "title": "Millersville University Wrestling vs Black and Gold Dual",
+      "source": "MU",
+      "date": "2026-11-07T21:00:00.000Z"
     },
     {
-      "key": "Planning Commission|2026-07-13T23:00:00.000Z",
-      "firstSeenAt": "2026-06-10T19:38:29.784Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-07-13T23:00:00.000Z"
+      "key": "Millersville University Wrestling vs York College of Pennsylvania|2026-11-13T20:00:00.000Z",
+      "firstSeenAt": "2026-06-11T05:28:48.499Z",
+      "title": "Millersville University Wrestling vs York College of Pennsylvania",
+      "source": "MU",
+      "date": "2026-11-13T20:00:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
-      "firstSeenAt": "2026-06-10T19:38:29.784Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-07-29T12:30:00.000Z"
+      "key": "Millersville University Wrestling vs \"Shorty\" Hitchcock Memorial Open|2026-11-21T15:00:00.000Z",
+      "firstSeenAt": "2026-06-11T05:28:48.499Z",
+      "title": "Millersville University Wrestling vs \"Shorty\" Hitchcock Memorial Open",
+      "source": "MU",
+      "date": "2026-11-21T15:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
-      "firstSeenAt": "2026-06-10T19:38:29.784Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-08-03T23:00:00.000Z"
+      "key": "Millersville University Wrestling at Shippensburg University|2026-12-05T15:00:00.000Z",
+      "firstSeenAt": "2026-06-11T05:28:48.499Z",
+      "title": "Millersville University Wrestling at Shippensburg University",
+      "source": "MU",
+      "date": "2026-12-05T15:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
-      "firstSeenAt": "2026-06-10T19:38:29.784Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-08-05T23:00:00.000Z"
+      "key": "Millersville University Wrestling vs East Stroudsburg University|2026-12-10T00:00:00.000Z",
+      "firstSeenAt": "2026-06-11T05:28:48.499Z",
+      "title": "Millersville University Wrestling vs East Stroudsburg University",
+      "source": "MU",
+      "date": "2026-12-10T00:00:00.000Z"
     },
     {
-      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
-      "firstSeenAt": "2026-06-10T19:38:29.784Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-08-10T23:00:00.000Z"
+      "key": "Millersville University Wrestling at Franklin and Marshall College|2026-12-17T00:00:00.000Z",
+      "firstSeenAt": "2026-06-11T05:28:48.499Z",
+      "title": "Millersville University Wrestling at Franklin and Marshall College",
+      "source": "MU",
+      "date": "2026-12-17T00:00:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
-      "firstSeenAt": "2026-06-10T19:38:29.784Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-08-26T12:30:00.000Z"
+      "key": "Millersville University Wrestling at Wilkes Open|2026-12-22T15:00:00.000Z",
+      "firstSeenAt": "2026-06-11T05:28:48.499Z",
+      "title": "Millersville University Wrestling at Wilkes Open",
+      "source": "MU",
+      "date": "2026-12-22T15:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
-      "firstSeenAt": "2026-06-10T19:38:29.784Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-09-02T23:00:00.000Z"
+      "key": "Millersville University Wrestling at David H. Lehman Open|2027-01-08T14:00:00.000Z",
+      "firstSeenAt": "2026-06-11T05:28:48.499Z",
+      "title": "Millersville University Wrestling at David H. Lehman Open",
+      "source": "MU",
+      "date": "2027-01-08T14:00:00.000Z"
     }
   ],
-  "addedLastRun": 42
+  "addedLastRun": 1
 }

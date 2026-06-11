@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-11T14:03:34.393Z",
+  "generatedAt": "2026-06-11T14:33:40.269Z",
   "totalEvents": 999,
   "withDescription": 327,
   "withImage": 106,
@@ -95,16 +95,14 @@
     "open": 5,
     "next2Weeks": 1,
     "nextClose": "2026-06-15",
-    "openNoDeadline": 0
+    "openNoDeadline": 1
   },
   "reviewQueue": {
-    "pendingFuture": 1,
-    "pendingPast": 1,
-    "pendingBySource": {
-      "Youth Sports": 1
-    },
-    "stalePast": 3,
-    "lastSyncAt": "2026-06-11T14:01:34.765Z"
+    "pendingFuture": 0,
+    "pendingPast": 0,
+    "pendingBySource": {},
+    "stalePast": 1,
+    "lastSyncAt": "2026-06-11T14:31:44.870Z"
   },
   "recentlyAdded": [
     {

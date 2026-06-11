@@ -55,7 +55,7 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
    If JS fails entirely (no-JS users), these fallbacks still produce a usable
    layout with no clipping. */
 :root { --header-h: 60px; }
-@media (max-width: 940px) { :root { --header-h: 50px; } }
+@media (max-width: 1000px) { :root { --header-h: 50px; } }
 .header-container { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 10px 16px; }
 .logo-block h1 { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.5px; color: var(--text); line-height: 1; user-select: none; display: flex; align-items: baseline; }
 .logo-link { cursor: pointer; }
@@ -74,7 +74,7 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .close-menu { display: none; background: none; border: none; font-size: 1.4rem; cursor: pointer; align-self: flex-end; margin-bottom: 16px; color: var(--text); }
 .menu-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 99; opacity: 0; transition: opacity 0.3s; pointer-events: none; backdrop-filter: blur(2px); }
 
-@media (max-width: 940px) {
+@media (max-width: 1000px) {
     .main-nav { display: none; }
     .menu-overlay.open { display: block; opacity: 1; pointer-events: auto; }
     .main-nav.open { display: flex; position: fixed; top: 0; right: 0; width: 260px; height: 100vh; background: var(--surface); flex-direction: column; padding: 20px; box-shadow: -4px 0 20px rgba(0,0,0,0.1); z-index: 100; align-items: flex-start; border-left: 1px solid var(--border); }
@@ -82,7 +82,7 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     .nav-link { width: 100%; text-align: left; padding: 14px 8px; font-size: 1rem; border-radius: 0; border-bottom: 1px solid var(--border); }
     .nav-link.active { background: var(--gold-soft); border-radius: var(--radius-sm); }
 }
-@media (min-width: 941px) { .hamburger-menu { display: none !important; } }
+@media (min-width: 1001px) { .hamburger-menu { display: none !important; } }
 
 /* =========================================================
    4. LAYOUT & VIEWS
@@ -1098,7 +1098,7 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .feed-gear-desktop { display: none; }
 .feed-dot-desktop { position: absolute; top: 4px; right: 4px; width: 8px; height: 8px; background: var(--gold); border-radius: 50%; }
 
-@media (min-width: 941px) {
+@media (min-width: 1001px) {
     .header-cart-mobile { display: none; }
     .nav-cart-widget { display: flex; align-items: center; }
     /* Hide the mobile gear entirely on desktop */

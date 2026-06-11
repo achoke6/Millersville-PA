@@ -2888,7 +2888,7 @@ window.addEventListener('popstate',function(){
 });
 
 window.toggleMobileMenu=function(){
-    if(window.innerWidth>940) return;
+    if(window.innerWidth>1000) return;
     const nav=document.getElementById('top-nav'), overlay=document.getElementById('menu-overlay');
     if(nav.classList.contains('open')){nav.classList.remove('open');overlay.classList.remove('open');setTimeout(()=>{if(!nav.classList.contains('open'))nav.style.display='';},300);}
     else{nav.style.display='flex';void nav.offsetWidth;nav.classList.add('open');overlay.classList.add('open');}

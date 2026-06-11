@@ -6828,7 +6828,6 @@ window.openAdvertiseForm = function() {
     overlay.onclick = function(ev){ if(ev.target===overlay) overlay.remove(); };
     const modal = document.createElement('div');
     modal.style.cssText = 'background:var(--surface);border-radius:var(--radius);max-width:520px;width:100%;max-height:90vh;overflow-y:auto;padding:28px;position:relative;';
-    const tiers = ['Premium','Standard','Basic','Not Sure'];
     modal.innerHTML = `
         <button onclick="this.closest('div[style*=fixed]').remove()" class="modal-close-btn">✕</button>
         <h3 style="margin-bottom:4px;">📢 Advertise With Us</h3>
@@ -6846,14 +6845,17 @@ window.openAdvertiseForm = function() {
                     <input id="adv-email" type="email" placeholder="you@business.com" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;background:var(--bg);color:var(--text);">
                 </div>
                 <div style="flex:1;">
-                    <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Phone</label>
+                    <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Phone *</label>
                     <input id="adv-phone" type="tel" placeholder="(717) 555-1234" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;background:var(--bg);color:var(--text);">
                 </div>
             </div>
 
-            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px;">Type of Interest *</label>
-            <div id="adv-tiers" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
-                ${tiers.map(t => `<label style="display:flex;align-items:center;gap:5px;font-size:0.85rem;padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;background:var(--bg);"><input type="checkbox" value="${t}" name="adv-tier" style="accent-color:var(--gold);"> ${t}</label>`).join('')}
+            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Website</label>
+            <input id="adv-website" type="url" placeholder="https://yourbusiness.com" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;margin-bottom:12px;background:var(--bg);color:var(--text);">
+
+            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:6px;">Audience Preference</label>
+            <div id="adv-audience" style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+                ${['Locals','University Community','Both'].map(a => `<label style="display:flex;align-items:center;gap:5px;font-size:0.85rem;padding:6px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;background:var(--bg);"><input type="radio" value="${a}" name="adv-aud" style="accent-color:var(--gold);"> ${a}</label>`).join('')}
             </div>
 
             <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Tell us more</label>
@@ -6875,11 +6877,13 @@ window.submitAdvertise = function() {
     const name = document.getElementById('adv-name').value.trim();
     const email = document.getElementById('adv-email').value.trim();
     const phone = document.getElementById('adv-phone').value.trim();
+    const website = document.getElementById('adv-website').value.trim();
     const msg = document.getElementById('adv-msg').value.trim();
-    const tiers = [...document.querySelectorAll('input[name="adv-tier"]:checked')].map(c => c.value);
+    const audEl = document.querySelector('input[name="adv-aud"]:checked');
+    const audience = audEl ? audEl.value : '';
 
-    if(!biz || !name || !email || tiers.length === 0) {
-        alert('Please fill in Business Name, Contact Name, Email, and select at least one type of interest.');
+    if(!biz || !name || !email || !phone) {
+        alert('Please fill in Business Name, Contact Name, Email, and Phone.');
         return;
     }
 
@@ -6887,13 +6891,14 @@ window.submitAdvertise = function() {
     btn.textContent = 'Submitting...';
     btn.disabled = true;
 
+    // The Form has a single "Name" question — combine business + contact into it.
     const formData = new URLSearchParams();
-    formData.append('entry.1812391001', biz);
-    formData.append('entry.2112425545', name);
-    formData.append('entry.336196442', email);
-    formData.append('entry.1305587255', phone);
+    formData.append('entry.1812391001', biz + ' — ' + name);
+    formData.append('entry.2112425545', email);
+    formData.append('entry.336196442', phone);
+    formData.append('entry.1305587255', website);
     formData.append('entry.1887090090', msg);
-    tiers.forEach(t => formData.append('entry.1921946502', t));
+    if (audience) formData.append('entry.180355862', audience);
 
     fetch('https://docs.google.com/forms/d/e/1FAIpQLSfSGk9g9R4YHuEbiIdY537G3UztmlXjzDgYFDgr1X5wsN7rqA/formResponse', {
         method: 'POST',
@@ -7037,38 +7042,20 @@ window.submitEvent = function() {
     btn.textContent = 'Submitting...';
     btn.disabled = true;
 
-    // Split into Google's composite date/time params (entry.NNN_year/_month/_day,
-    // entry.NNN_hour/_minute). <input type="date|time"> values are already
-    // "YYYY-MM-DD" and 24-hour "HH:MM", so hour goes through as-is (0–23) — the
-    // earlier code subtracted 12 without sending AM/PM, which sank every PM time
-    // by 12 hours (5pm → 5am).
-    const [year, month, day] = date.split('-');
-    const [sh, sm] = time.split(':');
-    const hour = String(parseInt(sh, 10));
-    const minute = sm;
-    let eYear = '', eMonth = '', eDay = '', eHour = '', eMinute = '';
-    if(endDate) { [eYear, eMonth, eDay] = endDate.split('-'); }
-    if(endTime) { const [h, m] = endTime.split(':'); eHour = String(parseInt(h, 10)); eMinute = m; }
-
+    // Date and Time on the Google Form are plain short-answer TEXT questions
+    // (confirmed by the prefill URL: entry.885260694=2026-06-19, not _year/_month/
+    // _day). Post the raw <input> values through as-is. The old _year/_month/_day +
+    // _hour/_minute composites targeted fields that don't exist on a text question,
+    // so Google silently dropped every date/time — that was the bug.
     const formData = new URLSearchParams();
     formData.append('entry.490875700', name);
     formData.append('entry.1500961889', desc);
     formData.append('entry.912188599', audience);        // Audience: Millersville Marauders | Townies | Both
     formData.append('entry.1083341292', kids);           // Is this an event for children? Yes | No
-    formData.append('entry.885260694_year', year);
-    formData.append('entry.885260694_month', month);
-    formData.append('entry.885260694_day', day);
-    formData.append('entry.499967239_hour', hour);
-    formData.append('entry.499967239_minute', minute);
-    if(endDate) {
-        formData.append('entry.884959691_year', eYear);
-        formData.append('entry.884959691_month', eMonth);
-        formData.append('entry.884959691_day', eDay);
-    }
-    if(endTime) {
-        formData.append('entry.1349393568_hour', eHour);
-        formData.append('entry.1349393568_minute', eMinute);
-    }
+    formData.append('entry.885260694', date);            // Start Date  (text question, raw YYYY-MM-DD)
+    formData.append('entry.499967239', time);            // Start Time  (text question, raw HH:MM 24h)
+    if(endDate) formData.append('entry.884959691', endDate);   // End Date  (text question)
+    if(endTime) formData.append('entry.1349393568', endTime);  // End Time  (text question)
     formData.append('entry.461670075', location);
     formData.append('entry.6546809', email);
     formData.append('entry.946075783', link);

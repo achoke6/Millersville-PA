@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-06-11T05:28:48.509Z",
-  "totalEvents": 998,
+  "generatedAt": "2026-06-11T10:22:44.347Z",
+  "totalEvents": 999,
   "withDescription": 327,
-  "withImage": 105,
+  "withImage": 106,
   "familyFriendly": 53,
   "eventsToday": 2,
   "sources": {
@@ -12,7 +12,7 @@
     "pennManor": 228,
     "borough": 106,
     "vfw": 5,
-    "phantomPower": 11,
+    "phantomPower": 12,
     "community": 14,
     "muHudlBroadcasts": 0
   },
@@ -43,7 +43,7 @@
     },
     "phantomPower": {
       "earliest": "2026-06-13T00:00:00.000Z",
-      "latest": "2026-07-17T23:00:00.000Z"
+      "latest": "2026-07-21T23:00:00.000Z"
     },
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
@@ -76,8 +76,8 @@
       "daysSinceMoved": 7
     },
     "phantomPower": {
-      "newest": "2026-07-17",
-      "daysSinceMoved": 7
+      "newest": "2026-07-21",
+      "daysSinceMoved": 0
     },
     "community": {
       "newest": "2027-04-16",
@@ -104,9 +104,16 @@
       "Youth Sports": 1
     },
     "stalePast": 3,
-    "lastSyncAt": "2026-06-11T05:27:14.807Z"
+    "lastSyncAt": "2026-06-11T10:21:00.180Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Stabbing Westward: 30 Years of Wither Blister Burn + Peel|2026-07-21T23:00:00.000Z",
+      "firstSeenAt": "2026-06-11T10:22:44.345Z",
+      "title": "Stabbing Westward: 30 Years of Wither Blister Burn + Peel",
+      "source": "Other",
+      "date": "2026-07-21T23:00:00.000Z"
+    },
     {
       "key": "Millersville University Wrestling at Glenville Open|2026-11-01T14:00:00.000Z",
       "firstSeenAt": "2026-06-11T05:28:48.499Z",
@@ -169,14 +176,7 @@
       "title": "Millersville University Wrestling at David H. Lehman Open",
       "source": "MU",
       "date": "2027-01-08T14:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-06-24T12:30:00.000Z",
-      "firstSeenAt": "2026-06-10T19:49:08.991Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-06-24T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 9
+  "addedLastRun": 1
 }

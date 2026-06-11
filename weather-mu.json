@@ -126,7 +126,74 @@
       }
     ]
   },
-  "observations": [],
+  "observations": [
+    {
+      "time": "20:00",
+      "temp": "74",
+      "dewpoint": "72",
+      "rh": "93",
+      "windDir": "SW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "10.7",
+      "condition": "None"
+    },
+    {
+      "time": "19:00",
+      "temp": "75",
+      "dewpoint": "72",
+      "rh": "90",
+      "windDir": "W",
+      "windSpeed": "1",
+      "precip": "0.12",
+      "visibility": "10.8",
+      "condition": "None"
+    },
+    {
+      "time": "18:00",
+      "temp": "73",
+      "dewpoint": "72",
+      "rh": "97",
+      "windDir": "SSW",
+      "windSpeed": "2",
+      "precip": "0.01",
+      "visibility": "11.5",
+      "condition": "Light Showers Rain"
+    },
+    {
+      "time": "17:00",
+      "temp": "74",
+      "dewpoint": "72",
+      "rh": "94",
+      "windDir": "W",
+      "windSpeed": "2",
+      "precip": "0.65",
+      "visibility": "9.4",
+      "condition": "Light Showers Rain"
+    },
+    {
+      "time": "16:00",
+      "temp": "70",
+      "dewpoint": "69",
+      "rh": "98",
+      "windDir": "ESE",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "3.0",
+      "condition": "Heavy Showers Rain"
+    },
+    {
+      "time": "15:00",
+      "temp": "86",
+      "dewpoint": "73",
+      "rh": "65",
+      "windDir": "SW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "8.9",
+      "condition": "None"
+    }
+  ],
   "discussion": {
     "headline": "dangerous heat, humidity with multiple rounds of storms late this week",
     "dateLine": "2:00 p.m. Tuesday, June 9, 2026",
@@ -168,5 +235,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-06-10T22:00:43.642Z"
+  "updated": "2026-06-11T00:13:30.175Z"
 }

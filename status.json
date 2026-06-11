@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-06-11T19:59:23.207Z",
-  "totalEvents": 1000,
+  "generatedAt": "2026-06-11T20:08:58.584Z",
+  "totalEvents": 988,
   "withDescription": 327,
-  "withImage": 106,
+  "withImage": 94,
   "familyFriendly": 54,
   "eventsToday": 2,
   "sources": {
@@ -12,7 +12,7 @@
     "pennManor": 228,
     "borough": 106,
     "vfw": 5,
-    "phantomPower": 12,
+    "phantomPower": 0,
     "community": 14,
     "muHudlBroadcasts": 0
   },
@@ -41,10 +41,7 @@
       "earliest": "2026-05-27T22:00:00.000Z",
       "latest": "2026-09-11T17:00:00.000Z"
     },
-    "phantomPower": {
-      "earliest": "2026-06-13T00:00:00.000Z",
-      "latest": "2026-07-21T23:00:00.000Z"
-    },
+    "phantomPower": null,
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
@@ -75,10 +72,7 @@
       "newest": "2026-09-11",
       "daysSinceMoved": 7
     },
-    "phantomPower": {
-      "newest": "2026-07-21",
-      "daysSinceMoved": 0
-    },
+    "phantomPower": null,
     "community": {
       "newest": "2027-04-16",
       "daysSinceMoved": 6
@@ -86,9 +80,9 @@
   },
   "sports": {
     "total": 400,
-    "scored": 17,
+    "scored": 15,
     "wins": 7,
-    "losses": 9,
+    "losses": 7,
     "ties": 1
   },
   "registrations": {
@@ -102,7 +96,7 @@
     "pendingPast": 0,
     "pendingBySource": {},
     "stalePast": 1,
-    "lastSyncAt": "2026-06-11T19:57:33.236Z"
+    "lastSyncAt": "2026-06-11T20:07:22.386Z"
   },
   "recentlyAdded": [
     {
@@ -111,13 +105,6 @@
       "title": "Arts Smarts Camps",
       "source": "MU",
       "date": "2026-07-06T09:00:00"
-    },
-    {
-      "key": "Stabbing Westward: 30 Years of Wither Blister Burn + Peel|2026-07-21T23:00:00.000Z",
-      "firstSeenAt": "2026-06-11T10:22:44.345Z",
-      "title": "Stabbing Westward: 30 Years of Wither Blister Burn + Peel",
-      "source": "Other",
-      "date": "2026-07-21T23:00:00.000Z"
     },
     {
       "key": "Millersville University Wrestling at Glenville Open|2026-11-01T14:00:00.000Z",
@@ -174,6 +161,13 @@
       "title": "Millersville University Wrestling at Wilkes Open",
       "source": "MU",
       "date": "2026-12-22T15:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Wrestling at David H. Lehman Open|2027-01-08T14:00:00.000Z",
+      "firstSeenAt": "2026-06-11T05:28:48.499Z",
+      "title": "Millersville University Wrestling at David H. Lehman Open",
+      "source": "MU",
+      "date": "2027-01-08T14:00:00.000Z"
     }
   ],
   "addedLastRun": 0

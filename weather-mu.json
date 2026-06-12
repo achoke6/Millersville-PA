@@ -1,27 +1,27 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Thursday, June 11, 2026 at 12:32 PM (Kyle Elliott, Meteorologist)",
+    "issued": "Friday, June 12, 2026 at 07:57 AM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "This afternoon",
-        "text": "Partly sunny, very hot and humid; heat indices as high as 104°F. High: 92-96"
-      },
-      {
-        "period": "Tonight",
-        "text": "Decreasing clouds, warm & muggy with scattered evening showers and T-storms. Low: 68-72"
-      },
-      {
-        "period": "Friday",
+        "period": "Today",
         "text": "Increasing clouds, hot and humid with severe T-storms in the afternoon. High: 90-94"
       },
       {
-        "period": "Friday Night",
-        "text": "Turning less humid with decreasing clouds. Low: 62-66"
+        "period": "Tonight",
+        "text": "Turning less humid with decreasing clouds. Low: 60-64"
       },
       {
         "period": "Saturday",
-        "text": "Sunny and very warm but with low humidity. High: 86-90"
+        "text": "Sunny and very warm but with much lower humidity. High: 86-90"
+      },
+      {
+        "period": "Saturday Night",
+        "text": "Mainly clear and mild. Low: 60-64"
+      },
+      {
+        "period": "Sunday",
+        "text": "Increasing clouds, very warm and more humid with afternoon T-storms. High: 86-90"
       }
     ]
   },
@@ -128,6 +128,50 @@
   },
   "observations": [
     {
+      "time": "08:00",
+      "temp": "78",
+      "dewpoint": "70",
+      "rh": "78",
+      "windDir": "SSW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "10.0",
+      "condition": "None"
+    },
+    {
+      "time": "07:00",
+      "temp": "72",
+      "dewpoint": "69",
+      "rh": "89",
+      "windDir": "SSW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "9.2",
+      "condition": "None"
+    },
+    {
+      "time": "06:00",
+      "temp": "72",
+      "dewpoint": "68",
+      "rh": "88",
+      "windDir": "WSW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "9.1",
+      "condition": "None"
+    },
+    {
+      "time": "05:00",
+      "temp": "73",
+      "dewpoint": "68",
+      "rh": "86",
+      "windDir": "W",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "9.3",
+      "condition": "None"
+    },
+    {
       "time": "04:00",
       "temp": "72",
       "dewpoint": "68",
@@ -147,50 +191,6 @@
       "windSpeed": "2",
       "precip": "0.00",
       "visibility": "9.6",
-      "condition": "None"
-    },
-    {
-      "time": "02:00",
-      "temp": "73",
-      "dewpoint": "69",
-      "rh": "86",
-      "windDir": "WSW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "9.9",
-      "condition": "None"
-    },
-    {
-      "time": "01:00",
-      "temp": "74",
-      "dewpoint": "69",
-      "rh": "83",
-      "windDir": "WSW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "10.1",
-      "condition": "None"
-    },
-    {
-      "time": "00:00",
-      "temp": "75",
-      "dewpoint": "69",
-      "rh": "81",
-      "windDir": "W",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "10.2",
-      "condition": "None"
-    },
-    {
-      "time": "23:00",
-      "temp": "76",
-      "dewpoint": "69",
-      "rh": "79",
-      "windDir": "SW",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "10.3",
       "condition": "None"
     }
   ],
@@ -235,5 +235,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-06-12T08:24:35.333Z"
+  "updated": "2026-06-12T12:17:54.532Z"
 }

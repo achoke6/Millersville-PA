@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-06-12T03:52:48.703Z",
-  "totalEvents": 998,
+  "generatedAt": "2026-06-12T08:25:50.824Z",
+  "totalEvents": 966,
   "withDescription": 326,
   "withImage": 106,
   "familyFriendly": 54,
   "eventsToday": 2,
   "sources": {
-    "muAthletics": 204,
+    "muAthletics": 214,
     "muCalendar": 150,
     "muGetInvolved": 231,
     "pennManor": 228,
@@ -53,39 +53,39 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-03-12",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "pennManor": {
       "newest": "2026-10-01",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     },
     "borough": {
       "newest": "2027-05-08",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "phantomPower": {
       "newest": "2026-07-21",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     }
   },
   "sports": {
-    "total": 400,
+    "total": 410,
     "scored": 17,
     "wins": 7,
     "losses": 9,
@@ -102,79 +102,79 @@
     "pendingPast": 0,
     "pendingBySource": {},
     "stalePast": 1,
-    "lastSyncAt": "2026-06-12T03:51:10.551Z"
+    "lastSyncAt": "2026-06-12T08:24:34.559Z"
   },
   "recentlyAdded": [
     {
-      "key": "Morimvr w. Scarlet Meridian, Illusion of Solace, and Skinmag|2026-06-13T00:00:00.000Z",
-      "firstSeenAt": "2026-06-11T21:20:15.617Z",
-      "title": "Morimvr w. Scarlet Meridian, Illusion of Solace, and Skinmag",
-      "source": "Other",
-      "date": "2026-06-13T00:00:00.000Z"
+      "key": "Millersville University Wrestling at Gannon University|2027-01-16T21:00:00.000Z",
+      "firstSeenAt": "2026-06-12T08:25:50.821Z",
+      "title": "Millersville University Wrestling at Gannon University",
+      "source": "MU",
+      "date": "2027-01-16T21:00:00.000Z"
     },
     {
-      "key": "Upon A Burning Body|2026-06-14T21:30:00.000Z",
-      "firstSeenAt": "2026-06-11T21:20:15.617Z",
-      "title": "Upon A Burning Body",
-      "source": "Other",
-      "date": "2026-06-14T21:30:00.000Z"
+      "key": "Millersville University Wrestling at Lake Erie College|2027-01-17T18:00:00.000Z",
+      "firstSeenAt": "2026-06-12T08:25:50.821Z",
+      "title": "Millersville University Wrestling at Lake Erie College",
+      "source": "MU",
+      "date": "2027-01-17T18:00:00.000Z"
     },
     {
-      "key": "Jeffrey Lewis & The Voltage|2026-06-16T23:00:00.000Z",
-      "firstSeenAt": "2026-06-11T21:20:15.617Z",
-      "title": "Jeffrey Lewis & The Voltage",
-      "source": "Other",
-      "date": "2026-06-16T23:00:00.000Z"
+      "key": "Millersville University Wrestling vs Millersville Duals|2027-01-23T15:00:00.000Z",
+      "firstSeenAt": "2026-06-12T08:25:50.821Z",
+      "title": "Millersville University Wrestling vs Millersville Duals",
+      "source": "MU",
+      "date": "2027-01-23T15:00:00.000Z"
     },
     {
-      "key": "Caitlynne Curtis|2026-06-20T00:00:00.000Z",
-      "firstSeenAt": "2026-06-11T21:20:15.617Z",
-      "title": "Caitlynne Curtis",
-      "source": "Other",
-      "date": "2026-06-20T00:00:00.000Z"
+      "key": "Millersville University Wrestling vs University of Pittsburgh at Johnstown|2027-01-30T17:00:00.000Z",
+      "firstSeenAt": "2026-06-12T08:25:50.821Z",
+      "title": "Millersville University Wrestling vs University of Pittsburgh at Johnstown",
+      "source": "MU",
+      "date": "2027-01-30T17:00:00.000Z"
     },
     {
-      "key": "Battle Of Millersville Vol.1 - Tribute Fest|2026-06-21T00:00:00.000Z",
-      "firstSeenAt": "2026-06-11T21:20:15.617Z",
-      "title": "Battle Of Millersville Vol.1 - Tribute Fest",
-      "source": "Other",
-      "date": "2026-06-21T00:00:00.000Z"
+      "key": "Millersville University Wrestling vs Seton Hill University (Pa.)|2027-01-30T17:00:00.000Z",
+      "firstSeenAt": "2026-06-12T08:25:50.821Z",
+      "title": "Millersville University Wrestling vs Seton Hill University (Pa.)",
+      "source": "MU",
+      "date": "2027-01-30T17:00:00.000Z"
     },
     {
-      "key": "Brotality w. Quantifier, Making A Mockery, & New Damage|2026-06-24T23:00:00.000Z",
-      "firstSeenAt": "2026-06-11T21:20:15.617Z",
-      "title": "Brotality w. Quantifier, Making A Mockery, & New Damage",
-      "source": "Other",
-      "date": "2026-06-24T23:00:00.000Z"
+      "key": "Millersville University Wrestling at Kutztown University|2027-02-03T00:00:00.000Z",
+      "firstSeenAt": "2026-06-12T08:25:50.821Z",
+      "title": "Millersville University Wrestling at Kutztown University",
+      "source": "MU",
+      "date": "2027-02-03T00:00:00.000Z"
     },
     {
-      "key": "Mentalia's Stupid Drag Show|2026-06-26T00:00:00.000Z",
-      "firstSeenAt": "2026-06-11T21:20:15.617Z",
-      "title": "Mentalia's Stupid Drag Show",
-      "source": "Other",
-      "date": "2026-06-26T00:00:00.000Z"
+      "key": "Millersville University Wrestling at Messiah Open|2027-02-06T15:00:00.000Z",
+      "firstSeenAt": "2026-06-12T08:25:50.821Z",
+      "title": "Millersville University Wrestling at Messiah Open",
+      "source": "MU",
+      "date": "2027-02-06T15:00:00.000Z"
     },
     {
-      "key": "Stone Horses w. The Blues Vultures|2026-06-27T00:00:00.000Z",
-      "firstSeenAt": "2026-06-11T21:20:15.617Z",
-      "title": "Stone Horses w. The Blues Vultures",
-      "source": "Other",
-      "date": "2026-06-27T00:00:00.000Z"
+      "key": "Millersville University Wrestling at Lackawanna College|2027-02-13T00:00:00.000Z",
+      "firstSeenAt": "2026-06-12T08:25:50.821Z",
+      "title": "Millersville University Wrestling at Lackawanna College",
+      "source": "MU",
+      "date": "2027-02-13T00:00:00.000Z"
     },
     {
-      "key": "Bit Brigade Performs \"Mega Man X\" LIVE w. Super Guitar Bros.|2026-06-28T00:00:00.000Z",
-      "firstSeenAt": "2026-06-11T21:20:15.617Z",
-      "title": "Bit Brigade Performs \"Mega Man X\" LIVE w. Super Guitar Bros.",
-      "source": "Other",
-      "date": "2026-06-28T00:00:00.000Z"
+      "key": "Millersville University Wrestling vs Super Region I|2027-02-27T15:00:00.000Z",
+      "firstSeenAt": "2026-06-12T08:25:50.821Z",
+      "title": "Millersville University Wrestling vs Super Region I",
+      "source": "MU",
+      "date": "2027-02-27T15:00:00.000Z"
     },
     {
-      "key": "The Rumours w. Clownvis Presley & Mid Rats|2026-06-28T23:00:00.000Z",
-      "firstSeenAt": "2026-06-11T21:20:15.617Z",
-      "title": "The Rumours w. Clownvis Presley & Mid Rats",
-      "source": "Other",
-      "date": "2026-06-28T23:00:00.000Z"
+      "key": "Millersville University Wrestling at NCAA Championships|2027-03-12T00:00:00.000Z",
+      "firstSeenAt": "2026-06-12T08:25:50.821Z",
+      "title": "Millersville University Wrestling at NCAA Championships",
+      "source": "MU",
+      "date": "2027-03-12T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 10
 }

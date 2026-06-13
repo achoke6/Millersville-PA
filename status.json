@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-06-12T23:16:57.688Z",
-  "totalEvents": 1006,
-  "withDescription": 324,
+  "generatedAt": "2026-06-13T03:37:51.425Z",
+  "totalEvents": 1004,
+  "withDescription": 323,
   "withImage": 106,
   "familyFriendly": 54,
   "eventsToday": 2,
   "sources": {
     "muAthletics": 214,
-    "muCalendar": 150,
-    "muGetInvolved": 231,
+    "muCalendar": 149,
+    "muGetInvolved": 230,
     "pennManor": 228,
     "borough": 106,
     "vfw": 3,
@@ -22,11 +22,11 @@
       "latest": "2027-03-12T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-03-14T10:00:00.000Z",
+      "earliest": "2026-03-18T15:30:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-03-14T00:00:00.000Z",
+      "earliest": "2026-03-15T00:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
@@ -34,8 +34,8 @@
       "latest": "2026-10-01T19:45:00.000Z"
     },
     "borough": {
-      "earliest": "2026-03-14T14:00:00.000Z",
-      "latest": "2027-05-08T14:00:00.000Z"
+      "earliest": "2026-03-16T23:00:00.000Z",
+      "latest": "2027-06-12T14:00:00.000Z"
     },
     "vfw": {
       "earliest": "2026-06-12T22:00:00.000Z",
@@ -68,8 +68,8 @@
       "daysSinceMoved": 6
     },
     "borough": {
-      "newest": "2027-05-08",
-      "daysSinceMoved": 8
+      "newest": "2027-06-12",
+      "daysSinceMoved": 0
     },
     "vfw": {
       "newest": "2026-09-11",
@@ -102,9 +102,16 @@
     "pendingPast": 0,
     "pendingBySource": {},
     "stalePast": 1,
-    "lastSyncAt": "2026-06-12T23:15:27.740Z"
+    "lastSyncAt": "2026-06-13T03:36:13.700Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Reserve Public Meeting Room|2027-06-12T14:00:00.000Z",
+      "firstSeenAt": "2026-06-13T03:37:51.423Z",
+      "title": "Reserve Public Meeting Room",
+      "source": "Borough",
+      "date": "2027-06-12T14:00:00.000Z"
+    },
     {
       "key": "Traffic Commission Meeting|2026-06-24T12:30:00.000Z",
       "firstSeenAt": "2026-06-12T16:17:46.028Z",
@@ -167,14 +174,7 @@
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2026-08-26T12:30:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
-      "firstSeenAt": "2026-06-12T16:17:46.028Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-09-02T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

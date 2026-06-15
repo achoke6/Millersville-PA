@@ -1,176 +1,197 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "",
-    "periods": []
-  },
-  "sevenDay": {
-    "issued": "Friday, June 12, 2026 at 08:27 AM (Kyle Elliott)",
-    "days": [
+    "issued": "Monday, June 15, 2026 at 07:47 AM (Kyle Elliott, Meteorologist)",
+    "periods": [
       {
-        "period": "Friday",
-        "sky": "Increasing Clouds",
-        "weather": "Severe T-storms",
-        "pop": "60%",
-        "temp": "92",
-        "conf": "5"
+        "period": "Today",
+        "text": "Mostly sunny, breezy, much cooler and less humid. High: 74-78"
       },
       {
-        "period": "Friday night",
-        "sky": "Decreasing Clouds",
-        "weather": "Mild",
-        "pop": "<10%",
-        "temp": "62",
-        "conf": "5"
-      },
-      {
-        "period": "Saturday",
-        "sky": "Sunny",
-        "weather": "Warm",
-        "pop": "<10%",
-        "temp": "88",
-        "conf": "5"
-      },
-      {
-        "period": "Saturday night",
-        "sky": "Mainly Clear",
-        "weather": "Mild",
-        "pop": "<10%",
-        "temp": "62",
-        "conf": "5"
-      },
-      {
-        "period": "Sunday",
-        "sky": "Increasing Clouds",
-        "weather": "Afternoon T-Storms",
-        "pop": "70%",
-        "temp": "88",
-        "conf": "4"
-      },
-      {
-        "period": "Sunday night",
-        "sky": "Decreasing Clouds",
-        "weather": "Evening T-Storms",
-        "pop": "40%",
-        "temp": "62",
-        "conf": "4"
-      },
-      {
-        "period": "Monday",
-        "sky": "Mostly Sunny",
-        "weather": "Cooler",
-        "pop": "<10%",
-        "temp": "76",
-        "conf": "4"
-      },
-      {
-        "period": "Monday night",
-        "sky": "Mainly Clear",
-        "weather": "Fair",
-        "pop": "<10%",
-        "temp": "56",
-        "conf": "4"
+        "period": "Tonight",
+        "text": "Clear and cool. Low: 48-52"
       },
       {
         "period": "Tuesday",
-        "sky": "Partly Sunny",
+        "text": "Mostly sunny and beautiful with low humidity. High: 76-80"
+      },
+      {
+        "period": "Tuesday Night",
+        "text": "Comfortable with increasing clouds. Low: 56-60"
+      },
+      {
+        "period": "Wednesday",
+        "text": "Partly sunny and seasonable with an isolated shower or thunderstorm. High: 80-84"
+      }
+    ]
+  },
+  "sevenDay": {
+    "issued": "Monday, June 15, 2026 at 08:04 AM (Kyle Elliott)",
+    "days": [
+      {
+        "period": "Monday",
+        "sky": "Mostly Sunny",
+        "weather": "Breezy",
+        "pop": "<10%",
+        "temp": "76",
+        "conf": "5"
+      },
+      {
+        "period": "Monday night",
+        "sky": "Clear Skies",
+        "weather": "Cool",
+        "pop": "<10%",
+        "temp": "50",
+        "conf": "5"
+      },
+      {
+        "period": "Tuesday",
+        "sky": "Mostly Sunny",
         "weather": "Pleasant",
         "pop": "<10%",
+        "temp": "78",
+        "conf": "5"
+      },
+      {
+        "period": "Tuesday night",
+        "sky": "Increasing Clouds",
+        "weather": "Fair",
+        "pop": "20%",
+        "temp": "58",
+        "conf": "5"
+      },
+      {
+        "period": "Wednesday",
+        "sky": "Partly Sunny",
+        "weather": "Isolated Shower",
+        "pop": "30%",
+        "temp": "82",
+        "conf": "4"
+      },
+      {
+        "period": "Wednesday night",
+        "sky": "Partly Cloudy",
+        "weather": "Mild",
+        "pop": "<10%",
+        "temp": "64",
+        "conf": "4"
+      },
+      {
+        "period": "Thursday",
+        "sky": "Clouds & Sun",
+        "weather": "Sct. Thunderstorms",
+        "pop": "40%",
+        "temp": "88",
+        "conf": "3"
+      },
+      {
+        "period": "Thursday night",
+        "sky": "Partly Cloudy",
+        "weather": "Chc. of Showers",
+        "pop": "30%",
+        "temp": "64",
+        "conf": "3"
+      },
+      {
+        "period": "Friday",
+        "sky": "Clouds & Sun",
+        "weather": "Cooler",
+        "pop": "20%",
         "temp": "78",
         "conf": "3"
       },
       {
-        "period": "Tuesday night",
-        "sky": "Partly Cloudy",
+        "period": "Friday night",
+        "sky": "Mainly Clear",
         "weather": "Fair",
         "pop": "<10%",
-        "temp": "56",
+        "temp": "58",
         "conf": "3"
       },
       {
-        "period": "Wednesday",
-        "sky": "Clouds & Sun",
-        "weather": "Seasonable",
-        "pop": "20%",
+        "period": "Saturday",
+        "sky": "Mostly Sunny",
+        "weather": "Breezy",
+        "pop": "<10%",
         "temp": "low 80s",
         "conf": "3"
       },
       {
-        "period": "Thursday",
-        "sky": "Variably Cloudy",
-        "weather": "Chc. of T-storm",
-        "pop": "40%",
-        "temp": "mid 80s",
+        "period": "Sunday",
+        "sky": "Mostly Sunny",
+        "weather": "Seasonable",
+        "pop": "<10%",
+        "temp": "low 80s",
         "conf": "3"
       }
     ]
   },
   "observations": [
     {
-      "time": "02:00",
-      "temp": "69",
-      "dewpoint": "65",
-      "rh": "88",
-      "windDir": "NW",
+      "time": "09:00",
+      "temp": "70",
+      "dewpoint": "53",
+      "rh": "54",
+      "windDir": "N",
+      "windSpeed": "10",
+      "precip": "0.00",
+      "visibility": "10.7",
+      "condition": "None"
+    },
+    {
+      "time": "08:00",
+      "temp": "68",
+      "dewpoint": "58",
+      "rh": "69",
+      "windDir": "NNW",
       "windSpeed": "7",
-      "precip": "0.01",
+      "precip": "0.00",
       "visibility": "11.0",
       "condition": "None"
     },
     {
-      "time": "01:00",
-      "temp": "71",
-      "dewpoint": "71",
-      "rh": "98",
-      "windDir": "WSW",
-      "windSpeed": "1",
-      "precip": "0.02",
-      "visibility": "7.0",
+      "time": "07:00",
+      "temp": "65",
+      "dewpoint": "57",
+      "rh": "75",
+      "windDir": "NNW",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "10.5",
       "condition": "None"
     },
     {
-      "time": "00:00",
-      "temp": "71",
-      "dewpoint": "71",
-      "rh": "99",
+      "time": "06:00",
+      "temp": "64",
+      "dewpoint": "57",
+      "rh": "78",
       "windDir": "NW",
-      "windSpeed": "2",
+      "windSpeed": "5",
       "precip": "0.00",
-      "visibility": "10.9",
+      "visibility": "10.8",
       "condition": "None"
     },
     {
-      "time": "23:00",
-      "temp": "70",
-      "dewpoint": "70",
-      "rh": "99",
-      "windDir": "SW",
-      "windSpeed": "4",
-      "precip": "0.28",
-      "visibility": "10.0",
-      "condition": "None"
-    },
-    {
-      "time": "22:00",
-      "temp": "70",
-      "dewpoint": "69",
-      "rh": "99",
-      "windDir": "SW",
+      "time": "05:00",
+      "temp": "65",
+      "dewpoint": "58",
+      "rh": "78",
+      "windDir": "NNW",
       "windSpeed": "3",
-      "precip": "0.11",
-      "visibility": "7.9",
+      "precip": "0.00",
+      "visibility": "10.8",
       "condition": "None"
     },
     {
-      "time": "21:00",
-      "temp": "73",
-      "dewpoint": "72",
-      "rh": "95",
-      "windDir": "SW",
-      "windSpeed": "6",
+      "time": "04:00",
+      "temp": "67",
+      "dewpoint": "60",
+      "rh": "79",
+      "windDir": "NW",
+      "windSpeed": "9",
       "precip": "0.00",
-      "visibility": "2.1",
-      "condition": "Showers Rain"
+      "visibility": "11.2",
+      "condition": "None"
     }
   ],
   "discussion": {
@@ -184,6 +205,13 @@
     "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
   },
   "videos": [
+    {
+      "title": "Short Term Forecast 06/15/2026",
+      "videoId": "RuU8bnz4kEs",
+      "url": "https://www.youtube.com/watch?v=RuU8bnz4kEs",
+      "published": "2026-06-15T13:11:19+00:00",
+      "thumbnail": "https://i3.ytimg.com/vi/RuU8bnz4kEs/hqdefault.jpg"
+    },
     {
       "title": "Medium Range Forecast 06/08/2026",
       "videoId": "25aPWWcH4mk",
@@ -204,15 +232,8 @@
       "url": "https://www.youtube.com/watch?v=Onil_ULAZKE",
       "published": "2026-06-02T15:27:56+00:00",
       "thumbnail": "https://i4.ytimg.com/vi/Onil_ULAZKE/hqdefault.jpg"
-    },
-    {
-      "title": "Medium Range Forecast 06/01/2026",
-      "videoId": "aiB0nzgYe68",
-      "url": "https://www.youtube.com/watch?v=aiB0nzgYe68",
-      "published": "2026-06-01T13:59:39+00:00",
-      "thumbnail": "https://i2.ytimg.com/vi/aiB0nzgYe68/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-06-15T06:22:23.423Z"
+  "updated": "2026-06-15T13:11:43.181Z"
 }

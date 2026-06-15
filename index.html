@@ -108,7 +108,11 @@
         </div>
         <nav class="main-nav" id="top-nav">
             <button class="close-menu" onclick="toggleMobileMenu()">✖</button>
-            <button class="nav-link" onclick="openSearch(); toggleMobileMenu();">Search</button>
+            <button id="nav-home" class="nav-link active" onclick="switchView('home'); toggleMobileMenu();">Home</button>
+            <button id="nav-search" class="nav-link nav-search" onclick="openSearch(); toggleMobileMenu();" aria-label="Search" title="Search">
+                <svg class="nav-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <span class="nav-search-label">Search</span>
+            </button>
             <button id="nav-news" class="nav-link" onclick="switchView('news'); toggleMobileMenu();">News</button>
             <button id="nav-events" class="nav-link" onclick="switchView('events'); toggleMobileMenu();">Events</button>
             <button id="nav-sports" class="nav-link" onclick="switchView('sports'); toggleMobileMenu();">Sports</button>

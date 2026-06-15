@@ -71,6 +71,8 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .nav-link:hover { background: var(--bg); color: var(--text); }
 .nav-link.active { background: var(--gold-soft); color: var(--text); }
 .nav-external { color: var(--text-muted); text-decoration: none; display: flex; align-items: center; }
+/* Search nav item: text label in the mobile overlay; icon-only on desktop (see min-width:1001px block) */
+.nav-search-icon { display: none; }
 .hamburger-menu { display: flex; background: none; border: none; cursor: pointer; padding: 4px; border-radius: var(--radius-sm); }
 .close-menu { display: none; background: none; border: none; font-size: 1.4rem; cursor: pointer; align-self: flex-end; margin-bottom: 16px; color: var(--text); }
 .menu-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 99; opacity: 0; transition: opacity 0.3s; pointer-events: none; backdrop-filter: blur(2px); }
@@ -1122,6 +1124,21 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
         transition: background 0.15s, color 0.15s;
     }
     .feed-gear-desktop:hover { background: var(--border-light); color: var(--navy); }
+    /* Search collapses to an icon button on desktop (label hidden) to claw back inline-nav width */
+    .nav-search .nav-search-label { display: none; }
+    .nav-search .nav-search-icon { display: inline-flex; }
+    .nav-search {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        width: 34px;
+        height: 34px;
+        padding: 6px;
+        border-radius: 50%;
+        color: var(--text-dark);
+    }
+    .nav-search:hover { background: var(--border-light); color: var(--navy); }
 }
 
 /* Ecwid overrides to match app theme */

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-15T19:06:58.547Z",
+  "generatedAt": "2026-06-15T19:35:09.726Z",
   "totalEvents": 991,
   "withDescription": 317,
   "withImage": 105,
@@ -30,8 +30,8 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-05-04T21:30:00.000Z",
-      "latest": "2026-09-30T20:00:00.000Z"
+      "earliest": "2026-05-04T23:00:00.000Z",
+      "latest": "2026-10-01T19:45:00.000Z"
     },
     "borough": {
       "earliest": "2026-03-24T23:00:00.000Z",
@@ -64,8 +64,8 @@
       "daysSinceMoved": 11
     },
     "pennManor": {
-      "newest": "2026-09-30",
-      "daysSinceMoved": 10
+      "newest": "2026-10-01",
+      "daysSinceMoved": 9
     },
     "borough": {
       "newest": "2027-06-12",
@@ -102,9 +102,30 @@
     "pendingPast": 0,
     "pendingBySource": {},
     "stalePast": 1,
-    "lastSyncAt": "2026-06-15T19:05:21.819Z"
+    "lastSyncAt": "2026-06-15T19:33:17.041Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Boys 7/8/9th Football @ Solanco High School|2026-09-30T20:00:00.000Z",
+      "firstSeenAt": "2026-06-15T19:35:09.724Z",
+      "title": "Boys 7/8/9th Football @ Solanco High School",
+      "source": "PM",
+      "date": "2026-09-30T20:00:00.000Z"
+    },
+    {
+      "key": "Boys 7/8th Soccer @ Warwick High School|2026-09-30T21:00:00.000Z",
+      "firstSeenAt": "2026-06-15T19:35:09.724Z",
+      "title": "Boys 7/8th Soccer @ Warwick High School",
+      "source": "PM",
+      "date": "2026-09-30T21:00:00.000Z"
+    },
+    {
+      "key": "Girls 7/8/9th Volleyball @ Conestoga Valley High School|2026-10-01T19:45:00.000Z",
+      "firstSeenAt": "2026-06-15T19:35:09.724Z",
+      "title": "Girls 7/8/9th Volleyball @ Conestoga Valley High School",
+      "source": "PM",
+      "date": "2026-10-01T19:45:00.000Z"
+    },
     {
       "key": "Girls Varsity Tennis @ New Oxford High School|2026-09-29T20:00:00.000Z",
       "firstSeenAt": "2026-06-15T18:25:53.276Z",
@@ -153,28 +174,7 @@
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2026-07-29T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
-      "firstSeenAt": "2026-06-14T11:58:00.412Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-08-03T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
-      "firstSeenAt": "2026-06-14T11:58:00.412Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-08-05T23:00:00.000Z"
-    },
-    {
-      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
-      "firstSeenAt": "2026-06-14T11:58:00.412Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-08-10T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 3
 }

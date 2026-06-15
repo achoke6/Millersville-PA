@@ -1,11 +1,11 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Monday, June 15, 2026 at 07:47 AM (Kyle Elliott, Meteorologist)",
+    "issued": "Monday, June 15, 2026 at 12:58 PM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "Today",
-        "text": "Mostly sunny, breezy, much cooler and less humid. High: 74-78"
+        "period": "This afternoon",
+        "text": "Breezy, much cooler and less humid with intervals of clouds and sunshine. High: 74-78"
       },
       {
         "period": "Tonight",
@@ -128,6 +128,61 @@
   },
   "observations": [
     {
+      "time": "14:00",
+      "temp": "74",
+      "dewpoint": "52",
+      "rh": "46",
+      "windDir": "NNW",
+      "windSpeed": "7",
+      "precip": "0.00",
+      "visibility": "9.3",
+      "condition": "None"
+    },
+    {
+      "time": "13:00",
+      "temp": "74",
+      "dewpoint": "51",
+      "rh": "45",
+      "windDir": "NNW",
+      "windSpeed": "10",
+      "precip": "0.00",
+      "visibility": "10.1",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "75",
+      "dewpoint": "53",
+      "rh": "47",
+      "windDir": "NW",
+      "windSpeed": "8",
+      "precip": "0.00",
+      "visibility": "9.5",
+      "condition": "None"
+    },
+    {
+      "time": "11:00",
+      "temp": "71",
+      "dewpoint": "53",
+      "rh": "52",
+      "windDir": "N",
+      "windSpeed": "9",
+      "precip": "0.00",
+      "visibility": "10.7",
+      "condition": "None"
+    },
+    {
+      "time": "10:00",
+      "temp": "70",
+      "dewpoint": "49",
+      "rh": "48",
+      "windDir": "N",
+      "windSpeed": "12",
+      "precip": "0.00",
+      "visibility": "11.0",
+      "condition": "None"
+    },
+    {
       "time": "09:00",
       "temp": "70",
       "dewpoint": "53",
@@ -136,61 +191,6 @@
       "windSpeed": "10",
       "precip": "0.00",
       "visibility": "10.7",
-      "condition": "None"
-    },
-    {
-      "time": "08:00",
-      "temp": "68",
-      "dewpoint": "58",
-      "rh": "69",
-      "windDir": "NNW",
-      "windSpeed": "7",
-      "precip": "0.00",
-      "visibility": "11.0",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "65",
-      "dewpoint": "57",
-      "rh": "75",
-      "windDir": "NNW",
-      "windSpeed": "5",
-      "precip": "0.00",
-      "visibility": "10.5",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "64",
-      "dewpoint": "57",
-      "rh": "78",
-      "windDir": "NW",
-      "windSpeed": "5",
-      "precip": "0.00",
-      "visibility": "10.8",
-      "condition": "None"
-    },
-    {
-      "time": "05:00",
-      "temp": "65",
-      "dewpoint": "58",
-      "rh": "78",
-      "windDir": "NNW",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "10.8",
-      "condition": "None"
-    },
-    {
-      "time": "04:00",
-      "temp": "67",
-      "dewpoint": "60",
-      "rh": "79",
-      "windDir": "NW",
-      "windSpeed": "9",
-      "precip": "0.00",
-      "visibility": "11.2",
       "condition": "None"
     }
   ],
@@ -205,6 +205,13 @@
     "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
   },
   "videos": [
+    {
+      "title": "Medium Range Forecast 06/15/2026",
+      "videoId": "QWPqk_kDPSA",
+      "url": "https://www.youtube.com/watch?v=QWPqk_kDPSA",
+      "published": "2026-06-15T13:39:46+00:00",
+      "thumbnail": "https://i2.ytimg.com/vi/QWPqk_kDPSA/hqdefault.jpg"
+    },
     {
       "title": "Short Term Forecast 06/15/2026",
       "videoId": "RuU8bnz4kEs",
@@ -225,15 +232,8 @@
       "url": "https://www.youtube.com/watch?v=Eu7BP1Lu6kw",
       "published": "2026-06-08T14:37:29+00:00",
       "thumbnail": "https://i2.ytimg.com/vi/Eu7BP1Lu6kw/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 06/02/2026",
-      "videoId": "Onil_ULAZKE",
-      "url": "https://www.youtube.com/watch?v=Onil_ULAZKE",
-      "published": "2026-06-02T15:27:56+00:00",
-      "thumbnail": "https://i4.ytimg.com/vi/Onil_ULAZKE/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-06-15T13:11:43.181Z"
+  "updated": "2026-06-15T18:24:21.472Z"
 }

@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-06-15T00:08:48.225Z",
-  "totalEvents": 996,
+  "generatedAt": "2026-06-15T06:24:14.007Z",
+  "totalEvents": 997,
   "withDescription": 318,
-  "withImage": 104,
+  "withImage": 105,
   "familyFriendly": 54,
-  "eventsToday": 0,
+  "eventsToday": 2,
   "sources": {
     "muAthletics": 215,
     "muCalendar": 149,
@@ -12,7 +12,7 @@
     "pennManor": 228,
     "borough": 105,
     "vfw": 3,
-    "phantomPower": 11,
+    "phantomPower": 12,
     "community": 14,
     "muHudlBroadcasts": 0
   },
@@ -43,7 +43,7 @@
     },
     "phantomPower": {
       "earliest": "2026-06-16T23:00:00.000Z",
-      "latest": "2026-07-26T00:00:00.000Z"
+      "latest": "2026-08-02T00:00:00.000Z"
     },
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
@@ -53,35 +53,35 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-03-12",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 11
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 11
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 11
     },
     "pennManor": {
       "newest": "2026-10-01",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 9
     },
     "borough": {
       "newest": "2027-06-12",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 11
     },
     "phantomPower": {
-      "newest": "2026-07-26",
-      "daysSinceMoved": 1
+      "newest": "2026-08-02",
+      "daysSinceMoved": 0
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 9
+      "daysSinceMoved": 10
     }
   },
   "sports": {
@@ -102,9 +102,16 @@
     "pendingPast": 0,
     "pendingBySource": {},
     "stalePast": 1,
-    "lastSyncAt": "2026-06-15T00:07:06.871Z"
+    "lastSyncAt": "2026-06-15T06:22:22.278Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Houses Of The Holy - The True Zeppelin Experience|2026-08-02T00:00:00.000Z",
+      "firstSeenAt": "2026-06-15T06:24:14.004Z",
+      "title": "Houses Of The Holy - The True Zeppelin Experience",
+      "source": "Other",
+      "date": "2026-08-02T00:00:00.000Z"
+    },
     {
       "key": "Millersville University Field Hockey vs Franklin & Marshall|2026-08-27T22:00:00.000Z",
       "firstSeenAt": "2026-06-15T00:08:48.223Z",
@@ -167,14 +174,7 @@
       "title": "Zoning Hearing Board",
       "source": "Manor",
       "date": "2026-08-05T23:00:00.000Z"
-    },
-    {
-      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
-      "firstSeenAt": "2026-06-14T11:58:00.412Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-08-10T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 1
 }

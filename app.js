@@ -30,7 +30,7 @@ let allEvents=[], currentNews=[], allRestaurants=[];
 // expectation for a home page. The Specials & Deals card stays anchored to
 // today regardless of this value.
 let homeViewDate = null;
-const allEvSources = ['MU','PM','Borough','Manor','Other'];
+const allEvSources = ['MU','PM','Borough','Manor','Raney Cellars','Other'];
 let evActiveSources = new Set(allEvSources), evTags=new Set();
 let evAllMode = true;
 let evKidMode=false;
@@ -582,6 +582,7 @@ const feedSections = {
             },
             borough: { label: 'Borough', icon: '🌳', headingStyle: true, audience: 'townie', subs: [{id:'borough-all',label:'All Borough Events',icon:'🌳'}] },
             manor: { label: 'Manor Twp.', icon: '🪶', headingStyle: true, audience: 'townie', subs: [{id:'manor-all',label:'All Manor Twp. Events',icon:'🪶'}] },
+            raneyCellars: { label: 'Raney Cellars', icon: '🍺', headingStyle: true, audience: 'townie', subs: [{id:'raney-cellars-all',label:'Raney Cellars Events',icon:'🍺'}] },
             other: { label: 'Other', icon: '🎯', headingStyle: true, audience: 'townie', subs: [
                 {id:'other-vfw',label:'VFW Events',icon:'🎖️'},{id:'other-phantom',label:'Phantom Power',icon:'🎵'},
                 {id:'other-community',label:'Community Events',icon:'📝'}
@@ -618,6 +619,10 @@ const feedSections = {
             manor: {
                 label: 'Manor Twp.', icon: '🪶', headingStyle: true,
                 subs: [{id:'manor-all',label:'All Manor Twp. Events',icon:'🪶'}]
+            },
+            raneyCellars: {
+                label: 'Raney Cellars', icon: '🍺', headingStyle: true,
+                subs: [{id:'raney-cellars-all',label:'Raney Cellars Events',icon:'🍺'}]
             },
             other: {
                 label: 'Other', icon: '🎯', headingStyle: true,
@@ -678,6 +683,7 @@ const SOURCE_UNLOCK_IDS = {
     'PM':      ['pm-music', 'pm-board', 'pm-baseball', 'pm-softball', 'pm-lacrosse', 'pm-volleyball', 'pm-football', 'pm-basketball', 'pm-soccer', 'pm-fieldhockey', 'pm-tennis', 'pm-track'],
     'Borough': ['borough-all'],
     'Manor':   ['manor-all'],
+    'Raney Cellars': ['raney-cellars-all'],
     'VFW':     ['other-vfw'],
     // MU-side sources for townies
     'MU':         [], // MU itself always shown — only GetInvolved sub-content is gated
@@ -704,7 +710,7 @@ function isSourceHiddenByAffiliation(source) {
         return source === 'GetInvolved' || source === 'SP_Clubs';
     }
     // Marauder OR unset/default: hide PM, Borough, Manor Twp., VFW events + PM sports + PM/Borough news
-    return source === 'PM' || source === 'Borough' || source === 'Manor' || source === 'VFW' || source === 'SP_PM'
+    return source === 'PM' || source === 'Borough' || source === 'Manor' || source === 'Raney Cellars' || source === 'VFW' || source === 'SP_PM'
         || source === 'PM_NEWS' || source === 'BOROUGH_NEWS';
 }
 // Does the user have a favorite that "unlocks" this hidden source?
@@ -744,6 +750,7 @@ function isEventFromHiddenSource(e) {
     if (tags.includes('PM') && isSourceHidden('PM')) return true;
     if (tags.includes('Borough') && isSourceHidden('Borough')) return true;
     if (tags.includes('Manor') && isSourceHidden('Manor')) return true;
+    if (tags.includes('Raney Cellars') && isSourceHidden('Raney Cellars')) return true;
     if (tags.includes('Clubs/Orgs') && isSourceHidden('GetInvolved')) return true;
     return false;
 }
@@ -832,6 +839,7 @@ function suggestFeedIdForEvent(e, isSportsPage) {
     if (tags.includes('Borough')) return 'borough-all';
     // Manor Twp.
     if (tags.includes('Manor')) return 'manor-all';
+    if (tags.includes('Raney Cellars')) return 'raney-cellars-all';
     // Other
     if (tags.includes('VFW')) return 'other-vfw';
     if (tags.includes('Phantom Power') || tags.includes('Live Music')) return 'other-phantom';
@@ -2341,7 +2349,7 @@ let spPastDaysVisible = INITIAL_DAYS_PAST;
 let spMode='week', spAnchorDate=new Date();
 
 const sportsList=['Baseball','Softball','Track','Soccer','Lacrosse','Tennis','Volleyball','Wrestling','Basketball','Football','Field Hockey','Golf','Cross Country','Cheerleading','Swimming','Rugby','Fencing','Esports','Archery'];
-const topSources=['MU','PM','Borough','Manor','Other'];
+const topSources=['MU','PM','Borough','Manor','Raney Cellars','Other'];
 const sportMetaTags=['Athletic Competitions','Athletics','Club Sports','Home Game Mode','H Games'];
 
 // Sub-filter chips vary by affiliation:
@@ -2433,6 +2441,7 @@ function matchesSource(tags,src){
     if(src==='PM') return tags.includes('PM');
     if(src==='Borough') return tags.includes('Borough');
     if(src==='Manor') return tags.includes('Manor');
+    if(src==='Raney Cellars') return tags.includes('Raney Cellars');
     if(src==='Other') return tags.includes('Other') || tags.includes('Community');
     // Sports page still uses 'Clubs' as a separate filter (Club Sports games)
     if(src==='Clubs') return tags.includes('Clubs/Orgs')&&(tags.includes('Club Sports')||sportsList.some(s=>tags.includes(s)));
@@ -3134,7 +3143,8 @@ window.toggleEventSource=function(src){
     const visibleEvSources = allEvSources.filter(s =>
         !(s === 'PM' && isSourceHidden('PM')) &&
         !(s === 'Borough' && isSourceHidden('Borough')) &&
-        !(s === 'Manor' && isSourceHidden('Manor'))
+        !(s === 'Manor' && isSourceHidden('Manor')) &&
+        !(s === 'Raney Cellars' && isSourceHidden('Raney Cellars'))
     );
     if (visibleEvSources.length > 0 && visibleEvSources.every(s => evActiveSources.has(s))) {
         evAllMode = true;
@@ -3149,7 +3159,7 @@ window.toggleEventSource=function(src){
 function updateEventsUI(){
     const allBtn = document.getElementById('ev-src-all');
     if (allBtn) allBtn.classList.toggle('active', evAllMode);
-    const srcMap = {'MU':'mu','PM':'pm','Borough':'borough','Manor':'manor','Other':'other'};
+    const srcMap = {'MU':'mu','PM':'pm','Borough':'borough','Manor':'manor','Raney Cellars':'raney-cellars','Other':'other'};
     allEvSources.forEach(src => {
         const btn = document.getElementById('ev-src-' + srcMap[src]);
         if (!btn) return;
@@ -3164,6 +3174,7 @@ function updateEventsUI(){
         if (src === 'PM') hidePill = isSourceHidden('PM');
         else if (src === 'Borough') hidePill = isSourceHidden('Borough');
         else if (src === 'Manor') hidePill = isSourceHidden('Manor');
+        else if (src === 'Raney Cellars') hidePill = isSourceHidden('Raney Cellars');
         btn.style.display = hidePill ? 'none' : '';
     });
 
@@ -4841,6 +4852,7 @@ function buildTimelineItem(e, now) {
     else if(tags.includes('VFW')) src = 'VFW';
     else if(tags.includes('Borough')) src = 'Borough';
     else if(tags.includes('Manor')) src = 'Manor';
+    else if(tags.includes('Raney Cellars')) src = 'Raney Cellars';
     else if(tags.includes('PM') && isSport) src = 'PM';
     else if(tags.includes('PM')) src = 'PM';
     else if(tags.includes('MU') && isSport) src = 'MU';
@@ -5019,6 +5031,7 @@ window.openEventDetails = function(key) {
     if(tags.includes('VFW')) src = 'VFW';
     else if(tags.includes('Borough')) src = 'Borough';
     else if(tags.includes('Manor')) src = 'Manor';
+    else if(tags.includes('Raney Cellars')) src = 'Raney Cellars';
     else if(tags.includes('PM')) src = 'PM';
     else if(tags.includes('MU')) src = 'MU';
     else if(tags.includes('Community')) src = 'Community';
@@ -5041,7 +5054,7 @@ window.openEventDetails = function(key) {
 
     // Tag chips (exclude noisy internal markers). Only townies get the Community relabel
     // (unset/Marauder users see "GetInvolved" since default is now Marauder mode).
-    const hiddenTags = new Set(['MU','PM','Borough','Manor','Other','VFW','Clubs/Orgs','Live Music','H Games','Home Game Mode','Athletic Competitions','Athletics','Phantom Power','Human Resources','Office of the Provost','Office of VP for Finance and Administration','Advancement Department']);
+    const hiddenTags = new Set(['MU','PM','Borough','Manor','Raney Cellars','Other','VFW','Clubs/Orgs','Live Music','H Games','Home Game Mode','Athletic Competitions','Athletics','Phantom Power','Human Resources','Office of the Provost','Office of VP for Finance and Administration','Advancement Department']);
     const relabelForTownie = (tag) => (muAffiliation === 'townie' && tag === 'GetInvolved') ? 'Community' : tag;
     const hideResHall = (t) => tags.includes('Residence Halls') && t !== 'Residence Halls' && /residence hall/i.test(t);
     const displayTags = tags.filter(t => !hiddenTags.has(t) && !hideResHall(t)).map(relabelForTownie).slice(0, 6);

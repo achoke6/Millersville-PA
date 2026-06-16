@@ -3011,6 +3011,61 @@ async function runScraper() {
     } catch (e) { console.error("❌ Manor Township error:", e.message); }
 
 
+    // ===== 6e. RANEY CELLARS BREWING (The Events Calendar iCal) =====
+    // Raney Cellars is a local brewery at 11 Manor Ave, Millersville. Their
+    // WordPress site runs The Events Calendar plugin (same platform as Penn Manor
+    // and Manor Township), exposing a clean iCal feed. Content is food trucks,
+    // trivia nights, and live music — townie-side community/entertainment content.
+    // Hidden from Marauders by default (feed pref 'raney-cellars-all').
+    // iCal URL: https://www.raneycellarsbrewing.com/?ical=1
+    // No RRULE expansion needed — feed exports individual VEVENTs only.
+    // No price field set: events are community happenings, not free admissions.
+    try {
+        console.log("📡 Fetching Raney Cellars iCal...");
+        let allRaneyEvents = {};
+        const raneyUrl = 'https://www.raneycellarsbrewing.com/?ical=1&tribe_event_display=list&tribe_paged=';
+        const raneyMaxPages = 5;
+        for (let page = 1; page <= raneyMaxPages; page++) {
+            try {
+                const pageData = await ical.async.fromURL(raneyUrl + page, { headers: baseHeaders });
+                const pageEvents = Object.values(pageData).filter(e => e.type === 'VEVENT');
+                console.log(`  → Raney page ${page}: ${pageEvents.length} VEVENTs`);
+                if (pageEvents.length === 0) break;
+                let newCount = 0;
+                for (const [key, val] of Object.entries(pageData)) {
+                    if (val.type === 'VEVENT') {
+                        const uid = val.uid || key;
+                        if (!allRaneyEvents[uid]) newCount++;
+                        allRaneyEvents[uid] = val;
+                    }
+                }
+                if (pageEvents.length < 30 || newCount === 0) break;
+            } catch (err) {
+                console.log(`  → Raney page ${page} failed: ${err.message}`);
+                break;
+            }
+        }
+
+        let raneyCount = 0;
+        for (const ev of Object.values(allRaneyEvents)) {
+            const eventDate = new Date(ev.start);
+            if (isNaN(eventDate.getTime()) || eventDate < pastDate || eventDate >= futureDate) continue;
+            const title = (ev.summary || 'Raney Cellars Event').trim();
+            events.push({
+                title,
+                date: eventDate.toISOString(),
+                endTime: resolveEndTime({ origStart: ev.start, origEnd: ev.end, instanceStart: eventDate }),
+                location: ev.location || 'Raney Cellars Brewing, 11 Manor Ave',
+                description: ev.description || '',
+                tags: ['Raney Cellars'], price: '', ticketLink: '',
+                sourceLink: ev.url || 'https://www.raneycellarsbrewing.com/events/'
+            });
+            raneyCount++;
+        }
+        console.log(`✅ Raney Cellars: ${raneyCount} events`);
+    } catch (e) { console.error("❌ Raney Cellars error:", e.message); }
+
+
     // ===== 6b. PENN MANOR COMMUNITY EVENTS — hand-curated overrides =====
     //
     // Penn Manor's community page (https://www.pennmanor.net/community/) lists
@@ -5267,6 +5322,8 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                 // just not counted on the dashboard.
                 phantomPower: deduped.filter(e => e.location === 'Phantom Power').length,
                 community: bySourceCount('Community'),
+                manor: bySourceCount('Manor'),
+                raneyCellars: bySourceCount('Raney Cellars'),
                 // Enrichment count (not events). Number of MU athletic events
                 // that got a Hudl/PSAC streamLink this run. Watched by the
                 // status dashboard's per-source degradation detector — the
@@ -5297,7 +5354,9 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                         latest: new Date(Math.max(...stamps)).toISOString()
                     };
                 })(),
-                community: dateRangeFor('Community')
+                community: dateRangeFor('Community'),
+                manor: dateRangeFor('Manor'),
+                raneyCellars: dateRangeFor('Raney Cellars')
             },
             // Stale-source detection. For each source, compute the newest event
             // date currently in the data, then compare against the same source's
@@ -5335,7 +5394,9 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                         const stamps = m.map(e => new Date(e.date).getTime()).filter(Number.isFinite);
                         return stamps.length === 0 ? null : new Date(Math.max(...stamps)).toISOString();
                     })(),
-                    community: dateRangeFor('Community')?.latest
+                    community: dateRangeFor('Community')?.latest,
+                    manor: dateRangeFor('Manor')?.latest,
+                    raneyCellars: dateRangeFor('Raney Cellars')?.latest
                 };
                 for (const [key, latestIso] of Object.entries(newestPerSource)) {
                     if (!latestIso) { out[key] = null; continue; }

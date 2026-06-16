@@ -7042,20 +7042,20 @@ window.submitEvent = function() {
     btn.textContent = 'Submitting...';
     btn.disabled = true;
 
-    // Date and Time on the Google Form are plain short-answer TEXT questions
-    // (confirmed by the prefill URL: entry.885260694=2026-06-19, not _year/_month/
-    // _day). Post the raw <input> values through as-is. The old _year/_month/_day +
-    // _hour/_minute composites targeted fields that don't exist on a text question,
-    // so Google silently dropped every date/time — that was the bug.
+    // Start/End Date are Date questions and Start/End Time are Time questions on the
+    // Form. Post the raw <input> value to the BARE entry ID — entry.885260694=2026-06-19
+    // and entry.499967239=05:11 (the form's "Get pre-filled link" generates exactly this).
+    // Do NOT use Google's composite entry.NNN_year/_month/_day or _hour/_minute form;
+    // these questions don't accept it here and the value gets dropped.
     const formData = new URLSearchParams();
     formData.append('entry.490875700', name);
     formData.append('entry.1500961889', desc);
     formData.append('entry.912188599', audience);        // Audience: Millersville Marauders | Townies | Both
     formData.append('entry.1083341292', kids);           // Is this an event for children? Yes | No
-    formData.append('entry.885260694', date);            // Start Date  (text question, raw YYYY-MM-DD)
-    formData.append('entry.499967239', time);            // Start Time  (text question, raw HH:MM 24h)
-    if(endDate) formData.append('entry.884959691', endDate);   // End Date  (text question)
-    if(endTime) formData.append('entry.1349393568', endTime);  // End Time  (text question)
+    formData.append('entry.885260694', date);            // Start Date  (Date question, raw YYYY-MM-DD)
+    formData.append('entry.499967239', time);            // Start Time  (Time question, raw HH:MM 24h)
+    if(endDate) formData.append('entry.884959691', endDate);   // End Date  (Date question)
+    if(endTime) formData.append('entry.1349393568', endTime);  // End Time  (Time question)
     formData.append('entry.461670075', location);
     formData.append('entry.6546809', email);
     formData.append('entry.946075783', link);

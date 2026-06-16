@@ -3775,7 +3775,62 @@ window.clearSportsFilters=function(){
     window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
+// ── Sports-page camps block (townie-only) ───────────────────────
+// The Sports page goes quiet in summer (MU/PM seasons are over) — but that's
+// exactly when youth sports camps run, so for LOCAL viewers we surface the
+// athletic camps here as a standalone section above the game list. Deliberately
+// decoupled from the game render: it lives in its own container
+// (#sp-camps-section, created once and inserted before #sp-events-container),
+// does NOT participate in the All/PM/MU + sport-type filters, the favorites
+// filter, or the "Load more games (N)" count, and self-hides whenever there are
+// no upcoming camps (so it simply vanishes in-season). Sports camps are the
+// Athletic-Camp subset of program signups (isProgramSignup) — tech camps and
+// Arts Smarts stay on the home Upcoming Signups box only. Marauders/unset
+// viewers never see it (college kids aren't the audience for youth camps).
+function renderSportsCamps() {
+    const anchor = document.getElementById('sp-events-container');
+    if (!anchor || !anchor.parentNode) return;
+    // Create the section container once, parked right above the game list.
+    let section = document.getElementById('sp-camps-section');
+    if (!section) {
+        section = document.createElement('div');
+        section.id = 'sp-camps-section';
+        anchor.parentNode.insertBefore(section, anchor);
+    }
+    const hide = () => { section.style.display = 'none'; section.innerHTML = ''; };
+
+    // Locals only — the default (Marauder/unset) viewer never sees youth camps.
+    const isTownie = muAffiliation === 'townie';
+    if (!isTownie || !allEvents || allEvents.length === 0) return hide();
+
+    const nowMs = Date.now();
+    const camps = allEvents
+        .filter(c => isProgramSignup(c) && (c.tags || []).includes('Athletic Camp'))
+        .map(c => ({ ...c, _start: new Date(c.date).getTime() }))
+        .filter(c => !isNaN(c._start) && c._start >= nowMs)   // upcoming only → self-hides off-season
+        .sort((a, b) => a._start - b._start);
+    if (camps.length === 0) return hide();
+
+    // Reuse the canonical event card in events-page mode (Family badge + a
+    // "📝 Register Now" CTA, not a sports "Away" badge). The cloned object adds
+    // registrationRequired so buildEventCard routes to the register CTA via
+    // getRegisterUrl; the original event in allEvents is left untouched.
+    const cards = camps
+        .map(c => buildEventCard({ ...c, registrationRequired: true }, false))
+        .join('');
+    section.style.display = '';
+    section.innerHTML =
+        '<div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin:4px 0 12px;">'
+            + '<span style="font-size:1.05rem;font-weight:700;color:var(--text);">⚾ Sports Camps for Kids</span>'
+            + '<span style="font-size:0.8rem;color:var(--text-muted);">summer camps for local kids — register now</span>'
+        + '</div>'
+        + '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:14px;margin-bottom:24px;">'
+            + cards
+        + '</div>';
+}
+
 function renderSports(){
+    renderSportsCamps();
     // Loading state: events.json hasn't returned yet. Show skeletons in the
     // sports container so the page doesn't flash empty.
     if (!allEvents || allEvents.length === 0) {

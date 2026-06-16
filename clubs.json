@@ -22,8 +22,7 @@
     "name": "African Caribbean Student Association",
     "category": "Social",
     "categories": [
-      "Social",
-      "Performance"
+      "Social"
     ],
     "shortName": "ACSA",
     "id": ""
@@ -349,8 +348,10 @@
   },
   {
     "name": "Campus Recreation",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1706,12 +1707,10 @@
   },
   {
     "name": "Society of Motion Picture and Television Engineers",
-    "category": "Academic",
-    "categories": [
-      "Academic"
-    ],
-    "shortName": "SMPTE-MU",
-    "id": "smpte"
+    "category": "",
+    "categories": [],
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Society of Physics Students",

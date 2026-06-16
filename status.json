@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-16T15:10:56.938Z",
-  "totalEvents": 836,
+  "generatedAt": "2026-06-16T15:24:13.320Z",
+  "totalEvents": 878,
   "withDescription": 201,
   "withImage": 12,
   "familyFriendly": 53,
@@ -14,7 +14,7 @@
     "vfw": 4,
     "phantomPower": 12,
     "community": 14,
-    "manor": 0,
+    "manor": 42,
     "raneyCellars": 11,
     "muHudlBroadcasts": 0
   },
@@ -51,7 +51,10 @@
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-06-24T12:30:00.000Z",
+      "latest": "2027-06-07T23:00:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-04-04T16:00:00.000Z",
       "latest": "2026-06-25T20:00:00.000Z"
@@ -90,7 +93,10 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 11
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-06-07",
+      "daysSinceMoved": 0
+    },
     "raneyCellars": {
       "newest": "2026-06-25",
       "daysSinceMoved": 0
@@ -114,79 +120,79 @@
     "pendingPast": 0,
     "pendingBySource": {},
     "stalePast": 2,
-    "lastSyncAt": "2026-06-16T15:09:22.291Z"
+    "lastSyncAt": "2026-06-16T15:22:34.451Z"
   },
   "recentlyAdded": [
     {
-      "key": "Cousins Maine Lobster 1-7pm|2026-04-04T16:00:00.000Z",
-      "firstSeenAt": "2026-06-16T14:58:21.827Z",
-      "title": "Cousins Maine Lobster 1-7pm",
-      "source": "Raney Cellars",
-      "date": "2026-04-04T16:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-06-24T12:30:00.000Z",
+      "firstSeenAt": "2026-06-16T15:24:13.317Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-06-24T12:30:00.000Z"
     },
     {
-      "key": "Walk O Taco|2026-04-23T20:00:00.000Z",
-      "firstSeenAt": "2026-06-16T14:58:21.827Z",
-      "title": "Walk O Taco",
-      "source": "Raney Cellars",
-      "date": "2026-04-23T20:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-07-01T23:00:00.000Z",
+      "firstSeenAt": "2026-06-16T15:24:13.317Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-07-01T23:00:00.000Z"
     },
     {
-      "key": "Eat.Drifters|2026-05-14T20:00:00.000Z",
-      "firstSeenAt": "2026-06-16T14:58:21.827Z",
-      "title": "Eat.Drifters",
-      "source": "Raney Cellars",
-      "date": "2026-05-14T20:00:00.000Z"
+      "key": "Supervisors Meeting|2026-07-06T23:00:00.000Z",
+      "firstSeenAt": "2026-06-16T15:24:13.317Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-07-06T23:00:00.000Z"
     },
     {
-      "key": "Ember Food Truck|2026-05-24T17:00:00.000Z",
-      "firstSeenAt": "2026-06-16T14:58:21.827Z",
-      "title": "Ember Food Truck",
-      "source": "Raney Cellars",
-      "date": "2026-05-24T17:00:00.000Z"
+      "key": "Planning Commission|2026-07-13T23:00:00.000Z",
+      "firstSeenAt": "2026-06-16T15:24:13.317Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-07-13T23:00:00.000Z"
     },
     {
-      "key": "Gourmet Julies Way|2026-05-28T00:00:00.000Z",
-      "firstSeenAt": "2026-06-16T14:58:21.827Z",
-      "title": "Gourmet Julies Way",
-      "source": "Raney Cellars",
-      "date": "2026-05-28T00:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
+      "firstSeenAt": "2026-06-16T15:24:13.317Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-07-29T12:30:00.000Z"
     },
     {
-      "key": "MUSIC trivia with DJ Kate|2026-05-29T22:00:00.000Z",
-      "firstSeenAt": "2026-06-16T14:58:21.827Z",
-      "title": "MUSIC trivia with DJ Kate",
-      "source": "Raney Cellars",
-      "date": "2026-05-29T22:00:00.000Z"
+      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
+      "firstSeenAt": "2026-06-16T15:24:13.317Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-08-03T23:00:00.000Z"
     },
     {
-      "key": "Extra Rice 4PM|2026-06-11T20:00:00.000Z",
-      "firstSeenAt": "2026-06-16T14:58:21.827Z",
-      "title": "Extra Rice 4PM",
-      "source": "Raney Cellars",
-      "date": "2026-06-11T20:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
+      "firstSeenAt": "2026-06-16T15:24:13.317Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-08-05T23:00:00.000Z"
     },
     {
-      "key": "Oh My Cod Vegan Seafood|2026-06-18T20:00:00.000Z",
-      "firstSeenAt": "2026-06-16T14:58:21.827Z",
-      "title": "Oh My Cod Vegan Seafood",
-      "source": "Raney Cellars",
-      "date": "2026-06-18T20:00:00.000Z"
+      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
+      "firstSeenAt": "2026-06-16T15:24:13.317Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-08-10T23:00:00.000Z"
     },
     {
-      "key": "Thurday Trivia 6PM|2026-06-18T22:00:00.000Z",
-      "firstSeenAt": "2026-06-16T14:58:21.827Z",
-      "title": "Thurday Trivia 6PM",
-      "source": "Raney Cellars",
-      "date": "2026-06-18T22:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
+      "firstSeenAt": "2026-06-16T15:24:13.317Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-08-26T12:30:00.000Z"
     },
     {
-      "key": "Rlocal Pizza|2026-06-21T16:00:00.000Z",
-      "firstSeenAt": "2026-06-16T14:58:21.827Z",
-      "title": "Rlocal Pizza",
-      "source": "Raney Cellars",
-      "date": "2026-06-21T16:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-06-16T15:24:13.317Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-09-02T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 42
 }

@@ -128,6 +128,17 @@
   },
   "observations": [
     {
+      "time": "11:00",
+      "temp": "69",
+      "dewpoint": "45",
+      "rh": "42",
+      "windDir": "SW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "9.4",
+      "condition": "None"
+    },
+    {
       "time": "10:00",
       "temp": "69",
       "dewpoint": "45",
@@ -181,22 +192,11 @@
       "precip": "0.00",
       "visibility": "9.7",
       "condition": "None"
-    },
-    {
-      "time": "05:00",
-      "temp": "54",
-      "dewpoint": "49",
-      "rh": "84",
-      "windDir": "NW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "9.7",
-      "condition": "None"
     }
   ],
   "discussion": {
     "headline": "some storms on thursday, then a nice first weekend of summer",
-    "dateLine": "11:30 a.m. Tuesday, June 16, 2026",
+    "dateLine": "11:00 a.m. Tuesday, June 16, 2026",
     "excerpt": "As expected, strong-to-severe thunderstorms rumbled through northern MD, southeastern PA and the Lower Susquehanna Valley Sunday evening, and one may have produced an EF-0 or EF-1 tornado near Kirkwood in southern Lancaster County. In addition, there were a few dozen reports of wind damage across the region. Most areas picked up 0.25-0.75\" of beneficial rain from the event with locally higher amounts of 1-2\" across southern York and Lancaster Counties (see below). …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
@@ -235,5 +235,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-06-16T14:54:29.483Z"
+  "updated": "2026-06-16T15:09:23.069Z"
 }

@@ -3054,8 +3054,16 @@ async function runScraper() {
             events.push({
                 title,
                 date: eventDate.toISOString(),
-                endTime: resolveEndTime({ origStart: ev.start, origEnd: ev.end, instanceStart: eventDate }),
-                location: ev.location || 'Raney Cellars Brewing, 11 Manor Ave',
+                endTime: (() => {
+                    const resolved = resolveEndTime({ origStart: ev.start, origEnd: ev.end, instanceStart: eventDate });
+                    if (!resolved) return undefined;
+                    // Guard against WordPress data-entry errors (e.g. end date accidentally
+                    // set to next day). Cap timed Raney events at 12h; anything longer is
+                    // treated as no explicit end and falls back to the render-time default.
+                    const durMs = new Date(resolved).getTime() - eventDate.getTime();
+                    return durMs <= 12 * 60 * 60 * 1000 ? resolved : undefined;
+                })(),
+                location: ev.location || 'Raney Cellars Brewing',
                 description: ev.description || '',
                 tags: ['Raney Cellars'], price: '', ticketLink: '',
                 sourceLink: ev.url || 'https://www.raneycellarsbrewing.com/events/'

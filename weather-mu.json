@@ -1,10 +1,10 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Wednesday, June 17, 2026 at 07:28 AM (Kyle Elliott, Meteorologist)",
+    "issued": "Wednesday, June 17, 2026 at 12:32 PM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "Today",
+        "period": "This afternoon",
         "text": "Partly sunny and warmer with an isolated shower. High: 82-86"
       },
       {
@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "13:00",
+      "temp": "80",
+      "dewpoint": "62",
+      "rh": "54",
+      "windDir": "SW",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "9.3",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "78",
+      "dewpoint": "64",
+      "rh": "62",
+      "windDir": "SW",
+      "windSpeed": "6",
+      "precip": "0.00",
+      "visibility": "9.8",
+      "condition": "None"
+    },
+    {
       "time": "11:00",
       "temp": "73",
       "dewpoint": "63",
@@ -169,28 +191,6 @@
       "windSpeed": "3",
       "precip": "0.00",
       "visibility": "9.1",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "62",
-      "dewpoint": "59",
-      "rh": "88",
-      "windDir": "NE",
-      "windSpeed": "0",
-      "precip": "0.00",
-      "visibility": "8.3",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "58",
-      "dewpoint": "57",
-      "rh": "95",
-      "windDir": "NE",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "8.5",
       "condition": "None"
     }
   ],
@@ -235,5 +235,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-06-17T15:38:52.295Z"
+  "updated": "2026-06-17T17:12:34.408Z"
 }

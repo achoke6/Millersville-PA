@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-06-16T22:12:07.708Z",
-  "totalEvents": 995,
-  "withDescription": 320,
-  "withImage": 105,
+  "generatedAt": "2026-06-17T00:16:21.896Z",
+  "totalEvents": 946,
+  "withDescription": 316,
+  "withImage": 104,
   "familyFriendly": 54,
-  "eventsToday": 1,
+  "eventsToday": 0,
   "sources": {
     "muAthletics": 211,
-    "muCalendar": 149,
-    "muGetInvolved": 219,
+    "muCalendar": 147,
+    "muGetInvolved": 215,
     "pennManor": 223,
     "borough": 105,
     "vfw": 4,
-    "phantomPower": 12,
+    "phantomPower": 11,
     "community": 14,
-    "manor": 42,
+    "manor": 0,
     "raneyCellars": 11,
     "muHudlBroadcasts": 0
   },
@@ -24,11 +24,11 @@
       "latest": "2027-03-12T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-03-18T15:30:00.000Z",
+      "earliest": "2026-03-19T11:30:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-03-18T10:00:00.000Z",
+      "earliest": "2026-03-19T13:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
@@ -44,17 +44,14 @@
       "latest": "2026-09-11T17:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-06-16T23:00:00.000Z",
+      "earliest": "2026-06-20T00:00:00.000Z",
       "latest": "2026-08-02T00:00:00.000Z"
     },
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-06-24T12:30:00.000Z",
-      "latest": "2027-06-07T23:00:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-04-04T16:00:00.000Z",
       "latest": "2026-06-25T20:00:00.000Z"
@@ -93,10 +90,7 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 11
     },
-    "manor": {
-      "newest": "2027-06-07",
-      "daysSinceMoved": 0
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-06-25",
       "daysSinceMoved": 0
@@ -120,78 +114,78 @@
     "pendingPast": 0,
     "pendingBySource": {},
     "stalePast": 2,
-    "lastSyncAt": "2026-06-16T22:10:07.427Z"
+    "lastSyncAt": "2026-06-17T00:14:59.112Z"
   },
   "recentlyAdded": [
     {
-      "key": "Traffic Commission Meeting|2026-06-24T12:30:00.000Z",
-      "firstSeenAt": "2026-06-16T19:44:46.545Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-06-24T12:30:00.000Z"
+      "key": "Slip and Score Weekly Meetings|2026-04-14T20:00:00.000Z",
+      "firstSeenAt": "2026-06-16T19:35:55.079Z",
+      "title": "Slip and Score Weekly Meetings",
+      "source": "MU",
+      "date": "2026-04-14T20:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-07-01T23:00:00.000Z",
-      "firstSeenAt": "2026-06-16T19:44:46.545Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-07-01T23:00:00.000Z"
+      "key": "Chick-Fil-A Giftcard Giveaway|2026-04-22T16:00:00.000Z",
+      "firstSeenAt": "2026-06-16T19:35:55.079Z",
+      "title": "Chick-Fil-A Giftcard Giveaway",
+      "source": "MU",
+      "date": "2026-04-22T16:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-07-06T23:00:00.000Z",
-      "firstSeenAt": "2026-06-16T19:44:46.545Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-07-06T23:00:00.000Z"
+      "key": "Studio Hours|2026-04-22T20:00:00.000Z",
+      "firstSeenAt": "2026-06-16T19:35:55.079Z",
+      "title": "Studio Hours",
+      "source": "MU",
+      "date": "2026-04-22T20:00:00.000Z"
     },
     {
-      "key": "Planning Commission|2026-07-13T23:00:00.000Z",
-      "firstSeenAt": "2026-06-16T19:44:46.545Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-07-13T23:00:00.000Z"
+      "key": "Caribbean Fest|2026-04-22T20:30:00.000Z",
+      "firstSeenAt": "2026-06-16T19:35:55.079Z",
+      "title": "Caribbean Fest",
+      "source": "MU",
+      "date": "2026-04-22T20:30:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
-      "firstSeenAt": "2026-06-16T19:44:46.545Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-07-29T12:30:00.000Z"
+      "key": "BGC Weekly Meeting|2026-04-22T22:00:00.000Z",
+      "firstSeenAt": "2026-06-16T19:35:55.079Z",
+      "title": "BGC Weekly Meeting",
+      "source": "MU",
+      "date": "2026-04-22T22:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
-      "firstSeenAt": "2026-06-16T19:44:46.545Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-08-03T23:00:00.000Z"
+      "key": "Marauder Music Productions General Meeting|2026-04-22T22:30:00.000Z",
+      "firstSeenAt": "2026-06-16T19:35:55.079Z",
+      "title": "Marauder Music Productions General Meeting",
+      "source": "MU",
+      "date": "2026-04-22T22:30:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
-      "firstSeenAt": "2026-06-16T19:44:46.545Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-08-05T23:00:00.000Z"
+      "key": "Millersville Mens Club Soccer vs Lancaster Bible College|2026-04-22T23:30:00.000Z",
+      "firstSeenAt": "2026-06-16T19:35:55.079Z",
+      "title": "Millersville Mens Club Soccer vs Lancaster Bible College",
+      "source": "MU",
+      "date": "2026-04-22T23:30:00.000Z"
     },
     {
-      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
-      "firstSeenAt": "2026-06-16T19:44:46.545Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-08-10T23:00:00.000Z"
+      "key": "Golf Cart Trivia|2026-04-23T13:30:00.000Z",
+      "firstSeenAt": "2026-06-16T19:35:55.079Z",
+      "title": "Golf Cart Trivia",
+      "source": "MU",
+      "date": "2026-04-23T13:30:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
-      "firstSeenAt": "2026-06-16T19:44:46.545Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-08-26T12:30:00.000Z"
+      "key": "Mentorship Recognition and Recruitment Day|2026-04-23T15:00:00.000Z",
+      "firstSeenAt": "2026-06-16T19:35:55.079Z",
+      "title": "Mentorship Recognition and Recruitment Day",
+      "source": "MU",
+      "date": "2026-04-23T15:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
-      "firstSeenAt": "2026-06-16T19:44:46.545Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-09-02T23:00:00.000Z"
+      "key": "Know Your Options: Discover Callisto|2026-04-23T16:00:00.000Z",
+      "firstSeenAt": "2026-06-16T19:35:55.079Z",
+      "title": "Know Your Options: Discover Callisto",
+      "source": "MU",
+      "date": "2026-04-23T16:00:00.000Z"
     }
   ],
   "addedLastRun": 0

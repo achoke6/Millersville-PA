@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-17T18:16:20.086Z",
-  "totalEvents": 989,
+  "generatedAt": "2026-06-17T21:06:19.563Z",
+  "totalEvents": 990,
   "withDescription": 316,
   "withImage": 105,
   "familyFriendly": 54,
@@ -10,7 +10,7 @@
     "muCalendar": 147,
     "muGetInvolved": 215,
     "pennManor": 223,
-    "borough": 105,
+    "borough": 106,
     "vfw": 4,
     "phantomPower": 12,
     "community": 14,
@@ -44,7 +44,7 @@
       "latest": "2026-09-11T17:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-06-20T00:00:00.000Z",
+      "earliest": "2026-06-21T00:00:00.000Z",
       "latest": "2026-08-15T00:00:00.000Z"
     },
     "community": {
@@ -103,7 +103,7 @@
     }
   },
   "sports": {
-    "total": 402,
+    "total": 403,
     "scored": 14,
     "wins": 4,
     "losses": 9,
@@ -120,9 +120,30 @@
     "pendingPast": 0,
     "pendingBySource": {},
     "stalePast": 2,
-    "lastSyncAt": "2026-06-17T18:14:19.712Z"
+    "lastSyncAt": "2026-06-17T21:04:31.025Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Account Maintenance Update|2026-06-18T08:47:50.000Z",
+      "firstSeenAt": "2026-06-17T21:06:19.560Z",
+      "title": "Account Maintenance Update",
+      "source": "Borough",
+      "date": "2026-06-18T08:47:50.000Z"
+    },
+    {
+      "key": "Tantric|2026-07-18T23:00:00.000Z",
+      "firstSeenAt": "2026-06-17T21:06:19.560Z",
+      "title": "Tantric",
+      "source": "Other",
+      "date": "2026-07-18T23:00:00.000Z"
+    },
+    {
+      "key": "Boys 7/8/9th Football @ Solanco High School|2026-09-30T20:00:00.000Z",
+      "firstSeenAt": "2026-06-17T21:06:19.560Z",
+      "title": "Boys 7/8/9th Football @ Solanco High School",
+      "source": "PM",
+      "date": "2026-09-30T20:00:00.000Z"
+    },
     {
       "key": "Traffic Commission Meeting|2026-06-24T12:30:00.000Z",
       "firstSeenAt": "2026-06-17T14:30:20.462Z",
@@ -171,28 +192,7 @@
       "title": "Zoning Hearing Board",
       "source": "Manor",
       "date": "2026-08-05T23:00:00.000Z"
-    },
-    {
-      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
-      "firstSeenAt": "2026-06-17T14:30:20.462Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-08-10T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
-      "firstSeenAt": "2026-06-17T14:30:20.462Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-08-26T12:30:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
-      "firstSeenAt": "2026-06-17T14:30:20.462Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-09-02T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 3
 }

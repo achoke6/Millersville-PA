@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-06-17T18:16:20.086Z",
-  "totalEvents": 989,
-  "withDescription": 316,
+  "generatedAt": "2026-06-18T12:26:16.493Z",
+  "totalEvents": 985,
+  "withDescription": 311,
   "withImage": 105,
   "familyFriendly": 54,
-  "eventsToday": 1,
+  "eventsToday": 5,
   "sources": {
     "muAthletics": 211,
-    "muCalendar": 147,
-    "muGetInvolved": 215,
+    "muCalendar": 144,
+    "muGetInvolved": 213,
     "pennManor": 223,
-    "borough": 105,
+    "borough": 106,
     "vfw": 4,
     "phantomPower": 12,
     "community": 14,
@@ -24,16 +24,16 @@
       "latest": "2027-03-12T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-03-19T11:30:00.000Z",
+      "earliest": "2026-03-20T00:00:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-03-19T13:00:00.000Z",
+      "earliest": "2026-03-20T15:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
       "earliest": "2026-05-04T23:00:00.000Z",
-      "latest": "2026-09-30T20:00:00.000Z"
+      "latest": "2026-09-29T21:15:00.000Z"
     },
     "borough": {
       "earliest": "2026-03-24T23:00:00.000Z",
@@ -44,7 +44,7 @@
       "latest": "2026-09-11T17:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-06-20T00:00:00.000Z",
+      "earliest": "2026-06-21T00:00:00.000Z",
       "latest": "2026-08-15T00:00:00.000Z"
     },
     "community": {
@@ -63,27 +63,27 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-03-12",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 14
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 14
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 14
     },
     "pennManor": {
-      "newest": "2026-09-30",
-      "daysSinceMoved": 12
+      "newest": "2026-09-29",
+      "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2027-06-12",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     },
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 14
     },
     "phantomPower": {
       "newest": "2026-08-15",
@@ -91,19 +91,19 @@
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 12
+      "daysSinceMoved": 13
     },
     "manor": {
       "newest": "2027-06-07",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "raneyCellars": {
       "newest": "2026-06-25",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     }
   },
   "sports": {
-    "total": 402,
+    "total": 403,
     "scored": 14,
     "wins": 4,
     "losses": 9,
@@ -120,79 +120,79 @@
     "pendingPast": 0,
     "pendingBySource": {},
     "stalePast": 2,
-    "lastSyncAt": "2026-06-17T18:14:19.712Z"
+    "lastSyncAt": "2026-06-18T12:24:34.113Z"
   },
   "recentlyAdded": [
     {
-      "key": "Traffic Commission Meeting|2026-06-24T12:30:00.000Z",
-      "firstSeenAt": "2026-06-17T14:30:20.462Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-06-24T12:30:00.000Z"
+      "key": "Girls JV Soccer vs Central Dauphin High School|2026-08-22T14:00:00.000Z",
+      "firstSeenAt": "2026-06-18T12:26:16.490Z",
+      "title": "Girls JV Soccer vs Central Dauphin High School",
+      "source": "PM",
+      "date": "2026-08-22T14:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-07-01T23:00:00.000Z",
-      "firstSeenAt": "2026-06-17T14:30:20.462Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-07-01T23:00:00.000Z"
+      "key": "Girls Varsity Soccer vs Central Dauphin High School|2026-08-22T14:00:00.000Z",
+      "firstSeenAt": "2026-06-18T12:26:16.490Z",
+      "title": "Girls Varsity Soccer vs Central Dauphin High School",
+      "source": "PM",
+      "date": "2026-08-22T14:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-07-06T23:00:00.000Z",
-      "firstSeenAt": "2026-06-17T14:30:20.462Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-07-06T23:00:00.000Z"
+      "key": "Girls 7/8/9th Cross Country vs Cedar Crest High School|2026-09-29T20:15:00.000Z",
+      "firstSeenAt": "2026-06-18T12:26:16.490Z",
+      "title": "Girls 7/8/9th Cross Country vs Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-09-29T20:15:00.000Z"
     },
     {
-      "key": "Planning Commission|2026-07-13T23:00:00.000Z",
-      "firstSeenAt": "2026-06-17T14:30:20.462Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-07-13T23:00:00.000Z"
+      "key": "Boys 7/8/9th Cross Country vs Cedar Crest High School|2026-09-29T20:15:00.000Z",
+      "firstSeenAt": "2026-06-18T12:26:16.490Z",
+      "title": "Boys 7/8/9th Cross Country vs Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-09-29T20:15:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
-      "firstSeenAt": "2026-06-17T14:30:20.462Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-07-29T12:30:00.000Z"
+      "key": "Boys Varsity Cross Country vs Cedar Crest High School|2026-09-29T20:45:00.000Z",
+      "firstSeenAt": "2026-06-18T12:26:16.490Z",
+      "title": "Boys Varsity Cross Country vs Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-09-29T20:45:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
-      "firstSeenAt": "2026-06-17T14:30:20.462Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-08-03T23:00:00.000Z"
+      "key": "Girls Varsity Cross Country vs Cedar Crest High School|2026-09-29T21:15:00.000Z",
+      "firstSeenAt": "2026-06-18T12:26:16.490Z",
+      "title": "Girls Varsity Cross Country vs Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-09-29T21:15:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
-      "firstSeenAt": "2026-06-17T14:30:20.462Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-08-05T23:00:00.000Z"
+      "key": "Battle Of Millersville Vol.1 - Tribute Fest|2026-06-21T00:00:00.000Z",
+      "firstSeenAt": "2026-06-18T08:47:30.293Z",
+      "title": "Battle Of Millersville Vol.1 - Tribute Fest",
+      "source": "Other",
+      "date": "2026-06-21T00:00:00.000Z"
     },
     {
-      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
-      "firstSeenAt": "2026-06-17T14:30:20.462Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-08-10T23:00:00.000Z"
+      "key": "Brotality w. Quantifier, Making A Mockery, & New Damage|2026-06-24T23:00:00.000Z",
+      "firstSeenAt": "2026-06-18T08:47:30.293Z",
+      "title": "Brotality w. Quantifier, Making A Mockery, & New Damage",
+      "source": "Other",
+      "date": "2026-06-24T23:00:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
-      "firstSeenAt": "2026-06-17T14:30:20.462Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-08-26T12:30:00.000Z"
+      "key": "Mentalia's Stupid Drag Show|2026-06-26T00:00:00.000Z",
+      "firstSeenAt": "2026-06-18T08:47:30.293Z",
+      "title": "Mentalia's Stupid Drag Show",
+      "source": "Other",
+      "date": "2026-06-26T00:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
-      "firstSeenAt": "2026-06-17T14:30:20.462Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-09-02T23:00:00.000Z"
+      "key": "Stone Horses w. The Blues Vultures|2026-06-27T00:00:00.000Z",
+      "firstSeenAt": "2026-06-18T08:47:30.293Z",
+      "title": "Stone Horses w. The Blues Vultures",
+      "source": "Other",
+      "date": "2026-06-27T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 6
 }

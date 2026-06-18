@@ -113,7 +113,8 @@ jobs:
 
       # Sync the business Directory from its Google Sheet (single source of
       # truth, maintained by hand in Sheets). Regenerates restaurants.json,
-      # services.json, and association.json from one flat sheet — see
+      # services.json, housing.json, campus-cupboard.json, and association.json
+      # from one flat sheet — see
       # scripts/sync-directory.js. The commit step below picks these up via
       # `git add *.json` like any other data file.
       #

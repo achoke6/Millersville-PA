@@ -2245,6 +2245,7 @@ function applyAffiliation(value, clearFavs) {
     if (typeof renderSports === 'function') renderSports();
     if (typeof renderNewsUI === 'function') renderNewsUI();
     if (typeof renderPlaces === 'function') renderPlaces();
+    if (typeof pruneEmptyPlaceCategories === 'function') pruneEmptyPlaceCategories(); // audience-aware menu prune — re-run on affiliation change
     if (document.getElementById('feed-settings-overlay')) {
         window.closeFeedModal();
         if (typeof window.openFeedSettings === 'function') window.openFeedSettings();
@@ -3778,9 +3779,9 @@ window.clearSportsFilters=function(){
 // ── Sports-page camps block (townie-only) ───────────────────────
 // The Sports page goes quiet in summer (MU/PM seasons are over) — but that's
 // exactly when youth sports camps run, so for LOCAL viewers we surface the
-// athletic camps here as a standalone section above the game list. Deliberately
+// athletic camps here as a standalone section at the top of the page (above the date/filter bar). Deliberately
 // decoupled from the game render: it lives in its own container
-// (#sp-camps-section, created once and inserted before #sp-events-container),
+// (#sp-camps-section, created once and inserted before the sticky date/filter bar),
 // does NOT participate in the All/PM/MU + sport-type filters, the favorites
 // filter, or the "Load more games (N)" count, and self-hides whenever there are
 // no upcoming camps (so it simply vanishes in-season). Sports camps are the
@@ -3788,9 +3789,9 @@ window.clearSportsFilters=function(){
 // Arts Smarts stay on the home Upcoming Signups box only. Marauders/unset
 // viewers never see it (college kids aren't the audience for youth camps).
 function renderSportsCamps() {
-    const anchor = document.getElementById('sp-events-container');
+    const anchor = document.querySelector('#view-sports .sticky-nav-bar');
     if (!anchor || !anchor.parentNode) return;
-    // Create the section container once, parked right above the game list.
+    // Create the section container once, parked at the very top of the Sports view (above the date/filter bar).
     let section = document.getElementById('sp-camps-section');
     if (!section) {
         section = document.createElement('div');
@@ -5877,15 +5878,15 @@ async function loadPlaces(){try{
 
 // Hide directory category chips that have no listings at all, so the Filter menu
 // reflects what's actually in the directory instead of ~18 categories (many empty).
-// Data-level only: a category stays if ANY loaded place has it (or, for Housing, if
-// housing.json produced cards). Audience/MBA/Marauder-Gold emptiness is NOT considered
-// here — those still surface the friendly "Add it here" empty-state — so the menu
-// doesn't flicker as the viewer toggles modes. Reads each button's data-cat (set in
-// index.html). Idempotent; called once after the parallel data load in initApp().
+// Pruned by data + AUDIENCE: a category stays only if a loaded place in it is
+// visible to the current viewer (or, for Housing, if housing.json produced cards).
+// The MBA/Marauder-Gold lens toggles do NOT prune (transient — pruning on those
+// would flicker the menu). Reads each button's data-cat (set in index.html).
+// Idempotent; called after the parallel data load in initApp() and on affiliation switch.
 function pruneEmptyPlaceCategories(){
     const menu = document.getElementById('places-filter-menu');
     if (!menu) return;
-    const present = new Set((allPlaces || []).map(p => p && p.category).filter(Boolean));
+    const present = new Set((allPlaces || []).filter(p => placeAudienceVisible(p)).map(p => p && p.category).filter(Boolean));
     const hc = document.getElementById('housing-container');
     if (hc && hc.children.length) present.add('Housing');
     menu.querySelectorAll('.filter-menu-item').forEach(b => {

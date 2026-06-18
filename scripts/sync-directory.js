@@ -32,7 +32,7 @@
  *                  institution  = spotlight-only, no directory card (e.g. MU)
  *   landlord:    (housing only) leasing company shown as the card subtitle
  *   onCampus / marauderGold / verified / spotlight: "yes" (anything else = no)
- *   audience:    locals | students | both   (blank = both)
+ *   audience:    locals | marauders | both   (blank = both; "students"/"townies" also accepted)
  *
  * USAGE:
  *   DIRECTORY_SHEET_CSV_URL="https://docs.google.com/spreadsheets/d/<ID>/export?format=csv&gid=<GID>" \
@@ -142,6 +142,7 @@ async function main() {
       if (yes(get(row, 'marauderGold'))) o.marauderGold = true;
       if (yes(get(row, 'onCampus'))) o.onCampus = true;
       const phone = get(row, 'phone'); if (phone) o.phone = phone;
+      if (audience !== 'both') o.audience = audience;
       restaurants.push(o);
     } else if (type === 'service') {
       const o = { name, category: get(row, 'category'), address: get(row, 'address'),
@@ -149,10 +150,12 @@ async function main() {
       const website = get(row, 'website'); if (website) o.link = website;
       if (yes(get(row, 'marauderGold'))) o.marauderGold = true;
       if (yes(get(row, 'onCampus'))) o.onCampus = true;
+      if (audience !== 'both') o.audience = audience;
       services.push(o);
     } else if (type === 'housing') {
       const o = { name, landlord: get(row, 'landlord'), description: get(row, 'description') };
       const website = get(row, 'website'); if (website) o.link = website;
+      if (audience !== 'both') o.audience = audience;
       housing.push(o);
     } else if (type === 'cupboard') {
       // Static info only — the open/closed + seasonal-hours logic lives in

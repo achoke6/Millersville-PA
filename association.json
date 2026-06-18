@@ -3,7 +3,11 @@
   "associationName": "Millersville.APP Verified Businesses",
   "members": [
     {
-      "name": "Jack's Family Tavern & Restaurant",
+      "name": "House of Pizza",
+      "audience": "both"
+    },
+    {
+      "name": "VFW Post 7294",
       "audience": "both"
     },
     {
@@ -21,16 +25,6 @@
       "category": "Shopping"
     },
     {
-      "name": "Heritage Monuments",
-      "audience": "both",
-      "category": "Shopping"
-    },
-    {
-      "name": "Charles F. Snyder Funeral Home & Crematory",
-      "audience": "both",
-      "category": "Services"
-    },
-    {
       "name": "Gamber Physical Therapy & Fitness",
       "audience": "both",
       "category": "Health"
@@ -41,14 +35,13 @@
       "category": "Government"
     },
     {
-      "name": "The Mill at Manor Falls",
-      "audience": "both",
-      "category": "Venue"
-    },
-    {
       "name": "Student Lodging, Inc.",
       "audience": "marauders",
       "category": "Student Housing"
+    },
+    {
+      "name": "Raney Cellars",
+      "audience": "locals"
     }
   ],
   "spotlight": [

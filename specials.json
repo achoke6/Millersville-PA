@@ -47,120 +47,155 @@
     }
   },
   "John Herr's Village Market": {
-    "note": "Weekly deals: Thursday, June 11 through Wednesday, June 17",
+    "note": "Weekly deals: Thu Apr 30 - Wed May 6, 2026",
     "weekly": [
-      "Fresh Whole Chicken Legs (Value Pack) – $1.59/lb ($0.40/lb)",
-      "Red Ripe Cut Seedless Watermelon (whole or sliced) – $0.69/lb",
-      "Fresh Green Cabbage – $0.59/lb",
-      "Eastern Peaches (first of the season) – $1.69/lb",
-      "Coca-Cola or Sprite 12-pk 12-oz Cans (selected) – Buy 1 Get 1 Free"
+      "General Mills Cereal – $1.98 ea (Final price after rebate)",
+      "Throwback Thursdays Digital Coupons – Various items $1.28-$2.48 (Final prices after digital coupons)",
+      "Buy One Get One Free Sara Lee Bread – Free with purchase (BOGO)",
+      "Buy One Get One Free On The Border Tortilla Chips – Free with purchase (BOGO)",
+      "Buy One Get One Free Entenmann's Mini Muffins – Free with purchase (BOGO)"
     ],
-    "weeklyDateRange": "Thursday, June 11 through Wednesday, June 17",
+    "weeklyDateRange": "Thu Apr 30 - Wed May 6, 2026",
     "rawDeals": [
       {
-        "item": "Fresh Whole Chicken Legs (Value Pack)",
-        "salePrice": "$1.59/lb",
-        "regularPrice": "$1.99/lb",
-        "savings": "$0.40/lb",
-        "dateRange": "Thursday, June 11 through Wednesday, June 17"
+        "item": "General Mills Cereal",
+        "salePrice": "$1.98 ea",
+        "regularPrice": "",
+        "savings": "Final price after rebate",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
       },
       {
-        "item": "Red Ripe Cut Seedless Watermelon (whole or sliced)",
+        "item": "Throwback Thursdays Digital Coupons",
+        "salePrice": "Various items $1.28-$2.48",
+        "regularPrice": "",
+        "savings": "Final prices after digital coupons",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Buy One Get One Free Sara Lee Bread",
+        "salePrice": "Free with purchase",
+        "regularPrice": "",
+        "savings": "BOGO",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Buy One Get One Free On The Border Tortilla Chips",
+        "salePrice": "Free with purchase",
+        "regularPrice": "",
+        "savings": "BOGO",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Buy One Get One Free Entenmann's Mini Muffins",
+        "salePrice": "Free with purchase",
+        "regularPrice": "",
+        "savings": "BOGO",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Boneless Chuck Roast",
+        "salePrice": "$7.99/lb",
+        "regularPrice": "",
+        "savings": "Certified Angus Beef",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Boneless Top Sirloin Steaks",
+        "salePrice": "$8.99/lb",
+        "regularPrice": "",
+        "savings": "Value Pack",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Fresh Ground Italian Sausage",
+        "salePrice": "$2.49/lb",
+        "regularPrice": "",
+        "savings": "Less Amount $5.99/lb",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Bone-in Center Cut Pork Chops",
+        "salePrice": "$2.49/lb",
+        "regularPrice": "",
+        "savings": "Value Pack",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Hass Avocados",
+        "salePrice": "$0.98 ea",
+        "regularPrice": "$1.50 ea",
+        "savings": "Digital coupon",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Vidalia Onions",
+        "salePrice": "$1.48/lb",
+        "regularPrice": "",
+        "savings": "Digital coupon",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Sargento Shredded Cheese",
+        "salePrice": "$0.98",
+        "regularPrice": "$1.78",
+        "savings": "Digital coupon",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Margaritaville Salsa",
+        "salePrice": "$2.14",
+        "regularPrice": "",
+        "savings": "Digital coupon",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Food Club Cottage Cheese",
+        "salePrice": "$1.68",
+        "regularPrice": "",
+        "savings": "16 oz Selected",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Food Club Whipped Topping",
+        "salePrice": "$1.88",
+        "regularPrice": "",
+        "savings": "16 oz",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Banquet Stuffed Enchiladas",
+        "salePrice": "$7.98",
+        "regularPrice": "",
+        "savings": "26 oz Selected",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Simply Done Paper Bowls",
+        "salePrice": "$2.98",
+        "regularPrice": "",
+        "savings": "20 ct",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
+      },
+      {
+        "item": "Green Cabbage",
         "salePrice": "$0.69/lb",
         "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, June 11 through Wednesday, June 17"
+        "savings": "Fresh produce",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
       },
       {
-        "item": "Fresh Green Cabbage",
-        "salePrice": "$0.59/lb",
+        "item": "Organic Sweet Corn",
+        "salePrice": "$4.99",
         "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, June 11 through Wednesday, June 17"
+        "savings": "Bi-color 4 ct",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
       },
       {
-        "item": "Eastern Peaches (first of the season)",
+        "item": "Bartlett Pears",
         "salePrice": "$1.69/lb",
         "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, June 11 through Wednesday, June 17"
-      },
-      {
-        "item": "Coca-Cola or Sprite 12-pk 12-oz Cans (selected)",
-        "salePrice": "Buy 1 Get 1 Free",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, June 11 through Wednesday, June 17"
-      },
-      {
-        "item": "Fresh 80/20 Lean Ground Beef (Value Pack, store-made)",
-        "salePrice": "$5.99/lb",
-        "regularPrice": "$6.99/lb",
-        "savings": "$1.00/lb",
-        "dateRange": "Thursday, June 11 through Wednesday, June 17"
-      },
-      {
-        "item": "Green Zucchini or Yellow Summer Squash",
-        "salePrice": "$1.49/lb",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, June 11 through Wednesday, June 17"
-      },
-      {
-        "item": "Cabot Chunk or Cracker Cut Cheese (7-8 oz)",
-        "salePrice": "$1.98 (Digital Coupon)",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, June 11 through Wednesday, June 17"
-      },
-      {
-        "item": "Jack's Pizza (13.8-16.8 oz, selected)",
-        "salePrice": "Buy 1 Get 1 Free",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, June 11 through Wednesday, June 17"
-      },
-      {
-        "item": "Jif Peanut Butter (15-16 oz, selected)",
-        "salePrice": "$2.48",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, June 11 through Wednesday, June 17"
-      },
-      {
-        "item": "Fresh Broccoli Crowns",
-        "salePrice": "$1.99/lb",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, June 11 through Wednesday, June 17"
-      },
-      {
-        "item": "Large Lemons",
-        "salePrice": "3 for $2",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, June 11 through Wednesday, June 17"
-      },
-      {
-        "item": "Certified Angus Beef Boneless Bottom Round Roast",
-        "salePrice": "$5.49/lb",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, June 11 through Wednesday, June 17"
-      },
-      {
-        "item": "Sargento Sliced or Shredded Cheese (5-8 oz, Mix & Match)",
-        "salePrice": "$1.98 ea (buy 4)",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, June 11 through Wednesday, June 17"
-      },
-      {
-        "item": "Golden Ripe Pineapples",
-        "salePrice": "$2.99 ea",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, June 11 through Wednesday, June 17"
+        "savings": "Fresh produce",
+        "dateRange": "Thu Apr 30 - Wed May 6, 2026"
       }
     ]
   }

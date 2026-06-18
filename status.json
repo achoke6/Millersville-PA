@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-06-17T23:26:01.071Z",
-  "totalEvents": 990,
-  "withDescription": 316,
-  "withImage": 105,
+  "generatedAt": "2026-06-18T03:53:13.403Z",
+  "totalEvents": 973,
+  "withDescription": 311,
+  "withImage": 93,
   "familyFriendly": 54,
   "eventsToday": 1,
   "sources": {
     "muAthletics": 211,
-    "muCalendar": 147,
-    "muGetInvolved": 215,
+    "muCalendar": 144,
+    "muGetInvolved": 213,
     "pennManor": 223,
     "borough": 106,
     "vfw": 4,
-    "phantomPower": 12,
+    "phantomPower": 0,
     "community": 14,
     "manor": 42,
     "raneyCellars": 11,
@@ -24,11 +24,11 @@
       "latest": "2027-03-12T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-03-19T11:30:00.000Z",
+      "earliest": "2026-03-20T00:00:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-03-19T13:00:00.000Z",
+      "earliest": "2026-03-20T15:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
@@ -43,10 +43,7 @@
       "earliest": "2026-06-12T22:00:00.000Z",
       "latest": "2026-09-11T17:00:00.000Z"
     },
-    "phantomPower": {
-      "earliest": "2026-06-21T00:00:00.000Z",
-      "latest": "2026-08-15T00:00:00.000Z"
-    },
+    "phantomPower": null,
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
@@ -85,10 +82,7 @@
       "newest": "2026-09-11",
       "daysSinceMoved": 13
     },
-    "phantomPower": {
-      "newest": "2026-08-15",
-      "daysSinceMoved": 0
-    },
+    "phantomPower": null,
     "community": {
       "newest": "2027-04-16",
       "daysSinceMoved": 12
@@ -104,9 +98,9 @@
   },
   "sports": {
     "total": 403,
-    "scored": 14,
+    "scored": 12,
     "wins": 4,
-    "losses": 9,
+    "losses": 7,
     "ties": 1
   },
   "registrations": {
@@ -120,7 +114,7 @@
     "pendingPast": 0,
     "pendingBySource": {},
     "stalePast": 2,
-    "lastSyncAt": "2026-06-17T21:04:31.025Z"
+    "lastSyncAt": "2026-06-18T03:51:15.849Z"
   },
   "recentlyAdded": [
     {
@@ -129,13 +123,6 @@
       "title": "Account Maintenance Update",
       "source": "Borough",
       "date": "2026-06-18T08:47:50.000Z"
-    },
-    {
-      "key": "Tantric|2026-07-18T23:00:00.000Z",
-      "firstSeenAt": "2026-06-17T21:06:19.560Z",
-      "title": "Tantric",
-      "source": "Other",
-      "date": "2026-07-18T23:00:00.000Z"
     },
     {
       "key": "Boys 7/8/9th Football @ Solanco High School|2026-09-30T20:00:00.000Z",
@@ -192,6 +179,13 @@
       "title": "Zoning Hearing Board",
       "source": "Manor",
       "date": "2026-08-05T23:00:00.000Z"
+    },
+    {
+      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
+      "firstSeenAt": "2026-06-17T14:30:20.462Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-08-10T23:00:00.000Z"
     }
   ],
   "addedLastRun": 0

@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-06-18T12:26:16.493Z",
-  "totalEvents": 985,
+  "generatedAt": "2026-06-18T16:31:43.795Z",
+  "totalEvents": 983,
   "withDescription": 311,
   "withImage": 105,
   "familyFriendly": 54,
-  "eventsToday": 5,
+  "eventsToday": 4,
   "sources": {
     "muAthletics": 211,
     "muCalendar": 144,
     "muGetInvolved": 213,
-    "pennManor": 223,
-    "borough": 106,
+    "pennManor": 222,
+    "borough": 105,
     "vfw": 4,
     "phantomPower": 12,
     "community": 14,
@@ -33,7 +33,7 @@
     },
     "pennManor": {
       "earliest": "2026-05-04T23:00:00.000Z",
-      "latest": "2026-09-29T21:15:00.000Z"
+      "latest": "2026-09-29T21:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-03-24T23:00:00.000Z",
@@ -103,7 +103,7 @@
     }
   },
   "sports": {
-    "total": 403,
+    "total": 402,
     "scored": 14,
     "wins": 4,
     "losses": 9,
@@ -120,9 +120,16 @@
     "pendingPast": 0,
     "pendingBySource": {},
     "stalePast": 2,
-    "lastSyncAt": "2026-06-18T12:24:34.113Z"
+    "lastSyncAt": "2026-06-18T16:29:56.431Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Zoning Hearing Board - Cancelled|2026-06-25T22:30:00.000Z",
+      "firstSeenAt": "2026-06-18T13:31:22.587Z",
+      "title": "Zoning Hearing Board - Cancelled",
+      "source": "Borough",
+      "date": "2026-06-25T22:30:00.000Z"
+    },
     {
       "key": "Girls JV Soccer vs Central Dauphin High School|2026-08-22T14:00:00.000Z",
       "firstSeenAt": "2026-06-18T12:26:16.490Z",
@@ -159,13 +166,6 @@
       "date": "2026-09-29T20:45:00.000Z"
     },
     {
-      "key": "Girls Varsity Cross Country vs Cedar Crest High School|2026-09-29T21:15:00.000Z",
-      "firstSeenAt": "2026-06-18T12:26:16.490Z",
-      "title": "Girls Varsity Cross Country vs Cedar Crest High School",
-      "source": "PM",
-      "date": "2026-09-29T21:15:00.000Z"
-    },
-    {
       "key": "Battle Of Millersville Vol.1 - Tribute Fest|2026-06-21T00:00:00.000Z",
       "firstSeenAt": "2026-06-18T08:47:30.293Z",
       "title": "Battle Of Millersville Vol.1 - Tribute Fest",
@@ -194,5 +194,5 @@
       "date": "2026-06-27T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 6
+  "addedLastRun": 0
 }

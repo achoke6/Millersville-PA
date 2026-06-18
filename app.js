@@ -6070,7 +6070,7 @@ function renderPlaces(){
         return buildServiceCard(p);
     });
     const emptyMsg = placesMBAMode
-        ? '<p class="empty-state">No MBA member businesses match this filter.</p>'
+        ? '<p class="empty-state">No verified businesses match this filter.</p>'
         : '<p class="empty-state">No listings found in this category. Know a local business? <a href="#" onclick="event.preventDefault();openSubmitBusiness();">Add it here →</a></p>';
     pc.innerHTML = (cupboardCard + cards.join('')) || emptyMsg;
     // Let each card size to its own content instead of stretching to the tallest
@@ -6147,8 +6147,8 @@ function buildFoodCard(p, specials, dayName) {
         }
     }
 
-    return `<div class="app-card" style="position:relative;display:flex;flex-direction:column;justify-content:flex-start;">${membersBadge}
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;"><span class="card-tag">🍴 ${p.cuisine || 'Food & Drink'}</span>${mbaBadge(p.name)}</div>
+    return `<div class="app-card" style="position:relative;display:flex;flex-direction:column;justify-content:flex-start;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;"><span class="card-tag">🍴 ${p.cuisine || 'Food & Drink'}</span><span style="display:inline-flex;gap:6px;align-items:center;flex-shrink:0;">${membersBadge}${mbaBadge(p.name)}</span></div>
         <h3 class="card-title" style="margin-top:6px;">${p.name}</h3>
         ${ratingRow}${addr}
         <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:8px;">${p.description||''}</p>

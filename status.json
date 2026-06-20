@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-20T14:01:54.907Z",
-  "totalEvents": 1050,
+  "generatedAt": "2026-06-20T15:51:55.175Z",
+  "totalEvents": 1092,
   "withDescription": 397,
   "withImage": 102,
   "familyFriendly": 54,
@@ -14,7 +14,7 @@
     "vfw": 4,
     "phantomPower": 12,
     "community": 14,
-    "manor": 0,
+    "manor": 42,
     "raneyCellars": 11,
     "muHudlBroadcasts": 0
   },
@@ -51,7 +51,10 @@
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-06-24T12:30:00.000Z",
+      "latest": "2027-06-07T23:00:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-04-04T16:00:00.000Z",
       "latest": "2026-06-25T20:00:00.000Z"
@@ -90,7 +93,10 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 15
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-06-07",
+      "daysSinceMoved": 3
+    },
     "raneyCellars": {
       "newest": "2026-06-25",
       "daysSinceMoved": 4
@@ -114,79 +120,79 @@
     "pendingPast": 0,
     "pendingBySource": {},
     "stalePast": 2,
-    "lastSyncAt": "2026-06-20T14:00:11.657Z"
+    "lastSyncAt": "2026-06-20T15:49:59.561Z"
   },
   "recentlyAdded": [
     {
-      "key": "Girls Varsity Cross Country vs Cedar Crest High School|2026-09-29T21:15:00.000Z",
-      "firstSeenAt": "2026-06-20T05:14:36.813Z",
-      "title": "Girls Varsity Cross Country vs Cedar Crest High School",
-      "source": "PM",
-      "date": "2026-09-29T21:15:00.000Z"
+      "key": "Traffic Commission Meeting-CANCELED|2026-06-24T12:30:00.000Z",
+      "firstSeenAt": "2026-06-20T15:51:55.172Z",
+      "title": "Traffic Commission Meeting-CANCELED",
+      "source": "Manor",
+      "date": "2026-06-24T12:30:00.000Z"
     },
     {
-      "key": "Sunny Sweeney|2026-08-06T00:00:00.000Z",
-      "firstSeenAt": "2026-06-19T06:19:29.614Z",
-      "title": "Sunny Sweeney",
-      "source": "Other",
-      "date": "2026-08-06T00:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-07-01T23:00:00.000Z",
+      "firstSeenAt": "2026-06-20T15:51:55.172Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-07-01T23:00:00.000Z"
     },
     {
-      "key": "Lancaster Stands Up|2026-03-22T12:00:00",
-      "firstSeenAt": "2026-06-18T17:56:59.673Z",
-      "title": "Lancaster Stands Up",
-      "source": "MU",
-      "date": "2026-03-22T12:00:00"
+      "key": "Supervisors Meeting|2026-07-06T23:00:00.000Z",
+      "firstSeenAt": "2026-06-20T15:51:55.172Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-07-06T23:00:00.000Z"
     },
     {
-      "key": "Resumes & Cover Letters With The Gems|2026-03-25T17:00:00",
-      "firstSeenAt": "2026-06-18T17:56:59.673Z",
-      "title": "Resumes & Cover Letters With The Gems",
-      "source": "MU",
-      "date": "2026-03-25T17:00:00"
+      "key": "Planning Commission|2026-07-13T23:00:00.000Z",
+      "firstSeenAt": "2026-06-20T15:51:55.172Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-07-13T23:00:00.000Z"
     },
     {
-      "key": "Pepper an Acacian|2026-03-26T12:00:00",
-      "firstSeenAt": "2026-06-18T17:56:59.673Z",
-      "title": "Pepper an Acacian",
-      "source": "MU",
-      "date": "2026-03-26T12:00:00"
+      "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
+      "firstSeenAt": "2026-06-20T15:51:55.172Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-07-29T12:30:00.000Z"
     },
     {
-      "key": "Greek Week Committee|2026-03-27T17:15:00",
-      "firstSeenAt": "2026-06-18T17:56:59.673Z",
-      "title": "Greek Week Committee",
-      "source": "MU",
-      "date": "2026-03-27T17:15:00"
+      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
+      "firstSeenAt": "2026-06-20T15:51:55.172Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-08-03T23:00:00.000Z"
     },
     {
-      "key": "Sleep Awareness|2026-03-30T12:00:00",
-      "firstSeenAt": "2026-06-18T17:56:59.673Z",
-      "title": "Sleep Awareness",
-      "source": "MU",
-      "date": "2026-03-30T12:00:00"
+      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
+      "firstSeenAt": "2026-06-20T15:51:55.172Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-08-05T23:00:00.000Z"
     },
     {
-      "key": "Read watch and discuss|2026-03-30T19:00:00",
-      "firstSeenAt": "2026-06-18T17:56:59.673Z",
-      "title": "Read watch and discuss",
-      "source": "MU",
-      "date": "2026-03-30T19:00:00"
+      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
+      "firstSeenAt": "2026-06-20T15:51:55.172Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-08-10T23:00:00.000Z"
     },
     {
-      "key": "Sneakers 2 Stilettos Practice|2026-03-30T21:30:00",
-      "firstSeenAt": "2026-06-18T17:56:59.673Z",
-      "title": "Sneakers 2 Stilettos Practice",
-      "source": "MU",
-      "date": "2026-03-30T21:30:00"
+      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
+      "firstSeenAt": "2026-06-20T15:51:55.172Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-08-26T12:30:00.000Z"
     },
     {
-      "key": "Make Your Own Wellbeing Kit|2026-03-31T15:30:00",
-      "firstSeenAt": "2026-06-18T17:56:59.673Z",
-      "title": "Make Your Own Wellbeing Kit",
-      "source": "MU",
-      "date": "2026-03-31T15:30:00"
+      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-06-20T15:51:55.172Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-09-02T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 42
 }

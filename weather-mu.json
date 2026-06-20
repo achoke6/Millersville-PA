@@ -1,29 +1,8 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Thursday, June 18, 2026 at 11:03 AM (Kyle Elliott, Meteorologist)",
-    "periods": [
-      {
-        "period": "This afternoon",
-        "text": "Windy and very warm with decreasing clouds. High: 86-90"
-      },
-      {
-        "period": "Tonight",
-        "text": "Partly cloudy and mild. Low: 62-66"
-      },
-      {
-        "period": "Friday",
-        "text": "Decreasing clouds in the morning, then mostly sunny and breezy after midday. High: 81-85"
-      },
-      {
-        "period": "Friday Night",
-        "text": "Clear and comfortable. Low: 58-62"
-      },
-      {
-        "period": "Saturday",
-        "text": "Mostly sunny, breezy and pleasant with low humidity. High: 80-84"
-      }
-    ]
+    "issued": "",
+    "periods": []
   },
   "sevenDay": {
     "issued": "Thursday, June 18, 2026 at 09:04 AM (Kyle Elliott)",
@@ -126,7 +105,74 @@
       }
     ]
   },
-  "observations": [],
+  "observations": [
+    {
+      "time": "11:00",
+      "temp": "77",
+      "dewpoint": "52",
+      "rh": "41",
+      "windDir": "NNW",
+      "windSpeed": "9",
+      "precip": "0.00",
+      "visibility": "9.4",
+      "condition": "None"
+    },
+    {
+      "time": "10:00",
+      "temp": "75",
+      "dewpoint": "53",
+      "rh": "45",
+      "windDir": "WSW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "9.0",
+      "condition": "None"
+    },
+    {
+      "time": "09:00",
+      "temp": "73",
+      "dewpoint": "51",
+      "rh": "46",
+      "windDir": "W",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "9.7",
+      "condition": "None"
+    },
+    {
+      "time": "08:00",
+      "temp": "70",
+      "dewpoint": "51",
+      "rh": "52",
+      "windDir": "NW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "9.3",
+      "condition": "None"
+    },
+    {
+      "time": "07:00",
+      "temp": "66",
+      "dewpoint": "51",
+      "rh": "58",
+      "windDir": "NW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "9.5",
+      "condition": "None"
+    },
+    {
+      "time": "06:00",
+      "temp": "63",
+      "dewpoint": "50",
+      "rh": "63",
+      "windDir": "WSW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "9.4",
+      "condition": "None"
+    }
+  ],
   "discussion": {
     "headline": "some storms on thursday, then a nice first weekend of summer",
     "dateLine": "11:00 a.m. Tuesday, June 16, 2026",
@@ -168,5 +214,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-06-20T14:00:13.477Z"
+  "updated": "2026-06-20T15:50:02.923Z"
 }

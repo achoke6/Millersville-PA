@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-21T04:07:44.206Z",
+  "generatedAt": "2026-06-21T08:58:27.039Z",
   "totalEvents": 1082,
   "withDescription": 394,
   "withImage": 102,
@@ -44,8 +44,8 @@
       "latest": "2026-09-11T17:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-06-21T00:00:00.000Z",
-      "latest": "2026-08-06T00:00:00.000Z"
+      "earliest": "2026-06-24T23:00:00.000Z",
+      "latest": "2026-08-15T00:00:00.000Z"
     },
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
@@ -86,8 +86,8 @@
       "daysSinceMoved": 17
     },
     "phantomPower": {
-      "newest": "2026-08-06",
-      "daysSinceMoved": 2
+      "newest": "2026-08-15",
+      "daysSinceMoved": 3
     },
     "community": {
       "newest": "2027-04-16",
@@ -120,9 +120,16 @@
     "pendingPast": 0,
     "pendingBySource": {},
     "stalePast": 2,
-    "lastSyncAt": "2026-06-21T04:05:55.271Z"
+    "lastSyncAt": "2026-06-21T08:56:43.595Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Comedian Luke Null|2026-08-15T00:00:00.000Z",
+      "firstSeenAt": "2026-06-21T08:58:27.037Z",
+      "title": "Comedian Luke Null",
+      "source": "Other",
+      "date": "2026-08-15T00:00:00.000Z"
+    },
     {
       "key": "Traffic Commission Meeting-CANCELED|2026-06-24T12:30:00.000Z",
       "firstSeenAt": "2026-06-20T15:51:55.172Z",
@@ -185,14 +192,7 @@
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2026-08-26T12:30:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
-      "firstSeenAt": "2026-06-20T15:51:55.172Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-09-02T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

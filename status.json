@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-06-20T23:09:24.737Z",
-  "totalEvents": 1092,
-  "withDescription": 397,
+  "generatedAt": "2026-06-21T04:07:44.206Z",
+  "totalEvents": 1082,
+  "withDescription": 394,
   "withImage": 102,
   "familyFriendly": 54,
   "eventsToday": 1,
   "sources": {
     "muAthletics": 211,
     "muCalendar": 148,
-    "muGetInvolved": 317,
-    "pennManor": 222,
+    "muGetInvolved": 313,
+    "pennManor": 216,
     "borough": 106,
     "vfw": 4,
     "phantomPower": 12,
@@ -28,12 +28,12 @@
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-03-22T12:00:00.000Z",
+      "earliest": "2026-03-23T11:30:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
       "earliest": "2026-05-04T23:00:00.000Z",
-      "latest": "2026-09-29T21:15:00.000Z"
+      "latest": "2026-09-29T20:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-03-24T23:00:00.000Z",
@@ -63,47 +63,47 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-03-12",
-      "daysSinceMoved": 16
+      "daysSinceMoved": 17
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 16
+      "daysSinceMoved": 17
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 16
+      "daysSinceMoved": 17
     },
     "pennManor": {
       "newest": "2026-09-29",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "borough": {
       "newest": "2027-06-12",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 9
     },
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 16
+      "daysSinceMoved": 17
     },
     "phantomPower": {
       "newest": "2026-08-06",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 15
+      "daysSinceMoved": 16
     },
     "manor": {
       "newest": "2027-06-07",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "raneyCellars": {
       "newest": "2026-06-25",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     }
   },
   "sports": {
-    "total": 402,
+    "total": 396,
     "scored": 13,
     "wins": 3,
     "losses": 9,
@@ -120,7 +120,7 @@
     "pendingPast": 0,
     "pendingBySource": {},
     "stalePast": 2,
-    "lastSyncAt": "2026-06-20T23:07:33.226Z"
+    "lastSyncAt": "2026-06-21T04:05:55.271Z"
   },
   "recentlyAdded": [
     {

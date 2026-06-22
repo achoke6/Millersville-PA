@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-06-22T20:48:12.690Z",
-  "totalEvents": 796,
+  "generatedAt": "2026-06-22T22:47:59.148Z",
+  "totalEvents": 752,
   "withDescription": 202,
   "withImage": 111,
   "familyFriendly": 41,
   "eventsToday": 11,
   "sources": {
-    "muAthletics": 209,
+    "muAthletics": 207,
     "muCalendar": 43,
     "muGetInvolved": 131,
     "pennManor": 218,
@@ -14,13 +14,13 @@
     "vfw": 4,
     "phantomPower": 12,
     "community": 14,
-    "manor": 42,
+    "manor": 0,
     "raneyCellars": 11,
     "muHudlBroadcasts": 0
   },
   "sourceDateRanges": {
     "muAthletics": {
-      "earliest": "2026-08-15T16:00:00.000Z",
+      "earliest": "2026-08-27T20:00:00.000Z",
       "latest": "2027-03-12T00:00:00.000Z"
     },
     "muCalendar": {
@@ -51,10 +51,7 @@
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-06-24T12:30:00.000Z",
-      "latest": "2027-06-07T23:00:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-04-04T16:00:00.000Z",
       "latest": "2026-06-25T20:00:00.000Z"
@@ -93,17 +90,14 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 17
     },
-    "manor": {
-      "newest": "2027-06-07",
-      "daysSinceMoved": 5
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-06-25",
       "daysSinceMoved": 6
     }
   },
   "sports": {
-    "total": 396,
+    "total": 394,
     "scored": 10,
     "wins": 3,
     "losses": 6,
@@ -119,8 +113,8 @@
     "pendingFuture": 0,
     "pendingPast": 0,
     "pendingBySource": {},
-    "stalePast": 2,
-    "lastSyncAt": "2026-06-22T20:46:31.071Z"
+    "stalePast": 3,
+    "lastSyncAt": "2026-06-22T22:46:32.641Z"
   },
   "recentlyAdded": [
     {
@@ -194,5 +188,5 @@
       "date": "2026-04-24T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 6
+  "addedLastRun": 0
 }

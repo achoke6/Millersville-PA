@@ -1,11 +1,11 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Tuesday, June 23, 2026 at 07:29 AM (Kyle Elliott, Meteorologist)",
+    "issued": "Tuesday, June 23, 2026 at 12:51 PM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "Today",
-        "text": "Mostly cloudy and cool with light rain into the early-afternoon hours. High: 72-76"
+        "period": "This afternoon",
+        "text": "Mostly cloudy and cool with light rain ending by 3-4 PM. High: 72-76"
       },
       {
         "period": "Tonight",
@@ -21,7 +21,7 @@
       },
       {
         "period": "Thursday",
-        "text": "Partly sunny and seasonable. High: 84-88"
+        "text": "Partly sunny and seasonable with an afternoon breeze. High: 84-88"
       }
     ]
   },
@@ -128,6 +128,17 @@
   },
   "observations": [
     {
+      "time": "13:00",
+      "temp": "66",
+      "dewpoint": "64",
+      "rh": "93",
+      "windDir": "NNW",
+      "windSpeed": "6",
+      "precip": "0.04",
+      "visibility": "7.8",
+      "condition": "Light Rain"
+    },
+    {
       "time": "12:00",
       "temp": "66",
       "dewpoint": "64",
@@ -181,23 +192,12 @@
       "precip": "0.00",
       "visibility": "6.9",
       "condition": "Light Drizzle"
-    },
-    {
-      "time": "07:00",
-      "temp": "71",
-      "dewpoint": "67",
-      "rh": "88",
-      "windDir": "NNW",
-      "windSpeed": "5",
-      "precip": "0.00",
-      "visibility": "5.4",
-      "condition": "None"
     }
   ],
   "discussion": {
-    "headline": "some storms on thursday, then a nice first weekend of summer",
-    "dateLine": "11:00 a.m. Tuesday, June 16, 2026",
-    "excerpt": "As expected, strong-to-severe thunderstorms rumbled through northern MD, southeastern PA and the Lower Susquehanna Valley Sunday evening, and one may have produced an EF-0 or EF-1 tornado near Kirkwood in southern Lancaster County. In addition, there were a few dozen reports of wind damage across the region. Most areas picked up 0.25-0.75\" of beneficial rain from the event with locally higher amounts of 1-2\" across southern York and Lancaster Counties (see below). …",
+    "headline": "Temperate and relatively tranquil last week of june",
+    "dateLine": "1:00 p.m. Tuesday, June 23, 2026",
+    "excerpt": "The weather on Father's Day.. also the first day of astronomical summer.. was nothing short of spectacular across the Commonwealth. Partly sunny skies, a gentle breeze and low humidity accompanied high temperatures in the low-to-mid 80s for most. …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -235,5 +235,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-06-23T16:06:33.230Z"
+  "updated": "2026-06-23T17:52:36.791Z"
 }

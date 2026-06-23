@@ -6910,7 +6910,7 @@ window.openAdvertiseForm = function() {
                 </div>
                 <div style="flex:1;">
                     <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Phone *</label>
-                    <input id="adv-phone" type="tel" placeholder="(717) 555-1234" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;background:var(--bg);color:var(--text);">
+                    <input id="adv-phone" type="tel" placeholder="717-555-1234" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;background:var(--bg);color:var(--text);">
                 </div>
             </div>
 

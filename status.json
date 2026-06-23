@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-06-18T19:28:20.773Z",
-  "totalEvents": 1100,
-  "withDescription": 402,
-  "withImage": 102,
-  "familyFriendly": 54,
-  "eventsToday": 4,
+  "generatedAt": "2026-06-23T15:48:23.783Z",
+  "totalEvents": 793,
+  "withDescription": 202,
+  "withImage": 111,
+  "familyFriendly": 41,
+  "eventsToday": 2,
   "sources": {
-    "muAthletics": 211,
-    "muCalendar": 151,
-    "muGetInvolved": 322,
-    "pennManor": 222,
-    "borough": 106,
+    "muAthletics": 207,
+    "muCalendar": 43,
+    "muGetInvolved": 131,
+    "pennManor": 219,
+    "borough": 105,
     "vfw": 4,
     "phantomPower": 12,
     "community": 14,
@@ -20,23 +20,23 @@
   },
   "sourceDateRanges": {
     "muAthletics": {
-      "earliest": "2026-03-28T06:00:00.000Z",
+      "earliest": "2026-08-27T20:00:00.000Z",
       "latest": "2027-03-12T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-03-20T00:00:00.000Z",
+      "earliest": "2026-06-05T22:30:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-03-20T15:00:00.000Z",
+      "earliest": "2026-04-14T20:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-05-04T23:00:00.000Z",
-      "latest": "2026-09-29T21:00:00.000Z"
+      "earliest": "2026-05-05T20:00:00.000Z",
+      "latest": "2026-09-29T20:15:00.000Z"
     },
     "borough": {
-      "earliest": "2026-03-24T23:00:00.000Z",
+      "earliest": "2026-03-26T22:30:00.000Z",
       "latest": "2027-06-12T14:00:00.000Z"
     },
     "vfw": {
@@ -44,8 +44,8 @@
       "latest": "2026-09-11T17:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-06-21T00:00:00.000Z",
-      "latest": "2026-08-06T00:00:00.000Z"
+      "earliest": "2026-06-24T23:00:00.000Z",
+      "latest": "2026-08-02T00:00:00.000Z"
     },
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
@@ -63,50 +63,50 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-03-12",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 19
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 19
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 19
     },
     "pennManor": {
       "newest": "2026-09-29",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 5
     },
     "borough": {
       "newest": "2027-06-12",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 11
     },
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 19
     },
     "phantomPower": {
-      "newest": "2026-08-06",
-      "daysSinceMoved": 0
+      "newest": "2026-08-02",
+      "daysSinceMoved": 8
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 18
     },
     "manor": {
       "newest": "2027-06-07",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 6
     },
     "raneyCellars": {
       "newest": "2026-06-25",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 7
     }
   },
   "sports": {
-    "total": 402,
-    "scored": 14,
-    "wins": 4,
-    "losses": 9,
+    "total": 395,
+    "scored": 10,
+    "wins": 3,
+    "losses": 6,
     "ties": 1
   },
   "registrations": {
@@ -119,79 +119,79 @@
     "pendingFuture": 0,
     "pendingPast": 0,
     "pendingBySource": {},
-    "stalePast": 2,
-    "lastSyncAt": "2026-06-18T19:26:49.269Z"
+    "stalePast": 3,
+    "lastSyncAt": "2026-06-23T15:46:39.241Z"
   },
   "recentlyAdded": [
     {
-      "key": "Sunny Sweeney|2026-08-06T00:00:00.000Z",
-      "firstSeenAt": "2026-06-18T19:28:20.771Z",
-      "title": "Sunny Sweeney",
+      "key": "Mentalia&#x27;s Stupid Drag Show|2026-06-26T00:00:00.000Z",
+      "firstSeenAt": "2026-06-23T15:48:23.781Z",
+      "title": "Mentalia&#x27;s Stupid Drag Show",
       "source": "Other",
-      "date": "2026-08-06T00:00:00.000Z"
+      "date": "2026-06-26T00:00:00.000Z"
+    },
+    {
+      "key": "Jack&#x27;s Birthday Bash - DRAG SHOW|2026-07-17T00:00:00.000Z",
+      "firstSeenAt": "2026-06-23T12:08:18.349Z",
+      "title": "Jack&#x27;s Birthday Bash - DRAG SHOW",
+      "source": "Other",
+      "date": "2026-07-17T00:00:00.000Z"
+    },
+    {
+      "key": "Fragile Like Life After w. Stenial, Its Always Better Late Than Never, more|2026-07-11T23:00:00.000Z",
+      "firstSeenAt": "2026-06-23T08:36:38.747Z",
+      "title": "Fragile Like Life After w. Stenial, Its Always Better Late Than Never, more",
+      "source": "Other",
+      "date": "2026-07-11T23:00:00.000Z"
+    },
+    {
+      "key": "Boys 7/8/9th Cross Country vs Cedar Crest High School|2026-09-29T20:15:00.000Z",
+      "firstSeenAt": "2026-06-23T05:00:41.188Z",
+      "title": "Boys 7/8/9th Cross Country vs Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-09-29T20:15:00.000Z"
     },
     {
       "key": "Traffic Commission Meeting-CANCELED|2026-06-24T12:30:00.000Z",
-      "firstSeenAt": "2026-06-18T19:24:26.789Z",
+      "firstSeenAt": "2026-06-23T00:06:06.875Z",
       "title": "Traffic Commission Meeting-CANCELED",
       "source": "Manor",
       "date": "2026-06-24T12:30:00.000Z"
     },
     {
       "key": "Zoning Hearing Board|2026-07-01T23:00:00.000Z",
-      "firstSeenAt": "2026-06-18T18:26:14.685Z",
+      "firstSeenAt": "2026-06-23T00:06:06.875Z",
       "title": "Zoning Hearing Board",
       "source": "Manor",
       "date": "2026-07-01T23:00:00.000Z"
     },
     {
       "key": "Supervisors Meeting|2026-07-06T23:00:00.000Z",
-      "firstSeenAt": "2026-06-18T18:26:14.685Z",
+      "firstSeenAt": "2026-06-23T00:06:06.875Z",
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2026-07-06T23:00:00.000Z"
     },
     {
       "key": "Planning Commission|2026-07-13T23:00:00.000Z",
-      "firstSeenAt": "2026-06-18T18:26:14.685Z",
+      "firstSeenAt": "2026-06-23T00:06:06.875Z",
       "title": "Planning Commission",
       "source": "Manor",
       "date": "2026-07-13T23:00:00.000Z"
     },
     {
       "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
-      "firstSeenAt": "2026-06-18T18:26:14.685Z",
+      "firstSeenAt": "2026-06-23T00:06:06.875Z",
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2026-07-29T12:30:00.000Z"
     },
     {
       "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
-      "firstSeenAt": "2026-06-18T18:26:14.685Z",
+      "firstSeenAt": "2026-06-23T00:06:06.875Z",
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2026-08-03T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
-      "firstSeenAt": "2026-06-18T18:26:14.685Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-08-05T23:00:00.000Z"
-    },
-    {
-      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
-      "firstSeenAt": "2026-06-18T18:26:14.685Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-08-10T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
-      "firstSeenAt": "2026-06-18T18:26:14.685Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-08-26T12:30:00.000Z"
     }
   ],
   "addedLastRun": 1

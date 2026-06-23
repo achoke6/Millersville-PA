@@ -1887,148 +1887,125 @@ async function runScraper() {
         if (!res.ok) throw new Error(`MU API returned ${res.status}`);
         const data = JSON.parse(await res.text());
 
-        if (data.fields && Array.isArray(data.data)) {
-            const fields = data.fields.split(',');
-            const nameIdx = fields.indexOf('ActivityName');
-            const startIdx = fields.indexOf('StartDateTime');
-            const bldgIdx = fields.indexOf('BuildingCode');
-            const roomIdx = fields.indexOf('RoomName');
-            const roomNumIdx = fields.indexOf('RoomNumber');
-            const descIdx = fields.indexOf('EventMeetingByActivityId.Event.Description');
-            const linkIdx = fields.findIndex(f => f.toLowerCase().includes('url') || f.toLowerCase().includes('link'));
-            const idIdx = fields.indexOf('ActivityId');
-            const typeIdx = fields.indexOf('MeetingType:EventMeetingByActivityId.EventMeetingType.Name');
-            const customerIdx = fields.indexOf('Customer:EventMeetingByActivityId.Event.Customer.Name');
+        if (!Array.isArray(data.data)) throw new Error('MU API unexpected structure');
+        // Loud-fail on an empty feed. A 200 with {data:[]} is the dangerous
+        // silent-success shape: the post-deploy smoke test only checks the
+        // TOTAL event count, so MU alone going to zero wouldn't trip it.
+        // status.html's per-source count is the backstop; throwing here also
+        // makes it obvious in the build log instead of a misleading "✅ 0".
+        if (data.data.length === 0) throw new Error('MU Calendar returned 0 events — feed empty (body/auth?)');
 
-            let muCount = 0;
-            data.data.forEach(row => {
-                const eventTitle = row[nameIdx] || "Campus Event";
-                const eventType = typeIdx !== -1 ? (row[typeIdx] || '').trim() : '';
+        let muCount = 0;
+        data.data.forEach(obj => {
+            const eventTitle = obj.title || "Campus Event";
+            // category now plays the old MeetingType role: it drives the athletic
+            // skip, the tag, and the "Student Event" relabel below — all unchanged.
+            const eventType = (obj.category || '').trim();
 
-                // SKIP Athletic Competitions — we get those from Sidearm now
-                if (eventType === 'Athletic Competitions') return;
+            // SKIP Athletic Competitions — we get those from Sidearm now
+            if (eventType === 'Athletic Competitions') return;
 
-                // Build location from BuildingCode + RoomName + RoomNumber.
-                // The API splits room info across two fields:
-                //   BuildingCode: "SMC"
-                //   RoomName:     "Robert Slabinski"  (or "Meeting Room", "Reighard Multi Purpose Room")
-                //   RoomNumber:   "Atrium"            (or "18", "118", or empty)
-                // Concatenating all three gives the complete venue:
-                //   "SMC Robert Slabinski Atrium"
-                //   "SMC Meeting Room 18"
-                //   "SMC Reighard Multi Purpose Room"  (RoomNumber empty)
-                // Empty pieces are dropped so we don't get awkward double-spaces.
-                const bldg = row[bldgIdx] || '';
-                const roomName = row[roomIdx] || '';
-                const roomNum = roomNumIdx !== -1 ? (row[roomNumIdx] || '') : '';
-                let eventLoc = [bldg, roomName, roomNum].filter(Boolean).join(' ').trim() || "Campus";
-                // Clean up the AcCALEN building code. This is a placeholder MU
-                // uses for campus-wide calendar markers (semester evaluation
-                // periods, holidays, etc.) that don't have a real venue. Strip
-                // it so the location reads cleanly. The check is case-
-                // insensitive and matches ANYWHERE in the string since the API
-                // returns variations like "AcCalen Spring", "AcCALEN", etc.
-                if (/\bAccalen\b/i.test(eventLoc)) {
-                    eventLoc = eventLoc.replace(/\bAccalen\b\s*/gi, '').trim();
-                    if (!eventLoc) eventLoc = 'Millersville University';
+            // Build location from the split named fields (building + roomName +
+            // roomNumber). The proxy also returns a pre-combined location, but we
+            // compose from the parts to keep the existing cleanups working.
+            const bldg = obj.building || '';
+            const roomName = obj.roomName || '';
+            const roomNum = obj.roomNumber || '';
+            let eventLoc = [bldg, roomName, roomNum].filter(Boolean).join(' ').trim() || "Campus";
+            // Strip the AcCALEN placeholder building code (campus-wide markers with
+            // no real venue). Case-insensitive, matches anywhere in the string.
+            if (/\bAccalen\b/i.test(eventLoc)) {
+                eventLoc = eventLoc.replace(/\bAccalen\b\s*/gi, '').trim();
+                if (!eventLoc) eventLoc = 'Millersville University';
+            }
+            eventLoc = eventLoc.replace(/^WARE Ware Center$/i, 'Ware Center')
+                               .replace(/^WARE\b/, 'Ware Center')
+                               .replace(/^Ware Center\s+/, 'Ware Center, ');
+
+            // Description lives in the proxy's positional columns (index 11,
+            // duplicated at 2) — there is NO named key for it. Empty string when
+            // the event carries none. This is the one field read positionally,
+            // so a column reorder upstream would surface as blank/garbage desc
+            // (not 0 events) — worth watching.
+            const descHtml = obj['11'] || obj['2'] || '';
+            const pricing = extractPricing(descHtml, eventTitle, eventLoc, '');
+
+            let tags = ["MU"];
+            if (eventType) tags.push(eventType);
+            const custName = (obj.customerName || '').trim();
+            if (custName) tags.push(custName);
+
+            // RELABEL: "Student Event" from the MU calendar is really the GetInvolved feed
+            // being republished on the main calendar, creating duplicates. Treat these as
+            // GetInvolved events so they filter/display/dedupe consistently.
+            let audience;
+            if (tags.includes('Student Event')) {
+                tags = tags.filter(t => t !== 'Student Event');
+                if (!tags.includes('GetInvolved')) tags.push('GetInvolved');
+                if (!tags.includes('Clubs/Orgs')) tags.push('Clubs/Orgs');
+                // Plain-text description for keyword scanning
+                const plainDesc = descHtml.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+                const customerName = custName;
+
+                // Derived-tag detection — mirrors the GetInvolved API block
+                // (greekRegex). Cross-source dedupe prioritizes MU Calendar over
+                // GetInvolved, so without this the merged event would lose its
+                // Greek Life / Residence Halls / Fundraising tags. classifyAudience
+                // below depends on these, so detection MUST run first.
+                const greekRegex = /^(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega)\b/i;
+                const orgLower = customerName.toLowerCase();
+                const titleLower = (eventTitle || '').toLowerCase();
+                if (/housing and residential|residence hall/.test(orgLower)) {
+                    if (!tags.includes('Residence Halls')) tags.push('Residence Halls');
                 }
-                eventLoc = eventLoc.replace(/^WARE Ware Center$/i, 'Ware Center')
-                                   .replace(/^WARE\b/, 'Ware Center')
-                                   .replace(/^Ware Center\s+/, 'Ware Center, ');
-                const pricing = extractPricing(row[descIdx] || "", eventTitle, eventLoc, linkIdx !== -1 ? (row[linkIdx] || "") : "");
-
-                let tags = ["MU"];
-                if (eventType) tags.push(eventType);
-                if (customerIdx !== -1 && row[customerIdx]) tags.push(row[customerIdx].trim());
-
-                // RELABEL: "Student Event" from the MU calendar is really the GetInvolved feed
-                // being republished on the main calendar, creating duplicates. Treat these as
-                // GetInvolved events so they filter/display/dedupe consistently.
-                //   - Swap tag: "Student Event" → "GetInvolved" + "Clubs/Orgs"
-                //   - Run the audience classifier so townies filter correctly (public stuff like
-                //     blood drives / fundraisers stays visible to them, private chapter meetings don't)
-                let audience;
-                if (tags.includes('Student Event')) {
-                    tags = tags.filter(t => t !== 'Student Event');
-                    if (!tags.includes('GetInvolved')) tags.push('GetInvolved');
-                    if (!tags.includes('Clubs/Orgs')) tags.push('Clubs/Orgs');
-                    // Plain-text description for keyword scanning
-                    const plainDesc = (row[descIdx] || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
-                    const customerName = (customerIdx !== -1 && row[customerIdx]) ? row[customerIdx].trim() : '';
-
-                    // Derived-tag detection — mirrors the logic in the main
-                    // GetInvolved API block (search for greekRegex). Cross-source
-                    // dedupe prioritizes MU Calendar over GetInvolved; without
-                    // this parallel detection, the surviving merged event would
-                    // lose its Greek Life / Residence Halls / Fundraising tags
-                    // (which only the GetInvolved path knew how to derive).
-                    // Townie-side filtering also depends on these tags via
-                    // classifyAudience below, so the detection MUST run before
-                    // that call for Greek/Residence events to be correctly
-                    // marked mu-only instead of public.
-                    const greekRegex = /^(alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|xi|omicron|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega)\b/i;
-                    const orgLower = customerName.toLowerCase();
-                    const titleLower = (eventTitle || '').toLowerCase();
-                    if (/housing and residential|residence hall/.test(orgLower)) {
-                        if (!tags.includes('Residence Halls')) tags.push('Residence Halls');
-                    }
-                    if (/greek council/.test(orgLower) || greekRegex.test(orgLower) || greekRegex.test(titleLower)) {
-                        if (!tags.includes('Greek Life')) tags.push('Greek Life');
-                    }
-                    if (/fundrais/i.test(eventTitle) || /fundrais/i.test(plainDesc)) {
-                        if (!tags.includes('Fundraising')) tags.push('Fundraising');
-                    }
-
-                    audience = classifyAudience({
-                        titleText: eventTitle,
-                        descText: plainDesc,
-                        orgName: customerName,
-                        rawTags: tags,
-                        tags,
-                        benefits: []
-                    });
+                if (/greek council/.test(orgLower) || greekRegex.test(orgLower) || greekRegex.test(titleLower)) {
+                    if (!tags.includes('Greek Life')) tags.push('Greek Life');
+                }
+                if (/fundrais/i.test(eventTitle) || /fundrais/i.test(plainDesc)) {
+                    if (!tags.includes('Fundraising')) tags.push('Fundraising');
                 }
 
-                const eventId = idIdx !== -1 ? row[idIdx] : "";
-                const sourceLink = eventId
-                    ? `https://www.millersville.edu/calendar/events/${eventId}`
-                    : "https://www.millersville.edu/calendar/";
-
-                const descHtml = row[descIdx] || "";
-
-                // Decorate generic single-word titles ("Practice" / "Meeting" /
-                // "Informational") with the customer/org name when available,
-                // producing clearer card labels like "Men's Rugby Club Practice".
-                // The customerIdx value is the row's associated org on MU Calendar.
-                // When MU left Customer empty (common — many events don't fill it)
-                // OR when the Customer value doesn't resolve to a useful shortname
-                // (e.g. "Office of Student Services" with no shortName mapping),
-                // try the title-pattern overrides as a fallback so the pill can
-                // attribute the event to its actual host (GSA, RUF, etc.).
-                let calCustomerName = (customerIdx !== -1 && row[customerIdx]) ? row[customerIdx].trim() : '';
-                const titleOverride = resolveOrgFromTitle(eventTitle);
-                if (titleOverride) {
-                    // Title-pattern override always wins. The user curated this
-                    // mapping specifically, so it's more authoritative than
-                    // whatever generic customerName the MU calendar carries.
-                    calCustomerName = titleOverride;
-                }
-                const decoratedTitle = decorateGenericTitle(eventTitle, calCustomerName);
-
-                events.push({
-                    title: decoratedTitle, date: row[startIdx], location: eventLoc,
-                    tags: [...new Set(tags)], price: pricing.price,
-                    ticketLink: pricing.link, sourceLink,
-                    description: descHtml,
-                    ...(calCustomerName ? { orgName: calCustomerName, orgShortName: resolveOrgShortName(calCustomerName) } : {}),
-                    ...(audience ? { audience } : {})
+                audience = classifyAudience({
+                    titleText: eventTitle,
+                    descText: plainDesc,
+                    orgName: customerName,
+                    rawTags: tags,
+                    tags,
+                    benefits: []
                 });
-                muCount++;
+            }
+
+            const eventId = obj.eventId || obj.activityId || "";
+            const sourceLink = eventId
+                ? `https://www.millersville.edu/calendar/events/${eventId}`
+                : "https://www.millersville.edu/calendar/";
+
+            // Decorate generic single-word titles ("Practice"/"Meeting") with the
+            // org name when available. Title-pattern override wins over whatever
+            // generic customerName the calendar carries.
+            let calCustomerName = custName;
+            const titleOverride = resolveOrgFromTitle(eventTitle);
+            if (titleOverride) calCustomerName = titleOverride;
+            const decoratedTitle = decorateGenericTitle(eventTitle, calCustomerName);
+
+            // startDate is naive Eastern, no seconds ("…T18:00"). Append ":00" to
+            // match the prior StartDateTime format the rest of the pipeline (dedup,
+            // TZ handling) expects. Stored WITHOUT a Z — read as ET downstream.
+            const startRaw = obj.startDate
+                ? (obj.startDate.length === 16 ? obj.startDate + ':00' : obj.startDate)
+                : '';
+
+            events.push({
+                title: decoratedTitle, date: startRaw, location: eventLoc,
+                tags: [...new Set(tags)], price: pricing.price,
+                ticketLink: pricing.link, sourceLink,
+                description: descHtml,
+                ...(calCustomerName ? { orgName: calCustomerName, orgShortName: resolveOrgShortName(calCustomerName) } : {}),
+                ...(audience ? { audience } : {})
             });
-            console.log(`✅ MU Calendar (non-sport): ${muCount} events`);
-        } else {
-            throw new Error('MU API unexpected structure');
-        }
+            muCount++;
+        });
+        console.log(`✅ MU Calendar (non-sport): ${muCount} events`);
     } catch (e) { console.error("❌ MU Calendar error:", e.message); }
 
     // ===== 3b. ARTSMU.COM (WARE CENTER / WINTER CENTER — supplements MU Calendar) =====

@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-06-23T17:54:07.253Z",
-  "totalEvents": 749,
-  "withDescription": 199,
+  "generatedAt": "2026-06-23T19:25:34.522Z",
+  "totalEvents": 885,
+  "withDescription": 249,
   "withImage": 111,
-  "familyFriendly": 38,
+  "familyFriendly": 47,
   "eventsToday": 1,
   "sources": {
     "muAthletics": 207,
-    "muCalendar": 40,
-    "muGetInvolved": 131,
+    "muCalendar": 94,
+    "muGetInvolved": 171,
     "pennManor": 219,
     "borough": 106,
     "vfw": 4,
     "phantomPower": 12,
     "community": 14,
-    "manor": 0,
+    "manor": 42,
     "raneyCellars": 11,
     "muHudlBroadcasts": 0
   },
@@ -51,7 +51,10 @@
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-06-24T12:30:00.000Z",
+      "latest": "2027-06-07T23:00:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-04-04T16:00:00.000Z",
       "latest": "2026-06-25T20:00:00.000Z"
@@ -90,7 +93,10 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 18
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-06-07",
+      "daysSinceMoved": 6
+    },
     "raneyCellars": {
       "newest": "2026-06-25",
       "daysSinceMoved": 7
@@ -114,79 +120,79 @@
     "pendingPast": 0,
     "pendingBySource": {},
     "stalePast": 3,
-    "lastSyncAt": "2026-06-23T17:52:35.935Z"
+    "lastSyncAt": "2026-06-23T19:23:32.259Z"
   },
   "recentlyAdded": [
     {
-      "key": "FOUR YEAR (All Caps) Service Bundle Renewed | Payment USD470.77 Processed|2026-06-24T05:22:07.000Z",
-      "firstSeenAt": "2026-06-23T17:54:07.251Z",
-      "title": "FOUR YEAR (All Caps) Service Bundle Renewed | Payment USD470.77 Processed",
-      "source": "Borough",
-      "date": "2026-06-24T05:22:07.000Z"
+      "key": "Traffic Commission Meeting-CANCELED|2026-06-24T12:30:00.000Z",
+      "firstSeenAt": "2026-06-23T19:25:34.519Z",
+      "title": "Traffic Commission Meeting-CANCELED",
+      "source": "Manor",
+      "date": "2026-06-24T12:30:00.000Z"
     },
     {
-      "key": "MU Baseball Summer Camp|2026-06-24T13:00:00.000Z",
-      "firstSeenAt": "2026-06-23T16:08:31.129Z",
-      "title": "MU Baseball Summer Camp",
+      "key": "Summer Fun Series|2026-06-24T18:00:00",
+      "firstSeenAt": "2026-06-23T19:25:34.519Z",
+      "title": "Summer Fun Series",
       "source": "MU",
-      "date": "2026-06-24T13:00:00.000Z"
+      "date": "2026-06-24T18:00:00"
     },
     {
-      "key": "Summer Fun Series: Country Conjuring Magic Show & Ameri-ca-dabra!|2026-07-16T22:00:00.000Z",
-      "firstSeenAt": "2026-06-23T16:08:31.129Z",
-      "title": "Summer Fun Series: Country Conjuring Magic Show & Ameri-ca-dabra!",
+      "key": "End of Fiscal Year 2025-2026|2026-06-30T00:00:00",
+      "firstSeenAt": "2026-06-23T19:25:34.519Z",
+      "title": "End of Fiscal Year 2025-2026",
       "source": "MU",
-      "date": "2026-07-16T22:00:00.000Z"
+      "date": "2026-06-30T00:00:00"
     },
     {
-      "key": "Mentalia&#x27;s Stupid Drag Show|2026-06-26T00:00:00.000Z",
-      "firstSeenAt": "2026-06-23T15:48:23.781Z",
-      "title": "Mentalia&#x27;s Stupid Drag Show",
-      "source": "Other",
-      "date": "2026-06-26T00:00:00.000Z"
+      "key": "Start of Fiscal Year 2026-2027|2026-07-01T00:00:00",
+      "firstSeenAt": "2026-06-23T19:25:34.519Z",
+      "title": "Start of Fiscal Year 2026-2027",
+      "source": "MU",
+      "date": "2026-07-01T00:00:00"
     },
     {
-      "key": "Jack&#x27;s Birthday Bash - DRAG SHOW|2026-07-17T00:00:00.000Z",
-      "firstSeenAt": "2026-06-23T12:08:18.349Z",
-      "title": "Jack&#x27;s Birthday Bash - DRAG SHOW",
-      "source": "Other",
-      "date": "2026-07-17T00:00:00.000Z"
+      "key": "Summer Fun Series|2026-07-01T18:00:00",
+      "firstSeenAt": "2026-06-23T19:25:34.519Z",
+      "title": "Summer Fun Series",
+      "source": "MU",
+      "date": "2026-07-01T18:00:00"
     },
     {
-      "key": "Fragile Like Life After w. Stenial, Its Always Better Late Than Never, more|2026-07-11T23:00:00.000Z",
-      "firstSeenAt": "2026-06-23T08:36:38.747Z",
-      "title": "Fragile Like Life After w. Stenial, Its Always Better Late Than Never, more",
-      "source": "Other",
-      "date": "2026-07-11T23:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-07-01T23:00:00.000Z",
+      "firstSeenAt": "2026-06-23T19:25:34.519Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-07-01T23:00:00.000Z"
     },
     {
-      "key": "Boys 7/8/9th Cross Country vs Cedar Crest High School|2026-09-29T20:15:00.000Z",
-      "firstSeenAt": "2026-06-23T05:00:41.188Z",
-      "title": "Boys 7/8/9th Cross Country vs Cedar Crest High School",
-      "source": "PM",
-      "date": "2026-09-29T20:15:00.000Z"
+      "key": "Fourth of July Holiday - No Classes, Limited Campus Operations|2026-07-03T00:00:00",
+      "firstSeenAt": "2026-06-23T19:25:34.519Z",
+      "title": "Fourth of July Holiday - No Classes, Limited Campus Operations",
+      "source": "MU",
+      "date": "2026-07-03T00:00:00"
     },
     {
-      "key": "Boys JV Soccer @ Manheim Township High School|2026-09-29T20:00:00.000Z",
-      "firstSeenAt": "2026-06-22T20:48:12.687Z",
-      "title": "Boys JV Soccer @ Manheim Township High School",
-      "source": "PM",
-      "date": "2026-09-29T20:00:00.000Z"
+      "key": "Arts Smarts Camps|2026-07-06T09:00:00",
+      "firstSeenAt": "2026-06-23T19:25:34.519Z",
+      "title": "Arts Smarts Camps",
+      "source": "MU",
+      "date": "2026-07-06T09:00:00"
     },
     {
-      "key": "Girls Varsity Tennis @ New Oxford High School|2026-09-29T20:00:00.000Z",
-      "firstSeenAt": "2026-06-22T20:48:12.687Z",
-      "title": "Girls Varsity Tennis @ New Oxford High School",
-      "source": "PM",
-      "date": "2026-09-29T20:00:00.000Z"
+      "key": "Supervisors Meeting|2026-07-06T23:00:00.000Z",
+      "firstSeenAt": "2026-06-23T19:25:34.519Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-07-06T23:00:00.000Z"
     },
     {
-      "key": "Girls 7/8/9th Cross Country vs Cedar Crest High School|2026-09-29T20:15:00.000Z",
-      "firstSeenAt": "2026-06-22T20:48:12.687Z",
-      "title": "Girls 7/8/9th Cross Country vs Cedar Crest High School",
-      "source": "PM",
-      "date": "2026-09-29T20:15:00.000Z"
+      "key": "Summer Fun Series|2026-07-08T18:00:00",
+      "firstSeenAt": "2026-06-23T19:25:34.519Z",
+      "title": "Summer Fun Series",
+      "source": "MU",
+      "date": "2026-07-08T18:00:00"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 137
 }

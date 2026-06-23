@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-06-23T19:25:34.522Z",
-  "totalEvents": 885,
+  "generatedAt": "2026-06-23T20:07:58.430Z",
+  "totalEvents": 843,
   "withDescription": 249,
   "withImage": 111,
   "familyFriendly": 47,
@@ -14,7 +14,7 @@
     "vfw": 4,
     "phantomPower": 12,
     "community": 14,
-    "manor": 42,
+    "manor": 0,
     "raneyCellars": 11,
     "muHudlBroadcasts": 0
   },
@@ -51,10 +51,7 @@
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-06-24T12:30:00.000Z",
-      "latest": "2027-06-07T23:00:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-04-04T16:00:00.000Z",
       "latest": "2026-06-25T20:00:00.000Z"
@@ -93,10 +90,7 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 18
     },
-    "manor": {
-      "newest": "2027-06-07",
-      "daysSinceMoved": 6
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-06-25",
       "daysSinceMoved": 7
@@ -123,13 +117,6 @@
     "lastSyncAt": "2026-06-23T19:23:32.259Z"
   },
   "recentlyAdded": [
-    {
-      "key": "Traffic Commission Meeting-CANCELED|2026-06-24T12:30:00.000Z",
-      "firstSeenAt": "2026-06-23T19:25:34.519Z",
-      "title": "Traffic Commission Meeting-CANCELED",
-      "source": "Manor",
-      "date": "2026-06-24T12:30:00.000Z"
-    },
     {
       "key": "Summer Fun Series|2026-06-24T18:00:00",
       "firstSeenAt": "2026-06-23T19:25:34.519Z",
@@ -159,13 +146,6 @@
       "date": "2026-07-01T18:00:00"
     },
     {
-      "key": "Zoning Hearing Board|2026-07-01T23:00:00.000Z",
-      "firstSeenAt": "2026-06-23T19:25:34.519Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-07-01T23:00:00.000Z"
-    },
-    {
       "key": "Fourth of July Holiday - No Classes, Limited Campus Operations|2026-07-03T00:00:00",
       "firstSeenAt": "2026-06-23T19:25:34.519Z",
       "title": "Fourth of July Holiday - No Classes, Limited Campus Operations",
@@ -180,19 +160,33 @@
       "date": "2026-07-06T09:00:00"
     },
     {
-      "key": "Supervisors Meeting|2026-07-06T23:00:00.000Z",
-      "firstSeenAt": "2026-06-23T19:25:34.519Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-07-06T23:00:00.000Z"
-    },
-    {
       "key": "Summer Fun Series|2026-07-08T18:00:00",
       "firstSeenAt": "2026-06-23T19:25:34.519Z",
       "title": "Summer Fun Series",
       "source": "MU",
       "date": "2026-07-08T18:00:00"
+    },
+    {
+      "key": "Summer Session 2 ENDS|2026-07-10T07:00:00",
+      "firstSeenAt": "2026-06-23T19:25:34.519Z",
+      "title": "Summer Session 2 ENDS",
+      "source": "MU",
+      "date": "2026-07-10T07:00:00"
+    },
+    {
+      "key": "Summer Session 3 BEGINS|2026-07-13T07:00:00",
+      "firstSeenAt": "2026-06-23T19:25:34.519Z",
+      "title": "Summer Session 3 BEGINS",
+      "source": "MU",
+      "date": "2026-07-13T07:00:00"
+    },
+    {
+      "key": "Summer Fun Series|2026-07-15T18:00:00",
+      "firstSeenAt": "2026-06-23T19:25:34.519Z",
+      "title": "Summer Fun Series",
+      "source": "MU",
+      "date": "2026-07-15T18:00:00"
     }
   ],
-  "addedLastRun": 137
+  "addedLastRun": 0
 }

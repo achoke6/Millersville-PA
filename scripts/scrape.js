@@ -2739,6 +2739,7 @@ async function runScraper() {
         let boroughCount = 0;
         let boroughRecurring = 0;
         let boroughCollectionSkipped = 0;
+        let boroughSpamSkipped = 0;
 
         // Recurring municipal collection days (trash/recycling, woody yard waste,
         // appliance/tire) are intentionally NOT surfaced on the app — Adam's
@@ -2752,6 +2753,27 @@ async function runScraper() {
         //   "Appliance/Tire Collection"
         const BOROUGH_COLLECTION_RE = /\b(trash\s*&?\s*recycling|woody\s*yard\s*waste|appliance\s*\/?\s*tire)\b.*\bcollection\b|\bcollection\b.*\b(trash|recycling|yard waste|appliance|tire)\b/i;
 
+        // Vendor/transaction spam guard. The borough's calendar has an
+        // email→event bridge that has twice turned vendor emails into public
+        // "events" (an antivirus-renewal notice; a "...Service Bundle Renewed |
+        // Payment USD470.77 Processed" receipt). These never describe a real
+        // public happening, so we drop them at the source. Three independent
+        // signals, ANY of which skips the VEVENT:
+        //   1) a money amount WITH cents — "$470.77", "USD470.77", "US$1,200.00".
+        //      The required ".dd" is deliberate: a bare "$50" fee is NOT matched,
+        //      only formatted transaction totals.
+        //   2) payment-status phrasing — "Payment ... Processed/Received/
+        //      Confirmed/Declined/..." within a short span.
+        //   3) vendor-commerce nouns a community calendar never lists — antivirus,
+        //      service bundle, license key, software/subscription renewal,
+        //      auto-renew, order/invoice/receipt number.
+        // Tuned to spare legitimate municipal items: it matches "software
+        // renewal"/"subscription renewal"/"auto-renew" but never bare "renewal",
+        // so a "Dog License Renewal" or permit-renewal event survives. Extend the
+        // noun list here if a new spam pattern appears. Source-level skip, so it's
+        // NOT a Hard-Rule-7 triplicated change (junk never reaches events.json).
+        const BOROUGH_SPAM_RE = /(?:USD|EUR|GBP|US\$|\$)\s?\d[\d,]*\.\d{2}\b|\bpayment\b[\s\S]{0,30}\b(?:processed|received|confirmed|successful|completed|declined)\b|\b(?:antivirus|service\s+bundle|license\s+key|software\s+(?:renewal|license)|subscription\s+(?:renewal|renewed)|auto-?renew(?:al|ed)?|(?:order|invoice|receipt)\s+(?:number|#))\b/i;
+
         for (const ev of Object.values(boroughData)) {
             if (ev.type !== 'VEVENT') continue;
 
@@ -2761,6 +2783,17 @@ async function runScraper() {
             // Skip the recurring collection days (see note above). One check
             // here covers BOTH the RRULE-expansion and single-event paths below.
             if (BOROUGH_COLLECTION_RE.test(title)) { boroughCollectionSkipped++; continue; }
+
+            // Drop vendor/transaction spam the borough's email→calendar bridge
+            // republishes as public events (see BOROUGH_SPAM_RE). One check here
+            // covers BOTH the RRULE and single-event paths, like the collection
+            // skip above. Logged WITH the title so any false positive is visible
+            // in the Action log.
+            if (BOROUGH_SPAM_RE.test(title)) {
+                boroughSpamSkipped++;
+                console.log(`  🚫 Borough spam filtered: "${title}"`);
+                continue;
+            }
 
             // Handle recurring events (RRULE)
             if (ev.rrule) {
@@ -2861,6 +2894,7 @@ async function runScraper() {
         }
         console.log(`✅ Borough Calendar: ${boroughCount} events (${boroughRecurring} from recurring)`);
         if (boroughCollectionSkipped) console.log(`  ⏭️ skipped ${boroughCollectionSkipped} recurring collection day(s) (trash/yard-waste/appliance — intentionally hidden)`);
+        if (boroughSpamSkipped) console.log(`  🚫 filtered ${boroughSpamSkipped} vendor/transaction spam event(s) from Borough calendar`);
 
         // Apply hand-maintained borough-overrides.json. Format:
         //   {"overrides": [{

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-24T16:22:07.780Z",
+  "generatedAt": "2026-06-24T18:52:32.448Z",
   "totalEvents": 745,
   "withDescription": 254,
   "withImage": 111,
@@ -45,7 +45,7 @@
     },
     "phantomPower": {
       "earliest": "2026-06-24T23:00:00.000Z",
-      "latest": "2026-07-26T00:00:00.000Z"
+      "latest": "2026-08-02T00:00:00.000Z"
     },
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
@@ -86,8 +86,8 @@
       "daysSinceMoved": 20
     },
     "phantomPower": {
-      "newest": "2026-07-26",
-      "daysSinceMoved": 11
+      "newest": "2026-08-02",
+      "daysSinceMoved": 9
     },
     "community": {
       "newest": "2027-04-16",
@@ -120,9 +120,16 @@
     "pendingPast": 0,
     "pendingBySource": {},
     "stalePast": 3,
-    "lastSyncAt": "2026-06-24T16:20:24.955Z"
+    "lastSyncAt": "2026-06-24T18:50:34.002Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Houses Of The Holy - The True Zeppelin Experience|2026-08-02T00:00:00.000Z",
+      "firstSeenAt": "2026-06-24T18:52:32.446Z",
+      "title": "Houses Of The Holy - The True Zeppelin Experience",
+      "source": "Other",
+      "date": "2026-08-02T00:00:00.000Z"
+    },
     {
       "key": "Zoning Hearing Board|2026-07-01T23:00:00.000Z",
       "firstSeenAt": "2026-06-24T16:22:07.778Z",
@@ -185,14 +192,7 @@
       "title": "Zoning Hearing Board",
       "source": "Manor",
       "date": "2026-09-02T23:00:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2026-09-07T23:00:00.000Z",
-      "firstSeenAt": "2026-06-24T16:22:07.778Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-09-07T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 41
+  "addedLastRun": 1
 }

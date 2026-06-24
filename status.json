@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-06-24T14:28:51.000Z",
-  "totalEvents": 755,
-  "withDescription": 258,
+  "generatedAt": "2026-06-24T15:00:55.750Z",
+  "totalEvents": 716,
+  "withDescription": 260,
   "withImage": 111,
-  "familyFriendly": 48,
+  "familyFriendly": 50,
   "eventsToday": 3,
   "sources": {
     "muAthletics": 207,
-    "muCalendar": 94,
+    "muCalendar": 96,
     "muGetInvolved": 171,
     "pennManor": 82,
     "borough": 105,
     "vfw": 4,
     "phantomPower": 12,
     "community": 23,
-    "manor": 41,
+    "manor": 0,
     "raneyCellars": 11,
     "muHudlBroadcasts": 0
   },
@@ -51,10 +51,7 @@
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-07-01T23:00:00.000Z",
-      "latest": "2027-06-07T23:00:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-04-04T16:00:00.000Z",
       "latest": "2026-06-25T20:00:00.000Z"
@@ -93,10 +90,7 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 19
     },
-    "manor": {
-      "newest": "2027-06-07",
-      "daysSinceMoved": 7
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-06-25",
       "daysSinceMoved": 8
@@ -120,9 +114,23 @@
     "pendingPast": 0,
     "pendingBySource": {},
     "stalePast": 3,
-    "lastSyncAt": "2026-06-24T14:26:49.644Z"
+    "lastSyncAt": "2026-06-24T14:59:20.925Z"
   },
   "recentlyAdded": [
+    {
+      "key": "MU Field Hockey RAD Talent ID Showcase|2026-07-19T13:00:00.000Z",
+      "firstSeenAt": "2026-06-24T15:00:55.748Z",
+      "title": "MU Field Hockey RAD Talent ID Showcase",
+      "source": "MU",
+      "date": "2026-07-19T13:00:00.000Z"
+    },
+    {
+      "key": "MU Men's Basketball Summer Elite Camp|2026-08-08T13:00:00.000Z",
+      "firstSeenAt": "2026-06-24T15:00:55.748Z",
+      "title": "MU Men's Basketball Summer Elite Camp",
+      "source": "MU",
+      "date": "2026-08-08T13:00:00.000Z"
+    },
     {
       "key": "Sea Lions Swimming - @ Adamstown|2026-06-25T22:15:00.000Z",
       "firstSeenAt": "2026-06-24T14:28:50.997Z",
@@ -145,54 +153,40 @@
       "date": "2026-07-18T16:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-07-01T23:00:00.000Z",
-      "firstSeenAt": "2026-06-24T13:23:00.881Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-07-01T23:00:00.000Z"
+      "key": "Sea Lions Swimming - Swim for Life|2026-07-02T12:00:00.000Z",
+      "firstSeenAt": "2026-06-24T13:18:09.594Z",
+      "title": "Sea Lions Swimming - Swim for Life",
+      "source": "Community",
+      "date": "2026-07-02T12:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-07-06T23:00:00.000Z",
-      "firstSeenAt": "2026-06-24T13:23:00.881Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-07-06T23:00:00.000Z"
+      "key": "Sea Lions Swimming - Home vs Skyline|2026-07-07T22:15:00.000Z",
+      "firstSeenAt": "2026-06-24T13:18:09.594Z",
+      "title": "Sea Lions Swimming - Home vs Skyline",
+      "source": "Community",
+      "date": "2026-07-07T22:15:00.000Z"
     },
     {
-      "key": "Planning Commission|2026-07-13T23:00:00.000Z",
-      "firstSeenAt": "2026-06-24T13:23:00.881Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-07-13T23:00:00.000Z"
+      "key": "Sea Lions Swimming - Home vs Landisville|2026-07-09T22:15:00.000Z",
+      "firstSeenAt": "2026-06-24T13:18:09.594Z",
+      "title": "Sea Lions Swimming - Home vs Landisville",
+      "source": "Community",
+      "date": "2026-07-09T22:15:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
-      "firstSeenAt": "2026-06-24T13:23:00.881Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-07-29T12:30:00.000Z"
+      "key": "Sea Lions Swimming - League Championship Relays @ New Holland|2026-07-24T16:00:00.000Z",
+      "firstSeenAt": "2026-06-24T13:18:09.594Z",
+      "title": "Sea Lions Swimming - League Championship Relays @ New Holland",
+      "source": "Community",
+      "date": "2026-07-24T16:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
-      "firstSeenAt": "2026-06-24T13:23:00.881Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-08-03T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
-      "firstSeenAt": "2026-06-24T13:23:00.881Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-08-05T23:00:00.000Z"
-    },
-    {
-      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
-      "firstSeenAt": "2026-06-24T13:23:00.881Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-08-10T23:00:00.000Z"
+      "key": "Sea Lions Swimming - League Championship Individuals @ New Holland|2026-07-25T16:00:00.000Z",
+      "firstSeenAt": "2026-06-24T13:18:09.594Z",
+      "title": "Sea Lions Swimming - League Championship Individuals @ New Holland",
+      "source": "Community",
+      "date": "2026-07-25T16:00:00.000Z"
     }
   ],
-  "addedLastRun": 3
+  "addedLastRun": 2
 }

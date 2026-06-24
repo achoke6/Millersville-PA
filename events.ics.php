@@ -332,7 +332,7 @@ function eventMatchesFeed($e) {
         'volleyball' => 'volleyball', 'football' => 'football', 'basketball' => 'basketball',
         'soccer' => 'soccer', 'field hockey' => 'fieldhockey', 'tennis' => 'tennis',
         'track' => 'track', 'golf' => 'golf', 'swimming' => 'swimming',
-        'cross country' => 'crosscountry'
+        'cross country' => 'crosscountry', 'wrestling' => 'wrestling', 'bowling' => 'bowling'
     ];
     $tagsLower = array_map('strtolower', $tags);
 

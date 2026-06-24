@@ -470,7 +470,10 @@ const feedSections = {
                 {id:'pm-lacrosse',label:'Lacrosse',icon:'🥍'},{id:'pm-volleyball',label:'Volleyball',icon:'🏐'},
                 {id:'pm-football',label:'Football',icon:'🏈'},{id:'pm-basketball',label:'Basketball',icon:'🏀'},
                 {id:'pm-soccer',label:'Soccer',icon:'⚽'},{id:'pm-fieldhockey',label:'Field Hockey',icon:'🏑'},
-                {id:'pm-tennis',label:'Tennis',icon:'🎾'},{id:'pm-track',label:'Track',icon:'🏃'}
+                {id:'pm-tennis',label:'Tennis',icon:'🎾'},{id:'pm-track',label:'Track',icon:'🏃'},
+                {id:'pm-golf',label:'Golf',icon:'⛳'},{id:'pm-swimming',label:'Swimming',icon:'🏊'},
+                {id:'pm-crosscountry',label:'Cross Country',icon:'🏃'},{id:'pm-wrestling',label:'Wrestling',icon:'🤼'},
+                {id:'pm-bowling',label:'Bowling',icon:'🎳'}
             ]},
             musports: { label: 'MU Sports', icon: '🏴‍☠️', headingStyle: true, audience: 'student', subs: [
                 {id:'mu-baseball',label:'Baseball',icon:'⚾'},{id:'mu-softball',label:'Softball',icon:'🥎'},
@@ -582,10 +585,10 @@ const feedSections = {
             },
             borough: { label: 'Borough', icon: '🌳', headingStyle: true, audience: 'townie', subs: [{id:'borough-all',label:'All Borough Events',icon:'🌳'}] },
             manor: { label: 'Manor Twp.', icon: '🪶', headingStyle: true, audience: 'townie', subs: [{id:'manor-all',label:'All Manor Twp. Events',icon:'🪶'}] },
-            raneyCellars: { label: 'Raney Cellars', icon: '🍺', headingStyle: true, audience: 'townie', subs: [{id:'raney-cellars-all',label:'Raney Cellars Events',icon:'🍺'}] },
             other: { label: 'Other', icon: '🎯', headingStyle: true, audience: 'townie', subs: [
                 {id:'other-vfw',label:'VFW Events',icon:'🎖️'},{id:'other-phantom',label:'Phantom Power',icon:'🎵'},
-                {id:'other-community',label:'Community Events',icon:'📝'}
+                {id:'other-community',label:'Community Events',icon:'📝'},
+                {id:'raney-cellars-all',label:'Raney Cellars Events',icon:'🍺'}
             ]},
             family: { label: 'Family Friendly', icon: '👨‍👩‍👧', headingStyle: true, audience: 'townie', subs: [{id:'family-events',label:'Family Friendly Events',icon:'👨‍👩‍👧'}] }
         },
@@ -620,16 +623,13 @@ const feedSections = {
                 label: 'Manor Twp.', icon: '🪶', headingStyle: true,
                 subs: [{id:'manor-all',label:'All Manor Twp. Events',icon:'🪶'}]
             },
-            raneyCellars: {
-                label: 'Raney Cellars', icon: '🍺', headingStyle: true,
-                subs: [{id:'raney-cellars-all',label:'Raney Cellars Events',icon:'🍺'}]
-            },
             other: {
                 label: 'Other', icon: '🎯', headingStyle: true,
                 subs: [
                     {id:'other-vfw',label:'VFW Events',icon:'🎖️'},
                     {id:'other-phantom',label:'Phantom Power',icon:'🎵'},
-                    {id:'other-community',label:'Community Events',icon:'📝'}
+                    {id:'other-community',label:'Community Events',icon:'📝'},
+                    {id:'raney-cellars-all',label:'Raney Cellars Events',icon:'🍺'}
                 ]
             },
             family: {
@@ -795,7 +795,8 @@ function suggestFeedIdForEvent(e, isSportsPage) {
             'Baseball': 'baseball', 'Softball': 'softball', 'Lacrosse': 'lacrosse',
             'Volleyball': 'volleyball', 'Football': 'football', 'Basketball': 'basketball',
             'Soccer': 'soccer', 'Field Hockey': 'fieldhockey', 'Tennis': 'tennis',
-            'Track': 'track', 'Golf': 'golf', 'Swimming': 'swimming', 'Cross Country': 'crosscountry'
+            'Track': 'track', 'Golf': 'golf', 'Swimming': 'swimming', 'Cross Country': 'crosscountry',
+            'Wrestling': 'wrestling', 'Bowling': 'bowling'
         };
         const sportKey = tags.find(t => sportMap[t]);
         if (!sportKey) return null;
@@ -1215,28 +1216,20 @@ window.openFeedSettings = function() {
             ];
             const allChecked = allIds.length > 0 && allIds.every(id => current.includes(id));
 
-            // Render subs as chips (same shape as marauder picker), composites
-            // as full-width pill-styled checkboxes.
+            // Render subs and composites alike as chips (same shape as the
+            // marauder picker) so heading-style groups look uniform.
             const subsHtml = subs.length ? `<div style="display:flex;flex-wrap:wrap;gap:6px;padding-left:14px;margin-top:6px;">
                 ${subs.map(s => `<label class="feed-chip${current.includes(s.id)?' is-checked':''}"><input type="checkbox" class="feed-sub" data-group="${key}" value="${s.id}" ${current.includes(s.id)?'checked':''} onchange="updateFeedGroup('${key}')"> ${s.icon} ${labelFor(s)}</label>`).join('')}
             </div>` : '';
 
-            const compositesHtml = composites.length ? `<div style="padding-left:14px;margin-top:8px;">
+            const compositesHtml = composites.length ? `<div style="display:flex;flex-wrap:wrap;gap:6px;padding-left:14px;margin-top:6px;">
                 ${composites.map(c => {
                     const cChecked = (c.linkedIds || []).some(id => current.includes(id));
                     // Optional sub-sports chips inside a composite (used for
-                    // Club Sports, where townies often want individual sports).
+                    // Club Sports). Rendered as chips right after the composite.
                     const subSports = c.subSports || [];
-                    const subSportsHtml = subSports.length ? `<div style="display:flex;flex-wrap:wrap;gap:6px;padding:8px 0 4px 14px;">
-                        ${subSports.map(s => `<label class="feed-chip-tiny${current.includes(s.id)?' is-checked':''}"><input type="checkbox" class="feed-sub" data-group="${key}" value="${s.id}" ${current.includes(s.id)?'checked':''} onchange="updateFeedGroup('${key}')"> ${s.icon} ${s.label}</label>`).join('')}
-                    </div>` : '';
-                    return `<div style="margin-bottom:6px;">
-                        <label class="feed-composite-label feed-pill-sm${cChecked?' is-checked':''}">
-                            <input type="checkbox" class="feed-sub" data-group="${key}" data-linked-ids="${(c.linkedIds||[]).join(',')}" ${cChecked?'checked':''} onchange="updateCompositeSub(this)">
-                            <span>${c.icon} ${c.label}</span>
-                        </label>
-                        ${subSportsHtml}
-                    </div>`;
+                    const subSportsHtml = subSports.map(s => `<label class="feed-chip-tiny${current.includes(s.id)?' is-checked':''}"><input type="checkbox" class="feed-sub" data-group="${key}" value="${s.id}" ${current.includes(s.id)?'checked':''} onchange="updateFeedGroup('${key}')"> ${s.icon} ${s.label}</label>`).join('');
+                    return `<label class="feed-chip${cChecked?' is-checked':''}"><input type="checkbox" class="feed-sub" data-group="${key}" data-linked-ids="${(c.linkedIds||[]).join(',')}" ${cChecked?'checked':''} onchange="updateCompositeSub(this)"> ${c.icon} ${c.label}</label>${subSportsHtml}`;
                 }).join('')}
             </div>` : '';
 

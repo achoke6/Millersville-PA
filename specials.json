@@ -32,8 +32,12 @@
   },
   "VFW Post 7294": {
     "note": "Members & Guests · Weekly specials change each week",
-    "weekly": [],
-    "weeklyDateRange": "",
+    "weekly": [
+      "Cuban Sandwich – $12.95",
+      "Chicken Fajitas – $12.95",
+      "Shrimp Alfredo – $13.95 (Friday only)"
+    ],
+    "weeklyDateRange": "Tuesday, June 23 through Saturday, June 27",
     "recurring": {
       "Tuesday": "Shrimp Night",
       "Wednesday": "Wing Night",

@@ -12,7 +12,7 @@ const baseHeaders = {
 
 const SCRAPE_HORIZON_DAYS = 60;
 
-const sportsList = ['Baseball', 'Softball', 'Track', 'Soccer', 'Lacrosse', 'Tennis', 'Volleyball', 'Wrestling', 'Basketball', 'Football', 'Field Hockey', 'Golf', 'Cross Country', 'Cheerleading', 'Swimming', 'Rugby', 'Fencing', 'Esports', 'Archery'];
+const sportsList = ['Baseball', 'Softball', 'Track', 'Soccer', 'Lacrosse', 'Tennis', 'Volleyball', 'Wrestling', 'Basketball', 'Football', 'Field Hockey', 'Golf', 'Cross Country', 'Cheerleading', 'Swimming', 'Bowling', 'Rugby', 'Fencing', 'Esports', 'Archery'];
 
 // Resolve an event's end time for events.json serialization. Returns an ISO
 // string when the source carries an explicit end that should be persisted;
@@ -1168,52 +1168,11 @@ async function runScraper() {
             const isAthletic = categories.toLowerCase().includes('athletics') || desc.toLowerCase().includes('sport:');
 
             if (isAthletic) {
-                // Parse structured description: Sport:, Level:, Site:
-                const sportMatch = desc.match(/Sport:\s*(.+?)(?:\\n|\n|$)/i);
-                const levelMatch = desc.match(/Level:\s*(.+?)(?:\\n|\n|$)/i);
-
-                let tags = ["PM", "Athletics"];
-
-                // Home vs Away: "vs" = home, "@" = away
-                const isHome = lowerTitle.includes(' vs ');
-                if (isHome) tags.push("Home Game Mode");
-
-                // Level
-                const level = levelMatch ? levelMatch[1].trim() : '';
-                if (/varsity/i.test(level) && !/jv/i.test(level)) tags.push('Varsity');
-                if (/jv/i.test(level)) tags.push('JV');
-                if (/7th|8th|jr high|junior high/i.test(level)) tags.push('Jr High');
-
-                // Gender
-                if (/\bboys\b|boy's/i.test(level) || /\bboys\b/i.test(lowerTitle)) tags.push('Boys');
-                if (/\bgirls\b|girl's/i.test(level) || /\bgirls\b/i.test(lowerTitle)) tags.push('Girls');
-                if (/\bcoed\b/i.test(level) || /\bcoed\b/i.test(lowerTitle)) { tags.push('Boys'); tags.push('Girls'); }
-
-                // Sport type
-                sportsList.forEach(s => {
-                    if (lowerTitle.includes(s.toLowerCase())) tags.push(s);
-                });
-                // Catch Track & Field variants
-                if (/track\s*&?\s*field/i.test(desc) && !tags.includes('Track')) tags.push('Track');
-                if (/bocce/i.test(lowerTitle)) tags.push('Athletics'); // Bocce not in list but keep tagged
-
-                let pmStreamLink = '';
-
-                // Check if game is live
-                const eventEnd = ev.end ? new Date(ev.end) : new Date(eventDate.getTime() + 2*60*60*1000);
-                const pmIsLive = now >= eventDate && now <= eventEnd && !!pmStreamLink;
-
-                events.push({
-                    title, date: eventDate.toISOString(),
-                    endTime: resolveEndTime({ origStart: ev.start, origEnd: ev.end, instanceStart: eventDate }),
-                    location: loc,
-                    tags: [...new Set(tags)], price: "Free", ticketLink: "",
-                    sourceLink: ev.url || "https://www.pennmanor.net/calendar/",
-                    gameResult: '', gameScore: '',
-                    streamLink: pmStreamLink,
-                    isLive: pmIsLive
-                });
-                pmAthCount++;
+                // Athletics now come from the dedicated athletics-category feed
+                // (section 2a, just below) - comprehensive (swimming, bowling,
+                // cross country, ...) and pre-filtered. Skip them here so the
+                // general PM feed emits only non-athletic events (no duplicates).
+                continue;
             } else {
                 // Non-athletic PM event — categorize by title keywords
                 let tags = ["PM"];
@@ -1258,13 +1217,123 @@ async function runScraper() {
                 pmGenCount++;
             }
         }
-        console.log(`✅ Penn Manor: ${pmAthCount} athletic + ${pmGenCount} general = ${pmAthCount + pmGenCount} events`);
-        // Debug: check girls lacrosse coverage
-        const girlsLax = events.filter(e => e.tags && e.tags.includes('PM') && e.tags.includes('Girls') && e.tags.includes('Lacrosse'));
-        const futureGirlsLax = girlsLax.filter(e => new Date(e.date) >= now);
-        console.log(`    🔍 Girls Lacrosse: ${girlsLax.length} total, ${futureGirlsLax.length} future`);
-        futureGirlsLax.forEach(e => console.log(`      → ${e.title} (${new Date(e.date).toISOString().split('T')[0]})`));
+        console.log(`✅ Penn Manor (general): ${pmGenCount} non-athletic events (athletics now come from the athletics-category feed below)`);
     } catch (e) { console.error("❌ Penn Manor error:", e.message); }
+
+    // ===== 2a. PENN MANOR ATHLETICS (dedicated athletics-category iCal) =====
+    // Penn Manor athletic SCHEDULES now come straight from the district's
+    // "Athletics" category feed (same Tribe/WordPress platform as the general PM
+    // calendar in section 2, just pre-filtered to athletics). The old approach of
+    // detecting athletics inside the all-categories feed silently dropped sports
+    // the AD scheduled but the site didn't surface in its default list (confirmed
+    // missing: swimming, bowling). This feed is comprehensive: Cross Country,
+    // Swimming, Bowling, Wrestling, Basketball, etc. Varsity + JV ONLY
+    // (7th/8th/9th/freshman/jr-high dropped). Each game is emitted with the SAME
+    // object shape + tags as the old PM athletic events, so the MaxPreps/Hudl score
+    // matchers and the Hudl broadcast check (section 2b, which runs immediately
+    // after this) attach scores + stream links with no changes. Runs before 2b on
+    // purpose. URL: path form (/events/category/athletics/list/) and the
+    // ?tribe_events_cat=athletics query form were both verified to return the same
+    // feed; path form chosen to mirror the section-2 general feed. Past + future
+    // reuse the same pastDate/futureDate window as everything else, paginated like
+    // section 2.
+    try {
+        console.log("📡 Fetching Penn Manor Athletics (athletics-category iCal)...");
+        const allPMAth = {};
+        const pmAthFutureUrl = 'https://www.pennmanor.net/events/category/athletics/list/?ical=1&tribe_event_display=list&tribe_paged=';
+        const pmAthPastUrl   = 'https://www.pennmanor.net/events/category/athletics/list/?ical=1&tribe_event_display=past&tribe_paged=';
+
+        // Forward (upcoming) pages — stop logic mirrors section 2
+        let aLatest = null;
+        for (let aPage = 1; aPage <= 20; aPage++) {
+            try {
+                const pageData = await ical.async.fromURL(pmAthFutureUrl + aPage, { headers: baseHeaders });
+                const pageEvents = Object.values(pageData).filter(e => e.type === 'VEVENT');
+                if (pageEvents.length === 0) break;
+                let newCount = 0;
+                for (const [key, val] of Object.entries(pageData)) {
+                    if (val.type === 'VEVENT') { const uid = val.uid || key; if (!allPMAth[uid]) newCount++; allPMAth[uid] = val; }
+                }
+                let pageLatest = null;
+                pageEvents.forEach(ev => { const d = new Date(ev.start); if (!isNaN(d.getTime()) && (!pageLatest || d > pageLatest)) pageLatest = d; });
+                if (pageLatest) aLatest = pageLatest;
+                if (aLatest && aLatest >= futureDate) break;
+                if (pageEvents.length < 30) break;
+                if (newCount === 0) break;
+            } catch (err) { console.log(`  → Athletics page failed: ${err.message}`); break; }
+        }
+        // Past pages — mirrors section 2's backward pagination
+        for (let pp = 1; pp <= 20; pp++) {
+            try {
+                const pastData = await ical.async.fromURL(pmAthPastUrl + pp, { headers: baseHeaders });
+                const pastEvents = Object.values(pastData).filter(e => e.type === 'VEVENT');
+                if (pastEvents.length === 0) break;
+                let newPast = 0, oldest = null;
+                for (const [key, val] of Object.entries(pastData)) {
+                    if (val.type === 'VEVENT') { const uid = val.uid || key; if (!allPMAth[uid]) newPast++; allPMAth[uid] = val; const d = new Date(val.start); if (!oldest || d < oldest) oldest = d; }
+                }
+                if (newPast === 0) break;
+                if (oldest && oldest < pastDate) break;
+            } catch (err) { console.log(`  → Athletics past page failed: ${err.message}`); break; }
+        }
+
+        let pmAthEmit = 0, pmAthDropLevel = 0;
+        for (const ev of Object.values(allPMAth)) {
+            const eventDate = new Date(ev.start);
+            if (isNaN(eventDate.getTime()) || eventDate < pastDate || eventDate >= futureDate) continue;
+
+            const title = (ev.summary || 'Penn Manor Athletics')
+                .replace(/\s*@\s*\d{1,2}(?::\d{2})?\s*[ap]\.?m\.?\s*$/i, '')
+                .trim();
+            const lowerTitle = title.toLowerCase();
+            const desc = ev.description || '';
+
+            // Feed is games-only, but guard against any non-game rows defensively
+            if (/\bpractice\b|\bscrimmage\b|\bopen gym\b|\btryout/i.test(lowerTitle)) continue;
+
+            // Structured description fields: "Sport: X", "Level: <Gender> <Level>", "Site: <venue>"
+            const sportRaw = ((desc.match(/Sport:\s*(.+?)(?:\\n|\n|$)/i) || [])[1] || '').trim();
+            const levelRaw = ((desc.match(/Level:\s*(.+?)(?:\\n|\n|$)/i) || [])[1] || '').trim();
+            const siteRaw  = ((desc.match(/Site:\s*(.+?)(?:\\n|\n|$)/i)  || [])[1] || '').trim();
+
+            // Varsity + JV only — drop 7th/8th/9th/freshman/jr-high
+            const isVarsity = /\bvarsity\b/i.test(levelRaw);
+            const isJV = /\bjv\b/i.test(levelRaw);
+            if (!(isVarsity || isJV)) { pmAthDropLevel++; continue; }
+
+            const tags = ["PM", "Athletics"];
+            if (isVarsity && !isJV) tags.push('Varsity');
+            if (isJV) tags.push('JV');
+
+            // Gender (Level carries it; fall back to title)
+            if (/\bgirls?\b|girl's/i.test(levelRaw) || /\bgirls\b/i.test(lowerTitle)) tags.push('Girls');
+            if (/\bboys?\b|boy's/i.test(levelRaw)   || /\bboys\b/i.test(lowerTitle))  tags.push('Boys');
+
+            // Home vs Away: "vs" = home, "@" = away (mirrors section 2)
+            if (lowerTitle.includes(' vs ')) tags.push("Home Game Mode");
+
+            // Sport tag from the authoritative Sport: field, normalized to sportsList casing
+            const sportCanon = sportsList.find(s => s.toLowerCase() === sportRaw.toLowerCase());
+            if (sportCanon) tags.push(sportCanon);
+            else if (sportRaw) tags.push('Athletics'); // sport not in sportsList — keep tagged (e.g. Bocce)
+
+            // Display location: prefer the venue name (Site:) over the raw address
+            const loc = siteRaw || ev.location || 'Penn Manor School District';
+
+            events.push({
+                title, date: eventDate.toISOString(),
+                endTime: resolveEndTime({ origStart: ev.start, origEnd: ev.end, instanceStart: eventDate }),
+                location: loc,
+                tags: [...new Set(tags)], price: "Free", ticketLink: "",
+                sourceLink: ev.url || "https://www.pennmanor.net/events/category/athletics/",
+                gameResult: '', gameScore: '',
+                streamLink: '',
+                isLive: false
+            });
+            pmAthEmit++;
+        }
+        console.log(`✅ Penn Manor Athletics: ${pmAthEmit} games (Varsity/JV) emitted, ${pmAthDropLevel} sub-varsity dropped`);
+    } catch (e) { console.error("❌ Penn Manor Athletics error:", e.message); }
 
     // ===== 2b. HUDL BROADCAST CHECK (Penn Manor) =====
     try {

@@ -1974,6 +1974,29 @@ async function runScraper() {
             // SKIP Athletic Competitions — we get those from Sidearm now
             if (eventType === 'Athletic Competitions') return;
 
+            // --- TEMP SKIP: bare "Summer Fun Series" calendar phantoms (added 2026-06-24) ---
+            // After MU's calendar migration (Ad Astra -> Coursedog, June 2026), the
+            // Coursedog feed is publishing Summer Fun Series on the WRONG date (a day
+            // early — Wednesday instead of the real Thursday) as a bare, description-less
+            // placeholder: title exactly "Summer Fun Series", at "Duncan Alumni House Yard",
+            // tagged Public Event / Alumni Engagement. The CORRECT, fully-described copies
+            // ("Summer Fun Series: <activity> with <people>", Alumni House Lawn) come from
+            // the weekly alumni-events Cowork sync, NOT this calendar — so dropping the
+            // calendar copies loses nothing the site doesn't already have from the better
+            // source. MU IT estimated ~2 weeks to fix (so ~early July 2026).
+            //
+            // Matches the BARE title ONLY (optional trailing colon) — the real suffixed
+            // titles have text after the colon and are left untouched.
+            //
+            // REMOVE THIS once MU's calendar dates are corrected: at that point the calendar
+            // copy lands on the same Thursday instant as the curated copy, sharing the
+            // "Summer Fun Series" title-head, and dedupeEvents() in app.js collapses the
+            // pair on its own (richer copy wins) — so this skip becomes redundant.
+            if (/^\s*summer fun series\s*:?\s*$/i.test(eventTitle)) {
+                console.log(`⏭️  Skipped bare 'Summer Fun Series' calendar phantom (${obj.startDate || 'no date'})`);
+                return;
+            }
+
             // Build location from the split named fields (building + roomName +
             // roomNumber). The proxy also returns a pre-combined location, but we
             // compose from the parts to keep the existing cleanups working.

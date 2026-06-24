@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-06-24T15:00:55.750Z",
-  "totalEvents": 716,
-  "withDescription": 260,
+  "generatedAt": "2026-06-24T15:55:44.960Z",
+  "totalEvents": 704,
+  "withDescription": 254,
   "withImage": 111,
-  "familyFriendly": 50,
-  "eventsToday": 3,
+  "familyFriendly": 44,
+  "eventsToday": 2,
   "sources": {
     "muAthletics": 207,
-    "muCalendar": 96,
+    "muCalendar": 84,
     "muGetInvolved": 171,
     "pennManor": 82,
     "borough": 105,
@@ -45,7 +45,7 @@
     },
     "phantomPower": {
       "earliest": "2026-06-24T23:00:00.000Z",
-      "latest": "2026-08-02T00:00:00.000Z"
+      "latest": "2026-07-26T00:00:00.000Z"
     },
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
@@ -83,8 +83,8 @@
       "daysSinceMoved": 20
     },
     "phantomPower": {
-      "newest": "2026-08-02",
-      "daysSinceMoved": 9
+      "newest": "2026-07-26",
+      "daysSinceMoved": 11
     },
     "community": {
       "newest": "2027-04-16",
@@ -114,9 +114,16 @@
     "pendingPast": 0,
     "pendingBySource": {},
     "stalePast": 3,
-    "lastSyncAt": "2026-06-24T14:59:20.925Z"
+    "lastSyncAt": "2026-06-24T15:54:21.262Z"
   },
   "recentlyAdded": [
+    {
+      "key": "AFROMAN|2026-07-04T00:00:00.000Z",
+      "firstSeenAt": "2026-06-24T15:55:44.958Z",
+      "title": "AFROMAN",
+      "source": "Other",
+      "date": "2026-07-04T00:00:00.000Z"
+    },
     {
       "key": "MU Field Hockey RAD Talent ID Showcase|2026-07-19T13:00:00.000Z",
       "firstSeenAt": "2026-06-24T15:00:55.748Z",
@@ -179,14 +186,7 @@
       "title": "Sea Lions Swimming - League Championship Relays @ New Holland",
       "source": "Community",
       "date": "2026-07-24T16:00:00.000Z"
-    },
-    {
-      "key": "Sea Lions Swimming - League Championship Individuals @ New Holland|2026-07-25T16:00:00.000Z",
-      "firstSeenAt": "2026-06-24T13:18:09.594Z",
-      "title": "Sea Lions Swimming - League Championship Individuals @ New Holland",
-      "source": "Community",
-      "date": "2026-07-25T16:00:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 1
 }

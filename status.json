@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-06-24T03:31:06.047Z",
-  "totalEvents": 885,
+  "generatedAt": "2026-06-24T07:40:43.156Z",
+  "totalEvents": 843,
   "withDescription": 249,
   "withImage": 111,
   "familyFriendly": 47,
-  "eventsToday": 1,
+  "eventsToday": 4,
   "sources": {
     "muAthletics": 207,
     "muCalendar": 94,
@@ -14,7 +14,7 @@
     "vfw": 4,
     "phantomPower": 12,
     "community": 14,
-    "manor": 42,
+    "manor": 0,
     "raneyCellars": 11,
     "muHudlBroadcasts": 0
   },
@@ -51,10 +51,7 @@
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-06-24T12:30:00.000Z",
-      "latest": "2027-06-07T23:00:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-04-04T16:00:00.000Z",
       "latest": "2026-06-25T20:00:00.000Z"
@@ -63,43 +60,40 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-03-12",
-      "daysSinceMoved": 19
+      "daysSinceMoved": 20
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 19
+      "daysSinceMoved": 20
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 19
+      "daysSinceMoved": 20
     },
     "pennManor": {
       "newest": "2026-09-29",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     },
     "borough": {
       "newest": "2027-06-12",
-      "daysSinceMoved": 11
+      "daysSinceMoved": 12
     },
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 19
+      "daysSinceMoved": 20
     },
     "phantomPower": {
       "newest": "2026-08-02",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 9
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 18
+      "daysSinceMoved": 19
     },
-    "manor": {
-      "newest": "2027-06-07",
-      "daysSinceMoved": 6
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-06-25",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     }
   },
   "sports": {
@@ -120,78 +114,78 @@
     "pendingPast": 0,
     "pendingBySource": {},
     "stalePast": 3,
-    "lastSyncAt": "2026-06-24T03:29:18.444Z"
+    "lastSyncAt": "2026-06-24T07:39:18.316Z"
   },
   "recentlyAdded": [
     {
-      "key": "Traffic Commission Meeting-CANCELED|2026-06-24T12:30:00.000Z",
-      "firstSeenAt": "2026-06-23T22:13:18.645Z",
-      "title": "Traffic Commission Meeting-CANCELED",
-      "source": "Manor",
-      "date": "2026-06-24T12:30:00.000Z"
+      "key": "Summer Fun Series|2026-06-24T18:00:00",
+      "firstSeenAt": "2026-06-23T19:25:34.519Z",
+      "title": "Summer Fun Series",
+      "source": "MU",
+      "date": "2026-06-24T18:00:00"
     },
     {
-      "key": "Zoning Hearing Board|2026-07-01T23:00:00.000Z",
-      "firstSeenAt": "2026-06-23T22:13:18.645Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-07-01T23:00:00.000Z"
+      "key": "End of Fiscal Year 2025-2026|2026-06-30T00:00:00",
+      "firstSeenAt": "2026-06-23T19:25:34.519Z",
+      "title": "End of Fiscal Year 2025-2026",
+      "source": "MU",
+      "date": "2026-06-30T00:00:00"
     },
     {
-      "key": "Supervisors Meeting|2026-07-06T23:00:00.000Z",
-      "firstSeenAt": "2026-06-23T22:13:18.645Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-07-06T23:00:00.000Z"
+      "key": "Start of Fiscal Year 2026-2027|2026-07-01T00:00:00",
+      "firstSeenAt": "2026-06-23T19:25:34.519Z",
+      "title": "Start of Fiscal Year 2026-2027",
+      "source": "MU",
+      "date": "2026-07-01T00:00:00"
     },
     {
-      "key": "Planning Commission|2026-07-13T23:00:00.000Z",
-      "firstSeenAt": "2026-06-23T22:13:18.645Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-07-13T23:00:00.000Z"
+      "key": "Summer Fun Series|2026-07-01T18:00:00",
+      "firstSeenAt": "2026-06-23T19:25:34.519Z",
+      "title": "Summer Fun Series",
+      "source": "MU",
+      "date": "2026-07-01T18:00:00"
     },
     {
-      "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
-      "firstSeenAt": "2026-06-23T22:13:18.645Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-07-29T12:30:00.000Z"
+      "key": "Fourth of July Holiday - No Classes, Limited Campus Operations|2026-07-03T00:00:00",
+      "firstSeenAt": "2026-06-23T19:25:34.519Z",
+      "title": "Fourth of July Holiday - No Classes, Limited Campus Operations",
+      "source": "MU",
+      "date": "2026-07-03T00:00:00"
     },
     {
-      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
-      "firstSeenAt": "2026-06-23T22:13:18.645Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-08-03T23:00:00.000Z"
+      "key": "Arts Smarts Camps|2026-07-06T09:00:00",
+      "firstSeenAt": "2026-06-23T19:25:34.519Z",
+      "title": "Arts Smarts Camps",
+      "source": "MU",
+      "date": "2026-07-06T09:00:00"
     },
     {
-      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
-      "firstSeenAt": "2026-06-23T22:13:18.645Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-08-05T23:00:00.000Z"
+      "key": "Summer Fun Series|2026-07-08T18:00:00",
+      "firstSeenAt": "2026-06-23T19:25:34.519Z",
+      "title": "Summer Fun Series",
+      "source": "MU",
+      "date": "2026-07-08T18:00:00"
     },
     {
-      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
-      "firstSeenAt": "2026-06-23T22:13:18.645Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-08-10T23:00:00.000Z"
+      "key": "Summer Session 2 ENDS|2026-07-10T07:00:00",
+      "firstSeenAt": "2026-06-23T19:25:34.519Z",
+      "title": "Summer Session 2 ENDS",
+      "source": "MU",
+      "date": "2026-07-10T07:00:00"
     },
     {
-      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
-      "firstSeenAt": "2026-06-23T22:13:18.645Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-08-26T12:30:00.000Z"
+      "key": "Summer Session 3 BEGINS|2026-07-13T07:00:00",
+      "firstSeenAt": "2026-06-23T19:25:34.519Z",
+      "title": "Summer Session 3 BEGINS",
+      "source": "MU",
+      "date": "2026-07-13T07:00:00"
     },
     {
-      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
-      "firstSeenAt": "2026-06-23T22:13:18.645Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-09-02T23:00:00.000Z"
+      "key": "Summer Fun Series|2026-07-15T18:00:00",
+      "firstSeenAt": "2026-06-23T19:25:34.519Z",
+      "title": "Summer Fun Series",
+      "source": "MU",
+      "date": "2026-07-15T18:00:00"
     }
   ],
   "addedLastRun": 0

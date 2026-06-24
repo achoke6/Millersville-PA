@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-06-24T10:49:54.806Z",
-  "totalEvents": 885,
+  "generatedAt": "2026-06-24T12:28:47.221Z",
+  "totalEvents": 740,
   "withDescription": 249,
   "withImage": 111,
   "familyFriendly": 47,
-  "eventsToday": 5,
+  "eventsToday": 4,
   "sources": {
     "muAthletics": 207,
     "muCalendar": 94,
     "muGetInvolved": 171,
-    "pennManor": 219,
-    "borough": 106,
+    "pennManor": 75,
+    "borough": 105,
     "vfw": 4,
     "phantomPower": 12,
     "community": 14,
@@ -32,8 +32,8 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-05-05T20:00:00.000Z",
-      "latest": "2026-09-29T20:15:00.000Z"
+      "earliest": "2026-05-05T20:15:00.000Z",
+      "latest": "2026-09-21T23:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-03-26T22:30:00.000Z",
@@ -74,8 +74,8 @@
       "daysSinceMoved": 20
     },
     "pennManor": {
-      "newest": "2026-09-29",
-      "daysSinceMoved": 6
+      "newest": "2026-09-21",
+      "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2027-06-12",
@@ -103,10 +103,10 @@
     }
   },
   "sports": {
-    "total": 395,
-    "scored": 10,
+    "total": 258,
+    "scored": 9,
     "wins": 3,
-    "losses": 6,
+    "losses": 5,
     "ties": 1
   },
   "registrations": {
@@ -120,7 +120,7 @@
     "pendingPast": 0,
     "pendingBySource": {},
     "stalePast": 3,
-    "lastSyncAt": "2026-06-24T10:48:00.968Z"
+    "lastSyncAt": "2026-06-24T12:26:38.245Z"
   },
   "recentlyAdded": [
     {
@@ -194,5 +194,5 @@
       "date": "2026-09-02T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 42
+  "addedLastRun": 0
 }

@@ -2230,10 +2230,9 @@ async function runScraper() {
     // ===== 3d. HAND-MAINTAINED CAMPS (camps.json) =====
     // For camps where automated scraping fails (e.g., TotalCamps API blocks GHA IPs).
     // Edit /camps.json in the repo root to add/update camps. They'll appear on the site within the hour.
-    // Dedup set used by both this block and the auto-events.json block below —
-    // hoisted so both share the same view of what's already in the events
-    // array. Initialized once from current events; both loaders mutate it
-    // as they add entries.
+    // Dedup set for the camps.json loader below: keyed off what's already
+    // in the events array so a camp that duplicates an existing event
+    // (same title, same day) is skipped. The loader mutates it as it adds entries.
     const existingKeys4 = new Set(events.map(e => buildCampDedupKey(e.title, e.date)));
     try {
         const campsPath = path.join(__dirname, '../camps.json');
@@ -2283,86 +2282,6 @@ async function runScraper() {
             console.log(`ℹ️  camps.json not found at ${campsPath} — skipping hand-maintained camps`);
         }
     } catch (e) { console.error("❌ camps.json error:", e.message); }
-
-    // ===== 3d-2. AUTO-SCRAPED EVENTS (auto-events.json from DreamHost) =====
-    // Written weekly by scripts/scrape-monthly.js. Lives on DreamHost only,
-    // not in the repo (gitignored, excluded from deploy mirror) so the
-    // weekly scraper's output isn't clobbered by hourly deploys.
-    //
-    // Schema is identical to camps.json — both files feed the same insertion
-    // path. We process this AFTER camps.json so hand-curated entries seed
-    // the dedup set first; any auto-entry colliding with a curated one
-    // (same title, same day) gets skipped. That's the right priority:
-    // human-edited entries are higher-trust than HTML scraping output.
-    //
-    // Failure modes:
-    //   - File doesn't exist (first run, scraper hasn't fired yet) → log
-    //     and continue. Hourly cron isn't blocked.
-    //   - Network error fetching → log and continue.
-    //   - Malformed JSON → catch, log, continue.
-    //   - Empty array → no entries added, no error.
-    try {
-        const autoEventsUrl = 'https://millersville.app/auto-events.json';
-        const autoRes = await fetch(autoEventsUrl, {
-            headers: { 'User-Agent': 'MillersvilleScraper/1.0' },
-            signal: AbortSignal.timeout(15000)
-        });
-        if (autoRes.ok) {
-            // DreamHost serves an HTML 404 page with 200 OK status when the
-            // file is missing — same failure mode we hit on notifications-
-            // status.json. Validate the body looks like JSON before parsing
-            // so we don't log a spurious "Unexpected token <" error every run.
-            const bodyText = await autoRes.text();
-            const trimmed = bodyText.trimStart();
-            if (!trimmed.startsWith('[') && !trimmed.startsWith('{')) {
-                console.log(`ℹ️  auto-events.json not yet published (got HTML, weekly scraper hasn't successfully run)`);
-            } else {
-                let autoData;
-                try { autoData = JSON.parse(bodyText); }
-                catch (e) { console.log(`⚠️  auto-events.json parse error: ${e.message}`); autoData = null; }
-                if (Array.isArray(autoData)) {
-                    let autoCount = 0, autoSkipped = 0;
-                    // Reuse the same dedup set populated by the camps.json loader
-                    // above (existingKeys4) so collisions across both manual and
-                    // auto sources are handled uniformly.
-                    for (const camp of autoData) {
-                        if (!camp.title || !camp.date) { autoSkipped++; continue; }
-                        const campDate = new Date(camp.date);
-                        if (isNaN(campDate.getTime())) { autoSkipped++; continue; }
-                        if (campDate < pastDate || campDate >= futureDate) { autoSkipped++; continue; }
-                        const key = buildCampDedupKey(camp.title, campDate);
-                        if (existingKeys4.has(key)) { autoSkipped++; continue; }
-                        let resolvedEndTime;
-                        if (camp.endTime) {
-                            const endDate = new Date(camp.endTime);
-                            if (!isNaN(endDate.getTime())) resolvedEndTime = endDate.toISOString();
-                        }
-                        events.push({
-                            title: camp.title,
-                            date: campDate.toISOString(),
-                            endTime: resolvedEndTime,
-                            location: camp.location || 'Millersville University',
-                            tags: Array.isArray(camp.tags) ? camp.tags : ['MU'],
-                            price: camp.price || '',
-                            ticketLink: camp.registrationUrl || camp.ticketLink || '',
-                            sourceLink: camp.sourceLink || camp.registrationUrl || '',
-                            description: camp.description || '',
-                            kidFriendly: camp.kidFriendly === true  // default false unless explicit
-                        });
-                        existingKeys4.add(key);
-                        autoCount++;
-                    }
-                    console.log(`✅ Auto-events: ${autoCount} loaded from auto-events.json (${autoSkipped} skipped)`);
-                } else if (autoData !== null) {
-                    console.log(`ℹ️  auto-events.json had non-array shape — skipping`);
-                }
-            }
-        } else if (autoRes.status === 404) {
-            console.log(`ℹ️  auto-events.json not yet published (HTTP 404) — weekly scraper hasn't run yet`);
-        } else {
-            console.log(`⚠️  auto-events.json HTTP ${autoRes.status} — skipping`);
-        }
-    } catch (e) { console.error("⚠️ auto-events.json error:", e.message); }
 
     // ===== 4. CLUBS/ORGS (ANTHOLOGY / GETINVOLVED API) =====
     try {

@@ -16,7 +16,7 @@ jobs:
           fetch-depth: 0
 
       # Validate hand-maintained JSON files before doing anything expensive.
-      # camps.json, sponsors.json, org-overrides.json, and shortnames-overlay.json
+      # camps.json, org-overrides.json, and shortnames-overlay.json
       # are edited by hand — a missing comma or stray quote silently breaks the
       # scraper (or worse, breaks app.js after deploy). Catching it here means
       # PRs and pushes fail fast at the validation step, with a clear message
@@ -29,7 +29,7 @@ jobs:
       - name: Validate hand-maintained JSON
         run: |
           set -e
-          for f in camps.json sponsors.json org-overrides.json shortnames-overlay.json imleagues.json; do
+          for f in camps.json org-overrides.json shortnames-overlay.json imleagues.json; do
             if [ -f "$f" ]; then
               echo "Checking $f..."
               jq empty "$f" || { echo "❌ $f has invalid JSON syntax"; exit 1; }

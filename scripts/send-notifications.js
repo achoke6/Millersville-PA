@@ -23,7 +23,7 @@
  *
  * eventMatchesFeed is imported from ../lib/eventMatch.js (shared with
  * app.js via a UMD-style export). One source of truth — no more lockstep
- * comments. The PHP port in events_ics.php is NOT covered by the shared
+ * comments. The PHP port in events.ics.php is NOT covered by the shared
  * lib (different language); see comment in that file.
  */
 

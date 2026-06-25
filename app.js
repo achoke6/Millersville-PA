@@ -3567,7 +3567,6 @@ function renderEvents(){
     }
 
     container.innerHTML = html;
-    injectInlineAds('ev-events-container','events');
     if (typeof refreshDayLabels === 'function') refreshDayLabels();
 }
 
@@ -3970,7 +3969,6 @@ function renderSports(){
         html += '<div class="load-more-note">That\'s all ' + (isPast ? 'past' : 'scheduled') + ' games 👋</div>';
     }
     container.innerHTML = html;
-    injectInlineAds('sp-events-container','sports');
     if (typeof refreshDayLabels === 'function') refreshDayLabels();
 }
 
@@ -5603,7 +5601,6 @@ function renderNewsUI(){
     } else {
         c.innerHTML = f.map(n => buildNewsCard(n)).join('');
     }
-    injectInlineAds('news-container','news');
 }
 let allPlaces=[], placesFilter='All', placesMGMode=false, placesMBAMode=false;
 
@@ -6468,10 +6465,6 @@ window.submitReview = function() {
     });
 };
 
-// ==================== SPONSOR SYSTEM ====================
-let sponsorData = { sponsors: [], config: { rotateIntervalMs: 15000, inlineAdEveryN: 9, placements: {} } };
-let sponsorImpressions = {}; // { sponsorId: { impressions: N, clicks: N } }
-
 // Full MU organization directory (loaded from clubs.json — includes orgs without current events)
 let allClubsDirectory = [];
 
@@ -6533,158 +6526,6 @@ async function loadClubsDirectory() {
         console.log('Clubs directory not available');
     }
 }
-
-async function loadSponsors() {
-    try {
-        sponsorData = await (await fetch('sponsors.json')).json();
-        const now = new Date();
-        // Filter active sponsors within date range
-        sponsorData.sponsors = sponsorData.sponsors.filter(s => {
-            if (!s.active) return false;
-            if (s.startDate && new Date(s.startDate) > now) return false;
-            if (s.endDate && new Date(s.endDate) < now) return false;
-            return true;
-        });
-        renderHomeSponsors();
-        startSponsorRotation();
-        renderAnalytics();
-    } catch (e) { console.log('Sponsors load error:', e.message); renderHomeSponsors(); }
-}
-
-function trackImpression(sponsorId, placement) {
-    if (!sponsorImpressions[sponsorId]) sponsorImpressions[sponsorId] = { impressions: 0, clicks: 0 };
-    sponsorImpressions[sponsorId].impressions++;
-}
-
-function trackClick(sponsorId, placement) {
-    if (!sponsorImpressions[sponsorId]) sponsorImpressions[sponsorId] = { impressions: 0, clicks: 0 };
-    sponsorImpressions[sponsorId].clicks++;
-}
-
-function buildSponsorCard(s, placement) {
-    const clickHandler = s.internal
-        ? `event.preventDefault();trackClick('${s.id}','${placement}');switchView('${s.link.replace('/','')}')`
-        : `trackClick('${s.id}','${placement}')`;
-    const href = s.internal ? '#' : s.link;
-    const target = s.internal ? '' : 'target="_blank"';
-    return `<a href="${href}" ${target} class="sponsor-card ${s.tierClass||'sponsor-featured'}" onclick="${clickHandler}" data-sponsor="${s.id}" data-placement="${placement}">
-        <span class="sponsor-tier">${s.tier}</span>
-        <h3 class="sponsor-name">${s.name}</h3>
-        <span class="sponsor-cta">${s.cta}</span>
-    </a>`;
-}
-
-function renderHomeSponsors() {
-    const container = document.getElementById('home-sponsors');
-    if (!container) return;
-    const homeSponsors = sponsorData.sponsors.filter(s => s.placements.includes('homepage'));
-    if (homeSponsors.length === 0) {
-        container.innerHTML = '<p class="empty-state">Interested in sponsoring? <a href="#" onclick="event.preventDefault();switchView(\'advertise\')">Learn more →</a></p>';
-        return;
-    }
-    container.innerHTML = homeSponsors.map(s => buildSponsorCard(s, 'homepage')).join('');
-    // Track impressions for visible sponsors
-    homeSponsors.forEach(s => trackImpression(s.id, 'homepage'));
-}
-
-function buildInlineAd(placement) {
-    const pool = sponsorData.sponsors.filter(s => s.placements.includes(placement));
-    if (pool.length === 0) return '';
-    const s = pool[Math.floor(Math.random() * pool.length)];
-    trackImpression(s.id, placement + '-inline');
-    const clickHandler = s.internal
-        ? `event.preventDefault();trackClick('${s.id}','${placement}-inline');switchView('${s.link.replace('/','')}')`
-        : `trackClick('${s.id}','${placement}-inline')`;
-    const href = s.internal ? '#' : s.link;
-    const target = s.internal ? '' : 'target="_blank"';
-    return `<a href="${href}" ${target} class="app-card sponsor-inline" onclick="${clickHandler}" data-sponsor="${s.id}" style="background:linear-gradient(135deg,var(--gold-soft),var(--surface));border:1px solid var(--gold);text-decoration:none;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;cursor:pointer;">
-        <span style="font-size:0.65rem;font-weight:700;text-transform:uppercase;color:var(--gold);letter-spacing:1px;margin-bottom:4px;">Sponsored</span>
-        <h4 style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:4px;">${s.name}</h4>
-        <span style="font-size:0.85rem;color:var(--text-muted);">${s.cta}</span>
-    </a>`;
-}
-
-// Inject inline ads into card grids after rendering
-function injectInlineAds(containerId, placement) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    const n = sponsorData.config.inlineAdEveryN || 9;
-    const cards = container.querySelectorAll('.app-card:not(.sponsor-inline)');
-    // Remove existing inline ads
-    container.querySelectorAll('.sponsor-inline').forEach(el => el.remove());
-    if (cards.length < n) return; // Not enough cards to warrant an ad
-    const pool = sponsorData.sponsors.filter(s => s.placements.includes(placement));
-    if (pool.length === 0) return;
-    // Insert after every Nth card
-    let inserted = 0;
-    cards.forEach((card, i) => {
-        if ((i + 1) % n === 0) {
-            const ad = document.createElement('div');
-            ad.innerHTML = buildInlineAd(placement);
-            const adEl = ad.firstElementChild;
-            if (adEl) { card.after(adEl); inserted++; }
-        }
-    });
-}
-
-let rotationInterval = null;
-function startSponsorRotation() {
-    if (rotationInterval) clearInterval(rotationInterval);
-    const interval = sponsorData.config.rotateIntervalMs || 15000;
-    rotationInterval = setInterval(() => {
-        // Rotate homepage sponsors order
-        const container = document.getElementById('home-sponsors');
-        if (!container || container.children.length <= 1) return;
-        const first = container.firstElementChild;
-        if (first) {
-            first.style.transition = 'opacity 0.3s';
-            first.style.opacity = '0';
-            setTimeout(() => {
-                container.appendChild(first);
-                first.style.opacity = '1';
-                // Track impression for the newly visible first sponsor
-                const newFirst = container.firstElementChild;
-                if (newFirst?.dataset?.sponsor) {
-                    trackImpression(newFirst.dataset.sponsor, 'homepage-rotate');
-                }
-            }, 300);
-        }
-    }, interval);
-}
-
-function renderAnalytics() {
-    const dash = document.getElementById('analytics-dashboard');
-    if (!dash) return;
-    const now = new Date();
-    let html = '';
-    sponsorData.sponsors.forEach(s => {
-        const stats = sponsorImpressions[s.id] || { impressions: 0, clicks: 0 };
-        const ctr = stats.impressions > 0 ? ((stats.clicks / stats.impressions) * 100).toFixed(1) : '0.0';
-        const endDate = s.endDate ? new Date(s.endDate) : null;
-        const daysLeft = endDate ? Math.ceil((endDate - now) / (1000*60*60*24)) : '∞';
-        html += `<div class="app-card" style="margin-bottom:12px;">
-            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-                <div>
-                    <span class="card-tag">${s.tier}</span>
-                    <h3 class="card-title" style="margin-top:6px;">${s.name}</h3>
-                </div>
-                <span class="badge" style="background:var(--green);color:white;font-size:0.7rem;">Active</span>
-            </div>
-            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px;">
-                <div style="text-align:center;"><p style="font-size:1.2rem;font-weight:700;">${stats.impressions}</p><p style="font-size:0.7rem;color:var(--text-muted);">Impressions</p></div>
-                <div style="text-align:center;"><p style="font-size:1.2rem;font-weight:700;">${stats.clicks}</p><p style="font-size:0.7rem;color:var(--text-muted);">Clicks</p></div>
-                <div style="text-align:center;"><p style="font-size:1.2rem;font-weight:700;">${ctr}%</p><p style="font-size:0.7rem;color:var(--text-muted);">CTR</p></div>
-                <div style="text-align:center;"><p style="font-size:1.2rem;font-weight:700;">${daysLeft}</p><p style="font-size:0.7rem;color:var(--text-muted);">Days Left</p></div>
-            </div>
-            <div style="margin-top:12px;font-size:0.8rem;color:var(--text-muted);">
-                Placements: ${s.placements.join(', ')}
-            </div>
-        </div>`;
-    });
-    if (!html) html = '<p class="empty-state">No active sponsors.</p>';
-    dash.innerHTML = html;
-}
-// ==================== END SPONSOR SYSTEM ====================
 
 // Grocery deals popup
 let allGroceryDeals = [];

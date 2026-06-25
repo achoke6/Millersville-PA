@@ -41,8 +41,7 @@
     "name": "All Campus Musical Organization",
     "category": "Performance",
     "categories": [
-      "Performance",
-      "Meeting"
+      "Performance"
     ],
     "shortName": "",
     "id": ""
@@ -792,12 +791,15 @@
   },
   {
     "name": "Fencing Guild",
-    "category": "Sports and Leisure",
+    "category": "Fundraiser",
     "categories": [
-      "Sports and Leisure"
+      "Fundraiser",
+      "Performance",
+      "Social",
+      "Sporting"
     ],
-    "shortName": "MUFG",
-    "id": "fencingclub"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Field Hockey",
@@ -808,12 +810,12 @@
   },
   {
     "name": "Film Club",
-    "category": "Movie or Film",
+    "category": "Arts & Culture",
     "categories": [
-      "Movie or Film"
+      "Arts & Culture"
     ],
     "shortName": "",
-    "id": ""
+    "id": "filmclubmu"
   },
   {
     "name": "First Gems of The Ville",

@@ -213,8 +213,6 @@ jobs:
                 --exclude ^vfw-cache\.json$ \
                 --exclude ^grocery-cache\.json$ \
                 --exclude ^candidates-status\.json$ \
-                --exclude ^auto-events\.json$ \
-                --exclude ^auto-events-status\.json$ \
                 --exclude ^subscriptions\.json$ \
                 --exclude ^notifications-status\.json$ \
                 --exclude ^lib/eventJsonLd\.js$ \

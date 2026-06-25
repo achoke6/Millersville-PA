@@ -126,7 +126,74 @@
       }
     ]
   },
-  "observations": [],
+  "observations": [
+    {
+      "time": "15:00",
+      "temp": "82",
+      "dewpoint": "60",
+      "rh": "47",
+      "windDir": "SSW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "9.3",
+      "condition": "None"
+    },
+    {
+      "time": "14:00",
+      "temp": "84",
+      "dewpoint": "60",
+      "rh": "45",
+      "windDir": "SW",
+      "windSpeed": "9",
+      "precip": "0.00",
+      "visibility": "9.3",
+      "condition": "None"
+    },
+    {
+      "time": "13:00",
+      "temp": "84",
+      "dewpoint": "58",
+      "rh": "42",
+      "windDir": "SW",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "9.2",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "81",
+      "dewpoint": "60",
+      "rh": "48",
+      "windDir": "SSW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "9.3",
+      "condition": "None"
+    },
+    {
+      "time": "11:00",
+      "temp": "80",
+      "dewpoint": "61",
+      "rh": "51",
+      "windDir": "SSW",
+      "windSpeed": "6",
+      "precip": "0.00",
+      "visibility": "9.3",
+      "condition": "None"
+    },
+    {
+      "time": "10:00",
+      "temp": "77",
+      "dewpoint": "59",
+      "rh": "55",
+      "windDir": "S",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "9.2",
+      "condition": "None"
+    }
+  ],
   "discussion": {
     "headline": "Temperate and relatively tranquil last week of june",
     "dateLine": "1:00 p.m. Tuesday, June 23, 2026",
@@ -168,5 +235,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-06-25T19:01:42.481Z"
+  "updated": "2026-06-25T19:11:40.505Z"
 }

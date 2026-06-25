@@ -104,19 +104,22 @@ jobs:
         env:
           CANDIDATES_SHEET_CSV_URL: ${{ secrets.CANDIDATES_SHEET_CSV_URL }}
 
-      - run: node scripts/scrape.js
-        env:
-          GOOGLE_VISION_API_KEY: ${{ secrets.GOOGLE_VISION_API_KEY }}
-          VFW_SHEET_ID: ${{ secrets.VFW_SHEET_ID }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          HEALTHCHECK_URL: ${{ secrets.HEALTHCHECK_URL }}
-
       # Sync the business Directory from its Google Sheet (single source of
       # truth, maintained by hand in Sheets). Regenerates restaurants.json,
       # services.json, housing.json, campus-cupboard.json, and association.json
       # from one flat sheet — see
       # scripts/sync-directory.js. The commit step below picks these up via
       # `git add *.json` like any other data file.
+      #
+      # ORDER MATTERS — this step MUST run BEFORE scrape.js, not after.
+      # scrape.js's business-reviews step (~scrape.js L6294) reads services.json
+      # and overlays rating/reviewCount onto it; whichever of the two runs LAST
+      # is the copy that gets committed. With sync-directory placed AFTER scrape,
+      # it regenerated services.json clean from the sheet and silently wiped
+      # every review rating on every build. Keep sync-directory FIRST so scrape's
+      # overlay is the final writer and ratings survive. (Historically placed
+      # after scrape purely for commit-batching, on the now-false assumption that
+      # scrape doesn't touch the directory files — the review overlay broke it.)
       #
       # continue-on-error: a transient Google outage or a malformed sheet must
       # NOT fail the whole hourly deploy. The script itself fails safe — on any
@@ -127,6 +130,15 @@ jobs:
         run: node scripts/sync-directory.js
         env:
           DIRECTORY_SHEET_CSV_URL: ${{ secrets.DIRECTORY_SHEET_CSV_URL }}
+
+      # Runs AFTER sync-directory (above) so scrape's services.json review
+      # overlay is the final writer — do NOT move this above sync-directory.
+      - run: node scripts/scrape.js
+        env:
+          GOOGLE_VISION_API_KEY: ${{ secrets.GOOGLE_VISION_API_KEY }}
+          VFW_SHEET_ID: ${{ secrets.VFW_SHEET_ID }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          HEALTHCHECK_URL: ${{ secrets.HEALTHCHECK_URL }}
 
       - name: Commit and push updated data
         run: |

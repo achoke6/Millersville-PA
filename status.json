@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-06-25T15:40:44.004Z",
-  "totalEvents": 743,
-  "withDescription": 254,
-  "withImage": 111,
+  "generatedAt": "2026-06-25T18:12:09.709Z",
+  "totalEvents": 705,
+  "withDescription": 256,
+  "withImage": 112,
   "familyFriendly": 43,
   "eventsToday": 6,
   "sources": {
     "muAthletics": 207,
-    "muCalendar": 83,
+    "muCalendar": 85,
     "muGetInvolved": 171,
     "pennManor": 82,
     "borough": 104,
     "vfw": 4,
-    "phantomPower": 12,
+    "phantomPower": 13,
     "community": 23,
-    "manor": 41,
+    "manor": 0,
     "raneyCellars": 11,
     "muHudlBroadcasts": 0
   },
@@ -45,16 +45,13 @@
     },
     "phantomPower": {
       "earliest": "2026-06-26T00:00:00.000Z",
-      "latest": "2026-08-02T00:00:00.000Z"
+      "latest": "2026-09-18T00:00:00.000Z"
     },
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-07-01T23:00:00.000Z",
-      "latest": "2027-06-07T23:00:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-04-04T16:00:00.000Z",
       "latest": "2026-06-25T20:00:00.000Z"
@@ -86,17 +83,14 @@
       "daysSinceMoved": 21
     },
     "phantomPower": {
-      "newest": "2026-08-02",
-      "daysSinceMoved": 10
+      "newest": "2026-09-18",
+      "daysSinceMoved": 0
     },
     "community": {
       "newest": "2027-04-16",
       "daysSinceMoved": 20
     },
-    "manor": {
-      "newest": "2027-06-07",
-      "daysSinceMoved": 8
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-06-25",
       "daysSinceMoved": 9
@@ -120,79 +114,79 @@
     "pendingPast": 0,
     "pendingBySource": {},
     "stalePast": 3,
-    "lastSyncAt": "2026-06-25T15:38:59.727Z"
+    "lastSyncAt": "2026-06-25T18:08:27.388Z"
   },
   "recentlyAdded": [
     {
-      "key": "Zoning Hearing Board|2026-07-01T23:00:00.000Z",
-      "firstSeenAt": "2026-06-25T15:21:42.602Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-07-01T23:00:00.000Z"
+      "key": "Alpha Phi Alpha Planning Meeting|2026-08-07T14:00:00",
+      "firstSeenAt": "2026-06-25T18:12:09.707Z",
+      "title": "Alpha Phi Alpha Planning Meeting",
+      "source": "MU",
+      "date": "2026-08-07T14:00:00"
     },
     {
-      "key": "Supervisors Meeting|2026-07-06T23:00:00.000Z",
-      "firstSeenAt": "2026-06-25T15:21:42.602Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-07-06T23:00:00.000Z"
+      "key": "Alpha Phi Alpha Planning Meeting|2026-08-08T09:00:00",
+      "firstSeenAt": "2026-06-25T18:12:09.707Z",
+      "title": "Alpha Phi Alpha Planning Meeting",
+      "source": "MU",
+      "date": "2026-08-08T09:00:00"
     },
     {
-      "key": "Planning Commission|2026-07-13T23:00:00.000Z",
-      "firstSeenAt": "2026-06-25T15:21:42.602Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-07-13T23:00:00.000Z"
+      "key": "Reverend Horton Heat|2026-09-18T00:00:00.000Z",
+      "firstSeenAt": "2026-06-25T18:12:09.707Z",
+      "title": "Reverend Horton Heat",
+      "source": "Other",
+      "date": "2026-09-18T00:00:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
-      "firstSeenAt": "2026-06-25T15:21:42.602Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-07-29T12:30:00.000Z"
+      "key": "Houses Of The Holy - The True Zeppelin Experience|2026-08-02T00:00:00.000Z",
+      "firstSeenAt": "2026-06-25T14:18:25.240Z",
+      "title": "Houses Of The Holy - The True Zeppelin Experience",
+      "source": "Other",
+      "date": "2026-08-02T00:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
-      "firstSeenAt": "2026-06-25T15:21:42.602Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-08-03T23:00:00.000Z"
+      "key": "AFROMAN|2026-07-04T00:00:00.000Z",
+      "firstSeenAt": "2026-06-24T20:49:37.226Z",
+      "title": "AFROMAN",
+      "source": "Other",
+      "date": "2026-07-04T00:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
-      "firstSeenAt": "2026-06-25T15:21:42.602Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-08-05T23:00:00.000Z"
+      "key": "MU Field Hockey RAD Talent ID Showcase|2026-07-19T13:00:00.000Z",
+      "firstSeenAt": "2026-06-24T15:00:55.748Z",
+      "title": "MU Field Hockey RAD Talent ID Showcase",
+      "source": "MU",
+      "date": "2026-07-19T13:00:00.000Z"
     },
     {
-      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
-      "firstSeenAt": "2026-06-25T15:21:42.602Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-08-10T23:00:00.000Z"
+      "key": "MU Men's Basketball Summer Elite Camp|2026-08-08T13:00:00.000Z",
+      "firstSeenAt": "2026-06-24T15:00:55.748Z",
+      "title": "MU Men's Basketball Summer Elite Camp",
+      "source": "MU",
+      "date": "2026-08-08T13:00:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
-      "firstSeenAt": "2026-06-25T15:21:42.602Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-08-26T12:30:00.000Z"
+      "key": "Sea Lions Swimming - @ Adamstown|2026-06-25T22:15:00.000Z",
+      "firstSeenAt": "2026-06-24T14:28:50.997Z",
+      "title": "Sea Lions Swimming - @ Adamstown",
+      "source": "Community",
+      "date": "2026-06-25T22:15:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
-      "firstSeenAt": "2026-06-25T15:21:42.602Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-09-02T23:00:00.000Z"
+      "key": "Sea Lions Swimming - vs Woodridge (Senior Night)|2026-07-14T22:15:00.000Z",
+      "firstSeenAt": "2026-06-24T14:28:50.997Z",
+      "title": "Sea Lions Swimming - vs Woodridge (Senior Night)",
+      "source": "Community",
+      "date": "2026-07-14T22:15:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-09-07T23:00:00.000Z",
-      "firstSeenAt": "2026-06-25T15:21:42.602Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-09-07T23:00:00.000Z"
+      "key": "Sea Lions Swimming - Division 1 Championship|2026-07-18T16:00:00.000Z",
+      "firstSeenAt": "2026-06-24T14:28:50.997Z",
+      "title": "Sea Lions Swimming - Division 1 Championship",
+      "source": "Community",
+      "date": "2026-07-18T16:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 3
 }

@@ -1014,23 +1014,6 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     padding-top: 6px;
 }
 
-/* Sponsors Banner */
-.sponsors-banner { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
-.sponsors-banner::-webkit-scrollbar { height: 4px; }
-.sponsors-banner::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-.sponsor-card { min-width: 200px; max-width: 240px; flex-shrink: 0; scroll-snap-align: start; border-radius: var(--radius); padding: 16px; text-decoration: none; cursor: pointer; transition: var(--transition); display: flex; flex-direction: column; gap: 4px; }
-.sponsor-card:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
-.sponsor-homepage { background: linear-gradient(135deg, var(--navy) 0%, #1e3a5f 100%); color: white; border: 2px solid var(--gold); }
-.sponsor-featured { background: linear-gradient(135deg, #fffbeb 0%, var(--surface) 100%); color: var(--text); border: 2px solid var(--gold); }
-.sponsor-basic { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
-.sponsor-tier { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; opacity: 0.7; }
-.sponsor-homepage .sponsor-tier { color: var(--gold); }
-.sponsor-featured .sponsor-tier { color: var(--gold); }
-.sponsor-basic .sponsor-tier { color: var(--text-muted); }
-.sponsor-name { font-size: 1rem; font-weight: 800; margin: 0; line-height: 1.2; }
-.sponsor-cta { font-size: 0.75rem; font-weight: 600; margin-top: auto; }
-.sponsor-homepage .sponsor-cta { color: var(--gold); }
-.sponsor-featured .sponsor-cta { color: var(--navy); }
 .partner-label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--gold); margin-bottom: 4px; }
 .special-item { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 0.88rem; }
 .special-item:last-child { border-bottom: none; }

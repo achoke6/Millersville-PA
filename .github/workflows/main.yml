@@ -61,7 +61,7 @@ jobs:
 
       - uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 22
           # Caches ~/.npm (the global download cache, keyed off package-lock.json)
           # so npm ci doesn't re-download dependencies on every cron run. With
           # the lockfile pinned, this typically cuts dep install from ~30s to
@@ -213,6 +213,10 @@ jobs:
                 --exclude ^vfw-cache\.json$ \
                 --exclude ^grocery-cache\.json$ \
                 --exclude ^candidates-status\.json$ \
+                --exclude ^auto-events\.json$ \
+                --exclude ^auto-events-status\.json$ \
+                --exclude ^subscriptions\.json$ \
+                --exclude ^notifications-status\.json$ \
                 --exclude ^lib/eventJsonLd\.js$ \
                 ./ ${{ secrets.DREAMHOST_DIR }};
               put -O ${{ secrets.DREAMHOST_DIR }} .htaccess;

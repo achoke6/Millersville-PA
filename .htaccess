@@ -9,6 +9,16 @@ Options -MultiViews +FollowSymLinks
 RewriteEngine On
 RewriteBase /
 
+# Deny HTTP access to subscriptions.json: it holds subscriber push endpoints +
+# p256dh/auth keys and is read only by the notifications cron over SFTP, never
+# over HTTP. Without this, the "serve existing files directly" rule below would
+# return it at https://millersville.app/subscriptions.json. (auto-events.json and
+# notifications-status.json are intentionally left readable: fetched at runtime /
+# by status.html.) Added 2026-06-25.
+<FilesMatch "^subscriptions\.json$">
+    Require all denied
+</FilesMatch>
+
 # Force HTTPS. Any request that came in over plain HTTP gets a permanent
 # (301) redirect to the same path on HTTPS. %{HTTPS} reads "off" when the
 # connection isn't TLS — the canonical Apache pattern. Paired with the

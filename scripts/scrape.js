@@ -436,6 +436,21 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
     return 'mu-only';
 }
 
+// Decode the HTML entities that actually appear in scraped titles/descriptions:
+// straight + curly apostrophes and quotes, &, <, >, nbsp. Ampersand is decoded
+// LAST so an already-escaped sequence like "&amp;lt;" stays "&lt;" instead of
+// collapsing to "<". Idempotent on clean text (a second pass finds no entities).
+function decodeEntities(str) {
+    return String(str == null ? '' : str)
+        .replace(/&#0?39;|&apos;|&rsquo;|&#8217;/g, "'")
+        .replace(/&ldquo;|&rdquo;|&#8220;|&#8221;/g, '"')
+        .replace(/&quot;/g, '"')
+        .replace(/&nbsp;/g, ' ')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&#0?38;|&amp;/g, '&');
+}
+
 function extractEventbriteEvents(ldData, eventsArray, now, futureLimit, overrideUrl = null) {
     if (Array.isArray(ldData)) {
         ldData.forEach(item => extractEventbriteEvents(item, eventsArray, now, futureLimit, overrideUrl));
@@ -457,7 +472,7 @@ function extractEventbriteEvents(ldData, eventsArray, now, futureLimit, override
                     image = rawImg.url || '';
                 }
                 eventsArray.push({
-                    title: ldData.name, date: eventDate.toISOString(), location: "Phantom Power",
+                    title: decodeEntities(ldData.name), date: eventDate.toISOString(), location: "Phantom Power",
                     tags: ["Other", "Live Music"], price: "Ticket Required",
                     ticketLink: url,
                     sourceLink: url,
@@ -505,16 +520,12 @@ function extractPhantomPowerEventFromHTML(html, url, eventsArray, now, futureLim
     let title = null;
     const h1Match = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
     if (h1Match) {
-        title = h1Match[1]
-            .replace(/<[^>]+>/g, '')
-            .replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;/g, "'")
-            .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
-            .trim();
+        title = decodeEntities(h1Match[1].replace(/<[^>]+>/g, '')).trim();
     }
     // og:title is a reliable fallback if <h1> has odd nesting or is missing.
     if (!title) {
         const ogMatch = html.match(/<meta\s+property="og:title"\s+content="([^"]+)"/i);
-        if (ogMatch) title = ogMatch[1].replace(/\s*[|\-–]\s*Eventbrite\s*$/i, '').trim();
+        if (ogMatch) title = decodeEntities(ogMatch[1].replace(/\s*[|\-–]\s*Eventbrite\s*$/i, '')).trim();
     }
     if (!title) return 0;
 

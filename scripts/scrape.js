@@ -1315,7 +1315,8 @@ async function runScraper() {
             // Varsity + JV only — drop 7th/8th/9th/freshman/jr-high
             const isVarsity = /\bvarsity\b/i.test(levelRaw);
             const isJV = /\bjv\b/i.test(levelRaw);
-            if (!(isVarsity || isJV)) {
+            const isUnified = /\bunified\b/i.test(levelRaw);
+            if (!(isVarsity || isJV || isUnified)) {
                 pmAthDropLevel++;
                 if (!levelRaw || !PM_SUBVARSITY_RE.test(levelRaw)) {
                     pmAthSuspectDrops.push(`${title} [Level: ${levelRaw || '(empty)'}]`);
@@ -1326,18 +1327,27 @@ async function runScraper() {
             const tags = ["PM", "Athletics"];
             if (isVarsity && !isJV) tags.push('Varsity');
             if (isJV) tags.push('JV');
+            if (isUnified) tags.push('Unified');
 
-            // Gender (Level carries it; fall back to title)
-            if (/\bgirls?\b|girl's/i.test(levelRaw) || /\bgirls\b/i.test(lowerTitle)) tags.push('Girls');
-            if (/\bboys?\b|boy's/i.test(levelRaw)   || /\bboys\b/i.test(lowerTitle))  tags.push('Boys');
+            // Gender (Level carries it; fall back to title). Unified is coed - no gender tag.
+            if (!isUnified) {
+                if (/\bgirls?\b|girl's/i.test(levelRaw) || /\bgirls\b/i.test(lowerTitle)) tags.push('Girls');
+                if (/\bboys?\b|boy's/i.test(levelRaw)   || /\bboys\b/i.test(lowerTitle))  tags.push('Boys');
+            }
 
             // Home vs Away: "vs" = home, "@" = away (mirrors section 2)
             if (lowerTitle.includes(' vs ')) tags.push("Home Game Mode");
 
-            // Sport tag from the authoritative Sport: field, normalized to sportsList casing
-            const sportCanon = sportsList.find(s => s.toLowerCase() === sportRaw.toLowerCase());
-            if (sportCanon) tags.push(sportCanon);
-            else if (sportRaw) tags.push('Athletics'); // sport not in sportsList — keep tagged (e.g. Bocce)
+            // Sport tag from the authoritative Sport: field, normalized to sportsList casing.
+            // Unified is a coed program - tag it as its own sport (Unified Track & Field /
+            // Unified Bocce) so it is followable instead of bare Athletics.
+            if (isUnified) {
+                tags.push((/bocce/i.test(lowerTitle) || /bocce/i.test(sportRaw)) ? 'Unified Bocce' : 'Unified Track & Field');
+            } else {
+                const sportCanon = sportsList.find(s => s.toLowerCase() === sportRaw.toLowerCase());
+                if (sportCanon) tags.push(sportCanon);
+                else if (sportRaw) tags.push('Athletics'); // sport not in sportsList - keep tagged (e.g. Bocce)
+            }
 
             // Display location: prefer the venue name (Site:) over the raw address
             const loc = siteRaw || ev.location || 'Penn Manor School District';
@@ -4599,7 +4609,7 @@ Focus on the most impressive deals a shopper would want to know about. Include m
                         const genderMatch = 
                             (sc.gender === 'Boys' && (tags.includes('Boys') || evTitle.includes('boys') || evTitle.includes('men'))) ||
                             (sc.gender === 'Girls' && (tags.includes('Girls') || evTitle.includes('girls') || evTitle.includes('women'))) ||
-                            (!tags.includes('Boys') && !tags.includes('Girls'));
+                            (!tags.includes('Boys') && !tags.includes('Girls') && !tags.includes('Unified'));
                         
                         if (genderMatch) {
                             ev.gameResult = sc.result;

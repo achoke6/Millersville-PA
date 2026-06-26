@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-26T05:08:44.988Z",
+  "generatedAt": "2026-06-26T09:25:12.123Z",
   "totalEvents": 746,
   "withDescription": 256,
   "withImage": 112,
@@ -44,7 +44,7 @@
       "latest": "2026-09-11T17:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-06-26T00:00:00.000Z",
+      "earliest": "2026-06-27T00:00:00.000Z",
       "latest": "2026-09-18T00:00:00.000Z"
     },
     "community": {
@@ -120,9 +120,16 @@
     "pendingPast": 0,
     "pendingBySource": {},
     "stalePast": 3,
-    "lastSyncAt": "2026-06-26T05:07:06.759Z"
+    "lastSyncAt": "2026-06-26T09:23:17.691Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Sunny Sweeney|2026-08-06T00:00:00.000Z",
+      "firstSeenAt": "2026-06-26T09:25:12.121Z",
+      "title": "Sunny Sweeney",
+      "source": "Other",
+      "date": "2026-08-06T00:00:00.000Z"
+    },
     {
       "key": "Zoning Hearing Board|2026-07-01T23:00:00.000Z",
       "firstSeenAt": "2026-06-25T19:03:29.210Z",
@@ -185,14 +192,7 @@
       "title": "Zoning Hearing Board",
       "source": "Manor",
       "date": "2026-09-02T23:00:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2026-09-07T23:00:00.000Z",
-      "firstSeenAt": "2026-06-25T19:03:29.210Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-09-07T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

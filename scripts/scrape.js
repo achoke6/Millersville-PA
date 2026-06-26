@@ -1289,6 +1289,11 @@ async function runScraper() {
         }
 
         let pmAthEmit = 0, pmAthDropLevel = 0;
+        // Diagnostic: games the Level filter drops whose Level field is empty or matches no known
+        // sub-varsity keyword - these could be real Varsity/JV games silently lost to a feed format
+        // change, so we surface them in the run log (see manifest §8/§9).
+        const pmAthSuspectDrops = [];
+        const PM_SUBVARSITY_RE = /\b(?:7th|8th|9th|seventh|eighth|ninth|freshman|frosh|jr\.?\s*high|junior\s*high|j\.?h\.?|middle\s*school)\b/i;
         for (const ev of Object.values(allPMAth)) {
             const eventDate = new Date(ev.start);
             if (isNaN(eventDate.getTime()) || eventDate < pastDate || eventDate >= futureDate) continue;
@@ -1310,7 +1315,13 @@ async function runScraper() {
             // Varsity + JV only — drop 7th/8th/9th/freshman/jr-high
             const isVarsity = /\bvarsity\b/i.test(levelRaw);
             const isJV = /\bjv\b/i.test(levelRaw);
-            if (!(isVarsity || isJV)) { pmAthDropLevel++; continue; }
+            if (!(isVarsity || isJV)) {
+                pmAthDropLevel++;
+                if (!levelRaw || !PM_SUBVARSITY_RE.test(levelRaw)) {
+                    pmAthSuspectDrops.push(`${title} [Level: ${levelRaw || '(empty)'}]`);
+                }
+                continue;
+            }
 
             const tags = ["PM", "Athletics"];
             if (isVarsity && !isJV) tags.push('Varsity');
@@ -1344,6 +1355,11 @@ async function runScraper() {
             pmAthEmit++;
         }
         console.log(`✅ Penn Manor Athletics: ${pmAthEmit} games (Varsity/JV) emitted, ${pmAthDropLevel} sub-varsity dropped`);
+        if (pmAthSuspectDrops.length) {
+            console.log(`  ⚠️ Penn Manor Athletics: ${pmAthSuspectDrops.length} drop(s) with empty/unrecognized Level - verify the Level field format in the feed (a real Varsity/JV game may be getting dropped):`);
+            pmAthSuspectDrops.slice(0, 20).forEach(t => console.log(`       - ${t}`));
+            if (pmAthSuspectDrops.length > 20) console.log(`       ...and ${pmAthSuspectDrops.length - 20} more`);
+        }
     } catch (e) { console.error("❌ Penn Manor Athletics error:", e.message); }
 
     // ===== 2b. HUDL BROADCAST CHECK (Penn Manor) =====

@@ -327,21 +327,51 @@ function eventMatchesFeed($e) {
     // Family Friendly — matches any event with the kidFriendly flag.
     if (in_array('family-events', $prefs, true) && !empty($e['kidFriendly'])) return true;
 
-    $sportMap = [
-        'baseball' => 'baseball', 'softball' => 'softball', 'lacrosse' => 'lacrosse',
-        'volleyball' => 'volleyball', 'football' => 'football', 'basketball' => 'basketball',
-        'soccer' => 'soccer', 'field hockey' => 'fieldhockey', 'tennis' => 'tennis',
-        'track' => 'track', 'golf' => 'golf', 'swimming' => 'swimming',
-        'cross country' => 'crosscountry', 'wrestling' => 'wrestling', 'bowling' => 'bowling'
-    ];
     $tagsLower = array_map('strtolower', $tags);
+
+    // Per-level sport config: lowercased sport tag => [feed-id suffix, [genders]].
+    // Mirrors SPORT_GENDERS in app.js / SPORT_CFG in lib/eventMatch.js — KEEP IN
+    // LOCKSTEP. [] genders = single (match base pref, any gender); 2 genders =
+    // split (match <level>-<sport>-<gender> using the event's gender tag).
+    $sportCfg = [
+        'pm' => [
+            'baseball' => ['baseball', []], 'softball' => ['softball', []], 'football' => ['football', []],
+            'field hockey' => ['fieldhockey', []], 'golf' => ['golf', []], 'cross country' => ['crosscountry', []],
+            'swimming' => ['swimming', []], 'track' => ['track', []], 'bowling' => ['bowling', []],
+            'soccer' => ['soccer', ['boys', 'girls']], 'tennis' => ['tennis', ['boys', 'girls']],
+            'volleyball' => ['volleyball', ['boys', 'girls']], 'basketball' => ['basketball', ['boys', 'girls']],
+            'wrestling' => ['wrestling', ['boys', 'girls']], 'lacrosse' => ['lacrosse', ['boys', 'girls']],
+            'unified track & field' => ['unified-track', []], 'unified bocce' => ['unified-bocce', []],
+        ],
+        'mu' => [
+            'baseball' => ['baseball', []], 'football' => ['football', []], 'wrestling' => ['wrestling', []],
+            'cross country' => ['crosscountry', []], 'field hockey' => ['fieldhockey', []], 'lacrosse' => ['lacrosse', []],
+            'softball' => ['softball', []], 'swimming' => ['swimming', []], 'volleyball' => ['volleyball', []], 'track' => ['track', []],
+            'basketball' => ['basketball', ['mens', 'womens']], 'golf' => ['golf', ['mens', 'womens']],
+            'soccer' => ['soccer', ['mens', 'womens']], 'tennis' => ['tennis', ['mens', 'womens']],
+        ],
+    ];
+    $genderTagSuffix = ['boys' => 'boys', 'girls' => 'girls', "men's" => 'mens', "women's" => 'womens'];
+    // Single sports match the base pref; split sports require the event's gender tag.
+    $matchSportPref = function($tagsLower, $prefs, $level) use ($sportCfg, $genderTagSuffix) {
+        $cfg = $sportCfg[$level];
+        $gsuf = null;
+        foreach ($tagsLower as $tl) { if (isset($genderTagSuffix[$tl])) { $gsuf = $genderTagSuffix[$tl]; break; } }
+        foreach ($cfg as $sport => $info) {
+            if (!in_array($sport, $tagsLower, true)) continue;
+            $base = $level . '-' . $info[0];
+            if (count($info[1]) >= 2) {
+                if ($gsuf !== null && in_array($base . '-' . $gsuf, $prefs, true)) return true;
+            } elseif (in_array($base, $prefs, true)) {
+                return true;
+            }
+        }
+        return false;
+    };
 
     // PM athletics
     if (in_array('PM', $tags, true) && (in_array('Athletics', $tags, true) || in_array('Athletic Competitions', $tags, true))) {
-        foreach ($sportMap as $sport => $suffix) {
-            if (in_array($sport, $tagsLower, true) && in_array('pm-' . $suffix, $prefs, true)) return true;
-        }
-        return false;
+        return $matchSportPref($tagsLower, $prefs, 'pm');
     }
     // PM non-athletic
     if (in_array('PM', $tags, true)) {
@@ -353,10 +383,7 @@ function eventMatchesFeed($e) {
 
     // MU athletics
     if (in_array('MU', $tags, true) && (in_array('Athletics', $tags, true) || in_array('Athletic Competitions', $tags, true))) {
-        foreach ($sportMap as $sport => $suffix) {
-            if (in_array($sport, $tagsLower, true) && in_array('mu-' . $suffix, $prefs, true)) return true;
-        }
-        return false;
+        return $matchSportPref($tagsLower, $prefs, 'mu');
     }
 
     // Clubs/Orgs (BEFORE generic MU because GetInvolved events carry both 'MU' and 'Clubs/Orgs')

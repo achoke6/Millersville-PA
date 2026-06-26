@@ -461,29 +461,117 @@ function isIntramural(e) {
 
 // Feed subscription tokens and their display config
 // Organized into sections for the settings popup
+// ============================================================================
+// Sport gender model — single source of truth for which genders field each
+// sport at each level (Penn Manor high school vs Millersville college). A sport
+// with 2 genders is "split" (separate Boys/Girls or Men's/Women's follows,
+// pills, labels); [] means "single" (no gender shown, matches any gender).
+// Drives the favorites picker, SOURCE_UNLOCK_IDS, suggestFeedIdForEvent, the
+// Sports-page pills, and the title/badge cleanup — change a sport here and
+// everything downstream follows. PM tags genders Boys/Girls; MU tags Men's/Women's.
+// Mirrored (lockstep) in lib/eventMatch.js SPORT_CFG and events.ics.php $sportCfg.
+// ============================================================================
+const SPORT_GENDERS = {
+    pm: {
+        'Baseball': [], 'Softball': [], 'Football': [], 'Field Hockey': [], 'Golf': [],
+        'Cross Country': [], 'Swimming': [], 'Track': [], 'Bowling': [],
+        'Soccer': ['Boys','Girls'], 'Tennis': ['Boys','Girls'], 'Volleyball': ['Boys','Girls'],
+        'Basketball': ['Boys','Girls'], 'Wrestling': ['Boys','Girls'], 'Lacrosse': ['Boys','Girls'],
+        'Unified Track & Field': [], 'Unified Bocce': []
+    },
+    mu: {
+        'Baseball': [], 'Football': [], 'Wrestling': [], 'Cross Country': [], 'Field Hockey': [],
+        'Lacrosse': [], 'Softball': [], 'Swimming': [], 'Volleyball': [], 'Track': [],
+        'Basketball': ["Men's","Women's"], 'Golf': ["Men's","Women's"],
+        'Soccer': ["Men's","Women's"], 'Tennis': ["Men's","Women's"]
+    }
+};
+const PM_SPORT_ORDER = ['Baseball','Softball','Lacrosse','Volleyball','Football','Basketball',
+    'Soccer','Field Hockey','Tennis','Track','Golf','Swimming','Cross Country','Wrestling','Bowling',
+    'Unified Track & Field','Unified Bocce'];
+const MU_SPORT_ORDER = ['Baseball','Softball','Lacrosse','Volleyball','Football','Basketball',
+    'Soccer','Field Hockey','Tennis','Track','Golf','Swimming','Cross Country','Wrestling'];
+const SPORT_ICON = {
+    'Baseball':'⚾','Softball':'🥎','Lacrosse':'🥍','Volleyball':'🏐',
+    'Football':'🏈','Basketball':'🏀','Soccer':'⚽','Field Hockey':'🏑',
+    'Tennis':'🎾','Track':'🏃','Golf':'⛳','Swimming':'🏊',
+    'Cross Country':'🏃','Wrestling':'🤼','Bowling':'🎳',
+    'Unified Track & Field':'🤝','Unified Bocce':'🤝'
+};
+// Gender display word -> feed-id suffix (PM=boys/girls, MU=mens/womens).
+const GENDER_SUFFIX = { "Boys":'boys', "Girls":'girls', "Men's":'mens', "Women's":'womens' };
+function sportSuffix(tag) {
+    return ({ 'Field Hockey':'fieldhockey', 'Cross Country':'crosscountry', 'Track':'track',
+              'Unified Track & Field':'unified-track', 'Unified Bocce':'unified-bocce' })[tag]
+           || tag.toLowerCase().replace(/[^a-z0-9]+/g, '');
+}
+function sportDisplayName(tag) { return tag === 'Track' ? 'Track & Field' : tag; }
+function sportLevelFromTags(tags) { return tags.indexOf('PM') !== -1 ? 'pm' : tags.indexOf('MU') !== -1 ? 'mu' : null; }
+function sportGendersFor(level, tag) { return (SPORT_GENDERS[level] && SPORT_GENDERS[level][tag]) || []; }
+function isSplitSport(level, tag) { return sportGendersFor(level, tag).length >= 2; }
+function allSportFeedIds(level) {
+    const order = level === 'pm' ? PM_SPORT_ORDER : MU_SPORT_ORDER;
+    const ids = [];
+    order.forEach(function(tag) {
+        const g = sportGendersFor(level, tag), base = level + '-' + sportSuffix(tag);
+        if (g.length >= 2) g.forEach(function(x){ ids.push(base + '-' + GENDER_SUFFIX[x]); });
+        else ids.push(base);
+    });
+    return ids;
+}
+function buildSportSubs(level) {
+    const order = level === 'pm' ? PM_SPORT_ORDER : MU_SPORT_ORDER;
+    const subs = [];
+    order.forEach(function(tag) {
+        const g = sportGendersFor(level, tag), base = level + '-' + sportSuffix(tag), icon = SPORT_ICON[tag] || '🏅';
+        if (g.length >= 2) g.forEach(function(x){ subs.push({ id: base + '-' + GENDER_SUFFIX[x], label: x + ' ' + sportDisplayName(tag), icon: icon }); });
+        else subs.push({ id: base, label: sportDisplayName(tag), icon: icon });
+    });
+    return subs;
+}
+
+// --- Display helpers (read the same SPORT_GENDERS model) -------------------
+// A sport's gender is "redundant" only when one gender plays it at that level —
+// then the gender word is stripped from titles/badges. Split sports keep gender
+// (it's the only place it shows once badges are hidden). PM Cross Country /
+// Swimming / Track / Golf / Bowling are single-pill but BOTH-gender (separate
+// boys/girls events at the same meet) so they keep gender too — stripping would
+// collapse boys & girls cards into identical rows.
+const PM_KEEP_GENDER_SINGLE_PILL = ['Cross Country', 'Swimming', 'Track', 'Golf', 'Bowling'];
+function sportGenderIsRedundant(level, sportTag) {
+    if (isSplitSport(level, sportTag)) return false;
+    if (level === 'pm' && PM_KEEP_GENDER_SINGLE_PILL.indexOf(sportTag) !== -1) return false;
+    return true;
+}
+const GENDER_TAGS = ['Boys', 'Girls', "Men's", "Women's"];
+// Strip a leading gender word from a sport title only when that gender is redundant.
+function cleanSportTitle(title, tags) {
+    const level = sportLevelFromTags(tags);
+    if (!level) return title;
+    const sportTag = sportsList.find(s => tags.indexOf(s) !== -1);
+    if (!sportTag || !sportGenderIsRedundant(level, sportTag)) return title;
+    return title.replace(/^(Boys|Girls|Men['\u2019]s|Women['\u2019]s)\s+/, '');
+}
+// Match an event against a Sports-page pill label ("Boys Soccer", "Field Hockey",
+// "Track & Field", "Unified Track & Field"). A gendered label requires the sport
+// tag AND that gender tag; a plain label matches the sport tag (any gender).
+function eventMatchesSportLabel(tags, label) {
+    if (!label) return true;
+    const m = label.match(/^(Boys|Girls|Men's|Women's)\s+(.+)$/);
+    const gender = m ? m[1] : null;
+    const sportName = m ? m[2] : label;
+    const sportTag = sportName === 'Track & Field' ? 'Track' : sportName;
+    if (tags.indexOf(sportTag) === -1) return false;
+    if (gender && tags.indexOf(gender) === -1) return false;
+    return true;
+}
+
 const feedSections = {
     sports: {
         title: '🏆 Sports Favorites',
         groups: {
-            pm: { label: 'Penn Manor Sports', icon: '🏫', headingStyle: true, audience: 'townie', subs: [
-                {id:'pm-baseball',label:'Baseball',icon:'⚾'},{id:'pm-softball',label:'Softball',icon:'🥎'},
-                {id:'pm-lacrosse',label:'Lacrosse',icon:'🥍'},{id:'pm-volleyball',label:'Volleyball',icon:'🏐'},
-                {id:'pm-football',label:'Football',icon:'🏈'},{id:'pm-basketball',label:'Basketball',icon:'🏀'},
-                {id:'pm-soccer',label:'Soccer',icon:'⚽'},{id:'pm-fieldhockey',label:'Field Hockey',icon:'🏑'},
-                {id:'pm-tennis',label:'Tennis',icon:'🎾'},{id:'pm-track',label:'Track',icon:'🏃'},
-                {id:'pm-golf',label:'Golf',icon:'⛳'},{id:'pm-swimming',label:'Swimming',icon:'🏊'},
-                {id:'pm-crosscountry',label:'Cross Country',icon:'🏃'},{id:'pm-wrestling',label:'Wrestling',icon:'🤼'},
-                {id:'pm-bowling',label:'Bowling',icon:'🎳'}
-            ]},
-            musports: { label: 'MU Sports', icon: '🏴‍☠️', headingStyle: true, audience: 'student', subs: [
-                {id:'mu-baseball',label:'Baseball',icon:'⚾'},{id:'mu-softball',label:'Softball',icon:'🥎'},
-                {id:'mu-lacrosse',label:'Lacrosse',icon:'🥍'},{id:'mu-volleyball',label:'Volleyball',icon:'🏐'},
-                {id:'mu-football',label:'Football',icon:'🏈'},{id:'mu-basketball',label:'Basketball',icon:'🏀'},
-                {id:'mu-soccer',label:'Soccer',icon:'⚽'},{id:'mu-fieldhockey',label:'Field Hockey',icon:'🏑'},
-                {id:'mu-tennis',label:'Tennis',icon:'🎾'},{id:'mu-track',label:'Track',icon:'🏃'},
-                {id:'mu-golf',label:'Golf',icon:'⛳'},{id:'mu-swimming',label:'Swimming',icon:'🏊'},
-                {id:'mu-crosscountry',label:'Cross Country',icon:'🏃'}
-            ]}
+            pm: { label: 'Penn Manor Sports', icon: '🏫', headingStyle: true, audience: 'townie', subs: buildSportSubs('pm')},
+            musports: { label: 'MU Sports', icon: '🏴‍☠️', headingStyle: true, audience: 'student', subs: buildSportSubs('mu')}
         }
     },
     events: {
@@ -680,7 +768,7 @@ for (const g of Object.values(feedSections.events.groups)) g.subs.forEach(s => e
 // any of these IDs, the source is considered user-opted-in and treated normally.
 const SOURCE_UNLOCK_IDS = {
     // Events page source pills
-    'PM':      ['pm-music', 'pm-board', 'pm-baseball', 'pm-softball', 'pm-lacrosse', 'pm-volleyball', 'pm-football', 'pm-basketball', 'pm-soccer', 'pm-fieldhockey', 'pm-tennis', 'pm-track'],
+    'PM':      ['pm-music', 'pm-board'].concat(allSportFeedIds('pm')),
     'Borough': ['borough-all'],
     'Manor':   ['manor-all'],
     'VFW':     ['other-vfw'],
@@ -692,7 +780,7 @@ const SOURCE_UNLOCK_IDS = {
         'cs-soccer-mens','cs-soccer-womens','cs-volleyball-mens','cs-volleyball-womens',
         'cs-dance','cs-running','cs-softball','cs-tennis','cs-frisbee'],
     // Sports page source pills
-    'SP_PM':      ['pm-baseball', 'pm-softball', 'pm-lacrosse', 'pm-volleyball', 'pm-football', 'pm-basketball', 'pm-soccer', 'pm-fieldhockey', 'pm-tennis', 'pm-track'],
+    'SP_PM':      allSportFeedIds('pm'),
     'SP_Clubs':   ['clubs-sports'],
     // News page — Penn Manor and Borough news are community-side; hidden from
     // marauders by default. Each "unlocks" only via its matching news-* fav.
@@ -791,18 +879,18 @@ function suggestFeedIdForEvent(e, isSportsPage) {
     const tags = e.tags || [];
     // Sports page: match the sport to the affiliation's sport pref
     if (isSportsPage) {
-        const sportMap = {
-            'Baseball': 'baseball', 'Softball': 'softball', 'Lacrosse': 'lacrosse',
-            'Volleyball': 'volleyball', 'Football': 'football', 'Basketball': 'basketball',
-            'Soccer': 'soccer', 'Field Hockey': 'fieldhockey', 'Tennis': 'tennis',
-            'Track': 'track', 'Golf': 'golf', 'Swimming': 'swimming', 'Cross Country': 'crosscountry',
-            'Wrestling': 'wrestling', 'Bowling': 'bowling'
-        };
-        const sportKey = tags.find(t => sportMap[t]);
-        if (!sportKey) return null;
-        const slug = sportMap[sportKey];
-        if (tags.includes('MU')) return 'mu-' + slug;
-        if (tags.includes('PM')) return 'pm-' + slug;
+        const level = sportLevelFromTags(tags);
+        if (level) {
+            const sportTag = (level === 'pm' ? PM_SPORT_ORDER : MU_SPORT_ORDER).find(s => tags.includes(s));
+            if (sportTag) {
+                const base = level + '-' + sportSuffix(sportTag);
+                if (isSplitSport(level, sportTag)) {
+                    const g = sportGendersFor(level, sportTag).find(x => tags.includes(x));
+                    return g ? base + '-' + GENDER_SUFFIX[g] : base;
+                }
+                return base;
+            }
+        }
         if (tags.includes('Clubs/Orgs')) return 'clubs-sports';
         return null;
     }
@@ -2340,7 +2428,7 @@ let spDaysVisible = INITIAL_DAYS;
 let spPastDaysVisible = INITIAL_DAYS_PAST;
 let spMode='week', spAnchorDate=new Date();
 
-const sportsList=['Baseball','Softball','Track','Soccer','Lacrosse','Tennis','Volleyball','Wrestling','Basketball','Football','Field Hockey','Golf','Cross Country','Cheerleading','Swimming','Rugby','Fencing','Esports','Archery'];
+const sportsList=['Baseball','Softball','Track','Soccer','Lacrosse','Tennis','Volleyball','Wrestling','Basketball','Football','Field Hockey','Golf','Cross Country','Cheerleading','Swimming','Rugby','Fencing','Esports','Archery','Unified Track & Field','Unified Bocce'];
 const topSources=['MU','PM','Borough','Manor','Other'];
 const sportMetaTags=['Athletic Competitions','Athletics','Club Sports','Home Game Mode','H Games'];
 
@@ -3870,7 +3958,7 @@ function renderSports(){
     renderSportTypeTags(windowMatching);
 
     // Apply sport-type filter after the tag bar is rendered
-    let filtered = spSportTag ? windowMatching.filter(e => (e.tags || []).includes(spSportTag)) : windowMatching;
+    let filtered = spSportTag ? windowMatching.filter(e => eventMatchesSportLabel(e.tags || [], spSportTag)) : windowMatching;
 
     // Sort: past view newest-first (so "most recent" is at top); upcoming oldest-first
     filtered.sort((a, b) => isPast ? (b._dateMs - a._dateMs) : (a._dateMs - b._dateMs));
@@ -3879,10 +3967,10 @@ function renderSports(){
     let beyondCount = 0;
     if (isPast) {
         beyondCount = allMatching.filter(e => localDateStr(e.date) < rangeStart
-            && (!spSportTag || (e.tags || []).includes(spSportTag))).length;
+            && (!spSportTag || eventMatchesSportLabel(e.tags || [], spSportTag))).length;
     } else {
         beyondCount = allMatching.filter(e => localDateStr(e.date) > rangeEnd
-            && (!spSportTag || (e.tags || []).includes(spSportTag))).length;
+            && (!spSportTag || eventMatchesSportLabel(e.tags || [], spSportTag))).length;
     }
 
     const container = document.getElementById('sp-events-container');
@@ -4012,16 +4100,30 @@ window.setSportsTimeView = function(view) {
 
 function renderSportTypeTags(baseEvents){
     const row=document.getElementById('sp-sport-tags');
-    const activeSports=new Set();
-    baseEvents.forEach(e=>{(e.tags||[]).forEach(t=>{if(sportsList.includes(t))activeSports.add(t);});});
-    if(activeSports.size===0){row.innerHTML='';return;}
-    const sportFeedMap={Baseball:'baseball',Softball:'softball',Lacrosse:'lacrosse',Volleyball:'volleyball',
-        Football:'football',Basketball:'basketball',Soccer:'soccer','Field Hockey':'fieldhockey',
-        Tennis:'tennis',Track:'track',Golf:'golf',Swimming:'swimming','Cross Country':'crosscountry'};
+    // Smart pill labels from the events in the window: split sports get a pill
+    // per gender present ("Boys Soccer"); single sports get one pill ("Field
+    // Hockey", "Cross Country"). Sorted by sport then gender so Boys/Girls sit together.
+    const labels=new Map(); // label -> sport display name (sort key)
+    baseEvents.forEach(e=>{
+        const tags=e.tags||[];
+        const level=sportLevelFromTags(tags);
+        const sportTag=sportsList.find(s=>tags.indexOf(s)!==-1);
+        if(!sportTag) return;
+        const display=sportDisplayName(sportTag);
+        let label=display;
+        if(level && isSplitSport(level,sportTag)){
+            const g=sportGendersFor(level,sportTag).find(x=>tags.indexOf(x)!==-1);
+            if(!g) return; // split sport, no gender tag (e.g. a generic camp) — no sport pill
+            label=g+' '+display;
+        }
+        labels.set(label, display);
+    });
+    if(labels.size===0){row.innerHTML='';return;}
     let html=`<button class="sport-pill ${!spSportTag?'active':''}" onclick="setSportType(null)">All Sports</button>`;
-    Array.from(activeSports).sort().forEach(s=>{
-        const feedSuffix = sportFeedMap[s] || s.toLowerCase().replace(/\s+/g,'');
-        html+=`<button class="sport-pill ${spSportTag===s?'active':''}" data-feed="sport-${feedSuffix}" onclick="setSportType('${s}')">${s}</button>`;
+    Array.from(labels.keys()).sort((a,b)=>labels.get(a).localeCompare(labels.get(b))||a.localeCompare(b)).forEach(label=>{
+        const feedSuffix=label.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+        const esc=label.replace(/'/g,"\\'");
+        html+=`<button class="sport-pill ${spSportTag===label?'active':''}" data-feed="sport-${feedSuffix}" onclick="setSportType('${esc}')">${label}</button>`;
     });
     row.innerHTML=html;
 }
@@ -4343,7 +4445,7 @@ function buildEventCard(e,isSportsPage){
     // Collapse specific residence halls to the generic category (see source-pill
     // note): if "Residence Halls" is present, drop any specific-hall tag.
     const hideResHall = (t) => tags.includes('Residence Halls') && t !== 'Residence Halls' && /residence hall/i.test(t);
-    const displayTags=tags.filter(t=>!hiddenTags.includes(t) && !hideResHall(t)).map(relabelForTownie);
+    const displayTags=tags.filter(t=>!hiddenTags.includes(t) && !hideResHall(t) && GENDER_TAGS.indexOf(t)===-1).map(relabelForTownie);
     let tagHtml=sourceLabel?`<span class="card-tag">${sourceLabel}</span>`:'';
     // Multi-day pill — annotated by groupEventsByDay when an event appears on
     // a day other than its start (or on Day 1 of a multi-day span). Helps
@@ -4438,7 +4540,7 @@ function buildEventCard(e,isSportsPage){
     if (e.registrationRequired === true) perkBadges += '<span class="perk-badge perk-registration">📝 Registration required</span>';
 
     // Clean title
-    const displayTitle = (e.title || '').replace(/^Millersville University\s*/i, '').replace(/ - (Girls|Boys)\s+(vs |@ )/i, ' $2');
+    const displayTitle = cleanSportTitle((e.title || '').replace(/^Millersville University\s*/i, '').replace(/ - (Girls|Boys)\s+(vs |@ )/i, ' $2'), e.tags || []);
 
     // Visual highlight for favorited cards. Replaces the old "pinned at top" behavior —
     // favorites now sit in their chronological day group with a gold accent so users can
@@ -4904,7 +5006,7 @@ function buildTimelineItem(e, now) {
 
     // Clean title — strip "Millersville University" prefix and redundant gender
     let title = e.title || '';
-    title = title.replace(/^Millersville University\s*/i, '').replace(/ - (Girls|Boys)\s+(vs |@ )/i, ' $2');
+    title = cleanSportTitle(title.replace(/^Millersville University\s*/i, '').replace(/ - (Girls|Boys)\s+(vs |@ )/i, ' $2'), e.tags || []);
 
     // For marauders: when the org pill already shows the org name, strip the
     // org name out of the title to avoid redundant display. The scraper's
@@ -5099,7 +5201,7 @@ window.openEventDetails = function(key) {
     const hiddenTags = new Set(['MU','PM','Borough','Manor','Other','VFW','Clubs/Orgs','Live Music','H Games','Home Game Mode','Athletic Competitions','Athletics','Phantom Power','Human Resources','Office of the Provost','Office of VP for Finance and Administration','Advancement Department']);
     const relabelForTownie = (tag) => (muAffiliation === 'townie' && tag === 'GetInvolved') ? 'Community' : tag;
     const hideResHall = (t) => tags.includes('Residence Halls') && t !== 'Residence Halls' && /residence hall/i.test(t);
-    const displayTags = tags.filter(t => !hiddenTags.has(t) && !hideResHall(t)).map(relabelForTownie).slice(0, 6);
+    const displayTags = tags.filter(t => !hiddenTags.has(t) && !hideResHall(t) && GENDER_TAGS.indexOf(t) === -1).map(relabelForTownie).slice(0, 6);
 
     const description = (e.description || '').trim();
     const descBlock = description

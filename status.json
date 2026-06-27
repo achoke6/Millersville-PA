@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-06-27T06:35:18.730Z",
-  "totalEvents": 705,
+  "generatedAt": "2026-06-27T09:29:24.700Z",
+  "totalEvents": 747,
   "withDescription": 256,
-  "withImage": 112,
+  "withImage": 113,
   "familyFriendly": 43,
   "eventsToday": 1,
   "sources": {
@@ -12,9 +12,9 @@
     "pennManor": 82,
     "borough": 104,
     "vfw": 4,
-    "phantomPower": 13,
+    "phantomPower": 14,
     "community": 23,
-    "manor": 0,
+    "manor": 41,
     "raneyCellars": 11,
     "muHudlBroadcasts": 0
   },
@@ -51,7 +51,10 @@
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-07-01T23:00:00.000Z",
+      "latest": "2027-06-07T23:00:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-04-04T16:00:00.000Z",
       "latest": "2026-06-25T20:00:00.000Z"
@@ -90,7 +93,10 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 22
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-06-07",
+      "daysSinceMoved": 10
+    },
     "raneyCellars": {
       "newest": "2026-06-25",
       "daysSinceMoved": 11
@@ -114,79 +120,79 @@
     "pendingPast": 1,
     "pendingBySource": {},
     "stalePast": 3,
-    "lastSyncAt": "2026-06-27T06:31:35.477Z"
+    "lastSyncAt": "2026-06-27T09:27:31.075Z"
   },
   "recentlyAdded": [
     {
-      "key": "Coed Unified Track & Field - Outdoor @ Manheim Township High School|2026-05-13T20:00:00.000Z",
-      "firstSeenAt": "2026-06-26T19:44:19.025Z",
-      "title": "Coed Unified Track & Field - Outdoor @ Manheim Township High School",
-      "source": "PM",
-      "date": "2026-05-13T20:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-07-01T23:00:00.000Z",
+      "firstSeenAt": "2026-06-27T09:29:24.698Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-07-01T23:00:00.000Z"
     },
     {
-      "key": "Sunny Sweeney|2026-08-06T00:00:00.000Z",
-      "firstSeenAt": "2026-06-26T13:07:54.420Z",
-      "title": "Sunny Sweeney",
+      "key": "Supervisors Meeting|2026-07-06T23:00:00.000Z",
+      "firstSeenAt": "2026-06-27T09:29:24.698Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-07-06T23:00:00.000Z"
+    },
+    {
+      "key": "Planning Commission|2026-07-13T23:00:00.000Z",
+      "firstSeenAt": "2026-06-27T09:29:24.698Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-07-13T23:00:00.000Z"
+    },
+    {
+      "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
+      "firstSeenAt": "2026-06-27T09:29:24.698Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-07-29T12:30:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
+      "firstSeenAt": "2026-06-27T09:29:24.698Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-08-03T23:00:00.000Z"
+    },
+    {
+      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
+      "firstSeenAt": "2026-06-27T09:29:24.698Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-08-05T23:00:00.000Z"
+    },
+    {
+      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
+      "firstSeenAt": "2026-06-27T09:29:24.698Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-08-10T23:00:00.000Z"
+    },
+    {
+      "key": "Comedian Luke Null|2026-08-15T00:00:00.000Z",
+      "firstSeenAt": "2026-06-27T09:29:24.698Z",
+      "title": "Comedian Luke Null",
       "source": "Other",
-      "date": "2026-08-06T00:00:00.000Z"
+      "date": "2026-08-15T00:00:00.000Z"
     },
     {
-      "key": "Alpha Phi Alpha Planning Meeting|2026-08-07T14:00:00",
-      "firstSeenAt": "2026-06-25T18:12:09.707Z",
-      "title": "Alpha Phi Alpha Planning Meeting",
-      "source": "MU",
-      "date": "2026-08-07T14:00:00"
+      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
+      "firstSeenAt": "2026-06-27T09:29:24.698Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-08-26T12:30:00.000Z"
     },
     {
-      "key": "Alpha Phi Alpha Planning Meeting|2026-08-08T09:00:00",
-      "firstSeenAt": "2026-06-25T18:12:09.707Z",
-      "title": "Alpha Phi Alpha Planning Meeting",
-      "source": "MU",
-      "date": "2026-08-08T09:00:00"
-    },
-    {
-      "key": "Reverend Horton Heat|2026-09-18T00:00:00.000Z",
-      "firstSeenAt": "2026-06-25T18:12:09.707Z",
-      "title": "Reverend Horton Heat",
-      "source": "Other",
-      "date": "2026-09-18T00:00:00.000Z"
-    },
-    {
-      "key": "Houses Of The Holy - The True Zeppelin Experience|2026-08-02T00:00:00.000Z",
-      "firstSeenAt": "2026-06-25T14:18:25.240Z",
-      "title": "Houses Of The Holy - The True Zeppelin Experience",
-      "source": "Other",
-      "date": "2026-08-02T00:00:00.000Z"
-    },
-    {
-      "key": "AFROMAN|2026-07-04T00:00:00.000Z",
-      "firstSeenAt": "2026-06-24T20:49:37.226Z",
-      "title": "AFROMAN",
-      "source": "Other",
-      "date": "2026-07-04T00:00:00.000Z"
-    },
-    {
-      "key": "MU Field Hockey RAD Talent ID Showcase|2026-07-19T13:00:00.000Z",
-      "firstSeenAt": "2026-06-24T15:00:55.748Z",
-      "title": "MU Field Hockey RAD Talent ID Showcase",
-      "source": "MU",
-      "date": "2026-07-19T13:00:00.000Z"
-    },
-    {
-      "key": "MU Men's Basketball Summer Elite Camp|2026-08-08T13:00:00.000Z",
-      "firstSeenAt": "2026-06-24T15:00:55.748Z",
-      "title": "MU Men's Basketball Summer Elite Camp",
-      "source": "MU",
-      "date": "2026-08-08T13:00:00.000Z"
-    },
-    {
-      "key": "Sea Lions Swimming - @ Adamstown|2026-06-25T22:15:00.000Z",
-      "firstSeenAt": "2026-06-24T14:28:50.997Z",
-      "title": "Sea Lions Swimming - @ Adamstown",
-      "source": "Community",
-      "date": "2026-06-25T22:15:00.000Z"
+      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-06-27T09:29:24.698Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-09-02T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 42
 }

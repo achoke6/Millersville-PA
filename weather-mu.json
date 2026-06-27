@@ -126,74 +126,7 @@
       }
     ]
   },
-  "observations": [
-    {
-      "time": "15:00",
-      "temp": "72",
-      "dewpoint": "67",
-      "rh": "84",
-      "windDir": "E",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "8.1",
-      "condition": "None"
-    },
-    {
-      "time": "14:00",
-      "temp": "72",
-      "dewpoint": "66",
-      "rh": "80",
-      "windDir": "SE",
-      "windSpeed": "3",
-      "precip": "0.01",
-      "visibility": "6.3",
-      "condition": "Light Showers Rain"
-    },
-    {
-      "time": "13:00",
-      "temp": "73",
-      "dewpoint": "65",
-      "rh": "76",
-      "windDir": "NE",
-      "windSpeed": "2",
-      "precip": "0.01",
-      "visibility": "5.5",
-      "condition": "Light Rain"
-    },
-    {
-      "time": "12:00",
-      "temp": "74",
-      "dewpoint": "66",
-      "rh": "76",
-      "windDir": "SE",
-      "windSpeed": "2",
-      "precip": "0.02",
-      "visibility": "8.8",
-      "condition": "None"
-    },
-    {
-      "time": "11:00",
-      "temp": "72",
-      "dewpoint": "65",
-      "rh": "77",
-      "windDir": "NE",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "8.3",
-      "condition": "Light Rain"
-    },
-    {
-      "time": "10:00",
-      "temp": "73",
-      "dewpoint": "67",
-      "rh": "82",
-      "windDir": "ESE",
-      "windSpeed": "1",
-      "precip": "0.01",
-      "visibility": "7.9",
-      "condition": "Light Rain"
-    }
-  ],
+  "observations": [],
   "discussion": {
     "headline": "some beneficial rain on saturday; big heatwave next week?",
     "dateLine": "1:00 p.m. Friday, June 26, 2026, Update",
@@ -235,5 +168,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-06-27T19:18:46.059Z"
+  "updated": "2026-06-27T21:01:45.208Z"
 }

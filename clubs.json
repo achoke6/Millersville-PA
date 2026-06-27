@@ -469,12 +469,10 @@
   },
   {
     "name": "Club Softball",
-    "category": "Sports and Leisure",
-    "categories": [
-      "Sports and Leisure"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "Club Softball",
-    "id": "clubsoftball"
+    "id": ""
   },
   {
     "name": "Club Sport Council",
@@ -1408,10 +1406,12 @@
   },
   {
     "name": "Navigators",
-    "category": "",
-    "categories": [],
-    "shortName": "",
-    "id": ""
+    "category": "Spirituality",
+    "categories": [
+      "Spirituality"
+    ],
+    "shortName": "Navs",
+    "id": "thenavigators"
   },
   {
     "name": "NPHC, NALFO & NMGC presents: CGC",

@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-06-29T10:57:45.301Z",
-  "totalEvents": 735,
+  "generatedAt": "2026-06-29T14:49:12.301Z",
+  "totalEvents": 736,
   "withDescription": 251,
   "withImage": 112,
   "familyFriendly": 43,
-  "eventsToday": 1,
+  "eventsToday": 2,
   "sources": {
     "muAthletics": 207,
     "muCalendar": 84,
     "muGetInvolved": 171,
     "pennManor": 82,
-    "borough": 104,
+    "borough": 105,
     "vfw": 4,
     "phantomPower": 13,
     "community": 23,
@@ -120,9 +120,16 @@
     "pendingPast": 1,
     "pendingBySource": {},
     "stalePast": 3,
-    "lastSyncAt": "2026-06-29T10:55:55.740Z"
+    "lastSyncAt": "2026-06-29T14:47:25.805Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Renewal Successfully Processed for Service Monitoring Center|2026-06-30T03:16:08.000Z",
+      "firstSeenAt": "2026-06-29T14:49:12.299Z",
+      "title": "Renewal Successfully Processed for Service Monitoring Center",
+      "source": "Borough",
+      "date": "2026-06-30T03:16:08.000Z"
+    },
     {
       "key": "Ben Nichols w. Cory Branan|2026-08-20T00:00:00.000Z",
       "firstSeenAt": "2026-06-29T05:50:42.209Z",
@@ -185,14 +192,7 @@
       "title": "Legends Never Die (A celebration of Qwan Lewis)",
       "source": "Other",
       "date": "2026-08-15T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
-      "firstSeenAt": "2026-06-28T14:48:57.692Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-08-26T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

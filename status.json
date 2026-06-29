@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-06-29T00:09:26.732Z",
-  "totalEvents": 734,
+  "generatedAt": "2026-06-29T05:50:42.221Z",
+  "totalEvents": 735,
   "withDescription": 251,
-  "withImage": 111,
+  "withImage": 112,
   "familyFriendly": 43,
-  "eventsToday": 0,
+  "eventsToday": 1,
   "sources": {
     "muAthletics": 207,
     "muCalendar": 84,
@@ -12,7 +12,7 @@
     "pennManor": 82,
     "borough": 104,
     "vfw": 4,
-    "phantomPower": 12,
+    "phantomPower": 13,
     "community": 23,
     "manor": 41,
     "raneyCellars": 1,
@@ -63,43 +63,43 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-03-12",
-      "daysSinceMoved": 24
+      "daysSinceMoved": 25
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 24
+      "daysSinceMoved": 25
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 24
+      "daysSinceMoved": 25
     },
     "pennManor": {
       "newest": "2026-09-21",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "borough": {
       "newest": "2027-06-12",
-      "daysSinceMoved": 16
+      "daysSinceMoved": 17
     },
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 24
+      "daysSinceMoved": 25
     },
     "phantomPower": {
       "newest": "2026-09-18",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 23
+      "daysSinceMoved": 24
     },
     "manor": {
       "newest": "2027-06-07",
-      "daysSinceMoved": 11
+      "daysSinceMoved": 12
     },
     "raneyCellars": {
       "newest": "2026-06-27",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     }
   },
   "sports": {
@@ -120,9 +120,16 @@
     "pendingPast": 1,
     "pendingBySource": {},
     "stalePast": 3,
-    "lastSyncAt": "2026-06-29T00:07:49.095Z"
+    "lastSyncAt": "2026-06-29T05:49:01.161Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Ben Nichols w. Cory Branan|2026-08-20T00:00:00.000Z",
+      "firstSeenAt": "2026-06-29T05:50:42.209Z",
+      "title": "Ben Nichols w. Cory Branan",
+      "source": "Other",
+      "date": "2026-08-20T00:00:00.000Z"
+    },
     {
       "key": "Zoning Hearing Board|2026-07-01T23:00:00.000Z",
       "firstSeenAt": "2026-06-28T14:48:57.692Z",
@@ -185,14 +192,7 @@
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2026-08-26T12:30:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
-      "firstSeenAt": "2026-06-28T14:48:57.692Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-09-02T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

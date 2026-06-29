@@ -1,11 +1,11 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Monday, June 29, 2026 at 07:43 AM (Kyle Elliott, Meteorologist)",
+    "issued": "Monday, June 29, 2026 at 12:44 PM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "Today",
-        "text": "Mostly sunny, warmer and humid. High: 86-90"
+        "period": "This afternoon",
+        "text": "Very warm and humid with sunshine and some passing clouds. High: 86-90"
       },
       {
         "period": "Tonight",
@@ -13,7 +13,7 @@
       },
       {
         "period": "Tuesday",
-        "text": "Hot but not too humid with sunshine and some passing clouds. High: 88-92"
+        "text": "Mostly sunny and hot but not too humid. High: 88-92"
       },
       {
         "period": "Tuesday Night",
@@ -128,6 +128,39 @@
   },
   "observations": [
     {
+      "time": "13:00",
+      "temp": "86",
+      "dewpoint": "66",
+      "rh": "52",
+      "windDir": "SW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "9.7",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "85",
+      "dewpoint": "67",
+      "rh": "55",
+      "windDir": "ENE",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "9.5",
+      "condition": "None"
+    },
+    {
+      "time": "11:00",
+      "temp": "83",
+      "dewpoint": "70",
+      "rh": "65",
+      "windDir": "SSW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "8.2",
+      "condition": "None"
+    },
+    {
       "time": "10:00",
       "temp": "79",
       "dewpoint": "71",
@@ -159,39 +192,6 @@
       "precip": "0.00",
       "visibility": "3.6",
       "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "67",
-      "dewpoint": "67",
-      "rh": "99",
-      "windDir": "SSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "0.18",
-      "condition": "Fog"
-    },
-    {
-      "time": "06:00",
-      "temp": "67",
-      "dewpoint": "66",
-      "rh": "99",
-      "windDir": "NNW",
-      "windSpeed": "0",
-      "precip": "0.00",
-      "visibility": "0.30",
-      "condition": "Fog"
-    },
-    {
-      "time": "05:00",
-      "temp": "66",
-      "dewpoint": "66",
-      "rh": "99",
-      "windDir": "NW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "0.28",
-      "condition": "Fog"
     }
   ],
   "discussion": {
@@ -205,6 +205,13 @@
     "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
   },
   "videos": [
+    {
+      "title": "Medium Range Forecast 06/29/2026",
+      "videoId": "_D0AUlNTUNQ",
+      "url": "https://www.youtube.com/watch?v=_D0AUlNTUNQ",
+      "published": "2026-06-29T17:30:56+00:00",
+      "thumbnail": "https://i4.ytimg.com/vi/_D0AUlNTUNQ/hqdefault.jpg"
+    },
     {
       "title": "Short Term Forecast 06/29/2026",
       "videoId": "KTyRlcHwxpE",
@@ -225,15 +232,8 @@
       "url": "https://www.youtube.com/watch?v=G6nqWTe3rhk",
       "published": "2026-06-22T13:59:42+00:00",
       "thumbnail": "https://i4.ytimg.com/vi/G6nqWTe3rhk/hqdefault.jpg"
-    },
-    {
-      "title": "Medium Range Forecast 06/15/2026",
-      "videoId": "QWPqk_kDPSA",
-      "url": "https://www.youtube.com/watch?v=QWPqk_kDPSA",
-      "published": "2026-06-15T13:39:46+00:00",
-      "thumbnail": "https://i2.ytimg.com/vi/QWPqk_kDPSA/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-06-29T14:47:27.805Z"
+  "updated": "2026-06-29T17:35:34.534Z"
 }

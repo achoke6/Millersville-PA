@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-06-30T17:53:20.867Z",
-  "totalEvents": 734,
-  "withDescription": 251,
+  "generatedAt": "2026-06-30T19:56:04.685Z",
+  "totalEvents": 733,
+  "withDescription": 250,
   "withImage": 112,
-  "familyFriendly": 43,
-  "eventsToday": 2,
+  "familyFriendly": 42,
+  "eventsToday": 1,
   "sources": {
     "muAthletics": 207,
     "muCalendar": 84,
@@ -110,17 +110,17 @@
     "ties": 1
   },
   "registrations": {
-    "open": 4,
-    "next2Weeks": 1,
-    "nextClose": "2026-06-30",
+    "open": 3,
+    "next2Weeks": 0,
+    "nextClose": "2026-08-22",
     "openNoDeadline": 1
   },
   "reviewQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "pendingBySource": {},
-    "stalePast": 3,
-    "lastSyncAt": "2026-06-30T17:51:50.932Z"
+    "stalePast": 4,
+    "lastSyncAt": "2026-06-30T19:54:22.899Z"
   },
   "recentlyAdded": [
     {
@@ -194,5 +194,5 @@
       "date": "2026-09-02T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 0
 }

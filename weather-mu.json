@@ -126,74 +126,7 @@
       }
     ]
   },
-  "observations": [
-    {
-      "time": "20:00",
-      "temp": "82",
-      "dewpoint": "67",
-      "rh": "60",
-      "windDir": "SSW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "9.6",
-      "condition": "None"
-    },
-    {
-      "time": "19:00",
-      "temp": "85",
-      "dewpoint": "66",
-      "rh": "54",
-      "windDir": "S",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "9.7",
-      "condition": "None"
-    },
-    {
-      "time": "18:00",
-      "temp": "86",
-      "dewpoint": "64",
-      "rh": "48",
-      "windDir": "SSW",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "9.8",
-      "condition": "None"
-    },
-    {
-      "time": "17:00",
-      "temp": "87",
-      "dewpoint": "65",
-      "rh": "48",
-      "windDir": "SSW",
-      "windSpeed": "5",
-      "precip": "0.00",
-      "visibility": "9.1",
-      "condition": "None"
-    },
-    {
-      "time": "16:00",
-      "temp": "87",
-      "dewpoint": "65",
-      "rh": "48",
-      "windDir": "SSW",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "9.6",
-      "condition": "None"
-    },
-    {
-      "time": "15:00",
-      "temp": "87",
-      "dewpoint": "65",
-      "rh": "47",
-      "windDir": "SW",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "8.5",
-      "condition": "None"
-    }
-  ],
+  "observations": [],
   "discussion": {
     "headline": "some beneficial rain on saturday; big heatwave next week?",
     "dateLine": "1:00 p.m. Friday, June 26, 2026, Update",
@@ -204,36 +137,7 @@
     "radar": "https://sirocco.accuweather.com/nx_mosaic_640x480c/RE/inmaREPA_.gif",
     "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
   },
-  "videos": [
-    {
-      "title": "Medium Range Forecast 06/29/2026",
-      "videoId": "_D0AUlNTUNQ",
-      "url": "https://www.youtube.com/watch?v=_D0AUlNTUNQ",
-      "published": "2026-06-29T17:30:56+00:00",
-      "thumbnail": "https://i4.ytimg.com/vi/_D0AUlNTUNQ/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 06/29/2026",
-      "videoId": "KTyRlcHwxpE",
-      "url": "https://www.youtube.com/watch?v=KTyRlcHwxpE",
-      "published": "2026-06-29T14:16:24+00:00",
-      "thumbnail": "https://i4.ytimg.com/vi/KTyRlcHwxpE/hqdefault.jpg"
-    },
-    {
-      "title": "Medium Range Forecast 06/22/2026",
-      "videoId": "YHkWhTVRc5Q",
-      "url": "https://www.youtube.com/watch?v=YHkWhTVRc5Q",
-      "published": "2026-06-22T15:20:13+00:00",
-      "thumbnail": "https://i2.ytimg.com/vi/YHkWhTVRc5Q/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 06/22/2026",
-      "videoId": "G6nqWTe3rhk",
-      "url": "https://www.youtube.com/watch?v=G6nqWTe3rhk",
-      "published": "2026-06-22T13:59:42+00:00",
-      "thumbnail": "https://i4.ytimg.com/vi/G6nqWTe3rhk/hqdefault.jpg"
-    }
-  ],
+  "videos": [],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-06-30T00:03:58.857Z"
+  "updated": "2026-06-30T05:01:38.211Z"
 }

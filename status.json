@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-30T15:27:11.260Z",
+  "generatedAt": "2026-06-30T17:53:20.867Z",
   "totalEvents": 734,
   "withDescription": 251,
   "withImage": 112,
@@ -120,9 +120,16 @@
     "pendingPast": 1,
     "pendingBySource": {},
     "stalePast": 3,
-    "lastSyncAt": "2026-06-30T15:25:37.686Z"
+    "lastSyncAt": "2026-06-30T17:51:50.932Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Park Commission -  Cancelled|2026-07-06T22:00:00.000Z",
+      "firstSeenAt": "2026-06-30T17:53:20.865Z",
+      "title": "Park Commission -  Cancelled",
+      "source": "Borough",
+      "date": "2026-07-06T22:00:00.000Z"
+    },
     {
       "key": "Zoning Hearing Board|2026-07-01T23:00:00.000Z",
       "firstSeenAt": "2026-06-30T15:27:11.258Z",
@@ -185,14 +192,7 @@
       "title": "Zoning Hearing Board",
       "source": "Manor",
       "date": "2026-09-02T23:00:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2026-09-07T23:00:00.000Z",
-      "firstSeenAt": "2026-06-30T15:27:11.258Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-09-07T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 41
+  "addedLastRun": 1
 }

@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-07-01T17:55:20.148Z",
-  "totalEvents": 733,
+  "generatedAt": "2026-07-01T19:28:06.857Z",
+  "totalEvents": 679,
   "withDescription": 250,
-  "withImage": 112,
+  "withImage": 99,
   "familyFriendly": 42,
-  "eventsToday": 3,
+  "eventsToday": 2,
   "sources": {
     "muAthletics": 207,
     "muCalendar": 84,
     "muGetInvolved": 171,
     "pennManor": 81,
     "borough": 103,
-    "vfw": 4,
-    "phantomPower": 13,
+    "vfw": 3,
+    "phantomPower": 0,
     "community": 23,
-    "manor": 42,
-    "raneyCellars": 1,
+    "manor": 0,
+    "raneyCellars": 3,
     "muHudlBroadcasts": 0
   },
   "sourceDateRanges": {
@@ -40,24 +40,18 @@
       "latest": "2027-06-12T14:00:00.000Z"
     },
     "vfw": {
-      "earliest": "2026-06-12T22:00:00.000Z",
+      "earliest": "2026-06-17T22:00:00.000Z",
       "latest": "2026-09-11T17:00:00.000Z"
     },
-    "phantomPower": {
-      "earliest": "2026-07-04T00:00:00.000Z",
-      "latest": "2026-09-18T00:00:00.000Z"
-    },
+    "phantomPower": null,
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-07-01T23:00:00.000Z",
-      "latest": "2027-06-30T12:30:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
-      "earliest": "2026-06-27T21:00:00.000Z",
-      "latest": "2026-06-27T21:00:00.000Z"
+      "earliest": "2026-07-02T20:30:00.000Z",
+      "latest": "2026-07-09T21:00:00.000Z"
     }
   },
   "staleness": {
@@ -85,28 +79,22 @@
       "newest": "2026-09-11",
       "daysSinceMoved": 27
     },
-    "phantomPower": {
-      "newest": "2026-09-18",
-      "daysSinceMoved": 6
-    },
+    "phantomPower": null,
     "community": {
       "newest": "2027-04-16",
       "daysSinceMoved": 26
     },
-    "manor": {
-      "newest": "2027-06-30",
-      "daysSinceMoved": 1
-    },
+    "manor": null,
     "raneyCellars": {
-      "newest": "2026-06-27",
-      "daysSinceMoved": 4
+      "newest": "2026-07-09",
+      "daysSinceMoved": 0
     }
   },
   "sports": {
     "total": 258,
-    "scored": 9,
+    "scored": 8,
     "wins": 3,
-    "losses": 5,
+    "losses": 4,
     "ties": 1
   },
   "registrations": {
@@ -116,83 +104,65 @@
     "openNoDeadline": 1
   },
   "reviewQueue": {
-    "pendingFuture": 0,
+    "pendingFuture": 3,
     "pendingPast": 1,
-    "pendingBySource": {},
+    "pendingBySource": {
+      "Borough": 1,
+      "PM Community": 2
+    },
     "stalePast": 4,
-    "lastSyncAt": "2026-07-01T17:53:37.625Z"
+    "lastSyncAt": "2026-07-01T19:24:31.812Z"
   },
   "recentlyAdded": [
     {
-      "key": "Zoning Hearing Board|2026-07-01T23:00:00.000Z",
-      "firstSeenAt": "2026-07-01T15:42:31.970Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-07-01T23:00:00.000Z"
+      "key": "House Of Mofos|2026-07-02T20:30:00.000Z",
+      "firstSeenAt": "2026-07-01T19:28:06.855Z",
+      "title": "House Of Mofos",
+      "source": "Raney Cellars",
+      "date": "2026-07-02T20:30:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-07-06T23:00:00.000Z",
-      "firstSeenAt": "2026-07-01T15:42:31.970Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-07-06T23:00:00.000Z"
+      "key": "Thurday Trivia 6PM|2026-07-02T22:00:00.000Z",
+      "firstSeenAt": "2026-07-01T19:28:06.855Z",
+      "title": "Thurday Trivia 6PM",
+      "source": "Raney Cellars",
+      "date": "2026-07-02T22:00:00.000Z"
     },
     {
-      "key": "Planning Commission|2026-07-13T23:00:00.000Z",
-      "firstSeenAt": "2026-07-01T15:42:31.970Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-07-13T23:00:00.000Z"
+      "key": "Gourmet Julies Way|2026-07-09T21:00:00.000Z",
+      "firstSeenAt": "2026-07-01T19:28:06.855Z",
+      "title": "Gourmet Julies Way",
+      "source": "Raney Cellars",
+      "date": "2026-07-09T21:00:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
-      "firstSeenAt": "2026-07-01T15:42:31.970Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-07-29T12:30:00.000Z"
+      "key": "Park Commission -  Cancelled|2026-07-06T22:00:00.000Z",
+      "firstSeenAt": "2026-06-30T17:53:20.865Z",
+      "title": "Park Commission -  Cancelled",
+      "source": "Borough",
+      "date": "2026-07-06T22:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
-      "firstSeenAt": "2026-07-01T15:42:31.970Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-08-03T23:00:00.000Z"
+      "key": "Coed Unified Track & Field - Outdoor @ Manheim Township High School|2026-05-13T20:00:00.000Z",
+      "firstSeenAt": "2026-06-26T19:44:19.025Z",
+      "title": "Coed Unified Track & Field - Outdoor @ Manheim Township High School",
+      "source": "PM",
+      "date": "2026-05-13T20:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
-      "firstSeenAt": "2026-07-01T15:42:31.970Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-08-05T23:00:00.000Z"
+      "key": "Alpha Phi Alpha Planning Meeting|2026-08-07T14:00:00",
+      "firstSeenAt": "2026-06-25T18:12:09.707Z",
+      "title": "Alpha Phi Alpha Planning Meeting",
+      "source": "MU",
+      "date": "2026-08-07T14:00:00"
     },
     {
-      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
-      "firstSeenAt": "2026-07-01T15:42:31.970Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-08-10T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
-      "firstSeenAt": "2026-07-01T15:42:31.970Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-08-26T12:30:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
-      "firstSeenAt": "2026-07-01T15:42:31.970Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-09-02T23:00:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2026-09-07T23:00:00.000Z",
-      "firstSeenAt": "2026-07-01T15:42:31.970Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-09-07T23:00:00.000Z"
+      "key": "Alpha Phi Alpha Planning Meeting|2026-08-08T09:00:00",
+      "firstSeenAt": "2026-06-25T18:12:09.707Z",
+      "title": "Alpha Phi Alpha Planning Meeting",
+      "source": "MU",
+      "date": "2026-08-08T09:00:00"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 3
 }

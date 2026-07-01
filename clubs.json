@@ -64,10 +64,8 @@
   },
   {
     "name": "Alpha Sigma Alpha",
-    "category": "Tabling",
-    "categories": [
-      "Tabling"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -320,12 +318,12 @@
   },
   {
     "name": "Books & Banter",
-    "category": "Arts & Culture",
+    "category": "Fundraiser",
     "categories": [
-      "Arts & Culture"
+      "Fundraiser"
     ],
     "shortName": "",
-    "id": "tbd"
+    "id": ""
   },
   {
     "name": "Bowling Club",
@@ -436,8 +434,7 @@
     "name": "Climbing Club",
     "category": "Sports and Leisure",
     "categories": [
-      "Sports and Leisure",
-      "Meeting"
+      "Sports and Leisure"
     ],
     "shortName": "",
     "id": "climbingclub"
@@ -469,12 +466,10 @@
   },
   {
     "name": "Club Softball",
-    "category": "Sports and Leisure",
-    "categories": [
-      "Sports and Leisure"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "Club Softball",
-    "id": "clubsoftball"
+    "id": ""
   },
   {
     "name": "Club Sport Council",
@@ -791,11 +786,9 @@
   },
   {
     "name": "Fencing Guild",
-    "category": "Fundraiser",
+    "category": "Performance",
     "categories": [
-      "Fundraiser",
       "Performance",
-      "Social",
       "Sporting"
     ],
     "shortName": "",
@@ -1153,8 +1146,9 @@
   },
   {
     "name": "Math Club",
-    "category": "Social",
+    "category": "Lecture or Speaker",
     "categories": [
+      "Lecture or Speaker",
       "Social"
     ],
     "shortName": "",
@@ -1233,12 +1227,12 @@
   },
   {
     "name": "Men's Ice Hockey (D2)",
-    "category": "Competition",
+    "category": "Sports and Leisure",
     "categories": [
-      "Competition"
+      "Sports and Leisure"
     ],
-    "shortName": "",
-    "id": ""
+    "shortName": "MIH",
+    "id": "mensicehockey"
   },
   {
     "name": "Men's Rugby Club of Millersville University",
@@ -1494,9 +1488,10 @@
   },
   {
     "name": "Panhellenic Council",
-    "category": "Social",
+    "category": "Fundraiser",
     "categories": [
-      "Social"
+      "Fundraiser",
+      "Tabling"
     ],
     "shortName": "",
     "id": ""

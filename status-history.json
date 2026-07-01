@@ -759,18 +759,18 @@
     },
     {
       "date": "2026-07-01",
-      "ts": "2026-07-01T19:28:06.857Z",
-      "totalEvents": 679,
+      "ts": "2026-07-01T19:54:18.603Z",
+      "totalEvents": 735,
       "sources": {
         "muAthletics": 207,
         "muCalendar": 84,
         "muGetInvolved": 171,
-        "pennManor": 81,
+        "pennManor": 82,
         "borough": 103,
         "vfw": 3,
-        "phantomPower": 0,
+        "phantomPower": 13,
         "community": 23,
-        "manor": 0,
+        "manor": 42,
         "raneyCellars": 3,
         "muHudlBroadcasts": 0
       },
@@ -781,10 +781,12 @@
         "pennManor": "2026-09-21",
         "borough": "2027-06-12",
         "vfw": "2026-09-11",
+        "phantomPower": "2026-09-18",
         "community": "2027-04-16",
+        "manor": "2027-06-30",
         "raneyCellars": "2026-07-09"
       }
     }
   ],
-  "lastUpdated": "2026-07-01T19:28:06.857Z"
+  "lastUpdated": "2026-07-01T19:54:18.603Z"
 }

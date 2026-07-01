@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-30T23:12:23.547Z",
+  "generatedAt": "2026-07-01T03:43:10.557Z",
   "totalEvents": 733,
   "withDescription": 250,
   "withImage": 112,
@@ -10,11 +10,11 @@
     "muCalendar": 84,
     "muGetInvolved": 171,
     "pennManor": 81,
-    "borough": 104,
+    "borough": 103,
     "vfw": 4,
     "phantomPower": 13,
     "community": 23,
-    "manor": 41,
+    "manor": 42,
     "raneyCellars": 1,
     "muHudlBroadcasts": 0
   },
@@ -36,7 +36,7 @@
       "latest": "2026-09-21T23:00:00.000Z"
     },
     "borough": {
-      "earliest": "2026-04-01T22:30:00.000Z",
+      "earliest": "2026-04-03T12:00:00.000Z",
       "latest": "2027-06-12T14:00:00.000Z"
     },
     "vfw": {
@@ -53,7 +53,7 @@
     },
     "manor": {
       "earliest": "2026-07-01T23:00:00.000Z",
-      "latest": "2027-06-07T23:00:00.000Z"
+      "latest": "2027-06-30T12:30:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-06-27T21:00:00.000Z",
@@ -94,8 +94,8 @@
       "daysSinceMoved": 25
     },
     "manor": {
-      "newest": "2027-06-07",
-      "daysSinceMoved": 13
+      "newest": "2027-06-30",
+      "daysSinceMoved": 0
     },
     "raneyCellars": {
       "newest": "2026-06-27",
@@ -120,9 +120,23 @@
     "pendingPast": 1,
     "pendingBySource": {},
     "stalePast": 4,
-    "lastSyncAt": "2026-06-30T23:10:55.588Z"
+    "lastSyncAt": "2026-07-01T03:41:46.249Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Deadgrass|2026-08-09T00:00:00.000Z",
+      "firstSeenAt": "2026-07-01T03:43:10.555Z",
+      "title": "Deadgrass",
+      "source": "Other",
+      "date": "2026-08-09T00:00:00.000Z"
+    },
+    {
+      "key": "Traffic Commission Meeting|2027-06-30T12:30:00.000Z",
+      "firstSeenAt": "2026-07-01T03:43:10.555Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2027-06-30T12:30:00.000Z"
+    },
     {
       "key": "Park Commission -  Cancelled|2026-07-06T22:00:00.000Z",
       "firstSeenAt": "2026-06-30T17:53:20.865Z",
@@ -178,21 +192,7 @@
       "title": "Planning Commission",
       "source": "Manor",
       "date": "2026-08-10T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
-      "firstSeenAt": "2026-06-30T15:27:11.258Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-08-26T12:30:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
-      "firstSeenAt": "2026-06-30T15:27:11.258Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-09-02T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

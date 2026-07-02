@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-02T21:06:20.842Z",
-  "totalEvents": 735,
+  "generatedAt": "2026-07-02T23:05:50.867Z",
+  "totalEvents": 694,
   "withDescription": 250,
   "withImage": 112,
   "familyFriendly": 42,
@@ -14,7 +14,7 @@
     "vfw": 3,
     "phantomPower": 13,
     "community": 23,
-    "manor": 41,
+    "manor": 0,
     "raneyCellars": 3,
     "muHudlBroadcasts": 0
   },
@@ -51,10 +51,7 @@
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-07-06T23:00:00.000Z",
-      "latest": "2027-06-30T12:30:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-07-02T20:30:00.000Z",
       "latest": "2026-07-09T21:00:00.000Z"
@@ -93,10 +90,7 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 27
     },
-    "manor": {
-      "newest": "2027-06-30",
-      "daysSinceMoved": 2
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-07-09",
       "daysSinceMoved": 1
@@ -123,7 +117,7 @@
       "PM Community": 2
     },
     "stalePast": 4,
-    "lastSyncAt": "2026-07-02T21:04:42.156Z"
+    "lastSyncAt": "2026-07-02T23:04:34.954Z"
   },
   "recentlyAdded": [
     {
@@ -134,68 +128,68 @@
       "date": "2026-07-24T23:30:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-07-06T23:00:00.000Z",
-      "firstSeenAt": "2026-07-01T23:16:21.246Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-07-06T23:00:00.000Z"
+      "key": "Girls Varsity Tennis vs Cocalico High School|2026-08-28T20:00:00.000Z",
+      "firstSeenAt": "2026-07-01T21:28:24.242Z",
+      "title": "Girls Varsity Tennis vs Cocalico High School",
+      "source": "PM",
+      "date": "2026-08-28T20:00:00.000Z"
     },
     {
-      "key": "Planning Commission|2026-07-13T23:00:00.000Z",
-      "firstSeenAt": "2026-07-01T23:16:21.246Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-07-13T23:00:00.000Z"
+      "key": "AFROMAN|2026-07-04T00:00:00.000Z",
+      "firstSeenAt": "2026-07-01T19:54:18.601Z",
+      "title": "AFROMAN",
+      "source": "Other",
+      "date": "2026-07-04T00:00:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
-      "firstSeenAt": "2026-07-01T23:16:21.246Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-07-29T12:30:00.000Z"
+      "key": "Fragile Like Life After w. Stenial, Its Always Better Late Than Never, more|2026-07-11T23:00:00.000Z",
+      "firstSeenAt": "2026-07-01T19:54:18.601Z",
+      "title": "Fragile Like Life After w. Stenial, Its Always Better Late Than Never, more",
+      "source": "Other",
+      "date": "2026-07-11T23:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
-      "firstSeenAt": "2026-07-01T23:16:21.246Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-08-03T23:00:00.000Z"
+      "key": "Jack&#x27;s Birthday Bash - DRAG SHOW|2026-07-17T00:00:00.000Z",
+      "firstSeenAt": "2026-07-01T19:54:18.601Z",
+      "title": "Jack&#x27;s Birthday Bash - DRAG SHOW",
+      "source": "Other",
+      "date": "2026-07-17T00:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
-      "firstSeenAt": "2026-07-01T23:16:21.246Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-08-05T23:00:00.000Z"
+      "key": "The Ex-Faces|2026-07-17T23:00:00.000Z",
+      "firstSeenAt": "2026-07-01T19:54:18.601Z",
+      "title": "The Ex-Faces",
+      "source": "Other",
+      "date": "2026-07-17T23:00:00.000Z"
     },
     {
-      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
-      "firstSeenAt": "2026-07-01T23:16:21.246Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-08-10T23:00:00.000Z"
+      "key": "Tantric|2026-07-18T23:00:00.000Z",
+      "firstSeenAt": "2026-07-01T19:54:18.601Z",
+      "title": "Tantric",
+      "source": "Other",
+      "date": "2026-07-18T23:00:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
-      "firstSeenAt": "2026-07-01T23:16:21.246Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-08-26T12:30:00.000Z"
+      "key": "Stabbing Westward: 30 Years of Wither Blister Burn + Peel|2026-07-21T23:00:00.000Z",
+      "firstSeenAt": "2026-07-01T19:54:18.601Z",
+      "title": "Stabbing Westward: 30 Years of Wither Blister Burn + Peel",
+      "source": "Other",
+      "date": "2026-07-21T23:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
-      "firstSeenAt": "2026-07-01T23:16:21.246Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-09-02T23:00:00.000Z"
+      "key": "Bark At The Moon - Ozzy Osbourne Tribute|2026-07-26T00:00:00.000Z",
+      "firstSeenAt": "2026-07-01T19:54:18.601Z",
+      "title": "Bark At The Moon - Ozzy Osbourne Tribute",
+      "source": "Other",
+      "date": "2026-07-26T00:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-09-07T23:00:00.000Z",
-      "firstSeenAt": "2026-07-01T23:16:21.246Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-09-07T23:00:00.000Z"
+      "key": "Houses Of The Holy - The True Zeppelin Experience|2026-08-02T00:00:00.000Z",
+      "firstSeenAt": "2026-07-01T19:54:18.601Z",
+      "title": "Houses Of The Holy - The True Zeppelin Experience",
+      "source": "Other",
+      "date": "2026-08-02T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 0
 }

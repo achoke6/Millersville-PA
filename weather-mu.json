@@ -1,10 +1,10 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Thursday, July 02, 2026 at 08:55 AM (Kyle Elliott, Meteorologist)",
+    "issued": "Thursday, July 02, 2026 at 12:03 PM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "Today",
+        "period": "This afternoon",
         "text": "Humid with blistering sunshine and record-breaking heat. High: 100-104"
       },
       {
@@ -126,74 +126,7 @@
       }
     ]
   },
-  "observations": [
-    {
-      "time": "11:00",
-      "temp": "94",
-      "dewpoint": "75",
-      "rh": "55",
-      "windDir": "NNW",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "7.5",
-      "condition": "None"
-    },
-    {
-      "time": "10:00",
-      "temp": "91",
-      "dewpoint": "75",
-      "rh": "60",
-      "windDir": "NNW",
-      "windSpeed": "6",
-      "precip": "0.00",
-      "visibility": "8.1",
-      "condition": "None"
-    },
-    {
-      "time": "09:00",
-      "temp": "87",
-      "dewpoint": "75",
-      "rh": "67",
-      "windDir": "NW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "7.4",
-      "condition": "None"
-    },
-    {
-      "time": "08:00",
-      "temp": "83",
-      "dewpoint": "74",
-      "rh": "74",
-      "windDir": "WNW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "7.1",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "77",
-      "dewpoint": "75",
-      "rh": "93",
-      "windDir": "SW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "6.3",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "75",
-      "dewpoint": "74",
-      "rh": "97",
-      "windDir": "NNW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "6.6",
-      "condition": "None"
-    }
-  ],
+  "observations": [],
   "discussion": {
     "headline": "dangerous, record-breaking heatwave to bake mid-atlantic states",
     "dateLine": "1:00 p.m. Tuesday, June 30, 2026",
@@ -235,5 +168,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-02T15:17:43.629Z"
+  "updated": "2026-07-02T17:45:38.266Z"
 }

@@ -1,29 +1,8 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Thursday, July 02, 2026 at 12:03 PM (Kyle Elliott, Meteorologist)",
-    "periods": [
-      {
-        "period": "This afternoon",
-        "text": "Humid with blistering sunshine and record-breaking heat. High: 100-104"
-      },
-      {
-        "period": "Tonight",
-        "text": "Warm and muggy with clear skies. Low: 76-80"
-      },
-      {
-        "period": "Friday",
-        "text": "Humid with scorching sunshine and record-challenging heat. High: 101-105"
-      },
-      {
-        "period": "Friday Night",
-        "text": "Mainly clear, warm and muggy. Low: 76-80"
-      },
-      {
-        "period": "Saturday",
-        "text": "Mostly sunny, very hot and humid with an isolated T-storm in the afternoon. High: 96-100"
-      }
-    ]
+    "issued": "",
+    "periods": []
   },
   "sevenDay": {
     "issued": "Thursday, July 02, 2026 at 09:09 AM (Kyle Elliott)",
@@ -128,6 +107,28 @@
   },
   "observations": [
     {
+      "time": "13:00",
+      "temp": "96",
+      "dewpoint": "68",
+      "rh": "40",
+      "windDir": "N",
+      "windSpeed": "6",
+      "precip": "0.00",
+      "visibility": "8.8",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "94",
+      "dewpoint": "65",
+      "rh": "39",
+      "windDir": "WSW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "9.6",
+      "condition": "None"
+    },
+    {
       "time": "11:00",
       "temp": "91",
       "dewpoint": "64",
@@ -169,28 +170,6 @@
       "windSpeed": "1",
       "precip": "0.00",
       "visibility": "8.8",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "78",
-      "dewpoint": "65",
-      "rh": "64",
-      "windDir": "SW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "8.7",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "78",
-      "dewpoint": "65",
-      "rh": "64",
-      "windDir": "SW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "8.9",
       "condition": "None"
     }
   ],
@@ -235,5 +214,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-04T15:03:52.827Z"
+  "updated": "2026-07-04T17:03:13.103Z"
 }

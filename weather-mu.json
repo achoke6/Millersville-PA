@@ -126,7 +126,74 @@
       }
     ]
   },
-  "observations": [],
+  "observations": [
+    {
+      "time": "22:00",
+      "temp": "88",
+      "dewpoint": "74",
+      "rh": "63",
+      "windDir": "WSW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "8.1",
+      "condition": "None"
+    },
+    {
+      "time": "21:00",
+      "temp": "91",
+      "dewpoint": "73",
+      "rh": "55",
+      "windDir": "SW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "8.6",
+      "condition": "None"
+    },
+    {
+      "time": "20:00",
+      "temp": "96",
+      "dewpoint": "71",
+      "rh": "46",
+      "windDir": "WSW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "8.7",
+      "condition": "None"
+    },
+    {
+      "time": "19:00",
+      "temp": "98",
+      "dewpoint": "71",
+      "rh": "41",
+      "windDir": "W",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "8.5",
+      "condition": "None"
+    },
+    {
+      "time": "18:00",
+      "temp": "100",
+      "dewpoint": "70",
+      "rh": "39",
+      "windDir": "W",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "8.3",
+      "condition": "None"
+    },
+    {
+      "time": "17:00",
+      "temp": "100",
+      "dewpoint": "70",
+      "rh": "39",
+      "windDir": "W",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "8.3",
+      "condition": "None"
+    }
+  ],
   "discussion": {
     "headline": "dangerous, record-breaking heatwave to bake mid-atlantic states",
     "dateLine": "1:00 p.m. Tuesday, June 30, 2026",
@@ -168,5 +235,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-03T23:01:29.933Z"
+  "updated": "2026-07-04T02:46:45.617Z"
 }

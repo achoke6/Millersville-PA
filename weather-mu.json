@@ -5,107 +5,32 @@
     "periods": []
   },
   "sevenDay": {
-    "issued": "Thursday, July 02, 2026 at 09:09 AM (Kyle Elliott)",
-    "days": [
-      {
-        "period": "Thursday",
-        "sky": "Sunny",
-        "weather": "Record Warmth",
-        "pop": "<10%",
-        "temp": "102",
-        "conf": "5"
-      },
-      {
-        "period": "Thursday night",
-        "sky": "Clear Skies",
-        "weather": "Warm & Muggy",
-        "pop": "<10%",
-        "temp": "78",
-        "conf": "5"
-      },
-      {
-        "period": "Friday",
-        "sky": "Sunny",
-        "weather": "Record Warmth",
-        "pop": "<10%",
-        "temp": "103",
-        "conf": "5"
-      },
-      {
-        "period": "Friday night",
-        "sky": "Mainly Clear",
-        "weather": "Warm & Muggy",
-        "pop": "<10%",
-        "temp": "78",
-        "conf": "5"
-      },
-      {
-        "period": "Saturday",
-        "sky": "Mostly Sunny",
-        "weather": "Afternoon T-Storms",
-        "pop": "40%",
-        "temp": "98",
-        "conf": "4"
-      },
-      {
-        "period": "Saturday night",
-        "sky": "Partly Cloudy",
-        "weather": "Warm & Muggy",
-        "pop": "30%",
-        "temp": "74",
-        "conf": "4"
-      },
-      {
-        "period": "Sunday",
-        "sky": "Clouds & Sun",
-        "weather": "Afternoon T-Storms",
-        "pop": "60%",
-        "temp": "92",
-        "conf": "4"
-      },
-      {
-        "period": "Sunday night",
-        "sky": "Mostly Cloudy",
-        "weather": "Sct. Thunderstorms",
-        "pop": "60%",
-        "temp": "70",
-        "conf": "4"
-      },
-      {
-        "period": "Monday",
-        "sky": "Mostly Cloudy",
-        "weather": "Sct. Thunderstorms",
-        "pop": "60%",
-        "temp": "84",
-        "conf": "3"
-      },
-      {
-        "period": "Monday night",
-        "sky": "Mostly Cloudy",
-        "weather": "Chc. of Showers",
-        "pop": "40%",
-        "temp": "66",
-        "conf": "3"
-      },
-      {
-        "period": "Tuesday",
-        "sky": "Clouds & Sun",
-        "weather": "Seasonable",
-        "pop": "20%",
-        "temp": "mid 80s",
-        "conf": "3"
-      },
-      {
-        "period": "Wednesday",
-        "sky": "Partly Sunny",
-        "weather": "Seasonable",
-        "pop": "<10%",
-        "temp": "mid 80s",
-        "conf": "3"
-      }
-    ]
+    "issued": "",
+    "days": []
   },
   "observations": [
+    {
+      "time": "09:00",
+      "temp": "77",
+      "dewpoint": "72",
+      "rh": "87",
+      "windDir": "SW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "6.5",
+      "condition": "None"
+    },
+    {
+      "time": "08:00",
+      "temp": "75",
+      "dewpoint": "73",
+      "rh": "93",
+      "windDir": "SE",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "4.7",
+      "condition": "None"
+    },
     {
       "time": "07:00",
       "temp": "73",
@@ -149,28 +74,6 @@
       "precip": "0.00",
       "visibility": "2.9",
       "condition": "Mist"
-    },
-    {
-      "time": "03:00",
-      "temp": "72",
-      "dewpoint": "72",
-      "rh": "98",
-      "windDir": "SW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "4.1",
-      "condition": "None"
-    },
-    {
-      "time": "02:00",
-      "temp": "73",
-      "dewpoint": "72",
-      "rh": "98",
-      "windDir": "S",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "4.2",
-      "condition": "None"
     }
   ],
   "discussion": {
@@ -214,5 +117,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-05T11:29:37.730Z"
+  "updated": "2026-07-05T13:27:37.162Z"
 }

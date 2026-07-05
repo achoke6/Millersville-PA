@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-07-04T23:03:43.001Z",
-  "totalEvents": 611,
+  "generatedAt": "2026-07-05T02:58:42.553Z",
+  "totalEvents": 734,
   "withDescription": 250,
-  "withImage": 113,
-  "familyFriendly": 41,
+  "withImage": 112,
+  "familyFriendly": 42,
   "eventsToday": 0,
   "sources": {
     "muAthletics": 207,
     "muCalendar": 84,
     "muGetInvolved": 171,
-    "pennManor": 0,
+    "pennManor": 83,
     "borough": 102,
     "vfw": 3,
-    "phantomPower": 14,
+    "phantomPower": 13,
     "community": 23,
-    "manor": 0,
+    "manor": 41,
     "raneyCellars": 3,
     "muHudlBroadcasts": 0
   },
@@ -31,7 +31,10 @@
       "earliest": "2026-04-14T20:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
-    "pennManor": null,
+    "pennManor": {
+      "earliest": "2026-05-05T20:15:00.000Z",
+      "latest": "2026-09-21T23:00:00.000Z"
+    },
     "borough": {
       "earliest": "2026-04-06T22:00:00.000Z",
       "latest": "2027-06-12T14:00:00.000Z"
@@ -41,14 +44,17 @@
       "latest": "2026-09-11T17:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-07-04T00:00:00.000Z",
+      "earliest": "2026-07-11T23:00:00.000Z",
       "latest": "2026-09-18T00:00:00.000Z"
     },
     "community": {
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-07-06T23:00:00.000Z",
+      "latest": "2027-06-30T12:30:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-07-02T20:30:00.000Z",
       "latest": "2026-07-09T21:00:00.000Z"
@@ -67,7 +73,10 @@
       "newest": "2027-05-05",
       "daysSinceMoved": 30
     },
-    "pennManor": null,
+    "pennManor": {
+      "newest": "2026-09-21",
+      "daysSinceMoved": 10
+    },
     "borough": {
       "newest": "2027-06-12",
       "daysSinceMoved": 22
@@ -84,17 +93,20 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 29
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-06-30",
+      "daysSinceMoved": 4
+    },
     "raneyCellars": {
       "newest": "2026-07-09",
       "daysSinceMoved": 3
     }
   },
   "sports": {
-    "total": 207,
-    "scored": 0,
+    "total": 260,
+    "scored": 1,
     "wins": 0,
-    "losses": 0,
+    "losses": 1,
     "ties": 0
   },
   "registrations": {
@@ -111,79 +123,79 @@
       "PM Community": 2
     },
     "stalePast": 4,
-    "lastSyncAt": "2026-07-04T23:03:13.695Z"
+    "lastSyncAt": "2026-07-05T02:57:09.422Z"
   },
   "recentlyAdded": [
     {
-      "key": "Legends Never Die (A celebration of Qwan Lewis)|2026-08-15T23:00:00.000Z",
-      "firstSeenAt": "2026-07-04T11:26:32.122Z",
-      "title": "Legends Never Die (A celebration of Qwan Lewis)",
-      "source": "Other",
-      "date": "2026-08-15T23:00:00.000Z"
+      "key": "Boys Varsity Baseball vs Twin Valley High School|2026-05-05T20:15:00.000Z",
+      "firstSeenAt": "2026-07-05T02:58:42.551Z",
+      "title": "Boys Varsity Baseball vs Twin Valley High School",
+      "source": "PM",
+      "date": "2026-05-05T20:15:00.000Z"
     },
     {
-      "key": "New Damage EP Release Show w. Project 9 & Defiant|2026-07-24T23:30:00.000Z",
-      "firstSeenAt": "2026-07-02T21:06:20.840Z",
-      "title": "New Damage EP Release Show w. Project 9 & Defiant",
-      "source": "Other",
-      "date": "2026-07-24T23:30:00.000Z"
+      "key": "Boys JV Baseball vs Twin Valley High School|2026-05-05T20:15:00.000Z",
+      "firstSeenAt": "2026-07-05T02:58:42.551Z",
+      "title": "Boys JV Baseball vs Twin Valley High School",
+      "source": "PM",
+      "date": "2026-05-05T20:15:00.000Z"
     },
     {
-      "key": "AFROMAN|2026-07-04T00:00:00.000Z",
-      "firstSeenAt": "2026-07-01T19:54:18.601Z",
-      "title": "AFROMAN",
-      "source": "Other",
-      "date": "2026-07-04T00:00:00.000Z"
+      "key": "Girls Varsity Softball @ Twin Valley High School|2026-05-05T20:15:00.000Z",
+      "firstSeenAt": "2026-07-05T02:58:42.551Z",
+      "title": "Girls Varsity Softball @ Twin Valley High School",
+      "source": "PM",
+      "date": "2026-05-05T20:15:00.000Z"
     },
     {
-      "key": "Fragile Like Life After w. Stenial, Its Always Better Late Than Never, more|2026-07-11T23:00:00.000Z",
-      "firstSeenAt": "2026-07-01T19:54:18.601Z",
-      "title": "Fragile Like Life After w. Stenial, Its Always Better Late Than Never, more",
-      "source": "Other",
-      "date": "2026-07-11T23:00:00.000Z"
+      "key": "ESH Lunch & Learn|2026-05-05T22:00:00.000Z",
+      "firstSeenAt": "2026-07-05T02:58:42.551Z",
+      "title": "ESH Lunch & Learn",
+      "source": "PM",
+      "date": "2026-05-05T22:00:00.000Z"
     },
     {
-      "key": "Jack&#x27;s Birthday Bash - DRAG SHOW|2026-07-17T00:00:00.000Z",
-      "firstSeenAt": "2026-07-01T19:54:18.601Z",
-      "title": "Jack&#x27;s Birthday Bash - DRAG SHOW",
-      "source": "Other",
-      "date": "2026-07-17T00:00:00.000Z"
+      "key": "Lunch & Learn 6-7:00pm (Incoming Kdg Students Only)|2026-05-05T22:00:00.000Z",
+      "firstSeenAt": "2026-07-05T02:58:42.551Z",
+      "title": "Lunch & Learn 6-7:00pm (Incoming Kdg Students Only)",
+      "source": "PM",
+      "date": "2026-05-05T22:00:00.000Z"
     },
     {
-      "key": "The Ex-Faces|2026-07-17T23:00:00.000Z",
-      "firstSeenAt": "2026-07-01T19:54:18.601Z",
-      "title": "The Ex-Faces",
-      "source": "Other",
-      "date": "2026-07-17T23:00:00.000Z"
+      "key": "Boys JV Volleyball vs Warwick Senior High School|2026-05-05T22:00:00.000Z",
+      "firstSeenAt": "2026-07-05T02:58:42.551Z",
+      "title": "Boys JV Volleyball vs Warwick Senior High School",
+      "source": "PM",
+      "date": "2026-05-05T22:00:00.000Z"
     },
     {
-      "key": "Tantric|2026-07-18T23:00:00.000Z",
-      "firstSeenAt": "2026-07-01T19:54:18.601Z",
-      "title": "Tantric",
-      "source": "Other",
-      "date": "2026-07-18T23:00:00.000Z"
+      "key": "Boys Varsity Volleyball vs Warwick Senior High School|2026-05-05T23:00:00.000Z",
+      "firstSeenAt": "2026-07-05T02:58:42.551Z",
+      "title": "Boys Varsity Volleyball vs Warwick Senior High School",
+      "source": "PM",
+      "date": "2026-05-05T23:00:00.000Z"
     },
     {
-      "key": "Stabbing Westward: 30 Years of Wither Blister Burn + Peel|2026-07-21T23:00:00.000Z",
-      "firstSeenAt": "2026-07-01T19:54:18.601Z",
-      "title": "Stabbing Westward: 30 Years of Wither Blister Burn + Peel",
-      "source": "Other",
-      "date": "2026-07-21T23:00:00.000Z"
+      "key": "Boys Varsity Baseball vs Red Lion  Area Senior High School|2026-05-06T20:15:00.000Z",
+      "firstSeenAt": "2026-07-05T02:58:42.551Z",
+      "title": "Boys Varsity Baseball vs Red Lion  Area Senior High School",
+      "source": "PM",
+      "date": "2026-05-06T20:15:00.000Z"
     },
     {
-      "key": "Bark At The Moon - Ozzy Osbourne Tribute|2026-07-26T00:00:00.000Z",
-      "firstSeenAt": "2026-07-01T19:54:18.601Z",
-      "title": "Bark At The Moon - Ozzy Osbourne Tribute",
-      "source": "Other",
-      "date": "2026-07-26T00:00:00.000Z"
+      "key": "Boys JV Baseball vs Red Lion  Area Senior High School|2026-05-06T20:15:00.000Z",
+      "firstSeenAt": "2026-07-05T02:58:42.551Z",
+      "title": "Boys JV Baseball vs Red Lion  Area Senior High School",
+      "source": "PM",
+      "date": "2026-05-06T20:15:00.000Z"
     },
     {
-      "key": "Houses Of The Holy - The True Zeppelin Experience|2026-08-02T00:00:00.000Z",
-      "firstSeenAt": "2026-07-01T19:54:18.601Z",
-      "title": "Houses Of The Holy - The True Zeppelin Experience",
-      "source": "Other",
-      "date": "2026-08-02T00:00:00.000Z"
+      "key": "Boys Varsity Lacrosse - Boys @ Cedar Crest High School|2026-05-06T20:15:00.000Z",
+      "firstSeenAt": "2026-07-05T02:58:42.551Z",
+      "title": "Boys Varsity Lacrosse - Boys @ Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-05-06T20:15:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 124
 }

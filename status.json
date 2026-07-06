@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-06T00:07:12.297Z",
-  "totalEvents": 692,
+  "generatedAt": "2026-07-06T05:10:57.528Z",
+  "totalEvents": 734,
   "withDescription": 250,
   "withImage": 112,
   "familyFriendly": 42,
-  "eventsToday": 0,
+  "eventsToday": 11,
   "sources": {
     "muAthletics": 207,
     "muCalendar": 84,
@@ -14,7 +14,7 @@
     "vfw": 3,
     "phantomPower": 13,
     "community": 23,
-    "manor": 0,
+    "manor": 42,
     "raneyCellars": 3,
     "muHudlBroadcasts": 0
   },
@@ -51,7 +51,10 @@
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-07-06T23:00:00.000Z",
+      "latest": "2027-07-05T23:00:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-07-02T20:30:00.000Z",
       "latest": "2026-07-09T21:00:00.000Z"
@@ -60,40 +63,43 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-03-12",
-      "daysSinceMoved": 31
+      "daysSinceMoved": 32
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 31
+      "daysSinceMoved": 32
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 31
+      "daysSinceMoved": 32
     },
     "pennManor": {
       "newest": "2026-09-21",
-      "daysSinceMoved": 11
+      "daysSinceMoved": 12
     },
     "borough": {
       "newest": "2027-06-12",
-      "daysSinceMoved": 23
+      "daysSinceMoved": 24
     },
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 31
+      "daysSinceMoved": 32
     },
     "phantomPower": {
       "newest": "2026-09-18",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 11
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 30
+      "daysSinceMoved": 31
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-07-05",
+      "daysSinceMoved": 0
+    },
     "raneyCellars": {
       "newest": "2026-07-09",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     }
   },
   "sports": {
@@ -117,79 +123,79 @@
       "PM Community": 2
     },
     "stalePast": 4,
-    "lastSyncAt": "2026-07-06T00:03:35.931Z"
+    "lastSyncAt": "2026-07-06T05:09:22.901Z"
   },
   "recentlyAdded": [
     {
-      "key": "Boys Varsity Baseball vs Twin Valley High School|2026-05-05T20:15:00.000Z",
-      "firstSeenAt": "2026-07-05T02:58:42.551Z",
-      "title": "Boys Varsity Baseball vs Twin Valley High School",
-      "source": "PM",
-      "date": "2026-05-05T20:15:00.000Z"
+      "key": "Supervisors Meeting|2026-07-06T23:00:00.000Z",
+      "firstSeenAt": "2026-07-06T05:10:57.526Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-07-06T23:00:00.000Z"
     },
     {
-      "key": "Boys JV Baseball vs Twin Valley High School|2026-05-05T20:15:00.000Z",
-      "firstSeenAt": "2026-07-05T02:58:42.551Z",
-      "title": "Boys JV Baseball vs Twin Valley High School",
-      "source": "PM",
-      "date": "2026-05-05T20:15:00.000Z"
+      "key": "Planning Commission|2026-07-13T23:00:00.000Z",
+      "firstSeenAt": "2026-07-06T05:10:57.526Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-07-13T23:00:00.000Z"
     },
     {
-      "key": "Girls Varsity Softball @ Twin Valley High School|2026-05-05T20:15:00.000Z",
-      "firstSeenAt": "2026-07-05T02:58:42.551Z",
-      "title": "Girls Varsity Softball @ Twin Valley High School",
-      "source": "PM",
-      "date": "2026-05-05T20:15:00.000Z"
+      "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
+      "firstSeenAt": "2026-07-06T05:10:57.526Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-07-29T12:30:00.000Z"
     },
     {
-      "key": "ESH Lunch & Learn|2026-05-05T22:00:00.000Z",
-      "firstSeenAt": "2026-07-05T02:58:42.551Z",
-      "title": "ESH Lunch & Learn",
-      "source": "PM",
-      "date": "2026-05-05T22:00:00.000Z"
+      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
+      "firstSeenAt": "2026-07-06T05:10:57.526Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-08-03T23:00:00.000Z"
     },
     {
-      "key": "Lunch & Learn 6-7:00pm (Incoming Kdg Students Only)|2026-05-05T22:00:00.000Z",
-      "firstSeenAt": "2026-07-05T02:58:42.551Z",
-      "title": "Lunch & Learn 6-7:00pm (Incoming Kdg Students Only)",
-      "source": "PM",
-      "date": "2026-05-05T22:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
+      "firstSeenAt": "2026-07-06T05:10:57.526Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-08-05T23:00:00.000Z"
     },
     {
-      "key": "Boys JV Volleyball vs Warwick Senior High School|2026-05-05T22:00:00.000Z",
-      "firstSeenAt": "2026-07-05T02:58:42.551Z",
-      "title": "Boys JV Volleyball vs Warwick Senior High School",
-      "source": "PM",
-      "date": "2026-05-05T22:00:00.000Z"
+      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
+      "firstSeenAt": "2026-07-06T05:10:57.526Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-08-10T23:00:00.000Z"
     },
     {
-      "key": "Boys Varsity Volleyball vs Warwick Senior High School|2026-05-05T23:00:00.000Z",
-      "firstSeenAt": "2026-07-05T02:58:42.551Z",
-      "title": "Boys Varsity Volleyball vs Warwick Senior High School",
-      "source": "PM",
-      "date": "2026-05-05T23:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
+      "firstSeenAt": "2026-07-06T05:10:57.526Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-08-26T12:30:00.000Z"
     },
     {
-      "key": "Boys Varsity Baseball vs Red Lion  Area Senior High School|2026-05-06T20:15:00.000Z",
-      "firstSeenAt": "2026-07-05T02:58:42.551Z",
-      "title": "Boys Varsity Baseball vs Red Lion  Area Senior High School",
-      "source": "PM",
-      "date": "2026-05-06T20:15:00.000Z"
+      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-07-06T05:10:57.526Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-09-02T23:00:00.000Z"
     },
     {
-      "key": "Boys JV Baseball vs Red Lion  Area Senior High School|2026-05-06T20:15:00.000Z",
-      "firstSeenAt": "2026-07-05T02:58:42.551Z",
-      "title": "Boys JV Baseball vs Red Lion  Area Senior High School",
-      "source": "PM",
-      "date": "2026-05-06T20:15:00.000Z"
+      "key": "Supervisors Meeting|2026-09-07T23:00:00.000Z",
+      "firstSeenAt": "2026-07-06T05:10:57.526Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-07T23:00:00.000Z"
     },
     {
-      "key": "Boys Varsity Lacrosse - Boys @ Cedar Crest High School|2026-05-06T20:15:00.000Z",
-      "firstSeenAt": "2026-07-05T02:58:42.551Z",
-      "title": "Boys Varsity Lacrosse - Boys @ Cedar Crest High School",
-      "source": "PM",
-      "date": "2026-05-06T20:15:00.000Z"
+      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
+      "firstSeenAt": "2026-07-06T05:10:57.526Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-09-14T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 42
 }

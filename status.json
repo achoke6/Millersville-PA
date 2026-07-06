@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-06T10:18:56.764Z",
-  "totalEvents": 734,
-  "withDescription": 250,
+  "generatedAt": "2026-07-06T12:23:22.339Z",
+  "totalEvents": 735,
+  "withDescription": 251,
   "withImage": 112,
   "familyFriendly": 42,
   "eventsToday": 11,
@@ -10,8 +10,8 @@
     "muCalendar": 84,
     "muGetInvolved": 171,
     "pennManor": 83,
-    "borough": 101,
-    "vfw": 3,
+    "borough": 102,
+    "vfw": 2,
     "phantomPower": 13,
     "community": 23,
     "manor": 42,
@@ -40,7 +40,7 @@
       "latest": "2027-06-12T14:00:00.000Z"
     },
     "vfw": {
-      "earliest": "2026-06-17T22:00:00.000Z",
+      "earliest": "2026-07-18T20:00:00.000Z",
       "latest": "2026-09-11T17:00:00.000Z"
     },
     "phantomPower": {
@@ -110,22 +110,35 @@
     "ties": 0
   },
   "registrations": {
-    "open": 3,
+    "open": 4,
     "next2Weeks": 0,
-    "nextClose": "2026-08-22",
+    "nextClose": "2026-08-03",
     "openNoDeadline": 1
   },
   "reviewQueue": {
-    "pendingFuture": 3,
+    "pendingFuture": 1,
     "pendingPast": 1,
     "pendingBySource": {
-      "Borough": 1,
-      "PM Community": 2
+      "PM Community": 1
     },
     "stalePast": 4,
-    "lastSyncAt": "2026-07-06T10:17:24.637Z"
+    "lastSyncAt": "2026-07-06T12:21:50.175Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Public Hearing: TND Zoning Amendment (Crossings at Penn Ridge)|2026-07-09T22:00:00.000Z",
+      "firstSeenAt": "2026-07-06T12:23:22.337Z",
+      "title": "Public Hearing: TND Zoning Amendment (Crossings at Penn Ridge)",
+      "source": "Borough",
+      "date": "2026-07-09T22:00:00.000Z"
+    },
+    {
+      "key": "Back to School Community Event|2026-08-09T16:00:00.000Z",
+      "firstSeenAt": "2026-07-06T12:23:22.337Z",
+      "title": "Back to School Community Event",
+      "source": "Other",
+      "date": "2026-08-09T16:00:00.000Z"
+    },
     {
       "key": "Supervisors Meeting|2026-07-06T23:00:00.000Z",
       "firstSeenAt": "2026-07-06T05:10:57.526Z",
@@ -181,21 +194,7 @@
       "title": "Zoning Hearing Board",
       "source": "Manor",
       "date": "2026-09-02T23:00:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2026-09-07T23:00:00.000Z",
-      "firstSeenAt": "2026-07-06T05:10:57.526Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-09-07T23:00:00.000Z"
-    },
-    {
-      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
-      "firstSeenAt": "2026-07-06T05:10:57.526Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-09-14T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

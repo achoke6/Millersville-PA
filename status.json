@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-05T22:08:29.727Z",
-  "totalEvents": 734,
+  "generatedAt": "2026-07-06T00:07:12.297Z",
+  "totalEvents": 692,
   "withDescription": 250,
   "withImage": 112,
   "familyFriendly": 42,
@@ -10,11 +10,11 @@
     "muCalendar": 84,
     "muGetInvolved": 171,
     "pennManor": 83,
-    "borough": 102,
+    "borough": 101,
     "vfw": 3,
     "phantomPower": 13,
     "community": 23,
-    "manor": 41,
+    "manor": 0,
     "raneyCellars": 3,
     "muHudlBroadcasts": 0
   },
@@ -36,7 +36,7 @@
       "latest": "2026-09-21T23:00:00.000Z"
     },
     "borough": {
-      "earliest": "2026-04-06T22:00:00.000Z",
+      "earliest": "2026-04-11T14:00:00.000Z",
       "latest": "2027-06-12T14:00:00.000Z"
     },
     "vfw": {
@@ -51,10 +51,7 @@
       "earliest": "2026-04-27T21:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-07-06T23:00:00.000Z",
-      "latest": "2027-06-30T12:30:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-07-02T20:30:00.000Z",
       "latest": "2026-07-09T21:00:00.000Z"
@@ -93,10 +90,7 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 30
     },
-    "manor": {
-      "newest": "2027-06-30",
-      "daysSinceMoved": 5
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-07-09",
       "daysSinceMoved": 4
@@ -123,7 +117,7 @@
       "PM Community": 2
     },
     "stalePast": 4,
-    "lastSyncAt": "2026-07-05T22:06:58.202Z"
+    "lastSyncAt": "2026-07-06T00:03:35.931Z"
   },
   "recentlyAdded": [
     {

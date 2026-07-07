@@ -8,7 +8,9 @@
     "link": "https://play.google.com/store/apps/details?id=com.blackboard.mobileorder&hl=en_US",
     "iosLink": "https://apps.apple.com/us/app/transact-mobile-ordering/id1494719529",
     "marauderGold": true,
-    "onCampus": true
+    "onCampus": true,
+    "lat": 39.996161,
+    "lng": -76.353888
   },
   {
     "name": "Koshary Station",
@@ -16,7 +18,9 @@
     "description": "Authentic Egyptian dishes — falafel, shawarma, koshary & more",
     "address": "4 S Prince St, Millersville, PA 17551",
     "status": "View Menu",
-    "link": "https://www.kosharystation.com"
+    "link": "https://www.kosharystation.com",
+    "lat": 39.996508,
+    "lng": -76.358826
   },
   {
     "name": "Cactus Café",
@@ -24,7 +28,9 @@
     "description": "Community favorite café with a warm atmosphere",
     "address": "2 S Prince St, Millersville, PA 17551",
     "status": "View Menu",
-    "link": "https://www.cactuscafemillersville.com/"
+    "link": "https://www.cactuscafemillersville.com/",
+    "lat": 39.995304,
+    "lng": -76.358205
   },
   {
     "name": "Jack's Family Tavern & Restaurant",
@@ -32,7 +38,9 @@
     "description": "Family-friendly American tavern with classic fare and great fries",
     "address": "15 S Prince St, Millersville, PA 17551",
     "status": "View Menu",
-    "link": "https://www.jacksfamilytavern.com/"
+    "link": "https://www.jacksfamilytavern.com/",
+    "lat": 39.995819,
+    "lng": -76.358193
   },
   {
     "name": "Sugar Bowl Millersville",
@@ -41,7 +49,9 @@
     "address": "9 Normal Ave, Millersville, PA 17551",
     "status": "Order Online",
     "link": "https://orderonlinemenu.com/SugarBowlMillersville",
-    "marauderGold": true
+    "marauderGold": true,
+    "lat": 39.99945,
+    "lng": -76.354701
   },
   {
     "name": "Poke Bowl Station",
@@ -49,7 +59,9 @@
     "description": "Fresh poke bowls with customizable toppings",
     "address": "367 Comet Dr, Lancaster, PA 17603",
     "status": "View Menu",
-    "link": "https://www.pokebowlstationmillersville.com/"
+    "link": "https://www.pokebowlstationmillersville.com/",
+    "lat": 40.009219,
+    "lng": -76.344328
   },
   {
     "name": "House of Pizza",
@@ -57,7 +69,9 @@
     "description": "Local pizza shop serving slices and pies",
     "address": "101 W Frederick St, Millersville, PA 17551",
     "status": "View Menu",
-    "link": "https://www.houseofpizzamillersville.com/menu.html"
+    "link": "https://www.houseofpizzamillersville.com/menu.html",
+    "lat": 39.996728,
+    "lng": -76.358971
   },
   {
     "name": "Two Cousins Pizza Millersville",
@@ -65,7 +79,9 @@
     "description": "Casual Italian dining and pizza",
     "address": "115 Manor Ave, Millersville, PA 17551",
     "status": "Order Online",
-    "link": "https://order.toasttab.com/online/two-cousins-pizza-millersville-115-manor-avenue-ogxls"
+    "link": "https://order.toasttab.com/online/two-cousins-pizza-millersville-115-manor-avenue-ogxls",
+    "lat": 40.010128,
+    "lng": -76.3564
   },
   {
     "name": "Nino's New York Style Pizza",
@@ -73,7 +89,9 @@
     "description": "Specialty pies and classic NY-style slices",
     "address": "361 Comet Dr, Lancaster, PA 17603",
     "status": "Order Online",
-    "link": "https://www.ninospizzamillersville.com/order"
+    "link": "https://www.ninospizzamillersville.com/order",
+    "lat": 40.009603,
+    "lng": -76.344031
   },
   {
     "name": "Wayback Burgers",
@@ -82,7 +100,9 @@
     "address": "343 Comet Dr, Lancaster, PA 17603",
     "status": "Order Online",
     "link": "https://order.waybackburgers.com/menu/millersville",
-    "marauderGold": true
+    "marauderGold": true,
+    "lat": 40.008906,
+    "lng": -76.344529
   },
   {
     "name": "China Wok Chinese Restaurant",
@@ -90,7 +110,9 @@
     "description": "Chinese takeout and dine-in",
     "address": "345 Comet Dr, Millersville, PA 17551",
     "status": "View Menu",
-    "link": "https://www.google.com/maps/search/China+Wok+Millersville+PA"
+    "link": "https://www.google.com/maps/search/China+Wok+Millersville+PA",
+    "lat": 40.008822,
+    "lng": -76.344434
   },
   {
     "name": "The Bunker at Crossgates",
@@ -98,7 +120,9 @@
     "description": "Bar and grill located at the golf course",
     "address": "1 Crossland Pass, Millersville, PA 17551",
     "status": "View Menu",
-    "link": "https://www.crossgatesgolf.com/"
+    "link": "https://www.crossgatesgolf.com/",
+    "lat": 39.98775,
+    "lng": -76.342612
   },
   {
     "name": "Evergreen Cafe",
@@ -108,7 +132,9 @@
     "status": "View Menu",
     "link": "https://www.millersville.edu/dining/",
     "marauderGold": true,
-    "onCampus": true
+    "onCampus": true,
+    "lat": 39.997226,
+    "lng": -76.35239
   },
   {
     "name": "VFW Post 7294",
@@ -116,7 +142,9 @@
     "description": "Weekly food specials and events. Members Only.",
     "address": "219 Walnut Hill Rd, Millersville, PA 17551",
     "status": "Members Only",
-    "link": "https://www.vfwpost7294.org/"
+    "link": "https://www.vfwpost7294.org/",
+    "lat": 39.989529,
+    "lng": -76.367107
   },
   {
     "name": "John Herr's Village Market",
@@ -125,7 +153,9 @@
     "address": "25 Manor Ave, Millersville, PA 17551",
     "status": "View Menu",
     "link": "https://www.johnherrsvillagemarket.com/weekly-ad",
-    "marauderGold": true
+    "marauderGold": true,
+    "lat": 40.009889,
+    "lng": -76.35876
   },
   {
     "name": "Sheetz #544",
@@ -134,7 +164,9 @@
     "address": "1790 Millersville Rd, Lancaster, PA 17603",
     "status": "View Menu",
     "link": "https://www.sheetz.com/",
-    "marauderGold": true
+    "marauderGold": true,
+    "lat": 40.008708,
+    "lng": -76.344067
   },
   {
     "name": "The Anchor",
@@ -145,7 +177,9 @@
     "link": "https://www.millersville.edu/dining/",
     "marauderGold": true,
     "onCampus": true,
-    "audience": "marauders"
+    "audience": "marauders",
+    "lat": 39.996747,
+    "lng": -76.353648
   },
   {
     "name": "The Cove",
@@ -156,7 +190,9 @@
     "link": "https://www.millersville.edu/dining/",
     "marauderGold": true,
     "onCampus": true,
-    "audience": "marauders"
+    "audience": "marauders",
+    "lat": 40.001798,
+    "lng": -76.356964
   },
   {
     "name": "Upper Deck",
@@ -167,7 +203,9 @@
     "link": "https://www.millersville.edu/dining/",
     "marauderGold": true,
     "onCampus": true,
-    "audience": "marauders"
+    "audience": "marauders",
+    "lat": 39.997226,
+    "lng": -76.35239
   },
   {
     "name": "Starbucks (McNairy Library)",
@@ -177,14 +215,18 @@
     "status": "View Menu",
     "link": "https://www.millersville.edu/dining/",
     "marauderGold": true,
-    "onCampus": true
+    "onCampus": true,
+    "lat": 39.997999,
+    "lng": -76.354436
   },
   {
     "name": "Benson Snacks",
     "cuisine": "American, Ice Cream",
     "description": "",
     "address": "314 N Prince St, Millersville, PA 17551",
-    "link": "https://www.bensons-snacks.com/snack-bar-menu"
+    "link": "https://www.bensons-snacks.com/snack-bar-menu",
+    "lat": 40.001942,
+    "lng": -76.360659
   },
   {
     "name": "Tropical Smoothie Cafe",
@@ -192,7 +234,9 @@
     "description": "",
     "address": "341 Comet Dr, Millersville, PA 17551",
     "link": "https://order.tropicalsmoothiecafe.com/menu/pa-007",
-    "phone": "(717) 584-0818"
+    "phone": "(717) 584-0818",
+    "lat": 40.008878,
+    "lng": -76.344544
   },
   {
     "name": "Raney Cellars",
@@ -201,6 +245,8 @@
     "address": "11 Manor Ave #1122, Millersville, PA 17551",
     "link": "http://raneycellarsbrewing.com/",
     "phone": "(717) 725-0095",
-    "audience": "locals"
+    "audience": "locals",
+    "lat": 40.008528,
+    "lng": -76.358234
   }
 ]

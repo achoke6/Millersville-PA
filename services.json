@@ -1,43 +1,13 @@
 [
   {
-    "name": "Millersville Post Office",
-    "category": "Government",
-    "address": "431 N George St, Millersville",
-    "phone": "(717) 872-5011",
-    "description": "USPS mail, packages, PO boxes, and passport services",
-    "link": "https://tools.usps.com/locations/details/1373168"
-  },
-  {
-    "name": "Millersville Borough Hall",
-    "category": "Government",
-    "address": "100 Municipal Dr, Millersville",
-    "phone": "(717) 872-4637",
-    "description": "Borough offices, permits, codes, and public services",
-    "link": "https://millersvilleborough.org/"
-  },
-  {
-    "name": "Penn Manor School District Office",
-    "category": "Government",
-    "address": "100 E Cottage Ave, Millersville, PA 17551",
-    "phone": "(717) 872-9500",
-    "description": "District administration and enrollment",
-    "link": "https://www.pennmanor.net/"
-  },
-  {
-    "name": "Millersville Police Department",
-    "category": "Government",
-    "address": "100 Municipal Dr, Millersville",
-    "phone": "(717) 872-9111",
-    "description": "Borough police, non-emergency line",
-    "link": "https://millersvilleborough.org/police/"
-  },
-  {
     "name": "Barley's Barber Salon & Skin Studio",
     "category": "Beauty/Grooming",
     "address": "192 Blue Rock Rd, Millersville",
     "phone": "(717) 872-8242",
     "description": "Classic barbering and advanced skincare since 1969",
-    "link": "https://www.barleysbarbersalon.com/"
+    "link": "https://www.barleysbarbersalon.com/",
+    "lat": 40.005749,
+    "lng": -76.367537
   },
   {
     "name": "The Reset Barbershop",
@@ -45,7 +15,9 @@
     "address": "109 W Frederick St, Millersville",
     "phone": "(717) 584-3139",
     "description": "Modern barbershop — precision fades, cuts, and facials",
-    "link": "https://www.theresetbarbershop.com/"
+    "link": "https://www.theresetbarbershop.com/",
+    "lat": 39.996638,
+    "lng": -76.359336
   },
   {
     "name": "Sport Clips",
@@ -54,6 +26,8 @@
     "phone": "(717) 584-8550",
     "description": "Men's and boys' haircuts with sports-themed atmosphere",
     "link": "https://sportclips.com/",
+    "lat": 40.008822,
+    "lng": -76.344434,
     "rating": "4.0",
     "reviewCount": 1
   },
@@ -63,7 +37,9 @@
     "address": "363 Comet Dr, Millersville, PA 17551",
     "phone": "(717) 872-0799",
     "description": "Full-service nail spa — manicures, pedicures, waxing",
-    "link": "https://www.qnailsmillersvillepa.com/"
+    "link": "https://www.qnailsmillersvillepa.com/",
+    "lat": 40.008822,
+    "lng": -76.344434
   },
   {
     "name": "Billie Jean's Hair & Nail Studio",
@@ -71,109 +47,18 @@
     "address": "248 Manor Ave, Millersville, PA 17551",
     "phone": "",
     "description": "Hair and nail studio serving Millersville for 40+ years",
-    "link": "https://www.google.com/maps/search/Billie+Jeans+Hair+Nail+Millersville+PA"
+    "link": "https://www.google.com/maps/search/Billie+Jeans+Hair+Nail+Millersville+PA",
+    "lat": 40.011365,
+    "lng": -76.353757
   },
   {
-    "name": "Turkey Hill Minit Market",
-    "category": "Shopping",
-    "address": "26 Manor Ave, Millersville, PA 17551",
-    "phone": "",
-    "description": "Convenience store, gas, drinks, snacks, and ice cream",
-    "link": "https://www.turkeyhill.com/stores"
-  },
-  {
-    "name": "Millersville Mart",
-    "category": "Shopping",
-    "address": "473 N George St, Millersville, PA 17551",
-    "phone": "",
-    "description": "Local convenience store and fuel station",
-    "link": "https://www.google.com/maps/search/Millersville+Gas+Grocery+PA"
-  },
-  {
-    "name": "CVS Pharmacy",
-    "category": "Health",
-    "address": "1278 Millersville Pike, Lancaster, PA 17603",
-    "phone": "(717) 872-0373",
-    "description": "Pharmacy, prescriptions, vaccinations, and health essentials",
-    "link": "https://www.cvs.com/"
-  },
-  {
-    "name": "MU Student Health Services",
-    "category": "Health",
-    "address": "40 Dilworth Rd, 2nd Floor Millersville, PA 17551",
-    "phone": "(717) 871-4141",
-    "description": "On-campus health clinic for MU students",
-    "link": "https://www.millersville.edu/healthservices/",
-    "onCampus": true,
-    "audience": "marauders"
-  },
-  {
-    "name": "MU Counseling & Human Development Center",
-    "category": "Health",
-    "address": "40 Dilworth Rd., 3rd Floor, Millersville, PA 17551",
-    "phone": "(717) 871-7821",
-    "description": "Free confidential counseling for MU students",
-    "link": "https://www.millersville.edu/counsel/counseling-center-overview.php",
-    "onCampus": true,
-    "audience": "marauders"
-  },
-  {
-    "name": "Crossgates Golf Course",
-    "category": "Recreation",
-    "address": "1 Crossland Pass, Millersville",
-    "phone": "(717) 872-4500",
-    "description": "18-hole public golf course with bar and grill",
-    "link": "https://www.google.com/maps/search/Crossgates+Golf+Course+Millersville+PA"
-  },
-  {
-    "name": "Freedom Memorial Park",
-    "category": "Recreation",
-    "address": "9 Shertzer Ln, Millersville, PA 17551",
-    "phone": "",
-    "description": "Borough park with pavilions, playground, and walking paths",
-    "link": "https://millersvilleborough.org/"
-  },
-  {
-    "name": "MU Recreation Center",
-    "category": "Recreation",
-    "address": "21 S George St, Millersville, PA 17551",
-    "phone": "(717) 871-7555",
-    "description": "Fitness centerfor MU students and local community.",
-    "link": "https://www.millersville.edu/campusrec/smc-rec-center.php",
-    "onCampus": true
-  },
-  {
-    "name": "RRTA Bus Service",
-    "category": "Transport",
-    "address": "Millersville University Campus",
-    "phone": "(717) 397-4246",
-    "description": "Free bus service for MU students — Red Rose Transit Authority",
-    "link": "https://www.redrosetransit.com/",
-    "onCampus": true
-  },
-  {
-    "name": "Fulton Bank",
-    "category": "Finance",
-    "address": "1216 Millersville Pike, Lancaster, PA 17603",
-    "phone": "(717) 291-2411",
-    "description": "Full-service bank with checking, savings, and ATM",
-    "link": "https://www.fultonbank.com/"
-  },
-  {
-    "name": "Members 1st Federal Credit Union",
-    "category": "Finance",
-    "address": "377 Comet Dr, Millersville, PA 17551",
-    "phone": "(800) 237-7288",
-    "description": "Credit union with student-friendly accounts and ATMs",
-    "link": "https://www.members1st.org/"
-  },
-  {
-    "name": "Phantom Power",
-    "category": "Entertainment",
-    "address": "121 W Frederick St, Millersville",
-    "phone": "",
-    "description": "Live music venue and event space",
-    "link": "https://www.phantompower.live/"
+    "name": "The Vintage Clipper",
+    "category": "Beauty/Grooming",
+    "address": "109 W Frederick St, Millersville, PA 17551",
+    "phone": "(717) 584-3139",
+    "description": "",
+    "lat": 39.996638,
+    "lng": -76.359336
   },
   {
     "name": "Millersville University Library",
@@ -182,7 +67,9 @@
     "phone": "(717) 871-7111",
     "description": "McNairy Library — study spaces, research, and technology",
     "link": "https://www.millersville.edu/library/",
-    "onCampus": true
+    "onCampus": true,
+    "lat": 39.997999,
+    "lng": -76.354436
   },
   {
     "name": "MU Tutoring Center",
@@ -192,7 +79,203 @@
     "description": "Free academic tutoring for MU students",
     "link": "https://www.millersville.edu/learningcenter/",
     "onCampus": true,
-    "audience": "marauders"
+    "audience": "marauders",
+    "lat": 40.000308,
+    "lng": -76.357051
+  },
+  {
+    "name": "Phantom Power",
+    "category": "Entertainment",
+    "address": "121 W Frederick St, Millersville",
+    "phone": "",
+    "description": "Live music venue and event space",
+    "link": "https://www.phantompower.live/",
+    "lat": 39.996503,
+    "lng": -76.359882
+  },
+  {
+    "name": "Fulton Bank",
+    "category": "Finance",
+    "address": "1216 Millersville Pike, Lancaster, PA 17603",
+    "phone": "(717) 291-2411",
+    "description": "Full-service bank with checking, savings, and ATM",
+    "link": "https://www.fultonbank.com/",
+    "lat": 40.027525,
+    "lng": -76.326433
+  },
+  {
+    "name": "Members 1st Federal Credit Union",
+    "category": "Finance",
+    "address": "377 Comet Dr, Millersville, PA 17551",
+    "phone": "(800) 237-7288",
+    "description": "Credit union with student-friendly accounts and ATMs",
+    "link": "https://www.members1st.org/",
+    "lat": 40.008822,
+    "lng": -76.344434
+  },
+  {
+    "name": "Millersville Post Office",
+    "category": "Government",
+    "address": "431 N George St, Millersville",
+    "phone": "(717) 872-5011",
+    "description": "USPS mail, packages, PO boxes, and passport services",
+    "link": "https://tools.usps.com/locations/details/1373168",
+    "lat": 40.006219,
+    "lng": -76.357904
+  },
+  {
+    "name": "Millersville Borough Hall",
+    "category": "Government",
+    "address": "100 Municipal Dr, Millersville",
+    "phone": "(717) 872-4637",
+    "description": "Borough offices, permits, codes, and public services",
+    "link": "https://millersvilleborough.org/",
+    "lat": 40.005497,
+    "lng": -76.359727
+  },
+  {
+    "name": "Penn Manor School District Office",
+    "category": "Government",
+    "address": "100 E Cottage Ave, Millersville, PA 17551",
+    "phone": "(717) 872-9500",
+    "description": "District administration and enrollment",
+    "link": "https://www.pennmanor.net/",
+    "lat": 40.00139,
+    "lng": -76.3498
+  },
+  {
+    "name": "Millersville Police Department",
+    "category": "Government",
+    "address": "100 Municipal Dr, Millersville",
+    "phone": "(717) 872-9111",
+    "description": "Borough police, non-emergency line",
+    "link": "https://millersvilleborough.org/police/",
+    "lat": 40.005497,
+    "lng": -76.359727
+  },
+  {
+    "name": "Blue Rock Fire and Rescue",
+    "category": "Government",
+    "address": "26 E Charlotte St, Millersville, PA 17551",
+    "phone": "",
+    "description": "Volunteer fire and rescue company serving Millersville Borough and Manor Township",
+    "lat": 40.004888,
+    "lng": -76.356878
+  },
+  {
+    "name": "CVS Pharmacy",
+    "category": "Health",
+    "address": "1278 Millersville Pike, Lancaster, PA 17603",
+    "phone": "(717) 872-0373",
+    "description": "Pharmacy, prescriptions, vaccinations, and health essentials",
+    "link": "https://www.cvs.com/",
+    "lat": 40.027037,
+    "lng": -76.32734
+  },
+  {
+    "name": "MU Student Health Services",
+    "category": "Health",
+    "address": "40 Dilworth Rd, 2nd Floor Millersville, PA 17551",
+    "phone": "(717) 871-4141",
+    "description": "On-campus health clinic for MU students",
+    "link": "https://www.millersville.edu/healthservices/",
+    "onCampus": true,
+    "audience": "marauders",
+    "lat": 40.000316,
+    "lng": -76.357393
+  },
+  {
+    "name": "MU Counseling & Human Development Center",
+    "category": "Health",
+    "address": "40 Dilworth Rd., 3rd Floor, Millersville, PA 17551",
+    "phone": "(717) 871-7821",
+    "description": "Free confidential counseling for MU students",
+    "link": "https://www.millersville.edu/counsel/counseling-center-overview.php",
+    "onCampus": true,
+    "audience": "marauders",
+    "lat": 40.000316,
+    "lng": -76.357393
+  },
+  {
+    "name": "Gamber Physical Therapy & Fitness",
+    "category": "Health",
+    "address": "234 Manor Ave, Millersville, PA 17551",
+    "phone": "(717) 871-8727",
+    "description": "Direct-access physical therapy and fitness — no physician referral required",
+    "link": "https://www.gamberpt.com/",
+    "lat": 40.011471,
+    "lng": -76.354234
+  },
+  {
+    "name": "Crossgates Golf Course",
+    "category": "Recreation",
+    "address": "1 Crossland Pass, Millersville",
+    "phone": "(717) 872-4500",
+    "description": "18-hole public golf course with bar and grill",
+    "link": "https://www.google.com/maps/search/Crossgates+Golf+Course+Millersville+PA",
+    "lat": 39.98775,
+    "lng": -76.342612
+  },
+  {
+    "name": "Freedom Memorial Park",
+    "category": "Recreation",
+    "address": "9 Shertzer Ln, Millersville, PA 17551",
+    "phone": "",
+    "description": "Borough park with pavilions, playground, and walking paths",
+    "link": "https://millersvilleborough.org/",
+    "lat": 40.010774,
+    "lng": -76.360797
+  },
+  {
+    "name": "MU Recreation Center",
+    "category": "Recreation",
+    "address": "21 S George St, Millersville, PA 17551",
+    "phone": "(717) 871-7555",
+    "description": "Fitness center for MU students and local community.",
+    "link": "https://www.millersville.edu/campusrec/smc-rec-center.php",
+    "onCampus": true,
+    "lat": 39.996161,
+    "lng": -76.353888
+  },
+  {
+    "name": "Lions Club Pool",
+    "category": "Recreation",
+    "address": "314 N Prince St, Millersville, PA 17551",
+    "phone": "",
+    "description": "",
+    "link": "https://e-clubhouse.org/sites/millersvillepa/",
+    "lat": 40.001942,
+    "lng": -76.360659
+  },
+  {
+    "name": "Charles F. Snyder Funeral Home & Crematory",
+    "category": "Services",
+    "address": "441 N George St, Millersville, PA 17551",
+    "phone": "(717) 872-5041",
+    "description": "Family-owned funeral home and crematory serving Lancaster County since 1947",
+    "link": "https://www.snyderfuneralhome.com/millersville",
+    "lat": 40.006588,
+    "lng": -76.358064
+  },
+  {
+    "name": "Turkey Hill Minit Market",
+    "category": "Shopping",
+    "address": "26 Manor Ave, Millersville, PA 17551",
+    "phone": "",
+    "description": "Convenience store, gas, drinks, snacks, and ice cream",
+    "link": "https://www.turkeyhill.com/stores",
+    "lat": 40.00857,
+    "lng": -76.357785
+  },
+  {
+    "name": "Millersville Mart",
+    "category": "Shopping",
+    "address": "473 N George St, Millersville, PA 17551",
+    "phone": "",
+    "description": "Local convenience store and fuel station",
+    "link": "https://www.google.com/maps/search/Millersville+Gas+Grocery+PA",
+    "lat": 40.007592,
+    "lng": -76.358489
   },
   {
     "name": "The University Store",
@@ -202,7 +285,9 @@
     "description": "The University store — textbooks, MU gear, school supplies, and snacks",
     "link": "https://millersville.store",
     "marauderGold": true,
-    "onCampus": true
+    "onCampus": true,
+    "lat": 39.996161,
+    "lng": -76.353888
   },
   {
     "name": "Heritage Monuments",
@@ -210,23 +295,9 @@
     "address": "320 Old Blue Rock Rd, Millersville, PA 17551",
     "phone": "(717) 872-1750",
     "description": "Family-owned monument and memorial design and placement since 1985 (a Charles F. Snyder company)",
-    "link": "https://www.heritagemonuments.com/"
-  },
-  {
-    "name": "Charles F. Snyder Funeral Home & Crematory",
-    "category": "Services",
-    "address": "441 N George St, Millersville, PA 17551",
-    "phone": "(717) 872-5041",
-    "description": "Family-owned funeral home and crematory serving Lancaster County since 1947",
-    "link": "https://www.snyderfuneralhome.com/millersville"
-  },
-  {
-    "name": "Gamber Physical Therapy & Fitness",
-    "category": "Health",
-    "address": "234 Manor Ave, Millersville, PA 17551",
-    "phone": "(717) 871-8727",
-    "description": "Direct-access physical therapy and fitness — no physician referral required",
-    "link": "https://www.gamberpt.com/"
+    "link": "https://www.heritagemonuments.com/",
+    "lat": 40.006443,
+    "lng": -76.373354
   },
   {
     "name": "Berry Good Embroidery",
@@ -234,21 +305,9 @@
     "address": "230 Manor Ave, Millersville, PA 17551",
     "phone": "(412) 551-7636",
     "description": "Custom embroidery for apparel, gifts, business logos, and team gear",
-    "link": "https://www.berrygoodembroidery.com/"
-  },
-  {
-    "name": "Blue Rock Fire and Rescue",
-    "category": "Government",
-    "address": "26 E Charlotte St, Millersville, PA 17551",
-    "phone": "",
-    "description": "Volunteer fire and rescue company serving Millersville Borough and Manor Township"
-  },
-  {
-    "name": "The Mill at Manor Falls",
-    "category": "Venue",
-    "address": "380 Old Blue Rock Rd, Millersville, PA 17551",
-    "phone": "",
-    "description": "Event and wedding venue along the Conestoga in the Millersville area"
+    "link": "https://www.berrygoodembroidery.com/",
+    "lat": 40.011426,
+    "lng": -76.354288
   },
   {
     "name": "Student Lodging, Inc.",
@@ -257,21 +316,17 @@
     "phone": "",
     "description": "Student apartments near Millersville University — Brookwood and Wellness communities",
     "link": "https://studentlodginginc.com",
-    "audience": "marauders"
+    "audience": "marauders",
+    "lat": 39.992734,
+    "lng": -76.359191
   },
   {
-    "name": "Lions Club Pool",
-    "category": "Recreation",
-    "address": "314 N Prince St, Millersville, PA 17551",
+    "name": "The Mill at Manor Falls",
+    "category": "Venue",
+    "address": "380 Old Blue Rock Rd, Millersville, PA 17551",
     "phone": "",
-    "description": "",
-    "link": "https://e-clubhouse.org/sites/millersvillepa/"
-  },
-  {
-    "name": "The Vintage Clipper",
-    "category": "Beauty/Grooming",
-    "address": "109 W Frederick St, Millersville, PA 17551",
-    "phone": "(717) 584-3139",
-    "description": ""
+    "description": "Event and wedding venue along the Conestoga in the Millersville area",
+    "lat": 40.008496,
+    "lng": -76.375411
   }
 ]

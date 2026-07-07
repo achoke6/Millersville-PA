@@ -2913,7 +2913,8 @@ document.addEventListener('keydown', (e) => {
 
 async function initApp(){
     loadFeedPrefs();
-    await Promise.allSettled([loadWeather(),loadWeatherMU(),loadSpecials(),loadEvents(),loadPlaces(),loadHousing(),loadNews(),loadBoard(),loadSignups(),loadClubsDirectory()]);
+    await Promise.allSettled([loadWeather(),loadWeatherMU(),loadSpecials(),loadEvents(),loadPlaces(),loadHousing(),loadNews(),loadBoard(),loadSignups(),loadClubsDirectory(),loadVenueAliases()]);
+    linkEventsToPlaces();   // event↔place venue matching (Today lens, card/popup event lines)
     pruneEmptyPlaceCategories();   // directory + housing are loaded now — drop empty category chips
     renderHomeFeed();
     attachHomeSwipeHandlers();
@@ -5922,17 +5923,7 @@ function paintSpotlight(el){
 }
 
 
-function renderStars(rating) {
-    if (!rating) return '';
-    rating = parseFloat(rating);
-    const full = Math.floor(rating);
-    const half = rating % 1 >= 0.25 && rating % 1 < 0.75 ? 1 : 0;
-    const empty = 5 - full - half;
-    const extra = rating % 1 >= 0.75 ? 1 : 0;
-    return '<span style="color:var(--gold);font-size:0.85rem;letter-spacing:1px;">' +
-        '★'.repeat(full + extra) + (half ? '½' : '') + '☆'.repeat(empty - extra) +
-        '</span> <span style="font-size:0.8rem;color:var(--text-muted);">' + rating.toFixed(1) + '</span>';
-}
+
 
 async function loadHousing(){try{allHousing=await(await fetch('housing.json')).json();if(!Array.isArray(allHousing))allHousing=[];renderHousing();}catch(e){}}
 // §9 fix: housing cards now run through placeAudienceVisible like every other
@@ -6058,7 +6049,7 @@ function placesMapPinList(){
     if (placesMBAMode) list = list.filter(p => getMembership(p.name));
     if (placesMGMode)  list = list.filter(p => p.marauderGold === true);
     if (placesFilter !== 'All') list = list.filter(p => p.category === placesFilter);
-    if (placesTodayMode) list = list.filter(p => placeHasSpecialsToday(p.name));
+    if (placesTodayMode) list = list.filter(p => placeTodayContent(p));
     list.filter(placesMapHasCoords).forEach(p => pins.push({ place: p, group: (p.placeType==='food') ? 'food' : 'service' }));
     if (!placesMGMode && !placesMBAMode && !placesTodayMode && (placesFilter==='All' || placesFilter==='Housing')){
         (allHousing||[]).filter(placeAudienceVisible).filter(placesMapHasCoords)
@@ -6102,6 +6093,7 @@ function refreshPlacesMap(){
         const icon = L.divIcon({ className: '', html: `<div class="map-pin" style="border-color:${color}">${glyph}</div>`, iconSize: [30,30], iconAnchor: [15,15], popupAnchor: [0,-16] });
         L.marker([en.dlat, en.dlng], { icon: icon, title: p.name })
             .bindPopup(placesMapPopup(p), { maxWidth: 240 })
+            .on('click', () => scrollToPlaceCard(p))
             .addTo(placesMapMarkers);
     });
 }
@@ -6113,11 +6105,81 @@ function placesMapPopup(p){
     if (meta) html += `<div class="map-popup-meta">${meta}</div>`;
     if (p.address) html += `<div class="map-popup-meta">${p.address}</div>`;
     if (placeHasSpecialsToday(p.name)) html += `<div class="map-popup-meta">🔥 Specials today</div>`;
+    const evToday = placeEventsToday(p);
+    evToday.slice(0,2).forEach(e => { html += `<div class="map-popup-meta">📅 ${e.title} · ${formatTime(new Date(e.t))}</div>`; });
+    if (evToday.length > 2) html += `<div class="map-popup-meta">+${evToday.length-2} more today</div>`;
+    if (!evToday.length){ const nx = placeNextUpcoming(p); if (nx) html += `<div class="map-popup-meta">📅 Next: ${new Date(nx.t).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})} · ${nx.title}</div>`; }
     html += `<div class="map-popup-btns">`;
     if (p.link) html += `<a href="${p.link}" target="_blank" rel="noopener" class="btn btn-sm btn-outline">Website</a>`;
     html += `<a href="https://www.google.com/maps/search/?api=1&query=${q}" target="_blank" rel="noopener" class="btn btn-sm btn-outline">Directions</a></div></div>`;
     return html;
 }
+// ---- Event ↔ place linkage -------------------------------------------------
+// Links events to directory places by venue string, once per load, powering:
+// the Today lens ("specials OR events today"), the card "Here today" box, and
+// pin-popup event lines. Tiers: (1) venue-aliases.json overrides (normalized
+// location → slug), (2) exact normalized name, (3) street-address containment,
+// (4) word-boundary name containment (guarded: 2+ words or 8+ chars).
+// ⚠ slugifyPlace() is MIRRORED in scripts/sync-directory.js (slugify) — the
+// two must produce identical slugs or aliases/explicit slugs stop matching.
+function normVenue(v){return (v||'').toLowerCase().replace(/[^\w\s]/g,' ').replace(/\s+/g,' ').trim().replace(/^the /,'');}
+function slugifyPlace(name){return normVenue(name).replace(/ /g,'-');}
+function placeSlug(p){return p.slug || slugifyPlace(p.name);}
+let _placeEvents = new Map();
+async function loadVenueAliases(){
+    try{ const r = await fetch('venue-aliases.json'); if (r.ok) window._venueAliases = await r.json(); }catch(e){}
+}
+function linkEventsToPlaces(){
+    _placeEvents = new Map();
+    if (!Array.isArray(allEvents) || !allEvents.length || !allPlaces.length) return;
+    const aliases = (window._venueAliases && window._venueAliases.overrides) || {};
+    // Longest names first so the most specific listing wins containment ties.
+    const idx = allPlaces
+        .map(p => ({ slug: placeSlug(p), n: normVenue(p.name), addr: normVenue((p.address||'').split(',')[0]) }))
+        .filter(x => x.n)
+        .sort((a,b) => b.n.length - a.n.length);
+    const now = Date.now();
+    const unmatched = new Set();
+    allEvents.forEach(ev => {
+        const loc = normVenue(ev.location);
+        if (!loc) return;
+        let slug = aliases[loc] || null;
+        if (!slug){ const hit = idx.find(x => x.n === loc); if (hit) slug = hit.slug; }
+        if (!slug){ const hit = idx.find(x => x.addr && x.addr.length >= 8 && (' '+loc+' ').includes(' '+x.addr+' ')); if (hit) slug = hit.slug; }
+        if (!slug){
+            const hit = idx.find(x => (x.n.length >= 8 || x.n.includes(' ')) && (' '+loc+' ').includes(' '+x.n+' '));
+            if (hit) slug = hit.slug;
+        }
+        if (!slug){ unmatched.add(loc); return; }
+        const t = new Date(ev.date).getTime();
+        if (isNaN(t) || t < now - 86400000) return;   // today + future only
+        if (!_placeEvents.has(slug)) _placeEvents.set(slug, []);
+        _placeEvents.get(slug).push({ title: ev.title, t });
+    });
+    _placeEvents.forEach(list => list.sort((a,b) => a.t - b.t));
+    if (unmatched.size) console.debug('venue-match: unmatched locations (alias candidates):', [...unmatched].slice(0,40));
+}
+function placeEventsToday(p){
+    const list = _placeEvents.get(placeSlug(p)) || [];
+    const today = new Date().toDateString();
+    return list.filter(e => new Date(e.t).toDateString() === today);
+}
+function placeNextUpcoming(p){
+    const today = new Date().toDateString();
+    return (_placeEvents.get(placeSlug(p)) || []).find(e => e.t > Date.now() && new Date(e.t).toDateString() !== today) || null;
+}
+// The Today-lens predicate — used by BOTH the list filter and the pin filter,
+// so the two-spot mirror stays in agreement through one function.
+function placeTodayContent(p){ return placeHasSpecialsToday(p.name) || placeEventsToday(p).length > 0; }
+// Pin tap → pull that place's card up under the map, with a highlight pulse.
+window.scrollToPlaceCard = function(p){
+    const el = document.querySelector(`#view-places [data-place="${placeSlug(p)}"]`);
+    if (!el) return;
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    el.classList.remove('place-card-flash'); void el.offsetWidth;
+    el.classList.add('place-card-flash');
+};
+
 // ============================ END DIRECTORY MAP ============================
 
 // Hide directory category chips that have no listings at all, so the Filter menu
@@ -6166,7 +6228,7 @@ function updatePlacesFilterNote(){
     if (!note) return;
     if (placesMBAMode) note.textContent = 'Showing only verified businesses.';
     else if (placesMGMode) note.textContent = 'Showing only businesses that accept Marauder Gold.';
-    else if (placesTodayMode) note.textContent = 'Showing places with specials today.';
+    else if (placesTodayMode) note.textContent = 'Showing places with specials or events today.';
     else note.textContent = '';
 }
 
@@ -6328,7 +6390,7 @@ function renderPlaces(){
 
     // "Today" lens: only places whose card shows a specials box today.
     if(placesTodayMode){
-        filtered = filtered.filter(p => placeHasSpecialsToday(p.name));
+        filtered = filtered.filter(p => placeTodayContent(p));
     }
 
     // Audience targeting: drop listings whose audience excludes the current
@@ -6403,9 +6465,7 @@ function buildFoodCard(p, specials, dayName) {
 
     const membersBadge = p.status==='Members Only' ? '<span class="badge-members-only">Members Only</span>' : '';
     const addr = p.address ? `<p class="card-meta" style="margin-bottom:4px;">📍 ${p.address}</p>` : '';
-    const stars = p.rating ? renderStars(p.rating) : '';
-    const reviews = p.reviewCount ? `<span style="font-size:0.75rem;color:var(--text-muted);margin-left:4px;">(${p.reviewCount} review${p.reviewCount>1?'s':''})</span>` : '';
-    const ratingRow = stars ? `<div style="margin:4px 0 6px;">${stars}${reviews}</div>` : '';
+    const ratingRow = '';   // star ratings retired with the review system (2026-07)
 
     // Build specials section
     let specialsHtml='';
@@ -6429,14 +6489,15 @@ function buildFoodCard(p, specials, dayName) {
         }
     }
 
-    return `<div class="app-card" style="position:relative;display:flex;flex-direction:column;justify-content:flex-start;">
+    const evT = placeEventsToday(p);
+    const eventsHtml = evT.length ? `<div class="specials-section"><p style="font-size:0.8rem;font-weight:700;margin-bottom:4px;">📅 Here today:</p>${evT.slice(0,3).map(e=>`<p style="font-size:0.8rem;color:var(--text);margin:2px 0;">• ${e.title} · ${formatTime(new Date(e.t))}</p>`).join('')}</div>` : '';
+    return `<div class="app-card" data-place="${placeSlug(p)}" style="position:relative;display:flex;flex-direction:column;justify-content:flex-start;">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;"><span class="card-tag">🍴 ${p.cuisine || 'Food & Drink'}</span><span style="display:inline-flex;gap:6px;align-items:center;flex-shrink:0;">${membersBadge}${mbaBadge(p.name)}</span></div>
         <h3 class="card-title" style="margin-top:6px;">${p.name}</h3>
         ${ratingRow}${addr}
         <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:8px;">${p.description||''}</p>
-        ${specialsHtml}
+        ${specialsHtml}${eventsHtml}
         <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:auto;">
-            <button onclick="openReviewModal('${p.name.replace(/'/g,"\\'")}')" class="btn btn-sm btn-outline" style="font-size:0.75rem;">⭐ Review</button>
             <div style="flex:1;">${actionBtn}</div>
         </div>
     </div>`;
@@ -6446,9 +6507,7 @@ function buildServiceCard(p) {
     const catIcons={'Government':'🏛','Health':'🏥','Beauty/Grooming':'💈','Shopping':'🛒','Recreation':'🏞','Transport':'🚌','Finance':'🏦','Shipping':'📦','Entertainment':'🎵','Education':'📚','Mechanic':'🔧','Gas Station':'⛽','EV Charging':'🔌','Housing':'🏠','Home Services':'🔨','Real Estate':'🏘','Venue':'🎉','Lodging':'🛏','Services':'🛠','Student Housing':'🎓'};
     const icon = catIcons[p.category] || '🏢';
     const mba = mbaBadge(p.name);
-    const stars = p.rating ? renderStars(p.rating) : '';
-    const reviews = p.reviewCount ? `<span style="font-size:0.75rem;color:var(--text-muted);margin-left:4px;">(${p.reviewCount} review${p.reviewCount>1?'s':''})</span>` : '';
-    const ratingRow = stars ? `<div style="margin:4px 0 6px;">${stars}${reviews}</div>` : '';
+    const ratingRow = '';   // star ratings retired with the review system (2026-07)
     const hours = p.hours ? `<p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:4px;">🕐 ${p.hours}</p>` : '';
     const phone = p.phone ? `<a href="tel:${p.phone.replace(/[^+\d]/g,'')}" style="font-weight:600;font-size:0.85rem;color:var(--text);text-decoration:none;">📞 ${p.phone}</a>` : '';
     const site = p.gasLink ? `<a href="${p.gasLink}" target="_blank" class="btn btn-sm btn-outline" style="font-size:0.75rem;">⛽ Prices</a>` :
@@ -6457,6 +6516,8 @@ function buildServiceCard(p) {
     // Enhanced listing for Featured Spotlight buyers: logo header, marketing
     // tagline, gold-accented card, and a hook for live-feed content (scraped
     // specials/deals — built per business where feasible; null for now).
+    const evT = placeEventsToday(p);
+    const eventsHtml = evT.length ? `<div class="specials-section"><p style="font-size:0.8rem;font-weight:700;margin-bottom:4px;">📅 Here today:</p>${evT.slice(0,3).map(e=>`<p style="font-size:0.8rem;color:var(--text);margin:2px 0;">• ${e.title} · ${formatTime(new Date(e.t))}</p>`).join('')}</div>` : '';
     const spot = getSpotlight(p.name);
     if (spot) {
         const logoHtml = spot.logo
@@ -6467,7 +6528,7 @@ function buildServiceCard(p) {
         // liveFeed hook: when a scraped feed is configured for this member,
         // render it here. Empty for now — wired when per-business scraping ships.
         const liveFeedHtml = '';  // placeholder for future spot.liveFeed rendering
-        return `<div class="app-card card-spotlight" style="display:flex;flex-direction:column;justify-content:flex-start;">
+        return `<div class="app-card card-spotlight" data-place="${placeSlug(p)}" style="display:flex;flex-direction:column;justify-content:flex-start;">
             <div style="display:flex;justify-content:space-between;align-items:flex-start;">
                 <span class="card-tag">${icon} ${p.category}</span>
                 ${mba}
@@ -6479,18 +6540,17 @@ function buildServiceCard(p) {
             <p class="card-meta" style="margin-bottom:4px;">📍 ${p.address}</p>
             ${hours}
             <p style="font-size:0.85rem;color:var(--text-muted);margin:8px 0;">${p.description}</p>
-            ${liveFeedHtml}
+            ${liveFeedHtml}${eventsHtml}
             <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:auto;">
                 ${phone}
                 <div style="display:flex;gap:6px;align-items:center;">
-                    <button onclick="openReviewModal('${p.name.replace(/'/g,"\\'")}')" class="btn btn-sm btn-outline" style="font-size:0.75rem;">⭐ Review</button>
-                    ${site}
+                            ${site}
                 </div>
             </div>
         </div>`;
     }
 
-    return `<div class="app-card" style="display:flex;flex-direction:column;justify-content:flex-start;">
+    return `<div class="app-card" data-place="${placeSlug(p)}" style="display:flex;flex-direction:column;justify-content:flex-start;">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;">
             <span class="card-tag">${icon} ${p.category}</span>
             ${mba}
@@ -6500,11 +6560,11 @@ function buildServiceCard(p) {
         <p class="card-meta" style="margin-bottom:4px;">📍 ${p.address}</p>
         ${hours}
         <p style="font-size:0.85rem;color:var(--text-muted);margin:8px 0;">${p.description}</p>
+        ${eventsHtml}
         <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:auto;">
             ${phone}
             <div style="display:flex;gap:6px;align-items:center;">
-                <button onclick="openReviewModal('${p.name.replace(/'/g,"\\'")}')" class="btn btn-sm btn-outline" style="font-size:0.75rem;">⭐ Review</button>
-                ${site}
+                    ${site}
             </div>
         </div>
     </div>`;
@@ -6677,94 +6737,8 @@ window.submitBoardPost=function(){
 // ==================== BUSINESS REVIEWS ====================
 // TODO: Replace these with actual Google Form ID and entry IDs after creating the form
 const REVIEW_FORM_ID = '1FAIpQLSfhrXMwntQtaSgEru41iDOlsMgD8GrtqkIsbGaL8dwPqODUaA';
-const REVIEW_FIELDS = { business: 'entry.1618716598', rating: 'entry.417623384', review: 'entry.1736323342', name: 'entry.2003641787' };
+// (Review system retired 2026-07 — form, modal, star picker, and ratings removed site-wide.)
 
-window.openReviewModal = function(businessName) {
-    // Build dropdown from loaded services data
-    const bizOptions = (allPlaces || []).map(s => `<option value="${s.name}" ${s.name===businessName?'selected':''}>${s.name}</option>`).join('');
-
-    const overlay = document.createElement('div');
-    overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;overflow-y:auto;';
-    overlay.onclick = function(ev) { if (ev.target === overlay) overlay.remove(); };
-    const modal = document.createElement('div');
-    modal.style.cssText = 'background:var(--surface);border-radius:var(--radius);max-width:420px;width:100%;max-height:90vh;overflow-y:auto;padding:28px;position:relative;';
-    modal.innerHTML = `
-        <button onclick="this.closest('div[style*=fixed]').remove()" class="modal-close-btn">✕</button>
-        <h3 style="margin-bottom:12px;">⭐ Leave a Review</h3>
-        <div id="rv-form-fields">
-            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Business *</label>
-            <select id="rv-business" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;margin-bottom:12px;background:var(--bg);color:var(--text);">
-                ${bizOptions}
-            </select>
-
-            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:8px;">Your Rating *</label>
-            <div id="rv-stars" style="display:flex;gap:8px;margin-bottom:16px;">
-                ${[1,2,3,4,5].map(n => `<button onclick="setReviewRating(${n})" class="rv-star" data-val="${n}" style="background:none;border:none;font-size:2rem;cursor:pointer;color:var(--border);transition:color 0.15s;">★</button>`).join('')}
-            </div>
-            <input type="hidden" id="rv-rating" value="">
-
-            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Review (optional)</label>
-            <textarea id="rv-text" rows="3" placeholder="What was your experience?" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;margin-bottom:12px;resize:vertical;background:var(--bg);color:var(--text);"></textarea>
-
-            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Your Name (optional)</label>
-            <input id="rv-name" type="text" placeholder="Anonymous" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;margin-bottom:16px;background:var(--bg);color:var(--text);">
-
-            <button id="rv-submit-btn" onclick="submitReview()" class="btn btn-sm btn-ticket" style="display:block;width:100%;text-align:center;padding:12px;font-size:0.95rem;">Submit Review</button>
-        </div>
-        <div id="rv-success" style="display:none;text-align:center;padding:24px 0;">
-            <p style="font-size:1.5rem;margin-bottom:8px;">⭐</p>
-            <h3 style="margin-bottom:8px;">Review Submitted!</h3>
-            <p style="font-size:0.85rem;color:var(--text-muted);">Thanks for your feedback! Your review will be reflected after processing.</p>
-        </div>`;
-    overlay.appendChild(modal);
-    document.body.appendChild(overlay);
-};
-
-window.setReviewRating = function(n) {
-    document.getElementById('rv-rating').value = n;
-    document.querySelectorAll('.rv-star').forEach(btn => {
-        const val = parseInt(btn.dataset.val);
-        btn.style.color = val <= n ? 'var(--gold)' : 'var(--border)';
-    });
-};
-
-window.submitReview = function() {
-    const businessName = document.getElementById('rv-business').value;
-    const rating = document.getElementById('rv-rating').value;
-    if (!rating) { alert('Please select a star rating.'); return; }
-    const review = document.getElementById('rv-text').value.trim();
-    const name = document.getElementById('rv-name').value.trim() || 'Anonymous';
-
-    const btn = document.getElementById('rv-submit-btn');
-    btn.textContent = 'Submitting...'; btn.disabled = true;
-
-    const formData = new URLSearchParams();
-    formData.append(REVIEW_FIELDS.business, businessName);
-    formData.append(REVIEW_FIELDS.rating, rating);
-    formData.append(REVIEW_FIELDS.review, review);
-    formData.append(REVIEW_FIELDS.name, name);
-
-    fetch(`https://docs.google.com/forms/d/e/${REVIEW_FORM_ID}/formResponse`, {
-        method: 'POST', mode: 'no-cors',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: formData.toString()
-    }).then(() => {
-        document.getElementById('rv-form-fields').style.display = 'none';
-        document.getElementById('rv-success').style.display = 'block';
-    }).catch(() => {
-        document.getElementById('rv-form-fields').style.display = 'none';
-        document.getElementById('rv-success').style.display = 'block';
-    });
-};
-
-// Full MU organization directory (loaded from clubs.json — includes orgs without current events)
-let allClubsDirectory = [];
-
-// Major → relevant clubs mapping (loaded from major-clubs-mapping.json on first
-// club-browser open). Lazy-loaded since most users won't open the picker. Once
-// fetched it stays in memory for the session.
-let majorClubsMapping = null;
-let majorClubsMappingLoadPromise = null;
 function loadMajorClubsMapping() {
     if (majorClubsMapping) return Promise.resolve(majorClubsMapping);
     if (majorClubsMappingLoadPromise) return majorClubsMappingLoadPromise;

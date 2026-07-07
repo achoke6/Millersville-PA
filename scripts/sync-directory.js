@@ -20,7 +20,7 @@
  * SHEET COLUMNS (header row, exact names, case-insensitive match):
  *   name, active, type, category, cuisine, landlord, address, phone, website,
  *   iosLink, status, onCampus, marauderGold, verified, audience, spotlight,
- *   tagline, logo, description, lat, lng
+ *   tagline, logo, description, lat, lng, slug
  *
  *   active:      non-blank (e.g. "X") = listed; blank = hidden/skipped entirely.
  *                (If the column is absent, all rows are treated as active.)
@@ -55,6 +55,15 @@ const SHEET_URL = process.env.DIRECTORY_SHEET_CSV_URL;
 const OUT_DIR = process.env.DIRECTORY_OUT_DIR || '.';
 
 // --- tiny CSV parser (handles quoted fields, commas, escaped quotes, newlines)
+// Stable place identity. MIRRORED as slugifyPlace() in app.js — both must
+// produce identical slugs (venue-aliases.json keys/values and any explicit
+// slug cells depend on the agreement). An optional `slug` sheet column
+// (header-read) overrides the derived value — fill a cell only when a
+// business is about to be renamed, so its joins survive the rename.
+function slugify(name) {
+  return String(name || '').toLowerCase().replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ').trim().replace(/^the /, '').replace(/ /g, '-');
+}
+
 function parseCSV(text) {
   const rows = [];
   let row = [], field = '', inQuotes = false;
@@ -176,7 +185,7 @@ async function main() {
       if (yes(get(row, 'onCampus'))) o.onCampus = true;
       const phone = get(row, 'phone'); if (phone) o.phone = phone;
       if (audience !== 'both') o.audience = audience;
-      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; }
+      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = slugify(get(row, 'slug') || name);
       restaurants.push(o);
     } else if (type === 'service') {
       const o = { name, category: get(row, 'category'), address: get(row, 'address'),
@@ -185,13 +194,13 @@ async function main() {
       if (yes(get(row, 'marauderGold'))) o.marauderGold = true;
       if (yes(get(row, 'onCampus'))) o.onCampus = true;
       if (audience !== 'both') o.audience = audience;
-      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; }
+      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = slugify(get(row, 'slug') || name);
       services.push(o);
     } else if (type === 'housing') {
       const o = { name, landlord: get(row, 'landlord'), description: get(row, 'description') };
       const website = get(row, 'website'); if (website) o.link = website;
       if (audience !== 'both') o.audience = audience;
-      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; }
+      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = slugify(get(row, 'slug') || name);
       housing.push(o);
     } else if (type === 'cupboard') {
       // Static info only — the open/closed + seasonal-hours logic lives in
@@ -201,7 +210,7 @@ async function main() {
         name, description: get(row, 'description'), address: get(row, 'address'),
         onCampus: yes(get(row, 'onCampus'))
       };
-      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; }
+      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = slugify(get(row, 'slug') || name);
       cupboard.push(o);
     } else if (type === 'institution') {
       // No directory card — only eligible for the spotlight rotation.

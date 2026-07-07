@@ -322,10 +322,11 @@
 
     <!-- PLACES -->
     <section id="view-places" class="app-view">
+        <div id="places-map"></div>
         <div class="sticky-nav-bar">
             <div class="toolbar-compact">
                 <div class="toolbar-right">
-                    <button class="family-toggle today-toggle" id="places-today-toggle" onclick="togglePlacesToday()" title="Places with specials today"><span class="today-toggle-label">🔥 Today</span></button>
+                    <button class="family-toggle today-toggle" id="places-today-toggle" onclick="togglePlacesToday()" title="Places with specials or events today"><span class="today-toggle-label">🔥 Today</span></button>
                     <button class="family-toggle mg-toggle" id="places-mg-toggle" onclick="togglePlacesMarauderGold()" title="Businesses that accept Marauder Gold"><img src="/img/mu-coin.png" alt="Marauder Gold" class="mg-coin-img"></button>
                     <button id="places-filter-toggle" class="filter-toggle" onclick="togglePlacesFilters()">Filter <span id="places-filter-arrow">▾</span></button>
                 </div>
@@ -356,7 +357,6 @@
                 <button class="filter-menu-item" data-cat="Shipping" onclick="setPlacesFilter('Shipping', this)">📦 Shipping</button>
             </div>
         </div>
-        <div id="places-map"></div>
         <div id="housing-container" class="card-grid"></div>
         <div id="places-container" class="card-grid"></div>
         <button class="fab-submit" onclick="openSubmitBusiness()" title="Add Your Business">➕</button>

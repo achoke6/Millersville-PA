@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-07T18:48:58.906Z",
-  "totalEvents": 686,
+  "generatedAt": "2026-07-07T19:02:13.867Z",
+  "totalEvents": 727,
   "withDescription": 243,
   "withImage": 112,
   "familyFriendly": 41,
@@ -14,7 +14,7 @@
     "vfw": 2,
     "phantomPower": 13,
     "community": 21,
-    "manor": 0,
+    "manor": 41,
     "raneyCellars": 3,
     "muHudlBroadcasts": 0
   },
@@ -51,7 +51,10 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-07-13T23:00:00.000Z",
+      "latest": "2027-07-05T23:00:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-07-02T20:30:00.000Z",
       "latest": "2026-07-09T21:00:00.000Z"
@@ -90,7 +93,10 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 32
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-07-05",
+      "daysSinceMoved": 1
+    },
     "raneyCellars": {
       "newest": "2026-07-09",
       "daysSinceMoved": 6
@@ -116,79 +122,79 @@
       "PM Community": 1
     },
     "stalePast": 5,
-    "lastSyncAt": "2026-07-07T18:47:38.486Z"
+    "lastSyncAt": "2026-07-07T19:00:40.332Z"
   },
   "recentlyAdded": [
     {
-      "key": "2026 Summer Welcomes|2026-07-10T08:00:00",
-      "firstSeenAt": "2026-07-07T15:57:47.578Z",
-      "title": "2026 Summer Welcomes",
-      "source": "MU",
-      "date": "2026-07-10T08:00:00"
+      "key": "Planning Commission|2026-07-13T23:00:00.000Z",
+      "firstSeenAt": "2026-07-07T19:02:13.865Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-07-13T23:00:00.000Z"
     },
     {
-      "key": "2026 Summer Welcomes|2026-07-10T08:45:00",
-      "firstSeenAt": "2026-07-07T15:57:47.578Z",
-      "title": "2026 Summer Welcomes",
-      "source": "MU",
-      "date": "2026-07-10T08:45:00"
+      "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
+      "firstSeenAt": "2026-07-07T19:02:13.865Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-07-29T12:30:00.000Z"
     },
     {
-      "key": "2026 Summer Welcomes|2026-07-17T08:00:00",
-      "firstSeenAt": "2026-07-07T15:57:47.578Z",
-      "title": "2026 Summer Welcomes",
-      "source": "MU",
-      "date": "2026-07-17T08:00:00"
+      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
+      "firstSeenAt": "2026-07-07T19:02:13.865Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-08-03T23:00:00.000Z"
     },
     {
-      "key": "2026 Summer Welcomes|2026-07-17T08:45:00",
-      "firstSeenAt": "2026-07-07T15:57:47.578Z",
-      "title": "2026 Summer Welcomes",
-      "source": "MU",
-      "date": "2026-07-17T08:45:00"
+      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
+      "firstSeenAt": "2026-07-07T19:02:13.865Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-08-05T23:00:00.000Z"
     },
     {
-      "key": "2026 Summer Welcomes|2026-07-24T08:00:00",
-      "firstSeenAt": "2026-07-07T15:57:47.578Z",
-      "title": "2026 Summer Welcomes",
-      "source": "MU",
-      "date": "2026-07-24T08:00:00"
+      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
+      "firstSeenAt": "2026-07-07T19:02:13.865Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-08-10T23:00:00.000Z"
     },
     {
-      "key": "2026 Summer Welcomes|2026-07-24T08:45:00",
-      "firstSeenAt": "2026-07-07T15:57:47.578Z",
-      "title": "2026 Summer Welcomes",
-      "source": "MU",
-      "date": "2026-07-24T08:45:00"
+      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
+      "firstSeenAt": "2026-07-07T19:02:13.865Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-08-26T12:30:00.000Z"
     },
     {
-      "key": "Girls Varsity Cross Country @ Warwick High School|2026-08-29T22:00:00.000Z",
-      "firstSeenAt": "2026-07-07T13:21:01.010Z",
-      "title": "Girls Varsity Cross Country @ Warwick High School",
-      "source": "PM",
-      "date": "2026-08-29T22:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-07-07T19:02:13.865Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-09-02T23:00:00.000Z"
     },
     {
-      "key": "Boys Varsity Cross Country @ Warwick High School|2026-08-29T22:00:00.000Z",
-      "firstSeenAt": "2026-07-07T13:21:01.010Z",
-      "title": "Boys Varsity Cross Country @ Warwick High School",
-      "source": "PM",
-      "date": "2026-08-29T22:00:00.000Z"
+      "key": "Supervisors Meeting|2026-09-07T23:00:00.000Z",
+      "firstSeenAt": "2026-07-07T19:02:13.865Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-07T23:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Volleyball at Goldey-Beacom|2026-08-27T23:00:00.000Z",
-      "firstSeenAt": "2026-07-06T19:55:14.335Z",
-      "title": "Millersville University Women's Volleyball at Goldey-Beacom",
-      "source": "MU",
-      "date": "2026-08-27T23:00:00.000Z"
+      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
+      "firstSeenAt": "2026-07-07T19:02:13.865Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-09-14T23:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Volleyball vs Caldwell|2026-08-29T17:00:00.000Z",
-      "firstSeenAt": "2026-07-06T19:55:14.335Z",
-      "title": "Millersville University Women's Volleyball vs Caldwell",
-      "source": "MU",
-      "date": "2026-08-29T17:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-07-07T19:02:13.865Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-09-30T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 41
 }

@@ -10,7 +10,8 @@
     "marauderGold": true,
     "onCampus": true,
     "lat": 39.996161,
-    "lng": -76.353888
+    "lng": -76.353888,
+    "slug": "chick-fil-a"
   },
   {
     "name": "Koshary Station",
@@ -20,7 +21,8 @@
     "status": "View Menu",
     "link": "https://www.kosharystation.com",
     "lat": 39.996508,
-    "lng": -76.358826
+    "lng": -76.358826,
+    "slug": "koshary-station"
   },
   {
     "name": "Cactus Café",
@@ -30,7 +32,8 @@
     "status": "View Menu",
     "link": "https://www.cactuscafemillersville.com/",
     "lat": 39.995304,
-    "lng": -76.358205
+    "lng": -76.358205,
+    "slug": "cactus-caf"
   },
   {
     "name": "Jack's Family Tavern & Restaurant",
@@ -40,7 +43,8 @@
     "status": "View Menu",
     "link": "https://www.jacksfamilytavern.com/",
     "lat": 39.995819,
-    "lng": -76.358193
+    "lng": -76.358193,
+    "slug": "jack-s-family-tavern-restaurant"
   },
   {
     "name": "Sugar Bowl Millersville",
@@ -51,7 +55,8 @@
     "link": "https://orderonlinemenu.com/SugarBowlMillersville",
     "marauderGold": true,
     "lat": 39.99945,
-    "lng": -76.354701
+    "lng": -76.354701,
+    "slug": "sugar-bowl-millersville"
   },
   {
     "name": "Poke Bowl Station",
@@ -61,7 +66,8 @@
     "status": "View Menu",
     "link": "https://www.pokebowlstationmillersville.com/",
     "lat": 40.009219,
-    "lng": -76.344328
+    "lng": -76.344328,
+    "slug": "poke-bowl-station"
   },
   {
     "name": "House of Pizza",
@@ -71,7 +77,8 @@
     "status": "View Menu",
     "link": "https://www.houseofpizzamillersville.com/menu.html",
     "lat": 39.996728,
-    "lng": -76.358971
+    "lng": -76.358971,
+    "slug": "house-of-pizza"
   },
   {
     "name": "Two Cousins Pizza Millersville",
@@ -81,7 +88,8 @@
     "status": "Order Online",
     "link": "https://order.toasttab.com/online/two-cousins-pizza-millersville-115-manor-avenue-ogxls",
     "lat": 40.010128,
-    "lng": -76.3564
+    "lng": -76.3564,
+    "slug": "two-cousins-pizza-millersville"
   },
   {
     "name": "Nino's New York Style Pizza",
@@ -91,7 +99,8 @@
     "status": "Order Online",
     "link": "https://www.ninospizzamillersville.com/order",
     "lat": 40.009603,
-    "lng": -76.344031
+    "lng": -76.344031,
+    "slug": "nino-s-new-york-style-pizza"
   },
   {
     "name": "Wayback Burgers",
@@ -102,7 +111,8 @@
     "link": "https://order.waybackburgers.com/menu/millersville",
     "marauderGold": true,
     "lat": 40.008906,
-    "lng": -76.344529
+    "lng": -76.344529,
+    "slug": "wayback-burgers"
   },
   {
     "name": "China Wok Chinese Restaurant",
@@ -112,7 +122,8 @@
     "status": "View Menu",
     "link": "https://www.google.com/maps/search/China+Wok+Millersville+PA",
     "lat": 40.008822,
-    "lng": -76.344434
+    "lng": -76.344434,
+    "slug": "china-wok-chinese-restaurant"
   },
   {
     "name": "The Bunker at Crossgates",
@@ -122,7 +133,8 @@
     "status": "View Menu",
     "link": "https://www.crossgatesgolf.com/",
     "lat": 39.98775,
-    "lng": -76.342612
+    "lng": -76.342612,
+    "slug": "bunker-at-crossgates"
   },
   {
     "name": "Evergreen Cafe",
@@ -134,7 +146,8 @@
     "marauderGold": true,
     "onCampus": true,
     "lat": 39.997226,
-    "lng": -76.35239
+    "lng": -76.35239,
+    "slug": "evergreen-cafe"
   },
   {
     "name": "VFW Post 7294",
@@ -144,7 +157,8 @@
     "status": "Members Only",
     "link": "https://www.vfwpost7294.org/",
     "lat": 39.989529,
-    "lng": -76.367107
+    "lng": -76.367107,
+    "slug": "vfw-post-7294"
   },
   {
     "name": "John Herr's Village Market",
@@ -155,7 +169,8 @@
     "link": "https://www.johnherrsvillagemarket.com/weekly-ad",
     "marauderGold": true,
     "lat": 40.009889,
-    "lng": -76.35876
+    "lng": -76.35876,
+    "slug": "john-herr-s-village-market"
   },
   {
     "name": "Sheetz #544",
@@ -166,7 +181,8 @@
     "link": "https://www.sheetz.com/",
     "marauderGold": true,
     "lat": 40.008708,
-    "lng": -76.344067
+    "lng": -76.344067,
+    "slug": "sheetz-544"
   },
   {
     "name": "The Anchor",
@@ -179,7 +195,8 @@
     "onCampus": true,
     "audience": "marauders",
     "lat": 39.996747,
-    "lng": -76.353648
+    "lng": -76.353648,
+    "slug": "anchor"
   },
   {
     "name": "The Cove",
@@ -192,7 +209,8 @@
     "onCampus": true,
     "audience": "marauders",
     "lat": 40.001798,
-    "lng": -76.356964
+    "lng": -76.356964,
+    "slug": "cove"
   },
   {
     "name": "Upper Deck",
@@ -205,7 +223,8 @@
     "onCampus": true,
     "audience": "marauders",
     "lat": 39.997226,
-    "lng": -76.35239
+    "lng": -76.35239,
+    "slug": "upper-deck"
   },
   {
     "name": "Starbucks (McNairy Library)",
@@ -217,7 +236,8 @@
     "marauderGold": true,
     "onCampus": true,
     "lat": 39.997999,
-    "lng": -76.354436
+    "lng": -76.354436,
+    "slug": "starbucks-mcnairy-library"
   },
   {
     "name": "Benson Snacks",
@@ -226,7 +246,8 @@
     "address": "314 N Prince St, Millersville, PA 17551",
     "link": "https://www.bensons-snacks.com/snack-bar-menu",
     "lat": 40.001942,
-    "lng": -76.360659
+    "lng": -76.360659,
+    "slug": "benson-snacks"
   },
   {
     "name": "Tropical Smoothie Cafe",
@@ -236,7 +257,8 @@
     "link": "https://order.tropicalsmoothiecafe.com/menu/pa-007",
     "phone": "(717) 584-0818",
     "lat": 40.008878,
-    "lng": -76.344544
+    "lng": -76.344544,
+    "slug": "tropical-smoothie-cafe"
   },
   {
     "name": "Raney Cellars",
@@ -247,6 +269,7 @@
     "phone": "(717) 725-0095",
     "audience": "locals",
     "lat": 40.008528,
-    "lng": -76.358234
+    "lng": -76.358234,
+    "slug": "raney-cellars"
   }
 ]

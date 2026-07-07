@@ -7,7 +7,8 @@
     "description": "Classic barbering and advanced skincare since 1969",
     "link": "https://www.barleysbarbersalon.com/",
     "lat": 40.005749,
-    "lng": -76.367537
+    "lng": -76.367537,
+    "slug": "barley-s-barber-salon-skin-studio"
   },
   {
     "name": "The Reset Barbershop",
@@ -17,7 +18,8 @@
     "description": "Modern barbershop — precision fades, cuts, and facials",
     "link": "https://www.theresetbarbershop.com/",
     "lat": 39.996638,
-    "lng": -76.359336
+    "lng": -76.359336,
+    "slug": "reset-barbershop"
   },
   {
     "name": "Sport Clips",
@@ -28,6 +30,7 @@
     "link": "https://sportclips.com/",
     "lat": 40.008822,
     "lng": -76.344434,
+    "slug": "sport-clips",
     "rating": "4.0",
     "reviewCount": 1
   },
@@ -39,7 +42,8 @@
     "description": "Full-service nail spa — manicures, pedicures, waxing",
     "link": "https://www.qnailsmillersvillepa.com/",
     "lat": 40.008822,
-    "lng": -76.344434
+    "lng": -76.344434,
+    "slug": "q-nails"
   },
   {
     "name": "Billie Jean's Hair & Nail Studio",
@@ -49,7 +53,8 @@
     "description": "Hair and nail studio serving Millersville for 40+ years",
     "link": "https://www.google.com/maps/search/Billie+Jeans+Hair+Nail+Millersville+PA",
     "lat": 40.011365,
-    "lng": -76.353757
+    "lng": -76.353757,
+    "slug": "billie-jean-s-hair-nail-studio"
   },
   {
     "name": "The Vintage Clipper",
@@ -58,7 +63,8 @@
     "phone": "(717) 584-3139",
     "description": "",
     "lat": 39.996638,
-    "lng": -76.359336
+    "lng": -76.359336,
+    "slug": "vintage-clipper"
   },
   {
     "name": "Millersville University Library",
@@ -69,7 +75,8 @@
     "link": "https://www.millersville.edu/library/",
     "onCampus": true,
     "lat": 39.997999,
-    "lng": -76.354436
+    "lng": -76.354436,
+    "slug": "millersville-university-library"
   },
   {
     "name": "MU Tutoring Center",
@@ -81,7 +88,8 @@
     "onCampus": true,
     "audience": "marauders",
     "lat": 40.000308,
-    "lng": -76.357051
+    "lng": -76.357051,
+    "slug": "mu-tutoring-center"
   },
   {
     "name": "Phantom Power",
@@ -91,7 +99,8 @@
     "description": "Live music venue and event space",
     "link": "https://www.phantompower.live/",
     "lat": 39.996503,
-    "lng": -76.359882
+    "lng": -76.359882,
+    "slug": "phantom-power"
   },
   {
     "name": "Fulton Bank",
@@ -101,7 +110,8 @@
     "description": "Full-service bank with checking, savings, and ATM",
     "link": "https://www.fultonbank.com/",
     "lat": 40.027525,
-    "lng": -76.326433
+    "lng": -76.326433,
+    "slug": "fulton-bank"
   },
   {
     "name": "Members 1st Federal Credit Union",
@@ -111,7 +121,8 @@
     "description": "Credit union with student-friendly accounts and ATMs",
     "link": "https://www.members1st.org/",
     "lat": 40.008822,
-    "lng": -76.344434
+    "lng": -76.344434,
+    "slug": "members-1st-federal-credit-union"
   },
   {
     "name": "Millersville Post Office",
@@ -121,7 +132,8 @@
     "description": "USPS mail, packages, PO boxes, and passport services",
     "link": "https://tools.usps.com/locations/details/1373168",
     "lat": 40.006219,
-    "lng": -76.357904
+    "lng": -76.357904,
+    "slug": "millersville-post-office"
   },
   {
     "name": "Millersville Borough Hall",
@@ -131,7 +143,8 @@
     "description": "Borough offices, permits, codes, and public services",
     "link": "https://millersvilleborough.org/",
     "lat": 40.005497,
-    "lng": -76.359727
+    "lng": -76.359727,
+    "slug": "millersville-borough-hall"
   },
   {
     "name": "Penn Manor School District Office",
@@ -141,7 +154,8 @@
     "description": "District administration and enrollment",
     "link": "https://www.pennmanor.net/",
     "lat": 40.00139,
-    "lng": -76.3498
+    "lng": -76.3498,
+    "slug": "penn-manor-school-district-office"
   },
   {
     "name": "Millersville Police Department",
@@ -151,7 +165,8 @@
     "description": "Borough police, non-emergency line",
     "link": "https://millersvilleborough.org/police/",
     "lat": 40.005497,
-    "lng": -76.359727
+    "lng": -76.359727,
+    "slug": "millersville-police-department"
   },
   {
     "name": "Blue Rock Fire and Rescue",
@@ -160,7 +175,8 @@
     "phone": "",
     "description": "Volunteer fire and rescue company serving Millersville Borough and Manor Township",
     "lat": 40.004888,
-    "lng": -76.356878
+    "lng": -76.356878,
+    "slug": "blue-rock-fire-and-rescue"
   },
   {
     "name": "CVS Pharmacy",
@@ -170,7 +186,8 @@
     "description": "Pharmacy, prescriptions, vaccinations, and health essentials",
     "link": "https://www.cvs.com/",
     "lat": 40.027037,
-    "lng": -76.32734
+    "lng": -76.32734,
+    "slug": "cvs-pharmacy"
   },
   {
     "name": "MU Student Health Services",
@@ -182,7 +199,8 @@
     "onCampus": true,
     "audience": "marauders",
     "lat": 40.000316,
-    "lng": -76.357393
+    "lng": -76.357393,
+    "slug": "mu-student-health-services"
   },
   {
     "name": "MU Counseling & Human Development Center",
@@ -194,7 +212,8 @@
     "onCampus": true,
     "audience": "marauders",
     "lat": 40.000316,
-    "lng": -76.357393
+    "lng": -76.357393,
+    "slug": "mu-counseling-human-development-center"
   },
   {
     "name": "Gamber Physical Therapy & Fitness",
@@ -204,7 +223,8 @@
     "description": "Direct-access physical therapy and fitness — no physician referral required",
     "link": "https://www.gamberpt.com/",
     "lat": 40.011471,
-    "lng": -76.354234
+    "lng": -76.354234,
+    "slug": "gamber-physical-therapy-fitness"
   },
   {
     "name": "Crossgates Golf Course",
@@ -214,7 +234,8 @@
     "description": "18-hole public golf course with bar and grill",
     "link": "https://www.google.com/maps/search/Crossgates+Golf+Course+Millersville+PA",
     "lat": 39.98775,
-    "lng": -76.342612
+    "lng": -76.342612,
+    "slug": "crossgates-golf-course"
   },
   {
     "name": "Freedom Memorial Park",
@@ -224,7 +245,8 @@
     "description": "Borough park with pavilions, playground, and walking paths",
     "link": "https://millersvilleborough.org/",
     "lat": 40.010774,
-    "lng": -76.360797
+    "lng": -76.360797,
+    "slug": "freedom-memorial-park"
   },
   {
     "name": "MU Recreation Center",
@@ -235,7 +257,8 @@
     "link": "https://www.millersville.edu/campusrec/smc-rec-center.php",
     "onCampus": true,
     "lat": 39.996161,
-    "lng": -76.353888
+    "lng": -76.353888,
+    "slug": "mu-recreation-center"
   },
   {
     "name": "Lions Club Pool",
@@ -245,7 +268,8 @@
     "description": "",
     "link": "https://e-clubhouse.org/sites/millersvillepa/",
     "lat": 40.001942,
-    "lng": -76.360659
+    "lng": -76.360659,
+    "slug": "lions-club-pool"
   },
   {
     "name": "Charles F. Snyder Funeral Home & Crematory",
@@ -255,7 +279,8 @@
     "description": "Family-owned funeral home and crematory serving Lancaster County since 1947",
     "link": "https://www.snyderfuneralhome.com/millersville",
     "lat": 40.006588,
-    "lng": -76.358064
+    "lng": -76.358064,
+    "slug": "charles-f-snyder-funeral-home-crematory"
   },
   {
     "name": "Turkey Hill Minit Market",
@@ -265,7 +290,8 @@
     "description": "Convenience store, gas, drinks, snacks, and ice cream",
     "link": "https://www.turkeyhill.com/stores",
     "lat": 40.00857,
-    "lng": -76.357785
+    "lng": -76.357785,
+    "slug": "turkey-hill-minit-market"
   },
   {
     "name": "Millersville Mart",
@@ -275,7 +301,8 @@
     "description": "Local convenience store and fuel station",
     "link": "https://www.google.com/maps/search/Millersville+Gas+Grocery+PA",
     "lat": 40.007592,
-    "lng": -76.358489
+    "lng": -76.358489,
+    "slug": "millersville-mart"
   },
   {
     "name": "The University Store",
@@ -287,7 +314,8 @@
     "marauderGold": true,
     "onCampus": true,
     "lat": 39.996161,
-    "lng": -76.353888
+    "lng": -76.353888,
+    "slug": "university-store"
   },
   {
     "name": "Heritage Monuments",
@@ -297,7 +325,8 @@
     "description": "Family-owned monument and memorial design and placement since 1985 (a Charles F. Snyder company)",
     "link": "https://www.heritagemonuments.com/",
     "lat": 40.006443,
-    "lng": -76.373354
+    "lng": -76.373354,
+    "slug": "heritage-monuments"
   },
   {
     "name": "Berry Good Embroidery",
@@ -307,7 +336,8 @@
     "description": "Custom embroidery for apparel, gifts, business logos, and team gear",
     "link": "https://www.berrygoodembroidery.com/",
     "lat": 40.011426,
-    "lng": -76.354288
+    "lng": -76.354288,
+    "slug": "berry-good-embroidery"
   },
   {
     "name": "Student Lodging, Inc.",
@@ -318,7 +348,8 @@
     "link": "https://studentlodginginc.com",
     "audience": "marauders",
     "lat": 39.992734,
-    "lng": -76.359191
+    "lng": -76.359191,
+    "slug": "student-lodging-inc"
   },
   {
     "name": "The Mill at Manor Falls",
@@ -327,6 +358,7 @@
     "phone": "",
     "description": "Event and wedding venue along the Conestoga in the Millersville area",
     "lat": 40.008496,
-    "lng": -76.375411
+    "lng": -76.375411,
+    "slug": "mill-at-manor-falls"
   }
 ]

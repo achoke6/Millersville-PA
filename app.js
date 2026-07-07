@@ -6270,6 +6270,7 @@ window.togglePlacesToday=function(){
     if(btn) btn.classList.toggle('active', placesTodayMode);
     updatePlacesFilterNote();
     renderPlaces();
+    window.scrollTo(0, 0);   // lens re-render can shrink the list; don't strand the viewport below it
 };
 
 window.togglePlacesMarauderGold=function(){
@@ -6279,6 +6280,7 @@ window.togglePlacesMarauderGold=function(){
     if(btn) btn.classList.toggle('active', placesMGMode);
     updatePlacesFilterNote();
     renderPlaces();
+    window.scrollTo(0, 0);   // lens re-render can shrink the list; don't strand the viewport below it
 };
 
 window.togglePlacesMBA=function(){

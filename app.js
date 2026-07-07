@@ -2981,7 +2981,7 @@ window.toggleMobileMenu=function(){
     if(nav.classList.contains('open')){nav.classList.remove('open');overlay.classList.remove('open');setTimeout(()=>{if(!nav.classList.contains('open'))nav.style.display='';},300);}
     else{nav.style.display='flex';void nav.offsetWidth;nav.classList.add('open');overlay.classList.add('open');}
 };
-const viewLabels={home:'',news:'/ News',events:'/ Events',sports:'/ Sports',places:'/ Directory',board:'/ Board',weather:'/ Weather',store:'/ Store',advertise:'/ Advertise'};
+const viewLabels={home:'',news:'/ News',events:'/ Events',sports:'/ Sports',places:'/ Map',board:'/ Board',weather:'/ Weather',store:'/ Store',advertise:'/ Advertise'};
 
 let ecwidLoaded = false;
 window.loadEcwidStore = function(){
@@ -3065,6 +3065,7 @@ function injectEcwidCSS(){
 }
 
 window.switchView=function(view,skipPush){
+    if(view==='places') initPlacesMap();   // lazy map init; invalidateSize on return visits
     document.querySelectorAll('.app-view').forEach(v=>v.classList.remove('active'));
     document.getElementById(`view-${view}`).classList.add('active');
     document.querySelectorAll('.nav-link').forEach(b=>b.classList.remove('active'));
@@ -5705,6 +5706,8 @@ function renderNewsUI(){
     }
 }
 let allPlaces=[], placesFilter='All', placesMGMode=false, placesMBAMode=false;
+let allHousing=[];   // housing.json rows (rendered audience-filtered — see renderHousing)
+let placesMap=null, placesMapMarkers=null, placesMapLibReady=false, placesMapLibLoading=null, placesMapFailed=false;   // Directory map (see DIRECTORY MAP block)
 
 // --- MBA (Millersville Business Association) membership integration ----------
 // association.json is the SINGLE SOURCE OF TRUTH for membership. We load it
@@ -5929,7 +5932,12 @@ function renderStars(rating) {
         '</span> <span style="font-size:0.8rem;color:var(--text-muted);">' + rating.toFixed(1) + '</span>';
 }
 
-async function loadHousing(){try{const data=await(await fetch('housing.json')).json();const c=document.getElementById('housing-container');data.sort((a,b)=>(b.featured===true)-(a.featured===true));c.innerHTML=data.map(p=>{return `<div class="app-card"><h3 class="card-title">${p.name}</h3><p class="card-meta" style="font-weight:bold;text-transform:uppercase;margin-bottom:8px;">${p.landlord}</p><p style="font-size:0.9rem;margin-bottom:16px;">${p.description}</p><div class="card-footer"><a href="${p.link}" target="_blank" class="btn btn-sm btn-outline" style="display:block;text-align:center;">View Property</a></div></div>`;}).join('');}catch(e){}}
+async function loadHousing(){try{allHousing=await(await fetch('housing.json')).json();if(!Array.isArray(allHousing))allHousing=[];renderHousing();}catch(e){}}
+// §9 fix: housing cards now run through placeAudienceVisible like every other
+// listing, and re-render on every renderPlaces() call so they track identity
+// switches. Blank/both/unknown audience fails open, so output is identical to
+// the old unfiltered render until a housing row actually carries an audience.
+function renderHousing(){const c=document.getElementById('housing-container');if(!c)return;const visible=(allHousing||[]).filter(placeAudienceVisible);visible.sort((a,b)=>(b.featured===true)-(a.featured===true));c.innerHTML=visible.map(p=>{return `<div class="app-card"><h3 class="card-title">${p.name}</h3><p class="card-meta" style="font-weight:bold;text-transform:uppercase;margin-bottom:8px;">${p.landlord}</p><p style="font-size:0.9rem;margin-bottom:16px;">${p.description}</p><div class="card-footer"><a href="${p.link}" target="_blank" class="btn btn-sm btn-outline" style="display:block;text-align:center;">View Property</a></div></div>`;}).join('');}
 
 async function loadPlaces(){try{
     const [restaurants, services, specials, vfw, cupboardData] = await Promise.all([
@@ -5967,6 +5975,146 @@ async function loadPlaces(){try{
     window._placesSpecials = specials;
     renderPlaces();
 }catch(e){console.error('Places error:',e);}}
+
+// ============================== DIRECTORY MAP ==============================
+// Leaflet + self-hosted Protomaps PMTiles basemap (/millersville.pmtiles).
+// Zero third-party requests at runtime. Vendor assets (/vendor/*) are lazy-
+// injected the first time the Directory view opens, so no other page pays for
+// them. Pins are rebuilt from the SAME predicates as the list — audience,
+// category chip, MBA and Marauder-Gold lenses — via the refreshPlacesMap()
+// call in renderPlaces(), so map and list can never disagree.
+const PLACES_MAP_CFG = {
+    pmtiles: '/millersville.pmtiles',
+    center: [40.0015, -76.3545],                 // between the square and campus
+    zoom: 15, minZoom: 13, maxZoom: 18,          // basemap data is z15, overzoomed
+    bounds: [[39.95, -76.44], [40.07, -76.27]]   // = the pmtiles extract bbox
+};
+// Pin glyphs per category. NOTE: separate from the card-side catIcons map
+// (function-local in renderPlaces). Adding a directory category now means
+// keeping FOUR things in agreement: sheet value, #places-filter-menu data-cat,
+// catIcons, and this map.
+const MAP_PIN_ICONS = {
+    'Food & Drink':'🍴','Housing':'🏠','Student Housing':'🎓','Shopping':'🛒',
+    'Health':'🏥','Beauty/Grooming':'💈','Finance':'🏦','Real Estate':'🏘',
+    'Home Services':'🔨','Services':'🛠','Government':'🏛','Education':'📚',
+    'Recreation':'🏞','Entertainment':'🎵','Venue':'🎉','Lodging':'🛏',
+    'Transport':'🚌','Shipping':'📦','Mechanic':'🔧','Gas Station':'⛽',
+    'EV Charging':'🔌','Cupboard':'🧺'
+};
+const MAP_PIN_COLORS = { food:'#b0452b', service:'#0f6e56', housing:'#5b4bc4', cupboard:'#a06a10' };
+
+function placesMapAssetsLoad(){
+    if (placesMapLibReady) return Promise.resolve();
+    if (placesMapLibLoading) return placesMapLibLoading;
+    const css = href => new Promise(res => { const l=document.createElement('link'); l.rel='stylesheet'; l.href=href; l.onload=res; l.onerror=res; document.head.appendChild(l); });
+    const js  = src  => new Promise((res,rej) => { const s=document.createElement('script'); s.src=src; s.onload=res; s.onerror=()=>rej(new Error('failed to load '+src)); document.head.appendChild(s); });
+    placesMapLibLoading = Promise.all([css('/vendor/leaflet.css'), css('/vendor/leaflet-gesture-handling.css'), js('/vendor/leaflet.js')])
+        .then(() => Promise.all([js('/vendor/protomaps-leaflet.js'), js('/vendor/leaflet-gesture-handling.js')]))
+        .then(() => { placesMapLibReady = true; });
+    return placesMapLibLoading;
+}
+
+function initPlacesMap(){
+    if (placesMap){ setTimeout(()=>placesMap.invalidateSize(), 60); return; }
+    if (placesMapFailed) return;
+    const el = document.getElementById('places-map');
+    if (!el) return;
+    placesMapAssetsLoad().then(() => {
+        if (placesMap) return;
+        el.classList.add('map-ready');
+        placesMap = L.map(el, {
+            center: PLACES_MAP_CFG.center, zoom: PLACES_MAP_CFG.zoom,
+            minZoom: PLACES_MAP_CFG.minZoom, maxZoom: PLACES_MAP_CFG.maxZoom,
+            maxBounds: PLACES_MAP_CFG.bounds, maxBoundsViscosity: 1.0,
+            gestureHandling: true, zoomControl: true, attributionControl: true
+        });
+        placesMap.attributionControl.setPrefix(false);
+        protomapsL.leafletLayer({
+            url: PLACES_MAP_CFG.pmtiles, flavor: 'light', lang: 'en',
+            attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
+        }).addTo(placesMap);
+        placesMapMarkers = L.layerGroup().addTo(placesMap);
+        refreshPlacesMap();
+        setTimeout(()=>placesMap.invalidateSize(), 60);
+    }).catch(e => {
+        // Vendor asset failed (offline first visit, bad deploy). The map stays
+        // hidden and the directory list is completely unaffected.
+        console.warn('Directory map unavailable:', e && e.message);
+        placesMapFailed = true;
+    });
+}
+
+function placesMapHasCoords(p){ return !!p && isFinite(p.lat) && isFinite(p.lng); }
+
+// One pin set, same rules as the visible list. Mirrors: placeAudienceVisible
+// on everything; MBA lens = verified members only; MG lens = marauderGold only;
+// category chip; the housing-container visibility rule; and the Campus
+// Cupboard pinned-card condition (students, All / Food & Drink, no lenses).
+function placesMapPinList(){
+    const pins = [];
+    let list = (allPlaces||[]).filter(placeAudienceVisible);
+    if (placesMBAMode) list = list.filter(p => getMembership(p.name));
+    if (placesMGMode)  list = list.filter(p => p.marauderGold === true);
+    if (placesFilter !== 'All') list = list.filter(p => p.category === placesFilter);
+    list.filter(placesMapHasCoords).forEach(p => pins.push({ place: p, group: (p.placeType==='food') ? 'food' : 'service' }));
+    if (!placesMGMode && !placesMBAMode && (placesFilter==='All' || placesFilter==='Housing')){
+        (allHousing||[]).filter(placeAudienceVisible).filter(placesMapHasCoords)
+            .forEach(p => pins.push({ place: {...p, category:'Housing'}, group: 'housing' }));
+    }
+    const cb = window._cupboard;
+    if (cb && placesMapHasCoords(cb) && !placesMBAMode && !placesMGMode &&
+        muAffiliation === 'student' && (placesFilter==='All' || placesFilter==='Food & Drink')){
+        pins.push({ place: {...cb, category:'Cupboard'}, group: 'cupboard' });
+    }
+    return pins;
+}
+
+function refreshPlacesMap(){
+    if (!placesMap || !placesMapMarkers) return;
+    const entries = placesMapPinList();
+    // Fan out pins that share identical coordinates (plaza clusters like the
+    // Comet Dr strip, or two listings in one building) in a ~11 m ring so
+    // every pin stays individually tappable at high zoom. Display-only; the
+    // underlying data is untouched.
+    const byKey = {};
+    entries.forEach(en => {
+        en.dlat = en.place.lat; en.dlng = en.place.lng;
+        const k = en.place.lat.toFixed(6) + ',' + en.place.lng.toFixed(6);
+        (byKey[k] = byKey[k] || []).push(en);
+    });
+    Object.values(byKey).forEach(g => {
+        if (g.length < 2) return;
+        const r = 0.00010;
+        g.forEach((en, i) => {
+            const a = 2 * Math.PI * i / g.length;
+            en.dlat = en.place.lat + r * Math.sin(a);
+            en.dlng = en.place.lng + r * Math.cos(a) / Math.cos(en.place.lat * Math.PI / 180);
+        });
+    });
+    placesMapMarkers.clearLayers();
+    entries.forEach(en => {
+        const p = en.place;
+        const glyph = MAP_PIN_ICONS[p.category] || '📍';
+        const color = MAP_PIN_COLORS[en.group] || '#14203a';
+        const icon = L.divIcon({ className: '', html: `<div class="map-pin" style="border-color:${color}">${glyph}</div>`, iconSize: [30,30], iconAnchor: [15,15], popupAnchor: [0,-16] });
+        L.marker([en.dlat, en.dlng], { icon: icon, title: p.name })
+            .bindPopup(placesMapPopup(p), { maxWidth: 240 })
+            .addTo(placesMapMarkers);
+    });
+}
+
+function placesMapPopup(p){
+    const meta = p.cuisine || p.category || p.landlord || '';
+    const q = encodeURIComponent(p.address ? (p.name + ', ' + p.address) : (p.lat + ',' + p.lng));
+    let html = `<div class="map-popup"><strong>${p.name}</strong>`;
+    if (meta) html += `<div class="map-popup-meta">${meta}</div>`;
+    if (p.address) html += `<div class="map-popup-meta">${p.address}</div>`;
+    html += `<div class="map-popup-btns">`;
+    if (p.link) html += `<a href="${p.link}" target="_blank" rel="noopener" class="btn btn-sm btn-outline">Website</a>`;
+    html += `<a href="https://www.google.com/maps/search/?api=1&query=${q}" target="_blank" rel="noopener" class="btn btn-sm btn-outline">Directions</a></div></div>`;
+    return html;
+}
+// ============================ END DIRECTORY MAP ============================
 
 // Hide directory category chips that have no listings at all, so the Filter menu
 // reflects what's actually in the directory instead of ~18 categories (many empty).
@@ -6062,6 +6210,8 @@ function applyPlacesCardFit(pc){
 }
 
 function renderPlaces(){
+    renderHousing();        // §9: housing tracks audience + affiliation switches
+    refreshPlacesMap();     // pins mirror the same filters as the list (no-op until map init)
     // Marauder Gold is an MU campus payment card, so its filter toggle is only
     // relevant to confirmed students. Hide it for townies and undeclared
     // viewers; if such a viewer somehow had MG mode active, drop it so they're

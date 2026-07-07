@@ -1433,3 +1433,18 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     width: 50%;
     flex-shrink: 0;
 }
+
+/* ============== Directory map (Leaflet + Protomaps PMTiles) ============== */
+/* Hidden until first successful lazy-init, so a vendor-load failure leaves no
+   empty gray box. Height is viewport-relative; deliberately NO media queries
+   (nothing here participates in the Hard-Rule-8 nav breakpoint). z-index:0
+   creates a stacking context so Leaflet's internal panes (z up to ~700) stay
+   below the sticky bar and header. */
+#places-map{display:none;height:42vh;min-height:260px;max-height:480px;margin:0 0 16px;border-radius:12px;overflow:hidden;position:relative;z-index:0;background:#e9e6df;}
+#places-map.map-ready{display:block;}
+.map-pin{width:30px;height:30px;border-radius:50%;background:#fff;border:2px solid #14203a;display:flex;align-items:center;justify-content:center;font-size:15px;line-height:1;box-shadow:0 1px 4px rgba(0,0,0,.3);cursor:pointer;}
+.map-popup{font-size:0.85rem;min-width:170px;}
+.map-popup strong{font-size:0.95rem;}
+.map-popup-meta{color:#666;margin-top:2px;}
+.map-popup-btns{display:flex;gap:6px;margin-top:8px;}
+.map-popup-btns .btn{flex:1;text-align:center;}

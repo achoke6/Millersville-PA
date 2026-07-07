@@ -20,7 +20,7 @@
  * SHEET COLUMNS (header row, exact names, case-insensitive match):
  *   name, active, type, category, cuisine, landlord, address, phone, website,
  *   iosLink, status, onCampus, marauderGold, verified, audience, spotlight,
- *   tagline, logo, description
+ *   tagline, logo, description, lat, lng
  *
  *   active:      non-blank (e.g. "X") = listed; blank = hidden/skipped entirely.
  *                (If the column is absent, all rows are treated as active.)
@@ -33,6 +33,11 @@
  *   landlord:    (housing only) leasing company shown as the card subtitle
  *   onCampus / marauderGold / verified / spotlight: "yes" (anything else = no)
  *   audience:    locals | marauders | both   (blank = both; "students"/"townies" also accepted)
+ *   lat, lng:    optional decimal coordinates (one-time Nominatim pass; rows
+ *                without them simply don't get a map pin). Emitted onto food /
+ *                service / housing / cupboard listings only when both parse and
+ *                fall inside the local sanity box (GEO below) — bad or
+ *                out-of-area values are warned and skipped, never written.
  *
  * USAGE:
  *   DIRECTORY_SHEET_CSV_URL="https://docs.google.com/spreadsheets/d/<ID>/export?format=csv&gid=<GID>" \
@@ -75,6 +80,12 @@ function parseCSV(text) {
 const yes = v => String(v || '').trim().toLowerCase() === 'yes';
 const clean = v => String(v || '').trim();
 
+// Sanity box for the lat/lng passthrough (greater Millersville / western
+// Lancaster County). Coordinates outside this box are treated as data-entry
+// errors: warned and skipped, so a typo can never place a pin in another
+// state's Millersville.
+const GEO = { latMin: 39.90, latMax: 40.15, lngMin: -76.55, lngMax: -76.15 };
+
 async function main() {
   if (!SHEET_URL) {
     console.error('✗ DIRECTORY_SHEET_CSV_URL not set');
@@ -112,6 +123,28 @@ async function main() {
   const restaurants = [], services = [], housing = [], cupboard = [], members = [], spotlight = [];
   const seenNames = new Set();
   let warnings = 0;
+  let geocoded = 0;
+
+  // lat/lng passthrough: parse + sanity-check the optional coordinate columns.
+  // Returns {lat, lng} rounded to 6 dp, or null. A blank pair = silently no
+  // coords (normal for new rows); anything malformed or outside GEO = warn +
+  // skip, listing still emitted without coords — a bad cell must never place
+  // a pin.
+  const coordsFor = (row, name) => {
+    const latRaw = get(row, 'lat'), lngRaw = get(row, 'lng');
+    if (!latRaw && !lngRaw) return null;
+    const lat = parseFloat(latRaw), lng = parseFloat(lngRaw);
+    const ok = isFinite(lat) && isFinite(lng) &&
+      lat >= GEO.latMin && lat <= GEO.latMax &&
+      lng >= GEO.lngMin && lng <= GEO.lngMax;
+    if (!ok) {
+      console.warn(`  ⚠ bad/out-of-area lat,lng ("${latRaw}", "${lngRaw}") for ${name} — coords skipped`);
+      warnings++;
+      return null;
+    }
+    geocoded++;
+    return { lat: Math.round(lat * 1e6) / 1e6, lng: Math.round(lng * 1e6) / 1e6 };
+  };
 
   for (let r = 1; r < rows.length; r++) {
     const row = rows[r];
@@ -143,6 +176,7 @@ async function main() {
       if (yes(get(row, 'onCampus'))) o.onCampus = true;
       const phone = get(row, 'phone'); if (phone) o.phone = phone;
       if (audience !== 'both') o.audience = audience;
+      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; }
       restaurants.push(o);
     } else if (type === 'service') {
       const o = { name, category: get(row, 'category'), address: get(row, 'address'),
@@ -151,20 +185,24 @@ async function main() {
       if (yes(get(row, 'marauderGold'))) o.marauderGold = true;
       if (yes(get(row, 'onCampus'))) o.onCampus = true;
       if (audience !== 'both') o.audience = audience;
+      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; }
       services.push(o);
     } else if (type === 'housing') {
       const o = { name, landlord: get(row, 'landlord'), description: get(row, 'description') };
       const website = get(row, 'website'); if (website) o.link = website;
       if (audience !== 'both') o.audience = audience;
+      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; }
       housing.push(o);
     } else if (type === 'cupboard') {
       // Static info only — the open/closed + seasonal-hours logic lives in
       // app.js (buildCampusCupboardItems). This row controls whether the
       // resource appears at all and its description/location text.
-      cupboard.push({
+      const o = {
         name, description: get(row, 'description'), address: get(row, 'address'),
         onCampus: yes(get(row, 'onCampus'))
-      });
+      };
+      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; }
+      cupboard.push(o);
     } else if (type === 'institution') {
       // No directory card — only eligible for the spotlight rotation.
     } else {
@@ -221,6 +259,7 @@ async function main() {
   console.log(`  housing.json:     ${housing.length}`);
   console.log(`  campus-cupboard:  ${cupboard.length ? 'present' : 'none'}`);
   console.log(`  association.json: ${members.length} verified, ${spotlight.length} spotlight`);
+  console.log(`  geocoded listings: ${geocoded}`);
   if (warnings) console.log(`  ⚠ ${warnings} warning(s) above`);
 }
 

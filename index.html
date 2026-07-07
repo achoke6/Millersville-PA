@@ -112,7 +112,7 @@
             <button id="nav-news" class="nav-link" onclick="switchView('news'); toggleMobileMenu();">News</button>
             <button id="nav-events" class="nav-link" onclick="switchView('events'); toggleMobileMenu();">Events</button>
             <button id="nav-sports" class="nav-link" onclick="switchView('sports'); toggleMobileMenu();">Sports</button>
-            <button id="nav-places" class="nav-link" onclick="switchView('places'); toggleMobileMenu();">Directory</button>
+            <button id="nav-places" class="nav-link" onclick="switchView('places'); toggleMobileMenu();">Map</button>
             <button id="nav-board" class="nav-link" onclick="switchView('board'); toggleMobileMenu();">Board</button>
             <button id="nav-weather" class="nav-link" onclick="switchView('weather'); toggleMobileMenu();">Weather</button>
             <button id="nav-store" class="nav-link" onclick="switchView('store'); toggleMobileMenu();">Store</button>
@@ -223,7 +223,7 @@
         <div class="home-section">
             <div class="home-section-header">
                 <h2 class="home-section-title">🍴 Today's Specials & Deals</h2>
-                <a href="#" onclick="event.preventDefault();switchView('places');" class="home-more-link">Directory →</a>
+                <a href="#" onclick="event.preventDefault();switchView('places');" class="home-more-link">View All →</a>
             </div>
             <div id="home-specials" class="home-scroll-row"></div>
         </div>
@@ -356,6 +356,7 @@
                 <button class="filter-menu-item" data-cat="Shipping" onclick="setPlacesFilter('Shipping', this)">📦 Shipping</button>
             </div>
         </div>
+        <div id="places-map"></div>
         <div id="housing-container" class="card-grid"></div>
         <div id="places-container" class="card-grid"></div>
         <button class="fab-submit" onclick="openSubmitBusiness()" title="Add Your Business">➕</button>

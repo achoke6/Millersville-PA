@@ -69,6 +69,14 @@ self.addEventListener('fetch', event => {
     // SW updates via its own protocol and we don't want stale copies.
     if (url.pathname === '/sw.js' || url.pathname === '/manifest.json') return;
 
+    // PMTiles basemap: NEVER intercept. It's fetched via HTTP Range requests;
+    // the Cache API rejects 206 partial responses (cache.put() failures) and
+    // caches.match() ignores Range headers — a cached full-body response would
+    // answer a ranged request with the wrong bytes. Let the browser talk to
+    // the network directly. (Map is online-only; the directory list itself
+    // still works offline via the JSON data cache.)
+    if (url.pathname.endsWith('.pmtiles')) return;
+
     // Network-first for JSON data: tries network, falls back to cache.
     // On success, also updates the cache so the offline copy stays current.
     if (url.pathname.endsWith('.json')) {

@@ -5708,6 +5708,7 @@ function renderNewsUI(){
 let allPlaces=[], placesFilter='All', placesMGMode=false, placesMBAMode=false;
 let allHousing=[];   // housing.json rows (rendered audience-filtered — see renderHousing)
 let placesMap=null, placesMapMarkers=null, placesMapLibReady=false, placesMapLibLoading=null, placesMapFailed=false;   // Directory map (see DIRECTORY MAP block)
+let placesTodayMode=false;   // "Today" lens: places with a specials box today (see placesSpecialsItems)
 
 // --- MBA (Millersville Business Association) membership integration ----------
 // association.json is the SINGLE SOURCE OF TRUTH for membership. We load it
@@ -5807,6 +5808,7 @@ function placeAudienceVisible(place){
 // The "MBA Member" badge — identical for both tiers (tier is an internal MBA
 // dues matter, not something residents need to see). Returns '' for non-members.
 function mbaBadge(placeName){
+    return '';   // Verified shield retired 2026-07 (Today lens replaced the Verified toggle); body kept below for easy restore.
     if (!getMembership(placeName)) return '';
     // Verified-business shield (navy shield, gold trim, checkmark). Granted to
     // businesses on a paid Millersville.APP listing. (Independent of the MBA.)
@@ -6056,13 +6058,14 @@ function placesMapPinList(){
     if (placesMBAMode) list = list.filter(p => getMembership(p.name));
     if (placesMGMode)  list = list.filter(p => p.marauderGold === true);
     if (placesFilter !== 'All') list = list.filter(p => p.category === placesFilter);
+    if (placesTodayMode) list = list.filter(p => placeHasSpecialsToday(p.name));
     list.filter(placesMapHasCoords).forEach(p => pins.push({ place: p, group: (p.placeType==='food') ? 'food' : 'service' }));
-    if (!placesMGMode && !placesMBAMode && (placesFilter==='All' || placesFilter==='Housing')){
+    if (!placesMGMode && !placesMBAMode && !placesTodayMode && (placesFilter==='All' || placesFilter==='Housing')){
         (allHousing||[]).filter(placeAudienceVisible).filter(placesMapHasCoords)
             .forEach(p => pins.push({ place: {...p, category:'Housing'}, group: 'housing' }));
     }
     const cb = window._cupboard;
-    if (cb && placesMapHasCoords(cb) && !placesMBAMode && !placesMGMode &&
+    if (cb && placesMapHasCoords(cb) && !placesMBAMode && !placesMGMode && !placesTodayMode &&
         muAffiliation === 'student' && (placesFilter==='All' || placesFilter==='Food & Drink')){
         pins.push({ place: {...cb, category:'Cupboard'}, group: 'cupboard' });
     }
@@ -6109,6 +6112,7 @@ function placesMapPopup(p){
     let html = `<div class="map-popup"><strong>${p.name}</strong>`;
     if (meta) html += `<div class="map-popup-meta">${meta}</div>`;
     if (p.address) html += `<div class="map-popup-meta">${p.address}</div>`;
+    if (placeHasSpecialsToday(p.name)) html += `<div class="map-popup-meta">🔥 Specials today</div>`;
     html += `<div class="map-popup-btns">`;
     if (p.link) html += `<a href="${p.link}" target="_blank" rel="noopener" class="btn btn-sm btn-outline">Website</a>`;
     html += `<a href="https://www.google.com/maps/search/?api=1&query=${q}" target="_blank" rel="noopener" class="btn btn-sm btn-outline">Directions</a></div></div>`;
@@ -6162,12 +6166,53 @@ function updatePlacesFilterNote(){
     if (!note) return;
     if (placesMBAMode) note.textContent = 'Showing only verified businesses.';
     else if (placesMGMode) note.textContent = 'Showing only businesses that accept Marauder Gold.';
+    else if (placesTodayMode) note.textContent = 'Showing places with specials today.';
     else note.textContent = '';
 }
 
+// Single source of truth for "what specials does <name> have today". Used by
+// buildFoodCard's specials box AND the Today lens (list + map pins), so the
+// chip can never disagree with what cards display. Carries the VFW rules that
+// used to live inline in buildFoodCard: closed Sun/Mon, and Saturday drops
+// Friday-only items. (sp.daily is spread-copied so pushes never mutate the
+// shared _placesSpecials object across renders.)
+function placesSpecialsItems(name, dayName){
+    const sp = (window._placesSpecials || {})[name];
+    if (!sp) return [];
+    if (name === 'VFW Post 7294' && (dayName === 'Sunday' || dayName === 'Monday')) return [];
+    let items = [];
+    if (sp.daily && sp.daily[dayName]) items = [...sp.daily[dayName]];
+    if (name === 'VFW Post 7294') {
+        if (sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
+        if (sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
+        if (dayName === 'Saturday'){
+            items = items.filter(i => !/\((?:Fri|Friday)(?:\s+only)?\)/i.test(i));
+        }
+    } else {
+        if (sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
+        if (sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
+    }
+    return items;
+}
+function placeHasSpecialsToday(name){
+    return placesSpecialsItems(name, new Date().toLocaleDateString('en-US',{weekday:'long'})).length > 0;
+}
+
+// "Today" lens — occupies the retired ✓ Verified slot, same exclusivity
+// pattern as the old MBA toggle (Today and Marauder Gold are mutually
+// exclusive; the category chip still ANDs with it).
+window.togglePlacesToday=function(){
+    placesTodayMode=!placesTodayMode;
+    if(placesTodayMode){ placesMGMode=false; const g=document.getElementById('places-mg-toggle'); if(g) g.classList.remove('active'); }
+    const btn=document.getElementById('places-today-toggle');
+    if(btn) btn.classList.toggle('active', placesTodayMode);
+    updatePlacesFilterNote();
+    renderPlaces();
+};
+
 window.togglePlacesMarauderGold=function(){
     placesMGMode=!placesMGMode;
-    if(placesMGMode){ placesMBAMode=false; const m=document.getElementById('places-mba-toggle'); if(m) m.classList.remove('active'); }
+    if(placesMGMode){ placesMBAMode=false; placesTodayMode=false; const m=document.getElementById('places-mba-toggle'); if(m) m.classList.remove('active'); const t=document.getElementById('places-today-toggle'); if(t) t.classList.remove('active'); }
     const btn=document.getElementById('places-mg-toggle');
     if(btn) btn.classList.toggle('active', placesMGMode);
     updatePlacesFilterNote();
@@ -6261,7 +6306,7 @@ function renderPlaces(){
     }
 
     // Housing visibility
-    if((placesFilter==='All' || placesFilter==='Housing') && !placesMBAMode){
+    if((placesFilter==='All' || placesFilter==='Housing') && !placesMBAMode && !placesTodayMode){
         hc.style.display='';
     } else {
         hc.style.display='none';
@@ -6279,6 +6324,11 @@ function renderPlaces(){
     // MBA member lens: when active, show only businesses that are MBA members.
     if(placesMBAMode){
         filtered = filtered.filter(p => getMembership(p.name));
+    }
+
+    // "Today" lens: only places whose card shows a specials box today.
+    if(placesTodayMode){
+        filtered = filtered.filter(p => placeHasSpecialsToday(p.name));
     }
 
     // Audience targeting: drop listings whose audience excludes the current
@@ -6303,7 +6353,7 @@ function renderPlaces(){
     // views (it's a free grocery store inside the HUB). Skipped for townies
     // and for filter views that exclude food (e.g. Services).
     let cupboardCard = '';
-    if (!placesMBAMode && muAffiliation === 'student' && (placesFilter === 'All' || placesFilter === 'Food & Drink')) {
+    if (!placesMBAMode && !placesTodayMode && muAffiliation === 'student' && (placesFilter === 'All' || placesFilter === 'Food & Drink')) {
         cupboardCard = buildCampusCupboardCard(dayName);
     }
 
@@ -6313,6 +6363,8 @@ function renderPlaces(){
     });
     const emptyMsg = placesMBAMode
         ? '<p class="empty-state">No verified businesses match this filter.</p>'
+        : placesTodayMode
+        ? '<p class="empty-state">No specials listed for today — check back tomorrow.</p>'
         : '<p class="empty-state">No listings found in this category. Know a local business? <a href="#" onclick="event.preventDefault();openSubmitBusiness();">Add it here →</a></p>';
     pc.innerHTML = (cupboardCard + cards.join('')) || emptyMsg;
     // Let each card size to its own content instead of stretching to the tallest
@@ -6360,19 +6412,7 @@ function buildFoodCard(p, specials, dayName) {
     const sp = specials[p.name];
     const vfwClosedDay = (dayName === 'Sunday' || dayName === 'Monday');
     if(sp && !(vfwClosedDay && p.name === 'VFW Post 7294')){
-        let items=[];
-        if(sp.daily && sp.daily[dayName]) items = sp.daily[dayName];
-        if (p.name === 'VFW Post 7294') {
-            if(sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
-            if(sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
-            // On Saturday, drop Friday-only items — no longer offered.
-            if(dayName === 'Saturday'){
-                items = items.filter(i => !/\((?:Fri|Friday)(?:\s+only)?\)/i.test(i));
-            }
-        } else {
-            if(sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
-            if(sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
-        }
+        let items = placesSpecialsItems(p.name, dayName);   // single source of truth (also drives the Today lens)
         if(items.length > 0){
             const isGrocery = p.name === "John Herr's Village Market";
             const note = sp.note ? `<p style="font-size:0.7rem;color:var(--text-muted);margin-bottom:4px;font-style:italic;">${sp.note}</p>` : '';

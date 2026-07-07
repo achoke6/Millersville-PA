@@ -128,6 +128,17 @@
   },
   "observations": [
     {
+      "time": "13:00",
+      "temp": "77",
+      "dewpoint": "67",
+      "rh": "73",
+      "windDir": "N",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "10.3",
+      "condition": "None"
+    },
+    {
       "time": "12:00",
       "temp": "72",
       "dewpoint": "67",
@@ -181,23 +192,12 @@
       "precip": "0.01",
       "visibility": "5.4",
       "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "67",
-      "dewpoint": "66",
-      "rh": "98",
-      "windDir": "ENE",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "1.9",
-      "condition": "Mist"
     }
   ],
   "discussion": {
-    "headline": "dangerous, record-breaking heatwave to bake mid-atlantic states",
-    "dateLine": "1:00 p.m. Tuesday, June 30, 2026",
-    "excerpt": "After a relatively cool, cloudy, and damp last weekend of June, partly sunny and warmer conditions returned on Monday with high temperatures in the upper 80s to low 90s across northern MD and southeastern PA. The high pressure system that had been centered over the Northeast on Monday has since shifted into the western Atlantic. On its backside, south-southwesterly winds of 10-20 mph have pumped even hotter air into the Lower Susquehanna Valley this afternoon. …",
+    "headline": "cooler with More rounds of showers, storms this week",
+    "dateLine": "1:00 p.m. Tuesday, July 7, 2026",
+    "excerpt": "Phew! In terms of the weather, the 2026 edition of the Fourth of July weekend won't soon be forgotten! For the first time since July 2-4, 1966, the mercury exceeded the century mark on three consecutive days at Millersville University exactly 60 years later. The high temperature of 102°F on Thursday, July 2, was one degree above the previous record high of 101°F from July 2, 1966. …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -235,5 +235,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-07T16:29:10.460Z"
+  "updated": "2026-07-07T17:12:10.575Z"
 }

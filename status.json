@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-07-06T14:24:57.253Z",
-  "totalEvents": 740,
-  "withDescription": 256,
+  "generatedAt": "2026-07-07T13:21:01.013Z",
+  "totalEvents": 738,
+  "withDescription": 254,
   "withImage": 112,
-  "familyFriendly": 42,
-  "eventsToday": 11,
+  "familyFriendly": 41,
+  "eventsToday": 2,
   "sources": {
     "muAthletics": 207,
     "muCalendar": 85,
     "muGetInvolved": 175,
-    "pennManor": 83,
+    "pennManor": 84,
     "borough": 102,
     "vfw": 2,
     "phantomPower": 13,
-    "community": 23,
-    "manor": 42,
+    "community": 21,
+    "manor": 41,
     "raneyCellars": 3,
     "muHudlBroadcasts": 0
   },
@@ -48,11 +48,11 @@
       "latest": "2026-09-18T00:00:00.000Z"
     },
     "community": {
-      "earliest": "2026-04-27T21:00:00.000Z",
+      "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
     "manor": {
-      "earliest": "2026-07-06T23:00:00.000Z",
+      "earliest": "2026-07-13T23:00:00.000Z",
       "latest": "2027-07-05T23:00:00.000Z"
     },
     "raneyCellars": {
@@ -63,47 +63,47 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-03-12",
-      "daysSinceMoved": 32
+      "daysSinceMoved": 33
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 32
+      "daysSinceMoved": 33
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 32
+      "daysSinceMoved": 33
     },
     "pennManor": {
       "newest": "2026-09-21",
-      "daysSinceMoved": 12
+      "daysSinceMoved": 13
     },
     "borough": {
       "newest": "2027-06-12",
-      "daysSinceMoved": 24
+      "daysSinceMoved": 25
     },
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 32
+      "daysSinceMoved": 33
     },
     "phantomPower": {
       "newest": "2026-09-18",
-      "daysSinceMoved": 11
+      "daysSinceMoved": 12
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 31
+      "daysSinceMoved": 32
     },
     "manor": {
       "newest": "2027-07-05",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "raneyCellars": {
       "newest": "2026-07-09",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     }
   },
   "sports": {
-    "total": 260,
+    "total": 261,
     "scored": 1,
     "wins": 0,
     "losses": 1,
@@ -121,80 +121,80 @@
     "pendingBySource": {
       "PM Community": 1
     },
-    "stalePast": 4,
-    "lastSyncAt": "2026-07-06T14:23:10.552Z"
+    "stalePast": 5,
+    "lastSyncAt": "2026-07-07T13:19:20.670Z"
   },
   "recentlyAdded": [
     {
-      "key": "WIXQ General Meeting|2026-09-07T17:00:00",
-      "firstSeenAt": "2026-07-06T14:24:57.250Z",
-      "title": "WIXQ General Meeting",
-      "source": "MU",
-      "date": "2026-09-07T17:00:00"
+      "key": "Girls Varsity Cross Country @ Warwick High School|2026-08-29T22:00:00.000Z",
+      "firstSeenAt": "2026-07-07T13:21:01.010Z",
+      "title": "Girls Varsity Cross Country @ Warwick High School",
+      "source": "PM",
+      "date": "2026-08-29T22:00:00.000Z"
     },
     {
-      "key": "WIXQ General Meeting|2026-09-27T17:00:00",
-      "firstSeenAt": "2026-07-06T14:24:57.250Z",
-      "title": "WIXQ General Meeting",
-      "source": "MU",
-      "date": "2026-09-27T17:00:00"
-    },
-    {
-      "key": "WIXQ General Meeting|2026-10-18T17:00:00",
-      "firstSeenAt": "2026-07-06T14:24:57.250Z",
-      "title": "WIXQ General Meeting",
-      "source": "MU",
-      "date": "2026-10-18T17:00:00"
-    },
-    {
-      "key": "FAFSA & Resource Expo|2026-10-20T08:00:00",
-      "firstSeenAt": "2026-07-06T14:24:57.250Z",
-      "title": "FAFSA & Resource Expo",
-      "source": "MU",
-      "date": "2026-10-20T08:00:00"
-    },
-    {
-      "key": "WIXQ General Meeting|2026-11-15T17:00:00",
-      "firstSeenAt": "2026-07-06T14:24:57.250Z",
-      "title": "WIXQ General Meeting",
-      "source": "MU",
-      "date": "2026-11-15T17:00:00"
-    },
-    {
-      "key": "Public Hearing: TND Zoning Amendment (Crossings at Penn Ridge)|2026-07-09T22:00:00.000Z",
-      "firstSeenAt": "2026-07-06T12:23:22.337Z",
-      "title": "Public Hearing: TND Zoning Amendment (Crossings at Penn Ridge)",
-      "source": "Borough",
-      "date": "2026-07-09T22:00:00.000Z"
-    },
-    {
-      "key": "Back to School Community Event|2026-08-09T16:00:00.000Z",
-      "firstSeenAt": "2026-07-06T12:23:22.337Z",
-      "title": "Back to School Community Event",
-      "source": "Other",
-      "date": "2026-08-09T16:00:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2026-07-06T23:00:00.000Z",
-      "firstSeenAt": "2026-07-06T05:10:57.526Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-07-06T23:00:00.000Z"
+      "key": "Boys Varsity Cross Country @ Warwick High School|2026-08-29T22:00:00.000Z",
+      "firstSeenAt": "2026-07-07T13:21:01.010Z",
+      "title": "Boys Varsity Cross Country @ Warwick High School",
+      "source": "PM",
+      "date": "2026-08-29T22:00:00.000Z"
     },
     {
       "key": "Planning Commission|2026-07-13T23:00:00.000Z",
-      "firstSeenAt": "2026-07-06T05:10:57.526Z",
+      "firstSeenAt": "2026-07-07T10:26:10.502Z",
       "title": "Planning Commission",
       "source": "Manor",
       "date": "2026-07-13T23:00:00.000Z"
     },
     {
       "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
-      "firstSeenAt": "2026-07-06T05:10:57.526Z",
+      "firstSeenAt": "2026-07-07T10:26:10.502Z",
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2026-07-29T12:30:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
+      "firstSeenAt": "2026-07-07T10:26:10.502Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-08-03T23:00:00.000Z"
+    },
+    {
+      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
+      "firstSeenAt": "2026-07-07T10:26:10.502Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-08-05T23:00:00.000Z"
+    },
+    {
+      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
+      "firstSeenAt": "2026-07-07T10:26:10.502Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-08-10T23:00:00.000Z"
+    },
+    {
+      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
+      "firstSeenAt": "2026-07-07T10:26:10.502Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-08-26T12:30:00.000Z"
+    },
+    {
+      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-07-07T10:26:10.502Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-09-02T23:00:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2026-09-07T23:00:00.000Z",
+      "firstSeenAt": "2026-07-07T10:26:10.502Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-07T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 5
+  "addedLastRun": 2
 }

@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-07-08T19:24:29.197Z",
-  "totalEvents": 802,
-  "withDescription": 292,
+  "generatedAt": "2026-07-08T21:07:28.355Z",
+  "totalEvents": 700,
+  "withDescription": 289,
   "withImage": 112,
   "familyFriendly": 41,
   "eventsToday": 0,
@@ -10,7 +10,7 @@
     "muCalendar": 124,
     "muGetInvolved": 175,
     "pennManor": 84,
-    "borough": 102,
+    "borough": 0,
     "vfw": 2,
     "phantomPower": 13,
     "community": 21,
@@ -35,10 +35,7 @@
       "earliest": "2026-05-05T20:15:00.000Z",
       "latest": "2026-09-21T23:00:00.000Z"
     },
-    "borough": {
-      "earliest": "2026-04-11T14:00:00.000Z",
-      "latest": "2027-06-12T14:00:00.000Z"
-    },
+    "borough": null,
     "vfw": {
       "earliest": "2026-07-18T20:00:00.000Z",
       "latest": "2026-09-11T17:00:00.000Z"
@@ -77,10 +74,7 @@
       "newest": "2026-09-21",
       "daysSinceMoved": 14
     },
-    "borough": {
-      "newest": "2027-06-12",
-      "daysSinceMoved": 26
-    },
+    "borough": null,
     "vfw": {
       "newest": "2026-09-11",
       "daysSinceMoved": 34
@@ -122,7 +116,7 @@
       "PM Community": 1
     },
     "stalePast": 5,
-    "lastSyncAt": "2026-07-08T19:22:35.459Z"
+    "lastSyncAt": "2026-07-08T21:05:47.776Z"
   },
   "recentlyAdded": [
     {
@@ -196,5 +190,5 @@
       "date": "2026-10-24T17:00:00.000Z"
     }
   ],
-  "addedLastRun": 27
+  "addedLastRun": 0
 }

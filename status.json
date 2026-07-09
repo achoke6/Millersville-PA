@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-07-09T13:49:54.820Z",
-  "totalEvents": 706,
-  "withDescription": 289,
+  "generatedAt": "2026-07-09T16:29:51.234Z",
+  "totalEvents": 629,
+  "withDescription": 254,
   "withImage": 112,
   "familyFriendly": 41,
   "eventsToday": 4,
   "sources": {
     "muAthletics": 238,
-    "muCalendar": 124,
-    "muGetInvolved": 175,
+    "muCalendar": 88,
+    "muGetInvolved": 176,
     "pennManor": 84,
     "borough": 0,
     "vfw": 2,
     "phantomPower": 13,
     "community": 21,
-    "manor": 42,
+    "manor": 0,
     "raneyCellars": 3,
     "muHudlBroadcasts": 0
   },
@@ -48,10 +48,7 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-07-13T23:00:00.000Z",
-      "latest": "2027-07-07T23:00:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-07-09T21:00:00.000Z",
       "latest": "2026-07-23T20:00:00.000Z"
@@ -87,10 +84,7 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 34
     },
-    "manor": {
-      "newest": "2027-07-07",
-      "daysSinceMoved": 2
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-07-23",
       "daysSinceMoved": 1
@@ -116,9 +110,37 @@
       "PM Community": 1
     },
     "stalePast": 5,
-    "lastSyncAt": "2026-07-09T13:48:21.435Z"
+    "lastSyncAt": "2026-07-09T16:26:17.692Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Summer Welcome Session|2026-07-10T09:00:00",
+      "firstSeenAt": "2026-07-09T16:29:51.232Z",
+      "title": "Summer Welcome Session",
+      "source": "MU",
+      "date": "2026-07-10T09:00:00"
+    },
+    {
+      "key": "Summer Welcome Session|2026-07-17T09:00:00",
+      "firstSeenAt": "2026-07-09T16:29:51.232Z",
+      "title": "Summer Welcome Session",
+      "source": "MU",
+      "date": "2026-07-17T09:00:00"
+    },
+    {
+      "key": "Summer Welcome Session|2026-07-23T09:00:00",
+      "firstSeenAt": "2026-07-09T16:29:51.232Z",
+      "title": "Summer Welcome Session",
+      "source": "MU",
+      "date": "2026-07-23T09:00:00"
+    },
+    {
+      "key": "Extended Orientation for Gateway Scholars Program|2026-08-16T00:00:00",
+      "firstSeenAt": "2026-07-09T16:29:51.232Z",
+      "title": "Extended Orientation for Gateway Scholars Program",
+      "source": "MU",
+      "date": "2026-08-16T00:00:00"
+    },
     {
       "key": "\"GOLDEN\": A K-POP KIDS PARTY|2026-08-02T16:00:00.000Z",
       "firstSeenAt": "2026-07-09T02:52:30.823Z",
@@ -160,35 +182,7 @@
       "title": "Millersville University Women's Tennis at PSAC Semifinals",
       "source": "MU",
       "date": "2027-04-30T14:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Tennis at PSAC Championship|2027-05-01T14:00:00.000Z",
-      "firstSeenAt": "2026-07-08T23:06:34.759Z",
-      "title": "Millersville University Women's Tennis at PSAC Championship",
-      "source": "MU",
-      "date": "2027-05-01T14:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Men's Tennis vs Goucher|2026-09-19T17:00:00.000Z",
-      "firstSeenAt": "2026-07-08T19:24:29.195Z",
-      "title": "Millersville University Men's Tennis vs Goucher",
-      "source": "MU",
-      "date": "2026-09-19T17:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Tennis at Seton Hill|2026-09-26T17:00:00.000Z",
-      "firstSeenAt": "2026-07-08T19:24:29.195Z",
-      "title": "Millersville University Women's Tennis at Seton Hill",
-      "source": "MU",
-      "date": "2026-09-26T17:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Tennis at California (PA)|2026-09-27T17:00:00.000Z",
-      "firstSeenAt": "2026-07-08T19:24:29.195Z",
-      "title": "Millersville University Women's Tennis at California (PA)",
-      "source": "MU",
-      "date": "2026-09-27T17:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 4
 }

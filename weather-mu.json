@@ -1,27 +1,27 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Wednesday, July 08, 2026 at 12:14 PM (Kyle Elliott, Meteorologist)",
+    "issued": "Thursday, July 09, 2026 at 08:39 AM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "This afternoon",
-        "text": "Partly sunny and pleasant. High: 82-86"
-      },
-      {
-        "period": "Tonight",
-        "text": "Warm and muggy with increasing clouds. Low: 66-70"
-      },
-      {
-        "period": "Thursday",
+        "period": "Today",
         "text": "Mostly cloudy and humid with scattered showers and heavy, drenching T-storms High: 82-86"
       },
       {
-        "period": "Thursday Night",
+        "period": "Tonight",
         "text": "Partly cloudy, warm and muggy. Low: 68-72"
       },
       {
         "period": "Friday",
         "text": "Partly sunny, warm and humid with afternoon showers and T-storms. High: 86-90"
+      },
+      {
+        "period": "Friday Night",
+        "text": "Mostly cloudy, warm and muggy with an isolated shower. Low: 68-72"
+      },
+      {
+        "period": "Saturday",
+        "text": "Seasonable and humid with decreasing clouds and an isolated shower. High: 82-86"
       }
     ]
   },
@@ -128,6 +128,39 @@
   },
   "observations": [
     {
+      "time": "09:00",
+      "temp": "76",
+      "dewpoint": "73",
+      "rh": "90",
+      "windDir": "SW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "8.2",
+      "condition": "None"
+    },
+    {
+      "time": "08:00",
+      "temp": "74",
+      "dewpoint": "71",
+      "rh": "90",
+      "windDir": "NNE",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "7.9",
+      "condition": "None"
+    },
+    {
+      "time": "07:00",
+      "temp": "73",
+      "dewpoint": "71",
+      "rh": "93",
+      "windDir": "E",
+      "windSpeed": "0",
+      "precip": "0.00",
+      "visibility": "8.4",
+      "condition": "None"
+    },
+    {
       "time": "06:00",
       "temp": "73",
       "dewpoint": "71",
@@ -158,39 +191,6 @@
       "windSpeed": "3",
       "precip": "0.00",
       "visibility": "9.5",
-      "condition": "None"
-    },
-    {
-      "time": "03:00",
-      "temp": "72",
-      "dewpoint": "69",
-      "rh": "88",
-      "windDir": "SSW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "9.9",
-      "condition": "None"
-    },
-    {
-      "time": "02:00",
-      "temp": "71",
-      "dewpoint": "68",
-      "rh": "90",
-      "windDir": "WSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "9.6",
-      "condition": "None"
-    },
-    {
-      "time": "01:00",
-      "temp": "73",
-      "dewpoint": "68",
-      "rh": "86",
-      "windDir": "SSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "9.9",
       "condition": "None"
     }
   ],
@@ -235,5 +235,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-09T10:33:51.436Z"
+  "updated": "2026-07-09T13:48:23.524Z"
 }

@@ -2614,7 +2614,7 @@ function matchesSportSource(tags, src) {
     return false;
 }
 
-const viewPaths={home:'/',news:'/news',events:'/events',sports:'/sports',places:'/directory',board:'/board',weather:'/weather',store:'/store',advertise:'/advertise',analytics:'/analytics'};
+const viewPaths={home:'/',news:'/news',events:'/events',sports:'/sports',places:'/map',board:'/board',weather:'/weather',store:'/store',advertise:'/advertise',analytics:'/analytics'};   // places: /map canonical as of 2026-07-10 (was /directory) — legacy aliases below
 const pathToView=Object.fromEntries(Object.entries(viewPaths).map(([k,v])=>[v,k]));
 
 // ==================== URL STATE (shareable filter URLs) ====================
@@ -2785,7 +2785,7 @@ function updatePageTitleForView(view) {
 // Legacy URL redirects
 pathToView['/food'] = 'places';
 pathToView['/services'] = 'places';
-pathToView['/directory'] = 'places';
+pathToView['/directory'] = 'places';   // pre-2026-07-10 canonical — bookmarks, shares, and indexed links keep working
 pathToView['/places'] = 'places';   // legacy alias — old links keep working
 
 // Runtime header-height measurement. The secondary sticky nav bar (events/
@@ -2946,7 +2946,11 @@ async function initApp(){
     }
     let view=pathToView[p]||'home';
     // Redirect old /housing URL to services with Housing filter
-    if(p==='/housing'){ view='places'; history.replaceState(null,'','/places'); }
+    if(p==='/housing'){ view='places'; }
+    // Normalize every legacy Map-page path (/directory, /places, /food,
+    // /services, /housing) in the address bar — the aliases above keep them
+    // routable; this keeps the visible URL canonical.
+    if(view==='places' && p!=='/map'){ history.replaceState(null,'','/map'); }
     switchView(view,true);
     if(p==='/housing'){ setTimeout(()=>{ const btn=document.querySelector('#svc-filter-group .src-btn:nth-child(2)'); if(btn) btn.click(); },500); }
 }

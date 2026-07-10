@@ -6234,6 +6234,7 @@ window.focusPlaceOnMap = function(pOrSlug){
 // extract bbox, and maxBounds clamps panning) get a message, not a marker.
 function placesMapLocate(){
     if (!placesMap) return;
+    if (!('geolocation' in navigator)){ placesMapOnLocationError({ code: 2 }); return; }
     placesMap.locate({ setView: false, enableHighAccuracy: true, timeout: 10000 });
 }
 function placesMapOnLocation(e){
@@ -6252,10 +6253,22 @@ function placesMapOnLocation(e){
     }).addTo(placesMap);
     placesMap.setView(e.latlng, Math.max(placesMap.getZoom(), 15));
 }
-function placesMapOnLocationError(){
+function placesMapOnLocationError(err){
     if (!placesMap) return;
+    // Geolocation error codes: 1 = permission blocked (browser/site level),
+    // 2 = position unavailable (usually the OS location service, common on
+    // desktop PCs), 3 = timeout. Saying WHICH one turns a dead end into a fix.
+    const code = err && err.code;
+    let msg;
+    if (code === 1){
+        msg = 'Location is blocked for this site. Click the padlock → Site settings → Location → Allow — and if there was never a prompt, check the browser’s own location setting too.';
+    } else if (code === 3){
+        msg = 'Locating timed out — try again in a moment.';
+    } else {
+        msg = 'Your device couldn’t determine a position. On desktop PCs this usually means the operating system’s location service is off (Windows: Settings → Privacy & security → Location).';
+    }
     L.popup().setLatLng(placesMap.getCenter())
-        .setContent('<div style="font-weight:700;margin-bottom:2px;">Location unavailable</div><div class="map-popup-meta">Check your browser’s location permission for millersville.app and try again.</div>')
+        .setContent('<div style="font-weight:700;margin-bottom:2px;">Location unavailable</div><div class="map-popup-meta">' + msg + '</div>')
         .openOn(placesMap);
 }
 

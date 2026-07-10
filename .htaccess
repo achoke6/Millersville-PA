@@ -120,13 +120,17 @@ RewriteRule ^ index.html [L]
     #   (31536000) or 2 years after a few weeks of confirmed stability.
     # Permissions-Policy: disables browser features we don't use. Empty
     #   parens () means "no origin including this one can use this feature."
-    #   We deliberately leave notifications and service-worker stuff
-    #   unmentioned — those are features we DO use for push notifications.
+    #   geolocation=(self) — changed 2026-07-09 from () when the Map page's
+    #   "My location" button shipped: our own origin may request it (the
+    #   browser prompt works again), but a third party iframing our pages
+    #   still can't. We deliberately leave notifications and service-worker
+    #   stuff unmentioned — those are features we DO use for push
+    #   notifications.
     Header set X-Content-Type-Options "nosniff"
     Header set X-Frame-Options "SAMEORIGIN"
     Header set Referrer-Policy "strict-origin-when-cross-origin"
     Header set Strict-Transport-Security "max-age=15768000; includeSubDomains"
-    Header set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=(), serial=(), accelerometer=(), gyroscope=(), magnetometer=(), midi=()"
+    Header set Permissions-Policy "camera=(), microphone=(), geolocation=(self), payment=(), usb=(), bluetooth=(), serial=(), accelerometer=(), gyroscope=(), magnetometer=(), midi=()"
 
     # JSON files & HTML: no caching at any layer. JSON for data freshness,
     # HTML so code deploys pick up instantly.

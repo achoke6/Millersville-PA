@@ -6253,7 +6253,7 @@ function placesMapOnLocation(e){
     console.debug('locate:', e.latlng ? (e.latlng.lat.toFixed(5) + ',' + e.latlng.lng.toFixed(5)) : e.latlng, 'accuracy(m)', Math.round(e.accuracy || 0));
     if (placesMapUserDot){ placesMap.removeLayer(placesMapUserDot); placesMapUserDot = null; }
     if (placesMapUserAcc){ placesMap.removeLayer(placesMapUserAcc); placesMapUserAcc = null; }
-    if (!L.latLngBounds(PLACES_MAP_CFG.maxBounds).contains(e.latlng)){
+    if (!L.latLngBounds(PLACES_MAP_CFG.bounds).contains(e.latlng)){   // NB: the config key is `bounds`; `maxBounds` is only the Leaflet OPTION name fed from it at init
         L.popup().setLatLng(placesMap.getCenter())
             .setContent('<div style="font-weight:700;margin-bottom:2px;">Outside the map area</div><div class="map-popup-meta">Your location is outside Millersville, so there’s nothing to show here.</div>')
             .openOn(placesMap);

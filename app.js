@@ -6232,6 +6232,18 @@ window.focusPlaceOnMap = function(pOrSlug){
 // The position is used entirely client-side — a dot on the map — and is never
 // stored or transmitted. Out-of-area locations (basemap only covers the
 // extract bbox, and maxBounds clamps panning) get a message, not a marker.
+// Frame the map around whatever pins are currently visible (lens results).
+// One pin gets a clean setView; maxZoom 16 keeps two adjacent pins from
+// zooming to rooftop level; zero coordful pins leaves the view alone.
+function placesMapFitVisible(){
+    if (!placesMap) return;
+    const pts = [];
+    placesMapMarkerBySlug.forEach(m => pts.push(m.getLatLng()));
+    if (!pts.length) return;
+    if (pts.length === 1){ placesMap.setView(pts[0], 16); return; }
+    placesMap.fitBounds(L.latLngBounds(pts), { padding: [24, 24], maxZoom: 16 });
+}
+
 function placesMapLocate(){
     if (!placesMap) return;
     if (!('geolocation' in navigator)){ placesMapOnLocationError({ code: 2 }); return; }
@@ -6259,16 +6271,23 @@ function placesMapOnLocationError(err){
     // 2 = position unavailable (usually the OS location service, common on
     // desktop PCs), 3 = timeout. Saying WHICH one turns a dead end into a fix.
     const code = err && err.code;
+    const raw = (err && err.message) ? String(err.message) : '';
     let msg;
-    if (code === 1){
+    if (code === 1 && /permissions? policy/i.test(raw)){
+        // The document itself carries a Permissions-Policy header that excludes
+        // geolocation — the browser never prompts. Fix the header (.htaccess or
+        // host-level security headers), not the browser settings.
+        msg = 'The site is blocking geolocation via a Permissions-Policy header — this is server config (.htaccess / host security headers), not a browser setting.';
+    } else if (code === 1){
         msg = 'Location is blocked for this site. Click the padlock → Site settings → Location → Allow — and if there was never a prompt, check the browser’s own location setting too.';
     } else if (code === 3){
         msg = 'Locating timed out — try again in a moment.';
     } else {
         msg = 'Your device couldn’t determine a position. On desktop PCs this usually means the operating system’s location service is off (Windows: Settings → Privacy & security → Location).';
     }
+    const detail = raw ? '<div class="map-popup-meta" style="opacity:.65;font-size:11px;margin-top:3px;">' + raw.replace(/</g, '&lt;') + '</div>' : '';
     L.popup().setLatLng(placesMap.getCenter())
-        .setContent('<div style="font-weight:700;margin-bottom:2px;">Location unavailable</div><div class="map-popup-meta">' + msg + '</div>')
+        .setContent('<div style="font-weight:700;margin-bottom:2px;">Location unavailable</div><div class="map-popup-meta">' + msg + '</div>' + detail)
         .openOn(placesMap);
 }
 
@@ -6362,6 +6381,8 @@ window.togglePlacesToday=function(){
     if(btn) btn.classList.toggle('active', placesTodayMode);
     updatePlacesFilterNote();
     renderPlaces();
+    if (placesTodayMode) placesMapFitVisible();
+    else if (placesMap) placesMap.setView(PLACES_MAP_CFG.center, PLACES_MAP_CFG.zoom);
     window.scrollTo(0, 0);   // lens re-render can shrink the list; don't strand the viewport below it
 };
 
@@ -6372,6 +6393,8 @@ window.togglePlacesMarauderGold=function(){
     if(btn) btn.classList.toggle('active', placesMGMode);
     updatePlacesFilterNote();
     renderPlaces();
+    if (placesMGMode) placesMapFitVisible();
+    else if (placesMap) placesMap.setView(PLACES_MAP_CFG.center, PLACES_MAP_CFG.zoom);
     window.scrollTo(0, 0);   // lens re-render can shrink the list; don't strand the viewport below it
 };
 

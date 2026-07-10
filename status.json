@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-07-10T00:04:40.959Z",
-  "totalEvents": 671,
+  "generatedAt": "2026-07-10T04:51:11.845Z",
+  "totalEvents": 587,
   "withDescription": 254,
   "withImage": 112,
-  "familyFriendly": 41,
-  "eventsToday": 4,
+  "familyFriendly": 40,
+  "eventsToday": 2,
   "sources": {
     "muAthletics": 238,
     "muCalendar": 88,
     "muGetInvolved": 176,
-    "pennManor": 84,
+    "pennManor": 0,
     "borough": 0,
     "vfw": 2,
     "phantomPower": 13,
@@ -31,10 +31,7 @@
       "earliest": "2026-04-14T20:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
-    "pennManor": {
-      "earliest": "2026-05-05T20:15:00.000Z",
-      "latest": "2026-09-21T23:00:00.000Z"
-    },
+    "pennManor": null,
     "borough": null,
     "vfw": {
       "earliest": "2026-07-18T20:00:00.000Z",
@@ -60,47 +57,44 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-01",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 35
+      "daysSinceMoved": 36
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 35
+      "daysSinceMoved": 36
     },
-    "pennManor": {
-      "newest": "2026-09-21",
-      "daysSinceMoved": 15
-    },
+    "pennManor": null,
     "borough": null,
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 35
+      "daysSinceMoved": 36
     },
     "phantomPower": {
       "newest": "2026-09-18",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 15
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 34
+      "daysSinceMoved": 35
     },
     "manor": {
       "newest": "2027-07-07",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "raneyCellars": {
       "newest": "2026-07-23",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     }
   },
   "sports": {
-    "total": 292,
-    "scored": 1,
+    "total": 238,
+    "scored": 0,
     "wins": 0,
-    "losses": 1,
+    "losses": 0,
     "ties": 0
   },
   "registrations": {
@@ -116,7 +110,7 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-10T00:03:09.692Z"
+    "lastSyncAt": "2026-07-10T04:50:22.432Z"
   },
   "recentlyAdded": [
     {

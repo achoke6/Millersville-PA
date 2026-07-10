@@ -57,16 +57,6 @@
     "slug": "billie-jean-s-hair-nail-studio"
   },
   {
-    "name": "The Vintage Clipper",
-    "category": "Beauty/Grooming",
-    "address": "109 W Frederick St, Millersville, PA 17551",
-    "phone": "(717) 584-3139",
-    "description": "",
-    "lat": 39.996638,
-    "lng": -76.359336,
-    "slug": "vintage-clipper"
-  },
-  {
     "name": "Millersville University Library",
     "category": "Education",
     "address": "9 N George St, Millersville, PA 17551",
@@ -120,8 +110,8 @@
     "phone": "(800) 237-7288",
     "description": "Credit union with student-friendly accounts and ATMs",
     "link": "https://www.members1st.org/",
-    "lat": 40.008822,
-    "lng": -76.344434,
+    "lat": 40.009454,
+    "lng": -76.344571,
     "slug": "members-1st-federal-credit-union"
   },
   {
@@ -360,5 +350,16 @@
     "lat": 40.008496,
     "lng": -76.375411,
     "slug": "mill-at-manor-falls"
+  },
+  {
+    "name": "Dominic's Barbershop",
+    "category": "Beauty/Grooming",
+    "address": "30 S Prince St, Millersville, PA 17551",
+    "phone": "(717) 872-0598",
+    "description": "Full service barbershop",
+    "link": "http://millersvillebarber.com/",
+    "lat": 39.995598,
+    "lng": -76.358896,
+    "slug": "dominic-s-barbershop"
   }
 ]

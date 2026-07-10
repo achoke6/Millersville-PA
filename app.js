@@ -6046,7 +6046,7 @@ function initPlacesMap(){
     placesMap.on('locationfound', placesMapOnLocation);
     placesMap.on('locationerror', placesMapOnLocationError);
         refreshPlacesMap();
-        setTimeout(()=>placesMap.invalidateSize(), 60);
+        setTimeout(()=>{ placesMap.invalidateSize(); placesMapFitVisible(); }, 60);   // frame every listed place once the container size is right
     }).catch(e => {
         // Vendor asset failed (offline first visit, bad deploy). The map stays
         // hidden and the directory list is completely unaffected.
@@ -6250,6 +6250,7 @@ function placesMapLocate(){
     placesMap.locate({ setView: false, enableHighAccuracy: true, timeout: 10000 });
 }
 function placesMapOnLocation(e){
+    console.debug('locate:', e.latlng ? (e.latlng.lat.toFixed(5) + ',' + e.latlng.lng.toFixed(5)) : e.latlng, 'accuracy(m)', Math.round(e.accuracy || 0));
     if (placesMapUserDot){ placesMap.removeLayer(placesMapUserDot); placesMapUserDot = null; }
     if (placesMapUserAcc){ placesMap.removeLayer(placesMapUserAcc); placesMapUserAcc = null; }
     if (!L.latLngBounds(PLACES_MAP_CFG.maxBounds).contains(e.latlng)){
@@ -6258,12 +6259,16 @@ function placesMapOnLocation(e){
             .openOn(placesMap);
         return;
     }
-    placesMapUserAcc = L.circle(e.latlng, { radius: e.accuracy || 30, weight: 1, color: '#2a6df4', fillColor: '#2a6df4', fillOpacity: 0.08 }).addTo(placesMap);
+    // Cap the accuracy circle at 150 m: desktop Wi-Fi positioning can report
+    // kilometers of uncertainty, and an honest circle that big swallows the
+    // whole town and reads as a broken map. The dot rides zIndexOffset 1000
+    // so it can never hide under a business pin.
+    placesMapUserAcc = L.circle(e.latlng, { radius: Math.min(e.accuracy || 30, 150), weight: 1, color: '#2a6df4', fillColor: '#2a6df4', fillOpacity: 0.08 }).addTo(placesMap);
     placesMapUserDot = L.marker(e.latlng, {
         icon: L.divIcon({ className: '', html: '<div class="map-user-dot" title="You are here"></div>', iconSize: [18, 18], iconAnchor: [9, 9] }),
-        interactive: false, keyboard: false
+        interactive: false, keyboard: false, zIndexOffset: 1000
     }).addTo(placesMap);
-    placesMap.setView(e.latlng, Math.max(placesMap.getZoom(), 15));
+    placesMap.setView(e.latlng, Math.max(placesMap.getZoom(), 17));   // street level — a real "take me to me", never zooms OUT
 }
 function placesMapOnLocationError(err){
     if (!placesMap) return;
@@ -6381,8 +6386,7 @@ window.togglePlacesToday=function(){
     if(btn) btn.classList.toggle('active', placesTodayMode);
     updatePlacesFilterNote();
     renderPlaces();
-    if (placesTodayMode) placesMapFitVisible();
-    else if (placesMap) placesMap.setView(PLACES_MAP_CFG.center, PLACES_MAP_CFG.zoom);
+    placesMapFitVisible();   // ON: frame today's places; OFF: pins just rebuilt to every listed place — frame those
     window.scrollTo(0, 0);   // lens re-render can shrink the list; don't strand the viewport below it
 };
 
@@ -6393,8 +6397,7 @@ window.togglePlacesMarauderGold=function(){
     if(btn) btn.classList.toggle('active', placesMGMode);
     updatePlacesFilterNote();
     renderPlaces();
-    if (placesMGMode) placesMapFitVisible();
-    else if (placesMap) placesMap.setView(PLACES_MAP_CFG.center, PLACES_MAP_CFG.zoom);
+    placesMapFitVisible();   // ON: frame MG places; OFF: frame every listed place
     window.scrollTo(0, 0);   // lens re-render can shrink the list; don't strand the viewport below it
 };
 

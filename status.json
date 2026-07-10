@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-07-10T11:51:11.721Z",
-  "totalEvents": 629,
-  "withDescription": 254,
+  "generatedAt": "2026-07-10T13:55:52.365Z",
+  "totalEvents": 677,
+  "withDescription": 260,
   "withImage": 112,
   "familyFriendly": 41,
   "eventsToday": 2,
   "sources": {
     "muAthletics": 238,
-    "muCalendar": 88,
+    "muCalendar": 94,
     "muGetInvolved": 176,
     "pennManor": 84,
     "borough": 0,
     "vfw": 2,
     "phantomPower": 13,
     "community": 21,
-    "manor": 0,
+    "manor": 42,
     "raneyCellars": 3,
     "muHudlBroadcasts": 0
   },
@@ -48,7 +48,10 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-07-13T23:00:00.000Z",
+      "latest": "2027-07-07T23:00:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-07-09T21:00:00.000Z",
       "latest": "2026-07-23T20:00:00.000Z"
@@ -84,7 +87,10 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 35
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-07-07",
+      "daysSinceMoved": 3
+    },
     "raneyCellars": {
       "newest": "2026-07-23",
       "daysSinceMoved": 2
@@ -110,79 +116,79 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-10T11:50:10.182Z"
+    "lastSyncAt": "2026-07-10T13:54:27.277Z"
   },
   "recentlyAdded": [
     {
-      "key": "Boys Varsity Baseball vs Twin Valley High School|2026-05-05T20:15:00.000Z",
-      "firstSeenAt": "2026-07-10T08:22:27.536Z",
-      "title": "Boys Varsity Baseball vs Twin Valley High School",
-      "source": "PM",
-      "date": "2026-05-05T20:15:00.000Z"
+      "key": "Planning Commission|2026-07-13T23:00:00.000Z",
+      "firstSeenAt": "2026-07-10T13:55:52.363Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-07-13T23:00:00.000Z"
     },
     {
-      "key": "Boys JV Baseball vs Twin Valley High School|2026-05-05T20:15:00.000Z",
-      "firstSeenAt": "2026-07-10T08:22:27.536Z",
-      "title": "Boys JV Baseball vs Twin Valley High School",
-      "source": "PM",
-      "date": "2026-05-05T20:15:00.000Z"
+      "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
+      "firstSeenAt": "2026-07-10T13:55:52.363Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-07-29T12:30:00.000Z"
     },
     {
-      "key": "Girls Varsity Softball @ Twin Valley High School|2026-05-05T20:15:00.000Z",
-      "firstSeenAt": "2026-07-10T08:22:27.536Z",
-      "title": "Girls Varsity Softball @ Twin Valley High School",
-      "source": "PM",
-      "date": "2026-05-05T20:15:00.000Z"
+      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
+      "firstSeenAt": "2026-07-10T13:55:52.363Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-08-03T23:00:00.000Z"
     },
     {
-      "key": "ESH Lunch & Learn|2026-05-05T22:00:00.000Z",
-      "firstSeenAt": "2026-07-10T08:22:27.536Z",
-      "title": "ESH Lunch & Learn",
-      "source": "PM",
-      "date": "2026-05-05T22:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
+      "firstSeenAt": "2026-07-10T13:55:52.363Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-08-05T23:00:00.000Z"
     },
     {
-      "key": "Lunch & Learn 6-7:00pm (Incoming Kdg Students Only)|2026-05-05T22:00:00.000Z",
-      "firstSeenAt": "2026-07-10T08:22:27.536Z",
-      "title": "Lunch & Learn 6-7:00pm (Incoming Kdg Students Only)",
-      "source": "PM",
-      "date": "2026-05-05T22:00:00.000Z"
+      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
+      "firstSeenAt": "2026-07-10T13:55:52.363Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-08-10T23:00:00.000Z"
     },
     {
-      "key": "Boys JV Volleyball vs Warwick Senior High School|2026-05-05T22:00:00.000Z",
-      "firstSeenAt": "2026-07-10T08:22:27.536Z",
-      "title": "Boys JV Volleyball vs Warwick Senior High School",
-      "source": "PM",
-      "date": "2026-05-05T22:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
+      "firstSeenAt": "2026-07-10T13:55:52.363Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-08-26T12:30:00.000Z"
     },
     {
-      "key": "Boys Varsity Volleyball vs Warwick Senior High School|2026-05-05T23:00:00.000Z",
-      "firstSeenAt": "2026-07-10T08:22:27.536Z",
-      "title": "Boys Varsity Volleyball vs Warwick Senior High School",
-      "source": "PM",
-      "date": "2026-05-05T23:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-07-10T13:55:52.363Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-09-02T23:00:00.000Z"
     },
     {
-      "key": "Boys Varsity Baseball vs Red Lion  Area Senior High School|2026-05-06T20:15:00.000Z",
-      "firstSeenAt": "2026-07-10T08:22:27.536Z",
-      "title": "Boys Varsity Baseball vs Red Lion  Area Senior High School",
-      "source": "PM",
-      "date": "2026-05-06T20:15:00.000Z"
+      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
+      "firstSeenAt": "2026-07-10T13:55:52.363Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-08T23:00:00.000Z"
     },
     {
-      "key": "Boys JV Baseball vs Red Lion  Area Senior High School|2026-05-06T20:15:00.000Z",
-      "firstSeenAt": "2026-07-10T08:22:27.536Z",
-      "title": "Boys JV Baseball vs Red Lion  Area Senior High School",
-      "source": "PM",
-      "date": "2026-05-06T20:15:00.000Z"
+      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
+      "firstSeenAt": "2026-07-10T13:55:52.363Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-09-14T23:00:00.000Z"
     },
     {
-      "key": "Boys Varsity Lacrosse - Boys @ Cedar Crest High School|2026-05-06T20:15:00.000Z",
-      "firstSeenAt": "2026-07-10T08:22:27.536Z",
-      "title": "Boys Varsity Lacrosse - Boys @ Cedar Crest High School",
-      "source": "PM",
-      "date": "2026-05-06T20:15:00.000Z"
+      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-07-10T13:55:52.363Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-09-30T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 48
 }

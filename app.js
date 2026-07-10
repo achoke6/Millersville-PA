@@ -5709,6 +5709,8 @@ function renderNewsUI(){
 let allPlaces=[], placesFilter='All', placesMGMode=false, placesMBAMode=false;
 let allHousing=[];   // housing.json rows (rendered audience-filtered — see renderHousing)
 let placesMap=null, placesMapMarkers=null, placesMapLibReady=false, placesMapLibLoading=null, placesMapFailed=false;   // Directory map (see DIRECTORY MAP block)
+let placesMapMarkerBySlug = new Map();   // slug → Leaflet marker (card-tap → pin focus)
+let placesMapUserDot = null, placesMapUserAcc = null;   // "My location" dot + accuracy circle (session-only, never stored)
 let placesTodayMode=false;   // "Today" lens: places with a specials box today (see placesSpecialsItems)
 
 // --- MBA (Millersville Business Association) membership integration ----------
@@ -6027,6 +6029,22 @@ function initPlacesMap(){
             attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
         }).addTo(placesMap);
         placesMapMarkers = L.layerGroup().addTo(placesMap);
+    // 🎯 "My location" control — rides the native leaflet-bar styling, sits
+    // under the zoom buttons. Geolocation is strictly user-initiated (the
+    // permission prompt fires on first tap, never on load).
+    const locateCtl = L.control({ position: 'topleft' });
+    locateCtl.onAdd = function(){
+        const div = L.DomUtil.create('div', 'leaflet-bar');
+        const a = L.DomUtil.create('a', 'map-locate-btn', div);
+        a.href = '#'; a.title = 'Show my location';
+        a.setAttribute('role', 'button'); a.setAttribute('aria-label', 'Show my location');
+        a.textContent = '🎯';
+        L.DomEvent.on(a, 'click', function(ev){ L.DomEvent.stop(ev); placesMapLocate(); });
+        return div;
+    };
+    locateCtl.addTo(placesMap);
+    placesMap.on('locationfound', placesMapOnLocation);
+    placesMap.on('locationerror', placesMapOnLocationError);
         refreshPlacesMap();
         setTimeout(()=>placesMap.invalidateSize(), 60);
     }).catch(e => {
@@ -6086,15 +6104,17 @@ function refreshPlacesMap(){
         });
     });
     placesMapMarkers.clearLayers();
+    placesMapMarkerBySlug.clear();
     entries.forEach(en => {
         const p = en.place;
         const glyph = MAP_PIN_ICONS[p.category] || '📍';
         const color = MAP_PIN_COLORS[en.group] || '#14203a';
         const icon = L.divIcon({ className: '', html: `<div class="map-pin" style="border-color:${color}">${glyph}</div>`, iconSize: [30,30], iconAnchor: [15,15], popupAnchor: [0,-16] });
-        L.marker([en.dlat, en.dlng], { icon: icon, title: p.name })
+        const m = L.marker([en.dlat, en.dlng], { icon: icon, title: p.name })
             .bindPopup(placesMapPopup(p), { maxWidth: 240 })
-            .on('click', () => scrollToPlaceCard(p))
-            .addTo(placesMapMarkers);
+            .on('click', () => scrollToPlaceCard(p));
+        m.addTo(placesMapMarkers);
+        placesMapMarkerBySlug.set(placeSlug(p), m);
     });
 }
 
@@ -6111,7 +6131,7 @@ function placesMapPopup(p){
     if (!evToday.length){ const nx = placeNextUpcoming(p); if (nx) html += `<div class="map-popup-meta">📅 Next: ${new Date(nx.t).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})} · ${nx.title}</div>`; }
     html += `<div class="map-popup-btns">`;
     if (p.link) html += `<a href="${p.link}" target="_blank" rel="noopener" class="btn btn-sm btn-outline">Website</a>`;
-    html += `<a href="https://www.google.com/maps/search/?api=1&query=${q}" target="_blank" rel="noopener" class="btn btn-sm btn-outline">Directions</a></div></div>`;
+    html += `<a href="https://www.google.com/maps/dir/?api=1&destination=${q}" target="_blank" rel="noopener" class="btn btn-sm btn-outline">Directions</a></div></div>`;
     return html;
 }
 // ---- Event ↔ place linkage -------------------------------------------------
@@ -6179,6 +6199,65 @@ window.scrollToPlaceCard = function(p){
     el.classList.remove('place-card-flash'); void el.offsetWidth;
     el.classList.add('place-card-flash');
 };
+// Card tap → focus that place's pin: pan the map and open its popup (the
+// reverse of scrollToPlaceCard). Real actions inside a card (links/buttons)
+// win over map focus. Places without coords have no marker — silent no-op.
+// Programmatic openPopup() does NOT fire the marker's 'click' handler, so
+// the two directions cannot feedback-loop.
+window.focusPlaceOnMap = function(pOrSlug){
+    if (!placesMap) return;
+    const slug = typeof pOrSlug === 'string' ? pOrSlug : placeSlug(pOrSlug);
+    const m = placesMapMarkerBySlug.get(slug);
+    if (!m) return;
+    const mapEl = document.getElementById('places-map');
+    const box = mapEl.getBoundingClientRect();
+    if (box.bottom < 100 || box.top > window.innerHeight) {
+        mapEl.scrollIntoView({ behavior: 'smooth', block: 'start' });   // desktop: map can be scrolled away; mobile sticky never is
+    }
+    placesMap.panTo(m.getLatLng());
+    m.openPopup();
+};
+// One delegated listener per container — attaches once, survives every
+// innerHTML re-render, and works for all three data-place card templates.
+['places-container', 'housing-container'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('click', ev => {
+        if (ev.target.closest('a,button')) return;
+        const card = ev.target.closest('[data-place]');
+        if (card) focusPlaceOnMap(card.getAttribute('data-place'));
+    });
+});
+
+// "My location": one-shot browser geolocation per tap (no continuous watch).
+// The position is used entirely client-side — a dot on the map — and is never
+// stored or transmitted. Out-of-area locations (basemap only covers the
+// extract bbox, and maxBounds clamps panning) get a message, not a marker.
+function placesMapLocate(){
+    if (!placesMap) return;
+    placesMap.locate({ setView: false, enableHighAccuracy: true, timeout: 10000 });
+}
+function placesMapOnLocation(e){
+    if (placesMapUserDot){ placesMap.removeLayer(placesMapUserDot); placesMapUserDot = null; }
+    if (placesMapUserAcc){ placesMap.removeLayer(placesMapUserAcc); placesMapUserAcc = null; }
+    if (!L.latLngBounds(PLACES_MAP_CFG.maxBounds).contains(e.latlng)){
+        L.popup().setLatLng(placesMap.getCenter())
+            .setContent('<div style="font-weight:700;margin-bottom:2px;">Outside the map area</div><div class="map-popup-meta">Your location is outside Millersville, so there’s nothing to show here.</div>')
+            .openOn(placesMap);
+        return;
+    }
+    placesMapUserAcc = L.circle(e.latlng, { radius: e.accuracy || 30, weight: 1, color: '#2a6df4', fillColor: '#2a6df4', fillOpacity: 0.08 }).addTo(placesMap);
+    placesMapUserDot = L.marker(e.latlng, {
+        icon: L.divIcon({ className: '', html: '<div class="map-user-dot" title="You are here"></div>', iconSize: [18, 18], iconAnchor: [9, 9] }),
+        interactive: false, keyboard: false
+    }).addTo(placesMap);
+    placesMap.setView(e.latlng, Math.max(placesMap.getZoom(), 15));
+}
+function placesMapOnLocationError(){
+    if (!placesMap) return;
+    L.popup().setLatLng(placesMap.getCenter())
+        .setContent('<div style="font-weight:700;margin-bottom:2px;">Location unavailable</div><div class="map-popup-meta">Check your browser’s location permission for millersville.app and try again.</div>')
+        .openOn(placesMap);
+}
 
 // ============================ END DIRECTORY MAP ============================
 

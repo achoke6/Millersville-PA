@@ -6214,7 +6214,18 @@ window.focusPlaceOnMap = function(pOrSlug){
     if (box.bottom < 100 || box.top > window.innerHeight) {
         mapEl.scrollIntoView({ behavior: 'smooth', block: 'start' });   // desktop: map can be scrolled away; mobile sticky never is
     }
-    placesMap.panTo(m.getLatLng());
+    const target = m.getLatLng();
+    if (placesMapUserDot){
+        // Frame BOTH the clicked place and the user's dot — the map answers
+        // "where is it relative to me" in one view. maxZoom 17 keeps a
+        // next-door pair from zooming to rooftop level.
+        placesMap.fitBounds(L.latLngBounds([target, placesMapUserDot.getLatLng()]), { padding: [48, 48], maxZoom: 17 });
+    } else {
+        // No location dot (permission not granted / never asked): street-level
+        // on the place itself — also resolves the ~11 m fan-out ring that
+        // co-located listings (shared building) compress into at low zoom.
+        placesMap.setView(target, Math.max(placesMap.getZoom(), 16));
+    }
     m.openPopup();
 };
 // One delegated listener per container — attaches once, survives every

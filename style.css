@@ -1456,6 +1456,8 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 #places-map{scroll-margin-top:calc(var(--header-h,60px) + 8px);}
 /* "My location" control + user dot */
 .map-locate-btn{font-size:15px;text-align:center;text-decoration:none;cursor:pointer;}
+.campus-map-link{display:inline-flex;align-items:center;font-size:12px;color:var(--text-muted,#777);text-decoration:none;margin-right:6px;white-space:nowrap;}
+.campus-map-link:hover{text-decoration:underline;}
 .map-user-dot{width:14px;height:14px;margin:2px;border-radius:50%;background:#2a6df4;border:3px solid #fff;box-shadow:0 0 6px rgba(42,109,244,0.6);}
 .place-card-flash{animation:placeFlash 1.6s ease-out;}
 @keyframes placeFlash{0%{box-shadow:0 0 0 3px var(--gold);}100%{box-shadow:0 0 0 0 rgba(253,203,88,0);}}

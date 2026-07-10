@@ -326,6 +326,11 @@
         <div class="sticky-nav-bar">
             <div class="toolbar-compact">
                 <div class="toolbar-right">
+                    <!-- MU-only: official campus map (building-level detail our basemap
+                         doesn't carry). Hidden by default; renderPlaces() shows it when
+                         the viewer's affiliation is 'student' — re-evaluated on every
+                         identity switch, same pattern as the housing audience filter. -->
+                    <a id="places-campus-map-link" class="campus-map-link" href="https://www.millersville.edu/directions/" target="_blank" rel="noopener" style="display:none;" title="Official MU campus map &amp; directions">🎓 Campus Map ↗</a>
                     <button class="family-toggle today-toggle" id="places-today-toggle" onclick="togglePlacesToday()" title="Places with specials or events today"><span class="today-toggle-label">🔥 Today</span></button>
                     <button class="family-toggle mg-toggle" id="places-mg-toggle" onclick="togglePlacesMarauderGold()" title="Businesses that accept Marauder Gold"><img src="/img/mu-coin.png" alt="Marauder Gold" class="mg-coin-img"></button>
                     <button id="places-filter-toggle" class="filter-toggle" onclick="togglePlacesFilters()">Filter <span id="places-filter-arrow">▾</span></button>

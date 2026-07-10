@@ -6437,6 +6437,11 @@ function applyPlacesCardFit(pc){
 }
 
 function renderPlaces(){
+    // MU-only toolbar extra: the official campus map link (index.html, hidden
+    // by default). Toggled here because renderPlaces re-runs on every
+    // affiliation switch — same pattern as the housing audience filter.
+    const cml = document.getElementById('places-campus-map-link');
+    if (cml) cml.style.display = (muAffiliation === 'student') ? '' : 'none';
     renderHousing();        // §9: housing tracks audience + affiliation switches
     refreshPlacesMap();     // pins mirror the same filters as the list (no-op until map init)
     // Marauder Gold is an MU campus payment card, so its filter toggle is only

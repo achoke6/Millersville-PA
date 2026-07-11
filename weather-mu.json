@@ -8,7 +8,74 @@
     "issued": "",
     "days": []
   },
-  "observations": [],
+  "observations": [
+    {
+      "time": "16:00",
+      "temp": "87",
+      "dewpoint": "70",
+      "rh": "58",
+      "windDir": "N",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "9.6",
+      "condition": "None"
+    },
+    {
+      "time": "15:00",
+      "temp": "84",
+      "dewpoint": "72",
+      "rh": "69",
+      "windDir": "SW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "10.3",
+      "condition": "None"
+    },
+    {
+      "time": "14:00",
+      "temp": "84",
+      "dewpoint": "69",
+      "rh": "62",
+      "windDir": "WNW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "9.9",
+      "condition": "None"
+    },
+    {
+      "time": "13:00",
+      "temp": "84",
+      "dewpoint": "71",
+      "rh": "64",
+      "windDir": "NNW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "9.9",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "83",
+      "dewpoint": "70",
+      "rh": "65",
+      "windDir": "N",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "10.1",
+      "condition": "None"
+    },
+    {
+      "time": "11:00",
+      "temp": "80",
+      "dewpoint": "71",
+      "rh": "75",
+      "windDir": "ESE",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "9.3",
+      "condition": "None"
+    }
+  ],
   "discussion": {
     "headline": "cooler with More rounds of showers, storms this week",
     "dateLine": "1:00 p.m. Tuesday, July 7, 2026",
@@ -50,5 +117,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-11T19:00:47.233Z"
+  "updated": "2026-07-11T20:44:20.988Z"
 }

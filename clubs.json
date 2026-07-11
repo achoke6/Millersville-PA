@@ -11,9 +11,13 @@
   },
   {
     "name": "ADAPT",
-    "category": "Movie or Film",
+    "category": "Educational Program",
     "categories": [
-      "Movie or Film"
+      "Educational Program",
+      "Movie or Film",
+      "Performance",
+      "Social",
+      "Tabling"
     ],
     "shortName": "",
     "id": ""
@@ -691,6 +695,9 @@
     "category": "Educational Program",
     "categories": [
       "Educational Program",
+      "Lecture or Speaker",
+      "Movie or Film",
+      "Performance",
       "Social"
     ],
     "shortName": "",
@@ -1142,9 +1149,9 @@
   },
   {
     "name": "Math Club",
-    "category": "Lecture or Speaker",
+    "category": "Meeting",
     "categories": [
-      "Lecture or Speaker",
+      "Meeting",
       "Social"
     ],
     "shortName": "",

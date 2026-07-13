@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-07-13T16:32:44.380Z",
-  "totalEvents": 677,
-  "withDescription": 260,
+  "generatedAt": "2026-07-13T18:13:33.815Z",
+  "totalEvents": 676,
+  "withDescription": 259,
   "withImage": 112,
-  "familyFriendly": 41,
+  "familyFriendly": 40,
   "eventsToday": 7,
   "sources": {
     "muAthletics": 238,
-    "muCalendar": 94,
+    "muCalendar": 93,
     "muGetInvolved": 176,
     "pennManor": 84,
     "borough": 0,
@@ -116,9 +116,23 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-13T16:31:06.246Z"
+    "lastSyncAt": "2026-07-13T18:12:17.652Z"
   },
   "recentlyAdded": [
+    {
+      "key": "MU Women's Soccer Summer Camp|2026-07-20T13:00:00.000Z",
+      "firstSeenAt": "2026-07-13T18:13:33.812Z",
+      "title": "MU Women's Soccer Summer Camp",
+      "source": "MU",
+      "date": "2026-07-20T13:00:00.000Z"
+    },
+    {
+      "key": "MU Baseball Summer Camp|2026-07-21T13:00:00.000Z",
+      "firstSeenAt": "2026-07-13T18:13:33.812Z",
+      "title": "MU Baseball Summer Camp",
+      "source": "MU",
+      "date": "2026-07-21T13:00:00.000Z"
+    },
     {
       "key": "Planning Commission|2026-07-13T23:00:00.000Z",
       "firstSeenAt": "2026-07-13T16:32:44.378Z",
@@ -174,21 +188,7 @@
       "title": "Millersville University Men's Soccer vs Holy Family",
       "source": "MU",
       "date": "2026-08-27T23:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Soccer at East Stroudsburg|2026-08-29T17:00:00.000Z",
-      "firstSeenAt": "2026-07-13T16:32:44.378Z",
-      "title": "Millersville University Women's Soccer at East Stroudsburg",
-      "source": "MU",
-      "date": "2026-08-29T17:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Men's Soccer vs Ashland|2026-08-30T17:00:00.000Z",
-      "firstSeenAt": "2026-07-13T16:32:44.378Z",
-      "title": "Millersville University Men's Soccer vs Ashland",
-      "source": "MU",
-      "date": "2026-08-30T17:00:00.000Z"
     }
   ],
-  "addedLastRun": 73
+  "addedLastRun": 2
 }

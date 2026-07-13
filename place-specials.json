@@ -1,0 +1,56 @@
+{
+  "_comment": "Per-place specials registry — keyed by DIRECTORY PLACE SLUG (same derivation as sync-directory.js slugify / app.js slugifyPlace: lowercase, punctuation→space, collapse spaces, drop leading 'the', spaces→hyphens — so \"Jack's Family Tavern\" → jack-s-family-tavern). A key that doesn't equal its directory row's slug silently detaches: after any edit, load the Map page and check the browser console for 'specials-match: unmatched slugs'. Hand-maintained fields: name, note, audience ('locals' hides from marauders / 'marauders' hides from townies — omit for everyone), closedDays, season, daily, recurring, events. The Cowork specials task maintains each place's weekly block — dateRange + EXCLUSIVE validThrough (the day AFTER the last valid day) + items, en-dash prices, '(Fri only)'-style day tags that age out once that day has passed. The Corn Wagon's weekly items are NOT stored here — scrape.js scrapes thecornwagon.com/current-info live each run (this entry's presence is the on/off switch; season gates it). VFW Post 7294 and John Herr's are NOT in this file — they keep their dedicated pipelines (vfw.json / grocery.json) and are assembled in scrape.js under literal slug keys.",
+  "_format": "places.<slug> = { name, note?, audience? ('locals'|'marauders'), closedDays? ['Sunday',...], season? {fromMonth,toMonth}, daily? {Day:[items]}, recurring? {Day:'item'}, weekly? {dateRange, validThrough, items[]}, events? [{title, date (ISO w/ ET offset), endTime?, description?, price?, link?, kidFriendly?}] — events are emitted as Community events located at the place name.",
+  "places": {
+    "house-of-pizza": {
+      "name": "House of Pizza",
+      "note": "Dine-in & Carryout Only · Mon-Fri till 2 PM · Not for Delivery",
+      "daily": {
+        "Monday": [
+          "2 Slices & MD Drink – $4.50",
+          "Soup & Sandwich – $5.99",
+          "Turkey Sub – $5.25"
+        ],
+        "Tuesday": [
+          "2 Slices & MD Drink – $4.50",
+          "Ham Sub – $5.00",
+          "Pork BBQ Sandwich w/Fries – $5.99"
+        ],
+        "Wednesday": [
+          "2 Slices & MD Drink – $4.50",
+          "Soup & Sandwich – $5.99",
+          "Italian Sub – $5.25"
+        ],
+        "Thursday": [
+          "2 Slices & MD Drink – $4.50",
+          "Soup & Sandwich – $5.99",
+          "¼ Lb. Cheeseburger & Fries – $4.50",
+          "🍺 Miller Lite Draft (Pint) – $1.50 (all day till midnight)"
+        ],
+        "Friday": [
+          "2 Slices & MD Drink – $4.50",
+          "Meatball Sub – $5.50",
+          "Shrimp Basket & Fries – $5.75"
+        ]
+      }
+    },
+    "bunker-at-crossgates": {
+      "name": "The Bunker at Crossgates"
+    },
+    "jack-s-family-tavern": {
+      "name": "Jack's Family Tavern",
+      "events": []
+    },
+    "corn-wagon": {
+      "name": "The Corn Wagon",
+      "note": "Seasonal roadside produce stand · open July–November, Mon–Sat",
+      "closedDays": [
+        "Sunday"
+      ],
+      "season": {
+        "fromMonth": 7,
+        "toMonth": 11
+      }
+    }
+  }
+}

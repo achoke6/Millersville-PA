@@ -451,6 +451,36 @@ function decodeEntities(str) {
         .replace(/&#0?38;|&amp;/g, '&');
 }
 
+// The Corn Wagon current-info parser. Input: raw HTML of
+// https://www.thecornwagon.com/current-info (Duda site, server-rendered —
+// plain text in the markup, no JS rendering needed). Output: array of
+// "Item – price text" strings (en-dash house style), max 15. Priced lines
+// look like "Sweet Corn (bi-color) - Price drop - now only $4.00/13 ears":
+// the item name is the text before the FIRST " - "; the remainder keeps its
+// own wording. Lines without a $ amount ("coming soon", "expected mid-July",
+// "crop lost", the * disclaimers) are skipped — so an off-season or frozen
+// page yields [] and the specials box simply doesn't render. Standalone pure
+// function so the harness can test it without running the scraper.
+function parseCornWagonItems(html) {
+    if (!html) return [];
+    const text = String(html)
+        .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+        .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+        .replace(/<[^>]+>/g, '\n');
+    const items = [];
+    for (let line of text.split('\n')) {
+        line = decodeEntities(line).replace(/\s+/g, ' ').trim();
+        if (!line || line.startsWith('*')) continue;   // price/availability disclaimers
+        if (!/\$\s?\d/.test(line)) continue;           // must carry a price
+        if (line.length > 120) continue;               // paragraph, not an item line
+        const m = line.match(/^(.{2,60}?)\s+[-–—]\s+(.+)$/);
+        if (!m) continue;
+        items.push(`${m[1].trim()} – ${m[2].trim()}`);
+        if (items.length >= 15) break;
+    }
+    return items;
+}
+
 function extractEventbriteEvents(ldData, eventsArray, now, futureLimit, overrideUrl = null) {
     if (Array.isArray(ldData)) {
         ldData.forEach(item => extractEventbriteEvents(item, eventsArray, now, futureLimit, overrideUrl));
@@ -3374,19 +3404,12 @@ async function runScraper() {
 
     // ===== 7. VFW POST 7294 — hand-maintained via vfw.json + Cowork =====
     //
-    // PREVIOUSLY: Google Sheet of image URLs → Anthropic Vision API extracted
-    // structured event/specials data → cached in vfw-cache.json. The Vision
-    // pipeline worked but had recurring edge cases (expired specials slipping
-    // through, calendar images returning useless event lists, dollar-cost
-    // creep) and required Adam to manually post images to the sheet weekly
-    // anyway. The simpler answer is to skip the API call entirely and
-    // transcribe the data from the VFW blog (https://www.vfwpost7294.org/)
-    // during the same weekly Cowork session.
-    //
-    // The Vision code is preserved below in `if (false) { ... }` rather than
-    // deleted — easy to re-enable if Cowork doesn't pan out. To fully remove
-    // later: delete the dead block, delete vfw-cache.json, remove
-    // VFW_SHEET_ID / GOOGLE_VISION_API_KEY secrets from GitHub Actions.
+    // The old Vision pipeline (Google Sheet of image URLs → Anthropic Vision
+    // API → vfw-cache.json) was disabled when the Cowork task took over, and
+    // its dead `if (false)` block was fully removed 2026-07-13. vfw-cache.json
+    // is now orphaned (delete the file at leisure), and the VFW_SHEET_ID /
+    // GOOGLE_VISION_API_KEY / ANTHROPIC_API_KEY secrets have no remaining
+    // scraper consumers — safe to remove from GitHub Actions.
     try {
         let vfwEventCount = 0;
         let vfwWeeklySpecials = [], vfwSpecialsDateRange = '';
@@ -3456,280 +3479,15 @@ async function runScraper() {
             console.error(`❌ VFW vfw.json load error: ${e.message}`);
         }
 
-        // ===== LEGACY VISION PIPELINE (disabled, preserved for reference) =====
-        if (false) {
-        console.log("📡 Fetching VFW Post 7294 images from Google Sheet...");
-        const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY;
-        if (!ANTHROPIC_KEY) throw new Error('ANTHROPIC_API_KEY not set');
-
-        const VFW_SHEET_ID = process.env.VFW_SHEET_ID || '';
-        const cachePath = path.join(__dirname, '../vfw-cache.json');
-        let vfwCache = {};
-        try {
-            vfwCache = JSON.parse(fs.readFileSync(cachePath, 'utf8'));
-            for (const [key, val] of Object.entries(vfwCache)) {
-                if (!val || (typeof val === 'string' && val.trim().length === 0)) delete vfwCache[key];
-            }
-        } catch (e) { /* no cache yet */ }
-
-        let vfwEventCount = 0, vfwApiCalls = 0;
-        let vfwWeeklySpecials = [], vfwSpecialsDateRange = '';
-
-        // Fetch image URLs from Google Sheet
-        let sheetImages = [];
-        if (VFW_SHEET_ID) {
-            try {
-                const sheetUrl = `https://docs.google.com/spreadsheets/d/${VFW_SHEET_ID}/gviz/tq?tqx=out:csv`;
-                const sheetRes = await fetch(sheetUrl);
-                if (sheetRes.ok) {
-                    const csvText = await sheetRes.text();
-                    for (const row of csvText.split('\n').slice(1)) {
-                        const cols = row.match(/"([^"]*)"/g);
-                        if (!cols || cols.length < 1) continue;
-                        const imgUrl = cols[0].replace(/"/g, '').trim();
-                        const postDate = cols[1] ? cols[1].replace(/"/g, '').trim() : '';
-                        if (imgUrl && /^https?:\/\//.test(imgUrl)) {
-                            sheetImages.push({ url: imgUrl, date: postDate });
-                        }
-                    }
-                    console.log(`  📋 Google Sheet: ${sheetImages.length} image(s)`);
-                }
-            } catch (e) { console.log(`  ⚠️ Sheet error: ${e.message}`); }
-        } else {
-            console.log(`  ⚠️ VFW_SHEET_ID not set — skipping`);
-        }
-
-        // Process each image with Claude Vision
-        for (const si of sheetImages) {
-          try {
-            // Check cache first
-            let parsed = vfwCache[si.url];
-            if (parsed && typeof parsed === 'object' && parsed.type) {
-                console.log(`  📱 Image (${si.date || 'no date'}): cached as ${parsed.type}`);
-            } else {
-                // Convert Google Drive URLs to direct download
-                let downloadUrl = si.url;
-                const driveMatch = si.url.match(/drive\.google\.com\/file\/d\/([^/]+)/);
-                const driveMatch2 = si.url.match(/drive\.google\.com\/open\?id=([^&]+)/);
-                const driveId = driveMatch?.[1] || driveMatch2?.[1];
-                if (driveId) {
-                    downloadUrl = `https://drive.google.com/uc?export=download&id=${driveId}`;
-                }
-
-                // Download image
-                const isFacebookCDN = downloadUrl.includes('fbcdn.net') || downloadUrl.includes('facebook.com');
-                const dlHeaders = isFacebookCDN ? {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-                    'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
-                    'Accept-Language': 'en-US,en;q=0.9',
-                    'Referer': 'https://www.facebook.com/',
-                    'Sec-Fetch-Dest': 'image',
-                    'Sec-Fetch-Mode': 'no-cors',
-                    'Sec-Fetch-Site': 'cross-site'
-                } : baseHeaders;
-                const imgRes = await fetch(downloadUrl, { headers: dlHeaders, signal: AbortSignal.timeout(15000), redirect: 'follow' });
-                if (!imgRes.ok) {
-                    if (isFacebookCDN) {
-                        console.log(`    ⚠️ Facebook CDN expired (403) — save image to Google Drive and update sheet URL`);
-                        console.log(`      URL: ${si.url.substring(0, 100)}...`);
-                    } else {
-                        console.log(`    ⚠️ Download failed: ${imgRes.status} (${si.url.substring(0, 80)})`);
-                    }
-                    continue;
-                }
-                const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
-                if (imgBuffer.length < 1000) { console.log(`    ⚠️ Tiny image, skipping`); continue; }
-
-                // Detect media type
-                const isJpeg = imgBuffer[0] === 0xFF && imgBuffer[1] === 0xD8;
-                const isPng = imgBuffer[0] === 0x89 && imgBuffer[1] === 0x50;
-                const mediaType = isPng ? 'image/png' : isJpeg ? 'image/jpeg' : 'image/jpeg';
-
-                // Send to Claude Vision API
-                const prompt = `Analyze this VFW Post 7294 image. Today is ${today.toISOString().split('T')[0]}. Determine the type and extract structured data.
-
-Respond ONLY with valid JSON (no markdown, no backticks), using one of these formats:
-
-If it's a MONTHLY CALENDAR with events:
-{"type":"calendar","month":"April","year":2026,"events":[{"name":"Music Bingo","date":"2026-04-10"},{"name":"Trivia Night","date":"2026-04-15"}]}
-Only include special events like Bingo, Trivia, Meetings, Parties, BBQ, Paint nights, Concerts. Do NOT include recurring food nights (Shrimp Night, Wing Night, Taco Night, Burger Night) or daily food specials.
-
-If it's a WEEKLY SPECIALS flyer:
-{"type":"specials","dateRange":"Tuesday, April 7 through Saturday, April 11","items":[{"name":"Tuna Melt","price":"$12.95","fridayOnly":false},{"name":"Prime Rib","price":"$17.95","fridayOnly":true}]}
-Extract food item names, prices, and whether they are Friday-only.
-
-If it's an EVENT FLYER/ANNOUNCEMENT:
-{"type":"event","name":"Meat Tray Bingo","date":"2026-05-03","time":"1:00 PM","endTime":"5:00 PM","details":"Doors open 12:00 PM, Starter Packs $25","openToPublic":true}
-- "time" is the start time when shown (use "H:MM AM/PM" format).
-- "endTime" is the end time, ONLY when explicitly shown on the flyer (e.g. "5pm-9pm", "from 6 to 10", "1:00 PM - 5:00 PM"). Use the same "H:MM AM/PM" format. Omit the field entirely if no end time is shown — do NOT guess or estimate.
-
-Respond with ONLY the JSON object.`;
-
-                const claudeRes = await fetch('https://api.anthropic.com/v1/messages', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'x-api-key': ANTHROPIC_KEY,
-                        'anthropic-version': '2023-06-01'
-                    },
-                    body: JSON.stringify({
-                        model: 'claude-sonnet-4-20250514',
-                        max_tokens: 1024,
-                        messages: [{
-                            role: 'user',
-                            content: [
-                                { type: 'image', source: { type: 'base64', media_type: mediaType, data: imgBuffer.toString('base64') } },
-                                { type: 'text', text: prompt }
-                            ]
-                        }]
-                    })
-                });
-
-                if (!claudeRes.ok) {
-                    const err = await claudeRes.text();
-                    console.log(`    ⚠️ Claude API error: ${err.substring(0, 200)}`);
-                    continue;
-                }
-
-                const claudeData = await claudeRes.json();
-                const responseText = claudeData.content?.[0]?.text || '';
-                vfwApiCalls++;
-
-                try {
-                    // Strip any markdown fences if present
-                    const cleanJson = responseText.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
-                    parsed = JSON.parse(cleanJson);
-                    vfwCache[si.url] = parsed;
-                    console.log(`  📱 Image (${si.date || 'no date'}): ${parsed.type}`);
-                } catch (jsonErr) {
-                    console.log(`    ⚠️ Failed to parse Claude response: ${responseText.substring(0, 200)}`);
-                    continue;
-                }
-            }
-
-            const postLink = 'https://www.facebook.com/VFWPost7294';
-
-            // ===== CALENDAR =====
-            if (parsed.type === 'calendar' && parsed.events) {
-                console.log(`    📅 Calendar: ${parsed.month} ${parsed.year}, ${parsed.events.length} events`);
-                for (const evt of parsed.events) {
-                    if (!evt.date || !evt.name) continue;
-                    const evDate = new Date(evt.date + 'T16:00:00Z');
-                    if (isNaN(evDate.getTime()) || evDate < pastDate || evDate >= futureDate) continue;
-                    // Skip recurring food nights
-                    if (/^(wing night|taco night|burger night|shrimp night)$/i.test(evt.name)) continue;
-                    events.push({
-                        title: evt.name, date: evDate.toISOString(),
-                        location: 'VFW Post 7294, 219 Walnut Hill Rd',
-                        tags: ['Other', 'VFW'], price: 'Members Only', ticketLink: '', sourceLink: postLink,
-                        gameResult: '', gameScore: '', streamLink: '', isLive: false, kidFriendly: false
-                    });
-                    vfwEventCount++;
-                    console.log(`    📌 Event: "${evt.name}" on ${evt.date}`);
-                }
-
-            // ===== WEEKLY SPECIALS =====
-            } else if (parsed.type === 'specials' && parsed.items && vfwWeeklySpecials.length === 0) {
-                console.log(`    🍽️ Weekly specials: ${parsed.items.length} items`);
-                if (parsed.dateRange) console.log(`    📅 Range: ${parsed.dateRange}`);
-
-                // Check if current week
-                let isCurrent = true;
-                if (parsed.dateRange) {
-                    const months = {january:0,february:1,march:2,april:3,may:4,june:5,july:6,august:7,september:8,october:9,november:10,december:11};
-                    const sm = parsed.dateRange.match(/(january|february|march|april|may|june|july|august|september|october|november|december)\s+(\d{1,2})/i);
-                    const em = parsed.dateRange.match(/through\s+\w+,?\s*(?:(january|february|march|april|may|june|july|august|september|october|november|december)\s+)?(\d{1,2})/i);
-                    if (sm && em) {
-                        const yr = today.getFullYear();
-                        const sM = months[sm[1].toLowerCase()], sD = parseInt(sm[2]);
-                        const eM = months[(em[1] || sm[1]).toLowerCase()], eD = parseInt(em[2]);
-                        if (today < new Date(yr, sM, sD) || today > new Date(yr, eM, eD, 23, 59, 59)) {
-                            isCurrent = false;
-                            console.log(`    ⏭️ Expired (${parsed.dateRange})`);
-                        }
-                    }
-                }
-
-                if (isCurrent) {
-                    vfwWeeklySpecials = parsed.items.map(s => ({
-                        name: s.name, price: s.price || '', fridayOnly: s.fridayOnly || false,
-                        dateRange: parsed.dateRange || ''
-                    }));
-                    vfwSpecialsDateRange = parsed.dateRange || '';
-                    parsed.items.forEach(s => console.log(`    🍽️ ${s.name} – ${s.price}${s.fridayOnly ? ' (Fri only)' : ''}`));
-                    console.log(`    ✅ Current week specials`);
-                }
-
-            // ===== EVENT FLYER =====
-            } else if (parsed.type === 'event' && parsed.name) {
-                const evDateStr = parsed.date || '';
-                // Prefer the flyer's stated start time when present; fall back to
-                // the noon-ET placeholder used for date-only events. Same pattern
-                // for end time: only set endTime when the flyer explicitly shows
-                // an end time (Vision is told not to guess).
-                const startStrET = combineDateAndClockTime(evDateStr, parsed.time);
-                const startMs = startStrET ? parseEventInstant(startStrET)
-                                           : (evDateStr ? new Date(evDateStr + 'T16:00:00Z').getTime() : NaN);
-                let endMs = NaN;
-                if (parsed.endTime) {
-                    const endStrET = combineDateAndClockTime(evDateStr, parsed.endTime);
-                    if (endStrET) {
-                        endMs = parseEventInstant(endStrET);
-                        // Cross-midnight handling: a flyer that says "10pm-1am"
-                        // means the end is on the next calendar day. If endMs
-                        // isn't strictly after startMs, bump 24h.
-                        if (!isNaN(endMs) && !isNaN(startMs) && endMs <= startMs) {
-                            endMs += 24 * 3600 * 1000;
-                        }
-                    }
-                }
-                if (!isNaN(startMs) && startMs >= pastDate.getTime() && startMs < futureDate.getTime()) {
-                    const priceTag = parsed.openToPublic ? 'Open to Public' : 'Members Only';
-                    events.push({
-                        title: parsed.name,
-                        date: new Date(startMs).toISOString(),
-                        endTime: !isNaN(endMs) ? new Date(endMs).toISOString() : undefined,
-                        location: 'VFW Post 7294, 219 Walnut Hill Rd',
-                        // The flyer image itself, courtesy of the Google Sheet
-                        // upload pipeline. Stored even though the frontend
-                        // doesn't render images on event cards yet — gets us a
-                        // real withImage% on the status dashboard, and unlocks
-                        // future image-rendering UI without re-scraping.
-                        image: si.url || '',
-                        tags: ['Other', 'VFW'], price: priceTag, ticketLink: '', sourceLink: postLink,
-                        gameResult: '', gameScore: '', streamLink: '', isLive: false, kidFriendly: false
-                    });
-                    vfwEventCount++;
-                    console.log(`    📌 Event: "${parsed.name}" on ${evDateStr}${parsed.time ? ' at ' + parsed.time : ''}${parsed.endTime ? '–' + parsed.endTime : ''}`);
-                }
-            }
-
-          } catch (err) { console.log(`    ⚠️ Error: ${err.message}`); }
-        }
-
-        // Save cache + specials
-        fs.writeFileSync(cachePath, JSON.stringify(vfwCache, null, 2));
-        console.log(`✅ VFW: ${vfwEventCount} events (${vfwApiCalls} API calls, ${Object.keys(vfwCache).length} cached)`);
-        } // ===== END LEGACY VISION PIPELINE =====
-
         // ===== JOHN HERR'S WEEKLY GROCERY DEALS =====
         //
-        // PREVIOUSLY: print page → image downloads → Anthropic Vision API
-        // extracted top 15-20 deals as structured JSON → cached weekly in
-        // grocery-cache.json with a Thursday refresh trigger. The pipeline
-        // worked but cost one Vision call per week (~$0.15-$0.40 per run)
-        // and was the LAST Vision call in the scraper after VFW switched
-        // to hand-maintained data.
-        //
-        // NOW: hand-maintained grocery.json populated via Cowork. Transcribe
-        // ~15 top deals from the weekly circular into the JSON. Same
-        // dateRange + validThrough auto-expiry pattern as vfw.json.
-        //
-        // Vision pipeline preserved below in `if (false)` for easy
-        // re-enable if Cowork doesn't pan out. To fully remove later:
-        // delete the dead block, delete grocery-cache.json, optionally
-        // remove ANTHROPIC_API_KEY from secrets (also used by no other
-        // scraper paths after this change — verify before removal).
+        // Hand-maintained grocery.json populated via Cowork (Thursdays ~7:30).
+        // ~15 top deals transcribed from the weekly circular; same dateRange +
+        // exclusive-validThrough auto-expiry pattern as vfw.json. The old
+        // Vision pipeline's dead `if (false)` block AND the grocery-cache.json
+        // fallback were removed 2026-07-13 — the cache file is orphaned
+        // (delete at leisure), and stale cached prices no longer resurrect
+        // when grocery.json expires: an empty rail is the honest state.
         let groceryDeals = [];
 
         // ===== HAND-MAINTAINED LOADER (active path) =====
@@ -3758,232 +3516,171 @@ Respond with ONLY the JSON object.`;
                 }));
                 console.log(`✅ John Herr's: ${groceryDeals.length} deals from grocery.json (${dateRange})`);
             } else {
-                // grocery.json missing, empty, or expired. Try the legacy
-                // Vision-pipeline cache as a fallback so the site doesn't
-                // go blank between deploy and first Cowork update. The cache
-                // file ages out naturally once it stops being refreshed;
-                // when it expires we honestly have nothing to show, which
-                // is the right state to surface (rather than stale prices).
-                try {
-                    const legacyCache = JSON.parse(fs.readFileSync(path.join(__dirname, '../grocery-cache.json'), 'utf8'));
-                    if (legacyCache.deals && legacyCache.deals.length > 0) {
-                        groceryDeals = legacyCache.deals;
-                        console.log(`  📦 John Herr's: ${groceryDeals.length} deals from legacy cache (grocery.json ${validThrough ? 'expired' : 'empty'} — Cowork update needed)`);
-                    }
-                } catch (_) { /* no legacy cache — silent */ }
-
-                if (groceryDeals.length === 0) {
-                    if (validThrough) {
-                        console.log(`  ⏭️  John Herr's deals expired (validThrough ${groceryData.validThrough}), no legacy cache — skipping`);
-                    } else {
-                        console.log(`  ⏭️  John Herr's deals missing validThrough, no legacy cache — skipping (Cowork update needed)`);
-                    }
+                // grocery.json missing, empty, or expired — show nothing.
+                // (Legacy grocery-cache.json fallback removed 2026-07-13:
+                // stale prices are worse than an empty rail.)
+                if (validThrough) {
+                    console.log(`  ⏭️  John Herr's deals expired (validThrough ${groceryData.validThrough}) — skipping (Cowork update needed)`);
+                } else {
+                    console.log(`  ⏭️  John Herr's deals missing validThrough — skipping (Cowork update needed)`);
                 }
             }
         } catch (e) {
             console.log(`  ⚠️ John Herr's grocery.json load error: ${e.message}`);
         }
 
-        // ===== LEGACY VISION PIPELINE (disabled, preserved for reference) =====
-        if (false) {
+        // ===== PLACE SPECIALS (place-specials.json + live Corn Wagon scrape) =====
+        // place-specials.json is the per-place specials registry, keyed by the
+        // DIRECTORY PLACE SLUG (same derivation as sync-directory.js slugify /
+        // app.js slugifyPlace). Keys are hand-written slugs, so NO slugify
+        // implementation lives in this file — Hard Rule 11 stays two-way.
+        // Hand-maintained per place: name / note / audience / closedDays /
+        // season / daily / recurring / events. The Cowork specials task
+        // maintains each place's `weekly` block (dateRange + exclusive
+        // validThrough + items), vfw.json-style. VFW + John Herr's keep their
+        // dedicated pipelines and are assembled below under literal slug keys.
+        const specials = {};
+        let placeSpecialsPlaces = {};
         try {
-            const groceryCachePath = path.join(__dirname, '../grocery-cache.json');
-            let groceryCache = {};
-            try { groceryCache = JSON.parse(fs.readFileSync(groceryCachePath, 'utf8')); } catch(e) {}
+            const psRaw = JSON.parse(fs.readFileSync(path.join(__dirname, '../place-specials.json'), 'utf8'));
+            placeSpecialsPlaces = (psRaw && psRaw.places) || {};
+        } catch (e) { console.log(`  ⚠️ place-specials.json load error: ${e.message}`); }
 
-            // Determine if we need to refresh: cache empty, or it's Thursday+ and cache is from before this Thursday
-            const now = new Date();
-            const cacheTime = groceryCache.timestamp ? new Date(groceryCache.timestamp) : null;
-            const dayOfWeek = now.getDay(); // 0=Sun, 4=Thu
-            // Find most recent Thursday (circular release day)
-            const daysSinceThu = (dayOfWeek + 7 - 4) % 7;
-            const lastThu = new Date(now); lastThu.setDate(now.getDate() - daysSinceThu); lastThu.setHours(0,0,0,0);
-            const cacheIsStale = !cacheTime || cacheTime < lastThu;
-            const cacheHasDeals = groceryCache.deals && groceryCache.deals.length > 0;
+        let psEventCount = 0;
+        for (const [slug, pl] of Object.entries(placeSpecialsPlaces)) {
+            const entry = { name: pl.name || slug };
+            if (pl.note) entry.note = pl.note;
+            if (pl.audience) entry.audience = pl.audience;
+            if (Array.isArray(pl.closedDays) && pl.closedDays.length) entry.closedDays = pl.closedDays;
+            if (pl.daily) entry.daily = pl.daily;
+            if (pl.recurring) entry.recurring = pl.recurring;
+            // weekly: same exclusive-validThrough expiry as vfw.json — an
+            // expired/undated block is dropped (daily/recurring still show).
+            if (pl.weekly && Array.isArray(pl.weekly.items) && pl.weekly.items.length) {
+                const vt = pl.weekly.validThrough ? new Date(pl.weekly.validThrough + 'T00:00:00-04:00') : null;
+                if (vt && new Date() < vt) {
+                    entry.weekly = pl.weekly.items;
+                    entry.weeklyDateRange = pl.weekly.dateRange || '';
+                } else {
+                    console.log(`  ⏭️  ${entry.name}: weekly specials ${vt ? 'expired' : 'undated'} — dropped`);
+                }
+            }
+            specials[slug] = entry;
 
-            if (cacheHasDeals && !cacheIsStale) {
-                // Use cached deals
-                groceryDeals = groceryCache.deals;
-                console.log(`📡 John Herr's: using cached deals (${groceryDeals.length} deals, cached ${cacheTime.toLocaleDateString()})`);
+            // Optional events[]: emitted as Community events (Other pill —
+            // existing feed prefs, no Hard-Rule-7 source wiring). location =
+            // the place NAME so linkEventsToPlaces ties them to the card/pin
+            // via the tier-2 exact-name match (→ Today lens, "Here today"
+            // box, pin popups).
+            const evArr = Array.isArray(pl.events) ? pl.events : [];
+            for (const ev of evArr) {
+                if (!ev.title || !ev.date) continue;
+                const evDate = new Date(ev.date);
+                if (isNaN(evDate.getTime())) continue;
+                if (evDate < pastDate || evDate >= futureDate) continue;
+                const evEnd = ev.endTime && !isNaN(new Date(ev.endTime).getTime())
+                    ? new Date(ev.endTime).toISOString() : undefined;
+                events.push({
+                    title: ev.title,
+                    date: evDate.toISOString(),
+                    ...(evEnd ? { endTime: evEnd } : {}),
+                    location: pl.name || slug,
+                    tags: ['Community'],
+                    price: ev.price || 'Free',
+                    ticketLink: '',
+                    sourceLink: ev.link || '',
+                    description: ev.description || '',
+                    ...(pl.audience === 'locals' ? { audience: 'townie-only' }
+                        : pl.audience === 'marauders' ? { audience: 'mu-only' } : {}),
+                    ...(ev.kidFriendly === true ? { kidFriendly: true } : {})
+                });
+                psEventCount++;
+            }
+        }
+        if (Object.keys(placeSpecialsPlaces).length) {
+            console.log(`✅ Place specials: ${Object.keys(placeSpecialsPlaces).length} place(s) from place-specials.json${psEventCount ? `, ${psEventCount} event(s)` : ''}`);
+        }
+
+        // ── The Corn Wagon (live scrape) ───────────────────────────────────────
+        // thecornwagon.com/current-info is static server-rendered text with a
+        // clean "Item - $price" list (see parseCornWagonItems). Scraped hourly
+        // into the corn-wagon entry's weekly items; the entry itself (name /
+        // closedDays / season) is hand-maintained in place-specials.json, and
+        // the fetch only runs if that entry exists — the file is the on/off
+        // switch — and only in season (seasonal stand, July–November).
+        if (specials['corn-wagon']) {
+            const cwMeta = placeSpecialsPlaces['corn-wagon'] || {};
+            const nowMonth = new Date().getMonth() + 1;
+            const cws = cwMeta.season;
+            const inSeason = !cws || (cws.fromMonth <= cws.toMonth
+                ? (nowMonth >= cws.fromMonth && nowMonth <= cws.toMonth)
+                : (nowMonth >= cws.fromMonth || nowMonth <= cws.toMonth));
+            if (!inSeason) {
+                console.log(`  ⏭️  Corn Wagon: out of season (month ${nowMonth}) — skipping scrape`);
             } else {
-                console.log(`📡 Fetching John Herr's weekly circular...${cacheIsStale ? ' (cache stale, refreshing)' : ' (no cache)'}`);
-                const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY;
-                // Stable print page for John Herr's Village Market (store ID: 54348)
-                const printPageUrl = 'https://www.familyownedmarkets.com/print-weekly-specials/?circularstoreidentifier=54348';
-
-                if (ANTHROPIC_KEY) {
-                    // Step 1: Fetch print page and extract image URLs
-                    const pageRes = await fetch(printPageUrl, { signal: AbortSignal.timeout(30000) });
-                    if (!pageRes.ok) throw new Error(`Print page fetch failed: ${pageRes.status}`);
-                    const html = await pageRes.text();
-                    const imageUrls = [...html.matchAll(/https:\/\/familyownedmarketsdata\.shoptocook\.com\/shoptocook\/Content\/SimpleCircular\/\d+\/\d+_max\.jpg/g)].map(m => m[0]);
-                    const uniqueImages = [...new Set(imageUrls)];
-                    console.log(`  📄 Found ${uniqueImages.length} circular pages`);
-
-                    if (uniqueImages.length === 0) throw new Error('No circular images found on print page');
-
-                    // Step 2: Download each image and convert to base64
-                    const imageBlocks = [];
-                    for (const imgUrl of uniqueImages) {
-                        try {
-                            const imgRes = await fetch(imgUrl, { signal: AbortSignal.timeout(20000) });
-                            if (!imgRes.ok) continue;
-                            const imgBuffer = Buffer.from(await imgRes.arrayBuffer());
-                            imageBlocks.push({
-                                type: 'image',
-                                source: { type: 'base64', media_type: 'image/jpeg', data: imgBuffer.toString('base64') }
-                            });
-                        } catch (e) {
-                            console.log(`    ⚠️ Image download failed: ${e.message}`);
-                        }
-                    }
-                    console.log(`  🖼️ Downloaded ${imageBlocks.length}/${uniqueImages.length} images (total ${(imageBlocks.reduce((sum,b)=>sum+b.source.data.length,0)/1024).toFixed(0)}KB base64)`);
-
-                    if (imageBlocks.length === 0) throw new Error('All image downloads failed');
-
-                    // Step 3: Send all images to Claude Vision
-                    const claudeRes = await fetch('https://api.anthropic.com/v1/messages', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'x-api-key': ANTHROPIC_KEY,
-                            'anthropic-version': '2023-06-01'
-                        },
-                        body: JSON.stringify({
-                            model: 'claude-sonnet-4-20250514',
-                            max_tokens: 2048,
-                            messages: [{
-                                role: 'user',
-                                content: [
-                                    ...imageBlocks,
-                                    { type: 'text', text: `These images are pages from the weekly grocery circular for John Herr's Village Market. Extract the TOP 15-20 best deals across all pages — items with the biggest savings, lowest prices, or best value (BOGO, buy-one-get-one, manager's specials, etc).
-
-IMPORTANT: Order the deals from BEST to worst. The first 5 should be the absolute best deals — the ones a savvy shopper would be most excited about.
-
-For each deal, provide the item name, sale price, and original/regular price if shown.
-
-Also find the valid date range for this circular (usually Thursday through Wednesday).
-
-Respond ONLY with valid JSON (no markdown, no backticks):
-{"dateRange":"Thu Apr 16 - Wed Apr 22","deals":[{"item":"Boneless Chicken Breast","salePrice":"$1.99/lb","regularPrice":"$4.99/lb","savings":"60% off"},{"item":"Strawberries 1lb","salePrice":"$2.50","regularPrice":"","savings":"Great price"}]}
-
-Focus on the most impressive deals a shopper would want to know about. Include meats, produce, dairy, pantry staples. Skip minor items like 10 cents off a can of beans. Respond with ONLY the JSON.` }
-                                ]
-                            }]
-                        })
+                try {
+                    const cwRes = await fetch('https://www.thecornwagon.com/current-info', {
+                        headers: baseHeaders, signal: AbortSignal.timeout(15000)
                     });
-
-                    if (claudeRes.ok) {
-                        const claudeData = await claudeRes.json();
-                        const responseText = claudeData.content?.[0]?.text || '';
-                        try {
-                            const cleanJson = responseText.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
-                            const parsed = JSON.parse(cleanJson);
-                            groceryDeals = parsed.deals || [];
-                            const dateRange = parsed.dateRange || '';
-                            console.log(`  ✅ John Herr's: ${groceryDeals.length} top deals (${dateRange})`);
-                            groceryDeals.forEach(d => console.log(`    🏷️ ${d.item} – ${d.salePrice}${d.savings ? ' (' + d.savings + ')' : ''}`));
-                            groceryDeals = groceryDeals.map(d => ({ ...d, dateRange }));
-
-                            // Data-quality assertion. If the full pipeline ran
-                            // (cache stale, ANTHROPIC_KEY set, print page
-                            // fetched OK, Claude returned 200) but extracted
-                            // ZERO deals, something's broken: store ID might
-                            // have rotated (print page empty), the shoptocook
-                            // image CDN may have changed its URL pattern
-                            // breaking our regex, or the circular layout
-                            // drifted enough that Claude can't parse it. Fire
-                            // /fail so we hear about it within the hour. This
-                            // is distinct from cache-miss (handled by outer
-                            // try/catch as transient) and the "cache is warm"
-                            // path (which skips this block entirely).
-                            if (groceryDeals.length === 0) {
-                                console.warn(`⚠️  DATA QUALITY: John Herr's Vision pipeline ran but extracted 0 deals. Likely store ID rotation, CDN change, or circular layout drift.`);
-                                const healthUrl = process.env.HEALTHCHECK_URL;
-                                if (healthUrl) {
-                                    try {
-                                        const ctrl = new AbortController();
-                                        const timer = setTimeout(() => ctrl.abort(), 5000);
-                                        await fetch(`${healthUrl}/fail`, {
-                                            method: 'POST',
-                                            headers: { 'Content-Type': 'text/plain' },
-                                            body: "John Herr's grocery deals extracted 0 items from circular despite full pipeline success — likely store ID 54348 rotation or circular layout drift.",
-                                            signal: ctrl.signal
-                                        }).catch(() => {});
-                                        clearTimeout(timer);
-                                        console.log("   🚨 Fired /fail ping to healthchecks.io");
-                                    } catch (_) { /* never break the scrape on monitoring failure */ }
-                                }
-                            }
-
-                            // Save to cache
-                            fs.writeFileSync(groceryCachePath, JSON.stringify({ timestamp: now.toISOString(), deals: groceryDeals }, null, 2));
-                            console.log(`  💾 Grocery deals cached`);
-                        } catch (jsonErr) {
-                            console.log(`    ⚠️ Failed to parse deals: ${responseText.substring(0, 200)}`);
+                    if (cwRes.ok) {
+                        const cwItems = parseCornWagonItems(await cwRes.text());
+                        if (cwItems.length) {
+                            specials['corn-wagon'].weekly = cwItems;
+                            console.log(`✅ Corn Wagon: ${cwItems.length} priced item(s) from current-info`);
+                        } else {
+                            console.log(`  ⏭️  Corn Wagon: page loaded but no priced items parsed — no specials this run`);
                         }
                     } else {
-                        const err = await claudeRes.text();
-                        console.log(`    ⚠️ Claude API error: ${err.substring(0, 200)}`);
+                        console.log(`  ⚠️ Corn Wagon fetch failed: ${cwRes.status}`);
                     }
-                } else {
-                    console.log(`    ⚠️ ANTHROPIC_API_KEY not set — skipping grocery deals`);
-                }
-
-                // Fallback to cached deals if API failed
-                if (groceryDeals.length === 0 && cacheHasDeals) {
-                    groceryDeals = groceryCache.deals;
-                    console.log(`  📦 Using cached grocery deals as fallback (${groceryDeals.length} deals)`);
-                }
+                } catch (e) { console.log(`  ⚠️ Corn Wagon error: ${e.message}`); }
             }
-        } catch (e) { console.log(`  ⚠️ John Herr's error: ${e.message}`); }
-        } // ===== END LEGACY VISION PIPELINE =====
+        }
 
-        const specials = {
-            "House of Pizza": {
-                note: "Dine-in & Carryout Only · Mon-Fri till 2 PM · Not for Delivery",
-                daily: {
-                    "Monday": ["2 Slices & MD Drink – $4.50", "Soup & Sandwich – $5.99", "Turkey Sub – $5.25"],
-                    "Tuesday": ["2 Slices & MD Drink – $4.50", "Ham Sub – $5.00", "Pork BBQ Sandwich w/Fries – $5.99"],
-                    "Wednesday": ["2 Slices & MD Drink – $4.50", "Soup & Sandwich – $5.99", "Italian Sub – $5.25"],
-                    "Thursday": ["2 Slices & MD Drink – $4.50", "Soup & Sandwich – $5.99", "¼ Lb. Cheeseburger & Fries – $4.50", "🍺 Miller Lite Draft (Pint) – $1.50 (all day till midnight)"],
-                    "Friday": ["2 Slices & MD Drink – $4.50", "Meatball Sub – $5.50", "Shrimp Basket & Fries – $5.75"]
-                }
-            },
-            "VFW Post 7294": {
-                note: "Members & Guests · Weekly specials change each week",
-                weekly: vfwWeeklySpecials.map(s => {
-                    let label = s.name;
-                    if (s.price) label += ` – ${s.price}`;
-                    if (s.fridayOnly) label += ' (Friday only)';
-                    return label;
-                }),
-                weeklyDateRange: vfwSpecialsDateRange,
-                recurring: {
-                    "Tuesday": "Shrimp Night",
-                    "Wednesday": "Wing Night",
-                    "Thursday": "Taco Night",
-                    "Friday": "Special (varies weekly)",
-                    "Saturday": "Burger Night"
-                }
-            },
-            "John Herr's Village Market": {
-                note: groceryDeals.length > 0 && groceryDeals[0].dateRange ? `Weekly deals: ${groceryDeals[0].dateRange}` : "Weekly deals · Thu–Wed",
-                weekly: groceryDeals.slice(0, 5).map(d => {
-                    let label = `${d.item} – ${d.salePrice}`;
-                    if (d.savings) label += ` (${d.savings})`;
-                    return label;
-                }),
-                weeklyDateRange: groceryDeals.length > 0 ? groceryDeals[0].dateRange : '',
-                rawDeals: groceryDeals.map(d => ({
-                    item: d.item, salePrice: d.salePrice,
-                    regularPrice: d.regularPrice || '', savings: d.savings || '',
-                    dateRange: d.dateRange || ''
-                }))
+        // VFW Post 7294 — dedicated pipeline (vfw.json via the Cowork task).
+        // Key = the directory row's slug. If that row is ever renamed, freeze
+        // the slug with the sheet's explicit `slug` column rather than editing
+        // this constant — that's the whole point of the slug join.
+        specials['vfw-post-7294'] = {
+            name: 'VFW Post 7294',
+            audience: 'locals',                    // members-only — home rail hides from marauders
+            closedDays: ['Sunday', 'Monday'],      // kitchen runs Tue–Sat
+            note: "Members & Guests · Weekly specials change each week",
+            weekly: vfwWeeklySpecials.map(s => {
+                let label = s.name;
+                if (s.price) label += ` – ${s.price}`;
+                if (s.fridayOnly) label += ' (Friday only)';
+                return label;
+            }),
+            weeklyDateRange: vfwSpecialsDateRange,
+            recurring: {
+                "Tuesday": "Shrimp Night",
+                "Wednesday": "Wing Night",
+                "Thursday": "Taco Night",
+                "Friday": "Special (varies weekly)",
+                "Saturday": "Burger Night"
             }
         };
+
+        // John Herr's Village Market — dedicated pipeline (grocery.json via
+        // the Thursday Cowork task). Same slug-key rule as VFW above.
+        specials['john-herr-s-village-market'] = {
+            name: "John Herr's Village Market",
+            note: groceryDeals.length > 0 && groceryDeals[0].dateRange ? `Weekly deals: ${groceryDeals[0].dateRange}` : "Weekly deals · Thu–Wed",
+            weekly: groceryDeals.slice(0, 5).map(d => {
+                let label = `${d.item} – ${d.salePrice}`;
+                if (d.savings) label += ` (${d.savings})`;
+                return label;
+            }),
+            weeklyDateRange: groceryDeals.length > 0 ? groceryDeals[0].dateRange : '',
+            rawDeals: groceryDeals.map(d => ({
+                item: d.item, salePrice: d.salePrice,
+                regularPrice: d.regularPrice || '', savings: d.savings || '',
+                dateRange: d.dateRange || ''
+            }))
+        };
         fs.writeFileSync(path.join(__dirname, '../specials.json'), JSON.stringify(specials, null, 2));
-        console.log(`✅ Specials saved (VFW: ${vfwWeeklySpecials.length}, Grocery: ${groceryDeals.length})`);
+        console.log(`✅ Specials saved (${Object.keys(specials).length} places · VFW: ${vfwWeeklySpecials.length}, Grocery: ${groceryDeals.length})`);
     } catch (e) { console.error("❌ VFW/Specials error:", e.message); }
 
     // ===== 8. COMMUNITY EVENT SUBMISSIONS (Google Sheet) =====
@@ -6131,56 +5828,11 @@ Focus on the most impressive deals a shopper would want to know about. Include m
         console.log(`✅ Community Board: ${boardPosts.length} active, ${expiredCount} expired`);
     } catch (e) { console.log(`  ⚠️ Community Board error: ${e.message}`); }
 
-    // ===== BUSINESS REVIEWS =====
-    try {
-        const REVIEW_SHEET_ID = process.env.REVIEW_SHEET_ID || '1-E7fJ6PyC1o-n5RpqKvkyGtvvxwqUrHnNRTvN5RWICc';
-        if (REVIEW_SHEET_ID) {
-            console.log('📡 Fetching business reviews...');
-            const reviewUrl = `https://docs.google.com/spreadsheets/d/${REVIEW_SHEET_ID}/gviz/tq?tqx=out:csv`;
-            const reviewRes = await fetch(reviewUrl, { headers: baseHeaders, signal: AbortSignal.timeout(10000) });
-            if (reviewRes.ok) {
-                const reviewCsv = await reviewRes.text();
-                const reviewRows = reviewCsv.split('\n').slice(1); // skip header
-                const bizReviews = {}; // { businessName: { total: N, sum: N, reviews: [] } }
-
-                for (const row of reviewRows) {
-                    if (!row.trim()) continue;
-                    // CSV: timestamp, business, rating, review text, reviewer name
-                    const cols = row.match(/(".*?"|[^",]+)(?=\s*,|\s*$)/g);
-                    if (!cols || cols.length < 3) continue;
-                    const business = (cols[1] || '').replace(/"/g, '').trim();
-                    const rating = parseFloat((cols[2] || '').replace(/"/g, '').trim());
-                    if (!business || isNaN(rating) || rating < 1 || rating > 5) continue;
-                    const reviewText = cols[3] ? cols[3].replace(/"/g, '').trim() : '';
-                    const reviewer = cols[4] ? cols[4].replace(/"/g, '').trim() : 'Anonymous';
-
-                    if (!bizReviews[business]) bizReviews[business] = { total: 0, sum: 0 };
-                    bizReviews[business].total++;
-                    bizReviews[business].sum += rating;
-                }
-
-                // Read current services.json and merge ratings
-                const servicesPath = path.join(__dirname, '../services.json');
-                let services = [];
-                try { services = JSON.parse(fs.readFileSync(servicesPath, 'utf8')); } catch (e) {}
-
-                let updated = 0;
-                for (const svc of services) {
-                    const rev = bizReviews[svc.name];
-                    if (rev && rev.total > 0) {
-                        svc.rating = (rev.sum / rev.total).toFixed(1);
-                        svc.reviewCount = rev.total;
-                        updated++;
-                    }
-                }
-
-                fs.writeFileSync(servicesPath, JSON.stringify(services, null, 2));
-                console.log(`✅ Reviews: ${Object.keys(bizReviews).length} businesses reviewed, ${updated} ratings updated`);
-            } else {
-                console.log(`  ⚠️ Reviews sheet fetch failed: ${reviewRes.status}`);
-            }
-        }
-    } catch (e) { console.log(`  ⚠️ Reviews error: ${e.message}`); }
+    // (Business-review overlay removed 2026-07-13. The review UI was retired
+    // 2026-07-07 and nothing renders rating/reviewCount, so the hourly sheet
+    // fetch + services.json write-back is gone. services.json is now written
+    // ONLY by sync-directory.js — the sync→scrape order in main.yml is plain
+    // convention, no longer load-bearing. Review Form/sheet can be closed.)
 
     // Dead-man switch ping. If the GitHub Action secret HEALTHCHECK_URL is set, ping it
     // when the scrape completes. If the scrape never finishes (hang, crash, GitHub Actions

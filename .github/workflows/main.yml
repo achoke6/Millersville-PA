@@ -29,7 +29,7 @@ jobs:
       - name: Validate hand-maintained JSON
         run: |
           set -e
-          for f in camps.json org-overrides.json shortnames-overlay.json imleagues.json venue-aliases.json; do
+          for f in camps.json org-overrides.json shortnames-overlay.json imleagues.json venue-aliases.json place-specials.json; do
             if [ -f "$f" ]; then
               echo "Checking $f..."
               jq empty "$f" || { echo "❌ $f has invalid JSON syntax"; exit 1; }
@@ -60,6 +60,14 @@ jobs:
           if [ -f imleagues.json ]; then
             jq -e 'type == "array" and (length == 0 or (all(.title and .deadline)))' imleagues.json > /dev/null \
               || { echo "❌ imleagues.json must be an array of objects, each with title + deadline"; exit 1; }
+          fi
+          if [ -f place-specials.json ]; then
+            jq -e '.places | type == "object"' place-specials.json > /dev/null \
+              || { echo "❌ place-specials.json must have a .places object (slug → place entry)"; exit 1; }
+            jq -e '.places | keys | all(test("^[a-z0-9][a-z0-9-]*$"))' place-specials.json > /dev/null \
+              || { echo "❌ place-specials.json keys must be directory place slugs (lowercase letters/digits/hyphens)"; exit 1; }
+            jq -e '[.places[] | select(has("weekly")) | .weekly] | all(has("items") and has("validThrough"))' place-specials.json > /dev/null \
+              || { echo "❌ place-specials.json: every weekly block needs items + validThrough"; exit 1; }
           fi
           echo "✓ All JSON files valid"
 
@@ -115,15 +123,13 @@ jobs:
       # scripts/sync-directory.js. The commit step below picks these up via
       # `git add *.json` like any other data file.
       #
-      # ORDER MATTERS — this step MUST run BEFORE scrape.js, not after.
-      # scrape.js's business-reviews step (~scrape.js L6294) reads services.json
-      # and overlays rating/reviewCount onto it; whichever of the two runs LAST
-      # is the copy that gets committed. With sync-directory placed AFTER scrape,
-      # it regenerated services.json clean from the sheet and silently wiped
-      # every review rating on every build. Keep sync-directory FIRST so scrape's
-      # overlay is the final writer and ratings survive. (Historically placed
-      # after scrape purely for commit-batching, on the now-false assumption that
-      # scrape doesn't touch the directory files — the review overlay broke it.)
+      # Order note: sync-directory runs BEFORE scrape.js. This was load-bearing
+      # while scrape.js's business-review overlay wrote rating/reviewCount back
+      # into services.json (whichever ran last got committed); that overlay was
+      # removed 2026-07-13 with the review-system retirement, so the order is
+      # now plain convention — scrape.js no longer touches the directory files.
+      # Keeping sync-directory first stays the safe default if any future step
+      # ever overlays onto directory output again.
       #
       # continue-on-error: a transient Google outage or a malformed sheet must
       # NOT fail the whole hourly deploy. The script itself fails safe — on any

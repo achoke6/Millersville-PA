@@ -5371,20 +5371,14 @@ window.openEventDetails = function(key) {
 async function loadHomeSpecials(){
     try {
         const specials = await fetch('specials.json').then(r=>r.json());
-        // VFW specials come from vfw.json (the single source maintained by the
-        // weekly Cowork task). Synthesize the specials-shaped entry from it so
-        // the rendering below is unchanged. This overrides any VFW block that
-        // might still exist in specials.json.
+        // specials.json is keyed by DIRECTORY PLACE SLUG (see scrape.js
+        // assembly); each entry carries its display `name`. VFW is overridden
+        // from vfw.json (the single source maintained by the Cowork task) via
+        // the same helper the Map page uses, so the two can never disagree.
         try {
             const vfw = await fetch('vfw.json').then(r=>r.json());
-            if (vfw && vfw.weeklySpecials) {
-                specials['VFW Post 7294'] = {
-                    note: vfw.note || '',
-                    weekly: vfw.weeklySpecials.items || [],
-                    weeklyDateRange: vfw.weeklySpecials.dateRange || '',
-                    recurring: vfw.recurring || {}
-                };
-            }
+            const vfwEntry = vfwSpecialsEntryFromJson(vfw);
+            if (vfwEntry) specials['vfw-post-7294'] = vfwEntry;
         } catch(e){ /* vfw.json optional — fall back to specials.json if present */ }
         const dayName = new Date().toLocaleDateString('en-US',{weekday:'long'});
         const container = document.getElementById('home-specials');
@@ -5402,38 +5396,22 @@ async function loadHomeSpecials(){
             }
         }
 
-        for (const [restaurant, sp] of Object.entries(specials)) {
-            // VFW is members-only — hide from marauders by default. Townies
-            // (and marauders who explicitly favorite VFW) can still see it.
-            // The favorited-opt-in path is implicit: this loop only shows
-            // cards on the home special-deals strip; the picker provides
-            // the override route.
-            if (restaurant === 'VFW Post 7294' && muAffiliation === 'student') continue;
+        for (const [slug, sp] of Object.entries(specials)) {
+            // Audience-targeted specials — symmetric with the directory's
+            // placeAudienceVisible vocabulary: 'locals' hides from marauders
+            // (VFW is members-only/local), 'marauders' would hide from
+            // townies/unset. Everything else shows to everyone.
+            if (sp.audience === 'locals' && muAffiliation === 'student') continue;
+            if (sp.audience === 'marauders' && muAffiliation !== 'student') continue;
 
-            // VFW kitchen runs Tue–Sat. Hide the specials card on Sun & Mon
-            // (kitchen closed / specials not relevant). Saturday still shows,
-            // but the Friday-only item is dropped (handled below).
-            if (restaurant === 'VFW Post 7294' && (dayName === 'Sunday' || dayName === 'Monday')) continue;
-
-            let items = [];
-            if(sp.daily && sp.daily[dayName]) items = sp.daily[dayName];
-
-            // VFW: show recurring for today + weekly specials
-            if (restaurant === 'VFW Post 7294') {
-                if(sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
-                if(sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
-                // On Saturday, drop Friday-only items — they're no longer offered.
-                if(dayName === 'Saturday'){
-                    items = items.filter(i => !/\((?:Fri|Friday)(?:\s+only)?\)/i.test(i));
-                }
-            } else {
-                if(sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
-                if(sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
-            }
+            // Single source of truth — the same accumulation that drives the
+            // Map page cards and the Today lens (closed days, day-only tags,
+            // daily + recurring + weekly) so the rail can never disagree.
+            const items = placesSpecialsItemsFor(sp, dayName);
 
             if(items.length > 0){
                 const note = sp.note || '';
-                cards.push(`<div class="home-special-card"><h3 class="home-special-name">${restaurant}</h3><p class="home-special-note">${note}</p>${items.map(i=>`<p class="home-special-item">• ${i}</p>`).join('')}</div>`);
+                cards.push(`<div class="home-special-card"><h3 class="home-special-name">${sp.name || slug}</h3><p class="home-special-note">${note}</p>${items.map(i=>`<p class="home-special-item">• ${i}</p>`).join('')}</div>`);
             }
         }
         container.innerHTML = cards.length > 0 ? cards.join('') : '<p class="home-empty">No specials today</p>';
@@ -5951,19 +5929,14 @@ async function loadPlaces(){try{
     // failed (fall back to built-in text); null = no cupboard row in the sheet
     // (hide the resource entirely). An object = use its description/address.
     if (cupboardData !== undefined) window._cupboard = cupboardData;
-    // VFW specials come from vfw.json (single source, maintained by the weekly
-    // Cowork task). Synthesize the specials-shaped entry so buildFoodCard works
-    // unchanged. Overrides any stale VFW block in specials.json.
-    if (vfw && vfw.weeklySpecials) {
-        specials['VFW Post 7294'] = {
-            note: vfw.note || '',
-            weekly: vfw.weeklySpecials.items || [],
-            weeklyDateRange: vfw.weeklySpecials.dateRange || '',
-            recurring: vfw.recurring || {}
-        };
-    }
+    // VFW specials come from vfw.json (single source, maintained by the
+    // Cowork task) — synthesized via the shared helper (also used by the home
+    // rail) under the 'vfw-post-7294' slug key, overriding the scrape-time
+    // block in specials.json.
+    const vfwEntry = vfwSpecialsEntryFromJson(vfw);
+    if (vfwEntry) specials['vfw-post-7294'] = vfwEntry;
     // Store grocery deals for popup
-    const jh = specials["John Herr's Village Market"];
+    const jh = specials['john-herr-s-village-market'];
     if(jh && jh.rawDeals) { allGroceryDeals = jh.rawDeals; }
     allRestaurants = restaurants;
     // Merge: add category to restaurants, combine
@@ -5972,6 +5945,14 @@ async function loadPlaces(){try{
     allPlaces = [...foodPlaces, ...svcPlaces];
     // Store specials globally for rendering
     window._placesSpecials = specials;
+    // Diagnostic (mirrors `venue-match: unmatched locations`): specials
+    // entries whose slug matches no food/service listing — usually a
+    // hand-typed place-specials.json key that doesn't equal the directory
+    // row's slug. Harmless at runtime (the specials just don't attach);
+    // fix the JSON key, or freeze the row's slug via the sheet's `slug` column.
+    const _placeSlugSet = new Set(allPlaces.map(placeSlug));
+    const _unmatchedSp = Object.keys(specials).filter(s => !_placeSlugSet.has(s));
+    if (_unmatchedSp.length) console.log('specials-match: unmatched slugs (fix place-specials.json keys or sheet slugs):', _unmatchedSp);
     renderPlaces();
 }catch(e){console.error('Places error:',e);}}
 
@@ -6128,7 +6109,7 @@ function placesMapPopup(p){
     let html = `<div class="map-popup"><strong>${p.name}</strong>`;
     if (meta) html += `<div class="map-popup-meta">${meta}</div>`;
     if (p.address) html += `<div class="map-popup-meta">${p.address}</div>`;
-    if (placeHasSpecialsToday(p.name)) html += `<div class="map-popup-meta">🔥 Specials today</div>`;
+    if (placeHasSpecialsToday(placeSlug(p))) html += `<div class="map-popup-meta">🔥 Specials today</div>`;
     const evToday = placeEventsToday(p);
     evToday.slice(0,2).forEach(e => { html += `<div class="map-popup-meta">📅 ${e.title} · ${formatTime(new Date(e.t))}</div>`; });
     if (evToday.length > 2) html += `<div class="map-popup-meta">+${evToday.length-2} more today</div>`;
@@ -6194,7 +6175,7 @@ function placeNextUpcoming(p){
 }
 // The Today-lens predicate — used by BOTH the list filter and the pin filter,
 // so the two-spot mirror stays in agreement through one function.
-function placeTodayContent(p){ return placeHasSpecialsToday(p.name) || placeEventsToday(p).length > 0; }
+function placeTodayContent(p){ return placeHasSpecialsToday(placeSlug(p)) || placeEventsToday(p).length > 0; }
 // Pin tap → pull that place's card up under the map, with a highlight pulse.
 window.scrollToPlaceCard = function(p){
     const el = document.querySelector(`#view-places [data-place="${placeSlug(p)}"]`);
@@ -6363,32 +6344,66 @@ function updatePlacesFilterNote(){
     else note.textContent = '';
 }
 
-// Single source of truth for "what specials does <name> have today". Used by
-// buildFoodCard's specials box AND the Today lens (list + map pins), so the
-// chip can never disagree with what cards display. Carries the VFW rules that
-// used to live inline in buildFoodCard: closed Sun/Mon, and Saturday drops
-// Friday-only items. (sp.daily is spread-copied so pushes never mutate the
-// shared _placesSpecials object across renders.)
-function placesSpecialsItems(name, dayName){
-    const sp = (window._placesSpecials || {})[name];
+// Single source of truth for "what specials does <place> have today" — used
+// by buildFoodCard's specials box, the home rail, AND the Today lens (list +
+// map pins), so no surface can disagree. All rules are data-driven off the
+// entry itself (specials.json / place-specials.json):
+//   • closedDays: [] of weekday names — closed day ⇒ no items at all
+//     (generalizes the old hardcoded VFW closed-Sun/Mon rule).
+//   • "(Fri only)"-style day tags on items age out once that day has passed
+//     within the Monday-start week (generalizes the old VFW Saturday rule —
+//     a Fri-only item still previews Tue–Fri, drops Sat/Sun).
+//   • Order: daily → recurring → weekly (matches the old VFW display; the
+//     other legacy entries never had both, so nothing visibly moved).
+// sp.daily is spread-copied so pushes never mutate the shared object.
+const SPECIALS_DAY_IDX = {Monday:0,Tuesday:1,Wednesday:2,Thursday:3,Friday:4,Saturday:5,Sunday:6};
+function placesSpecialsItemsFor(sp, dayName){
     if (!sp) return [];
-    if (name === 'VFW Post 7294' && (dayName === 'Sunday' || dayName === 'Monday')) return [];
+    if (Array.isArray(sp.closedDays) && sp.closedDays.includes(dayName)) return [];
     let items = [];
     if (sp.daily && sp.daily[dayName]) items = [...sp.daily[dayName]];
-    if (name === 'VFW Post 7294') {
-        if (sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
-        if (sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
-        if (dayName === 'Saturday'){
-            items = items.filter(i => !/\((?:Fri|Friday)(?:\s+only)?\)/i.test(i));
-        }
-    } else {
-        if (sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
-        if (sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
+    if (sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
+    if (sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
+    const todayIdx = SPECIALS_DAY_IDX[dayName];
+    if (todayIdx !== undefined) {
+        items = items.filter(i => {
+            const m = i.match(/\((Mon|Tues?|Wed(?:nes)?|Thur?s?|Fri|Sat(?:ur)?|Sun)(?:day)?\.?\s+only\)/i);
+            if (!m) return true;
+            const idx = {mon:0,tue:1,wed:2,thu:3,fri:4,sat:5,sun:6}[m[1].slice(0,3).toLowerCase()];
+            return idx === undefined ? true : todayIdx <= idx;
+        });
     }
     return items;
 }
-function placeHasSpecialsToday(name){
-    return placesSpecialsItems(name, new Date().toLocaleDateString('en-US',{weekday:'long'})).length > 0;
+// Slug-keyed wrapper over the global map (specials.json is keyed by directory
+// place slug — Hard Rule 11's derivation; callers pass placeSlug(p)).
+function placesSpecialsItems(slug, dayName){
+    return placesSpecialsItemsFor((window._placesSpecials || {})[slug], dayName);
+}
+function placeHasSpecialsToday(slug){
+    return placesSpecialsItems(slug, new Date().toLocaleDateString('en-US',{weekday:'long'})).length > 0;
+}
+
+// Synthesize the VFW specials entry from vfw.json (the single source the
+// Cowork task maintains) — shared by loadPlaces and loadHomeSpecials, always
+// overriding the scrape-time block in specials.json. Weekly items honor the
+// exclusive validThrough like every other weekly block (an expired week drops
+// the weekly list but keeps the evergreen recurring themes). Stored under the
+// 'vfw-post-7294' slug = the directory row's slug; if that row is renamed,
+// freeze its slug via the sheet's explicit `slug` column.
+function vfwSpecialsEntryFromJson(vfw){
+    if (!(vfw && vfw.weeklySpecials)) return null;
+    const vt = vfw.weeklySpecials.validThrough ? new Date(vfw.weeklySpecials.validThrough + 'T00:00:00-04:00') : null;
+    const current = vt && new Date() < vt;
+    return {
+        name: 'VFW Post 7294',
+        audience: 'locals',
+        closedDays: ['Sunday','Monday'],
+        note: vfw.note || '',
+        weekly: current ? (vfw.weeklySpecials.items || []) : [],
+        weeklyDateRange: current ? (vfw.weeklySpecials.dateRange || '') : '',
+        recurring: vfw.recurring || {}
+    };
 }
 
 // "Today" lens — occupies the retired ✓ Verified slot, same exclusivity
@@ -6607,17 +6622,19 @@ function buildFoodCard(p, specials, dayName) {
     const addr = p.address ? `<p class="card-meta" style="margin-bottom:4px;">📍 ${p.address}</p>` : '';
     const ratingRow = '';   // star ratings retired with the review system (2026-07)
 
-    // Build specials section
+    // Build specials section — specials.json is slug-keyed; all display rules
+    // (closed days, day-only tags) live in placesSpecialsItems, so no place
+    // needs name special-casing here. Grocery styling keys off rawDeals.
     let specialsHtml='';
-    const sp = specials[p.name];
-    const vfwClosedDay = (dayName === 'Sunday' || dayName === 'Monday');
-    if(sp && !(vfwClosedDay && p.name === 'VFW Post 7294')){
-        let items = placesSpecialsItems(p.name, dayName);   // single source of truth (also drives the Today lens)
+    const pslug = placeSlug(p);
+    const sp = specials[pslug];
+    if(sp){
+        let items = placesSpecialsItems(pslug, dayName);   // single source of truth (also drives the Today lens + home rail)
         if(items.length > 0){
-            const isGrocery = p.name === "John Herr's Village Market";
+            const isGrocery = !!(sp.rawDeals && sp.rawDeals.length);
             const note = sp.note ? `<p style="font-size:0.7rem;color:var(--text-muted);margin-bottom:4px;font-style:italic;">${sp.note}</p>` : '';
             const dateRange = (!isGrocery && sp.weeklyDateRange) ? `<p style="font-size:0.7rem;color:var(--gold);font-weight:600;margin-bottom:4px;">${sp.weeklyDateRange}</p>` : '';
-            const isVFW = p.name === 'VFW Post 7294';
+            const isVFW = pslug === 'vfw-post-7294';
             const heading = isGrocery ? '🏷️ Top Weekly Deals:' : isVFW ? `Specials (${dayName}):` : `Today's Specials (${dayName}):`;
             const topItems = isGrocery ? items.slice(0, 5) : items;
             const moreItems = isGrocery ? items.slice(5) : [];

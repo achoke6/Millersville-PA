@@ -112,12 +112,12 @@
   },
   {
     "name": "American Chemical Society",
-    "category": "Academic",
+    "category": "Educational Program",
     "categories": [
-      "Academic"
+      "Educational Program"
     ],
-    "shortName": "ACS",
-    "id": "acs"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "American Choral Directors Association",
@@ -1009,10 +1009,13 @@
   },
   {
     "name": "It's On Us",
-    "category": "",
-    "categories": [],
-    "shortName": "IOU",
-    "id": "itsonus"
+    "category": "Educational Program",
+    "categories": [
+      "Educational Program",
+      "Social"
+    ],
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Jazz Bands",
@@ -1149,9 +1152,8 @@
   },
   {
     "name": "Math Club",
-    "category": "Meeting",
+    "category": "Social",
     "categories": [
-      "Meeting",
       "Social"
     ],
     "shortName": "",

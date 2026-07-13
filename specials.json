@@ -1,5 +1,6 @@
 {
-  "House of Pizza": {
+  "house-of-pizza": {
+    "name": "House of Pizza",
     "note": "Dine-in & Carryout Only · Mon-Fri till 2 PM · Not for Delivery",
     "daily": {
       "Monday": [
@@ -30,7 +31,33 @@
       ]
     }
   },
-  "VFW Post 7294": {
+  "bunker-at-crossgates": {
+    "name": "The Bunker at Crossgates"
+  },
+  "jack-s-family-tavern": {
+    "name": "Jack's Family Tavern"
+  },
+  "corn-wagon": {
+    "name": "The Corn Wagon",
+    "note": "Seasonal roadside produce stand · open July–November, Mon–Sat",
+    "closedDays": [
+      "Sunday"
+    ],
+    "weekly": [
+      "Sweet Corn (bi-color) – Price drop - now only $4.00/13 ears",
+      "Zucchini (as available) – $1.00 each or 4/$3.00",
+      "Tomatoes (as available) – priced by size or $3.00/quart",
+      "Pickling Cucumbers (as available) – 3/$1.00",
+      "Cucumbers (as available) – 4/$3.00"
+    ]
+  },
+  "vfw-post-7294": {
+    "name": "VFW Post 7294",
+    "audience": "locals",
+    "closedDays": [
+      "Sunday",
+      "Monday"
+    ],
     "note": "Members & Guests · Weekly specials change each week",
     "weekly": [],
     "weeklyDateRange": "",
@@ -42,7 +69,8 @@
       "Saturday": "Burger Night"
     }
   },
-  "John Herr's Village Market": {
+  "john-herr-s-village-market": {
+    "name": "John Herr's Village Market",
     "note": "Weekly deals: Thursday, July 9 through Wednesday, July 15",
     "weekly": [
       "Utz Party Size Original or Grandma Utz Potato Chips (12.5-13 oz, Selected) — Door Buster – Buy One Get One FREE",

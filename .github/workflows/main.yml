@@ -145,23 +145,20 @@ jobs:
       # overlay is the final writer — do NOT move this above sync-directory.
       - run: node scripts/scrape.js
         env:
-          GOOGLE_VISION_API_KEY: ${{ secrets.GOOGLE_VISION_API_KEY }}
-          VFW_SHEET_ID: ${{ secrets.VFW_SHEET_ID }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           HEALTHCHECK_URL: ${{ secrets.HEALTHCHECK_URL }}
 
       - name: Commit and push updated data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add *.json vfw-cache.json 2>/dev/null || true
+          git add *.json 2>/dev/null || true
           git diff --staged --quiet && echo "No changes to commit" || {
             git commit -m "System: Auto-syncing Community Data"
             git pull --rebase origin main --strategy-option theirs || {
               echo "Rebase conflict — resolving with ours (freshly scraped data wins)"
               git rebase --abort 2>/dev/null || true
               git pull origin main --no-rebase --strategy-option theirs
-              git add *.json vfw-cache.json 2>/dev/null || true
+              git add *.json 2>/dev/null || true
               git commit -m "System: Auto-syncing Community Data (merge)" --allow-empty
             }
             git push origin main
@@ -220,8 +217,6 @@ jobs:
                 --exclude ^index_old\.html$ \
                 --exclude ^style_old\.css$ \
                 --exclude ^404\.html$ \
-                --exclude ^vfw-cache\.json$ \
-                --exclude ^grocery-cache\.json$ \
                 --exclude ^candidates-status\.json$ \
                 --exclude ^subscriptions\.json$ \
                 --exclude ^notifications-status\.json$ \

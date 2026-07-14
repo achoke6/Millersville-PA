@@ -356,5 +356,6 @@ jobs:
           if [ -n "${{ secrets.HEALTHCHECK_URL }}" ]; then
             curl -fsS -m 10 --retry 3 "${{ secrets.HEALTHCHECK_URL }}/fail" || true
           fi
-- name: Log runner IP (temp — for DreamHost ticket)
+      - name: Log runner IP (temp — for DreamHost ticket)
+        if: always()
         run: echo "Runner public IP = $(curl -s https://api.ipify.org)"

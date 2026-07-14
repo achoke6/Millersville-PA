@@ -143,6 +143,29 @@ jobs:
         env:
           DIRECTORY_SHEET_CSV_URL: ${{ secrets.DIRECTORY_SHEET_CSV_URL }}
 
+      # Warn-only cross-check: every place-specials.json key must equal a
+      # directory listing slug, or that place's specials/events silently
+      # detach on the site — the map card box + Today lens joins are
+      # slug-based (Hard Rule 11). Runs AFTER sync-directory so it compares
+      # against the freshly-generated slugs. Deliberately NON-FATAL: a
+      # mismatch degrades one place's card, not the whole hourly deploy —
+      # the ⚠️ in this log (and the site's own console specials-match line)
+      # is the signal. Caught for real 2026-07-14 (Jack's "& Restaurant").
+      - name: Cross-check place-specials keys vs directory slugs (warn-only)
+        continue-on-error: true
+        run: |
+          if [ -f place-specials.json ]; then
+            SLUGS=$(jq -r '.. | objects | select(has("slug")) | .slug' restaurants.json services.json housing.json campus-cupboard.json 2>/dev/null | sort -u)
+            MISS=0
+            for KEY in $(jq -r '.places | keys[]' place-specials.json); do
+              if ! echo "$SLUGS" | grep -qx "$KEY"; then
+                echo "⚠️ place-specials key '$KEY' matches no directory slug — its map card box / Today lens join is broken (fix the JSON key or set the sheet row's explicit slug cell)"
+                MISS=1
+              fi
+            done
+            [ "$MISS" -eq 0 ] && echo "✓ all place-specials keys match directory slugs"
+          fi
+
       # Runs AFTER sync-directory (above) so scrape's services.json review
       # overlay is the final writer — do NOT move this above sync-directory.
       - run: node scripts/scrape.js

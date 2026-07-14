@@ -40,8 +40,10 @@ let evFreeFoodMode=false, evFreeStuffMode=false;
 // ==================== MY FEED SYSTEM ====================
 const FEED_KEY = 'mapp_feed_prefs';
 const AFFILIATION_KEY = 'mapp_mu_affiliation'; // 'student' | 'townie' | null (unset)
+const SHOW21_KEY = 'mapp_show_21plus'; // '1' = opted in to see 🍺-flagged drink specials (default off, site-wide)
 let feedPrefs = null; // null = not configured
 let muAffiliation = null; // null = not yet asked; 'student' or 'townie' once set
+let show21Plus = false;   // 21+ drink-specials opt-in — display setting, loaded in loadFeedPrefs
 
 function setFeedDotVisible(visible) {
     const d1 = document.getElementById('feed-dot');
@@ -54,6 +56,7 @@ function loadFeedPrefs() {
     try { feedPrefs = JSON.parse(localStorage.getItem(FEED_KEY)); } catch(e) { feedPrefs = null; }
     setFeedDotVisible(!!feedPrefs);
     try { muAffiliation = localStorage.getItem(AFFILIATION_KEY); } catch(e) { muAffiliation = null; }
+    try { show21Plus = localStorage.getItem(SHOW21_KEY) === '1'; } catch(e) { show21Plus = false; }
     if (muAffiliation !== 'student' && muAffiliation !== 'townie') muAffiliation = null;
     // Shareable affiliation link: ?aud=townie (aliases: local/locals) or ?aud=mu
     // (aliases: student/marauder). ONLY sets affiliation when none is set yet, so a
@@ -1511,6 +1514,19 @@ window.openFeedSettings = function() {
             </div>
             <div style="font-size:0.76rem;color:var(--text-muted);margin-top:8px;">${muAffiliation ? 'Local shows community events & deals; MU Student adds campus life.' : 'Pick one to tailor your events, sports, and local listings — change it anytime.'}</div>
         </div>
+        <!-- 21+ drink-specials opt-in. A display setting: applies immediately
+             (not tied to Save) and is deliberately NOT wiped by Clear Favs.
+             Default OFF for every viewer — 🍺-flagged items are hidden from
+             the home rail, card specials boxes, and Today lens until checked. -->
+        <div style="margin-bottom:16px;padding:14px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);">
+            <label style="display:flex;gap:10px;align-items:flex-start;cursor:pointer;">
+                <input type="checkbox" ${show21Plus ? 'checked' : ''} onchange="window.toggle21Plus(this.checked)" style="margin-top:3px;flex-shrink:0;">
+                <span>
+                    <span style="font-weight:700;font-size:0.9rem;">🍺 Show 21+ drink specials</span>
+                    <span style="display:block;font-size:0.76rem;color:var(--text-muted);margin-top:2px;">Bar &amp; drink specials are hidden by default. Check this to include them — for visitors 21 and older.</span>
+                </span>
+            </label>
+        </div>
         <div id="feed-options">${sectionsHtml}</div>
         <!-- Calendar subscription card. Lets the user grab a personalized iCal
              feed URL containing their current favorites. Sits between the
@@ -2335,6 +2351,17 @@ function applyAffiliation(value, clearFavs) {
         if (typeof window.openFeedSettings === 'function') window.openFeedSettings();
     }
 }
+
+// 21+ drink-specials opt-in. A display setting, not a favorite — persists on
+// its own key (survives Clear Favs), applies immediately (no Save needed),
+// and re-renders the two specials surfaces: home rail (renderHomeFeed) and
+// directory cards / Today lens / pins (renderPlaces).
+window.toggle21Plus = function(on) {
+    show21Plus = !!on;
+    try { localStorage.setItem(SHOW21_KEY, show21Plus ? '1' : '0'); } catch (e) {}
+    if (typeof renderHomeFeed === 'function') renderHomeFeed();
+    if (typeof renderPlaces === 'function') renderPlaces();
+};
 
 // Called after affiliation changes. Cleans up state that may be invalid under the new
 // affiliation. Specifically:
@@ -6372,6 +6399,13 @@ function placesSpecialsItemsFor(sp, dayName){
     if (sp.daily && sp.daily[dayName]) items = [...sp.daily[dayName]];
     if (sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
     if (sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
+    // 21+ gate: any item containing 🍺 is alcohol-flagged (data convention,
+    // documented in place-specials.json _format) and hidden for EVERY viewer
+    // until they opt in via the My Favorites "Show 21+ drink specials"
+    // checkbox. This one filter point covers the home rail, both card
+    // specials boxes, the Today lens, and the map pins — they all flow
+    // through this function. Also catches recurring items ("🔁 🍺 ...").
+    if (!show21Plus) items = items.filter(i => !i.includes('🍺'));
     const todayIdx = SPECIALS_DAY_IDX[dayName];
     if (todayIdx !== undefined) {
         items = items.filter(i => {

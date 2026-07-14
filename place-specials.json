@@ -1,6 +1,6 @@
 {
   "_comment": "Per-place specials registry — keyed by DIRECTORY PLACE SLUG (same derivation as sync-directory.js slugify / app.js slugifyPlace: lowercase, punctuation→space, collapse spaces, drop leading 'the', spaces→hyphens — so \"Jack's Family Tavern\" → jack-s-family-tavern). A key that doesn't equal its directory row's slug silently detaches: after any edit, load the Map page and check the browser console for 'specials-match: unmatched slugs'. Hand-maintained fields: name, note, audience ('locals' hides from marauders / 'marauders' hides from townies — omit for everyone), closedDays, season, daily, recurring, events. The Cowork specials task maintains each place's weekly block — dateRange + EXCLUSIVE validThrough (the day AFTER the last valid day) + items, en-dash prices, '(Fri only)'-style day tags that age out once that day has passed. The Corn Wagon's weekly items are NOT stored here — scrape.js scrapes thecornwagon.com/current-info live each run (this entry's presence is the on/off switch; season gates it). VFW Post 7294 and John Herr's are NOT in this file — they keep their dedicated pipelines (vfw.json / grocery.json) and are assembled in scrape.js under literal slug keys.",
-  "_format": "places.<slug> = { name, note?, audience? ('locals'|'marauders'), closedDays? ['Sunday',...], season? {fromMonth,toMonth}, daily? {Day:[items]}, recurring? {Day:'item'}, weekly? {dateRange, validThrough, items[]}, events? [{title, date (ISO w/ ET offset), endTime?, description?, price?, link?, kidFriendly?}] — events are emitted as Community events located at the place name.",
+  "_format": "places.<slug> = { name, note?, audience? ('locals'|'marauders'), closedDays? ['Sunday',...], season? {fromMonth,toMonth}, daily? {Day:[items]}, recurring? {Day:'item'}, weekly? {dateRange, validThrough, items[]}, events? [{title, date (ISO w/ ET offset), endTime?, description?, price?, link?, kidFriendly?}], eventTag? (source tag for ALL this place's emitted events — default Community; a non-Community tag is a real source and needs Hard-Rule-7 wiring: app.js + eventMatch.js + events.ics.php, like Jack's Tavern → jacks-tavern-all), recurringEvents? [{title, day (weekday name), time (HH:MM 24h ET), description?, link?, price?, kidFriendly?}] — standing weekly items scrape.js expands into the next 3 dated instances each run. events are emitted located at the place name.",
   "places": {
     "house-of-pizza": {
       "name": "House of Pizza",
@@ -51,13 +51,11 @@
           "Meatball Monday – 2 free meatballs with any food order"
         ],
         "Tuesday": [
-          "Tito's Vodka – $4.00 pours all day",
-          "Trivia Night – 8 PM"
+          "Tito's Vodka – $4.00 pours all day"
         ],
         "Wednesday": [
           "Keystone Light cans – $2.50",
-          "Hot Dogs – 99¢ · Jack Dogs – $3.99",
-          "Open Jukebox – 10 PM to close"
+          "Hot Dogs – 99¢ · Jack Dogs – $3.99"
         ],
         "Thursday": [
           "Michelob Ultra – Happy Hour pricing all day"
@@ -66,6 +64,11 @@
           "Coors Banquet bottles – Happy Hour pricing all day"
         ]
       },
+      "eventTag": "Jack's Tavern",
+      "recurringEvents": [
+        { "title": "Trivia Night", "day": "Tuesday", "time": "20:00", "description": "Weekly trivia at Jack's Family Tavern — Tuesdays at 8 PM." },
+        { "title": "Open Jukebox", "day": "Wednesday", "time": "22:00", "description": "Open jukebox from 10 PM to close." }
+      ],
       "events": []
     },
     "corn-wagon": {

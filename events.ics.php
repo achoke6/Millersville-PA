@@ -437,6 +437,7 @@ function eventMatchesFeed($e) {
     if (in_array('Borough', $tags, true)       && in_array('borough-all', $prefs, true))          return true;
     if (in_array('Manor', $tags, true)         && in_array('manor-all', $prefs, true))             return true;
     if (in_array('Raney Cellars', $tags, true) && in_array('raney-cellars-all', $prefs, true))     return true;
+    if (in_array("Jack's Tavern", $tags, true) && in_array('jacks-tavern-all', $prefs, true))     return true;
     if (in_array('VFW', $tags, true)           && in_array('other-vfw', $prefs, true))             return true;
     if (in_array('Live Music', $tags, true)    && in_array('other-phantom', $prefs, true))         return true;
     if (in_array('Community', $tags, true)     && in_array('other-community', $prefs, true))       return true;

@@ -676,7 +676,8 @@ const feedSections = {
             other: { label: 'Other', icon: '🎯', headingStyle: true, audience: 'townie', subs: [
                 {id:'other-vfw',label:'VFW Events',icon:'🎖️'},{id:'other-phantom',label:'Phantom Power',icon:'🎵'},
                 {id:'other-community',label:'Community Events',icon:'📝'},
-                {id:'raney-cellars-all',label:'Raney Cellars Events',icon:'🍺'}
+                {id:'raney-cellars-all',label:'Raney Cellars Events',icon:'🍺'},
+                {id:'jacks-tavern-all',label:"Jack's Tavern Events",icon:'🍻'}
             ]},
             family: { label: 'Family Friendly', icon: '👨‍👩‍👧', headingStyle: true, audience: 'townie', subs: [{id:'family-events',label:'Family Friendly Events',icon:'👨‍👩‍👧'}] }
         },
@@ -717,7 +718,8 @@ const feedSections = {
                     {id:'other-vfw',label:'VFW Events',icon:'🎖️'},
                     {id:'other-phantom',label:'Phantom Power',icon:'🎵'},
                     {id:'other-community',label:'Community Events',icon:'📝'},
-                    {id:'raney-cellars-all',label:'Raney Cellars Events',icon:'🍺'}
+                    {id:'raney-cellars-all',label:'Raney Cellars Events',icon:'🍺'},
+                    {id:'jacks-tavern-all',label:"Jack's Tavern Events",icon:'🍻'}
                 ]
             },
             family: {
@@ -927,6 +929,7 @@ function suggestFeedIdForEvent(e, isSportsPage) {
     // Manor Twp.
     if (tags.includes('Manor')) return 'manor-all';
     if (tags.includes('Raney Cellars')) return 'raney-cellars-all';
+    if (tags.includes("Jack's Tavern")) return 'jacks-tavern-all';
     // Other
     if (tags.includes('VFW')) return 'other-vfw';
     if (tags.includes('Phantom Power') || tags.includes('Live Music')) return 'other-phantom';
@@ -2521,7 +2524,7 @@ function matchesSource(tags,src){
     if(src==='PM') return tags.includes('PM');
     if(src==='Borough') return tags.includes('Borough');
     if(src==='Manor') return tags.includes('Manor');
-    if(src==='Other') return tags.includes('Other') || tags.includes('Community') || tags.includes('Raney Cellars');
+    if(src==='Other') return tags.includes('Other') || tags.includes('Community') || tags.includes('Raney Cellars') || tags.includes("Jack's Tavern");
     // Sports page still uses 'Clubs' as a separate filter (Club Sports games)
     if(src==='Clubs') return tags.includes('Clubs/Orgs')&&(tags.includes('Club Sports')||sportsList.some(s=>tags.includes(s)));
     return false;
@@ -5006,6 +5009,7 @@ function buildTimelineItem(e, now) {
     else if(tags.includes('Borough')) src = 'Borough';
     else if(tags.includes('Manor')) src = 'Manor';
     else if(tags.includes('Raney Cellars')) src = 'Raney Cellars';
+    else if(tags.includes("Jack's Tavern")) src = "Jack's Tavern";
     else if(tags.includes('PM') && isSport) src = 'PM';
     else if(tags.includes('PM')) src = 'PM';
     else if(tags.includes('MU') && isSport) src = 'MU';
@@ -5045,7 +5049,7 @@ function buildTimelineItem(e, now) {
     // matches the org name (the pill already conveys it — avoids "Free
     // Lunch — The HUB" with [The HUB] pill, which is double display).
     const rawLoc = cleanLocation(e.location || '').trim();
-    const genericLoc = /^(millersville university|millersville borough|phantom power|raney cellars brewing|campus|tba|tbd|online|virtual|zoom|n\/a|pa)$/i;
+    const genericLoc = /^(millersville university|millersville borough|phantom power|raney cellars brewing|jack'?s family tavern|campus|tba|tbd|online|virtual|zoom|n\/a|pa)$/i;
     const orgEqualsLoc = e.orgShortName && rawLoc.toLowerCase() === e.orgShortName.toLowerCase();
     if (rawLoc && rawLoc.length <= 35 && !genericLoc.test(rawLoc) && !orgEqualsLoc && !title.toLowerCase().includes(rawLoc.toLowerCase())) {
         title = `${title} — ${rawLoc}`;
@@ -5185,6 +5189,7 @@ window.openEventDetails = function(key) {
     else if(tags.includes('Borough')) src = 'Borough';
     else if(tags.includes('Manor')) src = 'Manor';
     else if(tags.includes('Raney Cellars')) src = 'Raney Cellars';
+    else if(tags.includes("Jack's Tavern")) src = "Jack's Tavern";
     else if(tags.includes('PM')) src = 'PM';
     else if(tags.includes('MU')) src = 'MU';
     else if(tags.includes('Community')) src = 'Community';

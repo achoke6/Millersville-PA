@@ -481,6 +481,54 @@ function parseCornWagonItems(html) {
     return items;
 }
 
+// Expand a place's hand-maintained recurringEvents — standing weekly items a
+// venue never posts dated flyers for (e.g. "Trivia Night, Tuesdays 8 PM") —
+// into the next `count` dated instances. Stateless: recomputed every hourly
+// run, nothing persists between runs. Each item: { title, day (weekday name),
+// time ("HH:MM" 24h ET), description?, link?, price?, kidFriendly? }.
+// Calendar iteration is done in pure date arithmetic at UTC noon (DST-free),
+// then each instance's ET wall-clock is converted to a true instant via
+// parseEventInstant (DST-aware) — so a 20:00 trivia night stays 20:00 ET
+// across the EDT/EST boundary. Malformed items (unknown day, bad time) are
+// skipped with a log line, never thrown — one bad entry must not sink the
+// scrape (the main.yml shape check catches missing fields pre-deploy).
+// Pure + top-level for the harness, like parseCornWagonItems above.
+function expandRecurringEvents(recArr, nowMs, count = 3) {
+    const DAY_INDEX = { sunday: 0, monday: 1, tuesday: 2, wednesday: 3,
+                        thursday: 4, friday: 5, saturday: 6 };
+    const out = [];
+    if (!Array.isArray(recArr)) return out;
+    const todayET = deriveDayET(nowMs);                    // "YYYY-MM-DD"
+    const [ty, tm, td] = todayET.split('-').map(Number);
+    for (const rec of recArr) {
+        if (!rec || !rec.title) continue;
+        const wantDay = DAY_INDEX[String(rec.day || '').toLowerCase()];
+        const timeOk = /^([01]\d|2[0-3]):[0-5]\d$/.test(rec.time || '');
+        if (wantDay === undefined || !timeOk) {
+            console.log(`  ⚠️ recurringEvents: skipping malformed entry "${rec.title || '?'}" (day="${rec.day}", time="${rec.time}")`);
+            continue;
+        }
+        let found = 0;
+        for (let i = 0; i < 28 && found < count; i++) {
+            const dUtcNoon = new Date(Date.UTC(ty, tm - 1, td + i, 12));
+            if (dUtcNoon.getUTCDay() !== wantDay) continue;
+            const dayStr = dUtcNoon.toISOString().slice(0, 10);
+            const instant = parseEventInstant(`${dayStr}T${rec.time}:00`);
+            if (isNaN(instant) || instant <= nowMs) continue;  // today's already-passed slot rolls to next week
+            out.push({
+                title: rec.title,
+                date: new Date(instant).toISOString(),
+                description: rec.description || '',
+                link: rec.link || '',
+                price: rec.price || '',
+                kidFriendly: rec.kidFriendly === true
+            });
+            found++;
+        }
+    }
+    return out;
+}
+
 function extractEventbriteEvents(ldData, eventsArray, now, futureLimit, overrideUrl = null) {
     if (Array.isArray(ldData)) {
         ldData.forEach(item => extractEventbriteEvents(item, eventsArray, now, futureLimit, overrideUrl));
@@ -3567,11 +3615,13 @@ async function runScraper() {
             }
             specials[slug] = entry;
 
-            // Optional events[]: emitted as Community events (Other pill —
-            // existing feed prefs, no Hard-Rule-7 source wiring). location =
-            // the place NAME so linkEventsToPlaces ties them to the card/pin
-            // via the tier-2 exact-name match (→ Today lens, "Here today"
-            // box, pin popups).
+            // Optional events[]: emitted as Community events by default, or
+            // under the entry's `eventTag` when set (e.g. Jack's Family
+            // Tavern → "Jack's Tavern" — a Raney-style source with its own
+            // feed pref; the tag/pref pair is Hard-Rule-7 wired in app.js +
+            // eventMatch.js + events.ics.php). location = the place NAME so
+            // linkEventsToPlaces ties them to the card/pin via the tier-2
+            // exact-name match (→ Today lens, "Here today" box, pin popups).
             const evArr = Array.isArray(pl.events) ? pl.events : [];
             for (const ev of evArr) {
                 if (!ev.title || !ev.date) continue;
@@ -3585,7 +3635,7 @@ async function runScraper() {
                     date: evDate.toISOString(),
                     ...(evEnd ? { endTime: evEnd } : {}),
                     location: pl.name || slug,
-                    tags: ['Community'],
+                    tags: [pl.eventTag || 'Community'],
                     price: ev.price || 'Free',
                     ticketLink: '',
                     sourceLink: ev.link || '',
@@ -3593,6 +3643,30 @@ async function runScraper() {
                     ...(pl.audience === 'locals' ? { audience: 'townie-only' }
                         : pl.audience === 'marauders' ? { audience: 'mu-only' } : {}),
                     ...(ev.kidFriendly === true ? { kidFriendly: true } : {})
+                });
+                psEventCount++;
+            }
+
+            // Optional recurringEvents: standing weekly items (trivia night,
+            // open jukebox) with no dated posts anywhere — expanded statelessly
+            // into the next 3 dated instances each run (expandRecurringEvents,
+            // top of file). Same emission shape + tier-2 attach path as
+            // events[] above. If the Cowork task ever writes a real dated
+            // duplicate into events[], dedupeEvents() collapses the pair on
+            // shared instant + title-head, keeping the richer copy.
+            for (const rec of expandRecurringEvents(pl.recurringEvents, Date.now(), 3)) {
+                events.push({
+                    title: rec.title,
+                    date: rec.date,
+                    location: pl.name || slug,
+                    tags: [pl.eventTag || 'Community'],
+                    price: rec.price || 'Free',
+                    ticketLink: '',
+                    sourceLink: rec.link || '',
+                    description: rec.description || '',
+                    ...(pl.audience === 'locals' ? { audience: 'townie-only' }
+                        : pl.audience === 'marauders' ? { audience: 'mu-only' } : {}),
+                    ...(rec.kidFriendly ? { kidFriendly: true } : {})
                 });
                 psEventCount++;
             }

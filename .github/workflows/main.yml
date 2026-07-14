@@ -68,6 +68,8 @@ jobs:
               || { echo "❌ place-specials.json keys must be directory place slugs (lowercase letters/digits/hyphens)"; exit 1; }
             jq -e '[.places[] | select(has("weekly")) | .weekly] | all(has("items") and has("validThrough"))' place-specials.json > /dev/null \
               || { echo "❌ place-specials.json: every weekly block needs items + validThrough"; exit 1; }
+            jq -e '[.places[] | select(has("recurringEvents")) | .recurringEvents[]] | all(has("title") and has("day") and has("time"))' place-specials.json > /dev/null \
+              || { echo "❌ place-specials.json: every recurringEvents entry needs title + day + time"; exit 1; }
           fi
           echo "✓ All JSON files valid"
 

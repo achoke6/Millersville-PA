@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-14T01:55:36.355Z",
+  "generatedAt": "2026-07-14T04:51:42.843Z",
   "totalEvents": 675,
   "withDescription": 259,
   "withImage": 111,
   "familyFriendly": 40,
-  "eventsToday": 6,
+  "eventsToday": 1,
   "sources": {
     "muAthletics": 238,
     "muCalendar": 93,
@@ -60,40 +60,40 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-01",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 39
+      "daysSinceMoved": 40
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 39
+      "daysSinceMoved": 40
     },
     "pennManor": {
       "newest": "2026-09-21",
-      "daysSinceMoved": 19
+      "daysSinceMoved": 20
     },
     "borough": null,
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 39
+      "daysSinceMoved": 40
     },
     "phantomPower": {
       "newest": "2026-09-18",
-      "daysSinceMoved": 18
+      "daysSinceMoved": 19
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 38
+      "daysSinceMoved": 39
     },
     "manor": {
       "newest": "2027-07-07",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     },
     "raneyCellars": {
       "newest": "2026-07-23",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     }
   },
   "sports": {
@@ -116,7 +116,7 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-14T01:54:20.325Z"
+    "lastSyncAt": "2026-07-14T04:50:13.945Z"
   },
   "recentlyAdded": [
     {
@@ -190,5 +190,5 @@
       "date": "2026-08-27T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 0
 }

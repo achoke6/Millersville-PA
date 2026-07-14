@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "11:00",
+      "temp": "84",
+      "dewpoint": "67",
+      "rh": "57",
+      "windDir": "W",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "3.2",
+      "condition": "None"
+    },
+    {
+      "time": "10:00",
+      "temp": "82",
+      "dewpoint": "67",
+      "rh": "60",
+      "windDir": "WNW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "1.9",
+      "condition": "Mist"
+    },
+    {
       "time": "09:00",
       "temp": "77",
       "dewpoint": "67",
@@ -170,28 +192,6 @@
       "precip": "0.00",
       "visibility": "0.54",
       "condition": "Fog"
-    },
-    {
-      "time": "05:00",
-      "temp": "65",
-      "dewpoint": "63",
-      "rh": "93",
-      "windDir": "SSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "0.16",
-      "condition": "Fog"
-    },
-    {
-      "time": "04:00",
-      "temp": "66",
-      "dewpoint": "63",
-      "rh": "88",
-      "windDir": "SSW",
-      "windSpeed": "0",
-      "precip": "0.00",
-      "visibility": "0.44",
-      "condition": "Fog"
     }
   ],
   "discussion": {
@@ -205,6 +205,13 @@
     "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
   },
   "videos": [
+    {
+      "title": "Short Term Forecast 07/14/2026",
+      "videoId": "8mDhkhef3BM",
+      "url": "https://www.youtube.com/watch?v=8mDhkhef3BM",
+      "published": "2026-07-14T14:42:59+00:00",
+      "thumbnail": "https://i1.ytimg.com/vi/8mDhkhef3BM/hqdefault.jpg"
+    },
     {
       "title": "Medium Range Forecast 07/06/2026",
       "videoId": "HhKufa-__gI",
@@ -225,15 +232,8 @@
       "url": "https://www.youtube.com/watch?v=_D0AUlNTUNQ",
       "published": "2026-06-29T17:30:56+00:00",
       "thumbnail": "https://i4.ytimg.com/vi/_D0AUlNTUNQ/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 06/29/2026",
-      "videoId": "KTyRlcHwxpE",
-      "url": "https://www.youtube.com/watch?v=KTyRlcHwxpE",
-      "published": "2026-06-29T14:16:24+00:00",
-      "thumbnail": "https://i4.ytimg.com/vi/KTyRlcHwxpE/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-14T13:38:58.755Z"
+  "updated": "2026-07-14T15:22:47.372Z"
 }

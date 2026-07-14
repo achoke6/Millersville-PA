@@ -5427,7 +5427,7 @@ async function loadHomeSpecials(){
         if (muAffiliation === 'student') {
             const cupboardItems = buildCampusCupboardItems(dayName);
             if (cupboardItems) {
-                cards.push(`<div class="home-special-card"><h3 class="home-special-name">🛒 Campus Cupboard</h3><p class="home-special-note">Free grocery store for MU students — inside The HUB</p>${cupboardItems.map(i=>`<p class="home-special-item">• ${i}</p>`).join('')}</div>`);
+                cards.push(`<div class="home-special-card" data-spslug="campus-cupboard" role="button" tabindex="0" aria-label="Details for Campus Cupboard" style="cursor:pointer;"><h3 class="home-special-name">🛒 Campus Cupboard</h3><p class="home-special-note">Free grocery store for MU students — inside The HUB</p>${cupboardItems.map(i=>`<p class="home-special-item">• ${i}</p>`).join('')}<p class="home-special-item" style="margin-top:8px;font-size:0.7rem;color:var(--text-muted);">Tap for map &amp; details →</p></div>`);
             }
         }
 
@@ -5480,14 +5480,30 @@ window.closeHomeSpecialPopup = function(){
 
 window.openHomeSpecialPopup = function(slug){
     window.closeHomeSpecialPopup();   // never two at once
-    const sp = (window._placesSpecials || {})[slug];
-    if (!sp) return;
+    const dayName = new Date().toLocaleDateString('en-US',{weekday:'long'});
+    let sp = (window._placesSpecials || {})[slug];
     // Directory row (address / link / coords / category). May be missing --
     // an unmatched specials slug (the specials-match drift case) degrades to
     // a details-only popup, never a throw.
-    const place = (allPlaces || []).find(p => placeSlug(p) === slug) || null;
-    const dayName = new Date().toLocaleDateString('en-US',{weekday:'long'});
-    const items = placesSpecialsItems(slug, dayName);   // single source of truth (21+ gate lives inside)
+    let place = (allPlaces || []).find(p => placeSlug(p) === slug) || null;
+    let items = sp ? placesSpecialsItems(slug, dayName) : [];   // single source of truth (21+ gate lives inside)
+    let goldBlurb = '';   // rendered in readable gold (--gold-text, not decorative --gold)
+    // Campus Cupboard -- synthesized: it lives outside allPlaces AND
+    // _placesSpecials (window._cupboard + code-driven hours, per the
+    // buildCampusCupboardCard static-info convention -- address/link
+    // hardcoded there too). Marauder-only and closed-day-hidden exactly
+    // like the rail card that opens this, so the guards can't disagree.
+    if (slug === 'campus-cupboard'){
+        const cb = window._cupboard, cbItems = buildCampusCupboardItems(dayName);
+        if (!cb || !cbItems || muAffiliation !== 'student') return;
+        sp = { name: '🛒 Campus Cupboard', note: 'Inside The HUB · MU students only' };
+        place = { ...cb, name: 'Campus Cupboard', category: 'Cupboard', placeType: 'cupboard',
+                  address: cb.address || '121 N George St, Millersville, PA 17551',
+                  link: cb.link || 'https://www.hubmu.org/free-groceries' };
+        items = [cbItems[0]];       // "Open today: <hours>"
+        goldBlurb = cbItems[1];     // free-grocery description
+    }
+    if (!sp) return;
     const hasCoords = !!(place && isFinite(place.lat) && isFinite(place.lng));
     const evToday = place ? placeEventsToday(place) : [];
     const q = place ? encodeURIComponent(place.address ? (place.name + ', ' + place.address) : (place.lat + ',' + place.lng)) : '';
@@ -5511,6 +5527,7 @@ window.openHomeSpecialPopup = function(slug){
         html += `<p style="font-weight:700;font-size:0.85rem;margin:12px 0 4px;color:var(--navy);">Today's Specials (${dayName}):</p>`;
         html += items.map(i=>`<p class="home-special-item">• ${i}</p>`).join('');
     }
+    if (goldBlurb) html += `<p style="font-size:0.82rem;font-weight:600;color:var(--gold-text);margin:10px 0 0;">${goldBlurb}</p>`;
     evToday.slice(0,3).forEach(e => { html += `<p class="home-special-item">📅 ${e.title} · ${formatTime(new Date(e.t))}</p>`; });
     if (evToday.length > 3) html += `<p class="home-special-item" style="color:var(--text-muted);">+${evToday.length-3} more today</p>`;
     const btns = [];
@@ -5550,7 +5567,7 @@ window.openHomeSpecialPopup = function(slug){
                 attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
             }).addTo(homeSpecialMiniMap);
             const glyph = MAP_PIN_ICONS[place.category] || '📍';
-            const color = MAP_PIN_COLORS[(place.placeType==='food') ? 'food' : 'service'] || '#14203a';
+            const color = MAP_PIN_COLORS[(place.placeType==='food') ? 'food' : (place.category==='Cupboard' ? 'cupboard' : 'service')] || '#14203a';
             L.marker([place.lat, place.lng], { interactive: false, icon: L.divIcon({ className: '', html: `<div class="map-pin" style="border-color:${color}">${glyph}</div>`, iconSize: [30,30], iconAnchor: [15,15] }) }).addTo(homeSpecialMiniMap);
             setTimeout(()=>{ if (homeSpecialMiniMap) homeSpecialMiniMap.invalidateSize(); }, 60);   // size after modal layout settles
         }).catch(e => {
@@ -5565,8 +5582,9 @@ window.openHomeSpecialPopup = function(slug){
 // innerHTML re-render (parity with the places/housing card listeners).
 // Real links/buttons inside a card win over the popup; Enter/Space fire it
 // for keyboard users (cards carry role=button + tabindex=0). The Campus
-// Cupboard card has no data-spslug, so it stays non-tappable by construction
-// (parity with its untagged map card).
+// Cupboard card carries data-spslug="campus-cupboard", routed to the
+// synthesized branch in openHomeSpecialPopup (it lives outside allPlaces
+// and _placesSpecials).
 (function(){
     const rail = document.getElementById('home-specials');
     if (!rail) return;
@@ -5599,6 +5617,19 @@ function buildCampusCupboardItems(dayName) {
     const desc = (window._cupboard && window._cupboard.description)
         || 'Fresh produce, dairy, eggs, frozen, canned & dry goods, hygiene products. Bring student ID.';
     return [`Open today: ${hours}`, desc];
+}
+
+// Cupboard visibility predicate -- ONE function shared by the Places-page
+// card (renderPlaces), the map pin list (placesMapPinList), and the home
+// popup guard, so the mirrored spots can't drift (the placeTodayContent
+// pattern). True = student viewer AND open today (weekday + sheet row
+// active). Being open IS its "today special" (free groceries), so the
+// 🔥 Today lens now INCLUDES it -- and closed days hide the PIN too,
+// aligning the old pin/card weekend asymmetry (the pin used to render on
+// weekends while the card hid). (2026-07-14)
+function cupboardTodayVisible(){
+    return muAffiliation === 'student' &&
+        !!buildCampusCupboardItems(new Date().toLocaleDateString('en-US',{weekday:'long'}));
 }
 
 /* ==================== WEATHER ==================== */
@@ -6220,8 +6251,8 @@ function placesMapPinList(){
             .forEach(p => pins.push({ place: {...p, category:'Housing'}, group: 'housing' }));
     }
     const cb = window._cupboard;
-    if (cb && placesMapHasCoords(cb) && !placesMBAMode && !placesMGMode && !placesTodayMode &&
-        muAffiliation === 'student' && (placesFilter==='All' || placesFilter==='Food & Drink')){
+    if (cb && placesMapHasCoords(cb) && !placesMBAMode && !placesMGMode && cupboardTodayVisible() &&
+        (placesFilter==='All' || placesFilter==='Food & Drink')){
         pins.push({ place: {...cb, category:'Cupboard'}, group: 'cupboard' });
     }
     return pins;
@@ -6270,7 +6301,8 @@ function placesMapPopup(p){
     let html = `<div class="map-popup"><strong>${p.name}</strong>`;
     if (meta) html += `<div class="map-popup-meta">${meta}</div>`;
     if (p.address) html += `<div class="map-popup-meta">${p.address}</div>`;
-    if (placeHasSpecialsToday(placeSlug(p))) html += `<div class="map-popup-meta">🔥 Specials today</div>`;
+    if (p.category === 'Cupboard') html += `<div class="map-popup-meta">🔥 Free groceries today</div>`;
+    else if (placeHasSpecialsToday(placeSlug(p))) html += `<div class="map-popup-meta">🔥 Specials today</div>`;
     const evToday = placeEventsToday(p);
     evToday.slice(0,2).forEach(e => { html += `<div class="map-popup-meta">📅 ${e.title} · ${formatTime(new Date(e.t))}</div>`; });
     if (evToday.length > 2) html += `<div class="map-popup-meta">+${evToday.length-2} more today</div>`;
@@ -6747,7 +6779,7 @@ function renderPlaces(){
     // views (it's a free grocery store inside the HUB). Skipped for townies
     // and for filter views that exclude food (e.g. Services).
     let cupboardCard = '';
-    if (!placesMBAMode && !placesTodayMode && muAffiliation === 'student' && (placesFilter === 'All' || placesFilter === 'Food & Drink')) {
+    if (!placesMBAMode && cupboardTodayVisible() && (placesFilter === 'All' || placesFilter === 'Food & Drink')) {
         cupboardCard = buildCampusCupboardCard(dayName);
     }
 
@@ -6782,7 +6814,7 @@ function buildCampusCupboardCard(dayName) {
             <div class="card-heading"><span style="font-size:1.5rem;">🛒</span><h3 class="card-title">Campus Cupboard</h3></div>
             <p class="card-meta">📍 Inside The HUB, 121 N George St · MU students only</p>
             <p class="card-meta status-open">⏰ ${statusText}</p>
-            <p style="font-size:0.85rem;margin:8px 0;color:var(--text-muted);">Free grocery store with fresh produce, dairy, eggs, frozen, canned & dry goods, and hygiene products. Bring student ID.</p>
+            <p style="font-size:0.85rem;margin:8px 0;color:var(--gold-text);font-weight:600;">Free grocery store with fresh produce, dairy, eggs, frozen, canned & dry goods, and hygiene products. Bring student ID.</p>
             <a href="https://www.hubmu.org/free-groceries" target="_blank" rel="noopener" class="btn btn-sm btn-outline" style="font-size:0.78rem;">More info ↗</a>
         </div>
     </div>`;

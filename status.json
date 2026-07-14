@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-07-14T17:24:30.112Z",
-  "totalEvents": 682,
-  "withDescription": 265,
+  "generatedAt": "2026-07-14T18:00:43.188Z",
+  "totalEvents": 683,
+  "withDescription": 266,
   "withImage": 111,
-  "familyFriendly": 40,
+  "familyFriendly": 41,
   "eventsToday": 2,
   "sources": {
     "muAthletics": 238,
-    "muCalendar": 94,
+    "muCalendar": 95,
     "muGetInvolved": 175,
     "pennManor": 84,
     "borough": 0,
@@ -116,15 +116,22 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-14T17:23:09.269Z"
+    "lastSyncAt": "2026-07-14T17:59:20.643Z"
   },
   "recentlyAdded": [
     {
-      "key": "LUNA Dance|2026-08-07T22:30:00.000Z",
-      "firstSeenAt": "2026-07-14T17:24:30.110Z",
-      "title": "LUNA Dance",
+      "key": "LUNA Dance Company: First Friday Preview Performance|2026-08-07T22:30:00.000Z",
+      "firstSeenAt": "2026-07-14T18:00:43.186Z",
+      "title": "LUNA Dance Company: First Friday Preview Performance",
       "source": "MU",
       "date": "2026-08-07T22:30:00.000Z"
+    },
+    {
+      "key": "Homecoming 2026 - Color of Teaching Scholastic Book Fair|2026-10-17T10:00:00",
+      "firstSeenAt": "2026-07-14T18:00:43.186Z",
+      "title": "Homecoming 2026 - Color of Teaching Scholastic Book Fair",
+      "source": "MU",
+      "date": "2026-10-17T10:00:00"
     },
     {
       "key": "Trivia Night|2026-07-15T00:00:00.000Z",
@@ -181,14 +188,7 @@
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2026-08-03T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
-      "firstSeenAt": "2026-07-14T13:40:16.184Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-08-05T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 2
 }

@@ -5446,12 +5446,138 @@ async function loadHomeSpecials(){
 
             if(items.length > 0){
                 const note = sp.note || '';
-                cards.push(`<div class="home-special-card"><h3 class="home-special-name">${sp.name || slug}</h3><p class="home-special-note">${note}</p>${items.map(i=>`<p class="home-special-item">• ${i}</p>`).join('')}</div>`);
+                cards.push(`<div class="home-special-card" data-spslug="${slug}" role="button" tabindex="0" aria-label="Details for ${sp.name || slug}" style="cursor:pointer;"><h3 class="home-special-name">${sp.name || slug}</h3><p class="home-special-note">${note}</p>${items.map(i=>`<p class="home-special-item">• ${i}</p>`).join('')}<p class="home-special-item" style="margin-top:8px;font-size:0.7rem;color:var(--text-muted);">Tap for map &amp; details →</p></div>`);
             }
         }
         container.innerHTML = cards.length > 0 ? cards.join('') : '<p class="home-empty">No specials today</p>';
     } catch(e) { document.getElementById('home-specials').innerHTML = '<p class="home-empty">No specials today</p>'; }
 }
+
+// ---- Home-rail specials popup (2026-07-14) ---------------------------------
+// Tap a rail card -> modal card: mini locator map (same self-hosted Leaflet/
+// PMTiles stack as /map -- placesMapAssetsLoad is shared and idempotent, so
+// vendor assets load once whichever surface asks first), the directory row's
+// details, today's items, and Directions / Website buttons. The item list
+// comes from placesSpecialsItems -- the single source of truth -- so the 21+
+// gate, closed days, and day-only tags apply here identically (a second
+// inline accumulation would silently bypass the gate).
+// The mini map is its OWN Leaflet instance (one container can't live in two
+// maps), created per open and .remove()'d on close -- placesMap is untouched
+// and the /map page's lazy init path is unaffected. Degradations, all silent:
+// no directory match for the slug -> details-only popup (no map/buttons);
+// place without lat/lng (geocoding is fail-closed) -> no map slot; vendor
+// assets unreachable (offline first visit) -> map slot hides, details stay.
+let homeSpecialMiniMap = null;
+
+function homeSpecialPopupEsc(e){ if (e.key === 'Escape') window.closeHomeSpecialPopup(); }
+
+window.closeHomeSpecialPopup = function(){
+    if (homeSpecialMiniMap){ try { homeSpecialMiniMap.remove(); } catch(e){} homeSpecialMiniMap = null; }
+    const ov = document.getElementById('home-special-popup-overlay');
+    if (ov) ov.remove();
+    document.removeEventListener('keydown', homeSpecialPopupEsc);
+};
+
+window.openHomeSpecialPopup = function(slug){
+    window.closeHomeSpecialPopup();   // never two at once
+    const sp = (window._placesSpecials || {})[slug];
+    if (!sp) return;
+    // Directory row (address / link / coords / category). May be missing --
+    // an unmatched specials slug (the specials-match drift case) degrades to
+    // a details-only popup, never a throw.
+    const place = (allPlaces || []).find(p => placeSlug(p) === slug) || null;
+    const dayName = new Date().toLocaleDateString('en-US',{weekday:'long'});
+    const items = placesSpecialsItems(slug, dayName);   // single source of truth (21+ gate lives inside)
+    const hasCoords = !!(place && isFinite(place.lat) && isFinite(place.lng));
+    const evToday = place ? placeEventsToday(place) : [];
+    const q = place ? encodeURIComponent(place.address ? (place.name + ', ' + place.address) : (place.lat + ',' + place.lng)) : '';
+
+    const ov = document.createElement('div');
+    ov.id = 'home-special-popup-overlay';
+    ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:10000;display:flex;align-items:center;justify-content:center;padding:16px;';
+    const box = document.createElement('div');
+    box.style.cssText = 'background:var(--surface);border-radius:var(--radius);max-width:420px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 12px 44px rgba(0,0,0,0.28);position:relative;';
+
+    let html = '';
+    if (hasCoords) html += `<div id="home-special-mini-map" style="height:180px;border-radius:var(--radius) var(--radius) 0 0;background:var(--gold-soft);display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:0.8rem;">Loading map…</div>`;
+    html += `<button onclick="closeHomeSpecialPopup()" aria-label="Close" style="position:absolute;top:8px;right:8px;z-index:1001;width:32px;height:32px;border-radius:50%;border:none;background:rgba(20,32,58,0.75);color:#fff;font-size:1.05rem;line-height:1;cursor:pointer;">×</button>`;
+    html += `<div style="padding:18px 20px 20px;">`;
+    html += `<h3 class="home-special-name" style="font-size:1.1rem;">${sp.name || (place && place.name) || slug}</h3>`;
+    if (sp.note) html += `<p class="home-special-note">${sp.note}</p>`;
+    const meta = place ? (place.cuisine || place.category || '') : '';
+    if (meta) html += `<p style="font-size:0.78rem;color:var(--text-muted);margin:2px 0;">${meta}</p>`;
+    if (place && place.address) html += `<p style="font-size:0.78rem;color:var(--text-muted);margin:2px 0;">📍 ${place.address}</p>`;
+    if (items.length){
+        html += `<p style="font-weight:700;font-size:0.85rem;margin:12px 0 4px;color:var(--navy);">Today's Specials (${dayName}):</p>`;
+        html += items.map(i=>`<p class="home-special-item">• ${i}</p>`).join('');
+    }
+    evToday.slice(0,3).forEach(e => { html += `<p class="home-special-item">📅 ${e.title} · ${formatTime(new Date(e.t))}</p>`; });
+    if (evToday.length > 3) html += `<p class="home-special-item" style="color:var(--text-muted);">+${evToday.length-3} more today</p>`;
+    const btns = [];
+    if (place && place.link) btns.push(`<a href="${place.link}" target="_blank" rel="noopener" class="btn btn-sm btn-outline" style="flex:1;text-align:center;">Website</a>`);
+    if (q) btns.push(`<a href="https://www.google.com/maps/dir/?api=1&destination=${q}" target="_blank" rel="noopener" class="btn btn-sm btn-outline" style="flex:1;text-align:center;">Directions</a>`);
+    // John Herr's: the full-circular popup already exists -- chain into it
+    // instead of duplicating its deal list here.
+    if (slug === 'john-herr-s-village-market' && allGroceryDeals.length > 0)
+        btns.push(`<button onclick="closeHomeSpecialPopup();showGroceryDeals();" class="btn btn-sm btn-outline" style="flex:1;">All deals</button>`);
+    if (btns.length) html += `<div style="display:flex;gap:8px;margin-top:14px;">${btns.join('')}</div>`;
+    html += `</div>`;
+    box.innerHTML = html;
+    ov.appendChild(box);
+    document.body.appendChild(ov);
+    ov.onclick = e => { if (e.target === ov) window.closeHomeSpecialPopup(); };
+    document.addEventListener('keydown', homeSpecialPopupEsc);
+
+    if (hasCoords){
+        placesMapAssetsLoad().then(() => {
+            const el = document.getElementById('home-special-mini-map');
+            if (!el) return;   // popup already closed before assets resolved
+            el.textContent = '';
+            // Static locator map: every interaction off. NB config key is
+            // PLACES_MAP_CFG.bounds; maxBounds is only the Leaflet OPTION name
+            // (the 2026-07-09 lesson).
+            homeSpecialMiniMap = L.map(el, {
+                center: [place.lat, place.lng], zoom: 16,
+                minZoom: PLACES_MAP_CFG.minZoom, maxZoom: PLACES_MAP_CFG.maxZoom,
+                maxBounds: PLACES_MAP_CFG.bounds,
+                zoomControl: false, attributionControl: true,
+                dragging: false, scrollWheelZoom: false, touchZoom: false,
+                doubleClickZoom: false, boxZoom: false, keyboard: false
+            });
+            homeSpecialMiniMap.attributionControl.setPrefix(false);
+            protomapsL.leafletLayer({
+                url: PLACES_MAP_CFG.pmtiles, flavor: 'light', lang: 'en',
+                attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
+            }).addTo(homeSpecialMiniMap);
+            const glyph = MAP_PIN_ICONS[place.category] || '📍';
+            const color = MAP_PIN_COLORS[(place.placeType==='food') ? 'food' : 'service'] || '#14203a';
+            L.marker([place.lat, place.lng], { interactive: false, icon: L.divIcon({ className: '', html: `<div class="map-pin" style="border-color:${color}">${glyph}</div>`, iconSize: [30,30], iconAnchor: [15,15] }) }).addTo(homeSpecialMiniMap);
+            setTimeout(()=>{ if (homeSpecialMiniMap) homeSpecialMiniMap.invalidateSize(); }, 60);   // size after modal layout settles
+        }).catch(e => {
+            const el = document.getElementById('home-special-mini-map');
+            if (el) el.style.display = 'none';   // vendor assets unavailable -- details still show
+            console.warn('Mini map unavailable:', e && e.message);
+        });
+    }
+};
+
+// One delegated listener on the rail -- attaches once, survives every
+// innerHTML re-render (parity with the places/housing card listeners).
+// Real links/buttons inside a card win over the popup; Enter/Space fire it
+// for keyboard users (cards carry role=button + tabindex=0). The Campus
+// Cupboard card has no data-spslug, so it stays non-tappable by construction
+// (parity with its untagged map card).
+(function(){
+    const rail = document.getElementById('home-specials');
+    if (!rail) return;
+    const fire = ev => {
+        if (ev.target.closest('a,button')) return;
+        const card = ev.target.closest('[data-spslug]');
+        if (card){ ev.preventDefault(); window.openHomeSpecialPopup(card.getAttribute('data-spslug')); }
+    };
+    rail.addEventListener('click', fire);
+    rail.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') fire(ev); });
+})();
 
 // Build a list of items shown on the Campus Cupboard card based on current
 // day + season. Returns null when closed (weekends) so the card is hidden

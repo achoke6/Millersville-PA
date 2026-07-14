@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-07-14T17:13:52.630Z",
-  "totalEvents": 681,
+  "generatedAt": "2026-07-14T17:24:30.112Z",
+  "totalEvents": 682,
   "withDescription": 265,
   "withImage": 111,
   "familyFriendly": 40,
   "eventsToday": 2,
   "sources": {
     "muAthletics": 238,
-    "muCalendar": 93,
+    "muCalendar": 94,
     "muGetInvolved": 175,
     "pennManor": 84,
     "borough": 0,
@@ -116,9 +116,16 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-14T17:12:32.968Z"
+    "lastSyncAt": "2026-07-14T17:23:09.269Z"
   },
   "recentlyAdded": [
+    {
+      "key": "LUNA Dance|2026-08-07T22:30:00.000Z",
+      "firstSeenAt": "2026-07-14T17:24:30.110Z",
+      "title": "LUNA Dance",
+      "source": "MU",
+      "date": "2026-08-07T22:30:00.000Z"
+    },
     {
       "key": "Trivia Night|2026-07-15T00:00:00.000Z",
       "firstSeenAt": "2026-07-14T16:03:48.104Z",
@@ -181,14 +188,7 @@
       "title": "Zoning Hearing Board",
       "source": "Manor",
       "date": "2026-08-05T23:00:00.000Z"
-    },
-    {
-      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
-      "firstSeenAt": "2026-07-14T13:40:16.184Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-08-10T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

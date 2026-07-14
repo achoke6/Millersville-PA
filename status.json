@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-14T19:49:26.021Z",
-  "totalEvents": 683,
+  "generatedAt": "2026-07-14T21:00:21.840Z",
+  "totalEvents": 642,
   "withDescription": 266,
   "withImage": 111,
   "familyFriendly": 41,
@@ -14,7 +14,7 @@
     "vfw": 3,
     "phantomPower": 13,
     "community": 21,
-    "manor": 41,
+    "manor": 0,
     "raneyCellars": 3,
     "muHudlBroadcasts": 0
   },
@@ -48,10 +48,7 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-07-29T12:30:00.000Z",
-      "latest": "2027-07-07T23:00:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-07-09T21:00:00.000Z",
       "latest": "2026-07-23T20:00:00.000Z"
@@ -87,10 +84,7 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 39
     },
-    "manor": {
-      "newest": "2027-07-07",
-      "daysSinceMoved": 7
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-07-23",
       "daysSinceMoved": 6
@@ -116,7 +110,7 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-14T19:47:51.061Z"
+    "lastSyncAt": "2026-07-14T20:59:00.408Z"
   },
   "recentlyAdded": [
     {
@@ -176,18 +170,18 @@
       "date": "2026-07-30T02:00:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
-      "firstSeenAt": "2026-07-14T13:40:16.184Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-07-29T12:30:00.000Z"
+      "key": "Employee Appreciation Picnic|2026-07-18T20:00:00.000Z",
+      "firstSeenAt": "2026-07-14T01:55:36.353Z",
+      "title": "Employee Appreciation Picnic",
+      "source": "Other",
+      "date": "2026-07-18T20:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
-      "firstSeenAt": "2026-07-14T13:40:16.184Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-08-03T23:00:00.000Z"
+      "key": "MU Women's Soccer Summer Camp|2026-07-20T13:00:00.000Z",
+      "firstSeenAt": "2026-07-13T18:13:33.812Z",
+      "title": "MU Women's Soccer Summer Camp",
+      "source": "MU",
+      "date": "2026-07-20T13:00:00.000Z"
     }
   ],
   "addedLastRun": 0

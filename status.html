@@ -288,9 +288,26 @@ async function render() {
         // gets caught next cron instead of next baseball season.
         { label: 'MU Hudl broadcasts',     key: 'muHudlBroadcasts' }
     ];
+    // Accepted/known outages — a source we KNOW is down and have decided to
+    // wait out (e.g. the borough retired its Google Calendar, 2026-07-13).
+    // While the source's count is 0/absent, its row shows a neutral note
+    // instead of tripping the red health banner — a months-long accepted
+    // outage would otherwise drown out real failures on other sources.
+    // AUTO-RECOVERS: the moment the source produces events again, normal
+    // median comparison resumes untouched. Remove an entry once its feed
+    // has been back for good.
+    const KNOWN_OUTAGES = {
+        borough: 'known outage — borough retired its calendar feed (2026-07-13); Borough events publish via the blog task + candidates sheet'
+    };
     const degraded = [];
+    const knownOutages = [];
     const sourceRanges = status.sourceDateRanges || {};
     const sourceRows = sourceList.map(({ label, key }) => {
+        const knownOut = KNOWN_OUTAGES[key];
+        if (knownOut && !(s[key] > 0)) {
+            knownOutages.push(label);
+            return metric(label, s[key] == null ? 0 : s[key], { hint: knownOut });
+        }
         const cmp = compareSource(s[key], history, key, todayDate);
         if (cmp) degraded.push({ label, status: cmp.status });
         // Combine degradation hint with date-range hint. Degradation wins
@@ -330,6 +347,9 @@ async function render() {
     } else {
         healthRow.className = 'status-health-row ok';
         healthRow.textContent = '✓ All sources within typical range';
+    }
+    if (knownOutages.length && healthRow.className.indexOf('muted') === -1) {
+        healthRow.textContent += ' · known outage: ' + knownOutages.join(', ');
     }
 
     const sourcesCard = card('Events by Source', sourceRows);

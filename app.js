@@ -2952,6 +2952,9 @@ async function initApp(){
     // routable; this keeps the visible URL canonical.
     if(view==='places' && p!=='/map'){ history.replaceState(null,'','/map'); }
     switchView(view,true);
+    // Deep link: /map?today=1 lands with the Today lens already on (used by
+    // the home rail's "View all →" opened in a new tab, and shareable).
+    if(view==='places' && params.get('today')==='1'){ history.replaceState(null,'','/map'); if(!placesTodayMode) window.togglePlacesToday(); }
     if(p==='/housing'){ setTimeout(()=>{ const btn=document.querySelector('#svc-filter-group .src-btn:nth-child(2)'); if(btn) btn.click(); },500); }
 }
 
@@ -6420,6 +6423,15 @@ window.togglePlacesToday=function(){
     window.scrollTo(0, 0);   // lens re-render can shrink the list; don't strand the viewport below it
 };
 
+// Home-rail "View all →" target + shareable deep link (/map?today=1):
+// jump to the Map page with the Today lens already on. Wired to the
+// index.html rail header; the initial router also calls it for ?today=1.
+window.openPlacesToday=function(){
+    switchView('places');
+    if(!placesTodayMode) window.togglePlacesToday();
+    else window.scrollTo(0, 0);
+};
+
 window.togglePlacesMarauderGold=function(){
     placesMGMode=!placesMGMode;
     if(placesMGMode){ placesMBAMode=false; placesTodayMode=false; const m=document.getElementById('places-mba-toggle'); if(m) m.classList.remove('active'); const t=document.getElementById('places-today-toggle'); if(t) t.classList.remove('active'); }
@@ -6611,6 +6623,31 @@ function buildCampusCupboardCard(dayName) {
     </div>`;
 }
 
+// Shared specials-section renderer for directory cards. Reads the same
+// vfw-merged specials object the Today lens uses (window._placesSpecials),
+// so food AND service cards (e.g. The Corn Wagon, a Shopping listing) render
+// identically — placesSpecialsItems stays the single source of truth for
+// closed days, day-only tags, and daily→recurring→weekly order. Returns ''
+// when the place has no specials entry or nothing lands on this day.
+function placeSpecialsSectionHtml(pslug, dayName){
+    const sp = (window._placesSpecials || {})[pslug];
+    if(!sp) return '';
+    const items = placesSpecialsItems(pslug, dayName);   // single source of truth (also drives the Today lens + home rail)
+    if(items.length === 0) return '';
+    const isGrocery = !!(sp.rawDeals && sp.rawDeals.length);
+    const note = sp.note ? `<p style="font-size:0.7rem;color:var(--text-muted);margin-bottom:4px;font-style:italic;">${sp.note}</p>` : '';
+    const dateRange = (!isGrocery && sp.weeklyDateRange) ? `<p style="font-size:0.7rem;color:var(--gold);font-weight:600;margin-bottom:4px;">${sp.weeklyDateRange}</p>` : '';
+    const isVFW = pslug === 'vfw-post-7294';
+    const heading = isGrocery ? '🏷️ Top Weekly Deals:' : isVFW ? `Specials (${dayName}):` : `Today's Specials (${dayName}):`;
+    const topItems = isGrocery ? items.slice(0, 5) : items;
+    const moreItems = isGrocery ? items.slice(5) : [];
+    let moreHtml = '';
+    if(moreItems.length > 0){
+        moreHtml = `<button onclick="showGroceryDeals(event)" class="btn btn-sm btn-outline" style="margin-top:6px;font-size:0.75rem;width:100%;text-align:center;">View All ${items.length} Deals</button>`;
+    }
+    return `<div class="specials-section">${note}${dateRange}<p style="font-size:0.8rem;font-weight:700;margin-bottom:4px;">${heading}</p>${topItems.map(i=>`<p style="font-size:0.8rem;color:var(--text);margin:2px 0;">• ${i}</p>`).join('')}${moreHtml}</div>`;
+}
+
 function buildFoodCard(p, specials, dayName) {
     // Action buttons
     let actionBtn='';
@@ -6625,26 +6662,9 @@ function buildFoodCard(p, specials, dayName) {
     // Build specials section — specials.json is slug-keyed; all display rules
     // (closed days, day-only tags) live in placesSpecialsItems, so no place
     // needs name special-casing here. Grocery styling keys off rawDeals.
-    let specialsHtml='';
+    // Specials section — shared with buildServiceCard via placeSpecialsSectionHtml.
     const pslug = placeSlug(p);
-    const sp = specials[pslug];
-    if(sp){
-        let items = placesSpecialsItems(pslug, dayName);   // single source of truth (also drives the Today lens + home rail)
-        if(items.length > 0){
-            const isGrocery = !!(sp.rawDeals && sp.rawDeals.length);
-            const note = sp.note ? `<p style="font-size:0.7rem;color:var(--text-muted);margin-bottom:4px;font-style:italic;">${sp.note}</p>` : '';
-            const dateRange = (!isGrocery && sp.weeklyDateRange) ? `<p style="font-size:0.7rem;color:var(--gold);font-weight:600;margin-bottom:4px;">${sp.weeklyDateRange}</p>` : '';
-            const isVFW = pslug === 'vfw-post-7294';
-            const heading = isGrocery ? '🏷️ Top Weekly Deals:' : isVFW ? `Specials (${dayName}):` : `Today's Specials (${dayName}):`;
-            const topItems = isGrocery ? items.slice(0, 5) : items;
-            const moreItems = isGrocery ? items.slice(5) : [];
-            let moreHtml = '';
-            if(moreItems.length > 0){
-                moreHtml = `<button onclick="showGroceryDeals(event)" class="btn btn-sm btn-outline" style="margin-top:6px;font-size:0.75rem;width:100%;text-align:center;">View All ${items.length} Deals</button>`;
-            }
-            specialsHtml=`<div class="specials-section">${note}${dateRange}<p style="font-size:0.8rem;font-weight:700;margin-bottom:4px;">${heading}</p>${topItems.map(i=>`<p style="font-size:0.8rem;color:var(--text);margin:2px 0;">• ${i}</p>`).join('')}${moreHtml}</div>`;
-        }
-    }
+    let specialsHtml = placeSpecialsSectionHtml(pslug, dayName);
 
     const evT = placeEventsToday(p);
     const eventsHtml = evT.length ? `<div class="specials-section"><p style="font-size:0.8rem;font-weight:700;margin-bottom:4px;">📅 Here today:</p>${evT.slice(0,3).map(e=>`<p style="font-size:0.8rem;color:var(--text);margin:2px 0;">• ${e.title} · ${formatTime(new Date(e.t))}</p>`).join('')}</div>` : '';
@@ -6661,6 +6681,8 @@ function buildFoodCard(p, specials, dayName) {
 }
 
 function buildServiceCard(p) {
+    const svcDayName = new Date().toLocaleDateString('en-US',{weekday:'long'});
+    const specialsHtml = placeSpecialsSectionHtml(placeSlug(p), svcDayName);   // e.g. The Corn Wagon — Shopping listing with a specials entry
     const catIcons={'Government':'🏛','Health':'🏥','Beauty/Grooming':'💈','Shopping':'🛒','Recreation':'🏞','Transport':'🚌','Finance':'🏦','Shipping':'📦','Entertainment':'🎵','Education':'📚','Mechanic':'🔧','Gas Station':'⛽','EV Charging':'🔌','Housing':'🏠','Home Services':'🔨','Real Estate':'🏘','Venue':'🎉','Lodging':'🛏','Services':'🛠','Student Housing':'🎓'};
     const icon = catIcons[p.category] || '🏢';
     const mba = mbaBadge(p.name);
@@ -6697,7 +6719,7 @@ function buildServiceCard(p) {
             <p class="card-meta" style="margin-bottom:4px;">📍 ${p.address}</p>
             ${hours}
             <p style="font-size:0.85rem;color:var(--text-muted);margin:8px 0;">${p.description}</p>
-            ${liveFeedHtml}${eventsHtml}
+            ${liveFeedHtml}${specialsHtml}${eventsHtml}
             <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:auto;">
                 ${phone}
                 <div style="display:flex;gap:6px;align-items:center;">
@@ -6717,7 +6739,7 @@ function buildServiceCard(p) {
         <p class="card-meta" style="margin-bottom:4px;">📍 ${p.address}</p>
         ${hours}
         <p style="font-size:0.85rem;color:var(--text-muted);margin:8px 0;">${p.description}</p>
-        ${eventsHtml}
+        ${specialsHtml}${eventsHtml}
         <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:auto;">
             ${phone}
             <div style="display:flex;gap:6px;align-items:center;">

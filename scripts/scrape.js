@@ -481,6 +481,30 @@ function parseCornWagonItems(html) {
     return items;
 }
 
+// Corn Wagon carry-forward (2026-07-15): the Duda host intermittently drops
+// the runner's fetch (~seen live 07-14/15 — one run fails, the next is fine),
+// and because specials.json is rewritten hourly, each failed run blanked the
+// box site-wide for an hour. On a NETWORK-level failure only (HTTP error or
+// thrown fetch — a success-but-empty page is a genuine off-crop state and is
+// NOT carried), the previous run's committed specials.json (already in the
+// checkout) is reused if its last GOOD scrape is within the TTL. The
+// weeklyFetchedAt stamp is preserved from the last SUCCESS — the TTL is
+// absolute, never sliding — so continuous failures age out to boxless
+// (Phase 2's "stale prices never resurrect" rule, with a 24h grace).
+// Known imperfection: if the previous run's commit was skipped (the
+// empty-merge quirk), the on-disk copy is one run staler — the TTL bounds it.
+// Pure + top-level for the harness, like parseCornWagonItems above.
+const CORN_WAGON_CARRY_TTL_MS = 24 * 60 * 60 * 1000;
+function cornWagonCarryForward(prevSpecials, nowMs) {
+    const prev = prevSpecials && prevSpecials['corn-wagon'];
+    if (!prev || !Array.isArray(prev.weekly) || !prev.weekly.length) return null;
+    if (!prev.weeklyFetchedAt) return null;
+    const fetchedMs = Date.parse(prev.weeklyFetchedAt);
+    if (isNaN(fetchedMs)) return null;
+    if (nowMs - fetchedMs > CORN_WAGON_CARRY_TTL_MS) return null;
+    return { weekly: prev.weekly.slice(), weeklyFetchedAt: prev.weeklyFetchedAt };
+}
+
 // Expand a place's hand-maintained recurringEvents — standing weekly items a
 // venue never posts dated flyers for (e.g. "Trivia Night, Tuesdays 8 PM") —
 // into the next `count` dated instances. Stateless: recomputed every hourly
@@ -3692,6 +3716,28 @@ async function runScraper() {
             if (!inSeason) {
                 console.log(`  ⏭️  Corn Wagon: out of season (month ${nowMonth}) — skipping scrape`);
             } else {
+                // Network-failure fallback: reuse the previous run's committed
+                // specials.json if its last GOOD scrape is <24h old — see
+                // cornWagonCarryForward (top of file). Appends to the original
+                // failure message, so the old "⚠️ Corn Wagon fetch failed" /
+                // "⚠️ Corn Wagon error" log prefixes survive for grep/monitor
+                // continuity; the carry outcome is the "— carried forward" /
+                // "— no carry-forward" suffix.
+                const cwCarry = (failMsg) => {
+                    let cf = null;
+                    try {
+                        cf = cornWagonCarryForward(
+                            JSON.parse(fs.readFileSync(path.join(__dirname, '../specials.json'), 'utf8')),
+                            Date.now());
+                    } catch (_) { /* no/unreadable previous specials.json — cf stays null */ }
+                    if (cf) {
+                        specials['corn-wagon'].weekly = cf.weekly;
+                        specials['corn-wagon'].weeklyFetchedAt = cf.weeklyFetchedAt;
+                        console.log(`  ⚠️ Corn Wagon ${failMsg} — carried forward ${cf.weekly.length} item(s) (last good ${cf.weeklyFetchedAt})`);
+                    } else {
+                        console.log(`  ⚠️ Corn Wagon ${failMsg} — no carry-forward (last good scrape missing or >24h) — boxless this run`);
+                    }
+                };
                 try {
                     const cwRes = await fetch('https://www.thecornwagon.com/current-info', {
                         headers: baseHeaders, signal: AbortSignal.timeout(15000)
@@ -3700,14 +3746,16 @@ async function runScraper() {
                         const cwItems = parseCornWagonItems(await cwRes.text());
                         if (cwItems.length) {
                             specials['corn-wagon'].weekly = cwItems;
+                            specials['corn-wagon'].weeklyFetchedAt = new Date().toISOString();
                             console.log(`✅ Corn Wagon: ${cwItems.length} priced item(s) from current-info`);
                         } else {
+                            // Genuine page state (off-crop / frozen) — NOT carried.
                             console.log(`  ⏭️  Corn Wagon: page loaded but no priced items parsed — no specials this run`);
                         }
                     } else {
-                        console.log(`  ⚠️ Corn Wagon fetch failed: ${cwRes.status}`);
+                        cwCarry(`fetch failed: ${cwRes.status}`);
                     }
-                } catch (e) { console.log(`  ⚠️ Corn Wagon error: ${e.message}`); }
+                } catch (e) { cwCarry(`error: ${e.message}`); }
             }
         }
 

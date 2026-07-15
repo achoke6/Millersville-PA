@@ -1,11 +1,11 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Wednesday, July 15, 2026 at 08:10 AM (Kyle Elliott, Meteorologist)",
+    "issued": "Wednesday, July 15, 2026 at 02:02 PM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "Today",
-        "text": "Mostly sunny and humid with record-challenging heat. High: 96-100"
+        "period": "This afternoon",
+        "text": "Mostly sunny and humid with record-challenging heat. High: 94-98"
       },
       {
         "period": "Tonight",
@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "14:00",
+      "temp": "94",
+      "dewpoint": "74",
+      "rh": "53",
+      "windDir": "W",
+      "windSpeed": "6",
+      "precip": "0.00",
+      "visibility": "9.1",
+      "condition": "None"
+    },
+    {
+      "time": "13:00",
+      "temp": "91",
+      "dewpoint": "73",
+      "rh": "56",
+      "windDir": "WSW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "9.2",
+      "condition": "None"
+    },
+    {
       "time": "12:00",
       "temp": "90",
       "dewpoint": "73",
@@ -170,28 +192,6 @@
       "precip": "0.00",
       "visibility": "6.5",
       "condition": "None"
-    },
-    {
-      "time": "08:00",
-      "temp": "80",
-      "dewpoint": "69",
-      "rh": "71",
-      "windDir": "WSW",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "4.9",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "71",
-      "dewpoint": "69",
-      "rh": "93",
-      "windDir": "SW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "0.33",
-      "condition": "Fog"
     }
   ],
   "discussion": {
@@ -235,5 +235,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-15T16:20:04.424Z"
+  "updated": "2026-07-15T18:05:24.404Z"
 }

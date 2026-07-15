@@ -10,12 +10,12 @@
         "Saturday": "Burger Night"
     },
     "weeklySpecials": {
-        "dateRange": "Tuesday, July 7 through Saturday, July 11",
-        "validThrough": "2026-07-12",
+        "dateRange": "Tuesday, July 14 through Friday, July 17",
+        "validThrough": "2026-07-18",
         "items": [
-            "Roast Beef Wrap – $13.95",
-            "Pulled Pork Mac and Cheese – $13.95",
-            "Fried Flounder – $14.95 (Fri only)"
+            "Black and Bleu Burger – $12.95",
+            "Chicken and Waffles – $13.95",
+            "General Tso Salmon – $17.95 (Fri only)"
         ]
     },
     "events": [
@@ -29,6 +29,12 @@
             "title": "Employee Appreciation Picnic",
             "date": "2026-07-18T16:00:00-04:00",
             "description": "Everyone welcome! VFW Post 7294 gives their dedicated employees the day off with a community picnic at the Pavilion. Hamburgers, hotdogs, and sides. Food, fellowship, and fun."
+        },
+        {
+            "title": "Millersville National Night Out",
+            "date": "2026-08-04T18:00:00-04:00",
+            "endTime": "2026-08-04T20:00:00-04:00",
+            "description": "3rd Annual Millersville National Night Out. VFW Post 7294 will have a table. Interact with first responders, free hotdogs and water, games and giveaways, tours of the police station, and live music. Rain date: August 5th. Location: Charles F. Snyder Funeral Home Lot and Millersville Borough Municipal Building."
         },
         {
             "title": "9/11 Golf Outing 2026",

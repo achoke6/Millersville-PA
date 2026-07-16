@@ -184,7 +184,7 @@ jobs:
               git rebase --abort 2>/dev/null || true
               git pull origin main --no-rebase --strategy-option theirs
               git add *.json 2>/dev/null || true
-              git commit -m "System: Auto-syncing Community Data (merge)" --allow-empty
+              git diff --staged --quiet || git commit -m "System: Auto-syncing Community Data (merge)"
             }
             git push origin main
           }

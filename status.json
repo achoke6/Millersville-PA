@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-07-16T20:03:20.531Z",
-  "totalEvents": 679,
-  "withDescription": 264,
+  "generatedAt": "2026-07-16T22:03:55.725Z",
+  "totalEvents": 681,
+  "withDescription": 266,
   "withImage": 111,
   "familyFriendly": 41,
   "eventsToday": 2,
   "sources": {
     "muAthletics": 238,
-    "muCalendar": 94,
+    "muCalendar": 96,
     "muGetInvolved": 171,
     "pennManor": 83,
     "borough": 0,
@@ -116,9 +116,37 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-16T20:01:32.942Z"
+    "lastSyncAt": "2026-07-16T22:02:12.156Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Academic Convocation|2026-08-21T08:30:00",
+      "firstSeenAt": "2026-07-16T22:03:55.723Z",
+      "title": "Academic Convocation",
+      "source": "MU",
+      "date": "2026-08-21T08:30:00"
+    },
+    {
+      "key": "Candlelighting Ceremony|2026-08-21T19:30:00",
+      "firstSeenAt": "2026-07-16T22:03:55.723Z",
+      "title": "Candlelighting Ceremony",
+      "source": "MU",
+      "date": "2026-08-21T19:30:00"
+    },
+    {
+      "key": "Annual Candle Lighting Ceremony|2026-08-21T23:30:00.000Z",
+      "firstSeenAt": "2026-07-16T22:03:55.723Z",
+      "title": "Annual Candle Lighting Ceremony",
+      "source": "MU",
+      "date": "2026-08-21T23:30:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Tennis vs East Stroudsburg|2027-04-09T17:00:00.000Z",
+      "firstSeenAt": "2026-07-16T22:03:55.723Z",
+      "title": "Millersville University Women's Tennis vs East Stroudsburg",
+      "source": "MU",
+      "date": "2027-04-09T17:00:00.000Z"
+    },
     {
       "key": "Summer Welcome Session|2026-07-24T09:00:00",
       "firstSeenAt": "2026-07-16T20:03:20.529Z",
@@ -160,35 +188,7 @@
       "title": "Homecoming 2026 - Mentoring Educators for Tomorrow Scholastic Book Fair",
       "source": "MU",
       "date": "2026-10-17T10:00:00"
-    },
-    {
-      "key": "Post Meeting|2026-07-22T22:00:00.000Z",
-      "firstSeenAt": "2026-07-16T14:14:43.823Z",
-      "title": "Post Meeting",
-      "source": "Other",
-      "date": "2026-07-22T22:00:00.000Z"
-    },
-    {
-      "key": "Open Jukebox|2026-08-06T02:00:00.000Z",
-      "firstSeenAt": "2026-07-16T02:27:07.767Z",
-      "title": "Open Jukebox",
-      "source": "Jack's Tavern",
-      "date": "2026-08-06T02:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
-      "firstSeenAt": "2026-07-15T23:04:16.663Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-07-29T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
-      "firstSeenAt": "2026-07-15T23:04:16.663Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-08-03T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 4
 }

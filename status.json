@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-07-16T18:07:04.987Z",
-  "totalEvents": 684,
-  "withDescription": 269,
+  "generatedAt": "2026-07-16T20:03:20.531Z",
+  "totalEvents": 679,
+  "withDescription": 264,
   "withImage": 111,
-  "familyFriendly": 42,
+  "familyFriendly": 41,
   "eventsToday": 2,
   "sources": {
     "muAthletics": 238,
-    "muCalendar": 95,
-    "muGetInvolved": 175,
+    "muCalendar": 94,
+    "muGetInvolved": 171,
     "pennManor": 83,
     "borough": 0,
     "vfw": 5,
@@ -116,9 +116,16 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-16T18:05:11.132Z"
+    "lastSyncAt": "2026-07-16T20:01:32.942Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Summer Welcome Session|2026-07-24T09:00:00",
+      "firstSeenAt": "2026-07-16T20:03:20.529Z",
+      "title": "Summer Welcome Session",
+      "source": "MU",
+      "date": "2026-07-24T09:00:00"
+    },
     {
       "key": "Girls Varsity Field Hockey vs Palmyra Area High School|2026-08-22T15:50:00.000Z",
       "firstSeenAt": "2026-07-16T17:46:57.499Z",
@@ -181,14 +188,7 @@
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2026-08-03T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
-      "firstSeenAt": "2026-07-15T23:04:16.663Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-08-05T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

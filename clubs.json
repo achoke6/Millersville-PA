@@ -237,8 +237,10 @@
   },
   {
     "name": "Bard Hall Residence Hall",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "Bard Hall",
     "id": ""
   },
@@ -285,12 +287,13 @@
   },
   {
     "name": "Black Student Union",
-    "category": "Identity-Based",
+    "category": "Lecture or Speaker",
     "categories": [
-      "Identity-Based"
+      "Lecture or Speaker",
+      "Meeting"
     ],
-    "shortName": "BSU",
-    "id": "blackstudentunion"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Board Game Club",
@@ -1409,15 +1412,6 @@
     "name": "Navigators",
     "category": "",
     "categories": [],
-    "shortName": "",
-    "id": ""
-  },
-  {
-    "name": "NPHC, NALFO & NMGC presents: CGC",
-    "category": "Meeting",
-    "categories": [
-      "Meeting"
-    ],
     "shortName": "",
     "id": ""
   },

@@ -437,6 +437,7 @@ window.setMuAffiliation = function(value) {
     localStorage.setItem(AFFILIATION_KEY, value);
     // Re-render everything so the filter takes immediate effect
     if (typeof renderHomeFeed === 'function') renderHomeFeed();
+    if (typeof loadHomeSpecials === 'function') loadHomeSpecials(); // home specials rail — separate render, reads muAffiliation
     if (typeof renderEvents === 'function') renderEvents();
 };
 // Whether an event is hidden from the current viewer's feed, based on the
@@ -2341,6 +2342,7 @@ function applyAffiliation(value, clearFavs) {
     }
     pruneStaleStateForAffiliation();
     renderHomeFeed();
+    if (typeof loadHomeSpecials === 'function') loadHomeSpecials(); // home specials rail is a separate render (reads muAffiliation at build time) — renderHomeFeed does NOT rebuild it
     if (typeof renderEvents === 'function') renderEvents();
     if (typeof renderSports === 'function') renderSports();
     if (typeof renderNewsUI === 'function') renderNewsUI();
@@ -2354,12 +2356,14 @@ function applyAffiliation(value, clearFavs) {
 
 // 21+ drink-specials opt-in. A display setting, not a favorite — persists on
 // its own key (survives Clear Favs), applies immediately (no Save needed),
-// and re-renders the two specials surfaces: home rail (renderHomeFeed) and
-// directory cards / Today lens / pins (renderPlaces).
+// and re-renders the specials surfaces: home rail (loadHomeSpecials — NOT
+// renderHomeFeed, which is the timeline), directory cards / Today lens /
+// pins (renderPlaces), and the home timeline (renderHomeFeed).
 window.toggle21Plus = function(on) {
     show21Plus = !!on;
     try { localStorage.setItem(SHOW21_KEY, show21Plus ? '1' : '0'); } catch (e) {}
     if (typeof renderHomeFeed === 'function') renderHomeFeed();
+    if (typeof loadHomeSpecials === 'function') loadHomeSpecials(); // rail cards gate 🍺 items via placesSpecialsItemsFor — rebuild so the toggle shows without reload
     if (typeof renderPlaces === 'function') renderPlaces();
 };
 

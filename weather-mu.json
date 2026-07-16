@@ -1,27 +1,27 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Wednesday, July 15, 2026 at 02:02 PM (Kyle Elliott, Meteorologist)",
+    "issued": "Thursday, July 16, 2026 at 09:00 AM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "This afternoon",
-        "text": "Mostly sunny and humid with record-challenging heat. High: 94-98"
+        "period": "Today",
+        "text": "Hot & humid with hazy sun; smoke from wildfires will cause poor air quality. High: 92-96"
       },
       {
         "period": "Tonight",
-        "text": "Mainly clear, warm and muggy. Low: 70-74"
-      },
-      {
-        "period": "Thursday",
-        "text": "Hot and humid with hazy sun; smoke from wildfires can reduce air quality. High: 94-98"
-      },
-      {
-        "period": "Thursday Night",
         "text": "Mainly clear and mild; smoke from wildfires will cause poor air quality. Low: 66-70"
       },
       {
         "period": "Friday",
         "text": "Hot with hazy sun and some clouds; reduced air quality from wildfire smoke. High: 88-92"
+      },
+      {
+        "period": "Friday Night",
+        "text": "Warm with increasing clouds. Low: 68-72"
+      },
+      {
+        "period": "Saturday",
+        "text": "Mostly cloudy and humid with scattered showers and heavy thunderstorms. High: 84-88"
       }
     ]
   },
@@ -128,6 +128,39 @@
   },
   "observations": [
     {
+      "time": "10:00",
+      "temp": "85",
+      "dewpoint": "75",
+      "rh": "72",
+      "windDir": "SW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "7.3",
+      "condition": "None"
+    },
+    {
+      "time": "09:00",
+      "temp": "81",
+      "dewpoint": "74",
+      "rh": "80",
+      "windDir": "SW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "6.0",
+      "condition": "None"
+    },
+    {
+      "time": "08:00",
+      "temp": "77",
+      "dewpoint": "72",
+      "rh": "85",
+      "windDir": "SW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "6.2",
+      "condition": "None"
+    },
+    {
       "time": "07:00",
       "temp": "74",
       "dewpoint": "72",
@@ -158,39 +191,6 @@
       "windSpeed": "0",
       "precip": "0.00",
       "visibility": "5.6",
-      "condition": "None"
-    },
-    {
-      "time": "04:00",
-      "temp": "75",
-      "dewpoint": "73",
-      "rh": "93",
-      "windDir": "SW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "6.3",
-      "condition": "None"
-    },
-    {
-      "time": "03:00",
-      "temp": "75",
-      "dewpoint": "73",
-      "rh": "93",
-      "windDir": "NNE",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "6.3",
-      "condition": "None"
-    },
-    {
-      "time": "02:00",
-      "temp": "77",
-      "dewpoint": "72",
-      "rh": "85",
-      "windDir": "SW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "6.8",
       "condition": "None"
     }
   ],
@@ -235,5 +235,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-16T12:23:12.614Z"
+  "updated": "2026-07-16T14:13:13.188Z"
 }

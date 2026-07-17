@@ -509,7 +509,10 @@ function cornWagonCarryForward(prevSpecials, nowMs) {
 // venue never posts dated flyers for (e.g. "Trivia Night, Tuesdays 8 PM") —
 // into the next `count` dated instances. Stateless: recomputed every hourly
 // run, nothing persists between runs. Each item: { title, day (weekday name),
-// time ("HH:MM" 24h ET), description?, link?, price?, kidFriendly? }.
+// time ("HH:MM" 24h ET), description?, link?, price?, kidFriendly?,
+// benefits? (['Free Food', …] — perk badges + the Marauder free-food filter),
+// perkFoodIcon? (glyph replacing 🍕 on this event's Free Food badge) }.
+// benefits/perkFoodIcon pass through sanitized via eventPerkFields (below).
 // Calendar iteration is done in pure date arithmetic at UTC noon (DST-free),
 // then each instance's ET wall-clock is converted to a true instant via
 // parseEventInstant (DST-aware) — so a 20:00 trivia night stays 20:00 ET
@@ -545,12 +548,110 @@ function expandRecurringEvents(recArr, nowMs, count = 3) {
                 description: rec.description || '',
                 link: rec.link || '',
                 price: rec.price || '',
-                kidFriendly: rec.kidFriendly === true
+                kidFriendly: rec.kidFriendly === true,
+                ...eventPerkFields(rec)
             });
             found++;
         }
     }
     return out;
+}
+
+// Well-formed subset of an entry-level activeRanges array — the calendar
+// windows during which a place's STANDING specials content is live (the
+// daily/recurring/weekly passthrough into specials.json AND recurringEvents
+// expansion; dated events[] are exempt — dated content carries its own
+// calendar). Ranges are {from,to} ISO dates, inclusive both ends, compared
+// as strings. The caller fails CLOSED when a gate was written but nothing
+// valid survives — a deliberate gate that's broken must not spray standing
+// content year-round (the main.yml shape check catches it pre-deploy).
+// First user: Jesus Dogs (fall + spring semester windows). Pure + top-level
+// for the harness, like parseCornWagonItems above.
+function parseActiveRanges(raw) {
+    if (!Array.isArray(raw)) return [];
+    const ISO = /^\d{4}-\d{2}-\d{2}$/;
+    return raw
+        .filter(r => r && typeof r === 'object' && ISO.test(r.from || '') && ISO.test(r.to || '') && r.from <= r.to)
+        .map(r => ({ from: r.from, to: r.to }));
+}
+
+// Optional per-item event perk fields, sanitized once at emission so the
+// render sites stay simple: benefits (string array, e.g. ['Free Food'] —
+// drives the perk badges AND the Marauder free-food filter) and perkFoodIcon
+// (a short glyph replacing the default 🍕 on that event's Free Food badge —
+// Jesus Dogs sets 🌭). Returns a spread-ready object; empty when neither
+// field is usable. Pure + top-level for the harness.
+function eventPerkFields(src) {
+    const out = {};
+    if (src && Array.isArray(src.benefits)) {
+        const b = src.benefits.filter(x => typeof x === 'string' && x.trim()).slice(0, 4);
+        if (b.length) out.benefits = b;
+    }
+    if (src && src.perkFoodIcon) {
+        const ic = String(src.perkFoodIcon).replace(/[<>&"']/g, '').trim().slice(0, 8);
+        if (ic) out.perkFoodIcon = ic;
+    }
+    return out;
+}
+
+// Parse the CWS "Daily Summaries" climate page (www.atmos.millersville.edu/
+// ~cws/climo/dailysum.html) — a month-to-date ledger: one table row per day
+// with max/min temp (+ occurrence times), peak wind dir/speed (+ time), and
+// daily rainfall, then a month Total Rainfall row and year-to-date footer
+// lines. The page's HTML is hand-generated and messy (doubled <html>
+// wrappers, tags split across newlines mid-attribute), so this parses with
+// whitespace-tolerant regexes, never a DOM. Values stay STRINGS end to end —
+// the station publishes literal "Missing" for sensor gaps and it must render
+// as-is. Returns null when no day rows parse (structure drift / non-HTML
+// body) so the caller omits the whole section; footer fields degrade to ''
+// individually. Pure + top-level for the harness, like parseCornWagonItems.
+function parseCwsDailySummary(html) {
+    if (typeof html !== 'string' || !html) return null;
+    const clean = (s) => (s || '')
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/&#160;|&nbsp;/g, ' ')
+        .replace(/&#176;|&deg;/g, '\u00B0')
+        .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+        .replace(/\s+/g, ' ').trim();
+    // "98 (15:59)" | "Missing (12:32)" | "0.00" → { v, t }
+    const splitVT = (s) => {
+        const m = s.match(/^(.*?)\s*\((\d{1,2}:\d{2})\)$/);
+        return m ? { v: m[1].trim(), t: m[2] } : { v: s, t: '' };
+    };
+    const tbl = html.match(/<table[^>]*>([\s\S]*?)<\/table>/i);
+    if (!tbl) return null;
+    const days = [];
+    let totalRain = '';
+    let tr; const trRe = /<tr[^>]*>([\s\S]*?)<\/tr>/gi;
+    while ((tr = trRe.exec(tbl[1])) !== null) {
+        const cells = []; let td; const tdRe = /<td[^>]*>([\s\S]*?)<\/td>/gi;
+        while ((td = tdRe.exec(tr[1])) !== null) cells.push(clean(td[1]));
+        if (!cells.length) continue;                        // header row is <th>s
+        if (/^\d{1,2}\/\d{1,2}$/.test(cells[0]) && cells.length >= 6) {
+            const mx = splitVT(cells[1]), mn = splitVT(cells[2]),
+                  wd = splitVT(cells[3]), ws = splitVT(cells[4]);
+            days.push({ date: cells[0], max: mx.v, maxTime: mx.t, min: mn.v, minTime: mn.t,
+                        windDir: wd.v, windSpeed: ws.v, windTime: ws.t || wd.t, rain: cells[5] });
+        } else if (cells.some(c => /total\s*rainfall/i.test(c))) {
+            const val = [...cells].reverse().find(c => /^[\d.]+$/.test(c));
+            if (val) totalRain = val;
+        }
+    }
+    if (!days.length) return null;
+    const h1 = html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
+    const mLblM = h1 ? clean(h1[1]).match(/for\s+(.+)$/i) : null;
+    const flat = clean(html);
+    const ytd  = flat.match(/Year-to-date rainfall:\s*([\d.]+)/i);
+    const yMax = flat.match(/Max temp for the year:\s*(-?\d+)\s*\(([^)]+)\)/i);
+    const yMin = flat.match(/Min temp for the year:\s*(-?\d+)\s*\(([^)]+)\)/i);
+    return {
+        monthLabel: mLblM ? mLblM[1].trim() : '',
+        days,
+        totalRain,
+        ytdRain: ytd ? ytd[1] : '',
+        yearMax: yMax ? yMax[1] : '', yearMaxDate: yMax ? yMax[2].trim() : '',
+        yearMin: yMin ? yMin[1] : '', yearMinDate: yMin ? yMin[2].trim() : ''
+    };
 }
 
 function extractEventbriteEvents(ldData, eventsArray, now, futureLimit, overrideUrl = null) {
@@ -766,6 +867,7 @@ async function runScraper() {
             forecast: { synopsis: '', issued: '', periods: [] },
             sevenDay: { issued: '', days: [] },
             observations: [],
+            dailySummary: null,
             discussion: { headline: '', dateLine: '', excerpt: '', url: `${WX_BASE}/forecasts/weather-discussion.php` },
             images: {
                 radar: 'https://sirocco.accuweather.com/nx_mosaic_640x480c/RE/inmaREPA_.gif',
@@ -815,6 +917,25 @@ async function runScraper() {
                 console.log(`  ✅ MU observations: ${muWx.observations.length} rows`);
             }
         } catch (e) { console.log(`  ⚠️ MU observations unavailable: ${e.message}`); }
+
+        // --- Daily climate summary (CWS month-to-date ledger) ---
+        // Different HOST than the rest of this block: the Campus Weather
+        // Service's climate pages live on www.atmos.millersville.edu (the WIC
+        // pages above are www.millersville.edu). First-deploy watch item: if
+        // the runner can't reach that subdomain this logs ⚠️ and the section
+        // is simply absent — nothing else in the block is affected.
+        try {
+            const r = await fetch('https://www.atmos.millersville.edu/~cws/climo/dailysum.html', { headers: baseHeaders });
+            if (r.ok) {
+                const dsum = parseCwsDailySummary(await r.text());
+                if (dsum) {
+                    muWx.dailySummary = dsum;
+                    console.log(`  ✅ MU daily summary: ${dsum.days.length} day(s) — ${dsum.monthLabel || 'month ?'}`);
+                } else {
+                    console.log('  ⚠️ MU daily summary: page fetched but no day rows parsed — section omitted');
+                }
+            }
+        } catch (e) { console.log(`  ⚠️ MU daily summary unavailable: ${e.message}`); }
 
         // --- Weather discussion (EXCERPT + link, tweets/scripts stripped) ---
         try {
@@ -877,7 +998,7 @@ async function runScraper() {
         } catch (e) { console.log(`  ⚠️ MU videos unavailable: ${e.message}`); }
 
         fs.writeFileSync(path.join(__dirname, '../weather-mu.json'), JSON.stringify(muWx, null, 2));
-        console.log(`✅ MU Weather Center saved (forecast ${muWx.forecast.periods.length}, 7-day ${muWx.sevenDay.days.length}, obs ${muWx.observations.length}, videos ${muWx.videos.length})`);
+        console.log(`✅ MU Weather Center saved (forecast ${muWx.forecast.periods.length}, 7-day ${muWx.sevenDay.days.length}, obs ${muWx.observations.length}, daily ${muWx.dailySummary ? muWx.dailySummary.days.length : 0}, videos ${muWx.videos.length})`);
     } catch (e) { console.error('❌ MU Weather Center error:', e.message); }
 
 
@@ -3607,7 +3728,7 @@ async function runScraper() {
         // app.js slugifyPlace). Keys are hand-written slugs, so NO slugify
         // implementation lives in this file — Hard Rule 11 stays two-way.
         // Hand-maintained per place: name / note / audience / closedDays /
-        // season / daily / recurring / events. The Cowork specials task
+        // season / activeRanges / daily / recurring / events. The Cowork specials task
         // maintains each place's `weekly` block (dateRange + exclusive
         // validThrough + items), vfw.json-style. VFW + John Herr's keep their
         // dedicated pipelines and are assembled below under literal slug keys.
@@ -3624,17 +3745,37 @@ async function runScraper() {
             if (pl.note) entry.note = pl.note;
             if (pl.audience) entry.audience = pl.audience;
             if (Array.isArray(pl.closedDays) && pl.closedDays.length) entry.closedDays = pl.closedDays;
-            if (pl.daily) entry.daily = pl.daily;
-            if (pl.recurring) entry.recurring = pl.recurring;
-            // weekly: same exclusive-validThrough expiry as vfw.json — an
-            // expired/undated block is dropped (daily/recurring still show).
-            if (pl.weekly && Array.isArray(pl.weekly.items) && pl.weekly.items.length) {
-                const vt = pl.weekly.validThrough ? new Date(pl.weekly.validThrough + 'T00:00:00-04:00') : null;
-                if (vt && new Date() < vt) {
-                    entry.weekly = pl.weekly.items;
-                    entry.weeklyDateRange = pl.weekly.dateRange || '';
-                } else {
-                    console.log(`  ⏭️  ${entry.name}: weekly specials ${vt ? 'expired' : 'undated'} — dropped`);
+
+            // Entry-level activeRanges (optional): calendar windows during
+            // which this place's STANDING content is live (parseActiveRanges,
+            // top of file). Out of range, the entry still lands in
+            // specials.json (name/note/audience) but carries no items and
+            // expands no recurring events — the rail tile, card box, Today-
+            // lens membership, and pin 🔥 line all go dark together. Dated
+            // events[] below are deliberately EXEMPT (dated content carries
+            // its own calendar). A written gate that parses to nothing valid
+            // fails CLOSED, with the main.yml shape check as the pre-deploy
+            // backstop. First user: Jesus Dogs (semester-only Thursdays).
+            const arGate = Array.isArray(pl.activeRanges) && pl.activeRanges.length > 0;
+            const arClean = parseActiveRanges(pl.activeRanges);
+            if (arGate && !arClean.length) console.log(`  ⚠️ ${entry.name}: activeRanges present but no valid {from,to} ranges — standing content treated as inactive`);
+            const activeOn = (d) => !arGate || arClean.some(r => d >= r.from && d <= r.to);
+            const standingActive = activeOn(deriveDayET(Date.now()));
+            if (arGate && arClean.length && !standingActive) console.log(`  ⏭️  ${entry.name}: outside active ranges today — standing specials skipped (dated events still emit)`);
+
+            if (standingActive) {
+                if (pl.daily) entry.daily = pl.daily;
+                if (pl.recurring) entry.recurring = pl.recurring;
+                // weekly: same exclusive-validThrough expiry as vfw.json — an
+                // expired/undated block is dropped (daily/recurring still show).
+                if (pl.weekly && Array.isArray(pl.weekly.items) && pl.weekly.items.length) {
+                    const vt = pl.weekly.validThrough ? new Date(pl.weekly.validThrough + 'T00:00:00-04:00') : null;
+                    if (vt && new Date() < vt) {
+                        entry.weekly = pl.weekly.items;
+                        entry.weeklyDateRange = pl.weekly.dateRange || '';
+                    } else {
+                        console.log(`  ⏭️  ${entry.name}: weekly specials ${vt ? 'expired' : 'undated'} — dropped`);
+                    }
                 }
             }
             specials[slug] = entry;
@@ -3664,6 +3805,7 @@ async function runScraper() {
                     ticketLink: '',
                     sourceLink: ev.link || '',
                     description: ev.description || '',
+                    ...eventPerkFields(ev),
                     ...(pl.audience === 'locals' ? { audience: 'townie-only' }
                         : pl.audience === 'marauders' ? { audience: 'mu-only' } : {}),
                     ...(ev.kidFriendly === true ? { kidFriendly: true } : {})
@@ -3679,6 +3821,12 @@ async function runScraper() {
             // duplicate into events[], dedupeEvents() collapses the pair on
             // shared instant + title-head, keeping the richer copy.
             for (const rec of expandRecurringEvents(pl.recurringEvents, Date.now(), 3)) {
+                // Per-INSTANCE activeRanges check — near a window edge the
+                // next-3 expansion can straddle the boundary, so gating on
+                // "today" alone would emit instances past the window's end.
+                // Instances appear once they fall inside a window AND the
+                // 28-day expansion horizon (≈a month before each semester).
+                if (!activeOn(deriveDayET(new Date(rec.date).getTime()))) continue;
                 events.push({
                     title: rec.title,
                     date: rec.date,
@@ -3688,6 +3836,8 @@ async function runScraper() {
                     ticketLink: '',
                     sourceLink: rec.link || '',
                     description: rec.description || '',
+                    ...(rec.benefits ? { benefits: rec.benefits } : {}),
+                    ...(rec.perkFoodIcon ? { perkFoodIcon: rec.perkFoodIcon } : {}),
                     ...(pl.audience === 'locals' ? { audience: 'townie-only' }
                         : pl.audience === 'marauders' ? { audience: 'mu-only' } : {}),
                     ...(rec.kidFriendly ? { kidFriendly: true } : {})

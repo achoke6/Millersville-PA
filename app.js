@@ -4573,7 +4573,7 @@ function buildEventCard(e,isSportsPage){
     // Student perks
     const benefits = e.benefits || [];
     let perkBadges = '';
-    if (benefits.includes('Free Food')) perkBadges += '<span class="perk-badge perk-food">🍕 Free Food</span>';
+    if (benefits.includes('Free Food')) perkBadges += '<span class="perk-badge perk-food">' + (e.perkFoodIcon || '🍕') + ' Free Food</span>';   // perkFoodIcon: per-event glyph override (Jesus Dogs 🌭)
     if (benefits.includes('Free Stuff')) perkBadges += '<span class="perk-badge perk-stuff">🎁 Free Stuff</span>';
     if (benefits.includes('Credit')) perkBadges += '<span class="perk-badge perk-credit">📚 Credit</span>';
     // Registration-required warning. Distinct from perks — this tells the user
@@ -5096,7 +5096,7 @@ function buildTimelineItem(e, now) {
     if (isSport && isHome) badges += '<span class="tl-badge tl-home">🏠</span>';
     if (e.kidFriendly) badges += '<span class="tl-badge tl-family">👨‍👩‍👧</span>';
     const benefits = e.benefits || [];
-    if (benefits.includes('Free Food')) badges += '<span class="tl-badge tl-perk">🍕</span>';
+    if (benefits.includes('Free Food')) badges += '<span class="tl-badge tl-perk">' + (e.perkFoodIcon || '🍕') + '</span>';   // perkFoodIcon: per-event glyph override (Jesus Dogs 🌭)
     if (benefits.includes('Free Stuff')) badges += '<span class="tl-badge tl-perk">🎁</span>';
     if (e.registrationRequired === true) badges += '<span class="tl-badge tl-registration" title="Registration required">📝</span>';
     // Multi-day annotation (Day 2 of 3, etc.) — set by groupEventsByDay when
@@ -5237,7 +5237,7 @@ window.openEventDetails = function(key) {
     // .event-details-overlay .perk-badge rules in CSS.
     const benefits = e.benefits || [];
     let perks = '';
-    if (benefits.includes('Free Food'))  perks += '<span class="perk-badge perk-food">🍕 Free Food</span>';
+    if (benefits.includes('Free Food'))  perks += '<span class="perk-badge perk-food">' + (e.perkFoodIcon || '🍕') + ' Free Food</span>';   // perkFoodIcon: per-event glyph override (Jesus Dogs 🌭)
     if (benefits.includes('Free Stuff')) perks += '<span class="perk-badge perk-stuff">🎁 Free Stuff</span>';
     if (benefits.includes('Credit'))     perks += '<span class="perk-badge perk-credit">📚 Credit</span>';
 
@@ -5570,7 +5570,7 @@ window.openHomeSpecialPopup = function(slug){
                 url: PLACES_MAP_CFG.pmtiles, flavor: 'light', lang: 'en',
                 attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
             }).addTo(homeSpecialMiniMap);
-            const glyph = MAP_PIN_ICONS[place.category] || '📍';
+            const glyph = PLACE_PIN_OVERRIDES[placeSlug(place)] || MAP_PIN_ICONS[place.category] || '📍';
             const color = MAP_PIN_COLORS[(place.placeType==='food') ? 'food' : (place.category==='Cupboard' ? 'cupboard' : 'service')] || '#14203a';
             L.marker([place.lat, place.lng], { interactive: false, icon: L.divIcon({ className: '', html: `<div class="map-pin" style="border-color:${color}">${glyph}</div>`, iconSize: [30,30], iconAnchor: [15,15] }) }).addTo(homeSpecialMiniMap);
             setTimeout(()=>{ if (homeSpecialMiniMap) homeSpecialMiniMap.invalidateSize(); }, 60);   // size after modal layout settles
@@ -5726,6 +5726,36 @@ async function loadWeatherMU(){
             <h3 class="card-title">📊 Recent Observations</h3>
             <p class="card-meta" style="margin:2px 0 8px;">Past 6 hours · Millersville University station</p>
             <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:0.82rem;">${head}${body}</table></div>
+        </div>`);
+    }
+
+    // Daily climate summary — the CWS month-to-date ledger
+    // (www.atmos.millersville.edu/~cws/climo/dailysum.html), parsed by
+    // scrape.js into weather-mu.json (data.dailySummary). FULL month, newest
+    // first to match the observations card above. The station publishes
+    // literal "Missing" for sensor gaps — values render as-is, and unit
+    // suffixes (°, mph) attach only to numeric values so "Missing°" can
+    // never appear. Footer stats (month total + year-to-date lines) render
+    // only when parsed; the whole card is simply absent when scrape.js
+    // couldn't fetch or parse the page (different HOST than the WIC pages —
+    // see the watch note on the fetch block in scrape.js).
+    const dsum = data.dailySummary || {};
+    if ((dsum.days||[]).length) {
+        const uv = (v,u)=>/^-?[\d.]+$/.test(v)?esc(v)+u:esc(v);   // unit only on numeric values ("Missing" stays bare)
+        const sub = (t)=>t?`<br><span style="font-size:0.72em;color:var(--text-muted);font-weight:400;">(${esc(t)})</span>`:'';
+        const head = `<tr style="text-align:left;border-bottom:2px solid var(--border);"><th style="padding:6px 6px 6px 0;">Date</th><th style="padding:6px;">High</th><th style="padding:6px;">Low</th><th style="padding:6px;">Peak Wind</th><th style="padding:6px;">Rain (in.)</th></tr>`;
+        const body = [...dsum.days].reverse().map(d=>`<tr style="border-bottom:1px solid var(--border);"><td style="padding:6px 6px 6px 0;font-weight:600;white-space:nowrap;vertical-align:top;">${esc(d.date)}</td><td style="padding:6px;font-weight:600;vertical-align:top;">${uv(d.max,'°')}${sub(d.maxTime)}</td><td style="padding:6px;vertical-align:top;">${uv(d.min,'°')}${sub(d.minTime)}</td><td style="padding:6px;white-space:nowrap;vertical-align:top;">${uv(d.windSpeed,' mph')} · ${uv(d.windDir,'°')}${sub(d.windTime)}</td><td style="padding:6px;vertical-align:top;">${esc(d.rain)}</td></tr>`).join('');
+        const stats = [];
+        if (dsum.totalRain) stats.push(`Month rainfall: <b>${esc(dsum.totalRain)} in.</b>`);
+        if (dsum.ytdRain) stats.push(`Year-to-date: <b>${esc(dsum.ytdRain)} in.</b>`);
+        if (dsum.yearMax) stats.push(`Year max: <b>${uv(dsum.yearMax,'°')}</b>${dsum.yearMaxDate?` (${esc(dsum.yearMaxDate)})`:''}`);
+        if (dsum.yearMin) stats.push(`Year min: <b>${uv(dsum.yearMin,'°')}</b>${dsum.yearMinDate?` (${esc(dsum.yearMinDate)})`:''}`);
+        sections.push(`<div class="app-card">
+            <h3 class="card-title">📈 Daily Climate Summary</h3>
+            <p class="card-meta" style="margin:2px 0 8px;">${dsum.monthLabel?`${esc(dsum.monthLabel)} · `:''}Millersville University station · midnight-to-midnight · times in ( )</p>
+            <div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:0.82rem;">${head}${body}</table></div>
+            ${stats.length?`<p style="font-size:0.84rem;line-height:1.6;margin:10px 0 0;">${stats.join(' · ')}</p>`:''}
+            <a href="https://www.atmos.millersville.edu/~cws/climo/dailysum.html" target="_blank" rel="noopener" class="btn btn-sm btn-outline" style="margin-top:10px;">Full climate records ➔</a>
         </div>`);
     }
 
@@ -6178,6 +6208,12 @@ const MAP_PIN_ICONS = {
     'EV Charging':'🔌','Cupboard':'🧺'
 };
 const MAP_PIN_COLORS = { food:'#b0452b', service:'#0f6e56', housing:'#5b4bc4', cupboard:'#a06a10' };
+// Per-place pin glyph overrides, keyed by DIRECTORY PLACE SLUG — checked
+// before the category default at BOTH pin sites (main map pins and the
+// home-popup mini map). For the rare listing whose identity beats its
+// category icon. First user: Jesus Dogs (🌭, not the Food & Drink 🍴).
+// Promote to a sheet column if these ever multiply past a handful.
+const PLACE_PIN_OVERRIDES = { 'jesus-dogs': '🌭' };
 
 function placesMapAssetsLoad(){
     if (placesMapLibReady) return Promise.resolve();
@@ -6288,7 +6324,7 @@ function refreshPlacesMap(){
     placesMapMarkerBySlug.clear();
     entries.forEach(en => {
         const p = en.place;
-        const glyph = MAP_PIN_ICONS[p.category] || '📍';
+        const glyph = PLACE_PIN_OVERRIDES[placeSlug(p)] || MAP_PIN_ICONS[p.category] || '📍';
         const color = MAP_PIN_COLORS[en.group] || '#14203a';
         const icon = L.divIcon({ className: '', html: `<div class="map-pin" style="border-color:${color}">${glyph}</div>`, iconSize: [30,30], iconAnchor: [15,15], popupAnchor: [0,-16] });
         const m = L.marker([en.dlat, en.dlng], { icon: icon, title: p.name })

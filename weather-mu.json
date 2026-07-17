@@ -128,6 +128,17 @@
   },
   "observations": [
     {
+      "time": "19:00",
+      "temp": "83",
+      "dewpoint": "58",
+      "rh": "43",
+      "windDir": "W",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "4.3",
+      "condition": "None"
+    },
+    {
       "time": "18:00",
       "temp": "84",
       "dewpoint": "59",
@@ -180,17 +191,6 @@
       "windSpeed": "3",
       "precip": "0.00",
       "visibility": "4.1",
-      "condition": "None"
-    },
-    {
-      "time": "13:00",
-      "temp": "82",
-      "dewpoint": "62",
-      "rh": "50",
-      "windDir": "N",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "4.3",
       "condition": "None"
     }
   ],
@@ -382,9 +382,9 @@
     "yearMinDate": "January 21"
   },
   "discussion": {
-    "headline": "nother heatwave to scorch the mid-atlantic states this week",
-    "dateLine": "1:00 p.m. Tuesday, July 14, 2026",
-    "excerpt": "As anticipated last week, the second weekend of July wrapped up on a partly sunny and seasonably warm note with high temperatures in the mid 80s Sunday afternoon. The week then kicked off on an even nicer note with more sunshine, lower humidity and similar temperatures on Monday. Unfortunately, much hotter and somewhat more humid conditions have returned this afternoon, and another heatwave will bake northern MD and southeastern PA through the end of the week. …",
+    "headline": "Poor Air Quality Today followed by severe storms on saturday",
+    "dateLine": "3:00 p.m. Friday, July 17, 2026, Update",
+    "excerpt": "The third heatwave of the year scorched the mid-Atlantic States this week, but its intensity and duration both paled in comparison to the early-July scorcher. However, high temperatures still reached the mid 90s in most spots on Wednesday and Thursday, and maximum heat indices topped out between 100-105°F both afternoons. Wednesday's high of 96°F at Millersville University ultimately came up 4°F short of tying the July 15th record high of 100°F from 1997 (see below). …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -422,5 +422,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-17T22:47:35.476Z"
+  "updated": "2026-07-17T23:51:25.149Z"
 }

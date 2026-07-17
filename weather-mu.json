@@ -1,55 +1,39 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Thursday, July 16, 2026 at 12:17 PM (Kyle Elliott, Meteorologist)",
+    "issued": "Friday, July 17, 2026 at 08:57 AM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "This afternoon",
-        "text": "Hot & humid with hazy sun; smoke from wildfires will reduce air quality. High: 92-96"
+        "period": "Today",
+        "text": "Cooler with hazy sun and some clouds; poor air quality from wildfire smoke. High: 84-88"
       },
       {
         "period": "Tonight",
-        "text": "Mainly clear and mild; smoke from wildfires will cause poor air quality. Low: 66-70"
-      },
-      {
-        "period": "Friday",
-        "text": "Hot with hazy sun and some clouds; poor air quality from wildfire smoke. High: 88-92"
-      },
-      {
-        "period": "Friday Night",
         "text": "Warm with increasing clouds; reduced air quality from wildfire smoke. Low: 68-72"
       },
       {
         "period": "Saturday",
-        "text": "Mostly cloudy and humid with scattered showers and heavy thunderstorms. High: 84-88"
+        "text": "Mostly cloudy and humid with showers and scattered severe thunderstorms. High: 84-88"
+      },
+      {
+        "period": "Saturday Night",
+        "text": "Warm and muggy with decreasing clouds; evening showers and thunderstorms. Low: 68-72"
+      },
+      {
+        "period": "Sunday",
+        "text": "Mostly sunny, cooler and less humid with a refreshing breeze. High: 80-84"
       }
     ]
   },
   "sevenDay": {
-    "issued": "Thursday, July 16, 2026 at 12:39 PM (Kyle Elliott)",
+    "issued": "Friday, July 17, 2026 at 09:40 AM (Kyle Elliott)",
     "days": [
-      {
-        "period": "Thursday",
-        "sky": "Hazy",
-        "weather": "Hot & Humid",
-        "pop": "<10%",
-        "temp": "94",
-        "conf": "5"
-      },
-      {
-        "period": "Thursday night",
-        "sky": "Mainly Clear",
-        "weather": "Mild",
-        "pop": "<10%",
-        "temp": "68",
-        "conf": "5"
-      },
       {
         "period": "Friday",
         "sky": "Hazy",
-        "weather": "Hot",
+        "weather": "Cooler",
         "pop": "<10%",
-        "temp": "90",
+        "temp": "86",
         "conf": "5"
       },
       {
@@ -58,38 +42,38 @@
         "weather": "Warm",
         "pop": "20%",
         "temp": "70",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Saturday",
         "sky": "Mostly Cloudy",
-        "weather": "Sct. Thunderstorms",
-        "pop": "80%",
+        "weather": "Chc. Severe Storms",
+        "pop": "90%",
         "temp": "86",
         "conf": "4"
       },
       {
         "period": "Saturday night",
-        "sky": "Mostly Cloudy",
-        "weather": "Sct. Thunderstorms",
-        "pop": "80%",
+        "sky": "Decreasing Clouds",
+        "weather": "Evening T-Storms",
+        "pop": "70%",
         "temp": "70",
         "conf": "4"
       },
       {
         "period": "Sunday",
         "sky": "Mostly Sunny",
-        "weather": "Pleasant",
+        "weather": "Cooler",
         "pop": "<10%",
-        "temp": "84",
+        "temp": "82",
         "conf": "4"
       },
       {
         "period": "Sunday night",
         "sky": "Mainly Clear",
-        "weather": "Fair",
+        "weather": "Cool",
         "pop": "<10%",
-        "temp": "60",
+        "temp": "58",
         "conf": "4"
       },
       {
@@ -98,7 +82,7 @@
         "weather": "Pleasant",
         "pop": "<10%",
         "temp": "84",
-        "conf": "3"
+        "conf": "4"
       },
       {
         "period": "Monday night",
@@ -106,27 +90,65 @@
         "weather": "Mild",
         "pop": "<10%",
         "temp": "68",
-        "conf": "3"
+        "conf": "4"
       },
       {
         "period": "Tuesday",
-        "sky": "Clouds & Sun",
-        "weather": "Chc. of T-storm",
-        "pop": "30%",
-        "temp": "mid 80s",
+        "sky": "Mostly Cloudy",
+        "weather": "Sct. Thunderstorms",
+        "pop": "40%",
+        "temp": "88",
+        "conf": "3"
+      },
+      {
+        "period": "Tuesday night",
+        "sky": "Mostly Cloudy",
+        "weather": "Sct. Thunderstorms",
+        "pop": "40%",
+        "temp": "70",
         "conf": "3"
       },
       {
         "period": "Wednesday",
-        "sky": "Variably Cloudy",
-        "weather": "Chc. of T-storm",
-        "pop": "30%",
-        "temp": "mid 80s",
+        "sky": "Clouds & Sun",
+        "weather": "Cooler",
+        "pop": "20%",
+        "temp": "low 80s",
+        "conf": "3"
+      },
+      {
+        "period": "Thursday",
+        "sky": "Mostly Sunny",
+        "weather": "Pleasant",
+        "pop": "<10%",
+        "temp": "low 80s",
         "conf": "3"
       }
     ]
   },
   "observations": [
+    {
+      "time": "10:00",
+      "temp": "78",
+      "dewpoint": "62",
+      "rh": "58",
+      "windDir": "N",
+      "windSpeed": "6",
+      "precip": "0.00",
+      "visibility": "3.3",
+      "condition": "None"
+    },
+    {
+      "time": "09:00",
+      "temp": "74",
+      "dewpoint": "63",
+      "rh": "68",
+      "windDir": "NW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "2.2",
+      "condition": "Mist"
+    },
     {
       "time": "08:00",
       "temp": "70",
@@ -167,28 +189,6 @@
       "rh": "93",
       "windDir": "SW",
       "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "1.8",
-      "condition": "Mist"
-    },
-    {
-      "time": "04:00",
-      "temp": "68",
-      "dewpoint": "65",
-      "rh": "89",
-      "windDir": "SSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "1.8",
-      "condition": "Mist"
-    },
-    {
-      "time": "03:00",
-      "temp": "69",
-      "dewpoint": "66",
-      "rh": "89",
-      "windDir": "SW",
-      "windSpeed": "2",
       "precip": "0.00",
       "visibility": "1.8",
       "condition": "Mist"
@@ -235,5 +235,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-17T12:07:52.131Z"
+  "updated": "2026-07-17T14:42:23.011Z"
 }

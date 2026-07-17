@@ -511,7 +511,12 @@ function cornWagonCarryForward(prevSpecials, nowMs) {
 // run, nothing persists between runs. Each item: { title, day (weekday name),
 // time ("HH:MM" 24h ET), description?, link?, price?, kidFriendly?,
 // benefits? (['Free Food', …] — perk badges + the Marauder free-food filter),
-// perkFoodIcon? (glyph replacing 🍕 on this event's Free Food badge) }.
+// perkFoodIcon? (glyph replacing 🍕 on this event's Free Food badge),
+// expandCount? / expandDays? (per-item widening of the default
+// next-3-within-28-days window — a series that should list EVERY upcoming
+// date sets these high, e.g. 60/365, and the call-site activeRanges filter
+// then clips instances to the entry's windows; legacy items without the
+// fields are byte-identical to the old behavior) }.
 // benefits/perkFoodIcon pass through sanitized via eventPerkFields (below).
 // Calendar iteration is done in pure date arithmetic at UTC noon (DST-free),
 // then each instance's ET wall-clock is converted to a true instant via
@@ -535,8 +540,15 @@ function expandRecurringEvents(recArr, nowMs, count = 3) {
             console.log(`  ⚠️ recurringEvents: skipping malformed entry "${rec.title || '?'}" (day="${rec.day}", time="${rec.time}")`);
             continue;
         }
+        // Per-item expansion overrides (2026-07-17, for Jesus Dogs): clamped,
+        // and garbage values fall back to the defaults so a typo can't flood
+        // or zero a series.
+        const capN = (rec.expandCount != null && Number.isFinite(+rec.expandCount))
+            ? Math.max(1, Math.min(60, Math.trunc(+rec.expandCount))) : count;
+        const horizonN = (rec.expandDays != null && Number.isFinite(+rec.expandDays))
+            ? Math.max(7, Math.min(366, Math.trunc(+rec.expandDays))) : 28;
         let found = 0;
-        for (let i = 0; i < 28 && found < count; i++) {
+        for (let i = 0; i < horizonN && found < capN; i++) {
             const dUtcNoon = new Date(Date.UTC(ty, tm - 1, td + i, 12));
             if (dUtcNoon.getUTCDay() !== wantDay) continue;
             const dayStr = dUtcNoon.toISOString().slice(0, 10);
@@ -772,13 +784,20 @@ async function runScraper() {
             const muRes = await fetch('https://snowball.millersville.edu/~cws/current.xml', { headers: baseHeaders });
             if (muRes.ok) {
                 const muXml = await muRes.text();
-                const gx = (tag) => { const m = muXml.match(new RegExp(`<${tag}>([^<]+)</${tag}>`, 'i')); return m ? m[1].trim() : null; };
+                // Sentinel guard (2026-07-17): the station XML serializes sensor
+                // gaps as literal TEXT ("null", also seen "Missing" on the CWS
+                // climo pages) — a truthy string that sails past every JS
+                // null-check and shipped `wind: "2 mph null"` onto the
+                // current-conditions card. Map those to a real null so the
+                // existing guards work; a gapped temp now correctly falls
+                // through to the Open-Meteo fallback instead of "null°F".
+                const gx = (tag) => { const m = muXml.match(new RegExp(`<${tag}>([^<]+)</${tag}>`, 'i')); const v = m ? m[1].trim() : null; return v && !/^(null|missing|n\/?a|--?)$/i.test(v) ? v : null; };
                 muTemp = gx('temp');
                 muHumidity = gx('humidity');
                 muWindDir = gx('wind_direction');
                 muWindSpeed = gx('wind_speed');
                 muUpdate = gx('update');
-                console.log(`  ✅ MU Station: ${muTemp}°F, Wind ${muWindSpeed} mph ${muWindDir}, Humidity ${muHumidity}%`);
+                console.log(`  ✅ MU Station: ${muTemp}°F, Wind ${muWindSpeed ? `${muWindSpeed} mph ${muWindDir || ''}`.trim() : 'Calm'}, Humidity ${muHumidity}%`);
             }
         } catch (e) { console.log(`  ⚠️ MU Station unavailable: ${e.message}`); }
 
@@ -3761,7 +3780,7 @@ async function runScraper() {
             if (arGate && !arClean.length) console.log(`  ⚠️ ${entry.name}: activeRanges present but no valid {from,to} ranges — standing content treated as inactive`);
             const activeOn = (d) => !arGate || arClean.some(r => d >= r.from && d <= r.to);
             const standingActive = activeOn(deriveDayET(Date.now()));
-            if (arGate && arClean.length && !standingActive) console.log(`  ⏭️  ${entry.name}: outside active ranges today — standing specials skipped (dated events still emit)`);
+            if (arGate && arClean.length && !standingActive) console.log(`  ⏭️  ${entry.name}: outside active ranges today — standing specials skipped (in-window + dated events still emit)`);
 
             if (standingActive) {
                 if (pl.daily) entry.daily = pl.daily;

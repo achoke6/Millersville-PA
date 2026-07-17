@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-17T05:46:17.333Z",
-  "totalEvents": 681,
+  "generatedAt": "2026-07-17T08:08:09.249Z",
+  "totalEvents": 640,
   "withDescription": 266,
   "withImage": 111,
   "familyFriendly": 41,
@@ -14,7 +14,7 @@
     "vfw": 5,
     "phantomPower": 13,
     "community": 21,
-    "manor": 41,
+    "manor": 0,
     "raneyCellars": 3,
     "muHudlBroadcasts": 0
   },
@@ -41,17 +41,14 @@
       "latest": "2026-09-11T17:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-07-17T00:00:00.000Z",
+      "earliest": "2026-07-17T23:00:00.000Z",
       "latest": "2026-09-18T00:00:00.000Z"
     },
     "community": {
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-07-29T12:30:00.000Z",
-      "latest": "2027-07-07T23:00:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-07-09T21:00:00.000Z",
       "latest": "2026-07-23T20:00:00.000Z"
@@ -87,10 +84,7 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 42
     },
-    "manor": {
-      "newest": "2027-07-07",
-      "daysSinceMoved": 10
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-07-23",
       "daysSinceMoved": 9
@@ -116,9 +110,16 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-17T05:44:46.618Z"
+    "lastSyncAt": "2026-07-17T08:06:50.620Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Ben Nichols w. Cory Branan|2026-08-20T00:00:00.000Z",
+      "firstSeenAt": "2026-07-17T08:08:09.247Z",
+      "title": "Ben Nichols w. Cory Branan",
+      "source": "Other",
+      "date": "2026-08-20T00:00:00.000Z"
+    },
     {
       "key": "Academic Convocation|2026-08-21T08:30:00",
       "firstSeenAt": "2026-07-16T22:03:55.723Z",
@@ -181,14 +182,7 @@
       "title": "Girls Varsity Field Hockey vs Wilson High School (West Lawn)",
       "source": "PM",
       "date": "2026-08-22T19:10:00.000Z"
-    },
-    {
-      "key": "Homecoming 2026 - Mentoring Educators for Tomorrow Scholastic Book Fair|2026-10-17T10:00:00",
-      "firstSeenAt": "2026-07-16T17:46:57.499Z",
-      "title": "Homecoming 2026 - Mentoring Educators for Tomorrow Scholastic Book Fair",
-      "source": "MU",
-      "date": "2026-10-17T10:00:00"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

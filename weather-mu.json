@@ -126,7 +126,74 @@
       }
     ]
   },
-  "observations": [],
+  "observations": [
+    {
+      "time": "22:00",
+      "temp": "84",
+      "dewpoint": "62",
+      "rh": "47",
+      "windDir": "NNW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "2.1",
+      "condition": "Mist"
+    },
+    {
+      "time": "21:00",
+      "temp": "85",
+      "dewpoint": "63",
+      "rh": "47",
+      "windDir": "N",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "2.2",
+      "condition": "Mist"
+    },
+    {
+      "time": "20:00",
+      "temp": "88",
+      "dewpoint": "68",
+      "rh": "52",
+      "windDir": "N",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "3.0",
+      "condition": "Mist"
+    },
+    {
+      "time": "19:00",
+      "temp": "90",
+      "dewpoint": "68",
+      "rh": "48",
+      "windDir": "NW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "3.8",
+      "condition": "None"
+    },
+    {
+      "time": "18:00",
+      "temp": "92",
+      "dewpoint": "67",
+      "rh": "43",
+      "windDir": "NW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "4.4",
+      "condition": "None"
+    },
+    {
+      "time": "17:00",
+      "temp": "94",
+      "dewpoint": "67",
+      "rh": "42",
+      "windDir": "WNW",
+      "windSpeed": "6",
+      "precip": "0.00",
+      "visibility": "5.5",
+      "condition": "None"
+    }
+  ],
   "discussion": {
     "headline": "nother heatwave to scorch the mid-atlantic states this week",
     "dateLine": "1:00 p.m. Tuesday, July 14, 2026",
@@ -168,5 +235,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-17T00:01:45.803Z"
+  "updated": "2026-07-17T02:57:09.241Z"
 }

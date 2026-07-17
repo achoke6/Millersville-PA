@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-17T08:08:09.249Z",
-  "totalEvents": 640,
+  "generatedAt": "2026-07-17T10:46:56.379Z",
+  "totalEvents": 681,
   "withDescription": 266,
   "withImage": 111,
   "familyFriendly": 41,
@@ -14,7 +14,7 @@
     "vfw": 5,
     "phantomPower": 13,
     "community": 21,
-    "manor": 0,
+    "manor": 41,
     "raneyCellars": 3,
     "muHudlBroadcasts": 0
   },
@@ -48,7 +48,10 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-07-29T12:30:00.000Z",
+      "latest": "2027-07-07T23:00:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-07-09T21:00:00.000Z",
       "latest": "2026-07-23T20:00:00.000Z"
@@ -84,7 +87,10 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 42
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-07-07",
+      "daysSinceMoved": 10
+    },
     "raneyCellars": {
       "newest": "2026-07-23",
       "daysSinceMoved": 9
@@ -110,79 +116,79 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-17T08:06:50.620Z"
+    "lastSyncAt": "2026-07-17T10:45:21.960Z"
   },
   "recentlyAdded": [
     {
-      "key": "Ben Nichols w. Cory Branan|2026-08-20T00:00:00.000Z",
-      "firstSeenAt": "2026-07-17T08:08:09.247Z",
-      "title": "Ben Nichols w. Cory Branan",
-      "source": "Other",
-      "date": "2026-08-20T00:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
+      "firstSeenAt": "2026-07-17T10:46:56.377Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-07-29T12:30:00.000Z"
     },
     {
-      "key": "Academic Convocation|2026-08-21T08:30:00",
-      "firstSeenAt": "2026-07-16T22:03:55.723Z",
-      "title": "Academic Convocation",
-      "source": "MU",
-      "date": "2026-08-21T08:30:00"
+      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
+      "firstSeenAt": "2026-07-17T10:46:56.377Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-08-03T23:00:00.000Z"
     },
     {
-      "key": "Candlelighting Ceremony|2026-08-21T19:30:00",
-      "firstSeenAt": "2026-07-16T22:03:55.723Z",
-      "title": "Candlelighting Ceremony",
-      "source": "MU",
-      "date": "2026-08-21T19:30:00"
+      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
+      "firstSeenAt": "2026-07-17T10:46:56.377Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-08-05T23:00:00.000Z"
     },
     {
-      "key": "Annual Candle Lighting Ceremony|2026-08-21T23:30:00.000Z",
-      "firstSeenAt": "2026-07-16T22:03:55.723Z",
-      "title": "Annual Candle Lighting Ceremony",
-      "source": "MU",
-      "date": "2026-08-21T23:30:00.000Z"
+      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
+      "firstSeenAt": "2026-07-17T10:46:56.377Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-08-10T23:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Tennis vs East Stroudsburg|2027-04-09T17:00:00.000Z",
-      "firstSeenAt": "2026-07-16T22:03:55.723Z",
-      "title": "Millersville University Women's Tennis vs East Stroudsburg",
-      "source": "MU",
-      "date": "2027-04-09T17:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
+      "firstSeenAt": "2026-07-17T10:46:56.377Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-08-26T12:30:00.000Z"
     },
     {
-      "key": "Summer Welcome Session|2026-07-24T09:00:00",
-      "firstSeenAt": "2026-07-16T20:03:20.529Z",
-      "title": "Summer Welcome Session",
-      "source": "MU",
-      "date": "2026-07-24T09:00:00"
+      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-07-17T10:46:56.377Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-09-02T23:00:00.000Z"
     },
     {
-      "key": "Girls Varsity Field Hockey vs Palmyra Area High School|2026-08-22T15:50:00.000Z",
-      "firstSeenAt": "2026-07-16T17:46:57.499Z",
-      "title": "Girls Varsity Field Hockey vs Palmyra Area High School",
-      "source": "PM",
-      "date": "2026-08-22T15:50:00.000Z"
+      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
+      "firstSeenAt": "2026-07-17T10:46:56.377Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-08T23:00:00.000Z"
     },
     {
-      "key": "Girls Varsity Field Hockey vs Central Bucks West High School|2026-08-22T16:40:00.000Z",
-      "firstSeenAt": "2026-07-16T17:46:57.499Z",
-      "title": "Girls Varsity Field Hockey vs Central Bucks West High School",
-      "source": "PM",
-      "date": "2026-08-22T16:40:00.000Z"
+      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
+      "firstSeenAt": "2026-07-17T10:46:56.377Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-09-14T23:00:00.000Z"
     },
     {
-      "key": "Girls Varsity Field Hockey vs Owen J Roberts|2026-08-22T17:30:00.000Z",
-      "firstSeenAt": "2026-07-16T17:46:57.499Z",
-      "title": "Girls Varsity Field Hockey vs Owen J Roberts",
-      "source": "PM",
-      "date": "2026-08-22T17:30:00.000Z"
+      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-07-17T10:46:56.377Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-09-30T12:30:00.000Z"
     },
     {
-      "key": "Girls Varsity Field Hockey vs Wilson High School (West Lawn)|2026-08-22T19:10:00.000Z",
-      "firstSeenAt": "2026-07-16T17:46:57.499Z",
-      "title": "Girls Varsity Field Hockey vs Wilson High School (West Lawn)",
-      "source": "PM",
-      "date": "2026-08-22T19:10:00.000Z"
+      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
+      "firstSeenAt": "2026-07-17T10:46:56.377Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-10-05T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 41
 }

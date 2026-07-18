@@ -128,6 +128,39 @@
   },
   "observations": [
     {
+      "time": "01:00",
+      "temp": "67",
+      "dewpoint": "65",
+      "rh": "96",
+      "windDir": "WSW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "3.2",
+      "condition": "None"
+    },
+    {
+      "time": "00:00",
+      "temp": "68",
+      "dewpoint": "66",
+      "rh": "95",
+      "windDir": "SSW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "3.3",
+      "condition": "None"
+    },
+    {
+      "time": "23:00",
+      "temp": "70",
+      "dewpoint": "67",
+      "rh": "90",
+      "windDir": "SW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "3.6",
+      "condition": "None"
+    },
+    {
       "time": "22:00",
       "temp": "71",
       "dewpoint": "67",
@@ -158,39 +191,6 @@
       "windSpeed": "2",
       "precip": "0.00",
       "visibility": "4.4",
-      "condition": "None"
-    },
-    {
-      "time": "19:00",
-      "temp": "83",
-      "dewpoint": "58",
-      "rh": "43",
-      "windDir": "W",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "4.3",
-      "condition": "None"
-    },
-    {
-      "time": "18:00",
-      "temp": "84",
-      "dewpoint": "59",
-      "rh": "43",
-      "windDir": "WNW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "4.1",
-      "condition": "None"
-    },
-    {
-      "time": "17:00",
-      "temp": "85",
-      "dewpoint": "58",
-      "rh": "40",
-      "windDir": "W",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "3.9",
       "condition": "None"
     }
   ],
@@ -372,6 +372,17 @@
         "windSpeed": "16",
         "windTime": "14:03",
         "rain": "0.00"
+      },
+      {
+        "date": "07/17",
+        "max": "87",
+        "maxTime": "15:44",
+        "min": "66",
+        "minTime": "06:05",
+        "windDir": "328",
+        "windSpeed": "10",
+        "windTime": "16:25",
+        "rain": "0.00"
       }
     ],
     "totalRain": "2.76",
@@ -422,5 +433,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-18T02:13:55.554Z"
+  "updated": "2026-07-18T05:23:42.402Z"
 }

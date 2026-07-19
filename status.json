@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-07-19T05:51:57.414Z",
-  "totalEvents": 711,
+  "generatedAt": "2026-07-19T08:14:54.099Z",
+  "totalEvents": 710,
   "withDescription": 296,
-  "withImage": 111,
+  "withImage": 110,
   "familyFriendly": 41,
   "eventsToday": 1,
   "sources": {
@@ -12,7 +12,7 @@
     "pennManor": 83,
     "borough": 0,
     "vfw": 5,
-    "phantomPower": 13,
+    "phantomPower": 12,
     "community": 53,
     "manor": 41,
     "raneyCellars": 3,
@@ -116,16 +116,9 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-19T05:50:27.222Z"
+    "lastSyncAt": "2026-07-19T08:13:24.788Z"
   },
   "recentlyAdded": [
-    {
-      "key": "Doom Scroll w. Hans Gruber & The Die Hards|2026-08-27T23:00:00.000Z",
-      "firstSeenAt": "2026-07-19T05:51:57.412Z",
-      "title": "Doom Scroll w. Hans Gruber & The Die Hards",
-      "source": "Other",
-      "date": "2026-08-27T23:00:00.000Z"
-    },
     {
       "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
       "firstSeenAt": "2026-07-18T23:53:50.672Z",
@@ -188,7 +181,14 @@
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2026-09-30T12:30:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
+      "firstSeenAt": "2026-07-18T23:53:50.672Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-10-05T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 0
 }

@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-19T02:32:25.783Z",
-  "totalEvents": 710,
+  "generatedAt": "2026-07-19T05:51:57.414Z",
+  "totalEvents": 711,
   "withDescription": 296,
-  "withImage": 110,
+  "withImage": 111,
   "familyFriendly": 41,
-  "eventsToday": 3,
+  "eventsToday": 1,
   "sources": {
     "muAthletics": 238,
     "muCalendar": 94,
@@ -12,7 +12,7 @@
     "pennManor": 83,
     "borough": 0,
     "vfw": 5,
-    "phantomPower": 12,
+    "phantomPower": 13,
     "community": 53,
     "manor": 41,
     "raneyCellars": 3,
@@ -60,40 +60,40 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-01",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 11
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 44
+      "daysSinceMoved": 45
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 44
+      "daysSinceMoved": 45
     },
     "pennManor": {
       "newest": "2026-09-21",
-      "daysSinceMoved": 24
+      "daysSinceMoved": 25
     },
     "borough": null,
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 44
+      "daysSinceMoved": 45
     },
     "phantomPower": {
       "newest": "2026-09-18",
-      "daysSinceMoved": 23
+      "daysSinceMoved": 24
     },
     "community": {
       "newest": "2027-05-14",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "manor": {
       "newest": "2027-07-07",
-      "daysSinceMoved": 11
+      "daysSinceMoved": 12
     },
     "raneyCellars": {
       "newest": "2026-07-23",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 11
     }
   },
   "sports": {
@@ -116,9 +116,16 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-19T02:31:09.712Z"
+    "lastSyncAt": "2026-07-19T05:50:27.222Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Doom Scroll w. Hans Gruber & The Die Hards|2026-08-27T23:00:00.000Z",
+      "firstSeenAt": "2026-07-19T05:51:57.412Z",
+      "title": "Doom Scroll w. Hans Gruber & The Die Hards",
+      "source": "Other",
+      "date": "2026-08-27T23:00:00.000Z"
+    },
     {
       "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
       "firstSeenAt": "2026-07-18T23:53:50.672Z",
@@ -181,14 +188,7 @@
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2026-09-30T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
-      "firstSeenAt": "2026-07-18T23:53:50.672Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-10-05T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

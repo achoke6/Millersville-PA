@@ -1,29 +1,8 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Friday, July 17, 2026 at 12:01 PM (Kyle Elliott, Meteorologist)",
-    "periods": [
-      {
-        "period": "This afternoon",
-        "text": "Cooler with hazy sun and some clouds; poor air quality from wildfire smoke. High: 84-88"
-      },
-      {
-        "period": "Tonight",
-        "text": "Warm with increasing clouds; reduced air quality from wildfire smoke. Low: 68-72"
-      },
-      {
-        "period": "Saturday",
-        "text": "Mostly cloudy and humid with showers and scattered severe thunderstorms. High: 84-88"
-      },
-      {
-        "period": "Saturday Night",
-        "text": "Warm and muggy with decreasing clouds; evening showers and thunderstorms. Low: 68-72"
-      },
-      {
-        "period": "Sunday",
-        "text": "Mostly sunny, cooler and less humid with a refreshing breeze. High: 80-84"
-      }
-    ]
+    "issued": "",
+    "periods": []
   },
   "sevenDay": {
     "issued": "Friday, July 17, 2026 at 09:40 AM (Kyle Elliott)",
@@ -128,6 +107,28 @@
   },
   "observations": [
     {
+      "time": "13:00",
+      "temp": "81",
+      "dewpoint": "62",
+      "rh": "53",
+      "windDir": "N",
+      "windSpeed": "8",
+      "precip": "0.00",
+      "visibility": "8.8",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "78",
+      "dewpoint": "62",
+      "rh": "57",
+      "windDir": "N",
+      "windSpeed": "8",
+      "precip": "0.00",
+      "visibility": "8.5",
+      "condition": "None"
+    },
+    {
       "time": "11:00",
       "temp": "79",
       "dewpoint": "63",
@@ -169,28 +170,6 @@
       "windSpeed": "5",
       "precip": "0.00",
       "visibility": "8.4",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "71",
-      "dewpoint": "66",
-      "rh": "85",
-      "windDir": "WNW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "8.7",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "70",
-      "dewpoint": "66",
-      "rh": "88",
-      "windDir": "NW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "9.5",
       "condition": "None"
     }
   ],
@@ -444,5 +423,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-19T15:56:06.705Z"
+  "updated": "2026-07-19T17:02:12.833Z"
 }

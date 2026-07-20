@@ -11,11 +11,11 @@
   },
   {
     "name": "ADAPT",
-    "category": "Educational Program",
+    "category": "Service",
     "categories": [
-      "Educational Program",
-      "Movie or Film",
-      "Performance",
+      "Service",
+      "Competition",
+      "Fundraiser",
       "Social",
       "Tabling"
     ],
@@ -946,8 +946,10 @@
   },
   {
     "name": "Honors College Student Association",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "HCSA",
     "id": ""
   },

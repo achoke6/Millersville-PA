@@ -5,6 +5,15 @@ on:
   push:
     branches: [ main ]
   workflow_dispatch:
+# Serialize runs: the hourly cron and a push-triggered run can otherwise
+# overlap, and origin advancing mid-run sends the commit step down its
+# merge-fallback path against another run's data (2026-07-20: an
+# overlapping pair shipped a stale events.json over fresh Borough data).
+# Queue instead of cancel — cancelling mid-`mirror --delete` could leave
+# a partial deploy on DreamHost.
+concurrency:
+  group: deploy
+  cancel-in-progress: false
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -184,7 +193,7 @@ jobs:
             git pull --rebase origin main --strategy-option theirs || {
               echo "Rebase conflict — resolving with ours (freshly scraped data wins)"
               git rebase --abort 2>/dev/null || true
-              git pull origin main --no-rebase --strategy-option theirs
+              git pull origin main --no-rebase --strategy-option ours
               git add *.json 2>/dev/null || true
               git diff --staged --quiet || git commit -m "System: Auto-syncing Community Data (merge)"
             }

@@ -298,9 +298,7 @@ async function render() {
     // AUTO-RECOVERS: the moment the source produces events again, normal
     // median comparison resumes untouched. Remove an entry once its feed
     // has been back for good.
-    const KNOWN_OUTAGES = {
-        borough: 'known outage — borough retired its calendar feed (2026-07-13); Borough events publish via the blog task + candidates sheet'
-    };
+    const KNOWN_OUTAGES = {};
     const degraded = [];
     const knownOutages = [];
     const sourceRanges = status.sourceDateRanges || {};

@@ -2954,7 +2954,7 @@ async function runScraper() {
     try {
         console.log("📡 Fetching Borough Calendar...");
         const boroughData = await ical.async.fromURL(
-            'https://calendar.google.com/calendar/ical/millersville%40millersvilleborough.org/public/basic.ics',
+            'https://calendar.google.com/calendar/ical/millersvilleborough%40gmail.com/public/basic.ics',
             { headers: baseHeaders }
         );
         let boroughCount = 0;

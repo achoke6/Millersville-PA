@@ -1,10 +1,10 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Monday, July 20, 2026 at 08:49 AM (Kyle Elliott, Meteorologist)",
+    "issued": "Monday, July 20, 2026 at 11:30 AM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "Today",
+        "period": "This afternoon",
         "text": "Mostly sunny and beautiful with low humidity. High: 82-86"
       },
       {
@@ -126,74 +126,7 @@
       }
     ]
   },
-  "observations": [
-    {
-      "time": "11:00",
-      "temp": "78",
-      "dewpoint": "52",
-      "rh": "41",
-      "windDir": "E",
-      "windSpeed": "6",
-      "precip": "0.00",
-      "visibility": "10.7",
-      "condition": "None"
-    },
-    {
-      "time": "10:00",
-      "temp": "75",
-      "dewpoint": "56",
-      "rh": "51",
-      "windDir": "SSW",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "09:00",
-      "temp": "70",
-      "dewpoint": "53",
-      "rh": "55",
-      "windDir": "ENE",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "11.4",
-      "condition": "None"
-    },
-    {
-      "time": "08:00",
-      "temp": "67",
-      "dewpoint": "57",
-      "rh": "69",
-      "windDir": "E",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "10.4",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "58",
-      "dewpoint": "58",
-      "rh": "97",
-      "windDir": "SSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "7.9",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "57",
-      "dewpoint": "57",
-      "rh": "98",
-      "windDir": "SSW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "6.4",
-      "condition": "None"
-    }
-  ],
+  "observations": [],
   "dailySummary": {
     "monthLabel": "July 2026",
     "days": [
@@ -426,6 +359,13 @@
   },
   "videos": [
     {
+      "title": "Short Term Forecast 07/20/2026",
+      "videoId": "1qg0Jw1ygKE",
+      "url": "https://www.youtube.com/watch?v=1qg0Jw1ygKE",
+      "published": "2026-07-20T15:33:12+00:00",
+      "thumbnail": "https://i2.ytimg.com/vi/1qg0Jw1ygKE/hqdefault.jpg"
+    },
+    {
       "title": "Medium Range Forecast 07/20/2026",
       "videoId": "8n_pOf2TEYw",
       "url": "https://www.youtube.com/watch?v=8n_pOf2TEYw",
@@ -445,15 +385,8 @@
       "url": "https://www.youtube.com/watch?v=8mDhkhef3BM",
       "published": "2026-07-14T14:42:59+00:00",
       "thumbnail": "https://i1.ytimg.com/vi/8mDhkhef3BM/hqdefault.jpg"
-    },
-    {
-      "title": "Medium Range Forecast 07/06/2026",
-      "videoId": "HhKufa-__gI",
-      "url": "https://www.youtube.com/watch?v=HhKufa-__gI",
-      "published": "2026-07-06T18:09:24+00:00",
-      "thumbnail": "https://i1.ytimg.com/vi/HhKufa-__gI/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-20T15:10:40.435Z"
+  "updated": "2026-07-20T18:00:53.633Z"
 }

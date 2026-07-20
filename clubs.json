@@ -11,11 +11,11 @@
   },
   {
     "name": "ADAPT",
-    "category": "Educational Program",
+    "category": "Service",
     "categories": [
-      "Educational Program",
-      "Movie or Film",
-      "Performance",
+      "Service",
+      "Competition",
+      "Fundraiser",
       "Social",
       "Tabling"
     ],
@@ -636,9 +636,10 @@
   },
   {
     "name": "Cultural Greek Council",
-    "category": "Educational Program",
+    "category": "Service",
     "categories": [
-      "Educational Program"
+      "Service",
+      "Social"
     ],
     "shortName": "CGC",
     "id": ""
@@ -766,13 +767,13 @@
   },
   {
     "name": "Equestrian Club",
-    "category": "Sports and Leisure",
+    "category": "Service",
     "categories": [
-      "Sports and Leisure",
+      "Service",
       "Meeting"
     ],
-    "shortName": "Equestrian",
-    "id": "equestrian"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Expressions Dance",
@@ -945,8 +946,10 @@
   },
   {
     "name": "Honors College Student Association",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "HCSA",
     "id": ""
   },
@@ -1776,7 +1779,7 @@
     "id": ""
   },
   {
-    "name": "Student Giving Committee",
+    "name": "Student Giving Network",
     "category": "",
     "categories": [],
     "shortName": "",

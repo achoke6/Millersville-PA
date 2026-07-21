@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-21T13:59:52.120Z",
-  "totalEvents": 816,
+  "generatedAt": "2026-07-21T15:04:32.766Z",
+  "totalEvents": 815,
   "withDescription": 303,
   "withImage": 111,
   "familyFriendly": 41,
@@ -15,7 +15,7 @@
     "phantomPower": 13,
     "community": 53,
     "manor": 41,
-    "raneyCellars": 3,
+    "raneyCellars": 2,
     "muHudlBroadcasts": 0
   },
   "sourceDateRanges": {
@@ -56,8 +56,8 @@
       "latest": "2027-07-07T23:00:00.000Z"
     },
     "raneyCellars": {
-      "earliest": "2026-07-09T21:00:00.000Z",
-      "latest": "2026-07-23T20:00:00.000Z"
+      "earliest": "2026-07-23T20:00:00.000Z",
+      "latest": "2026-07-23T22:00:00.000Z"
     }
   },
   "staleness": {
@@ -122,9 +122,16 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-21T13:58:01.357Z"
+    "lastSyncAt": "2026-07-21T15:02:49.090Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Thurday Trivia 6PM|2026-07-23T22:00:00.000Z",
+      "firstSeenAt": "2026-07-21T15:04:32.764Z",
+      "title": "Thurday Trivia 6PM",
+      "source": "Raney Cellars",
+      "date": "2026-07-23T22:00:00.000Z"
+    },
     {
       "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
       "firstSeenAt": "2026-07-21T10:25:10.038Z",
@@ -187,14 +194,7 @@
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2026-09-30T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
-      "firstSeenAt": "2026-07-21T10:25:10.038Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-10-05T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

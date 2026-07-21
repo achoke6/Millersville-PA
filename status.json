@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-21T07:32:44.894Z",
-  "totalEvents": 775,
+  "generatedAt": "2026-07-21T10:25:10.040Z",
+  "totalEvents": 816,
   "withDescription": 303,
   "withImage": 111,
   "familyFriendly": 41,
@@ -14,7 +14,7 @@
     "vfw": 5,
     "phantomPower": 13,
     "community": 53,
-    "manor": 0,
+    "manor": 41,
     "raneyCellars": 3,
     "muHudlBroadcasts": 0
   },
@@ -51,7 +51,10 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-05-14T02:00:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-07-29T12:30:00.000Z",
+      "latest": "2027-07-07T23:00:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-07-09T21:00:00.000Z",
       "latest": "2026-07-23T20:00:00.000Z"
@@ -90,7 +93,10 @@
       "newest": "2027-05-14",
       "daysSinceMoved": 4
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-07-07",
+      "daysSinceMoved": 14
+    },
     "raneyCellars": {
       "newest": "2026-07-23",
       "daysSinceMoved": 13
@@ -116,79 +122,79 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-21T07:31:33.394Z"
+    "lastSyncAt": "2026-07-21T10:23:32.099Z"
   },
   "recentlyAdded": [
     {
-      "key": "Zoning Hearing Board - Re: 25 Manor Avenue|2026-04-23T22:30:00.000Z",
-      "firstSeenAt": "2026-07-20T19:24:44.683Z",
-      "title": "Zoning Hearing Board - Re: 25 Manor Avenue",
-      "source": "Borough",
-      "date": "2026-04-23T22:30:00.000Z"
+      "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
+      "firstSeenAt": "2026-07-21T10:25:10.038Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-07-29T12:30:00.000Z"
     },
     {
-      "key": "Borough Council Meeting|2026-04-28T23:00:00.000Z",
-      "firstSeenAt": "2026-07-20T19:24:44.683Z",
-      "title": "Borough Council Meeting",
-      "source": "Borough",
-      "date": "2026-04-28T23:00:00.000Z"
+      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
+      "firstSeenAt": "2026-07-21T10:25:10.038Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-08-03T23:00:00.000Z"
     },
     {
-      "key": "Park Commission - Cancelled|2026-05-04T22:00:00.000Z",
-      "firstSeenAt": "2026-07-20T19:24:44.683Z",
-      "title": "Park Commission - Cancelled",
-      "source": "Borough",
-      "date": "2026-05-04T22:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
+      "firstSeenAt": "2026-07-21T10:25:10.038Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-08-05T23:00:00.000Z"
     },
     {
-      "key": "Reserved Plan Review Room|2026-05-05T23:00:00.000Z",
-      "firstSeenAt": "2026-07-20T19:24:44.683Z",
-      "title": "Reserved Plan Review Room",
-      "source": "Borough",
-      "date": "2026-05-05T23:00:00.000Z"
+      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
+      "firstSeenAt": "2026-07-21T10:25:10.038Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-08-10T23:00:00.000Z"
     },
     {
-      "key": "Planning Commission - Cancelled|2026-05-06T22:30:00.000Z",
-      "firstSeenAt": "2026-07-20T19:24:44.683Z",
-      "title": "Planning Commission - Cancelled",
-      "source": "Borough",
-      "date": "2026-05-06T22:30:00.000Z"
+      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
+      "firstSeenAt": "2026-07-21T10:25:10.038Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-08-26T12:30:00.000Z"
     },
     {
-      "key": "Reserve Public Meeting Room|2026-05-09T14:00:00.000Z",
-      "firstSeenAt": "2026-07-20T19:24:44.683Z",
-      "title": "Reserve Public Meeting Room",
-      "source": "Borough",
-      "date": "2026-05-09T14:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-07-21T10:25:10.038Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-09-02T23:00:00.000Z"
     },
     {
-      "key": "Historic Commission - Cancelled|2026-05-11T23:00:00.000Z",
-      "firstSeenAt": "2026-07-20T19:24:44.683Z",
-      "title": "Historic Commission - Cancelled",
-      "source": "Borough",
-      "date": "2026-05-11T23:00:00.000Z"
+      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
+      "firstSeenAt": "2026-07-21T10:25:10.038Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-08T23:00:00.000Z"
     },
     {
-      "key": "Borough Council Meeting|2026-05-12T23:00:00.000Z",
-      "firstSeenAt": "2026-07-20T19:24:44.683Z",
-      "title": "Borough Council Meeting",
-      "source": "Borough",
-      "date": "2026-05-12T23:00:00.000Z"
+      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
+      "firstSeenAt": "2026-07-21T10:25:10.038Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-09-14T23:00:00.000Z"
     },
     {
-      "key": "Civil Service Commission|2026-05-18T23:00:00.000Z",
-      "firstSeenAt": "2026-07-20T19:24:44.683Z",
-      "title": "Civil Service Commission",
-      "source": "Borough",
-      "date": "2026-05-18T23:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-07-21T10:25:10.038Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-09-30T12:30:00.000Z"
     },
     {
-      "key": "Office Closed|2026-05-19T12:00:00.000Z",
-      "firstSeenAt": "2026-07-20T19:24:44.683Z",
-      "title": "Office Closed",
-      "source": "Borough",
-      "date": "2026-05-19T12:00:00.000Z"
+      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
+      "firstSeenAt": "2026-07-21T10:25:10.038Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-10-05T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 41
 }

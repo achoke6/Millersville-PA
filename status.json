@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-07-21T19:20:06.816Z",
-  "totalEvents": 815,
+  "generatedAt": "2026-07-21T19:46:41.638Z",
+  "totalEvents": 816,
   "withDescription": 303,
   "withImage": 111,
   "familyFriendly": 41,
   "eventsToday": 3,
   "sources": {
-    "muAthletics": 240,
+    "muAthletics": 241,
     "muCalendar": 99,
     "muGetInvolved": 171,
     "pennManor": 83,
@@ -103,7 +103,7 @@
     }
   },
   "sports": {
-    "total": 295,
+    "total": 296,
     "scored": 1,
     "wins": 0,
     "losses": 1,
@@ -122,9 +122,16 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-21T19:18:16.729Z"
+    "lastSyncAt": "2026-07-21T19:44:46.630Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Millersville University Women's Cross Country at Paul Short Run|2026-10-02T18:00:00.000Z",
+      "firstSeenAt": "2026-07-21T19:46:41.636Z",
+      "title": "Millersville University Women's Cross Country at Paul Short Run",
+      "source": "MU",
+      "date": "2026-10-02T18:00:00.000Z"
+    },
     {
       "key": "Thurday Trivia 6PM|2026-07-23T22:00:00.000Z",
       "firstSeenAt": "2026-07-21T15:04:32.764Z",
@@ -187,14 +194,7 @@
       "title": "Planning Commission",
       "source": "Manor",
       "date": "2026-09-14T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
-      "firstSeenAt": "2026-07-21T10:25:10.038Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-09-30T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

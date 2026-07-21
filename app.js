@@ -5526,7 +5526,7 @@ window.openHomeSpecialPopup = function(slug){
     if (sp.note) html += `<p class="home-special-note">${sp.note}</p>`;
     const meta = place ? (place.cuisine || place.category || '') : '';
     if (meta) html += `<p style="font-size:0.78rem;color:var(--text-muted);margin:2px 0;">${meta}</p>`;
-    if (place && place.address) html += `<p style="font-size:0.78rem;color:var(--text-muted);margin:2px 0;">📍 ${place.address}</p>`;
+    if (place && place.address) html += `<p style="font-size:0.78rem;color:var(--text-muted);margin:2px 0;">📍 ${place.address}</p>`; { const _ht = placeHoursText(place); if (_ht) html += `<p style="font-size:0.78rem;color:var(--text-muted);margin:2px 0;">🕐 ${_ht}</p>`; }
     if (items.length){
         html += `<p style="font-weight:700;font-size:0.85rem;margin:12px 0 4px;color:var(--navy);">Today's Specials (${dayName}):</p>`;
         html += items.map(i=>`<p class="home-special-item">• ${i}</p>`).join('');
@@ -6340,7 +6340,7 @@ function placesMapPopup(p){
     const q = encodeURIComponent(p.address ? (p.name + ', ' + p.address) : (p.lat + ',' + p.lng));
     let html = `<div class="map-popup"><strong>${p.name}</strong>`;
     if (meta) html += `<div class="map-popup-meta">${meta}</div>`;
-    if (p.address) html += `<div class="map-popup-meta">${p.address}</div>`;
+    if (p.address) html += `<div class="map-popup-meta">${p.address}</div>`; { const _ht = placeHoursText(p); if (_ht) html += `<div class="map-popup-meta">🕐 ${_ht}</div>`; }
     if (p.category === 'Cupboard') html += `<div class="map-popup-meta">🔥 Free groceries today</div>`;
     else if (placeHasSpecialsToday(placeSlug(p))) html += `<div class="map-popup-meta">🔥 Specials today</div>`;
     const evToday = placeEventsToday(p);
@@ -6589,6 +6589,80 @@ function updatePlacesFilterNote(){
 //   • Order: daily → recurring → weekly (matches the old VFW display; the
 //     other legacy entries never had both, so nothing visibly moved).
 // sp.daily is spread-copied so pushes never mutate the shared object.
+// ---- Structured business hours (sheet hours_mon..hours_sun) ---------------
+// Listings may carry .hours = {mon:"11:00-21:00", tue:"closed", ...} emitted
+// by sync-directory.js. Ranges are 24h ET; end "24:00" allowed; end < start
+// means past midnight (spills into the next day); "00:00-24:00" = 24 hours;
+// comma-joined = split hours. A missing day makes NO claim. All "now" math
+// is pinned to America/New_York via Intl so a traveler's device clock can't
+// flip the Open/Closed badge. No .hours (or unparseable) → all of this
+// renders nothing, matching the lat/lng fail-quiet convention.
+const HOURS_DAY_KEYS = ['sun','mon','tue','wed','thu','fri','sat'];   // Date.getDay() order
+function hoursNowET(){
+    try {
+        const parts = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(new Date());
+        const get = t => (parts.find(p => p.type === t) || {}).value || '';
+        const dayIdx = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(get('weekday'));
+        const mins = parseInt(get('hour'), 10) * 60 + parseInt(get('minute'), 10);
+        if (dayIdx >= 0 && isFinite(mins)) return { dayIdx, mins };
+    } catch (e) { /* ancient browser without timeZone support — fall through */ }
+    const d = new Date();
+    return { dayIdx: d.getDay(), mins: d.getHours() * 60 + d.getMinutes() };
+}
+function hoursParseRanges(v){
+    if (!v || v === 'closed') return [];
+    return String(v).split(',').map(s => s.trim()).map(r => {
+        const m = r.match(/^(\d{2}):(\d{2})-(\d{2}):(\d{2})$/);
+        return m ? { start: +m[1]*60 + +m[2], end: +m[3]*60 + +m[4] } : null;
+    }).filter(Boolean);
+}
+function hoursFmtMins(m){
+    m = ((m % 1440) + 1440) % 1440;
+    const h24 = Math.floor(m / 60), mm = m % 60, ap = h24 >= 12 ? 'PM' : 'AM';
+    let h = h24 % 12; if (h === 0) h = 12;
+    return h + (mm ? ':' + String(mm).padStart(2, '0') : '') + ' ' + ap;
+}
+function hoursFmtRanges(v){
+    return hoursParseRanges(v).map(r => hoursFmtMins(r.start) + '–' + hoursFmtMins(r.end)).join(', ');
+}
+// Open-now check. Today's ranges: normal (end>start) span start..end; past-
+// midnight (end<=start) is open from start onward. Yesterday's past-midnight
+// ranges cover the early-morning spillover (Jack's 20:00-02:00 at Sat 1 AM).
+function hoursOpenNow(hours){
+    const now = hoursNowET();
+    const today = hours[HOURS_DAY_KEYS[now.dayIdx]];
+    const yest  = hours[HOURS_DAY_KEYS[(now.dayIdx + 6) % 7]];
+    if (today === undefined && yest === undefined) return null;   // no data for the relevant days
+    for (const r of hoursParseRanges(today)){
+        if (r.end > r.start ? (now.mins >= r.start && now.mins < r.end) : (now.mins >= r.start))
+            return { open: true, until: r.end > r.start ? r.end : r.end + 1440 };
+    }
+    for (const r of hoursParseRanges(yest)){
+        if (r.end <= r.start && now.mins < r.end) return { open: true, until: r.end };
+    }
+    return { open: false };
+}
+// Inner text for the 🕐 line ('' = render nothing). Shared by both card
+// builders and both popup surfaces so status logic lives in ONE place.
+function placeHoursText(p){
+    if (!p || !p.hours || typeof p.hours !== 'object') return '';
+    const st = hoursOpenNow(p.hours);
+    if (!st) return '';
+    const todayVal = p.hours[HOURS_DAY_KEYS[hoursNowET().dayIdx]];
+    const r0 = hoursParseRanges(todayVal || '')[0];
+    if (st.open && r0 && r0.start === 0 && r0.end === 1440)
+        return '<span style="color:#15803d;font-weight:700;">Open 24 hours</span>';
+    if (st.open)
+        return '<span style="color:#15803d;font-weight:700;">Open</span> · until ' + hoursFmtMins(st.until);
+    if (todayVal === 'closed')
+        return '<span style="color:#b91c1c;font-weight:700;">Closed</span> today';
+    if (todayVal === undefined) return '';   // closed per yesterday's spillover, today unknown — say nothing
+    return '<span style="color:#b91c1c;font-weight:700;">Closed</span> · today ' + hoursFmtRanges(todayVal);
+}
+function placeHoursLineHtml(p){
+    const t = placeHoursText(p);
+    return t ? `<p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:4px;">🕐 ${t}</p>` : '';
+}
 const SPECIALS_DAY_IDX = {Monday:0,Tuesday:1,Wednesday:2,Thursday:3,Friday:4,Saturday:5,Sunday:6};
 function placesSpecialsItemsFor(sp, dayName){
     if (!sp) return [];
@@ -6908,7 +6982,7 @@ function buildFoodCard(p, specials, dayName) {
     return `<div class="app-card" data-place="${placeSlug(p)}" style="position:relative;display:flex;flex-direction:column;justify-content:flex-start;">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;"><span class="card-tag">🍴 ${p.cuisine || 'Food & Drink'}</span><span style="display:inline-flex;gap:6px;align-items:center;flex-shrink:0;">${membersBadge}${mbaBadge(p.name)}</span></div>
         <h3 class="card-title" style="margin-top:6px;">${p.name}</h3>
-        ${ratingRow}${addr}
+        ${ratingRow}${addr}${placeHoursLineHtml(p)}
         <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:8px;">${p.description||''}</p>
         ${specialsHtml}${eventsHtml}
         <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:auto;">
@@ -6924,7 +6998,7 @@ function buildServiceCard(p) {
     const icon = catIcons[p.category] || '🏢';
     const mba = mbaBadge(p.name);
     const ratingRow = '';   // star ratings retired with the review system (2026-07)
-    const hours = p.hours ? `<p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:4px;">🕐 ${p.hours}</p>` : '';
+    const hours = placeHoursLineHtml(p);
     const phone = p.phone ? `<a href="tel:${p.phone.replace(/[^+\d]/g,'')}" style="font-weight:600;font-size:0.85rem;color:var(--text);text-decoration:none;">📞 ${p.phone}</a>` : '';
     const site = p.gasLink ? `<a href="${p.gasLink}" target="_blank" class="btn btn-sm btn-outline" style="font-size:0.75rem;">⛽ Prices</a>` :
                  p.link ? `<a href="${p.link}" target="_blank" class="btn btn-sm btn-outline" style="font-size:0.75rem;">🌐 Visit</a>` : '';

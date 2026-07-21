@@ -20,7 +20,7 @@
  * SHEET COLUMNS (header row, exact names, case-insensitive match):
  *   name, active, type, category, cuisine, landlord, address, phone, website,
  *   iosLink, status, onCampus, marauderGold, verified, audience, spotlight,
- *   tagline, logo, description, lat, lng, slug
+ *   tagline, logo, description, lat, lng, slug, hours_mon..hours_sun
  *
  *   active:      non-blank (e.g. "X") = listed; blank = hidden/skipped entirely.
  *                (If the column is absent, all rows are treated as active.)
@@ -38,6 +38,15 @@
  *                service / housing / cupboard listings only when both parse and
  *                fall inside the local sanity box (GEO below) — bad or
  *                out-of-area values are warned and skipped, never written.
+ *   hours_mon..hours_sun: optional per-day business hours (food/service only).
+ *                Per-day cell values: "HH:MM-HH:MM" (24h ET; end "24:00"
+ *                allowed; end < start = past midnight, e.g. "20:00-02:00";
+ *                "00:00-24:00" = open 24 hours), comma-joined ranges for
+ *                split hours ("11:00-14:00,17:00-21:00"), or "closed".
+ *                Blank = unknown → the day is simply omitted from the emitted
+ *                object; a row with no valid days emits no `hours` field at
+ *                all (the frontend renders nothing — fail-quiet like lat/lng).
+ *                Malformed cells are warned + skipped PER DAY, never emitted.
  *
  * USAGE:
  *   DIRECTORY_SHEET_CSV_URL="https://docs.google.com/spreadsheets/d/<ID>/export?format=csv&gid=<GID>" \
@@ -133,6 +142,7 @@ async function main() {
   const seenNames = new Set();
   let warnings = 0;
   let geocoded = 0;
+  let hoursListings = 0;
 
   // lat/lng passthrough: parse + sanity-check the optional coordinate columns.
   // Returns {lat, lng} rounded to 6 dp, or null. A blank pair = silently no
@@ -153,6 +163,32 @@ async function main() {
     }
     geocoded++;
     return { lat: Math.round(lat * 1e6) / 1e6, lng: Math.round(lng * 1e6) / 1e6 };
+  };
+
+  // hours passthrough: optional hours_mon..hours_sun columns (food/service).
+  // Per-day values: "HH:MM-HH:MM" (24h; end 24:00 allowed; end<start = past
+  // midnight), comma-joined for split hours, or "closed". Blank = unknown
+  // (day omitted). Malformed cells are warned + skipped PER DAY, never
+  // emitted — a bad cell must never claim a business is open. Returns an
+  // {mon..sun} object of the valid days, or null when none (no `hours`
+  // field emitted at all, mirroring the coordsFor fail-quiet convention).
+  const HOURS_DAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+  const HOURS_RANGE_RE = /^([01]\d|2[0-3]):[0-5]\d-(([01]\d|2[0-3]):[0-5]\d|24:00)$/;
+  const hoursFor = (row, name) => {
+    const out = {};
+    let any = false;
+    for (const d of HOURS_DAYS) {
+      const v = get(row, 'hours_' + d);
+      if (!v) continue;
+      const parts = v.toLowerCase().split(',').map(s => s.trim()).filter(Boolean);
+      if (parts.length === 1 && parts[0] === 'closed') { out[d] = 'closed'; any = true; continue; }
+      if (parts.length > 0 && parts.every(rg => HOURS_RANGE_RE.test(rg))) { out[d] = parts.join(','); any = true; continue; }
+      console.warn(`  ⚠ bad hours_${d} ("${v}") for ${name} — day skipped`);
+      warnings++;
+    }
+    if (!any) return null;
+    hoursListings++;
+    return out;
   };
 
   for (let r = 1; r < rows.length; r++) {
@@ -186,6 +222,7 @@ async function main() {
       const phone = get(row, 'phone'); if (phone) o.phone = phone;
       if (audience !== 'both') o.audience = audience;
       const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = slugify(get(row, 'slug') || name);
+      const h = hoursFor(row, name); if (h) o.hours = h;
       restaurants.push(o);
     } else if (type === 'service') {
       const o = { name, category: get(row, 'category'), address: get(row, 'address'),
@@ -195,6 +232,7 @@ async function main() {
       if (yes(get(row, 'onCampus'))) o.onCampus = true;
       if (audience !== 'both') o.audience = audience;
       const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = slugify(get(row, 'slug') || name);
+      const h = hoursFor(row, name); if (h) o.hours = h;
       services.push(o);
     } else if (type === 'housing') {
       const o = { name, landlord: get(row, 'landlord'), description: get(row, 'description') };
@@ -269,6 +307,7 @@ async function main() {
   console.log(`  campus-cupboard:  ${cupboard.length ? 'present' : 'none'}`);
   console.log(`  association.json: ${members.length} verified, ${spotlight.length} spotlight`);
   console.log(`  geocoded listings: ${geocoded}`);
+  console.log(`  listings with hours: ${hoursListings}`);
   if (warnings) console.log(`  ⚠ ${warnings} warning(s) above`);
 }
 

@@ -1,16 +1,5 @@
 [
   {
-    "name": "Barley's Barber Salon & Skin Studio",
-    "category": "Beauty/Grooming",
-    "address": "192 Blue Rock Rd, Millersville",
-    "phone": "(717) 872-8242",
-    "description": "Classic barbering and advanced skincare since 1969",
-    "link": "https://www.barleysbarbersalon.com/",
-    "lat": 40.005749,
-    "lng": -76.367537,
-    "slug": "barley-s-barber-salon-skin-studio"
-  },
-  {
     "name": "The Reset Barbershop",
     "category": "Beauty/Grooming",
     "address": "109 W Frederick St, Millersville",
@@ -55,42 +44,6 @@
     "slug": "billie-jean-s-hair-nail-studio"
   },
   {
-    "name": "Millersville University Library",
-    "category": "Education",
-    "address": "9 N George St, Millersville, PA 17551",
-    "phone": "(717) 871-7111",
-    "description": "McNairy Library — study spaces, research, and technology",
-    "link": "https://www.millersville.edu/library/",
-    "onCampus": true,
-    "lat": 39.997999,
-    "lng": -76.354436,
-    "slug": "millersville-university-library"
-  },
-  {
-    "name": "MU Tutoring Center",
-    "category": "Education",
-    "address": "40 Dilworth Rd, Rm. 355, Millersville, PA 17551",
-    "phone": "(717) 871-7222",
-    "description": "Free academic tutoring for MU students",
-    "link": "https://www.millersville.edu/learningcenter/",
-    "onCampus": true,
-    "audience": "marauders",
-    "lat": 40.000308,
-    "lng": -76.357051,
-    "slug": "mu-tutoring-center"
-  },
-  {
-    "name": "Phantom Power",
-    "category": "Entertainment",
-    "address": "121 W Frederick St, Millersville",
-    "phone": "",
-    "description": "Live music venue and event space",
-    "link": "https://www.phantompower.live/",
-    "lat": 39.996503,
-    "lng": -76.359882,
-    "slug": "phantom-power"
-  },
-  {
     "name": "Fulton Bank",
     "category": "Finance",
     "address": "1216 Millersville Pike, Lancaster, PA 17603",
@@ -111,17 +64,6 @@
     "lat": 40.009454,
     "lng": -76.344571,
     "slug": "members-1st-federal-credit-union"
-  },
-  {
-    "name": "Millersville Post Office",
-    "category": "Government",
-    "address": "431 N George St, Millersville",
-    "phone": "(717) 872-5011",
-    "description": "USPS mail, packages, PO boxes, and passport services",
-    "link": "https://tools.usps.com/locations/details/1373168",
-    "lat": 40.006219,
-    "lng": -76.357904,
-    "slug": "millersville-post-office"
   },
   {
     "name": "Millersville Borough Hall",
@@ -157,16 +99,6 @@
     "slug": "millersville-police-department"
   },
   {
-    "name": "Blue Rock Fire and Rescue",
-    "category": "Government",
-    "address": "26 E Charlotte St, Millersville, PA 17551",
-    "phone": "",
-    "description": "Volunteer fire and rescue company serving Millersville Borough and Manor Township",
-    "lat": 40.004888,
-    "lng": -76.356878,
-    "slug": "blue-rock-fire-and-rescue"
-  },
-  {
     "name": "CVS Pharmacy",
     "category": "Health",
     "address": "1278 Millersville Pike, Lancaster, PA 17603",
@@ -176,32 +108,6 @@
     "lat": 40.027037,
     "lng": -76.32734,
     "slug": "cvs-pharmacy"
-  },
-  {
-    "name": "MU Student Health Services",
-    "category": "Health",
-    "address": "40 Dilworth Rd, 2nd Floor Millersville, PA 17551",
-    "phone": "(717) 871-4141",
-    "description": "On-campus health clinic for MU students",
-    "link": "https://www.millersville.edu/healthservices/",
-    "onCampus": true,
-    "audience": "marauders",
-    "lat": 40.000316,
-    "lng": -76.357393,
-    "slug": "mu-student-health-services"
-  },
-  {
-    "name": "MU Counseling & Human Development Center",
-    "category": "Health",
-    "address": "40 Dilworth Rd., 3rd Floor, Millersville, PA 17551",
-    "phone": "(717) 871-7821",
-    "description": "Free confidential counseling for MU students",
-    "link": "https://www.millersville.edu/counsel/counseling-center-overview.php",
-    "onCampus": true,
-    "audience": "marauders",
-    "lat": 40.000316,
-    "lng": -76.357393,
-    "slug": "mu-counseling-human-development-center"
   },
   {
     "name": "Gamber Physical Therapy & Fitness",
@@ -317,17 +223,6 @@
     "slug": "heritage-monuments"
   },
   {
-    "name": "Berry Good Embroidery",
-    "category": "Shopping",
-    "address": "230 Manor Ave, Millersville, PA 17551",
-    "phone": "(412) 551-7636",
-    "description": "Custom embroidery for apparel, gifts, business logos, and team gear",
-    "link": "https://www.berrygoodembroidery.com/",
-    "lat": 40.011288,
-    "lng": -76.353757,
-    "slug": "berry-good-embroidery"
-  },
-  {
     "name": "Student Lodging, Inc.",
     "category": "Student Housing",
     "address": "508 Hillview Ave, Millersville, PA 17551",
@@ -338,16 +233,6 @@
     "lat": 39.992734,
     "lng": -76.359191,
     "slug": "student-lodging-inc"
-  },
-  {
-    "name": "The Mill at Manor Falls",
-    "category": "Venue",
-    "address": "380 Old Blue Rock Rd, Millersville, PA 17551",
-    "phone": "",
-    "description": "Event and wedding venue along the Conestoga in the Millersville area",
-    "lat": 40.008496,
-    "lng": -76.375411,
-    "slug": "mill-at-manor-falls"
   },
   {
     "name": "Dominic's Barbershop",
@@ -392,5 +277,120 @@
     "lat": 40.005181,
     "lng": -76.355133,
     "slug": "loft-pantry"
+  },
+  {
+    "name": "Barley's Barber Salon & Skin Studio",
+    "category": "Beauty/Grooming",
+    "address": "192 Blue Rock Rd, Millersville",
+    "phone": "(717) 872-8242",
+    "description": "Classic barbering and advanced skincare since 1969",
+    "link": "https://www.barleysbarbersalon.com/",
+    "lat": 40.005749,
+    "lng": -76.367537,
+    "slug": "barley-s-barber-salon-skin-studio"
+  },
+  {
+    "name": "Phantom Power",
+    "category": "Entertainment",
+    "address": "121 W Frederick St, Millersville",
+    "phone": "",
+    "description": "Live music venue and event space",
+    "link": "https://www.phantompower.live/",
+    "lat": 39.996503,
+    "lng": -76.359882,
+    "slug": "phantom-power"
+  },
+  {
+    "name": "Blue Rock Fire and Rescue",
+    "category": "Government",
+    "address": "26 E Charlotte St, Millersville, PA 17551",
+    "phone": "",
+    "description": "Volunteer fire and rescue company serving Millersville Borough and Manor Township",
+    "lat": 40.004888,
+    "lng": -76.356878,
+    "slug": "blue-rock-fire-and-rescue"
+  },
+  {
+    "name": "Berry Good Embroidery",
+    "category": "Shopping",
+    "address": "230 Manor Ave, Millersville, PA 17551",
+    "phone": "(412) 551-7636",
+    "description": "Custom embroidery for apparel, gifts, business logos, and team gear",
+    "link": "https://www.berrygoodembroidery.com/",
+    "lat": 40.011288,
+    "lng": -76.353757,
+    "slug": "berry-good-embroidery"
+  },
+  {
+    "name": "The Mill at Manor Falls",
+    "category": "Venue",
+    "address": "380 Old Blue Rock Rd, Millersville, PA 17551",
+    "phone": "",
+    "description": "Event and wedding venue along the Conestoga in the Millersville area",
+    "lat": 40.008496,
+    "lng": -76.375411,
+    "slug": "mill-at-manor-falls"
+  },
+  {
+    "name": "Millersville University Library",
+    "category": "Education",
+    "address": "9 N George St, Millersville, PA 17551",
+    "phone": "(717) 871-7111",
+    "description": "McNairy Library — study spaces, research, and technology",
+    "link": "https://www.millersville.edu/library/",
+    "onCampus": true,
+    "lat": 39.997999,
+    "lng": -76.354436,
+    "slug": "millersville-university-library"
+  },
+  {
+    "name": "MU Tutoring Center",
+    "category": "Education",
+    "address": "40 Dilworth Rd, Rm. 355, Millersville, PA 17551",
+    "phone": "(717) 871-7222",
+    "description": "Free academic tutoring for MU students",
+    "link": "https://www.millersville.edu/learningcenter/",
+    "onCampus": true,
+    "audience": "marauders",
+    "lat": 40.000308,
+    "lng": -76.357051,
+    "slug": "mu-tutoring-center"
+  },
+  {
+    "name": "Millersville Post Office",
+    "category": "Government",
+    "address": "431 N George St, Millersville",
+    "phone": "(717) 872-5011",
+    "description": "USPS mail, packages, PO boxes, and passport services",
+    "link": "https://tools.usps.com/locations/details/1373168",
+    "lat": 40.006219,
+    "lng": -76.357904,
+    "slug": "millersville-post-office"
+  },
+  {
+    "name": "MU Student Health Services",
+    "category": "Health",
+    "address": "40 Dilworth Rd, 2nd Floor Millersville, PA 17551",
+    "phone": "(717) 871-4141",
+    "description": "On-campus health clinic for MU students",
+    "link": "https://www.millersville.edu/healthservices/",
+    "onCampus": true,
+    "audience": "marauders",
+    "lat": 40.000316,
+    "lng": -76.357393,
+    "slug": "mu-student-health-services"
+  },
+  {
+    "name": "MU Counseling & Human Development Center",
+    "category": "Health",
+    "address": "40 Dilworth Rd., 3rd Floor, Millersville, PA 17551",
+    "phone": "(717) 871-7821",
+    "description": "Free confidential counseling for MU students",
+    "link": "https://www.millersville.edu/counsel/counseling-center-overview.php",
+    "onCampus": true,
+    "audience": "marauders",
+    "lat": 40.000316,
+    "lng": -76.357393,
+    "slug": "mu-counseling-human-development-center"
   }
 ]

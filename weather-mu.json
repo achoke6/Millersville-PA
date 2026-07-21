@@ -1,15 +1,15 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Tuesday, July 21, 2026 at 08:38 AM (Kyle Elliott, Meteorologist)",
+    "issued": "Tuesday, July 21, 2026 at 12:51 PM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "Today",
-        "text": "Mostly cloudy and very humid with afternoon showers and severe T-storms. High: 84-88"
+        "period": "This afternoon",
+        "text": "Mostly cloudy and very humid with showers and scattered severe T-storms. High: 86-90"
       },
       {
         "period": "Tonight",
-        "text": "Mainly cloudy and muggy with evening showers and scattered severe T-storms. Low: 66-70"
+        "text": "Decreasing clouds & muggy with evening showers & scattered severe T-storms. Low: 66-70"
       },
       {
         "period": "Wednesday",
@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "13:00",
+      "temp": "87",
+      "dewpoint": "74",
+      "rh": "65",
+      "windDir": "SSW",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "9.3",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "83",
+      "dewpoint": "73",
+      "rh": "73",
+      "windDir": "SW",
+      "windSpeed": "7",
+      "precip": "0.00",
+      "visibility": "9.8",
+      "condition": "None"
+    },
+    {
       "time": "11:00",
       "temp": "80",
       "dewpoint": "74",
@@ -169,28 +191,6 @@
       "windSpeed": "5",
       "precip": "0.00",
       "visibility": "8.1",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "74",
-      "dewpoint": "71",
-      "rh": "91",
-      "windDir": "SSW",
-      "windSpeed": "5",
-      "precip": "0.00",
-      "visibility": "7.3",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "73",
-      "dewpoint": "70",
-      "rh": "90",
-      "windDir": "SW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "7.5",
       "condition": "None"
     }
   ],
@@ -426,9 +426,9 @@
     "yearMinDate": "January 21"
   },
   "discussion": {
-    "headline": "Poor Air Quality Today followed by severe storms on saturday",
-    "dateLine": "3:00 p.m. Friday, July 17, 2026, Update",
-    "excerpt": "The third heatwave of the year scorched the mid-Atlantic States this week, but its intensity and duration both paled in comparison to the early-July scorcher. However, high temperatures still reached the mid 90s in most spots on Wednesday and Thursday, and maximum heat indices topped out between 100-105°F both afternoons. Wednesday's high of 96°F at Millersville University ultimately came up 4°F short of tying the July 15th record high of 100°F from 1997 (see below). …",
+    "headline": "nother round of severe storms today, then quiet and refreshing",
+    "dateLine": "1:00 p.m. Tuesday, July 21, 2026",
+    "excerpt": "The week kicked off on a mostly sunny and pleasant note across northern MD and southeastern PA with high temperatures in the comfortable low-to-mid 80s Monday afternoon. Unfortunately, the tranquil conditions will be replaced by volatile weather and another round of severe storms this afternoon and evening. Much like Saturday, the Storm Prediction Center (SPC) has placed most of PA and the Delmarva Region in an \"enhanced risk\" for severe weather. …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -466,5 +466,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-21T15:02:51.053Z"
+  "updated": "2026-07-21T17:16:30.695Z"
 }

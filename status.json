@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-07-20T18:01:43.054Z",
-  "totalEvents": 716,
-  "withDescription": 302,
+  "generatedAt": "2026-07-21T12:24:50.989Z",
+  "totalEvents": 816,
+  "withDescription": 303,
   "withImage": 111,
   "familyFriendly": 41,
   "eventsToday": 3,
   "sources": {
-    "muAthletics": 238,
+    "muAthletics": 240,
     "muCalendar": 99,
     "muGetInvolved": 171,
     "pennManor": 83,
@@ -14,7 +14,7 @@
     "vfw": 5,
     "phantomPower": 13,
     "community": 53,
-    "manor": 0,
+    "manor": 41,
     "raneyCellars": 3,
     "muHudlBroadcasts": 0
   },
@@ -51,7 +51,10 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-05-14T02:00:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-07-29T12:30:00.000Z",
+      "latest": "2027-07-07T23:00:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-07-09T21:00:00.000Z",
       "latest": "2026-07-23T20:00:00.000Z"
@@ -60,40 +63,43 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-01",
-      "daysSinceMoved": 12
+      "daysSinceMoved": 13
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 46
+      "daysSinceMoved": 47
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 46
+      "daysSinceMoved": 47
     },
     "pennManor": {
       "newest": "2026-09-21",
-      "daysSinceMoved": 26
+      "daysSinceMoved": 27
     },
     "borough": {
       "newest": "2027-07-10",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 46
+      "daysSinceMoved": 47
     },
     "phantomPower": {
       "newest": "2026-09-18",
-      "daysSinceMoved": 25
+      "daysSinceMoved": 26
     },
     "community": {
       "newest": "2027-05-14",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-07-07",
+      "daysSinceMoved": 14
+    },
     "raneyCellars": {
       "newest": "2026-07-23",
-      "daysSinceMoved": 12
+      "daysSinceMoved": 13
     }
   },
   "sports": {
@@ -116,79 +122,79 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-20T18:00:08.532Z"
+    "lastSyncAt": "2026-07-21T12:23:11.378Z"
   },
   "recentlyAdded": [
     {
-      "key": "3 Legacies Wrestling|2026-08-08T17:30:00",
-      "firstSeenAt": "2026-07-20T18:01:43.052Z",
-      "title": "3 Legacies Wrestling",
-      "source": "MU",
-      "date": "2026-08-08T17:30:00"
-    },
-    {
-      "key": "CGC Week: Meet Groove Phi Groove|2026-09-14T19:00:00",
-      "firstSeenAt": "2026-07-20T18:01:43.052Z",
-      "title": "CGC Week: Meet Groove Phi Groove",
-      "source": "MU",
-      "date": "2026-09-14T19:00:00"
-    },
-    {
-      "key": "CGC Week: Meet Sigma Gamma Rho|2026-09-14T19:00:00",
-      "firstSeenAt": "2026-07-20T18:01:43.052Z",
-      "title": "CGC Week: Meet Sigma Gamma Rho",
-      "source": "MU",
-      "date": "2026-09-14T19:00:00"
-    },
-    {
-      "key": "CGC Week: Meet Kappa Alpha Psi|2026-09-15T19:00:00",
-      "firstSeenAt": "2026-07-20T18:01:43.052Z",
-      "title": "CGC Week: Meet Kappa Alpha Psi",
-      "source": "MU",
-      "date": "2026-09-15T19:00:00"
-    },
-    {
-      "key": "CGC Week: Meet Omega Psi Phi Fraternity, Inc|2026-09-16T19:00:00",
-      "firstSeenAt": "2026-07-20T18:01:43.052Z",
-      "title": "CGC Week: Meet Omega Psi Phi Fraternity, Inc",
-      "source": "MU",
-      "date": "2026-09-16T19:00:00"
-    },
-    {
-      "key": "CGC Week: Meet Mu Sigma Upsilon|2026-09-16T20:30:00",
-      "firstSeenAt": "2026-07-20T18:01:43.052Z",
-      "title": "CGC Week: Meet Mu Sigma Upsilon",
-      "source": "MU",
-      "date": "2026-09-16T20:30:00"
-    },
-    {
       "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
-      "firstSeenAt": "2026-07-20T02:52:57.013Z",
+      "firstSeenAt": "2026-07-21T10:25:10.038Z",
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2026-07-29T12:30:00.000Z"
     },
     {
-      "key": "Borough Council Meeting|2026-04-28T23:00:00.000Z",
-      "firstSeenAt": "2026-07-20T18:04:16.058Z",
-      "title": "Borough Council Meeting",
-      "source": "Borough",
-      "date": "2026-04-28T23:00:00.000Z"
+      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
+      "firstSeenAt": "2026-07-21T10:25:10.038Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-08-03T23:00:00.000Z"
     },
     {
-      "key": "Park Commission - Cancelled|2026-05-04T22:00:00.000Z",
-      "firstSeenAt": "2026-07-20T18:04:16.058Z",
-      "title": "Park Commission - Cancelled",
-      "source": "Borough",
-      "date": "2026-05-04T22:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
+      "firstSeenAt": "2026-07-21T10:25:10.038Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-08-05T23:00:00.000Z"
     },
     {
       "key": "Planning Commission|2026-08-10T23:00:00.000Z",
-      "firstSeenAt": "2026-07-20T02:52:57.013Z",
+      "firstSeenAt": "2026-07-21T10:25:10.038Z",
       "title": "Planning Commission",
       "source": "Manor",
       "date": "2026-08-10T23:00:00.000Z"
+    },
+    {
+      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
+      "firstSeenAt": "2026-07-21T10:25:10.038Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-08-26T12:30:00.000Z"
+    },
+    {
+      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-07-21T10:25:10.038Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-09-02T23:00:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
+      "firstSeenAt": "2026-07-21T10:25:10.038Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-08T23:00:00.000Z"
+    },
+    {
+      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
+      "firstSeenAt": "2026-07-21T10:25:10.038Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-09-14T23:00:00.000Z"
+    },
+    {
+      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-07-21T10:25:10.038Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-09-30T12:30:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
+      "firstSeenAt": "2026-07-21T10:25:10.038Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-10-05T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 6
+  "addedLastRun": 0
 }

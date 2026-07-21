@@ -126,7 +126,74 @@
       }
     ]
   },
-  "observations": [],
+  "observations": [
+    {
+      "time": "08:00",
+      "temp": "75",
+      "dewpoint": "72",
+      "rh": "89",
+      "windDir": "SSW",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "8.1",
+      "condition": "None"
+    },
+    {
+      "time": "07:00",
+      "temp": "74",
+      "dewpoint": "71",
+      "rh": "91",
+      "windDir": "SSW",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "7.3",
+      "condition": "None"
+    },
+    {
+      "time": "06:00",
+      "temp": "73",
+      "dewpoint": "70",
+      "rh": "90",
+      "windDir": "SW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "7.5",
+      "condition": "None"
+    },
+    {
+      "time": "05:00",
+      "temp": "72",
+      "dewpoint": "68",
+      "rh": "88",
+      "windDir": "NE",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "7.9",
+      "condition": "None"
+    },
+    {
+      "time": "04:00",
+      "temp": "72",
+      "dewpoint": "67",
+      "rh": "84",
+      "windDir": "SSW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "8.3",
+      "condition": "None"
+    },
+    {
+      "time": "03:00",
+      "temp": "72",
+      "dewpoint": "66",
+      "rh": "82",
+      "windDir": "S",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "8.3",
+      "condition": "None"
+    }
+  ],
   "dailySummary": {
     "monthLabel": "July 2026",
     "days": [
@@ -338,6 +405,17 @@
         "windSpeed": "18",
         "windTime": "14:05",
         "rain": "0.00"
+      },
+      {
+        "date": "07/20",
+        "max": "84",
+        "maxTime": "16:19",
+        "min": "57",
+        "minTime": "06:07",
+        "windDir": "212",
+        "windSpeed": "12",
+        "windTime": "14:57",
+        "rain": "0.00"
       }
     ],
     "totalRain": "2.91",
@@ -388,5 +466,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-20T18:00:10.777Z"
+  "updated": "2026-07-21T12:23:13.461Z"
 }

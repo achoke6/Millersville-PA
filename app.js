@@ -6715,6 +6715,14 @@ function placeHoursDetailsHtml(p, open){
         status = '<span style="color:#b91c1c;font-weight:700;">Closed</span>';
     return `<div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:4px;">🕐 ${status}${placeHoursTableHtml(p)}</div>`;
 }
+// Directory sort rank from open state: open (0) → closed (1) → unknown (2).
+// Places without structured hours rank unknown, so hours-less listings keep
+// their old alphabetical spot at the end of each open-state band.
+function hoursSortRank(p){
+    if (!p || !p.hours || typeof p.hours !== 'object') return 2;
+    const st = hoursOpenNow(p.hours);
+    return st ? (st.open ? 0 : 1) : 2;   // open, closed, unknown
+}
 const SPECIALS_DAY_IDX = {Monday:0,Tuesday:1,Wednesday:2,Thursday:3,Friday:4,Saturday:5,Sunday:6};
 function placesSpecialsItemsFor(sp, dayName){
     if (!sp) return [];
@@ -6929,15 +6937,15 @@ function renderPlaces(){
     // townie here (Directory-specific convention — see placeAudienceVisible).
     filtered = filtered.filter(p => placeAudienceVisible(p));
 
-    // Sort: featured first, then food, then services
-    // Sort: Featured Spotlight buyers first (they paid for prominence), then
-    // featured, then food before services.
-    // Neutral directory order: food before services, then alphabetical.
-    // Spotlight buyers still get an enhanced card (logo, gold border) via
-    // getSpotlight() in the card builders, but are NOT forced to the top —
-    // the directory stays a fair, predictable listing.
+    // Directory order: food before services (outermost, unchanged), then
+    // open → closed → unknown within each section (hoursSortRank — open
+    // places float to the top of their section), then alphabetical. Spotlight
+    // buyers still get an enhanced card (logo, gold border) via getSpotlight()
+    // in the card builders, but are NOT forced to the top — the directory
+    // stays a fair, predictable listing.
     filtered.sort((a,b) =>
         ((a.placeType==='food'?0:1)-(b.placeType==='food'?0:1)) ||
+        (hoursSortRank(a) - hoursSortRank(b)) ||
         a.name.localeCompare(b.name)
     );
 

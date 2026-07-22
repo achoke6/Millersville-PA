@@ -5503,8 +5503,9 @@ window.openHomeSpecialPopup = function(slug){
         sp = { name: '🛒 Campus Cupboard', note: 'Inside The HUB · MU students only' };
         place = { ...cb, name: 'Campus Cupboard', category: 'Cupboard', placeType: 'cupboard',
                   address: cb.address || '121 N George St, Millersville, PA 17551',
-                  link: cb.link || 'https://www.hubmu.org/free-groceries' };
-        items = [cbItems[0]];       // "Open today: <hours>"
+                  link: cb.link || 'https://www.hubmu.org/free-groceries',
+                  hours: cupboardHoursObject() };   // Patch-K line renders 🕐 status + table
+        items = [];                 // hours now render via the table — no bespoke "Open today" item
         goldBlurb = cbItems[1];     // free-grocery description
     }
     if (!sp) return;
@@ -6976,18 +6977,29 @@ function renderPlaces(){
     pc.style.alignItems = 'start';
 }
 
+// Adapter: derive a structured {mon..sun} hours object from the Cupboard's
+// code-driven seasonal schedule (same summer window as buildCampusCupboardItems,
+// which stays the open-today truth for cupboardTodayVisible). Computed at
+// render time so the summer/semester transition flows through automatically.
+function cupboardHoursObject(){
+    const now = new Date();
+    const m = now.getMonth() + 1, d = now.getDate();
+    const isSummer = (m === 5 && d >= 11) || m === 6 || m === 7 || (m === 8 && d < 25);
+    const wk = isSummer ? '09:00-13:00' : '08:00-20:00';
+    return { mon: wk, tue: wk, wed: wk, thu: wk, fri: wk, sat: 'closed', sun: 'closed' };
+}
 // Build the Campus Cupboard card for the Places page. Mirrors the food-card
 // shape (header + meta + action button) but pulls hours from
 // buildCampusCupboardItems for season-aware display.
 function buildCampusCupboardCard(dayName) {
     const items = buildCampusCupboardItems(dayName);
     if (!items) return '';   // closed today (weekend) — hide the card entirely
-    const statusText = items[0];
     return `<div class="app-card" style="border-left:4px solid var(--gold);display:flex;flex-direction:column;justify-content:flex-start;">
         <div class="card-body">
             <div class="card-heading"><span style="font-size:1.5rem;">🛒</span><h3 class="card-title">Campus Cupboard</h3></div>
-            <p class="card-meta">📍 Inside The HUB, 121 N George St · MU students only</p>
-            <p class="card-meta status-open">⏰ ${statusText}</p>
+            <p class="card-meta" style="margin-bottom:4px;">📍 Inside The HUB, 121 N George St</p>
+            <p class="card-meta">MU students only</p>
+            ${placeHoursDetailsHtml({ hours: cupboardHoursObject() }, false)}
             <p style="font-size:0.85rem;margin:8px 0;color:var(--gold-text);font-weight:600;">Free grocery store with fresh produce, dairy, eggs, frozen, canned & dry goods, and hygiene products. Bring student ID.</p>
             <a href="https://www.hubmu.org/free-groceries" target="_blank" rel="noopener" class="btn btn-sm btn-outline" style="font-size:0.78rem;">More info ↗</a>
         </div>
@@ -7016,7 +7028,7 @@ function placeSpecialsSectionHtml(pslug, dayName){
     if(moreItems.length > 0){
         moreHtml = `<button onclick="showGroceryDeals(event)" class="btn btn-sm btn-outline" style="margin-top:6px;font-size:0.75rem;width:100%;text-align:center;">View All ${items.length} Deals</button>`;
     }
-    return `<div class="specials-section">${note}${dateRange}<p style="font-size:0.8rem;font-weight:700;margin-bottom:4px;">${heading}</p>${topItems.map(i=>`<p style="font-size:0.8rem;color:var(--text);margin:2px 0;">• ${i}</p>`).join('')}${moreHtml}</div>`;
+    return `<div class="specials-section">${dateRange}<p style="font-size:0.8rem;font-weight:700;margin-bottom:4px;">${heading}</p>${note}${topItems.map(i=>`<p style="font-size:0.8rem;color:var(--text);margin:2px 0;">• ${i}</p>`).join('')}${moreHtml}</div>`;
 }
 
 function buildFoodCard(p, specials, dayName) {

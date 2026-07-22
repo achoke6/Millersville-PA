@@ -5526,9 +5526,9 @@ window.openHomeSpecialPopup = function(slug){
     const meta = place ? (place.cuisine || place.category || '') : '';
     if (meta) html += `<p style="font-size:0.78rem;color:var(--text-muted);margin:2px 0;">${meta}</p>`;
     if (place && place.address) html += `<p style="font-size:0.78rem;color:var(--text-muted);margin:2px 0;">📍 ${place.address}</p>`; { const _hd = placeHoursDetailsHtml(place, true); if (_hd) html += `<div style="margin:6px 0 0;">${_hd}</div>`; }
-    if (sp.note) html += `<p style="font-size:0.76rem;color:var(--text-muted);font-style:italic;margin:12px 0 0;">${sp.note}</p>`;
     if (items.length){
         html += `<p style="font-weight:700;font-size:0.85rem;margin:12px 0 4px;color:var(--navy);">Today's Specials (${dayName}):</p>`;
+        if (sp.note) html += `<p style="font-size:0.74rem;color:var(--text-muted);font-style:italic;margin:2px 0 6px;">${sp.note}</p>`;
         html += items.map(i=>`<p class="home-special-item">• ${i}</p>`).join('');
     }
     if (goldBlurb) html += `<p style="font-size:0.82rem;font-weight:600;color:var(--gold-text);margin:10px 0 0;">${goldBlurb}</p>`;
@@ -6670,27 +6670,50 @@ function placeHoursLineHtml(p){
 // for that day (makes no claim); '00:00-24:00' reads as Open 24 hours.
 const HOURS_TABLE_ORDER = ['mon','tue','wed','thu','fri','sat','sun'];
 const HOURS_DAY_LABELS = { mon:'Mon', tue:'Tue', wed:'Wed', thu:'Thu', fri:'Fri', sat:'Sat', sun:'Sun' };
+// Compact time for the horizontal table only: 10:30a, 8p, 12p.
+function hoursFmtMinsCompact(m){
+    m = ((m % 1440) + 1440) % 1440;
+    const h24 = Math.floor(m / 60), mm = m % 60, ap = h24 >= 12 ? 'p' : 'a';
+    let h = h24 % 12; if (h === 0) h = 12;
+    return h + (mm ? ':' + String(mm).padStart(2, '0') : '') + ap;
+}
+// Horizontal weekly hours table, Sun→Sat columns, today's column highlighted.
+// Always visible (no disclosure). '—' = no data; split hours stack via <br>.
 function placeHoursTableHtml(p){
     if (!p || !p.hours || typeof p.hours !== 'object') return '';
+    const order = ['sun','mon','tue','wed','thu','fri','sat'];
+    const labels = { sun:'Sun', mon:'Mon', tue:'Tue', wed:'Wed', thu:'Thu', fri:'Fri', sat:'Sat' };
     const todayKey = HOURS_DAY_KEYS[hoursNowET().dayIdx];
-    const rows = HOURS_TABLE_ORDER.map(d => {
+    const hlTh = 'background:var(--gold-soft, rgba(212,175,55,0.16));';
+    const cell = 'padding:3px 4px;text-align:center;border-left:1px solid var(--border);';
+    const head = order.map(d =>
+        `<th style="${cell}font-weight:${d===todayKey?'700':'600'};${d===todayKey?hlTh:''}">${labels[d]}</th>`).join('');
+    const body = order.map(d => {
         const v = p.hours[d];
-        const txt = v === undefined ? '—' : v === 'closed' ? 'Closed' : v === '00:00-24:00' ? 'Open 24 hours' : hoursFmtRanges(v);
-        const hl = d === todayKey ? 'background:var(--gold-soft);font-weight:700;' : '';
-        return `<tr style="${hl}"><td style="padding:2px 12px 2px 6px;white-space:nowrap;">${HOURS_DAY_LABELS[d]}</td><td style="padding:2px 6px 2px 0;">${txt}</td></tr>`;
+        const txt = v === undefined ? '—'
+            : v === 'closed' ? 'Closed'
+            : v === '00:00-24:00' ? '24 hrs'
+            : hoursParseRanges(v).map(r => hoursFmtMinsCompact(r.start) + '–' + hoursFmtMinsCompact(r.end)).join('<br>');
+        return `<td style="${cell}${d===todayKey?hlTh+'font-weight:700;':''}">${txt}</td>`;
     }).join('');
-    return `<table style="border-collapse:collapse;font-size:0.78rem;color:var(--text);margin:4px 0 2px 16px;border:1px solid var(--border);border-radius:var(--radius-sm);">${rows}</table>`;
+    return `<table style="border-collapse:collapse;width:100%;font-size:0.68rem;color:var(--text);margin:4px 0 2px;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;"><tr>${head}</tr><tr>${body}</tr></table>`;
 }
-// Status line + expandable weekly table. Native <details> — no JS, survives
-// innerHTML re-renders. `open` = start expanded (home popup); collapsed on
-// directory cards. Falls back to the plain status line when no table exists.
+// Short status line + always-visible horizontal table. The `open` param is
+// retained for call-site compatibility but no longer changes behavior.
 function placeHoursDetailsHtml(p, open){
-    const status = placeHoursText(p);
-    if (!status) return '';
-    const table = placeHoursTableHtml(p);
-    if (!table) return `<p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:4px;">🕐 ${status}</p>`;
-    return `<details${open ? ' open' : ''} style="font-size:0.8rem;color:var(--text-muted);margin-bottom:4px;">
-        <summary style="cursor:pointer;">🕐 ${status} <span style="font-size:0.68rem;opacity:0.8;">· all hours</span></summary>${table}</details>`;
+    if (!p || !p.hours || typeof p.hours !== 'object') return '';
+    const st = hoursOpenNow(p.hours);
+    if (!st) return '';
+    const todayVal = p.hours[HOURS_DAY_KEYS[hoursNowET().dayIdx]];
+    const r0 = hoursParseRanges(todayVal || '')[0];
+    let status;
+    if (st.open && r0 && r0.start === 0 && r0.end === 1440)
+        status = '<span style="color:#15803d;font-weight:700;">Open 24 hours</span>';
+    else if (st.open)
+        status = '<span style="color:#15803d;font-weight:700;">Open</span> · until ' + hoursFmtMins(st.until);
+    else
+        status = '<span style="color:#b91c1c;font-weight:700;">Closed</span>';
+    return `<div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:4px;">🕐 ${status}${placeHoursTableHtml(p)}</div>`;
 }
 const SPECIALS_DAY_IDX = {Monday:0,Tuesday:1,Wednesday:2,Thursday:3,Friday:4,Saturday:5,Sunday:6};
 function placesSpecialsItemsFor(sp, dayName){

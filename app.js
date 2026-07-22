@@ -5491,7 +5491,6 @@ window.openHomeSpecialPopup = function(slug){
     // a details-only popup, never a throw.
     let place = (allPlaces || []).find(p => placeSlug(p) === slug) || null;
     let items = sp ? placesSpecialsItems(slug, dayName) : [];   // single source of truth (21+ gate lives inside)
-    let goldBlurb = '';   // rendered in readable gold (--gold-text, not decorative --gold)
     // Campus Cupboard -- synthesized: it lives outside allPlaces AND
     // _placesSpecials (window._cupboard + code-driven hours, per the
     // buildCampusCupboardCard static-info convention -- address/link
@@ -5505,8 +5504,7 @@ window.openHomeSpecialPopup = function(slug){
                   address: cb.address || '121 N George St, Millersville, PA 17551',
                   link: cb.link || 'https://www.hubmu.org/free-groceries',
                   hours: cupboardHoursObject() };   // Patch-K line renders 🕐 status + table
-        items = [];                 // hours now render via the table — no bespoke "Open today" item
-        goldBlurb = cbItems[1];     // free-grocery description
+        items = ['Free groceries — ' + cbItems[1]];   // standard Today's-Specials list; cbItems[0] hours line stays dropped — the 🕐 table carries hours (gold blurb retired 2026-07-22)
     }
     if (!sp) return;
     const hasCoords = !!(place && isFinite(place.lat) && isFinite(place.lng));
@@ -5536,7 +5534,6 @@ window.openHomeSpecialPopup = function(slug){
         if (sp.note) html += `<p style="font-size:0.74rem;color:var(--text-muted);font-style:italic;margin:2px 0 6px;">${sp.note}</p>`;
         html += items.map(i=>`<p class="home-special-item">• ${i}</p>`).join('');
     }
-    if (goldBlurb) html += `<p style="font-size:0.82rem;font-weight:600;color:var(--gold-text);margin:10px 0 0;">${goldBlurb}</p>`;
     evToday.slice(0,3).forEach(e => { html += `<p class="home-special-item">📅 ${e.title} · ${formatTime(new Date(e.t))}</p>`; });
     if (evToday.length > 3) html += `<p class="home-special-item" style="color:var(--text-muted);">+${evToday.length-3} more today</p>`;
     const btns = [];
@@ -7004,7 +7001,7 @@ function buildCampusCupboardCard(dayName) {
             <p class="card-meta" style="margin-bottom:4px;">📍 Inside The HUB, 121 N George St</p>
             <p class="card-meta">MU students only</p>
             ${placeHoursDetailsHtml({ hours: cupboardHoursObject() }, false)}
-            <p style="font-size:0.85rem;margin:8px 0;color:var(--gold-text);font-weight:600;">Free grocery store with fresh produce, dairy, eggs, frozen, canned & dry goods, and hygiene products. Bring student ID.</p>
+            <div class="specials-section"><p style="font-size:0.8rem;font-weight:700;margin-bottom:4px;">Today's Specials (${dayName}):</p><p style="font-size:0.8rem;color:var(--text);margin:2px 0;">• Free groceries — ${items[1]}</p></div>
             <a href="https://www.hubmu.org/free-groceries" target="_blank" rel="noopener" class="btn btn-sm btn-outline" style="font-size:0.78rem;">More info ↗</a>
         </div>
     </div>`;

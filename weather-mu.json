@@ -1,49 +1,33 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Tuesday, July 21, 2026 at 12:51 PM (Kyle Elliott, Meteorologist)",
+    "issued": "Wednesday, July 22, 2026 at 08:50 AM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "This afternoon",
-        "text": "Mostly cloudy and very humid with showers and scattered severe T-storms. High: 86-90"
-      },
-      {
-        "period": "Tonight",
-        "text": "Decreasing clouds & muggy with evening showers & scattered severe T-storms. Low: 66-70"
-      },
-      {
-        "period": "Wednesday",
+        "period": "Today",
         "text": "Mostly sunny, breezy and turning less humid with an isolated shower. High: 84-88"
       },
       {
-        "period": "Wednesday Night",
+        "period": "Tonight",
         "text": "Mainly clear and comfortable. Low: 58-62"
       },
       {
         "period": "Thursday",
-        "text": "Sunny, cooler and refreshing with low humidity. High: 76-80"
+        "text": "Sunny, cooler and refreshing with low humidity. High: 78-82"
+      },
+      {
+        "period": "Thursday Night",
+        "text": "Clear and comfortably cool. Low: 54-58"
+      },
+      {
+        "period": "Friday",
+        "text": "Mostly sunny and beautiful with low humidity. High: 80-84"
       }
     ]
   },
   "sevenDay": {
-    "issued": "Tuesday, July 21, 2026 at 09:05 AM (Kyle Elliott)",
+    "issued": "Wednesday, July 22, 2026 at 09:01 AM (Kyle Elliott)",
     "days": [
-      {
-        "period": "Tuesday",
-        "sky": "Mostly Cloudy",
-        "weather": "Severe T-storms",
-        "pop": "90%",
-        "temp": "86",
-        "conf": "5"
-      },
-      {
-        "period": "Tuesday night",
-        "sky": "Mostly Cloudy",
-        "weather": "Severe T-Storms",
-        "pop": "80%",
-        "temp": "68",
-        "conf": "5"
-      },
       {
         "period": "Wednesday",
         "sky": "Mostly Sunny",
@@ -65,7 +49,7 @@
         "sky": "Sunny",
         "weather": "Cooler",
         "pop": "<10%",
-        "temp": "78",
+        "temp": "80",
         "conf": "5"
       },
       {
@@ -90,7 +74,7 @@
         "weather": "Fair",
         "pop": "<10%",
         "temp": "60",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Saturday",
@@ -113,7 +97,15 @@
         "sky": "Partly Sunny",
         "weather": "Seasonable",
         "pop": "20%",
-        "temp": "mid 80s",
+        "temp": "86",
+        "conf": "3"
+      },
+      {
+        "period": "Sunday night",
+        "sky": "Partly Cloudy",
+        "weather": "Chc. of Showers",
+        "pop": "30%",
+        "temp": "66",
         "conf": "3"
       },
       {
@@ -123,10 +115,40 @@
         "pop": "30%",
         "temp": "mid 80s",
         "conf": "3"
+      },
+      {
+        "period": "Tuesday",
+        "sky": "Variably Cloudy",
+        "weather": "Chc. of T-storm",
+        "pop": "30%",
+        "temp": "mid 80s",
+        "conf": "3"
       }
     ]
   },
   "observations": [
+    {
+      "time": "09:00",
+      "temp": "76",
+      "dewpoint": "69",
+      "rh": "78",
+      "windDir": "W",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "08:00",
+      "temp": "74",
+      "dewpoint": "68",
+      "rh": "82",
+      "windDir": "WSW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
     {
       "time": "07:00",
       "temp": "71",
@@ -170,31 +192,250 @@
       "precip": "0.00",
       "visibility": "11.7",
       "condition": "None"
-    },
-    {
-      "time": "03:00",
-      "temp": "71",
-      "dewpoint": "67",
-      "rh": "90",
-      "windDir": "S",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "12.0",
-      "condition": "None"
-    },
-    {
-      "time": "02:00",
-      "temp": "71",
-      "dewpoint": "67",
-      "rh": "90",
-      "windDir": "SSW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
     }
   ],
-  "dailySummary": null,
+  "dailySummary": {
+    "monthLabel": "July 2026",
+    "days": [
+      {
+        "date": "07/01",
+        "max": "98",
+        "maxTime": "15:59",
+        "min": "71",
+        "minTime": "05:16",
+        "windDir": "224",
+        "windSpeed": "15",
+        "windTime": "16:38",
+        "rain": "0.00"
+      },
+      {
+        "date": "07/02",
+        "max": "102",
+        "maxTime": "15:54",
+        "min": "75",
+        "minTime": "05:51",
+        "windDir": "326",
+        "windSpeed": "13",
+        "windTime": "09:54",
+        "rain": "0.00"
+      },
+      {
+        "date": "07/03",
+        "max": "102",
+        "maxTime": "15:53",
+        "min": "77",
+        "minTime": "06:12",
+        "windDir": "239",
+        "windSpeed": "Missing",
+        "windTime": "12:32",
+        "rain": "0.00"
+      },
+      {
+        "date": "07/04",
+        "max": "101",
+        "maxTime": "16:44",
+        "min": "72",
+        "minTime": "20:29",
+        "windDir": "339",
+        "windSpeed": "42",
+        "windTime": "19:34",
+        "rain": "0.38"
+      },
+      {
+        "date": "07/05",
+        "max": "90",
+        "maxTime": "15:30",
+        "min": "69",
+        "minTime": "21:42",
+        "windDir": "246",
+        "windSpeed": "31",
+        "windTime": "20:46",
+        "rain": "1.46"
+      },
+      {
+        "date": "07/06",
+        "max": "78",
+        "maxTime": "15:38",
+        "min": "69",
+        "minTime": "00:02",
+        "windDir": "94",
+        "windSpeed": "17",
+        "windTime": "21:31",
+        "rain": "0.03"
+      },
+      {
+        "date": "07/07",
+        "max": "82",
+        "maxTime": "14:41",
+        "min": "67",
+        "minTime": "06:21",
+        "windDir": "90",
+        "windSpeed": "12",
+        "windTime": "18:34",
+        "rain": "0.01"
+      },
+      {
+        "date": "07/08",
+        "max": "85",
+        "maxTime": "17:06",
+        "min": "65",
+        "minTime": "05:22",
+        "windDir": "211",
+        "windSpeed": "11",
+        "windTime": "16:15",
+        "rain": "0.00"
+      },
+      {
+        "date": "07/09",
+        "max": "87",
+        "maxTime": "14:05",
+        "min": "71",
+        "minTime": "02:05",
+        "windDir": "359",
+        "windSpeed": "24",
+        "windTime": "14:33",
+        "rain": "0.65"
+      },
+      {
+        "date": "07/10",
+        "max": "85",
+        "maxTime": "15:21",
+        "min": "69",
+        "minTime": "22:52",
+        "windDir": "321",
+        "windSpeed": "12",
+        "windTime": "10:42",
+        "rain": "0.03"
+      },
+      {
+        "date": "07/11",
+        "max": "87",
+        "maxTime": "15:59",
+        "min": "68",
+        "minTime": "04:31",
+        "windDir": "100",
+        "windSpeed": "13",
+        "windTime": "16:16",
+        "rain": "0.20"
+      },
+      {
+        "date": "07/12",
+        "max": "86",
+        "maxTime": "14:33",
+        "min": "67",
+        "minTime": "05:26",
+        "windDir": "191",
+        "windSpeed": "14",
+        "windTime": "19:11",
+        "rain": "0.00"
+      },
+      {
+        "date": "07/13",
+        "max": "86",
+        "maxTime": "16:27",
+        "min": "62",
+        "minTime": "05:00",
+        "windDir": "207",
+        "windSpeed": "14",
+        "windTime": "12:51",
+        "rain": "0.00"
+      },
+      {
+        "date": "07/14",
+        "max": "91",
+        "maxTime": "15:17",
+        "min": "64",
+        "minTime": "05:57",
+        "windDir": "239",
+        "windSpeed": "17",
+        "windTime": "17:47",
+        "rain": "0.00"
+      },
+      {
+        "date": "07/15",
+        "max": "96",
+        "maxTime": "15:51",
+        "min": "69",
+        "minTime": "06:02",
+        "windDir": "250",
+        "windSpeed": "14",
+        "windTime": "12:33",
+        "rain": "0.00"
+      },
+      {
+        "date": "07/16",
+        "max": "95",
+        "maxTime": "15:46",
+        "min": "73",
+        "minTime": "06:07",
+        "windDir": "321",
+        "windSpeed": "16",
+        "windTime": "14:03",
+        "rain": "0.00"
+      },
+      {
+        "date": "07/17",
+        "max": "87",
+        "maxTime": "15:44",
+        "min": "66",
+        "minTime": "06:05",
+        "windDir": "328",
+        "windSpeed": "10",
+        "windTime": "16:25",
+        "rain": "0.00"
+      },
+      {
+        "date": "07/18",
+        "max": "86",
+        "maxTime": "14:42",
+        "min": "66",
+        "minTime": "02:10",
+        "windDir": "296",
+        "windSpeed": "24",
+        "windTime": "22:51",
+        "rain": "0.15"
+      },
+      {
+        "date": "07/19",
+        "max": "83",
+        "maxTime": "14:51",
+        "min": "64",
+        "minTime": "23:58",
+        "windDir": "356",
+        "windSpeed": "18",
+        "windTime": "14:05",
+        "rain": "0.00"
+      },
+      {
+        "date": "07/20",
+        "max": "84",
+        "maxTime": "16:19",
+        "min": "57",
+        "minTime": "06:07",
+        "windDir": "212",
+        "windSpeed": "12",
+        "windTime": "14:57",
+        "rain": "0.00"
+      },
+      {
+        "date": "07/21",
+        "max": "88",
+        "maxTime": "13:43",
+        "min": "70",
+        "minTime": "23:21",
+        "windDir": "210",
+        "windSpeed": "18",
+        "windTime": "17:56",
+        "rain": "0.12"
+      }
+    ],
+    "totalRain": "3.03",
+    "ytdRain": "17.44",
+    "yearMax": "102",
+    "yearMaxDate": "July 03",
+    "yearMin": "1",
+    "yearMinDate": "January 21"
+  },
   "discussion": {
     "headline": "nother round of severe storms today, then quiet and refreshing",
     "dateLine": "1:00 p.m. Tuesday, July 21, 2026",
@@ -236,5 +477,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-22T11:08:05.725Z"
+  "updated": "2026-07-22T13:22:06.869Z"
 }

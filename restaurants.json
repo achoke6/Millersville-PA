@@ -23,6 +23,119 @@
     }
   },
   {
+    "name": "Evergreen Cafe",
+    "cuisine": "Coffee shop",
+    "description": "Student run coffee shop.",
+    "address": "40 James St, Millersville, PA 17551",
+    "status": "View Menu",
+    "link": "https://www.millersville.edu/dining/",
+    "marauderGold": true,
+    "onCampus": true,
+    "lat": 39.997226,
+    "lng": -76.35239,
+    "slug": "evergreen-cafe",
+    "hours": {
+      "mon": "09:00-13:00,18:30-22:30",
+      "tue": "09:00-13:00,18:30-22:30",
+      "wed": "09:00-13:00,18:30-22:30",
+      "thu": "09:00-13:00,18:30-22:30",
+      "fri": "09:00-13:00,18:30-22:30",
+      "sat": "09:00-13:00,18:30-22:30",
+      "sun": "09:00-13:00,18:30-22:30"
+    }
+  },
+  {
+    "name": "The Anchor",
+    "cuisine": "Dining hall",
+    "description": "Casual dining option upstairs in Gordinier Hall.",
+    "address": "1 James St, Millersville, PA 17551",
+    "status": "View Menu",
+    "link": "https://www.millersville.edu/dining/",
+    "marauderGold": true,
+    "onCampus": true,
+    "audience": "marauders",
+    "lat": 39.996747,
+    "lng": -76.353648,
+    "slug": "anchor",
+    "hours": {
+      "mon": "10:00-19:00",
+      "tue": "10:00-19:00",
+      "wed": "10:00-19:00",
+      "thu": "10:00-19:00",
+      "fri": "10:00-18:30",
+      "sat": "10:00-18:30",
+      "sun": "10:00-18:30"
+    }
+  },
+  {
+    "name": "The Cove",
+    "cuisine": "Café",
+    "description": "Café and snack location in Lyle Hall.",
+    "address": "227 Cove Dr, Millersville, PA 17551",
+    "status": "View Menu",
+    "link": "https://www.millersville.edu/dining/",
+    "marauderGold": true,
+    "onCampus": true,
+    "audience": "marauders",
+    "lat": 40.001798,
+    "lng": -76.356964,
+    "slug": "cove",
+    "hours": {
+      "mon": "08:00-14:30",
+      "tue": "08:00-14:30",
+      "wed": "08:00-14:30",
+      "thu": "08:00-14:30",
+      "fri": "closed",
+      "sat": "closed",
+      "sun": "closed"
+    }
+  },
+  {
+    "name": "Upper Deck",
+    "cuisine": "Dining",
+    "description": "Main residential dining hall in Gordinier Hall. Buffet-style meals.",
+    "address": "40 James St, Millersville, PA 17551",
+    "status": "View Menu",
+    "link": "https://www.millersville.edu/dining/",
+    "marauderGold": true,
+    "onCampus": true,
+    "audience": "marauders",
+    "lat": 39.997226,
+    "lng": -76.35239,
+    "slug": "upper-deck",
+    "hours": {
+      "mon": "07:30-10:30,11:00-15:00,16:00-19:30",
+      "tue": "07:30-10:30,11:00-15:00,16:00-19:30",
+      "wed": "07:30-10:30,11:00-15:00,16:00-19:30",
+      "thu": "07:30-10:30,11:00-15:00,16:00-19:30",
+      "fri": "07:30-10:30,11:00-15:00,16:00-19:30",
+      "sat": "07:30-10:30,11:00-15:00,16:00-19:30",
+      "sun": "11:30-15:00,16:00-19:30"
+    }
+  },
+  {
+    "name": "Starbucks (McNairy Library)",
+    "cuisine": "Coffee, Café",
+    "description": "Starbucks coffee shop inside McNairy Library.",
+    "address": "9 N George St, Millersville, PA 17551",
+    "status": "View Menu",
+    "link": "https://www.millersville.edu/dining/",
+    "marauderGold": true,
+    "onCampus": true,
+    "lat": 39.997999,
+    "lng": -76.354436,
+    "slug": "starbucks-mcnairy-library",
+    "hours": {
+      "mon": "07:30-16:00",
+      "tue": "07:30-16:00",
+      "wed": "07:30-16:00",
+      "thu": "07:30-16:00",
+      "fri": "07:30-16:00",
+      "sat": "closed",
+      "sun": "closed"
+    }
+  },
+  {
     "name": "Koshary Station",
     "cuisine": "Egyptian",
     "description": "Authentic Egyptian dishes — falafel, shawarma, koshary & more",
@@ -245,28 +358,6 @@
     }
   },
   {
-    "name": "Evergreen Cafe",
-    "cuisine": "Coffee shop",
-    "description": "Coffee shop located on MU campus",
-    "address": "40 James St, Millersville, PA 17551",
-    "status": "View Menu",
-    "link": "https://www.millersville.edu/dining/",
-    "marauderGold": true,
-    "onCampus": true,
-    "lat": 39.997226,
-    "lng": -76.35239,
-    "slug": "evergreen-cafe",
-    "hours": {
-      "mon": "09:00-13:00,18:30-22:30",
-      "tue": "09:00-13:00,18:30-22:30",
-      "wed": "09:00-13:00,18:30-22:30",
-      "thu": "09:00-13:00,18:30-22:30",
-      "fri": "09:00-13:00,18:30-22:30",
-      "sat": "09:00-13:00,18:30-22:30",
-      "sun": "09:00-13:00,18:30-22:30"
-    }
-  },
-  {
     "name": "VFW Post 7294",
     "cuisine": "American, Bar food",
     "description": "Weekly food specials and events. Members Only.",
@@ -326,97 +417,6 @@
       "fri": "00:00-24:00",
       "sat": "00:00-24:00",
       "sun": "00:00-24:00"
-    }
-  },
-  {
-    "name": "The Anchor",
-    "cuisine": "Dining hall",
-    "description": "Main residential dining hall in Gordinier Hall. Buffet-style meals.",
-    "address": "1 James St, Millersville, PA 17551",
-    "status": "View Menu",
-    "link": "https://www.millersville.edu/dining/",
-    "marauderGold": true,
-    "onCampus": true,
-    "audience": "marauders",
-    "lat": 39.996747,
-    "lng": -76.353648,
-    "slug": "anchor",
-    "hours": {
-      "mon": "10:00-19:00",
-      "tue": "10:00-19:00",
-      "wed": "10:00-19:00",
-      "thu": "10:00-19:00",
-      "fri": "10:00-18:30",
-      "sat": "10:00-18:30",
-      "sun": "10:00-18:30"
-    }
-  },
-  {
-    "name": "The Cove",
-    "cuisine": "Café",
-    "description": "Café and snack location in Lyle Hall.",
-    "address": "227 Cove Dr, Millersville, PA 17551",
-    "status": "View Menu",
-    "link": "https://www.millersville.edu/dining/",
-    "marauderGold": true,
-    "onCampus": true,
-    "audience": "marauders",
-    "lat": 40.001798,
-    "lng": -76.356964,
-    "slug": "cove",
-    "hours": {
-      "mon": "08:00-14:30",
-      "tue": "08:00-14:30",
-      "wed": "08:00-14:30",
-      "thu": "08:00-14:30",
-      "fri": "closed",
-      "sat": "closed",
-      "sun": "closed"
-    }
-  },
-  {
-    "name": "Upper Deck",
-    "cuisine": "Dining",
-    "description": "Casual dining option upstairs in Gordinier Hall.",
-    "address": "40 James St, Millersville, PA 17551",
-    "status": "View Menu",
-    "link": "https://www.millersville.edu/dining/",
-    "marauderGold": true,
-    "onCampus": true,
-    "audience": "marauders",
-    "lat": 39.997226,
-    "lng": -76.35239,
-    "slug": "upper-deck",
-    "hours": {
-      "mon": "07:30-10:30,11:00-15:00,16:00-19:30",
-      "tue": "07:30-10:30,11:00-15:00,16:00-19:30",
-      "wed": "07:30-10:30,11:00-15:00,16:00-19:30",
-      "thu": "07:30-10:30,11:00-15:00,16:00-19:30",
-      "fri": "07:30-10:30,11:00-15:00,16:00-19:30",
-      "sat": "07:30-10:30,11:00-15:00,16:00-19:30",
-      "sun": "11:30-15:00,16:00-19:30"
-    }
-  },
-  {
-    "name": "Starbucks (McNairy Library)",
-    "cuisine": "Coffee, Café",
-    "description": "Starbucks coffee shop inside McNairy Library.",
-    "address": "9 N George St, Millersville, PA 17551",
-    "status": "View Menu",
-    "link": "https://www.millersville.edu/dining/",
-    "marauderGold": true,
-    "onCampus": true,
-    "lat": 39.997999,
-    "lng": -76.354436,
-    "slug": "starbucks-mcnairy-library",
-    "hours": {
-      "mon": "07:30-16:00",
-      "tue": "07:30-16:00",
-      "wed": "07:30-16:00",
-      "thu": "07:30-16:00",
-      "fri": "07:30-16:00",
-      "sat": "closed",
-      "sun": "closed"
     }
   },
   {

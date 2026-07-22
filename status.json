@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-07-22T05:49:46.286Z",
-  "totalEvents": 808,
+  "generatedAt": "2026-07-22T08:27:09.085Z",
+  "totalEvents": 809,
   "withDescription": 296,
-  "withImage": 106,
+  "withImage": 107,
   "familyFriendly": 41,
   "eventsToday": 2,
   "sources": {
@@ -12,7 +12,7 @@
     "pennManor": 83,
     "borough": 98,
     "vfw": 5,
-    "phantomPower": 12,
+    "phantomPower": 13,
     "community": 53,
     "manor": 41,
     "raneyCellars": 2,
@@ -122,9 +122,16 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-22T05:48:11.045Z"
+    "lastSyncAt": "2026-07-22T08:25:37.469Z"
   },
   "recentlyAdded": [
+    {
+      "key": "DurtE w. Shawn Paris, Wildcard, Knowledge, Firenation Flames, H8trid|2026-08-30T00:00:00.000Z",
+      "firstSeenAt": "2026-07-22T08:27:09.083Z",
+      "title": "DurtE w. Shawn Paris, Wildcard, Knowledge, Firenation Flames, H8trid",
+      "source": "Other",
+      "date": "2026-08-30T00:00:00.000Z"
+    },
     {
       "key": "Trivia Night|2026-08-12T00:00:00.000Z",
       "firstSeenAt": "2026-07-22T02:29:50.723Z",
@@ -187,14 +194,7 @@
       "title": "Zoning Hearing Board",
       "source": "Manor",
       "date": "2026-09-02T23:00:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
-      "firstSeenAt": "2026-07-21T10:25:10.038Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-09-08T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

@@ -5523,10 +5523,10 @@ window.openHomeSpecialPopup = function(slug){
     html += `<button onclick="closeHomeSpecialPopup()" aria-label="Close" style="position:absolute;top:8px;right:8px;z-index:1001;width:32px;height:32px;border-radius:50%;border:none;background:rgba(20,32,58,0.75);color:#fff;font-size:1.05rem;line-height:1;cursor:pointer;">×</button>`;
     html += `<div style="padding:18px 20px 20px;">`;
     html += `<h3 class="home-special-name" style="font-size:1.1rem;">${sp.name || (place && place.name) || slug}</h3>`;
-    if (sp.note) html += `<p class="home-special-note">${sp.note}</p>`;
     const meta = place ? (place.cuisine || place.category || '') : '';
     if (meta) html += `<p style="font-size:0.78rem;color:var(--text-muted);margin:2px 0;">${meta}</p>`;
-    if (place && place.address) html += `<p style="font-size:0.78rem;color:var(--text-muted);margin:2px 0;">📍 ${place.address}</p>`; { const _ht = placeHoursText(place); if (_ht) html += `<p style="font-size:0.78rem;color:var(--text-muted);margin:2px 0;">🕐 ${_ht}</p>`; }
+    if (place && place.address) html += `<p style="font-size:0.78rem;color:var(--text-muted);margin:2px 0;">📍 ${place.address}</p>`; { const _hd = placeHoursDetailsHtml(place, true); if (_hd) html += `<div style="margin:6px 0 0;">${_hd}</div>`; }
+    if (sp.note) html += `<p style="font-size:0.76rem;color:var(--text-muted);font-style:italic;margin:12px 0 0;">${sp.note}</p>`;
     if (items.length){
         html += `<p style="font-weight:700;font-size:0.85rem;margin:12px 0 4px;color:var(--navy);">Today's Specials (${dayName}):</p>`;
         html += items.map(i=>`<p class="home-special-item">• ${i}</p>`).join('');
@@ -6336,17 +6336,20 @@ function refreshPlacesMap(){
 }
 
 function placesMapPopup(p){
-    const meta = p.cuisine || p.category || p.landlord || '';
     const q = encodeURIComponent(p.address ? (p.name + ', ' + p.address) : (p.lat + ',' + p.lng));
     let html = `<div class="map-popup"><strong>${p.name}</strong>`;
-    if (meta) html += `<div class="map-popup-meta">${meta}</div>`;
-    if (p.address) html += `<div class="map-popup-meta">${p.address}</div>`; { const _ht = placeHoursText(p); if (_ht) html += `<div class="map-popup-meta">🕐 ${_ht}</div>`; }
-    if (p.category === 'Cupboard') html += `<div class="map-popup-meta">🔥 Free groceries today</div>`;
-    else if (placeHasSpecialsToday(placeSlug(p))) html += `<div class="map-popup-meta">🔥 Specials today</div>`;
+    if (p.address) html += `<div class="map-popup-meta">📍 ${p.address}</div>`;
+    const _ht = placeHoursText(p);
+    if (_ht) html += `<div class="map-popup-meta">🕐 ${_ht}</div>`;
+    // "Today" cluster — visually separated from the identity block above.
+    const today = [];
+    if (p.category === 'Cupboard') today.push('🔥 Free groceries today');
+    else if (placeHasSpecialsToday(placeSlug(p))) today.push('🔥 Specials today');
     const evToday = placeEventsToday(p);
-    evToday.slice(0,2).forEach(e => { html += `<div class="map-popup-meta">📅 ${e.title} · ${formatTime(new Date(e.t))}</div>`; });
-    if (evToday.length > 2) html += `<div class="map-popup-meta">+${evToday.length-2} more today</div>`;
-    if (!evToday.length){ const nx = placeNextUpcoming(p); if (nx) html += `<div class="map-popup-meta">📅 Next: ${new Date(nx.t).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})} · ${nx.title}</div>`; }
+    evToday.slice(0,2).forEach(e => today.push(`📅 ${e.title} · ${formatTime(new Date(e.t))}`));
+    if (evToday.length > 2) today.push(`+${evToday.length-2} more today`);
+    if (!evToday.length){ const nx = placeNextUpcoming(p); if (nx) today.push(`📅 Next: ${new Date(nx.t).toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})} · ${nx.title}`); }
+    if (today.length) html += `<div style="border-top:1px solid var(--border);margin-top:6px;padding-top:5px;">${today.map(t=>`<div class="map-popup-meta">${t}</div>`).join('')}</div>`;
     html += `<div class="map-popup-btns">`;
     if (p.link) html += `<a href="${p.link}" target="_blank" rel="noopener" class="btn btn-sm btn-outline">Website</a>`;
     html += `<a href="https://www.google.com/maps/dir/?api=1&destination=${q}" target="_blank" rel="noopener" class="btn btn-sm btn-outline">Directions</a></div></div>`;
@@ -6451,7 +6454,7 @@ window.focusPlaceOnMap = function(pOrSlug){
 ['places-container', 'housing-container'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener('click', ev => {
-        if (ev.target.closest('a,button')) return;
+        if (ev.target.closest('a,button,details')) return;
         const card = ev.target.closest('[data-place]');
         if (card) focusPlaceOnMap(card.getAttribute('data-place'));
     });
@@ -6662,6 +6665,32 @@ function placeHoursText(p){
 function placeHoursLineHtml(p){
     const t = placeHoursText(p);
     return t ? `<p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:4px;">🕐 ${t}</p>` : '';
+}
+// Weekly hours table (Mon-first), today's row highlighted. '—' = no data
+// for that day (makes no claim); '00:00-24:00' reads as Open 24 hours.
+const HOURS_TABLE_ORDER = ['mon','tue','wed','thu','fri','sat','sun'];
+const HOURS_DAY_LABELS = { mon:'Mon', tue:'Tue', wed:'Wed', thu:'Thu', fri:'Fri', sat:'Sat', sun:'Sun' };
+function placeHoursTableHtml(p){
+    if (!p || !p.hours || typeof p.hours !== 'object') return '';
+    const todayKey = HOURS_DAY_KEYS[hoursNowET().dayIdx];
+    const rows = HOURS_TABLE_ORDER.map(d => {
+        const v = p.hours[d];
+        const txt = v === undefined ? '—' : v === 'closed' ? 'Closed' : v === '00:00-24:00' ? 'Open 24 hours' : hoursFmtRanges(v);
+        const hl = d === todayKey ? 'background:var(--gold-soft);font-weight:700;' : '';
+        return `<tr style="${hl}"><td style="padding:2px 12px 2px 6px;white-space:nowrap;">${HOURS_DAY_LABELS[d]}</td><td style="padding:2px 6px 2px 0;">${txt}</td></tr>`;
+    }).join('');
+    return `<table style="border-collapse:collapse;font-size:0.78rem;color:var(--text);margin:4px 0 2px 16px;border:1px solid var(--border);border-radius:var(--radius-sm);">${rows}</table>`;
+}
+// Status line + expandable weekly table. Native <details> — no JS, survives
+// innerHTML re-renders. `open` = start expanded (home popup); collapsed on
+// directory cards. Falls back to the plain status line when no table exists.
+function placeHoursDetailsHtml(p, open){
+    const status = placeHoursText(p);
+    if (!status) return '';
+    const table = placeHoursTableHtml(p);
+    if (!table) return `<p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:4px;">🕐 ${status}</p>`;
+    return `<details${open ? ' open' : ''} style="font-size:0.8rem;color:var(--text-muted);margin-bottom:4px;">
+        <summary style="cursor:pointer;">🕐 ${status} <span style="font-size:0.68rem;opacity:0.8;">· all hours</span></summary>${table}</details>`;
 }
 const SPECIALS_DAY_IDX = {Monday:0,Tuesday:1,Wednesday:2,Thursday:3,Friday:4,Saturday:5,Sunday:6};
 function placesSpecialsItemsFor(sp, dayName){
@@ -6982,7 +7011,7 @@ function buildFoodCard(p, specials, dayName) {
     return `<div class="app-card" data-place="${placeSlug(p)}" style="position:relative;display:flex;flex-direction:column;justify-content:flex-start;">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;"><span class="card-tag">🍴 ${p.cuisine || 'Food & Drink'}</span><span style="display:inline-flex;gap:6px;align-items:center;flex-shrink:0;">${membersBadge}${mbaBadge(p.name)}</span></div>
         <h3 class="card-title" style="margin-top:6px;">${p.name}</h3>
-        ${ratingRow}${addr}${placeHoursLineHtml(p)}
+        ${ratingRow}${addr}${placeHoursDetailsHtml(p, false)}
         <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:8px;">${p.description||''}</p>
         ${specialsHtml}${eventsHtml}
         <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:auto;">
@@ -6998,7 +7027,7 @@ function buildServiceCard(p) {
     const icon = catIcons[p.category] || '🏢';
     const mba = mbaBadge(p.name);
     const ratingRow = '';   // star ratings retired with the review system (2026-07)
-    const hours = placeHoursLineHtml(p);
+    const hours = placeHoursDetailsHtml(p, false);
     const phone = p.phone ? `<a href="tel:${p.phone.replace(/[^+\d]/g,'')}" style="font-weight:600;font-size:0.85rem;color:var(--text);text-decoration:none;">📞 ${p.phone}</a>` : '';
     const site = p.gasLink ? `<a href="${p.gasLink}" target="_blank" class="btn btn-sm btn-outline" style="font-size:0.75rem;">⛽ Prices</a>` :
                  p.link ? `<a href="${p.link}" target="_blank" class="btn btn-sm btn-outline" style="font-size:0.75rem;">🌐 Visit</a>` : '';

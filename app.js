@@ -5500,7 +5500,7 @@ window.openHomeSpecialPopup = function(slug){
     if (slug === 'campus-cupboard'){
         const cb = window._cupboard, cbItems = buildCampusCupboardItems(dayName);
         if (!cb || !cbItems || muAffiliation !== 'student') return;
-        sp = { name: '🛒 Campus Cupboard', note: 'Inside The HUB · MU students only' };
+        sp = { name: '🛒 Campus Cupboard', eligibility: 'Inside The HUB · MU students only' };
         place = { ...cb, name: 'Campus Cupboard', category: 'Cupboard', placeType: 'cupboard',
                   address: cb.address || '121 N George St, Millersville, PA 17551',
                   link: cb.link || 'https://www.hubmu.org/free-groceries',
@@ -5526,7 +5526,11 @@ window.openHomeSpecialPopup = function(slug){
     html += `<h3 class="home-special-name" style="font-size:1.1rem;">${sp.name || (place && place.name) || slug}</h3>`;
     const meta = place ? (place.cuisine || place.category || '') : '';
     if (meta) html += `<p style="font-size:0.78rem;color:var(--text-muted);margin:2px 0;">${meta}</p>`;
-    if (place && place.address) html += `<p style="font-size:0.78rem;color:var(--text-muted);margin:2px 0;">📍 ${place.address}</p>`; { const _hd = placeHoursDetailsHtml(place, true); if (_hd) html += `<div style="margin:6px 0 0;">${_hd}</div>`; }
+    if (place && place.address) html += `<p style="font-size:0.78rem;color:var(--text-muted);margin:2px 0;">📍 ${place.address}</p>`;
+    // Eligibility line (Cupboard) — audience is already gated to marauders; this
+    // is for self-selected/edge viewers + card↔popup consistency, so small + muted.
+    if (sp.eligibility) html += `<p style="font-size:0.78rem;color:var(--text-muted);margin:2px 0;">${sp.eligibility}</p>`;
+    { const _hd = placeHoursDetailsHtml(place, true); if (_hd) html += `<div style="margin:6px 0 0;">${_hd}</div>`; }
     if (items.length){
         html += `<p style="font-weight:700;font-size:0.85rem;margin:12px 0 4px;color:var(--navy);">Today's Specials (${dayName}):</p>`;
         if (sp.note) html += `<p style="font-size:0.74rem;color:var(--text-muted);font-style:italic;margin:2px 0 6px;">${sp.note}</p>`;

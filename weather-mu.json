@@ -1,27 +1,27 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Wednesday, July 22, 2026 at 12:31 PM (Kyle Elliott, Meteorologist)",
+    "issued": "Thursday, July 23, 2026 at 06:37 AM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "This afternoon",
-        "text": "Breezy and turning less humid with sunshine and some passing clouds. High: 84-88"
-      },
-      {
-        "period": "Tonight",
-        "text": "Mainly clear and comfortable. Low: 58-62"
-      },
-      {
-        "period": "Thursday",
+        "period": "Today",
         "text": "Sunny, cooler and refreshing with low humidity. High: 78-82"
       },
       {
-        "period": "Thursday Night",
+        "period": "Tonight",
         "text": "Clear and comfortably cool. Low: 54-58"
       },
       {
         "period": "Friday",
         "text": "Mostly sunny and beautiful with low humidity. High: 80-84"
+      },
+      {
+        "period": "Friday Night",
+        "text": "Mainly clear and comfortable. Low: 56-60"
+      },
+      {
+        "period": "Saturday",
+        "text": "Mostly sunny and gorgeous with low humidity. High: 82-86"
       }
     ]
   },
@@ -128,67 +128,67 @@
   },
   "observations": [
     {
-      "time": "13:00",
-      "temp": "85",
-      "dewpoint": "65",
-      "rh": "50",
-      "windDir": "WSW",
-      "windSpeed": "7",
+      "time": "07:00",
+      "temp": "62",
+      "dewpoint": "53",
+      "rh": "73",
+      "windDir": "NW",
+      "windSpeed": "2",
       "precip": "0.00",
-      "visibility": "10.9",
+      "visibility": "12 +",
       "condition": "None"
     },
     {
-      "time": "12:00",
-      "temp": "84",
-      "dewpoint": "68",
-      "rh": "59",
-      "windDir": "WSW",
-      "windSpeed": "4",
+      "time": "06:00",
+      "temp": "58",
+      "dewpoint": "54",
+      "rh": "86",
+      "windDir": "SW",
+      "windSpeed": "1",
       "precip": "0.00",
-      "visibility": "10.9",
+      "visibility": "11.9",
       "condition": "None"
     },
     {
-      "time": "11:00",
-      "temp": "81",
-      "dewpoint": "67",
-      "rh": "63",
-      "windDir": "WSW",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "11.3",
-      "condition": "None"
-    },
-    {
-      "time": "10:00",
-      "temp": "80",
-      "dewpoint": "68",
-      "rh": "68",
-      "windDir": "WSW",
-      "windSpeed": "5",
-      "precip": "0.00",
-      "visibility": "11.6",
-      "condition": "None"
-    },
-    {
-      "time": "09:00",
-      "temp": "76",
-      "dewpoint": "69",
-      "rh": "78",
-      "windDir": "W",
+      "time": "05:00",
+      "temp": "62",
+      "dewpoint": "53",
+      "rh": "71",
+      "windDir": "NNW",
       "windSpeed": "3",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
     },
     {
-      "time": "08:00",
-      "temp": "74",
-      "dewpoint": "68",
-      "rh": "82",
-      "windDir": "WSW",
-      "windSpeed": "3",
+      "time": "04:00",
+      "temp": "64",
+      "dewpoint": "53",
+      "rh": "68",
+      "windDir": "N",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "03:00",
+      "temp": "65",
+      "dewpoint": "53",
+      "rh": "65",
+      "windDir": "N",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "02:00",
+      "temp": "67",
+      "dewpoint": "53",
+      "rh": "61",
+      "windDir": "NNW",
+      "windSpeed": "2",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
@@ -427,6 +427,17 @@
         "windSpeed": "18",
         "windTime": "17:56",
         "rain": "0.12"
+      },
+      {
+        "date": "07/22",
+        "max": "87",
+        "maxTime": "16:10",
+        "min": "69",
+        "minTime": "04:13",
+        "windDir": "346",
+        "windSpeed": "20",
+        "windTime": "18:10",
+        "rain": "0.00"
       }
     ],
     "totalRain": "3.03",
@@ -477,5 +488,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-22T17:52:02.358Z"
+  "updated": "2026-07-23T11:07:23.770Z"
 }

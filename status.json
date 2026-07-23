@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-07-22T17:53:33.792Z",
-  "totalEvents": 809,
-  "withDescription": 296,
-  "withImage": 107,
+  "generatedAt": "2026-07-23T11:08:54.426Z",
+  "totalEvents": 799,
+  "withDescription": 285,
+  "withImage": 98,
   "familyFriendly": 41,
-  "eventsToday": 2,
+  "eventsToday": 5,
   "sources": {
     "muAthletics": 241,
     "muCalendar": 99,
-    "muGetInvolved": 164,
-    "pennManor": 83,
-    "borough": 98,
+    "muGetInvolved": 154,
+    "pennManor": 84,
+    "borough": 97,
     "vfw": 5,
     "phantomPower": 13,
     "community": 53,
@@ -28,7 +28,7 @@
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-04-23T13:30:00.000Z",
+      "earliest": "2026-04-24T14:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
@@ -36,7 +36,7 @@
       "latest": "2026-09-21T23:00:00.000Z"
     },
     "borough": {
-      "earliest": "2026-04-23T22:30:00.000Z",
+      "earliest": "2026-04-28T23:00:00.000Z",
       "latest": "2027-07-10T14:00:00.000Z"
     },
     "vfw": {
@@ -63,47 +63,47 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-01",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 15
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 48
+      "daysSinceMoved": 49
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 48
+      "daysSinceMoved": 49
     },
     "pennManor": {
       "newest": "2026-09-21",
-      "daysSinceMoved": 28
+      "daysSinceMoved": 29
     },
     "borough": {
       "newest": "2027-07-10",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 48
+      "daysSinceMoved": 49
     },
     "phantomPower": {
       "newest": "2026-10-04",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "community": {
       "newest": "2027-05-14",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     },
     "manor": {
       "newest": "2027-07-07",
-      "daysSinceMoved": 15
+      "daysSinceMoved": 16
     },
     "raneyCellars": {
       "newest": "2026-07-23",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 15
     }
   },
   "sports": {
-    "total": 296,
+    "total": 297,
     "scored": 1,
     "wins": 0,
     "losses": 1,
@@ -116,84 +116,85 @@
     "openNoDeadline": 1
   },
   "reviewQueue": {
-    "pendingFuture": 1,
+    "pendingFuture": 2,
     "pendingPast": 1,
     "pendingBySource": {
+      "Borough": 1,
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-22T17:52:01.054Z"
+    "lastSyncAt": "2026-07-23T11:07:21.240Z"
   },
   "recentlyAdded": [
     {
-      "key": "PIG w. Cyanotic & DNE|2026-10-04T00:00:00.000Z",
-      "firstSeenAt": "2026-07-22T14:42:51.337Z",
-      "title": "PIG w. Cyanotic & DNE",
-      "source": "Other",
-      "date": "2026-10-04T00:00:00.000Z"
-    },
-    {
-      "key": "DurtE w. Shawn Paris, Wildcard, Knowledge, Firenation Flames, H8trid|2026-08-30T00:00:00.000Z",
-      "firstSeenAt": "2026-07-22T08:27:09.083Z",
-      "title": "DurtE w. Shawn Paris, Wildcard, Knowledge, Firenation Flames, H8trid",
-      "source": "Other",
-      "date": "2026-08-30T00:00:00.000Z"
-    },
-    {
-      "key": "Trivia Night|2026-08-12T00:00:00.000Z",
-      "firstSeenAt": "2026-07-22T02:29:50.723Z",
-      "title": "Trivia Night",
-      "source": "Jack's Tavern",
-      "date": "2026-08-12T00:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Cross Country at Paul Short Run|2026-10-02T18:00:00.000Z",
-      "firstSeenAt": "2026-07-21T19:46:41.636Z",
-      "title": "Millersville University Women's Cross Country at Paul Short Run",
-      "source": "MU",
-      "date": "2026-10-02T18:00:00.000Z"
-    },
-    {
-      "key": "Thurday Trivia 6PM|2026-07-23T22:00:00.000Z",
-      "firstSeenAt": "2026-07-21T15:04:32.764Z",
-      "title": "Thurday Trivia 6PM",
-      "source": "Raney Cellars",
-      "date": "2026-07-23T22:00:00.000Z"
-    },
-    {
       "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
-      "firstSeenAt": "2026-07-21T10:25:10.038Z",
+      "firstSeenAt": "2026-07-23T05:52:59.318Z",
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2026-07-29T12:30:00.000Z"
     },
     {
       "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
-      "firstSeenAt": "2026-07-21T10:25:10.038Z",
+      "firstSeenAt": "2026-07-23T05:52:59.318Z",
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2026-08-03T23:00:00.000Z"
     },
     {
       "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
-      "firstSeenAt": "2026-07-21T10:25:10.038Z",
+      "firstSeenAt": "2026-07-23T05:52:59.318Z",
       "title": "Zoning Hearing Board",
       "source": "Manor",
       "date": "2026-08-05T23:00:00.000Z"
     },
     {
       "key": "Planning Commission|2026-08-10T23:00:00.000Z",
-      "firstSeenAt": "2026-07-21T10:25:10.038Z",
+      "firstSeenAt": "2026-07-23T05:52:59.318Z",
       "title": "Planning Commission",
       "source": "Manor",
       "date": "2026-08-10T23:00:00.000Z"
     },
     {
       "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
-      "firstSeenAt": "2026-07-21T10:25:10.038Z",
+      "firstSeenAt": "2026-07-23T05:52:59.318Z",
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2026-08-26T12:30:00.000Z"
+    },
+    {
+      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-07-23T05:52:59.318Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-09-02T23:00:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
+      "firstSeenAt": "2026-07-23T05:52:59.318Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-08T23:00:00.000Z"
+    },
+    {
+      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
+      "firstSeenAt": "2026-07-23T05:52:59.318Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-09-14T23:00:00.000Z"
+    },
+    {
+      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-07-23T05:52:59.318Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-09-30T12:30:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
+      "firstSeenAt": "2026-07-23T05:52:59.318Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-10-05T23:00:00.000Z"
     }
   ],
   "addedLastRun": 0

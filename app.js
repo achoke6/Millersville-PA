@@ -5492,7 +5492,7 @@ window.openHomeSpecialPopup = function(slug){
     let place = (allPlaces || []).find(p => placeSlug(p) === slug) || null;
     let items = sp ? placesSpecialsItems(slug, dayName) : [];   // single source of truth (21+ gate lives inside)
     // Campus Cupboard -- synthesized: it lives outside allPlaces AND
-    // _placesSpecials (window._cupboard + code-driven hours, per the
+    // _placesSpecials (window._cupboard + sheet-driven hours, per the
     // buildCampusCupboardCard static-info convention -- address/link
     // hardcoded there too). Marauder-only and closed-day-hidden exactly
     // like the rail card that opens this, so the guards can't disagree.
@@ -5502,8 +5502,9 @@ window.openHomeSpecialPopup = function(slug){
         sp = { name: '🛒 Campus Cupboard', eligibility: 'Inside The HUB · MU students only' };
         place = { ...cb, name: 'Campus Cupboard', category: 'Cupboard', placeType: 'cupboard',
                   address: cb.address || '121 N George St, Millersville, PA 17551',
-                  link: cb.link || 'https://www.hubmu.org/free-groceries',
-                  hours: cupboardHoursObject() };   // Patch-K line renders 🕐 status + table
+                  link: cb.link || 'https://www.hubmu.org/free-groceries' };
+        // hours/summerHours/breakClosed ride the ...cb spread — the Patch-K
+        // placeHoursDetailsHtml line below resolves them via placeEffectiveHours.
         items = ['Free groceries — ' + cbItems[1]];   // standard Today's-Specials list; cbItems[0] hours line stays dropped — the 🕐 table carries hours (gold blurb retired 2026-07-22)
     }
     if (!sp) return;
@@ -5603,33 +5604,35 @@ window.openHomeSpecialPopup = function(slug){
     rail.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') fire(ev); });
 })();
 
-// Build a list of items shown on the Campus Cupboard card based on current
-// day + season. Returns null when closed (weekends) so the card is hidden
-// entirely rather than showing a "closed" message.
-// Hours: academic year M-F 8am-8pm, summer M-F 9am-1pm.
+// Build a list of items shown on the Campus Cupboard card. Returns null
+// when closed today (weekend / break / no sheet data) so the card is hidden
+// entirely rather than showing a "closed" message. Open-today + the hours
+// line now flow through the SHARED hours path — the Cupboard's sheet row
+// carries hours_mon..sun / summer_hours_mon..sun / break_closed and
+// placeEffectiveHours() resolves them like every other listing (2026-07-23;
+// the hardcoded weekday check + May-11/Aug-25 summer window are retired).
+// dayName param retained for call-site compatibility; the open check is
+// ET-pinned via the shared helpers (an improvement — dayName was local-TZ).
 function buildCampusCupboardItems(dayName) {
-    // Sheet control: if the cupboard row was removed/deactivated in the sheet,
-    // window._cupboard is null → hide the resource entirely.
-    if (window._cupboard === null) return null;
-    const isWeekday = ['Monday','Tuesday','Wednesday','Thursday','Friday'].includes(dayName);
-    if (!isWeekday) return null;   // closed weekends — hide the card
-    const now = new Date();
-    const m = now.getMonth() + 1, d = now.getDate();
-    // Same summer window as HUB scrape (May 11 – Aug 24)
-    const isSummer = (m === 5 && d >= 11) || m === 6 || m === 7 || (m === 8 && d < 25);
-    const hours = isSummer ? '9am – 1pm' : '8am – 8pm';
-    // Description text comes from the sheet-synced file when available, else
-    // the built-in default. (Hours/open-closed stay code-driven.)
-    const desc = (window._cupboard && window._cupboard.description)
+    // Sheet control: null = row removed/deactivated → hide entirely.
+    // undefined (fetch failed) now ALSO hides — hours come from the sheet,
+    // so with no data we make no claim (was: built-in fallback hours).
+    const cb = window._cupboard;
+    if (!cb) return null;
+    const eh = placeEffectiveHours(cb);
+    const todayVal = eh ? eh[HOURS_DAY_KEYS[hoursNowET().dayIdx]] : undefined;
+    if (!todayVal || todayVal === 'closed') return null;   // closed/unknown today — hide
+    const desc = cb.description
         || 'Fresh produce, dairy, eggs, frozen, canned & dry goods, hygiene products. Bring student ID.';
-    return [`Open today: ${hours}`, desc];
+    return [`Open today: ${hoursFmtRanges(todayVal)}`, desc];
 }
 
 // Cupboard visibility predicate -- ONE function shared by the Places-page
 // card (renderPlaces), the map pin list (placesMapPinList), and the home
 // popup guard, so the mirrored spots can't drift (the placeTodayContent
-// pattern). True = student viewer AND open today (weekday + sheet row
-// active). Being open IS its "today special" (free groceries), so the
+// pattern). True = student viewer AND open today (per the sheet row's
+// hours/summer_hours/break_closed, resolved by placeEffectiveHours through
+// buildCampusCupboardItems). Being open IS its "today special", so the
 // 🔥 Today lens now INCLUDES it -- and closed days hide the PIN too,
 // aligning the old pin/card weekend asymmetry (the pin used to render on
 // weekends while the card hid). (2026-07-14)
@@ -6650,10 +6653,11 @@ function hoursOpenNow(hours){
 // Inner text for the 🕐 line ('' = render nothing). Shared by both card
 // builders and both popup surfaces so status logic lives in ONE place.
 function placeHoursText(p){
-    if (!p || !p.hours || typeof p.hours !== 'object') return '';
-    const st = hoursOpenNow(p.hours);
+    const _eh = placeEffectiveHours(p);
+    if (!_eh) return '';
+    const st = hoursOpenNow(_eh);
     if (!st) return '';
-    const todayVal = p.hours[HOURS_DAY_KEYS[hoursNowET().dayIdx]];
+    const todayVal = _eh[HOURS_DAY_KEYS[hoursNowET().dayIdx]];
     const r0 = hoursParseRanges(todayVal || '')[0];
     if (st.open && r0 && r0.start === 0 && r0.end === 1440)
         return '<span style="color:#15803d;font-weight:700;">Open 24 hours</span>';
@@ -6682,7 +6686,8 @@ function hoursFmtMinsCompact(m){
 // Horizontal weekly hours table, Sun→Sat columns, today's column highlighted.
 // Always visible (no disclosure). '—' = no data; split hours stack via <br>.
 function placeHoursTableHtml(p){
-    if (!p || !p.hours || typeof p.hours !== 'object') return '';
+    const _eh = placeEffectiveHours(p);
+    if (!_eh) return '';
     const order = ['sun','mon','tue','wed','thu','fri','sat'];
     const labels = { sun:'Sun', mon:'Mon', tue:'Tue', wed:'Wed', thu:'Thu', fri:'Fri', sat:'Sat' };
     const todayKey = HOURS_DAY_KEYS[hoursNowET().dayIdx];
@@ -6691,7 +6696,7 @@ function placeHoursTableHtml(p){
     const head = order.map(d =>
         `<th style="${cell}font-weight:${d===todayKey?'700':'600'};${d===todayKey?hlTh:''}">${labels[d]}</th>`).join('');
     const body = order.map(d => {
-        const v = p.hours[d];
+        const v = _eh[d];
         const txt = v === undefined ? '—'
             : v === 'closed' ? 'Closed'
             : v === '00:00-24:00' ? '24 hrs'
@@ -6703,10 +6708,11 @@ function placeHoursTableHtml(p){
 // Short status line + always-visible horizontal table. The `open` param is
 // retained for call-site compatibility but no longer changes behavior.
 function placeHoursDetailsHtml(p, open){
-    if (!p || !p.hours || typeof p.hours !== 'object') return '';
-    const st = hoursOpenNow(p.hours);
+    const _eh = placeEffectiveHours(p);
+    if (!_eh) return '';
+    const st = hoursOpenNow(_eh);
     if (!st) return '';
-    const todayVal = p.hours[HOURS_DAY_KEYS[hoursNowET().dayIdx]];
+    const todayVal = _eh[HOURS_DAY_KEYS[hoursNowET().dayIdx]];
     const r0 = hoursParseRanges(todayVal || '')[0];
     let status;
     if (st.open && r0 && r0.start === 0 && r0.end === 1440)
@@ -6721,9 +6727,100 @@ function placeHoursDetailsHtml(p, open){
 // Places without structured hours rank unknown, so hours-less listings keep
 // their old alphabetical spot at the end of each open-state band.
 function hoursSortRank(p){
-    if (!p || !p.hours || typeof p.hours !== 'object') return 2;
-    const st = hoursOpenNow(p.hours);
+    const _eh = placeEffectiveHours(p);
+    if (!_eh) return 2;
+    const st = hoursOpenNow(_eh);
     return st ? (st.open ? 0 : 1) : 2;   // open, closed, unknown
+}
+// ---- Academic-calendar hours resolution (2026-07-23) ----------------------
+// MU's calendar follows a stable tradition (verified vs registrar 2025-2027):
+// fall classes start the 4th MONDAY of August; spring commencement is the
+// SATURDAY of the week containing the first Monday of May. Both boundaries
+// are COMPUTED here — the warn-only cross-check in scrape.js compares them
+// against MU's own calendar feed and flags any deviation in the Action log.
+// If MU ever deviates, add a SUMMER_OVERRIDES entry; the math stays the
+// default. Summer window = the day after commencement through the day
+// before fall classes, inclusive. All "today" reads are ET-pinned.
+function hoursTodayISO(){
+    try {
+        return new Intl.DateTimeFormat('en-CA', { timeZone: 'America/New_York' }).format(new Date());
+    } catch (e) { /* ancient browser — fall through to device-local */ }
+    const d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+function isoAddDays(iso, n){
+    const [y, m, d] = String(iso).split('-').map(Number);
+    const t = new Date(Date.UTC(y, m - 1, d + n));
+    return t.getUTCFullYear() + '-' + String(t.getUTCMonth()+1).padStart(2,'0') + '-' + String(t.getUTCDate()).padStart(2,'0');
+}
+// MIRRORED (warn-only) as muFallStartISO/muCommencementISO in scrape.js —
+// drift there mis-warns in the Action log, never mis-renders the site.
+function muFallStartISO(year){
+    const dow = new Date(Date.UTC(year, 7, 1)).getUTCDay();      // Aug 1
+    const firstMonday = 1 + ((8 - dow) % 7);
+    return year + '-08-' + String(firstMonday + 21).padStart(2,'0');   // 4th Monday
+}
+function muCommencementISO(year){
+    const dow = new Date(Date.UTC(year, 4, 1)).getUTCDay();      // May 1
+    const firstMonday = 1 + ((8 - dow) % 7);
+    return year + '-05-' + String(firstMonday + 5).padStart(2,'0');    // that week's Saturday
+}
+// Hand override, used ONLY if MU deviates from tradition (the scrape.js
+// cross-check warning is the trigger). e.g. { 2028: { from:'2028-05-14', to:'2028-08-27' } }
+const SUMMER_OVERRIDES = {};
+function muSummerWindow(year){
+    if (SUMMER_OVERRIDES[year]) return SUMMER_OVERRIDES[year];
+    return { from: isoAddDays(muCommencementISO(year), 1), to: isoAddDays(muFallStartISO(year), -1) };
+}
+function isoInMuSummer(iso){
+    const w = muSummerWindow(+String(iso).slice(0, 4));
+    return iso >= w.from && iso <= w.to;
+}
+// Academic-break closures for break_closed listings. ESTIMATES aligned with
+// jesus-dogs.activeRanges (place-specials.json) — tune BOTH at the twice-
+// yearly registrar check (manifest §8). Inclusive ISO ranges; year-spanning
+// winter break works via full-ISO string comparison. Summer is NOT a break —
+// it has its own tier (summer_hours_ cells / inheritance) above.
+const MU_BREAK_RANGES = [
+    { from: '2026-11-26', to: '2026-11-29' },   // Thanksgiving 2026
+    { from: '2026-12-18', to: '2027-01-18' },   // Winter break 2026-27
+    { from: '2027-03-29', to: '2027-04-03' },   // Spring break 2027
+];
+function isoInMuBreak(iso){
+    return MU_BREAK_RANGES.some(r => iso >= r.from && iso <= r.to);
+}
+// THE resolver: every hours-reading surface goes through the shared helpers
+// (placeHoursText / placeHoursDetailsHtml / hoursSortRank), which now call
+// this instead of reading p.hours directly. Waterfall per DAY, resolved
+// against each table column's actual calendar date this ET week (so a
+// boundary week — break ends Wednesday, fall starts Monday — shows each
+// column correctly, not a whole-set flip):
+//   1. breakClosed listing + date in MU_BREAK_RANGES  → closed
+//   2. date in the computed summer window             → summer_hours_ cell,
+//      blank cell INHERITS that day's regular cell (per-day inheritance)
+//   3. otherwise                                      → regular hours cell
+// No base AND no summer hours → null (breakClosed alone makes no claim).
+// Fast path: listings with neither summerHours nor breakClosed return
+// p.hours untouched — the 53 existing hours listings behave identically.
+function placeEffectiveHours(p){
+    if (!p || typeof p !== 'object') return null;
+    const base = (p.hours && typeof p.hours === 'object') ? p.hours : null;
+    const summer = (p.summerHours && typeof p.summerHours === 'object') ? p.summerHours : null;
+    if (!base && !summer) return null;
+    if (!summer && !p.breakClosed) return base;
+    const todayISO = hoursTodayISO();
+    const todayIdx = hoursNowET().dayIdx;
+    const out = {};
+    for (let i = 0; i < 7; i++){
+        const key = HOURS_DAY_KEYS[i];
+        const dISO = isoAddDays(todayISO, i - todayIdx);
+        let v;
+        if (p.breakClosed && isoInMuBreak(dISO)) v = 'closed';
+        else if (summer && isoInMuSummer(dISO)) v = (summer[key] !== undefined) ? summer[key] : (base ? base[key] : undefined);
+        else v = base ? base[key] : undefined;
+        if (v !== undefined) out[key] = v;
+    }
+    return Object.keys(out).length ? out : null;
 }
 const SPECIALS_DAY_IDX = {Monday:0,Tuesday:1,Wednesday:2,Thursday:3,Friday:4,Saturday:5,Sunday:6};
 function placesSpecialsItemsFor(sp, dayName){
@@ -6978,20 +7075,12 @@ function renderPlaces(){
     pc.style.alignItems = 'start';
 }
 
-// Adapter: derive a structured {mon..sun} hours object from the Cupboard's
-// code-driven seasonal schedule (same summer window as buildCampusCupboardItems,
-// which stays the open-today truth for cupboardTodayVisible). Computed at
-// render time so the summer/semester transition flows through automatically.
-function cupboardHoursObject(){
-    const now = new Date();
-    const m = now.getMonth() + 1, d = now.getDate();
-    const isSummer = (m === 5 && d >= 11) || m === 6 || m === 7 || (m === 8 && d < 25);
-    const wk = isSummer ? '09:00-13:00' : '08:00-20:00';
-    return { mon: wk, tue: wk, wed: wk, thu: wk, fri: wk, sat: 'closed', sun: 'closed' };
-}
+// (cupboardHoursObject adapter RETIRED 2026-07-23 — the Cupboard's sheet row
+// now carries hours_/summer_hours_/break_closed like every other listing and
+// resolves through placeEffectiveHours; superseded infrastructure removed
+// outright per the goldBlurb precedent, not dormant UI.)
 // Build the Campus Cupboard card for the Places page. Mirrors the food-card
-// shape (header + meta + action button) but pulls hours from
-// buildCampusCupboardItems for season-aware display.
+// shape (header + meta + action button); hours render via the shared path.
 function buildCampusCupboardCard(dayName) {
     const items = buildCampusCupboardItems(dayName);
     if (!items) return '';   // closed today (weekend) — hide the card entirely
@@ -7000,7 +7089,7 @@ function buildCampusCupboardCard(dayName) {
             <div class="card-heading"><span style="font-size:1.5rem;">🛒</span><h3 class="card-title">Campus Cupboard</h3></div>
             <p class="card-meta" style="margin-bottom:4px;">📍 Inside The HUB, 121 N George St</p>
             <p class="card-meta">MU students only</p>
-            ${placeHoursDetailsHtml({ hours: cupboardHoursObject() }, false)}
+            ${placeHoursDetailsHtml(window._cupboard, false)}
             <div class="specials-section"><p style="font-size:0.8rem;font-weight:700;margin-bottom:4px;">Today's Specials (${dayName}):</p><p style="font-size:0.8rem;color:var(--text);margin:2px 0;">• Free groceries — ${items[1]}</p></div>
             <a href="https://www.hubmu.org/free-groceries" target="_blank" rel="noopener" class="btn btn-sm btn-outline" style="font-size:0.78rem;">More info ↗</a>
         </div>

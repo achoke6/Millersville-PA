@@ -9,7 +9,9 @@
  *   - restaurants.json   (type=food rows)
  *   - services.json      (type=service rows)
  *   - housing.json       (type=housing rows)
- *   - campus-cupboard.json (type=cupboard row — static info; hours logic in app.js)
+ *   - campus-cupboard.json (type=cupboard row — static info + hours; the
+ *                         open/closed logic runs through the same shared
+ *                         hours path as every other listing as of 2026-07-23)
  *   - association.json   (verified members + spotlight rotation, derived from
  *                         the verified/spotlight/audience columns)
  *
@@ -20,15 +22,17 @@
  * SHEET COLUMNS (header row, exact names, case-insensitive match):
  *   name, active, type, category, cuisine, landlord, address, phone, website,
  *   iosLink, status, onCampus, marauderGold, verified, audience, spotlight,
- *   tagline, logo, description, lat, lng, slug, hours_mon..hours_sun
+ *   tagline, logo, description, lat, lng, slug, hours_mon..hours_sun,
+ *   summer_hours_mon..summer_hours_sun, break_closed
  *
  *   active:      non-blank (e.g. "X") = listed; blank = hidden/skipped entirely.
  *                (If the column is absent, all rows are treated as active.)
  *   type:        food | service | housing | cupboard | institution
  *                  food/service = normal directory cards
  *                  housing      = apartment cards (uses name, landlord, website, description)
- *                  cupboard     = the Campus Cupboard resource (static info here;
- *                                 hours/open-closed logic stays in app.js)
+ *                  cupboard     = the Campus Cupboard resource (static info +
+ *                                 hours here; app.js resolves open/closed via
+ *                                 the shared hours path like any listing)
  *                  institution  = spotlight-only, no directory card (e.g. MU)
  *   landlord:    (housing only) leasing company shown as the card subtitle
  *   onCampus / marauderGold / verified / spotlight: "yes" (anything else = no)
@@ -38,7 +42,8 @@
  *                service / housing / cupboard listings only when both parse and
  *                fall inside the local sanity box (GEO below) — bad or
  *                out-of-area values are warned and skipped, never written.
- *   hours_mon..hours_sun: optional per-day business hours (food/service only).
+ *   hours_mon..hours_sun: optional per-day business hours (food/service/
+ *                cupboard).
  *                Per-day cell values: "HH:MM-HH:MM" (24h ET; end "24:00"
  *                allowed; end < start = past midnight, e.g. "20:00-02:00";
  *                "00:00-24:00" = open 24 hours), comma-joined ranges for
@@ -47,6 +52,17 @@
  *                object; a row with no valid days emits no `hours` field at
  *                all (the frontend renders nothing — fail-quiet like lat/lng).
  *                Malformed cells are warned + skipped PER DAY, never emitted.
+ *   summer_hours_mon..summer_hours_sun: optional per-day SUMMER hours (same
+ *                cell format), emitted as `summerHours`. The frontend applies
+ *                them only inside MU's computed summer window (day after
+ *                spring commencement .. day before fall classes); a blank
+ *                summer cell INHERITS that day's regular hours cell, so a
+ *                place that only changes weekdays fills 5 cells. A place
+ *                closed all summer fills all 7 with "closed" explicitly.
+ *   break_closed: "yes" = closed during MU academic breaks (Thanksgiving /
+ *                winter / spring break — app.js MU_BREAK_RANGES). Emitted as
+ *                `breakClosed: true`. Summer is NOT a break — use the
+ *                summer_hours_ cells for summer behavior.
  *
  * USAGE:
  *   DIRECTORY_SHEET_CSV_URL="https://docs.google.com/spreadsheets/d/<ID>/export?format=csv&gid=<GID>" \
@@ -143,6 +159,7 @@ async function main() {
   let warnings = 0;
   let geocoded = 0;
   let hoursListings = 0;
+  let summerHoursListings = 0;
 
   // lat/lng passthrough: parse + sanity-check the optional coordinate columns.
   // Returns {lat, lng} rounded to 6 dp, or null. A blank pair = silently no
@@ -174,22 +191,33 @@ async function main() {
   // field emitted at all, mirroring the coordsFor fail-quiet convention).
   const HOURS_DAYS = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
   const HOURS_RANGE_RE = /^([01]\d|2[0-3]):[0-5]\d-(([01]\d|2[0-3]):[0-5]\d|24:00)$/;
-  const hoursFor = (row, name) => {
+  // Shared per-day parser for both hours_ and summer_hours_ column sets —
+  // identical cell grammar and per-day warn+skip for both.
+  const hoursSetFor = (row, name, prefix) => {
     const out = {};
     let any = false;
     for (const d of HOURS_DAYS) {
-      const v = get(row, 'hours_' + d);
+      const v = get(row, prefix + d);
       if (!v) continue;
       const parts = v.toLowerCase().split(',').map(s => s.trim()).filter(Boolean);
       if (parts.length === 1 && parts[0] === 'closed') { out[d] = 'closed'; any = true; continue; }
       if (parts.length > 0 && parts.every(rg => HOURS_RANGE_RE.test(rg))) { out[d] = parts.join(','); any = true; continue; }
-      console.warn(`  ⚠ bad hours_${d} ("${v}") for ${name} — day skipped`);
+      console.warn(`  ⚠ bad ${prefix}${d} ("${v}") for ${name} — day skipped`);
       warnings++;
     }
-    if (!any) return null;
-    hoursListings++;
-    return out;
+    return any ? out : null;
   };
+  const hoursFor = (row, name) => {
+    const h = hoursSetFor(row, name, 'hours_');
+    if (h) hoursListings++;
+    return h;
+  };
+  const summerHoursFor = (row, name) => {
+    const h = hoursSetFor(row, name, 'summer_hours_');
+    if (h) summerHoursListings++;
+    return h;
+  };
+  const breakClosedFor = (row) => yes(get(row, 'break_closed'));
 
   for (let r = 1; r < rows.length; r++) {
     const row = rows[r];
@@ -223,6 +251,8 @@ async function main() {
       if (audience !== 'both') o.audience = audience;
       const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = slugify(get(row, 'slug') || name);
       const h = hoursFor(row, name); if (h) o.hours = h;
+      const sh = summerHoursFor(row, name); if (sh) o.summerHours = sh;
+      if (breakClosedFor(row)) o.breakClosed = true;
       restaurants.push(o);
     } else if (type === 'service') {
       const o = { name, category: get(row, 'category'), address: get(row, 'address'),
@@ -233,6 +263,8 @@ async function main() {
       if (audience !== 'both') o.audience = audience;
       const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = slugify(get(row, 'slug') || name);
       const h = hoursFor(row, name); if (h) o.hours = h;
+      const sh = summerHoursFor(row, name); if (sh) o.summerHours = sh;
+      if (breakClosedFor(row)) o.breakClosed = true;
       services.push(o);
     } else if (type === 'housing') {
       const o = { name, landlord: get(row, 'landlord'), description: get(row, 'description') };
@@ -241,14 +273,23 @@ async function main() {
       const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = slugify(get(row, 'slug') || name);
       housing.push(o);
     } else if (type === 'cupboard') {
-      // Static info only — the open/closed + seasonal-hours logic lives in
-      // app.js (buildCampusCupboardItems). This row controls whether the
-      // resource appears at all and its description/location text.
+      // Static info + HOURS (2026-07-23): the Cupboard's hours now come from
+      // this row's hours_/summer_hours_/break_closed cells like any other
+      // listing — app.js resolves open/closed through the shared hours path
+      // (placeEffectiveHours). A cupboard row with NO valid hours cells makes
+      // the app hide the Cupboard entirely (no claim = closed), so warn LOUD.
       const o = {
         name, description: get(row, 'description'), address: get(row, 'address'),
         onCampus: yes(get(row, 'onCampus'))
       };
       const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = slugify(get(row, 'slug') || name);
+      const h = hoursFor(row, name); if (h) o.hours = h;
+      const sh = summerHoursFor(row, name); if (sh) o.summerHours = sh;
+      if (breakClosedFor(row)) o.breakClosed = true;
+      if (!h) {
+        console.warn(`  ⚠ cupboard row "${name}" has no valid hours_ cells — the app will HIDE the Cupboard entirely`);
+        warnings++;
+      }
       cupboard.push(o);
     } else if (type === 'institution') {
       // No directory card — only eligible for the spotlight rotation.
@@ -308,6 +349,7 @@ async function main() {
   console.log(`  association.json: ${members.length} verified, ${spotlight.length} spotlight`);
   console.log(`  geocoded listings: ${geocoded}`);
   console.log(`  listings with hours: ${hoursListings}`);
+  console.log(`  listings with summer hours: ${summerHoursListings}`);
   if (warnings) console.log(`  ⚠ ${warnings} warning(s) above`);
 }
 

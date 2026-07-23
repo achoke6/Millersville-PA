@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-23T19:56:14.553Z",
-  "totalEvents": 799,
+  "generatedAt": "2026-07-23T21:02:46.632Z",
+  "totalEvents": 758,
   "withDescription": 285,
   "withImage": 98,
   "familyFriendly": 41,
@@ -14,7 +14,7 @@
     "vfw": 5,
     "phantomPower": 13,
     "community": 53,
-    "manor": 41,
+    "manor": 0,
     "raneyCellars": 2,
     "muHudlBroadcasts": 0
   },
@@ -51,10 +51,7 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-05-14T02:00:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-07-29T12:30:00.000Z",
-      "latest": "2027-07-07T23:00:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-07-23T20:00:00.000Z",
       "latest": "2026-07-23T22:00:00.000Z"
@@ -93,10 +90,7 @@
       "newest": "2027-05-14",
       "daysSinceMoved": 6
     },
-    "manor": {
-      "newest": "2027-07-07",
-      "daysSinceMoved": 16
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-07-23",
       "daysSinceMoved": 15
@@ -123,78 +117,78 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-23T19:54:30.187Z"
+    "lastSyncAt": "2026-07-23T21:01:35.782Z"
   },
   "recentlyAdded": [
     {
-      "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
-      "firstSeenAt": "2026-07-23T14:15:20.086Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-07-29T12:30:00.000Z"
+      "key": "Open Jukebox|2026-08-13T02:00:00.000Z",
+      "firstSeenAt": "2026-07-23T02:34:21.762Z",
+      "title": "Open Jukebox",
+      "source": "Jack's Tavern",
+      "date": "2026-08-13T02:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
-      "firstSeenAt": "2026-07-23T14:15:20.086Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-08-03T23:00:00.000Z"
+      "key": "Reserved, Public Meeting Room|2026-06-22T22:00:00.000Z",
+      "firstSeenAt": "2026-07-22T23:02:18.598Z",
+      "title": "Reserved, Public Meeting Room",
+      "source": "Borough",
+      "date": "2026-06-22T22:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
-      "firstSeenAt": "2026-07-23T14:15:20.086Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-08-05T23:00:00.000Z"
+      "key": "Boys JV Football vs Red Lion Area High School|2026-08-31T20:00:00.000Z",
+      "firstSeenAt": "2026-07-22T23:02:18.598Z",
+      "title": "Boys JV Football vs Red Lion Area High School",
+      "source": "PM",
+      "date": "2026-08-31T20:00:00.000Z"
     },
     {
-      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
-      "firstSeenAt": "2026-07-23T14:15:20.086Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-08-10T23:00:00.000Z"
+      "key": "PIG w. Cyanotic & DNE|2026-10-04T00:00:00.000Z",
+      "firstSeenAt": "2026-07-22T14:42:51.337Z",
+      "title": "PIG w. Cyanotic & DNE",
+      "source": "Other",
+      "date": "2026-10-04T00:00:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
-      "firstSeenAt": "2026-07-23T14:15:20.086Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-08-26T12:30:00.000Z"
+      "key": "DurtE w. Shawn Paris, Wildcard, Knowledge, Firenation Flames, H8trid|2026-08-30T00:00:00.000Z",
+      "firstSeenAt": "2026-07-22T08:27:09.083Z",
+      "title": "DurtE w. Shawn Paris, Wildcard, Knowledge, Firenation Flames, H8trid",
+      "source": "Other",
+      "date": "2026-08-30T00:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
-      "firstSeenAt": "2026-07-23T14:15:20.086Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-09-02T23:00:00.000Z"
+      "key": "Trivia Night|2026-08-12T00:00:00.000Z",
+      "firstSeenAt": "2026-07-22T02:29:50.723Z",
+      "title": "Trivia Night",
+      "source": "Jack's Tavern",
+      "date": "2026-08-12T00:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
-      "firstSeenAt": "2026-07-23T14:15:20.086Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-09-08T23:00:00.000Z"
+      "key": "Millersville University Women's Cross Country at Paul Short Run|2026-10-02T18:00:00.000Z",
+      "firstSeenAt": "2026-07-21T19:46:41.636Z",
+      "title": "Millersville University Women's Cross Country at Paul Short Run",
+      "source": "MU",
+      "date": "2026-10-02T18:00:00.000Z"
     },
     {
-      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
-      "firstSeenAt": "2026-07-23T14:15:20.086Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-09-14T23:00:00.000Z"
+      "key": "Thurday Trivia 6PM|2026-07-23T22:00:00.000Z",
+      "firstSeenAt": "2026-07-21T15:04:32.764Z",
+      "title": "Thurday Trivia 6PM",
+      "source": "Raney Cellars",
+      "date": "2026-07-23T22:00:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
-      "firstSeenAt": "2026-07-23T14:15:20.086Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-09-30T12:30:00.000Z"
+      "key": "Borough Council Meeting|2026-04-28T23:00:00.000Z",
+      "firstSeenAt": "2026-07-20T19:24:44.683Z",
+      "title": "Borough Council Meeting",
+      "source": "Borough",
+      "date": "2026-04-28T23:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
-      "firstSeenAt": "2026-07-23T14:15:20.086Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-10-05T23:00:00.000Z"
+      "key": "Park Commission - Cancelled|2026-05-04T22:00:00.000Z",
+      "firstSeenAt": "2026-07-20T19:24:44.683Z",
+      "title": "Park Commission - Cancelled",
+      "source": "Borough",
+      "date": "2026-05-04T22:00:00.000Z"
     }
   ],
   "addedLastRun": 0

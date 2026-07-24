@@ -1,55 +1,39 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Thursday, July 23, 2026 at 12:02 PM (Kyle Elliott, Meteorologist)",
+    "issued": "Friday, July 24, 2026 at 11:30 AM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
         "period": "This afternoon",
-        "text": "Sunny, cooler and refreshing with low humidity. High: 78-82"
+        "text": "Mostly sunny and beautiful with low humidity. High: 82-86"
       },
       {
         "period": "Tonight",
-        "text": "Clear and comfortably cool. Low: 54-58"
-      },
-      {
-        "period": "Friday",
-        "text": "Mostly sunny and beautiful with low humidity. High: 80-84"
-      },
-      {
-        "period": "Friday Night",
-        "text": "Mainly clear and comfortable. Low: 56-60"
+        "text": "Mainly clear and comfortably cool. Low: 54-58"
       },
       {
         "period": "Saturday",
         "text": "Mostly sunny and gorgeous with low humidity. High: 82-86"
+      },
+      {
+        "period": "Saturday Night",
+        "text": "Mainly clear and comfortable. Low: 58-62"
+      },
+      {
+        "period": "Sunday",
+        "text": "Seasonable with sunshine and a few passing clouds. High: 84-88"
       }
     ]
   },
   "sevenDay": {
-    "issued": "Thursday, July 23, 2026 at 09:19 AM (Kyle Elliott)",
+    "issued": "Friday, July 24, 2026 at 09:13 AM (Kyle Elliott)",
     "days": [
-      {
-        "period": "Thursday",
-        "sky": "Sunny",
-        "weather": "Cooler",
-        "pop": "<10%",
-        "temp": "80",
-        "conf": "5"
-      },
-      {
-        "period": "Thursday night",
-        "sky": "Clear Skies",
-        "weather": "Cool",
-        "pop": "<10%",
-        "temp": "56",
-        "conf": "5"
-      },
       {
         "period": "Friday",
         "sky": "Mostly Sunny",
         "weather": "Pleasant",
         "pop": "<10%",
-        "temp": "82",
+        "temp": "84",
         "conf": "5"
       },
       {
@@ -57,7 +41,7 @@
         "sky": "Mainly Clear",
         "weather": "Cool",
         "pop": "<10%",
-        "temp": "58",
+        "temp": "56",
         "conf": "5"
       },
       {
@@ -73,47 +57,55 @@
         "sky": "Mainly Clear",
         "weather": "Fair",
         "pop": "<10%",
-        "temp": "62",
+        "temp": "60",
         "conf": "5"
       },
       {
         "period": "Sunday",
-        "sky": "Partly Sunny",
+        "sky": "Mostly Sunny",
         "weather": "Seasonable",
-        "pop": "20%",
+        "pop": "<10%",
         "temp": "86",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Sunday night",
-        "sky": "Partly Cloudy",
-        "weather": "Mild",
-        "pop": "20%",
-        "temp": "66",
-        "conf": "4"
+        "sky": "Mainly Clear",
+        "weather": "Fair",
+        "pop": "<10%",
+        "temp": "64",
+        "conf": "5"
       },
       {
         "period": "Monday",
         "sky": "Clouds & Sun",
-        "weather": "Chc. of T-storm",
-        "pop": "30%",
+        "weather": "Afternoon T-Storms",
+        "pop": "40%",
         "temp": "88",
         "conf": "3"
       },
       {
         "period": "Monday night",
-        "sky": "Variably Cloudy",
-        "weather": "Chc. of Showers",
-        "pop": "30%",
+        "sky": "Mostly Cloudy",
+        "weather": "Sct. Thunderstorms",
+        "pop": "40%",
         "temp": "68",
         "conf": "3"
       },
       {
         "period": "Tuesday",
-        "sky": "Variably Cloudy",
-        "weather": "Chc. of T-storm",
-        "pop": "40%",
-        "temp": "upper 80s",
+        "sky": "Clouds & Sun",
+        "weather": "Sct. Thunderstorms",
+        "pop": "60%",
+        "temp": "86",
+        "conf": "3"
+      },
+      {
+        "period": "Tuesday night",
+        "sky": "Partly Cloudy",
+        "weather": "Chc. of Showers",
+        "pop": "30%",
+        "temp": "66",
         "conf": "3"
       },
       {
@@ -123,74 +115,82 @@
         "pop": "20%",
         "temp": "mid 80s",
         "conf": "3"
+      },
+      {
+        "period": "Thursday",
+        "sky": "Mostly Sunny",
+        "weather": "Seasonable",
+        "pop": "<10%",
+        "temp": "mid 80s",
+        "conf": "3"
       }
     ]
   },
   "observations": [
     {
       "time": "15:00",
-      "temp": "80",
-      "dewpoint": "51",
-      "rh": "37",
-      "windDir": "ESE",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "11.9",
-      "condition": "None"
-    },
-    {
-      "time": "14:00",
-      "temp": "80",
-      "dewpoint": "49",
-      "rh": "35",
-      "windDir": "NW",
-      "windSpeed": "5",
-      "precip": "0.00",
-      "visibility": "12.0",
-      "condition": "None"
-    },
-    {
-      "time": "13:00",
-      "temp": "77",
-      "dewpoint": "51",
-      "rh": "40",
-      "windDir": "WNW",
+      "temp": "81",
+      "dewpoint": "55",
+      "rh": "42",
+      "windDir": "ENE",
       "windSpeed": "4",
       "precip": "0.00",
       "visibility": "11.7",
       "condition": "None"
     },
     {
-      "time": "12:00",
-      "temp": "75",
-      "dewpoint": "51",
+      "time": "14:00",
+      "temp": "81",
+      "dewpoint": "56",
       "rh": "43",
-      "windDir": "NW",
-      "windSpeed": "3",
+      "windDir": "ESE",
+      "windSpeed": "6",
+      "precip": "0.00",
+      "visibility": "11.6",
+      "condition": "None"
+    },
+    {
+      "time": "13:00",
+      "temp": "80",
+      "dewpoint": "57",
+      "rh": "45",
+      "windDir": "ESE",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "79",
+      "dewpoint": "56",
+      "rh": "45",
+      "windDir": "SE",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "11:00",
+      "temp": "76",
+      "dewpoint": "60",
+      "rh": "57",
+      "windDir": "E",
+      "windSpeed": "4",
       "precip": "0.00",
       "visibility": "11.1",
       "condition": "None"
     },
     {
-      "time": "11:00",
-      "temp": "75",
-      "dewpoint": "52",
-      "rh": "44",
-      "windDir": "NW",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "10.6",
-      "condition": "None"
-    },
-    {
       "time": "10:00",
-      "temp": "72",
-      "dewpoint": "51",
-      "rh": "48",
-      "windDir": "ENE",
-      "windSpeed": "3",
+      "temp": "74",
+      "dewpoint": "63",
+      "rh": "67",
+      "windDir": "SW",
+      "windSpeed": "2",
       "precip": "0.00",
-      "visibility": "12 +",
+      "visibility": "11.1",
       "condition": "None"
     }
   ],
@@ -438,6 +438,17 @@
         "windSpeed": "20",
         "windTime": "18:10",
         "rain": "0.00"
+      },
+      {
+        "date": "07/23",
+        "max": "82",
+        "maxTime": "15:41",
+        "min": "58",
+        "minTime": "06:16",
+        "windDir": "322",
+        "windSpeed": "14",
+        "windTime": "11:38",
+        "rain": "0.00"
       }
     ],
     "totalRain": "3.03",
@@ -448,9 +459,9 @@
     "yearMinDate": "January 21"
   },
   "discussion": {
-    "headline": "nother round of severe storms today, then quiet and refreshing",
-    "dateLine": "1:00 p.m. Tuesday, July 21, 2026",
-    "excerpt": "The week kicked off on a mostly sunny and pleasant note across northern MD and southeastern PA with high temperatures in the comfortable low-to-mid 80s Monday afternoon. Unfortunately, the tranquil conditions will be replaced by volatile weather and another round of severe storms this afternoon and evening. Much like Saturday, the Storm Prediction Center (SPC) has placed most of PA and the Delmarva Region in an \"enhanced risk\" for severe weather. …",
+    "headline": "beautiful, summer weekend before storm chances return",
+    "dateLine": "11:30 a.m. Friday, July 24, 2026, Update",
+    "excerpt": "The weather over the last two days has been nothing short of spectacular! Following Wednesday morning's cold frontal passage, west-northwesterly winds of 12-25 mph ushered a cooler and much drier air mass into the Commonwealth. In fact, dewpoints plummeted into the 40s Thursday afternoon, and afternoon highs were in the refreshing upper 70s to low 80s under perfectly sunny skies. …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -488,5 +499,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-23T19:13:15.819Z"
+  "updated": "2026-07-24T19:22:03.919Z"
 }

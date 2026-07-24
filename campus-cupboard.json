@@ -5,5 +5,24 @@
   "onCampus": true,
   "lat": 39.999832,
   "lng": -76.35555,
-  "slug": "campus-cupboard"
+  "slug": "campus-cupboard",
+  "hours": {
+    "mon": "08:00-20:00",
+    "tue": "08:00-20:00",
+    "wed": "08:00-20:00",
+    "thu": "08:00-20:00",
+    "fri": "08:00-20:00",
+    "sat": "closed",
+    "sun": "closed"
+  },
+  "summerHours": {
+    "mon": "10:00-14:00",
+    "tue": "10:00-14:00",
+    "wed": "10:00-14:00",
+    "thu": "10:00-14:00",
+    "fri": "10:00-14:00",
+    "sat": "closed",
+    "sun": "closed"
+  },
+  "breakClosed": true
 }

@@ -160,6 +160,7 @@ async function main() {
   let geocoded = 0;
   let hoursListings = 0;
   let summerHoursListings = 0;
+  let breakClosedListings = 0;
 
   // lat/lng passthrough: parse + sanity-check the optional coordinate columns.
   // Returns {lat, lng} rounded to 6 dp, or null. A blank pair = silently no
@@ -217,7 +218,11 @@ async function main() {
     if (h) summerHoursListings++;
     return h;
   };
-  const breakClosedFor = (row) => yes(get(row, 'break_closed'));
+  const breakClosedFor = (row) => {
+    const v = yes(get(row, 'break_closed'));
+    if (v) breakClosedListings++;   // counted once per emitted row (canary)
+    return v;
+  };
 
   for (let r = 1; r < rows.length; r++) {
     const row = rows[r];
@@ -350,6 +355,7 @@ async function main() {
   console.log(`  geocoded listings: ${geocoded}`);
   console.log(`  listings with hours: ${hoursListings}`);
   console.log(`  listings with summer hours: ${summerHoursListings}`);
+  console.log(`  listings with break closed: ${breakClosedListings}`);
   if (warnings) console.log(`  ⚠ ${warnings} warning(s) above`);
 }
 

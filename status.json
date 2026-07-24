@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-07-24T17:30:17.712Z",
-  "totalEvents": 793,
-  "withDescription": 279,
+  "generatedAt": "2026-07-24T19:23:38.982Z",
+  "totalEvents": 796,
+  "withDescription": 282,
   "withImage": 95,
   "familyFriendly": 41,
   "eventsToday": 3,
   "sources": {
     "muAthletics": 241,
     "muCalendar": 99,
-    "muGetInvolved": 148,
+    "muGetInvolved": 151,
     "pennManor": 84,
     "borough": 97,
     "vfw": 5,
@@ -123,15 +123,36 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-24T17:28:31.519Z"
+    "lastSyncAt": "2026-07-24T19:22:01.962Z"
   },
   "recentlyAdded": [
     {
-      "key": "Traffic Commission Meeting|2026-07-29T12:30:00.000Z",
-      "firstSeenAt": "2026-07-24T06:25:38.827Z",
-      "title": "Traffic Commission Meeting",
+      "key": "Traffic Commission Meeting-CANCELED|2026-07-29T12:30:00.000Z",
+      "firstSeenAt": "2026-07-24T19:23:38.979Z",
+      "title": "Traffic Commission Meeting-CANCELED",
       "source": "Manor",
       "date": "2026-07-29T12:30:00.000Z"
+    },
+    {
+      "key": "Marauder Mania|2026-08-29T12:00:00",
+      "firstSeenAt": "2026-07-24T19:23:38.979Z",
+      "title": "Marauder Mania",
+      "source": "MU",
+      "date": "2026-08-29T12:00:00"
+    },
+    {
+      "key": "As Sweet as DZ|2026-09-04T17:30:00",
+      "firstSeenAt": "2026-07-24T19:23:38.979Z",
+      "title": "As Sweet as DZ",
+      "source": "MU",
+      "date": "2026-09-04T17:30:00"
+    },
+    {
+      "key": "Delta Zeta Football Tailgate|2026-09-13T15:00:00",
+      "firstSeenAt": "2026-07-24T19:23:38.979Z",
+      "title": "Delta Zeta Football Tailgate",
+      "source": "MU",
+      "date": "2026-09-13T15:00:00"
     },
     {
       "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
@@ -174,28 +195,7 @@
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2026-09-08T23:00:00.000Z"
-    },
-    {
-      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
-      "firstSeenAt": "2026-07-24T06:25:38.827Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-09-14T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
-      "firstSeenAt": "2026-07-24T06:25:38.827Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-09-30T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
-      "firstSeenAt": "2026-07-24T06:25:38.827Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-10-05T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 4
 }

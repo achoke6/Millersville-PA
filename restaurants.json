@@ -1,37 +1,5 @@
 [
   {
-    "name": "Chick-Fil-A",
-    "cuisine": "Chicken",
-    "description": "Classic chicken sandwiches and nuggets",
-    "address": "21 S George St, Millersville, PA 17551",
-    "status": "App Required",
-    "link": "https://play.google.com/store/apps/details?id=com.blackboard.mobileorder&hl=en_US",
-    "iosLink": "https://apps.apple.com/us/app/transact-mobile-ordering/id1494719529",
-    "marauderGold": true,
-    "onCampus": true,
-    "lat": 39.996161,
-    "lng": -76.353888,
-    "slug": "chick-fil-a",
-    "hours": {
-      "mon": "12:00-18:00",
-      "tue": "12:00-18:00",
-      "wed": "12:00-18:00",
-      "thu": "12:00-18:00",
-      "fri": "12:00-18:00",
-      "sat": "12:00-18:00",
-      "sun": "closed"
-    },
-    "summerHours": {
-      "mon": "12:00-18:00",
-      "tue": "12:00-18:00",
-      "wed": "12:00-18:00",
-      "thu": "12:00-18:00",
-      "fri": "12:00-18:00",
-      "sat": "closed",
-      "sun": "closed"
-    }
-  },
-  {
     "name": "Evergreen Cafe",
     "cuisine": "Coffee shop",
     "description": "Student run coffee shop.",
@@ -64,18 +32,18 @@
     "breakClosed": true
   },
   {
-    "name": "The Anchor",
-    "cuisine": "Dining hall",
-    "description": "Casual dining option upstairs in Gordinier Hall.",
-    "address": "1 James St, Millersville, PA 17551",
+    "name": "The Cove",
+    "cuisine": "Café",
+    "description": "Café and snack location in Lyle Hall.",
+    "address": "227 Cove Dr, Millersville, PA 17551",
     "status": "View Menu",
     "link": "https://www.millersville.edu/dining/",
     "marauderGold": true,
     "onCampus": true,
     "audience": "marauders",
-    "lat": 39.996747,
-    "lng": -76.353648,
-    "slug": "anchor",
+    "lat": 40.001798,
+    "lng": -76.356964,
+    "slug": "cove",
     "hours": {
       "mon": "closed",
       "tue": "closed",
@@ -93,21 +61,55 @@
       "fri": "closed",
       "sat": "closed",
       "sun": "closed"
-    }
+    },
+    "breakClosed": true
   },
   {
-    "name": "The Cove",
-    "cuisine": "Café",
-    "description": "Café and snack location in Lyle Hall.",
-    "address": "227 Cove Dr, Millersville, PA 17551",
+    "name": "Chick-Fil-A",
+    "cuisine": "Chicken",
+    "description": "Classic chicken sandwiches and nuggets",
+    "address": "21 S George St, Millersville, PA 17551",
+    "status": "App Required",
+    "link": "https://play.google.com/store/apps/details?id=com.blackboard.mobileorder&hl=en_US",
+    "iosLink": "https://apps.apple.com/us/app/transact-mobile-ordering/id1494719529",
+    "marauderGold": true,
+    "onCampus": true,
+    "lat": 39.996161,
+    "lng": -76.353888,
+    "slug": "chick-fil-a",
+    "hours": {
+      "mon": "12:00-18:00",
+      "tue": "12:00-18:00",
+      "wed": "12:00-18:00",
+      "thu": "12:00-18:00",
+      "fri": "12:00-18:00",
+      "sat": "12:00-18:00",
+      "sun": "closed"
+    },
+    "summerHours": {
+      "mon": "12:00-18:00",
+      "tue": "12:00-18:00",
+      "wed": "12:00-18:00",
+      "thu": "12:00-18:00",
+      "fri": "12:00-18:00",
+      "sat": "closed",
+      "sun": "closed"
+    },
+    "breakClosed": true
+  },
+  {
+    "name": "The Anchor",
+    "cuisine": "Dining hall",
+    "description": "Casual dining option upstairs in Gordinier Hall.",
+    "address": "1 James St, Millersville, PA 17551",
     "status": "View Menu",
     "link": "https://www.millersville.edu/dining/",
     "marauderGold": true,
     "onCampus": true,
     "audience": "marauders",
-    "lat": 40.001798,
-    "lng": -76.356964,
-    "slug": "cove",
+    "lat": 39.996747,
+    "lng": -76.353648,
+    "slug": "anchor",
     "hours": {
       "mon": "closed",
       "tue": "closed",
@@ -158,7 +160,8 @@
       "fri": "closed",
       "sat": "07:00-09:00,11:00-13:00,16:00-18:00",
       "sun": "07:00-09:00,11:00-13:00,16:00-18:00"
-    }
+    },
+    "breakClosed": true
   },
   {
     "name": "Starbucks (McNairy Library)",
@@ -189,7 +192,8 @@
       "fri": "07:30-16:00",
       "sat": "closed",
       "sun": "closed"
-    }
+    },
+    "breakClosed": true
   },
   {
     "name": "Koshary Station",
@@ -545,15 +549,6 @@
     "lng": -76.360659,
     "slug": "benson-snacks",
     "hours": {
-      "mon": "closed",
-      "tue": "closed",
-      "wed": "closed",
-      "thu": "closed",
-      "fri": "closed",
-      "sat": "closed",
-      "sun": "closed"
-    },
-    "summerHours": {
       "mon": "12:00-20:00",
       "tue": "12:00-20:00",
       "wed": "12:00-20:00",
@@ -578,15 +573,6 @@
       "tue": "closed",
       "wed": "closed",
       "thu": "22:00-24:00",
-      "fri": "closed",
-      "sat": "closed",
-      "sun": "closed"
-    },
-    "summerHours": {
-      "mon": "closed",
-      "tue": "closed",
-      "wed": "closed",
-      "thu": "closed",
       "fri": "closed",
       "sat": "closed",
       "sun": "closed"

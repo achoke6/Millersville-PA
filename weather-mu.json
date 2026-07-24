@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "11:00",
+      "temp": "76",
+      "dewpoint": "60",
+      "rh": "57",
+      "windDir": "E",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "11.1",
+      "condition": "None"
+    },
+    {
+      "time": "10:00",
+      "temp": "74",
+      "dewpoint": "63",
+      "rh": "67",
+      "windDir": "SW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "11.1",
+      "condition": "None"
+    },
+    {
       "time": "09:00",
       "temp": "67",
       "dewpoint": "57",
@@ -167,28 +189,6 @@
       "rh": "98",
       "windDir": "W",
       "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "10.9",
-      "condition": "None"
-    },
-    {
-      "time": "05:00",
-      "temp": "55",
-      "dewpoint": "54",
-      "rh": "98",
-      "windDir": "SE",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "9.7",
-      "condition": "None"
-    },
-    {
-      "time": "04:00",
-      "temp": "56",
-      "dewpoint": "55",
-      "rh": "98",
-      "windDir": "NE",
-      "windSpeed": "2",
       "precip": "0.00",
       "visibility": "10.9",
       "condition": "None"
@@ -459,9 +459,9 @@
     "yearMinDate": "January 21"
   },
   "discussion": {
-    "headline": "nother round of severe storms today, then quiet and refreshing",
-    "dateLine": "1:00 p.m. Tuesday, July 21, 2026",
-    "excerpt": "The week kicked off on a mostly sunny and pleasant note across northern MD and southeastern PA with high temperatures in the comfortable low-to-mid 80s Monday afternoon. Unfortunately, the tranquil conditions will be replaced by volatile weather and another round of severe storms this afternoon and evening. Much like Saturday, the Storm Prediction Center (SPC) has placed most of PA and the Delmarva Region in an \"enhanced risk\" for severe weather. …",
+    "headline": "beautiful, summer weekend before storm chances return",
+    "dateLine": "11:30 a.m. Friday, July 24, 2026, Update",
+    "excerpt": "The weather over the last two days has been nothing short of spectacular! Following Wednesday morning's cold frontal passage, west-northwesterly winds of 12-25 mph ushered a cooler and much drier air mass into the Commonwealth. In fact, dewpoints plummeted into the 40s Thursday afternoon, and afternoon highs were in the refreshing upper 70s to low 80s under perfectly sunny skies. …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -499,5 +499,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-24T13:40:26.654Z"
+  "updated": "2026-07-24T15:24:08.502Z"
 }

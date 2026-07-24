@@ -1,10 +1,10 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Friday, July 24, 2026 at 08:17 AM (Kyle Elliott, Meteorologist)",
+    "issued": "Friday, July 24, 2026 at 11:30 AM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "Today",
+        "period": "This afternoon",
         "text": "Mostly sunny and beautiful with low humidity. High: 82-86"
       },
       {
@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "13:00",
+      "temp": "80",
+      "dewpoint": "57",
+      "rh": "45",
+      "windDir": "ESE",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "79",
+      "dewpoint": "56",
+      "rh": "45",
+      "windDir": "SE",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "11:00",
       "temp": "76",
       "dewpoint": "60",
@@ -169,28 +191,6 @@
       "windSpeed": "1",
       "precip": "0.00",
       "visibility": "11.4",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "55",
-      "dewpoint": "54",
-      "rh": "96",
-      "windDir": "SSE",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "11.0",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "54",
-      "dewpoint": "53",
-      "rh": "98",
-      "windDir": "W",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "10.9",
       "condition": "None"
     }
   ],
@@ -499,5 +499,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-24T15:24:08.502Z"
+  "updated": "2026-07-24T17:28:34.061Z"
 }

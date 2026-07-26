@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-07-26T06:38:03.216Z",
-  "totalEvents": 749,
+  "generatedAt": "2026-07-26T09:14:34.828Z",
+  "totalEvents": 735,
   "withDescription": 275,
-  "withImage": 92,
+  "withImage": 78,
   "familyFriendly": 41,
   "eventsToday": 1,
   "sources": {
@@ -12,7 +12,7 @@
     "pennManor": 84,
     "borough": 97,
     "vfw": 5,
-    "phantomPower": 14,
+    "phantomPower": 0,
     "community": 53,
     "manor": 0,
     "raneyCellars": 2,
@@ -43,10 +43,7 @@
       "earliest": "2026-07-18T20:00:00.000Z",
       "latest": "2026-09-11T17:00:00.000Z"
     },
-    "phantomPower": {
-      "earliest": "2026-07-26T00:00:00.000Z",
-      "latest": "2026-10-04T00:00:00.000Z"
-    },
+    "phantomPower": null,
     "community": {
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-05-14T02:00:00.000Z"
@@ -82,10 +79,7 @@
       "newest": "2026-09-11",
       "daysSinceMoved": 52
     },
-    "phantomPower": {
-      "newest": "2026-10-04",
-      "daysSinceMoved": 4
-    },
+    "phantomPower": null,
     "community": {
       "newest": "2027-05-14",
       "daysSinceMoved": 9
@@ -98,9 +92,9 @@
   },
   "sports": {
     "total": 297,
-    "scored": 1,
+    "scored": 0,
     "wins": 0,
-    "losses": 1,
+    "losses": 0,
     "ties": 0
   },
   "registrations": {
@@ -117,23 +111,9 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-26T06:34:25.878Z"
+    "lastSyncAt": "2026-07-26T09:11:12.547Z"
   },
   "recentlyAdded": [
-    {
-      "key": "A Farewell To Kings - Rush Tribute (playing 2112 in its entirety)|2026-09-12T00:00:00.000Z",
-      "firstSeenAt": "2026-07-26T06:38:03.214Z",
-      "title": "A Farewell To Kings - Rush Tribute (playing 2112 in its entirety)",
-      "source": "Other",
-      "date": "2026-09-12T00:00:00.000Z"
-    },
-    {
-      "key": "A Skylit Drive|2026-08-30T23:00:00.000Z",
-      "firstSeenAt": "2026-07-25T13:22:31.293Z",
-      "title": "A Skylit Drive",
-      "source": "Other",
-      "date": "2026-08-30T23:00:00.000Z"
-    },
     {
       "key": "Marauder Mania|2026-08-29T12:00:00",
       "firstSeenAt": "2026-07-24T19:23:38.979Z",
@@ -177,19 +157,33 @@
       "date": "2026-08-31T20:00:00.000Z"
     },
     {
-      "key": "PIG w. Cyanotic & DNE|2026-10-04T00:00:00.000Z",
-      "firstSeenAt": "2026-07-22T14:42:51.337Z",
-      "title": "PIG w. Cyanotic & DNE",
-      "source": "Other",
-      "date": "2026-10-04T00:00:00.000Z"
+      "key": "Trivia Night|2026-08-12T00:00:00.000Z",
+      "firstSeenAt": "2026-07-22T02:29:50.723Z",
+      "title": "Trivia Night",
+      "source": "Jack's Tavern",
+      "date": "2026-08-12T00:00:00.000Z"
     },
     {
-      "key": "DurtE w. Shawn Paris, Wildcard, Knowledge, Firenation Flames, H8trid|2026-08-30T00:00:00.000Z",
-      "firstSeenAt": "2026-07-22T08:27:09.083Z",
-      "title": "DurtE w. Shawn Paris, Wildcard, Knowledge, Firenation Flames, H8trid",
-      "source": "Other",
-      "date": "2026-08-30T00:00:00.000Z"
+      "key": "Millersville University Women's Cross Country at Paul Short Run|2026-10-02T18:00:00.000Z",
+      "firstSeenAt": "2026-07-21T19:46:41.636Z",
+      "title": "Millersville University Women's Cross Country at Paul Short Run",
+      "source": "MU",
+      "date": "2026-10-02T18:00:00.000Z"
+    },
+    {
+      "key": "Thurday Trivia 6PM|2026-07-23T22:00:00.000Z",
+      "firstSeenAt": "2026-07-21T15:04:32.764Z",
+      "title": "Thurday Trivia 6PM",
+      "source": "Raney Cellars",
+      "date": "2026-07-23T22:00:00.000Z"
+    },
+    {
+      "key": "Borough Council Meeting|2026-04-28T23:00:00.000Z",
+      "firstSeenAt": "2026-07-20T19:24:44.683Z",
+      "title": "Borough Council Meeting",
+      "source": "Borough",
+      "date": "2026-04-28T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 0
 }

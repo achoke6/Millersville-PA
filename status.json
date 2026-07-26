@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-26T21:58:57.161Z",
-  "totalEvents": 749,
+  "generatedAt": "2026-07-26T23:03:35.254Z",
+  "totalEvents": 790,
   "withDescription": 275,
   "withImage": 92,
   "familyFriendly": 41,
@@ -14,7 +14,7 @@
     "vfw": 5,
     "phantomPower": 14,
     "community": 53,
-    "manor": 0,
+    "manor": 41,
     "raneyCellars": 2,
     "muHudlBroadcasts": 0
   },
@@ -51,7 +51,10 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-05-14T02:00:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-07-29T12:30:00.000Z",
+      "latest": "2027-07-07T23:00:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-07-23T20:00:00.000Z",
       "latest": "2026-07-23T22:00:00.000Z"
@@ -90,7 +93,10 @@
       "newest": "2027-05-14",
       "daysSinceMoved": 9
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-07-07",
+      "daysSinceMoved": 19
+    },
     "raneyCellars": {
       "newest": "2026-07-23",
       "daysSinceMoved": 18
@@ -117,79 +123,79 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-26T21:57:35.698Z"
+    "lastSyncAt": "2026-07-26T23:01:58.520Z"
   },
   "recentlyAdded": [
     {
-      "key": "A Farewell To Kings - Rush Tribute (playing 2112 in its entirety)|2026-09-12T00:00:00.000Z",
-      "firstSeenAt": "2026-07-26T20:09:18.237Z",
-      "title": "A Farewell To Kings - Rush Tribute (playing 2112 in its entirety)",
-      "source": "Other",
-      "date": "2026-09-12T00:00:00.000Z"
+      "key": "Traffic Commission Meeting-CANCELED|2026-07-29T12:30:00.000Z",
+      "firstSeenAt": "2026-07-26T23:03:35.252Z",
+      "title": "Traffic Commission Meeting-CANCELED",
+      "source": "Manor",
+      "date": "2026-07-29T12:30:00.000Z"
     },
     {
-      "key": "Bark At The Moon - Ozzy Osbourne Tribute|2026-07-26T00:00:00.000Z",
-      "firstSeenAt": "2026-07-26T11:19:15.191Z",
-      "title": "Bark At The Moon - Ozzy Osbourne Tribute",
-      "source": "Other",
-      "date": "2026-07-26T00:00:00.000Z"
+      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
+      "firstSeenAt": "2026-07-26T23:03:35.252Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-08-03T23:00:00.000Z"
     },
     {
-      "key": "Houses Of The Holy - The True Zeppelin Experience|2026-08-02T00:00:00.000Z",
-      "firstSeenAt": "2026-07-26T11:19:15.191Z",
-      "title": "Houses Of The Holy - The True Zeppelin Experience",
-      "source": "Other",
-      "date": "2026-08-02T00:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
+      "firstSeenAt": "2026-07-26T23:03:35.252Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-08-05T23:00:00.000Z"
     },
     {
-      "key": "\"GOLDEN\": A K-POP KIDS PARTY|2026-08-02T16:00:00.000Z",
-      "firstSeenAt": "2026-07-26T11:19:15.191Z",
-      "title": "\"GOLDEN\": A K-POP KIDS PARTY",
-      "source": "Other",
-      "date": "2026-08-02T16:00:00.000Z"
+      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
+      "firstSeenAt": "2026-07-26T23:03:35.252Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-08-10T23:00:00.000Z"
     },
     {
-      "key": "Sunny Sweeney|2026-08-06T00:00:00.000Z",
-      "firstSeenAt": "2026-07-26T11:19:15.191Z",
-      "title": "Sunny Sweeney",
-      "source": "Other",
-      "date": "2026-08-06T00:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
+      "firstSeenAt": "2026-07-26T23:03:35.252Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-08-26T12:30:00.000Z"
     },
     {
-      "key": "Deadgrass|2026-08-09T00:00:00.000Z",
-      "firstSeenAt": "2026-07-26T11:19:15.191Z",
-      "title": "Deadgrass",
+      "key": "Caitlynne Curtis|2026-09-02T00:00:00.000Z",
+      "firstSeenAt": "2026-07-26T23:03:35.252Z",
+      "title": "Caitlynne Curtis",
       "source": "Other",
-      "date": "2026-08-09T00:00:00.000Z"
+      "date": "2026-09-02T00:00:00.000Z"
     },
     {
-      "key": "Comedian Luke Null|2026-08-15T00:00:00.000Z",
-      "firstSeenAt": "2026-07-26T11:19:15.191Z",
-      "title": "Comedian Luke Null",
-      "source": "Other",
-      "date": "2026-08-15T00:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-07-26T23:03:35.252Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-09-02T23:00:00.000Z"
     },
     {
-      "key": "Legends Never Die (A celebration of Qwan Lewis)|2026-08-15T23:00:00.000Z",
-      "firstSeenAt": "2026-07-26T11:19:15.191Z",
-      "title": "Legends Never Die (A celebration of Qwan Lewis)",
-      "source": "Other",
-      "date": "2026-08-15T23:00:00.000Z"
+      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
+      "firstSeenAt": "2026-07-26T23:03:35.252Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-08T23:00:00.000Z"
     },
     {
-      "key": "Ben Nichols w. Cory Branan|2026-08-20T00:00:00.000Z",
-      "firstSeenAt": "2026-07-26T11:19:15.191Z",
-      "title": "Ben Nichols w. Cory Branan",
-      "source": "Other",
-      "date": "2026-08-20T00:00:00.000Z"
+      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
+      "firstSeenAt": "2026-07-26T23:03:35.252Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-09-14T23:00:00.000Z"
     },
     {
-      "key": "Smile Empty Soul|2026-08-20T23:00:00.000Z",
-      "firstSeenAt": "2026-07-26T11:19:15.191Z",
-      "title": "Smile Empty Soul",
-      "source": "Other",
-      "date": "2026-08-20T23:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-07-26T23:03:35.252Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-09-30T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 42
 }

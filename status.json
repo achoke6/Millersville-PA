@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-07-27T10:44:32.671Z",
-  "totalEvents": 740,
-  "withDescription": 266,
+  "generatedAt": "2026-07-27T16:18:28.167Z",
+  "totalEvents": 793,
+  "withDescription": 265,
   "withImage": 86,
   "familyFriendly": 41,
   "eventsToday": 0,
   "sources": {
     "muAthletics": 242,
-    "muCalendar": 99,
+    "muCalendar": 111,
     "muGetInvolved": 135,
     "pennManor": 84,
     "borough": 97,
     "vfw": 5,
     "phantomPower": 13,
     "community": 53,
-    "manor": 0,
+    "manor": 41,
     "raneyCellars": 2,
     "muHudlBroadcasts": 0
   },
@@ -51,7 +51,10 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-05-14T02:00:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-07-29T12:30:00.000Z",
+      "latest": "2027-07-07T23:00:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-07-23T20:00:00.000Z",
       "latest": "2026-07-23T22:00:00.000Z"
@@ -90,7 +93,10 @@
       "newest": "2027-05-14",
       "daysSinceMoved": 10
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-07-07",
+      "daysSinceMoved": 20
+    },
     "raneyCellars": {
       "newest": "2026-07-23",
       "daysSinceMoved": 19
@@ -117,79 +123,79 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-27T10:40:50.360Z"
+    "lastSyncAt": "2026-07-27T16:16:36.600Z"
   },
   "recentlyAdded": [
     {
-      "key": "Millersville University Women's Soccer vs East Stroudsburg University- Senior Day|2026-09-26T20:00:00.000Z",
-      "firstSeenAt": "2026-07-27T02:44:54.041Z",
-      "title": "Millersville University Women's Soccer vs East Stroudsburg University- Senior Day",
+      "key": "Faculty Recital: Morgann Davis|2026-09-13T22:00:00.000Z",
+      "firstSeenAt": "2026-07-27T16:18:28.165Z",
+      "title": "Faculty Recital: Morgann Davis",
       "source": "MU",
-      "date": "2026-09-26T20:00:00.000Z"
+      "date": "2026-09-13T22:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Soccer at Shepherd|2026-10-14T18:00:00.000Z",
-      "firstSeenAt": "2026-07-27T02:44:54.041Z",
-      "title": "Millersville University Women's Soccer at Shepherd",
+      "key": "Faculty Recital: Brandon Martinez|2026-09-19T23:30:00.000Z",
+      "firstSeenAt": "2026-07-27T16:18:28.165Z",
+      "title": "Faculty Recital: Brandon Martinez",
       "source": "MU",
-      "date": "2026-10-14T18:00:00.000Z"
+      "date": "2026-09-19T23:30:00.000Z"
     },
     {
-      "key": "Caitlynne Curtis|2026-09-02T00:00:00.000Z",
-      "firstSeenAt": "2026-07-26T23:03:35.252Z",
-      "title": "Caitlynne Curtis",
-      "source": "Other",
-      "date": "2026-09-02T00:00:00.000Z"
+      "key": "Faculty Recital: Ryan Kauffman|2026-09-27T22:00:00.000Z",
+      "firstSeenAt": "2026-07-27T16:18:28.165Z",
+      "title": "Faculty Recital: Ryan Kauffman",
+      "source": "MU",
+      "date": "2026-09-27T22:00:00.000Z"
     },
     {
-      "key": "Houses Of The Holy - The True Zeppelin Experience|2026-08-02T00:00:00.000Z",
-      "firstSeenAt": "2026-07-26T11:19:15.191Z",
-      "title": "Houses Of The Holy - The True Zeppelin Experience",
-      "source": "Other",
-      "date": "2026-08-02T00:00:00.000Z"
+      "key": "Xun Pan & Gabriel Chamber Ensemble|2026-10-03T23:30:00.000Z",
+      "firstSeenAt": "2026-07-27T16:18:28.165Z",
+      "title": "Xun Pan & Gabriel Chamber Ensemble",
+      "source": "MU",
+      "date": "2026-10-03T23:30:00.000Z"
     },
     {
-      "key": "\"GOLDEN\": A K-POP KIDS PARTY|2026-08-02T16:00:00.000Z",
-      "firstSeenAt": "2026-07-26T11:19:15.191Z",
-      "title": "\"GOLDEN\": A K-POP KIDS PARTY",
-      "source": "Other",
-      "date": "2026-08-02T16:00:00.000Z"
+      "key": "Faculty Recital: Strings Faculty|2026-10-24T23:30:00.000Z",
+      "firstSeenAt": "2026-07-27T16:18:28.165Z",
+      "title": "Faculty Recital: Strings Faculty",
+      "source": "MU",
+      "date": "2026-10-24T23:30:00.000Z"
     },
     {
-      "key": "Sunny Sweeney|2026-08-06T00:00:00.000Z",
-      "firstSeenAt": "2026-07-26T11:19:15.191Z",
-      "title": "Sunny Sweeney",
-      "source": "Other",
-      "date": "2026-08-06T00:00:00.000Z"
+      "key": "Concert Band & Wind Ensemble|2026-10-25T18:30:00.000Z",
+      "firstSeenAt": "2026-07-27T16:18:28.165Z",
+      "title": "Concert Band & Wind Ensemble",
+      "source": "MU",
+      "date": "2026-10-25T18:30:00.000Z"
     },
     {
-      "key": "Deadgrass|2026-08-09T00:00:00.000Z",
-      "firstSeenAt": "2026-07-26T11:19:15.191Z",
-      "title": "Deadgrass",
-      "source": "Other",
-      "date": "2026-08-09T00:00:00.000Z"
+      "key": "Octubaween!|2026-10-28T23:30:00.000Z",
+      "firstSeenAt": "2026-07-27T16:18:28.165Z",
+      "title": "Octubaween!",
+      "source": "MU",
+      "date": "2026-10-28T23:30:00.000Z"
     },
     {
-      "key": "Comedian Luke Null|2026-08-15T00:00:00.000Z",
-      "firstSeenAt": "2026-07-26T11:19:15.191Z",
-      "title": "Comedian Luke Null",
-      "source": "Other",
-      "date": "2026-08-15T00:00:00.000Z"
+      "key": "Jazz at the &#8216;Ville|2026-10-30T23:30:00.000Z",
+      "firstSeenAt": "2026-07-27T16:18:28.165Z",
+      "title": "Jazz at the &#8216;Ville",
+      "source": "MU",
+      "date": "2026-10-30T23:30:00.000Z"
     },
     {
-      "key": "Legends Never Die (A celebration of Qwan Lewis)|2026-08-15T23:00:00.000Z",
-      "firstSeenAt": "2026-07-26T11:19:15.191Z",
-      "title": "Legends Never Die (A celebration of Qwan Lewis)",
-      "source": "Other",
-      "date": "2026-08-15T23:00:00.000Z"
+      "key": "Fall Choral Concert|2026-11-07T23:30:00.000Z",
+      "firstSeenAt": "2026-07-27T16:18:28.165Z",
+      "title": "Fall Choral Concert",
+      "source": "MU",
+      "date": "2026-11-07T23:30:00.000Z"
     },
     {
-      "key": "Ben Nichols w. Cory Branan|2026-08-20T00:00:00.000Z",
-      "firstSeenAt": "2026-07-26T11:19:15.191Z",
-      "title": "Ben Nichols w. Cory Branan",
-      "source": "Other",
-      "date": "2026-08-20T00:00:00.000Z"
+      "key": "Orchestral Masterworks|2026-11-22T00:30:00.000Z",
+      "firstSeenAt": "2026-07-27T16:18:28.165Z",
+      "title": "Orchestral Masterworks",
+      "source": "MU",
+      "date": "2026-11-22T00:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 13
 }

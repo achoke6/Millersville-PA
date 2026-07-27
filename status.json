@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-07-27T18:24:57.248Z",
-  "totalEvents": 797,
+  "generatedAt": "2026-07-27T18:44:34.598Z",
+  "totalEvents": 799,
   "withDescription": 265,
   "withImage": 86,
   "familyFriendly": 41,
   "eventsToday": 0,
   "sources": {
     "muAthletics": 242,
-    "muCalendar": 115,
+    "muCalendar": 117,
     "muGetInvolved": 135,
     "pennManor": 84,
     "borough": 97,
     "vfw": 5,
     "phantomPower": 13,
-    "community": 53,
+    "community": 21,
     "manor": 41,
     "raneyCellars": 2,
     "muHudlBroadcasts": 0
@@ -25,7 +25,7 @@
     },
     "muCalendar": {
       "earliest": "2026-06-11T22:00:00.000Z",
-      "latest": "2027-04-03T18:30:00.000Z"
+      "latest": "2027-04-24T23:30:00.000Z"
     },
     "muGetInvolved": {
       "earliest": "2026-04-28T15:30:00.000Z",
@@ -49,7 +49,7 @@
     },
     "community": {
       "earliest": "2026-06-15T13:00:00.000Z",
-      "latest": "2027-05-14T02:00:00.000Z"
+      "latest": "2027-04-16T13:15:00.000Z"
     },
     "manor": {
       "earliest": "2026-07-29T12:30:00.000Z",
@@ -66,8 +66,8 @@
       "daysSinceMoved": 19
     },
     "muCalendar": {
-      "newest": "2027-04-03",
-      "daysSinceMoved": 53
+      "newest": "2027-04-24",
+      "daysSinceMoved": 0
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
@@ -90,8 +90,8 @@
       "daysSinceMoved": 5
     },
     "community": {
-      "newest": "2027-05-14",
-      "daysSinceMoved": 10
+      "newest": "2027-04-16",
+      "daysSinceMoved": 52
     },
     "manor": {
       "newest": "2027-07-07",
@@ -123,79 +123,79 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-27T18:22:55.352Z"
+    "lastSyncAt": "2026-07-27T18:42:30.295Z"
   },
   "recentlyAdded": [
     {
-      "key": "Spring Choral Concert|2027-03-06T19:30:00.000Z",
-      "firstSeenAt": "2026-07-27T18:24:57.246Z",
-      "title": "Spring Choral Concert",
+      "key": "Millersville University Women's Cross Country  Dutchmen Invitational|2026-09-05T14:15:00.000Z",
+      "firstSeenAt": "2026-07-27T18:44:34.595Z",
+      "title": "Millersville University Women's Cross Country  Dutchmen Invitational",
       "source": "MU",
-      "date": "2027-03-06T19:30:00.000Z"
+      "date": "2026-09-05T14:15:00.000Z"
     },
     {
-      "key": "Brass Area Recital|2027-03-24T23:30:00.000Z",
-      "firstSeenAt": "2026-07-27T18:24:57.246Z",
-      "title": "Brass Area Recital",
+      "key": "Millersville University Women's Cross Country  Lock Haven Invitational|2026-09-26T14:45:00.000Z",
+      "firstSeenAt": "2026-07-27T18:44:34.595Z",
+      "title": "Millersville University Women's Cross Country  Lock Haven Invitational",
       "source": "MU",
-      "date": "2027-03-24T23:30:00.000Z"
+      "date": "2026-09-26T14:45:00.000Z"
     },
     {
-      "key": "Concert Band & Wind Ensemble|2027-04-03T18:30:00.000Z",
-      "firstSeenAt": "2026-07-27T18:24:57.246Z",
-      "title": "Concert Band & Wind Ensemble",
+      "key": "Millersville University Women's Cross Country  Paul Short Run|2026-10-02T18:00:00.000Z",
+      "firstSeenAt": "2026-07-27T18:44:34.595Z",
+      "title": "Millersville University Women's Cross Country  Paul Short Run",
       "source": "MU",
-      "date": "2027-04-03T18:30:00.000Z"
+      "date": "2026-10-02T18:00:00.000Z"
     },
     {
-      "key": "Jazz at the &#8216;Ville|2027-02-27T00:30:00.000Z",
-      "firstSeenAt": "2026-07-27T17:05:21.911Z",
-      "title": "Jazz at the &#8216;Ville",
+      "key": "Millersville University Women's Cross Country  Bloomsburg Invitational|2026-10-17T15:00:00.000Z",
+      "firstSeenAt": "2026-07-27T18:44:34.595Z",
+      "title": "Millersville University Women's Cross Country  Bloomsburg Invitational",
       "source": "MU",
-      "date": "2027-02-27T00:30:00.000Z"
+      "date": "2026-10-17T15:00:00.000Z"
     },
     {
-      "key": "Faculty Recital: Morgann Davis|2026-09-13T22:00:00.000Z",
-      "firstSeenAt": "2026-07-27T16:18:28.165Z",
-      "title": "Faculty Recital: Morgann Davis",
+      "key": "Millersville University Women's Cross Country  Last Chance Run Fast Invitational|2026-10-23T19:00:00.000Z",
+      "firstSeenAt": "2026-07-27T18:44:34.595Z",
+      "title": "Millersville University Women's Cross Country  Last Chance Run Fast Invitational",
       "source": "MU",
-      "date": "2026-09-13T22:00:00.000Z"
+      "date": "2026-10-23T19:00:00.000Z"
     },
     {
-      "key": "Faculty Recital: Brandon Martinez|2026-09-19T23:30:00.000Z",
-      "firstSeenAt": "2026-07-27T16:18:28.165Z",
-      "title": "Faculty Recital: Brandon Martinez",
+      "key": "Millersville University Women's Cross Country  PSAC Championships|2026-11-07T16:15:00.000Z",
+      "firstSeenAt": "2026-07-27T18:44:34.595Z",
+      "title": "Millersville University Women's Cross Country  PSAC Championships",
       "source": "MU",
-      "date": "2026-09-19T23:30:00.000Z"
+      "date": "2026-11-07T16:15:00.000Z"
     },
     {
-      "key": "Faculty Recital: Ryan Kauffman|2026-09-27T22:00:00.000Z",
-      "firstSeenAt": "2026-07-27T16:18:28.165Z",
-      "title": "Faculty Recital: Ryan Kauffman",
+      "key": "Millersville University Women's Cross Country  NCAA Atlantic Regional|2026-11-21T16:15:00.000Z",
+      "firstSeenAt": "2026-07-27T18:44:34.595Z",
+      "title": "Millersville University Women's Cross Country  NCAA Atlantic Regional",
       "source": "MU",
-      "date": "2026-09-27T22:00:00.000Z"
+      "date": "2026-11-21T16:15:00.000Z"
     },
     {
-      "key": "Xun Pan & Gabriel Chamber Ensemble|2026-10-03T23:30:00.000Z",
-      "firstSeenAt": "2026-07-27T16:18:28.165Z",
-      "title": "Xun Pan & Gabriel Chamber Ensemble",
+      "key": "Fall Orchestra Concert|2026-11-22T00:30:00.000Z",
+      "firstSeenAt": "2026-07-27T18:44:34.595Z",
+      "title": "Fall Orchestra Concert",
       "source": "MU",
-      "date": "2026-10-03T23:30:00.000Z"
+      "date": "2026-11-22T00:30:00.000Z"
     },
     {
-      "key": "Faculty Recital: Strings Faculty|2026-10-24T23:30:00.000Z",
-      "firstSeenAt": "2026-07-27T16:18:28.165Z",
-      "title": "Faculty Recital: Strings Faculty",
+      "key": "Millersville University Women's Cross Country  NCAA Championship|2026-12-04T00:00:00.000Z",
+      "firstSeenAt": "2026-07-27T18:44:34.595Z",
+      "title": "Millersville University Women's Cross Country  NCAA Championship",
       "source": "MU",
-      "date": "2026-10-24T23:30:00.000Z"
+      "date": "2026-12-04T00:00:00.000Z"
     },
     {
-      "key": "Concert Band & Wind Ensemble|2026-10-25T18:30:00.000Z",
-      "firstSeenAt": "2026-07-27T16:18:28.165Z",
-      "title": "Concert Band & Wind Ensemble",
+      "key": "Faculty Recital: Brass Faculty|2027-04-04T18:30:00.000Z",
+      "firstSeenAt": "2026-07-27T18:44:34.595Z",
+      "title": "Faculty Recital: Brass Faculty",
       "source": "MU",
-      "date": "2026-10-25T18:30:00.000Z"
+      "date": "2027-04-04T18:30:00.000Z"
     }
   ],
-  "addedLastRun": 3
+  "addedLastRun": 11
 }

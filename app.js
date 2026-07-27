@@ -41,9 +41,11 @@ let evFreeFoodMode=false, evFreeStuffMode=false;
 const FEED_KEY = 'mapp_feed_prefs';
 const AFFILIATION_KEY = 'mapp_mu_affiliation'; // 'student' | 'townie' | null (unset)
 const SHOW21_KEY = 'mapp_show_21plus'; // '1' = opted in to see 🍺-flagged drink specials (default off, site-wide)
+const SHOWN_SOURCES_KEY = 'mapp_shown_sources'; // JSON array of source keys opted-in via the Uncommon picker's "Show events" middle state (see UNCOMMON_GROUP_SOURCES); survives Clear Favs
 let feedPrefs = null; // null = not configured
 let muAffiliation = null; // null = not yet asked; 'student' or 'townie' once set
 let show21Plus = false;   // 21+ drink-specials opt-in — display setting, loaded in loadFeedPrefs
+let shownSources = new Set(); // "Show events" source opt-ins — display setting, loaded in loadFeedPrefs
 
 function setFeedDotVisible(visible) {
     const d1 = document.getElementById('feed-dot');
@@ -57,6 +59,7 @@ function loadFeedPrefs() {
     setFeedDotVisible(!!feedPrefs);
     try { muAffiliation = localStorage.getItem(AFFILIATION_KEY); } catch(e) { muAffiliation = null; }
     try { show21Plus = localStorage.getItem(SHOW21_KEY) === '1'; } catch(e) { show21Plus = false; }
+    try { shownSources = new Set(JSON.parse(localStorage.getItem(SHOWN_SOURCES_KEY)) || []); } catch(e) { shownSources = new Set(); }
     if (muAffiliation !== 'student' && muAffiliation !== 'townie') muAffiliation = null;
     // Shareable affiliation link: ?aud=townie (aliases: local/locals) or ?aud=mu
     // (aliases: student/marauder). ONLY sets affiliation when none is set yet, so a
@@ -75,6 +78,12 @@ function loadFeedPrefs() {
             history.replaceState(null, '', _u.pathname + _u.search + _u.hash);
         }
     } catch(e) {}
+}
+// Persist the "Show events" source opt-ins. Own key — deliberately NOT wiped
+// by Clear Favs (mirrors SHOW21_KEY): visibility opt-ins are identity-adjacent
+// display settings, not favorites.
+function saveShownSources() {
+    try { localStorage.setItem(SHOWN_SOURCES_KEY, JSON.stringify([...shownSources])); } catch(e) {}
 }
 function saveFeedPrefs(prefs) {
     feedPrefs = prefs;
@@ -765,10 +774,15 @@ const eventFeedIds = new Set();
 for (const g of Object.values(feedSections.events.groups)) g.subs.forEach(s => eventFeedIds.add(s.id));
 
 // ========== Affiliation-based source hiding ==========
-// When a user picks Marauder, PM/Borough/VFW events + PM sports are hidden by default.
-// When a user picks Townie, MU GetInvolved events + MU Club Sports are hidden by default.
-// Users can "unlock" hidden sources by favoriting items in them — at which point the pill
-// reappears and their favorited items become visible in the filtered list.
+// When a user picks Marauder (or is unset), ALL community-side sources are
+// hidden by default: PM/Borough/Manor events, the whole Other family (VFW,
+// Phantom Power, Community, Raney Cellars, Jack's Tavern), PM sports, and
+// PM/Borough news. When a user picks Townie, MU GetInvolved events + MU Club
+// Sports are hidden by default.
+// Two opt-in paths (2026-07-27): favoriting an item "unlocks" its source
+// (SOURCE_UNLOCK_IDS — also subscribes push/iCal), OR the Uncommon picker's
+// "Show events" middle state (shownSources) reveals it WITHOUT subscribing.
+// Either path brings the source's pill back and its events into the lists.
 
 // Map of source-pill → set of feed-pref IDs that "unlock" it. If user's feedPrefs contains
 // any of these IDs, the source is considered user-opted-in and treated normally.
@@ -778,6 +792,12 @@ const SOURCE_UNLOCK_IDS = {
     'Borough': ['borough-all'],
     'Manor':   ['manor-all'],
     'VFW':     ['other-vfw'],
+    // Other-family sources gated for marauders 2026-07-27 (were always-visible;
+    // Phantom Power confirmed off-campus / not MU-affiliated — Adam's call):
+    'Phantom':   ['other-phantom'],
+    'Community': ['other-community'],
+    'Raney':     ['raney-cellars-all'],
+    'Jacks':     ['jacks-tavern-all'],
     // MU-side sources for townies
     'MU':         [], // MU itself always shown — only GetInvolved sub-content is gated
     'GetInvolved':['clubs-all', 'clubs-social', 'clubs-arts', 'clubs-sports', 'clubs-greek', 'clubs-service',
@@ -794,6 +814,19 @@ const SOURCE_UNLOCK_IDS = {
     'BOROUGH_NEWS': ['news-borough']
 };
 
+// Uncommon-picker group key → the source keys its three-state selector
+// (Hidden / Show / ★ Faves) controls. Groups absent here (family — a
+// cross-cutting pref, not a source) keep the plain master checkbox.
+// 'other' and 'newsCommunity' set/clear their member source keys together.
+const UNCOMMON_GROUP_SOURCES = {
+    pmev:    ['PM'],
+    borough: ['Borough'],
+    manor:   ['Manor'],
+    other:   ['VFW','Phantom','Community','Raney','Jacks'],
+    pm:      ['SP_PM'],
+    newsCommunity: ['PM_NEWS','BOROUGH_NEWS']
+};
+
 // Does the user's affiliation hide this source by default?
 // Default (unset) affiliation behaves as Marauder — most users of the site are MU students,
 // so that's the majority-optimal default. Townies explicitly opt in.
@@ -802,8 +835,13 @@ function isSourceHiddenByAffiliation(source) {
         // Townies hide GetInvolved + MU Club Sports
         return source === 'GetInvolved' || source === 'SP_Clubs';
     }
-    // Marauder OR unset/default: hide PM, Borough, Manor Twp., VFW events + PM sports + PM/Borough news
+    // Marauder OR unset/default: hide PM, Borough, Manor Twp., the whole Other
+    // family (VFW, Phantom Power, Community, Raney Cellars, Jack's Tavern),
+    // PM sports, and PM/Borough news. Phantom gated 2026-07-27 — it's
+    // off-campus and not MU-affiliated (supersedes the old "campus venue"
+    // carve-out that kept the Other pill always-visible).
     return source === 'PM' || source === 'Borough' || source === 'Manor' || source === 'VFW' || source === 'SP_PM'
+        || source === 'Phantom' || source === 'Community' || source === 'Raney' || source === 'Jacks'
         || source === 'PM_NEWS' || source === 'BOROUGH_NEWS';
 }
 // Does the user have a favorite that "unlocks" this hidden source?
@@ -814,9 +852,17 @@ function hasFavInSource(source) {
     if (source === 'GetInvolved' && feedPrefs.some(p => typeof p === 'string' && p.startsWith('club:'))) return true;
     return feedPrefs.some(p => ids.includes(p));
 }
-// Should this source be hidden from the user? (hidden by affiliation AND no favorite unlock)
+// Should this source be hidden from the user? Hidden by affiliation AND no
+// favorite unlock AND not opted-in via the Uncommon picker's "Show events"
+// middle state (shownSources / mapp_shown_sources).
 function isSourceHidden(source) {
-    return isSourceHiddenByAffiliation(source) && !hasFavInSource(source);
+    return isSourceHiddenByAffiliation(source) && !hasFavInSource(source) && !shownSources.has(source);
+}
+// The events-page Other pill has no single source key — it aggregates five.
+// It hides only when EVERY member is hidden (one shown/favorited member
+// brings the pill back).
+function otherSourcesAllHidden() {
+    return ['VFW','Phantom','Community','Raney','Jacks'].every(isSourceHidden);
 }
 // For a given event, is it from a hidden source?
 function isEventFromHiddenSource(e) {
@@ -844,6 +890,16 @@ function isEventFromHiddenSource(e) {
     if (tags.includes('Borough') && isSourceHidden('Borough')) return true;
     if (tags.includes('Manor') && isSourceHidden('Manor')) return true;
     if (tags.includes('Clubs/Orgs') && isSourceHidden('GetInvolved')) return true;
+    // Other-family sources (gated for marauders 2026-07-27). Phantom Power
+    // events carry 'Phantom Power' and/or 'Other'+'Live Music' — match either
+    // form; the Other&&LiveMusic conjunction keeps MU concerts (Live Music
+    // without Other) unaffected. NOTE: no audience bypass here — a Community-
+    // sheet row targeted at Marauders/Both is still source-hidden for default
+    // marauders until they Show/favorite Community (flagged in manifest §6).
+    if ((tags.includes('Phantom Power') || (tags.includes('Other') && tags.includes('Live Music'))) && isSourceHidden('Phantom')) return true;
+    if (tags.includes('Community') && isSourceHidden('Community')) return true;
+    if (tags.includes('Raney Cellars') && isSourceHidden('Raney')) return true;
+    if (tags.includes("Jack's Tavern") && isSourceHidden('Jacks')) return true;
     return false;
 }
 // For sports events, check against the sports-specific hidden sources
@@ -1365,11 +1421,37 @@ window.openFeedSettings = function() {
                 ? '<div id="clubs-individual-wrap" style="padding-left:14px;margin-top:10px;"><button onclick="toggleClubBrowser()" class="btn btn-sm btn-outline" style="font-size:0.75rem;">📋 Browse Individual Clubs ▸</button><div id="clubs-individual-list" style="display:none;max-height:200px;overflow-y:auto;margin-top:8px;flex-wrap:wrap;gap:4px;"></div></div>'
                 : '';
 
-            return `<div class="feed-heading-group" style="margin-bottom:14px;">
-                <label class="feed-heading-label" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding-bottom:6px;border-bottom:1px solid var(--border);">
+            // Uncommon three-state selector (marauder-only, source-mapped
+            // groups): replaces the master checkbox with Hidden / Show /
+            // ★ Faves. "Show" = see the source's events without subscribing
+            // (push/iCal untouched). Pending in data-shown until Save;
+            // ★ Faves is DERIVED (any chip checked) — checking a chip while
+            // Hidden auto-moves the control (the old unlock behavior,
+            // preserved). Initial active styles are baked at render;
+            // refreshUncommonSeg re-derives them on every interaction.
+            const segSources = isMarauder ? UNCOMMON_GROUP_SOURCES[key] : null;
+            let headerHtml;
+            if (segSources) {
+                const pendingShown = segSources.some(s => shownSources.has(s));
+                const segState = groupHasFavs(group) ? 'fav' : (pendingShown ? 'show' : 'hidden');
+                const segBtn = (state, text) => {
+                    const on = segState === state;
+                    return `<button type="button" data-state="${state}" onclick="setUncommonState('${key}','${state}')" style="font-size:0.7rem;padding:4px 9px;border:1px solid ${on?'var(--navy)':'var(--border)'};border-radius:999px;cursor:pointer;background:${on?'var(--navy)':'transparent'};color:${on?'#fff':'var(--text-muted)'};font-weight:${on?'700':'400'};font-family:inherit;white-space:nowrap;">${text}</button>`;
+                };
+                headerHtml = `<div class="feed-heading-label" style="display:flex;align-items:center;gap:8px;padding-bottom:6px;border-bottom:1px solid var(--border);">
+                    <span class="feed-heading-text">${group.icon} ${labelFor(group)}</span>
+                    <span class="uncommon-seg" data-uncommon-group="${key}" data-shown="${pendingShown?'1':'0'}" style="display:flex;gap:4px;margin-left:auto;">
+                        ${segBtn('hidden','Hidden')}${segBtn('show','Show')}${segBtn('fav','★ Faves')}
+                    </span>
+                </div>`;
+            } else {
+                headerHtml = `<label class="feed-heading-label" style="display:flex;align-items:center;gap:8px;cursor:pointer;padding-bottom:6px;border-bottom:1px solid var(--border);">
                     <input type="checkbox" class="feed-group" data-group="${key}" ${allChecked?'checked':''} onchange="toggleFeedGroup(this)" style="accent-color:var(--gold);width:16px;height:16px;">
                     <span class="feed-heading-text">${group.icon} ${labelFor(group)}</span>
-                </label>
+                </label>`;
+            }
+            return `<div class="feed-heading-group" style="margin-bottom:14px;">
+                ${headerHtml}
                 ${subsHtml}
                 ${compositesHtml}
                 ${subgroupsHtml}
@@ -1479,7 +1561,7 @@ window.openFeedSettings = function() {
             '🏘️ Uncommon for Marauders',
             uncommonHtml,
             defaultOpen,
-            'Penn Manor, Borough, and broader community — favorite if interested',
+            'Penn Manor, Borough, and broader community — hidden by default; Show to see events, ★ to follow',
             '#9ca3af'  // muted gray accent to de-emphasize vs. the themed sections
         );
     }
@@ -1780,6 +1862,52 @@ window.copyCalendarUrl = function(btn) {
     }
 };
 
+// === Uncommon-source three-state selector (Hidden / Show / ★ Faves) ========
+// Marauder-only control on source-mapped Uncommon groups (UNCOMMON_GROUP_SOURCES).
+// "Show" = see the source's events without subscribing — the middle ground
+// between hidden-by-default and favoriting (which also drives push/iCal).
+// The control's data-shown bit is PENDING modal state; saveFeedFromModal
+// persists it into shownSources / mapp_shown_sources on Save.
+window.setUncommonState = function(key, state) {
+    const seg = document.querySelector(`.uncommon-seg[data-uncommon-group="${key}"]`);
+    if (!seg) return;
+    if (state === 'fav') {
+        // ★ Faves = the old master-checkbox check-all behavior.
+        document.querySelectorAll(`.feed-sub[data-group="${key}"]`).forEach(cb => {
+            cb.checked = true;
+            const label = cb.closest('label');
+            if (label) label.classList.add('is-checked');
+        });
+    } else {
+        // Hidden and Show both clear the group's favorites; they differ only
+        // in the pending shown bit. (Moving OFF ★ Faves must uncheck chips —
+        // otherwise the derived state would snap right back to fav.)
+        seg.dataset.shown = state === 'show' ? '1' : '0';
+        document.querySelectorAll(`.feed-sub[data-group="${key}"]`).forEach(cb => {
+            cb.checked = false;
+            const label = cb.closest('label');
+            if (label) label.classList.remove('is-checked');
+        });
+    }
+    refreshUncommonSeg(key);
+};
+// Re-derive a selector's active position: any checked chip = ★ Faves
+// (derived, matching the SOURCE_UNLOCK_IDS unlock rule), else the pending
+// shown bit picks Show vs Hidden. No-ops for non-Uncommon groups.
+function refreshUncommonSeg(key) {
+    const seg = document.querySelector(`.uncommon-seg[data-uncommon-group="${key}"]`);
+    if (!seg) return;
+    const anyFav = [...document.querySelectorAll(`.feed-sub[data-group="${key}"]`)].some(cb => cb.checked);
+    const state = anyFav ? 'fav' : (seg.dataset.shown === '1' ? 'show' : 'hidden');
+    seg.querySelectorAll('button').forEach(b => {
+        const on = b.dataset.state === state;
+        b.style.background = on ? 'var(--navy)' : 'transparent';
+        b.style.color = on ? '#fff' : 'var(--text-muted)';
+        b.style.borderColor = on ? 'var(--navy)' : 'var(--border)';
+        b.style.fontWeight = on ? '700' : '400';
+    });
+}
+
 window.toggleFeedGroup = function(groupCb) {
     const group = groupCb.dataset.group;
     const checked = groupCb.checked;
@@ -1950,6 +2078,9 @@ window.updateFeedGroup = function(group) {
         const label = cb.closest('label');
         if (label) label.classList.toggle('is-checked', cb.checked);
     });
+    // Uncommon groups render a three-state selector instead of a master
+    // checkbox — re-derive its position (a checked chip = ★ Faves).
+    if (typeof refreshUncommonSeg === 'function') refreshUncommonSeg(group);
 };
 
 // Subgroup toggle handlers. Subgroups are collapsible nested sections inside
@@ -2017,6 +2148,16 @@ window.updateFeedSubgroup = function(sgKey) {
 };
 
 window.saveFeedFromModal = function() {
+    // Persist the Uncommon "Show events" selections first (their own key, not
+    // part of feedPrefs — survives Clear Favs). Each selector's pending
+    // data-shown bit adds/removes its group's source keys together. Runs
+    // before the empty-prefs early return below so Show survives a fav wipe.
+    document.querySelectorAll('.uncommon-seg').forEach(seg => {
+        const keys = UNCOMMON_GROUP_SOURCES[seg.dataset.uncommonGroup] || [];
+        const on = seg.dataset.shown === '1';
+        keys.forEach(k => { if (on) shownSources.add(k); else shownSources.delete(k); });
+    });
+    saveShownSources();
     // Composite subs (data-linked-ids) expand to multiple pref IDs; standard
     // subs use their single .value. De-duplicate via a Set since composites
     // could overlap with each other's linked IDs in theory.
@@ -2045,6 +2186,9 @@ window.saveFeedFromModal = function() {
     saveFeedPrefs(allPrefs);
     renderHomeFeed();
     renderEvents(); renderSports(); renderNewsUI();
+    // Pill visibility can change on save (Show/favorite reveals a source's
+    // pill; clearing hides it) — the render fns don't touch pill display.
+    updateEventsUI(); updateSportsUI();
 };
 
 // Visual feedback when a composite sub (linkedIds checkbox) is toggled.
@@ -2074,6 +2218,10 @@ window.clearFeedPrefs = function() {
     if (typeof window.resendNotificationPrefs === 'function') window.resendNotificationPrefs().catch(() => {});
     renderHomeFeed();
     renderEvents(); renderSports(); renderNewsUI();
+    // Unfavoriting can hide source pills — refresh them (latent staleness
+    // fixed alongside the 2026-07-27 Show-events work). shownSources is
+    // deliberately untouched: Show opt-ins survive Clear Favs.
+    updateEventsUI(); updateSportsUI();
 };
 
 // Clear just the favorites list but keep the Marauder/Townie affiliation
@@ -3255,22 +3403,38 @@ window.setEventSourceAll=function(){
 };
 window.toggleEventSource=function(src){
     evAllMode = false;
-    if (evActiveSources.size === allEvSources.length && allEvSources.every(s => evActiveSources.has(s))) {
-        evActiveSources = new Set([src]);
-    } else {
-        if(evActiveSources.has(src)) evActiveSources.delete(src);
-        else evActiveSources.add(src);
-    }
-    // All mode activates when all VISIBLE sources are selected (affiliation can hide PM/Borough)
     const visibleEvSources = allEvSources.filter(s =>
         !(s === 'PM' && isSourceHidden('PM')) &&
         !(s === 'Borough' && isSourceHidden('Borough')) &&
-        !(s === 'Manor' && isSourceHidden('Manor'))
+        !(s === 'Manor' && isSourceHidden('Manor')) &&
+        !(s === 'Other' && otherSourcesAllHidden())
     );
-    if (visibleEvSources.length > 0 && visibleEvSources.every(s => evActiveSources.has(s))) {
-        evAllMode = true;
-        // Ensure hidden sources are also in the set so filter logic stays consistent
-        evActiveSources = new Set(allEvSources);
+    if (visibleEvSources.length <= 2) {
+        // Two-pill mode (typical Marauder view: MU + Other): multi-select is
+        // meaningless — selecting the 2nd pill used to equal "all visible" and
+        // snap straight to All (the 2026-07-27 reported bug). Pills act as
+        // radio buttons instead: a tap selects just that source; tapping the
+        // ACTIVE pill returns to All. Locals' >2-pill multi-select below is
+        // untouched.
+        if (evActiveSources.size === 1 && evActiveSources.has(src)) {
+            evAllMode = true;
+            evActiveSources = new Set(allEvSources);
+        } else {
+            evActiveSources = new Set([src]);
+        }
+    } else {
+        if (evActiveSources.size === allEvSources.length && allEvSources.every(s => evActiveSources.has(s))) {
+            evActiveSources = new Set([src]);
+        } else {
+            if(evActiveSources.has(src)) evActiveSources.delete(src);
+            else evActiveSources.add(src);
+        }
+        // All mode activates when all VISIBLE sources are selected (affiliation can hide pills)
+        if (visibleEvSources.length > 0 && visibleEvSources.every(s => evActiveSources.has(s))) {
+            evAllMode = true;
+            // Ensure hidden sources are also in the set so filter logic stays consistent
+            evActiveSources = new Set(allEvSources);
+        }
     }
     evTags.clear();
     updateEventsUI();
@@ -3281,21 +3445,33 @@ function updateEventsUI(){
     const allBtn = document.getElementById('ev-src-all');
     if (allBtn) allBtn.classList.toggle('active', evAllMode);
     const srcMap = {'MU':'mu','PM':'pm','Borough':'borough','Manor':'manor','Other':'other'};
+    // Hide pills for sources the user's affiliation doesn't care about (unless
+    // shown/favorited). The Other pill hides only when ALL five member sources
+    // (VFW, Phantom, Community, Raney, Jacks) are hidden — one Show/favorite
+    // brings it back. (The old "Other never hides — Phantom is a campus venue"
+    // carve-out is retired 2026-07-27: Phantom Power is off-campus.)
+    const evPillHidden = (src) =>
+        src === 'PM' ? isSourceHidden('PM')
+        : src === 'Borough' ? isSourceHidden('Borough')
+        : src === 'Manor' ? isSourceHidden('Manor')
+        : src === 'Other' ? otherSourcesAllHidden()
+        : false;
+    // Degenerate row: with fewer than 2 visible source pills the row is a
+    // meaningless single choice (All === the lone source) — hide All + the
+    // survivor and force All mode. Reappears the moment a source is shown or
+    // favorited (this fn re-runs on save / affiliation switch / pill taps).
+    const visiblePillCount = allEvSources.filter(s => !evPillHidden(s)).length;
+    if (visiblePillCount < 2 && !evAllMode) {
+        evAllMode = true;
+        evActiveSources = new Set(allEvSources);
+        if (allBtn) allBtn.classList.toggle('active', true);
+    }
+    if (allBtn) allBtn.style.display = visiblePillCount < 2 ? 'none' : '';
     allEvSources.forEach(src => {
         const btn = document.getElementById('ev-src-' + srcMap[src]);
         if (!btn) return;
         btn.classList.toggle('active', !evAllMode && evActiveSources.has(src));
-        // Hide pills for sources the user's affiliation doesn't care about (unless they've favorited them)
-        //   PM pill hidden for Marauders unless they favorited a PM item
-        //   Borough pill hidden for Marauders unless they favorited Borough content
-        //   Other pill is NOT hidden — it contains VFW + Phantom Power + Community; keeping it
-        //   visible preserves Phantom Power visibility for Marauders (Phantom Power is a campus
-        //   event venue). We filter VFW out at the event level via isEventFromHiddenSource.
-        let hidePill = false;
-        if (src === 'PM') hidePill = isSourceHidden('PM');
-        else if (src === 'Borough') hidePill = isSourceHidden('Borough');
-        else if (src === 'Manor') hidePill = isSourceHidden('Manor');
-        btn.style.display = hidePill ? 'none' : '';
+        btn.style.display = (evPillHidden(src) || visiblePillCount < 2) ? 'none' : '';
     });
 
     // Toolbar toggle swap based on affiliation:
@@ -3824,24 +4000,34 @@ window.setSportsSourceAll=function(btn){
 
 window.toggleSportsSource=function(src){
     spAllMode = false;
-    // When switching from All, start fresh with just this source
-    if (spActiveSources.size === 3 && spActiveSources.has('PM') && spActiveSources.has('MU') && spActiveSources.has('Clubs')) {
-        spActiveSources = new Set([src]);
-    } else {
-        if(spActiveSources.has(src)) spActiveSources.delete(src);
-        else spActiveSources.add(src);
-    }
-    // If all VISIBLE sources are active, switch to All mode.
-    // We used to require all 3 hard-coded sources, but affiliation can hide PM (Marauders)
-    // or Clubs (Townies) — so for those users, "all sources selected" means all visible ones.
     const visibleSources = ['PM','MU','Clubs'].filter(s =>
         !(s === 'PM' && isSourceHidden('SP_PM')) &&
         !(s === 'Clubs' && isSourceHidden('SP_Clubs'))
     );
-    if (visibleSources.length > 0 && visibleSources.every(s => spActiveSources.has(s))) {
-        spAllMode = true;
-        // Ensure hidden sources are also in the set so event filter stays consistent
-        spActiveSources = new Set(['PM','MU','Clubs']);
+    if (visibleSources.length <= 2) {
+        // Two-pill mode (Marauders: MU + Clubs; Townies: PM + MU): radio
+        // behavior — same 2026-07-27 fix as toggleEventSource. A tap selects
+        // just that source; tapping the ACTIVE pill returns to All.
+        if (spActiveSources.size === 1 && spActiveSources.has(src)) {
+            spAllMode = true;
+            spActiveSources = new Set(['PM','MU','Clubs']);
+        } else {
+            spActiveSources = new Set([src]);
+        }
+    } else {
+        // When switching from All, start fresh with just this source
+        if (spActiveSources.size === 3 && spActiveSources.has('PM') && spActiveSources.has('MU') && spActiveSources.has('Clubs')) {
+            spActiveSources = new Set([src]);
+        } else {
+            if(spActiveSources.has(src)) spActiveSources.delete(src);
+            else spActiveSources.add(src);
+        }
+        // If all VISIBLE sources are active, switch to All mode.
+        if (visibleSources.length > 0 && visibleSources.every(s => spActiveSources.has(s))) {
+            spAllMode = true;
+            // Ensure hidden sources are also in the set so event filter stays consistent
+            spActiveSources = new Set(['PM','MU','Clubs']);
+        }
     }
     spSportTag=null;
     updateSportsUI();

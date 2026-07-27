@@ -1,11 +1,11 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Monday, July 27, 2026 at 08:09 AM (Kyle Elliott, Meteorologist)",
+    "issued": "Monday, July 27, 2026 at 12:26 PM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "Today",
-        "text": "Seasonable with increasing clouds & an isolated afternoon shower or T-storm. High: 84-88"
+        "period": "This afternoon",
+        "text": "Partly sunny and warm with an isolated shower or T-storm. High: 86-90"
       },
       {
         "period": "Tonight",
@@ -128,6 +128,17 @@
   },
   "observations": [
     {
+      "time": "13:00",
+      "temp": "84",
+      "dewpoint": "64",
+      "rh": "52",
+      "windDir": "SW",
+      "windSpeed": "6",
+      "precip": "0.00",
+      "visibility": "11.0",
+      "condition": "None"
+    },
+    {
       "time": "12:00",
       "temp": "84",
       "dewpoint": "65",
@@ -180,17 +191,6 @@
       "windSpeed": "1",
       "precip": "0.00",
       "visibility": "10.0",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "64",
-      "dewpoint": "63",
-      "rh": "97",
-      "windDir": "S",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "10.2",
       "condition": "None"
     }
   ],
@@ -532,5 +532,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-27T16:16:38.553Z"
+  "updated": "2026-07-27T17:03:21.935Z"
 }

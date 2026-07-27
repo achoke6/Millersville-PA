@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-07-27T16:18:28.167Z",
-  "totalEvents": 793,
+  "generatedAt": "2026-07-27T17:05:21.913Z",
+  "totalEvents": 794,
   "withDescription": 265,
   "withImage": 86,
   "familyFriendly": 41,
   "eventsToday": 0,
   "sources": {
     "muAthletics": 242,
-    "muCalendar": 111,
+    "muCalendar": 112,
     "muGetInvolved": 135,
     "pennManor": 84,
     "borough": 97,
@@ -123,9 +123,16 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-27T16:16:36.600Z"
+    "lastSyncAt": "2026-07-27T17:03:19.677Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Jazz at the &#8216;Ville|2027-02-27T00:30:00.000Z",
+      "firstSeenAt": "2026-07-27T17:05:21.911Z",
+      "title": "Jazz at the &#8216;Ville",
+      "source": "MU",
+      "date": "2027-02-27T00:30:00.000Z"
+    },
     {
       "key": "Faculty Recital: Morgann Davis|2026-09-13T22:00:00.000Z",
       "firstSeenAt": "2026-07-27T16:18:28.165Z",
@@ -188,14 +195,7 @@
       "title": "Fall Choral Concert",
       "source": "MU",
       "date": "2026-11-07T23:30:00.000Z"
-    },
-    {
-      "key": "Orchestral Masterworks|2026-11-22T00:30:00.000Z",
-      "firstSeenAt": "2026-07-27T16:18:28.165Z",
-      "title": "Orchestral Masterworks",
-      "source": "MU",
-      "date": "2026-11-22T00:30:00.000Z"
     }
   ],
-  "addedLastRun": 13
+  "addedLastRun": 1
 }

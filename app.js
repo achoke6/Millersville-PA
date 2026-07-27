@@ -684,6 +684,14 @@ const feedSections = {
                     }
                 ]
             },
+            // Jesus Dogs — first-class source 2026-07-27 (was Community-tag
+            // fallback). Marauder-native (audience student): renders as its
+            // own heading group below MU GetInvolved in the marauder picker,
+            // never extracted to Uncommon; absent from the townie picker
+            // (townieGroups) since its events are mu-only anyway. The chip is
+            // pure follow (push/iCal/⭐) — JD events are visible to every
+            // marauder/unset viewer by default regardless.
+            jesusdogs: { label: 'Jesus Dogs', icon: '🌭', headingStyle: true, audience: 'student', subs: [{id:'jesus-dogs-all',label:'Free Hot Dog Thursdays',icon:'🌭'}] },
             borough: { label: 'Borough', icon: '🌳', headingStyle: true, audience: 'townie', subs: [{id:'borough-all',label:'All Borough Events',icon:'🌳'}] },
             manor: { label: 'Manor Twp.', icon: '🪶', headingStyle: true, audience: 'townie', subs: [{id:'manor-all',label:'All Manor Twp. Events',icon:'🪶'}] },
             other: { label: 'Other', icon: '🎯', headingStyle: true, audience: 'townie', subs: [
@@ -858,9 +866,11 @@ function hasFavInSource(source) {
 function isSourceHidden(source) {
     return isSourceHiddenByAffiliation(source) && !hasFavInSource(source) && !shownSources.has(source);
 }
-// The events-page Other pill has no single source key — it aggregates five.
-// It hides only when EVERY member is hidden (one shown/favorited member
-// brings the pill back).
+// DORMANT (2026-07-27 same-day revision — zero call sites): the Other pill
+// went back to always-visible when Jesus Dogs became a first-class source
+// under it, so nothing consults this anymore. Kept per the dormant-not-
+// deleted convention; still correctly reads true only when every Other-
+// family source is hidden.
 function otherSourcesAllHidden() {
     return ['VFW','Phantom','Community','Raney','Jacks'].every(isSourceHidden);
 }
@@ -884,6 +894,14 @@ function isEventFromHiddenSource(e) {
     // venue-focus-based, not audience-based ("I want MU campus content"),
     // so the existing default stands.
     if (muAffiliation === 'townie' && e.audience === 'public') return false;
+
+    // Marauder-side audience bypass (2026-07-27): an event explicitly targeted
+    // at MU students (audience 'mu-only') is never source-hidden from marauder
+    // or unset viewers — mirrors the townie 'public' bypass above; the
+    // audience signal is the truth here too. (Protects e.g. a community-sheet
+    // row targeted at Marauders.) Townie hiding of mu-only events lives in
+    // isHiddenForViewer and is untouched.
+    if (muAffiliation !== 'townie' && e.audience === 'mu-only') return false;
 
     if (tags.includes('VFW') && isSourceHidden('VFW')) return true;
     if (tags.includes('PM') && isSourceHidden('PM')) return true;
@@ -990,6 +1008,7 @@ function suggestFeedIdForEvent(e, isSportsPage) {
     if (tags.includes('Manor')) return 'manor-all';
     if (tags.includes('Raney Cellars')) return 'raney-cellars-all';
     if (tags.includes("Jack's Tavern")) return 'jacks-tavern-all';
+    if (tags.includes('Jesus Dogs')) return 'jesus-dogs-all';
     // Other
     if (tags.includes('VFW')) return 'other-vfw';
     if (tags.includes('Phantom Power') || tags.includes('Live Music')) return 'other-phantom';
@@ -2703,7 +2722,7 @@ function matchesSource(tags,src){
     if(src==='PM') return tags.includes('PM');
     if(src==='Borough') return tags.includes('Borough');
     if(src==='Manor') return tags.includes('Manor');
-    if(src==='Other') return tags.includes('Other') || tags.includes('Community') || tags.includes('Raney Cellars') || tags.includes("Jack's Tavern");
+    if(src==='Other') return tags.includes('Other') || tags.includes('Community') || tags.includes('Raney Cellars') || tags.includes("Jack's Tavern") || tags.includes('Jesus Dogs');
     // Sports page still uses 'Clubs' as a separate filter (Club Sports games)
     if(src==='Clubs') return tags.includes('Clubs/Orgs')&&(tags.includes('Club Sports')||sportsList.some(s=>tags.includes(s)));
     return false;
@@ -3406,8 +3425,7 @@ window.toggleEventSource=function(src){
     const visibleEvSources = allEvSources.filter(s =>
         !(s === 'PM' && isSourceHidden('PM')) &&
         !(s === 'Borough' && isSourceHidden('Borough')) &&
-        !(s === 'Manor' && isSourceHidden('Manor')) &&
-        !(s === 'Other' && otherSourcesAllHidden())
+        !(s === 'Manor' && isSourceHidden('Manor'))
     );
     if (visibleEvSources.length <= 2) {
         // Two-pill mode (typical Marauder view: MU + Other): multi-select is
@@ -3446,15 +3464,15 @@ function updateEventsUI(){
     if (allBtn) allBtn.classList.toggle('active', evAllMode);
     const srcMap = {'MU':'mu','PM':'pm','Borough':'borough','Manor':'manor','Other':'other'};
     // Hide pills for sources the user's affiliation doesn't care about (unless
-    // shown/favorited). The Other pill hides only when ALL five member sources
-    // (VFW, Phantom, Community, Raney, Jacks) are hidden — one Show/favorite
-    // brings it back. (The old "Other never hides — Phantom is a campus venue"
-    // carve-out is retired 2026-07-27: Phantom Power is off-campus.)
+    // shown/favorited). The Other pill is ALWAYS visible again (2026-07-27
+    // same-day revision): Jesus Dogs became a first-class source living under
+    // Other, and its dated events are marauder-native — so every marauder has
+    // Other-pill content year-round. The rest of the Other family stays
+    // event-gated via isEventFromHiddenSource; only the pill un-hides.
     const evPillHidden = (src) =>
         src === 'PM' ? isSourceHidden('PM')
         : src === 'Borough' ? isSourceHidden('Borough')
         : src === 'Manor' ? isSourceHidden('Manor')
-        : src === 'Other' ? otherSourcesAllHidden()
         : false;
     // Degenerate row: with fewer than 2 visible source pills the row is a
     // meaningless single choice (All === the lone source) — hide All + the
@@ -5227,6 +5245,7 @@ function buildTimelineItem(e, now) {
     else if(tags.includes('Manor')) src = 'Manor';
     else if(tags.includes('Raney Cellars')) src = 'Raney Cellars';
     else if(tags.includes("Jack's Tavern")) src = "Jack's Tavern";
+    else if(tags.includes('Jesus Dogs')) src = 'Jesus Dogs';
     else if(tags.includes('PM') && isSport) src = 'PM';
     else if(tags.includes('PM')) src = 'PM';
     else if(tags.includes('MU') && isSport) src = 'MU';
@@ -5407,6 +5426,7 @@ window.openEventDetails = function(key) {
     else if(tags.includes('Manor')) src = 'Manor';
     else if(tags.includes('Raney Cellars')) src = 'Raney Cellars';
     else if(tags.includes("Jack's Tavern")) src = "Jack's Tavern";
+    else if(tags.includes('Jesus Dogs')) src = 'Jesus Dogs';
     else if(tags.includes('PM')) src = 'PM';
     else if(tags.includes('MU')) src = 'MU';
     else if(tags.includes('Community')) src = 'Community';

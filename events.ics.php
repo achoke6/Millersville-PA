@@ -42,6 +42,34 @@ if (!is_array($events)) {
 $prefsRaw = isset($_GET['p']) ? (string)$_GET['p'] : '';
 $prefs = array_values(array_filter(array_map('trim', explode(',', $prefsRaw)), 'strlen'));
 
+// =====================================================================
+// SPORT/TYPE END-TIME DEFAULTS — declared BEFORE the filter/emission code
+// below (moved here 2026-07-27; see the note at their old spot in HELPERS:
+// `const` executes in file order, and declaring them after the emission
+// loop was the source of the HTTP 500 on real pref ids).
+//
+// MUST stay in lockstep with SPORT_DEFAULTS / TYPE_DEFAULTS / DEFAULT_
+// DURATION_HOURS in app.js. Same values, same lookup order. The app uses
+// these at render time; this file uses them when emitting the iCal feed.
+// If you change the JS map, change this map — calendar subscribers see
+// the wrong end times otherwise.
+// =====================================================================
+const ICS_SPORT_DEFAULTS = [
+    'baseball'      => 3,   'softball'      => 3,
+    'football'      => 3,   'wrestling'     => 3,   'track' => 6,
+    'basketball'    => 2,   'soccer'        => 2,   'tennis' => 2,
+    'lacrosse'      => 2,   'field hockey'  => 2,   'cross country' => 2,
+    'volleyball'    => 1.5,
+    'swimming'      => 3,   'golf'          => 5,
+];
+const ICS_TYPE_DEFAULTS = [
+    'live music'   => 4,
+    'concert'      => 2.5,  'performance' => 2.5,
+    'theater'      => 2.5,  'theatre'     => 2.5,
+    'lecture'      => 2,    'film'        => 2,
+];
+const ICS_DEFAULT_DURATION_HOURS = 2;
+
 // If no prefs supplied, return an empty-but-valid calendar with a hint
 // inside it. Better than a confusing error — most calendar apps will show
 // the calendar name regardless and the user can troubleshoot from there.
@@ -123,30 +151,11 @@ function parseInstant($s) {
     }
 }
 
-// =====================================================================
-// SPORT/TYPE END-TIME DEFAULTS
-//
-// MUST stay in lockstep with SPORT_DEFAULTS / TYPE_DEFAULTS / DEFAULT_
-// DURATION_HOURS in app.js. Same values, same lookup order. The app uses
-// these at render time; this file uses them when emitting the iCal feed.
-// If you change the JS map, change this map — calendar subscribers see
-// the wrong end times otherwise.
-// =====================================================================
-const ICS_SPORT_DEFAULTS = [
-    'baseball'      => 3,   'softball'      => 3,
-    'football'      => 3,   'wrestling'     => 3,   'track' => 6,
-    'basketball'    => 2,   'soccer'        => 2,   'tennis' => 2,
-    'lacrosse'      => 2,   'field hockey'  => 2,   'cross country' => 2,
-    'volleyball'    => 1.5,
-    'swimming'      => 3,   'golf'          => 5,
-];
-const ICS_TYPE_DEFAULTS = [
-    'live music'   => 4,
-    'concert'      => 2.5,  'performance' => 2.5,
-    'theater'      => 2.5,  'theatre'     => 2.5,
-    'lecture'      => 2,    'film'        => 2,
-];
-const ICS_DEFAULT_DURATION_HOURS = 2;
+// SPORT/TYPE END-TIME DEFAULTS moved to the top of the file (2026-07-27):
+// `const` executes in file order (unlike function declarations, which
+// hoist), so declaring them here — below the emission loop that reads
+// them — was a fatal "Undefined constant" (HTTP 500) the moment any
+// event matched a real pref and lacked a source endTime.
 
 /**
  * Resolve an event's end time. Order:
@@ -238,6 +247,9 @@ function buildVevent($e) {
 
     $location    = isset($e['location'])    ? (string)$e['location']    : '';
     $description = isset($e['description']) ? (string)$e['description'] : '';
+    // FIX 2026-07-27: $tags was never defined in this function, so the
+    // CATEGORIES emit below ("if (!empty($tags))") silently never fired.
+    $tags        = isset($e['tags']) && is_array($e['tags']) ? $e['tags'] : [];
     $sourceLink  = isset($e['sourceLink'])  ? (string)$e['sourceLink']  : '';
 
     // Build description with a footer pointing back to the source. Helpful
@@ -438,6 +450,7 @@ function eventMatchesFeed($e) {
     if (in_array('Manor', $tags, true)         && in_array('manor-all', $prefs, true))             return true;
     if (in_array('Raney Cellars', $tags, true) && in_array('raney-cellars-all', $prefs, true))     return true;
     if (in_array("Jack's Tavern", $tags, true) && in_array('jacks-tavern-all', $prefs, true))     return true;
+    if (in_array('Jesus Dogs', $tags, true)    && in_array('jesus-dogs-all', $prefs, true))       return true;
     if (in_array('VFW', $tags, true)           && in_array('other-vfw', $prefs, true))             return true;
     if (in_array('Live Music', $tags, true)    && in_array('other-phantom', $prefs, true))         return true;
     if (in_array('Community', $tags, true)     && in_array('other-community', $prefs, true))       return true;

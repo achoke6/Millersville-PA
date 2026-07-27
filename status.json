@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-07-24T19:23:38.982Z",
-  "totalEvents": 796,
-  "withDescription": 282,
-  "withImage": 95,
+  "generatedAt": "2026-07-27T10:44:32.671Z",
+  "totalEvents": 740,
+  "withDescription": 266,
+  "withImage": 86,
   "familyFriendly": 41,
-  "eventsToday": 3,
+  "eventsToday": 0,
   "sources": {
-    "muAthletics": 241,
+    "muAthletics": 242,
     "muCalendar": 99,
-    "muGetInvolved": 151,
+    "muGetInvolved": 135,
     "pennManor": 84,
     "borough": 97,
     "vfw": 5,
     "phantomPower": 13,
     "community": 53,
-    "manor": 41,
+    "manor": 0,
     "raneyCellars": 2,
     "muHudlBroadcasts": 0
   },
@@ -28,7 +28,7 @@
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-04-25T16:00:00.000Z",
+      "earliest": "2026-04-28T15:30:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
@@ -44,17 +44,14 @@
       "latest": "2026-09-11T17:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-07-24T23:30:00.000Z",
+      "earliest": "2026-08-02T00:00:00.000Z",
       "latest": "2026-10-04T00:00:00.000Z"
     },
     "community": {
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-05-14T02:00:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-07-29T12:30:00.000Z",
-      "latest": "2027-07-07T23:00:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-07-23T20:00:00.000Z",
       "latest": "2026-07-23T22:00:00.000Z"
@@ -63,47 +60,44 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-01",
-      "daysSinceMoved": 16
+      "daysSinceMoved": 19
     },
     "muCalendar": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 50
+      "daysSinceMoved": 53
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 50
+      "daysSinceMoved": 53
     },
     "pennManor": {
       "newest": "2026-09-21",
-      "daysSinceMoved": 30
+      "daysSinceMoved": 33
     },
     "borough": {
       "newest": "2027-07-10",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 7
     },
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 50
+      "daysSinceMoved": 53
     },
     "phantomPower": {
       "newest": "2026-10-04",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 5
     },
     "community": {
       "newest": "2027-05-14",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 10
     },
-    "manor": {
-      "newest": "2027-07-07",
-      "daysSinceMoved": 17
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-07-23",
-      "daysSinceMoved": 16
+      "daysSinceMoved": 19
     }
   },
   "sports": {
-    "total": 297,
+    "total": 298,
     "scored": 1,
     "wins": 0,
     "losses": 1,
@@ -123,79 +117,79 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-24T19:22:01.962Z"
+    "lastSyncAt": "2026-07-27T10:40:50.360Z"
   },
   "recentlyAdded": [
     {
-      "key": "Traffic Commission Meeting-CANCELED|2026-07-29T12:30:00.000Z",
-      "firstSeenAt": "2026-07-24T19:23:38.979Z",
-      "title": "Traffic Commission Meeting-CANCELED",
-      "source": "Manor",
-      "date": "2026-07-29T12:30:00.000Z"
-    },
-    {
-      "key": "Marauder Mania|2026-08-29T12:00:00",
-      "firstSeenAt": "2026-07-24T19:23:38.979Z",
-      "title": "Marauder Mania",
+      "key": "Millersville University Women's Soccer vs East Stroudsburg University- Senior Day|2026-09-26T20:00:00.000Z",
+      "firstSeenAt": "2026-07-27T02:44:54.041Z",
+      "title": "Millersville University Women's Soccer vs East Stroudsburg University- Senior Day",
       "source": "MU",
-      "date": "2026-08-29T12:00:00"
+      "date": "2026-09-26T20:00:00.000Z"
     },
     {
-      "key": "As Sweet as DZ|2026-09-04T17:30:00",
-      "firstSeenAt": "2026-07-24T19:23:38.979Z",
-      "title": "As Sweet as DZ",
+      "key": "Millersville University Women's Soccer at Shepherd|2026-10-14T18:00:00.000Z",
+      "firstSeenAt": "2026-07-27T02:44:54.041Z",
+      "title": "Millersville University Women's Soccer at Shepherd",
       "source": "MU",
-      "date": "2026-09-04T17:30:00"
+      "date": "2026-10-14T18:00:00.000Z"
     },
     {
-      "key": "Delta Zeta Football Tailgate|2026-09-13T15:00:00",
-      "firstSeenAt": "2026-07-24T19:23:38.979Z",
-      "title": "Delta Zeta Football Tailgate",
-      "source": "MU",
-      "date": "2026-09-13T15:00:00"
+      "key": "Caitlynne Curtis|2026-09-02T00:00:00.000Z",
+      "firstSeenAt": "2026-07-26T23:03:35.252Z",
+      "title": "Caitlynne Curtis",
+      "source": "Other",
+      "date": "2026-09-02T00:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
-      "firstSeenAt": "2026-07-24T06:25:38.827Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-08-03T23:00:00.000Z"
+      "key": "Houses Of The Holy - The True Zeppelin Experience|2026-08-02T00:00:00.000Z",
+      "firstSeenAt": "2026-07-26T11:19:15.191Z",
+      "title": "Houses Of The Holy - The True Zeppelin Experience",
+      "source": "Other",
+      "date": "2026-08-02T00:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
-      "firstSeenAt": "2026-07-24T06:25:38.827Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-08-05T23:00:00.000Z"
+      "key": "\"GOLDEN\": A K-POP KIDS PARTY|2026-08-02T16:00:00.000Z",
+      "firstSeenAt": "2026-07-26T11:19:15.191Z",
+      "title": "\"GOLDEN\": A K-POP KIDS PARTY",
+      "source": "Other",
+      "date": "2026-08-02T16:00:00.000Z"
     },
     {
-      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
-      "firstSeenAt": "2026-07-24T06:25:38.827Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-08-10T23:00:00.000Z"
+      "key": "Sunny Sweeney|2026-08-06T00:00:00.000Z",
+      "firstSeenAt": "2026-07-26T11:19:15.191Z",
+      "title": "Sunny Sweeney",
+      "source": "Other",
+      "date": "2026-08-06T00:00:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
-      "firstSeenAt": "2026-07-24T06:25:38.827Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-08-26T12:30:00.000Z"
+      "key": "Deadgrass|2026-08-09T00:00:00.000Z",
+      "firstSeenAt": "2026-07-26T11:19:15.191Z",
+      "title": "Deadgrass",
+      "source": "Other",
+      "date": "2026-08-09T00:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
-      "firstSeenAt": "2026-07-24T06:25:38.827Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-09-02T23:00:00.000Z"
+      "key": "Comedian Luke Null|2026-08-15T00:00:00.000Z",
+      "firstSeenAt": "2026-07-26T11:19:15.191Z",
+      "title": "Comedian Luke Null",
+      "source": "Other",
+      "date": "2026-08-15T00:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
-      "firstSeenAt": "2026-07-24T06:25:38.827Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-09-08T23:00:00.000Z"
+      "key": "Legends Never Die (A celebration of Qwan Lewis)|2026-08-15T23:00:00.000Z",
+      "firstSeenAt": "2026-07-26T11:19:15.191Z",
+      "title": "Legends Never Die (A celebration of Qwan Lewis)",
+      "source": "Other",
+      "date": "2026-08-15T23:00:00.000Z"
+    },
+    {
+      "key": "Ben Nichols w. Cory Branan|2026-08-20T00:00:00.000Z",
+      "firstSeenAt": "2026-07-26T11:19:15.191Z",
+      "title": "Ben Nichols w. Cory Branan",
+      "source": "Other",
+      "date": "2026-08-20T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 4
+  "addedLastRun": 0
 }

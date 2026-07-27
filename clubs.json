@@ -134,9 +134,7 @@
     "name": "American Meteorological Society",
     "category": "Educational Program",
     "categories": [
-      "Educational Program",
-      "Social",
-      "Tabling"
+      "Educational Program"
     ],
     "shortName": "AMS",
     "id": ""
@@ -1049,15 +1047,6 @@
     "id": ""
   },
   {
-    "name": "Kappa Alpha Psi Fraternity Incorporated",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
-    "shortName": "Kappa Alpha Psi",
-    "id": ""
-  },
-  {
     "name": "Kappa Alpha Psi Fraternity, Inc.",
     "category": "",
     "categories": [],
@@ -1193,11 +1182,8 @@
   },
   {
     "name": "Men's Club Lacrosse",
-    "category": "Competition",
-    "categories": [
-      "Competition",
-      "Sporting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1748,8 +1734,11 @@
   },
   {
     "name": "Student Business Association",
-    "category": "",
-    "categories": [],
+    "category": "Lecture or Speaker",
+    "categories": [
+      "Lecture or Speaker",
+      "Social"
+    ],
     "shortName": "SBA",
     "id": ""
   },

@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-07-27T17:05:21.913Z",
-  "totalEvents": 794,
+  "generatedAt": "2026-07-27T18:24:57.248Z",
+  "totalEvents": 797,
   "withDescription": 265,
   "withImage": 86,
   "familyFriendly": 41,
   "eventsToday": 0,
   "sources": {
     "muAthletics": 242,
-    "muCalendar": 112,
+    "muCalendar": 115,
     "muGetInvolved": 135,
     "pennManor": 84,
     "borough": 97,
@@ -25,7 +25,7 @@
     },
     "muCalendar": {
       "earliest": "2026-06-11T22:00:00.000Z",
-      "latest": "2027-04-03T14:00:00.000Z"
+      "latest": "2027-04-03T18:30:00.000Z"
     },
     "muGetInvolved": {
       "earliest": "2026-04-28T15:30:00.000Z",
@@ -123,9 +123,30 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-27T17:03:19.677Z"
+    "lastSyncAt": "2026-07-27T18:22:55.352Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Spring Choral Concert|2027-03-06T19:30:00.000Z",
+      "firstSeenAt": "2026-07-27T18:24:57.246Z",
+      "title": "Spring Choral Concert",
+      "source": "MU",
+      "date": "2027-03-06T19:30:00.000Z"
+    },
+    {
+      "key": "Brass Area Recital|2027-03-24T23:30:00.000Z",
+      "firstSeenAt": "2026-07-27T18:24:57.246Z",
+      "title": "Brass Area Recital",
+      "source": "MU",
+      "date": "2027-03-24T23:30:00.000Z"
+    },
+    {
+      "key": "Concert Band & Wind Ensemble|2027-04-03T18:30:00.000Z",
+      "firstSeenAt": "2026-07-27T18:24:57.246Z",
+      "title": "Concert Band & Wind Ensemble",
+      "source": "MU",
+      "date": "2027-04-03T18:30:00.000Z"
+    },
     {
       "key": "Jazz at the &#8216;Ville|2027-02-27T00:30:00.000Z",
       "firstSeenAt": "2026-07-27T17:05:21.911Z",
@@ -174,28 +195,7 @@
       "title": "Concert Band & Wind Ensemble",
       "source": "MU",
       "date": "2026-10-25T18:30:00.000Z"
-    },
-    {
-      "key": "Octubaween!|2026-10-28T23:30:00.000Z",
-      "firstSeenAt": "2026-07-27T16:18:28.165Z",
-      "title": "Octubaween!",
-      "source": "MU",
-      "date": "2026-10-28T23:30:00.000Z"
-    },
-    {
-      "key": "Jazz at the &#8216;Ville|2026-10-30T23:30:00.000Z",
-      "firstSeenAt": "2026-07-27T16:18:28.165Z",
-      "title": "Jazz at the &#8216;Ville",
-      "source": "MU",
-      "date": "2026-10-30T23:30:00.000Z"
-    },
-    {
-      "key": "Fall Choral Concert|2026-11-07T23:30:00.000Z",
-      "firstSeenAt": "2026-07-27T16:18:28.165Z",
-      "title": "Fall Choral Concert",
-      "source": "MU",
-      "date": "2026-11-07T23:30:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 3
 }

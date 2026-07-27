@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-07-27T18:44:34.598Z",
-  "totalEvents": 799,
+  "generatedAt": "2026-07-27T19:25:53.160Z",
+  "totalEvents": 802,
   "withDescription": 265,
   "withImage": 86,
   "familyFriendly": 41,
   "eventsToday": 0,
   "sources": {
     "muAthletics": 242,
-    "muCalendar": 117,
+    "muCalendar": 120,
     "muGetInvolved": 135,
     "pennManor": 84,
     "borough": 97,
@@ -25,7 +25,7 @@
     },
     "muCalendar": {
       "earliest": "2026-06-11T22:00:00.000Z",
-      "latest": "2027-04-24T23:30:00.000Z"
+      "latest": "2027-05-02T18:30:00.000Z"
     },
     "muGetInvolved": {
       "earliest": "2026-04-28T15:30:00.000Z",
@@ -66,7 +66,7 @@
       "daysSinceMoved": 19
     },
     "muCalendar": {
-      "newest": "2027-04-24",
+      "newest": "2027-05-02",
       "daysSinceMoved": 0
     },
     "muGetInvolved": {
@@ -123,9 +123,30 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-27T18:42:30.295Z"
+    "lastSyncAt": "2026-07-27T19:23:00.812Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Spring Orchestra Concert|2027-04-30T23:30:00.000Z",
+      "firstSeenAt": "2026-07-27T19:25:53.158Z",
+      "title": "Spring Orchestra Concert",
+      "source": "MU",
+      "date": "2027-04-30T23:30:00.000Z"
+    },
+    {
+      "key": "Spring Choral Concert|2027-05-01T23:30:00.000Z",
+      "firstSeenAt": "2026-07-27T19:25:53.158Z",
+      "title": "Spring Choral Concert",
+      "source": "MU",
+      "date": "2027-05-01T23:30:00.000Z"
+    },
+    {
+      "key": "Concert Band & Wind Ensemble|2027-05-02T18:30:00.000Z",
+      "firstSeenAt": "2026-07-27T19:25:53.158Z",
+      "title": "Concert Band & Wind Ensemble",
+      "source": "MU",
+      "date": "2027-05-02T18:30:00.000Z"
+    },
     {
       "key": "Millersville University Women's Cross Country  Dutchmen Invitational|2026-09-05T14:15:00.000Z",
       "firstSeenAt": "2026-07-27T18:44:34.595Z",
@@ -174,28 +195,7 @@
       "title": "Millersville University Women's Cross Country  NCAA Atlantic Regional",
       "source": "MU",
       "date": "2026-11-21T16:15:00.000Z"
-    },
-    {
-      "key": "Fall Orchestra Concert|2026-11-22T00:30:00.000Z",
-      "firstSeenAt": "2026-07-27T18:44:34.595Z",
-      "title": "Fall Orchestra Concert",
-      "source": "MU",
-      "date": "2026-11-22T00:30:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Cross Country  NCAA Championship|2026-12-04T00:00:00.000Z",
-      "firstSeenAt": "2026-07-27T18:44:34.595Z",
-      "title": "Millersville University Women's Cross Country  NCAA Championship",
-      "source": "MU",
-      "date": "2026-12-04T00:00:00.000Z"
-    },
-    {
-      "key": "Faculty Recital: Brass Faculty|2027-04-04T18:30:00.000Z",
-      "firstSeenAt": "2026-07-27T18:44:34.595Z",
-      "title": "Faculty Recital: Brass Faculty",
-      "source": "MU",
-      "date": "2027-04-04T18:30:00.000Z"
     }
   ],
-  "addedLastRun": 11
+  "addedLastRun": 3
 }

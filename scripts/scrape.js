@@ -269,6 +269,7 @@ function extractPricing(desc, title = "", location = "", apiLink = "") {
         { match: /jazz ensembles|jazz.*java/i, url: 'https://www.etix.com/ticket/p/71762678/jazz-ensemblesjazz-java-with-alumni-band-millersville-winter-visual-performing-arts-center', price: '$18' },
         { match: /concert band.*wind ensemble|wind ensemble.*concert band/i, url: 'https://www.etix.com/ticket/p/74152110/concert-band-wind-ensemble-millersville-winter-visual-performing-arts-center', price: '$10' },
         { match: /spring choral concert/i, url: 'https://www.etix.com/ticket/p/42106815/spring-choral-concert-millersville-winter-visual-performing-arts-center', price: '$10' },
+        { match: /making democracy work/i, url: 'https://www.etix.com/ticket/p/38495242/', price: '$0 - $20' },
     ];
 
     // Check for direct etix match first

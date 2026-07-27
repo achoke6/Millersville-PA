@@ -4467,7 +4467,7 @@ function eventIsFree(e){
 function buildEventCard(e,isSportsPage){
     const d=new Date(e.date), tags=e.tags||[];
     const priceText=e.price?e.price.toString():"Free";
-    const isFree=priceText.toLowerCase()==='free'||priceText.toLowerCase()==='free entry';
+    const isFree=!e.price||eventIsFree(e);
     const hasLink=e.ticketLink&&e.ticketLink.trim()!=="";
     const isHome=tags.includes('Home Game Mode')||tags.includes('H Games');
 

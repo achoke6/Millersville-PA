@@ -915,7 +915,12 @@ function isEventFromHiddenSource(e) {
     // sheet row targeted at Marauders/Both is still source-hidden for default
     // marauders until they Show/favorite Community (flagged in manifest §6).
     if ((tags.includes('Phantom Power') || (tags.includes('Other') && tags.includes('Live Music'))) && isSourceHidden('Phantom')) return true;
-    if (tags.includes('Community') && isSourceHidden('Community')) return true;
+    // Bare 'Other' tag = Community family too (community-form submissions and
+    // candidates-sheet creates emit it; suggestFeedIdForEvent has always
+    // ★-mapped it to other-community). Missing here 2026-07-27a→d — townie
+    // events leaked into the Marauder Other pill. !Live Music keeps Phantom
+    // ('Other'+'Live Music') governed solely by its own line above.
+    if ((tags.includes('Community') || (tags.includes('Other') && !tags.includes('Live Music'))) && isSourceHidden('Community')) return true;
     if (tags.includes('Raney Cellars') && isSourceHidden('Raney')) return true;
     if (tags.includes("Jack's Tavern") && isSourceHidden('Jacks')) return true;
     return false;

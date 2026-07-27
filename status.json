@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-07-26T23:03:35.254Z",
-  "totalEvents": 790,
-  "withDescription": 275,
-  "withImage": 92,
+  "generatedAt": "2026-07-27T02:44:54.043Z",
+  "totalEvents": 781,
+  "withDescription": 266,
+  "withImage": 86,
   "familyFriendly": 41,
   "eventsToday": 1,
   "sources": {
-    "muAthletics": 241,
+    "muAthletics": 242,
     "muCalendar": 99,
-    "muGetInvolved": 144,
+    "muGetInvolved": 135,
     "pennManor": 84,
     "borough": 97,
     "vfw": 5,
-    "phantomPower": 14,
+    "phantomPower": 13,
     "community": 53,
     "manor": 41,
     "raneyCellars": 2,
@@ -28,7 +28,7 @@
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-04-27T14:00:00.000Z",
+      "earliest": "2026-04-28T15:30:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
@@ -44,7 +44,7 @@
       "latest": "2026-09-11T17:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-07-26T00:00:00.000Z",
+      "earliest": "2026-08-02T00:00:00.000Z",
       "latest": "2026-10-04T00:00:00.000Z"
     },
     "community": {
@@ -103,7 +103,7 @@
     }
   },
   "sports": {
-    "total": 297,
+    "total": 298,
     "scored": 1,
     "wins": 0,
     "losses": 1,
@@ -123,9 +123,23 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-26T23:01:58.520Z"
+    "lastSyncAt": "2026-07-27T02:43:12.614Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Millersville University Women's Soccer vs East Stroudsburg University- Senior Day|2026-09-26T20:00:00.000Z",
+      "firstSeenAt": "2026-07-27T02:44:54.041Z",
+      "title": "Millersville University Women's Soccer vs East Stroudsburg University- Senior Day",
+      "source": "MU",
+      "date": "2026-09-26T20:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Soccer at Shepherd|2026-10-14T18:00:00.000Z",
+      "firstSeenAt": "2026-07-27T02:44:54.041Z",
+      "title": "Millersville University Women's Soccer at Shepherd",
+      "source": "MU",
+      "date": "2026-10-14T18:00:00.000Z"
+    },
     {
       "key": "Traffic Commission Meeting-CANCELED|2026-07-29T12:30:00.000Z",
       "firstSeenAt": "2026-07-26T23:03:35.252Z",
@@ -181,21 +195,7 @@
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2026-09-08T23:00:00.000Z"
-    },
-    {
-      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
-      "firstSeenAt": "2026-07-26T23:03:35.252Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-09-14T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
-      "firstSeenAt": "2026-07-26T23:03:35.252Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-09-30T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 42
+  "addedLastRun": 2
 }

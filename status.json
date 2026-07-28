@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-07-27T22:07:15.453Z",
-  "totalEvents": 802,
-  "withDescription": 265,
-  "withImage": 86,
+  "generatedAt": "2026-07-28T00:03:21.162Z",
+  "totalEvents": 787,
+  "withDescription": 251,
+  "withImage": 76,
   "familyFriendly": 41,
   "eventsToday": 0,
   "sources": {
     "muAthletics": 242,
-    "muCalendar": 120,
-    "muGetInvolved": 135,
+    "muCalendar": 121,
+    "muGetInvolved": 120,
     "pennManor": 84,
-    "borough": 97,
+    "borough": 96,
     "vfw": 5,
     "phantomPower": 13,
     "community": 21,
@@ -28,7 +28,7 @@
       "latest": "2027-05-02T18:30:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-04-28T15:30:00.000Z",
+      "earliest": "2026-04-29T20:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
@@ -36,7 +36,7 @@
       "latest": "2026-09-21T23:00:00.000Z"
     },
     "borough": {
-      "earliest": "2026-04-28T23:00:00.000Z",
+      "earliest": "2026-05-04T22:00:00.000Z",
       "latest": "2027-07-10T14:00:00.000Z"
     },
     "vfw": {
@@ -123,9 +123,16 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-27T22:04:51.426Z"
+    "lastSyncAt": "2026-07-28T00:00:31.592Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Free Lunch|2026-08-25T15:00:00.000Z",
+      "firstSeenAt": "2026-07-28T00:03:21.160Z",
+      "title": "Free Lunch",
+      "source": "MU",
+      "date": "2026-08-25T15:00:00.000Z"
+    },
     {
       "key": "IARA w. Junk. & SkinMag|2026-08-29T00:00:00.000Z",
       "firstSeenAt": "2026-07-27T22:07:15.451Z",
@@ -188,13 +195,6 @@
       "title": "Millersville University Women's Cross Country  Last Chance Run Fast Invitational",
       "source": "MU",
       "date": "2026-10-23T19:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Cross Country  PSAC Championships|2026-11-07T16:15:00.000Z",
-      "firstSeenAt": "2026-07-27T18:44:34.595Z",
-      "title": "Millersville University Women's Cross Country  PSAC Championships",
-      "source": "MU",
-      "date": "2026-11-07T16:15:00.000Z"
     }
   ],
   "addedLastRun": 1

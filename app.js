@@ -695,7 +695,8 @@ const feedSections = {
             // audience bypass in isEventFromHiddenSource).
             otherevents: { label: 'Other Events', icon: '🎯', headingStyle: true, audience: 'student', subs: [
                 {id:'jesus-dogs-all',label:'Free Hot Dog Thursdays',icon:'🌭'},
-                {id:'backyard-all',label:'The Backyard',icon:'😊'}
+                {id:'backyard-all',label:'The Backyard',icon:'😊'},
+                {id:'hub-all',label:'HUB Free Meals',icon:'🥪'}
             ] },
             borough: { label: 'Borough', icon: '🌳', headingStyle: true, audience: 'townie', subs: [{id:'borough-all',label:'All Borough Events',icon:'🌳'}] },
             manor: { label: 'Manor Twp.', icon: '🪶', headingStyle: true, audience: 'townie', subs: [{id:'manor-all',label:'All Manor Twp. Events',icon:'🪶'}] },
@@ -1020,6 +1021,7 @@ function suggestFeedIdForEvent(e, isSportsPage) {
     if (tags.includes("Jack's Tavern")) return 'jacks-tavern-all';
     if (tags.includes('Jesus Dogs')) return 'jesus-dogs-all';
     if (tags.includes('The Backyard')) return 'backyard-all';
+    if (tags.includes('HUB')) return 'hub-all';
     // Other
     if (tags.includes('VFW')) return 'other-vfw';
     if (tags.includes('Phantom Power') || tags.includes('Live Music')) return 'other-phantom';
@@ -2733,7 +2735,7 @@ function matchesSource(tags,src){
     if(src==='PM') return tags.includes('PM');
     if(src==='Borough') return tags.includes('Borough');
     if(src==='Manor') return tags.includes('Manor');
-    if(src==='Other') return tags.includes('Other') || tags.includes('Community') || tags.includes('Raney Cellars') || tags.includes("Jack's Tavern") || tags.includes('Jesus Dogs') || tags.includes('The Backyard');
+    if(src==='Other') return tags.includes('Other') || tags.includes('Community') || tags.includes('Raney Cellars') || tags.includes("Jack's Tavern") || tags.includes('Jesus Dogs') || tags.includes('The Backyard') || tags.includes('HUB');
     // Sports page still uses 'Clubs' as a separate filter (Club Sports games)
     if(src==='Clubs') return tags.includes('Clubs/Orgs')&&(tags.includes('Club Sports')||sportsList.some(s=>tags.includes(s)));
     return false;
@@ -5250,6 +5252,7 @@ function buildTimelineItem(e, now) {
     else if(tags.includes("Jack's Tavern")) src = "Jack's Tavern";
     else if(tags.includes('Jesus Dogs')) src = 'Jesus Dogs';
     else if(tags.includes('The Backyard')) src = 'The Backyard';
+    else if(tags.includes('HUB')) src = 'The HUB';
     else if(tags.includes('PM') && isSport) src = 'PM';
     else if(tags.includes('PM')) src = 'PM';
     else if(tags.includes('MU') && isSport) src = 'MU';
@@ -5432,6 +5435,7 @@ window.openEventDetails = function(key) {
     else if(tags.includes("Jack's Tavern")) src = "Jack's Tavern";
     else if(tags.includes('Jesus Dogs')) src = 'Jesus Dogs';
     else if(tags.includes('The Backyard')) src = 'The Backyard';
+    else if(tags.includes('HUB')) src = 'The HUB';
     else if(tags.includes('PM')) src = 'PM';
     else if(tags.includes('MU')) src = 'MU';
     else if(tags.includes('Community')) src = 'Community';
@@ -6429,7 +6433,7 @@ const MAP_PIN_COLORS = { food:'#b0452b', service:'#0f6e56', housing:'#5b4bc4', c
 // home-popup mini map). For the rare listing whose identity beats its
 // category icon. First user: Jesus Dogs (🌭, not the Food & Drink 🍴).
 // Promote to a sheet column if these ever multiply past a handful.
-const PLACE_PIN_OVERRIDES = { 'jesus-dogs': '🌭', 'the-backyard': '😊' };
+const PLACE_PIN_OVERRIDES = { 'jesus-dogs': '🌭', 'the-backyard': '😊', 'the-hub': '🥪' };
 
 function placesMapAssetsLoad(){
     if (placesMapLibReady) return Promise.resolve();
@@ -6988,8 +6992,8 @@ function isoInMuSummer(iso){
     return iso >= w.from && iso <= w.to;
 }
 // Academic-break closures for break_closed listings. ESTIMATES aligned with
-// jesus-dogs.activeRanges (place-specials.json) — tune BOTH at the twice-
-// yearly registrar check (manifest §8). Inclusive ISO ranges; year-spanning
+// jesus-dogs.activeRanges AND the-hub.activeRanges (place-specials.json) —
+// tune ALL THREE at the twice-yearly registrar check (manifest §8). Inclusive ISO ranges; year-spanning
 // winter break works via full-ISO string comparison. Summer is NOT a break —
 // it has its own tier (summer_hours_ cells / inheritance) above.
 const MU_BREAK_RANGES = [

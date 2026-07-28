@@ -98,8 +98,11 @@ function slugify(name) {
 // silently orphaning that pin's PLACE_PIN_OVERRIDES key from the day it
 // shipped (app.js placeSlug() prefers this emitted field). Malformed or
 // blank cells fall back to slugify(name), warn-only.
-function resolveSlug(row, name) {
-  const cell = String(get(row, 'slug') || '').trim().toLowerCase();
+// Takes the raw CELL VALUE (not the row) — get() is a main()-scoped closure
+// over the header index, so a top-level helper can't call it. Pure +
+// top-level for the harness, like slugify above.
+function resolveSlug(rawCell, name) {
+  const cell = String(rawCell || '').trim().toLowerCase();
   if (/^[a-z0-9][a-z0-9-]*$/.test(cell)) return cell;
   if (cell) console.log(`  ⚠️ slug cell "${cell}" for "${name}" is malformed — using derived slug instead`);
   return slugify(name);
@@ -270,7 +273,7 @@ async function main() {
       if (yes(get(row, 'onCampus'))) o.onCampus = true;
       const phone = get(row, 'phone'); if (phone) o.phone = phone;
       if (audience !== 'both') o.audience = audience;
-      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = resolveSlug(row, name);
+      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = resolveSlug(get(row, 'slug'), name);
       const h = hoursFor(row, name); if (h) o.hours = h;
       const sh = summerHoursFor(row, name); if (sh) o.summerHours = sh;
       if (breakClosedFor(row)) o.breakClosed = true;
@@ -282,7 +285,7 @@ async function main() {
       if (yes(get(row, 'marauderGold'))) o.marauderGold = true;
       if (yes(get(row, 'onCampus'))) o.onCampus = true;
       if (audience !== 'both') o.audience = audience;
-      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = resolveSlug(row, name);
+      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = resolveSlug(get(row, 'slug'), name);
       const h = hoursFor(row, name); if (h) o.hours = h;
       const sh = summerHoursFor(row, name); if (sh) o.summerHours = sh;
       if (breakClosedFor(row)) o.breakClosed = true;
@@ -291,7 +294,7 @@ async function main() {
       const o = { name, landlord: get(row, 'landlord'), description: get(row, 'description') };
       const website = get(row, 'website'); if (website) o.link = website;
       if (audience !== 'both') o.audience = audience;
-      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = resolveSlug(row, name);
+      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = resolveSlug(get(row, 'slug'), name);
       housing.push(o);
     } else if (type === 'cupboard') {
       // Static info + HOURS (2026-07-23): the Cupboard's hours now come from
@@ -303,7 +306,7 @@ async function main() {
         name, description: get(row, 'description'), address: get(row, 'address'),
         onCampus: yes(get(row, 'onCampus'))
       };
-      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = resolveSlug(row, name);
+      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = resolveSlug(get(row, 'slug'), name);
       const h = hoursFor(row, name); if (h) o.hours = h;
       const sh = summerHoursFor(row, name); if (sh) o.summerHours = sh;
       if (breakClosedFor(row)) o.breakClosed = true;

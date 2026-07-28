@@ -128,6 +128,17 @@
   },
   "observations": [
     {
+      "time": "14:00",
+      "temp": "81",
+      "dewpoint": "74",
+      "rh": "79",
+      "windDir": "S",
+      "windSpeed": "3",
+      "precip": "0.02",
+      "visibility": "9.8",
+      "condition": "None"
+    },
+    {
       "time": "13:00",
       "temp": "77",
       "dewpoint": "73",
@@ -180,17 +191,6 @@
       "windSpeed": "6",
       "precip": "0.00",
       "visibility": "9.6",
-      "condition": "None"
-    },
-    {
-      "time": "08:00",
-      "temp": "74",
-      "dewpoint": "70",
-      "rh": "87",
-      "windDir": "",
-      "windSpeed": "",
-      "precip": "0.00",
-      "visibility": "8.3",
       "condition": "None"
     }
   ],
@@ -503,9 +503,9 @@
     "yearMinDate": "January 21"
   },
   "discussion": {
-    "headline": "beautiful, summer weekend before storm chances return",
-    "dateLine": "11:30 a.m. Friday, July 24, 2026, Update",
-    "excerpt": "The weather over the last two days has been nothing short of spectacular! Following Wednesday morning's cold frontal passage, west-northwesterly winds of 12-25 mph ushered a cooler and much drier air mass into the Commonwealth. In fact, dewpoints plummeted into the 40s Thursday afternoon, and afternoon highs were in the refreshing upper 70s to low 80s under perfectly sunny skies. …",
+    "headline": "nother round of severe storms and flooding concerns today",
+    "dateLine": "1:30 p.m. Tuesday, July 28, 2026",
+    "excerpt": "The last week of July kicked off on a partly-to-mostly sunny and seasonably warm note across the Lower Susquehanna Valley with high temperatures in the mid-to-upper 80s Monday afternoon. Unfortunately, the tranquil conditions will be replaced by another round of severe thunderstorms and flash flooding concerns this afternoon and evening. …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -543,5 +543,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-28T17:57:53.420Z"
+  "updated": "2026-07-28T18:05:47.490Z"
 }

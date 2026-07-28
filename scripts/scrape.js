@@ -3255,6 +3255,33 @@ async function runScraper() {
                 }
             }
         } catch (e) { console.log(`  ⚠️ Borough overrides error: ${e.message}`); }
+
+        // Post-override noise sweep: drop the borough's bare room-reservation
+        // placeholders. "Reserve Public Meeting Room" VEVENTs are bookings of
+        // the municipal meeting room, not announcements of public events —
+        // they carry no description from the feed and (per months of Borough-
+        // blog runs) almost never correspond to a blog post. When one DOES,
+        // the enrichment override above has already renamed it (and given it
+        // a description) before this sweep runs, so it survives on BOTH
+        // conditions — the ordering (overrides first, sweep second) is
+        // load-bearing; do not move this above the overrides block. The
+        // title match tolerates the restored Gmail-calendar's comma variant
+        // ("Reserve, Public Meeting Room"). Source-level like the collection/
+        // spam skips above — NOT a Hard-Rule-7 triplicated change; this
+        // REPLACES the retired render-time BOROUGH_NOISE_TITLES filter that
+        // lived in app.js / lib/eventMatch.js / events.ics.php. Logged with a
+        // count canary so a sheet/feed incident surfaces in the Action log.
+        const BOROUGH_NOISE_TITLE_RE = /^\s*reserve[\s,]+public\s+meeting\s+room\b/i;
+        let boroughNoiseSkipped = 0;
+        for (let i = events.length - 1; i >= 0; i--) {
+            const e = events[i];
+            if (!e.tags || !e.tags.includes('Borough')) continue;
+            if (!BOROUGH_NOISE_TITLE_RE.test(e.title || '')) continue;
+            if (e.description) continue;  // enriched → real event, keep
+            events.splice(i, 1);
+            boroughNoiseSkipped++;
+        }
+        if (boroughNoiseSkipped) console.log(`  ⏭️ dropped ${boroughNoiseSkipped} unenriched "Reserve Public Meeting Room" reservation(s) (room bookings, not public events)`);
     } catch (e) { console.error("❌ Borough Calendar error:", e.message); }
 
 

@@ -3340,18 +3340,10 @@ async function loadEvents(){
     // of an event we already carry under a different title) before anything else
     // touches the array — see dedupeEvents.
     allEvents = dedupeEvents(allEvents);
-    // Drop Borough administrative noise — recurring calendar housekeeping entries
-    // (e.g. "Reserve Public Meeting Room") that aren't real public events. We only
-    // remove a Borough event when its title matches a known-noise phrase AND it has
-    // no description (i.e. the borough blog never enriched it). Relevant Borough
-    // events without descriptions are kept. Add more phrases (lowercase) to extend.
-    const BOROUGH_NOISE_TITLES = ['reserve public meeting room'];
-    allEvents = allEvents.filter(e => {
-        if (!(e.tags || []).includes('Borough')) return true;          // non-Borough: keep
-        if ((e.description || '').trim()) return true;                  // blog-enriched: keep
-        const t = (e.title || '').toLowerCase().replace(/\s+/g, ' ').trim();
-        return !BOROUGH_NOISE_TITLES.some(noise => t.startsWith(noise)); // drop known noise
-    });
+    // Borough "Reserve Public Meeting Room" noise is now dropped at SCRAPE time
+    // (scrape.js post-override sweep, 2026-07-28) — the render-time
+    // BOROUGH_NOISE_TITLES filter that lived here was retired; unenriched
+    // placeholders never reach events.json.
     // Pre-parse date strings to millisecond timestamps once, attached as
     // _dateMs. Filter and sort hot paths reference _dateMs instead of
     // calling `new Date(e.date)` (which allocates a Date and reparses the

@@ -324,17 +324,9 @@ function eventMatchesFeed($e) {
     $tags  = isset($e['tags']) && is_array($e['tags']) ? $e['tags'] : [];
     $title = isset($e['title']) ? strtolower((string)$e['title']) : '';
 
-    // Borough administrative noise (kept in sync with app.js loadEvents and
-    // eventMatch.js): a Borough event whose title matches a known-noise phrase
-    // AND has no blog-enriched description never belongs in the feed.
-    $boroughNoiseTitles = ['reserve public meeting room'];
-    $bDesc = isset($e['description']) ? trim((string)$e['description']) : '';
-    if (in_array('Borough', $tags, true) && $bDesc === '') {
-        $bt = trim(preg_replace('/\s+/', ' ', $title));
-        foreach ($boroughNoiseTitles as $noise) {
-            if (strpos($bt, $noise) === 0) return false;
-        }
-    }
+    // (Borough "Reserve Public Meeting Room" noise is dropped at SCRAPE time as
+    // of 2026-07-28 — the render-time noise check that lived here was retired,
+    // matching lib/eventMatch.js; unenriched placeholders never reach events.json.)
 
     // Family Friendly — matches any event with the kidFriendly flag.
     if (in_array('family-events', $prefs, true) && !empty($e['kidFriendly'])) return true;

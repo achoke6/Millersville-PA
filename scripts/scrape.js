@@ -3402,6 +3402,129 @@ async function runScraper() {
         console.log(`✅ Raney Cellars: ${raneyCount} events`);
     } catch (e) { console.error("❌ Raney Cellars error:", e.message); }
 
+    // ===== 6f. THE BACKYARD (Google Calendar iCal — with recurring event expansion) =====
+    // On-campus pop-up spot (directory row: audience Marauders) hosting free
+    // food for MU students — food trucks, themed food days, and (TBD) bigger
+    // happenings. Source: their public Google Calendar ("Montour Backyard
+    // Events"). Marauder-native: every event emits audience 'mu-only'
+    // (townies: hidden by isHiddenForViewer; marauders/unset: always visible
+    // via the mu-only bypass in isEventFromHiddenSource). Feed pref
+    // 'backyard-all' — Hard-Rule-7 wired in app.js + lib/eventMatch.js +
+    // events.ics.php. The feed carries no LOCATION/DESCRIPTION fields;
+    // location defaults to the place NAME ('The Backyard') so
+    // linkEventsToPlaces tier-2 attaches events to the card/pin (Today lens,
+    // "Here today" box, pin popups) — the map pin is the discovery surface
+    // for a spot most students can't find by name.
+    // Every event is currently free food, so all carry benefits ['Free Food']
+    // (perk badge + the Marauder free-food filter). If a non-food event
+    // (e.g. a homecoming party) ever lands on the calendar, add a title-keyed
+    // exclusion at the marked spot in backyardEmit.
+    // The feed has no RRULEs today, but Google Calendar makes recurring
+    // events one click — Borough-style expansion (EXDATE + RECURRENCE-ID
+    // aware) ships from day one so a weekly series can't silently emit only
+    // its first instance.
+    try {
+        console.log("📡 Fetching The Backyard calendar...");
+        const backyardData = await ical.async.fromURL(
+            'https://calendar.google.com/calendar/ical/c_f595c11690e0aa18d6e981a04ec3f904cd00b1c65f378aadbe457a9f14ac6622%40group.calendar.google.com/public/basic.ics',
+            { headers: baseHeaders }
+        );
+        // Public embed page — the only human-browsable URL for this calendar;
+        // used as the sourceLink so "source" taps land somewhere readable.
+        const BACKYARD_LINK = 'https://calendar.google.com/calendar/embed?src=c_f595c11690e0aa18d6e981a04ec3f904cd00b1c65f378aadbe457a9f14ac6622%40group.calendar.google.com&ctz=America%2FNew_York';
+        const backyardEmit = (o) => {
+            events.push({
+                title: o.title,
+                date: o.date,
+                ...(o.endTime ? { endTime: o.endTime } : {}),
+                location: o.location || 'The Backyard',
+                description: o.description || '',
+                tags: ['The Backyard'],
+                price: 'Free', ticketLink: '',
+                sourceLink: BACKYARD_LINK,
+                // All-events-are-free-food assumption (see header note). A
+                // future non-food exclusion goes here, e.g.:
+                //   ...(/homecoming/i.test(o.title) ? {} : { benefits: ['Free Food'] })
+                benefits: ['Free Food'],
+                audience: 'mu-only',
+                ...(o.allDay ? { allDay: true } : {})
+            });
+        };
+        let backyardCount = 0;
+        let backyardRecurring = 0;
+        for (const ev of Object.values(backyardData)) {
+            if (ev.type !== 'VEVENT') continue;
+            const title = (ev.summary || 'The Backyard Event').trim();
+
+            if (ev.rrule) {
+                try {
+                    const occurrences = ev.rrule.between(pastDate, futureDate);
+                    for (const occ of occurrences) {
+                        const origStart = new Date(ev.start);
+                        // UTC components of the occurrence = intended local date
+                        const occYear = occ.getUTCFullYear();
+                        const occMonth = occ.getUTCMonth();
+                        const occDay = occ.getUTCDate();
+                        const isAllDay = (origStart.getUTCHours() === 0 && origStart.getUTCMinutes() === 0) ||
+                                         (ev.start && ev.start.dateOnly) ||
+                                         (ev.datetype === 'date');
+                        // All-day → noon UTC so the date stays correct in ET
+                        const origHour = isAllDay ? 12 : origStart.getUTCHours();
+                        const origMin = isAllDay ? 0 : origStart.getUTCMinutes();
+                        const eventDate = new Date(Date.UTC(occYear, occMonth, occDay, origHour, origMin, 0));
+
+                        const occKey = `${occYear}-${String(occMonth+1).padStart(2,'0')}-${String(occDay).padStart(2,'0')}`;
+                        if (ev.exdate) {
+                            const exdates = Object.values(ev.exdate).map(d => {
+                                const ed = new Date(d);
+                                return `${ed.getUTCFullYear()}-${String(ed.getUTCMonth()+1).padStart(2,'0')}-${String(ed.getUTCDate()).padStart(2,'0')}`;
+                            });
+                            if (exdates.includes(occKey)) continue;
+                        }
+                        if (ev.recurrences && ev.recurrences[occKey]) {
+                            const mod = ev.recurrences[occKey];
+                            backyardEmit({
+                                title: (mod.summary || title).trim(),
+                                date: new Date(mod.start).toISOString(),
+                                endTime: resolveEndTime({ origStart: mod.start, origEnd: mod.end, instanceStart: mod.start, isAllDay }),
+                                location: mod.location, description: mod.description, allDay: isAllDay
+                            });
+                        } else {
+                            backyardEmit({
+                                title,
+                                date: eventDate.toISOString(),
+                                endTime: resolveEndTime({ origStart: ev.start, origEnd: ev.end, instanceStart: eventDate, isAllDay }),
+                                location: ev.location, description: ev.description, allDay: isAllDay
+                            });
+                        }
+                        backyardCount++;
+                        backyardRecurring++;
+                    }
+                } catch (rrErr) {
+                    console.log(`  ⚠️ Backyard RRULE expansion failed for "${title}": ${rrErr.message}`);
+                }
+            } else {
+                let eventDate = new Date(ev.start);
+                if (isNaN(eventDate.getTime()) || eventDate < pastDate || eventDate >= futureDate) continue;
+                // All-day events: midnight UTC → noon UTC so date stays correct in ET
+                const singleIsAllDay = (eventDate.getUTCHours() === 0 && eventDate.getUTCMinutes() === 0) ||
+                                       (ev.start && ev.start.dateOnly) || (ev.datetype === 'date');
+                if (singleIsAllDay) {
+                    eventDate = new Date(Date.UTC(eventDate.getUTCFullYear(), eventDate.getUTCMonth(), eventDate.getUTCDate(), 12, 0, 0));
+                }
+                backyardEmit({
+                    title,
+                    date: eventDate.toISOString(),
+                    endTime: resolveEndTime({ origStart: ev.start, origEnd: ev.end, instanceStart: eventDate, isAllDay: singleIsAllDay }),
+                    location: ev.location, description: ev.description, allDay: singleIsAllDay
+                });
+                backyardCount++;
+            }
+        }
+        console.log(`✅ The Backyard: ${backyardCount} events${backyardRecurring ? ` (${backyardRecurring} from recurring)` : ''}`);
+    } catch (e) { console.error("❌ The Backyard error:", e.message); }
+
+
 
     // ===== 6b. PENN MANOR COMMUNITY EVENTS — hand-curated overrides =====
     //
@@ -5407,6 +5530,7 @@ async function runScraper() {
                 community: bySourceCount('Community'),
                 manor: bySourceCount('Manor'),
                 raneyCellars: bySourceCount('Raney Cellars'),
+                theBackyard: bySourceCount('The Backyard'),
                 // Enrichment count (not events). Number of MU athletic events
                 // that got a Hudl/PSAC streamLink this run. Watched by the
                 // status dashboard's per-source degradation detector — the
@@ -5439,7 +5563,8 @@ async function runScraper() {
                 })(),
                 community: dateRangeFor('Community'),
                 manor: dateRangeFor('Manor'),
-                raneyCellars: dateRangeFor('Raney Cellars')
+                raneyCellars: dateRangeFor('Raney Cellars'),
+                theBackyard: dateRangeFor('The Backyard')
             },
             // Stale-source detection. For each source, compute the newest event
             // date currently in the data, then compare against the same source's
@@ -5479,7 +5604,8 @@ async function runScraper() {
                     })(),
                     community: dateRangeFor('Community')?.latest,
                     manor: dateRangeFor('Manor')?.latest,
-                    raneyCellars: dateRangeFor('Raney Cellars')?.latest
+                    raneyCellars: dateRangeFor('Raney Cellars')?.latest,
+                    theBackyard: dateRangeFor('The Backyard')?.latest
                 };
                 for (const [key, latestIso] of Object.entries(newestPerSource)) {
                     if (!latestIso) { out[key] = null; continue; }

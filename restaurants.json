@@ -1,5 +1,15 @@
 [
   {
+    "name": "The Backyard",
+    "cuisine": "The new place to be!",
+    "description": "Hangout with some free food at pop-up events!",
+    "address": "12 S George St, Millersville, PA 17551",
+    "onCampus": true,
+    "lat": 39.997402,
+    "lng": -76.353637,
+    "slug": "backyard"
+  },
+  {
     "name": "Evergreen Cafe",
     "cuisine": "Coffee shop",
     "description": "Student run coffee shop.",
@@ -40,7 +50,6 @@
     "link": "https://www.millersville.edu/dining/",
     "marauderGold": true,
     "onCampus": true,
-    "audience": "marauders",
     "lat": 40.001798,
     "lng": -76.356964,
     "slug": "cove",
@@ -106,7 +115,6 @@
     "link": "https://www.millersville.edu/dining/",
     "marauderGold": true,
     "onCampus": true,
-    "audience": "marauders",
     "lat": 39.996747,
     "lng": -76.353648,
     "slug": "anchor",
@@ -139,7 +147,6 @@
     "link": "https://www.millersville.edu/dining/",
     "marauderGold": true,
     "onCampus": true,
-    "audience": "marauders",
     "lat": 39.997226,
     "lng": -76.35239,
     "slug": "upper-deck",
@@ -564,7 +571,6 @@
     "description": "Come join us on Thursday nights at 10pm for free hot dogs and fellowship!",
     "address": "Hillview Ave & S Prince St, Millersville PA 17551",
     "link": "https://www.instagram.com/jesusdogsofficial/",
-    "audience": "marauders",
     "lat": 39.994422,
     "lng": -76.357486,
     "slug": "jesus-dogs",

@@ -109,34 +109,76 @@
           "perkFoodIcon": "🌭"
         }
       ]
+    },
+    "the-hub": {
+      "name": "The HUB",
+      "note": "Free meals for MU students every week during the fall & spring semesters — Tue & Thu lunch 11 AM–1 PM, French Toast Friday 9 PM–midnight. Also home of the Campus Cupboard. Bring student ID.",
+      "audience": "marauders",
+      "eventTag": "HUB",
+      "activeRanges": [
+        {
+          "from": "2026-08-24",
+          "to": "2026-11-25"
+        },
+        {
+          "from": "2026-11-30",
+          "to": "2026-12-17"
+        },
+        {
+          "from": "2027-01-19",
+          "to": "2027-03-28"
+        },
+        {
+          "from": "2027-04-04",
+          "to": "2027-05-13"
+        }
+      ],
+      "recurring": {
+        "Tuesday": "🥪 Free student lunch 11 AM–1 PM",
+        "Thursday": "🥪 Free student lunch 11 AM–1 PM",
+        "Friday": "🍞 Free French toast & sausage 9 PM–midnight"
+      },
+      "recurringEvents": [
+        {
+          "title": "Free Lunch",
+          "day": "Tuesday",
+          "time": "11:00",
+          "expandCount": 60,
+          "expandDays": 365,
+          "description": "Free meal for all Millersville University students at The HUB (121 N George St, across from the Dillworth Building). Bring student ID. Service runs 11 AM – 1 PM.",
+          "link": "https://www.hubmu.org/free-meals",
+          "benefits": [
+            "Free Food"
+          ],
+          "perkFoodIcon": "🥪"
+        },
+        {
+          "title": "Free Lunch",
+          "day": "Thursday",
+          "time": "11:00",
+          "expandCount": 60,
+          "expandDays": 365,
+          "description": "Free homestyle meal for all Millersville University students at The HUB (121 N George St, across from the Dillworth Building). Bring student ID. Service runs 11 AM – 1 PM.",
+          "link": "https://www.hubmu.org/free-meals",
+          "benefits": [
+            "Free Food"
+          ],
+          "perkFoodIcon": "🥪"
+        },
+        {
+          "title": "French Toast Friday",
+          "day": "Friday",
+          "time": "21:00",
+          "expandCount": 60,
+          "expandDays": 365,
+          "description": "Free French toast & sausage for all Millersville University students at The HUB (121 N George St). 9 PM – midnight, with live music.",
+          "link": "https://www.hubmu.org/free-meals",
+          "benefits": [
+            "Free Food"
+          ],
+          "perkFoodIcon": "🍞"
+        }
+      ]
     }
-	"the-hub": {
-  "name": "The HUB",
-  "note": "Free meals for MU students every week during the fall & spring semesters — Tue & Thu lunch 11 AM–1 PM, French Toast Friday 9 PM–midnight. Also home of the Campus Cupboard. Bring student ID.",
-  "audience": "marauders",
-  "eventTag": "HUB",
-  "activeRanges": [
-    { "from": "2026-08-24", "to": "2026-11-25" },
-    { "from": "2026-11-30", "to": "2026-12-17" },
-    { "from": "2027-01-19", "to": "2027-03-28" },
-    { "from": "2027-04-04", "to": "2027-05-13" }
-  ],
-  "recurring": {
-    "Tuesday": "🥪 Free student lunch 11 AM–1 PM",
-    "Thursday": "🥪 Free student lunch 11 AM–1 PM",
-    "Friday": "🍞 Free French toast & sausage 9 PM–midnight"
-  },
-  "recurringEvents": [
-    { "title": "Free Lunch", "day": "Tuesday", "time": "11:00", "expandCount": 60, "expandDays": 365,
-      "description": "Free meal for all Millersville University students at The HUB (121 N George St, across from the Dillworth Building). Bring student ID. Service runs 11 AM – 1 PM.",
-      "link": "https://www.hubmu.org/free-meals", "benefits": ["Free Food"], "perkFoodIcon": "🥪" },
-    { "title": "Free Lunch", "day": "Thursday", "time": "11:00", "expandCount": 60, "expandDays": 365,
-      "description": "Free homestyle meal for all Millersville University students at The HUB (121 N George St, across from the Dillworth Building). Bring student ID. Service runs 11 AM – 1 PM.",
-      "link": "https://www.hubmu.org/free-meals", "benefits": ["Free Food"], "perkFoodIcon": "🥪" },
-    { "title": "French Toast Friday", "day": "Friday", "time": "21:00", "expandCount": 60, "expandDays": 365,
-      "description": "Free French toast & sausage for all Millersville University students at The HUB (121 N George St). 9 PM – midnight, with live music.",
-      "link": "https://www.hubmu.org/free-meals", "benefits": ["Free Food"], "perkFoodIcon": "🍞" }
-  ]
-}
   }
 }

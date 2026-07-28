@@ -81,12 +81,28 @@ const OUT_DIR = process.env.DIRECTORY_OUT_DIR || '.';
 
 // --- tiny CSV parser (handles quoted fields, commas, escaped quotes, newlines)
 // Stable place identity. MIRRORED as slugifyPlace() in app.js — both must
-// produce identical slugs (venue-aliases.json keys/values and any explicit
-// slug cells depend on the agreement). An optional `slug` sheet column
-// (header-read) overrides the derived value — fill a cell only when a
-// business is about to be renamed, so its joins survive the rename.
+// produce identical DERIVED slugs (venue-aliases.json keys/values depend on
+// the agreement). An optional `slug` sheet column (header-read) overrides
+// the derived value — fill a cell when a business is about to be renamed
+// (joins survive the rename) or when the derived slug is wrong for a
+// load-bearing key (leading-"the" names: the-hub, the-backyard).
 function slugify(name) {
   return String(name || '').toLowerCase().replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ').trim().replace(/^the /, '').replace(/ /g, '-');
+}
+
+// Explicit slug cells are honored VERBATIM when well-formed (trim +
+// lowercase only; shape = the main.yml deploy gate's ^[a-z0-9][a-z0-9-]*$).
+// Until 2026-07-28 explicit cells were re-run through slugify(), whose
+// leading-"the" strip turned the cell `the-hub` into emitted slug `hub` —
+// detaching its place-specials entry — and `the-backyard` into `backyard`,
+// silently orphaning that pin's PLACE_PIN_OVERRIDES key from the day it
+// shipped (app.js placeSlug() prefers this emitted field). Malformed or
+// blank cells fall back to slugify(name), warn-only.
+function resolveSlug(row, name) {
+  const cell = String(get(row, 'slug') || '').trim().toLowerCase();
+  if (/^[a-z0-9][a-z0-9-]*$/.test(cell)) return cell;
+  if (cell) console.log(`  ⚠️ slug cell "${cell}" for "${name}" is malformed — using derived slug instead`);
+  return slugify(name);
 }
 
 function parseCSV(text) {
@@ -254,7 +270,7 @@ async function main() {
       if (yes(get(row, 'onCampus'))) o.onCampus = true;
       const phone = get(row, 'phone'); if (phone) o.phone = phone;
       if (audience !== 'both') o.audience = audience;
-      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = slugify(get(row, 'slug') || name);
+      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = resolveSlug(row, name);
       const h = hoursFor(row, name); if (h) o.hours = h;
       const sh = summerHoursFor(row, name); if (sh) o.summerHours = sh;
       if (breakClosedFor(row)) o.breakClosed = true;
@@ -266,7 +282,7 @@ async function main() {
       if (yes(get(row, 'marauderGold'))) o.marauderGold = true;
       if (yes(get(row, 'onCampus'))) o.onCampus = true;
       if (audience !== 'both') o.audience = audience;
-      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = slugify(get(row, 'slug') || name);
+      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = resolveSlug(row, name);
       const h = hoursFor(row, name); if (h) o.hours = h;
       const sh = summerHoursFor(row, name); if (sh) o.summerHours = sh;
       if (breakClosedFor(row)) o.breakClosed = true;
@@ -275,7 +291,7 @@ async function main() {
       const o = { name, landlord: get(row, 'landlord'), description: get(row, 'description') };
       const website = get(row, 'website'); if (website) o.link = website;
       if (audience !== 'both') o.audience = audience;
-      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = slugify(get(row, 'slug') || name);
+      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = resolveSlug(row, name);
       housing.push(o);
     } else if (type === 'cupboard') {
       // Static info + HOURS (2026-07-23): the Cupboard's hours now come from
@@ -287,7 +303,7 @@ async function main() {
         name, description: get(row, 'description'), address: get(row, 'address'),
         onCampus: yes(get(row, 'onCampus'))
       };
-      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = slugify(get(row, 'slug') || name);
+      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = resolveSlug(row, name);
       const h = hoursFor(row, name); if (h) o.hours = h;
       const sh = summerHoursFor(row, name); if (sh) o.summerHours = sh;
       if (breakClosedFor(row)) o.breakClosed = true;

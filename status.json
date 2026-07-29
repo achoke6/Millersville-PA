@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-29T20:13:38.850Z",
+  "generatedAt": "2026-07-29T22:01:25.867Z",
   "totalEvents": 888,
   "withDescription": 341,
   "withImage": 74,
@@ -131,9 +131,16 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-29T20:11:21.750Z"
+    "lastSyncAt": "2026-07-29T21:59:08.352Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Zoning Hearing Board|2026-08-12T23:00:00.000Z",
+      "firstSeenAt": "2026-07-29T22:01:25.865Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-08-12T23:00:00.000Z"
+    },
     {
       "key": "MUth performance of Antigone in Munich|2026-08-08T14:00:00",
       "firstSeenAt": "2026-07-29T18:08:06.765Z",
@@ -170,13 +177,6 @@
       "date": "2026-08-03T23:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-08-05T23:00:00.000Z",
-      "firstSeenAt": "2026-07-29T16:22:22.575Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-08-05T23:00:00.000Z"
-    },
-    {
       "key": "Planning Commission|2026-08-10T23:00:00.000Z",
       "firstSeenAt": "2026-07-29T16:22:22.575Z",
       "title": "Planning Commission",
@@ -205,5 +205,5 @@
       "date": "2026-09-08T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

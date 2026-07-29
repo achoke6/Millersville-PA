@@ -3291,7 +3291,7 @@ function injectEcwidCSS(){
 
 window.switchView=function(view,skipPush){
     if(view==='places') initPlacesMap();   // lazy map init; invalidateSize on return visits
-    if(view==='food' && typeof renderFoodPage==='function') renderFoodPage();   // Food page rebuilds on every entry (reads allPlaces + allEvents + affiliation + 21+ at build time)
+    if(view==='food' && typeof renderFoodPage==='function'){ foodShowClosed=false; renderFoodPage(); }   // Food page rebuilds on every entry; closed-places toggle resets for the quick-look default
     document.querySelectorAll('.app-view').forEach(v=>v.classList.remove('active'));
     document.getElementById(`view-${view}`).classList.add('active');
     document.querySelectorAll('.nav-link').forEach(b=>b.classList.remove('active'));
@@ -7435,85 +7435,100 @@ function buildServiceCard(p) {
 let allSignups=[]; // youth sports registration windows (homepage Upcoming Signups)
 async function loadSignups(){try{const d=await(await fetch('youth-sports-registration.json')).json();allSignups=(d&&d.registrations)?d.registrations:[];}catch(e){allSignups=[];}}
 
-// Food page (/food). One container, stacked sections, rebuilt on every view
-// entry (switchView) AND on every affiliation/21+ switch (standing rule: any
-// new muAffiliation- or show21Plus-reading surface joins all three switch
-// paths — applyAffiliation, setMuAffiliation, toggle21Plus).
-//   1. Free-food events: upcoming events carrying benefits:['Free Food'],
-//      audience-gated via isHiddenForViewer — mu-only events (Jesus Dogs,
-//      The Backyard, HUB) hide from townies exactly as on the Events page;
-//      a townie-audience free-food event would surface here automatically.
-//   2. Listings: allPlaces food rows through placeAudienceVisible (unset =
-//      townie on directory surfaces — Marauders-only dining halls stay
-//      hidden from locals per the sheet audience column, no new gate).
-//      Students get On Campus / Off Campus groups keyed on p.onCampus (the
-//      Marauder-Gold grouping question, reused); others get a flat list.
-//      Cards reuse buildFoodCard — hours via the shared placeEffectiveHours
-//      path, specials box via placeSpecialsSectionHtml (21+ gate applies),
-//      so Today's Specials & Deals render here identically to /map. The
-//      Campus Cupboard pinned card reuses cupboardTodayVisible() — the ONE
-//      shared predicate — so it shows/hides here exactly as on /map.
-//      Within-group sort is open -> closed -> unknown then alpha (the
-//      hours-arc option-3 time-dependent sort; the map page's MG grouping
-//      stays unsorted — documented asymmetry, different page).
-//   3. Townie-only pointer card to the community food pantry (a service
-//      listing — free food assistance routes there, not to campus programs).
-// NOT a map surface: no placesMapPinList mirror needed. Card data-place
-// attrs are inert here (scrollToPlaceCard queries #view-places only).
+// Food page (/food) — v2 quick-look redesign (2026-07-28, same day as v1):
+// the page answers "where can I eat RIGHT NOW" in one screen, minimal scroll.
+//   1. 🍕 Free food TODAY as home-timeline LINE ITEMS (buildTimelineItem —
+//      tap opens the standard openEventDetails popup, the home-page
+//      interaction). Nothing today → ONE compact "next up" line with the
+//      date in the header (nobody scrolls through events weeks out).
+//      Audience-gated via isHiddenForViewer as before; 3-hour started-grace
+//      so a 10 PM Jesus Dogs still shows at 11:30 PM.
+//   2. Listings show OPEN-NOW places only (hoursSortRank === 0 — the shared
+//      open/closed/unknown predicate through placeEffectiveHours, so
+//      summer/break cells resolve correctly). Late night, every campus
+//      venue closed → the On Campus group VANISHES (empty groups skipped)
+//      and only what's open around town renders. Closed + hours-unlisted
+//      places sit behind the bottom toggle (window.toggleFoodClosed);
+//      the flag RESETS to hidden on every view entry (switchView hook) —
+//      the quick-look default. Open cards still reuse buildFoodCard
+//      (specials box, 21+ gate, shared hours path). Cupboard pinned first
+//      only while open NOW and cupboardTodayVisible(); with the toggle on
+//      it shows whenever today-visible (its table reads Closed honestly).
+//   3. Townie-only pantry pointer card unchanged, below the toggle.
+// Rebuilt on view entry, initApp post-load, and all three affiliation/21+
+// switch paths (standing rule). NOT a map surface (no pin mirror).
+// ⚠ Live-smoke check: tl-item styling assumed CLASS-scoped in style.css
+// (the home skeleton markup suggests so); if the free-food lines render
+// unstyled, the rules are #home-timeline-scoped — add a shared class then.
+let foodShowClosed = false;   // session toggle; reset on every /food entry
+window.toggleFoodClosed = function(){ foodShowClosed = !foodShowClosed; renderFoodPage(); };
 function renderFoodPage(){
     const c = document.getElementById('food-container');
     if (!c) return;
     const specials = window._placesSpecials || {};
-    const dayName = new Date().toLocaleDateString('en-US',{weekday:'long'});
+    const now = new Date();
+    const dayName = now.toLocaleDateString('en-US',{weekday:'long'});
     const isStudent = (muAffiliation === 'student');
+    const secHdr = (label, count) => `<div class="day-group-header">${label}${count !== undefined ? `<span class="day-count">${count}</span>` : ''}</div>`;
     let html = '';
 
-    // --- Free food events (upcoming, audience-gated, cap 6) ---
-    const nowMs = Date.now();
-    const freeFood = (typeof allEvents !== 'undefined' ? allEvents : []).filter(e =>
-        e && Array.isArray(e.benefits) && e.benefits.includes('Free Food') &&
-        (e._dateMs || 0) >= nowMs - 60*60*1000 &&   // events started <1h ago still count
-        !isHiddenForViewer(e)
+    // --- 1. Free food TODAY (line items + popup); else ONE next-up line ---
+    const todayStr = now.toDateString();   // same today-convention as placeEventsToday
+    const ffAll = (typeof allEvents !== 'undefined' ? allEvents : []).filter(e =>
+        e && Array.isArray(e.benefits) && e.benefits.includes('Free Food') && !isHiddenForViewer(e)
     );
-    if (freeFood.length){
-        html += `<div class="day-group-header">🍕 Free Food · Upcoming<span class="day-count">${freeFood.length} event${freeFood.length===1?'':'s'}</span></div>`;
-        html += freeFood.slice(0,6).map(e => buildEventCard(e, false)).join('');
-        if (freeFood.length > 6){
-            html += `<p style="font-size:0.85rem;margin:4px 0 8px;"><a href="#" onclick="event.preventDefault();switchView('events');">See all ${freeFood.length} free-food events →</a></p>`;
+    const ffToday = ffAll.filter(e =>
+        new Date(e._dateMs || e.date).toDateString() === todayStr &&
+        (e._dateMs || 0) >= now.getTime() - 3*60*60*1000
+    );
+    if (ffToday.length){
+        html += secHdr('🍕 Free Food Today', String(ffToday.length));
+        html += `<div style="margin-bottom:14px;">${ffToday.map(e => buildTimelineItem(e, now)).join('')}</div>`;
+    } else {
+        const next = ffAll.find(e => (e._dateMs || 0) > now.getTime());
+        if (next){
+            const nd = new Date(next._dateMs);
+            html += secHdr(`🍕 Free Food · next ${nd.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})}`);
+            html += `<div style="margin-bottom:14px;">${buildTimelineItem(next, now)}</div>`;
+        } else if (muAffiliation !== 'townie'){
+            html += `<p style="font-size:0.8rem;color:var(--text-muted);margin:2px 0 12px;">🍕 No free-food events scheduled — they return with the semester.</p>`;
         }
-    } else if (muAffiliation !== 'townie'){
-        // Marauder/unset viewers get an explanatory empty state (the semester
-        // programs are the audience's whole reason to check this section);
-        // townies just see no section — theirs is the pantry card below.
-        html += `<div class="day-group-header">🍕 Free Food</div><p class="empty-state">No free-food events on the calendar right now — free hot dog Thursdays, HUB meals & more return with the semester.</p>`;
     }
 
-    // --- Food listings ---
+    // --- 2. Listings: open now by default; closed/unlisted behind the toggle ---
     const food = (typeof allPlaces !== 'undefined' ? allPlaces : [])
         .filter(p => p && p.placeType === 'food' && placeAudienceVisible(p))
         .sort((a,b) => (hoursSortRank(a) - hoursSortRank(b)) || a.name.localeCompare(b.name));
-    // Campus Cupboard pinned first (map-page convention), shown on the same
-    // ONE predicate as /map — never a second copy of the gate.
-    const cupboardCard = (typeof cupboardTodayVisible === 'function' && cupboardTodayVisible()) ? buildCampusCupboardCard(dayName) : '';
+    const hidden = food.filter(p => hoursSortRank(p) !== 0);
+    const shown  = foodShowClosed ? food : food.filter(p => hoursSortRank(p) === 0);
+    const cbToday = (typeof cupboardTodayVisible === 'function' && cupboardTodayVisible());
+    const cbOpenNow = cbToday && window._cupboard && hoursSortRank(window._cupboard) === 0;
+    const cupboardCard = (cbOpenNow || (foodShowClosed && cbToday)) ? buildCampusCupboardCard(dayName) : '';
     html += cupboardCard;
     const buildCard = p => buildFoodCard(p, specials, dayName);
     if (isStudent){
-        const onC  = food.filter(p => p.onCampus === true);
-        const offC = food.filter(p => p.onCampus !== true);
+        const onC  = shown.filter(p => p.onCampus === true);
+        const offC = shown.filter(p => p.onCampus !== true);
         if (onC.length){
-            html += `<div class="day-group-header">On Campus<span class="day-count">${onC.length} place${onC.length===1?'':'s'}</span></div>`;
+            html += secHdr('On Campus', `${onC.length} place${onC.length===1?'':'s'}`);
             html += onC.map(buildCard).join('');
         }
         if (offC.length){
-            html += `<div class="day-group-header">Off Campus<span class="day-count">${offC.length} place${offC.length===1?'':'s'}</span></div>`;
+            html += secHdr('Off Campus', `${offC.length} place${offC.length===1?'':'s'}`);
             html += offC.map(buildCard).join('');
         }
-    } else if (food.length){
-        html += `<div class="day-group-header">Places to Eat<span class="day-count">${food.length} place${food.length===1?'':'s'}</span></div>`;
-        html += food.map(buildCard).join('');
+    } else if (shown.length){
+        html += secHdr(foodShowClosed ? 'Places to Eat' : 'Open Now', `${shown.length} place${shown.length===1?'':'s'}`);
+        html += shown.map(buildCard).join('');
+    }
+    if (!shown.length && !cupboardCard){
+        html += `<p class="empty-state">Nothing's open right now.</p>`;
+    }
+    if (hidden.length){
+        html += `<div style="text-align:center;margin:12px 0 4px;"><button onclick="toggleFoodClosed()" class="btn btn-sm btn-outline" style="font-size:0.8rem;">${foodShowClosed ? 'Hide closed places' : `Show ${hidden.length} closed or unlisted place${hidden.length===1?'':'s'}`}</button></div>`;
     }
 
-    // --- Food-pantry pointer (townies only; C1 routing decision 2026-07-28) ---
+    // --- 3. Food-pantry pointer (townies only) ---
     if (muAffiliation === 'townie'){
         const pantry = (typeof allPlaces !== 'undefined' ? allPlaces : []).find(p => p && /pantry/i.test(p.name || ''));
         if (pantry){

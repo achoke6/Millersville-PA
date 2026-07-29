@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-07-28T22:58:28.163Z",
+  "generatedAt": "2026-07-29T00:00:34.832Z",
   "totalEvents": 891,
   "withDescription": 345,
   "withImage": 77,
   "familyFriendly": 41,
-  "eventsToday": 2,
+  "eventsToday": 1,
   "sources": {
     "muAthletics": 255,
     "muCalendar": 120,
@@ -131,9 +131,16 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-28T22:56:10.833Z"
+    "lastSyncAt": "2026-07-28T23:58:02.024Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Trivia Night|2026-08-19T00:00:00.000Z",
+      "firstSeenAt": "2026-07-29T00:00:34.830Z",
+      "title": "Trivia Night",
+      "source": "Jack's Tavern",
+      "date": "2026-08-19T00:00:00.000Z"
+    },
     {
       "key": "Millersville University Men's Golf at Vulcan Invitational|2026-09-03T00:00:00.000Z",
       "firstSeenAt": "2026-07-28T18:08:22.822Z",
@@ -196,14 +203,7 @@
       "title": "Millersville University Men's Golf at Sunnehanna Collegiate",
       "source": "MU",
       "date": "2026-09-28T00:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Golf  Kutztown Invitational|2026-10-04T00:00:00.000Z",
-      "firstSeenAt": "2026-07-28T18:08:22.822Z",
-      "title": "Millersville University Women's Golf  Kutztown Invitational",
-      "source": "MU",
-      "date": "2026-10-04T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

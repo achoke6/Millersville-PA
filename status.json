@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-07-29T00:00:34.832Z",
-  "totalEvents": 891,
-  "withDescription": 345,
-  "withImage": 77,
+  "generatedAt": "2026-07-29T00:36:47.309Z",
+  "totalEvents": 885,
+  "withDescription": 338,
+  "withImage": 74,
   "familyFriendly": 41,
   "eventsToday": 1,
   "sources": {
     "muAthletics": 255,
     "muCalendar": 120,
-    "muGetInvolved": 120,
+    "muGetInvolved": 113,
     "pennManor": 86,
     "borough": 80,
     "vfw": 5,
     "phantomPower": 14,
     "community": 21,
-    "manor": 41,
+    "manor": 42,
     "raneyCellars": 2,
     "theBackyard": 10,
     "muHudlBroadcasts": 0
@@ -29,7 +29,7 @@
       "latest": "2027-05-02T18:30:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-04-29T20:00:00.000Z",
+      "earliest": "2026-04-30T16:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
@@ -54,7 +54,7 @@
     },
     "manor": {
       "earliest": "2026-07-29T12:30:00.000Z",
-      "latest": "2027-07-07T23:00:00.000Z"
+      "latest": "2027-07-28T12:30:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-07-23T20:00:00.000Z",
@@ -99,8 +99,8 @@
       "daysSinceMoved": 53
     },
     "manor": {
-      "newest": "2027-07-07",
-      "daysSinceMoved": 21
+      "newest": "2027-07-28",
+      "daysSinceMoved": 0
     },
     "raneyCellars": {
       "newest": "2026-07-23",
@@ -131,9 +131,16 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-28T23:58:02.024Z"
+    "lastSyncAt": "2026-07-29T00:34:04.517Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Traffic Commission Meeting|2027-07-28T12:30:00.000Z",
+      "firstSeenAt": "2026-07-29T00:36:47.307Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2027-07-28T12:30:00.000Z"
+    },
     {
       "key": "Trivia Night|2026-08-19T00:00:00.000Z",
       "firstSeenAt": "2026-07-29T00:00:34.830Z",
@@ -196,13 +203,6 @@
       "title": "Millersville University Women's Golf  Golden Eagle Autumn Invitational",
       "source": "MU",
       "date": "2026-09-26T00:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Men's Golf at Sunnehanna Collegiate|2026-09-28T00:00:00.000Z",
-      "firstSeenAt": "2026-07-28T18:08:22.822Z",
-      "title": "Millersville University Men's Golf at Sunnehanna Collegiate",
-      "source": "MU",
-      "date": "2026-09-28T00:00:00.000Z"
     }
   ],
   "addedLastRun": 1

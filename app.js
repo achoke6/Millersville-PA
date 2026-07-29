@@ -1,5 +1,5 @@
 // Escape a value before it goes into innerHTML. Required for any field that
-// can be user-submitted: community board posts (board.json), community event
+// can be user-submitted: community event
 // submissions (Google Sheet → events with tag 'Community'), business form
 // submissions, and reviews. Also defensive for RSS-scraped fields where a
 // compromised upstream feed could inject markup. Coerces to string and
@@ -448,6 +448,7 @@ window.setMuAffiliation = function(value) {
     if (typeof renderHomeFeed === 'function') renderHomeFeed();
     if (typeof loadHomeSpecials === 'function') loadHomeSpecials(); // home specials rail — separate render, reads muAffiliation
     if (typeof renderEvents === 'function') renderEvents();
+    if (typeof renderFoodPage === 'function') renderFoodPage(); // Food page reads muAffiliation (groups + event gate) at build time
 };
 // Whether an event is hidden from the current viewer's feed, based on the
 // event's audience and the viewer's affiliation. Symmetric:
@@ -2527,6 +2528,7 @@ function applyAffiliation(value, clearFavs) {
     if (typeof renderSports === 'function') renderSports();
     if (typeof renderNewsUI === 'function') renderNewsUI();
     if (typeof renderPlaces === 'function') renderPlaces();
+    if (typeof renderFoodPage === 'function') renderFoodPage(); // Food page reads muAffiliation + audience gates at build time
     if (typeof pruneEmptyPlaceCategories === 'function') pruneEmptyPlaceCategories(); // audience-aware menu prune — re-run on affiliation change
     if (document.getElementById('feed-settings-overlay')) {
         window.closeFeedModal();
@@ -2545,6 +2547,7 @@ window.toggle21Plus = function(on) {
     if (typeof renderHomeFeed === 'function') renderHomeFeed();
     if (typeof loadHomeSpecials === 'function') loadHomeSpecials(); // rail cards gate 🍺 items via placesSpecialsItemsFor — rebuild so the toggle shows without reload
     if (typeof renderPlaces === 'function') renderPlaces();
+    if (typeof renderFoodPage === 'function') renderFoodPage(); // food-card specials boxes gate 🍺 items too
 };
 
 // Called after affiliation changes. Cleans up state that may be invalid under the new
@@ -2828,7 +2831,7 @@ function matchesSportSource(tags, src) {
     return false;
 }
 
-const viewPaths={home:'/',news:'/news',events:'/events',sports:'/sports',places:'/map',board:'/board',weather:'/weather',store:'/store',advertise:'/advertise',analytics:'/analytics'};   // places: /map canonical as of 2026-07-10 (was /directory) — legacy aliases below
+const viewPaths={home:'/',news:'/news',events:'/events',sports:'/sports',places:'/map',food:'/food',weather:'/weather',store:'/store',advertise:'/advertise',analytics:'/analytics'};   // places: /map canonical as of 2026-07-10 — legacy aliases below; food: /food canonical as of 2026-07-28 (took Board's nav slot; /board falls through to home)
 const pathToView=Object.fromEntries(Object.entries(viewPaths).map(([k,v])=>[v,k]));
 
 // ==================== URL STATE (shareable filter URLs) ====================
@@ -2997,7 +3000,6 @@ function updatePageTitleForView(view) {
 }
 // ==========================================================================
 // Legacy URL redirects
-pathToView['/food'] = 'places';
 pathToView['/services'] = 'places';
 pathToView['/directory'] = 'places';   // pre-2026-07-10 canonical — bookmarks, shares, and indexed links keep working
 pathToView['/places'] = 'places';   // legacy alias — old links keep working
@@ -3127,9 +3129,10 @@ document.addEventListener('keydown', (e) => {
 
 async function initApp(){
     loadFeedPrefs();
-    await Promise.allSettled([loadWeather(),loadWeatherMU(),loadSpecials(),loadEvents(),loadPlaces(),loadHousing(),loadNews(),loadBoard(),loadSignups(),loadClubsDirectory(),loadVenueAliases()]);
+    await Promise.allSettled([loadWeather(),loadWeatherMU(),loadSpecials(),loadEvents(),loadPlaces(),loadHousing(),loadNews(),loadSignups(),loadClubsDirectory(),loadVenueAliases()]);
     linkEventsToPlaces();   // event↔place venue matching (Today lens, card/popup event lines)
     pruneEmptyPlaceCategories();   // directory + housing are loaded now — drop empty category chips
+    if (typeof renderFoodPage === 'function') renderFoodPage();   // /food deep-link cold load: containers exist before data — re-render now that allPlaces/allEvents are in
     renderHomeFeed();
     attachHomeSwipeHandlers();
     syncFilterArrows();
@@ -3203,7 +3206,7 @@ window.toggleMobileMenu=function(){
     if(nav.classList.contains('open')){nav.classList.remove('open');overlay.classList.remove('open');setTimeout(()=>{if(!nav.classList.contains('open'))nav.style.display='';},300);}
     else{nav.style.display='flex';void nav.offsetWidth;nav.classList.add('open');overlay.classList.add('open');}
 };
-const viewLabels={home:'',news:'/ News',events:'/ Events',sports:'/ Sports',places:'/ Map',board:'/ Board',weather:'/ Weather',store:'/ Store',advertise:'/ Advertise'};
+const viewLabels={home:'',news:'/ News',events:'/ Events',sports:'/ Sports',places:'/ Map',food:'/ Food',weather:'/ Weather',store:'/ Store',advertise:'/ Advertise'};
 
 let ecwidLoaded = false;
 window.loadEcwidStore = function(){
@@ -3288,6 +3291,7 @@ function injectEcwidCSS(){
 
 window.switchView=function(view,skipPush){
     if(view==='places') initPlacesMap();   // lazy map init; invalidateSize on return visits
+    if(view==='food' && typeof renderFoodPage==='function') renderFoodPage();   // Food page rebuilds on every entry (reads allPlaces + allEvents + affiliation + 21+ at build time)
     document.querySelectorAll('.app-view').forEach(v=>v.classList.remove('active'));
     document.getElementById(`view-${view}`).classList.add('active');
     document.querySelectorAll('.nav-link').forEach(b=>b.classList.remove('active'));
@@ -4985,21 +4989,6 @@ function renderHomeUI(){
             const src = sourceDisplay[n.source] || n.source;
             return `<a href="${escHtml(n.link)}" target="_blank" class="home-news-item"><span class="home-news-src">${escHtml(src)}</span><span class="home-news-title">${escHtml(decodeEntities(n.title))}</span></a>`;
         }).join('');
-    }
-
-    // ===== COMMUNITY BOARD PREVIEW =====
-    const boardSection = document.getElementById('home-board-section');
-    const boardPreview = document.getElementById('home-board-preview');
-    if (allBoardPosts && allBoardPosts.length > 0) {
-        boardSection.style.display = '';
-        const latest = allBoardPosts.slice(0, 2);
-        boardPreview.innerHTML = latest.map(p => {
-            const catColors = {'Lost Pet':'#dc2626','Found Pet':'#16a34a','Yard Sale':'#d97706','Help Wanted':'#2563eb','For Sale':'#7c3aed','Free Stuff':'#059669','Community Notice':'#6b7280'};
-            const color = catColors[p.category] || 'var(--text-muted)';
-            return `<div class="home-board-item" onclick="switchView('board')"><span class="home-board-cat" style="color:${color};">${escHtml(p.category)}</span> <span class="home-board-title">${escHtml(p.title)}</span></div>`;
-        }).join('');
-    } else {
-        boardSection.style.display = 'none';
     }
 
     // Upcoming Signups — surfaced to TOWNIES as a standing reminder regardless
@@ -7436,169 +7425,122 @@ function buildServiceCard(p) {
         </div>
     </div>`;
 }
-// ==================== COMMUNITY BOARD ====================
-let allBoardPosts=[], boardFilter='All';
+// ==================== FOOD PAGE ====================
+// (Community Board RETIRED 2026-07-28, full excision per the replacement
+// precedent: nav button, view, loadBoard/renderBoard/setBoardFilter, the
+// post modal, the homepage preview, the search-overlay section, and the
+// scrape.js board.json generator are all gone; the Food page took the nav
+// slot. board.json is deleted from the repo; the Google Form + response
+// sheet (1FZ-eFzLYFAgNd7aBCrU5uwb5wMQ2x9tBf_KLGa6GJS0) close at leisure.)
 let allSignups=[]; // youth sports registration windows (homepage Upcoming Signups)
 async function loadSignups(){try{const d=await(await fetch('youth-sports-registration.json')).json();allSignups=(d&&d.registrations)?d.registrations:[];}catch(e){allSignups=[];}}
-async function loadBoard(){try{allBoardPosts=await(await fetch('board.json')).json();renderBoard();}catch(e){
-    document.getElementById('board-container').innerHTML='<p class="empty-state">No community posts yet. Be the first to post!</p>';
-}}
-window.setBoardFilter=function(cat,btn){
-    boardFilter=cat;
-    document.querySelectorAll('#board-filter-group .src-btn').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    renderBoard();
-};
-function renderBoard(){
-    const c=document.getElementById('board-container');
-    const filtered=boardFilter==='All'?allBoardPosts:allBoardPosts.filter(p=>p.category===boardFilter);
-    if(filtered.length===0){c.innerHTML='<p class="empty-state">No posts in this category.</p>';return;}
-    const now = Date.now();
-    const dayMs = 24 * 60 * 60 * 1000;
-    c.innerHTML=filtered.map(p=>{
-        const catIcons={'Yard Sale':'🏷️','Lost Pet':'🐾','Found Pet':'🐾','Help Wanted':'💼','For Sale':'🛒','Free Stuff':'🎁','Community Notice':'📢'};
-        const icon=catIcons[p.category]||'📋';
-        // Image URL goes into an attribute, so escape it the same way as text.
-        // A bare quote in p.image would otherwise close the src=" early and
-        // anything after would be interpreted as new attributes.
-        const img=p.image?`<div class="card-img-wrap"><img src="${escHtml(p.image)}" alt="" loading="lazy" class="card-img"></div>`:'';
-        const contact=p.contact?`<p style="font-size:0.85rem;margin-top:8px;">📧 ${escHtml(p.contact)}</p>`:'';
-        const loc=p.location?`<p class="card-meta">📍 ${escHtml(p.location)}</p>`:'';
-        const urgentClass=(p.category==='Lost Pet')?'style="border-left:4px solid #dc2626;"':'';
 
-        // Age + expiry badges. Scraper now writes postedAt/expiresAt as ISO
-        // strings (per BOARD_TTL_DAYS: 7d for Free Stuff, 14d for Lost/Found
-        // Pet, 21d for Yard Sale, 30d for Help Wanted/For Sale/Community
-        // Notice). Older posts predating the TTL fields keep their legacy
-        // p.date display. Future posts (dated beyond today) label as "posted
-        // today" since they're freshly approved from the sheet.
-        let ageBadge = '';
-        let expiryBadge = '';
-        if (p.postedAt) {
-            const postedMs = new Date(p.postedAt).getTime();
-            if (!isNaN(postedMs)) {
-                const ageDays = Math.floor((now - postedMs) / dayMs);
-                let ageText;
-                if (ageDays <= 0) ageText = 'Posted today';
-                else if (ageDays === 1) ageText = 'Posted yesterday';
-                else if (ageDays < 7) ageText = `Posted ${ageDays} days ago`;
-                else if (ageDays < 14) ageText = 'Posted over a week ago';
-                else ageText = `Posted ${Math.floor(ageDays / 7)} weeks ago`;
-                ageBadge = `<span class="board-badge board-badge-age">${ageText}</span>`;
-            }
+// Food page (/food). One container, stacked sections, rebuilt on every view
+// entry (switchView) AND on every affiliation/21+ switch (standing rule: any
+// new muAffiliation- or show21Plus-reading surface joins all three switch
+// paths — applyAffiliation, setMuAffiliation, toggle21Plus).
+//   1. Free-food events: upcoming events carrying benefits:['Free Food'],
+//      audience-gated via isHiddenForViewer — mu-only events (Jesus Dogs,
+//      The Backyard, HUB) hide from townies exactly as on the Events page;
+//      a townie-audience free-food event would surface here automatically.
+//   2. Listings: allPlaces food rows through placeAudienceVisible (unset =
+//      townie on directory surfaces — Marauders-only dining halls stay
+//      hidden from locals per the sheet audience column, no new gate).
+//      Students get On Campus / Off Campus groups keyed on p.onCampus (the
+//      Marauder-Gold grouping question, reused); others get a flat list.
+//      Cards reuse buildFoodCard — hours via the shared placeEffectiveHours
+//      path, specials box via placeSpecialsSectionHtml (21+ gate applies),
+//      so Today's Specials & Deals render here identically to /map. The
+//      Campus Cupboard pinned card reuses cupboardTodayVisible() — the ONE
+//      shared predicate — so it shows/hides here exactly as on /map.
+//      Within-group sort is open -> closed -> unknown then alpha (the
+//      hours-arc option-3 time-dependent sort; the map page's MG grouping
+//      stays unsorted — documented asymmetry, different page).
+//   3. Townie-only pointer card to the community food pantry (a service
+//      listing — free food assistance routes there, not to campus programs).
+// NOT a map surface: no placesMapPinList mirror needed. Card data-place
+// attrs are inert here (scrollToPlaceCard queries #view-places only).
+function renderFoodPage(){
+    const c = document.getElementById('food-container');
+    if (!c) return;
+    const specials = window._placesSpecials || {};
+    const dayName = new Date().toLocaleDateString('en-US',{weekday:'long'});
+    const isStudent = (muAffiliation === 'student');
+    let html = '';
+
+    // --- Free food events (upcoming, audience-gated, cap 6) ---
+    const nowMs = Date.now();
+    const freeFood = (typeof allEvents !== 'undefined' ? allEvents : []).filter(e =>
+        e && Array.isArray(e.benefits) && e.benefits.includes('Free Food') &&
+        (e._dateMs || 0) >= nowMs - 60*60*1000 &&   // events started <1h ago still count
+        !isHiddenForViewer(e)
+    );
+    if (freeFood.length){
+        html += `<div class="day-group-header">🍕 Free Food · Upcoming<span class="day-count">${freeFood.length} event${freeFood.length===1?'':'s'}</span></div>`;
+        html += freeFood.slice(0,6).map(e => buildEventCard(e, false)).join('');
+        if (freeFood.length > 6){
+            html += `<p style="font-size:0.85rem;margin:4px 0 8px;"><a href="#" onclick="event.preventDefault();switchView('events');">See all ${freeFood.length} free-food events →</a></p>`;
         }
-        if (p.expiresAt) {
-            const expMs = new Date(p.expiresAt).getTime();
-            if (!isNaN(expMs)) {
-                const daysLeft = Math.ceil((expMs - now) / dayMs);
-                // Only show if within 3 days of expiry (the "urgent" window).
-                // Posts with more time get no expiry badge — reduces clutter.
-                if (daysLeft <= 0) {
-                    expiryBadge = `<span class="board-badge board-badge-expiring-now">Expiring today</span>`;
-                } else if (daysLeft === 1) {
-                    expiryBadge = `<span class="board-badge board-badge-expiring-soon">Expires tomorrow</span>`;
-                } else if (daysLeft <= 3) {
-                    expiryBadge = `<span class="board-badge board-badge-expiring-soon">Expires in ${daysLeft} days</span>`;
-                }
-            }
+    } else if (muAffiliation !== 'townie'){
+        // Marauder/unset viewers get an explanatory empty state (the semester
+        // programs are the audience's whole reason to check this section);
+        // townies just see no section — theirs is the pantry card below.
+        html += `<div class="day-group-header">🍕 Free Food</div><p class="empty-state">No free-food events on the calendar right now — free hot dog Thursdays, HUB meals & more return with the semester.</p>`;
+    }
+
+    // --- Food listings ---
+    const food = (typeof allPlaces !== 'undefined' ? allPlaces : [])
+        .filter(p => p && p.placeType === 'food' && placeAudienceVisible(p))
+        .sort((a,b) => (hoursSortRank(a) - hoursSortRank(b)) || a.name.localeCompare(b.name));
+    // Campus Cupboard pinned first (map-page convention), shown on the same
+    // ONE predicate as /map — never a second copy of the gate.
+    const cupboardCard = (typeof cupboardTodayVisible === 'function' && cupboardTodayVisible()) ? buildCampusCupboardCard(dayName) : '';
+    html += cupboardCard;
+    const buildCard = p => buildFoodCard(p, specials, dayName);
+    if (isStudent){
+        const onC  = food.filter(p => p.onCampus === true);
+        const offC = food.filter(p => p.onCampus !== true);
+        if (onC.length){
+            html += `<div class="day-group-header">On Campus<span class="day-count">${onC.length} place${onC.length===1?'':'s'}</span></div>`;
+            html += onC.map(buildCard).join('');
         }
+        if (offC.length){
+            html += `<div class="day-group-header">Off Campus<span class="day-count">${offC.length} place${offC.length===1?'':'s'}</span></div>`;
+            html += offC.map(buildCard).join('');
+        }
+    } else if (food.length){
+        html += `<div class="day-group-header">Places to Eat<span class="day-count">${food.length} place${food.length===1?'':'s'}</span></div>`;
+        html += food.map(buildCard).join('');
+    }
 
-        // Footer meta row: fall back to the original p.date string only when
-        // we have nothing dynamic to say (very old posts or posts with no
-        // postedAt). Keeps legacy display without forcing every post to
-        // wait for a scraper-regen to show anything at all.
-        const footerMeta = (ageBadge || expiryBadge)
-            ? `<div class="board-meta-row">${ageBadge}${expiryBadge}</div>`
-            : (p.date ? `<p style="font-size:0.7rem;color:var(--text-muted);margin-top:6px;">${escHtml(p.date)}</p>` : '');
+    // --- Food-pantry pointer (townies only; C1 routing decision 2026-07-28) ---
+    if (muAffiliation === 'townie'){
+        const pantry = (typeof allPlaces !== 'undefined' ? allPlaces : []).find(p => p && /pantry/i.test(p.name || ''));
+        if (pantry){
+            html += `<div class="app-card" style="border-left:4px solid var(--gold);">
+                <span class="card-tag">🥫 Community Resource</span>
+                <h3 class="card-title" style="margin-top:6px;">Need food assistance?</h3>
+                <p style="font-size:0.85rem;color:var(--text-muted);margin:6px 0 10px;">${escHtml(pantry.name)} offers free food for families in need — find hours and directions in the directory.</p>
+                <button onclick="openPantryOnMap('${placeSlug(pantry)}')" class="btn btn-sm btn-outline" style="display:block;width:100%;text-align:center;">📍 Find it on the map</button>
+            </div>`;
+        }
+    }
 
-        return `<div class="app-card" ${urgentClass}>${img}<span class="card-tag">${icon} ${escHtml(p.category)}</span><h3 class="card-title">${escHtml(p.title)}</h3>${loc}<p style="font-size:0.85rem;color:var(--text-muted);margin:6px 0;">${escHtml(p.description||'')}</p>${contact}${footerMeta}</div>`;
-    }).join('');
+    c.innerHTML = html || '<p class="empty-state">No food listings available right now.</p>';
+    c.style.alignItems = 'start';   // natural-height cards, same rationale as renderPlaces
 }
+// Pantry pointer -> /map with that card pulled up + flashed. initPlacesMap is
+// lazy in switchView; the CARD exists as soon as renderPlaces has run (initApp),
+// so a short settle covers the view transition. scrollToPlaceCard takes the
+// place object (it derives the slug itself).
+window.openPantryOnMap = function(slug){
+    switchView('places');
+    const p = (typeof allPlaces !== 'undefined' ? allPlaces : []).find(x => placeSlug(x) === slug);
+    if (p) setTimeout(() => window.scrollToPlaceCard(p), 350);
+};
 
 window.openSubmitBusiness=function(){
     openAdvertiseForm();
-};
-
-window.openBoardPost=function(){
-    const overlay=document.createElement('div');
-    overlay.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;overflow-y:auto;';
-    overlay.onclick=function(ev){if(ev.target===overlay)overlay.remove();};
-    const modal=document.createElement('div');
-    modal.style.cssText='background:var(--surface);border-radius:var(--radius);max-width:520px;width:100%;max-height:90vh;overflow-y:auto;padding:28px;position:relative;';
-    const cats=['Yard Sale','Lost/Found Pet','Help Wanted','For Sale','Free Stuff','Community Notice'];
-    modal.innerHTML=`
-        <button onclick="this.closest('div[style*=fixed]').remove()" class="modal-close-btn">✕</button>
-        <h3 style="margin-bottom:4px;">📋 Post to Community Board</h3>
-        <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:16px;">Share with your Millersville neighbors. Posts are reviewed before publishing.</p>
-        <div id="board-form-fields">
-            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Category *</label>
-            <select id="bp-cat" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;margin-bottom:12px;background:var(--bg);color:var(--text);">
-                ${cats.map(c=>`<option value="${c}">${c}</option>`).join('')}
-            </select>
-
-            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Title *</label>
-            <input id="bp-title" type="text" placeholder="e.g. Multi-family Yard Sale Saturday" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;margin-bottom:12px;background:var(--bg);color:var(--text);">
-
-            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Description *</label>
-            <textarea id="bp-desc" rows="3" placeholder="Details about your post..." style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;margin-bottom:12px;resize:vertical;background:var(--bg);color:var(--text);"></textarea>
-
-            <div style="display:flex;gap:12px;margin-bottom:12px;">
-                <div style="flex:1;">
-                    <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Contact Info *</label>
-                    <input id="bp-contact" type="text" placeholder="Phone or email" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;background:var(--bg);color:var(--text);">
-                </div>
-                <div style="flex:1;">
-                    <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Location</label>
-                    <input id="bp-loc" type="text" placeholder="Neighborhood or address" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;background:var(--bg);color:var(--text);">
-                </div>
-            </div>
-
-            <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Image URL (optional)</label>
-            <input id="bp-img" type="url" placeholder="https://..." style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;margin-bottom:16px;background:var(--bg);color:var(--text);">
-
-            <button id="bp-submit-btn" onclick="submitBoardPost()" class="btn btn-sm btn-ticket" style="display:block;width:100%;text-align:center;padding:12px;font-size:0.95rem;">Submit Post</button>
-        </div>
-        <div id="bp-success" style="display:none;text-align:center;padding:24px 0;">
-            <p style="font-size:1.5rem;margin-bottom:8px;">✅</p>
-            <h3 style="margin-bottom:8px;">Post Submitted!</h3>
-            <p style="font-size:0.85rem;color:var(--text-muted);">Thanks for sharing! Your post will appear after review.</p>
-        </div>`;
-    overlay.appendChild(modal);
-    document.body.appendChild(overlay);
-};
-
-window.submitBoardPost=function(){
-    const cat=document.getElementById('bp-cat').value;
-    const title=document.getElementById('bp-title').value.trim();
-    const desc=document.getElementById('bp-desc').value.trim();
-    const contact=document.getElementById('bp-contact').value.trim();
-    const loc=document.getElementById('bp-loc').value.trim();
-    const img=document.getElementById('bp-img').value.trim();
-
-    if(!title||!desc||!contact){alert('Please fill in Title, Description, and Contact Info.');return;}
-
-    const btn=document.getElementById('bp-submit-btn');
-    btn.textContent='Submitting...';btn.disabled=true;
-
-    const formData=new URLSearchParams();
-    formData.append('entry.1277308076',cat);
-    formData.append('entry.1203434084',title);
-    formData.append('entry.255927381',desc);
-    formData.append('entry.214344890',contact);
-    formData.append('entry.768523464',loc);
-    formData.append('entry.1488331868',img);
-
-    fetch('https://docs.google.com/forms/d/e/1FAIpQLSeCLBn-aWzznszV25pbH9iZhNzkpZyl-48jCiCArjHQA0iphQ/formResponse',{
-        method:'POST',mode:'no-cors',
-        headers:{'Content-Type':'application/x-www-form-urlencoded'},
-        body:formData.toString()
-    }).then(()=>{
-        document.getElementById('board-form-fields').style.display='none';
-        document.getElementById('bp-success').style.display='block';
-    }).catch(()=>{
-        document.getElementById('board-form-fields').style.display='none';
-        document.getElementById('bp-success').style.display='block';
-    });
 };
 
 // ==================== BUSINESS REVIEWS ====================
@@ -7823,22 +7765,6 @@ function runSearch(q) {
             html += `<div class="search-result" onclick="document.getElementById('search-overlay').remove();switchView('places');">
                 <p style="font-weight:600;margin:2px 0;">${s.name}</p>
                 <span style="font-size:0.8rem;color:var(--text-muted);">${s.category||s.cuisine||''} · ${s.description?.substring(0,60)||''}</span>
-            </div>`;
-        });
-        html += '</div>';
-    }
-
-    // Search Community Board
-    const boardHits = (allBoardPosts||[]).filter(p => {
-        return (p.title + ' ' + p.category + ' ' + (p.description||'') + ' ' + (p.location||'')).toLowerCase().includes(ql);
-    }).slice(0, 5);
-    if (boardHits.length) {
-        html += `<div style="margin-bottom:20px;"><h4 class="modal-section-label">📋 Community Board</h4>`;
-        boardHits.forEach(p => {
-            html += `<div class="search-result" onclick="document.getElementById('search-overlay').remove();switchView('board');">
-                <span style="font-size:0.7rem;color:var(--text-muted);">${p.category}</span>
-                <p style="font-weight:600;margin:2px 0;">${p.title}</p>
-                <span style="font-size:0.8rem;color:var(--text-muted);">${p.location||''} · ${p.date||''}</span>
             </div>`;
         });
         html += '</div>';

@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-07-29T12:02:04.677Z",
-  "totalEvents": 885,
+  "generatedAt": "2026-07-29T14:28:47.861Z",
+  "totalEvents": 844,
   "withDescription": 338,
   "withImage": 74,
   "familyFriendly": 41,
-  "eventsToday": 2,
+  "eventsToday": 1,
   "sources": {
     "muAthletics": 255,
-    "muCalendar": 120,
+    "muCalendar": 121,
     "muGetInvolved": 113,
     "pennManor": 86,
     "borough": 80,
     "vfw": 5,
     "phantomPower": 14,
     "community": 21,
-    "manor": 42,
+    "manor": 0,
     "raneyCellars": 2,
     "theBackyard": 10,
     "muHudlBroadcasts": 0
@@ -52,10 +52,7 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-07-29T12:30:00.000Z",
-      "latest": "2027-07-28T12:30:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-07-23T20:00:00.000Z",
       "latest": "2026-07-23T22:00:00.000Z"
@@ -98,10 +95,7 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 54
     },
-    "manor": {
-      "newest": "2027-07-28",
-      "daysSinceMoved": 1
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-07-23",
       "daysSinceMoved": 21
@@ -131,15 +125,15 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-29T11:59:33.198Z"
+    "lastSyncAt": "2026-07-29T14:27:01.371Z"
   },
   "recentlyAdded": [
     {
-      "key": "Traffic Commission Meeting|2027-07-28T12:30:00.000Z",
-      "firstSeenAt": "2026-07-29T00:36:47.307Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-07-28T12:30:00.000Z"
+      "key": "Through Our Eyes: A Community Celebration of Photography|2026-08-07T21:00:00.000Z",
+      "firstSeenAt": "2026-07-29T14:28:47.858Z",
+      "title": "Through Our Eyes: A Community Celebration of Photography",
+      "source": "MU",
+      "date": "2026-08-07T21:00:00.000Z"
     },
     {
       "key": "Trivia Night|2026-08-19T00:00:00.000Z",
@@ -205,5 +199,5 @@
       "date": "2026-09-26T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

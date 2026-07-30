@@ -260,8 +260,12 @@
   },
   {
     "name": "Best Buddies",
-    "category": "",
-    "categories": [],
+    "category": "Service",
+    "categories": [
+      "Service",
+      "Meeting",
+      "Social"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -302,10 +306,12 @@
   },
   {
     "name": "Body Empowerment Alliance",
-    "category": "",
-    "categories": [],
-    "shortName": "",
-    "id": ""
+    "category": "Service & Civic Engagement",
+    "categories": [
+      "Service & Civic Engagement"
+    ],
+    "shortName": "Bea",
+    "id": "thebodyempowermentalliance"
   },
   {
     "name": "Body Project",
@@ -1707,9 +1713,9 @@
   },
   {
     "name": "Spanish Club",
-    "category": "Social",
+    "category": "Meeting",
     "categories": [
-      "Social"
+      "Meeting"
     ],
     "shortName": "",
     "id": ""
@@ -1759,10 +1765,8 @@
   },
   {
     "name": "Student Government Association",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "SGA",
     "id": ""
   },

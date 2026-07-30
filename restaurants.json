@@ -228,18 +228,18 @@
     "description": "Community favorite café with a warm atmosphere",
     "address": "2 S Prince St, Millersville, PA 17551",
     "status": "View Menu",
-    "link": "https://www.cactuscafemillersville.com/",
+    "link": "https://cactuscafe.wixsite.com/cactuscafemillersvil/menu",
     "lat": 39.995304,
     "lng": -76.358205,
     "slug": "cactus-caf",
     "hours": {
       "mon": "closed",
-      "tue": "closed",
-      "wed": "closed",
+      "tue": "08:00-14:00",
+      "wed": "08:00-14:00",
       "thu": "08:00-14:00",
-      "fri": "08:00-14:00",
-      "sat": "08:00-14:00",
-      "sun": "08:00-14:00"
+      "fri": "08:00-15:00",
+      "sat": "08:00-15:00",
+      "sun": "08:00-15:00"
     }
   },
   {

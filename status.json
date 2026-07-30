@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-07-30T13:56:43.569Z",
-  "totalEvents": 886,
+  "generatedAt": "2026-07-30T14:37:45.343Z",
+  "totalEvents": 887,
   "withDescription": 330,
   "withImage": 64,
-  "familyFriendly": 41,
+  "familyFriendly": 47,
   "eventsToday": 1,
   "sources": {
     "muAthletics": 255,
-    "muCalendar": 124,
+    "muCalendar": 125,
     "muGetInvolved": 102,
     "pennManor": 86,
     "borough": 80,
@@ -131,9 +131,16 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-30T13:54:34.391Z"
+    "lastSyncAt": "2026-07-30T14:34:59.109Z"
   },
   "recentlyAdded": [
+    {
+      "key": "MMC 2026 Engaging Community Reception featuring Rob Bell|2026-10-09T00:00:00.000Z",
+      "firstSeenAt": "2026-07-30T14:37:45.340Z",
+      "title": "MMC 2026 Engaging Community Reception featuring Rob Bell",
+      "source": "MU",
+      "date": "2026-10-09T00:00:00.000Z"
+    },
     {
       "key": "A Skylit Drive|2026-08-28T00:00:00.000Z",
       "firstSeenAt": "2026-07-30T13:04:56.625Z",
@@ -196,14 +203,7 @@
       "title": "12 Stones",
       "source": "Other",
       "date": "2026-11-09T00:00:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
-      "firstSeenAt": "2026-07-30T08:25:15.554Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-08-03T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

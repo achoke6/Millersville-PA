@@ -3301,7 +3301,7 @@ function injectEcwidCSS(){
 
 window.switchView=function(view,skipPush){
     if(view==='places') initPlacesMap();   // lazy map init; invalidateSize on return visits
-    if(view==='food' && typeof renderFoodPage==='function'){ foodShowClosed=false; renderFoodPage(); }   // Food page rebuilds on every entry; closed-places toggle resets for the quick-look default
+    if(view==='food' && typeof renderFoodPage==='function'){ foodShowClosedOn=false; foodShowClosedOff=false; renderFoodPage(); }   // Food page rebuilds on every entry; BOTH per-group closed toggles reset for the quick-look default
     document.querySelectorAll('.app-view').forEach(v=>v.classList.remove('active'));
     document.getElementById(`view-${view}`).classList.add('active');
     document.querySelectorAll('.nav-link').forEach(b=>b.classList.remove('active'));
@@ -7445,33 +7445,65 @@ function buildServiceCard(p) {
 let allSignups=[]; // youth sports registration windows (homepage Upcoming Signups)
 async function loadSignups(){try{const d=await(await fetch('youth-sports-registration.json')).json();allSignups=(d&&d.registrations)?d.registrations:[];}catch(e){allSignups=[];}}
 
-// Food page (/food) — v2 quick-look redesign (2026-07-28, same day as v1):
-// the page answers "where can I eat RIGHT NOW" in one screen, minimal scroll.
-//   1. 🍕 Free food TODAY as home-timeline LINE ITEMS (buildTimelineItem —
+// Food page (/food) -- v3 (2026-07-30; v2 2026-07-28, v1 same day): the
+// page answers "where can I eat TODAY" in one phone screen, minimal scroll.
+//   1. Free food TODAY as home-timeline LINE ITEMS (buildTimelineItem --
 //      tap opens the standard openEventDetails popup, the home-page
-//      interaction). Nothing today → ONE compact "next up" line with the
-//      date in the header (nobody scrolls through events weeks out).
-//      Audience-gated via isHiddenForViewer as before; 3-hour started-grace
-//      so a 10 PM Jesus Dogs still shows at 11:30 PM.
-//   2. Listings show OPEN-NOW places only (hoursSortRank === 0 — the shared
-//      open/closed/unknown predicate through placeEffectiveHours, so
-//      summer/break cells resolve correctly). Late night, every campus
-//      venue closed → the On Campus group VANISHES (empty groups skipped)
-//      and only what's open around town renders. Closed + hours-unlisted
-//      places sit behind the bottom toggle (window.toggleFoodClosed);
-//      the flag RESETS to hidden on every view entry (switchView hook) —
-//      the quick-look default. Open cards still reuse buildFoodCard
-//      (specials box, 21+ gate, shared hours path). Cupboard pinned first
-//      only while open NOW and cupboardTodayVisible(); with the toggle on
-//      it shows whenever today-visible (its table reads Closed honestly).
+//      interaction). Nothing today -> ONE compact muted tappable next-up
+//      line (v3 fixed the v2 drift that rendered a dated header PLUS a
+//      full timeline item -- redundant on the page). Audience-gated via
+//      isHiddenForViewer as before; 3-hour started-grace so a 10 PM
+//      Jesus Dogs still shows at 11:30 PM.
+//   1.5 Locals/unset only: Today's Specials strip above the listings --
+//      one tappable line per place with items today (placesSpecialsItemsFor
+//      = single source of truth, 21+ gate inside; 'marauders'-targeted
+//      entries skipped) -> openHomeSpecialPopup does the detail work.
+//   2. Listings show places open TODAY: foodOpenState rank <= 1 (open now,
+//      or opening later today with an 'Opens 10 AM' label). The shared
+//      hoursSortRank is untouched -- it also drives the Places-page sort.
+//      Rows are collapsed native <details> (summary = name + status +
+//      specials dot; body = the untouched buildFoodCard -- specials box,
+//      21+ gate, shared hours path). Done-for-the-day + hours-unlisted
+//      rows sit behind PER-GROUP toggles (toggleFoodClosed('on'|'off'|
+//      'all')); both flags RESET on every view entry (switchView hook).
+//      A group with 0 open still shows its header + toggle (v3 -- the v2
+//      empty-group vanish hid campus dining entirely late-night).
+//      Cupboard pinned first: auto-expanded while open now, a collapsed
+//      'Opens ...' row before opening, behind the On-Campus toggle after
+//      close; cbToday gates weekends/breaks fully hidden as before.
 //   3. Townie-only pantry pointer card unchanged, below the toggle.
 // Rebuilt on view entry, initApp post-load, and all three affiliation/21+
 // switch paths (standing rule). NOT a map surface (no pin mirror).
 // ⚠ Live-smoke check: tl-item styling assumed CLASS-scoped in style.css
 // (the home skeleton markup suggests so); if the free-food lines render
 // unstyled, the rules are #home-timeline-scoped — add a shared class then.
-let foodShowClosed = false;   // session toggle; reset on every /food entry
-window.toggleFoodClosed = function(){ foodShowClosed = !foodShowClosed; renderFoodPage(); };
+let foodShowClosedOn = false, foodShowClosedOff = false;   // per-group session toggles (On/Off Campus; the flat non-student list drives both in lockstep); reset on every /food entry
+window.toggleFoodClosed = function(grp){
+    if (grp === 'on') foodShowClosedOn = !foodShowClosedOn;
+    else if (grp === 'off') foodShowClosedOff = !foodShowClosedOff;
+    else foodShowClosedOn = foodShowClosedOff = !(foodShowClosedOn && foodShowClosedOff);   // flat list ('all'): one button, both flags together
+    renderFoodPage();
+};
+// Food-page-local open-state classifier -- FINER than the shared
+// hoursSortRank (open/closed/unknown), which also drives the Places-page
+// sort and must not be widened. Reads through placeEffectiveHours + the
+// shared parse helpers per the hours-arc rule (never p.hours directly).
+//   rank 0 open now (until = closing mins) | 1 opens later today
+//   (opensAt = opening mins) | 2 done for the day / closed today |
+//   3 no hours data. The page shows rank <= 1 by default ("where can I
+//   eat TODAY" -- a 9:45 AM visit lists a 10 AM opener as 'Opens 10 AM'
+//   instead of hiding it until the minute it opens).
+function foodOpenState(p){
+    const eh = placeEffectiveHours(p);
+    if (!eh) return { rank: 3 };
+    const st = hoursOpenNow(eh);
+    if (!st) return { rank: 3 };
+    if (st.open) return { rank: 0, until: st.until };
+    const now = hoursNowET();
+    const nxt = hoursParseRanges(eh[HOURS_DAY_KEYS[now.dayIdx]] || '')
+        .filter(r => r.start > now.mins).sort((a,b) => a.start - b.start)[0];
+    return nxt ? { rank: 1, opensAt: nxt.start } : { rank: 2 };
+}
 function renderFoodPage(){
     const c = document.getElementById('food-container');
     if (!c) return;
@@ -7498,44 +7530,91 @@ function renderFoodPage(){
         const next = ffAll.find(e => (e._dateMs || 0) > now.getTime());
         if (next){
             const nd = new Date(next._dateMs);
-            html += secHdr(`🍕 Free Food · next ${nd.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'})}`);
-            html += `<div style="margin-bottom:14px;">${buildTimelineItem(next, now)}</div>`;
+            const ndTxt = nd.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+            const nk = JSON.stringify(getEventKey(next)).replace(/"/g, '&quot;');
+            html += `<p role="button" tabindex="0" onclick="window.openEventDetails(${nk})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.openEventDetails(${nk})}" style="cursor:pointer;font-size:0.82rem;color:var(--text-muted);margin:2px 0 14px;">🍕 Free food returns <strong>${ndTxt}</strong> · ${escHtml(next.title || '')} →</p>`;
         } else if (muAffiliation !== 'townie'){
             html += `<p style="font-size:0.8rem;color:var(--text-muted);margin:2px 0 12px;">🍕 No free-food events scheduled — they return with the semester.</p>`;
         }
     }
 
-    // --- 2. Listings: open now by default; closed/unlisted behind the toggle ---
+    // --- 1.5 Today's Specials strip (locals/unset only; marauders get the
+    // Cupboard pinned below instead). Same rules as the home rail:
+    // placesSpecialsItemsFor is the single source of truth (21+ gate,
+    // closedDays, day-only tags inside); 'marauders'-targeted entries are
+    // skipped for this viewer (symmetric with loadHomeSpecials). Tap ->
+    // the existing home-rail popup, which degrades gracefully. ---
+    if (!isStudent){
+        const spLines = [];
+        for (const [slug, sp] of Object.entries(specials)){
+            if (!sp || sp.audience === 'marauders') continue;
+            const items = placesSpecialsItemsFor(sp, dayName);
+            if (!items.length) continue;
+            const more = items.length > 1 ? ` <span style="color:var(--text-muted);">+${items.length - 1} more</span>` : '';
+            spLines.push(`<p role="button" tabindex="0" onclick="openHomeSpecialPopup('${slug}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openHomeSpecialPopup('${slug}')}" style="cursor:pointer;font-size:0.85rem;margin:6px 0;padding:9px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);">🏷️ <strong>${sp.name || slug}</strong> — ${items[0]}${more}</p>`);
+        }
+        if (spLines.length){
+            html += secHdr("Today's Specials", String(spLines.length));
+            html += `<div style="margin-bottom:14px;">${spLines.join('')}</div>`;
+        }
+    }
+
+    // --- 2. Listings: open TODAY by default (open now + opens later today,
+    // via foodOpenState); done-for-the-day + unlisted rows behind PER-GROUP
+    // toggles. Collapsed native <details> rows -- summary keeps the default
+    // list-item display so the browser's rotating marker is the affordance;
+    // inline styles only (style.css is mixed-endings, Hard Rule 2). ---
     const food = (typeof allPlaces !== 'undefined' ? allPlaces : [])
-        .filter(p => p && p.placeType === 'food' && placeAudienceVisible(p))
-        .sort((a,b) => (hoursSortRank(a) - hoursSortRank(b)) || a.name.localeCompare(b.name));
-    const hidden = food.filter(p => hoursSortRank(p) !== 0);
-    const shown  = foodShowClosed ? food : food.filter(p => hoursSortRank(p) === 0);
+        .filter(p => p && p.placeType === 'food' && placeAudienceVisible(p));
+    const stCache = new Map();
+    const stOf = p => { if (!stCache.has(p)) stCache.set(p, foodOpenState(p)); return stCache.get(p); };
+    const byState = (a,b) => (stOf(a).rank - stOf(b).rank) || a.name.localeCompare(b.name);
+    const stTxt = st =>
+        st.rank === 0 ? `<span style="color:#15803d;font-weight:700;">Open</span>${st.until !== undefined ? ' · until ' + hoursFmtMins(st.until) : ''}`
+      : st.rank === 1 ? `<span style="color:#b45309;font-weight:700;">Opens ${hoursFmtMins(st.opensAt)}</span>`
+      : st.rank === 2 ? `<span style="color:#b91c1c;font-weight:700;">Closed</span> today`
+      : `<span style="color:var(--text-muted);">Hours unlisted</span>`;
+    const sumRow = (label, st) => `<summary style="cursor:pointer;padding:10px 12px;font-size:0.9rem;"><span style="display:inline-flex;width:calc(100% - 22px);justify-content:space-between;align-items:center;gap:8px;vertical-align:middle;"><span style="font-weight:600;">${label}</span><span style="font-size:0.78rem;white-space:nowrap;">${stTxt(st)}</span></span></summary>`;
+    const rowFor = p => {
+        const hasSp = placesSpecialsItems(placeSlug(p), dayName).length > 0;
+        return `<details style="border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);margin:6px 0;">${sumRow(`${p.name}${hasSp ? ' 🏷️' : ''}`, stOf(p))}<div style="padding:0 8px 10px;">${buildFoodCard(p, specials, dayName)}</div></details>`;
+    };
+    // Cupboard -- pinned first, students only (cupboardTodayVisible). rank 1
+    // is the 9:45-vs-10-AM fix: a collapsed 'Opens 10 AM' row instead of
+    // hiding until the minute it opens. Open now -> auto-expanded full card.
+    // Done for the day -> behind the On-Campus toggle. cbToday still gates
+    // weekend/break days to fully hidden, toggle or not.
     const cbToday = (typeof cupboardTodayVisible === 'function' && cupboardTodayVisible());
-    const cbOpenNow = cbToday && window._cupboard && hoursSortRank(window._cupboard) === 0;
-    const cupboardCard = (cbOpenNow || (foodShowClosed && cbToday)) ? buildCampusCupboardCard(dayName) : '';
-    html += cupboardCard;
-    const buildCard = p => buildFoodCard(p, specials, dayName);
+    let cupboardHtml = '';
+    if (cbToday && window._cupboard){
+        const cst = foodOpenState(window._cupboard);
+        const card = buildCampusCupboardCard(dayName);
+        if (card && (cst.rank <= 1 || foodShowClosedOn)){
+            cupboardHtml = `<details${cst.rank === 0 ? ' open' : ''} style="border:1px solid var(--gold);border-radius:var(--radius-sm);background:var(--surface);margin:6px 0;">${sumRow('🛒 Campus Cupboard 🏷️', cst)}<div style="padding:0 8px 10px;">${card}</div></details>`;
+        }
+    }
+    html += cupboardHtml;
+    const closedHdr = `<p style="font-size:0.78rem;font-weight:700;color:var(--text-muted);margin:10px 0 2px;">Closed</p>`;
+    const toggleBtn = (grp, on, n) => `<div style="text-align:center;margin:8px 0 12px;"><button onclick="toggleFoodClosed('${grp}')" class="btn btn-sm btn-outline" style="font-size:0.8rem;">${on ? 'Hide closed places' : `Show ${n} closed or unlisted place${n===1?'':'s'}`}</button></div>`;
+    let anyRows = !!cupboardHtml;
+    const renderGroup = (label, list, grp, on) => {
+        const vis = list.filter(p => stOf(p).rank <= 1).sort(byState);
+        const hid = list.filter(p => stOf(p).rank >= 2).sort(byState);
+        if (!vis.length && !hid.length) return;
+        anyRows = true;
+        html += secHdr(label, `${vis.length} open today`);   // 0-open groups keep their header + toggle (v3 -- no more empty-group vanish)
+        html += vis.map(rowFor).join('');
+        if (on && hid.length) html += closedHdr + hid.map(rowFor).join('');
+        if (hid.length) html += toggleBtn(grp, on, hid.length);
+    };
     if (isStudent){
-        const onC  = shown.filter(p => p.onCampus === true);
-        const offC = shown.filter(p => p.onCampus !== true);
-        if (onC.length){
-            html += secHdr('On Campus', `${onC.length} place${onC.length===1?'':'s'}`);
-            html += onC.map(buildCard).join('');
-        }
-        if (offC.length){
-            html += secHdr('Off Campus', `${offC.length} place${offC.length===1?'':'s'}`);
-            html += offC.map(buildCard).join('');
-        }
-    } else if (shown.length){
-        html += secHdr(foodShowClosed ? 'Places to Eat' : 'Open Now', `${shown.length} place${shown.length===1?'':'s'}`);
-        html += shown.map(buildCard).join('');
+        renderGroup('On Campus', food.filter(p => p.onCampus === true), 'on', foodShowClosedOn);
+        renderGroup('Off Campus', food.filter(p => p.onCampus !== true), 'off', foodShowClosedOff);
+    } else {
+        renderGroup('Open Today', food, 'all', foodShowClosedOn && foodShowClosedOff);
     }
-    if (!shown.length && !cupboardCard){
-        html += `<p class="empty-state">Nothing's open right now.</p>`;
-    }
-    if (hidden.length){
-        html += `<div style="text-align:center;margin:12px 0 4px;"><button onclick="toggleFoodClosed()" class="btn btn-sm btn-outline" style="font-size:0.8rem;">${foodShowClosed ? 'Hide closed places' : `Show ${hidden.length} closed or unlisted place${hidden.length===1?'':'s'}`}</button></div>`;
+    if (!anyRows){
+        html += `<p class="empty-state">Nothing's open today.</p>`;
     }
 
     // --- 3. Food-pantry pointer (townies only) ---

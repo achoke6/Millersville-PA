@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-30T05:40:44.861Z",
-  "totalEvents": 836,
+  "generatedAt": "2026-07-30T08:25:15.556Z",
+  "totalEvents": 877,
   "withDescription": 330,
   "withImage": 64,
   "familyFriendly": 41,
@@ -14,7 +14,7 @@
     "vfw": 5,
     "phantomPower": 14,
     "community": 21,
-    "manor": 0,
+    "manor": 41,
     "raneyCellars": 2,
     "theBackyard": 10,
     "muHudlBroadcasts": 0
@@ -52,7 +52,10 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-08-03T23:00:00.000Z",
+      "latest": "2027-07-28T12:30:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-07-23T20:00:00.000Z",
       "latest": "2026-07-23T22:00:00.000Z"
@@ -95,7 +98,10 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 55
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-07-28",
+      "daysSinceMoved": 2
+    },
     "raneyCellars": {
       "newest": "2026-07-23",
       "daysSinceMoved": 22
@@ -125,79 +131,79 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-30T05:38:54.364Z"
+    "lastSyncAt": "2026-07-30T08:22:49.147Z"
   },
   "recentlyAdded": [
     {
-      "key": "Sunny Sweeney with special guest Amber Nadine|2026-08-06T00:00:00.000Z",
-      "firstSeenAt": "2026-07-30T05:40:44.858Z",
-      "title": "Sunny Sweeney with special guest Amber Nadine",
-      "source": "Other",
-      "date": "2026-08-06T00:00:00.000Z"
+      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
+      "firstSeenAt": "2026-07-30T08:25:15.554Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-08-03T23:00:00.000Z"
     },
     {
-      "key": "Open Jukebox|2026-08-20T02:00:00.000Z",
-      "firstSeenAt": "2026-07-30T02:12:24.045Z",
-      "title": "Open Jukebox",
-      "source": "Jack's Tavern",
-      "date": "2026-08-20T02:00:00.000Z"
+      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
+      "firstSeenAt": "2026-07-30T08:25:15.554Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-08-10T23:00:00.000Z"
     },
     {
-      "key": "MUth performance of Antigone in Munich|2026-08-08T14:00:00",
-      "firstSeenAt": "2026-07-29T18:08:06.765Z",
-      "title": "MUth performance of Antigone in Munich",
-      "source": "MU",
-      "date": "2026-08-08T14:00:00"
+      "key": "Zoning Hearing Board|2026-08-12T23:00:00.000Z",
+      "firstSeenAt": "2026-07-30T08:25:15.554Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-08-12T23:00:00.000Z"
     },
     {
-      "key": "MUth presents Radium Girls|2026-08-08T19:00:00",
-      "firstSeenAt": "2026-07-29T18:08:06.765Z",
-      "title": "MUth presents Radium Girls",
-      "source": "MU",
-      "date": "2026-08-08T19:00:00"
+      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
+      "firstSeenAt": "2026-07-30T08:25:15.554Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-08-26T12:30:00.000Z"
     },
     {
-      "key": "MUth presents Radium Girls|2026-08-09T14:00:00",
-      "firstSeenAt": "2026-07-29T18:08:06.765Z",
-      "title": "MUth presents Radium Girls",
-      "source": "MU",
-      "date": "2026-08-09T14:00:00"
+      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-07-30T08:25:15.554Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-09-02T23:00:00.000Z"
     },
     {
-      "key": "Park Commission - Cancelled|2026-08-03T22:00:00.000Z",
-      "firstSeenAt": "2026-07-29T16:22:22.575Z",
-      "title": "Park Commission - Cancelled",
-      "source": "Borough",
-      "date": "2026-08-03T22:00:00.000Z"
+      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
+      "firstSeenAt": "2026-07-30T08:25:15.554Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-08T23:00:00.000Z"
     },
     {
-      "key": "Through Our Eyes: A Community Celebration of Photography|2026-08-07T21:00:00.000Z",
-      "firstSeenAt": "2026-07-29T14:28:47.858Z",
-      "title": "Through Our Eyes: A Community Celebration of Photography",
-      "source": "MU",
-      "date": "2026-08-07T21:00:00.000Z"
+      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
+      "firstSeenAt": "2026-07-30T08:25:15.554Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-09-14T23:00:00.000Z"
     },
     {
-      "key": "Trivia Night|2026-08-19T00:00:00.000Z",
-      "firstSeenAt": "2026-07-29T00:00:34.830Z",
-      "title": "Trivia Night",
-      "source": "Jack's Tavern",
-      "date": "2026-08-19T00:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-07-30T08:25:15.554Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-09-30T12:30:00.000Z"
     },
     {
-      "key": "Millersville University Men's Golf at Vulcan Invitational|2026-09-03T00:00:00.000Z",
-      "firstSeenAt": "2026-07-28T18:08:22.822Z",
-      "title": "Millersville University Men's Golf at Vulcan Invitational",
-      "source": "MU",
-      "date": "2026-09-03T00:00:00.000Z"
+      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
+      "firstSeenAt": "2026-07-30T08:25:15.554Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-10-05T23:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Golf  Vulcan Invitational|2026-09-03T00:00:00.000Z",
-      "firstSeenAt": "2026-07-28T18:08:22.822Z",
-      "title": "Millersville University Women's Golf  Vulcan Invitational",
-      "source": "MU",
-      "date": "2026-09-03T00:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
+      "firstSeenAt": "2026-07-30T08:25:15.554Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-10-07T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 41
 }

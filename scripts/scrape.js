@@ -2347,6 +2347,14 @@ async function runScraper() {
                 });
             }
 
+            // Alumni-audience rows: category 'Alumni Event', or hosted by
+            // Alumni Engagement (the customerName tag). Townie-side — see the
+            // camps.json loader note; keeps the calendar twins of alumni
+            // events in lockstep with the curated camps.json copies.
+            if (!audience && (eventType === 'Alumni Event' || tags.includes('Alumni Engagement'))) {
+                audience = 'townie-only';
+            }
+
             const eventId = obj.eventId || obj.activityId || "";
             const sourceLink = eventId
                 ? `https://www.millersville.edu/calendar/events/${eventId}`
@@ -2541,17 +2549,28 @@ async function runScraper() {
                         const endDate = new Date(camp.endTime);
                         if (!isNaN(endDate.getTime())) resolvedEndTime = endDate.toISOString();
                     }
+                    // Alumni-page events (tags 'Alumni Event' / 'Summer Fun
+                    // Series') are townie-audience: MU markets them to the
+                    // local community, not students. audience 'townie-only'
+                    // hides them from confirmed Marauders only (unset viewers
+                    // still see them — the site-wide audience convention). An
+                    // explicit camp.audience field on the entry wins over the
+                    // tag-derived default.
+                    const campTags = Array.isArray(camp.tags) ? camp.tags : ['MU', 'Summer Camp'];
+                    const campIsAlumni = campTags.includes('Alumni Event') || campTags.includes('Summer Fun Series');
                     events.push({
                         title: camp.title,
                         date: campDate.toISOString(),
                         endTime: resolvedEndTime,
                         location: camp.location || 'Millersville University',
-                        tags: Array.isArray(camp.tags) ? camp.tags : ['MU', 'Summer Camp'],
+                        tags: campTags,
                         price: camp.price || '',
                         ticketLink: camp.registrationUrl || camp.ticketLink || '',
                         sourceLink: camp.sourceLink || camp.registrationUrl || '',
                         description: camp.description || '',
-                        kidFriendly: camp.kidFriendly !== false
+                        kidFriendly: camp.kidFriendly !== false,
+                        ...(camp.audience ? { audience: camp.audience }
+                            : campIsAlumni ? { audience: 'townie-only' } : {})
                     });
                     existingKeys4.add(key);
                     campCount++;
@@ -4428,7 +4447,8 @@ async function runScraper() {
         let isFamilyFriendly = false;
 
         // Respect pre-set kidFriendly for events that already declared themselves (e.g. Summer Camps, Athletic Camps)
-        if ((tags.includes('Summer Camp') || tags.includes('Athletic Camp')) && e.kidFriendly === true) {
+        if ((tags.includes('Summer Camp') || tags.includes('Athletic Camp') ||
+             tags.includes('Summer Fun Series') || tags.includes('Alumni Event')) && e.kidFriendly === true) {
             famCount++;
             return;
         }

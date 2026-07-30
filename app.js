@@ -729,6 +729,7 @@ const feedSections = {
                 composites: [
                     { label: 'Arts & Performance', icon: '🎭', linkedIds: ['mu-arts', 'clubs-arts'] },
                     { label: 'Public Events',      icon: '📢', linkedIds: ['mu-public'] },
+                    { label: 'Alumni Events',      icon: '🎓', linkedIds: ['mu-alumni'] },
                     { label: 'Community Fundraisers', icon: '🤝', linkedIds: ['clubs-service'] }
                 ]
             },
@@ -787,6 +788,10 @@ const sportFeedIds = new Set();
 for (const g of Object.values(feedSections.sports.groups)) g.subs.forEach(s => sportFeedIds.add(s.id));
 const eventFeedIds = new Set();
 for (const g of Object.values(feedSections.events.groups)) g.subs.forEach(s => eventFeedIds.add(s.id));
+// mu-alumni lives ONLY in the townie picker's MU composites (deliberately no
+// Marauder chip — the events are townie-only), so the groups walk above never
+// sees it. Register it by hand or hasEventPrefs misses alumni-only favorites.
+eventFeedIds.add('mu-alumni');
 
 // ========== Affiliation-based source hiding ==========
 // When a user picks Marauder (or is unset), ALL community-side sources are
@@ -1004,6 +1009,11 @@ function suggestFeedIdForEvent(e, isSportsPage) {
     }
     // MU Calendar proper
     if (tags.includes('MU')) {
+        // Alumni-page events (camps.json tags + the MU Calendar's 'Alumni
+        // Engagement' customerName tag). Checked BEFORE Public Event so the
+        // calendar twins (tagged both) star-suggest mu-alumni.
+        if (tags.includes('Alumni Event') || tags.includes('Alumni Engagement') ||
+            tags.includes('Summer Fun Series')) return 'mu-alumni';
         if (tags.includes('Arts Concert / Performance') || tags.includes('Art Exhibit')) return 'mu-arts';
         if (tags.includes('Public Event')) return 'mu-public';
         return null;

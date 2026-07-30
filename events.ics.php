@@ -433,6 +433,9 @@ function eventMatchesFeed($e) {
 
     // MU non-sport (MU Calendar — Clubs/Orgs already handled above)
     if (in_array('MU', $tags, true)) {
+        // mu-alumni — KEEP IN LOCKSTEP with lib/eventMatch.js (three tag spellings).
+        if ((in_array('Alumni Event', $tags, true) || in_array('Alumni Engagement', $tags, true) ||
+             in_array('Summer Fun Series', $tags, true)) && in_array('mu-alumni', $prefs, true)) return true;
         if (in_array('Arts Concert / Performance', $tags, true) && in_array('mu-arts', $prefs, true)) return true;
         if (in_array('Public Event', $tags, true) && in_array('mu-public', $prefs, true)) return true;
         return false;

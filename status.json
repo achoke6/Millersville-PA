@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-30T19:24:57.895Z",
-  "totalEvents": 881,
+  "generatedAt": "2026-07-30T21:08:51.853Z",
+  "totalEvents": 840,
   "withDescription": 330,
   "withImage": 64,
   "familyFriendly": 47,
@@ -14,7 +14,7 @@
     "vfw": 5,
     "phantomPower": 14,
     "community": 21,
-    "manor": 41,
+    "manor": 0,
     "raneyCellars": 5,
     "theBackyard": 10,
     "muHudlBroadcasts": 0
@@ -52,10 +52,7 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-08-03T23:00:00.000Z",
-      "latest": "2027-07-28T12:30:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-07-30T22:00:00.000Z",
       "latest": "2026-08-15T22:00:00.000Z"
@@ -98,10 +95,7 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 55
     },
-    "manor": {
-      "newest": "2027-07-28",
-      "daysSinceMoved": 2
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-08-15",
       "daysSinceMoved": 0
@@ -131,78 +125,78 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-30T19:22:33.446Z"
+    "lastSyncAt": "2026-07-30T21:07:01.813Z"
   },
   "recentlyAdded": [
     {
-      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
-      "firstSeenAt": "2026-07-30T17:26:59.185Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-08-03T23:00:00.000Z"
+      "key": "Thurday Trivia 6PM|2026-07-30T22:00:00.000Z",
+      "firstSeenAt": "2026-07-30T15:53:15.639Z",
+      "title": "Thurday Trivia 6PM",
+      "source": "Raney Cellars",
+      "date": "2026-07-30T22:00:00.000Z"
     },
     {
-      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
-      "firstSeenAt": "2026-07-30T17:26:59.185Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-08-10T23:00:00.000Z"
+      "key": "Oh My Cod Vegan Seafood|2026-08-05T20:00:00.000Z",
+      "firstSeenAt": "2026-07-30T15:53:15.639Z",
+      "title": "Oh My Cod Vegan Seafood",
+      "source": "Raney Cellars",
+      "date": "2026-08-05T20:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-08-12T23:00:00.000Z",
-      "firstSeenAt": "2026-07-30T17:26:59.185Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-08-12T23:00:00.000Z"
+      "key": "Eat.Drifters|2026-08-06T20:00:00.000Z",
+      "firstSeenAt": "2026-07-30T15:53:15.639Z",
+      "title": "Eat.Drifters",
+      "source": "Raney Cellars",
+      "date": "2026-08-06T20:00:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
-      "firstSeenAt": "2026-07-30T17:26:59.185Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-08-26T12:30:00.000Z"
+      "key": "Gourmet Julies Way|2026-08-07T21:00:00.000Z",
+      "firstSeenAt": "2026-07-30T15:53:15.639Z",
+      "title": "Gourmet Julies Way",
+      "source": "Raney Cellars",
+      "date": "2026-08-07T21:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
-      "firstSeenAt": "2026-07-30T17:26:59.185Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-09-02T23:00:00.000Z"
+      "key": "Southern Fried Vegan|2026-08-15T22:00:00.000Z",
+      "firstSeenAt": "2026-07-30T15:53:15.639Z",
+      "title": "Southern Fried Vegan",
+      "source": "Raney Cellars",
+      "date": "2026-08-15T22:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
-      "firstSeenAt": "2026-07-30T17:26:59.185Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-09-08T23:00:00.000Z"
+      "key": "MMC 2026 Engaging Community Reception featuring Rob Bell|2026-10-09T00:00:00.000Z",
+      "firstSeenAt": "2026-07-30T14:37:45.340Z",
+      "title": "MMC 2026 Engaging Community Reception featuring Rob Bell",
+      "source": "MU",
+      "date": "2026-10-09T00:00:00.000Z"
     },
     {
-      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
-      "firstSeenAt": "2026-07-30T17:26:59.185Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-09-14T23:00:00.000Z"
+      "key": "Sunny Sweeney with special guest Amber Nadine|2026-08-06T00:00:00.000Z",
+      "firstSeenAt": "2026-07-30T05:40:44.858Z",
+      "title": "Sunny Sweeney with special guest Amber Nadine",
+      "source": "Other",
+      "date": "2026-08-06T00:00:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
-      "firstSeenAt": "2026-07-30T17:26:59.185Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-09-30T12:30:00.000Z"
+      "key": "Open Jukebox|2026-08-20T02:00:00.000Z",
+      "firstSeenAt": "2026-07-30T02:12:24.045Z",
+      "title": "Open Jukebox",
+      "source": "Jack's Tavern",
+      "date": "2026-08-20T02:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
-      "firstSeenAt": "2026-07-30T17:26:59.185Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-10-05T23:00:00.000Z"
+      "key": "MUth performance of Antigone in Munich|2026-08-08T14:00:00",
+      "firstSeenAt": "2026-07-29T18:08:06.765Z",
+      "title": "MUth performance of Antigone in Munich",
+      "source": "MU",
+      "date": "2026-08-08T14:00:00"
     },
     {
-      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
-      "firstSeenAt": "2026-07-30T17:26:59.185Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-10-07T23:00:00.000Z"
+      "key": "MUth presents Radium Girls|2026-08-08T19:00:00",
+      "firstSeenAt": "2026-07-29T18:08:06.765Z",
+      "title": "MUth presents Radium Girls",
+      "source": "MU",
+      "date": "2026-08-08T19:00:00"
     }
   ],
   "addedLastRun": 0

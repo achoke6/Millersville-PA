@@ -1552,7 +1552,7 @@
     },
     {
       "date": "2026-07-28",
-      "ts": "2026-07-29T00:36:47.309Z",
+      "ts": "2026-07-29T03:16:00.878Z",
       "totalEvents": 885,
       "sources": {
         "muAthletics": 255,
@@ -1581,7 +1581,71 @@
         "raneyCellars": "2026-07-23",
         "theBackyard": "2026-09-30"
       }
+    },
+    {
+      "date": "2026-07-29",
+      "ts": "2026-07-30T02:12:24.047Z",
+      "totalEvents": 877,
+      "sources": {
+        "muAthletics": 255,
+        "muCalendar": 124,
+        "muGetInvolved": 102,
+        "pennManor": 86,
+        "borough": 80,
+        "vfw": 5,
+        "phantomPower": 14,
+        "community": 21,
+        "manor": 41,
+        "raneyCellars": 2,
+        "theBackyard": 10,
+        "muHudlBroadcasts": 0
+      },
+      "newestDates": {
+        "muAthletics": "2027-05-01",
+        "muCalendar": "2027-05-02",
+        "muGetInvolved": "2027-05-05",
+        "pennManor": "2026-09-21",
+        "borough": "2026-12-25",
+        "vfw": "2026-09-11",
+        "phantomPower": "2026-10-04",
+        "community": "2027-04-16",
+        "manor": "2027-07-28",
+        "raneyCellars": "2026-07-23",
+        "theBackyard": "2026-09-30"
+      }
+    },
+    {
+      "date": "2026-07-30",
+      "ts": "2026-07-30T11:08:25.230Z",
+      "totalEvents": 877,
+      "sources": {
+        "muAthletics": 255,
+        "muCalendar": 124,
+        "muGetInvolved": 102,
+        "pennManor": 86,
+        "borough": 80,
+        "vfw": 5,
+        "phantomPower": 14,
+        "community": 21,
+        "manor": 41,
+        "raneyCellars": 2,
+        "theBackyard": 10,
+        "muHudlBroadcasts": 0
+      },
+      "newestDates": {
+        "muAthletics": "2027-05-01",
+        "muCalendar": "2027-05-02",
+        "muGetInvolved": "2027-05-05",
+        "pennManor": "2026-09-21",
+        "borough": "2026-12-25",
+        "vfw": "2026-09-11",
+        "phantomPower": "2026-10-04",
+        "community": "2027-04-16",
+        "manor": "2027-07-28",
+        "raneyCellars": "2026-07-23",
+        "theBackyard": "2026-09-30"
+      }
     }
   ],
-  "lastUpdated": "2026-07-29T00:36:47.309Z"
+  "lastUpdated": "2026-07-30T11:08:25.230Z"
 }

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-30T11:08:25.230Z",
-  "totalEvents": 877,
+  "generatedAt": "2026-07-30T13:04:56.628Z",
+  "totalEvents": 886,
   "withDescription": 330,
   "withImage": 64,
   "familyFriendly": 41,
@@ -12,7 +12,7 @@
     "pennManor": 86,
     "borough": 80,
     "vfw": 5,
-    "phantomPower": 14,
+    "phantomPower": 23,
     "community": 21,
     "manor": 41,
     "raneyCellars": 2,
@@ -46,7 +46,7 @@
     },
     "phantomPower": {
       "earliest": "2026-08-02T00:00:00.000Z",
-      "latest": "2026-10-04T00:00:00.000Z"
+      "latest": "2026-11-09T00:00:00.000Z"
     },
     "community": {
       "earliest": "2026-06-15T13:00:00.000Z",
@@ -91,8 +91,8 @@
       "daysSinceMoved": 56
     },
     "phantomPower": {
-      "newest": "2026-10-04",
-      "daysSinceMoved": 8
+      "newest": "2026-11-09",
+      "daysSinceMoved": 0
     },
     "community": {
       "newest": "2027-04-16",
@@ -131,79 +131,79 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-30T11:06:01.865Z"
+    "lastSyncAt": "2026-07-30T13:02:32.809Z"
   },
   "recentlyAdded": [
+    {
+      "key": "A Skylit Drive|2026-08-28T00:00:00.000Z",
+      "firstSeenAt": "2026-07-30T13:04:56.625Z",
+      "title": "A Skylit Drive",
+      "source": "Other",
+      "date": "2026-08-28T00:00:00.000Z"
+    },
+    {
+      "key": "A Skylit Drive|2026-08-31T00:00:00.000Z",
+      "firstSeenAt": "2026-07-30T13:04:56.625Z",
+      "title": "A Skylit Drive",
+      "source": "Other",
+      "date": "2026-08-31T00:00:00.000Z"
+    },
+    {
+      "key": "Caitlynne Curtis|2026-09-02T00:00:00.000Z",
+      "firstSeenAt": "2026-07-30T13:04:56.625Z",
+      "title": "Caitlynne Curtis",
+      "source": "Other",
+      "date": "2026-09-02T00:00:00.000Z"
+    },
+    {
+      "key": "CKY|2026-09-13T00:00:00.000Z",
+      "firstSeenAt": "2026-07-30T13:04:56.625Z",
+      "title": "CKY",
+      "source": "Other",
+      "date": "2026-09-13T00:00:00.000Z"
+    },
+    {
+      "key": "Nation of Language|2026-09-17T00:00:00.000Z",
+      "firstSeenAt": "2026-07-30T13:04:56.625Z",
+      "title": "Nation of Language",
+      "source": "Other",
+      "date": "2026-09-17T00:00:00.000Z"
+    },
+    {
+      "key": "The Reverend Horton Heat|2026-09-18T00:00:00.000Z",
+      "firstSeenAt": "2026-07-30T13:04:56.625Z",
+      "title": "The Reverend Horton Heat",
+      "source": "Other",
+      "date": "2026-09-18T00:00:00.000Z"
+    },
+    {
+      "key": "Eyehategod|2026-09-24T00:00:00.000Z",
+      "firstSeenAt": "2026-07-30T13:04:56.625Z",
+      "title": "Eyehategod",
+      "source": "Other",
+      "date": "2026-09-24T00:00:00.000Z"
+    },
+    {
+      "key": "Lords of Acid|2026-10-17T00:00:00.000Z",
+      "firstSeenAt": "2026-07-30T13:04:56.625Z",
+      "title": "Lords of Acid",
+      "source": "Other",
+      "date": "2026-10-17T00:00:00.000Z"
+    },
+    {
+      "key": "12 Stones|2026-11-09T00:00:00.000Z",
+      "firstSeenAt": "2026-07-30T13:04:56.625Z",
+      "title": "12 Stones",
+      "source": "Other",
+      "date": "2026-11-09T00:00:00.000Z"
+    },
     {
       "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
       "firstSeenAt": "2026-07-30T08:25:15.554Z",
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2026-08-03T23:00:00.000Z"
-    },
-    {
-      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
-      "firstSeenAt": "2026-07-30T08:25:15.554Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-08-10T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-08-12T23:00:00.000Z",
-      "firstSeenAt": "2026-07-30T08:25:15.554Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-08-12T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
-      "firstSeenAt": "2026-07-30T08:25:15.554Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-08-26T12:30:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
-      "firstSeenAt": "2026-07-30T08:25:15.554Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-09-02T23:00:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
-      "firstSeenAt": "2026-07-30T08:25:15.554Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-09-08T23:00:00.000Z"
-    },
-    {
-      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
-      "firstSeenAt": "2026-07-30T08:25:15.554Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-09-14T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
-      "firstSeenAt": "2026-07-30T08:25:15.554Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-09-30T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
-      "firstSeenAt": "2026-07-30T08:25:15.554Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-10-05T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
-      "firstSeenAt": "2026-07-30T08:25:15.554Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-10-07T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 9
 }

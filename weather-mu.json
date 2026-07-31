@@ -1,11 +1,11 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Friday, July 31, 2026 at 07:31 AM (Kyle Elliott, Meteorologist)",
+    "issued": "Friday, July 31, 2026 at 12:07 PM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "Today",
-        "text": "Mostly sunny and seasonable. High: 84-88"
+        "period": "This afternoon",
+        "text": "Seasonable with sunshine and some passing clouds. High: 84-88"
       },
       {
         "period": "Tonight",
@@ -128,6 +128,17 @@
   },
   "observations": [
     {
+      "time": "12:00",
+      "temp": "81",
+      "dewpoint": "63",
+      "rh": "55",
+      "windDir": "NE",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "10.1",
+      "condition": "None"
+    },
+    {
       "time": "11:00",
       "temp": "82",
       "dewpoint": "65",
@@ -180,17 +191,6 @@
       "windSpeed": "2",
       "precip": "0.00",
       "visibility": "10.6",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "69",
-      "dewpoint": "64",
-      "rh": "82",
-      "windDir": "NW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "10.4",
       "condition": "None"
     }
   ],
@@ -536,9 +536,9 @@
     "yearMinDate": "January 21"
   },
   "discussion": {
-    "headline": "nother round of severe storms and flooding concerns today",
-    "dateLine": "1:30 p.m. Tuesday, July 28, 2026",
-    "excerpt": "The last week of July kicked off on a partly-to-mostly sunny and seasonably warm note across the Lower Susquehanna Valley with high temperatures in the mid-to-upper 80s Monday afternoon. Unfortunately, the tranquil conditions will be replaced by another round of severe thunderstorms and flash flooding concerns this afternoon and evening. …",
+    "headline": "ugust to kick off on a seasonably warm, humid and unsettled note",
+    "dateLine": "11:30 a.m. Friday, July 31, 2026, Update",
+    "excerpt": "In the wake of Tuesday's storm system, northwesterly winds of 12-25 mph ushered slightly cooler, drier and less humid air into the Lower Susquehanna Valley during the middle of the week. Morning sunshine \"self-destructed\" and gave way to afternoon clouds both Wednesday and Thursday, and high temperatures only reached the upper 70s to low 80s each afternoon. …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -576,5 +576,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-07-31T15:13:05.396Z"
+  "updated": "2026-07-31T16:44:12.341Z"
 }

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-31T12:00:07.585Z",
+  "generatedAt": "2026-07-31T14:22:09.307Z",
   "totalEvents": 875,
   "withDescription": 324,
   "withImage": 58,
@@ -61,7 +61,7 @@
       "latest": "2026-08-15T22:00:00.000Z"
     },
     "theBackyard": {
-      "earliest": "2026-08-25T12:00:00.000Z",
+      "earliest": "2026-08-25T15:00:00.000Z",
       "latest": "2026-09-30T15:00:00.000Z"
     }
   },
@@ -131,9 +131,37 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-07-31T11:57:45.744Z"
+    "lastSyncAt": "2026-07-31T14:19:58.563Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Mr. Softee/Nino's|2026-08-25T15:00:00.000Z",
+      "firstSeenAt": "2026-07-31T14:22:09.305Z",
+      "title": "Mr. Softee/Nino's",
+      "source": "The Backyard",
+      "date": "2026-08-25T15:00:00.000Z"
+    },
+    {
+      "key": "Traveling J's|2026-08-26T15:00:00.000Z",
+      "firstSeenAt": "2026-07-31T14:22:09.305Z",
+      "title": "Traveling J's",
+      "source": "The Backyard",
+      "date": "2026-08-26T15:00:00.000Z"
+    },
+    {
+      "key": "Joe on the go/Donuts|2026-08-27T13:00:00.000Z",
+      "firstSeenAt": "2026-07-31T14:22:09.305Z",
+      "title": "Joe on the go/Donuts",
+      "source": "The Backyard",
+      "date": "2026-08-27T13:00:00.000Z"
+    },
+    {
+      "key": "Scoops Food Truck and Ice cream|2026-09-03T15:00:00.000Z",
+      "firstSeenAt": "2026-07-31T14:22:09.305Z",
+      "title": "Scoops Food Truck and Ice cream",
+      "source": "The Backyard",
+      "date": "2026-09-03T15:00:00.000Z"
+    },
     {
       "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
       "firstSeenAt": "2026-07-30T23:06:34.925Z",
@@ -175,35 +203,7 @@
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2026-09-08T23:00:00.000Z"
-    },
-    {
-      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
-      "firstSeenAt": "2026-07-30T23:06:34.925Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-09-14T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
-      "firstSeenAt": "2026-07-30T23:06:34.925Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-09-30T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
-      "firstSeenAt": "2026-07-30T23:06:34.925Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-10-05T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
-      "firstSeenAt": "2026-07-30T23:06:34.925Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-10-07T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 4
 }

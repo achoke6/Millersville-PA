@@ -7454,10 +7454,13 @@ async function loadSignups(){try{const d=await(await fetch('youth-sports-registr
 //      full timeline item -- redundant on the page). Audience-gated via
 //      isHiddenForViewer as before; 3-hour started-grace so a 10 PM
 //      Jesus Dogs still shows at 11:30 PM.
-//   1.5 Locals/unset only: Today's Specials strip above the listings --
-//      one tappable line per place with items today (placesSpecialsItemsFor
-//      = single source of truth, 21+ gate inside; 'marauders'-targeted
-//      entries skipped) -> openHomeSpecialPopup does the detail work.
+//   1.5 ALL viewers (v4 2026-07-31; was locals/unset only): Today's
+//      Specials strip above the listings -- one tappable line per place
+//      with items today (placesSpecialsItemsFor = single source of truth,
+//      21+ gate inside; audience gating mirrors loadHomeSpecials) ->
+//      openHomeSpecialPopup does the detail work. Marauders get the
+//      Campus Cupboard as the FIRST line (cupboardTodayVisible-equivalent
+//      gate) -- this REPLACED the v3 pinned Food-page card.
 //   2. Listings show places open TODAY: foodOpenState rank <= 1 (open now,
 //      or opening later today with an 'Opens 10 AM' label). The shared
 //      hoursSortRank is untouched -- it also drives the Places-page sort.
@@ -7468,10 +7471,14 @@ async function loadSignups(){try{const d=await(await fetch('youth-sports-registr
 //      'all')); both flags RESET on every view entry (switchView hook).
 //      A group with 0 open still shows its header + toggle (v3 -- the v2
 //      empty-group vanish hid campus dining entirely late-night).
-//      Cupboard pinned first: auto-expanded while open now, a collapsed
-//      'Opens ...' row before opening, behind the On-Campus toggle after
-//      close; cbToday gates weekends/breaks fully hidden as before.
-//   3. Townie-only pantry pointer card unchanged, below the toggle.
+//      (The v3 pinned Cupboard card here was RETIRED in v4 -- the
+//      Cupboard now rides the 1.5 strip like every other special;
+//      buildCampusCupboardCard still serves the Places page.)
+//   3. Townie-only pantry pointer card below the toggle -- primary action
+//      is the Loft's Calendly scheduling link (hardcoded, Cupboard
+//      static-info convention) with a muted view-on-map fallback.
+//   3.5 Marauder-only SNAP Benefits pointer card (v4): PA COMPASS
+//      eligibility + application links, SNAP-station location line.
 // Rebuilt on view entry, initApp post-load, and all three affiliation/21+
 // switch paths (standing rule). NOT a map surface (no pin mirror).
 // ⚠ Live-smoke check: tl-item styling assumed CLASS-scoped in style.css
@@ -7538,16 +7545,31 @@ function renderFoodPage(){
         }
     }
 
-    // --- 1.5 Today's Specials strip (locals/unset only; marauders get the
-    // Cupboard pinned below instead). Same rules as the home rail:
-    // placesSpecialsItemsFor is the single source of truth (21+ gate,
-    // closedDays, day-only tags inside); 'marauders'-targeted entries are
-    // skipped for this viewer (symmetric with loadHomeSpecials). Tap ->
-    // the existing home-rail popup, which degrades gracefully. ---
-    if (!isStudent){
+    // --- 1.5 Today's Specials strip (ALL viewers as of v4 2026-07-31;
+    // was locals/unset only -- the pinned Cupboard card covered marauders).
+    // Same rules as the home rail: placesSpecialsItemsFor is the single
+    // source of truth (21+ gate, closedDays, day-only tags inside);
+    // audience gating mirrors loadHomeSpecials ('locals' hides from
+    // marauders, 'marauders' hides from townies/unset). Marauders get the
+    // Campus Cupboard as the FIRST line (buildCampusCupboardItems null =
+    // weekend/break/no-data -> line absent) -- it replaced the retired
+    // pinned Food-page card; tap opens the existing synthesized popup
+    // branch (openHomeSpecialPopup('campus-cupboard')). Every line -> the
+    // home-rail popup, which degrades gracefully. ---
+    {
         const spLines = [];
+        const cbItems = isStudent && typeof buildCampusCupboardItems === 'function' ? buildCampusCupboardItems(dayName) : null;
+        if (cbItems){
+            // cbItems[0] is "Open today: <hours>" (buildCampusCupboardItems)
+            // -- strip that prefix for the line text; if the wording ever
+            // changes, the full text shows instead (graceful, never wrong).
+            const cbHours = String(cbItems[0]).replace(/^Open today:\s*/i, '');
+            spLines.push(`<p role="button" tabindex="0" onclick="openHomeSpecialPopup('campus-cupboard')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openHomeSpecialPopup('campus-cupboard')}" style="cursor:pointer;font-size:0.85rem;margin:6px 0;padding:9px 12px;background:var(--surface);border:1px solid var(--gold);border-radius:var(--radius-sm);">🏷️ <strong>Campus Cupboard</strong> — Free groceries · ${cbHours} <span style="color:var(--text-muted);">· MU students only</span></p>`);
+        }
         for (const [slug, sp] of Object.entries(specials)){
-            if (!sp || sp.audience === 'marauders') continue;
+            if (!sp) continue;
+            if (sp.audience === 'locals' && isStudent) continue;
+            if (sp.audience === 'marauders' && !isStudent) continue;
             const items = placesSpecialsItemsFor(sp, dayName);
             if (!items.length) continue;
             const more = items.length > 1 ? ` <span style="color:var(--text-muted);">+${items.length - 1} more</span>` : '';
@@ -7579,24 +7601,13 @@ function renderFoodPage(){
         const hasSp = placesSpecialsItems(placeSlug(p), dayName).length > 0;
         return `<details style="border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);margin:6px 0;">${sumRow(`${p.name}${hasSp ? ' 🏷️' : ''}`, stOf(p))}<div style="padding:0 8px 10px;">${buildFoodCard(p, specials, dayName)}</div></details>`;
     };
-    // Cupboard -- pinned first, students only (cupboardTodayVisible). rank 1
-    // is the 9:45-vs-10-AM fix: a collapsed 'Opens 10 AM' row instead of
-    // hiding until the minute it opens. Open now -> auto-expanded full card.
-    // Done for the day -> behind the On-Campus toggle. cbToday still gates
-    // weekend/break days to fully hidden, toggle or not.
-    const cbToday = (typeof cupboardTodayVisible === 'function' && cupboardTodayVisible());
-    let cupboardHtml = '';
-    if (cbToday && window._cupboard){
-        const cst = foodOpenState(window._cupboard);
-        const card = buildCampusCupboardCard(dayName);
-        if (card && (cst.rank <= 1 || foodShowClosedOn)){
-            cupboardHtml = `<details${cst.rank === 0 ? ' open' : ''} style="border:1px solid var(--gold);border-radius:var(--radius-sm);background:var(--surface);margin:6px 0;">${sumRow('🛒 Campus Cupboard 🏷️', cst)}<div style="padding:0 8px 10px;">${card}</div></details>`;
-        }
-    }
-    html += cupboardHtml;
+    // Cupboard: pinned <details> card RETIRED in v4 (2026-07-31) -- the
+    // Cupboard now rides the section-1.5 specials strip like every other
+    // special (first line, marauders only). buildCampusCupboardCard still
+    // serves the Places page; cupboardTodayVisible still gates pin/lens.
     const closedHdr = `<p style="font-size:0.78rem;font-weight:700;color:var(--text-muted);margin:10px 0 2px;">Closed</p>`;
     const toggleBtn = (grp, on, n) => `<div style="text-align:center;margin:8px 0 12px;"><button onclick="toggleFoodClosed('${grp}')" class="btn btn-sm btn-outline" style="font-size:0.8rem;">${on ? 'Hide closed places' : `Show ${n} closed or unlisted place${n===1?'':'s'}`}</button></div>`;
-    let anyRows = !!cupboardHtml;
+    let anyRows = false;
     const renderGroup = (label, list, grp, on) => {
         const vis = list.filter(p => stOf(p).rank <= 1).sort(byState);
         const hid = list.filter(p => stOf(p).rank >= 2).sort(byState);
@@ -7617,17 +7628,39 @@ function renderFoodPage(){
         html += `<p class="empty-state">Nothing's open today.</p>`;
     }
 
-    // --- 3. Food-pantry pointer (townies only) ---
+    // --- 3. Food-pantry pointer (townies only). Primary action is the
+    // Loft's Calendly scheduling link (hardcoded -- the Cupboard static-info
+    // convention; update in place if the link changes); the old map jump
+    // stays as a muted fallback link (openPantryOnMap kept). ---
     if (muAffiliation === 'townie'){
         const pantry = (typeof allPlaces !== 'undefined' ? allPlaces : []).find(p => p && /pantry/i.test(p.name || ''));
         if (pantry){
             html += `<div class="app-card" style="border-left:4px solid var(--gold);">
                 <span class="card-tag">🥫 Community Resource</span>
                 <h3 class="card-title" style="margin-top:6px;">Need food assistance?</h3>
-                <p style="font-size:0.85rem;color:var(--text-muted);margin:6px 0 10px;">${escHtml(pantry.name)} offers free food for families in need — find hours and directions in the directory.</p>
-                <button onclick="openPantryOnMap('${placeSlug(pantry)}')" class="btn btn-sm btn-outline" style="display:block;width:100%;text-align:center;">📍 Find it on the map</button>
+                <p style="font-size:0.85rem;color:var(--text-muted);margin:6px 0 10px;">${escHtml(pantry.name)} offers free food for families in need — schedule a visit online.</p>
+                <a href="https://calendly.com/jenna-loftcp/new-meeting" target="_blank" rel="noopener" class="btn btn-sm btn-outline" style="display:block;width:100%;text-align:center;">🗓️ Schedule a visit ↗</a>
+                <p style="text-align:center;margin:8px 0 0;"><a href="#" onclick="event.preventDefault();openPantryOnMap('${placeSlug(pantry)}')" style="font-size:0.78rem;color:var(--text-muted);">📍 View on map</a></p>
             </div>`;
         }
+    }
+
+    // --- 3.5 SNAP Benefits pointer (marauders only, v4 2026-07-31).
+    // Static info per the Cupboard convention -- the two PA COMPASS links
+    // (eligibility check vs application) and the on-campus SNAP-station
+    // location are hardcoded here; update in place if either moves. Two
+    // links means a single sheet website cell can't carry this, so the
+    // card stays code-side (no directory row). ---
+    if (isStudent){
+        html += `<div class="app-card" style="border-left:4px solid var(--gold);">
+            <span class="card-tag">💳 Student Resource</span>
+            <h3 class="card-title" style="margin-top:6px;">SNAP Benefits (Food Stamps)</h3>
+            <p style="font-size:0.85rem;color:var(--text-muted);margin:6px 0 10px;">Monthly grocery money for eligible students. Get in-person help at the SNAP station — SMC Main Floor, upper seating area of Chick-Fil-A.</p>
+            <div style="display:flex;gap:8px;">
+                <a href="https://www.compass.dhs.pa.gov/intake/#/getstarted" target="_blank" rel="noopener" class="btn btn-sm btn-outline" style="flex:1;text-align:center;">Check eligibility ↗</a>
+                <a href="https://www.compass.dhs.pa.gov/home/#/" target="_blank" rel="noopener" class="btn btn-sm btn-outline" style="flex:1;text-align:center;">Apply ↗</a>
+            </div>
+        </div>`;
     }
 
     c.innerHTML = html || '<p class="empty-state">No food listings available right now.</p>';

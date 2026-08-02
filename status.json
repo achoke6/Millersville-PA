@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-02T05:58:10.982Z",
+  "generatedAt": "2026-08-02T08:23:51.311Z",
   "totalEvents": 870,
   "withDescription": 320,
   "withImage": 58,
@@ -45,7 +45,7 @@
       "latest": "2026-09-11T17:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-08-02T00:00:00.000Z",
+      "earliest": "2026-08-02T16:00:00.000Z",
       "latest": "2026-10-04T00:00:00.000Z"
     },
     "community": {
@@ -131,9 +131,16 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-08-02T05:56:14.554Z"
+    "lastSyncAt": "2026-08-02T08:21:42.907Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Caitlynne Curtis|2026-09-02T00:00:00.000Z",
+      "firstSeenAt": "2026-08-02T08:23:51.309Z",
+      "title": "Caitlynne Curtis",
+      "source": "Other",
+      "date": "2026-09-02T00:00:00.000Z"
+    },
     {
       "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
       "firstSeenAt": "2026-08-02T02:40:29.760Z",
@@ -196,14 +203,7 @@
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2026-10-05T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
-      "firstSeenAt": "2026-08-02T02:40:29.760Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-10-07T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

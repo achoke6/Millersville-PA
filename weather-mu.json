@@ -1,29 +1,8 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Friday, July 31, 2026 at 12:07 PM (Kyle Elliott, Meteorologist)",
-    "periods": [
-      {
-        "period": "This afternoon",
-        "text": "Seasonable with sunshine and some passing clouds. High: 84-88"
-      },
-      {
-        "period": "Tonight",
-        "text": "Mainly clear and comfortable. Low: 64-68"
-      },
-      {
-        "period": "Saturday",
-        "text": "Warm with a mix of clouds and sunshine. High: 86-90"
-      },
-      {
-        "period": "Saturday Night",
-        "text": "Mostly cloudy, warm and muggy. Low: 70-74"
-      },
-      {
-        "period": "Sunday",
-        "text": "Breezy and humid with clouds and some breaks of sun. High: 84-88"
-      }
-    ]
+    "issued": "",
+    "periods": []
   },
   "sevenDay": {
     "issued": "Friday, July 31, 2026 at 08:16 AM (Kyle Elliott)",
@@ -128,6 +107,28 @@
   },
   "observations": [
     {
+      "time": "13:00",
+      "temp": "81",
+      "dewpoint": "70",
+      "rh": "70",
+      "windDir": "S",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "10.4",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "80",
+      "dewpoint": "70",
+      "rh": "72",
+      "windDir": "S",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "10.6",
+      "condition": "None"
+    },
+    {
       "time": "11:00",
       "temp": "80",
       "dewpoint": "70",
@@ -169,28 +170,6 @@
       "windSpeed": "4",
       "precip": "0.00",
       "visibility": "10.0",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "74",
-      "dewpoint": "70",
-      "rh": "88",
-      "windDir": "SSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "10.1",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "74",
-      "dewpoint": "71",
-      "rh": "89",
-      "windDir": "S",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "9.9",
       "condition": "None"
     }
   ],
@@ -257,5 +236,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-08-02T15:58:39.642Z"
+  "updated": "2026-08-02T17:08:46.500Z"
 }

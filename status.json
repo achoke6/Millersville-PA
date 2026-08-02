@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-08-02T20:56:23.693Z",
-  "totalEvents": 734,
+  "generatedAt": "2026-08-02T21:55:50.179Z",
+  "totalEvents": 830,
   "withDescription": 320,
-  "withImage": 44,
-  "familyFriendly": 46,
-  "eventsToday": 0,
+  "withImage": 58,
+  "familyFriendly": 47,
+  "eventsToday": 1,
   "sources": {
-    "muAthletics": 255,
+    "muAthletics": 256,
     "muCalendar": 124,
     "muGetInvolved": 92,
-    "pennManor": 5,
+    "pennManor": 86,
     "borough": 80,
     "vfw": 5,
-    "phantomPower": 0,
+    "phantomPower": 14,
     "community": 21,
     "manor": 0,
     "raneyCellars": 5,
@@ -33,8 +33,8 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-08-03T23:00:00.000Z",
-      "latest": "2026-09-08T23:00:00.000Z"
+      "earliest": "2026-05-05T20:15:00.000Z",
+      "latest": "2026-09-21T23:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-05-04T22:00:00.000Z",
@@ -44,7 +44,10 @@
       "earliest": "2026-07-18T20:00:00.000Z",
       "latest": "2026-09-11T17:00:00.000Z"
     },
-    "phantomPower": null,
+    "phantomPower": {
+      "earliest": "2026-08-02T16:00:00.000Z",
+      "latest": "2026-10-04T00:00:00.000Z"
+    },
     "community": {
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
@@ -73,8 +76,8 @@
       "daysSinceMoved": 59
     },
     "pennManor": {
-      "newest": "2026-09-08",
-      "daysSinceMoved": 0
+      "newest": "2026-09-21",
+      "daysSinceMoved": 39
     },
     "borough": {
       "newest": "2026-12-25",
@@ -84,7 +87,10 @@
       "newest": "2026-09-11",
       "daysSinceMoved": 59
     },
-    "phantomPower": null,
+    "phantomPower": {
+      "newest": "2026-10-04",
+      "daysSinceMoved": 11
+    },
     "community": {
       "newest": "2027-04-16",
       "daysSinceMoved": 58
@@ -100,10 +106,10 @@
     }
   },
   "sports": {
-    "total": 255,
-    "scored": 0,
+    "total": 314,
+    "scored": 1,
     "wins": 0,
-    "losses": 0,
+    "losses": 1,
     "ties": 0
   },
   "registrations": {
@@ -119,79 +125,79 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-08-02T20:52:43.526Z"
+    "lastSyncAt": "2026-08-02T21:54:04.526Z"
   },
   "recentlyAdded": [
     {
-      "key": "Mr. Softee/Nino's|2026-08-25T15:00:00.000Z",
-      "firstSeenAt": "2026-07-31T14:22:09.305Z",
-      "title": "Mr. Softee/Nino's",
-      "source": "The Backyard",
-      "date": "2026-08-25T15:00:00.000Z"
+      "key": "Boys Varsity Baseball vs Twin Valley High School|2026-05-05T20:15:00.000Z",
+      "firstSeenAt": "2026-08-02T21:55:50.177Z",
+      "title": "Boys Varsity Baseball vs Twin Valley High School",
+      "source": "PM",
+      "date": "2026-05-05T20:15:00.000Z"
     },
     {
-      "key": "Traveling J's|2026-08-26T15:00:00.000Z",
-      "firstSeenAt": "2026-07-31T14:22:09.305Z",
-      "title": "Traveling J's",
-      "source": "The Backyard",
-      "date": "2026-08-26T15:00:00.000Z"
+      "key": "Boys JV Baseball vs Twin Valley High School|2026-05-05T20:15:00.000Z",
+      "firstSeenAt": "2026-08-02T21:55:50.177Z",
+      "title": "Boys JV Baseball vs Twin Valley High School",
+      "source": "PM",
+      "date": "2026-05-05T20:15:00.000Z"
     },
     {
-      "key": "Joe on the go/Donuts|2026-08-27T13:00:00.000Z",
-      "firstSeenAt": "2026-07-31T14:22:09.305Z",
-      "title": "Joe on the go/Donuts",
-      "source": "The Backyard",
-      "date": "2026-08-27T13:00:00.000Z"
+      "key": "Girls Varsity Softball @ Twin Valley High School|2026-05-05T20:15:00.000Z",
+      "firstSeenAt": "2026-08-02T21:55:50.177Z",
+      "title": "Girls Varsity Softball @ Twin Valley High School",
+      "source": "PM",
+      "date": "2026-05-05T20:15:00.000Z"
     },
     {
-      "key": "Scoops Food Truck and Ice cream|2026-09-03T15:00:00.000Z",
-      "firstSeenAt": "2026-07-31T14:22:09.305Z",
-      "title": "Scoops Food Truck and Ice cream",
-      "source": "The Backyard",
-      "date": "2026-09-03T15:00:00.000Z"
+      "key": "Boys JV Volleyball vs Warwick Senior High School|2026-05-05T22:00:00.000Z",
+      "firstSeenAt": "2026-08-02T21:55:50.177Z",
+      "title": "Boys JV Volleyball vs Warwick Senior High School",
+      "source": "PM",
+      "date": "2026-05-05T22:00:00.000Z"
     },
     {
-      "key": "Thurday Trivia 6PM|2026-07-30T22:00:00.000Z",
-      "firstSeenAt": "2026-07-30T15:53:15.639Z",
-      "title": "Thurday Trivia 6PM",
-      "source": "Raney Cellars",
-      "date": "2026-07-30T22:00:00.000Z"
+      "key": "Boys Varsity Volleyball vs Warwick Senior High School|2026-05-05T23:00:00.000Z",
+      "firstSeenAt": "2026-08-02T21:55:50.177Z",
+      "title": "Boys Varsity Volleyball vs Warwick Senior High School",
+      "source": "PM",
+      "date": "2026-05-05T23:00:00.000Z"
     },
     {
-      "key": "Oh My Cod Vegan Seafood|2026-08-05T20:00:00.000Z",
-      "firstSeenAt": "2026-07-30T15:53:15.639Z",
-      "title": "Oh My Cod Vegan Seafood",
-      "source": "Raney Cellars",
-      "date": "2026-08-05T20:00:00.000Z"
+      "key": "Boys Varsity Baseball vs Red Lion  Area Senior High School|2026-05-06T20:15:00.000Z",
+      "firstSeenAt": "2026-08-02T21:55:50.177Z",
+      "title": "Boys Varsity Baseball vs Red Lion  Area Senior High School",
+      "source": "PM",
+      "date": "2026-05-06T20:15:00.000Z"
     },
     {
-      "key": "Eat.Drifters|2026-08-06T20:00:00.000Z",
-      "firstSeenAt": "2026-07-30T15:53:15.639Z",
-      "title": "Eat.Drifters",
-      "source": "Raney Cellars",
-      "date": "2026-08-06T20:00:00.000Z"
+      "key": "Boys JV Baseball vs Red Lion  Area Senior High School|2026-05-06T20:15:00.000Z",
+      "firstSeenAt": "2026-08-02T21:55:50.177Z",
+      "title": "Boys JV Baseball vs Red Lion  Area Senior High School",
+      "source": "PM",
+      "date": "2026-05-06T20:15:00.000Z"
     },
     {
-      "key": "Gourmet Julies Way|2026-08-07T21:00:00.000Z",
-      "firstSeenAt": "2026-07-30T15:53:15.639Z",
-      "title": "Gourmet Julies Way",
-      "source": "Raney Cellars",
-      "date": "2026-08-07T21:00:00.000Z"
+      "key": "Boys Varsity Lacrosse - Boys @ Cedar Crest High School|2026-05-06T20:15:00.000Z",
+      "firstSeenAt": "2026-08-02T21:55:50.177Z",
+      "title": "Boys Varsity Lacrosse - Boys @ Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-05-06T20:15:00.000Z"
     },
     {
-      "key": "Southern Fried Vegan|2026-08-15T22:00:00.000Z",
-      "firstSeenAt": "2026-07-30T15:53:15.639Z",
-      "title": "Southern Fried Vegan",
-      "source": "Raney Cellars",
-      "date": "2026-08-15T22:00:00.000Z"
+      "key": "Girls JV Lacrosse - Girls vs Cedar Crest High School|2026-05-06T21:30:00.000Z",
+      "firstSeenAt": "2026-08-02T21:55:50.177Z",
+      "title": "Girls JV Lacrosse - Girls vs Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-05-06T21:30:00.000Z"
     },
     {
-      "key": "MMC 2026 Engaging Community Reception featuring Rob Bell|2026-10-09T00:00:00.000Z",
-      "firstSeenAt": "2026-07-30T14:37:45.340Z",
-      "title": "MMC 2026 Engaging Community Reception featuring Rob Bell",
-      "source": "MU",
-      "date": "2026-10-09T00:00:00.000Z"
+      "key": "Boys JV Lacrosse - Boys @ Cedar Crest High School|2026-05-06T21:45:00.000Z",
+      "firstSeenAt": "2026-08-02T21:55:50.177Z",
+      "title": "Boys JV Lacrosse - Boys @ Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-05-06T21:45:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 96
 }

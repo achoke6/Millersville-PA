@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-08-01T23:57:31.885Z",
-  "totalEvents": 831,
-  "withDescription": 322,
+  "generatedAt": "2026-08-02T02:40:29.763Z",
+  "totalEvents": 870,
+  "withDescription": 320,
   "withImage": 58,
   "familyFriendly": 47,
   "eventsToday": 1,
   "sources": {
     "muAthletics": 255,
     "muCalendar": 124,
-    "muGetInvolved": 94,
+    "muGetInvolved": 92,
     "pennManor": 86,
     "borough": 80,
     "vfw": 5,
     "phantomPower": 14,
     "community": 21,
-    "manor": 0,
+    "manor": 41,
     "raneyCellars": 5,
     "theBackyard": 10,
     "muHudlBroadcasts": 0
@@ -29,7 +29,7 @@
       "latest": "2027-05-02T18:30:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-05-03T16:00:00.000Z",
+      "earliest": "2026-05-04T15:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
@@ -52,7 +52,10 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-08-03T23:00:00.000Z",
+      "latest": "2027-07-28T12:30:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-07-30T22:00:00.000Z",
       "latest": "2026-08-15T22:00:00.000Z"
@@ -95,7 +98,10 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 57
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-07-28",
+      "daysSinceMoved": 4
+    },
     "raneyCellars": {
       "newest": "2026-08-15",
       "daysSinceMoved": 2
@@ -125,79 +131,79 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-08-01T23:55:41.662Z"
+    "lastSyncAt": "2026-08-02T02:38:12.026Z"
   },
   "recentlyAdded": [
     {
-      "key": "Mr. Softee/Nino's|2026-08-25T15:00:00.000Z",
-      "firstSeenAt": "2026-07-31T14:22:09.305Z",
-      "title": "Mr. Softee/Nino's",
-      "source": "The Backyard",
-      "date": "2026-08-25T15:00:00.000Z"
+      "key": "Supervisors Meeting|2026-08-03T23:00:00.000Z",
+      "firstSeenAt": "2026-08-02T02:40:29.760Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-08-03T23:00:00.000Z"
     },
     {
-      "key": "Traveling J's|2026-08-26T15:00:00.000Z",
-      "firstSeenAt": "2026-07-31T14:22:09.305Z",
-      "title": "Traveling J's",
-      "source": "The Backyard",
-      "date": "2026-08-26T15:00:00.000Z"
+      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
+      "firstSeenAt": "2026-08-02T02:40:29.760Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-08-10T23:00:00.000Z"
     },
     {
-      "key": "Joe on the go/Donuts|2026-08-27T13:00:00.000Z",
-      "firstSeenAt": "2026-07-31T14:22:09.305Z",
-      "title": "Joe on the go/Donuts",
-      "source": "The Backyard",
-      "date": "2026-08-27T13:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-08-12T23:00:00.000Z",
+      "firstSeenAt": "2026-08-02T02:40:29.760Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-08-12T23:00:00.000Z"
     },
     {
-      "key": "Scoops Food Truck and Ice cream|2026-09-03T15:00:00.000Z",
-      "firstSeenAt": "2026-07-31T14:22:09.305Z",
-      "title": "Scoops Food Truck and Ice cream",
-      "source": "The Backyard",
-      "date": "2026-09-03T15:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
+      "firstSeenAt": "2026-08-02T02:40:29.760Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-08-26T12:30:00.000Z"
     },
     {
-      "key": "Thurday Trivia 6PM|2026-07-30T22:00:00.000Z",
-      "firstSeenAt": "2026-07-30T15:53:15.639Z",
-      "title": "Thurday Trivia 6PM",
-      "source": "Raney Cellars",
-      "date": "2026-07-30T22:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-08-02T02:40:29.760Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-09-02T23:00:00.000Z"
     },
     {
-      "key": "Oh My Cod Vegan Seafood|2026-08-05T20:00:00.000Z",
-      "firstSeenAt": "2026-07-30T15:53:15.639Z",
-      "title": "Oh My Cod Vegan Seafood",
-      "source": "Raney Cellars",
-      "date": "2026-08-05T20:00:00.000Z"
+      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
+      "firstSeenAt": "2026-08-02T02:40:29.760Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-08T23:00:00.000Z"
     },
     {
-      "key": "Eat.Drifters|2026-08-06T20:00:00.000Z",
-      "firstSeenAt": "2026-07-30T15:53:15.639Z",
-      "title": "Eat.Drifters",
-      "source": "Raney Cellars",
-      "date": "2026-08-06T20:00:00.000Z"
+      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
+      "firstSeenAt": "2026-08-02T02:40:29.760Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-09-14T23:00:00.000Z"
     },
     {
-      "key": "Gourmet Julies Way|2026-08-07T21:00:00.000Z",
-      "firstSeenAt": "2026-07-30T15:53:15.639Z",
-      "title": "Gourmet Julies Way",
-      "source": "Raney Cellars",
-      "date": "2026-08-07T21:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-08-02T02:40:29.760Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-09-30T12:30:00.000Z"
     },
     {
-      "key": "Southern Fried Vegan|2026-08-15T22:00:00.000Z",
-      "firstSeenAt": "2026-07-30T15:53:15.639Z",
-      "title": "Southern Fried Vegan",
-      "source": "Raney Cellars",
-      "date": "2026-08-15T22:00:00.000Z"
+      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
+      "firstSeenAt": "2026-08-02T02:40:29.760Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-10-05T23:00:00.000Z"
     },
     {
-      "key": "MMC 2026 Engaging Community Reception featuring Rob Bell|2026-10-09T00:00:00.000Z",
-      "firstSeenAt": "2026-07-30T14:37:45.340Z",
-      "title": "MMC 2026 Engaging Community Reception featuring Rob Bell",
-      "source": "MU",
-      "date": "2026-10-09T00:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
+      "firstSeenAt": "2026-08-02T02:40:29.760Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-10-07T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 41
 }

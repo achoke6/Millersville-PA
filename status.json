@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-08-02T19:08:00.449Z",
-  "totalEvents": 829,
+  "generatedAt": "2026-08-02T20:56:23.693Z",
+  "totalEvents": 734,
   "withDescription": 320,
-  "withImage": 58,
-  "familyFriendly": 47,
-  "eventsToday": 1,
+  "withImage": 44,
+  "familyFriendly": 46,
+  "eventsToday": 0,
   "sources": {
     "muAthletics": 255,
     "muCalendar": 124,
     "muGetInvolved": 92,
-    "pennManor": 86,
+    "pennManor": 5,
     "borough": 80,
     "vfw": 5,
-    "phantomPower": 14,
+    "phantomPower": 0,
     "community": 21,
     "manor": 0,
     "raneyCellars": 5,
@@ -33,8 +33,8 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-05-05T20:15:00.000Z",
-      "latest": "2026-09-21T23:00:00.000Z"
+      "earliest": "2026-08-03T23:00:00.000Z",
+      "latest": "2026-09-08T23:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-05-04T22:00:00.000Z",
@@ -44,10 +44,7 @@
       "earliest": "2026-07-18T20:00:00.000Z",
       "latest": "2026-09-11T17:00:00.000Z"
     },
-    "phantomPower": {
-      "earliest": "2026-08-02T16:00:00.000Z",
-      "latest": "2026-10-04T00:00:00.000Z"
-    },
+    "phantomPower": null,
     "community": {
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
@@ -76,8 +73,8 @@
       "daysSinceMoved": 59
     },
     "pennManor": {
-      "newest": "2026-09-21",
-      "daysSinceMoved": 39
+      "newest": "2026-09-08",
+      "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2026-12-25",
@@ -87,10 +84,7 @@
       "newest": "2026-09-11",
       "daysSinceMoved": 59
     },
-    "phantomPower": {
-      "newest": "2026-10-04",
-      "daysSinceMoved": 11
-    },
+    "phantomPower": null,
     "community": {
       "newest": "2027-04-16",
       "daysSinceMoved": 58
@@ -106,10 +100,10 @@
     }
   },
   "sports": {
-    "total": 313,
-    "scored": 1,
+    "total": 255,
+    "scored": 0,
     "wins": 0,
-    "losses": 1,
+    "losses": 0,
     "ties": 0
   },
   "registrations": {
@@ -125,16 +119,9 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-08-02T19:06:12.639Z"
+    "lastSyncAt": "2026-08-02T20:52:43.526Z"
   },
   "recentlyAdded": [
-    {
-      "key": "Caitlynne Curtis|2026-09-02T00:00:00.000Z",
-      "firstSeenAt": "2026-08-02T14:29:27.584Z",
-      "title": "Caitlynne Curtis",
-      "source": "Other",
-      "date": "2026-09-02T00:00:00.000Z"
-    },
     {
       "key": "Mr. Softee/Nino's|2026-08-25T15:00:00.000Z",
       "firstSeenAt": "2026-07-31T14:22:09.305Z",
@@ -197,6 +184,13 @@
       "title": "Southern Fried Vegan",
       "source": "Raney Cellars",
       "date": "2026-08-15T22:00:00.000Z"
+    },
+    {
+      "key": "MMC 2026 Engaging Community Reception featuring Rob Bell|2026-10-09T00:00:00.000Z",
+      "firstSeenAt": "2026-07-30T14:37:45.340Z",
+      "title": "MMC 2026 Engaging Community Reception featuring Rob Bell",
+      "source": "MU",
+      "date": "2026-10-09T00:00:00.000Z"
     }
   ],
   "addedLastRun": 0

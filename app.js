@@ -41,7 +41,7 @@ let evFreeFoodMode=false, evFreeStuffMode=false;
 const FEED_KEY = 'mapp_feed_prefs';
 const AFFILIATION_KEY = 'mapp_mu_affiliation'; // 'student' | 'townie' | null (unset)
 const SHOW21_KEY = 'mapp_show_21plus'; // '1' = opted in to see 🍺-flagged drink specials (default off, site-wide)
-const SHOWN_SOURCES_KEY = 'mapp_shown_sources'; // JSON array of source keys opted-in via the Uncommon picker's "Show events" middle state (see UNCOMMON_GROUP_SOURCES); survives Clear Favs
+const SHOWN_SOURCES_KEY = 'mapp_shown_sources'; // JSON array of Show opt-ins from the Uncommon picker — source keys (1:1 chips) AND per-item pref ids (PM sports / PM events chips; see UNCOMMON_SUB_SOURCES); survives Clear Favs
 let feedPrefs = null; // null = not configured
 let muAffiliation = null; // null = not yet asked; 'student' or 'townie' once set
 let show21Plus = false;   // 21+ drink-specials opt-in — display setting, loaded in loadFeedPrefs
@@ -591,7 +591,7 @@ const feedSections = {
     events: {
         title: '📅 Event Favorites',
         groups: {
-            pmev: { label: 'PM Events', icon: '🏫', headingStyle: true, audience: 'townie', subs: [
+            pmev: { label: 'Penn Manor Events', icon: '🏫', headingStyle: true, audience: 'townie', subs: [
                 {id:'pm-music',label:'Music/Arts',icon:'🎵'},{id:'pm-board',label:'Board Meetings',icon:'📋'}
             ]},
             mu: { label: 'MU Events', icon: '🏴‍☠️', headingStyle: true, audience: 'student', subs: [
@@ -808,7 +808,11 @@ eventFeedIds.add('mu-alumni');
 // any of these IDs, the source is considered user-opted-in and treated normally.
 const SOURCE_UNLOCK_IDS = {
     // Events page source pills
-    'PM':      ['pm-music', 'pm-board'].concat(allSportFeedIds('pm')),
+    // 2026-08-03 granular pass: PM sports favorites no longer unlock the PM
+    // EVENTS pill — a sport fav reveals only its own sport (see
+    // pmSportsEventHidden); the events-page PM source is unlocked by its
+    // own two items alone.
+    'PM':      ['pm-music', 'pm-board'],
     'Borough': ['borough-all'],
     'Manor':   ['manor-all'],
     'VFW':     ['other-vfw'],
@@ -837,7 +841,8 @@ const SOURCE_UNLOCK_IDS = {
 // Uncommon-picker group key → the source keys its three-state selector
 // (Hidden / Show / ★ Faves) controls. Groups absent here (family — a
 // cross-cutting pref, not a source) keep the plain master checkbox.
-// 'other' and 'newsCommunity' set/clear their member source keys together.
+// Per-item since 2026-08-03: the group selector is a bulk set-all over each
+// chip's own 👁 Show bit (see UNCOMMON_SUB_SOURCES below).
 const UNCOMMON_GROUP_SOURCES = {
     pmev:    ['PM'],
     borough: ['Borough'],
@@ -846,6 +851,41 @@ const UNCOMMON_GROUP_SOURCES = {
     pm:      ['SP_PM'],
     newsCommunity: ['PM_NEWS','BOROUGH_NEWS']
 };
+
+// --- Per-item Show plumbing (2026-08-03) ------------------------------------
+// Each Uncommon picker chip carries its own 👁 Show bit. The bit writes ONE
+// shownSources key: the chip's source key where chips map 1:1 to sources
+// (Other family, community news, Borough, Manor), or the pref id itself where
+// chips are finer than their source (PM sports under SP_PM; pm-music/pm-board
+// under PM). Legacy whole-source keys written by the old group-level Show
+// ('SP_PM' / 'PM') are still honored by the event gates and migrate to
+// per-item bits on the next modal Save.
+const UNCOMMON_SUB_SOURCES = {
+    'other-vfw': 'VFW', 'other-phantom': 'Phantom', 'other-community': 'Community',
+    'raney-cellars-all': 'Raney', 'jacks-tavern-all': 'Jacks',
+    'news-pm': 'PM_NEWS', 'news-borough': 'BOROUGH_NEWS',
+    'borough-all': 'Borough', 'manor-all': 'Manor'
+};
+function shownKeyForItem(id) { return UNCOMMON_SUB_SOURCES[id] || id; }
+// Sources whose Show state can also live in per-item pref ids.
+const SOURCE_SHOW_ITEM_IDS = {
+    'SP_PM': allSportFeedIds('pm'),
+    'PM':    ['pm-music', 'pm-board']
+};
+// Render-time init for a chip's 👁 bit: its own key, plus the group's legacy
+// whole-source key for finer-than-source groups (lights every chip so a
+// pre-existing group-level Show migrates losslessly on Save).
+function uncommonItemShown(groupKey, id) {
+    if (shownSources.has(shownKeyForItem(id))) return true;
+    return (UNCOMMON_GROUP_SOURCES[groupKey] || []).some(k => SOURCE_SHOW_ITEM_IDS[k] && shownSources.has(k));
+}
+// Shown OR faved, per item id — the per-event visibility test used by the
+// granular gates below.
+function isItemShownOrFaved(id) {
+    if (!id) return false;
+    if (shownSources.has(id)) return true;
+    return !!(feedPrefs && feedPrefs.length && feedPrefs.indexOf(id) !== -1);
+}
 
 // Does the user's affiliation hide this source by default?
 // Default (unset) affiliation behaves as Marauder — most users of the site are MU students,
@@ -872,11 +912,47 @@ function hasFavInSource(source) {
     if (source === 'GetInvolved' && feedPrefs.some(p => typeof p === 'string' && p.startsWith('club:'))) return true;
     return feedPrefs.some(p => ids.includes(p));
 }
+// Does a per-item Show bit exist for this source? (Sources whose Uncommon
+// chips are finer than the source key — PM sports, PM events.)
+function hasShownItemInSource(source) {
+    const ids = SOURCE_SHOW_ITEM_IDS[source];
+    return !!ids && ids.some(id => shownSources.has(id));
+}
 // Should this source be hidden from the user? Hidden by affiliation AND no
 // favorite unlock AND not opted-in via the Uncommon picker's "Show events"
-// middle state (shownSources / mapp_shown_sources).
+// state — whole-source key OR any per-item 👁 bit (2026-08-03).
 function isSourceHidden(source) {
-    return isSourceHiddenByAffiliation(source) && !hasFavInSource(source) && !shownSources.has(source);
+    return isSourceHiddenByAffiliation(source) && !hasFavInSource(source)
+        && !shownSources.has(source) && !hasShownItemInSource(source);
+}
+// --- Granular per-event gates (2026-08-03) ----------------------------------
+// PM sports: for marauder/unset viewers an event is visible only when ITS OWN
+// sport is shown (👁) or faved — faving one sport no longer reveals the whole
+// PM sports source. Legacy whole-group Show ('SP_PM') still honored. A bare
+// split-sport id (gender tag missing on the event) matches either gender
+// variant; an unidentifiable sport rides along whenever ANY PM sport is
+// shown/faved (never silently stranded).
+function pmSportsEventHidden(e) {
+    if (!isSourceHiddenByAffiliation('SP_PM')) return false;
+    if (shownSources.has('SP_PM')) return false;
+    const ids = SOURCE_SHOW_ITEM_IDS['SP_PM'];
+    const id = suggestFeedIdForEvent(e, true);
+    if (id) {
+        if (ids.indexOf(id) !== -1) return !isItemShownOrFaved(id);
+        const variants = ids.filter(x => x.indexOf(id + '-') === 0);
+        if (variants.length) return !variants.some(isItemShownOrFaved);
+    }
+    return !ids.some(isItemShownOrFaved);
+}
+// PM general events, parallel: pm-music / pm-board are individually
+// shown/faved; PM events matching neither item (no Music/Arts or Board/PTO
+// tag) ride along when either item is shown/faved. Legacy 'PM' Show honored.
+function pmGeneralEventHidden(e) {
+    if (!isSourceHiddenByAffiliation('PM')) return false;
+    if (shownSources.has('PM')) return false;
+    const id = suggestFeedIdForEvent(e, false);
+    if (id === 'pm-music' || id === 'pm-board') return !isItemShownOrFaved(id);
+    return !SOURCE_SHOW_ITEM_IDS['PM'].some(isItemShownOrFaved);
 }
 // DORMANT (2026-07-27 same-day revision — zero call sites): the Other pill
 // went back to always-visible when Jesus Dogs became a first-class source
@@ -916,7 +992,13 @@ function isEventFromHiddenSource(e) {
     if (muAffiliation !== 'townie' && e.audience === 'mu-only') return false;
 
     if (tags.includes('VFW') && isSourceHidden('VFW')) return true;
-    if (tags.includes('PM') && isSourceHidden('PM')) return true;
+    if (tags.includes('PM')) {
+        // PM sports events carry the PM tag too (the timeline runs this gate
+        // on everything) — route them to the per-sport gate; everything else
+        // gets the per-item PM-events gate (2026-08-03).
+        const pmSport = tags.includes('Athletics') || tags.includes('Athletic Competitions');
+        if (pmSport ? pmSportsEventHidden(e) : pmGeneralEventHidden(e)) return true;
+    }
     if (tags.includes('Borough') && isSourceHidden('Borough')) return true;
     if (tags.includes('Manor') && isSourceHidden('Manor')) return true;
     if (tags.includes('Clubs/Orgs') && isSourceHidden('GetInvolved')) return true;
@@ -942,7 +1024,7 @@ function isSportsEventFromHiddenSource(e) {
     const tags = e.tags || [];
     const isPM = tags.includes('PM') && (tags.includes('Athletics') || tags.includes('Athletic Competitions'));
     const isMUClubSport = tags.includes('Clubs/Orgs') && tags.includes('Club Sports');
-    if (isPM && isSourceHidden('SP_PM')) return true;
+    if (isPM && pmSportsEventHidden(e)) return true;
     if (isMUClubSport && isSourceHidden('SP_Clubs')) return true;
     return false;
 }
@@ -1394,6 +1476,9 @@ window.openFeedSettings = function() {
             const subs = group.subs || [];
             const composites = group.composites || [];
             const subgroups = group.subgroups || [];
+            // Marauder-only Uncommon groups get the three-state selector and
+            // per-chip 👁 Show toggles (2026-08-03).
+            const segGroup = isMarauder && !!UNCOMMON_GROUP_SOURCES[key];
             // Collect ALL underlying IDs (subs + every composite's linkedIds
             // + subgroup masters + subgroup children) to determine master
             // state. Master is checked when every underlying ID is in current.
@@ -1413,7 +1498,11 @@ window.openFeedSettings = function() {
             // Render subs and composites alike as chips (same shape as the
             // marauder picker) so heading-style groups look uniform.
             const subsHtml = subs.length ? `<div style="display:flex;flex-wrap:wrap;gap:6px;padding-left:14px;margin-top:6px;">
-                ${subs.map(s => `<label class="feed-chip${current.includes(s.id)?' is-checked':''}"><input type="checkbox" class="feed-sub" data-group="${key}" value="${s.id}" ${current.includes(s.id)?'checked':''} onchange="updateFeedGroup('${key}')"> ${s.icon} ${labelFor(s)}</label>`).join('')}
+                ${subs.map(s => {
+                    const eyeOn = segGroup && uncommonItemShown(key, s.id);
+                    const eye = segGroup ? `<button type="button" class="uncommon-eye" data-group="${key}" data-pref-id="${s.id.replace(/"/g,'&quot;')}" data-shown="${eyeOn?'1':'0'}" aria-pressed="${eyeOn?'true':'false'}" onclick="toggleUncommonEye(event, this)" title="Show these events without following" style="border:1px solid ${eyeOn?'var(--navy)':'var(--border)'};background:${eyeOn?'var(--navy)':'transparent'};color:${eyeOn?'#fff':'var(--text-muted)'};border-radius:999px;font-size:0.68rem;line-height:1;padding:2px 6px;margin-left:4px;cursor:pointer;font-family:inherit;">👁</button>` : '';
+                    return `<label class="feed-chip${current.includes(s.id)?' is-checked':''}"><input type="checkbox" class="feed-sub" data-group="${key}" value="${s.id}" ${current.includes(s.id)?'checked':''} onchange="updateFeedGroup('${key}')"> ${s.icon} ${labelFor(s)}${eye}</label>`;
+                }).join('')}
             </div>` : '';
 
             const compositesHtml = composites.length ? `<div style="display:flex;flex-wrap:wrap;gap:6px;padding-left:14px;margin-top:6px;">
@@ -1466,16 +1555,18 @@ window.openFeedSettings = function() {
 
             // Uncommon three-state selector (marauder-only, source-mapped
             // groups): replaces the master checkbox with Hidden / Show /
-            // ★ Faves. "Show" = see the source's events without subscribing
-            // (push/iCal untouched). Pending in data-shown until Save;
-            // ★ Faves is DERIVED (any chip checked) — checking a chip while
-            // Hidden auto-moves the control (the old unlock behavior,
-            // preserved). Initial active styles are baked at render;
-            // refreshUncommonSeg re-derives them on every interaction.
-            const segSources = isMarauder ? UNCOMMON_GROUP_SOURCES[key] : null;
+            // ★ Faves. "Show" = see events without subscribing (push/iCal
+            // untouched). Per-item since 2026-08-03: each chip carries its
+            // own 👁 Show bit (pending in the chip's data-shown until Save);
+            // the group control is a bulk set-all whose position is DERIVED —
+            // ★ Faves when any chip is checked, Show when any 👁 is on, else
+            // Hidden. Checking a chip while Hidden auto-moves the control
+            // (the old unlock behavior, preserved). Initial styles baked at
+            // render; refreshUncommonSeg re-derives on every interaction.
+            const segSources = segGroup ? UNCOMMON_GROUP_SOURCES[key] : null;
             let headerHtml;
             if (segSources) {
-                const pendingShown = segSources.some(s => shownSources.has(s));
+                const pendingShown = subs.some(s => uncommonItemShown(key, s.id));
                 const segState = groupHasFavs(group) ? 'fav' : (pendingShown ? 'show' : 'hidden');
                 const segBtn = (state, text) => {
                     const on = segState === state;
@@ -1483,7 +1574,7 @@ window.openFeedSettings = function() {
                 };
                 headerHtml = `<div class="feed-heading-label" style="display:flex;align-items:center;gap:8px;padding-bottom:6px;border-bottom:1px solid var(--border);">
                     <span class="feed-heading-text">${group.icon} ${labelFor(group)}</span>
-                    <span class="uncommon-seg" data-uncommon-group="${key}" data-shown="${pendingShown?'1':'0'}" style="display:flex;gap:4px;margin-left:auto;">
+                    <span class="uncommon-seg" data-uncommon-group="${key}" style="display:flex;gap:4px;margin-left:auto;">
                         ${segBtn('hidden','Hidden')}${segBtn('show','Show')}${segBtn('fav','★ Faves')}
                     </span>
                 </div>`;
@@ -1907,10 +1998,12 @@ window.copyCalendarUrl = function(btn) {
 
 // === Uncommon-source three-state selector (Hidden / Show / ★ Faves) ========
 // Marauder-only control on source-mapped Uncommon groups (UNCOMMON_GROUP_SOURCES).
-// "Show" = see the source's events without subscribing — the middle ground
-// between hidden-by-default and favoriting (which also drives push/iCal).
-// The control's data-shown bit is PENDING modal state; saveFeedFromModal
-// persists it into shownSources / mapp_shown_sources on Save.
+// "Show" = see events without subscribing — the middle ground between
+// hidden-by-default and favoriting (which also drives push/iCal).
+// Per-item since 2026-08-03: each chip carries its own 👁 Show toggle
+// (pending in the chip's data-shown until Save); the group control is a bulk
+// set-all over those bits. saveFeedFromModal persists per-item bits into
+// shownSources / mapp_shown_sources on Save.
 window.setUncommonState = function(key, state) {
     const seg = document.querySelector(`.uncommon-seg[data-uncommon-group="${key}"]`);
     if (!seg) return;
@@ -1922,10 +2015,15 @@ window.setUncommonState = function(key, state) {
             if (label) label.classList.add('is-checked');
         });
     } else {
-        // Hidden and Show both clear the group's favorites; they differ only
-        // in the pending shown bit. (Moving OFF ★ Faves must uncheck chips —
-        // otherwise the derived state would snap right back to fav.)
-        seg.dataset.shown = state === 'show' ? '1' : '0';
+        // Hidden and Show both clear the group's favorites (moving OFF
+        // ★ Faves must uncheck chips — otherwise the derived state would
+        // snap right back to fav); they differ in the per-item 👁 bits,
+        // set-all here and then adjustable chip by chip.
+        const on = state === 'show';
+        document.querySelectorAll(`.uncommon-eye[data-group="${key}"]`).forEach(eye => {
+            eye.dataset.shown = on ? '1' : '0';
+            styleUncommonEye(eye);
+        });
         document.querySelectorAll(`.feed-sub[data-group="${key}"]`).forEach(cb => {
             cb.checked = false;
             const label = cb.closest('label');
@@ -1934,15 +2032,33 @@ window.setUncommonState = function(key, state) {
     }
     refreshUncommonSeg(key);
 };
+// Restyle a chip's 👁 toggle from its data-shown bit.
+function styleUncommonEye(btn) {
+    const on = btn.dataset.shown === '1';
+    btn.style.background = on ? 'var(--navy)' : 'transparent';
+    btn.style.color = on ? '#fff' : 'var(--text-muted)';
+    btn.style.borderColor = on ? 'var(--navy)' : 'var(--border)';
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+}
+// Per-chip 👁 Show toggle. Lives INSIDE the chip's <label> — preventDefault
+// stops the label from also toggling its checkbox. Pending until Save.
+window.toggleUncommonEye = function(ev, btn) {
+    if (ev) { ev.preventDefault(); ev.stopPropagation(); }
+    btn.dataset.shown = btn.dataset.shown === '1' ? '0' : '1';
+    styleUncommonEye(btn);
+    refreshUncommonSeg(btn.dataset.group);
+};
 // Re-derive a selector's active position: any checked chip = ★ Faves
-// (derived, matching the SOURCE_UNLOCK_IDS unlock rule), else the pending
-// shown bit picks Show vs Hidden. No-ops for non-Uncommon groups.
+// (derived, matching the SOURCE_UNLOCK_IDS unlock rule), else any lit 👁
+// picks Show, else Hidden. No-ops for non-Uncommon groups.
 function refreshUncommonSeg(key) {
     const seg = document.querySelector(`.uncommon-seg[data-uncommon-group="${key}"]`);
     if (!seg) return;
     const anyFav = [...document.querySelectorAll(`.feed-sub[data-group="${key}"]`)].some(cb => cb.checked);
-    const state = anyFav ? 'fav' : (seg.dataset.shown === '1' ? 'show' : 'hidden');
+    const anyShown = [...document.querySelectorAll(`.uncommon-eye[data-group="${key}"]`)].some(b => b.dataset.shown === '1');
+    const state = anyFav ? 'fav' : (anyShown ? 'show' : 'hidden');
     seg.querySelectorAll('button').forEach(b => {
+        if (b.classList.contains('uncommon-eye')) return;
         const on = b.dataset.state === state;
         b.style.background = on ? 'var(--navy)' : 'transparent';
         b.style.color = on ? '#fff' : 'var(--text-muted)';
@@ -2192,14 +2308,21 @@ window.updateFeedSubgroup = function(sgKey) {
 
 window.saveFeedFromModal = function() {
     // Persist the Uncommon "Show events" selections first (their own key, not
-    // part of feedPrefs — survives Clear Favs). Each selector's pending
-    // data-shown bit adds/removes its group's source keys together. Runs
-    // before the empty-prefs early return below so Show survives a fav wipe.
-    document.querySelectorAll('.uncommon-seg').forEach(seg => {
-        const keys = UNCOMMON_GROUP_SOURCES[seg.dataset.uncommonGroup] || [];
-        const on = seg.dataset.shown === '1';
-        keys.forEach(k => { if (on) shownSources.add(k); else shownSources.delete(k); });
+    // part of feedPrefs — survives Clear Favs). Per-item since 2026-08-03:
+    // each chip's 👁 bit writes its own shownSources key — the mapped source
+    // key for 1:1 chips, the pref id itself for finer-than-source chips (PM
+    // sports, PM events). Runs before the empty-prefs early return below so
+    // Show survives a fav wipe. Townie modals render no 👁s and leave
+    // shownSources untouched (same as before).
+    document.querySelectorAll('.uncommon-eye').forEach(eye => {
+        const k = shownKeyForItem(eye.dataset.prefId);
+        if (eye.dataset.shown === '1') shownSources.add(k); else shownSources.delete(k);
     });
+    // Legacy whole-source Show keys migrate to per-item bits: render seeded
+    // them into every chip's 👁 (uncommonItemShown), so once a group's 👁s
+    // were present in this modal the group key itself is dropped.
+    if (document.querySelector('.uncommon-eye[data-group="pm"]')) shownSources.delete('SP_PM');
+    if (document.querySelector('.uncommon-eye[data-group="pmev"]')) shownSources.delete('PM');
     saveShownSources();
     // Composite subs (data-linked-ids) expand to multiple pref IDs; standard
     // subs use their single .value. De-duplicate via a Set since composites

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-03T20:28:11.586Z",
+  "generatedAt": "2026-08-03T22:09:25.632Z",
   "totalEvents": 880,
   "withDescription": 328,
   "withImage": 54,
@@ -131,9 +131,16 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-08-03T20:25:50.157Z"
+    "lastSyncAt": "2026-08-03T22:07:01.672Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Zoning Hearing Board|2026-08-27T22:30:00.000Z",
+      "firstSeenAt": "2026-08-03T22:09:25.630Z",
+      "title": "Zoning Hearing Board",
+      "source": "Borough",
+      "date": "2026-08-27T22:30:00.000Z"
+    },
     {
       "key": "Planning Commission - Cancelled|2026-08-05T22:30:00.000Z",
       "firstSeenAt": "2026-08-03T15:24:22.666Z",
@@ -196,14 +203,7 @@
       "title": "Global Student Engagement Conference",
       "source": "MU",
       "date": "2026-11-09T08:00:00"
-    },
-    {
-      "key": "Global Student Engagement Conference|2026-11-09T08:00:00",
-      "firstSeenAt": "2026-08-03T15:24:22.666Z",
-      "title": "Global Student Engagement Conference",
-      "source": "MU",
-      "date": "2026-11-09T08:00:00"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

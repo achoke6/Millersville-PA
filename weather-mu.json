@@ -1,15 +1,15 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Tuesday, August 04, 2026 at 07:41 AM (Kyle Elliott, Meteorologist)",
+    "issued": "Tuesday, August 04, 2026 at 12:29 PM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "Today",
+        "period": "This afternoon",
         "text": "Mostly sunny and seasonable with low humidity. High: 84-88"
       },
       {
         "period": "Tonight",
-        "text": "Increasing clouds and turning more humid. Low: 64-68"
+        "text": "Turning more humid with increasing clouds. Low: 64-68"
       },
       {
         "period": "Wednesday",
@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "14:00",
+      "temp": "83",
+      "dewpoint": "61",
+      "rh": "48",
+      "windDir": "E",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "11.2",
+      "condition": "None"
+    },
+    {
+      "time": "13:00",
+      "temp": "83",
+      "dewpoint": "62",
+      "rh": "49",
+      "windDir": "SW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "11.5",
+      "condition": "None"
+    },
+    {
       "time": "12:00",
       "temp": "82",
       "dewpoint": "63",
@@ -169,28 +191,6 @@
       "windSpeed": "3",
       "precip": "0.00",
       "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "08:00",
-      "temp": "73",
-      "dewpoint": "62",
-      "rh": "69",
-      "windDir": "NNE",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "11.8",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "63",
-      "dewpoint": "62",
-      "rh": "97",
-      "windDir": "SSW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "11.6",
       "condition": "None"
     }
   ],
@@ -239,9 +239,9 @@
     "yearMinDate": "January 21"
   },
   "discussion": {
-    "headline": "ugust to kick off on a seasonably warm, humid and unsettled note",
-    "dateLine": "11:30 a.m. Friday, July 31, 2026, Update",
-    "excerpt": "In the wake of Tuesday's storm system, northwesterly winds of 12-25 mph ushered slightly cooler, drier and less humid air into the Lower Susquehanna Valley during the middle of the week. Morning sunshine \"self-destructed\" and gave way to afternoon clouds both Wednesday and Thursday, and high temperatures only reached the upper 70s to low 80s each afternoon. …",
+    "headline": "\"dog days\" of summer live up to their name through the weekend",
+    "dateLine": "12:15 p.m. Tuesday, August 4, 2026",
+    "excerpt": "Due primarily to warm nights and the record-breaking, early-month heatwave, aggregate temperatures in July 2026 ended up about 2.5°F above average at Millersville University (see below). Monthly rainfall amounts varied greatly from county-to-county and neighborhood-to-neighborhood thanks to frequent bouts of scattered, hit-or-miss thunderstorms. …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -279,5 +279,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-08-04T16:10:09.916Z"
+  "updated": "2026-08-04T18:25:42.534Z"
 }

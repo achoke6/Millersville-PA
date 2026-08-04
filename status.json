@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-04T20:24:40.605Z",
+  "generatedAt": "2026-08-04T22:11:48.115Z",
   "totalEvents": 872,
   "withDescription": 326,
   "withImage": 48,
@@ -130,10 +130,17 @@
     "pendingBySource": {
       "PM Community": 1
     },
-    "stalePast": 6,
-    "lastSyncAt": "2026-08-04T20:22:10.530Z"
+    "stalePast": 7,
+    "lastSyncAt": "2026-08-04T22:09:33.274Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Girls Varsity Cross Country @ Solanco High School|2026-08-22T21:00:00.000Z",
+      "firstSeenAt": "2026-08-04T22:11:48.113Z",
+      "title": "Girls Varsity Cross Country @ Solanco High School",
+      "source": "PM",
+      "date": "2026-08-22T21:00:00.000Z"
+    },
     {
       "key": "Planning Commission|2026-08-10T23:00:00.000Z",
       "firstSeenAt": "2026-08-04T20:24:40.603Z",
@@ -196,14 +203,7 @@
       "title": "Zoning Hearing Board",
       "source": "Manor",
       "date": "2026-10-07T23:00:00.000Z"
-    },
-    {
-      "key": "Planning Commission|2026-10-12T23:00:00.000Z",
-      "firstSeenAt": "2026-08-04T20:24:40.603Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-10-12T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 41
+  "addedLastRun": 1
 }

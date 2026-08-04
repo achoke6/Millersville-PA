@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-04T18:27:33.686Z",
-  "totalEvents": 831,
+  "generatedAt": "2026-08-04T20:24:40.605Z",
+  "totalEvents": 872,
   "withDescription": 326,
   "withImage": 48,
   "familyFriendly": 49,
@@ -14,7 +14,7 @@
     "vfw": 3,
     "phantomPower": 14,
     "community": 21,
-    "manor": 0,
+    "manor": 41,
     "raneyCellars": 5,
     "theBackyard": 10,
     "muHudlBroadcasts": 0
@@ -52,7 +52,10 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-08-10T23:00:00.000Z",
+      "latest": "2027-08-02T23:00:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-07-30T22:00:00.000Z",
       "latest": "2026-08-15T22:00:00.000Z"
@@ -95,7 +98,10 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 60
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-08-02",
+      "daysSinceMoved": 2
+    },
     "raneyCellars": {
       "newest": "2026-08-15",
       "daysSinceMoved": 5
@@ -125,79 +131,79 @@
       "PM Community": 1
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-08-04T18:25:40.767Z"
+    "lastSyncAt": "2026-08-04T20:22:10.530Z"
   },
   "recentlyAdded": [
     {
-      "key": "Boys Varsity Cross Country @ Solanco High School|2026-08-22T20:00:00.000Z",
-      "firstSeenAt": "2026-08-04T16:12:48.150Z",
-      "title": "Boys Varsity Cross Country @ Solanco High School",
-      "source": "PM",
-      "date": "2026-08-22T20:00:00.000Z"
+      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
+      "firstSeenAt": "2026-08-04T20:24:40.603Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-08-10T23:00:00.000Z"
     },
     {
-      "key": "Girls Varsity Cross Country @ Solanco High School|2026-08-22T20:00:00.000Z",
-      "firstSeenAt": "2026-08-04T16:12:48.150Z",
-      "title": "Girls Varsity Cross Country @ Solanco High School",
-      "source": "PM",
-      "date": "2026-08-22T20:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-08-12T23:00:00.000Z",
+      "firstSeenAt": "2026-08-04T20:24:40.603Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-08-12T23:00:00.000Z"
     },
     {
-      "key": "Fall 2026 Involvement Fair|2026-08-23T11:30:00",
-      "firstSeenAt": "2026-08-04T16:12:48.150Z",
-      "title": "Fall 2026 Involvement Fair",
-      "source": "MU",
-      "date": "2026-08-23T11:30:00"
+      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
+      "firstSeenAt": "2026-08-04T20:24:40.603Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-08-26T12:30:00.000Z"
     },
     {
-      "key": "Navigation Stations|2026-08-24T07:30:00",
-      "firstSeenAt": "2026-08-04T16:12:48.150Z",
-      "title": "Navigation Stations",
-      "source": "MU",
-      "date": "2026-08-24T07:30:00"
+      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-08-04T20:24:40.603Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-09-02T23:00:00.000Z"
     },
     {
-      "key": "Navigation Stations|2026-08-25T07:30:00",
-      "firstSeenAt": "2026-08-04T16:12:48.150Z",
-      "title": "Navigation Stations",
-      "source": "MU",
-      "date": "2026-08-25T07:30:00"
+      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
+      "firstSeenAt": "2026-08-04T20:24:40.603Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-08T23:00:00.000Z"
     },
     {
-      "key": "PTO Meeting|2026-09-08T19:45:00.000Z",
-      "firstSeenAt": "2026-08-04T16:12:48.150Z",
-      "title": "PTO Meeting",
-      "source": "PM",
-      "date": "2026-09-08T19:45:00.000Z"
+      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
+      "firstSeenAt": "2026-08-04T20:24:40.603Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-09-14T23:00:00.000Z"
     },
     {
-      "key": "HB PTO Meeting|2026-09-09T21:30:00.000Z",
-      "firstSeenAt": "2026-08-04T16:12:48.150Z",
-      "title": "HB PTO Meeting",
-      "source": "PM",
-      "date": "2026-09-09T21:30:00.000Z"
+      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-08-04T20:24:40.603Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-09-30T12:30:00.000Z"
     },
     {
-      "key": "State of the 'Ville|2026-09-10T16:00:00",
-      "firstSeenAt": "2026-08-04T16:12:48.150Z",
-      "title": "State of the 'Ville",
-      "source": "MU",
-      "date": "2026-09-10T16:00:00"
+      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
+      "firstSeenAt": "2026-08-04T20:24:40.603Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-10-05T23:00:00.000Z"
     },
     {
-      "key": "Garden Supper|2026-09-10T17:00:00",
-      "firstSeenAt": "2026-08-04T16:12:48.150Z",
-      "title": "Garden Supper",
-      "source": "MU",
-      "date": "2026-09-10T17:00:00"
+      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
+      "firstSeenAt": "2026-08-04T20:24:40.603Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-10-07T23:00:00.000Z"
     },
     {
-      "key": "Alpha Phi Alpha Planning Meeting|2026-08-14T14:00:00",
-      "firstSeenAt": "2026-08-04T13:02:14.558Z",
-      "title": "Alpha Phi Alpha Planning Meeting",
-      "source": "MU",
-      "date": "2026-08-14T14:00:00"
+      "key": "Planning Commission|2026-10-12T23:00:00.000Z",
+      "firstSeenAt": "2026-08-04T20:24:40.603Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-10-12T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 41
 }

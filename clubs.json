@@ -343,9 +343,9 @@
   },
   {
     "name": "Campus Life",
-    "category": "Social",
+    "category": "Final Stretch",
     "categories": [
-      "Social"
+      "Final Stretch"
     ],
     "shortName": "",
     "id": ""
@@ -789,10 +789,13 @@
   },
   {
     "name": "Fellowship of Christian Athletes",
-    "category": "",
-    "categories": [],
+    "category": "Spirituality",
+    "categories": [
+      "Spirituality",
+      "Sports and Leisure"
+    ],
     "shortName": "FCA",
-    "id": ""
+    "id": "fca"
   },
   {
     "name": "Fencing Guild",

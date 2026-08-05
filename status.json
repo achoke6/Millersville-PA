@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-08-04T22:11:48.115Z",
+  "generatedAt": "2026-08-05T00:02:52.847Z",
   "totalEvents": 872,
   "withDescription": 326,
   "withImage": 48,
   "familyFriendly": 49,
-  "eventsToday": 3,
+  "eventsToday": 2,
   "sources": {
     "muAthletics": 257,
     "muCalendar": 129,
@@ -131,9 +131,16 @@
       "PM Community": 1
     },
     "stalePast": 7,
-    "lastSyncAt": "2026-08-04T22:09:33.274Z"
+    "lastSyncAt": "2026-08-04T23:59:56.229Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Trivia Night|2026-08-26T00:00:00.000Z",
+      "firstSeenAt": "2026-08-05T00:02:52.845Z",
+      "title": "Trivia Night",
+      "source": "Jack's Tavern",
+      "date": "2026-08-26T00:00:00.000Z"
+    },
     {
       "key": "Girls Varsity Cross Country @ Solanco High School|2026-08-22T21:00:00.000Z",
       "firstSeenAt": "2026-08-04T22:11:48.113Z",
@@ -196,13 +203,6 @@
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2026-10-05T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
-      "firstSeenAt": "2026-08-04T20:24:40.603Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-10-07T23:00:00.000Z"
     }
   ],
   "addedLastRun": 1

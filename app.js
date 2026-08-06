@@ -1333,6 +1333,18 @@ function isProgramSignup(e) {
     return false;
 }
 
+// A "ticket package" is a hand-entered season-ticket / ticket-package promo —
+// a community-submissions sheet row carrying a Registration Deadline (e.g. MU
+// Football season tickets). Identified by TITLE, like Arts Smarts above: the
+// sheet row's Title must contain "season ticket(s)" or "ticket package(s)" to
+// be picked up. Surfaced on the Sports page's top signups block for townies,
+// alongside the athletic camps; the home Upcoming Signups box already shows
+// it via registrationDeadline, so this predicate is Sports-page-only.
+function isTicketPackage(e) {
+    if (!e || !isRegistrationEvent(e) || isIntramural(e)) return false;
+    return /season\s*tickets?|ticket\s*packages?/i.test(e.title || '');
+}
+
 // Expand/collapse the overflow rows in the homepage Upcoming Signups box. The box
 // renders SIGNUPS_COLLAPSED_COUNT rows on load and hides the rest so Today's
 // Specials peeks above the fold and invites a scroll; this reveals them on tap.
@@ -4277,8 +4289,9 @@ window.clearSportsFilters=function(){
 // does NOT participate in the All/PM/MU + sport-type filters, the favorites
 // filter, or the "Load more games (N)" count, and self-hides whenever there are
 // no upcoming camps (so it simply vanishes in-season). Sports camps are the
-// Athletic-Camp subset of program signups (isProgramSignup) — tech camps and
-// Arts Smarts stay on the home Upcoming Signups box only. Marauders/unset
+// Athletic-Camp subset of program signups (isProgramSignup) PLUS hand-entered
+// ticket packages (isTicketPackage — e.g. MU Football season tickets) — tech
+// camps and Arts Smarts stay on the home Upcoming Signups box only. Marauders/unset
 // viewers never see it (college kids aren't the audience for youth camps).
 function renderSportsCamps() {
     const anchor = document.querySelector('#view-sports .sticky-nav-bar');
@@ -4298,7 +4311,7 @@ function renderSportsCamps() {
 
     const nowMs = Date.now();
     const camps = allEvents
-        .filter(c => isProgramSignup(c) && (c.tags || []).includes('Athletic Camp'))
+        .filter(c => (isProgramSignup(c) && (c.tags || []).includes('Athletic Camp')) || isTicketPackage(c))
         .map(c => ({ ...c, _start: new Date(c.date).getTime() }))
         .filter(c => !isNaN(c._start) && c._start >= nowMs)   // upcoming only → self-hides off-season
         .sort((a, b) => a._start - b._start);
@@ -4314,8 +4327,8 @@ function renderSportsCamps() {
     section.style.display = '';
     section.innerHTML =
         '<div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin:4px 0 12px;">'
-            + '<span style="font-size:1.05rem;font-weight:700;color:var(--text);">⚾ Sports Camps for Kids</span>'
-            + '<span style="font-size:0.8rem;color:var(--text-muted);">summer camps for local kids — register now</span>'
+            + '<span style="font-size:1.05rem;font-weight:700;color:var(--text);">⚾ Sports Signups & Tickets</span>'
+            + '<span style="font-size:0.8rem;color:var(--text-muted);">camps & ticket packages for locals — register now</span>'
         + '</div>'
         + '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:14px;margin-bottom:24px;">'
             + cards

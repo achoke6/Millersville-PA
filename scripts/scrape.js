@@ -4243,6 +4243,7 @@ async function runScraper() {
                 location: findCol('Location'),
                 link:     findCol('Website/Link', 'Website', 'Link'),
                 status:   findCol('Approved', 'Status', 'Approve', 'Publish'),
+                deadline: findCol('Registration Deadline', 'Deadline'),
             };
 
             const rows = allRows.slice(1); // skip header
@@ -4266,6 +4267,7 @@ async function runScraper() {
                 const kidsRaw = get(COL.kids);
                 const endDateStr = get(COL.endDate);
                 const endTimeStr = get(COL.endTime);
+                const deadlineStr = get(COL.deadline);
 
                 // Accept multiple "approved" signals: Approved, Yes, Y, ✓, true, 1
                 const statusApproved = /^(approved|yes|y|true|1|✓|✔)$/i.test(status);
@@ -4413,6 +4415,33 @@ async function runScraper() {
                     }
                 }
 
+                // ── Registration deadline (the Form's "Registration Deadline"
+                // column — shown on "Signup or Registration" submissions, and
+                // settable on hand-entered rows). When present and parseable
+                // the row becomes a REGISTRATION event: 📝 Register Now CTA,
+                // and townies see it in the homepage Upcoming Signups box
+                // with a countdown (app.js isRegistrationEvent / the signups
+                // renderer key on registrationDeadline). Emitted as
+                // END-OF-DEADLINE-DAY ET so "register by Sept 12" doesn't
+                // expire at midnight UTC — same convention as the §6 deadline
+                // gate. Blank/unparseable → plain event, exactly as before
+                // this column was wired (it used to be dropped entirely).
+                let regDeadlineIso = '';
+                if (deadlineStr) {
+                    let dy = 0, dmo = 0, ddd = 0;
+                    const dm = deadlineStr.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+                    if (dm) { dy = parseInt(dm[3]); dmo = parseInt(dm[1]); ddd = parseInt(dm[2]); }
+                    else {
+                        const fd = new Date(deadlineStr);
+                        if (!isNaN(fd.getTime())) { dy = fd.getFullYear(); dmo = fd.getMonth() + 1; ddd = fd.getDate(); }
+                    }
+                    if (dy && dmo && ddd) {
+                        const doff = isEasternDST(dy, dmo - 1, ddd) ? '-04:00' : '-05:00';
+                        const cand = `${dy}-${String(dmo).padStart(2,'0')}-${String(ddd).padStart(2,'0')}T23:59:00${doff}`;
+                        if (!isNaN(new Date(cand).getTime())) regDeadlineIso = cand;
+                    }
+                }
+
                 events.push({
                     title: eventName,
                     date: eventDate.toISOString(),
@@ -4425,6 +4454,7 @@ async function runScraper() {
                     ...(audience ? { audience } : {}),
                     ...(/^yes$/i.test(kidsRaw) ? { kidFriendly: true } : {}),
                     ...(endTimeIso ? { endTime: endTimeIso } : {}),
+                    ...(regDeadlineIso ? { registrationRequired: true, registrationDeadline: regDeadlineIso } : {}),
                     ...(timeProvided ? {} : { allDay: true })
                 });
                 communityCount++;

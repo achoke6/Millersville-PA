@@ -440,6 +440,23 @@ window.notificationStatus = function() {
 // ============================================================================
 // END PUSH NOTIFICATIONS
 // ============================================================================
+// Advertise page is hidden from MU students — explicit 'student' only; unset
+// and townie viewers both keep it (the page doubles as the pitch for visitors
+// who haven't picked an identity yet). One gate covers the nav button and, if
+// the viewer flips to student while ON the page (Feed settings), bounces them
+// home. Wired into all three switch paths (new-surface rule: applyAffiliation /
+// setMuAffiliation / toggle21Plus — no-op on the 21+ path), resetEverything
+// (identity back to unset → button reappears), and initApp boot. The
+// companion choke-point guard at the top of switchView() catches nav clicks,
+// /advertise deep links, and popstate in one place.
+function applyAdvertiseGate() {
+    const btn = document.getElementById('nav-advertise');
+    if (btn) btn.style.display = (muAffiliation === 'student') ? 'none' : '';
+    if (muAffiliation === 'student') {
+        const v = document.getElementById('view-advertise');
+        if (v && v.classList.contains('active') && typeof window.switchView === 'function') window.switchView('home');
+    }
+}
 window.setMuAffiliation = function(value) {
     if (value !== 'student' && value !== 'townie') return;
     muAffiliation = value;
@@ -449,6 +466,7 @@ window.setMuAffiliation = function(value) {
     if (typeof loadHomeSpecials === 'function') loadHomeSpecials(); // home specials rail — separate render, reads muAffiliation
     if (typeof renderEvents === 'function') renderEvents();
     if (typeof renderFoodPage === 'function') renderFoodPage(); // Food page reads muAffiliation (groups + event gate) at build time
+    applyAdvertiseGate(); // Advertise nav/page is Marauder-hidden — new-surface rule
 };
 // Whether an event is hidden from the current viewer's feed, based on the
 // event's audience and the viewer's affiliation. Symmetric:
@@ -2410,6 +2428,7 @@ window.resetEverything = function() {
     setFeedDotVisible(false);
     renderHomeFeed();
     renderEvents(); renderSports(); renderNewsUI();
+    applyAdvertiseGate(); // affiliation back to unset — nav-advertise reappears
 };
 
 function renderHomeFeed() {
@@ -2663,6 +2682,7 @@ function applyAffiliation(value, clearFavs) {
     if (typeof renderPlaces === 'function') renderPlaces();
     if (typeof renderFoodPage === 'function') renderFoodPage(); // Food page reads muAffiliation + audience gates at build time
     if (typeof pruneEmptyPlaceCategories === 'function') pruneEmptyPlaceCategories(); // audience-aware menu prune — re-run on affiliation change
+    applyAdvertiseGate(); // Advertise nav/page is Marauder-hidden — new-surface rule
     if (document.getElementById('feed-settings-overlay')) {
         window.closeFeedModal();
         if (typeof window.openFeedSettings === 'function') window.openFeedSettings();
@@ -2681,6 +2701,7 @@ window.toggle21Plus = function(on) {
     if (typeof loadHomeSpecials === 'function') loadHomeSpecials(); // rail cards gate 🍺 items via placesSpecialsItemsFor — rebuild so the toggle shows without reload
     if (typeof renderPlaces === 'function') renderPlaces();
     if (typeof renderFoodPage === 'function') renderFoodPage(); // food-card specials boxes gate 🍺 items too
+    applyAdvertiseGate(); // no-op for 21+ — called per the new-surface rule
 };
 
 // Called after affiliation changes. Cleans up state that may be invalid under the new
@@ -3262,6 +3283,7 @@ document.addEventListener('keydown', (e) => {
 
 async function initApp(){
     loadFeedPrefs();
+    applyAdvertiseGate();   // nav-advertise visibility depends on affiliation — set before first paint
     await Promise.allSettled([loadWeather(),loadWeatherMU(),loadSpecials(),loadEvents(),loadPlaces(),loadHousing(),loadNews(),loadSignups(),loadClubsDirectory(),loadVenueAliases()]);
     linkEventsToPlaces();   // event↔place venue matching (Today lens, card/popup event lines)
     pruneEmptyPlaceCategories();   // directory + housing are loaded now — drop empty category chips
@@ -3423,6 +3445,7 @@ function injectEcwidCSS(){
 }
 
 window.switchView=function(view,skipPush){
+    if(view==='advertise' && muAffiliation==='student') view='home';   // Advertise is Marauder-hidden — nav click, /advertise deep link, and popstate all funnel here (URL left as typed on skipPush loads, same as the /board fallthrough)
     if(view==='places') initPlacesMap();   // lazy map init; invalidateSize on return visits
     if(view==='food' && typeof renderFoodPage==='function'){ foodShowClosedOn=false; foodShowClosedOff=false; renderFoodPage(); }   // Food page rebuilds on every entry; BOTH per-group closed toggles reset for the quick-look default
     document.querySelectorAll('.app-view').forEach(v=>v.classList.remove('active'));
@@ -8048,7 +8071,7 @@ window.openAdvertiseForm = function() {
     modal.innerHTML = `
         <button onclick="this.closest('div[style*=fixed]').remove()" class="modal-close-btn">✕</button>
         <h3 style="margin-bottom:4px;">📢 Advertise With Us</h3>
-        <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:16px;">Tell us about your business and we'll get back to you within 24 hours.</p>
+        <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:16px;">Tell us how we can help and we'll get back to you within 24 hours.</p>
         <div id="adv-form-fields">
             <label style="font-size:0.82rem;font-weight:700;display:block;margin-bottom:4px;">Business Name *</label>
             <input id="adv-biz" type="text" placeholder="e.g. Joe's Pizza" style="width:100%;padding:10px;border:1px solid var(--border);border-radius:var(--radius-sm);font-family:inherit;font-size:0.9rem;margin-bottom:12px;background:var(--bg);color:var(--text);">

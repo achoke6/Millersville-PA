@@ -70,15 +70,19 @@
     ],
     "weekly": [
       "Sweet Corn (bi-color and/or white) – $4.00/13 ears",
+      "Tomatoes – priced by size, $3.00/quart, $12/peck, or $20/basket (5/8 bushel)",
+      "Roma Tomatoes – $2.50/quart, $12/peck, or $20/basket (5/8 bushel)",
+      "Grape Tomatoes – $2/pint",
       "Zucchini – $1.00 each or 4/$3.00",
-      "Tomatoes – priced by size or $3.00/quart",
-      "Grape Tomatoes – $2.00/pint",
-      "Bell Peppers – 3/$1.00",
+      "Green Bell Peppers – 3/$1.00",
       "Eggplant – $1.00 each",
+      "Cucumbers – 4/$3.00",
       "Pickling Cucumbers – 3/$1.00",
-      "Cucumbers – 4/$3.00"
+      "Jalapeno Peppers – $1.00/pint or $2.00/quart",
+      "Banana Peppers (sweet) – 4/$1.00",
+      "Cantaloupes – $2.00-$3.50 each"
     ],
-    "weeklyFetchedAt": "2026-08-03T13:41:47.155Z"
+    "weeklyFetchedAt": "2026-08-06T12:03:18.149Z"
   },
   "jesus-dogs": {
     "name": "Jesus Dogs",
@@ -110,128 +114,9 @@
   },
   "john-herr-s-village-market": {
     "name": "John Herr's Village Market",
-    "note": "Weekly deals: Thursday, July 30 through Wednesday, August 5",
-    "weekly": [
-      "Whole Boneless Pork Loin (cut into chops or roasts at no extra cost) — Hog Wild Sale, Thu Jul 30-Sun Aug 2 only – $1.77/lb",
-      "Fresh Grade A All Natural Boneless & Skinless Chicken Breasts (sold in 10-lb bag only @ $19.90) – $1.99/lb",
-      "Select Beef Boneless Ribeye Steaks / Delmonico (Value Pack) – $15.99/lb ($1.00/lb)",
-      "Food Club Canned Vegetables (11-15.25 oz, Selected) — Door Buster, limit 12 – 2 for $1",
-      "Utz Kettle Classics Potato Chips (7.5-8 oz, Selected — Zapps, Family Size, Grandma Utz) – Buy 1 Get 1 FREE"
-    ],
-    "weeklyDateRange": "Thursday, July 30 through Wednesday, August 5",
-    "rawDeals": [
-      {
-        "item": "Whole Boneless Pork Loin (cut into chops or roasts at no extra cost) — Hog Wild Sale, Thu Jul 30-Sun Aug 2 only",
-        "salePrice": "$1.77/lb",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, July 30 through Wednesday, August 5"
-      },
-      {
-        "item": "Fresh Grade A All Natural Boneless & Skinless Chicken Breasts (sold in 10-lb bag only @ $19.90)",
-        "salePrice": "$1.99/lb",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, July 30 through Wednesday, August 5"
-      },
-      {
-        "item": "Select Beef Boneless Ribeye Steaks / Delmonico (Value Pack)",
-        "salePrice": "$15.99/lb",
-        "regularPrice": "$16.99/lb",
-        "savings": "$1.00/lb",
-        "dateRange": "Thursday, July 30 through Wednesday, August 5"
-      },
-      {
-        "item": "Food Club Canned Vegetables (11-15.25 oz, Selected) — Door Buster, limit 12",
-        "salePrice": "2 for $1",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, July 30 through Wednesday, August 5"
-      },
-      {
-        "item": "Utz Kettle Classics Potato Chips (7.5-8 oz, Selected — Zapps, Family Size, Grandma Utz)",
-        "salePrice": "Buy 1 Get 1 FREE",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, July 30 through Wednesday, August 5"
-      },
-      {
-        "item": "Our Own Store-Made Certified Angus Beef Fresh Ground Sirloin (Value Pack)",
-        "salePrice": "$6.99/lb",
-        "regularPrice": "$7.49/lb",
-        "savings": "$0.50/lb",
-        "dateRange": "Thursday, July 30 through Wednesday, August 5"
-      },
-      {
-        "item": "Whole Fresh Atlantic Salmon Fillets",
-        "salePrice": "$9.99/lb",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, July 30 through Wednesday, August 5"
-      },
-      {
-        "item": "Southern Seas EZ Peel Raw Shrimp (41/50 ct, 1-lb bag)",
-        "salePrice": "$6.99",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, July 30 through Wednesday, August 5"
-      },
-      {
-        "item": "Boneless Center Cut Pork Loin Roast",
-        "salePrice": "$2.29/lb",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, July 30 through Wednesday, August 5"
-      },
-      {
-        "item": "Herr's Original Potato Chips (Selected sizes)",
-        "salePrice": "Buy 1 Get 1 FREE",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, July 30 through Wednesday, August 5"
-      },
-      {
-        "item": "Red Ripe Strawberries (16 oz) or Fresh Blueberries (1 pint)",
-        "salePrice": "2 for $6",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, July 30 through Wednesday, August 5"
-      },
-      {
-        "item": "Fresh Broccoli Crowns",
-        "salePrice": "$1.99/lb",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, July 30 through Wednesday, August 5"
-      },
-      {
-        "item": "Oscar Mayer Lunchables (8.9-10.7 oz, Selected) — Door Buster, limit 8",
-        "salePrice": "4 for $10",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, July 30 through Wednesday, August 5"
-      },
-      {
-        "item": "Food Club Peanut Butter (16 oz) — Throwback Thursday (Jul 30-Aug 2 only, Digital Coupon)",
-        "salePrice": "$0.98",
-        "regularPrice": "$2.18",
-        "savings": "$1.20",
-        "dateRange": "Thursday, July 30 through Wednesday, August 5"
-      },
-      {
-        "item": "Food Club Macaroni & Cheese Dinner (5.5-7.25 oz) — Door Buster",
-        "salePrice": "5 for $2",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, July 30 through Wednesday, August 5"
-      },
-      {
-        "item": "General Mills Large Size Cereal (12-16.8 oz, Selected) — Digital Coupon",
-        "salePrice": "2 for $6",
-        "regularPrice": "2 for $8",
-        "savings": "$2.00",
-        "dateRange": "Thursday, July 30 through Wednesday, August 5"
-      }
-    ]
+    "note": "Weekly deals · Thu–Wed",
+    "weekly": [],
+    "weeklyDateRange": "",
+    "rawDeals": []
   }
 }

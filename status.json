@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-06T06:29:51.760Z",
-  "totalEvents": 815,
+  "generatedAt": "2026-08-06T09:40:06.084Z",
+  "totalEvents": 857,
   "withDescription": 323,
   "withImage": 45,
   "familyFriendly": 49,
@@ -14,7 +14,7 @@
     "vfw": 3,
     "phantomPower": 14,
     "community": 21,
-    "manor": 0,
+    "manor": 42,
     "raneyCellars": 5,
     "theBackyard": 10,
     "muHudlBroadcasts": 0
@@ -52,7 +52,10 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-08-10T23:00:00.000Z",
+      "latest": "2027-08-04T23:00:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-07-30T22:00:00.000Z",
       "latest": "2026-08-15T22:00:00.000Z"
@@ -95,7 +98,10 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 62
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-08-04",
+      "daysSinceMoved": 2
+    },
     "raneyCellars": {
       "newest": "2026-08-15",
       "daysSinceMoved": 7
@@ -125,79 +131,79 @@
       "PM Community": 1
     },
     "stalePast": 7,
-    "lastSyncAt": "2026-08-06T06:27:45.189Z"
+    "lastSyncAt": "2026-08-06T09:38:00.628Z"
   },
   "recentlyAdded": [
     {
-      "key": "THIS.IS.EMO NIGHT|2026-09-05T01:00:00.000Z",
-      "firstSeenAt": "2026-08-06T06:29:51.758Z",
-      "title": "THIS.IS.EMO NIGHT",
-      "source": "Other",
-      "date": "2026-09-05T01:00:00.000Z"
+      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
+      "firstSeenAt": "2026-08-06T09:40:06.082Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-08-10T23:00:00.000Z"
     },
     {
-      "key": "Open Jukebox|2026-08-27T02:00:00.000Z",
-      "firstSeenAt": "2026-08-06T03:19:50.726Z",
-      "title": "Open Jukebox",
-      "source": "Jack's Tavern",
-      "date": "2026-08-27T02:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-08-12T23:00:00.000Z",
+      "firstSeenAt": "2026-08-06T09:40:06.082Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-08-12T23:00:00.000Z"
     },
     {
-      "key": "Girls Varsity Soccer @ Governor Mifflin High School|2026-08-24T21:00:00.000Z",
-      "firstSeenAt": "2026-08-05T18:21:40.584Z",
-      "title": "Girls Varsity Soccer @ Governor Mifflin High School",
-      "source": "PM",
-      "date": "2026-08-24T21:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
+      "firstSeenAt": "2026-08-06T09:40:06.082Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-08-26T12:30:00.000Z"
     },
     {
-      "key": "Millersville University Men's Soccer at Salem|2026-09-05T18:30:00.000Z",
-      "firstSeenAt": "2026-08-05T18:21:40.584Z",
-      "title": "Millersville University Men's Soccer at Salem",
-      "source": "MU",
-      "date": "2026-09-05T18:30:00.000Z"
+      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-08-06T09:40:06.082Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-09-02T23:00:00.000Z"
     },
     {
-      "key": "PTO Meeting|2026-08-17T22:00:00.000Z",
-      "firstSeenAt": "2026-08-05T14:26:07.023Z",
-      "title": "PTO Meeting",
-      "source": "PM",
-      "date": "2026-08-17T22:00:00.000Z"
+      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
+      "firstSeenAt": "2026-08-06T09:40:06.082Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-08T23:00:00.000Z"
     },
     {
-      "key": "Boys Varsity Cross Country @ Solanco High School|2026-08-22T21:30:00.000Z",
-      "firstSeenAt": "2026-08-05T14:26:07.023Z",
-      "title": "Boys Varsity Cross Country @ Solanco High School",
-      "source": "PM",
-      "date": "2026-08-22T21:30:00.000Z"
+      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
+      "firstSeenAt": "2026-08-06T09:40:06.082Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-09-14T23:00:00.000Z"
     },
     {
-      "key": "Trivia Night|2026-08-26T00:00:00.000Z",
-      "firstSeenAt": "2026-08-05T00:02:52.845Z",
-      "title": "Trivia Night",
-      "source": "Jack's Tavern",
-      "date": "2026-08-26T00:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-08-06T09:40:06.082Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-09-30T12:30:00.000Z"
     },
     {
-      "key": "Girls Varsity Cross Country @ Solanco High School|2026-08-22T21:00:00.000Z",
-      "firstSeenAt": "2026-08-04T22:11:48.113Z",
-      "title": "Girls Varsity Cross Country @ Solanco High School",
-      "source": "PM",
-      "date": "2026-08-22T21:00:00.000Z"
+      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
+      "firstSeenAt": "2026-08-06T09:40:06.082Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-10-05T23:00:00.000Z"
     },
     {
-      "key": "Fall 2026 Involvement Fair|2026-08-23T11:30:00",
-      "firstSeenAt": "2026-08-04T16:12:48.150Z",
-      "title": "Fall 2026 Involvement Fair",
-      "source": "MU",
-      "date": "2026-08-23T11:30:00"
+      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
+      "firstSeenAt": "2026-08-06T09:40:06.082Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-10-07T23:00:00.000Z"
     },
     {
-      "key": "Navigation Stations|2026-08-24T07:30:00",
-      "firstSeenAt": "2026-08-04T16:12:48.150Z",
-      "title": "Navigation Stations",
-      "source": "MU",
-      "date": "2026-08-24T07:30:00"
+      "key": "Planning Commission|2026-10-12T23:00:00.000Z",
+      "firstSeenAt": "2026-08-06T09:40:06.082Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-10-12T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 42
 }

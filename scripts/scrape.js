@@ -4490,7 +4490,8 @@ async function runScraper() {
 
         // Respect pre-set kidFriendly for events that already declared themselves (e.g. Summer Camps, Athletic Camps)
         if ((tags.includes('Summer Camp') || tags.includes('Athletic Camp') ||
-             tags.includes('Summer Fun Series') || tags.includes('Alumni Event')) && e.kidFriendly === true) {
+             tags.includes('Summer Fun Series') || tags.includes('Alumni Event') ||
+             tags.includes('Community')) && e.kidFriendly === true) {
             famCount++;
             return;
         }

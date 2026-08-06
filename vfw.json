@@ -10,24 +10,38 @@
         "Saturday": "Burger Night"
     },
     "weeklySpecials": {
-        "dateRange": "Tuesday, July 28 through Saturday, August 1",
-        "validThrough": "2026-08-02",
+        "dateRange": "Tuesday, August 4 through Saturday, August 8",
+        "validThrough": "2026-08-09",
         "items": [
-            "Veal Parmesan – $13.95",
-            "Roast Beef – $13.95",
-            "Fried Catfish – $14.95 (Fri only)"
+            "Tuna Melt – $12.95",
+            "Beef Tips and Mushrooms – $14.95",
+            "Fried Flounder – $14.95 (Fri only)"
         ]
     },
     "events": [
-        {
-            "title": "Post Meeting",
-            "date": "2026-07-22T18:00:00-04:00"
-        },
         {
             "title": "Millersville National Night Out",
             "date": "2026-08-04T18:00:00-04:00",
             "endTime": "2026-08-04T20:00:00-04:00",
             "description": "3rd Annual Millersville National Night Out. VFW Post 7294 will have a table. Interact with first responders, free hotdogs and water, games and giveaways, tours of the police station, and live music. Rain date: August 5th. Location: Charles F. Snyder Funeral Home Lot and Millersville Borough Municipal Building."
+        },
+        {
+            "title": "Bri's Backyard BBQ",
+            "date": "2026-08-16T12:00:00-04:00",
+            "endTime": "2026-08-16T20:00:00-04:00",
+            "description": "Bri's Backyard BBQ outside at the Trooper John Pavilion. Members and guests all invited — feel free to bring a dish to share! (No canteen.)"
+        },
+        {
+            "title": "Post Meeting",
+            "date": "2026-08-26T18:00:00-04:00"
+        },
+        {
+            "title": "9/11 Memorial",
+            "date": "2026-08-29T09:00:00-04:00"
+        },
+        {
+            "title": "Chicken BBQ",
+            "date": "2026-08-29T11:00:00-04:00"
         },
         {
             "title": "9/11 Golf Outing 2026",

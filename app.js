@@ -5810,7 +5810,7 @@ async function loadHomeSpecials(){
 
             if(items.length > 0){
                 const note = sp.note || '';
-                cards.push(`<div class="home-special-card" data-spslug="${slug}" role="button" tabindex="0" aria-label="Details for ${sp.name || slug}" style="cursor:pointer;"><h3 class="home-special-name">${sp.name || slug}</h3><p class="home-special-note">${note}</p>${items.map(i=>`<p class="home-special-item">• ${i}</p>`).join('')}<p class="home-special-item" style="margin-top:8px;font-size:0.7rem;color:var(--text-muted);">Tap for map &amp; details →</p></div>`);
+                cards.push(`<div class="home-special-card" data-spslug="${slug}" role="button" tabindex="0" aria-label="Details for ${sp.name || slug}" style="cursor:pointer;"><h3 class="home-special-name">${sp.name || slug}</h3><p class="home-special-note">${note}</p>${items.slice(0, 5).map(i=>`<p class="home-special-item">• ${i}</p>`).join('')}<p class="home-special-item" style="margin-top:8px;font-size:0.7rem;color:var(--text-muted);">${items.length > 5 ? `+${items.length - 5} more — tap for full list →` : 'Tap for map &amp; details →'}</p></div>`);
             }
         }
         container.innerHTML = cards.length > 0 ? cards.join('') : '<p class="home-empty">No specials today</p>';

@@ -474,7 +474,12 @@ function parseCornWagonItems(html) {
         if (!line || line.startsWith('*')) continue;   // price/availability disclaimers
         if (!/\$\s?\d/.test(line)) continue;           // must carry a price
         if (line.length > 120) continue;               // paragraph, not an item line
-        const m = line.match(/^(.{2,60}?)\s+[-–—]\s+(.+)$/);
+        let m = line.match(/^(.{2,60}?)\s+[-–—]\s+(.+)$/);
+        // Dash-less fallback (2026-08-06): the stand sometimes omits the
+        // separator ("Cayenne Peppers 4/$1.00"). Accept "ShortName <price...>"
+        // when the name is short, $-free, and prose-punctuation-free — the
+        // freeze-corn bulk banner (63-char name, contains "!") can't slip through.
+        if (!m) m = line.match(/^([A-Za-z][A-Za-z0-9 .,'()/&-]{1,44}?)\s+((?:\d+\s*\/\s*)?\$\d.*)$/);
         if (!m) continue;
         items.push(`${m[1].trim()} – ${m[2].trim()}`);
         if (items.length >= 15) break;

@@ -4922,7 +4922,11 @@ function buildEventCard(e,isSportsPage){
         // Registration event → "Register Now" (signup page), not a ticket link.
         // Reuses .btn-ticket styling (green CTA); stopPropagation so the click
         // opens the signup page instead of the card's detail modal.
-        actionHtml=`<a href="${escHtml(getRegisterUrl(e))}" target="_blank" rel="noopener" class="btn btn-sm btn-ticket" onclick="event.stopPropagation();">📝 Register Now</a>`;
+        // TICKET PACKAGES (isTicketPackage, 2026-08-06): a purchase, not a
+        // signup — same green CTA, label "🎟 Buy Tickets"; the link is
+        // unchanged (getRegisterUrl falls back to sourceLink, the packages page).
+        const regCtaLabel = isTicketPackage(e) ? '🎟 Buy Tickets' : '📝 Register Now';
+        actionHtml=`<a href="${escHtml(getRegisterUrl(e))}" target="_blank" rel="noopener" class="btn btn-sm btn-ticket" onclick="event.stopPropagation();">${regCtaLabel}</a>`;
     } else if(hasLink && !isFree){
         actionHtml=`<a href="${e.ticketLink}" target="_blank" class="btn btn-sm btn-ticket">🎟 Tickets</a>`;
     } else if(!isFree){
@@ -4962,7 +4966,9 @@ function buildEventCard(e,isSportsPage){
     // "you can't just show up; check the linked source first." Shown on events
     // where Cowork flagged registrationRequired but no firm deadline was known.
     // (When a deadline IS known, scrape.js auto-hides the event past it.)
-    if (e.registrationRequired === true) perkBadges += '<span class="perk-badge perk-registration">📝 Registration required</span>';
+    // Ticket packages skip the registration pill — "Buy Tickets" says it
+    // all, and "Registration required" misreads a purchase (2026-08-06).
+    if (e.registrationRequired === true && !isTicketPackage(e)) perkBadges += '<span class="perk-badge perk-registration">📝 Registration required</span>';
 
     // Clean title
     const displayTitle = cleanSportTitle((e.title || '').replace(/^Millersville University\s*/i, '').replace(/ - (Girls|Boys)\s+(vs |@ )/i, ' $2'), e.tags || []);
@@ -5209,6 +5215,11 @@ function renderHomeUI(){
             })
             .filter(e => {
                 if (isNaN(e._dl) || e._dl < nowMs) return false;            // invalid or closed
+                // Ticket packages (2026-08-06) skip the lead window entirely:
+                // on sale the day the sheet row lands, gone at the deadline —
+                // a ~5-week seasonal run, not a winter deadline that would
+                // surface irrelevantly in summer.
+                if (isTicketPackage(e)) return true;
                 const notYetOpen = e._op !== null && e._op > nowMs;
                 return notYetOpen
                     ? (e._op - nowMs) <= OPEN_LEAD_MS                       // opens within the heads-up window
@@ -5296,9 +5307,13 @@ function renderHomeUI(){
                 // an <a> (with preventDefault) so existing styling and native
                 // keyboard focus/activation are preserved.
                 const signupKey = getEventKey(e);
+                // Ticket packages get a 🎟 marker so the row reads as a
+                // purchase, not a registration (2026-08-06); the popup's CTA
+                // is the matching "🎟 Buy Tickets" link.
+                const rowIcon = isTicketPackage(e) ? '🎟 ' : '';
                 return `<a href="#" class="home-signup-item${urgency}" onclick="event.preventDefault();window.openEventDetails(${JSON.stringify(signupKey).replace(/"/g, '&quot;')})">
                     <div class="home-signup-main">
-                        <span class="home-signup-org">${escHtml(cleanTitle)}</span>
+                        <span class="home-signup-org">${rowIcon}${escHtml(cleanTitle)}</span>
                         ${sub ? `<span class="home-signup-sub">${escHtml(sub)}</span>` : ''}
                     </div>
                     <div class="home-signup-deadline">
@@ -5313,13 +5328,23 @@ function renderHomeUI(){
             const tbaRows = tbaSignups.map(r => {
                 const titleText = (r.title && r.title.trim()) ? r.title.trim() : (r.org || 'Registration');
                 const sub = r.org && !titleText.toLowerCase().includes(r.org.toLowerCase()) ? r.org : '';
+                // Honor an Opens date on open-ended rows (2026-08-06): before
+                // it, the label reads "Opens <date> / closes TBA" — "Open now"
+                // was factually wrong for a not-yet-open registration (Rec
+                // Basketball, opens 9/1). sync-candidates now emits `opens` on
+                // TBA rows; older JSON without the field keeps the prior
+                // "Open now" reading (graceful).
+                const opMs = r.opens ? new Date(r.opens).getTime() : NaN;
+                const tbaByLabel = (!isNaN(opMs) && opMs > nowMs)
+                    ? `Opens ${new Date(opMs).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`
+                    : 'Open now';
                 return `<a href="${escHtml(r.registerLink)}" target="_blank" rel="noopener" class="home-signup-item">
                     <div class="home-signup-main">
                         <span class="home-signup-org">${escHtml(titleText)}</span>
                         ${sub ? `<span class="home-signup-sub">${escHtml(sub)}</span>` : ''}
                     </div>
                     <div class="home-signup-deadline">
-                        <span class="home-signup-by">Open now</span>
+                        <span class="home-signup-by">${tbaByLabel}</span>
                         <span class="home-signup-days">closes TBA</span>
                     </div>
                 </a>`;
@@ -5468,7 +5493,9 @@ function buildTimelineItem(e, now) {
     const benefits = e.benefits || [];
     if (benefits.includes('Free Food')) badges += '<span class="tl-badge tl-perk">' + (e.perkFoodIcon || '🍕') + '</span>';   // perkFoodIcon: per-event glyph override (Jesus Dogs 🌭)
     if (benefits.includes('Free Stuff')) badges += '<span class="tl-badge tl-perk">🎁</span>';
-    if (e.registrationRequired === true) badges += '<span class="tl-badge tl-registration" title="Registration required">📝</span>';
+    if (e.registrationRequired === true) badges += isTicketPackage(e)
+        ? '<span class="tl-badge tl-registration" title="Ticket packages">🎟</span>'
+        : '<span class="tl-badge tl-registration" title="Registration required">📝</span>';
     // Multi-day annotation (Day 2 of 3, etc.) — set by groupEventsByDay when
     // an event spans multiple calendar days. Renders before LIVE/score so the
     // user sees "this is part of a multi-day event" first.
@@ -5707,8 +5734,10 @@ window.openEventDetails = function(key) {
     // Action buttons
     let actions = '';
     if ((isRegistrationEvent(e) || isProgramSignup(e)) && getRegisterUrl(e)) {
-        // Registration event → "Register Now" (signup page), not "Buy Tickets".
-        actions += `<a href="${escHtml(getRegisterUrl(e))}" target="_blank" rel="noopener" class="btn btn-sm btn-ticket" style="text-decoration:none;">📝 Register Now</a>`;
+        // Registration event → "Register Now" (signup page), not "Buy Tickets"
+        // — EXCEPT ticket packages (2026-08-06), where a purchase is exactly
+        // what it is: the label flips to "🎟 Buy Tickets", link unchanged.
+        actions += `<a href="${escHtml(getRegisterUrl(e))}" target="_blank" rel="noopener" class="btn btn-sm btn-ticket" style="text-decoration:none;">${isTicketPackage(e) ? '🎟 Buy Tickets' : '📝 Register Now'}</a>`;
     } else if (e.ticketLink && !eventIsFree(e)) {
         // Paid/ticketed only. A free event never shows "Buy Tickets" — its link is
         // an info page, surfaced as "More Info" via the source button below.

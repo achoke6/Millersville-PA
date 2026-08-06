@@ -246,6 +246,11 @@ async function main() {
           title: title,
           org: location || title,
           sport: col(row, 'notes') || '',
+          // Opens rides along on TBA rows too (2026-08-06) — the dated branch
+          // above always passed it, this branch silently dropped it, so the
+          // homepage showed "Open now" for a registration that opens 9/1.
+          // app.js renders "Opens <date> / closes TBA" until the date passes.
+          ...(opensDt ? { opens: opensDt.toISOString() } : {}),
           registerLink: link || 'https://www.pennmanor.net/community/',
           note: description || ''
         });

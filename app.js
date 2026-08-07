@@ -5575,10 +5575,24 @@ function buildTimelineItem(e, now) {
 // Event detail modal — shown when a user clicks a timeline card (home) or search result.
 // Looks up event by key (sourceLink or title|date composite), renders title/time/location/
 // description/tags/benefits, and provides buttons to open source link or tickets.
+// ---- Event-modal mini locator map (2026-08-07) ------------------------------
+// Same lifecycle contract as the home-rail popup's map: its OWN Leaflet
+// instance over the shared self-hosted PMTiles stack (placesMapAssetsLoad is
+// idempotent -- vendor assets load once whichever surface asks first),
+// created per open and .remove()'d on EVERY close path: the ✕ button, the
+// backdrop click, and a reopen while one is somehow live. Exposed on window
+// for the ✕ button's inline handler; a bare call when no map exists is a
+// harmless no-op.
+let eventDetailsMiniMap = null;
+window.destroyEventDetailsMiniMap = function(){
+    if (eventDetailsMiniMap){ try { eventDetailsMiniMap.remove(); } catch(e){} eventDetailsMiniMap = null; }
+};
+
 window.openEventDetails = function(key) {
     if (!key) return;
     const e = allEvents.find(ev => getEventKey(ev) === key);
     if (!e) return;
+    window.destroyEventDetailsMiniMap();   // reopen belt -- never two live map instances
 
     const d = new Date(e.date);
     const tags = e.tags || [];
@@ -5757,11 +5771,12 @@ window.openEventDetails = function(key) {
         else streamLabel = '📺 Live Stream';
         actions += `<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-outline" style="text-decoration:none;">${streamLabel}</a>`;
     }
-    // Calendar action — uses the same key scheme as card buttons so addToCalendar can find it
-    const modalCardKey = getEventKey(e).replace(/"/g, '&quot;');
     // Add to Calendar / Share / Directions RETIRED from the event modal
-    // 2026-08-07 (declutter, Adam). Owed follow-up: mini locator map atop
-    // coords-resolved modals (ev._venuePlace). Core CTA + View Source remain.
+    // 2026-08-07 (declutter, Adam); the owed mini locator map SHIPPED in the
+    // same arc -- see the miniMapSlot/closeBtn block below, keyed off the
+    // linkEventsToPlaces ev._venuePlace stamp. Core CTA + View Source remain.
+    // (The dead modalCardKey const -- the retired calendar button's key
+    // plumbing -- was removed with the map patch.)
     // Source link labeling: for past sports games, promote it to "Game Recap
     // & Box Score" since the target URL is the MaxPreps/MU Athletics recap
     // page where inning/quarter box scores and recap articles live. Other
@@ -5784,16 +5799,41 @@ window.openEventDetails = function(key) {
         actions += `<a href="${infoUrl}" target="_blank" class="btn btn-sm btn-outline" style="text-decoration:none;">${srcLabel}</a>`;
     }
 
+    // Mini locator map (the 2026-08-07 declutter's owed follow-up): the
+    // rail-popup pattern atop the modal, keyed off the linkEventsToPlaces
+    // ev._venuePlace stamp (tier-agnostic, stamped pre-gate, so PAST events'
+    // modals resolve too). Strictly fail-closed: no stamp / no allPlaces
+    // match / non-numeric coords => empty slot + the original ✕, and the
+    // modal renders byte-identical to the pre-map version. Number.isFinite
+    // (no coercion) is deliberately stricter than the rail's isFinite --
+    // "numeric lat/lng" means numbers, not numeric strings.
+    const venuePlace = e._venuePlace ? (allPlaces || []).find(p => placeSlug(p) === e._venuePlace) : null;
+    const hasVenueCoords = !!(venuePlace && Number.isFinite(venuePlace.lat) && Number.isFinite(venuePlace.lng));
+    // Slot bleeds edge-to-edge past the modal's 24px padding (negative
+    // margins -- inline styles only, Hard Rule 2) with top corners matching
+    // the modal radius; gold-soft "Loading map…" placeholder until tiles
+    // land, exactly like the rail popup's slot.
+    const miniMapSlot = hasVenueCoords
+        ? `<div id="event-details-mini-map" style="height:180px;margin:-24px -24px 14px;border-radius:var(--radius) var(--radius) 0 0;background:var(--gold-soft);display:flex;align-items:center;justify-content:center;color:var(--text-muted);font-size:0.8rem;">Loading map…</div>`
+        : '';
+    // ✕ over map tiles needs the rail popup's treatment (translucent navy
+    // circle, z-index above Leaflet's panes -- they'd otherwise paint over a
+    // z-index:auto button). No map => the original button, byte-identical.
+    const closeBtn = hasVenueCoords
+        ? `<button onclick="window.destroyEventDetailsMiniMap();this.closest('.event-details-overlay').remove()" aria-label="Close" style="position:absolute;top:8px;right:8px;z-index:1001;width:32px;height:32px;border-radius:50%;border:none;background:rgba(20,32,58,0.75);color:#fff;font-size:1.05rem;line-height:1;cursor:pointer;">×</button>`
+        : `<button onclick="this.closest('.event-details-overlay').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);padding:4px 8px;">✕</button>`;
+
     // Build modal
     const overlay = document.createElement('div');
     overlay.className = 'event-details-overlay';
     overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:9998;display:flex;align-items:flex-start;justify-content:center;padding:40px 16px 16px;overflow-y:auto;';
-    overlay.onclick = ev => { if (ev.target === overlay) overlay.remove(); };
+    overlay.onclick = ev => { if (ev.target === overlay) { window.destroyEventDetailsMiniMap(); overlay.remove(); } };
 
     const modal = document.createElement('div');
     modal.style.cssText = 'background:var(--surface);border-radius:var(--radius);max-width:540px;width:100%;padding:24px;position:relative;box-shadow:0 10px 40px rgba(0,0,0,0.2);';
     modal.innerHTML = `
-        <button onclick="this.closest('.event-details-overlay').remove()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);padding:4px 8px;">✕</button>
+        ${miniMapSlot}
+        ${closeBtn}
         <h2 style="margin:0 0 8px;font-size:1.25rem;color:var(--navy);line-height:1.3;padding-right:24px;">${escHtml(e.title || 'Event')}</h2>
         <div style="font-size:0.92rem;color:var(--text);font-weight:600;">📅 ${dateStr}${timeStr ? ' · ' + timeStr : ''}</div>
         ${locBlock}
@@ -5807,6 +5847,44 @@ window.openEventDetails = function(key) {
     `;
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
+
+    if (hasVenueCoords){
+        // Closure-captured node, NOT getElementById: if a second modal opens
+        // before this one's vendor assets resolve, an id lookup could grab
+        // the NEW modal's slot and double-init it -- the captured node can
+        // only ever be this modal's own.
+        const mapEl = modal.querySelector('#event-details-mini-map');
+        placesMapAssetsLoad().then(() => {
+            if (!mapEl || !document.body.contains(mapEl)) return;   // modal closed before assets resolved
+            mapEl.textContent = '';
+            // Static locator map: every interaction off. NB config key is
+            // PLACES_MAP_CFG.bounds; maxBounds is only the Leaflet OPTION
+            // name (the 2026-07-09 lesson).
+            eventDetailsMiniMap = L.map(mapEl, {
+                center: [venuePlace.lat, venuePlace.lng], zoom: 16,
+                minZoom: PLACES_MAP_CFG.minZoom, maxZoom: PLACES_MAP_CFG.maxZoom,
+                maxBounds: PLACES_MAP_CFG.bounds,
+                zoomControl: false, attributionControl: true,
+                dragging: false, scrollWheelZoom: false, touchZoom: false,
+                doubleClickZoom: false, boxZoom: false, keyboard: false
+            });
+            eventDetailsMiniMap.attributionControl.setPrefix(false);
+            protomapsL.leafletLayer({
+                url: PLACES_MAP_CFG.pmtiles, flavor: 'light', lang: 'en',
+                attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'
+            }).addTo(eventDetailsMiniMap);
+            // Glyph/color mirror BOTH existing pin sites: slug override ->
+            // category default -> 📍; campus rows ride services.json
+            // (placeType 'service') so they get the main map's service green.
+            const glyph = PLACE_PIN_OVERRIDES[placeSlug(venuePlace)] || MAP_PIN_ICONS[venuePlace.category] || '📍';
+            const color = MAP_PIN_COLORS[(venuePlace.placeType==='food') ? 'food' : (venuePlace.category==='Cupboard' ? 'cupboard' : 'service')] || '#14203a';
+            L.marker([venuePlace.lat, venuePlace.lng], { interactive: false, icon: L.divIcon({ className: '', html: `<div class="map-pin" style="border-color:${color}">${glyph}</div>`, iconSize: [30,30], iconAnchor: [15,15] }) }).addTo(eventDetailsMiniMap);
+            setTimeout(()=>{ if (eventDetailsMiniMap) eventDetailsMiniMap.invalidateSize(); }, 60);   // size after modal layout settles; bump if a slow phone shows blank tiles
+        }).catch(err => {
+            if (mapEl) mapEl.style.display = 'none';   // vendor assets unavailable -- details still show
+            console.warn('Event mini map unavailable:', err && err.message);
+        });
+    }
 };
 
 /* ==================== HOME SPECIALS ==================== */

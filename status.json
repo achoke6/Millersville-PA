@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-07T15:17:12.695Z",
-  "totalEvents": 866,
+  "generatedAt": "2026-08-07T15:56:09.378Z",
+  "totalEvents": 867,
   "withDescription": 331,
   "withImage": 45,
   "familyFriendly": 68,
@@ -14,7 +14,7 @@
     "vfw": 6,
     "phantomPower": 14,
     "community": 22,
-    "manor": 42,
+    "manor": 43,
     "raneyCellars": 6,
     "theBackyard": 10,
     "muHudlBroadcasts": 0
@@ -131,9 +131,23 @@
       "PM Community": 1
     },
     "stalePast": 7,
-    "lastSyncAt": "2026-08-07T15:14:44.249Z"
+    "lastSyncAt": "2026-08-07T15:53:44.379Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Supervisors Meeting|2026-09-07T23:00:00.000Z",
+      "firstSeenAt": "2026-08-07T15:56:09.376Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-07T23:00:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2026-11-06T00:00:00.000Z",
+      "firstSeenAt": "2026-08-07T15:56:09.376Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-11-06T00:00:00.000Z"
+    },
     {
       "key": "Planning Commission-CANCELED|2026-08-10T23:00:00.000Z",
       "firstSeenAt": "2026-08-07T15:17:12.693Z",
@@ -189,21 +203,7 @@
       "title": "Planning Commission",
       "source": "Manor",
       "date": "2026-09-14T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
-      "firstSeenAt": "2026-08-07T13:56:05.027Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-09-30T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
-      "firstSeenAt": "2026-08-07T13:56:05.027Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-10-05T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 2
 }

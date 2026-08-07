@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-08-07T16:54:28.323Z",
-  "totalEvents": 868,
+  "generatedAt": "2026-08-07T18:54:55.305Z",
+  "totalEvents": 829,
   "withDescription": 331,
   "withImage": 45,
   "familyFriendly": 68,
   "eventsToday": 3,
   "sources": {
     "muAthletics": 255,
-    "muCalendar": 131,
+    "muCalendar": 135,
     "muGetInvolved": 97,
     "pennManor": 71,
     "borough": 77,
     "vfw": 6,
     "phantomPower": 14,
     "community": 22,
-    "manor": 43,
+    "manor": 0,
     "raneyCellars": 6,
     "theBackyard": 10,
     "muHudlBroadcasts": 0
@@ -52,10 +52,7 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-08-10T23:00:00.000Z",
-      "latest": "2027-08-04T23:00:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-08-05T20:00:00.000Z",
       "latest": "2026-08-15T22:00:00.000Z"
@@ -98,10 +95,7 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 63
     },
-    "manor": {
-      "newest": "2027-08-04",
-      "daysSinceMoved": 3
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-08-15",
       "daysSinceMoved": 8
@@ -131,9 +125,37 @@
       "PM Community": 1
     },
     "stalePast": 7,
-    "lastSyncAt": "2026-08-07T16:51:59.987Z"
+    "lastSyncAt": "2026-08-07T18:52:50.495Z"
   },
   "recentlyAdded": [
+    {
+      "key": "M-Uth Theatre Ensemble Presents: Antigone in Munich|2026-08-08T18:00:00.000Z",
+      "firstSeenAt": "2026-08-07T17:49:14.690Z",
+      "title": "M-Uth Theatre Ensemble Presents: Antigone in Munich",
+      "source": "MU",
+      "date": "2026-08-08T18:00:00.000Z"
+    },
+    {
+      "key": "M-Uth Theatre Ensemble Presents: Radium Girls|2026-08-08T23:00:00.000Z",
+      "firstSeenAt": "2026-08-07T17:49:14.690Z",
+      "title": "M-Uth Theatre Ensemble Presents: Radium Girls",
+      "source": "MU",
+      "date": "2026-08-08T23:00:00.000Z"
+    },
+    {
+      "key": "M-Uth Theatre Ensemble Presents: Radium Girls|2026-08-09T18:00:00.000Z",
+      "firstSeenAt": "2026-08-07T17:49:14.690Z",
+      "title": "M-Uth Theatre Ensemble Presents: Radium Girls",
+      "source": "MU",
+      "date": "2026-08-09T18:00:00.000Z"
+    },
+    {
+      "key": "\"Wild in the Shadows\" by Rob Homan|2026-09-04T21:00:00.000Z",
+      "firstSeenAt": "2026-08-07T17:49:14.690Z",
+      "title": "\"Wild in the Shadows\" by Rob Homan",
+      "source": "MU",
+      "date": "2026-09-04T21:00:00.000Z"
+    },
     {
       "key": "Lancaster Print Crawl feat. Mark & Jordan Rast|2026-09-04T21:00:00.000Z",
       "firstSeenAt": "2026-08-07T16:54:28.320Z",
@@ -175,35 +197,7 @@
       "title": "Millersville University Women's Golf WCU Battlefield Classic",
       "source": "MU",
       "date": "2026-09-21T00:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Golf Golden Eagle Autumn Invitational|2026-09-26T00:00:00.000Z",
-      "firstSeenAt": "2026-08-07T15:59:20.548Z",
-      "title": "Millersville University Women's Golf Golden Eagle Autumn Invitational",
-      "source": "MU",
-      "date": "2026-09-26T00:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Cross Country Lock Haven Invitational|2026-09-26T14:45:00.000Z",
-      "firstSeenAt": "2026-08-07T15:59:20.548Z",
-      "title": "Millersville University Women's Cross Country Lock Haven Invitational",
-      "source": "MU",
-      "date": "2026-09-26T14:45:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Cross Country Paul Short Run|2026-10-02T18:00:00.000Z",
-      "firstSeenAt": "2026-08-07T15:59:20.548Z",
-      "title": "Millersville University Women's Cross Country Paul Short Run",
-      "source": "MU",
-      "date": "2026-10-02T18:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Golf Kutztown Invitational|2026-10-04T00:00:00.000Z",
-      "firstSeenAt": "2026-08-07T15:59:20.548Z",
-      "title": "Millersville University Women's Golf Kutztown Invitational",
-      "source": "MU",
-      "date": "2026-10-04T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 0
 }

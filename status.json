@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-08-07T02:41:26.069Z",
-  "totalEvents": 867,
+  "generatedAt": "2026-08-07T04:54:22.856Z",
+  "totalEvents": 825,
   "withDescription": 330,
   "withImage": 45,
   "familyFriendly": 68,
-  "eventsToday": 1,
+  "eventsToday": 3,
   "sources": {
     "muAthletics": 257,
     "muCalendar": 130,
@@ -14,7 +14,7 @@
     "vfw": 6,
     "phantomPower": 14,
     "community": 22,
-    "manor": 42,
+    "manor": 0,
     "raneyCellars": 5,
     "theBackyard": 10,
     "muHudlBroadcasts": 0
@@ -52,10 +52,7 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-08-10T23:00:00.000Z",
-      "latest": "2027-08-04T23:00:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-07-30T22:00:00.000Z",
       "latest": "2026-08-15T22:00:00.000Z"
@@ -68,47 +65,44 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-01",
-      "daysSinceMoved": 29
+      "daysSinceMoved": 30
     },
     "muCalendar": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 11
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 63
+      "daysSinceMoved": 64
     },
     "pennManor": {
       "newest": "2026-09-09",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 9
+      "daysSinceMoved": 10
     },
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 63
+      "daysSinceMoved": 64
     },
     "phantomPower": {
       "newest": "2026-10-04",
-      "daysSinceMoved": 15
+      "daysSinceMoved": 16
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 62
+      "daysSinceMoved": 63
     },
-    "manor": {
-      "newest": "2027-08-04",
-      "daysSinceMoved": 2
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-08-15",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "theBackyard": {
       "newest": "2026-09-30",
-      "daysSinceMoved": 9
+      "daysSinceMoved": 10
     }
   },
   "sports": {
@@ -131,7 +125,7 @@
       "PM Community": 1
     },
     "stalePast": 7,
-    "lastSyncAt": "2026-08-07T02:39:11.417Z"
+    "lastSyncAt": "2026-08-07T04:52:31.256Z"
   },
   "recentlyAdded": [
     {
@@ -191,18 +185,18 @@
       "date": "2026-10-09T18:30:00"
     },
     {
-      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
+      "key": "O-Group Meet-up|2026-08-20T22:45:00.000Z",
       "firstSeenAt": "2026-08-06T16:00:04.166Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-08-10T23:00:00.000Z"
+      "title": "O-Group Meet-up",
+      "source": "MU",
+      "date": "2026-08-20T22:45:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-08-12T23:00:00.000Z",
+      "key": "MU Football Season Tickets (2026)|2026-09-12T16:00:00.000Z",
       "firstSeenAt": "2026-08-06T16:00:04.166Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-08-12T23:00:00.000Z"
+      "title": "MU Football Season Tickets (2026)",
+      "source": "Community",
+      "date": "2026-09-12T16:00:00.000Z"
     }
   ],
   "addedLastRun": 0

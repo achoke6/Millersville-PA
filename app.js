@@ -5760,6 +5760,11 @@ window.openEventDetails = function(key) {
     // Calendar action — uses the same key scheme as card buttons so addToCalendar can find it
     const modalCardKey = getEventKey(e).replace(/"/g, '&quot;');
     actions += `<button class="btn btn-sm btn-outline" data-cardkey="${modalCardKey}" onclick="addToCalendar(this)" style="cursor:pointer;">📅 Add to Calendar</button>`;
+    // 🧭 Directions (2026-08-07): 2-tier resolver — linked place lat/lng or a
+    // text-query fallback. Empty string = unresolvable/blocklisted → no
+    // button. URL is "lat,lng" or fully encodeURIComponent'd — attr-safe.
+    const dirUrl = eventDirectionsUrl(e);
+    if (dirUrl) actions += `<a href="${dirUrl}" target="_blank" rel="noopener" class="btn btn-sm btn-outline" style="text-decoration:none;">🧭 Directions</a>`;
     actions += `<button class="btn btn-sm btn-outline" data-cardkey="${modalCardKey}" onclick="shareEvent(this)" style="cursor:pointer;">🔗 Share</button>`;
     // Source link labeling: for past sports games, promote it to "Game Recap
     // & Box Score" since the target URL is the MaxPreps/MU Athletics recap
@@ -6607,7 +6612,7 @@ const PLACES_MAP_CFG = {
 // keeping FOUR things in agreement: sheet value, #places-filter-menu data-cat,
 // catIcons, and this map.
 const MAP_PIN_ICONS = {
-    'Food & Drink':'🍴','Housing':'🏠','Student Housing':'🎓','Shopping':'🛒',
+    'Food & Drink':'🍴','Housing':'🏠','Student Housing':'🎓','Shopping':'🛒','Campus':'🏛',
     'Health':'🏥','Beauty/Grooming':'💈','Finance':'🏦','Real Estate':'🏘',
     'Home Services':'🔨','Services':'🛠','Government':'🏛','Education':'📚',
     'Recreation':'🏞','Entertainment':'🎵','Venue':'🎉','Lodging':'🛏',
@@ -6620,7 +6625,13 @@ const MAP_PIN_COLORS = { food:'#b0452b', service:'#0f6e56', housing:'#5b4bc4', c
 // home-popup mini map). For the rare listing whose identity beats its
 // category icon. First user: Jesus Dogs (🌭, not the Food & Drink 🍴).
 // Promote to a sheet column if these ever multiply past a handful.
-const PLACE_PIN_OVERRIDES = { 'jesus-dogs': '🌭', 'the-backyard': '😊', 'the-hub': '🥪' };
+const PLACE_PIN_OVERRIDES = { 'jesus-dogs': '🌭', 'the-backyard': '😊', 'the-hub': '🥪',
+    // Campus venues (2026-08-07): per-venue glyphs; anything not listed gets
+    // the 'Campus' category default 🏛. Keys are directory slugs (leading
+    // "the" dropped by slugify — e.g. The Ware Center → ware-center).
+    'biemesderfer-stadium': '🏈', 'pucillo-gymnasium': '🏀', 'pucillo-field': '🏑',
+    'mccomsey-tennis-courts': '🎾', 'winter-visual-performing-arts-center': '🎭',
+    'ware-center': '🎭', 'millersville-catholic-house': '⛪', 'mcnairy-library': '📚' };
 
 function placesMapAssetsLoad(){
     if (placesMapLibReady) return Promise.resolve();
@@ -6799,6 +6810,10 @@ function linkEventsToPlaces(){
             if (hit) slug = hit.slug;
         }
         if (!slug){ unmatched.add(loc); return; }
+        // Tier-1 handle for the event-modal Directions resolver (2026-08-07):
+        // stamped on EVERY matched event, before the today+future gate below,
+        // so past events' modals resolve directions too.
+        ev._venuePlace = slug;
         const t = new Date(ev.date).getTime();
         if (isNaN(t) || t < now - 86400000) return;   // today + future only
         if (!_placeEvents.has(slug)) _placeEvents.set(slug, []);
@@ -6815,6 +6830,35 @@ function placeEventsToday(p){
 function placeNextUpcoming(p){
     const today = new Date().toDateString();
     return (_placeEvents.get(placeSlug(p)) || []).find(e => e.t > Date.now() && new Date(e.t).toDateString() !== today) || null;
+}
+// ─── Event → Directions resolver v2 (2026-08-07) ───
+// Gives every event-detail modal a 🧭 Directions link when its location is
+// resolvable. Two tiers, first hit wins:
+//   (1) linked directory place (ev._venuePlace, stamped by linkEventsToPlaces)
+//       → the place's lat/lng — the same precision pin popups use. With the
+//       campus rows Active, this covers campus buildings, rooms (they attach
+//       to their building via name containment), and every matched business.
+//       A matched place WITHOUT coords (blank lat/lng cells) falls through.
+//   (2) text-query fallback: the raw location string straight into the Google
+//       directions URL — named venues, embedded street addresses, and
+//       away-game cities resolve with zero data maintenance.
+// Suppressed for blocklisted/too-short locations. NOTE: genericLoc is
+// deliberately NOT reused — it marks real venues whose names are redundant
+// with the source pill (e.g. Raney), exactly where directions SHOULD work.
+// (v1's venue-directions.json table was superseded by campus directory rows
+// before it ever shipped — place coords now carry that load.)
+const EVENT_DIR_BLOCKLIST = new Set(['tbd','tba','campus','campuswide','online','virtual','zoom','various','various locations','multiple locations','penn manor school district']);
+function eventDirectionsUrl(e){
+    const rawLoc = ((e && e.location) || '').trim();
+    if (!rawLoc) return '';
+    const loc = normVenue(rawLoc);
+    if (!loc || loc.length < 3 || EVENT_DIR_BLOCKLIST.has(loc)) return '';
+    if (e._venuePlace){
+        const p = (allPlaces || []).find(pl => placeSlug(pl) === e._venuePlace);
+        if (p && typeof p.lat === 'number' && typeof p.lng === 'number')
+            return `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}`;
+    }
+    return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(rawLoc)}`;
 }
 // The Today-lens predicate — used by BOTH the list filter and the pin filter,
 // so the two-spot mirror stays in agreement through one function.
@@ -7458,6 +7502,22 @@ function renderPlaces(){
         cupboardCard = buildCampusCupboardCard(dayName);
     }
 
+    // Campus venues (2026-08-07): in the default All view they'd scatter
+    // through the services section's unknown-hours band — collapse them into
+    // ONE native <details> group at the end instead (food-page closed-group
+    // precedent; native element, resets closed on every render, inline styles
+    // only per Hard Rule 2). The Campus category chip shows them expanded via
+    // the normal flow; the 🔥 Today lens keeps event-day campus places
+    // INLINE (decision: they earned the spot); MBA mode never includes them.
+    let campusGroup = '';
+    if (placesFilter === 'All' && !placesTodayMode) {
+        const campusList = filtered.filter(p => p.category === 'Campus');
+        if (campusList.length) {
+            filtered = filtered.filter(p => p.category !== 'Campus');
+            campusGroup = `<details class="place-group" style="grid-column:1/-1;"><summary style="cursor:pointer;font-weight:700;padding:8px 0;">🏛 Campus<span class="day-count">${campusList.length} place${campusList.length===1?'':'s'}</span></summary>`
+                + campusList.map(p => buildServiceCard(p)).join('') + '</details>';
+        }
+    }
     const cards = filtered.map(p => {
         if (p.placeType === 'food') return buildFoodCard(p, specials, dayName);
         return buildServiceCard(p);
@@ -7467,7 +7527,7 @@ function renderPlaces(){
         : placesTodayMode
         ? '<p class="empty-state">No specials listed for today — check back tomorrow.</p>'
         : '<p class="empty-state">No listings found in this category. Know a local business? <a href="#" onclick="event.preventDefault();openSubmitBusiness();">Add it here →</a></p>';
-    pc.innerHTML = (cupboardCard + cards.join('')) || emptyMsg;
+    pc.innerHTML = (cupboardCard + cards.join('') + campusGroup) || emptyMsg;
     // Let each card size to its own content instead of stretching to the tallest
     // card in its row. Equal-height rows looked fine until a card with a big
     // specials/deals box forced its short row-mates to match, leaving an ugly

@@ -315,6 +315,23 @@ async function main() {
         warnings++;
       }
       cupboard.push(o);
+    } else if (type === 'campus') {
+      // Campus venues (2026-08-07): first-class listings so students get
+      // pins, "📅 Here today" lines, 🔥 Today-lens membership on event
+      // days, and event-modal 🧭 Directions via place coords. They ride the
+      // SERVICES output with category forced to 'Campus' — allPlaces
+      // membership makes pins/matcher/audience/hours all work unchanged;
+      // app.js groups them into a collapsed Campus section on the Places
+      // list and /food ignores them (it filters placeType==='food').
+      const o = { name, category: 'Campus', address: get(row, 'address'),
+                  phone: get(row, 'phone'), description: get(row, 'description') };
+      const website = get(row, 'website'); if (website) o.link = website;
+      if (audience !== 'both') o.audience = audience;
+      const c = coordsFor(row, name); if (c) { o.lat = c.lat; o.lng = c.lng; } o.slug = resolveSlug(get(row, 'slug'), name);
+      const h = hoursFor(row, name); if (h) o.hours = h;
+      const sh = summerHoursFor(row, name); if (sh) o.summerHours = sh;
+      if (breakClosedFor(row)) o.breakClosed = true;
+      services.push(o);
     } else if (type === 'institution') {
       // No directory card — only eligible for the spotlight rotation.
     } else {

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-07T08:13:16.078Z",
-  "totalEvents": 825,
+  "generatedAt": "2026-08-07T10:01:31.446Z",
+  "totalEvents": 867,
   "withDescription": 330,
   "withImage": 45,
   "familyFriendly": 68,
@@ -14,7 +14,7 @@
     "vfw": 6,
     "phantomPower": 14,
     "community": 22,
-    "manor": 0,
+    "manor": 42,
     "raneyCellars": 5,
     "theBackyard": 10,
     "muHudlBroadcasts": 0
@@ -52,7 +52,10 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-08-10T23:00:00.000Z",
+      "latest": "2027-08-04T23:00:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-07-30T22:00:00.000Z",
       "latest": "2026-08-15T22:00:00.000Z"
@@ -95,7 +98,10 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 63
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-08-04",
+      "daysSinceMoved": 3
+    },
     "raneyCellars": {
       "newest": "2026-08-15",
       "daysSinceMoved": 8
@@ -125,79 +131,79 @@
       "PM Community": 1
     },
     "stalePast": 7,
-    "lastSyncAt": "2026-08-07T08:11:33.919Z"
+    "lastSyncAt": "2026-08-07T09:59:24.900Z"
   },
   "recentlyAdded": [
     {
-      "key": "ESH PTO Meeting|2026-08-17T22:00:00.000Z",
-      "firstSeenAt": "2026-08-06T23:58:29.398Z",
-      "title": "ESH PTO Meeting",
-      "source": "PM",
-      "date": "2026-08-17T22:00:00.000Z"
+      "key": "Planning Commission|2026-08-10T23:00:00.000Z",
+      "firstSeenAt": "2026-08-07T10:01:31.444Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-08-10T23:00:00.000Z"
     },
     {
-      "key": "Commuting Student Meeting|2026-08-20T21:30:00.000Z",
-      "firstSeenAt": "2026-08-06T23:58:29.398Z",
-      "title": "Commuting Student Meeting",
-      "source": "MU",
-      "date": "2026-08-20T21:30:00.000Z"
+      "key": "Zoning Hearing Board|2026-08-12T23:00:00.000Z",
+      "firstSeenAt": "2026-08-07T10:01:31.444Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-08-12T23:00:00.000Z"
     },
     {
-      "key": "SGA Skating Party|2026-08-21T00:30:00.000Z",
-      "firstSeenAt": "2026-08-06T23:58:29.398Z",
-      "title": "SGA Skating Party",
-      "source": "MU",
-      "date": "2026-08-21T00:30:00.000Z"
+      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
+      "firstSeenAt": "2026-08-07T10:01:31.444Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-08-26T12:30:00.000Z"
     },
     {
-      "key": "First Day Assembly|2026-08-24T14:00:00.000Z",
-      "firstSeenAt": "2026-08-06T23:58:29.398Z",
-      "title": "First Day Assembly",
-      "source": "PM",
-      "date": "2026-08-24T14:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-08-07T10:01:31.444Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-09-02T23:00:00.000Z"
     },
     {
-      "key": "Laptop Distribution|2026-08-25T04:00:00.000Z",
-      "firstSeenAt": "2026-08-06T23:58:29.398Z",
-      "title": "Laptop Distribution",
-      "source": "PM",
-      "date": "2026-08-25T04:00:00.000Z"
+      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
+      "firstSeenAt": "2026-08-07T10:01:31.444Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-08T23:00:00.000Z"
     },
     {
-      "key": "Start Smart!|2026-09-01T11:30:00",
-      "firstSeenAt": "2026-08-06T23:58:29.398Z",
-      "title": "Start Smart!",
-      "source": "MU",
-      "date": "2026-09-01T11:30:00"
+      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
+      "firstSeenAt": "2026-08-07T10:01:31.444Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-09-14T23:00:00.000Z"
     },
     {
-      "key": "Team Leaders Meeting - 7AM|2026-09-03T04:00:00.000Z",
-      "firstSeenAt": "2026-08-06T23:58:29.398Z",
-      "title": "Team Leaders Meeting - 7AM",
-      "source": "PM",
-      "date": "2026-09-03T04:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-08-07T10:01:31.444Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-09-30T12:30:00.000Z"
     },
     {
-      "key": "Ghost Hunters Weekend|2026-10-09T18:30:00",
-      "firstSeenAt": "2026-08-06T23:58:29.398Z",
-      "title": "Ghost Hunters Weekend",
-      "source": "MU",
-      "date": "2026-10-09T18:30:00"
+      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
+      "firstSeenAt": "2026-08-07T10:01:31.444Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-10-05T23:00:00.000Z"
     },
     {
-      "key": "O-Group Meet-up|2026-08-20T22:45:00.000Z",
-      "firstSeenAt": "2026-08-06T16:00:04.166Z",
-      "title": "O-Group Meet-up",
-      "source": "MU",
-      "date": "2026-08-20T22:45:00.000Z"
+      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
+      "firstSeenAt": "2026-08-07T10:01:31.444Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-10-07T23:00:00.000Z"
     },
     {
-      "key": "MU Football Season Tickets (2026)|2026-09-12T16:00:00.000Z",
-      "firstSeenAt": "2026-08-06T16:00:04.166Z",
-      "title": "MU Football Season Tickets (2026)",
-      "source": "Community",
-      "date": "2026-09-12T16:00:00.000Z"
+      "key": "Planning Commission|2026-10-12T23:00:00.000Z",
+      "firstSeenAt": "2026-08-07T10:01:31.444Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-10-12T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 42
 }

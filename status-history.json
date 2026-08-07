@@ -1872,11 +1872,13 @@
     },
     {
       "date": "2026-08-07",
-      "ts": "2026-08-07T18:54:55.305Z",
+      "ts": "2026-08-07T19:11:34.534Z",
       "totalEvents": 829,
       "sources": {
         "muAthletics": 255,
-        "muCalendar": 135,
+        "muCalendar": 69,
+        "artsmu": 29,
+        "campsAlumni": 39,
         "muGetInvolved": 97,
         "pennManor": 71,
         "borough": 77,
@@ -1890,7 +1892,9 @@
       },
       "newestDates": {
         "muAthletics": "2027-05-01",
-        "muCalendar": "2027-05-02",
+        "muCalendar": "2027-01-01",
+        "artsmu": "2027-05-02",
+        "campsAlumni": "2027-04-03",
         "muGetInvolved": "2027-05-05",
         "pennManor": "2026-09-09",
         "borough": "2026-12-25",
@@ -1902,5 +1906,5 @@
       }
     }
   ],
-  "lastUpdated": "2026-08-07T18:54:55.305Z"
+  "lastUpdated": "2026-08-07T19:11:34.534Z"
 }

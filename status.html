@@ -71,6 +71,32 @@
 
     <div id="grid" class="status-grid"></div>
 
+    <!-- What feeds this page — static legend (D4, 2026-08-07). Lives OUTSIDE
+         #grid because the grid's innerHTML is rebuilt on every render. -->
+    <div class="status-card" style="margin-top:16px;">
+        <details>
+            <summary style="cursor:pointer;font-weight:600;">What feeds this page</summary>
+            <div style="font-size:0.85rem;line-height:1.55;margin-top:10px;">
+                <p style="margin:0 0 6px;"><strong>Events, by row above</strong> — everything refreshes hourly via GitHub Actions:</p>
+                <ul style="margin:0 0 10px;padding-left:1.2em;">
+                    <li><strong>MU Calendar</strong> — millersville.edu/calendar (Coursedog). Athletic Competitions are deliberately excluded here (counted under MU Athletics); "Student Event" rows are republished GetInvolved events and count there instead; alumni-category rows stay in this row.</li>
+                    <li><strong>MU Arts (artsmu.com)</strong> — Ware Center + Winter Center event pages, including Arts Smarts camps; deduped against the calendar at fetch time.</li>
+                    <li><strong>Camps &amp; Alumni sync</strong> — hand-curated camps.json, written by a weekly automation from MU's alumni and camps pages.</li>
+                    <li><strong>MU GetInvolved</strong> — getinvolved.millersville.edu public API, Approved events only. Events restricted to signed-in students are intentionally out of scope. Includes the calendar's "Student Event" republications.</li>
+                    <li><strong>MU Athletics</strong> — millersvilleathletics.com (Sidearm) schedules and scores.</li>
+                    <li><strong>MU Hudl broadcasts</strong> — enrichment, not events: how many athletic events got a PSAC stream link this run.</li>
+                    <li><strong>Penn Manor</strong> — pennmanor.net iCal feeds (a dedicated athletics feed plus the general district feed).</li>
+                    <li><strong>Borough</strong> — the borough's public Google Calendar. Trash/recycling collection days and email-bridge spam are intentionally dropped.</li>
+                    <li><strong>Manor Township · Raney Cellars · The Backyard</strong> — each venue's public iCal feed.</li>
+                    <li><strong>VFW</strong> — the post's event flyers (also feeds the specials rail).</li>
+                    <li><strong>Phantom Power</strong> — Eventbrite/JamBase listings, counted by venue.</li>
+                    <li><strong>Community &amp; place events</strong> — the public event-submission sheet plus standing weekly items (e.g. trivia nights) from partner places.</li>
+                </ul>
+                <p style="margin:0;"><strong>Beyond events:</strong> specials come from the VFW, The Corn Wagon, John Herr's Village Market, and partner-place entries; the weather page combines the NWS forecast with MU's campus weather station daily summary; the business directory and hours come from a curated Google Sheet.</p>
+            </div>
+        </details>
+    </div>
+
     <div class="status-meta">
         <a href="/">← Back to site</a> · Auto-refreshes every 60s ·
         <a href="https://github.com/achoke6/Millersville-PA/actions" target="_blank">GitHub Actions</a>
@@ -140,7 +166,8 @@ const NOISE_FLOOR = 4;
 const SEASONAL_LOW = {
     muGetInvolved:    [6, 7, 8],  // student clubs — summer break, near-zero events
     muCalendar:       [6, 7, 8],  // campus calendar — much quieter over summer
-    muHudlBroadcasts: [6, 7, 8]   // no athletic broadcasts outside the seasons
+    muHudlBroadcasts: [6, 7, 8],  // no athletic broadcasts outside the seasons
+    artsmu:           [6, 7, 8]   // Ware/Winter season is Sep-May; summer is naturally thin
 };
 
 function compareSource(currentValue, history, sourceKey, todayDate) {
@@ -275,12 +302,18 @@ async function render() {
     const sourceList = [
         { label: 'MU Athletics',           key: 'muAthletics' },
         { label: 'MU Calendar',            key: 'muCalendar' },
+        // Un-folded from the MU Calendar count 2026-08-07 — see the legend
+        // below the grid. New keys have no history, so compareSource stays
+        // quiet until a 2-day baseline builds (missing history reads 0 <
+        // NOISE_FLOOR).
+        { label: 'MU Arts (artsmu.com)',   key: 'artsmu' },
+        { label: 'Camps & Alumni sync',    key: 'campsAlumni' },
         { label: 'MU GetInvolved',         key: 'muGetInvolved' },
         { label: 'Penn Manor',             key: 'pennManor' },
         { label: 'Borough',                key: 'borough' },
         { label: 'VFW',                    key: 'vfw' },
         { label: 'Phantom Power',          key: 'phantomPower' },
-        { label: 'Community submissions',  key: 'community' },
+        { label: 'Community & place events', key: 'community' },
         { label: 'Manor Township',         key: 'manor' },
         { label: 'Raney Cellars',          key: 'raneyCellars' },
 		{ label: 'The Backyard',           key: 'theBackyard' },

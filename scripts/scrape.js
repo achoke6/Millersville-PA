@@ -255,6 +255,30 @@ const hGameClubSports = [
 
 // ===== UTILITY FUNCTIONS =====
 
+// Per-feed predicates for the status dashboard's per-source rows (2026-08-07,
+// D1/D2b). Pure + top-level per the harness convention.
+// artsmu.com events are identified by sourceLink — same precedent as the
+// dedupe sourceBucket; tag-shape ('MU' + an arts tag) would silently collide
+// if the MU Calendar ever publishes the same category tags.
+function isArtsmuEvent(e) {
+    return ((e && e.sourceLink) || '').toLowerCase().includes('artsmu.com');
+}
+// camps.json (the weekly alumni/camps Cowork sync) is tag-keyed because its
+// sourceLinks are non-distinctive external pages. Two guards keep this
+// strictly per-feed: (1) the calendar-link guard leaves the MU Calendar's
+// OWN alumni twins (deliberately kept by dedupe — different title-heads) in
+// the calendar row; (2) the artsmu guard leaves Arts Smarts camps in the
+// artsmu row. With the guards in place, 'Alumni Event' can safely be in the
+// tag list, so camps.json's alumni-office rows count here too.
+function isCampsAlumniEvent(e) {
+    const link = ((e && e.sourceLink) || '').toLowerCase();
+    if (link.includes('millersville.edu/calendar')) return false;
+    if (isArtsmuEvent(e)) return false;
+    const t = (e && e.tags) || [];
+    return t.includes('Summer Camp') || t.includes('Athletic Camp') ||
+           t.includes('Summer Fun Series') || t.includes('Alumni Event');
+}
+
 function extractPricing(desc, title = "", location = "", apiLink = "") {
     // Etix direct ticket links for known MU events
     const etixEvents = [
@@ -304,6 +328,27 @@ function extractPricing(desc, title = "", location = "", apiLink = "") {
                 }
             }
             if (bestLink) link = bestLink;
+        }
+        // Bare-domain ticket fallback (2026-08-07): some descriptions name a
+        // ticketing site with no scheme and no anchor ("Tickets go on sale
+        // Sunday, July 19th at 3LWTIX.com" — the 3 Legacies Wrestling case).
+        // MU's calendar popup builds its Buy Tickets button from exactly this
+        // text; the Coursedog proxy carries NO ticket field (probed
+        // 2026-08-07 — record keys fully inventoried, no detail endpoint).
+        // Double-gated: only when the link hunt above found NOTHING, and the
+        // domain must sit in the SAME SENTENCE as the word "ticket(s)"
+        // ([^.!?] cannot cross a sentence boundary), so "Tickets at the
+        // door. Follow us at ourclub.com" never matches. (?<!@) blocks
+        // domains inside email addresses; the host blocklist drops social/
+        // mail hosts. Worst realistic miss: a non-ticket org site named in
+        // the ticket sentence — wrong-but-harmless link to the org's page.
+        if (!link) {
+            const plainForTickets = desc.replace(/<[^>]+>/g, ' ');
+            const bareDomainMatch = plainForTickets.match(/tickets?[^.!?]*?(?<!@)\b((?:[a-z0-9][a-z0-9-]*\.)+(?:com|org|net))\b/i);
+            if (bareDomainMatch &&
+                !/^(www\.)?(facebook|instagram|twitter|x|youtube|tiktok|gmail|yahoo|outlook|hotmail|aol)\./i.test(bareDomainMatch[1])) {
+                link = 'https://' + bareDomainMatch[1];
+            }
         }
     }
     if (!link && price !== "Free") {
@@ -5474,6 +5519,25 @@ async function runScraper() {
                 latest: new Date(maxMs).toISOString()
             };
         };
+        // Predicate-only variant of dateRangeFor, for feeds identified by
+        // sourceLink / tag-set rather than a single tag (artsmu, camps.json).
+        // Same return shape and null-on-empty behavior.
+        const dateRangeForPred = (pred) => {
+            const matched = deduped.filter(pred);
+            if (matched.length === 0) return null;
+            let minMs = Infinity, maxMs = -Infinity;
+            for (const e of matched) {
+                const ms = new Date(e.date).getTime();
+                if (!Number.isFinite(ms)) continue;
+                if (ms < minMs) minMs = ms;
+                if (ms > maxMs) maxMs = ms;
+            }
+            if (!Number.isFinite(minMs)) return null;
+            return {
+                earliest: new Date(minMs).toISOString(),
+                latest: new Date(maxMs).toISOString()
+            };
+        };
         const pastSports = deduped.filter(e =>
             (e.tags || []).includes('Athletics') || (e.tags || []).includes('Athletic Competitions')
         ).filter(e => e.gameResult && e.gameScore);
@@ -5500,7 +5564,12 @@ async function runScraper() {
             // Per-source counts (after dedupe)
             sources: {
                 muAthletics: bySourceCount('MU', e => (e.tags || []).includes('Athletics') || (e.tags || []).includes('Athletic Competitions')),
-                muCalendar: bySourceCount('MU', e => !(e.tags || []).includes('Athletics') && !(e.tags || []).includes('Clubs/Orgs')),
+                muCalendar: bySourceCount('MU', e => !(e.tags || []).includes('Athletics') && !(e.tags || []).includes('Clubs/Orgs') && !isArtsmuEvent(e) && !isCampsAlumniEvent(e)),
+                // Un-folded from muCalendar 2026-08-07 (D1/D2b): both feeds
+                // previously hid inside the calendar count, so either dying
+                // was invisible to the per-source degradation detector.
+                artsmu: deduped.filter(isArtsmuEvent).length,
+                campsAlumni: deduped.filter(isCampsAlumniEvent).length,
                 muGetInvolved: bySourceCount('Clubs/Orgs'),
                 pennManor: bySourceCount('PM'),
                 borough: bySourceCount('Borough'),
@@ -5532,7 +5601,9 @@ async function runScraper() {
             // enrichment count, not a set of events with their own dates.
             sourceDateRanges: {
                 muAthletics: dateRangeFor('MU', e => (e.tags || []).includes('Athletics') || (e.tags || []).includes('Athletic Competitions')),
-                muCalendar: dateRangeFor('MU', e => !(e.tags || []).includes('Athletics') && !(e.tags || []).includes('Clubs/Orgs')),
+                muCalendar: dateRangeFor('MU', e => !(e.tags || []).includes('Athletics') && !(e.tags || []).includes('Clubs/Orgs') && !isArtsmuEvent(e) && !isCampsAlumniEvent(e)),
+                artsmu: dateRangeForPred(isArtsmuEvent),
+                campsAlumni: dateRangeForPred(isCampsAlumniEvent),
                 muGetInvolved: dateRangeFor('Clubs/Orgs'),
                 pennManor: dateRangeFor('PM'),
                 borough: dateRangeFor('Borough'),
@@ -5577,7 +5648,9 @@ async function runScraper() {
                 const out = {};
                 const newestPerSource = {
                     muAthletics: dateRangeFor('MU', e => (e.tags || []).includes('Athletics') || (e.tags || []).includes('Athletic Competitions'))?.latest,
-                    muCalendar: dateRangeFor('MU', e => !(e.tags || []).includes('Athletics') && !(e.tags || []).includes('Clubs/Orgs'))?.latest,
+                    muCalendar: dateRangeFor('MU', e => !(e.tags || []).includes('Athletics') && !(e.tags || []).includes('Clubs/Orgs') && !isArtsmuEvent(e) && !isCampsAlumniEvent(e))?.latest,
+                    artsmu: dateRangeForPred(isArtsmuEvent)?.latest,
+                    campsAlumni: dateRangeForPred(isCampsAlumniEvent)?.latest,
                     muGetInvolved: dateRangeFor('Clubs/Orgs')?.latest,
                     pennManor: dateRangeFor('PM')?.latest,
                     borough: dateRangeFor('Borough')?.latest,

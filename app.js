@@ -6772,7 +6772,7 @@ function initPlacesMap(){
     placesMap.on('locationfound', placesMapOnLocation);
     placesMap.on('locationerror', placesMapOnLocationError);
         refreshPlacesMap();
-        setTimeout(()=>{ placesMap.invalidateSize(); placesMapFitVisible(); }, 60);   // frame every listed place once the container size is right
+        setTimeout(()=>{ placesMap.invalidateSize(); }, 60);   // size-settle only — initial view stays the PLACES_MAP_CFG town default (2026-08-07: fit-to-all zoomed way out once 30 campus pins + the Manor Falls outlier joined; outliers now start off-screen by design)
     }).catch(e => {
         // Vendor asset failed (offline first visit, bad deploy). The map stays
         // hidden and the directory list is completely unaffected.
@@ -6967,7 +6967,7 @@ window.focusPlaceOnMap = function(pOrSlug){
 ['places-container', 'housing-container'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener('click', ev => {
-        if (ev.target.closest('a,button,details')) return;
+        if (ev.target.closest('a,button,summary')) return;   // summary, NOT details: a details ancestor swallowed every campus-group card tap (fixed 2026-08-07)
         const card = ev.target.closest('[data-place]');
         if (card) focusPlaceOnMap(card.getAttribute('data-place'));
     });
@@ -7079,6 +7079,7 @@ window.setPlacesFilter=function(cat,btn){
     const menu = document.getElementById('places-filter-menu');
     if (menu) menu.style.display = 'none';
     renderPlaces();
+    placesMapFitVisible();   // frame the chip's pin set — pins were just rebuilt inside renderPlaces (refreshPlacesMap); matches the lens toggles' reframe behavior (2026-08-07)
 };
 
 // Marauder Gold filter — ANDs with the category chip. When active, only entries
@@ -7457,11 +7458,6 @@ function applyPlacesCardFit(pc){
 }
 
 function renderPlaces(){
-    // MU-only toolbar extra: the official campus map link (index.html, hidden
-    // by default). Toggled here because renderPlaces re-runs on every
-    // affiliation switch — same pattern as the housing audience filter.
-    const cml = document.getElementById('places-campus-map-link');
-    if (cml) cml.style.display = (muAffiliation === 'student') ? '' : 'none';
     renderHousing();        // §9: housing tracks audience + affiliation switches
     refreshPlacesMap();     // pins mirror the same filters as the list (no-op until map init)
     // Marauder Gold is an MU campus payment card, so its filter toggle is only
@@ -7576,8 +7572,8 @@ function renderPlaces(){
         const campusList = filtered.filter(p => p.category === 'Campus');
         if (campusList.length) {
             filtered = filtered.filter(p => p.category !== 'Campus');
-            campusGroup = `<details class="place-group" style="grid-column:1/-1;"><summary style="cursor:pointer;font-weight:700;padding:8px 0;">🏛 Campus<span class="day-count">${campusList.length} place${campusList.length===1?'':'s'}</span></summary>`
-                + campusList.map(p => buildServiceCard(p)).join('') + '</details>';
+            campusGroup = `<details class="place-group" style="grid-column:1/-1;"><summary style="cursor:pointer;font-weight:700;padding:8px 0;">🏛 Campus<span class="day-count" style="font-size:0.7rem;font-weight:500;color:var(--text-muted);margin-left:8px;">${campusList.length} place${campusList.length===1?'':'s'}</span></summary><div class="card-grid" style="margin-top:4px;">`
+                + campusList.map(p => buildServiceCard(p)).join('') + '</div></details>';   // inner card-grid (EXISTING class, no new CSS rule): details children aren't grid items of #places-container, so gap/columns were lost; day-count style inline — the CSS rule is scoped to .day-group-header
         }
     }
     const cards = filtered.map(p => {
@@ -7680,7 +7676,7 @@ function buildFoodCard(p, specials, dayName) {
 function buildServiceCard(p) {
     const svcDayName = new Date().toLocaleDateString('en-US',{weekday:'long'});
     const specialsHtml = placeSpecialsSectionHtml(placeSlug(p), svcDayName);   // e.g. The Corn Wagon — Shopping listing with a specials entry
-    const catIcons={'Government':'🏛','Health':'🏥','Beauty/Grooming':'💈','Shopping':'🛒','Recreation':'🏞','Transport':'🚌','Finance':'🏦','Shipping':'📦','Entertainment':'🎵','Education':'📚','Mechanic':'🔧','Gas Station':'⛽','EV Charging':'🔌','Housing':'🏠','Home Services':'🔨','Real Estate':'🏘','Venue':'🎉','Lodging':'🛏','Services':'🛠','Student Housing':'🎓'};
+    const catIcons={'Government':'🏛','Health':'🏥','Beauty/Grooming':'💈','Shopping':'🛒','Recreation':'🏞','Transport':'🚌','Finance':'🏦','Shipping':'📦','Entertainment':'🎵','Education':'📚','Mechanic':'🔧','Gas Station':'⛽','EV Charging':'🔌','Housing':'🏠','Home Services':'🔨','Real Estate':'🏘','Venue':'🎉','Lodging':'🛏','Services':'🛠','Student Housing':'🎓','Campus':'🏛'};
     const icon = catIcons[p.category] || '🏢';
     const mba = mbaBadge(p.name);
     const ratingRow = '';   // star ratings retired with the review system (2026-07)
@@ -7688,6 +7684,10 @@ function buildServiceCard(p) {
     const phone = p.phone ? `<a href="tel:${p.phone.replace(/[^+\d]/g,'')}" style="font-weight:600;font-size:0.85rem;color:var(--text);text-decoration:none;">📞 ${p.phone}</a>` : '';
     const site = p.gasLink ? `<a href="${p.gasLink}" target="_blank" class="btn btn-sm btn-outline" style="font-size:0.75rem;">⛽ Prices</a>` :
                  p.link ? `<a href="${p.link}" target="_blank" class="btn btn-sm btn-outline" style="font-size:0.75rem;">🌐 Visit</a>` : '';
+    // Campus rows (and any sparse sheet row) may have empty address/description
+    // cells — suppress the line instead of rendering a bare "📍" / empty <p> (2026-08-07).
+    const addrLine = p.address ? `<p class="card-meta" style="margin-bottom:4px;">📍 ${p.address}</p>` : '';
+    const descLine = p.description ? `<p style="font-size:0.85rem;color:var(--text-muted);margin:8px 0;">${p.description}</p>` : '';
 
     // Enhanced listing for Featured Spotlight buyers: logo header, marketing
     // tagline, gold-accented card, and a hook for live-feed content (scraped
@@ -7713,9 +7713,9 @@ function buildServiceCard(p) {
             <h3 class="card-title" style="margin-top:6px;">${p.name}</h3>
             ${taglineHtml}
             ${ratingRow}
-            <p class="card-meta" style="margin-bottom:4px;">📍 ${p.address}</p>
+            ${addrLine}
             ${hours}
-            <p style="font-size:0.85rem;color:var(--text-muted);margin:8px 0;">${p.description}</p>
+            ${descLine}
             ${liveFeedHtml}${specialsHtml}${eventsHtml}
             <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:auto;">
                 ${phone}
@@ -7733,9 +7733,9 @@ function buildServiceCard(p) {
         </div>
         <h3 class="card-title" style="margin-top:6px;">${p.name}</h3>
         ${ratingRow}
-        <p class="card-meta" style="margin-bottom:4px;">📍 ${p.address}</p>
+        ${addrLine}
         ${hours}
-        <p style="font-size:0.85rem;color:var(--text-muted);margin:8px 0;">${p.description}</p>
+        ${descLine}
         ${specialsHtml}${eventsHtml}
         <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:auto;">
             ${phone}

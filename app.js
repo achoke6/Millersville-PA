@@ -5017,12 +5017,12 @@ function buildEventCard(e,isSportsPage){
     // Uses sourceLink when available; otherwise title+date as a fallback (matches the
     // composite key strategy used by openEventDetails and search hit-handling).
     const cardKey = getEventKey(e).replace(/"/g, '&quot;');
-    const calBtn = `<button class="btn-cal" data-cardkey="${cardKey}" onclick="event.stopPropagation();addToCalendar(this)" title="Add to calendar" aria-label="Add to calendar">📥</button>`;
+    const calBtn = '';   // 📥 RETIRED 2026-08-07 (declutter).
     // Share button — uses Web Share API on mobile (native share sheet with
     // iMessage/AirDrop/Slack/etc.) and falls back to clipboard copy on
     // desktop browsers where navigator.share is undefined. Visual feedback
     // (✓) on the button itself confirms the copy worked on the fallback path.
-    const shareBtn = `<button class="btn-share" data-cardkey="${cardKey}" onclick="event.stopPropagation();shareEvent(this)" title="Share" aria-label="Share">🔗</button>`;
+    const shareBtn = '';   // 🔗 RETIRED 2026-08-07 (declutter).
 
     // Whole-card click opens the detail modal — the same one used by homepage
     // timeline and search results. All interactive children (star, calendar,
@@ -5759,13 +5759,9 @@ window.openEventDetails = function(key) {
     }
     // Calendar action — uses the same key scheme as card buttons so addToCalendar can find it
     const modalCardKey = getEventKey(e).replace(/"/g, '&quot;');
-    actions += `<button class="btn btn-sm btn-outline" data-cardkey="${modalCardKey}" onclick="addToCalendar(this)" style="cursor:pointer;">📅 Add to Calendar</button>`;
-    // 🧭 Directions (2026-08-07): 2-tier resolver — linked place lat/lng or a
-    // text-query fallback. Empty string = unresolvable/blocklisted → no
-    // button. URL is "lat,lng" or fully encodeURIComponent'd — attr-safe.
-    const dirUrl = eventDirectionsUrl(e);
-    if (dirUrl) actions += `<a href="${dirUrl}" target="_blank" rel="noopener" class="btn btn-sm btn-outline" style="text-decoration:none;">🧭 Directions</a>`;
-    actions += `<button class="btn btn-sm btn-outline" data-cardkey="${modalCardKey}" onclick="shareEvent(this)" style="cursor:pointer;">🔗 Share</button>`;
+    // Add to Calendar / Share / Directions RETIRED from the event modal
+    // 2026-08-07 (declutter, Adam). Owed follow-up: mini locator map atop
+    // coords-resolved modals (ev._venuePlace). Core CTA + View Source remain.
     // Source link labeling: for past sports games, promote it to "Game Recap
     // & Box Score" since the target URL is the MaxPreps/MU Athletics recap
     // page where inning/quarter box scores and recap articles live. Other
@@ -6830,35 +6826,6 @@ function placeEventsToday(p){
 function placeNextUpcoming(p){
     const today = new Date().toDateString();
     return (_placeEvents.get(placeSlug(p)) || []).find(e => e.t > Date.now() && new Date(e.t).toDateString() !== today) || null;
-}
-// ─── Event → Directions resolver v2 (2026-08-07) ───
-// Gives every event-detail modal a 🧭 Directions link when its location is
-// resolvable. Two tiers, first hit wins:
-//   (1) linked directory place (ev._venuePlace, stamped by linkEventsToPlaces)
-//       → the place's lat/lng — the same precision pin popups use. With the
-//       campus rows Active, this covers campus buildings, rooms (they attach
-//       to their building via name containment), and every matched business.
-//       A matched place WITHOUT coords (blank lat/lng cells) falls through.
-//   (2) text-query fallback: the raw location string straight into the Google
-//       directions URL — named venues, embedded street addresses, and
-//       away-game cities resolve with zero data maintenance.
-// Suppressed for blocklisted/too-short locations. NOTE: genericLoc is
-// deliberately NOT reused — it marks real venues whose names are redundant
-// with the source pill (e.g. Raney), exactly where directions SHOULD work.
-// (v1's venue-directions.json table was superseded by campus directory rows
-// before it ever shipped — place coords now carry that load.)
-const EVENT_DIR_BLOCKLIST = new Set(['tbd','tba','campus','campuswide','online','virtual','zoom','various','various locations','multiple locations','penn manor school district']);
-function eventDirectionsUrl(e){
-    const rawLoc = ((e && e.location) || '').trim();
-    if (!rawLoc) return '';
-    const loc = normVenue(rawLoc);
-    if (!loc || loc.length < 3 || EVENT_DIR_BLOCKLIST.has(loc)) return '';
-    if (e._venuePlace){
-        const p = (allPlaces || []).find(pl => placeSlug(pl) === e._venuePlace);
-        if (p && typeof p.lat === 'number' && typeof p.lng === 'number')
-            return `https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lng}`;
-    }
-    return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(rawLoc)}`;
 }
 // The Today-lens predicate — used by BOTH the list filter and the pin filter,
 // so the two-spot mirror stays in agreement through one function.

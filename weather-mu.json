@@ -126,74 +126,7 @@
       }
     ]
   },
-  "observations": [
-    {
-      "time": "05:00",
-      "temp": "71",
-      "dewpoint": "71",
-      "rh": "100",
-      "windDir": "E",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "0.27",
-      "condition": "Fog"
-    },
-    {
-      "time": "04:00",
-      "temp": "72",
-      "dewpoint": "72",
-      "rh": "100",
-      "windDir": "S",
-      "windSpeed": "1",
-      "precip": "0.01",
-      "visibility": "1.2",
-      "condition": "Mist"
-    },
-    {
-      "time": "03:00",
-      "temp": "72",
-      "dewpoint": "72",
-      "rh": "99",
-      "windDir": "SE",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "0.33",
-      "condition": "Fog"
-    },
-    {
-      "time": "02:00",
-      "temp": "73",
-      "dewpoint": "72",
-      "rh": "99",
-      "windDir": "SSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "0.30",
-      "condition": "Fog"
-    },
-    {
-      "time": "01:00",
-      "temp": "74",
-      "dewpoint": "73",
-      "rh": "99",
-      "windDir": "NNE",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "7.2",
-      "condition": "None"
-    },
-    {
-      "time": "00:00",
-      "temp": "74",
-      "dewpoint": "73",
-      "rh": "99",
-      "windDir": "S",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "3.6",
-      "condition": "None"
-    }
-  ],
+  "observations": [],
   "dailySummary": {
     "monthLabel": "August 2026",
     "days": [
@@ -312,5 +245,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-08-07T09:59:27.094Z"
+  "updated": "2026-08-07T11:00:50.241Z"
 }

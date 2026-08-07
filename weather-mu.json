@@ -1,11 +1,11 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Friday, August 07, 2026 at 07:46 AM (Kyle Elliott, Meteorologist)",
+    "issued": "Friday, August 07, 2026 at 11:57 AM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "Today",
-        "text": "Increasing clouds, hot and steamy with afternoon showers and thunderstorms. High: 88-92"
+        "period": "This afternoon",
+        "text": "Increasing clouds, hot and steamy with scattered showers and thunderstorms. High: 88-92"
       },
       {
         "period": "Tonight",
@@ -128,6 +128,17 @@
   },
   "observations": [
     {
+      "time": "12:00",
+      "temp": "86",
+      "dewpoint": "74",
+      "rh": "69",
+      "windDir": "SSE",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "10.9",
+      "condition": "None"
+    },
+    {
       "time": "11:00",
       "temp": "85",
       "dewpoint": "75",
@@ -181,17 +192,6 @@
       "precip": "0.00",
       "visibility": "0.70",
       "condition": "Mist"
-    },
-    {
-      "time": "06:00",
-      "temp": "71",
-      "dewpoint": "71",
-      "rh": "100",
-      "windDir": "SSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "0.26",
-      "condition": "Fog"
     }
   ],
   "dailySummary": {
@@ -272,9 +272,9 @@
     "yearMinDate": "January 21"
   },
   "discussion": {
-    "headline": "\"dog days\" of summer live up to their name through the weekend",
-    "dateLine": "12:15 p.m. Tuesday, August 4, 2026",
-    "excerpt": "Due primarily to warm nights and the record-breaking, early-month heatwave, aggregate temperatures in July 2026 ended up about 2.5°F above average at Millersville University (see below). Monthly rainfall amounts varied greatly from county-to-county and neighborhood-to-neighborhood thanks to frequent bouts of scattered, hit-or-miss thunderstorms. …",
+    "headline": "\"dog days\" of summer live up to their name through Early Next week",
+    "dateLine": "11:45 a.m. Friday, August 7, 2026, Update",
+    "excerpt": "Following a pleasant start to the week, southwesterly flow returned on Wednesday and ushered much hotter and steamier air back into the mid-Atlantic States. Along with the heat and humidity came showers and locally heavy, drenching thunderstorms. In fact, parts of York, Adams and Cumberland Counties received as much as 2-3\" of rain from Thursday afternoon's storms, and wind gusts reached 50-60 mph in a few spots (see below). …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -312,5 +312,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-08-07T15:57:11.635Z"
+  "updated": "2026-08-07T16:52:02.907Z"
 }

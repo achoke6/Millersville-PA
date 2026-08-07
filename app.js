@@ -5777,6 +5777,10 @@ window.openEventDetails = function(key) {
     // linkEventsToPlaces ev._venuePlace stamp. Core CTA + View Source remain.
     // (The dead modalCardKey const -- the retired calendar button's key
     // plumbing -- was removed with the map patch.)
+    // 🧭 Directions RESTORED same-day (2026-08-07) in coords-anchored form --
+    // see the hasVenueCoords append in the mini-map block below. It renders
+    // exactly when the map does, so it can never target a text-query guess
+    // the way the retired button could. Calendar/Share stay retired.
     // Source link labeling: for past sports games, promote it to "Game Recap
     // & Box Score" since the target URL is the MaxPreps/MU Athletics recap
     // page where inning/quarter box scores and recap articles live. Other
@@ -5809,6 +5813,19 @@ window.openEventDetails = function(key) {
     // "numeric lat/lng" means numbers, not numeric strings.
     const venuePlace = e._venuePlace ? (allPlaces || []).find(p => placeSlug(p) === e._venuePlace) : null;
     const hasVenueCoords = !!(venuePlace && Number.isFinite(venuePlace.lat) && Number.isFinite(venuePlace.lng));
+
+    // 🧭 Directions (2026-08-07, same-day follow-up to the declutter): appended
+    // to the actions row ONLY when the mini map renders -- coords-anchored, so
+    // unlike the retired button it never falls back to a text-query guess.
+    // Destination mirrors placesMapPopup's q byte-for-byte: "name, address"
+    // when the listing has one, raw "lat,lng" otherwise. Appended AFTER the
+    // source/info button (contextual affordances sit last), and it alone can
+    // materialize the actions row for an otherwise-linkless event.
+    if (hasVenueCoords){
+        const destQ = encodeURIComponent(venuePlace.address ? (venuePlace.name + ', ' + venuePlace.address) : (venuePlace.lat + ',' + venuePlace.lng));
+        actions += `<a href="https://www.google.com/maps/dir/?api=1&destination=${destQ}" target="_blank" rel="noopener" class="btn btn-sm btn-outline" style="text-decoration:none;">🧭 Directions</a>`;
+    }
+
     // Slot bleeds edge-to-edge past the modal's 24px padding (negative
     // margins -- inline styles only, Hard Rule 2) with top corners matching
     // the modal radius; gold-soft "Loading map…" placeholder until tiles

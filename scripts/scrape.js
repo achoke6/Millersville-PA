@@ -438,7 +438,8 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
 }
 
 // Decode the HTML entities that actually appear in scraped titles/descriptions:
-// straight + curly apostrophes and quotes, &, <, >, nbsp. Ampersand is decoded
+// straight + curly apostrophes and quotes, en/em dashes, ellipsis, &, <, >,
+// nbsp (named + &#160;). Ampersand is decoded
 // LAST so an already-escaped sequence like "&amp;lt;" stays "&lt;" instead of
 // collapsing to "<". Idempotent on clean text (a second pass finds no entities).
 function decodeEntities(str) {
@@ -449,6 +450,11 @@ function decodeEntities(str) {
         .replace(/&nbsp;/g, ' ')
         .replace(/&lt;/g, '<')
         .replace(/&gt;/g, '>')
+        .replace(/&lsquo;|&#8216;/g, "'")
+        .replace(/&ndash;|&#8211;/g, '\u2013')
+        .replace(/&mdash;|&#8212;/g, '\u2014')
+        .replace(/&hellip;|&#8230;/g, '\u2026')
+        .replace(/&#0?160;/g, ' ')
         .replace(/&#0?38;|&amp;/g, '&');
 }
 
@@ -5219,13 +5225,26 @@ async function runScraper() {
     // to keep events.json size manageable — 600 chars is enough for a useful preview.
     deduped.forEach(e => {
         if (e.description && typeof e.description === 'string') {
-            // Strip HTML tags and collapse whitespace
-            const plain = e.description.replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').replace(/&#0?39;/g, "'").replace(/&quot;/g, '"').replace(/\s+/g, ' ').trim();
+            // Strip HTML tags, decode entities via the shared decodeEntities
+            // helper (2026-08-07 -- the inline 4-entity chain here missed
+            // &ndash;/&ldquo;/&rdquo;/&rsquo;, which rendered as raw text in
+            // GetInvolved descriptions on cards + the event modal), then
+            // collapse whitespace. Decode-before-truncate also stops the 600
+            // cut from splitting an entity mid-sequence.
+            const plain = decodeEntities(e.description.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
             e.description = plain.length > 600 ? plain.slice(0, 600).trim() + '…' : plain;
             if (!e.description) delete e.description;
         } else {
             delete e.description;
         }
+        // Title + location get the same decode (2026-08-07): single-line
+        // fields that feeds pre-encode too. Raw entities in `location`
+        // additionally pollute normVenue tokens on the app's venue-matching
+        // side ("&ndash;" survives punctuation-stripping as a literal
+        // "ndash" word). Every render site escHtml's these, so decoded
+        // <'s and &'s stay inert text.
+        if (typeof e.title === 'string')    e.title    = decodeEntities(e.title).replace(/\s+/g, ' ').trim();
+        if (typeof e.location === 'string') e.location = decodeEntities(e.location).replace(/\s+/g, ' ').trim();
     });
     // Slim pass before write: events.json gets fetched by every page load and
     // is the largest file the frontend downloads. Strip empty/redundant fields
@@ -5259,14 +5278,18 @@ async function runScraper() {
             }
         }
     }
+    // Strip C0/C1 control chars from all event string fields BEFORE
+    // serializing. A stray char like U+0002 (a mangled "multi-day") is valid
+    // once JSON-escaped, but Google's structured-data parser rejects it
+    // ("Incorrect value type"), and it renders as a gap on cards. Keep
+    // tab/newline/CR. (2026-08-07 fix: this pass previously ran AFTER
+    // JSON.stringify(deduped) and iterated the pre-dedupe `events` array --
+    // the serialized file never saw the strip, so the documented
+    // sanitization was a no-op on disk. Reordered + retargeted.)
+    const CTRL = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F]/g;
+    for (const ev of deduped) for (const k in ev) if (typeof ev[k] === 'string') ev[k] = ev[k].replace(CTRL, ' ');
     const slimJson = JSON.stringify(deduped);  // No pretty-print — wire format
     afterBytes = slimJson.length;
-	// Strip C0/C1 control chars from all event string fields before writing.
-	// A stray char like U+0002 (a mangled "multi-day") is valid once JSON-escaped,
-	// but Google's structured-data parser rejects it ("Incorrect value type"), and
-	// it renders as a gap on cards. Keep tab/newline/CR.
-	const CTRL = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F]/g;
-	for (const ev of events) for (const k in ev) if (typeof ev[k] === 'string') ev[k] = ev[k].replace(CTRL, ' ');
     fs.writeFileSync(path.join(__dirname, '../events.json'), slimJson);
     if (beforeBytes > 0) {
         const reductionPct = Math.round((1 - afterBytes / beforeBytes) * 100);

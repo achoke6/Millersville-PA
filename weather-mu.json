@@ -1,29 +1,8 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Friday, August 07, 2026 at 11:57 AM (Kyle Elliott, Meteorologist)",
-    "periods": [
-      {
-        "period": "This afternoon",
-        "text": "Increasing clouds, hot and steamy with scattered showers and thunderstorms. High: 88-92"
-      },
-      {
-        "period": "Tonight",
-        "text": "Partly cloudy, warm and muggy with an evening shower or thunderstorm. Low: 68-72"
-      },
-      {
-        "period": "Saturday",
-        "text": "Partly sunny, warm and humid with afternoon showers and thunderstorms. High: 86-90"
-      },
-      {
-        "period": "Saturday Night",
-        "text": "Mainly clear, warm and muggy. Low: 68-72"
-      },
-      {
-        "period": "Sunday",
-        "text": "Mostly sunny, hot and humid. High: 88-92"
-      }
-    ]
+    "issued": "",
+    "periods": []
   },
   "sevenDay": {
     "issued": "Friday, August 07, 2026 at 08:17 AM (Kyle Elliott)",
@@ -128,6 +107,17 @@
   },
   "observations": [
     {
+      "time": "12:00",
+      "temp": "87",
+      "dewpoint": "71",
+      "rh": "60",
+      "windDir": "W",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "10.0",
+      "condition": "None"
+    },
+    {
       "time": "11:00",
       "temp": "84",
       "dewpoint": "72",
@@ -180,17 +170,6 @@
       "windSpeed": "1",
       "precip": "0.00",
       "visibility": "9.2",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "70",
-      "dewpoint": "69",
-      "rh": "98",
-      "windDir": "S",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "6.3",
       "condition": "None"
     }
   ],
@@ -334,5 +313,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-08-09T15:29:10.002Z"
+  "updated": "2026-08-09T16:31:53.107Z"
 }

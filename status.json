@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-09T07:54:26.794Z",
+  "generatedAt": "2026-08-09T08:41:21.956Z",
   "totalEvents": 867,
   "withDescription": 331,
   "withImage": 45,
@@ -55,7 +55,7 @@
       "latest": "2026-09-11T17:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-08-09T00:00:00.000Z",
+      "earliest": "2026-08-15T00:00:00.000Z",
       "latest": "2026-10-04T00:00:00.000Z"
     },
     "community": {
@@ -149,9 +149,16 @@
       "PM Community": 1
     },
     "stalePast": 7,
-    "lastSyncAt": "2026-08-09T07:52:19.455Z"
+    "lastSyncAt": "2026-08-09T08:39:07.952Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Disney Dance Party|2026-09-05T16:30:00.000Z",
+      "firstSeenAt": "2026-08-09T08:41:21.954Z",
+      "title": "Disney Dance Party",
+      "source": "Other",
+      "date": "2026-09-05T16:30:00.000Z"
+    },
     {
       "key": "Lancaster Print Crawl feat. Mark & Jordan Rast|2026-09-04T21:00:00.000Z",
       "firstSeenAt": "2026-08-08T21:29:48.903Z",
@@ -214,14 +221,7 @@
       "title": "Planning Commission",
       "source": "Manor",
       "date": "2026-09-14T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
-      "firstSeenAt": "2026-08-08T18:36:10.254Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-09-30T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

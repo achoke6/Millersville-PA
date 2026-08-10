@@ -1979,10 +1979,10 @@
     },
     {
       "date": "2026-08-10",
-      "ts": "2026-08-10T09:22:48.781Z",
-      "totalEvents": 567,
+      "ts": "2026-08-10T11:08:42.568Z",
+      "totalEvents": 865,
       "sources": {
-        "muAthletics": 0,
+        "muAthletics": 255,
         "muCalendar": 69,
         "artsmu": 26,
         "campsAlumni": 39,
@@ -1992,12 +1992,13 @@
         "vfw": 6,
         "phantomPower": 14,
         "community": 22,
-        "manor": 0,
+        "manor": 43,
         "raneyCellars": 6,
         "theBackyard": 10,
         "muHudlBroadcasts": 0
       },
       "newestDates": {
+        "muAthletics": "2027-05-01",
         "muCalendar": "2027-01-01",
         "artsmu": "2027-05-02",
         "campsAlumni": "2027-04-03",
@@ -2007,10 +2008,11 @@
         "vfw": "2026-09-11",
         "phantomPower": "2026-10-04",
         "community": "2027-04-16",
+        "manor": "2027-08-04",
         "raneyCellars": "2026-08-15",
         "theBackyard": "2026-09-30"
       }
     }
   ],
-  "lastUpdated": "2026-08-10T09:22:48.781Z"
+  "lastUpdated": "2026-08-10T11:08:42.568Z"
 }

@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-08-10T13:04:58.324Z",
-  "totalEvents": 865,
-  "withDescription": 331,
+  "generatedAt": "2026-08-10T14:32:24.952Z",
+  "totalEvents": 826,
+  "withDescription": 334,
   "withImage": 45,
   "familyFriendly": 68,
-  "eventsToday": 2,
+  "eventsToday": 1,
   "sources": {
     "muAthletics": 255,
     "muCalendar": 69,
-    "artsmu": 26,
+    "artsmu": 27,
     "campsAlumni": 39,
-    "muGetInvolved": 97,
+    "muGetInvolved": 98,
     "pennManor": 68,
     "borough": 76,
-    "vfw": 6,
+    "vfw": 8,
     "phantomPower": 14,
     "community": 22,
-    "manor": 43,
+    "manor": 0,
     "raneyCellars": 6,
     "theBackyard": 10,
     "muHudlBroadcasts": 0
@@ -52,7 +52,7 @@
     },
     "vfw": {
       "earliest": "2026-08-04T22:00:00.000Z",
-      "latest": "2026-09-11T17:00:00.000Z"
+      "latest": "2026-10-15T20:30:00.000Z"
     },
     "phantomPower": {
       "earliest": "2026-08-15T00:00:00.000Z",
@@ -62,10 +62,7 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-08-10T23:00:00.000Z",
-      "latest": "2027-08-04T23:00:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-08-05T20:00:00.000Z",
       "latest": "2026-08-15T22:00:00.000Z"
@@ -105,8 +102,8 @@
       "daysSinceMoved": 13
     },
     "vfw": {
-      "newest": "2026-09-11",
-      "daysSinceMoved": 67
+      "newest": "2026-10-15",
+      "daysSinceMoved": 0
     },
     "phantomPower": {
       "newest": "2026-10-04",
@@ -116,10 +113,7 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 66
     },
-    "manor": {
-      "newest": "2027-08-04",
-      "daysSinceMoved": 6
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-08-15",
       "daysSinceMoved": 11
@@ -149,29 +143,36 @@
       "PM Community": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-08-10T13:02:20.775Z"
+    "lastSyncAt": "2026-08-10T14:30:33.023Z"
   },
   "recentlyAdded": [
     {
-      "key": "Planning Commission-CANCELED|2026-08-10T23:00:00.000Z",
-      "firstSeenAt": "2026-08-10T11:08:42.566Z",
-      "title": "Planning Commission-CANCELED",
-      "source": "Manor",
-      "date": "2026-08-10T23:00:00.000Z"
+      "key": "Make Cruisin' Fun Again|2026-09-17T20:30:00.000Z",
+      "firstSeenAt": "2026-08-10T14:32:24.950Z",
+      "title": "Make Cruisin' Fun Again",
+      "source": "Other",
+      "date": "2026-09-17T20:30:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-08-12T23:00:00.000Z",
-      "firstSeenAt": "2026-08-10T11:08:42.566Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-08-12T23:00:00.000Z"
+      "key": "Make Cruisin' Fun Again|2026-10-15T20:30:00.000Z",
+      "firstSeenAt": "2026-08-10T14:32:24.950Z",
+      "title": "Make Cruisin' Fun Again",
+      "source": "Other",
+      "date": "2026-10-15T20:30:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
-      "firstSeenAt": "2026-08-10T11:08:42.566Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-08-26T12:30:00.000Z"
+      "key": "December Commencement|2026-12-12T14:00:00",
+      "firstSeenAt": "2026-08-10T14:32:24.950Z",
+      "title": "December Commencement",
+      "source": "MU",
+      "date": "2026-12-12T14:00:00"
+    },
+    {
+      "key": "LBBB presents “Our Best Brass Christmas”|2026-12-20T20:00:00.000Z",
+      "firstSeenAt": "2026-08-10T14:32:24.950Z",
+      "title": "LBBB presents “Our Best Brass Christmas”",
+      "source": "MU",
+      "date": "2026-12-20T20:00:00.000Z"
     },
     {
       "key": "Millersville University Women's Soccer vs Lock Haven|2026-08-27T20:00:00.000Z",
@@ -214,14 +215,7 @@
       "title": "Millersville University Women's Soccer at East Stroudsburg",
       "source": "MU",
       "date": "2026-08-29T17:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Volleyball vs West Virginia State|2026-08-29T19:00:00.000Z",
-      "firstSeenAt": "2026-08-10T11:08:42.566Z",
-      "title": "Millersville University Women's Volleyball vs West Virginia State",
-      "source": "MU",
-      "date": "2026-08-29T19:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 4
 }

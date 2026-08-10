@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-08-07T19:11:34.534Z",
-  "totalEvents": 829,
+  "generatedAt": "2026-08-10T13:04:58.324Z",
+  "totalEvents": 865,
   "withDescription": 331,
   "withImage": 45,
   "familyFriendly": 68,
-  "eventsToday": 3,
+  "eventsToday": 2,
   "sources": {
     "muAthletics": 255,
     "muCalendar": 69,
-    "artsmu": 29,
+    "artsmu": 26,
     "campsAlumni": 39,
     "muGetInvolved": 97,
-    "pennManor": 71,
-    "borough": 77,
+    "pennManor": 68,
+    "borough": 76,
     "vfw": 6,
     "phantomPower": 14,
     "community": 22,
-    "manor": 0,
+    "manor": 43,
     "raneyCellars": 6,
     "theBackyard": 10,
     "muHudlBroadcasts": 0
@@ -43,11 +43,11 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-05-09T12:00:00.000Z",
+      "earliest": "2026-05-12T19:45:00.000Z",
       "latest": "2026-09-09T21:30:00.000Z"
     },
     "borough": {
-      "earliest": "2026-05-11T23:00:00.000Z",
+      "earliest": "2026-05-12T23:00:00.000Z",
       "latest": "2026-12-25T12:00:00.000Z"
     },
     "vfw": {
@@ -55,14 +55,17 @@
       "latest": "2026-09-11T17:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-08-09T00:00:00.000Z",
+      "earliest": "2026-08-15T00:00:00.000Z",
       "latest": "2026-10-04T00:00:00.000Z"
     },
     "community": {
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-08-10T23:00:00.000Z",
+      "latest": "2027-08-04T23:00:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-08-05T20:00:00.000Z",
       "latest": "2026-08-15T22:00:00.000Z"
@@ -75,56 +78,59 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-01",
-      "daysSinceMoved": 30
+      "daysSinceMoved": 33
     },
     "muCalendar": {
       "newest": "2027-01-01",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 3
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 3
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 3
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 64
+      "daysSinceMoved": 67
     },
     "pennManor": {
       "newest": "2026-09-09",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 6
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 13
     },
     "vfw": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 64
+      "daysSinceMoved": 67
     },
     "phantomPower": {
       "newest": "2026-10-04",
-      "daysSinceMoved": 16
+      "daysSinceMoved": 19
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 63
+      "daysSinceMoved": 66
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-08-04",
+      "daysSinceMoved": 6
+    },
     "raneyCellars": {
       "newest": "2026-08-15",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 11
     },
     "theBackyard": {
       "newest": "2026-09-30",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 13
     }
   },
   "sports": {
-    "total": 295,
+    "total": 292,
     "scored": 0,
     "wins": 0,
     "losses": 0,
@@ -132,7 +138,7 @@
   },
   "registrations": {
     "open": 4,
-    "next2Weeks": 0,
+    "next2Weeks": 1,
     "nextClose": "2026-08-22",
     "openNoDeadline": 1
   },
@@ -142,80 +148,80 @@
     "pendingBySource": {
       "PM Community": 1
     },
-    "stalePast": 7,
-    "lastSyncAt": "2026-08-07T19:09:30.343Z"
+    "stalePast": 8,
+    "lastSyncAt": "2026-08-10T13:02:20.775Z"
   },
   "recentlyAdded": [
     {
-      "key": "Zoning Hearing Board - Regarding 11 Millersville University Properties (see description for more details)|2026-08-27T22:30:00.000Z",
-      "firstSeenAt": "2026-08-07T19:11:34.532Z",
-      "title": "Zoning Hearing Board - Regarding 11 Millersville University Properties (see description for more details)",
-      "source": "Borough",
-      "date": "2026-08-27T22:30:00.000Z"
+      "key": "Planning Commission-CANCELED|2026-08-10T23:00:00.000Z",
+      "firstSeenAt": "2026-08-10T11:08:42.566Z",
+      "title": "Planning Commission-CANCELED",
+      "source": "Manor",
+      "date": "2026-08-10T23:00:00.000Z"
     },
     {
-      "key": "M-Uth Theatre Ensemble Presents: Antigone in Munich|2026-08-08T18:00:00.000Z",
-      "firstSeenAt": "2026-08-07T17:49:14.690Z",
-      "title": "M-Uth Theatre Ensemble Presents: Antigone in Munich",
+      "key": "Zoning Hearing Board|2026-08-12T23:00:00.000Z",
+      "firstSeenAt": "2026-08-10T11:08:42.566Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-08-12T23:00:00.000Z"
+    },
+    {
+      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
+      "firstSeenAt": "2026-08-10T11:08:42.566Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-08-26T12:30:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Soccer vs Lock Haven|2026-08-27T20:00:00.000Z",
+      "firstSeenAt": "2026-08-10T11:08:42.566Z",
+      "title": "Millersville University Women's Soccer vs Lock Haven",
       "source": "MU",
-      "date": "2026-08-08T18:00:00.000Z"
+      "date": "2026-08-27T20:00:00.000Z"
     },
     {
-      "key": "M-Uth Theatre Ensemble Presents: Radium Girls|2026-08-08T23:00:00.000Z",
-      "firstSeenAt": "2026-08-07T17:49:14.690Z",
-      "title": "M-Uth Theatre Ensemble Presents: Radium Girls",
+      "key": "Millersville University Women's Volleyball at Goldey-Beacom|2026-08-27T23:00:00.000Z",
+      "firstSeenAt": "2026-08-10T11:08:42.566Z",
+      "title": "Millersville University Women's Volleyball at Goldey-Beacom",
       "source": "MU",
-      "date": "2026-08-08T23:00:00.000Z"
+      "date": "2026-08-27T23:00:00.000Z"
     },
     {
-      "key": "M-Uth Theatre Ensemble Presents: Radium Girls|2026-08-09T18:00:00.000Z",
-      "firstSeenAt": "2026-08-07T17:49:14.690Z",
-      "title": "M-Uth Theatre Ensemble Presents: Radium Girls",
+      "key": "Millersville University Men's Soccer vs Holy Family|2026-08-27T23:00:00.000Z",
+      "firstSeenAt": "2026-08-10T11:08:42.566Z",
+      "title": "Millersville University Men's Soccer vs Holy Family",
       "source": "MU",
-      "date": "2026-08-09T18:00:00.000Z"
+      "date": "2026-08-27T23:00:00.000Z"
     },
     {
-      "key": "\"Wild in the Shadows\" by Rob Homan|2026-09-04T21:00:00.000Z",
-      "firstSeenAt": "2026-08-07T17:49:14.690Z",
-      "title": "\"Wild in the Shadows\" by Rob Homan",
+      "key": "Millersville University Women's Volleyball vs Jefferson|2026-08-28T17:00:00.000Z",
+      "firstSeenAt": "2026-08-10T11:08:42.566Z",
+      "title": "Millersville University Women's Volleyball vs Jefferson",
       "source": "MU",
-      "date": "2026-09-04T21:00:00.000Z"
+      "date": "2026-08-28T17:00:00.000Z"
     },
     {
-      "key": "Lancaster Print Crawl feat. Mark & Jordan Rast|2026-09-04T21:00:00.000Z",
-      "firstSeenAt": "2026-08-07T16:54:28.320Z",
-      "title": "Lancaster Print Crawl feat. Mark & Jordan Rast",
+      "key": "Millersville University Women's Volleyball vs Caldwell|2026-08-29T17:00:00.000Z",
+      "firstSeenAt": "2026-08-10T11:08:42.566Z",
+      "title": "Millersville University Women's Volleyball vs Caldwell",
       "source": "MU",
-      "date": "2026-09-04T21:00:00.000Z"
+      "date": "2026-08-29T17:00:00.000Z"
     },
     {
-      "key": "Park Commission - Cancelled|2026-07-06T22:00:00.000Z",
-      "firstSeenAt": "2026-08-07T15:59:20.548Z",
-      "title": "Park Commission - Cancelled",
-      "source": "Borough",
-      "date": "2026-07-06T22:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Golf Vulcan Invitational|2026-09-03T00:00:00.000Z",
-      "firstSeenAt": "2026-08-07T15:59:20.548Z",
-      "title": "Millersville University Women's Golf Vulcan Invitational",
+      "key": "Millersville University Women's Soccer at East Stroudsburg|2026-08-29T17:00:00.000Z",
+      "firstSeenAt": "2026-08-10T11:08:42.566Z",
+      "title": "Millersville University Women's Soccer at East Stroudsburg",
       "source": "MU",
-      "date": "2026-09-03T00:00:00.000Z"
+      "date": "2026-08-29T17:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Cross Country Dutchmen Invitational|2026-09-05T14:15:00.000Z",
-      "firstSeenAt": "2026-08-07T15:59:20.548Z",
-      "title": "Millersville University Women's Cross Country Dutchmen Invitational",
+      "key": "Millersville University Women's Volleyball vs West Virginia State|2026-08-29T19:00:00.000Z",
+      "firstSeenAt": "2026-08-10T11:08:42.566Z",
+      "title": "Millersville University Women's Volleyball vs West Virginia State",
       "source": "MU",
-      "date": "2026-09-05T14:15:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Golf Millersville Invitational|2026-09-14T00:00:00.000Z",
-      "firstSeenAt": "2026-08-07T15:59:20.548Z",
-      "title": "Millersville University Women's Golf Millersville Invitational",
-      "source": "MU",
-      "date": "2026-09-14T00:00:00.000Z"
+      "date": "2026-08-29T19:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 0
 }

@@ -1691,9 +1691,32 @@ window.openFeedSettings = function() {
         const rawEntries = Object.entries(sourceGroups);
 
         let commonEntries;
+        let offCampusBlock = '';   // 2026-08-10: Other family renders nested under Other Events (marauder/unset)
         if (isMarauder) {
             commonEntries = [];
             for (const [gk, g] of rawEntries) {
+                if (secKey === 'events' && gk === 'other') {
+                    // OFF CAMPUS FAVORITES (2026-08-10): the Other family
+                    // (VFW/Phantom/Community/Raney/Jack's) moves OUT of the
+                    // Uncommon accordion into a collapsed subset row under the
+                    // Other Events heading — Club Sports subgroup chrome, same
+                    // toggleSubgroupCollapse. Same group key 'other' + same
+                    // renderGroupBlock output, so the Hidden/Show/★ selector,
+                    // per-chip 👁 bits (mapp_shown_sources), SOURCE_UNLOCK_IDS,
+                    // and the event gate are all byte-identical — placement +
+                    // label only. Auto-expands when any pref/👁 is already set.
+                    // Townie picker untouched (townieGroups has its own 'other').
+                    const ocOn = (g.subs || []).some(s => current.includes(s.id) || uncommonItemShown('other', s.id));
+                    const ocInner = renderGroupBlock('other', Object.assign({}, g, { label: '', icon: '' }));
+                    offCampusBlock = `<div class="feed-subgroup" data-subgroup-key="events__offcampus" style="margin:2px 0 12px;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;">
+                        <div class="feed-subgroup-header" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:${ocOn?'var(--gold-soft)':'var(--bg)'};cursor:pointer;" onclick="toggleSubgroupCollapse(event, 'events__offcampus')">
+                            <span style="flex:1;font-size:0.85rem;font-weight:700;">🛣️ Off Campus Favorites</span>
+                            <span class="feed-subgroup-chevron" style="font-size:0.85rem;color:var(--text-muted);transition:transform 0.15s;${ocOn?'transform:rotate(90deg);':''}">▸</span>
+                        </div>
+                        <div class="feed-subgroup-children" style="display:${ocOn?'flex':'none'};padding:10px 12px 0;background:var(--surface);border-top:1px solid var(--border);"><div style="flex:1 1 100%;">${ocInner}</div></div>
+                    </div>`;
+                    continue;
+                }
                 if (isGroupDimmed(g)) uncommonGroups.push([gk, g]);
                 else commonEntries.push([gk, g]);
             }
@@ -1702,7 +1725,7 @@ window.openFeedSettings = function() {
         }
 
         if (commonEntries.length === 0) continue;
-        const groupHtml = commonEntries.map(([k, g]) => renderGroupBlock(k, g)).filter(Boolean).join('');
+        const groupHtml = commonEntries.map(([k, g]) => renderGroupBlock(k, g) + (k === 'otherevents' ? offCampusBlock : '')).filter(Boolean).join('');   // Off Campus Favorites rides directly below the Other Events heading (2026-08-10)
         if (!groupHtml.trim()) continue;
 
         const defaultOpen = anyFavsIn(commonEntries);
@@ -1725,7 +1748,7 @@ window.openFeedSettings = function() {
             '🏘️ Uncommon for Marauders',
             uncommonHtml,
             defaultOpen,
-            'Penn Manor, Borough, and broader community — hidden by default; Show to see events, ★ to follow',
+            'Penn Manor, Borough, and Manor Twp. — hidden by default; Show to see events, ★ to follow',   // Other family moved to Off Campus Favorites under Other Events (2026-08-10)
             '#9ca3af'  // muted gray accent to de-emphasize vs. the themed sections
         );
     }
@@ -5948,7 +5971,20 @@ async function loadHomeSpecials(){
 
             if(items.length > 0){
                 const note = sp.note || '';
-                cards.push(`<div class="home-special-card" data-spslug="${slug}" role="button" tabindex="0" aria-label="Details for ${sp.name || slug}" style="cursor:pointer;"><h3 class="home-special-name">${sp.name || slug}</h3><p class="home-special-note">${note}</p>${items.slice(0, 5).map(i=>`<p class="home-special-item">• ${i}</p>`).join('')}<p class="home-special-item" style="margin-top:8px;font-size:0.7rem;color:var(--text-muted);">${items.length > 5 ? `+${items.length - 5} more — tap for full list →` : 'Tap for map &amp; details →'}</p></div>`);
+                // Grocery (John Herr's): COMPACT tile (2026-08-10) — its long
+                // wrapped deal lines made it the rail's tallest card, and the
+                // equal-height rail stretched EVERY tile to match (dead space
+                // for visitors who never scroll right). One deal-count line;
+                // browsing is unchanged one tap away (rail popup full list →
+                // "All deals" circular modal). Non-grocery tiles keep the
+                // 2026-08-06 5-item cap + "+N more" hint byte-identically.
+                const isGroceryTile = !!(sp.rawDeals && sp.rawDeals.length);
+                const tileBody = isGroceryTile
+                    ? `<p class="home-special-item">🏷️ ${sp.rawDeals.length} weekly deals this week</p>`
+                    : items.slice(0, 5).map(i=>`<p class="home-special-item">• ${i}</p>`).join('');
+                const tileHint = isGroceryTile ? 'Tap for full list →'
+                    : (items.length > 5 ? `+${items.length - 5} more — tap for full list →` : 'Tap for map &amp; details →');
+                cards.push(`<div class="home-special-card" data-spslug="${slug}" role="button" tabindex="0" aria-label="Details for ${sp.name || slug}" style="cursor:pointer;"><h3 class="home-special-name">${sp.name || slug}</h3><p class="home-special-note">${note}</p>${tileBody}<p class="home-special-item" style="margin-top:8px;font-size:0.7rem;color:var(--text-muted);">${tileHint}</p></div>`);
             }
         }
         container.innerHTML = cards.length > 0 ? cards.join('') : '<p class="home-empty">No specials today</p>';

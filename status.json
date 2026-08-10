@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-08-10T14:32:24.952Z",
-  "totalEvents": 826,
+  "generatedAt": "2026-08-10T14:58:17.285Z",
+  "totalEvents": 869,
   "withDescription": 334,
   "withImage": 45,
   "familyFriendly": 68,
-  "eventsToday": 1,
+  "eventsToday": 2,
   "sources": {
     "muAthletics": 255,
     "muCalendar": 69,
@@ -16,7 +16,7 @@
     "vfw": 8,
     "phantomPower": 14,
     "community": 22,
-    "manor": 0,
+    "manor": 43,
     "raneyCellars": 6,
     "theBackyard": 10,
     "muHudlBroadcasts": 0
@@ -62,7 +62,10 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-08-10T23:00:00.000Z",
+      "latest": "2027-08-04T23:00:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-08-05T20:00:00.000Z",
       "latest": "2026-08-15T22:00:00.000Z"
@@ -113,7 +116,10 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 66
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-08-04",
+      "daysSinceMoved": 6
+    },
     "raneyCellars": {
       "newest": "2026-08-15",
       "daysSinceMoved": 11
@@ -143,79 +149,79 @@
       "PM Community": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-08-10T14:30:33.023Z"
+    "lastSyncAt": "2026-08-10T14:56:00.506Z"
   },
   "recentlyAdded": [
     {
-      "key": "Make Cruisin' Fun Again|2026-09-17T20:30:00.000Z",
-      "firstSeenAt": "2026-08-10T14:32:24.950Z",
-      "title": "Make Cruisin' Fun Again",
-      "source": "Other",
-      "date": "2026-09-17T20:30:00.000Z"
+      "key": "Planning Commission-CANCELED|2026-08-10T23:00:00.000Z",
+      "firstSeenAt": "2026-08-10T14:58:17.283Z",
+      "title": "Planning Commission-CANCELED",
+      "source": "Manor",
+      "date": "2026-08-10T23:00:00.000Z"
     },
     {
-      "key": "Make Cruisin' Fun Again|2026-10-15T20:30:00.000Z",
-      "firstSeenAt": "2026-08-10T14:32:24.950Z",
-      "title": "Make Cruisin' Fun Again",
-      "source": "Other",
-      "date": "2026-10-15T20:30:00.000Z"
+      "key": "Zoning Hearing Board|2026-08-12T23:00:00.000Z",
+      "firstSeenAt": "2026-08-10T14:58:17.283Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-08-12T23:00:00.000Z"
     },
     {
-      "key": "December Commencement|2026-12-12T14:00:00",
-      "firstSeenAt": "2026-08-10T14:32:24.950Z",
-      "title": "December Commencement",
-      "source": "MU",
-      "date": "2026-12-12T14:00:00"
+      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
+      "firstSeenAt": "2026-08-10T14:58:17.283Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-08-26T12:30:00.000Z"
     },
     {
-      "key": "LBBB presents “Our Best Brass Christmas”|2026-12-20T20:00:00.000Z",
-      "firstSeenAt": "2026-08-10T14:32:24.950Z",
-      "title": "LBBB presents “Our Best Brass Christmas”",
-      "source": "MU",
-      "date": "2026-12-20T20:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-08-10T14:58:17.283Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-09-02T23:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Soccer vs Lock Haven|2026-08-27T20:00:00.000Z",
-      "firstSeenAt": "2026-08-10T11:08:42.566Z",
-      "title": "Millersville University Women's Soccer vs Lock Haven",
-      "source": "MU",
-      "date": "2026-08-27T20:00:00.000Z"
+      "key": "Supervisors Meeting|2026-09-07T23:00:00.000Z",
+      "firstSeenAt": "2026-08-10T14:58:17.283Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-07T23:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Volleyball at Goldey-Beacom|2026-08-27T23:00:00.000Z",
-      "firstSeenAt": "2026-08-10T11:08:42.566Z",
-      "title": "Millersville University Women's Volleyball at Goldey-Beacom",
-      "source": "MU",
-      "date": "2026-08-27T23:00:00.000Z"
+      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
+      "firstSeenAt": "2026-08-10T14:58:17.283Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-08T23:00:00.000Z"
     },
     {
-      "key": "Millersville University Men's Soccer vs Holy Family|2026-08-27T23:00:00.000Z",
-      "firstSeenAt": "2026-08-10T11:08:42.566Z",
-      "title": "Millersville University Men's Soccer vs Holy Family",
-      "source": "MU",
-      "date": "2026-08-27T23:00:00.000Z"
+      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
+      "firstSeenAt": "2026-08-10T14:58:17.283Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-09-14T23:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Volleyball vs Jefferson|2026-08-28T17:00:00.000Z",
-      "firstSeenAt": "2026-08-10T11:08:42.566Z",
-      "title": "Millersville University Women's Volleyball vs Jefferson",
-      "source": "MU",
-      "date": "2026-08-28T17:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-08-10T14:58:17.283Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-09-30T12:30:00.000Z"
     },
     {
-      "key": "Millersville University Women's Volleyball vs Caldwell|2026-08-29T17:00:00.000Z",
-      "firstSeenAt": "2026-08-10T11:08:42.566Z",
-      "title": "Millersville University Women's Volleyball vs Caldwell",
-      "source": "MU",
-      "date": "2026-08-29T17:00:00.000Z"
+      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
+      "firstSeenAt": "2026-08-10T14:58:17.283Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-10-05T23:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Soccer at East Stroudsburg|2026-08-29T17:00:00.000Z",
-      "firstSeenAt": "2026-08-10T11:08:42.566Z",
-      "title": "Millersville University Women's Soccer at East Stroudsburg",
-      "source": "MU",
-      "date": "2026-08-29T17:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
+      "firstSeenAt": "2026-08-10T14:58:17.283Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-10-07T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 4
+  "addedLastRun": 43
 }

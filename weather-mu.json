@@ -1,11 +1,11 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Monday, August 10, 2026 at 08:55 AM (Kyle Elliott, Meteorologist)",
+    "issued": "Monday, August 10, 2026 at 12:03 PM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "Today",
-        "text": "Partly sunny, hot and humid with scattered strong-to-severe thunderstorms. High: 86-90"
+        "period": "This afternoon",
+        "text": "Increasing clouds, warm and humid with scattered strong-to-severe T-storms. High: 86-90"
       },
       {
         "period": "Tonight",
@@ -13,11 +13,11 @@
       },
       {
         "period": "Tuesday",
-        "text": "Partly sunny and humid with scattered afternoon showers and thunderstorms. High: 84-88"
+        "text": "Partly sunny and humid with scattered afternoon showers and T-storms. High: 84-88"
       },
       {
         "period": "Tuesday Night",
-        "text": "Mostly cloudy, warm and muggy with evening showers and thunderstorms. Low: 66-70"
+        "text": "Mostly cloudy, warm and muggy with evening showers and T-storms. Low: 66-70"
       },
       {
         "period": "Wednesday",
@@ -126,74 +126,7 @@
       }
     ]
   },
-  "observations": [
-    {
-      "time": "11:00",
-      "temp": "71",
-      "dewpoint": "69",
-      "rh": "96",
-      "windDir": "WNW",
-      "windSpeed": "1",
-      "precip": "0.31",
-      "visibility": "11.9",
-      "condition": "None"
-    },
-    {
-      "time": "10:00",
-      "temp": "68",
-      "dewpoint": "68",
-      "rh": "99",
-      "windDir": "SSW",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "6.3",
-      "condition": "Light Showers Rain"
-    },
-    {
-      "time": "09:00",
-      "temp": "77",
-      "dewpoint": "70",
-      "rh": "79",
-      "windDir": "WNW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "9.3",
-      "condition": "None"
-    },
-    {
-      "time": "08:00",
-      "temp": "72",
-      "dewpoint": "69",
-      "rh": "92",
-      "windDir": "SW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "8.8",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "67",
-      "dewpoint": "67",
-      "rh": "99",
-      "windDir": "SSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "5.3",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "67",
-      "dewpoint": "67",
-      "rh": "99",
-      "windDir": "SSW",
-      "windSpeed": "0",
-      "precip": "0.00",
-      "visibility": "4.0",
-      "condition": "None"
-    }
-  ],
+  "observations": [],
   "dailySummary": {
     "monthLabel": "August 2026",
     "days": [
@@ -316,6 +249,20 @@
   },
   "videos": [
     {
+      "title": "Medium Range Forecast 08/10/2026",
+      "videoId": "kgVpy-vTrQo",
+      "url": "https://www.youtube.com/watch?v=kgVpy-vTrQo",
+      "published": "2026-08-10T16:46:53+00:00",
+      "thumbnail": "https://i4.ytimg.com/vi/kgVpy-vTrQo/hqdefault.jpg"
+    },
+    {
+      "title": "Short Term Forecast 08/10/2026",
+      "videoId": "dU_ztFVj9Og",
+      "url": "https://www.youtube.com/watch?v=dU_ztFVj9Og",
+      "published": "2026-08-10T16:26:33+00:00",
+      "thumbnail": "https://i1.ytimg.com/vi/dU_ztFVj9Og/hqdefault.jpg"
+    },
+    {
       "title": "Medium Range Forecast 08/03/2026",
       "videoId": "QRjW0Z3uV8k",
       "url": "https://www.youtube.com/watch?v=QRjW0Z3uV8k",
@@ -328,22 +275,8 @@
       "url": "https://www.youtube.com/watch?v=TFPRS5uagmc",
       "published": "2026-08-03T14:42:24+00:00",
       "thumbnail": "https://i1.ytimg.com/vi/TFPRS5uagmc/hqdefault.jpg"
-    },
-    {
-      "title": "Medium Range Forecast 07/27/2026",
-      "videoId": "m1gdwK44vOY",
-      "url": "https://www.youtube.com/watch?v=m1gdwK44vOY",
-      "published": "2026-07-27T16:02:43+00:00",
-      "thumbnail": "https://i2.ytimg.com/vi/m1gdwK44vOY/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 07/27/2026",
-      "videoId": "YhgAphFId4U",
-      "url": "https://www.youtube.com/watch?v=YhgAphFId4U",
-      "published": "2026-07-27T15:36:34+00:00",
-      "thumbnail": "https://i2.ytimg.com/vi/YhgAphFId4U/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-08-10T15:59:25.705Z"
+  "updated": "2026-08-10T17:01:44.609Z"
 }

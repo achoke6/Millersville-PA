@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-08-11T13:00:56.461Z",
-  "totalEvents": 865,
-  "withDescription": 337,
+  "generatedAt": "2026-08-11T13:44:55.989Z",
+  "totalEvents": 866,
+  "withDescription": 338,
   "withImage": 45,
   "familyFriendly": 71,
-  "eventsToday": 2,
+  "eventsToday": 3,
   "sources": {
     "muAthletics": 255,
     "muCalendar": 69,
@@ -15,7 +15,7 @@
     "borough": 75,
     "vfw": 8,
     "phantomPower": 14,
-    "community": 22,
+    "community": 23,
     "manor": 42,
     "raneyCellars": 6,
     "theBackyard": 10,
@@ -137,7 +137,7 @@
     "ties": 0
   },
   "registrations": {
-    "open": 4,
+    "open": 5,
     "next2Weeks": 1,
     "nextClose": "2026-08-22",
     "openNoDeadline": 1
@@ -149,9 +149,16 @@
       "PM Community": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-08-11T12:58:36.526Z"
+    "lastSyncAt": "2026-08-11T13:42:41.264Z"
   },
   "recentlyAdded": [
+    {
+      "key": "SLI Waiting List Signups (Brookwood / Healthy Living)|2026-08-11T13:00:00.000Z",
+      "firstSeenAt": "2026-08-11T13:44:55.987Z",
+      "title": "SLI Waiting List Signups (Brookwood / Healthy Living)",
+      "source": "Community",
+      "date": "2026-08-11T13:00:00.000Z"
+    },
     {
       "key": "Zoning Hearing Board|2026-08-12T23:00:00.000Z",
       "firstSeenAt": "2026-08-11T08:54:28.138Z",
@@ -214,14 +221,7 @@
       "title": "Zoning Hearing Board",
       "source": "Manor",
       "date": "2026-10-07T23:00:00.000Z"
-    },
-    {
-      "key": "Planning Commission|2026-10-12T23:00:00.000Z",
-      "firstSeenAt": "2026-08-11T08:54:28.138Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-10-12T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

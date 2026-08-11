@@ -5301,6 +5301,26 @@ async function runScraper() {
     // Strip the internal marker so it never lands in events.json.
     deduped.forEach(e => { if (e._overrideCreated) delete e._overrideCreated; });
 
+    // ── Camps → townie-only (2026-08-11): youth camps + Arts Smarts are
+    // advertised to LOCALS only — marauders shouldn't see kids' camps on
+    // their timeline. Fills audience ONLY when absent: an explicit audience
+    // (including 'public' inherited in the dedupe merge above) always wins.
+    // TWIN PREDICATE of app.js isProgramSignup(), minus its deadline /
+    // intramural guards (irrelevant at source) — keep the two in lockstep.
+    // Runs AFTER dedupe + override cleanup so merged audience signals are
+    // already settled (sweep-after-overrides ordering).
+    let campsAudienceStamped = 0;
+    deduped.forEach(e => {
+        if (e.audience) return;
+        const tags = e.tags || [];
+        const isCampShape = tags.includes('Summer Camp') || tags.includes('Athletic Camp')
+            || /arts\s*smarts?/i.test(e.title || '');
+        if (isCampShape) { e.audience = 'townie-only'; campsAudienceStamped++; }
+    });
+    if (campsAudienceStamped > 0) {
+        console.log(`🏕️ Stamped ${campsAudienceStamped} camp/Arts Smarts event(s) townie-only`);
+    }
+
     if (exactDupes.length > 0) {
         console.log(`⚠️ Removed ${exactDupes.length} exact duplicates:`);
         exactDupes.forEach(d => console.log(`   ✕ [${d.source}] ${d.title} (${d.date})`));

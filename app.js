@@ -1324,7 +1324,10 @@ function getRegisterUrl(e) {
 // the Upcoming Signups box: the renderer gates the list on isTownie, and we
 // exclude intramurals defensively. No deadline, so it's anchored on the start
 // date; the register link is getRegisterUrl(e) — ticketLink for camps, sourceLink
-// for Arts Smarts.
+// for Arts Smarts. TWIN PREDICATE: scripts/scrape.js stamps these same
+// events (tags Summer Camp/Athletic Camp, or an Arts Smarts title)
+// audience 'townie-only' at source (2026-08-11) — if this predicate
+// changes, change the scraper's copy in the same push.
 function isProgramSignup(e) {
     if (!e || e.registrationDeadline || isIntramural(e)) return false;
     const tags = e.tags || [];

@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-08-11T15:08:16.090Z",
+  "generatedAt": "2026-08-11T15:51:13.000Z",
   "totalEvents": 866,
   "withDescription": 338,
   "withImage": 45,
   "familyFriendly": 71,
-  "eventsToday": 3,
+  "eventsToday": 2,
   "sources": {
     "muAthletics": 255,
     "muCalendar": 69,
@@ -60,7 +60,7 @@
     },
     "community": {
       "earliest": "2026-06-15T13:00:00.000Z",
-      "latest": "2027-04-16T13:15:00.000Z"
+      "latest": "2027-05-16T03:59:00.000Z"
     },
     "manor": {
       "earliest": "2026-08-12T23:00:00.000Z",
@@ -113,8 +113,8 @@
       "daysSinceMoved": 20
     },
     "community": {
-      "newest": "2027-04-16",
-      "daysSinceMoved": 67
+      "newest": "2027-05-16",
+      "daysSinceMoved": 0
     },
     "manor": {
       "newest": "2027-08-04",
@@ -149,15 +149,22 @@
       "PM Community": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-08-11T15:05:30.124Z"
+    "lastSyncAt": "2026-08-11T15:48:46.372Z"
   },
   "recentlyAdded": [
     {
-      "key": "SLI Waiting List Signups (Brookwood / Healthy Living)|2026-08-11T13:00:00.000Z",
-      "firstSeenAt": "2026-08-11T13:44:55.987Z",
+      "key": "MU Football Season Tickets (2026)|2026-09-13T03:59:00.000Z",
+      "firstSeenAt": "2026-08-11T15:51:12.998Z",
+      "title": "MU Football Season Tickets (2026)",
+      "source": "Community",
+      "date": "2026-09-13T03:59:00.000Z"
+    },
+    {
+      "key": "SLI Waiting List Signups (Brookwood / Healthy Living)|2027-05-16T03:59:00.000Z",
+      "firstSeenAt": "2026-08-11T15:51:12.998Z",
       "title": "SLI Waiting List Signups (Brookwood / Healthy Living)",
       "source": "Community",
-      "date": "2026-08-11T13:00:00.000Z"
+      "date": "2027-05-16T03:59:00.000Z"
     },
     {
       "key": "Zoning Hearing Board|2026-08-12T23:00:00.000Z",
@@ -214,14 +221,7 @@
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2026-10-05T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
-      "firstSeenAt": "2026-08-11T08:54:28.138Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-10-07T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

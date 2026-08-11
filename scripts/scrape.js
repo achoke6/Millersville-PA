@@ -4296,6 +4296,7 @@ async function runScraper() {
                 status:   findCol('Approved', 'Status', 'Approve', 'Publish'),
                 deadline: findCol('Registration Deadline', 'Deadline'),
                 opens:    findCol('Registration Opens', 'Opens'),
+                type:     findCol('Type'),
             };
 
             const rows = allRows.slice(1); // skip header
@@ -4321,6 +4322,11 @@ async function runScraper() {
                 const endTimeStr = get(COL.endTime);
                 const deadlineStr = get(COL.deadline);
                 const opensStr = get(COL.opens);
+                const typeRaw = get(COL.type);
+                // The Form's Type answer is "Event" or "Signup or Registration";
+                // hand-entered rows may abbreviate — any signup/registration
+                // wording counts. Plain "Event" (or blank/missing column) doesn't.
+                const isSignupType = /signup|registration/i.test(typeRaw);
 
                 // Accept multiple "approved" signals: Approved, Yes, Y, ✓, true, 1
                 const statusApproved = /^(approved|yes|y|true|1|✓|✔)$/i.test(status);
@@ -4434,8 +4440,11 @@ async function runScraper() {
                 const eventDate = new Date(isoStr);
                 if (isNaN(eventDate.getTime())) { skippedBadDate++; continue; }
 
-                // Skip events outside our date range
-                if (eventDate < pastDate || eventDate >= futureDate) { skippedOutOfRange++; continue; }
+                // Skip events outside our date range. Signup rows (Type =
+                // "Signup or Registration") defer to the DEADLINE range check
+                // below — their calendar date becomes the deadline day, so the
+                // Start Date only anchors the row, it never gates it.
+                if (!isSignupType && (eventDate < pastDate || eventDate >= futureDate)) { skippedOutOfRange++; continue; }
 
                 // ── Audience: map the Form answer to the site's event model.
                 //   'mu-only'     → students only, hidden from townies.
@@ -4495,9 +4504,26 @@ async function runScraper() {
                     }
                 }
 
+                // ── Signup rows are dated on their DEADLINE day, all-day
+                // (2026-08-11, the sync-candidates youth-reg convention): the
+                // calendar entry reads as "last day to sign up", not a phantom
+                // event on the Start Date. Range-checked against the deadline —
+                // a deadline beyond the 365-day window range-skips, same as
+                // youth regs. A Signup row without a parseable deadline is a
+                // data error: warned + skipped (never guess a deadline).
+                let signupDate = null;
+                if (isSignupType) {
+                    if (!regDeadlineIso) {
+                        console.log(`  ⚠️ Signup row "${eventName}" has no parseable Registration Deadline — skipped`);
+                        continue;
+                    }
+                    signupDate = new Date(regDeadlineIso);
+                    if (signupDate < pastDate || signupDate >= futureDate) { skippedOutOfRange++; continue; }
+                }
+
                 events.push({
                     title: eventName,
-                    date: eventDate.toISOString(),
+                    date: (signupDate || eventDate).toISOString(),
                     location: location || 'Millersville',
                     tags: ['Community'],
                     price: 'Free',
@@ -4506,7 +4532,7 @@ async function runScraper() {
                     description: description || '',
                     ...(audience ? { audience } : {}),
                     ...(/^yes$/i.test(kidsRaw) ? { kidFriendly: true } : {}),
-                    ...(endTimeIso ? { endTime: endTimeIso } : {}),
+                    ...((endTimeIso && !signupDate) ? { endTime: endTimeIso } : {}),
                     ...(regDeadlineIso ? { registrationRequired: true, registrationDeadline: regDeadlineIso } : {}),
                     ...(regDeadlineIso && (() => {
                         // Optional Opens column (hand-entered, rightmost). A
@@ -4528,7 +4554,7 @@ async function runScraper() {
                         const cand = `${oy}-${String(omo).padStart(2,'0')}-${String(odd).padStart(2,'0')}T00:00:00${ooff}`;
                         return isNaN(new Date(cand).getTime()) ? null : { registrationOpens: cand };
                     })() || {}),
-                    ...(timeProvided ? {} : { allDay: true })
+                    ...((timeProvided && !signupDate) ? {} : { allDay: true })
                 });
                 communityCount++;
             }

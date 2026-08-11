@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "01:00",
+      "temp": "70",
+      "dewpoint": "67",
+      "rh": "91",
+      "windDir": "W",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "10.6",
+      "condition": "None"
+    },
+    {
+      "time": "00:00",
+      "temp": "70",
+      "dewpoint": "67",
+      "rh": "90",
+      "windDir": "W",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "10.7",
+      "condition": "None"
+    },
+    {
       "time": "23:00",
       "temp": "71",
       "dewpoint": "67",
@@ -169,28 +191,6 @@
       "windSpeed": "3",
       "precip": "0.00",
       "visibility": "10.5",
-      "condition": "None"
-    },
-    {
-      "time": "19:00",
-      "temp": "72",
-      "dewpoint": "69",
-      "rh": "89",
-      "windDir": "SW",
-      "windSpeed": "5",
-      "precip": "0.00",
-      "visibility": "10.7",
-      "condition": "None"
-    },
-    {
-      "time": "18:00",
-      "temp": "73",
-      "dewpoint": "69",
-      "rh": "90",
-      "windDir": "SW",
-      "windSpeed": "4",
-      "precip": "0.03",
-      "visibility": "10.8",
       "condition": "None"
     }
   ],
@@ -295,10 +295,21 @@
         "windSpeed": "13",
         "windTime": "17:08",
         "rain": "0.00"
+      },
+      {
+        "date": "08/10",
+        "max": "88",
+        "maxTime": "14:13",
+        "min": "67",
+        "minTime": "06:11",
+        "windDir": "301",
+        "windSpeed": "19",
+        "windTime": "09:23",
+        "rain": "0.35"
       }
     ],
-    "totalRain": "2.51",
-    "ytdRain": "20.74",
+    "totalRain": "2.86",
+    "ytdRain": "21.09",
     "yearMax": "102",
     "yearMaxDate": "July 03",
     "yearMin": "1",
@@ -316,5 +327,5 @@
   },
   "videos": [],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-08-11T03:41:29.441Z"
+  "updated": "2026-08-11T05:05:40.889Z"
 }

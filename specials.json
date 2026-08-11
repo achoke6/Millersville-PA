@@ -83,7 +83,7 @@
       "Cayenne Peppers – 4/$1.00",
       "Cantaloupes – $2.00-$3.50 each"
     ],
-    "weeklyFetchedAt": "2026-08-11T19:00:49.764Z"
+    "weeklyFetchedAt": "2026-08-11T19:57:34.163Z"
   },
   "jesus-dogs": {
     "name": "Jesus Dogs",
@@ -103,8 +103,12 @@
       "Monday"
     ],
     "note": "Members & Guests · Weekly specials change each week",
-    "weekly": [],
-    "weeklyDateRange": "",
+    "weekly": [
+      "Turkey Pesto Grilled Cheese – $12.95",
+      "Shepherd's Pie – $13.95",
+      "Yellowfin Tuna – $14.95 (Friday only)"
+    ],
+    "weeklyDateRange": "Tuesday, August 11 through Saturday, August 15",
     "recurring": {
       "Tuesday": "Shrimp Night",
       "Wednesday": "Wing Night",

@@ -5230,7 +5230,7 @@ function renderHomeUI(){
         // now (prior behavior). All also appear on the calendar, dated on the deadline.
         const upcoming = (allEvents || [])
             .filter(e => e && e.registrationDeadline)
-            .filter(e => isTownie ? !isIntramural(e) : isIntramural(e))
+            .filter(e => isTownie ? (!isIntramural(e) && e.audience !== 'mu-only') : (isIntramural(e) || e.audience === 'mu-only' || e.audience === 'public'))
             .map(e => {
                 const _dl = new Date(e.registrationDeadline).getTime();
                 const _opRaw = e.registrationOpens ? new Date(e.registrationOpens).getTime() : NaN;

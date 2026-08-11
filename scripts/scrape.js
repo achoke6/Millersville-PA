@@ -4295,6 +4295,7 @@ async function runScraper() {
                 link:     findCol('Website/Link', 'Website', 'Link'),
                 status:   findCol('Approved', 'Status', 'Approve', 'Publish'),
                 deadline: findCol('Registration Deadline', 'Deadline'),
+                opens:    findCol('Registration Opens', 'Opens'),
             };
 
             const rows = allRows.slice(1); // skip header
@@ -4319,6 +4320,7 @@ async function runScraper() {
                 const endDateStr = get(COL.endDate);
                 const endTimeStr = get(COL.endTime);
                 const deadlineStr = get(COL.deadline);
+                const opensStr = get(COL.opens);
 
                 // Accept multiple "approved" signals: Approved, Yes, Y, ✓, true, 1
                 const statusApproved = /^(approved|yes|y|true|1|✓|✔)$/i.test(status);
@@ -4506,6 +4508,26 @@ async function runScraper() {
                     ...(/^yes$/i.test(kidsRaw) ? { kidFriendly: true } : {}),
                     ...(endTimeIso ? { endTime: endTimeIso } : {}),
                     ...(regDeadlineIso ? { registrationRequired: true, registrationDeadline: regDeadlineIso } : {}),
+                    ...(regDeadlineIso && (() => {
+                        // Optional Opens column (hand-entered, rightmost). A
+                        // parseable date → registrationOpens at START-of-day ET
+                        // (T00:00 + DST offset — the deadline's twin, which uses
+                        // end-of-day). Only meaningful alongside a deadline;
+                        // blank/garbage → field omitted, signup appears
+                        // immediately (open-now), exactly as before this column.
+                        if (!opensStr) return null;
+                        let oy = 0, omo = 0, odd = 0;
+                        const om = opensStr.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+                        if (om) { oy = parseInt(om[3]); omo = parseInt(om[1]); odd = parseInt(om[2]); }
+                        else {
+                            const fo = new Date(opensStr);
+                            if (!isNaN(fo.getTime())) { oy = fo.getFullYear(); omo = fo.getMonth() + 1; odd = fo.getDate(); }
+                        }
+                        if (!(oy && omo && odd)) return null;
+                        const ooff = isEasternDST(oy, omo - 1, odd) ? '-04:00' : '-05:00';
+                        const cand = `${oy}-${String(omo).padStart(2,'0')}-${String(odd).padStart(2,'0')}T00:00:00${ooff}`;
+                        return isNaN(new Date(cand).getTime()) ? null : { registrationOpens: cand };
+                    })() || {}),
                     ...(timeProvided ? {} : { allDay: true })
                 });
                 communityCount++;

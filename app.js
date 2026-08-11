@@ -5325,11 +5325,13 @@ function renderHomeUI(){
                     const dlLabel = dlDate.toLocaleDateString('en-US', sameYear ? { month: 'short', day: 'numeric' } : { month: 'short', day: 'numeric', year: 'numeric' });
                     const daysLeft = Math.ceil((e._dl - nowMs) / (24 * 60 * 60 * 1000));
                     // Countdown pressure only inside SIGNUP_LEAD_MS — a far
-                    // deadline shows the date alone, no urgency yet.
+                    // deadline reads "Open Now" (invitational, no urgency yet;
+                    // 2026-08-11 third sitting), flipping to the countdown
+                    // inside the last 30 days.
                     const closingSoon = (e._dl - nowMs) <= SIGNUP_LEAD_MS;
                     urgency = closingSoon && daysLeft <= 3 ? ' home-signup-urgent' : '';
                     byLabel = `by ${dlLabel}`;
-                    daysText = !closingSoon ? '' : daysLeft <= 0 ? 'closes today' : daysLeft === 1 ? '1 day left' : `${daysLeft} days left`;
+                    daysText = !closingSoon ? 'Open Now' : daysLeft <= 0 ? 'closes today' : daysLeft === 1 ? '1 day left' : `${daysLeft} days left`;
                 }
                 // The scraper no longer prefixes youth titles with "Register
                 // by <date>: ", but keep this strip as a defensive no-op so any

@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-08-12T01:48:09.430Z",
+  "generatedAt": "2026-08-12T04:07:34.042Z",
   "totalEvents": 864,
   "withDescription": 338,
   "withImage": 45,
   "familyFriendly": 71,
-  "eventsToday": 1,
+  "eventsToday": 3,
   "sources": {
     "muAthletics": 255,
     "muCalendar": 69,
@@ -78,55 +78,55 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-01",
-      "daysSinceMoved": 34
+      "daysSinceMoved": 35
     },
     "muCalendar": {
       "newest": "2027-01-01",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 68
+      "daysSinceMoved": 69
     },
     "pennManor": {
       "newest": "2026-09-10",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 15
     },
     "vfw": {
       "newest": "2026-10-15",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "phantomPower": {
       "newest": "2026-10-04",
-      "daysSinceMoved": 20
+      "daysSinceMoved": 21
     },
     "community": {
       "newest": "2027-05-16",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "manor": {
       "newest": "2027-08-04",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "raneyCellars": {
       "newest": "2026-08-15",
-      "daysSinceMoved": 12
+      "daysSinceMoved": 13
     },
     "theBackyard": {
       "newest": "2026-09-30",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 15
     }
   },
   "sports": {
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-08-12T01:45:35.065Z"
+    "lastSyncAt": "2026-08-12T04:05:36.447Z"
   },
   "recentlyAdded": [
     {
-      "key": "A Skylit Drive|2026-08-30T23:00:00.000Z",
-      "firstSeenAt": "2026-08-12T01:48:09.428Z",
-      "title": "A Skylit Drive",
+      "key": "A Skylit Drive w. Reunion, Atlas at Hold and Surrender in Silence|2026-08-30T23:00:00.000Z",
+      "firstSeenAt": "2026-08-12T04:07:34.040Z",
+      "title": "A Skylit Drive w. Reunion, Atlas at Hold and Surrender in Silence",
       "source": "Other",
       "date": "2026-08-30T23:00:00.000Z"
     },
@@ -223,5 +223,5 @@
       "date": "2026-10-05T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 1
 }

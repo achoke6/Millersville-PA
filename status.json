@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-12T19:16:11.884Z",
-  "totalEvents": 863,
-  "withDescription": 337,
+  "generatedAt": "2026-08-12T20:42:49.238Z",
+  "totalEvents": 868,
+  "withDescription": 342,
   "withImage": 45,
   "familyFriendly": 71,
   "eventsToday": 3,
   "sources": {
     "muAthletics": 255,
-    "muCalendar": 69,
+    "muCalendar": 74,
     "artsmu": 27,
     "campsAlumni": 42,
     "muGetInvolved": 98,
@@ -28,7 +28,7 @@
     },
     "muCalendar": {
       "earliest": "2026-06-30T00:00:00.000Z",
-      "latest": "2027-01-01T00:00:00.000Z"
+      "latest": "2027-04-17T08:00:00.000Z"
     },
     "artsmu": {
       "earliest": "2026-08-07T21:00:00.000Z",
@@ -81,8 +81,8 @@
       "daysSinceMoved": 35
     },
     "muCalendar": {
-      "newest": "2027-01-01",
-      "daysSinceMoved": 5
+      "newest": "2027-04-17",
+      "daysSinceMoved": 0
     },
     "artsmu": {
       "newest": "2027-05-02",
@@ -149,9 +149,44 @@
       "PM Community": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-08-12T19:13:48.076Z"
+    "lastSyncAt": "2026-08-12T20:40:41.059Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Admissions Event|2026-09-26T08:00:00",
+      "firstSeenAt": "2026-08-12T20:42:49.236Z",
+      "title": "Admissions Event",
+      "source": "MU",
+      "date": "2026-09-26T08:00:00"
+    },
+    {
+      "key": "Admissions Event|2026-10-31T08:00:00",
+      "firstSeenAt": "2026-08-12T20:42:49.236Z",
+      "title": "Admissions Event",
+      "source": "MU",
+      "date": "2026-10-31T08:00:00"
+    },
+    {
+      "key": "Admissions Event|2026-11-14T08:00:00",
+      "firstSeenAt": "2026-08-12T20:42:49.236Z",
+      "title": "Admissions Event",
+      "source": "MU",
+      "date": "2026-11-14T08:00:00"
+    },
+    {
+      "key": "Admissions Event|2027-03-20T08:00:00",
+      "firstSeenAt": "2026-08-12T20:42:49.236Z",
+      "title": "Admissions Event",
+      "source": "MU",
+      "date": "2027-03-20T08:00:00"
+    },
+    {
+      "key": "Admissions Event|2027-04-17T08:00:00",
+      "firstSeenAt": "2026-08-12T20:42:49.236Z",
+      "title": "Admissions Event",
+      "source": "MU",
+      "date": "2027-04-17T08:00:00"
+    },
     {
       "key": "Boys Varsity Cross Country @ Solanco High School|2026-08-22T20:00:00.000Z",
       "firstSeenAt": "2026-08-12T19:16:11.881Z",
@@ -186,42 +221,7 @@
       "title": "Boys Varsity Lacrosse - Boys vs New Oxford High School",
       "source": "PM",
       "date": "2026-05-19T23:00:00.000Z"
-    },
-    {
-      "key": "Senior Awards Ceremony|2026-05-21T22:30:00.000Z",
-      "firstSeenAt": "2026-08-12T15:59:20.297Z",
-      "title": "Senior Awards Ceremony",
-      "source": "PM",
-      "date": "2026-05-21T22:30:00.000Z"
-    },
-    {
-      "key": "Central Manor Senior Walk|2026-06-02T17:30:00.000Z",
-      "firstSeenAt": "2026-08-12T15:59:20.297Z",
-      "title": "Central Manor Senior Walk",
-      "source": "PM",
-      "date": "2026-06-02T17:30:00.000Z"
-    },
-    {
-      "key": "HB Senior Walk|2026-06-02T17:30:00.000Z",
-      "firstSeenAt": "2026-08-12T15:59:20.297Z",
-      "title": "HB Senior Walk",
-      "source": "PM",
-      "date": "2026-06-02T17:30:00.000Z"
-    },
-    {
-      "key": "LeTort Senior Walk|2026-06-02T17:30:00.000Z",
-      "firstSeenAt": "2026-08-12T15:59:20.297Z",
-      "title": "LeTort Senior Walk",
-      "source": "PM",
-      "date": "2026-06-02T17:30:00.000Z"
-    },
-    {
-      "key": "Senior Walk|2026-06-02T17:30:00.000Z",
-      "firstSeenAt": "2026-08-12T15:59:20.297Z",
-      "title": "Senior Walk",
-      "source": "PM",
-      "date": "2026-06-02T17:30:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 5
 }

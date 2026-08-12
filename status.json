@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-08-12T13:05:39.856Z",
-  "totalEvents": 864,
-  "withDescription": 338,
+  "generatedAt": "2026-08-12T14:55:46.769Z",
+  "totalEvents": 807,
+  "withDescription": 337,
   "withImage": 45,
-  "familyFriendly": 71,
+  "familyFriendly": 70,
   "eventsToday": 3,
   "sources": {
     "muAthletics": 255,
@@ -11,11 +11,11 @@
     "artsmu": 27,
     "campsAlumni": 42,
     "muGetInvolved": 98,
-    "pennManor": 61,
+    "pennManor": 5,
     "borough": 75,
     "vfw": 8,
     "phantomPower": 14,
-    "community": 23,
+    "community": 22,
     "manor": 42,
     "raneyCellars": 6,
     "theBackyard": 10,
@@ -43,8 +43,8 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-05-14T22:00:00.000Z",
-      "latest": "2026-09-10T20:00:00.000Z"
+      "earliest": "2026-08-17T22:00:00.000Z",
+      "latest": "2026-08-24T14:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-05-18T23:00:00.000Z",
@@ -60,7 +60,7 @@
     },
     "community": {
       "earliest": "2026-06-15T13:00:00.000Z",
-      "latest": "2027-05-16T03:59:00.000Z"
+      "latest": "2027-04-16T13:15:00.000Z"
     },
     "manor": {
       "earliest": "2026-08-12T23:00:00.000Z",
@@ -97,8 +97,8 @@
       "daysSinceMoved": 69
     },
     "pennManor": {
-      "newest": "2026-09-10",
-      "daysSinceMoved": 1
+      "newest": "2026-08-24",
+      "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2026-12-25",
@@ -113,8 +113,8 @@
       "daysSinceMoved": 21
     },
     "community": {
-      "newest": "2027-05-16",
-      "daysSinceMoved": 1
+      "newest": "2027-04-16",
+      "daysSinceMoved": 68
     },
     "manor": {
       "newest": "2027-08-04",
@@ -130,14 +130,14 @@
     }
   },
   "sports": {
-    "total": 287,
+    "total": 255,
     "scored": 0,
     "wins": 0,
     "losses": 0,
     "ties": 0
   },
   "registrations": {
-    "open": 5,
+    "open": 4,
     "next2Weeks": 1,
     "nextClose": "2026-08-22",
     "openNoDeadline": 1
@@ -149,7 +149,7 @@
       "PM Community": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-08-12T13:03:27.596Z"
+    "lastSyncAt": "2026-08-12T14:54:18.956Z"
   },
   "recentlyAdded": [
     {

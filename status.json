@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-08-12T23:40:35.901Z",
-  "totalEvents": 868,
+  "generatedAt": "2026-08-13T01:49:52.444Z",
+  "totalEvents": 866,
   "withDescription": 342,
   "withImage": 45,
-  "familyFriendly": 71,
-  "eventsToday": 3,
+  "familyFriendly": 70,
+  "eventsToday": 2,
   "sources": {
     "muAthletics": 255,
     "muCalendar": 74,
     "artsmu": 27,
     "campsAlumni": 42,
     "muGetInvolved": 98,
-    "pennManor": 61,
+    "pennManor": 60,
     "borough": 75,
     "vfw": 8,
     "phantomPower": 14,
     "community": 22,
-    "manor": 42,
+    "manor": 41,
     "raneyCellars": 6,
     "theBackyard": 10,
     "muHudlBroadcasts": 0
@@ -43,7 +43,7 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-05-14T22:00:00.000Z",
+      "earliest": "2026-05-15T21:00:00.000Z",
       "latest": "2026-09-10T20:00:00.000Z"
     },
     "borough": {
@@ -63,7 +63,7 @@
       "latest": "2027-04-16T13:15:00.000Z"
     },
     "manor": {
-      "earliest": "2026-08-12T23:00:00.000Z",
+      "earliest": "2026-08-26T12:30:00.000Z",
       "latest": "2027-08-04T23:00:00.000Z"
     },
     "raneyCellars": {
@@ -149,7 +149,7 @@
       "PM Community": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-08-12T23:38:14.344Z"
+    "lastSyncAt": "2026-08-13T01:47:49.364Z"
   },
   "recentlyAdded": [
     {
@@ -195,13 +195,6 @@
       "date": "2026-08-22T20:00:00.000Z"
     },
     {
-      "key": "Spring Concert|2026-05-14T22:00:00.000Z",
-      "firstSeenAt": "2026-08-12T15:59:20.297Z",
-      "title": "Spring Concert",
-      "source": "PM",
-      "date": "2026-05-14T22:00:00.000Z"
-    },
-    {
       "key": "Girls Varsity Softball vs Hershey High School|2026-05-15T21:00:00.000Z",
       "firstSeenAt": "2026-08-12T15:59:20.297Z",
       "title": "Girls Varsity Softball vs Hershey High School",
@@ -221,6 +214,13 @@
       "title": "Boys Varsity Lacrosse - Boys vs New Oxford High School",
       "source": "PM",
       "date": "2026-05-19T23:00:00.000Z"
+    },
+    {
+      "key": "Senior Awards Ceremony|2026-05-21T22:30:00.000Z",
+      "firstSeenAt": "2026-08-12T15:59:20.297Z",
+      "title": "Senior Awards Ceremony",
+      "source": "PM",
+      "date": "2026-05-21T22:30:00.000Z"
     }
   ],
   "addedLastRun": 0

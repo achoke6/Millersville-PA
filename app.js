@@ -6838,12 +6838,25 @@ function placesMapHasCoords(p){ return !!p && isFinite(p.lat) && isFinite(p.lng)
 // on everything; MBA lens = verified members only; MG lens = marauderGold only;
 // category chip; the housing-container visibility rule; and the Campus
 // Cupboard pinned-card condition (students, All / Food & Drink, no lenses).
+// Category-chip predicate — ONE definition shared by renderPlaces, the
+// pin list, and the MG-mode filter (list/pin mirror rule; the
+// placeTodayContent no-drift pattern). The Campus chip matches BOTH
+// type=campus venue rows (category 'Campus') AND businesses flagged
+// onCampus=yes in the sheet (campus dining, Rec Center, University
+// Store, ...). Every other chip stays a pure category match; the All
+// view is unaffected (onCampus rows keep rendering inline in their
+// real sections there).
+function placeMatchesCategory(p){
+    if (placesFilter === 'All') return true;
+    if (p.category === placesFilter) return true;
+    return placesFilter === 'Campus' && p.onCampus === true;
+}
 function placesMapPinList(){
     const pins = [];
     let list = (allPlaces||[]).filter(placeAudienceVisible);
     if (placesMBAMode) list = list.filter(p => getMembership(p.name));
     if (placesMGMode)  list = list.filter(p => p.marauderGold === true);
-    if (placesFilter !== 'All') list = list.filter(p => p.category === placesFilter);
+    if (placesFilter !== 'All') list = list.filter(placeMatchesCategory);
     if (placesTodayMode) list = list.filter(p => placeTodayContent(p));
     list.filter(placesMapHasCoords).forEach(p => pins.push({ place: p, group: (p.placeType==='food') ? 'food' : 'service' }));
     if (!placesMGMode && !placesMBAMode && !placesTodayMode && (placesFilter==='All' || placesFilter==='Housing')){
@@ -6852,7 +6865,7 @@ function placesMapPinList(){
     }
     const cb = window._cupboard;
     if (cb && placesMapHasCoords(cb) && !placesMBAMode && !placesMGMode && cupboardTodayVisible() &&
-        (placesFilter==='All' || placesFilter==='Food & Drink')){
+        (placesFilter==='All' || placesFilter==='Food & Drink' || placesFilter==='Campus')){
         pins.push({ place: {...cb, category:'Cupboard'}, group: 'cupboard' });
     }
     return pins;
@@ -7539,7 +7552,7 @@ function renderPlaces(){
         pc.style.display='';
         let mgFiltered = allPlaces.filter(p => p.marauderGold === true);
         if(placesFilter !== 'All'){
-            mgFiltered = mgFiltered.filter(p => p.category === placesFilter);
+            mgFiltered = mgFiltered.filter(placeMatchesCategory);
         }
         // Respect audience targeting here too (listing's own, else MBA member).
         mgFiltered = mgFiltered.filter(p => placeAudienceVisible(p));
@@ -7573,7 +7586,7 @@ function renderPlaces(){
     pc.style.display='';
 
     // Filter places by category
-    let filtered = placesFilter==='All' ? allPlaces : allPlaces.filter(p=>p.category===placesFilter);
+    let filtered = placesFilter==='All' ? allPlaces : allPlaces.filter(placeMatchesCategory);
 
     // MBA member lens: when active, show only businesses that are MBA members.
     if(placesMBAMode){
@@ -7607,7 +7620,7 @@ function renderPlaces(){
     // views (it's a free grocery store inside the HUB). Skipped for townies
     // and for filter views that exclude food (e.g. Services).
     let cupboardCard = '';
-    if (!placesMBAMode && cupboardTodayVisible() && (placesFilter === 'All' || placesFilter === 'Food & Drink')) {
+    if (!placesMBAMode && cupboardTodayVisible() && (placesFilter === 'All' || placesFilter === 'Food & Drink' || placesFilter === 'Campus')) {
         cupboardCard = buildCampusCupboardCard(dayName);
     }
 

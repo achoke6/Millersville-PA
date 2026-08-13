@@ -954,7 +954,7 @@
     "category": "Campus",
     "address": "37 West Frederick St. Millersville, PA 17551",
     "phone": "",
-    "description": "",
+    "description": "Police, Parking, Shipping, ID Services, & IT",
     "audience": "marauders",
     "lat": 39.997761,
     "lng": -76.356568,
@@ -970,5 +970,35 @@
     "lat": 40.000521,
     "lng": -76.36329,
     "slug": "jefferson-hall"
+  },
+  {
+    "name": "Cooper Park",
+    "category": "Campus",
+    "address": "",
+    "phone": "",
+    "description": "Baseball Field",
+    "lat": 40.000021,
+    "lng": -76.361166,
+    "slug": "cooper-park"
+  },
+  {
+    "name": "Brooks Field",
+    "category": "Campus",
+    "address": "",
+    "phone": "",
+    "description": "Athletic Field",
+    "lat": 39.998464,
+    "lng": -76.356896,
+    "slug": "brooks-field"
+  },
+  {
+    "name": "Seaber Softball Stadium",
+    "category": "Campus",
+    "address": "",
+    "phone": "",
+    "description": "Softball Field",
+    "lat": 39.99877,
+    "lng": -76.347229,
+    "slug": "seaber-softball-stadium"
   }
 ]

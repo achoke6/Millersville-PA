@@ -31,28 +31,6 @@
     "breakClosed": true
   },
   {
-    "name": "Millersville University Library",
-    "category": "Education",
-    "address": "9 N George St, Millersville, PA 17551",
-    "phone": "(717) 871-7111",
-    "description": "McNairy Library — study spaces, research, and technology",
-    "link": "https://www.millersville.edu/library/",
-    "onCampus": true,
-    "lat": 39.997999,
-    "lng": -76.354436,
-    "slug": "millersville-university-library",
-    "summerHours": {
-      "mon": "10:00-19:00",
-      "tue": "10:00-19:00",
-      "wed": "10:00-19:00",
-      "thu": "10:00-19:00",
-      "fri": "10:00-13:00",
-      "sat": "closed",
-      "sun": "closed"
-    },
-    "breakClosed": true
-  },
-  {
     "name": "The Reset Barbershop",
     "category": "Beauty/Grooming",
     "address": "109 W Frederick St, Millersville",
@@ -735,12 +713,14 @@
   {
     "name": "McNairy Library",
     "category": "Campus",
-    "address": "",
-    "phone": "",
-    "description": "Librar, talks and exhibits during semester",
-    "lat": 39.998135,
-    "lng": -76.355045,
-    "slug": "mcnairy-library"
+    "address": "9 N George St, Millersville, PA 17551",
+    "phone": "(717) 871-7111",
+    "description": "McNairy Library — study spaces, research, and technology",
+    "link": "https://www.millersville.edu/library/",
+    "lat": 39.997999,
+    "lng": -76.354436,
+    "slug": "mcnairy-library",
+    "breakClosed": true
   },
   {
     "name": "Caputo Hall",

@@ -71,9 +71,9 @@
     "weekly": [
       "Sweet Corn (bi-color and/or white) – $4.00/13 ears",
       "Tomatoes – priced by size, $3.00/quart, $12/peck, or $20/basket (5/8 bushel)",
-      "Roma Tomatoes – $2.50/quart, $12/peck, or $20/basket (5/8 bushel)",
+      "Roma Tomatoes (limited supply) – $2.50/quart, $12/peck, or $20/basket (5/8 bushel)",
       "Grape Tomatoes – $2/pint, $3.50/quart",
-      "Zucchini – $1.00 each or 4/$3.00",
+      "Zucchini – $1.00 each",
       "Green Bell Peppers – 3/$1.00",
       "Eggplant – $1.00 each",
       "Cucumbers – 4/$3.00",
@@ -83,7 +83,7 @@
       "Cayenne Peppers – 4/$1.00",
       "Cantaloupes – $2.00-$3.50 each"
     ],
-    "weeklyFetchedAt": "2026-08-11T19:00:49.764Z"
+    "weeklyFetchedAt": "2026-08-13T13:07:11.040Z"
   },
   "jesus-dogs": {
     "name": "Jesus Dogs",
@@ -103,8 +103,12 @@
       "Monday"
     ],
     "note": "Members & Guests · Weekly specials change each week",
-    "weekly": [],
-    "weeklyDateRange": "",
+    "weekly": [
+      "Turkey Pesto Grilled Cheese – $12.95",
+      "Shepherd's Pie – $13.95",
+      "Yellowfin Tuna – $14.95 (Friday only)"
+    ],
+    "weeklyDateRange": "Tuesday, August 11 through Saturday, August 15",
     "recurring": {
       "Tuesday": "Shrimp Night",
       "Wednesday": "Wing Night",
@@ -115,128 +119,9 @@
   },
   "john-herr-s-village-market": {
     "name": "John Herr's Village Market",
-    "note": "Weekly deals: Thursday, August 6 through Wednesday, August 12",
-    "weekly": [
-      "Red or Green Seedless Grapes — Unbeatable Produce Price – $0.88/lb",
-      "Fresh Bone-In Center Cut Pork Loin Chops (Value Pack) – $2.69/lb ($0.60/lb)",
-      "Fresh Boneless & Skinless Chicken Thighs (Value Pack) – $2.99/lb ($0.50/lb)",
-      "Paul Piazza Wild Caught Gulf Shrimp (26/30 ct, 2-lb bag) – $17.98",
-      "Single Serve K-Cup Coffee (10 ct, Selected — McCafé, Green Mountain, Maxwell House, Dunkin, Donut Shop, Swiss Miss Hot Chocolate) – Buy 1 Get 1 FREE"
-    ],
-    "weeklyDateRange": "Thursday, August 6 through Wednesday, August 12",
-    "rawDeals": [
-      {
-        "item": "Red or Green Seedless Grapes — Unbeatable Produce Price",
-        "salePrice": "$0.88/lb",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, August 6 through Wednesday, August 12"
-      },
-      {
-        "item": "Fresh Bone-In Center Cut Pork Loin Chops (Value Pack)",
-        "salePrice": "$2.69/lb",
-        "regularPrice": "$3.29/lb",
-        "savings": "$0.60/lb",
-        "dateRange": "Thursday, August 6 through Wednesday, August 12"
-      },
-      {
-        "item": "Fresh Boneless & Skinless Chicken Thighs (Value Pack)",
-        "salePrice": "$2.99/lb",
-        "regularPrice": "$3.49/lb",
-        "savings": "$0.50/lb",
-        "dateRange": "Thursday, August 6 through Wednesday, August 12"
-      },
-      {
-        "item": "Paul Piazza Wild Caught Gulf Shrimp (26/30 ct, 2-lb bag)",
-        "salePrice": "$17.98",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, August 6 through Wednesday, August 12"
-      },
-      {
-        "item": "Single Serve K-Cup Coffee (10 ct, Selected — McCafé, Green Mountain, Maxwell House, Dunkin, Donut Shop, Swiss Miss Hot Chocolate)",
-        "salePrice": "Buy 1 Get 1 FREE",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, August 6 through Wednesday, August 12"
-      },
-      {
-        "item": "Smithfield Pork Tenderloins, Fillets or Picnic Roasts (18.4-27.2 oz, Selected)",
-        "salePrice": "Buy 1 Get 1 FREE",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, August 6 through Wednesday, August 12"
-      },
-      {
-        "item": "Our Own Store-Made Fresh 85% Lean Ground Beef (Value Pack)",
-        "salePrice": "$6.99/lb",
-        "regularPrice": "$7.49/lb",
-        "savings": "$0.50/lb",
-        "dateRange": "Thursday, August 6 through Wednesday, August 12"
-      },
-      {
-        "item": "Select Beef Boneless New York Strip Steaks (Value Pack)",
-        "salePrice": "$11.99/lb",
-        "regularPrice": "$12.99/lb",
-        "savings": "$1.00/lb",
-        "dateRange": "Thursday, August 6 through Wednesday, August 12"
-      },
-      {
-        "item": "Certified Angus Beef Boneless Shoulder London Broil",
-        "salePrice": "$7.99/lb",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, August 6 through Wednesday, August 12"
-      },
-      {
-        "item": "Oscar Mayer Lunchables (2.25-4.4 oz, Selected) — Digital Coupon",
-        "salePrice": "$0.98",
-        "regularPrice": "$1.98",
-        "savings": "$1.00",
-        "dateRange": "Thursday, August 6 through Wednesday, August 12"
-      },
-      {
-        "item": "Red Baron Pizza (Selected) — Throwback Thursday (Thu Aug 6-Sun Aug 9 only, Digital Coupon)",
-        "salePrice": "$2.78",
-        "regularPrice": "$4.78",
-        "savings": "$2.00",
-        "dateRange": "Thursday, August 6 through Wednesday, August 12"
-      },
-      {
-        "item": "Coke Products (12-pack 12-oz cans, Selected)",
-        "salePrice": "Buy 2 Get 1 FREE",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, August 6 through Wednesday, August 12"
-      },
-      {
-        "item": "Martin's Original Potato Chips (8.5 oz, Selected)",
-        "salePrice": "Buy 1 Get 1 FREE",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, August 6 through Wednesday, August 12"
-      },
-      {
-        "item": "John F. Martin NY Extra Sharp White or Yellow Cheddar Cheese",
-        "salePrice": "$4.99/lb",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, August 6 through Wednesday, August 12"
-      },
-      {
-        "item": "General Mills Giant Size Cereal (20-29 oz, Selected) — Digital Coupon",
-        "salePrice": "$3.98",
-        "regularPrice": "$5.98",
-        "savings": "$2.00",
-        "dateRange": "Thursday, August 6 through Wednesday, August 12"
-      },
-      {
-        "item": "Sweet Bartlett Pears",
-        "salePrice": "$1.99/lb",
-        "regularPrice": "",
-        "savings": "",
-        "dateRange": "Thursday, August 6 through Wednesday, August 12"
-      }
-    ]
+    "note": "Weekly deals · Thu–Wed",
+    "weekly": [],
+    "weeklyDateRange": "",
+    "rawDeals": []
   }
 }

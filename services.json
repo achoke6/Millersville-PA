@@ -235,16 +235,14 @@
     "category": "Health",
     "address": "234 Manor Ave, Millersville, PA 17551",
     "phone": "(717) 871-8727",
-    "description": "Direct-access physical therapy and fitness — no physician referral required",
+    "description": "Direct-access physical therapy and fitness — no physician referral required. By appointment only — Tue & Thu",
     "link": "https://www.gamberpt.com/",
     "lat": 40.011387,
     "lng": -76.353658,
     "slug": "gamber-physical-therapy-fitness",
     "hours": {
       "mon": "08:00-18:00",
-      "tue": "07:00-12:00",
       "wed": "08:00-18:00",
-      "thu": "07:00-12:00",
       "fri": "08:00-18:00",
       "sat": "closed",
       "sun": "closed"
@@ -359,8 +357,8 @@
     "link": "https://millersville.store",
     "marauderGold": true,
     "onCampus": true,
-    "lat": 39.996161,
-    "lng": -76.353888,
+    "lat": 39.99703,
+    "lng": -76.354463,
     "slug": "university-store",
     "hours": {
       "mon": "08:30-16:00",
@@ -380,8 +378,8 @@
     "description": "Student apartments near Millersville University — Brookwood and Wellness communities",
     "link": "https://studentlodginginc.com",
     "audience": "marauders",
-    "lat": 39.992734,
-    "lng": -76.359191,
+    "lat": 39.992622,
+    "lng": -76.359661,
     "slug": "student-lodging-inc",
     "hours": {
       "mon": "09:00-17:00",
@@ -478,7 +476,7 @@
     "category": "Beauty/Grooming",
     "address": "192 Blue Rock Rd, Millersville",
     "phone": "(717) 872-8242",
-    "description": "Classic barbering and advanced skincare since 1969",
+    "description": "Hours vary with shows — see the events feed.",
     "link": "https://www.barleysbarbersalon.com/",
     "lat": 40.005749,
     "lng": -76.367537,
@@ -491,8 +489,8 @@
     "phone": "",
     "description": "Live music venue and event space",
     "link": "https://www.phantompower.live/",
-    "lat": 39.996503,
-    "lng": -76.359882,
+    "lat": 39.997091,
+    "lng": -76.359967,
     "slug": "phantom-power",
     "hours": {
       "mon": "19:00-24:00"
@@ -717,8 +715,8 @@
     "phone": "(717) 871-7111",
     "description": "McNairy Library — study spaces, research, and technology",
     "link": "https://www.millersville.edu/library/",
-    "lat": 39.997999,
-    "lng": -76.354436,
+    "lat": 39.998365,
+    "lng": -76.355217,
     "slug": "mcnairy-library",
     "breakClosed": true
   },
@@ -789,8 +787,8 @@
     "address": "",
     "phone": "",
     "description": "Art and design building",
-    "lat": 39.999308,
-    "lng": -76.350992,
+    "lat": 39.999391,
+    "lng": -76.351199,
     "slug": "breidenstine-hall"
   },
   {
@@ -983,5 +981,15 @@
     "lat": 39.99877,
     "lng": -76.347229,
     "slug": "seaber-softball-stadium"
+  },
+  {
+    "name": "Comet Field",
+    "category": "Recreation",
+    "address": "",
+    "phone": "",
+    "description": "",
+    "lat": 40.006777,
+    "lng": -76.341709,
+    "slug": "comet-field"
   }
 ]

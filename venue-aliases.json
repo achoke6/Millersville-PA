@@ -1,4 +1,17 @@
 {
   "_comment": "Hand-maintained overrides for event-to-place venue matching (tier 1 of the matcher in app.js linkEventsToPlaces). Keys are NORMALIZED event location strings: lowercase, punctuation stripped, single spaces, leading 'the' dropped. Values are directory place slugs (see slugify in scripts/sync-directory.js). The browser console logs 'venue-match: unmatched locations' as alias candidates. Edit directly.",
-  "overrides": {}
+  "overrides": {
+    "millersville borough": "millersville-borough-hall",
+    "millersville pa anttonen natatorium": "pucillo-gymnasium",
+    "outdoor quad": "quad",
+    "outdoor quad north": "quad",
+    "outdoor pond": "pond",
+    "millersville university pond": "pond",
+    "millersville university alumni house": "duncan-alumni-house",
+    "millersville university alumni house lawn": "duncan-alumni-house",
+    "stayer 108": "stayer-hall",
+    "winter vis perf arts center atrium": "winter-visual-performing-arts-center",
+    "millersville university tech engineering": "osburn-hall",
+    "millersville university chryst field": "biemesderfer-stadium"
+  }
 }

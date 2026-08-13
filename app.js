@@ -3820,7 +3820,7 @@ window.togglePlacesFilters=function(){
     const menu = document.getElementById('places-filter-menu');
     const arrow = document.getElementById('places-filter-arrow');
     const open = menu.style.display === 'none';
-    menu.style.display = open ? 'block' : 'none';
+    menu.style.display = open ? 'block' : 'none'; if (open){ const r = menu.getBoundingClientRect(); menu.style.maxHeight = Math.max(160, window.innerHeight - r.top - 12) + 'px'; }
     if (arrow) arrow.textContent = open ? '▴' : '▾';
 };
 window.toggleSpFilters=function(){
@@ -7893,16 +7893,16 @@ function renderFoodPage(){
     );
     if (ffToday.length){
         html += secHdr('🍕 Free Food Today', String(ffToday.length));
-        html += `<div style="margin-bottom:14px;">${ffToday.map(e => buildTimelineItem(e, now)).join('')}</div>`;
+        html += `<div style="grid-column:1/-1;margin-bottom:14px;">${ffToday.map(e => buildTimelineItem(e, now)).join('')}</div>`;
     } else {
         const next = ffAll.find(e => (e._dateMs || 0) > now.getTime());
         if (next){
             const nd = new Date(next._dateMs);
             const ndTxt = nd.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
             const nk = JSON.stringify(getEventKey(next)).replace(/"/g, '&quot;');
-            html += `<p role="button" tabindex="0" onclick="window.openEventDetails(${nk})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.openEventDetails(${nk})}" style="cursor:pointer;font-size:0.82rem;color:var(--text-muted);margin:2px 0 14px;">🍕 Free food returns <strong>${ndTxt}</strong> · ${escHtml(next.title || '')} →</p>`;
+            html += `<p role="button" tabindex="0" onclick="window.openEventDetails(${nk})" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.openEventDetails(${nk})}" style="grid-column:1/-1;cursor:pointer;font-size:0.82rem;color:var(--text-muted);margin:2px 0 14px;">🍕 Free food returns <strong>${ndTxt}</strong> · ${escHtml(next.title || '')} →</p>`;
         } else if (muAffiliation !== 'townie'){
-            html += `<p style="font-size:0.8rem;color:var(--text-muted);margin:2px 0 12px;">🍕 No free-food events scheduled — they return with the semester.</p>`;
+            html += `<p style="grid-column:1/-1;font-size:0.8rem;color:var(--text-muted);margin:2px 0 12px;">🍕 No free-food events scheduled — they return with the semester.</p>`;
         }
     }
 
@@ -7938,7 +7938,7 @@ function renderFoodPage(){
         }
         if (spLines.length){
             html += secHdr("Today's Specials", String(spLines.length));
-            html += `<div style="margin-bottom:14px;">${spLines.join('')}</div>`;
+            html += `<div style="grid-column:1/-1;margin-bottom:14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:0 12px;align-items:start;">${spLines.join('')}</div>`;
         }
     }
 
@@ -7966,8 +7966,8 @@ function renderFoodPage(){
     // Cupboard now rides the section-1.5 specials strip like every other
     // special (first line, marauders only). buildCampusCupboardCard still
     // serves the Places page; cupboardTodayVisible still gates pin/lens.
-    const closedHdr = `<p style="font-size:0.78rem;font-weight:700;color:var(--text-muted);margin:10px 0 2px;">Closed</p>`;
-    const toggleBtn = (grp, on, n) => `<div style="text-align:center;margin:8px 0 12px;"><button onclick="toggleFoodClosed('${grp}')" class="btn btn-sm btn-outline" style="font-size:0.8rem;">${on ? 'Hide closed places' : `Show ${n} closed or unlisted place${n===1?'':'s'}`}</button></div>`;
+    const closedHdr = `<p style="grid-column:1/-1;font-size:0.78rem;font-weight:700;color:var(--text-muted);margin:10px 0 2px;">Closed</p>`;
+    const toggleBtn = (grp, on, n) => `<div style="grid-column:1/-1;text-align:center;margin:8px 0 12px;"><button onclick="toggleFoodClosed('${grp}')" class="btn btn-sm btn-outline" style="font-size:0.8rem;">${on ? 'Hide closed places' : `Show ${n} closed or unlisted place${n===1?'':'s'}`}</button></div>`;
     let anyRows = false;
     const renderGroup = (label, list, grp, on) => {
         const vis = list.filter(p => stOf(p).rank <= 1).sort(byState);

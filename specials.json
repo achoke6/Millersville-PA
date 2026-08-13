@@ -83,7 +83,7 @@
       "Cayenne Peppers – 4/$1.00",
       "Cantaloupes – $2.00-$3.50 each"
     ],
-    "weeklyFetchedAt": "2026-08-13T13:07:11.040Z"
+    "weeklyFetchedAt": "2026-08-13T14:21:54.885Z"
   },
   "jesus-dogs": {
     "name": "Jesus Dogs",
@@ -119,9 +119,135 @@
   },
   "john-herr-s-village-market": {
     "name": "John Herr's Village Market",
-    "note": "Weekly deals · Thu–Wed",
-    "weekly": [],
-    "weeklyDateRange": "",
-    "rawDeals": []
+    "note": "Weekly deals: Thursday, August 13 through Wednesday, August 19",
+    "weekly": [
+      "Whole Frying Chicken – $1.79/lb",
+      "Fresh Boneless Pork Sirloin Chops (Value Pack) – $2.69/lb ($0.60/lb)",
+      "Our Own Store-Made Fresh 80% Lean Ground Beef (Value Pack) – $5.99/lb ($0.50/lb)",
+      "Whole Seedless Watermelon – $4.99 each",
+      "Certified Angus Beef Whole-in-Bag Eye of Round (cut into roasts or steaks at no extra cost) – $5.49/lb"
+    ],
+    "weeklyDateRange": "Thursday, August 13 through Wednesday, August 19",
+    "rawDeals": [
+      {
+        "item": "Whole Frying Chicken",
+        "salePrice": "$1.79/lb",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, August 13 through Wednesday, August 19"
+      },
+      {
+        "item": "Fresh Boneless Pork Sirloin Chops (Value Pack)",
+        "salePrice": "$2.69/lb",
+        "regularPrice": "$3.29/lb",
+        "savings": "$0.60/lb",
+        "dateRange": "Thursday, August 13 through Wednesday, August 19"
+      },
+      {
+        "item": "Our Own Store-Made Fresh 80% Lean Ground Beef (Value Pack)",
+        "salePrice": "$5.99/lb",
+        "regularPrice": "$6.49/lb",
+        "savings": "$0.50/lb",
+        "dateRange": "Thursday, August 13 through Wednesday, August 19"
+      },
+      {
+        "item": "Whole Seedless Watermelon",
+        "salePrice": "$4.99 each",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, August 13 through Wednesday, August 19"
+      },
+      {
+        "item": "Certified Angus Beef Whole-in-Bag Eye of Round (cut into roasts or steaks at no extra cost)",
+        "salePrice": "$5.49/lb",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, August 13 through Wednesday, August 19"
+      },
+      {
+        "item": "Certified Angus Beef T-Bone or Porterhouse Steaks (Value Pack)",
+        "salePrice": "$13.99/lb",
+        "regularPrice": "$14.99/lb",
+        "savings": "$1.00/lb",
+        "dateRange": "Thursday, August 13 through Wednesday, August 19"
+      },
+      {
+        "item": "Thomas' English Muffins (6-pack, Selected)",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, August 13 through Wednesday, August 19"
+      },
+      {
+        "item": "Martin's Kettle Cooked Potato Chips (8 oz, Selected)",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, August 13 through Wednesday, August 19"
+      },
+      {
+        "item": "Snapple Tea or Drinks (6-pack/16-oz, Selected)",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, August 13 through Wednesday, August 19"
+      },
+      {
+        "item": "Wholly Guacamole (7-8 oz, Selected)",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, August 13 through Wednesday, August 19"
+      },
+      {
+        "item": "Hass Avocados",
+        "salePrice": "5 for $5",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, August 13 through Wednesday, August 19"
+      },
+      {
+        "item": "Jumbo Athena Cantaloupes",
+        "salePrice": "2 for $7",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, August 13 through Wednesday, August 19"
+      },
+      {
+        "item": "Hellmann's Mayonnaise (30 oz, Selected) — Digital Coupon",
+        "salePrice": "$5.98",
+        "regularPrice": "$7.98",
+        "savings": "$2.00",
+        "dateRange": "Thursday, August 13 through Wednesday, August 19"
+      },
+      {
+        "item": "Coke Products (24-pack 12-oz cans, Selected) — Weekly Door Buster",
+        "salePrice": "$10.99",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, August 13 through Wednesday, August 19"
+      },
+      {
+        "item": "John F. Martin Deli Ham Off the Bone — Weekly Door Buster",
+        "salePrice": "$4.99/lb",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, August 13 through Wednesday, August 19"
+      },
+      {
+        "item": "Tillamook Ice Cream (1.5 qt)",
+        "salePrice": "$4.99",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, August 13 through Wednesday, August 19"
+      },
+      {
+        "item": "Tony's Pizza (10.4-19.7 oz, Selected) — Throwback Thursday (Thu Aug 13-Sun Aug 16 only, Digital Coupon)",
+        "salePrice": "$1.98",
+        "regularPrice": "$2.98",
+        "savings": "$1.00",
+        "dateRange": "Thursday, August 13 through Wednesday, August 19"
+      }
+    ]
   }
 }

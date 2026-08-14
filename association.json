@@ -3,19 +3,21 @@
   "associationName": "Millersville.APP Verified Businesses",
   "members": [
     {
+      "name": "Blue Rock Fire and Rescue",
+      "audience": "both",
+      "category": "Government"
+    },
+    {
+      "name": "Gamber Physical Therapy & Fitness",
+      "audience": "both",
+      "category": "Health"
+    },
+    {
       "name": "House of Pizza",
       "audience": "both"
     },
     {
-      "name": "VFW Post 7294",
-      "audience": "both"
-    },
-    {
       "name": "John Herr's Village Market",
-      "audience": "both"
-    },
-    {
-      "name": "Raney Cellars",
       "audience": "both"
     },
     {
@@ -24,14 +26,8 @@
       "category": "Finance"
     },
     {
-      "name": "Gamber Physical Therapy & Fitness",
-      "audience": "both",
-      "category": "Health"
-    },
-    {
-      "name": "The University Store",
-      "audience": "both",
-      "category": "Shopping"
+      "name": "Raney Cellars",
+      "audience": "both"
     },
     {
       "name": "Student Lodging, Inc.",
@@ -39,26 +35,30 @@
       "category": "Student Housing"
     },
     {
-      "name": "Blue Rock Fire and Rescue",
+      "name": "The University Store",
       "audience": "both",
-      "category": "Government"
+      "category": "Shopping"
+    },
+    {
+      "name": "VFW Post 7294",
+      "audience": "both"
     }
   ],
   "spotlight": [
-    {
-      "name": "The University Store",
-      "audience": "both",
-      "tagline": "The University Store",
-      "logo": "/img/university-store-logo.png",
-      "link": "https://millersville.store",
-      "liveFeed": null
-    },
     {
       "name": "Student Lodging, Inc.",
       "audience": "marauders",
       "tagline": "Student apartments steps from campus.",
       "logo": "/img/student-lodging-logo.png",
       "link": "https://studentlodginginc.com",
+      "liveFeed": null
+    },
+    {
+      "name": "The University Store",
+      "audience": "both",
+      "tagline": "The University Store",
+      "logo": "/img/university-store-logo.png",
+      "link": "https://millersville.store",
       "liveFeed": null
     }
   ]

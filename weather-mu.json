@@ -128,6 +128,17 @@
   },
   "observations": [
     {
+      "time": "13:00",
+      "temp": "84",
+      "dewpoint": "64",
+      "rh": "51",
+      "windDir": "SE",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "9.3",
+      "condition": "None"
+    },
+    {
       "time": "12:00",
       "temp": "82",
       "dewpoint": "65",
@@ -180,17 +191,6 @@
       "windSpeed": "1",
       "precip": "0.00",
       "visibility": "7.4",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "69",
-      "dewpoint": "68",
-      "rh": "96",
-      "windDir": "W",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "6.4",
       "condition": "None"
     }
   ],
@@ -349,9 +349,9 @@
     "yearMinDate": "January 21"
   },
   "discussion": {
-    "headline": "Not as stormy this week with a pleasant weekend to follow",
-    "dateLine": "12:15 p.m. Tuesday, August 11, 2026",
-    "excerpt": "Following a partly-to-mostly sunny, hot and humid end to the weekend, more showers and thunderstorms rumbled through northern MD, southeastern PA and the Lower Susquehanna Valley on Monday. One round impacted south-central PA during the morning with the second right on its heels between 1-6 PM. Along with locally heavy rainfall and frequent lightning, the storms caused numerous downed trees and powerlines, as well as nickel- to quarter-sized hail, in parts of the region. …",
+    "headline": "beautiful saturday followed by a stormy sunday",
+    "dateLine": "1:30 p.m. Friday, August 14, 2026, Update",
+    "excerpt": "The last few days have provided residents of northern MD and southeastern PA with a much-needed reprieve from the recent onslaught of showers and locally heavy, drenching thunderstorms. A quasi-stationary frontal boundary draped from the Ohio Valley through the southern mid-Atlantic States has served as the \"train tracks\" for several violent thunderstorm complexes, or Mesoscale Convective Systems (MCS), since Tuesday. …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -389,5 +389,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-08-14T16:49:06.158Z"
+  "updated": "2026-08-14T17:50:41.401Z"
 }

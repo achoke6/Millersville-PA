@@ -1,14 +1,95 @@
 [
   {
-    "name": "The Backyard",
-    "cuisine": "The new place to be!",
-    "description": "Hangout with some free food at pop-up events!",
-    "address": "12 S George St, Millersville, PA 17551",
+    "name": "Benson Snacks",
+    "cuisine": "American, Ice Cream",
+    "description": "Pool snackbar with a window to order for non-members.",
+    "address": "314 N Prince St, Millersville, PA 17551",
+    "link": "https://www.bensons-snacks.com/snack-bar-menu",
+    "lat": 40.001942,
+    "lng": -76.360659,
+    "slug": "benson-snacks",
+    "hours": {
+      "mon": "12:00-20:00",
+      "tue": "12:00-20:00",
+      "wed": "12:00-20:00",
+      "thu": "12:00-20:00",
+      "fri": "12:00-20:00",
+      "sat": "12:00-20:00",
+      "sun": "12:00-20:00"
+    }
+  },
+  {
+    "name": "Cactus Café",
+    "cuisine": "Café",
+    "description": "Community favorite café with a warm atmosphere",
+    "address": "2 S Prince St, Millersville, PA 17551",
+    "status": "View Menu",
+    "link": "https://cactuscafe.wixsite.com/cactuscafemillersvil/menu",
+    "lat": 39.996438,
+    "lng": -76.358993,
+    "slug": "cactus-caf",
+    "hours": {
+      "mon": "closed",
+      "tue": "08:00-14:00",
+      "wed": "08:00-14:00",
+      "thu": "08:00-14:00",
+      "fri": "08:00-15:00",
+      "sat": "08:00-15:00",
+      "sun": "08:00-15:00"
+    }
+  },
+  {
+    "name": "Chick-Fil-A",
+    "cuisine": "Chicken",
+    "description": "Classic chicken sandwiches and nuggets",
+    "address": "21 S George St, Millersville, PA 17551",
+    "status": "App Required",
+    "link": "https://play.google.com/store/apps/details?id=com.blackboard.mobileorder&hl=en_US",
+    "iosLink": "https://apps.apple.com/us/app/transact-mobile-ordering/id1494719529",
+    "marauderGold": true,
     "onCampus": true,
-    "audience": "marauders",
-    "lat": 39.997402,
-    "lng": -76.353637,
-    "slug": "the-backyard"
+    "lat": 39.996469,
+    "lng": -76.354305,
+    "slug": "chick-fil-a",
+    "hours": {
+      "mon": "12:00-18:00",
+      "tue": "12:00-18:00",
+      "wed": "12:00-18:00",
+      "thu": "12:00-18:00",
+      "fri": "12:00-18:00",
+      "sat": "12:00-18:00",
+      "sun": "closed"
+    },
+    "summerHours": {
+      "mon": "12:00-18:00",
+      "tue": "12:00-18:00",
+      "wed": "12:00-18:00",
+      "thu": "12:00-18:00",
+      "fri": "12:00-18:00",
+      "sat": "closed",
+      "sun": "closed"
+    },
+    "breakClosed": true
+  },
+  {
+    "name": "China Wok Chinese Restaurant",
+    "cuisine": "Chinese",
+    "description": "Chinese takeout and dine-in",
+    "address": "345 Comet Dr, Millersville, PA 17551",
+    "status": "Order Online",
+    "link": "https://order.mealkeyway.com/customer/release/index?mid=58667a6665426b534a6253536d542f414d57573052513d3d#/main",
+    "lat": 40.008786,
+    "lng": -76.344928,
+    "slug": "china-wok-chinese-restaurant",
+    "hours": {
+      "mon": "11:00-21:30",
+      "tue": "closed",
+      "wed": "11:00-21:30",
+      "thu": "11:00-21:30",
+      "fri": "11:00-22:00",
+      "sat": "11:00-22:00",
+      "sun": "11:00-21:00"
+    }
   },
   {
     "name": "Evergreen Cafe",
@@ -43,70 +124,250 @@
     "breakClosed": true
   },
   {
-    "name": "The Cove",
-    "cuisine": "Café",
-    "description": "Café and snack location in Lyle Hall.",
-    "address": "227 Cove Dr, Millersville, PA 17551",
+    "name": "House of Pizza",
+    "cuisine": "Pizza, Italian",
+    "description": "Local pizza shop serving slices and pies",
+    "address": "101 W Frederick St, Millersville, PA 17551",
+    "status": "View Menu",
+    "link": "https://www.houseofpizzamillersville.com/menu.html",
+    "lat": 39.996952,
+    "lng": -76.358907,
+    "slug": "house-of-pizza",
+    "hours": {
+      "mon": "10:30-20:00",
+      "tue": "10:30-20:00",
+      "wed": "10:30-20:00",
+      "thu": "10:30-22:00",
+      "fri": "10:30-22:00",
+      "sat": "10:30-22:00",
+      "sun": "12:00-19:00"
+    }
+  },
+  {
+    "name": "Jack's Family Tavern & Restaurant",
+    "cuisine": "American tavern",
+    "description": "Family-friendly American tavern with classic fare and great fries",
+    "address": "15 S Prince St, Millersville, PA 17551",
+    "status": "View Menu",
+    "link": "https://www.jacksfamilytavern.com/",
+    "lat": 39.995819,
+    "lng": -76.358193,
+    "slug": "jack-s-family-tavern",
+    "hours": {
+      "mon": "11:00-02:00",
+      "tue": "11:00-02:00",
+      "wed": "11:00-02:00",
+      "thu": "11:00-02:00",
+      "fri": "11:00-02:00",
+      "sat": "11:00-02:00",
+      "sun": "11:00-02:00"
+    }
+  },
+  {
+    "name": "Jesus Dogs",
+    "cuisine": "Free hot dogs",
+    "description": "Come join us on Thursday nights at 10pm for free hot dogs and fellowship!",
+    "address": "Hillview Ave & S Prince St, Millersville PA 17551",
+    "link": "https://www.instagram.com/jesusdogsofficial/",
+    "audience": "marauders",
+    "lat": 39.994422,
+    "lng": -76.357486,
+    "slug": "jesus-dogs"
+  },
+  {
+    "name": "John Herr's Village Market",
+    "cuisine": "Grocery & Deli",
+    "description": "Local grocery store with a full deli, bakery, and weekly deals",
+    "address": "25 Manor Ave, Millersville, PA 17551",
+    "status": "View Menu",
+    "link": "https://www.johnherrsvillagemarket.com/weekly-ad",
+    "marauderGold": true,
+    "lat": 40.009889,
+    "lng": -76.35876,
+    "slug": "john-herr-s-village-market",
+    "hours": {
+      "mon": "08:00-21:00",
+      "tue": "08:00-21:00",
+      "wed": "08:00-21:00",
+      "thu": "08:00-21:00",
+      "fri": "08:00-21:00",
+      "sat": "08:00-18:00",
+      "sun": "08:00-17:00"
+    }
+  },
+  {
+    "name": "Koshary Station",
+    "cuisine": "Egyptian",
+    "description": "Authentic Egyptian dishes — falafel, shawarma, koshary & more",
+    "address": "4 S Prince St, Millersville, PA 17551",
+    "status": "View Menu",
+    "link": "https://kosharystation.com/menu",
+    "lat": 39.996257,
+    "lng": -76.358891,
+    "slug": "koshary-station",
+    "hours": {
+      "mon": "11:00-19:00",
+      "tue": "11:00-19:00",
+      "wed": "11:00-19:00",
+      "thu": "11:00-19:00",
+      "fri": "11:00-19:00",
+      "sat": "11:00-19:00",
+      "sun": "closed"
+    }
+  },
+  {
+    "name": "Nino's New York Style Pizza",
+    "cuisine": "New York-style pizza",
+    "description": "Specialty pies and classic NY-style slices",
+    "address": "361 Comet Dr, Lancaster, PA 17603",
+    "status": "Order Online",
+    "link": "https://www.ninospizzamillersville.com/order",
+    "lat": 40.009603,
+    "lng": -76.344031,
+    "slug": "nino-s-new-york-style-pizza",
+    "hours": {
+      "mon": "closed",
+      "tue": "10:30-21:00",
+      "wed": "10:30-21:00",
+      "thu": "10:30-21:00",
+      "fri": "10:30-22:00",
+      "sat": "10:30-22:00",
+      "sun": "11:00-21:00"
+    }
+  },
+  {
+    "name": "Poke Bowl Station",
+    "cuisine": "Poke bowls",
+    "description": "Fresh poke bowls with customizable toppings",
+    "address": "367 Comet Dr, Lancaster, PA 17603",
+    "status": "View Menu",
+    "link": "https://www.pokebowlstationmillersville.com/",
+    "lat": 40.009219,
+    "lng": -76.344328,
+    "slug": "poke-bowl-station",
+    "hours": {
+      "mon": "11:00-21:00",
+      "tue": "11:00-21:00",
+      "wed": "closed",
+      "thu": "11:00-21:00",
+      "fri": "11:00-21:00",
+      "sat": "11:00-21:00",
+      "sun": "11:00-21:00"
+    }
+  },
+  {
+    "name": "Raney Cellars",
+    "cuisine": "Craft Beer",
+    "description": "Fresh and ever evolving tap list. Food trucks frequently. There is also always free popcorn!",
+    "address": "11 Manor Ave #1122, Millersville, PA 17551",
+    "link": "http://raneycellarsbrewing.com/",
+    "phone": "(717) 725-0095",
+    "lat": 40.008528,
+    "lng": -76.358234,
+    "slug": "raney-cellars",
+    "hours": {
+      "mon": "closed",
+      "tue": "closed",
+      "wed": "16:00-20:00",
+      "thu": "16:00-20:00",
+      "fri": "16:00-21:00",
+      "sat": "14:00-21:00",
+      "sun": "13:00-19:00"
+    }
+  },
+  {
+    "name": "Sheetz #544",
+    "cuisine": "Convenience, MTO",
+    "description": "Made-to-order food, coffee, and convenience items. Nearest Sheetz to campus.",
+    "address": "1790 Millersville Rd, Lancaster, PA 17603",
+    "status": "Order Online",
+    "link": "https://orders.sheetz.com/order/time",
+    "marauderGold": true,
+    "lat": 40.008708,
+    "lng": -76.344067,
+    "slug": "sheetz-544",
+    "hours": {
+      "mon": "00:00-24:00",
+      "tue": "00:00-24:00",
+      "wed": "00:00-24:00",
+      "thu": "00:00-24:00",
+      "fri": "00:00-24:00",
+      "sat": "00:00-24:00",
+      "sun": "00:00-24:00"
+    }
+  },
+  {
+    "name": "Starbucks (McNairy Library)",
+    "cuisine": "Coffee, Café",
+    "description": "Starbucks coffee shop inside McNairy Library.",
+    "address": "9 N George St, Millersville, PA 17551",
     "status": "View Menu",
     "link": "https://www.millersville.edu/dining/",
     "marauderGold": true,
     "onCampus": true,
-    "audience": "marauders",
-    "lat": 40.001798,
-    "lng": -76.356964,
-    "slug": "cove",
+    "lat": 39.998201,
+    "lng": -76.354905,
+    "slug": "starbucks-mcnairy-library",
     "hours": {
-      "mon": "closed",
-      "tue": "closed",
-      "wed": "closed",
-      "thu": "closed",
-      "fri": "closed",
+      "mon": "07:30-16:00",
+      "tue": "07:30-16:00",
+      "wed": "07:30-16:00",
+      "thu": "07:30-16:00",
+      "fri": "07:30-16:00",
       "sat": "closed",
       "sun": "closed"
     },
     "summerHours": {
-      "mon": "closed",
-      "tue": "closed",
-      "wed": "closed",
-      "thu": "closed",
-      "fri": "closed",
+      "mon": "07:30-16:00",
+      "tue": "07:30-16:00",
+      "wed": "07:30-16:00",
+      "thu": "07:30-16:00",
+      "fri": "07:30-16:00",
       "sat": "closed",
       "sun": "closed"
     },
     "breakClosed": true
   },
   {
-    "name": "Chick-Fil-A",
-    "cuisine": "Chicken",
-    "description": "Classic chicken sandwiches and nuggets",
-    "address": "21 S George St, Millersville, PA 17551",
-    "status": "App Required",
-    "link": "https://play.google.com/store/apps/details?id=com.blackboard.mobileorder&hl=en_US",
-    "iosLink": "https://apps.apple.com/us/app/transact-mobile-ordering/id1494719529",
-    "marauderGold": true,
-    "onCampus": true,
-    "lat": 39.996161,
-    "lng": -76.353888,
-    "slug": "chick-fil-a",
+    "name": "Subway",
+    "cuisine": "Sandwich Shop",
+    "description": "Casual counter-serve chain for build-your-own sandwiches & salads, with health-conscious options.",
+    "address": "240 Manor Ave, Millersville, PA 17551",
+    "link": "https://www.subway.com/en-us/restaurant/22565-0/menu",
+    "phone": "(717) 871-6597",
+    "lat": 40.011521,
+    "lng": -76.353859,
+    "slug": "subway",
     "hours": {
-      "mon": "12:00-18:00",
-      "tue": "12:00-18:00",
-      "wed": "12:00-18:00",
-      "thu": "12:00-18:00",
-      "fri": "12:00-18:00",
-      "sat": "12:00-18:00",
-      "sun": "closed"
-    },
-    "summerHours": {
-      "mon": "12:00-18:00",
-      "tue": "12:00-18:00",
-      "wed": "12:00-18:00",
-      "thu": "12:00-18:00",
-      "fri": "12:00-18:00",
-      "sat": "closed",
-      "sun": "closed"
-    },
-    "breakClosed": true
+      "mon": "09:00-22:30",
+      "tue": "09:00-22:30",
+      "wed": "09:00-22:30",
+      "thu": "09:00-22:30",
+      "fri": "09:00-22:30",
+      "sat": "09:00-22:30",
+      "sun": "09:00-22:30"
+    }
+  },
+  {
+    "name": "Sugar Bowl Millersville",
+    "cuisine": "American, Stromboli",
+    "description": "Known for their stromboli and large menu",
+    "address": "9 Normal Ave, Millersville, PA 17551",
+    "status": "Order Online",
+    "link": "https://orderonlinemenu.com/SugarBowlMillersville",
+    "marauderGold": true,
+    "lat": 39.999658,
+    "lng": -76.354187,
+    "slug": "sugar-bowl-millersville",
+    "hours": {
+      "mon": "11:00-22:00",
+      "tue": "11:00-22:00",
+      "wed": "11:00-22:00",
+      "thu": "11:00-22:00",
+      "fri": "11:00-22:00",
+      "sat": "11:00-22:00",
+      "sun": "11:00-22:00"
+    }
   },
   {
     "name": "The Anchor",
@@ -142,6 +403,122 @@
     "breakClosed": true
   },
   {
+    "name": "The Backyard",
+    "cuisine": "The new place to be!",
+    "description": "Hangout with some free food at pop-up events!",
+    "address": "12 S George St, Millersville, PA 17551",
+    "link": "https://www.instagram.com/funinthebackyard/",
+    "onCampus": true,
+    "audience": "marauders",
+    "lat": 39.997402,
+    "lng": -76.353637,
+    "slug": "the-backyard"
+  },
+  {
+    "name": "The Bunker at Crossgates",
+    "cuisine": "Bar & grill",
+    "description": "Bar and grill located at the golf course",
+    "address": "1 Crossland Pass, Millersville, PA 17551",
+    "status": "View Menu",
+    "link": "https://www.thebunkeratcrossgates.com/pdfs/Menu.pdf",
+    "lat": 39.98775,
+    "lng": -76.342612,
+    "slug": "bunker-at-crossgates",
+    "hours": {
+      "mon": "11:00-22:00",
+      "tue": "11:00-22:00",
+      "wed": "11:00-22:00",
+      "thu": "11:00-22:00",
+      "fri": "11:00-23:00",
+      "sat": "09:00-23:00",
+      "sun": "09:00-20:00"
+    }
+  },
+  {
+    "name": "The Cove",
+    "cuisine": "Café",
+    "description": "Café and snack location in Lyle Hall.",
+    "address": "227 Cove Dr, Millersville, PA 17551",
+    "status": "View Menu",
+    "link": "https://www.millersville.edu/dining/",
+    "marauderGold": true,
+    "onCampus": true,
+    "audience": "marauders",
+    "lat": 40.000519,
+    "lng": -76.357201,
+    "slug": "cove",
+    "hours": {
+      "mon": "closed",
+      "tue": "closed",
+      "wed": "closed",
+      "thu": "closed",
+      "fri": "closed",
+      "sat": "closed",
+      "sun": "closed"
+    },
+    "summerHours": {
+      "mon": "closed",
+      "tue": "closed",
+      "wed": "closed",
+      "thu": "closed",
+      "fri": "closed",
+      "sat": "closed",
+      "sun": "closed"
+    },
+    "breakClosed": true
+  },
+  {
+    "name": "The HUB",
+    "cuisine": "Free meals!",
+    "description": "Free food for MU Students! Also home of the Campus Cupboard",
+    "address": "121 N. George St, Millersville, PA 17551",
+    "link": "https://www.hubmu.org/free-meals",
+    "audience": "marauders",
+    "lat": 39.99978,
+    "lng": -76.35548,
+    "slug": "the-hub"
+  },
+  {
+    "name": "Tropical Smoothie Cafe",
+    "cuisine": "Juice",
+    "description": "",
+    "address": "341 Comet Dr, Millersville, PA 17551",
+    "link": "https://order.tropicalsmoothiecafe.com/menu/pa-007",
+    "phone": "(717) 584-0818",
+    "lat": 40.008675,
+    "lng": -76.344981,
+    "slug": "tropical-smoothie-cafe",
+    "hours": {
+      "mon": "07:00-21:00",
+      "tue": "07:00-21:00",
+      "wed": "07:00-21:00",
+      "thu": "07:00-21:00",
+      "fri": "07:00-21:00",
+      "sat": "08:00-21:00",
+      "sun": "08:00-21:00"
+    }
+  },
+  {
+    "name": "Two Cousins Pizza Millersville",
+    "cuisine": "Italian, Pizza",
+    "description": "Casual Italian dining and pizza",
+    "address": "115 Manor Ave, Millersville, PA 17551",
+    "status": "Order Online",
+    "link": "https://order.toasttab.com/online/two-cousins-pizza-millersville-115-manor-avenue-ogxls",
+    "lat": 40.010128,
+    "lng": -76.3564,
+    "slug": "two-cousins-pizza-millersville",
+    "hours": {
+      "mon": "11:00-21:00",
+      "tue": "11:00-21:00",
+      "wed": "11:00-21:00",
+      "thu": "11:00-21:00",
+      "fri": "11:00-22:00",
+      "sat": "11:00-22:00",
+      "sun": "11:00-21:00"
+    }
+  },
+  {
     "name": "Upper Deck",
     "cuisine": "Dining",
     "description": "Main residential dining hall in Gordinier Hall. Buffet-style meals.",
@@ -175,196 +552,23 @@
     "breakClosed": true
   },
   {
-    "name": "Starbucks (McNairy Library)",
-    "cuisine": "Coffee, Café",
-    "description": "Starbucks coffee shop inside McNairy Library.",
-    "address": "9 N George St, Millersville, PA 17551",
-    "status": "View Menu",
-    "link": "https://www.millersville.edu/dining/",
-    "marauderGold": true,
-    "onCampus": true,
-    "lat": 39.997999,
-    "lng": -76.354436,
-    "slug": "starbucks-mcnairy-library",
-    "hours": {
-      "mon": "07:30-16:00",
-      "tue": "07:30-16:00",
-      "wed": "07:30-16:00",
-      "thu": "07:30-16:00",
-      "fri": "07:30-16:00",
-      "sat": "closed",
-      "sun": "closed"
-    },
-    "summerHours": {
-      "mon": "07:30-16:00",
-      "tue": "07:30-16:00",
-      "wed": "07:30-16:00",
-      "thu": "07:30-16:00",
-      "fri": "07:30-16:00",
-      "sat": "closed",
-      "sun": "closed"
-    },
-    "breakClosed": true
-  },
-  {
-    "name": "Koshary Station",
-    "cuisine": "Egyptian",
-    "description": "Authentic Egyptian dishes — falafel, shawarma, koshary & more",
-    "address": "4 S Prince St, Millersville, PA 17551",
-    "status": "View Menu",
-    "link": "https://kosharystation.com/menu",
-    "lat": 39.996508,
-    "lng": -76.358826,
-    "slug": "koshary-station",
-    "hours": {
-      "mon": "11:00-19:00",
-      "tue": "11:00-19:00",
-      "wed": "11:00-19:00",
-      "thu": "11:00-19:00",
-      "fri": "11:00-19:00",
-      "sat": "11:00-19:00",
-      "sun": "closed"
-    }
-  },
-  {
-    "name": "Cactus Café",
-    "cuisine": "Café",
-    "description": "Community favorite café with a warm atmosphere",
-    "address": "2 S Prince St, Millersville, PA 17551",
-    "status": "View Menu",
-    "link": "https://cactuscafe.wixsite.com/cactuscafemillersvil/menu",
-    "lat": 39.995304,
-    "lng": -76.358205,
-    "slug": "cactus-caf",
+    "name": "VFW Post 7294",
+    "cuisine": "American, Bar food",
+    "description": "Weekly food specials and events. Members Only.",
+    "address": "219 Walnut Hill Rd, Millersville, PA 17551",
+    "status": "Members Only",
+    "link": "https://www.vfwpost7294.org/",
+    "lat": 39.989529,
+    "lng": -76.367107,
+    "slug": "vfw-post-7294",
     "hours": {
       "mon": "closed",
-      "tue": "08:00-14:00",
-      "wed": "08:00-14:00",
-      "thu": "08:00-14:00",
-      "fri": "08:00-15:00",
-      "sat": "08:00-15:00",
-      "sun": "08:00-15:00"
-    }
-  },
-  {
-    "name": "Jack's Family Tavern & Restaurant",
-    "cuisine": "American tavern",
-    "description": "Family-friendly American tavern with classic fare and great fries",
-    "address": "15 S Prince St, Millersville, PA 17551",
-    "status": "View Menu",
-    "link": "https://www.jacksfamilytavern.com/",
-    "lat": 39.995819,
-    "lng": -76.358193,
-    "slug": "jack-s-family-tavern",
-    "hours": {
-      "mon": "11:00-02:00",
-      "tue": "11:00-02:00",
-      "wed": "11:00-02:00",
-      "thu": "11:00-02:00",
-      "fri": "11:00-02:00",
-      "sat": "11:00-02:00",
-      "sun": "11:00-02:00"
-    }
-  },
-  {
-    "name": "Sugar Bowl Millersville",
-    "cuisine": "American, Stromboli",
-    "description": "Known for their stromboli and large menu",
-    "address": "9 Normal Ave, Millersville, PA 17551",
-    "status": "Order Online",
-    "link": "https://orderonlinemenu.com/SugarBowlMillersville",
-    "marauderGold": true,
-    "lat": 39.99945,
-    "lng": -76.354701,
-    "slug": "sugar-bowl-millersville",
-    "hours": {
-      "mon": "11:00-22:00",
-      "tue": "11:00-22:00",
-      "wed": "11:00-22:00",
-      "thu": "11:00-22:00",
-      "fri": "11:00-22:00",
-      "sat": "11:00-22:00",
-      "sun": "11:00-22:00"
-    }
-  },
-  {
-    "name": "Poke Bowl Station",
-    "cuisine": "Poke bowls",
-    "description": "Fresh poke bowls with customizable toppings",
-    "address": "367 Comet Dr, Lancaster, PA 17603",
-    "status": "View Menu",
-    "link": "https://www.pokebowlstationmillersville.com/",
-    "lat": 40.009219,
-    "lng": -76.344328,
-    "slug": "poke-bowl-station",
-    "hours": {
-      "mon": "11:00-21:00",
-      "tue": "11:00-21:00",
-      "wed": "closed",
-      "thu": "11:00-21:00",
-      "fri": "11:00-21:00",
-      "sat": "11:00-21:00",
-      "sun": "11:00-21:00"
-    }
-  },
-  {
-    "name": "House of Pizza",
-    "cuisine": "Pizza, Italian",
-    "description": "Local pizza shop serving slices and pies",
-    "address": "101 W Frederick St, Millersville, PA 17551",
-    "status": "View Menu",
-    "link": "https://www.houseofpizzamillersville.com/menu.html",
-    "lat": 39.996728,
-    "lng": -76.358971,
-    "slug": "house-of-pizza",
-    "hours": {
-      "mon": "10:30-20:00",
-      "tue": "10:30-20:00",
-      "wed": "10:30-20:00",
-      "thu": "10:30-22:00",
-      "fri": "10:30-22:00",
-      "sat": "10:30-22:00",
-      "sun": "12:00-19:00"
-    }
-  },
-  {
-    "name": "Two Cousins Pizza Millersville",
-    "cuisine": "Italian, Pizza",
-    "description": "Casual Italian dining and pizza",
-    "address": "115 Manor Ave, Millersville, PA 17551",
-    "status": "Order Online",
-    "link": "https://order.toasttab.com/online/two-cousins-pizza-millersville-115-manor-avenue-ogxls",
-    "lat": 40.010128,
-    "lng": -76.3564,
-    "slug": "two-cousins-pizza-millersville",
-    "hours": {
-      "mon": "11:00-21:00",
-      "tue": "11:00-21:00",
-      "wed": "11:00-21:00",
-      "thu": "11:00-21:00",
-      "fri": "11:00-22:00",
-      "sat": "11:00-22:00",
-      "sun": "11:00-21:00"
-    }
-  },
-  {
-    "name": "Nino's New York Style Pizza",
-    "cuisine": "New York-style pizza",
-    "description": "Specialty pies and classic NY-style slices",
-    "address": "361 Comet Dr, Lancaster, PA 17603",
-    "status": "Order Online",
-    "link": "https://www.ninospizzamillersville.com/order",
-    "lat": 40.009603,
-    "lng": -76.344031,
-    "slug": "nino-s-new-york-style-pizza",
-    "hours": {
-      "mon": "closed",
-      "tue": "10:30-21:00",
-      "wed": "10:30-21:00",
-      "thu": "10:30-21:00",
-      "fri": "10:30-22:00",
-      "sat": "10:30-22:00",
-      "sun": "11:00-21:00"
+      "tue": "14:00-22:00",
+      "wed": "14:00-22:00",
+      "thu": "14:00-22:00",
+      "fri": "14:00-23:00",
+      "sat": "12:00-23:00",
+      "sun": "12:00-20:00"
     }
   },
   {
@@ -387,208 +591,5 @@
       "sat": "11:00-21:00",
       "sun": "11:00-20:00"
     }
-  },
-  {
-    "name": "China Wok Chinese Restaurant",
-    "cuisine": "Chinese",
-    "description": "Chinese takeout and dine-in",
-    "address": "345 Comet Dr, Millersville, PA 17551",
-    "status": "Order Online",
-    "link": "https://order.mealkeyway.com/customer/release/index?mid=58667a6665426b534a6253536d542f414d57573052513d3d#/main",
-    "lat": 40.008786,
-    "lng": -76.344928,
-    "slug": "china-wok-chinese-restaurant",
-    "hours": {
-      "mon": "11:00-21:30",
-      "tue": "closed",
-      "wed": "11:00-21:30",
-      "thu": "11:00-21:30",
-      "fri": "11:00-22:00",
-      "sat": "11:00-22:00",
-      "sun": "11:00-21:00"
-    }
-  },
-  {
-    "name": "The Bunker at Crossgates",
-    "cuisine": "Bar & grill",
-    "description": "Bar and grill located at the golf course",
-    "address": "1 Crossland Pass, Millersville, PA 17551",
-    "status": "View Menu",
-    "link": "https://www.thebunkeratcrossgates.com/pdfs/Menu.pdf",
-    "lat": 39.98775,
-    "lng": -76.342612,
-    "slug": "bunker-at-crossgates",
-    "hours": {
-      "mon": "11:00-22:00",
-      "tue": "11:00-22:00",
-      "wed": "11:00-22:00",
-      "thu": "11:00-22:00",
-      "fri": "11:00-23:00",
-      "sat": "09:00-23:00",
-      "sun": "09:00-20:00"
-    }
-  },
-  {
-    "name": "VFW Post 7294",
-    "cuisine": "American, Bar food",
-    "description": "Weekly food specials and events. Members Only.",
-    "address": "219 Walnut Hill Rd, Millersville, PA 17551",
-    "status": "Members Only",
-    "link": "https://www.vfwpost7294.org/",
-    "lat": 39.989529,
-    "lng": -76.367107,
-    "slug": "vfw-post-7294",
-    "hours": {
-      "mon": "closed",
-      "tue": "14:00-22:00",
-      "wed": "14:00-22:00",
-      "thu": "14:00-22:00",
-      "fri": "14:00-23:00",
-      "sat": "12:00-23:00",
-      "sun": "12:00-20:00"
-    }
-  },
-  {
-    "name": "John Herr's Village Market",
-    "cuisine": "Grocery & Deli",
-    "description": "Local grocery store with a full deli, bakery, and weekly deals",
-    "address": "25 Manor Ave, Millersville, PA 17551",
-    "status": "View Menu",
-    "link": "https://www.johnherrsvillagemarket.com/weekly-ad",
-    "marauderGold": true,
-    "lat": 40.009889,
-    "lng": -76.35876,
-    "slug": "john-herr-s-village-market",
-    "hours": {
-      "mon": "08:00-21:00",
-      "tue": "08:00-21:00",
-      "wed": "08:00-21:00",
-      "thu": "08:00-21:00",
-      "fri": "08:00-21:00",
-      "sat": "08:00-18:00",
-      "sun": "08:00-17:00"
-    }
-  },
-  {
-    "name": "Sheetz #544",
-    "cuisine": "Convenience, MTO",
-    "description": "Made-to-order food, coffee, and convenience items. Nearest Sheetz to campus.",
-    "address": "1790 Millersville Rd, Lancaster, PA 17603",
-    "status": "Order Online",
-    "link": "https://orders.sheetz.com/order/time",
-    "marauderGold": true,
-    "lat": 40.008708,
-    "lng": -76.344067,
-    "slug": "sheetz-544",
-    "hours": {
-      "mon": "00:00-24:00",
-      "tue": "00:00-24:00",
-      "wed": "00:00-24:00",
-      "thu": "00:00-24:00",
-      "fri": "00:00-24:00",
-      "sat": "00:00-24:00",
-      "sun": "00:00-24:00"
-    }
-  },
-  {
-    "name": "Tropical Smoothie Cafe",
-    "cuisine": "Juice",
-    "description": "",
-    "address": "341 Comet Dr, Millersville, PA 17551",
-    "link": "https://order.tropicalsmoothiecafe.com/menu/pa-007",
-    "phone": "(717) 584-0818",
-    "lat": 40.008675,
-    "lng": -76.344981,
-    "slug": "tropical-smoothie-cafe",
-    "hours": {
-      "mon": "07:00-21:00",
-      "tue": "07:00-21:00",
-      "wed": "07:00-21:00",
-      "thu": "07:00-21:00",
-      "fri": "07:00-21:00",
-      "sat": "08:00-21:00",
-      "sun": "08:00-21:00"
-    }
-  },
-  {
-    "name": "Raney Cellars",
-    "cuisine": "Craft Beer",
-    "description": "Fresh and ever evolving tap list. Food trucks frequently. There is also always free popcorn!",
-    "address": "11 Manor Ave #1122, Millersville, PA 17551",
-    "link": "http://raneycellarsbrewing.com/",
-    "phone": "(717) 725-0095",
-    "lat": 40.008528,
-    "lng": -76.358234,
-    "slug": "raney-cellars",
-    "hours": {
-      "mon": "closed",
-      "tue": "closed",
-      "wed": "16:00-20:00",
-      "thu": "16:00-20:00",
-      "fri": "16:00-21:00",
-      "sat": "14:00-21:00",
-      "sun": "13:00-19:00"
-    }
-  },
-  {
-    "name": "Subway",
-    "cuisine": "Sandwich Shop",
-    "description": "Casual counter-serve chain for build-your-own sandwiches & salads, with health-conscious options.",
-    "address": "240 Manor Ave, Millersville, PA 17551",
-    "link": "https://www.subway.com/en-us/restaurant/22565-0/menu",
-    "phone": "(717) 871-6597",
-    "lat": 40.011521,
-    "lng": -76.353859,
-    "slug": "subway",
-    "hours": {
-      "mon": "09:00-22:30",
-      "tue": "09:00-22:30",
-      "wed": "09:00-22:30",
-      "thu": "09:00-22:30",
-      "fri": "09:00-22:30",
-      "sat": "09:00-22:30",
-      "sun": "09:00-22:30"
-    }
-  },
-  {
-    "name": "Benson Snacks",
-    "cuisine": "American, Ice Cream",
-    "description": "Pool snackbar with a window to order for non-members.",
-    "address": "314 N Prince St, Millersville, PA 17551",
-    "link": "https://www.bensons-snacks.com/snack-bar-menu",
-    "lat": 40.001942,
-    "lng": -76.360659,
-    "slug": "benson-snacks",
-    "hours": {
-      "mon": "12:00-20:00",
-      "tue": "12:00-20:00",
-      "wed": "12:00-20:00",
-      "thu": "12:00-20:00",
-      "fri": "12:00-20:00",
-      "sat": "12:00-20:00",
-      "sun": "12:00-20:00"
-    }
-  },
-  {
-    "name": "Jesus Dogs",
-    "cuisine": "Free hot dogs",
-    "description": "Come join us on Thursday nights at 10pm for free hot dogs and fellowship!",
-    "address": "Hillview Ave & S Prince St, Millersville PA 17551",
-    "link": "https://www.instagram.com/jesusdogsofficial/",
-    "audience": "marauders",
-    "lat": 39.994422,
-    "lng": -76.357486,
-    "slug": "jesus-dogs"
-  },
-  {
-    "name": "The HUB",
-    "cuisine": "Free meals!",
-    "description": "Free food for MU Students! Also home of the Campus Cupboard",
-    "address": "121 N. George St, Millersville, PA 17551",
-    "link": "https://www.hubmu.org/free-meals",
-    "audience": "marauders",
-    "lat": 39.99978,
-    "lng": -76.35548,
-    "slug": "the-hub"
   }
 ]

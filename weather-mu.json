@@ -1,27 +1,27 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Thursday, August 13, 2026 at 11:52 AM (Kyle Elliott, Meteorologist)",
+    "issued": "Friday, August 14, 2026 at 07:17 AM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "This afternoon",
-        "text": "Mostly sunny, warm and humid. High: 86-90"
+        "period": "Today",
+        "text": "Seasonable and a bit less humid with a mix of clouds and hazy sunshine. High: 82-86"
       },
       {
         "period": "Tonight",
-        "text": "Partly cloudy, warm and muggy. Low: 68-72"
-      },
-      {
-        "period": "Friday",
-        "text": "Mostly cloudy, seasonable and a bit less humid. High: 82-86"
-      },
-      {
-        "period": "Friday Night",
-        "text": "Partly cloudy and mild. Low: 64-68"
+        "text": "Mainly clear and mild. Low: 64-68"
       },
       {
         "period": "Saturday",
         "text": "Mostly sunny and pleasant with low humidity. High: 84-88"
+      },
+      {
+        "period": "Saturday Night",
+        "text": "Mild with increasing clouds. Low: 66-70"
+      },
+      {
+        "period": "Sunday",
+        "text": "Mostly cloudy and more humid with scattered showers and thunderstorms. High: 80-84"
       }
     ]
   },
@@ -126,74 +126,7 @@
       }
     ]
   },
-  "observations": [
-    {
-      "time": "11:00",
-      "temp": "80",
-      "dewpoint": "67",
-      "rh": "65",
-      "windDir": "NNW",
-      "windSpeed": "7",
-      "precip": "0.00",
-      "visibility": "10.4",
-      "condition": "None"
-    },
-    {
-      "time": "10:00",
-      "temp": "80",
-      "dewpoint": "67",
-      "rh": "65",
-      "windDir": "N",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "10.9",
-      "condition": "None"
-    },
-    {
-      "time": "09:00",
-      "temp": "77",
-      "dewpoint": "67",
-      "rh": "72",
-      "windDir": "NW",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "10.8",
-      "condition": "None"
-    },
-    {
-      "time": "08:00",
-      "temp": "75",
-      "dewpoint": "67",
-      "rh": "77",
-      "windDir": "NW",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "8.8",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "70",
-      "dewpoint": "68",
-      "rh": "92",
-      "windDir": "SSW",
-      "windSpeed": "0",
-      "precip": "0.00",
-      "visibility": "7.5",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "71",
-      "dewpoint": "67",
-      "rh": "86",
-      "windDir": "NW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "8.1",
-      "condition": "None"
-    }
-  ],
+  "observations": [],
   "dailySummary": {
     "monthLabel": "August 2026",
     "days": [
@@ -328,6 +261,17 @@
         "windSpeed": "12",
         "windTime": "12:35",
         "rain": "0.00"
+      },
+      {
+        "date": "08/13",
+        "max": "86",
+        "maxTime": "14:42",
+        "min": "70",
+        "minTime": "06:49",
+        "windDir": "355",
+        "windSpeed": "19",
+        "windTime": "09:36",
+        "rain": "0.00"
       }
     ],
     "totalRain": "2.88",
@@ -378,5 +322,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-08-13T15:57:08.522Z"
+  "updated": "2026-08-14T13:00:29.890Z"
 }

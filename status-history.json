@@ -2087,20 +2087,20 @@
     },
     {
       "date": "2026-08-13",
-      "ts": "2026-08-13T15:59:02.424Z",
-      "totalEvents": 825,
+      "ts": "2026-08-14T01:48:00.893Z",
+      "totalEvents": 865,
       "sources": {
         "muAthletics": 255,
         "muCalendar": 74,
         "artsmu": 27,
         "campsAlumni": 42,
         "muGetInvolved": 98,
-        "pennManor": 60,
+        "pennManor": 59,
         "borough": 75,
         "vfw": 8,
         "phantomPower": 14,
         "community": 22,
-        "manor": 0,
+        "manor": 41,
         "raneyCellars": 6,
         "theBackyard": 10,
         "muHudlBroadcasts": 0
@@ -2116,10 +2116,47 @@
         "vfw": "2026-10-15",
         "phantomPower": "2026-10-04",
         "community": "2027-04-16",
+        "manor": "2027-08-04",
+        "raneyCellars": "2026-08-15",
+        "theBackyard": "2026-09-30"
+      }
+    },
+    {
+      "date": "2026-08-14",
+      "ts": "2026-08-14T13:02:34.304Z",
+      "totalEvents": 865,
+      "sources": {
+        "muAthletics": 255,
+        "muCalendar": 74,
+        "artsmu": 27,
+        "campsAlumni": 42,
+        "muGetInvolved": 98,
+        "pennManor": 59,
+        "borough": 75,
+        "vfw": 8,
+        "phantomPower": 14,
+        "community": 22,
+        "manor": 41,
+        "raneyCellars": 6,
+        "theBackyard": 10,
+        "muHudlBroadcasts": 0
+      },
+      "newestDates": {
+        "muAthletics": "2027-05-01",
+        "muCalendar": "2027-04-17",
+        "artsmu": "2027-05-02",
+        "campsAlumni": "2027-04-03",
+        "muGetInvolved": "2027-05-05",
+        "pennManor": "2026-09-10",
+        "borough": "2026-12-25",
+        "vfw": "2026-10-15",
+        "phantomPower": "2026-10-04",
+        "community": "2027-04-16",
+        "manor": "2027-08-04",
         "raneyCellars": "2026-08-15",
         "theBackyard": "2026-09-30"
       }
     }
   ],
-  "lastUpdated": "2026-08-13T15:59:02.424Z"
+  "lastUpdated": "2026-08-14T13:02:34.304Z"
 }

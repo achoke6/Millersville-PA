@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-08-14T13:02:34.304Z",
-  "totalEvents": 865,
-  "withDescription": 342,
+  "generatedAt": "2026-08-14T13:44:32.260Z",
+  "totalEvents": 866,
+  "withDescription": 343,
   "withImage": 45,
   "familyFriendly": 70,
   "eventsToday": 3,
@@ -149,9 +149,16 @@
       "PM Community": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-08-14T13:00:27.441Z"
+    "lastSyncAt": "2026-08-14T13:42:23.284Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Karaoke Night|2026-08-20T02:00:00.000Z",
+      "firstSeenAt": "2026-08-14T13:44:32.257Z",
+      "title": "Karaoke Night",
+      "source": "Jack's Tavern",
+      "date": "2026-08-20T02:00:00.000Z"
+    },
     {
       "key": "Smile Empty Soul W. Revis & Yellow No. 5|2026-08-20T23:00:00.000Z",
       "firstSeenAt": "2026-08-14T10:00:53.336Z",
@@ -214,14 +221,7 @@
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2026-10-05T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
-      "firstSeenAt": "2026-08-14T08:16:09.815Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-10-07T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

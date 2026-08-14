@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-08-14T14:58:31.845Z",
-  "totalEvents": 866,
-  "withDescription": 343,
+  "generatedAt": "2026-08-14T15:51:25.301Z",
+  "totalEvents": 865,
+  "withDescription": 342,
   "withImage": 45,
   "familyFriendly": 70,
-  "eventsToday": 3,
+  "eventsToday": 2,
   "sources": {
     "muAthletics": 255,
-    "muCalendar": 74,
+    "muCalendar": 73,
     "artsmu": 27,
     "campsAlumni": 42,
     "muGetInvolved": 98,
@@ -149,9 +149,16 @@
       "PM Community": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-08-14T14:47:59.961Z"
+    "lastSyncAt": "2026-08-14T15:49:05.325Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Civil Service Commission - Cancelled|2026-08-17T22:00:00.000Z",
+      "firstSeenAt": "2026-08-14T15:51:25.300Z",
+      "title": "Civil Service Commission - Cancelled",
+      "source": "Borough",
+      "date": "2026-08-17T22:00:00.000Z"
+    },
     {
       "key": "Karaoke Night|2026-08-20T02:00:00.000Z",
       "firstSeenAt": "2026-08-14T13:44:32.257Z",
@@ -214,14 +221,7 @@
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2026-09-30T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
-      "firstSeenAt": "2026-08-14T08:16:09.815Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-10-05T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

@@ -26,39 +26,23 @@
     ]
   },
   "sevenDay": {
-    "issued": "Thursday, August 13, 2026 at 09:24 AM (Kyle Elliott)",
+    "issued": "Friday, August 14, 2026 at 11:46 AM (Kyle Elliott)",
     "days": [
       {
-        "period": "Thursday",
-        "sky": "Mostly Sunny",
-        "weather": "Warm & Muggy",
-        "pop": "<10%",
-        "temp": "88",
-        "conf": "5"
-      },
-      {
-        "period": "Thursday night",
-        "sky": "Partly Cloudy",
-        "weather": "Warm & Muggy",
-        "pop": "<10%",
-        "temp": "70",
-        "conf": "5"
-      },
-      {
         "period": "Friday",
-        "sky": "Partly Sunny",
+        "sky": "Clouds & Sun",
         "weather": "Seasonable",
         "pop": "<10%",
-        "temp": "86",
+        "temp": "84",
         "conf": "5"
       },
       {
         "period": "Friday night",
-        "sky": "Partly Cloudy",
+        "sky": "Mainly Clear",
         "weather": "Mild",
-        "pop": "20%",
+        "pop": "<10%",
         "temp": "66",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Saturday",
@@ -66,23 +50,23 @@
         "weather": "Pleasant",
         "pop": "<10%",
         "temp": "86",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Saturday night",
         "sky": "Increasing Clouds",
-        "weather": "Late-Night Showers",
-        "pop": "40%",
+        "weather": "Mild",
+        "pop": "20%",
         "temp": "68",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Sunday",
         "sky": "Mostly Cloudy",
         "weather": "Sct. Thunderstorms",
-        "pop": "70%",
+        "pop": "80%",
         "temp": "82",
-        "conf": "3"
+        "conf": "4"
       },
       {
         "period": "Sunday night",
@@ -90,7 +74,7 @@
         "weather": "Sct. Thunderstorms",
         "pop": "60%",
         "temp": "70",
-        "conf": "3"
+        "conf": "4"
       },
       {
         "period": "Monday",
@@ -98,7 +82,7 @@
         "weather": "Seasonable",
         "pop": "20%",
         "temp": "86",
-        "conf": "3"
+        "conf": "4"
       },
       {
         "period": "Monday night",
@@ -106,27 +90,54 @@
         "weather": "Mild",
         "pop": "<10%",
         "temp": "66",
-        "conf": "3"
+        "conf": "4"
       },
       {
         "period": "Tuesday",
         "sky": "Mostly Sunny",
         "weather": "Pleasant",
         "pop": "<10%",
-        "temp": "mid 80s",
+        "temp": "85",
+        "conf": "3"
+      },
+      {
+        "period": "Tuesday night",
+        "sky": "Mainly Clear",
+        "weather": "Fair",
+        "pop": "<10%",
+        "temp": "64",
         "conf": "3"
       },
       {
         "period": "Wednesday",
-        "sky": "Partly Sunny",
-        "weather": "Seasonable",
-        "pop": "20%",
-        "temp": "mid 80s",
+        "sky": "Mostly Sunny",
+        "weather": "Warm",
+        "pop": "<10%",
+        "temp": "upper 80s",
+        "conf": "3"
+      },
+      {
+        "period": "Thursday",
+        "sky": "Clouds & Sun",
+        "weather": "Chc. of T-storm",
+        "pop": "30%",
+        "temp": "upper 80s",
         "conf": "3"
       }
     ]
   },
   "observations": [
+    {
+      "time": "11:00",
+      "temp": "82",
+      "dewpoint": "62",
+      "rh": "51",
+      "windDir": "NNE",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "10.4",
+      "condition": "None"
+    },
     {
       "time": "10:00",
       "temp": "81",
@@ -180,17 +191,6 @@
       "windSpeed": "1",
       "precip": "0.00",
       "visibility": "6.1",
-      "condition": "None"
-    },
-    {
-      "time": "05:00",
-      "temp": "70",
-      "dewpoint": "69",
-      "rh": "95",
-      "windDir": "NNW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "5.5",
       "condition": "None"
     }
   ],
@@ -389,5 +389,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-08-14T14:56:01.598Z"
+  "updated": "2026-08-14T15:49:07.510Z"
 }

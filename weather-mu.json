@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "04:00",
+      "temp": "71",
+      "dewpoint": "69",
+      "rh": "95",
+      "windDir": "SSW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "6.3",
+      "condition": "None"
+    },
+    {
+      "time": "03:00",
+      "temp": "72",
+      "dewpoint": "70",
+      "rh": "92",
+      "windDir": "SE",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "7.3",
+      "condition": "None"
+    },
+    {
       "time": "02:00",
       "temp": "73",
       "dewpoint": "69",
@@ -169,28 +191,6 @@
       "windSpeed": "2",
       "precip": "0.00",
       "visibility": "8.2",
-      "condition": "None"
-    },
-    {
-      "time": "22:00",
-      "temp": "74",
-      "dewpoint": "70",
-      "rh": "86",
-      "windDir": "SW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "8.5",
-      "condition": "None"
-    },
-    {
-      "time": "21:00",
-      "temp": "78",
-      "dewpoint": "68",
-      "rh": "70",
-      "windDir": "W",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "9.3",
       "condition": "None"
     }
   ],
@@ -358,7 +358,36 @@
     "radar": "https://sirocco.accuweather.com/nx_mosaic_640x480c/RE/inmaREPA_.gif",
     "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
   },
-  "videos": [],
+  "videos": [
+    {
+      "title": "Medium Range Forecast 08/10/2026",
+      "videoId": "kgVpy-vTrQo",
+      "url": "https://www.youtube.com/watch?v=kgVpy-vTrQo",
+      "published": "2026-08-10T16:46:53+00:00",
+      "thumbnail": "https://i4.ytimg.com/vi/kgVpy-vTrQo/hqdefault.jpg"
+    },
+    {
+      "title": "Short Term Forecast 08/10/2026",
+      "videoId": "dU_ztFVj9Og",
+      "url": "https://www.youtube.com/watch?v=dU_ztFVj9Og",
+      "published": "2026-08-10T16:26:33+00:00",
+      "thumbnail": "https://i1.ytimg.com/vi/dU_ztFVj9Og/hqdefault.jpg"
+    },
+    {
+      "title": "Medium Range Forecast 08/03/2026",
+      "videoId": "QRjW0Z3uV8k",
+      "url": "https://www.youtube.com/watch?v=QRjW0Z3uV8k",
+      "published": "2026-08-03T15:11:03+00:00",
+      "thumbnail": "https://i2.ytimg.com/vi/QRjW0Z3uV8k/hqdefault.jpg"
+    },
+    {
+      "title": "Short Term Forecast 08/03/2026",
+      "videoId": "TFPRS5uagmc",
+      "url": "https://www.youtube.com/watch?v=TFPRS5uagmc",
+      "published": "2026-08-03T14:42:24+00:00",
+      "thumbnail": "https://i1.ytimg.com/vi/TFPRS5uagmc/hqdefault.jpg"
+    }
+  ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-08-14T06:11:33.407Z"
+  "updated": "2026-08-14T08:13:50.876Z"
 }

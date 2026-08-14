@@ -1,10 +1,10 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Friday, August 14, 2026 at 07:17 AM (Kyle Elliott, Meteorologist)",
+    "issued": "Friday, August 14, 2026 at 11:49 AM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "Today",
+        "period": "This afternoon",
         "text": "Seasonable and a bit less humid with a mix of clouds and hazy sunshine. High: 82-86"
       },
       {
@@ -128,6 +128,17 @@
   },
   "observations": [
     {
+      "time": "12:00",
+      "temp": "82",
+      "dewpoint": "65",
+      "rh": "56",
+      "windDir": "SSE",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "9.4",
+      "condition": "None"
+    },
+    {
       "time": "11:00",
       "temp": "82",
       "dewpoint": "62",
@@ -180,17 +191,6 @@
       "windSpeed": "1",
       "precip": "0.00",
       "visibility": "6.4",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "69",
-      "dewpoint": "68",
-      "rh": "95",
-      "windDir": "WSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "6.1",
       "condition": "None"
     }
   ],
@@ -389,5 +389,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-08-14T15:49:07.510Z"
+  "updated": "2026-08-14T16:49:06.158Z"
 }

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-16T19:21:08.586Z",
-  "totalEvents": 824,
+  "generatedAt": "2026-08-16T20:20:42.404Z",
+  "totalEvents": 865,
   "withDescription": 342,
   "withImage": 45,
   "familyFriendly": 70,
@@ -16,7 +16,7 @@
     "vfw": 8,
     "phantomPower": 14,
     "community": 22,
-    "manor": 0,
+    "manor": 41,
     "raneyCellars": 6,
     "theBackyard": 10,
     "muHudlBroadcasts": 0
@@ -62,7 +62,10 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-08-26T12:30:00.000Z",
+      "latest": "2027-08-04T23:00:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-08-05T20:00:00.000Z",
       "latest": "2026-08-15T22:00:00.000Z"
@@ -113,7 +116,10 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 72
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-08-04",
+      "daysSinceMoved": 12
+    },
     "raneyCellars": {
       "newest": "2026-08-15",
       "daysSinceMoved": 17
@@ -143,79 +149,79 @@
       "PM Community": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-08-16T19:19:16.952Z"
+    "lastSyncAt": "2026-08-16T20:18:37.357Z"
   },
   "recentlyAdded": [
     {
-      "key": "A Farewell To Kings - Rush Tribute (playing 2112 in its entirety)|2026-09-12T00:00:00.000Z",
-      "firstSeenAt": "2026-08-16T12:36:16.312Z",
-      "title": "A Farewell To Kings - Rush Tribute (playing 2112 in its entirety)",
-      "source": "Other",
-      "date": "2026-09-12T00:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
+      "firstSeenAt": "2026-08-16T20:20:42.402Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-08-26T12:30:00.000Z"
     },
     {
-      "key": "INVOCATION: AGE OF FIRE - DRAG NIGHT|2026-09-11T00:00:00.000Z",
-      "firstSeenAt": "2026-08-15T14:21:09.663Z",
-      "title": "INVOCATION: AGE OF FIRE - DRAG NIGHT",
-      "source": "Other",
-      "date": "2026-09-11T00:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-08-16T20:20:42.402Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-09-02T23:00:00.000Z"
     },
     {
-      "key": "/Nino's|2026-08-25T15:00:00.000Z",
-      "firstSeenAt": "2026-08-14T16:51:29.772Z",
-      "title": "/Nino's",
-      "source": "The Backyard",
-      "date": "2026-08-25T15:00:00.000Z"
+      "key": "Supervisors Meeting|2026-09-07T23:00:00.000Z",
+      "firstSeenAt": "2026-08-16T20:20:42.402Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-07T23:00:00.000Z"
     },
     {
-      "key": "Mr. Softee/90's Theme Food|2026-09-01T15:00:00.000Z",
-      "firstSeenAt": "2026-08-14T16:51:29.772Z",
-      "title": "Mr. Softee/90's Theme Food",
-      "source": "The Backyard",
-      "date": "2026-09-01T15:00:00.000Z"
+      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
+      "firstSeenAt": "2026-08-16T20:20:42.402Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-08T23:00:00.000Z"
     },
     {
-      "key": "Lancaster Brgr|2026-09-23T15:00:00.000Z",
-      "firstSeenAt": "2026-08-14T16:51:29.772Z",
-      "title": "Lancaster Brgr",
-      "source": "The Backyard",
-      "date": "2026-09-23T15:00:00.000Z"
+      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
+      "firstSeenAt": "2026-08-16T20:20:42.402Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-09-14T23:00:00.000Z"
     },
     {
-      "key": "Civil Service Commission - Cancelled|2026-08-17T22:00:00.000Z",
-      "firstSeenAt": "2026-08-14T15:51:25.300Z",
-      "title": "Civil Service Commission - Cancelled",
-      "source": "Borough",
-      "date": "2026-08-17T22:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-08-16T20:20:42.402Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-09-30T12:30:00.000Z"
     },
     {
-      "key": "Karaoke Night|2026-08-20T02:00:00.000Z",
-      "firstSeenAt": "2026-08-14T13:44:32.257Z",
-      "title": "Karaoke Night",
-      "source": "Jack's Tavern",
-      "date": "2026-08-20T02:00:00.000Z"
+      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
+      "firstSeenAt": "2026-08-16T20:20:42.402Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-10-05T23:00:00.000Z"
     },
     {
-      "key": "Smile Empty Soul W. Revis & Yellow No. 5|2026-08-20T23:00:00.000Z",
-      "firstSeenAt": "2026-08-14T10:00:53.336Z",
-      "title": "Smile Empty Soul W. Revis & Yellow No. 5",
-      "source": "Other",
-      "date": "2026-08-20T23:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
+      "firstSeenAt": "2026-08-16T20:20:42.402Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-10-07T23:00:00.000Z"
     },
     {
-      "key": "A Skylit Drive w. Reunion, Atlas at Hold, Surrender in Silence & The Martyr|2026-08-30T23:00:00.000Z",
-      "firstSeenAt": "2026-08-14T10:00:53.336Z",
-      "title": "A Skylit Drive w. Reunion, Atlas at Hold, Surrender in Silence & The Martyr",
-      "source": "Other",
-      "date": "2026-08-30T23:00:00.000Z"
+      "key": "Planning Commission|2026-10-12T23:00:00.000Z",
+      "firstSeenAt": "2026-08-16T20:20:42.402Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-10-12T23:00:00.000Z"
     },
     {
-      "key": "Los Mal Hablados|2026-09-09T23:30:00.000Z",
-      "firstSeenAt": "2026-08-13T23:50:43.983Z",
-      "title": "Los Mal Hablados",
-      "source": "Other",
-      "date": "2026-09-09T23:30:00.000Z"
+      "key": "Traffic Commission Meeting|2026-10-28T12:30:00.000Z",
+      "firstSeenAt": "2026-08-16T20:20:42.402Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-10-28T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 41
 }

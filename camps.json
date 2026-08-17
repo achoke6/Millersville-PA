@@ -1,12 +1,12 @@
 [
   {
     "title": "MU Baseball Summer Camp",
-    "date": "2026-08-12T09:00:00-04:00",
+    "date": "2026-08-22T09:00:00-04:00",
     "location": "Millersville University (Cooper Park)",
     "tags": ["MU", "Summer Camp", "Athletic Camp", "Baseball"],
     "price": "$260",
     "registrationUrl": "https://shehanbaseballcamps.totalcamps.com/",
-    "description": "High school prospect camps hosted by Shehan Baseball Camps at Millersville University. Upcoming individual sessions include Aug 12 (one day, $260) and Aug 22-23 ($260); team camps also available. Click Details to see current schedule and pricing.",
+    "description": "High school prospect camps hosted by Shehan Baseball Camps at Millersville University. Next individual session: College Coaches Camp, Aug 22-23 ($260), with evaluation cards from attending college coaches; team camps also available. Click Details to see current schedule and pricing.",
     "kidFriendly": true
   },
   {
@@ -32,13 +32,14 @@
     "kidFriendly": true
   },
   {
-    "title": "MU Men's Basketball Summer Elite Camp",
-    "date": "2026-08-08T09:00:00-04:00",
+    "title": "MU Basketball Fall Team Camp",
+    "date": "2026-10-10T09:00:00-04:00",
     "location": "Millersville University",
     "tags": ["MU", "Summer Camp", "Athletic Camp", "Basketball"],
-    "price": "$125",
+    "price": "$300/team",
     "registrationUrl": "https://millersvillebasketball.totalcamps.com/",
-    "description": "Casey Stitzel Summer Elite Camp for players in grades 9-12. A high-intensity exposure camp for players who want to play at the college level, with the chance to display ability to scholarship-level coaches. Culminates with a talk from MU Head Men's Basketball Coach Casey Stitzel on the recruiting process. Saturday, August 8, 2026 at Millersville University.",
+    "description": "One-day Millersville University Fall Men's Basketball Team Camp, Saturday, October 10, 2026. $300 per team; each team is guaranteed 3 games scheduled to fit its needs, with a certified trainer on site. Team registrations only (not individual players). Contact Coach Harris (dexter.harris@millersville.edu) or Coach McGee (570-205-6672).",
+    "audience": "townie-only",
     "kidFriendly": true
   },
   {
@@ -234,39 +235,6 @@
     "price": "$215",
     "registrationUrl": "https://millersvilletechcamps.com/product/youtube-studio-camp/",
     "description": "Afternoon session, 1pm-4pm, week of 6/22-6/26. Grades 3-6. Become a YouTube creator — DIYs, parodies, reviews, screencasts, Let's Plays. Custom thumbnails, channel graphics, video editing, lighting, screen capture, special effects, and audio production.",
-    "kidFriendly": true
-  },
-  {
-    "title": "Build Your Own Robot (Grades 7+)",
-    "date": "2026-06-22T09:00:00-04:00",
-    "endTime": "2026-06-22T12:00:00-04:00",
-    "location": "Millersville University (Tech & Engineering)",
-    "tags": ["MU", "Summer Camp", "Educational"],
-    "price": "$260",
-    "registrationUrl": "https://millersvilletechcamps.com/product/build-your-own-robot-6-22-6-26/",
-    "description": "Build a line-tracking robot and take it home. Learn soldering, electronic parts assembly, light emitters, light sensor circuitry, and tracking memory. Morning session, 9am-12pm, week of 6/22-6/26. Grades 7+.",
-    "kidFriendly": true
-  },
-  {
-    "title": "Aquaponics Camp (Grades 3+)",
-    "date": "2026-07-13T13:00:00-04:00",
-    "endTime": "2026-07-13T16:00:00-04:00",
-    "location": "Millersville University (Tech & Engineering)",
-    "tags": ["MU", "Summer Camp", "Educational"],
-    "price": "$265",
-    "registrationUrl": "https://millersvilletechcamps.com/product/aquaphonics-camp/",
-    "description": "Build and take home a functional aquaponics system (with live goldfish) to grow plants using fish waste. Topics include fish and plant life, water physics, and wetland ecosystems. Requires one power outlet. Afternoon session, 1pm-4pm, week of 7/13-7/17. Grades 3+.",
-    "kidFriendly": true
-  },
-  {
-    "title": "Advanced LEGO Robotics (Grades 6+)",
-    "date": "2026-07-13T13:00:00-04:00",
-    "endTime": "2026-07-13T16:00:00-04:00",
-    "location": "Millersville University (Tech & Engineering)",
-    "tags": ["MU", "Summer Camp", "Educational"],
-    "price": "$215",
-    "registrationUrl": "https://millersvilletechcamps.com/product/advances-lego-robotics/",
-    "description": "Uses the LEGO EV3 platform for open-ended challenges from past state competitions. Pairs work through programming and mechanical challenges, culminating in a shared final-exam challenge on Friday. Afternoon session, 1pm-4pm, week of 7/13-7/17. Grades 6+.",
     "kidFriendly": true
   },
   {

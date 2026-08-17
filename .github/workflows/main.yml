@@ -190,7 +190,7 @@ jobs:
           git add *.json 2>/dev/null || true
           git diff --staged --quiet && echo "No changes to commit" || {
             git commit -m "System: Auto-syncing Community Data"
-            git pull --rebase origin main --strategy-option theirs || {
+            git pull --rebase --autostash origin main --strategy-option theirs || {
               echo "Rebase conflict — resolving with ours (freshly scraped data wins)"
               git rebase --abort 2>/dev/null || true
               git pull origin main --no-rebase --strategy-option ours

@@ -1,11 +1,11 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Monday, August 17, 2026 at 07:28 AM (Kyle Elliott, Meteorologist)",
+    "issued": "Monday, August 17, 2026 at 11:48 AM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "Today",
-        "text": "Partly sunny, warmer and humid with isolated afternoon showers and T-storms. High: 84-88"
+        "period": "This afternoon",
+        "text": "Clouds and sun, warmer and humid with scattered showers and T-storms. High: 84-88"
       },
       {
         "period": "Tonight",
@@ -128,6 +128,17 @@
   },
   "observations": [
     {
+      "time": "12:00",
+      "temp": "83",
+      "dewpoint": "73",
+      "rh": "73",
+      "windDir": "WNW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "10.9",
+      "condition": "None"
+    },
+    {
       "time": "11:00",
       "temp": "81",
       "dewpoint": "74",
@@ -180,17 +191,6 @@
       "windSpeed": "5",
       "precip": "0.01",
       "visibility": "7.7",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "70",
-      "dewpoint": "70",
-      "rh": "99",
-      "windDir": "N",
-      "windSpeed": "2",
-      "precip": "0.04",
-      "visibility": "11.2",
       "condition": "None"
     }
   ],
@@ -422,5 +422,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-08-17T15:22:43.512Z"
+  "updated": "2026-08-17T16:27:49.564Z"
 }

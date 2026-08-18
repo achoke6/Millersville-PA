@@ -1,27 +1,27 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Monday, August 17, 2026 at 11:48 AM (Kyle Elliott, Meteorologist)",
+    "issued": "Tuesday, August 18, 2026 at 07:55 AM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "This afternoon",
-        "text": "Clouds and sun, warmer and humid with scattered showers and T-storms. High: 84-88"
+        "period": "Today",
+        "text": "Not as hot and turning less humid with sunshine and some passing clouds. High: 83-87"
       },
       {
         "period": "Tonight",
-        "text": "Warm and muggy with decreasing clouds. Low: 66-70"
-      },
-      {
-        "period": "Tuesday",
-        "text": "Mostly sunny, seasonable and turning less humid. High: 83-87"
-      },
-      {
-        "period": "Tuesday Night",
         "text": "Mainly clear and comfortable. Low: 60-64"
       },
       {
         "period": "Wednesday",
         "text": "Mostly sunny and seasonable with moderate humidity. High: 84-88"
+      },
+      {
+        "period": "Wednesday Night",
+        "text": "Partly cloudy, warm and muggy. Low: 66-70"
+      },
+      {
+        "period": "Thursday",
+        "text": "Mostly cloudy and humid with scattered showers. High: 80-84"
       }
     ]
   },
@@ -128,6 +128,17 @@
   },
   "observations": [
     {
+      "time": "08:00",
+      "temp": "75",
+      "dewpoint": "70",
+      "rh": "86",
+      "windDir": "NNW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "9.6",
+      "condition": "None"
+    },
+    {
       "time": "07:00",
       "temp": "69",
       "dewpoint": "69",
@@ -180,17 +191,6 @@
       "windSpeed": "1",
       "precip": "0.00",
       "visibility": "6.1",
-      "condition": "None"
-    },
-    {
-      "time": "02:00",
-      "temp": "71",
-      "dewpoint": "70",
-      "rh": "97",
-      "windDir": "W",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "8.4",
       "condition": "None"
     }
   ],
@@ -433,5 +433,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-08-18T11:22:37.625Z"
+  "updated": "2026-08-18T12:44:13.740Z"
 }

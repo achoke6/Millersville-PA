@@ -482,6 +482,57 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
     return 'mu-only';
 }
 
+// ---- Academic-milestone cross-check (warn-only; 2026-07-23 arc, restored 2026-08-18) ----
+// MIRROR of app.js muFallStartISO/muCommencementISO (the academic-tradition
+// math behind hours resolution): fall classes start the 4th MONDAY of August;
+// spring commencement is the SATURDAY of the week containing the first Monday
+// of May. Drift HERE mis-warns in the Action log but never mis-renders the
+// site — app.js owns rendering. Change one side, change both in the same
+// push (twin comment lives above app.js muFallStartISO).
+function muFallStartISO(year) {
+    const dow = new Date(Date.UTC(year, 7, 1)).getUTCDay();      // Aug 1
+    const firstMonday = 1 + ((8 - dow) % 7);
+    return year + '-08-' + String(firstMonday + 21).padStart(2, '0');   // 4th Monday
+}
+function muCommencementISO(year) {
+    const dow = new Date(Date.UTC(year, 4, 1)).getUTCDay();      // May 1
+    const firstMonday = 1 + ((8 - dow) % 7);
+    return year + '-05-' + String(firstMonday + 5).padStart(2, '0');    // that week's Saturday
+}
+// Compares MU's OWN calendar rows against the computed tradition dates.
+// Month-gated: only AUG "first day of classes"/"classes begin" rows and MAY
+// "commencement" rows count — the Jan spring first-day and Dec winter-
+// commencement copies are deliberately ignored. No milestone in the feed →
+// silent (titles are uncontrolled upstream text). A ⚠️ here is the trigger
+// for a SUMMER_OVERRIDES entry in app.js (see its comment) — the automated
+// half of the twice-yearly registrar check (manifest §8).
+function checkAcademicMilestones(rows) {
+    try {
+        const fallRe = /first day of classes|classes begin/i;
+        const commRe = /commencement/i;
+        (rows || []).forEach(obj => {
+            const title = obj.title || '';
+            const iso = String(obj.startDate || '').slice(0, 10);   // YYYY-MM-DD
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return;
+            const year = +iso.slice(0, 4);
+            const month = iso.slice(5, 7);
+            let kind, expect;
+            if (month === '08' && fallRe.test(title)) {
+                kind = 'fall start'; expect = muFallStartISO(year);
+            } else if (month === '05' && commRe.test(title)) {
+                kind = 'commencement'; expect = muCommencementISO(year);
+            } else return;
+            if (iso === expect) {
+                console.log(`✅ academic calendar: "${title}" ${iso} matches computed ${kind}`);
+            } else {
+                console.log(`⚠️ academic calendar: "${title}" ${iso} ≠ computed ${kind} ${expect} — check app.js SUMMER_OVERRIDES / MU_BREAK_RANGES`);
+            }
+        });
+    } catch (e) {
+        console.log(`⚠️ academic milestone check error (warn-only): ${e.message}`);
+    }
+}
+
 // Decode the HTML entities that actually appear in scraped titles/descriptions:
 // straight + curly apostrophes and quotes, en/em dashes, ellipsis, &, <, >,
 // nbsp (named + &#160;). Ampersand is decoded
@@ -2446,6 +2497,7 @@ async function runScraper() {
             muCount++;
         });
         console.log(`✅ MU Calendar (non-sport): ${muCount} events`);
+        checkAcademicMilestones(data.data);
     } catch (e) { console.error("❌ MU Calendar error:", e.message); }
 
     // ===== 3b. ARTSMU.COM (WARE CENTER / WINTER CENTER — supplements MU Calendar) =====

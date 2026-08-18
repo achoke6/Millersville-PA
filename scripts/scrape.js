@@ -482,6 +482,23 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
     return 'mu-only';
 }
 
+// ---- Alumni-event audience routing (title-keyed; 2026-08-18) ----
+// Used by BOTH alumni rule sites (MU Calendar parser + camps.json loader) —
+// keep the tiers here, not inline, so the two sites can never drift.
+// FULLY_EXEMPT: alumni-hosted but campus-wide — no audience stamped on either
+//   twin; every viewer sees the event (Homecoming cluster, 2026-07-30).
+// DUAL_AUDIENCE: the alumni office rides along at a student-facing event
+//   (donor presence at big campus moments) and publishes its own townie-facing
+//   copy (family badge, Free) via the camps sync, while the MU Calendar
+//   carries the campus-facing copy. The CALENDAR twin gets 'mu-only'; the
+//   CAMPS twin keeps the townie-only stamp — each confirmed identity sees
+//   exactly one copy (unset sees both: mu-only bypasses to unset and
+//   townie-only fails open — accepted). The twins are LOAD-BEARING for this
+//   split: never title-tidy a dual-audience pair into a dedupe collapse.
+//   Future dual events: add the title here (Candlelighting precedent).
+const ALUMNI_FULLY_EXEMPT_RE = /homecoming/i;
+const ALUMNI_DUAL_AUDIENCE_RE = /candle\s*light/i;
+
 // ---- Academic-milestone cross-check (warn-only; 2026-07-23 arc, restored 2026-08-18) ----
 // MIRROR of app.js muFallStartISO/muCommencementISO (the academic-tradition
 // math behind hours resolution): fall classes start the 4th MONDAY of August;
@@ -2459,11 +2476,12 @@ async function runScraper() {
             // camps.json loader note; keeps the calendar twins of alumni
             // events in lockstep with the curated camps.json copies.
             if (!audience && (eventType === 'Alumni Event' || tags.includes('Alumni Engagement'))
-                && !/homecoming|candle\s*light/i.test(eventTitle)) {
-                // Homecoming (2026-07-30) + Candlelighting (2026-08-18) exemptions:
-                // alumni-hosted, campus-wide / student-facing
-                // — see the camps.json loader's twin comment.
-                audience = 'townie-only';
+                && !ALUMNI_FULLY_EXEMPT_RE.test(eventTitle)) {
+                // Two-tier routing (constants above classifyAudience, 2026-08-18):
+                // dual-audience titles -> this calendar copy is the CAMPUS copy
+                // ('mu-only'); everything else stays townie-side. Homecoming is
+                // fully exempt (no audience). See the camps.json loader's twin.
+                audience = ALUMNI_DUAL_AUDIENCE_RE.test(eventTitle) ? 'mu-only' : 'townie-only';
             }
 
             const eventId = obj.eventId || obj.activityId || "";
@@ -2669,12 +2687,15 @@ async function runScraper() {
                     // explicit camp.audience field on the entry wins over the
                     // tag-derived default.
                     const campTags = Array.isArray(camp.tags) ? camp.tags : ['MU', 'Summer Camp'];
-                    // Homecoming (2026-07-30) + Candlelighting (2026-08-18)
-                    // exemptions: alumni-HOSTED but student-facing — students
-                    // must see them. Title-keyed so next year's entries
-                    // auto-exempt.
+                    // Two-tier routing (constants above classifyAudience,
+                    // 2026-08-18): only FULLY_EXEMPT titles (Homecoming)
+                    // escape the townie-only stamp. DUAL_AUDIENCE titles
+                    // (Candlelighting) deliberately KEEP it — this camps copy
+                    // is the townie-facing marketing copy; the MU Calendar
+                    // twin carries the campus copy as 'mu-only'. Title-keyed
+                    // so next year's entries auto-route.
                     const campIsAlumni = (campTags.includes('Alumni Event') || campTags.includes('Summer Fun Series'))
-                        && !/homecoming|candle\s*light/i.test(camp.title || '');
+                        && !ALUMNI_FULLY_EXEMPT_RE.test(camp.title || '');
                     events.push({
                         title: camp.title,
                         date: campDate.toISOString(),

@@ -7919,39 +7919,28 @@ function renderFoodPage(){
         }
     }
 
-    // --- 1.5 Today's Specials strip (ALL viewers as of v4 2026-07-31;
-    // was locals/unset only -- the pinned Cupboard card covered marauders).
-    // Same rules as the home rail: placesSpecialsItemsFor is the single
-    // source of truth (21+ gate, closedDays, day-only tags inside);
-    // audience gating mirrors loadHomeSpecials ('locals' hides from
-    // marauders, 'marauders' hides from townies/unset). Marauders get the
-    // Campus Cupboard as the FIRST line (buildCampusCupboardItems null =
-    // weekend/break/no-data -> line absent) -- it replaced the retired
-    // pinned Food-page card; tap opens the existing synthesized popup
-    // branch (openHomeSpecialPopup('campus-cupboard')). Every line -> the
-    // home-rail popup, which degrades gracefully. ---
+    // --- 1.5 Free Groceries (marauders only; 2026-08-18 v5 -- the Today's
+    // Specials STRIP is RETIRED: off-campus specials now surface as
+    // gold-bordered listing rows (rowFor keys the border off the same
+    // hasSp predicate as the 🏷️ dot -- items-today only, NO audience
+    // gate, matching the card's own specials box), and on-campus free food
+    // is the section-1 ticker. The Cupboard keeps its /food surface here --
+    // it's not an event, so the ticker never carries it. Same gate as the
+    // retired strip line (buildCampusCupboardItems null = weekend/break/
+    // no-data -> whole section absent, header included); cbItems =
+    // [hours line, description], both sheet-driven via campus-cupboard.json.
+    // Tap -> the existing synthesized popup branch
+    // (openHomeSpecialPopup('campus-cupboard')). ---
     {
-        const spLines = [];
         const cbItems = isStudent && typeof buildCampusCupboardItems === 'function' ? buildCampusCupboardItems(dayName) : null;
         if (cbItems){
             // cbItems[0] is "Open today: <hours>" (buildCampusCupboardItems)
             // -- strip that prefix for the line text; if the wording ever
             // changes, the full text shows instead (graceful, never wrong).
             const cbHours = String(cbItems[0]).replace(/^Open today:\s*/i, '');
-            spLines.push(`<p role="button" tabindex="0" onclick="openHomeSpecialPopup('campus-cupboard')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openHomeSpecialPopup('campus-cupboard')}" style="cursor:pointer;font-size:0.85rem;margin:6px 0;padding:9px 12px;background:var(--surface);border:1px solid var(--gold);border-radius:var(--radius-sm);">🏷️ <strong>Campus Cupboard</strong> — Free groceries · ${cbHours} <span style="color:var(--text-muted);">· MU students only</span></p>`);
-        }
-        for (const [slug, sp] of Object.entries(specials)){
-            if (!sp) continue;
-            if (sp.audience === 'locals' && isStudent) continue;
-            if (sp.audience === 'marauders' && !isStudent) continue;
-            const items = placesSpecialsItemsFor(sp, dayName);
-            if (!items.length) continue;
-            const more = items.length > 1 ? ` <span style="color:var(--text-muted);">+${items.length - 1} more</span>` : '';
-            spLines.push(`<p role="button" tabindex="0" onclick="openHomeSpecialPopup('${slug}')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openHomeSpecialPopup('${slug}')}" style="cursor:pointer;font-size:0.85rem;margin:6px 0;padding:9px 12px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);">🏷️ <strong>${sp.name || slug}</strong> — ${items[0]}${more}</p>`);
-        }
-        if (spLines.length){
-            html += secHdr("Today's Specials", String(spLines.length));
-            html += `<div style="grid-column:1/-1;margin-bottom:14px;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:0 12px;align-items:start;">${spLines.join('')}</div>`;
+            const cbDesc = escHtml(String(cbItems[1] || ''));
+            html += secHdr('Free Groceries');
+            html += `<div style="grid-column:1/-1;margin-bottom:14px;"><p role="button" tabindex="0" onclick="openHomeSpecialPopup('campus-cupboard')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openHomeSpecialPopup('campus-cupboard')}" style="cursor:pointer;font-size:0.85rem;margin:6px 0;padding:9px 12px;background:var(--surface);border:1px solid var(--gold);border-radius:var(--radius-sm);">🏷️ <strong>Campus Cupboard</strong> — ${cbDesc} <span style="color:var(--text-muted);">· ${cbHours}</span></p></div>`;
         }
     }
 
@@ -7973,7 +7962,7 @@ function renderFoodPage(){
     const sumRow = (label, st) => `<summary style="cursor:pointer;padding:10px 12px;font-size:0.9rem;"><span style="display:inline-flex;width:calc(100% - 22px);justify-content:space-between;align-items:center;gap:8px;vertical-align:middle;"><span style="font-weight:600;">${label}</span><span style="font-size:0.78rem;white-space:nowrap;">${stTxt(st)}</span></span></summary>`;
     const rowFor = p => {
         const hasSp = placesSpecialsItems(placeSlug(p), dayName).length > 0;
-        return `<details style="border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);margin:6px 0;">${sumRow(`${p.name}${hasSp ? ' 🏷️' : ''}`, stOf(p))}<div style="padding:0 8px 10px;">${buildFoodCard(p, specials, dayName)}</div></details>`;
+        return `<details style="border:1px solid ${hasSp ? 'var(--gold)' : 'var(--border)'};border-radius:var(--radius-sm);background:var(--surface);margin:6px 0;">${sumRow(`${p.name}${hasSp ? ' 🏷️' : ''}`, stOf(p))}<div style="padding:0 8px 10px;">${buildFoodCard(p, specials, dayName)}</div></details>`;
     };
     // Cupboard: pinned <details> card RETIRED in v4 (2026-07-31) -- the
     // Cupboard now rides the section-1.5 specials strip like every other

@@ -435,6 +435,25 @@
     }
   },
   {
+    "name": "The Corn Wagon",
+    "cuisine": "",
+    "description": "Local favorite produce stand",
+    "address": "2169 Millersville Rd, Lancaster, PA 17603",
+    "link": "https://www.thecornwagon.com/",
+    "lat": 39.989028,
+    "lng": -76.317354,
+    "slug": "corn-wagon",
+    "hours": {
+      "mon": "08:00-17:00",
+      "tue": "08:00-17:00",
+      "wed": "08:00-17:00",
+      "thu": "08:00-17:00",
+      "fri": "08:00-17:00",
+      "sat": "08:00-17:00",
+      "sun": "closed"
+    }
+  },
+  {
     "name": "The Cove",
     "cuisine": "Café",
     "description": "Café and snack location in Lyle Hall.",

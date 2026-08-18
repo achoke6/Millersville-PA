@@ -2408,8 +2408,9 @@ async function runScraper() {
             // camps.json loader note; keeps the calendar twins of alumni
             // events in lockstep with the curated camps.json copies.
             if (!audience && (eventType === 'Alumni Event' || tags.includes('Alumni Engagement'))
-                && !/homecoming/i.test(eventTitle)) {
-                // Homecoming exemption (2026-07-30): alumni-hosted, campus-wide
+                && !/homecoming|candle\s*light/i.test(eventTitle)) {
+                // Homecoming (2026-07-30) + Candlelighting (2026-08-18) exemptions:
+                // alumni-hosted, campus-wide / student-facing
                 // — see the camps.json loader's twin comment.
                 audience = 'townie-only';
             }
@@ -2616,11 +2617,12 @@ async function runScraper() {
                     // explicit camp.audience field on the entry wins over the
                     // tag-derived default.
                     const campTags = Array.isArray(camp.tags) ? camp.tags : ['MU', 'Summer Camp'];
-                    // Homecoming exemption (2026-07-30): alumni-HOSTED but
-                    // campus-wide — students must see it. Title-keyed so next
-                    // year's entry auto-exempts.
+                    // Homecoming (2026-07-30) + Candlelighting (2026-08-18)
+                    // exemptions: alumni-HOSTED but student-facing — students
+                    // must see them. Title-keyed so next year's entries
+                    // auto-exempt.
                     const campIsAlumni = (campTags.includes('Alumni Event') || campTags.includes('Summer Fun Series'))
-                        && !/homecoming/i.test(camp.title || '');
+                        && !/homecoming|candle\s*light/i.test(camp.title || '');
                     events.push({
                         title: camp.title,
                         date: campDate.toISOString(),

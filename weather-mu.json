@@ -1,10 +1,10 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Tuesday, August 18, 2026 at 07:55 AM (Kyle Elliott, Meteorologist)",
+    "issued": "Tuesday, August 18, 2026 at 11:59 AM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "Today",
+        "period": "This afternoon",
         "text": "Not as hot and turning less humid with sunshine and some passing clouds. High: 83-87"
       },
       {
@@ -21,7 +21,7 @@
       },
       {
         "period": "Thursday",
-        "text": "Mostly cloudy and humid with scattered showers. High: 80-84"
+        "text": "Mostly cloudy and humid with showers or periods of rain. High: 80-84"
       }
     ]
   },
@@ -128,6 +128,17 @@
   },
   "observations": [
     {
+      "time": "12:00",
+      "temp": "82",
+      "dewpoint": "71",
+      "rh": "69",
+      "windDir": "NW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "9.9",
+      "condition": "None"
+    },
+    {
       "time": "11:00",
       "temp": "81",
       "dewpoint": "68",
@@ -180,17 +191,6 @@
       "windSpeed": "1",
       "precip": "0.00",
       "visibility": "7.2",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "69",
-      "dewpoint": "69",
-      "rh": "99",
-      "windDir": "S",
-      "windSpeed": "0",
-      "precip": "0.00",
-      "visibility": "6.8",
       "condition": "None"
     }
   ],
@@ -393,9 +393,9 @@
     "yearMinDate": "January 21"
   },
   "discussion": {
-    "headline": "beautiful saturday followed by a stormy sunday",
-    "dateLine": "1:30 p.m. Friday, August 14, 2026, Update",
-    "excerpt": "The last few days have provided residents of northern MD and southeastern PA with a much-needed reprieve from the recent onslaught of showers and locally heavy, drenching thunderstorms. A quasi-stationary frontal boundary draped from the Ohio Valley through the southern mid-Atlantic States has served as the \"train tracks\" for several violent thunderstorm complexes, or Mesoscale Convective Systems (MCS), since Tuesday. …",
+    "headline": "typical august pattern with several shower chances through the weekend",
+    "dateLine": "11:30 a.m. Tuesday, August 18, 2026",
+    "excerpt": "The third week of August kicked off on a partly sunny, hot and humid note in advance of a weak cold front. High temperatures reached the upper 80s to low 90s Monday afternoon with dewpoints in the low-to-mid 70s and peak heat indices in the mid 90s. The front triggered scattered showers and a few drenching thunderstorms across the Lower Susquehanna Valley between 1-8 PM, but there were only a few reports of wind damage in Berks County. …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -433,5 +433,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-08-18T15:28:32.296Z"
+  "updated": "2026-08-18T16:28:45.438Z"
 }

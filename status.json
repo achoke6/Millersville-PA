@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-08-18T23:21:37.487Z",
+  "generatedAt": "2026-08-19T01:08:00.011Z",
   "totalEvents": 869,
   "withDescription": 345,
   "withImage": 45,
   "familyFriendly": 69,
-  "eventsToday": 1,
+  "eventsToday": 0,
   "sources": {
     "muAthletics": 255,
     "muCalendar": 75,
@@ -149,9 +149,16 @@
       "PM Community": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-08-18T23:19:15.136Z"
+    "lastSyncAt": "2026-08-19T01:05:50.651Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Trivia Night|2026-09-09T00:00:00.000Z",
+      "firstSeenAt": "2026-08-19T01:08:00.009Z",
+      "title": "Trivia Night",
+      "source": "Jack's Tavern",
+      "date": "2026-09-09T00:00:00.000Z"
+    },
     {
       "key": "Wild in the Shadows: Wood Sculpture by Rob Homan|2026-09-04T21:00:00.000Z",
       "firstSeenAt": "2026-08-18T20:23:22.494Z",
@@ -214,14 +221,7 @@
       "title": "Planning Commission",
       "source": "Manor",
       "date": "2026-09-14T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
-      "firstSeenAt": "2026-08-18T19:27:37.126Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-09-30T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

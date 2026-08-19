@@ -1,0 +1,22 @@
+# .github/workflows/probe-dserec.yml — DISPOSABLE. Delete after one run.
+# Tests whether GHA datacenter IPs can reach the DSE Rec intramurals API
+# (imleagues.com 403'd datacenter IPs; this decides if the scraper can
+# live in the hourly cloud build or must stay a local routine).
+name: probe-dserec
+on: workflow_dispatch
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hit DSE intramurals API
+        run: |
+          echo "--- HTTP status ---"
+          curl -s -o /tmp/body.json -w "%{http_code}\n" \
+            -H "accept: application/json" \
+            -H "x-requested-with: XMLHttpRequest" \
+            -H "referer: https://millersville.dserec.com/online/intramurals" \
+            -H "user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36" \
+            "https://millersville.dserec.com/api/intramurals/online/loadDataForHomePage"
+          echo "--- Body head ---"
+          head -c 600 /tmp/body.json
+          echo

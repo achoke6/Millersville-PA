@@ -1714,7 +1714,10 @@ window.openFeedSettings = function() {
                     const ocInner = renderGroupBlock('other', Object.assign({}, g, { label: '', icon: '' }));
                     offCampusBlock = `<div class="feed-subgroup" data-subgroup-key="events__offcampus" style="margin:2px 0 12px;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;">
                         <div class="feed-subgroup-header" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:${ocOn?'var(--gold-soft)':'var(--bg)'};cursor:pointer;" onclick="toggleSubgroupCollapse(event, 'events__offcampus')">
-                            <span style="flex:1;font-size:0.85rem;font-weight:700;">🛣️ Off Campus Favorites</span>
+                            <span style="flex:1;min-width:0;">
+                                <span style="display:block;font-size:0.85rem;font-weight:700;">🛣️ Off Campus Favorites</span>
+                                <span style="display:block;font-size:0.7rem;font-weight:400;color:var(--text-muted);">Hidden by default — Show to see events, ★ to follow</span>
+                            </span>
                             <span class="feed-subgroup-chevron" style="font-size:0.85rem;color:var(--text-muted);transition:transform 0.15s;${ocOn?'transform:rotate(90deg);':''}">▸</span>
                         </div>
                         <div class="feed-subgroup-children" style="display:${ocOn?'flex':'none'};padding:10px 12px 0;background:var(--surface);border-top:1px solid var(--border);"><div style="flex:1 1 100%;">${ocInner}</div></div>

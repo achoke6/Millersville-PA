@@ -85,7 +85,7 @@
       "Cayenne Peppers – 4/$1.00",
       "Cantaloupes – $2.00-$3.50 each"
     ],
-    "weeklyFetchedAt": "2026-08-19T15:20:30.638Z"
+    "weeklyFetchedAt": "2026-08-19T15:23:58.714Z"
   },
   "jesus-dogs": {
     "name": "Jesus Dogs",
@@ -105,8 +105,12 @@
       "Monday"
     ],
     "note": "Members & Guests · Weekly specials change each week",
-    "weekly": [],
-    "weeklyDateRange": "",
+    "weekly": [
+      "Popcorn Shrimp Po'Boy – $13.95",
+      "Chicken Alfredo – $12.95",
+      "Fried Cod – $13.95 (Friday only)"
+    ],
+    "weeklyDateRange": "Tuesday, August 18 through Saturday, August 22",
     "recurring": {
       "Tuesday": "Shrimp Night",
       "Wednesday": "Wing Night",

@@ -3862,64 +3862,112 @@ async function runScraper() {
         }
     } catch (e) { console.log(`  ⚠️ Youth sports registration error: ${e.message}`); }
 	
-	// ===== 6c-2. INTRAMURAL SIGNUPS (imleagues.json) =====
+	// ===== 6c-2. INTRAMURAL SIGNUPS (DSE Rec API) =====
     //
-    // MU intramural signups, scraped manually via scripts/scrape-imleagues.js
-    // (IMLeagues is an Angular SPA that blocks GHA IPs, so it can't run in this
-    // cron — run locally, commit imleagues.json). Same model as youth sports
-    // above: each ACTIVE entry whose deadline hasn't passed becomes an event
-    // dated ON the deadline, with the 📝 "Registration required" badge. Unlike
-    // youth sports these are MU-student events (kidFriendly:false). Season +
-    // registration window live in the description.
+    // MU intramural signups, fetched live from the DSE Rec portal's public
+    // JSON API. MU moved intramurals from IMLeagues to
+    // millersville.dserec.com for Fall 2026; unlike IMLeagues (which 403'd
+    // datacenter IPs and needed a local Playwright routine), DSE's API is a
+    // plain anonymous GET that GHA runners can reach (probe-verified
+    // 2026-08-19, two runners). The old scripts/scrape-imleagues.js routine
+    // and the committed imleagues.json are RETIRED.
     //
-    // imleagues.json is a flat array of:
-    //   { status:"active", sport, league, title, deadline (ISO Z),
-    //     registrationWindow, season, registerLink }
+    // Same model as youth sports above: ONE event per sport, dated on the
+    // deadline, with the 📝 registration badge. Divisions (Men's / Women's /
+    // Co-Rec...) are COLLAPSED per sport: deadline = earliest future
+    // division deadline (conservative), opens = earliest division
+    // registration_start, divisions listed in the description. MU-student
+    // events (kidFriendly:false). app.js isIntramural() matches 'dserec' in
+    // registerLink to route these to the marauder Upcoming Signups box.
+    //
+    // API quirks: (1) naive "YYYY-MM-DD HH:MM:SS" timestamps are ET
+    // wall-clock — parseEventInstant applies the DST-correct offset; (2)
+    // events_groups is an object of arrays ({in_progress, upcoming}) when
+    // populated but a bare [] when empty (PHP json_encode) — Object.values
+    // + flat covers both shapes; (3) a registration_end of exactly midnight
+    // means "closes at the end of the PREVIOUS day", so we back it up one
+    // minute ('2026-09-09 00:00:00' → Sep 8 11:59 PM ET) so date labels and
+    // countdowns read correctly — matches how IMLeagues rendered the same
+    // window. Fail-soft: any fetch/parse error = no intramural events this
+    // build; the next hourly run heals it.
     try {
-        const imlPath = path.join(__dirname, '../imleagues.json');
-        let imlData = null;
-        try { imlData = JSON.parse(fs.readFileSync(imlPath, 'utf8')); } catch (_) {}
-
-        if (Array.isArray(imlData)) {
-            const now = new Date();
-            let added = 0, closed = 0, skipped = 0;
-            for (const reg of imlData) {
-                if (reg.status !== 'active') { skipped++; continue; }
-                if (!reg.deadline || !reg.title) { skipped++; continue; }
-                const dl = new Date(reg.deadline);
-                if (isNaN(dl.getTime())) { skipped++; continue; }
-                if (dl < now) { closed++; continue; }   // deadline passed — don't create
-
-                const dlLabel = dl.toLocaleDateString('en-US', {
-                    month: 'short', day: 'numeric', timeZone: 'America/New_York'
-                });
-                events.push({
-                    title: reg.title,
-                    date: dl.toISOString(),
-                    endTime: '',
-                    location: 'Millersville University',
-                    tags: ['Other'],
-                    price: 'Free',
-                    registerLink: reg.registerLink || '',
-                    sourceLink: reg.registerLink || 'https://imleagues.com/millersville',
-                    gameResult: '', gameScore: '', streamLink: '', isLive: false,
-                    registrationRequired: true,
-                    registrationDeadline: reg.deadline,
-                    ...(reg.opens ? { registrationOpens: reg.opens } : {}),
-                    kidFriendly: false,
-                    description: [
-                        reg.season ? `Season runs ${reg.season}.` : '',
-                        reg.registrationWindow ? `Registration ${reg.registrationWindow}.` : '',
-                        `Registration closes ${dlLabel}. Sign up at IMLeagues.`
-                    ].filter(Boolean).join(' ')
-                });
-                added++;
-            }
-            if (added > 0 || closed > 0 || skipped > 0) {
-                console.log(`  ✅ Intramural signups: ${added} open, ${closed} closed, ${skipped} skipped`);
-            }
+        const dseRes = await fetch('https://millersville.dserec.com/api/intramurals/online/loadDataForHomePage', {
+            headers: {
+                ...baseHeaders,
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+                'Referer': 'https://millersville.dserec.com/online/intramurals'
+            },
+            signal: AbortSignal.timeout(15000)
+        });
+        if (!dseRes.ok) throw new Error(`HTTP ${dseRes.status}`);
+        const dseJson = await dseRes.json();
+        if (dseJson.status !== 'success' || !Array.isArray(dseJson?.data?.sports)) {
+            throw new Error('unexpected payload shape');
         }
-    } catch (e) { console.log(`  ⚠️ Intramural signups (imleagues.json) error: ${e.message}`); }
+        const seasonName = dseJson.data.active_season?.name || '';
+        const IM_MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+        const nowMs = Date.now();
+        let added = 0, closedSports = 0, divisionsSeen = 0;
+        for (const sport of dseJson.data.sports) {
+            const divisions = Object.values(sport.events_groups || {}).flat();
+            divisionsSeen += divisions.length;
+            const open = [];
+            for (const div of divisions) {
+                if (!div || !div.registration_end) continue;
+                let dlMs = parseEventInstant(div.registration_end);
+                if (isNaN(dlMs)) continue;
+                // Exact-midnight deadline = end of the previous day.
+                if (/[T ]00:00(:00)?$/.test(String(div.registration_end).trim())) dlMs -= 60000;
+                if (dlMs <= nowMs) continue;
+                const opMs = div.registration_start ? parseEventInstant(div.registration_start) : NaN;
+                open.push({ div, dlMs, opMs });
+            }
+            if (!open.length) { if (divisions.length) closedSports++; continue; }
+            open.sort((a, b) => a.dlMs - b.dlMs);
+            const earliest = open[0];
+            const opensList = open.map(o => o.opMs).filter(ms => !isNaN(ms));
+            const opensMs = opensList.length ? Math.min(...opensList) : NaN;
+            // Division labels from the leading token of each division name
+            // ("Co-Rec Thu 6 - 8pm Regular Season" → "Co-Rec"), deduped in
+            // deadline order. Unrecognized prefixes are just skipped.
+            const labels = [];
+            for (const o of open) {
+                const m = String(o.div.name || '').match(/^(Co-Rec|Co-ed|Men's|Women's|Open)\b/i);
+                if (m && !labels.some(l => l.toLowerCase() === m[1].toLowerCase())) labels.push(m[1]);
+            }
+            const typeWord = { league: 'League play', tournament: 'Tournament', contest: 'Contest' }[earliest.div.type] || 'Play';
+            let startLabel = '';
+            const sm = String(earliest.div.event_start || '').match(/^(\d{4})-(\d{2})-(\d{2})/);
+            if (sm) startLabel = `${IM_MONTHS[+sm[2] - 1]} ${+sm[3]}`;
+            const dlLabel = new Date(earliest.dlMs).toLocaleDateString('en-US', {
+                month: 'short', day: 'numeric', timeZone: 'America/New_York'
+            });
+            events.push({
+                title: `Intramural ${sport.name}`,
+                date: new Date(earliest.dlMs).toISOString(),
+                endTime: '',
+                location: 'Millersville University',
+                tags: ['Other'],
+                price: 'Free',
+                registerLink: `https://millersville.dserec.com/online/intramurals/sport/${sport.id}`,
+                sourceLink: `https://millersville.dserec.com/online/intramurals/sport/${sport.id}`,
+                gameResult: '', gameScore: '', streamLink: '', isLive: false,
+                registrationRequired: true,
+                registrationDeadline: new Date(earliest.dlMs).toISOString(),
+                ...(isNaN(opensMs) ? {} : { registrationOpens: new Date(opensMs).toISOString() }),
+                kidFriendly: false,
+                description: [
+                    `MU intramural ${sport.name}${seasonName ? ` — ${seasonName}` : ''}.`,
+                    labels.length ? `Divisions: ${labels.join(', ')}.` : '',
+                    startLabel ? `${typeWord} starts ${startLabel}.` : '',
+                    `Registration closes ${dlLabel}. Sign up at the MU Campus Rec portal.`
+                ].filter(Boolean).join(' ')
+            });
+            added++;
+        }
+        console.log(`  ✅ Intramural signups (DSE): ${added} sport(s) open, ${closedSports} closed, ${divisionsSeen} division(s) seen`);
+    } catch (e) { console.log(`  ⚠️ Intramural signups (DSE Rec) error: ${e.message}`); }
 
 
     // ===== 7. VFW POST 7294 — hand-maintained via vfw.json + Cowork =====

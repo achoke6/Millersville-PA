@@ -479,16 +479,17 @@ function isHiddenForViewer(e) {
     if (muAffiliation === 'student') return !!(e && e.audience === 'townie-only');
     return false; // unset → see everything
 }
-// Intramural signups (scraped from IMLeagues into events.json) are a MARAUDER-
-// only thing — townies can't join MU intramural leagues. We identify them by
-// their IMLeagues registration/source link (or an explicit 'Intramural' tag, if
-// the scraper ever adds one). Used to (a) hide them from townies everywhere and
-// (b) route them into the marauder "Upcoming Signups" box instead of the townie one.
+// Intramural signups (fetched from the DSE Rec portal into events.json; was
+// IMLeagues before Fall 2026) are a MARAUDER-only thing — townies can't join
+// MU intramural leagues. We identify them by their DSE Rec / legacy IMLeagues
+// registration/source link (or an explicit 'Intramural' tag, if the scraper
+// ever adds one). Used to (a) hide them from townies everywhere and (b) route
+// them into the marauder "Upcoming Signups" box instead of the townie one.
 function isIntramural(e) {
     if (!e) return false;
     if ((e.tags || []).includes('Intramural')) return true;
     const s = ((e.sourceLink || '') + ' ' + (e.registerLink || '')).toLowerCase();
-    return s.includes('imleagues');
+    return s.includes('imleagues') || s.includes('dserec');
 }
 
 // Feed subscription tokens and their display config

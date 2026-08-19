@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-08-19T18:34:10.323Z",
-  "totalEvents": 880,
-  "withDescription": 356,
-  "withImage": 45,
+  "generatedAt": "2026-08-19T19:19:42.839Z",
+  "totalEvents": 882,
+  "withDescription": 357,
+  "withImage": 46,
   "familyFriendly": 69,
   "eventsToday": 4,
   "sources": {
     "muAthletics": 255,
     "muCalendar": 75,
-    "artsmu": 32,
+    "artsmu": 33,
     "campsAlumni": 39,
-    "muGetInvolved": 103,
+    "muGetInvolved": 104,
     "pennManor": 58,
     "borough": 72,
     "vfw": 7,
@@ -149,9 +149,23 @@
       "PM Community": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-08-19T18:31:44.800Z"
+    "lastSyncAt": "2026-08-19T19:17:11.359Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Longest Drive Competition|2026-09-14T21:00:00.000Z",
+      "firstSeenAt": "2026-08-19T19:19:42.837Z",
+      "title": "Longest Drive Competition",
+      "source": "MU",
+      "date": "2026-09-14T21:00:00.000Z"
+    },
+    {
+      "key": "The Sun Will Rise Again|2027-02-06T00:00:00.000Z",
+      "firstSeenAt": "2026-08-19T19:19:42.837Z",
+      "title": "The Sun Will Rise Again",
+      "source": "MU",
+      "date": "2027-02-06T00:00:00.000Z"
+    },
     {
       "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
       "firstSeenAt": "2026-08-19T18:34:10.321Z",
@@ -207,21 +221,7 @@
       "title": "Zoning Hearing Board",
       "source": "Manor",
       "date": "2026-10-07T23:00:00.000Z"
-    },
-    {
-      "key": "Planning Commission|2026-10-12T23:00:00.000Z",
-      "firstSeenAt": "2026-08-19T18:34:10.321Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-10-12T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-10-28T12:30:00.000Z",
-      "firstSeenAt": "2026-08-19T18:34:10.321Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-10-28T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 41
+  "addedLastRun": 2
 }

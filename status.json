@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-08-18T17:36:24.592Z",
-  "totalEvents": 865,
+  "generatedAt": "2026-08-19T15:09:44.831Z",
+  "totalEvents": 868,
   "withDescription": 345,
   "withImage": 45,
-  "familyFriendly": 68,
-  "eventsToday": 1,
+  "familyFriendly": 69,
+  "eventsToday": 4,
   "sources": {
-    "muAthletics": 255,
+    "muAthletics": 254,
     "muCalendar": 75,
-    "artsmu": 28,
+    "artsmu": 32,
     "campsAlumni": 39,
     "muGetInvolved": 103,
     "pennManor": 58,
@@ -31,8 +31,8 @@
       "latest": "2027-04-24T19:30:00.000Z"
     },
     "artsmu": {
-      "earliest": "2026-08-07T21:00:00.000Z",
-      "latest": "2027-05-02T18:30:00.000Z"
+      "earliest": "2026-08-07T23:00:00.000Z",
+      "latest": "2027-05-02T23:00:00.000Z"
     },
     "campsAlumni": {
       "earliest": "2026-06-11T22:00:00.000Z",
@@ -78,59 +78,59 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-01",
-      "daysSinceMoved": 41
+      "daysSinceMoved": 42
     },
     "muCalendar": {
       "newest": "2027-04-24",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 11
+      "daysSinceMoved": 12
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 11
+      "daysSinceMoved": 12
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 75
+      "daysSinceMoved": 76
     },
     "pennManor": {
       "newest": "2026-09-10",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 21
+      "daysSinceMoved": 22
     },
     "vfw": {
       "newest": "2026-10-15",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 9
     },
     "phantomPower": {
       "newest": "2026-10-04",
-      "daysSinceMoved": 27
+      "daysSinceMoved": 28
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 74
+      "daysSinceMoved": 75
     },
     "manor": {
       "newest": "2027-08-04",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 15
     },
     "raneyCellars": {
       "newest": "2026-08-15",
-      "daysSinceMoved": 19
+      "daysSinceMoved": 20
     },
     "theBackyard": {
       "newest": "2026-09-30",
-      "daysSinceMoved": 21
+      "daysSinceMoved": 22
     }
   },
   "sports": {
-    "total": 286,
+    "total": 285,
     "scored": 0,
     "wins": 0,
     "losses": 0,
@@ -149,78 +149,78 @@
       "PM Community": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-08-18T17:34:19.413Z"
+    "lastSyncAt": "2026-08-19T15:07:34.413Z"
   },
   "recentlyAdded": [
     {
-      "key": "Jazz and Java|2027-04-24T19:30:00",
-      "firstSeenAt": "2026-08-18T16:31:29.444Z",
-      "title": "Jazz and Java",
+      "key": "Wild in the Shadows: Wood Sculpture by Rob Homan|2026-09-04T23:00:00.000Z",
+      "firstSeenAt": "2026-08-19T13:44:24.091Z",
+      "title": "Wild in the Shadows: Wood Sculpture by Rob Homan",
       "source": "MU",
-      "date": "2027-04-24T19:30:00"
+      "date": "2026-09-04T23:00:00.000Z"
     },
     {
-      "key": "Jazz and Java|2027-04-24T19:30:00",
-      "firstSeenAt": "2026-08-18T16:31:29.444Z",
-      "title": "Jazz and Java",
+      "key": "McCaskey Combined Choirs|2026-12-05T00:00:00.000Z",
+      "firstSeenAt": "2026-08-19T13:44:24.091Z",
+      "title": "McCaskey Combined Choirs",
       "source": "MU",
-      "date": "2027-04-24T19:30:00"
+      "date": "2026-12-05T00:00:00.000Z"
     },
     {
-      "key": "Prison Portrait Project by Carolyn Harper|2026-10-02T21:00:00.000Z",
-      "firstSeenAt": "2026-08-18T15:30:47.276Z",
-      "title": "Prison Portrait Project by Carolyn Harper",
+      "key": "Through Our Eyes: A Community Celebration of Photography|2026-08-07T23:00:00.000Z",
+      "firstSeenAt": "2026-08-19T12:43:19.686Z",
+      "title": "Through Our Eyes: A Community Celebration of Photography",
       "source": "MU",
-      "date": "2026-10-02T21:00:00.000Z"
-    },
-    {
-      "key": "Voices of Peace & Peace Kids to the Rescue|2026-10-02T23:00:00.000Z",
-      "firstSeenAt": "2026-08-18T15:30:47.276Z",
-      "title": "Voices of Peace & Peace Kids to the Rescue",
-      "source": "MU",
-      "date": "2026-10-02T23:00:00.000Z"
+      "date": "2026-08-07T23:00:00.000Z"
     },
     {
       "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
-      "firstSeenAt": "2026-08-17T21:25:21.737Z",
+      "firstSeenAt": "2026-08-19T12:43:19.686Z",
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2026-08-26T12:30:00.000Z"
     },
     {
       "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
-      "firstSeenAt": "2026-08-17T21:25:21.737Z",
+      "firstSeenAt": "2026-08-19T12:43:19.686Z",
       "title": "Zoning Hearing Board",
       "source": "Manor",
       "date": "2026-09-02T23:00:00.000Z"
     },
     {
+      "key": "Lancaster Print Crawl feat. Mark & Jordan Rast|2026-09-04T23:00:00.000Z",
+      "firstSeenAt": "2026-08-19T12:43:19.686Z",
+      "title": "Lancaster Print Crawl feat. Mark & Jordan Rast",
+      "source": "MU",
+      "date": "2026-09-04T23:00:00.000Z"
+    },
+    {
       "key": "Supervisors Meeting|2026-09-07T23:00:00.000Z",
-      "firstSeenAt": "2026-08-17T21:25:21.737Z",
+      "firstSeenAt": "2026-08-19T12:43:19.686Z",
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2026-09-07T23:00:00.000Z"
     },
     {
       "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
-      "firstSeenAt": "2026-08-17T21:25:21.737Z",
+      "firstSeenAt": "2026-08-19T12:43:19.686Z",
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2026-09-08T23:00:00.000Z"
     },
     {
+      "key": "Faculty Recital: Morgann Davis|2026-09-13T23:00:00.000Z",
+      "firstSeenAt": "2026-08-19T12:43:19.686Z",
+      "title": "Faculty Recital: Morgann Davis",
+      "source": "MU",
+      "date": "2026-09-13T23:00:00.000Z"
+    },
+    {
       "key": "Planning Commission|2026-09-14T23:00:00.000Z",
-      "firstSeenAt": "2026-08-17T21:25:21.737Z",
+      "firstSeenAt": "2026-08-19T12:43:19.686Z",
       "title": "Planning Commission",
       "source": "Manor",
       "date": "2026-09-14T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
-      "firstSeenAt": "2026-08-17T21:25:21.737Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-09-30T12:30:00.000Z"
     }
   ],
   "addedLastRun": 0

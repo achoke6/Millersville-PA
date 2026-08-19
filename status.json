@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-08-19T22:24:07.947Z",
-  "totalEvents": 897,
-  "withDescription": 362,
-  "withImage": 51,
+  "generatedAt": "2026-08-19T23:23:17.147Z",
+  "totalEvents": 902,
+  "withDescription": 367,
+  "withImage": 56,
   "familyFriendly": 69,
   "eventsToday": 5,
   "sources": {
@@ -10,7 +10,7 @@
     "muCalendar": 75,
     "artsmu": 43,
     "campsAlumni": 39,
-    "muGetInvolved": 109,
+    "muGetInvolved": 114,
     "pennManor": 58,
     "borough": 72,
     "vfw": 7,
@@ -149,9 +149,51 @@
       "PM Community": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-08-19T22:21:31.830Z"
+    "lastSyncAt": "2026-08-19T23:20:00.220Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Outdoor Soccer Registration Deadline|2026-09-15T03:45:00.000Z",
+      "firstSeenAt": "2026-08-19T23:23:17.146Z",
+      "title": "Outdoor Soccer Registration Deadline",
+      "source": "MU",
+      "date": "2026-09-15T03:45:00.000Z"
+    },
+    {
+      "key": "Flag Football Registration Deadline|2026-09-22T03:45:00.000Z",
+      "firstSeenAt": "2026-08-19T23:23:17.146Z",
+      "title": "Flag Football Registration Deadline",
+      "source": "MU",
+      "date": "2026-09-22T03:45:00.000Z"
+    },
+    {
+      "key": "Softball Tournament Registration Deadline|2026-09-24T16:00:00.000Z",
+      "firstSeenAt": "2026-08-19T23:23:17.146Z",
+      "title": "Softball Tournament Registration Deadline",
+      "source": "MU",
+      "date": "2026-09-24T16:00:00.000Z"
+    },
+    {
+      "key": "Dodgeball Registration Deadline|2026-10-16T03:45:00.000Z",
+      "firstSeenAt": "2026-08-19T23:23:17.146Z",
+      "title": "Dodgeball Registration Deadline",
+      "source": "MU",
+      "date": "2026-10-16T03:45:00.000Z"
+    },
+    {
+      "key": "Basketball Registration Deadline|2026-10-20T03:45:00.000Z",
+      "firstSeenAt": "2026-08-19T23:23:17.146Z",
+      "title": "Basketball Registration Deadline",
+      "source": "MU",
+      "date": "2026-10-20T03:45:00.000Z"
+    },
+    {
+      "key": "Volleyball Registration Deadline|2026-10-20T03:45:00.000Z",
+      "firstSeenAt": "2026-08-19T23:23:17.146Z",
+      "title": "Volleyball Registration Deadline",
+      "source": "MU",
+      "date": "2026-10-20T03:45:00.000Z"
+    },
     {
       "key": "3v3 Basketball Tournament Registration Deadline|2026-08-19T16:00:00.000Z",
       "firstSeenAt": "2026-08-19T21:25:09.946Z",
@@ -167,13 +209,6 @@
       "date": "2026-09-09T03:45:00.000Z"
     },
     {
-      "key": "Softball Tournament|2026-09-24T16:00:00.000Z",
-      "firstSeenAt": "2026-08-19T21:25:09.946Z",
-      "title": "Softball Tournament",
-      "source": "MU",
-      "date": "2026-09-24T16:00:00.000Z"
-    },
-    {
       "key": "Spikeball Tournament Registration Deadline|2026-10-15T16:00:00.000Z",
       "firstSeenAt": "2026-08-19T21:25:09.946Z",
       "title": "Spikeball Tournament Registration Deadline",
@@ -186,42 +221,7 @@
       "title": "Pickleball Tournament Registration Deadline",
       "source": "MU",
       "date": "2026-11-18T17:00:00.000Z"
-    },
-    {
-      "key": "Rock of Ages|2026-10-30T23:00:00.000Z",
-      "firstSeenAt": "2026-08-19T20:26:30.450Z",
-      "title": "Rock of Ages",
-      "source": "MU",
-      "date": "2026-10-30T23:00:00.000Z"
-    },
-    {
-      "key": "Rock of Ages|2026-10-31T23:00:00.000Z",
-      "firstSeenAt": "2026-08-19T20:26:30.450Z",
-      "title": "Rock of Ages",
-      "source": "MU",
-      "date": "2026-10-31T23:00:00.000Z"
-    },
-    {
-      "key": "Rock of Ages|2026-11-01T23:00:00.000Z",
-      "firstSeenAt": "2026-08-19T20:26:30.450Z",
-      "title": "Rock of Ages",
-      "source": "MU",
-      "date": "2026-11-01T23:00:00.000Z"
-    },
-    {
-      "key": "Rock of Ages|2026-11-05T23:00:00.000Z",
-      "firstSeenAt": "2026-08-19T20:26:30.450Z",
-      "title": "Rock of Ages",
-      "source": "MU",
-      "date": "2026-11-05T23:00:00.000Z"
-    },
-    {
-      "key": "Rock of Ages|2026-11-06T23:00:00.000Z",
-      "firstSeenAt": "2026-08-19T20:26:30.450Z",
-      "title": "Rock of Ages",
-      "source": "MU",
-      "date": "2026-11-06T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 6
 }

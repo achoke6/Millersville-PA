@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-08-19T15:30:38.427Z",
-  "totalEvents": 879,
+  "generatedAt": "2026-08-19T16:30:48.890Z",
+  "totalEvents": 880,
   "withDescription": 356,
   "withImage": 45,
   "familyFriendly": 69,
   "eventsToday": 4,
   "sources": {
-    "muAthletics": 254,
+    "muAthletics": 255,
     "muCalendar": 75,
     "artsmu": 32,
     "campsAlumni": 39,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 285,
+    "total": 286,
     "scored": 0,
     "wins": 0,
     "losses": 0,
@@ -149,9 +149,16 @@
       "PM Community": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-08-19T15:28:13.692Z"
+    "lastSyncAt": "2026-08-19T16:28:20.537Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Millersville University Field Hockey vs Indiana (PA)|2026-09-19T22:00:00.000Z",
+      "firstSeenAt": "2026-08-19T16:30:48.888Z",
+      "title": "Millersville University Field Hockey vs Indiana (PA)",
+      "source": "MU",
+      "date": "2026-09-19T22:00:00.000Z"
+    },
     {
       "key": "Intramural Cornhole|2026-09-09T03:59:00.000Z",
       "firstSeenAt": "2026-08-19T15:24:00.503Z",
@@ -214,14 +221,7 @@
       "title": "Intramural Dodgeball",
       "source": "Other",
       "date": "2026-10-16T03:59:00.000Z"
-    },
-    {
-      "key": "Intramural Basketball|2026-10-20T03:59:00.000Z",
-      "firstSeenAt": "2026-08-19T15:24:00.503Z",
-      "title": "Intramural Basketball",
-      "source": "Other",
-      "date": "2026-10-20T03:59:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

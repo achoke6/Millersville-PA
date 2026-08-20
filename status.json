@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-20T17:28:48.786Z",
-  "totalEvents": 900,
+  "generatedAt": "2026-08-20T18:38:59.771Z",
+  "totalEvents": 901,
   "withDescription": 367,
   "withImage": 57,
   "familyFriendly": 69,
@@ -11,7 +11,7 @@
     "artsmu": 43,
     "campsAlumni": 39,
     "muGetInvolved": 114,
-    "pennManor": 57,
+    "pennManor": 58,
     "borough": 71,
     "vfw": 7,
     "phantomPower": 15,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 286,
+    "total": 287,
     "scored": 0,
     "wins": 0,
     "losses": 0,
@@ -149,9 +149,23 @@
       "PM Community": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-08-20T17:26:07.210Z"
+    "lastSyncAt": "2026-08-20T18:35:12.020Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Girls Varsity Soccer vs Mechanicsburg Area Senior High School|2026-08-31T20:00:00.000Z",
+      "firstSeenAt": "2026-08-20T18:38:59.768Z",
+      "title": "Girls Varsity Soccer vs Mechanicsburg Area Senior High School",
+      "source": "PM",
+      "date": "2026-08-31T20:00:00.000Z"
+    },
+    {
+      "key": "Moonlight Ride|2026-10-23T23:00:00.000Z",
+      "firstSeenAt": "2026-08-20T18:38:59.768Z",
+      "title": "Moonlight Ride",
+      "source": "Manor",
+      "date": "2026-10-23T23:00:00.000Z"
+    },
     {
       "key": "Thurday Trivia 6PM|2026-08-20T22:00:00.000Z",
       "firstSeenAt": "2026-08-20T16:34:39.551Z",
@@ -207,21 +221,7 @@
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2026-09-07T23:00:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
-      "firstSeenAt": "2026-08-20T08:37:27.326Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-09-08T23:00:00.000Z"
-    },
-    {
-      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
-      "firstSeenAt": "2026-08-20T08:37:27.326Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-09-14T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

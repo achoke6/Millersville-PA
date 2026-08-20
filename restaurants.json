@@ -104,13 +104,13 @@
     "lng": -76.35239,
     "slug": "evergreen-cafe",
     "hours": {
-      "mon": "closed",
-      "tue": "closed",
-      "wed": "closed",
-      "thu": "closed",
-      "fri": "closed",
-      "sat": "closed",
-      "sun": "closed"
+      "mon": "09:00-13:00,18:30-23:00",
+      "tue": "09:00-13:00,18:30-23:00",
+      "wed": "09:00-13:00,18:30-23:00",
+      "thu": "09:00-13:00,18:30-23:00",
+      "fri": "09:00-13:00,18:30-23:00",
+      "sat": "09:00-13:00,18:30-23:00",
+      "sun": "09:00-13:00,18:30-23:00"
     },
     "summerHours": {
       "mon": "closed",
@@ -383,13 +383,13 @@
     "lng": -76.353648,
     "slug": "anchor",
     "hours": {
-      "mon": "closed",
-      "tue": "closed",
-      "wed": "closed",
-      "thu": "closed",
-      "fri": "closed",
-      "sat": "closed",
-      "sun": "closed"
+      "mon": "10:00-21:00",
+      "tue": "10:00-21:00",
+      "wed": "10:00-21:00",
+      "thu": "10:00-21:00",
+      "fri": "10:00-21:00",
+      "sat": "10:00-21:00",
+      "sun": "10:00-21:00"
     },
     "summerHours": {
       "mon": "closed",
@@ -455,10 +455,10 @@
     "lng": -76.357201,
     "slug": "cove",
     "hours": {
-      "mon": "closed",
-      "tue": "closed",
-      "wed": "closed",
-      "thu": "closed",
+      "mon": "08:30-14:00",
+      "tue": "08:30-14:00",
+      "wed": "08:30-14:00",
+      "thu": "08:30-14:00",
       "fri": "closed",
       "sat": "closed",
       "sun": "closed"
@@ -539,13 +539,8 @@
     "lng": -76.35239,
     "slug": "upper-deck",
     "hours": {
-      "mon": "closed",
-      "tue": "closed",
-      "wed": "closed",
-      "thu": "closed",
-      "fri": "closed",
-      "sat": "07:00-09:00,11:00-13:00,16:00-18:00",
-      "sun": "07:00-09:00,11:00-13:00,16:00-18:00"
+      "sat": "10:30-18:00",
+      "sun": "10:30-18:00"
     },
     "summerHours": {
       "mon": "closed",

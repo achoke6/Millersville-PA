@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-08-21T09:37:54.221Z",
-  "totalEvents": 900,
+  "generatedAt": "2026-08-21T10:30:09.313Z",
+  "totalEvents": 901,
   "withDescription": 367,
-  "withImage": 56,
+  "withImage": 57,
   "familyFriendly": 69,
   "eventsToday": 4,
   "sources": {
@@ -14,7 +14,7 @@
     "pennManor": 58,
     "borough": 71,
     "vfw": 7,
-    "phantomPower": 14,
+    "phantomPower": 15,
     "community": 22,
     "manor": 41,
     "raneyCellars": 5,
@@ -149,9 +149,16 @@
       "PM Community": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-08-21T09:33:52.679Z"
+    "lastSyncAt": "2026-08-21T10:27:34.709Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Nation of Language w. Anika|2026-09-17T00:00:00.000Z",
+      "firstSeenAt": "2026-08-21T10:30:09.311Z",
+      "title": "Nation of Language w. Anika",
+      "source": "Other",
+      "date": "2026-09-17T00:00:00.000Z"
+    },
     {
       "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
       "firstSeenAt": "2026-08-21T08:39:46.640Z",
@@ -214,14 +221,7 @@
       "title": "Moonlight Ride",
       "source": "Manor",
       "date": "2026-10-23T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-10-28T12:30:00.000Z",
-      "firstSeenAt": "2026-08-21T08:39:46.640Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-10-28T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

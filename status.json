@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-08-20T23:25:47.172Z",
-  "totalEvents": 901,
+  "generatedAt": "2026-08-21T01:11:40.787Z",
+  "totalEvents": 900,
   "withDescription": 367,
-  "withImage": 57,
+  "withImage": 56,
   "familyFriendly": 69,
-  "eventsToday": 7,
+  "eventsToday": 6,
   "sources": {
     "muAthletics": 255,
     "muCalendar": 75,
@@ -14,7 +14,7 @@
     "pennManor": 58,
     "borough": 71,
     "vfw": 7,
-    "phantomPower": 15,
+    "phantomPower": 14,
     "community": 22,
     "manor": 41,
     "raneyCellars": 5,
@@ -55,7 +55,7 @@
       "latest": "2026-10-15T20:30:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-08-20T23:00:00.000Z",
+      "earliest": "2026-08-22T00:00:00.000Z",
       "latest": "2026-10-04T00:00:00.000Z"
     },
     "community": {
@@ -149,9 +149,16 @@
       "PM Community": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-08-20T23:23:19.944Z"
+    "lastSyncAt": "2026-08-21T01:09:12.287Z"
   },
   "recentlyAdded": [
+    {
+      "key": "SGA Skating Party|2026-08-21T00:00:00.000Z",
+      "firstSeenAt": "2026-08-21T01:11:40.785Z",
+      "title": "SGA Skating Party",
+      "source": "MU",
+      "date": "2026-08-21T00:00:00.000Z"
+    },
     {
       "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
       "firstSeenAt": "2026-08-20T20:27:22.823Z",
@@ -214,14 +221,7 @@
       "title": "CKY w. Anthrophobia & New Damage",
       "source": "Other",
       "date": "2026-09-12T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
-      "firstSeenAt": "2026-08-20T08:37:27.326Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-08-26T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

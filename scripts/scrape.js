@@ -410,6 +410,28 @@ function decorateGenericTitle(title, orgName) {
     return `${o} ${t}`;
 }
 
+// Intramural-registration skip (2026-08-21, Adam's call): Campus Rec began
+// entering intramural sport registration windows on GetInvolved, duplicating
+// the DSE Rec API (scrape.js section 6c-2) -- the canonical intramural source
+// with correct deadlines, division labels, and sport deep links. Drop these at
+// scrape time from BOTH GetInvolved entry points -- the GetInvolved API block
+// AND the MU Calendar "Student Event" relabel path (the calendar republishes
+// GetInvolved posts; filtering only one path would leave the other copy with
+// nothing to dedupe against). SHARED PREDICATE, both call sites -- change
+// here, both paths follow (isProgramSignup twin-comment discipline).
+// Two-term match, deliberately conservative: an intramural token in the
+// title/org AND a registration signal in the title/description. A plain
+// intramural EVENT (championship night, open play) with no registration
+// language is NOT dropped. If a duplicate slips through under a title that
+// never says "intramural", extend the first regex -- same
+// extend-when-you-spot-new-offenders convention as GENERIC_CLUB_EVENT_TITLES.
+// No Hard Rule 7/10 exposure: single-source scrape-time filter; no match
+// lines, eventMatch.js / events.ics.php untouched.
+function isIntramuralRegistration(title, desc, orgName) {
+    if (!/\bintramurals?\b/i.test(`${title || ''} ${orgName || ''}`)) return false;
+    return /\bregist(er|ration)|\bsign[\s-]?ups?\b|\bdeadline\b/i.test(`${title || ''} ${desc || ''}`);
+}
+
 // Extract a linescore (box score) from a Sidearm recap page's HTML.
 // REMOVED 2026-05-09: Sidearm changed markup such that this returned 0/0 for
 // every cron for an extended period. Status dashboard tile for box scores
@@ -2443,6 +2465,15 @@ async function runScraper() {
                 const plainDesc = descHtml.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
                 const customerName = custName;
 
+                // Intramural registration windows duplicate the DSE Rec source --
+                // the calendar republishes GetInvolved posts, so this relabel
+                // path needs the same skip as the GetInvolved API block (shared
+                // isIntramuralRegistration(); change there, not here).
+                if (isIntramuralRegistration(eventTitle, plainDesc, customerName)) {
+                    console.log(`\u23ed\ufe0f  Skipped intramural registration (MU Calendar republish, dup of DSE Rec): "${(eventTitle || '').trim()}"`);
+                    return;
+                }
+
                 // Derived-tag detection — mirrors the GetInvolved API block
                 // (greekRegex). Cross-source dedupe prioritizes MU Calendar over
                 // GetInvolved, so without this the merged event would lose its
@@ -2781,6 +2812,14 @@ async function runScraper() {
         giItems.forEach(item => {
             const eventDate = new Date(item.startsOn);
             if (eventDate < pastDate || eventDate >= futureDate) return;
+
+            // Intramural registration windows duplicate the DSE Rec source --
+            // see isIntramuralRegistration() (shared with the MU Calendar
+            // "Student Event" relabel path; change there, not here).
+            if (isIntramuralRegistration(item.name, item.description, item.organizationName)) {
+                console.log(`\u23ed\ufe0f  Skipped intramural registration (GetInvolved dup of DSE Rec): "${(item.name || '').trim()}"`);
+                return;
+            }
 
             // Display tags start with internal markers (MU/Clubs/Orgs are hidden
             // by frontend) + GetInvolved + the org name. Theme and categoryNames
@@ -3586,9 +3625,13 @@ async function runScraper() {
             'https://calendar.google.com/calendar/ical/c_f595c11690e0aa18d6e981a04ec3f904cd00b1c65f378aadbe457a9f14ac6622%40group.calendar.google.com/public/basic.ics',
             { headers: baseHeaders }
         );
-        // Public embed page — the only human-browsable URL for this calendar;
-        // used as the sourceLink so "source" taps land somewhere readable.
-        const BACKYARD_LINK = 'https://calendar.google.com/calendar/embed?src=c_f595c11690e0aa18d6e981a04ec3f904cd00b1c65f378aadbe457a9f14ac6622%40group.calendar.google.com&ctz=America%2FNew_York';
+        // sourceLink -> their Instagram (Adam's call, 2026-08-21): the modal's
+        // "More Info" tap should promote the social page, not the raw Google
+        // Calendar embed. MIRRORS the directory row's link cell (services.json
+        // slug the-backyard) -- if the handle ever changes at the sheet, update
+        // this constant in the same pass. (The iCal fetch URL above is the DATA
+        // feed and stays on the calendar regardless.)
+        const BACKYARD_LINK = 'https://www.instagram.com/funinthebackyard/';
         const backyardEmit = (o) => {
             events.push({
                 title: o.title,

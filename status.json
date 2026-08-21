@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-08-21T14:40:39.588Z",
-  "totalEvents": 955,
-  "withDescription": 419,
+  "generatedAt": "2026-08-21T14:49:55.982Z",
+  "totalEvents": 954,
+  "withDescription": 423,
   "withImage": 57,
   "familyFriendly": 76,
   "eventsToday": 4,
   "sources": {
     "muAthletics": 255,
-    "muCalendar": 127,
-    "artsmu": 45,
+    "muCalendar": 131,
+    "artsmu": 40,
     "campsAlumni": 39,
     "muGetInvolved": 114,
     "pennManor": 58,
@@ -28,11 +28,11 @@
     },
     "muCalendar": {
       "earliest": "2026-06-30T00:00:00.000Z",
-      "latest": "2027-04-24T19:30:00.000Z"
+      "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
       "earliest": "2026-08-07T23:00:00.000Z",
-      "latest": "2027-06-04T23:00:00.000Z"
+      "latest": "2027-05-02T23:00:00.000Z"
     },
     "campsAlumni": {
       "earliest": "2026-06-11T22:00:00.000Z",
@@ -81,12 +81,12 @@
       "daysSinceMoved": 44
     },
     "muCalendar": {
-      "newest": "2027-04-24",
-      "daysSinceMoved": 3
+      "newest": "2027-06-04",
+      "daysSinceMoved": 0
     },
     "artsmu": {
-      "newest": "2027-06-04",
-      "daysSinceMoved": 2
+      "newest": "2027-05-02",
+      "daysSinceMoved": 14
     },
     "campsAlumni": {
       "newest": "2027-04-03",
@@ -149,9 +149,44 @@
       "PM Community": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-08-21T14:37:12.928Z"
+    "lastSyncAt": "2026-08-21T14:46:13.218Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Kendyll Hillegas: Kept Like a Secret|2027-02-05T17:00:00",
+      "firstSeenAt": "2026-08-21T14:49:55.980Z",
+      "title": "Kendyll Hillegas: Kept Like a Secret",
+      "source": "MU",
+      "date": "2027-02-05T17:00:00"
+    },
+    {
+      "key": "Kristin Hill: Is Creating Beauty Enough?|2027-03-05T17:00:00",
+      "firstSeenAt": "2026-08-21T14:49:55.980Z",
+      "title": "Kristin Hill: Is Creating Beauty Enough?",
+      "source": "MU",
+      "date": "2027-03-05T17:00:00"
+    },
+    {
+      "key": "On Screen/In Person Film Series: Sally's Iron Mustangs|2027-04-08T18:00:00",
+      "firstSeenAt": "2026-08-21T14:49:55.980Z",
+      "title": "On Screen/In Person Film Series: Sally's Iron Mustangs",
+      "source": "MU",
+      "date": "2027-04-08T18:00:00"
+    },
+    {
+      "key": "We the People First Friday: Ripple Hub Presents: Creators Collection|2027-05-07T18:30:00",
+      "firstSeenAt": "2026-08-21T14:49:55.980Z",
+      "title": "We the People First Friday: Ripple Hub Presents: Creators Collection",
+      "source": "MU",
+      "date": "2027-05-07T18:30:00"
+    },
+    {
+      "key": "We the People First Friday: Voices of Migration: An Art & Storytelling Celebration|2027-06-04T18:30:00",
+      "firstSeenAt": "2026-08-21T14:49:55.980Z",
+      "title": "We the People First Friday: Voices of Migration: An Art & Storytelling Celebration",
+      "source": "MU",
+      "date": "2027-06-04T18:30:00"
+    },
     {
       "key": "CANCELLED – Stars at the Break of Day – FREE|2026-09-18T23:00:00.000Z",
       "firstSeenAt": "2026-08-21T14:40:39.585Z",
@@ -186,42 +221,7 @@
       "title": "Disposable Humanity – FREE",
       "source": "MU",
       "date": "2026-11-18T00:00:00.000Z"
-    },
-    {
-      "key": "McCaskey Combined Choirs – FREE|2026-12-05T00:00:00.000Z",
-      "firstSeenAt": "2026-08-21T14:40:39.585Z",
-      "title": "McCaskey Combined Choirs – FREE",
-      "source": "MU",
-      "date": "2026-12-05T00:00:00.000Z"
-    },
-    {
-      "key": "Tommy Dorsey Orchestra – Sentimental for the Season|2026-12-19T00:00:00.000Z",
-      "firstSeenAt": "2026-08-21T14:40:39.585Z",
-      "title": "Tommy Dorsey Orchestra – Sentimental for the Season",
-      "source": "MU",
-      "date": "2026-12-19T00:00:00.000Z"
-    },
-    {
-      "key": "A Long Way to Go – FREE|2027-01-21T00:00:00.000Z",
-      "firstSeenAt": "2026-08-21T14:40:39.585Z",
-      "title": "A Long Way to Go – FREE",
-      "source": "MU",
-      "date": "2027-01-21T00:00:00.000Z"
-    },
-    {
-      "key": "Branford Marsalis and Dianne Reeves Celebrate John Coltrane|2027-02-04T19:30:00",
-      "firstSeenAt": "2026-08-21T14:40:39.585Z",
-      "title": "Branford Marsalis and Dianne Reeves Celebrate John Coltrane",
-      "source": "MU",
-      "date": "2027-02-04T19:30:00"
-    },
-    {
-      "key": "We the People First Friday: The Sun Will Rise Again|2027-02-05T18:30:00",
-      "firstSeenAt": "2026-08-21T14:40:39.585Z",
-      "title": "We the People First Friday: The Sun Will Rise Again",
-      "source": "MU",
-      "date": "2027-02-05T18:30:00"
     }
   ],
-  "addedLastRun": 31
+  "addedLastRun": 5
 }

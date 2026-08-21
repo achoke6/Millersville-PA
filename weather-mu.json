@@ -1,52 +1,36 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Thursday, August 20, 2026 at 11:51 AM (Kyle Elliott, Meteorologist)",
+    "issued": "Friday, August 21, 2026 at 07:26 AM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "This afternoon",
-        "text": "Mostly cloudy & humid with scattered showers and strong-to-severe T-storms. High: 80-84"
+        "period": "Today",
+        "text": "Mostly sunny and pleasant with low humidity. High: 80-84"
       },
       {
         "period": "Tonight",
-        "text": "Less humid and comfortable with decreasing clouds and an evening T-storm. Low: 60-64"
-      },
-      {
-        "period": "Friday",
-        "text": "Partly sunny and pleasant with moderate humidity. High: 80-84"
-      },
-      {
-        "period": "Friday Night",
-        "text": "Turning more humid with increasing clouds and a late-night shower. Low: 64-68"
+        "text": "Mainly clear in the evening, then increasing clouds overnight. Low: 62-66"
       },
       {
         "period": "Saturday",
-        "text": "Mostly cloudy and humid with scattered showers and periods of light rain. High: 78-82"
+        "text": "Mostly cloudy and more humid with a few passing showers. High: 78-82"
+      },
+      {
+        "period": "Saturday Night",
+        "text": "Mainly cloudy, mild and muggy with scattered showers. Low: 64-68"
+      },
+      {
+        "period": "Sunday",
+        "text": "Turning less humid with decreasing clouds and a morning shower. High: 80-84"
       }
     ]
   },
   "sevenDay": {
-    "issued": "Thursday, August 20, 2026 at 09:23 AM (Kyle Elliott)",
+    "issued": "Friday, August 21, 2026 at 08:00 AM (Kyle Elliott)",
     "days": [
       {
-        "period": "Thursday",
-        "sky": "Mostly Cloudy",
-        "weather": "Severe T-storms",
-        "pop": ">90%",
-        "temp": "82",
-        "conf": "5"
-      },
-      {
-        "period": "Thursday night",
-        "sky": "Decreasing Clouds",
-        "weather": "Evening T-Storms",
-        "pop": "40%",
-        "temp": "62",
-        "conf": "5"
-      },
-      {
         "period": "Friday",
-        "sky": "Partly Sunny",
+        "sky": "Mostly Sunny",
         "weather": "Pleasant",
         "pop": "<10%",
         "temp": "82",
@@ -55,41 +39,41 @@
       {
         "period": "Friday night",
         "sky": "Increasing Clouds",
-        "weather": "Late-Night Showers",
-        "pop": "40%",
-        "temp": "66",
-        "conf": "4"
+        "weather": "Fair",
+        "pop": "20%",
+        "temp": "64",
+        "conf": "5"
       },
       {
         "period": "Saturday",
         "sky": "Mostly Cloudy",
-        "weather": "Light Rain",
+        "weather": "Passing Showers",
         "pop": "60%",
         "temp": "80",
         "conf": "4"
       },
       {
         "period": "Saturday night",
-        "sky": "Partly Cloudy",
+        "sky": "Mostly Cloudy",
         "weather": "Scattered Showers",
-        "pop": "40%",
+        "pop": "60%",
         "temp": "66",
         "conf": "4"
       },
       {
         "period": "Sunday",
-        "sky": "Partly Sunny",
-        "weather": "Chc. of T-storm",
+        "sky": "Decreasing Clouds",
+        "weather": "Morning Showers",
         "pop": "30%",
         "temp": "82",
         "conf": "4"
       },
       {
         "period": "Sunday night",
-        "sky": "Mainly Clear",
+        "sky": "Clear Skies",
         "weather": "Fair",
         "pop": "<10%",
-        "temp": "62",
+        "temp": "60",
         "conf": "4"
       },
       {
@@ -98,22 +82,30 @@
         "weather": "Pleasant",
         "pop": "<10%",
         "temp": "80",
-        "conf": "3"
+        "conf": "4"
       },
       {
         "period": "Monday night",
-        "sky": "Mainly Clear",
+        "sky": "Clear Skies",
         "weather": "Cool",
         "pop": "<10%",
         "temp": "58",
-        "conf": "3"
+        "conf": "4"
       },
       {
         "period": "Tuesday",
         "sky": "Mostly Sunny",
         "weather": "Pleasant",
         "pop": "<10%",
-        "temp": "upper 70s",
+        "temp": "80",
+        "conf": "3"
+      },
+      {
+        "period": "Tuesday night",
+        "sky": "Mainly Clear",
+        "weather": "Fair",
+        "pop": "<10%",
+        "temp": "60",
         "conf": "3"
       },
       {
@@ -123,10 +115,29 @@
         "pop": "20%",
         "temp": "low 80s",
         "conf": "3"
+      },
+      {
+        "period": "Thursday",
+        "sky": "Variably Cloudy",
+        "weather": "Chc. of T-storm",
+        "pop": "30%",
+        "temp": "low 80s",
+        "conf": "3"
       }
     ]
   },
   "observations": [
+    {
+      "time": "08:00",
+      "temp": "64",
+      "dewpoint": "58",
+      "rh": "80",
+      "windDir": "NNW",
+      "windSpeed": "5",
+      "precip": "0.01",
+      "visibility": "9.8",
+      "condition": "None"
+    },
     {
       "time": "07:00",
       "temp": "60",
@@ -180,17 +191,6 @@
       "windSpeed": "2",
       "precip": "0.00",
       "visibility": "9.2",
-      "condition": "None"
-    },
-    {
-      "time": "02:00",
-      "temp": "63",
-      "dewpoint": "61",
-      "rh": "96",
-      "windDir": "WSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "8.8",
       "condition": "None"
     }
   ],
@@ -466,5 +466,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-08-21T11:22:59.172Z"
+  "updated": "2026-08-21T12:41:30.425Z"
 }

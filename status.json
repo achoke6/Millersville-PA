@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-08-21T21:25:32.620Z",
-  "totalEvents": 923,
-  "withDescription": 434,
-  "withImage": 65,
+  "generatedAt": "2026-08-21T22:25:22.793Z",
+  "totalEvents": 974,
+  "withDescription": 444,
+  "withImage": 75,
   "familyFriendly": 77,
   "eventsToday": 4,
   "sources": {
@@ -10,13 +10,13 @@
     "muCalendar": 133,
     "artsmu": 39,
     "campsAlumni": 39,
-    "muGetInvolved": 123,
+    "muGetInvolved": 133,
     "pennManor": 58,
     "borough": 71,
     "vfw": 7,
     "phantomPower": 15,
     "community": 22,
-    "manor": 0,
+    "manor": 41,
     "raneyCellars": 5,
     "theBackyard": 10,
     "muHudlBroadcasts": 0
@@ -62,7 +62,10 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-08-26T12:30:00.000Z",
+      "latest": "2027-08-04T23:00:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-08-15T22:00:00.000Z",
       "latest": "2026-09-10T20:00:00.000Z"
@@ -113,7 +116,10 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 77
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-08-04",
+      "daysSinceMoved": 17
+    },
     "raneyCellars": {
       "newest": "2026-09-10",
       "daysSinceMoved": 1
@@ -143,79 +149,79 @@
       "PM Community": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-08-21T21:21:43.896Z"
+    "lastSyncAt": "2026-08-21T22:21:47.630Z"
   },
   "recentlyAdded": [
     {
-      "key": "Ropes Course- Open Climb|2026-08-25T20:00:00.000Z",
-      "firstSeenAt": "2026-08-21T21:25:32.618Z",
-      "title": "Ropes Course- Open Climb",
-      "source": "MU",
-      "date": "2026-08-25T20:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
+      "firstSeenAt": "2026-08-21T22:25:22.791Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-08-26T12:30:00.000Z"
     },
     {
-      "key": "Ropes Course- Open Climb|2026-08-27T20:00:00.000Z",
-      "firstSeenAt": "2026-08-21T21:25:32.618Z",
-      "title": "Ropes Course- Open Climb",
+      "key": "SGA Weekly Meeting|2026-08-27T23:00:00.000Z",
+      "firstSeenAt": "2026-08-21T22:25:22.791Z",
+      "title": "SGA Weekly Meeting",
       "source": "MU",
-      "date": "2026-08-27T20:00:00.000Z"
+      "date": "2026-08-27T23:00:00.000Z"
     },
     {
-      "key": "Ropes Course- Open Climb|2026-09-01T20:00:00.000Z",
-      "firstSeenAt": "2026-08-21T21:25:32.618Z",
-      "title": "Ropes Course- Open Climb",
-      "source": "MU",
-      "date": "2026-09-01T20:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-08-21T22:25:22.791Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-09-02T23:00:00.000Z"
     },
     {
-      "key": "Ropes Course- Open Climb|2026-09-03T20:00:00.000Z",
-      "firstSeenAt": "2026-08-21T21:25:32.618Z",
-      "title": "Ropes Course- Open Climb",
+      "key": "SGA Weekly Meeting|2026-09-03T23:00:00.000Z",
+      "firstSeenAt": "2026-08-21T22:25:22.791Z",
+      "title": "SGA Weekly Meeting",
       "source": "MU",
-      "date": "2026-09-03T20:00:00.000Z"
+      "date": "2026-09-03T23:00:00.000Z"
     },
     {
-      "key": "Ropes Course- Open Climb|2026-09-08T20:00:00.000Z",
-      "firstSeenAt": "2026-08-21T21:25:32.618Z",
-      "title": "Ropes Course- Open Climb",
-      "source": "MU",
-      "date": "2026-09-08T20:00:00.000Z"
+      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
+      "firstSeenAt": "2026-08-21T22:25:22.791Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-08T23:00:00.000Z"
     },
     {
-      "key": "Ropes Course- Open Climb|2026-09-10T20:00:00.000Z",
-      "firstSeenAt": "2026-08-21T21:25:32.618Z",
-      "title": "Ropes Course- Open Climb",
+      "key": "SGA Weekly Meeting|2026-09-10T23:00:00.000Z",
+      "firstSeenAt": "2026-08-21T22:25:22.791Z",
+      "title": "SGA Weekly Meeting",
       "source": "MU",
-      "date": "2026-09-10T20:00:00.000Z"
+      "date": "2026-09-10T23:00:00.000Z"
     },
     {
-      "key": "Ropes Course- Open Climb|2026-09-15T20:00:00.000Z",
-      "firstSeenAt": "2026-08-21T21:25:32.618Z",
-      "title": "Ropes Course- Open Climb",
-      "source": "MU",
-      "date": "2026-09-15T20:00:00.000Z"
+      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
+      "firstSeenAt": "2026-08-21T22:25:22.791Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-09-14T23:00:00.000Z"
     },
     {
-      "key": "Ropes Course- Open Climb|2026-09-17T20:00:00.000Z",
-      "firstSeenAt": "2026-08-21T21:25:32.618Z",
-      "title": "Ropes Course- Open Climb",
+      "key": "SGA Weekly Meeting|2026-09-24T23:00:00.000Z",
+      "firstSeenAt": "2026-08-21T22:25:22.791Z",
+      "title": "SGA Weekly Meeting",
       "source": "MU",
-      "date": "2026-09-17T20:00:00.000Z"
+      "date": "2026-09-24T23:00:00.000Z"
     },
     {
-      "key": "Ropes Course- Open Climb|2026-09-22T20:00:00.000Z",
-      "firstSeenAt": "2026-08-21T21:25:32.618Z",
-      "title": "Ropes Course- Open Climb",
-      "source": "MU",
-      "date": "2026-09-22T20:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-08-21T22:25:22.791Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-09-30T12:30:00.000Z"
     },
     {
-      "key": "Ropes Course- Open Climb|2026-09-24T20:00:00.000Z",
-      "firstSeenAt": "2026-08-21T21:25:32.618Z",
-      "title": "Ropes Course- Open Climb",
+      "key": "SGA Weekly Meeting|2026-10-01T23:00:00.000Z",
+      "firstSeenAt": "2026-08-21T22:25:22.791Z",
+      "title": "SGA Weekly Meeting",
       "source": "MU",
-      "date": "2026-09-24T20:00:00.000Z"
+      "date": "2026-10-01T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 19
+  "addedLastRun": 51
 }

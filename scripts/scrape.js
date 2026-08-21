@@ -428,6 +428,19 @@ function decorateGenericTitle(title, orgName) {
 // No Hard Rule 7/10 exposure: single-source scrape-time filter; no match
 // lines, eventMatch.js / events.ics.php untouched.
 function isIntramuralRegistration(title, desc, orgName) {
+    // v2 (2026-08-21, landing-run audit): the definitive marker. Every real
+    // Campus Rec post routes registration to the DSE intramurals module in
+    // its DESCRIPTION -- the word "intramural" never appears in their titles
+    // ("<Sport> Registration Deadline") or org name ("Campus Recreation"),
+    // so the v1 two-term match below caught zero of the 11 live entries.
+    // Match the MODULE PATH, not the bare dserec.com domain, so a
+    // hypothetical non-intramural dserec link (e.g. a group-fitness signup,
+    // which our DSE source does NOT cover) survives. Call sites pass the
+    // RAW upstream description -- pre-truncation, pre-tag-strip -- so the
+    // URL cannot arrive cut mid-path here.
+    if (/dserec\.com\/online\/intramurals/i.test(desc || '')) return true;
+    // v1 two-term fallback, kept: an intramural-titled registration post
+    // that omits the dserec link still drops.
     if (!/\bintramurals?\b/i.test(`${title || ''} ${orgName || ''}`)) return false;
     return /\bregist(er|ration)|\bsign[\s-]?ups?\b|\bdeadline\b/i.test(`${title || ''} ${desc || ''}`);
 }
@@ -2469,7 +2482,10 @@ async function runScraper() {
                 // the calendar republishes GetInvolved posts, so this relabel
                 // path needs the same skip as the GetInvolved API block (shared
                 // isIntramuralRegistration(); change there, not here).
-                if (isIntramuralRegistration(eventTitle, plainDesc, customerName)) {
+                // Pass RAW descHtml, not plainDesc: the tag-strip that builds
+                // plainDesc deletes href attributes with their tags, and the
+                // predicate's definitive marker is a URL that may live there.
+                if (isIntramuralRegistration(eventTitle, descHtml, customerName)) {
                     console.log(`\u23ed\ufe0f  Skipped intramural registration (MU Calendar republish, dup of DSE Rec): "${(eventTitle || '').trim()}"`);
                     return;
                 }

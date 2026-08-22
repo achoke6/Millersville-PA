@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-08-22T17:21:32.749Z",
+  "generatedAt": "2026-08-22T18:30:04.350Z",
   "totalEvents": 973,
-  "withDescription": 443,
+  "withDescription": 442,
   "withImage": 75,
   "familyFriendly": 76,
-  "eventsToday": 12,
+  "eventsToday": 11,
   "sources": {
     "muAthletics": 255,
     "muCalendar": 133,
     "artsmu": 39,
     "campsAlumni": 39,
     "muGetInvolved": 132,
-    "pennManor": 59,
+    "pennManor": 60,
     "borough": 71,
     "vfw": 7,
     "phantomPower": 14,
@@ -130,16 +130,16 @@
     }
   },
   "sports": {
-    "total": 288,
+    "total": 289,
     "scored": 0,
     "wins": 0,
     "losses": 0,
     "ties": 0
   },
   "registrations": {
-    "open": 15,
-    "next2Weeks": 1,
-    "nextClose": "2026-08-22",
+    "open": 14,
+    "next2Weeks": 0,
+    "nextClose": "2026-09-09",
     "openNoDeadline": 1
   },
   "reviewQueue": {
@@ -148,10 +148,17 @@
     "pendingBySource": {
       "PM Community": 1
     },
-    "stalePast": 8,
-    "lastSyncAt": "2026-08-22T17:17:51.130Z"
+    "stalePast": 9,
+    "lastSyncAt": "2026-08-22T18:26:32.738Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Girls JV Field Hockey vs Manheim Central High School|2026-09-01T21:30:00.000Z",
+      "firstSeenAt": "2026-08-22T18:30:04.348Z",
+      "title": "Girls JV Field Hockey vs Manheim Central High School",
+      "source": "PM",
+      "date": "2026-09-01T21:30:00.000Z"
+    },
     {
       "key": "Boys JV Football vs Red Lion Area Junior/Senior High School|2026-08-31T20:00:00.000Z",
       "firstSeenAt": "2026-08-22T15:21:47.788Z",
@@ -214,14 +221,7 @@
       "title": "Planning Commission",
       "source": "Manor",
       "date": "2026-10-12T23:00:00.000Z"
-    },
-    {
-      "key": "Moonlight Ride|2026-10-23T22:30:00.000Z",
-      "firstSeenAt": "2026-08-22T10:23:11.552Z",
-      "title": "Moonlight Ride",
-      "source": "Manor",
-      "date": "2026-10-23T22:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

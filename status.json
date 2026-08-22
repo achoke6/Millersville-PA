@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-08-22T04:33:42.059Z",
-  "totalEvents": 973,
-  "withDescription": 443,
+  "generatedAt": "2026-08-22T05:25:51.123Z",
+  "totalEvents": 935,
+  "withDescription": 444,
   "withImage": 76,
   "familyFriendly": 76,
   "eventsToday": 12,
   "sources": {
     "muAthletics": 255,
     "muCalendar": 133,
-    "artsmu": 39,
-    "campsAlumni": 39,
+    "artsmu": 0,
+    "campsAlumni": 40,
     "muGetInvolved": 132,
     "pennManor": 58,
     "borough": 71,
@@ -30,10 +30,7 @@
       "earliest": "2026-06-30T00:00:00.000Z",
       "latest": "2027-06-04T18:30:00.000Z"
     },
-    "artsmu": {
-      "earliest": "2026-08-07T23:00:00.000Z",
-      "latest": "2027-05-02T23:00:00.000Z"
-    },
+    "artsmu": null,
     "campsAlumni": {
       "earliest": "2026-06-11T22:00:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
@@ -84,10 +81,7 @@
       "newest": "2027-06-04",
       "daysSinceMoved": 1
     },
-    "artsmu": {
-      "newest": "2027-05-02",
-      "daysSinceMoved": 15
-    },
+    "artsmu": null,
     "campsAlumni": {
       "newest": "2027-04-03",
       "daysSinceMoved": 15
@@ -149,9 +143,16 @@
       "PM Community": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-08-22T04:30:11.371Z"
+    "lastSyncAt": "2026-08-22T05:23:59.196Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Glorious Sounds of the Season|2026-12-05T23:00:00.000Z",
+      "firstSeenAt": "2026-08-22T05:25:51.120Z",
+      "title": "Glorious Sounds of the Season",
+      "source": "MU",
+      "date": "2026-12-05T23:00:00.000Z"
+    },
     {
       "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
       "firstSeenAt": "2026-08-22T02:55:16.898Z",
@@ -214,14 +215,7 @@
       "title": "Moonlight Ride",
       "source": "Manor",
       "date": "2026-10-23T22:30:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-10-28T12:30:00.000Z",
-      "firstSeenAt": "2026-08-22T02:55:16.898Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-10-28T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

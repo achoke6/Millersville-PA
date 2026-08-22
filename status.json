@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-22T21:26:20.355Z",
-  "totalEvents": 974,
+  "generatedAt": "2026-08-22T22:22:48.129Z",
+  "totalEvents": 976,
   "withDescription": 442,
   "withImage": 75,
   "familyFriendly": 76,
@@ -11,7 +11,7 @@
     "artsmu": 39,
     "campsAlumni": 39,
     "muGetInvolved": 132,
-    "pennManor": 61,
+    "pennManor": 63,
     "borough": 71,
     "vfw": 7,
     "phantomPower": 14,
@@ -44,7 +44,7 @@
     },
     "pennManor": {
       "earliest": "2026-06-02T17:30:00.000Z",
-      "latest": "2026-09-10T20:00:00.000Z"
+      "latest": "2026-09-21T23:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-05-25T12:00:00.000Z",
@@ -97,8 +97,8 @@
       "daysSinceMoved": 79
     },
     "pennManor": {
-      "newest": "2026-09-10",
-      "daysSinceMoved": 11
+      "newest": "2026-09-21",
+      "daysSinceMoved": 59
     },
     "borough": {
       "newest": "2026-12-25",
@@ -130,10 +130,10 @@
     }
   },
   "sports": {
-    "total": 290,
-    "scored": 0,
+    "total": 291,
+    "scored": 1,
     "wins": 0,
-    "losses": 0,
+    "losses": 1,
     "ties": 0
   },
   "registrations": {
@@ -149,9 +149,23 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-08-22T21:18:57.850Z"
+    "lastSyncAt": "2026-08-22T22:18:51.293Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Girls Varsity Volleyball @ Manheim Township High School|2026-09-01T23:00:00.000Z",
+      "firstSeenAt": "2026-08-22T22:22:48.127Z",
+      "title": "Girls Varsity Volleyball @ Manheim Township High School",
+      "source": "PM",
+      "date": "2026-09-01T23:00:00.000Z"
+    },
+    {
+      "key": "School Board Meeting|2026-09-21T23:00:00.000Z",
+      "firstSeenAt": "2026-08-22T22:22:48.127Z",
+      "title": "School Board Meeting",
+      "source": "PM",
+      "date": "2026-09-21T23:00:00.000Z"
+    },
     {
       "key": "Girls JV Volleyball @ Manheim Township High School|2026-09-01T22:00:00.000Z",
       "firstSeenAt": "2026-08-22T20:22:48.787Z",
@@ -207,21 +221,7 @@
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2026-09-30T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
-      "firstSeenAt": "2026-08-22T10:23:11.552Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-10-05T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
-      "firstSeenAt": "2026-08-22T10:23:11.552Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-10-07T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

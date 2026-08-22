@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-22T14:22:14.830Z",
-  "totalEvents": 972,
+  "generatedAt": "2026-08-22T15:21:47.790Z",
+  "totalEvents": 973,
   "withDescription": 443,
   "withImage": 75,
   "familyFriendly": 76,
@@ -11,7 +11,7 @@
     "artsmu": 39,
     "campsAlumni": 39,
     "muGetInvolved": 132,
-    "pennManor": 58,
+    "pennManor": 59,
     "borough": 71,
     "vfw": 7,
     "phantomPower": 14,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 287,
+    "total": 288,
     "scored": 0,
     "wins": 0,
     "losses": 0,
@@ -149,9 +149,16 @@
       "PM Community": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-08-22T14:18:39.451Z"
+    "lastSyncAt": "2026-08-22T15:18:15.540Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Boys JV Football vs Red Lion Area Junior/Senior High School|2026-08-31T20:00:00.000Z",
+      "firstSeenAt": "2026-08-22T15:21:47.788Z",
+      "title": "Boys JV Football vs Red Lion Area Junior/Senior High School",
+      "source": "PM",
+      "date": "2026-08-31T20:00:00.000Z"
+    },
     {
       "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
       "firstSeenAt": "2026-08-22T10:23:11.552Z",
@@ -214,14 +221,7 @@
       "title": "Moonlight Ride",
       "source": "Manor",
       "date": "2026-10-23T22:30:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-10-28T12:30:00.000Z",
-      "firstSeenAt": "2026-08-22T10:23:11.552Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-10-28T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

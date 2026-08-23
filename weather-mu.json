@@ -126,7 +126,74 @@
       }
     ]
   },
-  "observations": [],
+  "observations": [
+    {
+      "time": "00:00",
+      "temp": "70",
+      "dewpoint": "66",
+      "rh": "87",
+      "windDir": "S",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "9.5",
+      "condition": "None"
+    },
+    {
+      "time": "23:00",
+      "temp": "70",
+      "dewpoint": "65",
+      "rh": "86",
+      "windDir": "SSW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "10.0",
+      "condition": "None"
+    },
+    {
+      "time": "22:00",
+      "temp": "70",
+      "dewpoint": "65",
+      "rh": "83",
+      "windDir": "SSW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "10.0",
+      "condition": "None"
+    },
+    {
+      "time": "21:00",
+      "temp": "70",
+      "dewpoint": "65",
+      "rh": "83",
+      "windDir": "S",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "9.9",
+      "condition": "None"
+    },
+    {
+      "time": "20:00",
+      "temp": "71",
+      "dewpoint": "64",
+      "rh": "80",
+      "windDir": "S",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "10.2",
+      "condition": "None"
+    },
+    {
+      "time": "19:00",
+      "temp": "74",
+      "dewpoint": "65",
+      "rh": "74",
+      "windDir": "S",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "10.6",
+      "condition": "None"
+    }
+  ],
   "dailySummary": {
     "monthLabel": "August 2026",
     "days": [
@@ -360,6 +427,17 @@
         "windSpeed": "11",
         "windTime": "16:35",
         "rain": "0.01"
+      },
+      {
+        "date": "08/22",
+        "max": "80",
+        "maxTime": "13:41",
+        "min": "62",
+        "minTime": "04:04",
+        "windDir": "152",
+        "windSpeed": "14",
+        "windTime": "16:56",
+        "rain": "0.00"
       }
     ],
     "totalRain": "4.65",
@@ -410,5 +488,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-08-23T04:00:20.703Z"
+  "updated": "2026-08-23T04:37:17.734Z"
 }

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-23T16:25:17.407Z",
-  "totalEvents": 977,
+  "generatedAt": "2026-08-23T17:21:16.911Z",
+  "totalEvents": 936,
   "withDescription": 442,
   "withImage": 75,
   "familyFriendly": 76,
@@ -16,7 +16,7 @@
     "vfw": 7,
     "phantomPower": 14,
     "community": 22,
-    "manor": 41,
+    "manor": 0,
     "raneyCellars": 5,
     "theBackyard": 10,
     "muHudlBroadcasts": 0
@@ -62,10 +62,7 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-08-26T12:30:00.000Z",
-      "latest": "2027-08-04T23:00:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-08-15T22:00:00.000Z",
       "latest": "2026-09-10T20:00:00.000Z"
@@ -116,10 +113,7 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 79
     },
-    "manor": {
-      "newest": "2027-08-04",
-      "daysSinceMoved": 19
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-09-10",
       "daysSinceMoved": 3
@@ -149,7 +143,7 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-08-23T16:21:51.611Z"
+    "lastSyncAt": "2026-08-23T17:18:08.935Z"
   },
   "recentlyAdded": [
     {
@@ -167,61 +161,61 @@
       "date": "2026-08-27T23:00:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
-      "firstSeenAt": "2026-08-23T06:40:53.604Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-08-26T12:30:00.000Z"
+      "key": "Girls Varsity Volleyball @ Manheim Township High School|2026-09-01T23:00:00.000Z",
+      "firstSeenAt": "2026-08-22T22:22:48.127Z",
+      "title": "Girls Varsity Volleyball @ Manheim Township High School",
+      "source": "PM",
+      "date": "2026-09-01T23:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
-      "firstSeenAt": "2026-08-23T06:40:53.604Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-09-02T23:00:00.000Z"
+      "key": "School Board Meeting|2026-09-21T23:00:00.000Z",
+      "firstSeenAt": "2026-08-22T22:22:48.127Z",
+      "title": "School Board Meeting",
+      "source": "PM",
+      "date": "2026-09-21T23:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
-      "firstSeenAt": "2026-08-23T06:40:53.604Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-09-08T23:00:00.000Z"
+      "key": "Girls JV Volleyball @ Manheim Township High School|2026-09-01T22:00:00.000Z",
+      "firstSeenAt": "2026-08-22T20:22:48.787Z",
+      "title": "Girls JV Volleyball @ Manheim Township High School",
+      "source": "PM",
+      "date": "2026-09-01T22:00:00.000Z"
     },
     {
-      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
-      "firstSeenAt": "2026-08-23T06:40:53.604Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-09-14T23:00:00.000Z"
+      "key": "Girls JV Field Hockey vs Manheim Central High School|2026-09-01T21:30:00.000Z",
+      "firstSeenAt": "2026-08-22T18:30:04.348Z",
+      "title": "Girls JV Field Hockey vs Manheim Central High School",
+      "source": "PM",
+      "date": "2026-09-01T21:30:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
-      "firstSeenAt": "2026-08-23T06:40:53.604Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-09-30T12:30:00.000Z"
+      "key": "Boys JV Football vs Red Lion Area Junior/Senior High School|2026-08-31T20:00:00.000Z",
+      "firstSeenAt": "2026-08-22T15:21:47.788Z",
+      "title": "Boys JV Football vs Red Lion Area Junior/Senior High School",
+      "source": "PM",
+      "date": "2026-08-31T20:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
-      "firstSeenAt": "2026-08-23T06:40:53.604Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-10-05T23:00:00.000Z"
+      "key": "Through Our Eyes: A Community Celebration of Photography|2026-08-07T23:00:00.000Z",
+      "firstSeenAt": "2026-08-22T06:40:57.934Z",
+      "title": "Through Our Eyes: A Community Celebration of Photography",
+      "source": "MU",
+      "date": "2026-08-07T23:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
-      "firstSeenAt": "2026-08-23T06:40:53.604Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-10-07T23:00:00.000Z"
+      "key": "Faculty Recital: Morgann Davis|2026-09-13T23:00:00.000Z",
+      "firstSeenAt": "2026-08-22T06:40:57.934Z",
+      "title": "Faculty Recital: Morgann Davis",
+      "source": "MU",
+      "date": "2026-09-13T23:00:00.000Z"
     },
     {
-      "key": "Planning Commission|2026-10-12T23:00:00.000Z",
-      "firstSeenAt": "2026-08-23T06:40:53.604Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-10-12T23:00:00.000Z"
+      "key": "CANCELLED – Stars at the Break of Day – FREE|2026-09-18T23:00:00.000Z",
+      "firstSeenAt": "2026-08-22T06:40:57.934Z",
+      "title": "CANCELLED – Stars at the Break of Day – FREE",
+      "source": "MU",
+      "date": "2026-09-18T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 0
 }

@@ -1,29 +1,8 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Friday, August 21, 2026 at 12:37 PM (Kyle Elliott, Meteorologist)",
-    "periods": [
-      {
-        "period": "This afternoon",
-        "text": "Mostly sunny and pleasant with low humidity. High: 78-82"
-      },
-      {
-        "period": "Tonight",
-        "text": "Mainly clear in the evening, then increasing clouds overnight. Low: 62-66"
-      },
-      {
-        "period": "Saturday",
-        "text": "Mostly cloudy and more humid with a few passing showers. High: 78-82"
-      },
-      {
-        "period": "Saturday Night",
-        "text": "Mainly cloudy, mild and muggy with scattered showers. Low: 64-68"
-      },
-      {
-        "period": "Sunday",
-        "text": "Turning less humid with decreasing clouds and a morning shower. High: 80-84"
-      }
-    ]
+    "issued": "",
+    "periods": []
   },
   "sevenDay": {
     "issued": "Friday, August 21, 2026 at 08:00 AM (Kyle Elliott)",
@@ -128,6 +107,17 @@
   },
   "observations": [
     {
+      "time": "13:00",
+      "temp": "79",
+      "dewpoint": "65",
+      "rh": "64",
+      "windDir": "WNW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "11.5",
+      "condition": "None"
+    },
+    {
       "time": "12:00",
       "temp": "77",
       "dewpoint": "65",
@@ -181,17 +171,6 @@
       "precip": "0.00",
       "visibility": "5.2",
       "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "63",
-      "dewpoint": "63",
-      "rh": "100",
-      "windDir": "SSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "0.42",
-      "condition": "Fog"
     }
   ],
   "dailySummary": {
@@ -488,5 +467,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-08-23T16:21:53.566Z"
+  "updated": "2026-08-23T17:18:11.013Z"
 }

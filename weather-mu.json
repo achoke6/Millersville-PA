@@ -105,7 +105,74 @@
       }
     ]
   },
-  "observations": [],
+  "observations": [
+    {
+      "time": "00:00",
+      "temp": "62",
+      "dewpoint": "61",
+      "rh": "98",
+      "windDir": "W",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "8.9",
+      "condition": "None"
+    },
+    {
+      "time": "23:00",
+      "temp": "63",
+      "dewpoint": "62",
+      "rh": "95",
+      "windDir": "SSW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "9.7",
+      "condition": "None"
+    },
+    {
+      "time": "22:00",
+      "temp": "67",
+      "dewpoint": "60",
+      "rh": "78",
+      "windDir": "NW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "10.5",
+      "condition": "None"
+    },
+    {
+      "time": "21:00",
+      "temp": "69",
+      "dewpoint": "60",
+      "rh": "75",
+      "windDir": "W",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "10.5",
+      "condition": "None"
+    },
+    {
+      "time": "20:00",
+      "temp": "73",
+      "dewpoint": "62",
+      "rh": "71",
+      "windDir": "SW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "10.7",
+      "condition": "None"
+    },
+    {
+      "time": "19:00",
+      "temp": "77",
+      "dewpoint": "64",
+      "rh": "65",
+      "windDir": "SSW",
+      "windSpeed": "2",
+      "precip": "0.01",
+      "visibility": "10.8",
+      "condition": "None"
+    }
+  ],
   "dailySummary": {
     "monthLabel": "August 2026",
     "days": [
@@ -350,10 +417,21 @@
         "windSpeed": "14",
         "windTime": "16:56",
         "rain": "0.00"
+      },
+      {
+        "date": "08/23",
+        "max": "81",
+        "maxTime": "14:33",
+        "min": "62",
+        "minTime": "23:51",
+        "windDir": "320",
+        "windSpeed": "16",
+        "windTime": "15:23",
+        "rain": "0.85"
       }
     ],
-    "totalRain": "4.65",
-    "ytdRain": "22.88",
+    "totalRain": "5.50",
+    "ytdRain": "23.73",
     "yearMax": "102",
     "yearMaxDate": "July 03",
     "yearMin": "1",
@@ -400,5 +478,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-08-24T03:00:38.991Z"
+  "updated": "2026-08-24T04:41:31.716Z"
 }

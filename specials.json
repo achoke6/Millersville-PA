@@ -85,17 +85,25 @@
       "Cayenne Peppers – 4/$1.00",
       "Cantaloupes – $2.00-$3.50 each"
     ],
-    "weeklyFetchedAt": "2026-08-24T03:04:09.142Z"
+    "weeklyFetchedAt": "2026-08-24T04:44:51.351Z"
   },
   "jesus-dogs": {
     "name": "Jesus Dogs",
     "note": "Free hot dogs every Thursday night during the fall & spring semesters — 10 PM to midnight at the Brookwood pavilion (Hillview Ave & S Prince St). Hosted by New Life Fellowship Church & Phi Delta Theta. Everyone welcome, rain or shine.",
-    "audience": "marauders"
+    "audience": "marauders",
+    "recurring": {
+      "Thursday": "🌭 Free hot dogs 10 PM–midnight"
+    }
   },
   "the-hub": {
     "name": "The HUB",
     "note": "Free meals for MU students every week during the fall & spring semesters — Tue & Thu lunch 11 AM–1 PM, French Toast Friday 9 PM–midnight. Also home of the Campus Cupboard. Bring student ID.",
-    "audience": "marauders"
+    "audience": "marauders",
+    "recurring": {
+      "Tuesday": "🥪 Free student lunch 11 AM–1 PM",
+      "Thursday": "🥪 Free student lunch 11 AM–1 PM",
+      "Friday": "🍞 Free French toast & sausage 9 PM–midnight"
+    }
   },
   "vfw-post-7294": {
     "name": "VFW Post 7294",

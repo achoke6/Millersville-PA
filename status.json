@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-08-21T18:37:44.891Z",
-  "totalEvents": 956,
-  "withDescription": 426,
-  "withImage": 57,
-  "familyFriendly": 77,
-  "eventsToday": 4,
+  "generatedAt": "2026-08-24T12:47:28.752Z",
+  "totalEvents": 977,
+  "withDescription": 442,
+  "withImage": 75,
+  "familyFriendly": 76,
+  "eventsToday": 7,
   "sources": {
     "muAthletics": 255,
     "muCalendar": 133,
     "artsmu": 39,
     "campsAlumni": 39,
-    "muGetInvolved": 115,
-    "pennManor": 58,
-    "borough": 71,
+    "muGetInvolved": 132,
+    "pennManor": 64,
+    "borough": 70,
     "vfw": 7,
-    "phantomPower": 15,
+    "phantomPower": 14,
     "community": 22,
     "manor": 41,
     "raneyCellars": 5,
-    "theBackyard": 10,
+    "theBackyard": 11,
     "muHudlBroadcasts": 0
   },
   "sourceDateRanges": {
@@ -39,15 +39,15 @@
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-05-23T13:00:00.000Z",
+      "earliest": "2026-06-13T16:00:00.000Z",
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
       "earliest": "2026-06-02T17:30:00.000Z",
-      "latest": "2026-09-10T20:00:00.000Z"
+      "latest": "2026-09-21T23:00:00.000Z"
     },
     "borough": {
-      "earliest": "2026-05-25T12:00:00.000Z",
+      "earliest": "2026-05-26T23:00:00.000Z",
       "latest": "2026-12-25T12:00:00.000Z"
     },
     "vfw": {
@@ -55,7 +55,7 @@
       "latest": "2026-10-15T20:30:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-08-22T00:00:00.000Z",
+      "earliest": "2026-08-27T23:00:00.000Z",
       "latest": "2026-10-04T00:00:00.000Z"
     },
     "community": {
@@ -71,75 +71,75 @@
       "latest": "2026-09-10T20:00:00.000Z"
     },
     "theBackyard": {
-      "earliest": "2026-08-25T15:00:00.000Z",
+      "earliest": "2026-08-24T12:30:00.000Z",
       "latest": "2026-09-30T15:00:00.000Z"
     }
   },
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-01",
-      "daysSinceMoved": 44
+      "daysSinceMoved": 47
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 3
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 17
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 17
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 78
+      "daysSinceMoved": 81
     },
     "pennManor": {
-      "newest": "2026-09-10",
-      "daysSinceMoved": 10
+      "newest": "2026-09-21",
+      "daysSinceMoved": 61
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 24
+      "daysSinceMoved": 27
     },
     "vfw": {
       "newest": "2026-10-15",
-      "daysSinceMoved": 11
+      "daysSinceMoved": 14
     },
     "phantomPower": {
       "newest": "2026-10-04",
-      "daysSinceMoved": 30
+      "daysSinceMoved": 33
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 77
+      "daysSinceMoved": 80
     },
     "manor": {
       "newest": "2027-08-04",
-      "daysSinceMoved": 17
+      "daysSinceMoved": 20
     },
     "raneyCellars": {
       "newest": "2026-09-10",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 4
     },
     "theBackyard": {
       "newest": "2026-09-30",
-      "daysSinceMoved": 24
+      "daysSinceMoved": 27
     }
   },
   "sports": {
-    "total": 287,
-    "scored": 0,
+    "total": 292,
+    "scored": 1,
     "wins": 0,
     "losses": 0,
-    "ties": 0
+    "ties": 1
   },
   "registrations": {
-    "open": 15,
-    "next2Weeks": 1,
-    "nextClose": "2026-08-22",
+    "open": 14,
+    "next2Weeks": 0,
+    "nextClose": "2026-09-09",
     "openNoDeadline": 1
   },
   "reviewQueue": {
@@ -148,80 +148,80 @@
     "pendingBySource": {
       "PM Community": 1
     },
-    "stalePast": 8,
-    "lastSyncAt": "2026-08-21T18:33:00.760Z"
+    "stalePast": 9,
+    "lastSyncAt": "2026-08-24T12:44:07.740Z"
   },
   "recentlyAdded": [
     {
-      "key": "Boys JV Soccer vs Spring Grove Area High School|2026-08-26T20:00:00.000Z",
-      "firstSeenAt": "2026-08-21T18:37:44.888Z",
-      "title": "Boys JV Soccer vs Spring Grove Area High School",
-      "source": "PM",
-      "date": "2026-08-26T20:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
+      "firstSeenAt": "2026-08-23T21:26:59.819Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-08-26T12:30:00.000Z"
     },
     {
-      "key": "Tommy Dorsey Orchestra – Sentimental for the Season|2026-12-18T19:30:00",
-      "firstSeenAt": "2026-08-21T18:37:44.888Z",
-      "title": "Tommy Dorsey Orchestra – Sentimental for the Season",
-      "source": "MU",
-      "date": "2026-12-18T19:30:00"
+      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-08-23T21:26:59.819Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-09-02T23:00:00.000Z"
     },
     {
-      "key": "Lancaster Loves Seasons with Tanner Bingaman & Virginia Masland|2027-03-13T19:30:00",
-      "firstSeenAt": "2026-08-21T18:37:44.888Z",
-      "title": "Lancaster Loves Seasons with Tanner Bingaman & Virginia Masland",
-      "source": "MU",
-      "date": "2027-03-13T19:30:00"
+      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
+      "firstSeenAt": "2026-08-23T21:26:59.819Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-08T23:00:00.000Z"
     },
     {
-      "key": "Commuter Student Meeting|2026-08-22T18:30:00.000Z",
-      "firstSeenAt": "2026-08-21T17:30:11.227Z",
-      "title": "Commuter Student Meeting",
-      "source": "MU",
-      "date": "2026-08-22T18:30:00.000Z"
+      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
+      "firstSeenAt": "2026-08-23T21:26:59.819Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-09-14T23:00:00.000Z"
     },
     {
-      "key": "Boys Varsity Football vs Red Lion Area Junior/Senior High School|2026-08-28T23:00:00.000Z",
-      "firstSeenAt": "2026-08-21T17:30:11.227Z",
-      "title": "Boys Varsity Football vs Red Lion Area Junior/Senior High School",
-      "source": "PM",
-      "date": "2026-08-28T23:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-08-23T21:26:59.819Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-09-30T12:30:00.000Z"
     },
     {
-      "key": "Joseph Roach: The Vibrant Symphony of a Mind|2027-04-02T17:00:00",
-      "firstSeenAt": "2026-08-21T17:30:11.227Z",
-      "title": "Joseph Roach: The Vibrant Symphony of a Mind",
-      "source": "MU",
-      "date": "2027-04-02T17:00:00"
+      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
+      "firstSeenAt": "2026-08-23T21:26:59.819Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-10-05T23:00:00.000Z"
     },
     {
-      "key": "Youth Exhibit: Memories & Dreams|2027-05-07T17:00:00",
-      "firstSeenAt": "2026-08-21T17:30:11.227Z",
-      "title": "Youth Exhibit: Memories & Dreams",
-      "source": "MU",
-      "date": "2027-05-07T17:00:00"
+      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
+      "firstSeenAt": "2026-08-23T21:26:59.819Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-10-07T23:00:00.000Z"
+    },
+    {
+      "key": "Planning Commission|2026-10-12T23:00:00.000Z",
+      "firstSeenAt": "2026-08-23T21:26:59.819Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-10-12T23:00:00.000Z"
     },
     {
       "key": "Moonlight Ride|2026-10-23T22:30:00.000Z",
-      "firstSeenAt": "2026-08-21T15:33:40.139Z",
+      "firstSeenAt": "2026-08-23T21:26:59.819Z",
       "title": "Moonlight Ride",
       "source": "Manor",
       "date": "2026-10-23T22:30:00.000Z"
     },
     {
-      "key": "Kendyll Hillegas: Kept Like a Secret|2027-02-05T17:00:00",
-      "firstSeenAt": "2026-08-21T14:49:55.980Z",
-      "title": "Kendyll Hillegas: Kept Like a Secret",
-      "source": "MU",
-      "date": "2027-02-05T17:00:00"
-    },
-    {
-      "key": "Kristin Hill: Is Creating Beauty Enough?|2027-03-05T17:00:00",
-      "firstSeenAt": "2026-08-21T14:49:55.980Z",
-      "title": "Kristin Hill: Is Creating Beauty Enough?",
-      "source": "MU",
-      "date": "2027-03-05T17:00:00"
+      "key": "Traffic Commission Meeting|2026-10-28T12:30:00.000Z",
+      "firstSeenAt": "2026-08-23T21:26:59.819Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-10-28T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 3
+  "addedLastRun": 0
 }

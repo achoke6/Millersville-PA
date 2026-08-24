@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-08-24T14:42:35.212Z",
-  "totalEvents": 1040,
-  "withDescription": 517,
-  "withImage": 76,
-  "familyFriendly": 76,
-  "eventsToday": 8,
+  "generatedAt": "2026-08-24T15:12:24.072Z",
+  "totalEvents": 1034,
+  "withDescription": 518,
+  "withImage": 77,
+  "familyFriendly": 75,
+  "eventsToday": 9,
   "sources": {
     "muAthletics": 255,
     "muCalendar": 183,
-    "artsmu": 29,
+    "artsmu": 22,
     "campsAlumni": 39,
-    "muGetInvolved": 156,
+    "muGetInvolved": 157,
     "pennManor": 63,
     "borough": 70,
     "vfw": 7,
@@ -149,9 +149,16 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-08-24T14:39:04.326Z"
+    "lastSyncAt": "2026-08-24T15:09:05.952Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Fencing on the Quad|2026-08-24T22:00:00.000Z",
+      "firstSeenAt": "2026-08-24T15:12:24.070Z",
+      "title": "Fencing on the Quad",
+      "source": "MU",
+      "date": "2026-08-24T22:00:00.000Z"
+    },
     {
       "key": "Lombardo Hall Grand Opening for MU Community|2026-08-27T11:30:00",
       "firstSeenAt": "2026-08-24T14:42:35.209Z",
@@ -214,14 +221,7 @@
       "title": "Phi Sigma Pi Meet Night",
       "source": "MU",
       "date": "2026-09-16T19:00:00"
-    },
-    {
-      "key": "Phi Sigma Pi Meet Night|2026-09-17T19:00:00",
-      "firstSeenAt": "2026-08-24T14:42:35.209Z",
-      "title": "Phi Sigma Pi Meet Night",
-      "source": "MU",
-      "date": "2026-09-17T19:00:00"
     }
   ],
-  "addedLastRun": 17
+  "addedLastRun": 1
 }

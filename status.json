@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-24T22:30:50.930Z",
-  "totalEvents": 983,
+  "generatedAt": "2026-08-24T23:23:16.595Z",
+  "totalEvents": 943,
   "withDescription": 465,
   "withImage": 77,
   "familyFriendly": 75,
@@ -11,12 +11,12 @@
     "artsmu": 22,
     "campsAlumni": 39,
     "muGetInvolved": 133,
-    "pennManor": 65,
+    "pennManor": 66,
     "borough": 70,
     "vfw": 7,
     "phantomPower": 14,
     "community": 22,
-    "manor": 41,
+    "manor": 0,
     "raneyCellars": 5,
     "theBackyard": 11,
     "muHudlBroadcasts": 0
@@ -62,10 +62,7 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-08-26T12:30:00.000Z",
-      "latest": "2027-08-04T23:00:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-08-15T22:00:00.000Z",
       "latest": "2026-09-10T20:00:00.000Z"
@@ -116,10 +113,7 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 80
     },
-    "manor": {
-      "newest": "2027-08-04",
-      "daysSinceMoved": 20
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-09-10",
       "daysSinceMoved": 4
@@ -130,7 +124,7 @@
     }
   },
   "sports": {
-    "total": 293,
+    "total": 294,
     "scored": 1,
     "wins": 0,
     "losses": 0,
@@ -149,9 +143,16 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-08-24T22:27:14.040Z"
+    "lastSyncAt": "2026-08-24T23:19:50.675Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Boys JV Soccer vs Daniel Boone High School|2026-09-02T20:00:00.000Z",
+      "firstSeenAt": "2026-08-24T23:23:16.592Z",
+      "title": "Boys JV Soccer vs Daniel Boone High School",
+      "source": "PM",
+      "date": "2026-09-02T20:00:00.000Z"
+    },
     {
       "key": "Girls Varsity Field Hockey vs Manheim Central High School|2026-09-01T23:00:00.000Z",
       "firstSeenAt": "2026-08-24T22:30:50.928Z",
@@ -214,13 +215,6 @@
       "title": "Fencing on the Quad",
       "source": "MU",
       "date": "2026-08-24T22:00:00.000Z"
-    },
-    {
-      "key": "Lombardo Hall Grand Opening for MU Community|2026-08-27T11:30:00",
-      "firstSeenAt": "2026-08-24T14:42:35.209Z",
-      "title": "Lombardo Hall Grand Opening for MU Community",
-      "source": "MU",
-      "date": "2026-08-27T11:30:00"
     }
   ],
   "addedLastRun": 1

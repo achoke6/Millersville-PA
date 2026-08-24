@@ -334,6 +334,12 @@ function parseEtixTicketInfo(html) {
 function extractPricing(desc, title = "", location = "", apiLink = "") {
     // Etix direct ticket links for known MU events
     const etixEvents = [
+        // Picasso workshop series (verified from the etix page 2026-08-24 —
+        // "Registration: $45"; covers all three Sep sessions by title match).
+        // NOTE: with etix challenge-walled to GHA, this table is UN-RETIRED —
+        // it is again how real prices enter, one hand-maintained row at a
+        // time. The enrichment pass never overwrites a table price.
+        { match: /art as seen through the eyes of pablo picasso/i, url: 'https://www.etix.com/ticket/p/42699702/art-as-seen-through-the-eyes-of-pablo-picasso-lancaster-ware-center-for-the-arts', price: '$45' },
         { match: /shawan rice/i, url: 'https://www.etix.com/ticket/p/52838436/shawan-rice-the-quiet-riders-lancaster-ware-center-for-the-arts', price: '$15' },
         { match: /making of life on our planet/i, url: 'https://www.etix.com/ticket/p/44575281/the-making-of-life-on-our-planet-lancaster-ware-center-for-the-arts', price: '$8 - $10' },
         { match: /kids.?\s*salsa/i, url: 'https://www.etix.com/ticket/p/34862669/kidssalsa-5-lancaster-ware-center-for-the-arts', price: '$15' },
@@ -2743,10 +2749,16 @@ async function runScraper() {
                 if (/exhibit|gallery|on display/i.test(title + ' ' + description)) tags.push('Art Exhibit');
                 else tags.push('Arts Concert / Performance');
 
+                // Tell School MU-students-free boilerplate lives on the
+                // artsmu event page too — and artsmu we CAN fetch (etix is
+                // challenge-walled, 2026-08-24). Same stable phrase as
+                // parseEtixTicketInfo keys on.
+                const muFreeTicket = /free ticket with a valid MU ID/i.test(evHtml);
                 events.push({
                     title, date: eventDate.toISOString(), location: venue,
                     tags, price: price || 'Open To Public',
-                    ticketLink, sourceLink: eventUrl, description
+                    ticketLink, sourceLink: eventUrl, description,
+                    ...(muFreeTicket ? { muFreeTicket: true } : {})
                 });
                 existingKeys.add(key);
                 artsCount++;
@@ -5472,6 +5484,12 @@ async function runScraper() {
             // Redemption Time-class merges kept the fallback venue link and
             // discarded the real ticket page; the /p/ pid also feeds the etix
             // enrichment pass downstream of dedupe).
+            // muFreeTicket rides the merge (2026-08-24 evening): artsmu is
+            // now the flag's only source, and MU Calendar copies win the
+            // merge — without the carry the 🎓 badge never renders on the
+            // recitals that started this whole arc.
+            let muFreeMerged = false;
+            if (loser.event.muFreeTicket && !winner.muFreeTicket) { winner.muFreeTicket = true; muFreeMerged = true; }
             let ticketMerged = false;
             const loserLink = loser.event.ticketLink || '';
             if (!winner.ticketLink && loserLink) {
@@ -5496,6 +5514,7 @@ async function runScraper() {
                     loser.event.benefits?.length ? `benefits:${loser.event.benefits.join(',')}` : '',
                     loser.event.kidFriendly && !winner.kidFriendly ? 'kidFriendly' : '',
                     ticketMerged ? 'ticketLink' : '',   // (2026-08-24: old condition read winner.ticketLink AFTER mutation — never fired)
+                    muFreeMerged ? 'muFreeTicket' : '',
                     loser.event.audience === 'public' && winner.audience === 'public' && candidates[0].event.audience !== 'public' ? 'audience:public' : ''
                 ].filter(Boolean).join('+')
             });
@@ -5677,26 +5696,45 @@ async function runScraper() {
         const ETIX_FRESH_MS = 7 * 24 * 60 * 60 * 1000;  // weekly re-scrape — prices rarely move post-onsale
         const ETIX_RETRY_MS = 24 * 60 * 60 * 1000;      // failures back off a day (don't hammer ~53 URLs hourly when etix is down)
         const ETIX_FETCH_CAP = 60;                      // cold start is ~53 pages; cap guards a runaway
+        // Bump when the fetch/parse contract changes — entries stamped with an
+        // older pv are treated as stale and re-fetched (v2, 2026-08-24: the
+        // 202-challenge finding poisoned 48 entries as ok-but-empty).
+        const ETIX_PARSER_VERSION = 2;
         let etixFetched = 0, etixFromCache = 0, etixFailed = 0;
         for (const [pid, link] of pidLinks) {
             const c = etixCache[pid];
             const age = c ? nowMs - (c.fetchedAt || 0) : Infinity;
-            if (c && ((c.ok && age < ETIX_FRESH_MS) || (!c.ok && age < ETIX_RETRY_MS))) { etixFromCache++; continue; }
+            // pv mismatch = stale by definition (contract changed under it).
+            if (c && c.pv === ETIX_PARSER_VERSION && ((c.ok && age < ETIX_FRESH_MS) || (!c.ok && age < ETIX_RETRY_MS))) { etixFromCache++; continue; }
             if (etixFetched >= ETIX_FETCH_CAP) break;
             etixFetched++;
             try {
                 const res = await fetch(link, { headers: baseHeaders, signal: AbortSignal.timeout(15000) });
-                if (!res.ok) throw new Error('HTTP ' + res.status);
-                const info = parseEtixTicketInfo(await res.text());
-                etixCache[pid] = { price: info.price, muFreeTicket: info.muFreeTicket, ok: true, fetchedAt: nowMs };
+                // 2026-08-24 landing finding: etix answers non-browser TLS
+                // fingerprints with HTTP 202 + EMPTY body (bot challenge).
+                // res.ok is true for ANY 2xx, so v1 minted those as 7-day
+                // successes. Only a 200 with a real-sized body counts — event
+                // pages are tens of KB; anything under 2KB is the challenge
+                // shell or an empty answer, and must resolve as FAILURE so
+                // the veto (not a fake parse) covers the event.
+                if (res.status !== 200) throw new Error('HTTP ' + res.status);
+                const body = await res.text();
+                if (body.length < 2048) throw new Error('challenge/empty body (' + body.length + 'B)');
+                const info = parseEtixTicketInfo(body);
+                etixCache[pid] = { price: info.price, muFreeTicket: info.muFreeTicket, ok: true, pv: ETIX_PARSER_VERSION, fetchedAt: nowMs };
             } catch (err) {
                 etixFailed++;
-                if (c && c.ok) {
-                    // Carry the last good parse forward; date it so the next
-                    // retry lands after ETIX_RETRY_MS, not next run.
-                    etixCache[pid] = { price: c.price, muFreeTicket: c.muFreeTicket, ok: true, fetchedAt: nowMs - ETIX_FRESH_MS + ETIX_RETRY_MS, carried: true };
+                if (c && c.ok && (c.price || c.muFreeTicket)) {
+                    // Carry the last good parse forward ONLY when it actually
+                    // contains something (v1's ok-but-empty entries carry
+                    // nothing worth keeping); date it so the next retry lands
+                    // after ETIX_RETRY_MS, not next run.
+                    etixCache[pid] = { price: c.price, muFreeTicket: c.muFreeTicket, ok: true, pv: ETIX_PARSER_VERSION, fetchedAt: nowMs - ETIX_FRESH_MS + ETIX_RETRY_MS, carried: true };
                 } else {
-                    etixCache[pid] = { ok: false, fetchedAt: nowMs };
+                    // pv stamped on failures too — otherwise every run treats
+                    // them as version-stale and re-fetches HOURLY, defeating
+                    // the 24h backoff.
+                    etixCache[pid] = { ok: false, pv: ETIX_PARSER_VERSION, fetchedAt: nowMs };
                 }
             }
         }

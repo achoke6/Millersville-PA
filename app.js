@@ -43,7 +43,7 @@ const AFFILIATION_KEY = 'mapp_mu_affiliation'; // 'student' | 'townie' | null (u
 const SHOW21_KEY = 'mapp_show_21plus'; // '1' = opted in to see 🍺-flagged drink specials (default off, site-wide)
 const SHOWN_SOURCES_KEY = 'mapp_shown_sources'; // JSON array of Show opt-ins from the Uncommon picker — source keys (1:1 chips) AND per-item pref ids (PM sports / PM events chips; see UNCOMMON_SUB_SOURCES); survives Clear Favs
 let feedPrefs = null; // null = not configured
-let muAffiliation = null; // null = not yet asked; 'student' or 'townie' once set
+let muAffiliation = null; // null = not yet asked; 'student' or 'townie' once set. Unset RENDERS as Marauder site-wide (default-marauder policy, 2026-08-24) — the identity banner still asks; nothing is stored until the user picks.
 let show21Plus = false;   // 21+ drink-specials opt-in — display setting, loaded in loadFeedPrefs
 let shownSources = new Set(); // "Show events" source opt-ins — display setting, loaded in loadFeedPrefs
 
@@ -451,8 +451,11 @@ window.notificationStatus = function() {
 // /advertise deep links, and popstate in one place.
 function applyAdvertiseGate() {
     const btn = document.getElementById('nav-advertise');
-    if (btn) btn.style.display = (muAffiliation === 'student') ? 'none' : '';
-    if (muAffiliation === 'student') {
+    // Default-marauder (2026-08-24): hidden for unset too — the page is now
+    // townie-only (it had doubled as the pitch for undecided visitors; page
+    // currently unused per Adam). resetEverything → unset keeps it hidden.
+    if (btn) btn.style.display = viewerIsMarauder() ? 'none' : '';
+    if (viewerIsMarauder()) {
         const v = document.getElementById('view-advertise');
         if (v && v.classList.contains('active') && typeof window.switchView === 'function') window.switchView('home');
     }
@@ -474,10 +477,21 @@ window.setMuAffiliation = function(value) {
 //   • Marauders don't see townie/community-only events (audience 'townie-only').
 // Unset affiliation = Marauder default: see everything (users opt into townie
 // behavior, or stay default, via the welcome banner / Feed settings).
+// ===== DEFAULT-MARAUDER POLICY (2026-08-24) =====
+// Unset affiliation renders as Marauder EVERYWHERE — townie content requires
+// an explicit Local pick (semester-start call: most visitors are MU students).
+// Soft default: the identity banner still asks; nothing is written to storage
+// until the user chooses, and resetEverything() returns to unset-rendering-
+// as-Marauder. ONE predicate, all call sites (placeTodayContent no-drift
+// pattern). The former exceptions — advertise page, directory/MBA audience,
+// gold perk toggles, Marauder Gold — are all flipped; remaining raw
+// muAffiliation === 'student' checks are identity-UX only (banner highlight,
+// pickAffiliation onboarding), never content gates.
+function viewerIsMarauder() { return muAffiliation !== 'townie'; }
 function isHiddenForViewer(e) {
     if (muAffiliation === 'townie') return !!(e && (e.audience === 'mu-only' || isIntramural(e)));
-    if (muAffiliation === 'student') return !!(e && e.audience === 'townie-only');
-    return false; // unset → see everything
+    // Marauder OR unset (default-marauder): townie-only content hides.
+    return !!(e && e.audience === 'townie-only');
 }
 // Intramural signups (fetched from the DSE Rec portal into events.json; was
 // IMLeagues before Fall 2026) are a MARAUDER-only thing — townies can't join
@@ -1430,15 +1444,19 @@ window.openFeedSettings = function() {
     modal.style.cssText = 'background:var(--surface);border-radius:var(--radius);max-width:520px;width:100%;max-height:90vh;overflow-y:auto;padding:28px;position:relative;';
 
     // Affiliation / dimming setup — shared state for all rendering helpers below.
-    // Unset muAffiliation is treated as marauder (the app's default).
-    const effectiveAffiliation = muAffiliation === 'townie' ? 'townie' : 'student';
+    // Derived from the global viewerIsMarauder() predicate (default-marauder
+    // policy, 2026-08-24) — local const kept because nested helpers below
+    // (audienceRank, line ~1632 sub-audience test) read it as a string value.
+    const effectiveAffiliation = viewerIsMarauder() ? 'student' : 'townie';
     const isTownie = effectiveAffiliation === 'townie';
     const isMarauder = !isTownie;
     // Rank a group (or sub) by relevance to the current user — relevant first,
     // 'both' next, non-relevant last. Used to order sub-chips within a group.
     const audienceRank = aud => {
-        if (!muAffiliation || aud === 'both') return 1;
-        if (aud === muAffiliation) return 0;
+        // Default-marauder (2026-08-24): unset ranks like a Marauder
+        // (was: unset → everything ties at 1, no relevance ordering).
+        if (aud === 'both') return 1;
+        if (aud === effectiveAffiliation) return 0;
         return 2;
     };
     // A group is "dimmed" for marauders when its audience is explicitly townie-
@@ -2774,7 +2792,7 @@ function pruneStaleStateForAffiliation() {
     }
     // Prune feedPrefs: drop IDs tied to subs the user can't see anymore
     if (feedPrefs && feedPrefs.length > 0 && typeof feedSections !== 'undefined') {
-        const effectiveAff = muAffiliation === 'townie' ? 'townie' : 'student';
+        const effectiveAff = viewerIsMarauder() ? 'student' : 'townie';   // shared no-drift predicate (default-marauder, 2026-08-24)
         const visibleIds = new Set();
         for (const section of Object.values(feedSections)) {
             for (const group of Object.values(section.groups)) {
@@ -3487,7 +3505,7 @@ function injectEcwidCSS(){
 }
 
 window.switchView=function(view,skipPush){
-    if(view==='advertise' && muAffiliation==='student') view='home';   // Advertise is Marauder-hidden — nav click, /advertise deep link, and popstate all funnel here (URL left as typed on skipPush loads, same as the /board fallthrough)
+    if(view==='advertise' && viewerIsMarauder()) view='home';   // Advertise is Marauder-AND-unset-hidden (default-marauder 2026-08-24) — nav click, /advertise deep link, and popstate all funnel here (URL left as typed on skipPush loads, same as the /board fallthrough)
     if(view==='places') initPlacesMap();   // lazy map init; invalidateSize on return visits
     if(view==='food' && typeof renderFoodPage==='function'){ foodShowClosedOn=false; foodShowClosedOff=false; renderFoodPage(); }   // Food page rebuilds on every entry; BOTH per-group closed toggles reset for the quick-look default
     document.querySelectorAll('.app-view').forEach(v=>v.classList.remove('active'));
@@ -3702,14 +3720,15 @@ function updateEventsUI(){
     // Toolbar toggle swap based on affiliation:
     //   Marauder ('student')  → show 🍕 Free Food + 🎁 Free Stuff perks; hide 👨‍👩‍👧 family
     //   Townie ('townie')     → show 👨‍👩‍👧 family toggle; hide perks
-    //   Unset (no choice yet) → hide BOTH. The gold Marauder perk toggles appear
-    //                           ONLY after someone explicitly picks Marauder, so
-    //                           undeclared visitors and townies never see them.
+    //   Unset (no choice yet) → Marauder toggles (default-marauder policy,
+    //                           2026-08-24 — the explicit-only exception is
+    //                           retired; undecided viewers get the full
+    //                           Marauder toolbar, townies still never do).
     const kidBtn = document.getElementById('ev-kid-toggle');
     const foodBtn = document.getElementById('ev-freefood-toggle');
     const stuffBtn = document.getElementById('ev-freestuff-toggle');
     const isTownie = muAffiliation === 'townie';
-    const isMarauder = muAffiliation === 'student'; // explicit only — unset is NOT treated as Marauder here
+    const isMarauder = viewerIsMarauder(); // default-marauder (2026-08-24): unset gets the gold perk toggles too
     if (kidBtn) kidBtn.style.display = isTownie ? '' : 'none';
     if (foodBtn) foodBtn.style.display = isMarauder ? '' : 'none';
     if (stuffBtn) stuffBtn.style.display = isMarauder ? '' : 'none';
@@ -5453,7 +5472,7 @@ function buildTimelineItem(e, now) {
     const isSport = isSportEvent(e) || isPMSportByTitle(e);
     const isHome = tags.includes('Home Game Mode') || tags.includes('H Games');
 
-    // Source label / org pill. For marauders only (muAffiliation === 'student')
+    // Source label / org pill. For Marauder-rendering viewers (viewerIsMarauder() — incl. unset, default-marauder 2026-08-24)
     // and when the event has an orgShortName, use that as the pill instead of
     // the generic "MU" — most marauder home items are MU events, so the "MU"
     // label conveys nothing. The org short name (e.g. "IAEM", "SGA", "Acacia")
@@ -5474,9 +5493,9 @@ function buildTimelineItem(e, now) {
     const isResHall = tags.includes('Residence Halls');
 
     let src = '';
-    if (muAffiliation === 'student' && isResHall) {
+    if (viewerIsMarauder() && isResHall) {   // default-marauder (2026-08-24): org flavor for unset too
         src = 'Residence Halls';
-    } else if (muAffiliation === 'student' && e.orgShortName && !isSport && !orgIsAdmin) {
+    } else if (viewerIsMarauder() && e.orgShortName && !isSport && !orgIsAdmin) {
         src = e.orgShortName;
     } else if ((e.location||'').trim() === 'Phantom Power' || tags.includes('Phantom Power')) src = 'Phantom Power';
     else if(tags.includes('VFW')) src = 'VFW';
@@ -5504,7 +5523,7 @@ function buildTimelineItem(e, now) {
     // or "Meeting" so they read sensibly when no pill is present — but on
     // the marauder home view the pill IS the org, so showing the name twice
     // is noise. Townies don't have org pills so they keep the full title.
-    if (muAffiliation === 'student' && e.orgName && e.orgShortName) {
+    if (viewerIsMarauder() && e.orgName && e.orgShortName) {
         const orgPattern = e.orgName
             .replace(/[.*+?^${}()|[\]\\]/g, '\\$&')  // escape regex chars
             .replace(/[''']/g, "[''']?")              // tolerate curly/straight quote variants
@@ -5993,7 +6012,7 @@ async function loadHomeSpecials(){
         // between academic-year (M-F 8am-8pm) and summer (M-F 9am-1pm).
         // Summer pause is approximate — May 11 to Aug 24 — same window as
         // HUB meal events. Card always shown to marauders, never to townies.
-        if (muAffiliation === 'student') {
+        if (viewerIsMarauder()) {   // default-marauder (2026-08-24): undecided viewers see the Cupboard — trio-flip with the modal guard + cupboardTodayVisible (the guards can't disagree)
             const cupboardItems = buildCampusCupboardItems(dayName);
             if (cupboardItems) {
                 cards.push(`<div class="home-special-card" data-spslug="campus-cupboard" role="button" tabindex="0" aria-label="Details for Campus Cupboard" style="cursor:pointer;"><h3 class="home-special-name">🛒 Campus Cupboard</h3><p class="home-special-note">Free grocery store for MU students — inside The HUB</p>${cupboardItems.map(i=>`<p class="home-special-item">• ${i}</p>`).join('')}<p class="home-special-item" style="margin-top:8px;font-size:0.7rem;color:var(--text-muted);">Tap for map &amp; details →</p></div>`);
@@ -6005,8 +6024,8 @@ async function loadHomeSpecials(){
             // placeAudienceVisible vocabulary: 'locals' hides from marauders
             // (VFW is members-only/local), 'marauders' would hide from
             // townies/unset. Everything else shows to everyone.
-            if (sp.audience === 'locals' && muAffiliation === 'student') continue;
-            if (sp.audience === 'marauders' && muAffiliation !== 'student') continue;
+            if (sp.audience === 'locals' && viewerIsMarauder()) continue;      // default-marauder (2026-08-24): unset skips locals-audience specials…
+            if (sp.audience === 'marauders' && !viewerIsMarauder()) continue;   // …and sees marauders-audience ones
 
             // Single source of truth — the same accumulation that drives the
             // Map page cards and the Today lens (closed days, day-only tags,
@@ -6076,7 +6095,7 @@ window.openHomeSpecialPopup = function(slug){
     // like the rail card that opens this, so the guards can't disagree.
     if (slug === 'campus-cupboard'){
         const cb = window._cupboard, cbItems = buildCampusCupboardItems(dayName);
-        if (!cb || !cbItems || muAffiliation !== 'student') return;
+        if (!cb || !cbItems || !viewerIsMarauder()) return;   // trio-flip (default-marauder, 2026-08-24)
         sp = { name: '🛒 Campus Cupboard', eligibility: 'Inside The HUB · MU students only' };
         place = { ...cb, name: 'Campus Cupboard', category: 'Cupboard', placeType: 'cupboard',
                   address: cb.address || '121 N George St, Millersville, PA 17551',
@@ -6215,7 +6234,7 @@ function buildCampusCupboardItems(dayName) {
 // aligning the old pin/card weekend asymmetry (the pin used to render on
 // weekends while the card hid). (2026-07-14)
 function cupboardTodayVisible(){
-    return muAffiliation === 'student' &&
+    return viewerIsMarauder() &&   // trio-flip (default-marauder, 2026-08-24)
         !!buildCampusCupboardItems(new Date().toLocaleDateString('en-US',{weekday:'long'}));
 }
 
@@ -6560,12 +6579,11 @@ function getSpotlight(placeName){
 // Audience visibility for a member listing. Returns true if the member should
 // be visible to the CURRENT viewer given their muAffiliation.
 //
-// IMPORTANT — Directory-specific convention: unset affiliation is treated as
-// TOWNIE here, which is DELIBERATELY different from the rest of app.js (where
-// unset is treated as 'student'/marauder, see effectiveAffiliation). Rationale:
-// the Directory's purpose is local-business findability, every member wants
-// locals, and the MBA partnership benefits from undecided visitors seeing the
-// full local roster. So an undecided visitor sees everything a townie sees.
+// Directory convention FLIPPED 2026-08-24 (default-marauder policy): unset is
+// a Marauder here too, same as the rest of app.js. The old treat-unset-as-
+// townie carve-out was an MBA-partnership courtesy that no longer applies
+// (no MBA partnership). 'locals' listings now show to confirmed townies only;
+// 'marauders' listings show to marauders + undecided viewers.
 //
 // Non-members (no roster entry) are always visible — audience targeting is an
 // MBA-member benefit only.
@@ -6573,10 +6591,9 @@ function mbaAudienceVisible(member){
     if (!member) return true;                 // non-member: always visible
     const aud = member.audience || 'both';     // members default to 'both'
     if (aud === 'both') return true;
-    // Directory rule: treat unset as townie (local).
-    const viewerIsStudent = (muAffiliation === 'student');
-    if (aud === 'locals')    return !viewerIsStudent;  // townies + undecided
-    if (aud === 'marauders') return viewerIsStudent;   // confirmed students only
+    const viewerIsStudent = viewerIsMarauder();   // default-marauder (2026-08-24)
+    if (aud === 'locals')    return !viewerIsStudent;  // confirmed townies only
+    if (aud === 'marauders') return viewerIsStudent;   // marauders + undecided
     return true;
 }
 
@@ -6584,7 +6601,7 @@ function mbaAudienceVisible(member){
 // (MBA members only), this honors an `audience` field on the listing ITSELF, so
 // non-member listings — campus resources, student-only services — can be hidden
 // from townies. Precedence: the listing's own audience → its MBA member audience
-// → 'both'. Same Directory townie-default convention (unset affiliation = local).
+// → 'both'. Same default-marauder convention as mbaAudienceVisible (2026-08-24).
 // Accepts the events sheet's vocabulary too ('townies' == 'locals').
 function placeAudienceVisible(place){
     if (!place) return true;
@@ -6593,9 +6610,9 @@ function placeAudienceVisible(place){
     if (aud === 'townie' || aud === 'townies') aud = 'locals';
     if (aud === 'marauder' || aud === 'student' || aud === 'students') aud = 'marauders';
     if (aud === 'both' || aud === 'all' || aud === 'public' || aud === '') return true;
-    const viewerIsStudent = (muAffiliation === 'student');
-    if (aud === 'locals')    return !viewerIsStudent;  // townies + undecided
-    if (aud === 'marauders') return viewerIsStudent;    // confirmed students only
+    const viewerIsStudent = viewerIsMarauder();   // default-marauder (2026-08-24)
+    if (aud === 'locals')    return !viewerIsStudent;  // confirmed townies only
+    if (aud === 'marauders') return viewerIsStudent;    // marauders + undecided
     return true;  // unknown value → fail open (visible)
 }
 
@@ -6641,7 +6658,7 @@ function trackSpotlight(action, s){
         if (spotlightSeen[s.name]) return;
         spotlightSeen[s.name] = true;
     }
-    const aud = (typeof muAffiliation !== 'undefined' && muAffiliation === 'student') ? 'marauders' : 'townies';
+    const aud = (typeof muAffiliation !== 'undefined' && muAffiliation === 'townie') ? 'townies' : 'marauders';   // default-marauder (2026-08-24): unset now reports 'marauders' — GA audience mix shifts at the flip date
     gtag('event', action, { sponsor_name: s.name, audience: aud });
 }
 
@@ -7553,12 +7570,12 @@ function applyPlacesCardFit(pc){
 function renderPlaces(){
     renderHousing();        // §9: housing tracks audience + affiliation switches
     refreshPlacesMap();     // pins mirror the same filters as the list (no-op until map init)
-    // Marauder Gold is an MU campus payment card, so its filter toggle is only
-    // relevant to confirmed students. Hide it for townies and undeclared
-    // viewers; if such a viewer somehow had MG mode active, drop it so they're
-    // not stuck in a filtered view with no visible toggle to turn off.
+    // Marauder Gold is an MU campus payment card. Default-marauder
+    // (2026-08-24): the toggle shows for undecided viewers too — only
+    // confirmed townies hide it; if a townie somehow had MG mode active,
+    // drop it so they're not stuck in a filtered view with no toggle.
     const mgBtn = document.getElementById('places-mg-toggle');
-    const showMG = (muAffiliation === 'student');
+    const showMG = viewerIsMarauder();
     if (mgBtn) mgBtn.style.display = showMG ? '' : 'none';
     if (!showMG && placesMGMode) {
         placesMGMode = false;
@@ -7920,7 +7937,7 @@ function renderFoodPage(){
     const specials = window._placesSpecials || {};
     const now = new Date();
     const dayName = now.toLocaleDateString('en-US',{weekday:'long'});
-    const isStudent = (muAffiliation === 'student');
+    const isStudent = viewerIsMarauder();   // default-marauder (2026-08-24): unset sees the Free Groceries block
     const secHdr = (label, count) => `<div class="day-group-header">${label}${count !== undefined ? `<span class="day-count">${count}</span>` : ''}</div>`;
     let html = '';
 

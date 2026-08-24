@@ -405,7 +405,11 @@ function extractPricing(desc, title = "", location = "", apiLink = "") {
     }
     if (!link && price !== "Free") {
         const lt = title.toLowerCase(), ll = location.toLowerCase();
-        if (/winter|lyte/.test(ll) || /concert|recital|theatre/.test(lt)) link = "https://www.etix.com/ticket/v/23659/";
+        // Location mapping beats title guessing (2026-08-24): the title-only
+        // OR handed the WINTER venue page to paid concerts/recitals at the
+        // Ware Center. Title guesses now only apply when the location names
+        // no known Ware-family venue (the Ware branch below handles those).
+        if (/winter|lyte/.test(ll) || (!/ware|steinman/.test(ll) && /concert|recital|theatre/.test(lt))) link = "https://www.etix.com/ticket/v/23659/";
         else if (/pucillo|biemesderfer/.test(ll) || /game|match|tournament/.test(lt)) link = "https://www.etix.com/ticket/v/23684/";
     }
     // Ware Center / Steinman Hall events with admission → etix
@@ -413,7 +417,11 @@ function extractPricing(desc, title = "", location = "", apiLink = "") {
         const lt = title.toLowerCase(), ll = location.toLowerCase();
         if (/ware|steinman/.test(ll)) {
             if (price !== "Free" || /concert|ensemble|recital|performance|theatre|theater|film|screening|opera|symphony|jazz|music|dance|ballet|on screen|in person/.test(lt)) {
-                link = "https://www.etix.com/ticket/v/23659/";
+                // /v/23604/ is THE WARE CENTER's venue page. This branch shipped
+                // /v/23659/ (the WINTER Center) since inception — every one of the
+                // 18 holders at fix time was a Ware-location event landing users
+                // on the wrong venue's listings (2026-08-24, Redemption Time case).
+                link = "https://www.etix.com/ticket/v/23604/";
                 if (price === "Free") price = "Tickets Available";
             }
         }
@@ -5212,7 +5220,16 @@ async function runScraper() {
         return {
             idx: i,
             event: e,
-            norm: normalizeTitle(e.title),
+            // Trailing marketing-suffix strip (2026-08-24): artsmu titles the
+            // Ware film/First-Friday programs "<Show> – FREE" while MU Calendar
+            // titles them "…Series: <Show>" — the suffix defeated every match
+            // tier (7 live dupe pairs; substring containment fires once it's
+            // gone). Dedupe-side only: display titles and titleAbsorbs() keep
+            // the full normalizeTitle. Extend the pattern when a new suffix
+            // offender appears (none besides FREE in the data at fix time).
+            // Designated escalation if a future pair defeats ALL title tiers:
+            // same-ET-day + same etix /ticket/p/ pid is conclusive sameness.
+            norm: normalizeTitle(e.title).replace(/\s+free$/, ''),
             day,
             time,
             bucket: sourceBucket(e)
@@ -5404,9 +5421,18 @@ async function runScraper() {
             if (loser.event.kidFriendly === true && winner.kidFriendly !== true) {
                 winner.kidFriendly = true;
             }
-            // Inherit ticket link if winner lacks one (rare since ticketLink is a sort tiebreaker, but possible)
-            if (!winner.ticketLink && loser.event.ticketLink) {
-                winner.ticketLink = loser.event.ticketLink;
+            // Inherit ticket link if winner lacks one — and UPGRADE a generic
+            // etix /ticket/v/ venue link to the loser's specific /ticket/p/
+            // purchase page (2026-08-24: MU Calendar outranks artsmu, so the
+            // Redemption Time-class merges kept the fallback venue link and
+            // discarded the real ticket page; the /p/ pid also feeds the etix
+            // enrichment pass downstream of dedupe).
+            let ticketMerged = false;
+            const loserLink = loser.event.ticketLink || '';
+            if (!winner.ticketLink && loserLink) {
+                winner.ticketLink = loserLink; ticketMerged = true;
+            } else if (/etix\.com\/ticket\/v\//i.test(winner.ticketLink || '') && /etix\.com\/ticket\/p\//i.test(loserLink)) {
+                winner.ticketLink = loserLink; ticketMerged = true;
             }
             // Merge audience — if any duplicate says the event is public-facing, keep it public.
             // This helps MU Calendar entries (which have no audience field) pick up the 'public'
@@ -5424,7 +5450,7 @@ async function runScraper() {
                 merged: [
                     loser.event.benefits?.length ? `benefits:${loser.event.benefits.join(',')}` : '',
                     loser.event.kidFriendly && !winner.kidFriendly ? 'kidFriendly' : '',
-                    !winner.ticketLink && loser.event.ticketLink ? 'ticketLink' : '',
+                    ticketMerged ? 'ticketLink' : '',   // (2026-08-24: old condition read winner.ticketLink AFTER mutation — never fired)
                     loser.event.audience === 'public' && winner.audience === 'public' && candidates[0].event.audience !== 'public' ? 'audience:public' : ''
                 ].filter(Boolean).join('+')
             });

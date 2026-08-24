@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-24T21:29:22.590Z",
-  "totalEvents": 982,
+  "generatedAt": "2026-08-24T22:30:50.930Z",
+  "totalEvents": 983,
   "withDescription": 465,
   "withImage": 77,
   "familyFriendly": 75,
@@ -11,7 +11,7 @@
     "artsmu": 22,
     "campsAlumni": 39,
     "muGetInvolved": 133,
-    "pennManor": 64,
+    "pennManor": 65,
     "borough": 70,
     "vfw": 7,
     "phantomPower": 14,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 292,
+    "total": 293,
     "scored": 1,
     "wins": 0,
     "losses": 0,
@@ -149,9 +149,16 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-08-24T21:25:44.066Z"
+    "lastSyncAt": "2026-08-24T22:27:14.040Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Girls Varsity Field Hockey vs Manheim Central High School|2026-09-01T23:00:00.000Z",
+      "firstSeenAt": "2026-08-24T22:30:50.928Z",
+      "title": "Girls Varsity Field Hockey vs Manheim Central High School",
+      "source": "PM",
+      "date": "2026-09-01T23:00:00.000Z"
+    },
     {
       "key": "Marauder Mania (Rain location only)|2026-08-29T12:00:00",
       "firstSeenAt": "2026-08-24T21:29:22.587Z",
@@ -214,14 +221,7 @@
       "title": "Lombardo Hall Grand Opening for MU Community",
       "source": "MU",
       "date": "2026-08-27T11:30:00"
-    },
-    {
-      "key": "Mental Health Matters: Screening & Fair|2026-09-02T15:30:00.000Z",
-      "firstSeenAt": "2026-08-24T14:42:35.209Z",
-      "title": "Mental Health Matters: Screening & Fair",
-      "source": "MU",
-      "date": "2026-09-02T15:30:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 1
 }

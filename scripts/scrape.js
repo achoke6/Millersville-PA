@@ -279,6 +279,58 @@ function isCampsAlumniEvent(e) {
            t.includes('Summer Fun Series') || t.includes('Alumni Event');
 }
 
+// Parse an etix.com /ticket/p/ event page for the real price and the Tell
+// School of Music's MU-students-free-with-ID boilerplate. Pure + top-level
+// (harness convention). Tolerant by design: works on tag-stripped text, never
+// a DOM. Price preference order:
+//   1. "Registration: $45" (workshops/classes — the Picasso case)
+//   2. all $ amounts in the description region, collapsed to the etixEvents
+//      table's range style ('$8 - $10') — fee-context amounts excluded
+//   3. explicit free-admission language -> 'Free' (exact string, so the
+//      free-badge rule's eventIsFree() exact-match fires correctly)
+// Anything unparseable returns price '' — the enrichment sweep's false-Free
+// veto covers that case, so a parse miss can never assert "Free".
+// The price hunt is cut at the Public Onsale / OTHER EVENTS / CONTINUE
+// SHOPPING chrome so seat-map and cross-sell amounts can't pollute a range.
+function parseEtixTicketInfo(html) {
+    const out = { price: '', muFreeTicket: false };
+    if (!html || typeof html !== 'string') return out;
+    const text = html
+        .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+        .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/&amp;/g, '&').replace(/&nbsp;/g, ' ')
+        .replace(/&#0?39;|&#8217;|&rsquo;/g, "'")
+        .replace(/\s+/g, ' ');
+    // Stable phrase on every Tell School of Music etix page (and mirrored on
+    // the artsmu event pages): "...up to one (1) free ticket with a valid MU ID."
+    if (/free ticket with a valid MU ID/i.test(text)) out.muFreeTicket = true;
+    const cut = text.search(/Public Onsale Begins|OTHER EVENTS|CONTINUE SHOPPING/i);
+    const region = cut > 0 ? text.slice(0, cut) : text;
+    const reg = region.match(/Registration:\s*\$(\d{1,3}(?:\.\d{2})?)/i);
+    if (reg) {
+        out.price = '$' + reg[1];
+        return out;
+    }
+    const amounts = [];
+    for (const m of region.matchAll(/\$(\d{1,3}(?:\.\d{2})?)\b/g)) {
+        // Skip fee-context amounts ("plus a $3.50 service fee") — they'd
+        // silently widen a real range.
+        const tail = region.slice(m.index + m[0].length, m.index + m[0].length + 32);
+        if (/^\s*(?:per[- ]ticket\s*)?(?:service|convenience|processing|facility|handling)?\s*fee/i.test(tail)) continue;
+        const v = parseFloat(m[1]);
+        if (v >= 0 && v <= 500) amounts.push(v);
+    }
+    if (amounts.length) {
+        const fmt = v => '$' + (Number.isInteger(v) ? String(v) : v.toFixed(2));
+        const min = Math.min.apply(null, amounts), max = Math.max.apply(null, amounts);
+        out.price = min === max ? fmt(min) : fmt(min) + ' - ' + fmt(max);
+        return out;
+    }
+    if (/free admission|admission is free|this event is free/i.test(region)) out.price = 'Free';
+    return out;
+}
+
 function extractPricing(desc, title = "", location = "", apiLink = "") {
     // Etix direct ticket links for known MU events
     const etixEvents = [
@@ -2616,16 +2668,20 @@ async function runScraper() {
                     .replace(/&#0?38;/g, '&').replace(/&#0?39;/g, "'").replace(/&#8217;/g, "'")
                     .replace(/&#8220;|&#8221;/g, '"').replace(/&#8211;/g, '–')
                     .replace(/&amp;/g, '&').replace(/&quot;/g, '"');
-                if (/^CANCELLED:/i.test(title)) { artsSkipped++; continue; }
+                if (/^CANCELLED\b/i.test(title)) { artsSkipped++; continue; }  // \b not ':' — "CANCELLED – Stars at the Break of Day" slipped the colon-only form (2026-08-23)
 
                 // Date: "Friday, May 01, 2026" pattern near the top of the event page
                 const dateMatch = evHtml.match(/(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday),?\s+(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),?\s+(\d{4})/);
                 if (!dateMatch) { artsFailed++; continue; }
                 const [, , monthName, day, year] = dateMatch;
 
-                // Time: "Performance: 7:30 pm" or "Performance: 5 pm"
+                // Time: "Performance: 7:30 pm" / "Begins: 7:30 pm" / "Show: 5 pm".
+                // Deliberately NOT "Doors:" — doors-open is not the start time
+                // (the Brandon Martinez recital rendered 7:00 for a 7:30 show
+                // because its page says "Doors: 7 pm | Begins: 7:30 pm" and the
+                // old Performance-only regex fell through to the 19:00 default).
                 let hour = 19, min = 0;
-                const timeMatch = evHtml.match(/Performance:\s*(\d{1,2})(?::(\d{2}))?\s*([ap])m/i);
+                const timeMatch = evHtml.match(/(?:Performance|Begins|Show):\s*(\d{1,2})(?::(\d{2}))?\s*([ap])m/i);
                 if (timeMatch) {
                     hour = parseInt(timeMatch[1]);
                     min = timeMatch[2] ? parseInt(timeMatch[2]) : 0;
@@ -5516,6 +5572,87 @@ async function runScraper() {
     }
 
     deduped.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    // ===== ETIX TICKET-PAGE ENRICHMENT + FALSE-FREE VETO (2026-08-23) =====
+    // Baseline audit: 41 of 55 events carrying specific etix /ticket/p/ links
+    // had only placeholder prices, and 11 of those false-advertised a green
+    // Free badge on paid events (price 'Free' + ticketLink is exactly the
+    // free-badge rule's trigger — the $45 Picasso workshop case). The etix
+    // page is authoritative: real price ("Registration: $45") and the MU-
+    // students-free-with-ID boilerplate both live there. Cache-backed
+    // (etix-cache.json, scraper-owned, repo root — committed hourly by the
+    // git add *.json step like every other data file): 7-day refresh, 24h
+    // retry backoff on failures with carry-forward of the last good parse
+    // (Corn Wagon precedent), sequential fetches with the shared baseHeaders,
+    // per-run cap. Steady state ~0-3 fetches/run; cold start ~53. GHA->etix
+    // reachability unproven until the landing run — total failure degrades to
+    // the veto below, never worse than pre-enrichment behavior. price /
+    // ticketLink / muFreeTicket are display fields only — no feed-matching
+    // exposure (Hard Rule 7 untouched, events.ics.php untouched).
+    const ETIX_PLACEHOLDER_PRICES = new Set(['', 'Free', 'Open To Public', 'Ticket Required', 'Tickets Available']);
+    try {
+        const etixCachePath = path.join(__dirname, '../etix-cache.json');
+        let etixCache = {};
+        try { etixCache = JSON.parse(fs.readFileSync(etixCachePath, 'utf8')) || {}; } catch (_) {}
+        const pidOf = link => { const m = /etix\.com\/ticket\/p\/(\d+)/i.exec(link || ''); return m ? m[1] : null; };
+        // pid -> a representative full ticketLink (fetch the event's real URL,
+        // never a constructed one).
+        const pidLinks = new Map();
+        for (const ev of deduped) {
+            const pid = pidOf(ev.ticketLink);
+            if (pid && !pidLinks.has(pid)) pidLinks.set(pid, ev.ticketLink);
+        }
+        const nowMs = Date.now();
+        const ETIX_FRESH_MS = 7 * 24 * 60 * 60 * 1000;  // weekly re-scrape — prices rarely move post-onsale
+        const ETIX_RETRY_MS = 24 * 60 * 60 * 1000;      // failures back off a day (don't hammer ~53 URLs hourly when etix is down)
+        const ETIX_FETCH_CAP = 60;                      // cold start is ~53 pages; cap guards a runaway
+        let etixFetched = 0, etixFromCache = 0, etixFailed = 0;
+        for (const [pid, link] of pidLinks) {
+            const c = etixCache[pid];
+            const age = c ? nowMs - (c.fetchedAt || 0) : Infinity;
+            if (c && ((c.ok && age < ETIX_FRESH_MS) || (!c.ok && age < ETIX_RETRY_MS))) { etixFromCache++; continue; }
+            if (etixFetched >= ETIX_FETCH_CAP) break;
+            etixFetched++;
+            try {
+                const res = await fetch(link, { headers: baseHeaders, signal: AbortSignal.timeout(15000) });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const info = parseEtixTicketInfo(await res.text());
+                etixCache[pid] = { price: info.price, muFreeTicket: info.muFreeTicket, ok: true, fetchedAt: nowMs };
+            } catch (err) {
+                etixFailed++;
+                if (c && c.ok) {
+                    // Carry the last good parse forward; date it so the next
+                    // retry lands after ETIX_RETRY_MS, not next run.
+                    etixCache[pid] = { price: c.price, muFreeTicket: c.muFreeTicket, ok: true, fetchedAt: nowMs - ETIX_FRESH_MS + ETIX_RETRY_MS, carried: true };
+                } else {
+                    etixCache[pid] = { ok: false, fetchedAt: nowMs };
+                }
+            }
+        }
+        // Prune pids no longer referenced by any current event (aged-out shows).
+        for (const pid of Object.keys(etixCache)) if (!pidLinks.has(pid)) delete etixCache[pid];
+        fs.writeFileSync(etixCachePath, JSON.stringify(etixCache, null, 2));
+        // Sweep: fill placeholder prices, stamp muFreeTicket, veto false-Frees.
+        // A real $ price — including the extractPricing etixEvents table's
+        // values — is NEVER overwritten (placeholder-only guard).
+        let etixPriced = 0, etixFlagged = 0, etixVetoed = 0;
+        for (const ev of deduped) {
+            const pid = pidOf(ev.ticketLink);
+            if (!pid) continue;
+            const c = etixCache[pid];
+            if (c && c.ok) {
+                if (c.price && ETIX_PLACEHOLDER_PRICES.has((ev.price || '').trim())) { ev.price = c.price; etixPriced++; }
+                if (c.muFreeTicket) { ev.muFreeTicket = true; etixFlagged++; }
+            }
+            // False-Free veto: a specific etix purchase link whose price is
+            // still exactly 'Free' without the etix page confirming free
+            // admission is a paid event we couldn't price — 'Ticket Required'
+            // beats a lying green Free badge. (eventIsFree() is exact-match,
+            // so this single string flip disarms the badge on every surface.)
+            if ((ev.price || '').trim() === 'Free' && !(c && c.ok && c.price === 'Free')) { ev.price = 'Ticket Required'; etixVetoed++; }
+        }
+        console.log(`🎫 Etix enrichment: ${etixPriced} priced, ${etixFlagged} MU-free flagged, ${etixVetoed} false-Free vetoed (cache ${etixFromCache}, fetched ${etixFetched}, failed ${etixFailed})`);
+    } catch (e) { console.error('❌ Etix enrichment error:', e.message); }
     // Preserve descriptions for the card-detail modal on home/search. Truncate aggressively
     // to keep events.json size manageable — 600 chars is enough for a useful preview.
     deduped.forEach(e => {

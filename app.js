@@ -4958,7 +4958,12 @@ function buildEventCard(e,isSportsPage){
         const regCtaLabel = isTicketPackage(e) ? '🎟 Buy Tickets' : '📝 Register Now';
         actionHtml=`<a href="${escHtml(getRegisterUrl(e))}" target="_blank" rel="noopener" class="btn btn-sm btn-ticket" onclick="event.stopPropagation();">${regCtaLabel}</a>`;
     } else if(hasLink && !isFree){
-        actionHtml=`<a href="${e.ticketLink}" target="_blank" class="btn btn-sm btn-ticket">🎟 Tickets</a>`;
+        // Chip shows the real price when it's a clean single amount ('$45');
+        // ranges and placeholders keep the generic label (width + honesty —
+        // '$0 - $20' on a chip misreads as a slider). Full string is on the
+        // modal's 💵 line either way. (Etix enrichment arc, 2026-08-23.)
+        const chipPrice = /^\$\d+(?:\.\d{2})?$/.test((e.price || '').trim()) ? (e.price || '').trim() : '';
+        actionHtml=`<a href="${e.ticketLink}" target="_blank" class="btn btn-sm btn-ticket">${chipPrice ? `🎟 ${chipPrice}` : '🎟 Tickets'}</a>`;
     } else if(!isFree){
         actionHtml=`<span class="badge badge-door">${priceText}</span>`;
     } else if(!isSportsPage && eventIsFree(e) && hasLink){
@@ -4992,6 +4997,10 @@ function buildEventCard(e,isSportsPage){
     if (benefits.includes('Free Food')) perkBadges += '<span class="perk-badge perk-food">' + (e.perkFoodIcon || '🍕') + ' Free Food</span>';   // perkFoodIcon: per-event glyph override (Jesus Dogs 🌭)
     if (benefits.includes('Free Stuff')) perkBadges += '<span class="perk-badge perk-stuff">🎁 Free Stuff</span>';
     if (benefits.includes('Credit')) perkBadges += '<span class="perk-badge perk-credit">📚 Credit</span>';
+    // MU-students-free-with-ID flag (etix enrichment, 2026-08-23). Un-gated to
+    // all audiences (gold-borders precedent) — factual, useful to townies too.
+    // Reuses .perk-credit so style.css stays untouched (mixed-EOL hazard).
+    if (e.muFreeTicket) perkBadges += '<span class="perk-badge perk-credit">🎓 Free w/ MU ID</span>';
     // Registration-required warning. Distinct from perks — this tells the user
     // "you can't just show up; check the linked source first." Shown on events
     // where Cowork flagged registrationRequired but no firm deadline was known.
@@ -5696,6 +5705,7 @@ window.openEventDetails = function(key) {
     if (benefits.includes('Free Food'))  perks += '<span class="perk-badge perk-food">' + (e.perkFoodIcon || '🍕') + ' Free Food</span>';   // perkFoodIcon: per-event glyph override (Jesus Dogs 🌭)
     if (benefits.includes('Free Stuff')) perks += '<span class="perk-badge perk-stuff">🎁 Free Stuff</span>';
     if (benefits.includes('Credit'))     perks += '<span class="perk-badge perk-credit">📚 Credit</span>';
+    if (e.muFreeTicket)                  perks += '<span class="perk-badge perk-credit">🎓 Free w/ MU ID</span>';   // etix enrichment flag — see buildEventCard's twin
 
     // Tag chips (exclude noisy internal markers). Only townies get the Community relabel
     // (unset/Marauder users see "GetInvolved" since default is now Marauder mode).
@@ -5713,6 +5723,20 @@ window.openEventDetails = function(key) {
     const locBlock = location
         ? `<div style="margin-top:10px;font-size:0.88rem;color:var(--text-muted);">📍 ${escHtml(location)}</div>`
         : '';
+
+    // Ticket-info block (2026-08-23): the modal previously showed NO price at
+    // all — the door badge only renders on linkless cards, so ticketed events'
+    // prices were invisible everywhere. Real $ prices only; placeholders
+    // ('Open To Public', 'Ticket Required', …) stay off the modal as before.
+    // The 🎓 wording mirrors the Tell School of Music boilerplate — the
+    // discount is in-person/phone ONLY, so it must not read like an online
+    // checkout tip. Un-gated to all audiences (gold-borders precedent), and
+    // modal renders at open time, so no applyAffiliation()/setMuAffiliation()/
+    // toggle21Plus switch-path wiring is needed.
+    const realPrice = /^\$\d/.test((e.price || '').trim()) ? (e.price || '').trim() : '';
+    let ticketInfoBlock = '';
+    if (realPrice) ticketInfoBlock += `<div style="margin-top:10px;font-size:0.88rem;font-weight:600;color:var(--text);">💵 ${escHtml(realPrice)}</div>`;
+    if (e.muFreeTicket) ticketInfoBlock += `<div style="margin-top:6px;font-size:0.82rem;color:var(--text-muted);">🎓 MU students: one free ticket with valid MU ID — box office or phone only, not online</div>`;
 
     // Game score summary for past sports events. We store the score as "4-2"
     // (our-team first when home, their-team first when away — inherited from
@@ -5896,6 +5920,7 @@ window.openEventDetails = function(key) {
         <h2 style="margin:0 0 8px;font-size:1.25rem;color:var(--navy);line-height:1.3;padding-right:24px;">${escHtml(e.title || 'Event')}</h2>
         <div style="font-size:0.92rem;color:var(--text);font-weight:600;">📅 ${dateStr}${timeStr ? ' · ' + timeStr : ''}</div>
         ${locBlock}
+        ${ticketInfoBlock}
         ${scoreSummary}
         ${linescoreBlock}
         ${perks ? `<div class="modal-perks">${perks}</div>` : ''}

@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-08-24T12:47:28.752Z",
-  "totalEvents": 977,
-  "withDescription": 442,
-  "withImage": 75,
+  "generatedAt": "2026-08-24T14:42:35.212Z",
+  "totalEvents": 1040,
+  "withDescription": 517,
+  "withImage": 76,
   "familyFriendly": 76,
-  "eventsToday": 7,
+  "eventsToday": 8,
   "sources": {
     "muAthletics": 255,
-    "muCalendar": 133,
-    "artsmu": 39,
+    "muCalendar": 183,
+    "artsmu": 29,
     "campsAlumni": 39,
-    "muGetInvolved": 132,
-    "pennManor": 64,
+    "muGetInvolved": 156,
+    "pennManor": 63,
     "borough": 70,
     "vfw": 7,
     "phantomPower": 14,
@@ -31,8 +31,8 @@
       "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
-      "earliest": "2026-08-07T23:00:00.000Z",
-      "latest": "2027-05-02T23:00:00.000Z"
+      "earliest": "2026-08-07T21:00:00.000Z",
+      "latest": "2027-05-02T18:30:00.000Z"
     },
     "campsAlumni": {
       "earliest": "2026-06-11T22:00:00.000Z",
@@ -44,7 +44,7 @@
     },
     "pennManor": {
       "earliest": "2026-06-02T17:30:00.000Z",
-      "latest": "2026-09-21T23:00:00.000Z"
+      "latest": "2026-09-10T20:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-05-26T23:00:00.000Z",
@@ -97,8 +97,8 @@
       "daysSinceMoved": 81
     },
     "pennManor": {
-      "newest": "2026-09-21",
-      "daysSinceMoved": 61
+      "newest": "2026-09-10",
+      "daysSinceMoved": 13
     },
     "borough": {
       "newest": "2026-12-25",
@@ -149,79 +149,79 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-08-24T12:44:07.740Z"
+    "lastSyncAt": "2026-08-24T14:39:04.326Z"
   },
   "recentlyAdded": [
     {
-      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
-      "firstSeenAt": "2026-08-23T21:26:59.819Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-08-26T12:30:00.000Z"
+      "key": "Lombardo Hall Grand Opening for MU Community|2026-08-27T11:30:00",
+      "firstSeenAt": "2026-08-24T14:42:35.209Z",
+      "title": "Lombardo Hall Grand Opening for MU Community",
+      "source": "MU",
+      "date": "2026-08-27T11:30:00"
     },
     {
-      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
-      "firstSeenAt": "2026-08-23T21:26:59.819Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-09-02T23:00:00.000Z"
+      "key": "Mental Health Matters: Screening & Fair|2026-09-02T15:30:00.000Z",
+      "firstSeenAt": "2026-08-24T14:42:35.209Z",
+      "title": "Mental Health Matters: Screening & Fair",
+      "source": "MU",
+      "date": "2026-09-02T15:30:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
-      "firstSeenAt": "2026-08-23T21:26:59.819Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-09-08T23:00:00.000Z"
+      "key": "988 Day - Mental Heath Suicide Information|2026-09-08T10:00:00",
+      "firstSeenAt": "2026-08-24T14:42:35.209Z",
+      "title": "988 Day - Mental Heath Suicide Information",
+      "source": "MU",
+      "date": "2026-09-08T10:00:00"
     },
     {
-      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
-      "firstSeenAt": "2026-08-23T21:26:59.819Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-09-14T23:00:00.000Z"
+      "key": "988 Day - Mental Heath Suicide Information|2026-09-08T10:00:00",
+      "firstSeenAt": "2026-08-24T14:42:35.209Z",
+      "title": "988 Day - Mental Heath Suicide Information",
+      "source": "MU",
+      "date": "2026-09-08T10:00:00"
     },
     {
-      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
-      "firstSeenAt": "2026-08-23T21:26:59.819Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-09-30T12:30:00.000Z"
+      "key": "988 Day - Mental Heath Suicide Information|2026-09-08T10:00:00",
+      "firstSeenAt": "2026-08-24T14:42:35.209Z",
+      "title": "988 Day - Mental Heath Suicide Information",
+      "source": "MU",
+      "date": "2026-09-08T10:00:00"
     },
     {
-      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
-      "firstSeenAt": "2026-08-23T21:26:59.819Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-10-05T23:00:00.000Z"
+      "key": "Faculty Recital: Morgann Davis|2026-09-13T22:00:00.000Z",
+      "firstSeenAt": "2026-08-24T14:42:35.209Z",
+      "title": "Faculty Recital: Morgann Davis",
+      "source": "MU",
+      "date": "2026-09-13T22:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
-      "firstSeenAt": "2026-08-23T21:26:59.819Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-10-07T23:00:00.000Z"
+      "key": "Books and Banter General Meeting + Intro to Club|2026-09-14T19:00:00",
+      "firstSeenAt": "2026-08-24T14:42:35.209Z",
+      "title": "Books and Banter General Meeting + Intro to Club",
+      "source": "MU",
+      "date": "2026-09-14T19:00:00"
     },
     {
-      "key": "Planning Commission|2026-10-12T23:00:00.000Z",
-      "firstSeenAt": "2026-08-23T21:26:59.819Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-10-12T23:00:00.000Z"
+      "key": "Phi Sigma Pi Meet Night|2026-09-15T19:00:00",
+      "firstSeenAt": "2026-08-24T14:42:35.209Z",
+      "title": "Phi Sigma Pi Meet Night",
+      "source": "MU",
+      "date": "2026-09-15T19:00:00"
     },
     {
-      "key": "Moonlight Ride|2026-10-23T22:30:00.000Z",
-      "firstSeenAt": "2026-08-23T21:26:59.819Z",
-      "title": "Moonlight Ride",
-      "source": "Manor",
-      "date": "2026-10-23T22:30:00.000Z"
+      "key": "Phi Sigma Pi Meet Night|2026-09-16T19:00:00",
+      "firstSeenAt": "2026-08-24T14:42:35.209Z",
+      "title": "Phi Sigma Pi Meet Night",
+      "source": "MU",
+      "date": "2026-09-16T19:00:00"
     },
     {
-      "key": "Traffic Commission Meeting|2026-10-28T12:30:00.000Z",
-      "firstSeenAt": "2026-08-23T21:26:59.819Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-10-28T12:30:00.000Z"
+      "key": "Phi Sigma Pi Meet Night|2026-09-17T19:00:00",
+      "firstSeenAt": "2026-08-24T14:42:35.209Z",
+      "title": "Phi Sigma Pi Meet Night",
+      "source": "MU",
+      "date": "2026-09-17T19:00:00"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 17
 }

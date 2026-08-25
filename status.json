@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-08-25T14:45:46.352Z",
-  "totalEvents": 984,
-  "withDescription": 465,
-  "withImage": 77,
+  "generatedAt": "2026-08-25T15:20:52.684Z",
+  "totalEvents": 983,
+  "withDescription": 463,
+  "withImage": 76,
   "familyFriendly": 75,
-  "eventsToday": 10,
+  "eventsToday": 9,
   "sources": {
     "muAthletics": 255,
     "muCalendar": 154,
@@ -149,9 +149,16 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-08-25T14:41:56.556Z"
+    "lastSyncAt": "2026-08-25T15:17:21.457Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Mental Health Matters: Screening and Fair|2026-09-02T11:00:00",
+      "firstSeenAt": "2026-08-25T15:20:52.682Z",
+      "title": "Mental Health Matters: Screening and Fair",
+      "source": "MU",
+      "date": "2026-09-02T11:00:00"
+    },
     {
       "key": "Nino's & Lickity Split 🍦|2026-08-25T15:00:00.000Z",
       "firstSeenAt": "2026-08-25T13:51:33.333Z",
@@ -214,14 +221,7 @@
       "title": "Zoning Hearing Board",
       "source": "Manor",
       "date": "2026-10-07T23:00:00.000Z"
-    },
-    {
-      "key": "Planning Commission|2026-10-12T23:00:00.000Z",
-      "firstSeenAt": "2026-08-25T01:10:40.688Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-10-12T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

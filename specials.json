@@ -84,7 +84,7 @@
       "Cantaloupes – $2.00-$3.50 each",
       "Watermelons – $4.00-$6.00 each"
     ],
-    "weeklyFetchedAt": "2026-08-25T14:45:38.985Z"
+    "weeklyFetchedAt": "2026-08-25T15:20:45.579Z"
   },
   "jesus-dogs": {
     "name": "Jesus Dogs",
@@ -112,8 +112,12 @@
       "Monday"
     ],
     "note": "Members & Guests · Weekly specials change each week",
-    "weekly": [],
-    "weeklyDateRange": "",
+    "weekly": [
+      "Chipotle Chicken Sandwich – $12.95",
+      "Shrimp Stir Fry – $13.95",
+      "Garlic Maple Salmon – $17.95 (Friday only)"
+    ],
+    "weeklyDateRange": "Tuesday, August 25 through Saturday, August 29",
     "recurring": {
       "Tuesday": "Shrimp Night",
       "Wednesday": "Wing Night",

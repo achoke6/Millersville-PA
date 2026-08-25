@@ -5902,12 +5902,14 @@ window.openEventDetails = function(key) {
     // 🧭 Directions (2026-08-07, same-day follow-up to the declutter): appended
     // to the actions row ONLY when the mini map renders -- coords-anchored, so
     // unlike the retired button it never falls back to a text-query guess.
-    // Destination mirrors placesMapPopup's q byte-for-byte: "name, address"
-    // when the listing has one, raw "lat,lng" otherwise. Appended AFTER the
+    // Destination is raw "lat,lng" ALWAYS (2026-08-25: the "name, address"
+    // form let Google bait to same-named listings elsewhere -- The Backyard
+    // report; unlisted/generic names lose the address fight). placesMapPopup
+    // and the home popup flipped the same day. Appended AFTER the
     // source/info button (contextual affordances sit last), and it alone can
     // materialize the actions row for an otherwise-linkless event.
     if (hasVenueCoords){
-        const destQ = encodeURIComponent(venuePlace.address ? (venuePlace.name + ', ' + venuePlace.address) : (venuePlace.lat + ',' + venuePlace.lng));
+        const destQ = encodeURIComponent(venuePlace.lat + ',' + venuePlace.lng);
         actions += `<a href="https://www.google.com/maps/dir/?api=1&destination=${destQ}" target="_blank" rel="noopener" class="btn btn-sm btn-outline" style="text-decoration:none;">🧭 Directions</a>`;
     }
 
@@ -6107,7 +6109,7 @@ window.openHomeSpecialPopup = function(slug){
     if (!sp) return;
     const hasCoords = !!(place && isFinite(place.lat) && isFinite(place.lng));
     const evToday = place ? placeEventsToday(place) : [];
-    const q = place ? encodeURIComponent(place.address ? (place.name + ', ' + place.address) : (place.lat + ',' + place.lng)) : '';
+    const q = place ? encodeURIComponent(hasCoords ? (place.lat + ',' + place.lng) : (place.name + ', ' + place.address)) : '';
 
     const ov = document.createElement('div');
     ov.id = 'home-special-popup-overlay';
@@ -6955,7 +6957,7 @@ function refreshPlacesMap(){
 }
 
 function placesMapPopup(p){
-    const q = encodeURIComponent(p.address ? (p.name + ', ' + p.address) : (p.lat + ',' + p.lng));
+    const q = encodeURIComponent((isFinite(p.lat) && isFinite(p.lng)) ? (p.lat + ',' + p.lng) : (p.name + ', ' + p.address));
     let html = `<div class="map-popup"><strong>${p.name}</strong>`;
     if (p.address) html += `<div class="map-popup-meta">📍 ${p.address}</div>`;
     const _ht = placeHoursText(p);

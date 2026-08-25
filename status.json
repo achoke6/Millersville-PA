@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-08-25T19:33:26.048Z",
-  "totalEvents": 987,
-  "withDescription": 467,
-  "withImage": 81,
+  "generatedAt": "2026-08-25T20:31:26.309Z",
+  "totalEvents": 949,
+  "withDescription": 471,
+  "withImage": 85,
   "familyFriendly": 75,
   "eventsToday": 9,
   "sources": {
@@ -10,13 +10,13 @@
     "muCalendar": 154,
     "artsmu": 22,
     "campsAlumni": 39,
-    "muGetInvolved": 137,
+    "muGetInvolved": 140,
     "pennManor": 67,
     "borough": 69,
     "vfw": 7,
     "phantomPower": 14,
     "community": 22,
-    "manor": 41,
+    "manor": 0,
     "raneyCellars": 5,
     "theBackyard": 11,
     "muHudlBroadcasts": 0
@@ -62,10 +62,7 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-08-26T12:30:00.000Z",
-      "latest": "2027-08-04T23:00:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-08-15T22:00:00.000Z",
       "latest": "2026-09-10T20:00:00.000Z"
@@ -116,10 +113,7 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 81
     },
-    "manor": {
-      "newest": "2027-08-04",
-      "daysSinceMoved": 21
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-09-10",
       "daysSinceMoved": 5
@@ -149,9 +143,44 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-08-25T19:29:45.333Z"
+    "lastSyncAt": "2026-08-25T20:25:56.929Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Millersville University Women's Volleyball at Goldey-Beacom|2026-08-27T22:00:00.000Z",
+      "firstSeenAt": "2026-08-25T20:31:26.298Z",
+      "title": "Millersville University Women's Volleyball at Goldey-Beacom",
+      "source": "MU",
+      "date": "2026-08-27T22:00:00.000Z"
+    },
+    {
+      "key": "Kappa Alpha Psi Fraternity, Inc. game night|2026-08-27T23:00:00.000Z",
+      "firstSeenAt": "2026-08-25T20:31:26.298Z",
+      "title": "Kappa Alpha Psi Fraternity, Inc. game night",
+      "source": "MU",
+      "date": "2026-08-27T23:00:00.000Z"
+    },
+    {
+      "key": "Kappa Alpha Psi Fraternity, Inc. game night|2026-08-27T23:00:00.000Z",
+      "firstSeenAt": "2026-08-25T20:31:26.298Z",
+      "title": "Kappa Alpha Psi Fraternity, Inc. game night",
+      "source": "MU",
+      "date": "2026-08-27T23:00:00.000Z"
+    },
+    {
+      "key": "Mental Health Matters: Screening & Fair|2026-09-02T15:30:00.000Z",
+      "firstSeenAt": "2026-08-25T20:31:26.298Z",
+      "title": "Mental Health Matters: Screening & Fair",
+      "source": "MU",
+      "date": "2026-09-02T15:30:00.000Z"
+    },
+    {
+      "key": "988 Day|2026-09-08T14:00:00.000Z",
+      "firstSeenAt": "2026-08-25T20:31:26.298Z",
+      "title": "988 Day",
+      "source": "MU",
+      "date": "2026-09-08T14:00:00.000Z"
+    },
     {
       "key": "Millersville University Men's Basketball at Jefferson|2026-11-18T23:00:00.000Z",
       "firstSeenAt": "2026-08-25T19:33:26.046Z",
@@ -186,42 +215,7 @@
       "title": "'Field Notes' Exhibition Opening Reception",
       "source": "MU",
       "date": "2026-09-09T21:00:00.000Z"
-    },
-    {
-      "key": "Golf Cart Trivia|2026-10-14T13:30:00.000Z",
-      "firstSeenAt": "2026-08-25T16:37:34.756Z",
-      "title": "Golf Cart Trivia",
-      "source": "MU",
-      "date": "2026-10-14T13:30:00.000Z"
-    },
-    {
-      "key": "Golf Cart Trivia|2026-10-15T13:30:00.000Z",
-      "firstSeenAt": "2026-08-25T16:37:34.756Z",
-      "title": "Golf Cart Trivia",
-      "source": "MU",
-      "date": "2026-10-15T13:30:00.000Z"
-    },
-    {
-      "key": "Golf Cart Trivia|2026-10-16T13:30:00.000Z",
-      "firstSeenAt": "2026-08-25T16:37:34.756Z",
-      "title": "Golf Cart Trivia",
-      "source": "MU",
-      "date": "2026-10-16T13:30:00.000Z"
-    },
-    {
-      "key": "Mental Health Matters: Screening and Fair|2026-09-02T11:00:00",
-      "firstSeenAt": "2026-08-25T15:20:52.682Z",
-      "title": "Mental Health Matters: Screening and Fair",
-      "source": "MU",
-      "date": "2026-09-02T11:00:00"
-    },
-    {
-      "key": "Nino's & Lickity Split 🍦|2026-08-25T15:00:00.000Z",
-      "firstSeenAt": "2026-08-25T13:51:33.333Z",
-      "title": "Nino's & Lickity Split 🍦",
-      "source": "The Backyard",
-      "date": "2026-08-25T15:00:00.000Z"
     }
   ],
-  "addedLastRun": 3
+  "addedLastRun": 5
 }

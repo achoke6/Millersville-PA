@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-24T23:23:16.595Z",
-  "totalEvents": 943,
+  "generatedAt": "2026-08-25T01:10:40.690Z",
+  "totalEvents": 983,
   "withDescription": 465,
   "withImage": 77,
   "familyFriendly": 75,
@@ -12,11 +12,11 @@
     "campsAlumni": 39,
     "muGetInvolved": 133,
     "pennManor": 66,
-    "borough": 70,
+    "borough": 69,
     "vfw": 7,
     "phantomPower": 14,
     "community": 22,
-    "manor": 0,
+    "manor": 41,
     "raneyCellars": 5,
     "theBackyard": 11,
     "muHudlBroadcasts": 0
@@ -47,7 +47,7 @@
       "latest": "2026-09-21T23:00:00.000Z"
     },
     "borough": {
-      "earliest": "2026-05-26T23:00:00.000Z",
+      "earliest": "2026-05-28T22:30:00.000Z",
       "latest": "2026-12-25T12:00:00.000Z"
     },
     "vfw": {
@@ -62,7 +62,10 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-08-26T12:30:00.000Z",
+      "latest": "2027-08-04T23:00:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-08-15T22:00:00.000Z",
       "latest": "2026-09-10T20:00:00.000Z"
@@ -113,7 +116,10 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 80
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-08-04",
+      "daysSinceMoved": 20
+    },
     "raneyCellars": {
       "newest": "2026-09-10",
       "daysSinceMoved": 4
@@ -143,79 +149,79 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-08-24T23:19:50.675Z"
+    "lastSyncAt": "2026-08-25T01:07:10.092Z"
   },
   "recentlyAdded": [
     {
-      "key": "Boys JV Soccer vs Daniel Boone High School|2026-09-02T20:00:00.000Z",
-      "firstSeenAt": "2026-08-24T23:23:16.592Z",
-      "title": "Boys JV Soccer vs Daniel Boone High School",
-      "source": "PM",
-      "date": "2026-09-02T20:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
+      "firstSeenAt": "2026-08-25T01:10:40.688Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-08-26T12:30:00.000Z"
     },
     {
-      "key": "Girls Varsity Field Hockey vs Manheim Central High School|2026-09-01T23:00:00.000Z",
-      "firstSeenAt": "2026-08-24T22:30:50.928Z",
-      "title": "Girls Varsity Field Hockey vs Manheim Central High School",
-      "source": "PM",
-      "date": "2026-09-01T23:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-08-25T01:10:40.688Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-09-02T23:00:00.000Z"
     },
     {
-      "key": "Marauder Mania (Rain location only)|2026-08-29T12:00:00",
-      "firstSeenAt": "2026-08-24T21:29:22.587Z",
-      "title": "Marauder Mania (Rain location only)",
-      "source": "MU",
-      "date": "2026-08-29T12:00:00"
+      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
+      "firstSeenAt": "2026-08-25T01:10:40.688Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-08T23:00:00.000Z"
     },
     {
-      "key": "Brossman/Frisbie Science Lectureship|2026-11-05T00:00:00",
-      "firstSeenAt": "2026-08-24T21:29:22.587Z",
-      "title": "Brossman/Frisbie Science Lectureship",
-      "source": "MU",
-      "date": "2026-11-05T00:00:00"
+      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
+      "firstSeenAt": "2026-08-25T01:10:40.688Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-09-14T23:00:00.000Z"
     },
     {
-      "key": "Laptop Distribution|2026-08-24T04:00:00.000Z",
-      "firstSeenAt": "2026-08-24T20:31:20.015Z",
-      "title": "Laptop Distribution",
-      "source": "PM",
-      "date": "2026-08-24T04:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-08-25T01:10:40.688Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-09-30T12:30:00.000Z"
     },
     {
-      "key": "School Board Meeting|2026-09-21T23:00:00.000Z",
-      "firstSeenAt": "2026-08-24T19:31:02.015Z",
-      "title": "School Board Meeting",
-      "source": "PM",
-      "date": "2026-09-21T23:00:00.000Z"
+      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
+      "firstSeenAt": "2026-08-25T01:10:40.688Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-10-05T23:00:00.000Z"
     },
     {
-      "key": "Reformed University Fellowship Prayer Meeting|2026-08-24T21:00:00.000Z",
-      "firstSeenAt": "2026-08-24T17:32:07.728Z",
-      "title": "Reformed University Fellowship Prayer Meeting",
-      "source": "MU",
-      "date": "2026-08-24T21:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
+      "firstSeenAt": "2026-08-25T01:10:40.688Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-10-07T23:00:00.000Z"
     },
     {
-      "key": "Ware Center 2026-27 Season Tickets On Sale!|2026-08-24T00:00:00",
-      "firstSeenAt": "2026-08-24T15:40:04.919Z",
-      "title": "Ware Center 2026-27 Season Tickets On Sale!",
-      "source": "MU",
-      "date": "2026-08-24T00:00:00"
+      "key": "Planning Commission|2026-10-12T23:00:00.000Z",
+      "firstSeenAt": "2026-08-25T01:10:40.688Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-10-12T23:00:00.000Z"
     },
     {
-      "key": "Pop By & Meet Delta Zeta|2026-08-24T12:30:00",
-      "firstSeenAt": "2026-08-24T15:40:04.919Z",
-      "title": "Pop By & Meet Delta Zeta",
-      "source": "MU",
-      "date": "2026-08-24T12:30:00"
+      "key": "Moonlight Ride|2026-10-23T22:30:00.000Z",
+      "firstSeenAt": "2026-08-25T01:10:40.688Z",
+      "title": "Moonlight Ride",
+      "source": "Manor",
+      "date": "2026-10-23T22:30:00.000Z"
     },
     {
-      "key": "Fencing on the Quad|2026-08-24T22:00:00.000Z",
-      "firstSeenAt": "2026-08-24T15:12:24.070Z",
-      "title": "Fencing on the Quad",
-      "source": "MU",
-      "date": "2026-08-24T22:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-10-28T12:30:00.000Z",
+      "firstSeenAt": "2026-08-25T01:10:40.688Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-10-28T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 41
 }

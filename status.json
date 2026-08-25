@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-25T21:28:54.997Z",
-  "totalEvents": 990,
+  "generatedAt": "2026-08-25T22:27:46.315Z",
+  "totalEvents": 991,
   "withDescription": 471,
   "withImage": 85,
   "familyFriendly": 75,
@@ -11,7 +11,7 @@
     "artsmu": 22,
     "campsAlumni": 39,
     "muGetInvolved": 140,
-    "pennManor": 67,
+    "pennManor": 68,
     "borough": 69,
     "vfw": 7,
     "phantomPower": 14,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 294,
+    "total": 295,
     "scored": 1,
     "wins": 0,
     "losses": 0,
@@ -149,9 +149,16 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-08-25T21:25:16.390Z"
+    "lastSyncAt": "2026-08-25T22:23:55.612Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Boys Varsity Soccer vs Daniel Boone High School|2026-09-02T20:00:00.000Z",
+      "firstSeenAt": "2026-08-25T22:27:46.313Z",
+      "title": "Boys Varsity Soccer vs Daniel Boone High School",
+      "source": "PM",
+      "date": "2026-09-02T20:00:00.000Z"
+    },
     {
       "key": "Traffic Commission Meeting|2026-08-26T12:30:00.000Z",
       "firstSeenAt": "2026-08-25T21:28:54.992Z",
@@ -214,14 +221,7 @@
       "title": "Moonlight Ride",
       "source": "Manor",
       "date": "2026-10-23T22:30:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-10-28T12:30:00.000Z",
-      "firstSeenAt": "2026-08-25T21:28:54.992Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-10-28T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 41
+  "addedLastRun": 1
 }

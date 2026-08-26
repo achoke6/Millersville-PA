@@ -26,24 +26,8 @@
     ]
   },
   "sevenDay": {
-    "issued": "Tuesday, August 25, 2026 at 08:32 AM (Kyle Elliott)",
+    "issued": "Wednesday, August 26, 2026 at 09:34 AM (Kyle Elliott)",
     "days": [
-      {
-        "period": "Tuesday",
-        "sky": "Mostly Sunny",
-        "weather": "Pleasant",
-        "pop": "<10%",
-        "temp": "80",
-        "conf": "5"
-      },
-      {
-        "period": "Tuesday night",
-        "sky": "Mainly Clear",
-        "weather": "Fair",
-        "pop": "<10%",
-        "temp": "58",
-        "conf": "5"
-      },
       {
         "period": "Wednesday",
         "sky": "Mostly Sunny",
@@ -57,8 +41,8 @@
         "sky": "Increasing Clouds",
         "weather": "Warm & Muggy",
         "pop": "20%",
-        "temp": "68",
-        "conf": "4"
+        "temp": "70",
+        "conf": "5"
       },
       {
         "period": "Thursday",
@@ -72,21 +56,21 @@
         "period": "Thursday night",
         "sky": "Partly Cloudy",
         "weather": "Sct. Thunderstorms",
-        "pop": "60%",
+        "pop": "70%",
         "temp": "66",
         "conf": "4"
       },
       {
         "period": "Friday",
         "sky": "Partly Sunny",
-        "weather": "Isolated T-storm",
-        "pop": "30%",
+        "weather": "Seasonable",
+        "pop": "20%",
         "temp": "84",
         "conf": "4"
       },
       {
         "period": "Friday night",
-        "sky": "Partly Cloudy",
+        "sky": "Mainly Clear",
         "weather": "Mild",
         "pop": "<10%",
         "temp": "64",
@@ -98,7 +82,7 @@
         "weather": "Pleasant",
         "pop": "<10%",
         "temp": "82",
-        "conf": "3"
+        "conf": "4"
       },
       {
         "period": "Saturday night",
@@ -106,14 +90,22 @@
         "weather": "Mild",
         "pop": "<10%",
         "temp": "64",
-        "conf": "3"
+        "conf": "4"
       },
       {
         "period": "Sunday",
-        "sky": "Mostly Sunny",
+        "sky": "Partly Sunny",
         "weather": "Warm & Muggy",
         "pop": "<10%",
-        "temp": "mid 80s",
+        "temp": "86",
+        "conf": "3"
+      },
+      {
+        "period": "Sunday night",
+        "sky": "Partly Cloudy",
+        "weather": "Warm & Muggy",
+        "pop": "<10%",
+        "temp": "68",
         "conf": "3"
       },
       {
@@ -122,6 +114,14 @@
         "weather": "Hot & Humid",
         "pop": "<10%",
         "temp": "upper 80s",
+        "conf": "3"
+      },
+      {
+        "period": "Tuesday",
+        "sky": "Mostly Sunny",
+        "weather": "Hot & Humid",
+        "pop": "<10%",
+        "temp": "low 90s",
         "conf": "3"
       }
     ]
@@ -521,5 +521,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-08-26T13:23:16.572Z"
+  "updated": "2026-08-26T13:51:24.227Z"
 }

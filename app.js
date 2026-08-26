@@ -8004,7 +8004,11 @@ function renderFoodPage(){
         .filter(p => p && p.placeType === 'food' && placeAudienceVisible(p));
     const stCache = new Map();
     const stOf = p => { if (!stCache.has(p)) stCache.set(p, foodOpenState(p)); return stCache.get(p); };
-    const byState = (a,b) => (stOf(a).rank - stOf(b).rank) || a.name.localeCompare(b.name);
+    // Within-rank time sort (2026-08-26): rank-0 rows close-soonest first,
+    // rank-1 rows by next opening time ("what opens next"); ranks 2/3 have
+    // no time key and stay alphabetical. Name is always the final tiebreak.
+    const stKey = st => st.rank === 0 ? (st.until ?? 1e9) : st.rank === 1 ? (st.opensAt ?? 1e9) : 0;
+    const byState = (a,b) => (stOf(a).rank - stOf(b).rank) || (stKey(stOf(a)) - stKey(stOf(b))) || a.name.localeCompare(b.name);
     const stTxt = st =>
         st.rank === 0 ? `<span style="color:#15803d;font-weight:700;">Open</span>${st.until !== undefined ? ' · until ' + hoursFmtMins(st.until) : ''}`
       : st.rank === 1 ? `<span style="color:#b45309;font-weight:700;">Opens ${hoursFmtMins(st.opensAt)}</span>`

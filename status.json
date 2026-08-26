@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-08-26T19:01:33.275Z",
-  "totalEvents": 1038,
-  "withDescription": 518,
-  "withImage": 96,
+  "generatedAt": "2026-08-26T21:46:21.554Z",
+  "totalEvents": 1033,
+  "withDescription": 511,
+  "withImage": 88,
   "familyFriendly": 75,
   "eventsToday": 11,
   "sources": {
     "muAthletics": 255,
-    "muCalendar": 154,
+    "muCalendar": 155,
     "artsmu": 22,
     "campsAlumni": 39,
-    "muGetInvolved": 187,
-    "pennManor": 68,
-    "borough": 69,
+    "muGetInvolved": 179,
+    "pennManor": 69,
+    "borough": 70,
     "vfw": 7,
     "phantomPower": 14,
     "community": 22,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 295,
+    "total": 296,
     "scored": 1,
     "wins": 0,
     "losses": 0,
@@ -149,9 +149,30 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-08-26T18:58:47.289Z"
+    "lastSyncAt": "2026-08-26T21:44:03.443Z"
   },
   "recentlyAdded": [
+    {
+      "key": "UCC Board of Appeals Meeting|2026-08-31T21:00:00.000Z",
+      "firstSeenAt": "2026-08-26T21:46:21.552Z",
+      "title": "UCC Board of Appeals Meeting",
+      "source": "Borough",
+      "date": "2026-08-31T21:00:00.000Z"
+    },
+    {
+      "key": "Girls JV Soccer vs Warwick High School|2026-09-02T21:30:00.000Z",
+      "firstSeenAt": "2026-08-26T21:46:21.552Z",
+      "title": "Girls JV Soccer vs Warwick High School",
+      "source": "PM",
+      "date": "2026-09-02T21:30:00.000Z"
+    },
+    {
+      "key": "CGC Week: Meet Omega Psi Phi Fraternity, Inc|2026-09-16T19:00:00",
+      "firstSeenAt": "2026-08-26T21:46:21.552Z",
+      "title": "CGC Week: Meet Omega Psi Phi Fraternity, Inc",
+      "source": "MU",
+      "date": "2026-09-16T19:00:00"
+    },
     {
       "key": "RUF Bible Study|2026-08-25T19:00:00",
       "firstSeenAt": "2026-08-26T19:01:33.273Z",
@@ -200,28 +221,7 @@
       "title": "RUF Bible Study",
       "source": "MU",
       "date": "2026-09-15T19:00:00"
-    },
-    {
-      "key": "RUF Bible Study|2026-09-22T19:00:00",
-      "firstSeenAt": "2026-08-26T19:01:33.273Z",
-      "title": "RUF Bible Study",
-      "source": "MU",
-      "date": "2026-09-22T19:00:00"
-    },
-    {
-      "key": "RUF Bible Study|2026-09-29T19:00:00",
-      "firstSeenAt": "2026-08-26T19:01:33.273Z",
-      "title": "RUF Bible Study",
-      "source": "MU",
-      "date": "2026-09-29T19:00:00"
-    },
-    {
-      "key": "Academic Resilience Speaker|2026-09-30T12:00:00",
-      "firstSeenAt": "2026-08-26T19:01:33.273Z",
-      "title": "Academic Resilience Speaker",
-      "source": "MU",
-      "date": "2026-09-30T12:00:00"
     }
   ],
-  "addedLastRun": 19
+  "addedLastRun": 3
 }

@@ -7756,10 +7756,28 @@ function placeSpecialsSectionHtml(pslug, dayName){
 function buildFoodCard(p, specials, dayName) {
     // Action buttons
     let actionBtn='';
-    // App Required → one device-resolved store button: isIOS() → App Store,
-    // everything else (Android, desktop) → Play listing. Sheet keeps both
-    // links; presentation-only collapse of the old iOS/Android pair (2026-08-25).
-    if(p.status==='App Required') actionBtn=`<a href="${(isIOS()?(p.iosLink||p.link):(p.link||p.iosLink))||'#'}" target="_blank" rel="noopener" class="btn btn-sm btn-ticket" style="display:block;text-align:center;">📱 Mobile Order</a>`;
+    // App Required → one device-resolved 📱 Mobile Order button — v2
+    // try-the-app-first (2026-08-26). ANDROID: Chrome's intent:// fallback
+    // contract — an explicit package= asks the OS to open Transact's own
+    // https host IN the installed app (no link verification needed;
+    // same-tab — intent: is unreliable from _blank) and
+    // S.browser_fallback_url serves the Play listing when the app is
+    // absent, so the worst case equals the old plain store link. The
+    // intent form only builds when the Play id is the known Transact
+    // package — a future non-Transact App Required row degrades to its
+    // store link. iOS: App Store link stays (Transact publishes no URL
+    // scheme; the listing's Open button is the installed path — flip to
+    // the https portal URL only if an on-device probe shows universal
+    // links working). Desktop: Play web listing. Sheet keeps both links.
+    if(p.status==='App Required'){
+        const moPlay=(p.link||p.iosLink)||'#';
+        const moPkg=(moPlay.match(/[?&]id=([A-Za-z0-9._]+)/)||[])[1]||'';
+        const moIntent=/Android/i.test(navigator.userAgent||'')&&moPkg==='com.blackboard.mobileorder';
+        const moHref=moIntent
+            ? 'intent://mobileorder.transactcampus.com/#Intent;scheme=https;package='+moPkg+';S.browser_fallback_url='+encodeURIComponent(moPlay)+';end'
+            : ((isIOS()?(p.iosLink||p.link):moPlay)||'#');
+        actionBtn=`<a href="${moHref}"${moIntent?'':' target="_blank" rel="noopener"'} class="btn btn-sm btn-ticket" style="display:block;text-align:center;">📱 Mobile Order</a>`;
+    }
     else if(p.status==='Order Online') actionBtn=`<a href="${p.link}" target="_blank" class="btn btn-sm btn-ticket" style="display:block;text-align:center;">🛒 Order Online</a>`;
     else actionBtn=`<a href="${p.link}" target="_blank" class="btn btn-sm btn-outline" style="display:block;text-align:center;">📄 View Menu</a>`;
 

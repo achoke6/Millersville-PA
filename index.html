@@ -210,6 +210,13 @@
             </div>
         </div>
 
+        <!-- Food quick link — static strip to the Food page (/food): open-today
+             listings with menus & online ordering. Static v1 by design — no data
+             or audience dependency, so no re-render wiring (2026-08-25). -->
+        <div class="home-section" id="home-food-strip">
+            <a href="#" onclick="event.preventDefault();switchView('food');" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--gold-soft);text-decoration:none;color:var(--text);font-size:0.9rem;font-weight:600;"><span>🍴 Hungry? See who's open — menus &amp; ordering</span><span style="color:var(--navy);white-space:nowrap;">→</span></a>
+        </div>
+
         <!-- Upcoming Signups — registration deadlines within 2 weeks (townies).
              Sits directly below the daily event list as a standing reminder. -->
         <div class="home-section" id="home-signups-section" style="display:none;">

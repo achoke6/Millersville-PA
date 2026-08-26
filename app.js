@@ -5254,7 +5254,7 @@ function renderHomeUI(){
         // How many signup rows to show before a "Show N more" toggle. Keeps the
         // box short on load so Today's Specials peeks above the fold and invites a
         // scroll; the toggle reveals the rest. Counts across all row types.
-        const SIGNUPS_COLLAPSED_COUNT = 4;
+        const SIGNUPS_COLLAPSED_COUNT = 2;
         const isTownie = muAffiliation === 'townie';
         // (1) Deadline-based signups — events carrying registrationDeadline.
         // AUDIENCE SPLIT: intramural signups go to marauders (and unset, which

@@ -126,7 +126,74 @@
       }
     ]
   },
-  "observations": [],
+  "observations": [
+    {
+      "time": "00:00",
+      "temp": "62",
+      "dewpoint": "62",
+      "rh": "97",
+      "windDir": "SSW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "9.4",
+      "condition": "None"
+    },
+    {
+      "time": "23:00",
+      "temp": "64",
+      "dewpoint": "63",
+      "rh": "94",
+      "windDir": "SW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "9.5",
+      "condition": "None"
+    },
+    {
+      "time": "22:00",
+      "temp": "66",
+      "dewpoint": "63",
+      "rh": "88",
+      "windDir": "SW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "10.1",
+      "condition": "None"
+    },
+    {
+      "time": "21:00",
+      "temp": "68",
+      "dewpoint": "62",
+      "rh": "80",
+      "windDir": "SW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "10.0",
+      "condition": "None"
+    },
+    {
+      "time": "20:00",
+      "temp": "72",
+      "dewpoint": "60",
+      "rh": "67",
+      "windDir": "SW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "10.2",
+      "condition": "None"
+    },
+    {
+      "time": "19:00",
+      "temp": "76",
+      "dewpoint": "60",
+      "rh": "58",
+      "windDir": "WNW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "10.4",
+      "condition": "None"
+    }
+  ],
   "dailySummary": {
     "monthLabel": "August 2026",
     "days": [
@@ -393,6 +460,17 @@
         "windSpeed": "13",
         "windTime": "11:02",
         "rain": "0.06"
+      },
+      {
+        "date": "08/25",
+        "max": "80",
+        "maxTime": "13:13",
+        "min": "58",
+        "minTime": "04:20",
+        "windDir": "331",
+        "windSpeed": "17",
+        "windTime": "12:22",
+        "rain": "0.00"
       }
     ],
     "totalRain": "5.56",
@@ -414,5 +492,5 @@
   },
   "videos": [],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-08-26T03:01:56.422Z"
+  "updated": "2026-08-26T04:36:56.405Z"
 }

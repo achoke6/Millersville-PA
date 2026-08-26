@@ -7756,7 +7756,10 @@ function placeSpecialsSectionHtml(pslug, dayName){
 function buildFoodCard(p, specials, dayName) {
     // Action buttons
     let actionBtn='';
-    if(p.status==='App Required') actionBtn=`<div style="display:flex;gap:8px;"><a href="${p.iosLink||'#'}" target="_blank" class="btn btn-sm btn-outline" style="flex:1;text-align:center;">🍎 iOS</a><a href="${p.link||'#'}" target="_blank" class="btn btn-sm btn-outline" style="flex:1;text-align:center;">🤖 Android</a></div>`;
+    // App Required → one device-resolved store button: isIOS() → App Store,
+    // everything else (Android, desktop) → Play listing. Sheet keeps both
+    // links; presentation-only collapse of the old iOS/Android pair (2026-08-25).
+    if(p.status==='App Required') actionBtn=`<a href="${(isIOS()?(p.iosLink||p.link):(p.link||p.iosLink))||'#'}" target="_blank" rel="noopener" class="btn btn-sm btn-ticket" style="display:block;text-align:center;">📱 Mobile Order</a>`;
     else if(p.status==='Order Online') actionBtn=`<a href="${p.link}" target="_blank" class="btn btn-sm btn-ticket" style="display:block;text-align:center;">🛒 Order Online</a>`;
     else actionBtn=`<a href="${p.link}" target="_blank" class="btn btn-sm btn-outline" style="display:block;text-align:center;">📄 View Menu</a>`;
 

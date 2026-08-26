@@ -1,27 +1,27 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Tuesday, August 25, 2026 at 12:08 PM (Kyle Elliott, Meteorologist)",
+    "issued": "Wednesday, August 26, 2026 at 07:39 AM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "This afternoon",
-        "text": "Pleasant with sunshine and some passing clouds. High: 78-82"
-      },
-      {
-        "period": "Tonight",
-        "text": "Mainly clear and comfortable. Low: 56-60"
-      },
-      {
-        "period": "Wednesday",
+        "period": "Today",
         "text": "Warmer but not humid with sunshine and a few passing clouds. High: 82-86"
       },
       {
-        "period": "Wednesday Night",
-        "text": "Mild and turning more humid with increasing clouds. Low: 66-70"
+        "period": "Tonight",
+        "text": "Warm and turning more humid with increasing clouds. Low: 68-72"
       },
       {
         "period": "Thursday",
-        "text": "Humid with clouds, some sun, and scattered showers and thunderstorms. High: 82-86"
+        "text": "Humid with clouds, some sun, and scattered showers and T-storms. High: 82-86"
+      },
+      {
+        "period": "Thursday Night",
+        "text": "Mild and muggy with scattered showers and T-storms, mainly in the evening. Low: 64-68"
+      },
+      {
+        "period": "Friday",
+        "text": "Partly sunny, humid and seasonably warm. High: 82-86"
       }
     ]
   },
@@ -128,6 +128,17 @@
   },
   "observations": [
     {
+      "time": "08:00",
+      "temp": "64",
+      "dewpoint": "61",
+      "rh": "90",
+      "windDir": "SSW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "9.7",
+      "condition": "None"
+    },
+    {
       "time": "07:00",
       "temp": "58",
       "dewpoint": "58",
@@ -180,17 +191,6 @@
       "windSpeed": "0",
       "precip": "0.00",
       "visibility": "9.2",
-      "condition": "None"
-    },
-    {
-      "time": "02:00",
-      "temp": "61",
-      "dewpoint": "60",
-      "rh": "97",
-      "windDir": "E",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "8.5",
       "condition": "None"
     }
   ],
@@ -521,5 +521,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-08-26T11:27:04.834Z"
+  "updated": "2026-08-26T12:16:32.496Z"
 }

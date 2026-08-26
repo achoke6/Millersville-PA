@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-08-26T12:49:02.345Z",
-  "totalEvents": 1008,
-  "withDescription": 487,
-  "withImage": 100,
+  "generatedAt": "2026-08-26T13:25:37.354Z",
+  "totalEvents": 1009,
+  "withDescription": 488,
+  "withImage": 101,
   "familyFriendly": 75,
   "eventsToday": 11,
   "sources": {
@@ -10,7 +10,7 @@
     "muCalendar": 154,
     "artsmu": 22,
     "campsAlumni": 39,
-    "muGetInvolved": 156,
+    "muGetInvolved": 157,
     "pennManor": 68,
     "borough": 69,
     "vfw": 7,
@@ -149,9 +149,16 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-08-26T12:46:36.713Z"
+    "lastSyncAt": "2026-08-26T13:23:14.437Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Craft Night|2026-09-02T23:30:00.000Z",
+      "firstSeenAt": "2026-08-26T13:25:37.351Z",
+      "title": "Craft Night",
+      "source": "MU",
+      "date": "2026-09-02T23:30:00.000Z"
+    },
     {
       "key": "RUF Bible Study|2026-08-25T23:00:00.000Z",
       "firstSeenAt": "2026-08-26T03:04:13.924Z",
@@ -214,14 +221,7 @@
       "title": "RUF Bible Study",
       "source": "MU",
       "date": "2026-10-13T23:00:00.000Z"
-    },
-    {
-      "key": "RUF Bible Study|2026-10-20T23:00:00.000Z",
-      "firstSeenAt": "2026-08-26T03:04:13.924Z",
-      "title": "RUF Bible Study",
-      "source": "MU",
-      "date": "2026-10-20T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

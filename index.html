@@ -325,6 +325,10 @@
         <div class="sticky-nav-bar">
             <div class="toolbar-compact">
                 <div class="toolbar-right">
+                    <!-- Food-page quick link (2026-08-26): navigation, not a
+                         toggle — opens /food (menus & ordering). "Menus" label
+                         avoids twinning the Filter's Food & Drink category. -->
+                    <button class="family-toggle" id="places-food-link" onclick="switchView('food')" title="Open the Food page — menus &amp; ordering">🍽 Menus</button>
                     <button class="family-toggle today-toggle" id="places-today-toggle" onclick="togglePlacesToday()" title="Places with specials or events today"><span class="today-toggle-label">🔥 Today</span></button>
                     <button class="family-toggle mg-toggle" id="places-mg-toggle" onclick="togglePlacesMarauderGold()" title="Businesses that accept Marauder Gold"><img src="/img/mu-coin.png" alt="Marauder Gold" class="mg-coin-img"></button>
                     <button id="places-filter-toggle" class="filter-toggle" onclick="togglePlacesFilters()">Filter <span id="places-filter-arrow">▾</span></button>

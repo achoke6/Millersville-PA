@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-08-26T21:46:21.554Z",
-  "totalEvents": 1033,
+  "generatedAt": "2026-08-27T02:56:11.862Z",
+  "totalEvents": 993,
   "withDescription": 511,
   "withImage": 88,
   "familyFriendly": 75,
-  "eventsToday": 11,
+  "eventsToday": 10,
   "sources": {
     "muAthletics": 255,
     "muCalendar": 155,
     "artsmu": 22,
     "campsAlumni": 39,
     "muGetInvolved": 179,
-    "pennManor": 69,
-    "borough": 70,
+    "pennManor": 71,
+    "borough": 69,
     "vfw": 7,
     "phantomPower": 14,
     "community": 22,
-    "manor": 41,
+    "manor": 0,
     "raneyCellars": 5,
     "theBackyard": 11,
     "muHudlBroadcasts": 0
@@ -47,7 +47,7 @@
       "latest": "2026-09-21T23:00:00.000Z"
     },
     "borough": {
-      "earliest": "2026-05-28T22:30:00.000Z",
+      "earliest": "2026-06-01T23:00:00.000Z",
       "latest": "2026-12-25T12:00:00.000Z"
     },
     "vfw": {
@@ -62,10 +62,7 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-09-02T23:00:00.000Z",
-      "latest": "2027-08-25T12:30:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-08-15T22:00:00.000Z",
       "latest": "2026-09-10T20:00:00.000Z"
@@ -116,10 +113,7 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 82
     },
-    "manor": {
-      "newest": "2027-08-25",
-      "daysSinceMoved": 1
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-09-10",
       "daysSinceMoved": 6
@@ -130,7 +124,7 @@
     }
   },
   "sports": {
-    "total": 296,
+    "total": 298,
     "scored": 1,
     "wins": 0,
     "losses": 0,
@@ -149,9 +143,30 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-08-26T21:44:03.443Z"
+    "lastSyncAt": "2026-08-27T02:54:08.224Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Girls Varsity Soccer vs Warwick High School|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-08-27T02:56:11.860Z",
+      "title": "Girls Varsity Soccer vs Warwick High School",
+      "source": "PM",
+      "date": "2026-09-02T23:00:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Golf vs Manheim Township High School|2026-09-03T17:00:00.000Z",
+      "firstSeenAt": "2026-08-27T02:56:11.860Z",
+      "title": "Boys Varsity Golf vs Manheim Township High School",
+      "source": "PM",
+      "date": "2026-09-03T17:00:00.000Z"
+    },
+    {
+      "key": "Karake Night|2026-09-17T02:00:00.000Z",
+      "firstSeenAt": "2026-08-27T02:56:11.860Z",
+      "title": "Karake Night",
+      "source": "Jack's Tavern",
+      "date": "2026-09-17T02:00:00.000Z"
+    },
     {
       "key": "UCC Board of Appeals Meeting|2026-08-31T21:00:00.000Z",
       "firstSeenAt": "2026-08-26T21:46:21.552Z",
@@ -200,27 +215,6 @@
       "title": "RUF Bible Study",
       "source": "MU",
       "date": "2026-09-01T19:00:00"
-    },
-    {
-      "key": "Academic Resilience Speaker|2026-09-02T12:00:00",
-      "firstSeenAt": "2026-08-26T19:01:33.273Z",
-      "title": "Academic Resilience Speaker",
-      "source": "MU",
-      "date": "2026-09-02T12:00:00"
-    },
-    {
-      "key": "RUF Bible Study|2026-09-08T19:00:00",
-      "firstSeenAt": "2026-08-26T19:01:33.273Z",
-      "title": "RUF Bible Study",
-      "source": "MU",
-      "date": "2026-09-08T19:00:00"
-    },
-    {
-      "key": "RUF Bible Study|2026-09-15T19:00:00",
-      "firstSeenAt": "2026-08-26T19:01:33.273Z",
-      "title": "RUF Bible Study",
-      "source": "MU",
-      "date": "2026-09-15T19:00:00"
     }
   ],
   "addedLastRun": 3

@@ -517,7 +517,8 @@
     "category": "Lecture or Speaker",
     "categories": [
       "Lecture or Speaker",
-      "Meeting"
+      "Meeting",
+      "Social"
     ],
     "shortName": "CBF",
     "id": ""
@@ -1796,12 +1797,12 @@
   },
   {
     "name": "Student PSEA at Millersville University",
-    "category": "Meeting",
+    "category": "Academic",
     "categories": [
-      "Meeting"
+      "Academic"
     ],
     "shortName": "Student PSEA",
-    "id": ""
+    "id": "spsea"
   },
   {
     "name": "Student Services Business Office",
@@ -1844,6 +1845,15 @@
     "category": "",
     "categories": [],
     "shortName": "",
+    "id": ""
+  },
+  {
+    "name": "TCG Players of Millersville",
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
+    "shortName": "TCG Players",
     "id": ""
   },
   {

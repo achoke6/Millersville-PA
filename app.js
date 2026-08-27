@@ -3445,8 +3445,9 @@ async function initApp(){
     // routable; this keeps the visible URL canonical.
     if(view==='places' && p!=='/map'){ history.replaceState(null,'','/map'); }
     switchView(view,true);
-    // Deep link: /map?today=1 lands with the Today lens already on (used by
-    // the home rail's "View all →" opened in a new tab, and shareable).
+    // Deep link: /map?today=1 lands with the Today lens already on (shareable;
+    // the home rail's "View all →" moved to /food 2026-08-27 — the Food page
+    // presents specials better, while this link keeps map+Today reachable).
     if(view==='places' && params.get('today')==='1'){ history.replaceState(null,'','/map'); if(!placesTodayMode) window.togglePlacesToday(); }
     if(p==='/housing'){ setTimeout(()=>{ const btn=document.querySelector('#svc-filter-group .src-btn:nth-child(2)'); if(btn) btn.click(); },500); }
 }
@@ -6973,8 +6974,11 @@ function placesMapPinList(){
             .forEach(p => pins.push({ place: {...p, category:'Housing'}, group: 'housing' }));
     }
     const cb = window._cupboard;
+    // Cupboard pin: All/Campus (the Food & Drink FILTER value retired
+    // 2026-08-27 — its dropdown item now navigates to /food; 'Food & Drink'
+    // lives on as a data CATEGORY on places).
     if (cb && placesMapHasCoords(cb) && !placesMBAMode && !placesMGMode && cupboardTodayVisible() &&
-        (placesFilter==='All' || placesFilter==='Food & Drink' || placesFilter==='Campus')){
+        (placesFilter==='All' || placesFilter==='Campus')){
         pins.push({ place: {...cb, category:'Cupboard'}, group: 'cupboard' });
     }
     return pins;
@@ -7575,13 +7579,21 @@ window.togglePlacesToday=function(){
     window.scrollTo(0, 0);   // lens re-render can shrink the list; don't strand the viewport below it
 };
 
-// Home-rail "View all →" target + shareable deep link (/map?today=1):
-// jump to the Map page with the Today lens already on. Wired to the
-// index.html rail header; the initial router also calls it for ?today=1.
-window.openPlacesToday=function(){
-    switchView('places');
-    if(!placesTodayMode) window.togglePlacesToday();
-    else window.scrollTo(0, 0);
+// (openPlacesToday retired 2026-08-27 — the home rail's "View all →" now
+// switches straight to /food, leaving it caller-less. The /map?today=1 deep
+// link never used it: the initial router calls togglePlacesToday directly.)
+// Map filter menu → Food page: the Filter dropdown's "Food & Drink ↗" item
+// navigates instead of filtering — /food presents food data better for both
+// audiences (cards, menus, mobile ordering). Map-side food pins stay
+// reachable via All or the 🔥 Today lens. Close the menu and reset the arrow
+// (togglePlacesFilters flipped it to ▴ on open) BEFORE leaving, so returning
+// to the Map doesn't show "Filter ▴" over a closed menu.
+window.openFoodFromMap=function(){
+    const menu=document.getElementById('places-filter-menu');
+    if(menu) menu.style.display='none';
+    const arrow=document.getElementById('places-filter-arrow');
+    if(arrow) arrow.textContent='▾';
+    switchView('food');
 };
 
 window.togglePlacesMarauderGold=function(){
@@ -7725,11 +7737,13 @@ function renderPlaces(){
         a.name.localeCompare(b.name)
     );
 
-    // Campus Cupboard pinned card — marauders only, shown in All and Food & Drink
+    // Campus Cupboard pinned card — marauders only, shown in All and Campus
     // views (it's a free grocery store inside the HUB). Skipped for townies
-    // and for filter views that exclude food (e.g. Services).
+    // and for filter views that exclude food (e.g. Services). The Food & Drink
+    // arm was retired 2026-08-27 with the filter value itself — that dropdown
+    // item now navigates to /food (see openFoodFromMap).
     let cupboardCard = '';
-    if (!placesMBAMode && cupboardTodayVisible() && (placesFilter === 'All' || placesFilter === 'Food & Drink' || placesFilter === 'Campus')) {
+    if (!placesMBAMode && cupboardTodayVisible() && (placesFilter === 'All' || placesFilter === 'Campus')) {
         cupboardCard = buildCampusCupboardCard(dayName);
     }
 

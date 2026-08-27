@@ -208,7 +208,10 @@
         <div class="home-section">
             <div class="home-section-header">
                 <h2 class="home-section-title">🍴 Today's Specials & Deals</h2>
-                <a href="#" onclick="event.preventDefault();openPlacesToday();" class="home-more-link">View all →</a>
+                <!-- View all → the Food page (2026-08-27): better specials
+                     presentation than map+Today for both audiences. Map+Today
+                     stays reachable on the Map page itself and via /map?today=1. -->
+                <a href="#" onclick="event.preventDefault();switchView('food');" class="home-more-link">View all →</a>
             </div>
             <div id="home-specials" class="home-scroll-row"></div>
         </div>
@@ -303,9 +306,14 @@
             <div class="toolbar-compact">
                 <div class="toolbar-right">
                     <!-- Food-page quick link (2026-08-26): navigation, not a
-                         toggle — opens /food (menus & ordering). "Menus" label
-                         avoids twinning the Filter's Food & Drink category. -->
-                    <button class="family-toggle" id="places-food-link" onclick="switchView('food')" title="Open the Food page — menus &amp; ordering">🍽 Menus</button>
+                         toggle — opens /food (menus & ordering). Inline-styled
+                         to the labeled-toggle shape (width:auto, like
+                         .today-toggle) because the bare .family-toggle base is
+                         a fixed 34px icon square, which wrapped "🍽 Menus"
+                         onto two lines (fixed 2026-08-27). Twins with the
+                         Filter menu's Food & Drink ↗ item by design: two
+                         entry points, one destination. -->
+                    <button class="family-toggle" id="places-food-link" onclick="switchView('food')" title="Open the Food page — menus &amp; ordering" style="width:auto;padding:0 10px;gap:4px;font-size:0.78rem;font-weight:700;color:var(--navy);border-color:var(--navy);white-space:nowrap;">🍽 Menus</button>
                     <button class="family-toggle today-toggle" id="places-today-toggle" onclick="togglePlacesToday()" title="Places with specials or events today"><span class="today-toggle-label">🔥 Today</span></button>
                     <button class="family-toggle mg-toggle" id="places-mg-toggle" onclick="togglePlacesMarauderGold()" title="Businesses that accept Marauder Gold"><img src="/img/mu-coin.png" alt="Marauder Gold" class="mg-coin-img"></button>
                     <button id="places-filter-toggle" class="filter-toggle" onclick="togglePlacesFilters()">Filter <span id="places-filter-arrow">▾</span></button>
@@ -314,11 +322,15 @@
             <p id="places-filter-note" class="filter-note"></p>
             <!-- Category filter dropdown menu. Hidden by default; 'Filter ▾'
                  opens this vertical list. Picking a category applies it and
-                 closes the menu. No category row clutters the default view. -->
+                 closes the menu. No category row clutters the default view.
+                 Exception (2026-08-27): the Food & Drink ↗ item NAVIGATES to
+                 /food instead of filtering (openFoodFromMap in app.js) — no
+                 data-cat, so pruneEmptyPlaceCategories never hides it. Food
+                 pins stay reachable via All or the 🔥 Today lens. -->
             <div id="places-filter-menu" class="filter-menu" style="display:none;">
                 <button class="filter-menu-item" data-cat="All" onclick="setPlacesFilter('All', this)">All Categories</button>
                 <button class="filter-menu-item" data-cat="Campus" onclick="setPlacesFilter('Campus', this)">🏛 Campus</button>
-                <button class="filter-menu-item" data-cat="Food & Drink" onclick="setPlacesFilter('Food & Drink', this)">🍴 Food &amp; Drink</button>
+                <button class="filter-menu-item" onclick="openFoodFromMap()">🍴 Food &amp; Drink ↗</button>
                 <button class="filter-menu-item" data-cat="Housing" onclick="setPlacesFilter('Housing', this)">🏠 Housing</button>
                 <button class="filter-menu-item" data-cat="Student Housing" onclick="setPlacesFilter('Student Housing', this)">🎓 Student Housing</button>
                 <button class="filter-menu-item" data-cat="Shopping" onclick="setPlacesFilter('Shopping', this)">🛒 Shopping</button>

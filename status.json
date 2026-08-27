@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-08-27T02:56:11.862Z",
-  "totalEvents": 993,
-  "withDescription": 511,
-  "withImage": 88,
+  "generatedAt": "2026-08-27T13:49:47.400Z",
+  "totalEvents": 1035,
+  "withDescription": 512,
+  "withImage": 89,
   "familyFriendly": 75,
-  "eventsToday": 10,
+  "eventsToday": 16,
   "sources": {
     "muAthletics": 255,
     "muCalendar": 155,
     "artsmu": 22,
     "campsAlumni": 39,
-    "muGetInvolved": 179,
+    "muGetInvolved": 180,
     "pennManor": 71,
     "borough": 69,
     "vfw": 7,
     "phantomPower": 14,
     "community": 22,
-    "manor": 0,
+    "manor": 41,
     "raneyCellars": 5,
     "theBackyard": 11,
     "muHudlBroadcasts": 0
@@ -62,7 +62,10 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-09-02T23:00:00.000Z",
+      "latest": "2027-08-25T12:30:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-08-15T22:00:00.000Z",
       "latest": "2026-09-10T20:00:00.000Z"
@@ -75,52 +78,55 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-01",
-      "daysSinceMoved": 49
+      "daysSinceMoved": 50
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 19
+      "daysSinceMoved": 20
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 19
+      "daysSinceMoved": 20
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 83
+      "daysSinceMoved": 84
     },
     "pennManor": {
       "newest": "2026-09-21",
-      "daysSinceMoved": 63
+      "daysSinceMoved": 64
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 29
+      "daysSinceMoved": 30
     },
     "vfw": {
       "newest": "2026-10-15",
-      "daysSinceMoved": 16
+      "daysSinceMoved": 17
     },
     "phantomPower": {
       "newest": "2026-10-04",
-      "daysSinceMoved": 35
+      "daysSinceMoved": 36
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 82
+      "daysSinceMoved": 83
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-08-25",
+      "daysSinceMoved": 2
+    },
     "raneyCellars": {
       "newest": "2026-09-10",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     },
     "theBackyard": {
       "newest": "2026-09-30",
-      "daysSinceMoved": 29
+      "daysSinceMoved": 30
     }
   },
   "sports": {
@@ -143,79 +149,79 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-08-27T02:54:08.224Z"
+    "lastSyncAt": "2026-08-27T13:46:02.253Z"
   },
   "recentlyAdded": [
     {
-      "key": "Girls Varsity Soccer vs Warwick High School|2026-09-02T23:00:00.000Z",
-      "firstSeenAt": "2026-08-27T02:56:11.860Z",
-      "title": "Girls Varsity Soccer vs Warwick High School",
-      "source": "PM",
+      "key": "Glow Fencing|2026-08-27T21:00:00.000Z",
+      "firstSeenAt": "2026-08-27T13:49:47.399Z",
+      "title": "Glow Fencing",
+      "source": "MU",
+      "date": "2026-08-27T21:00:00.000Z"
+    },
+    {
+      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-08-27T12:23:20.905Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
       "date": "2026-09-02T23:00:00.000Z"
     },
     {
-      "key": "Boys Varsity Golf vs Manheim Township High School|2026-09-03T17:00:00.000Z",
-      "firstSeenAt": "2026-08-27T02:56:11.860Z",
-      "title": "Boys Varsity Golf vs Manheim Township High School",
-      "source": "PM",
-      "date": "2026-09-03T17:00:00.000Z"
+      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
+      "firstSeenAt": "2026-08-27T12:23:20.905Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-08T23:00:00.000Z"
     },
     {
-      "key": "Karake Night|2026-09-17T02:00:00.000Z",
-      "firstSeenAt": "2026-08-27T02:56:11.860Z",
-      "title": "Karake Night",
-      "source": "Jack's Tavern",
-      "date": "2026-09-17T02:00:00.000Z"
+      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
+      "firstSeenAt": "2026-08-27T12:23:20.905Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-09-14T23:00:00.000Z"
     },
     {
-      "key": "UCC Board of Appeals Meeting|2026-08-31T21:00:00.000Z",
-      "firstSeenAt": "2026-08-26T21:46:21.552Z",
-      "title": "UCC Board of Appeals Meeting",
-      "source": "Borough",
-      "date": "2026-08-31T21:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-08-27T12:23:20.905Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-09-30T12:30:00.000Z"
     },
     {
-      "key": "Girls JV Soccer vs Warwick High School|2026-09-02T21:30:00.000Z",
-      "firstSeenAt": "2026-08-26T21:46:21.552Z",
-      "title": "Girls JV Soccer vs Warwick High School",
-      "source": "PM",
-      "date": "2026-09-02T21:30:00.000Z"
+      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
+      "firstSeenAt": "2026-08-27T12:23:20.905Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-10-05T23:00:00.000Z"
     },
     {
-      "key": "CGC Week: Meet Omega Psi Phi Fraternity, Inc|2026-09-16T19:00:00",
-      "firstSeenAt": "2026-08-26T21:46:21.552Z",
-      "title": "CGC Week: Meet Omega Psi Phi Fraternity, Inc",
-      "source": "MU",
-      "date": "2026-09-16T19:00:00"
+      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
+      "firstSeenAt": "2026-08-27T12:23:20.905Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-10-07T23:00:00.000Z"
     },
     {
-      "key": "RUF Bible Study|2026-08-25T19:00:00",
-      "firstSeenAt": "2026-08-26T19:01:33.273Z",
-      "title": "RUF Bible Study",
-      "source": "MU",
-      "date": "2026-08-25T19:00:00"
+      "key": "Planning Commission|2026-10-12T23:00:00.000Z",
+      "firstSeenAt": "2026-08-27T12:23:20.905Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-10-12T23:00:00.000Z"
     },
     {
-      "key": "Bowling Club Competitive Informational Meeting|2026-08-27T01:00:00.000Z",
-      "firstSeenAt": "2026-08-26T19:01:33.273Z",
-      "title": "Bowling Club Competitive Informational Meeting",
-      "source": "MU",
-      "date": "2026-08-27T01:00:00.000Z"
+      "key": "Moonlight Ride|2026-10-23T22:30:00.000Z",
+      "firstSeenAt": "2026-08-27T12:23:20.905Z",
+      "title": "Moonlight Ride",
+      "source": "Manor",
+      "date": "2026-10-23T22:30:00.000Z"
     },
     {
-      "key": "Sword Side Quest|2026-08-31T22:00:00.000Z",
-      "firstSeenAt": "2026-08-26T19:01:33.273Z",
-      "title": "Sword Side Quest",
-      "source": "MU",
-      "date": "2026-08-31T22:00:00.000Z"
-    },
-    {
-      "key": "RUF Bible Study|2026-09-01T19:00:00",
-      "firstSeenAt": "2026-08-26T19:01:33.273Z",
-      "title": "RUF Bible Study",
-      "source": "MU",
-      "date": "2026-09-01T19:00:00"
+      "key": "Traffic Commission Meeting|2026-10-28T12:30:00.000Z",
+      "firstSeenAt": "2026-08-27T12:23:20.905Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-10-28T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 3
+  "addedLastRun": 1
 }

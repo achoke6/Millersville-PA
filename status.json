@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-08-27T12:23:20.908Z",
-  "totalEvents": 1034,
-  "withDescription": 511,
-  "withImage": 88,
+  "generatedAt": "2026-08-27T13:49:47.400Z",
+  "totalEvents": 1035,
+  "withDescription": 512,
+  "withImage": 89,
   "familyFriendly": 75,
-  "eventsToday": 15,
+  "eventsToday": 16,
   "sources": {
     "muAthletics": 255,
     "muCalendar": 155,
     "artsmu": 22,
     "campsAlumni": 39,
-    "muGetInvolved": 179,
+    "muGetInvolved": 180,
     "pennManor": 71,
     "borough": 69,
     "vfw": 7,
@@ -149,9 +149,16 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-08-27T12:19:38.159Z"
+    "lastSyncAt": "2026-08-27T13:46:02.253Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Glow Fencing|2026-08-27T21:00:00.000Z",
+      "firstSeenAt": "2026-08-27T13:49:47.399Z",
+      "title": "Glow Fencing",
+      "source": "MU",
+      "date": "2026-08-27T21:00:00.000Z"
+    },
     {
       "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
       "firstSeenAt": "2026-08-27T12:23:20.905Z",
@@ -214,14 +221,7 @@
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2026-10-28T12:30:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-11-05T00:00:00.000Z",
-      "firstSeenAt": "2026-08-27T12:23:20.905Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-11-05T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 41
+  "addedLastRun": 1
 }

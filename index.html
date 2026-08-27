@@ -153,32 +153,9 @@
             <p>Loading weather...</p>
         </div>
 
-        <div id="welcome-banner" class="welcome-banner" style="display:none;">
-            <!-- Balanced first-run identity pick: two equal-weight buttons (student /
-                 local) set the viewer's affiliation up front, then open the favorites
-                 modal. A quiet "show me everything" link skips the choice (affiliation
-                 stays unset = sees all events). Symmetric with the student/townie
-                 filtering in app.js. -->
-            <div id="welcome-prompt">
-                <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
-                    <span style="font-size:1.5rem;">⭐</span>
-                    <div style="flex:1;min-width:220px;">
-                        <strong>Welcome to Millersville.APP!</strong>
-                        <p style="font-size:0.82rem;color:var(--text-muted);margin:2px 0 0;">See what's relevant to you — are you here as a student or a local?</p>
-                    </div>
-                    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-                        <button onclick="welcomeIdentifyAsStudent()" class="btn btn-sm btn-ticket" style="white-space:nowrap;">🏴‍☠️ I'm a student</button>
-                        <button onclick="welcomeIdentifyAsTownie()" class="btn btn-sm btn-ticket" style="white-space:nowrap;">🌳 I'm a local</button>
-                    </div>
-                </div>
-                <!-- Tertiary: skip the choice and just browse (affiliation stays unset = sees all) -->
-                <div style="margin-top:10px;padding-top:8px;border-top:1px dashed var(--border);font-size:0.78rem;color:var(--text-muted);text-align:right;">
-                    <a href="#" onclick="event.preventDefault();dismissWelcome();" style="color:var(--text-muted);font-weight:600;text-decoration:underline;">Just browsing — show me everything →</a>
-                </div>
-            </div>
-        </div>
-
         <!-- Today's events — combined timeline with day navigator -->
+        <!-- (Welcome banner retired 2026-08-26 — identity lives in the gear's
+             mode band; the bottom #home-feed-cta box is the no-feed CTA.) -->
         <div class="home-section">
             <div class="home-section-header">
                 <div class="home-day-nav">

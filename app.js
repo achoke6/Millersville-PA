@@ -224,9 +224,10 @@ function maybeShowInstallBanner() {
     if (isStandalonePWA()) return;                               // already installed
     if (installSnoozed()) return;                                // recently dismissed
     if (document.getElementById('mapp-install-banner')) return;  // already showing
-    // Don't compete with the first-run welcome banner — let that resolve first.
-    const wb = document.getElementById('welcome-banner');
-    if (wb && wb.style.display !== 'none' && wb.offsetParent !== null) return;
+    // Don't compete with the one-time swipe hint — let that resolve first.
+    // (Normally can't collide: hint = first visit, install = visit ≥2 — this
+    // guards the ?resetHints=1 demo path.)
+    if (document.getElementById('mapp-swipe-hint')) return;
 
     const visits = parseInt(localStorage.getItem(VISIT_KEY) || '0', 10);
     if (isNaN(visits) || visits < 2) return;                     // wait for a return visit
@@ -476,17 +477,18 @@ window.setMuAffiliation = function(value) {
 //   • Townies don't see MU-student-only events or intramural signups.
 //   • Marauders don't see townie/community-only events (audience 'townie-only').
 // Unset affiliation = Marauder default: see everything (users opt into townie
-// behavior, or stay default, via the welcome banner / Feed settings).
+// behavior, or stay default, via the Feed-settings mode band — the gear).
 // ===== DEFAULT-MARAUDER POLICY (2026-08-24) =====
 // Unset affiliation renders as Marauder EVERYWHERE — townie content requires
 // an explicit Local pick (semester-start call: most visitors are MU students).
-// Soft default: the identity banner still asks; nothing is written to storage
-// until the user chooses, and resetEverything() returns to unset-rendering-
+// Soft default: identity is asked only in the Feed-settings mode band (the
+// welcome banner retired 2026-08-26); nothing is written to storage until
+// the user chooses, and resetEverything() returns to unset-rendering-
 // as-Marauder. ONE predicate, all call sites (placeTodayContent no-drift
 // pattern). The former exceptions — advertise page, directory/MBA audience,
 // gold perk toggles, Marauder Gold — are all flipped; remaining raw
-// muAffiliation === 'student' checks are identity-UX only (banner highlight,
-// pickAffiliation onboarding), never content gates.
+// muAffiliation === 'student' checks are identity-UX only (modal mode-band
+// highlight, pickAffiliation onboarding), never content gates.
 function viewerIsMarauder() { return muAffiliation !== 'townie'; }
 function isHiddenForViewer(e) {
     if (muAffiliation === 'townie') return !!(e && (e.audience === 'mu-only' || isIntramural(e)));
@@ -2478,11 +2480,13 @@ window.clearFavoritesOnly = function() {
     renderEvents(); renderSports(); renderNewsUI();
 };
 
-// Reset everything: favorites AND affiliation. Next page load will re-prompt.
+// Reset everything: favorites AND affiliation (back to unset — renders as
+// Marauder under the default-marauder policy; identity re-pickable in the
+// gear's mode band). Deliberately does NOT clear the swipe-hint key —
+// gesture education isn't identity (SHOW21_KEY survive-reset precedent).
 window.resetEverything = function() {
     localStorage.removeItem(FEED_KEY);
     localStorage.removeItem(AFFILIATION_KEY);
-    localStorage.removeItem('welcomeDismissed'); // let the welcome banner show again
     feedPrefs = null;
     muAffiliation = null;
     setFeedDotVisible(false);
@@ -2495,16 +2499,8 @@ function renderHomeFeed() {
     const hasFeed = feedPrefs && feedPrefs.length > 0;
     const feedCta = document.getElementById('home-feed-cta');
     if (feedCta) feedCta.style.display = hasFeed ? 'none' : 'block';
-    // Welcome banner shows once on first visit. Dismisses permanently when:
-    //   - User clicks "Set Up Favorites" (opens the feed modal; they've engaged)
-    //   - User clicks "Skip for now" (explicit dismiss; stays Marauder-default)
-    //   - User clicks "I'm a townie" (sets affiliation + offers favorites setup)
-    //   - User has already set up favorites (hasFeed)
-    const wb = document.getElementById('welcome-banner');
-    if (wb) {
-        const dismissed = localStorage.getItem('welcomeDismissed');
-        wb.style.display = (!hasFeed && !dismissed) ? 'block' : 'none';
-    }
+    // (Welcome banner retired 2026-08-26 — the #home-feed-cta box above is
+    // now the sole no-feed CTA; identity lives in the gear's mode band.)
     renderHomeUI();
 }
 // Day navigator on the home page. Selected day persists only for the current
@@ -2675,31 +2671,101 @@ function attachHomeSwipeHandlers() {
         else shiftHomeDay(-1);
     }, { passive: true });
 }
-window.dismissWelcome = function() {
-    localStorage.setItem('welcomeDismissed', '1');
-    const wb = document.getElementById('welcome-banner');
-    if (wb) wb.style.display = 'none';
-};
-// Identity pick — student. Mirror of welcomeIdentifyAsTownie below: set the
-// viewer's affiliation, dismiss the banner, then open the favorites modal so they
-// can refine their feed. (Replaces the old "Set Up Favorites" CTA, which left the
-// viewer unset/Marauder — the welcome now asks affiliation up front.)
-window.welcomeIdentifyAsStudent = function() {
-    pickAffiliation('student');
-    localStorage.setItem('welcomeDismissed', '1');
-    const wb = document.getElementById('welcome-banner');
-    if (wb) wb.style.display = 'none';
-    openFeedSettings();
-};
-// Secondary opt-out: user says they're a townie. Set affiliation, dismiss the banner,
-// then open the feed modal (already in townie mode) so they can set up their favorites.
-window.welcomeIdentifyAsTownie = function() {
-    pickAffiliation('townie');
-    localStorage.setItem('welcomeDismissed', '1');
-    const wb = document.getElementById('welcome-banner');
-    if (wb) wb.style.display = 'none';
-    openFeedSettings();
-};
+// ===== One-time swipe-discovery hint (2026-08-26) =====
+// Replaces the retired welcome banner as the only first-run chrome. Pure
+// gesture education: tells touch users the home timeline swipes between days
+// (the gesture itself shipped long ago in attachHomeSwipeHandlers above —
+// this is discovery, not capability). Touch devices only: swipe is
+// meaningless with a mouse, and the ‹ › day buttons are visible affordances
+// for everyone else. Shows once per browser on its own key — SHOW21_KEY
+// precedent: survives Clear Favs AND resetEverything (gesture education
+// isn't identity). ?resetHints=1 clears it for demos (see DOMContentLoaded).
+const SWIPE_HINT_KEY = 'mapp_hint_swipe';
+function maybeShowSwipeHint() {
+    let seen = null;
+    try { seen = localStorage.getItem(SWIPE_HINT_KEY); }
+    catch (_) { return; } // localStorage blocked → can't record a dismissal, never show
+    if (seen) return;
+    // Touch-capable check: coarse primary pointer, or legacy touch-event support.
+    const coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+    if (!coarse && !('ontouchstart' in window)) return;
+    // Destination-view check via the URL, NOT the active class: this runs at
+    // DOMContentLoaded, but initApp()'s router only switches views after the
+    // data fetches settle — so #view-home still wears .active on an /events
+    // deep link at this moment. Mirror the router's path logic (incl. the
+    // 404.html ?p= redirect and the /housing special case) to decide whether
+    // this load will actually land on home.
+    let dest = 'home';
+    try {
+        let p = window.location.pathname.replace(/\/$/, '');
+        const params = new URLSearchParams(window.location.search);
+        if (params.has('p')) p = params.get('p').replace(/\/$/, '');
+        dest = pathToView[p] || 'home';
+        if (p === '/housing') dest = 'places';
+    } catch (_) { /* URL API missing → assume home (root is the dominant entry) */ }
+    if (dest !== 'home') return;
+    if (document.getElementById('mapp-swipe-hint')) return; // already showing
+    showSwipeHint();
+}
+function dismissSwipeHint() {
+    try { localStorage.setItem(SWIPE_HINT_KEY, '1'); } catch (_) { /* still dismiss visually */ }
+    const el = document.getElementById('mapp-swipe-hint');
+    if (el) el.remove();
+}
+function showSwipeHint() {
+    const scrim = document.createElement('div');
+    scrim.id = 'mapp-swipe-hint';
+    scrim.setAttribute('role', 'dialog');
+    scrim.setAttribute('aria-label', 'Tip: swipe the events list to change days');
+    scrim.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.45);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;';
+    scrim.innerHTML = `
+        <div style="background:var(--surface);border-radius:var(--radius);max-width:340px;width:100%;padding:24px 22px;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,0.35);">
+            <div id="mapp-swipe-hint-glyph" style="font-size:2.1rem;line-height:1;">👆</div>
+            <p style="font-weight:700;font-size:1rem;color:var(--navy);margin:12px 0 6px;">Browse by day</p>
+            <p style="font-size:0.85rem;color:var(--text-muted);margin:0 0 16px;line-height:1.45;">Swipe the events list left or right — or tap ‹ › — to see other days.</p>
+            <button type="button" class="btn btn-sm btn-ticket" style="min-width:110px;">Got it</button>
+        </div>`;
+    // Tap anywhere dismisses — card and button included; their clicks bubble
+    // to this one scrim listener, so there's a single dismissal path.
+    scrim.addEventListener('click', dismissSwipeHint);
+    // Swiping the hint itself dismisses AND performs the day change — instant
+    // positive feedback that the gesture works. Same thresholds as
+    // attachHomeSwipeHandlers (own locals — the shared swipeStart* globals
+    // stay untouched). No ghost-click risk: a ≥60px move exceeds tap slop,
+    // so browsers suppress the synthetic click after a swipe.
+    let hintX = 0, hintY = 0, hintT = 0;
+    scrim.addEventListener('touchstart', (e) => {
+        if (e.touches.length !== 1) return;
+        hintX = e.touches[0].clientX;
+        hintY = e.touches[0].clientY;
+        hintT = Date.now();
+    }, { passive: true });
+    scrim.addEventListener('touchend', (e) => {
+        if (!hintT) return;
+        const t = e.changedTouches[0];
+        const dx = t.clientX - hintX;
+        const dy = t.clientY - hintY;
+        const duration = Date.now() - hintT;
+        hintT = 0;
+        if (duration > 600) return;
+        if (Math.abs(dx) < 60) return;
+        if (Math.abs(dx) < Math.abs(dy) * 1.5) return;
+        dismissSwipeHint();
+        if (typeof shiftHomeDay === 'function') shiftHomeDay(dx < 0 ? 1 : -1);
+    }, { passive: true });
+    document.body.appendChild(scrim);
+    // Nudge animation on the glyph — Web Animations API, so no style.css
+    // touch (Hard Rule 2) and no injected keyframes; skipped under
+    // prefers-reduced-motion, matching the timeline slide's respect for it.
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const glyph = document.getElementById('mapp-swipe-hint-glyph');
+    if (glyph && !reduceMotion && typeof glyph.animate === 'function') {
+        glyph.animate(
+            [{ transform: 'translateX(16px)' }, { transform: 'translateX(-16px)' }],
+            { duration: 900, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' }
+        );
+    }
+}
 window.pickAffiliation = function(value) {
     if (value !== 'student' && value !== 'townie') return;
     if (value === muAffiliation) return; // tapping the current mode is a no-op
@@ -3248,35 +3314,30 @@ function scheduleHeaderMeasure() {
 document.addEventListener("DOMContentLoaded",()=>{
     updateHeaderHeightVar();
 
-    // Admin/demo convenience: ?resetWelcome=1 in the URL clears ONLY the
-    // welcome-dismissed flag (not favorites or affiliation), letting the
-    // banner resurface without losing real user state. Appended silently
-    // via history.replaceState so the URL bar stays clean.
+    // Admin/demo convenience: ?resetHints=1 in the URL clears ONLY the
+    // one-time hint keys (currently just the swipe hint — not favorites or
+    // affiliation), letting first-run hints resurface without losing real
+    // user state. Appended silently via history.replaceState so the URL bar
+    // stays clean. (Replaced ?resetWelcome=1 when the banner retired,
+    // 2026-08-26.)
     try {
         const params = new URLSearchParams(window.location.search);
-        if (params.has('resetWelcome')) {
-            localStorage.removeItem('welcomeDismissed');
-            params.delete('resetWelcome');
+        if (params.has('resetHints')) {
+            localStorage.removeItem(SWIPE_HINT_KEY);
+            params.delete('resetHints');
             const cleanSearch = params.toString();
             const newUrl = window.location.pathname + (cleanSearch ? '?' + cleanSearch : '') + window.location.hash;
             history.replaceState(null, '', newUrl);
         }
     } catch (_) { /* no URL params support → skip */ }
 
-    // Show welcome banner IMMEDIATELY if this is a first-time visitor.
-    // We previously only set banner visibility in renderHomeFeed(), which
-    // runs after ~9 concurrent data fetches settle — producing a 2-5 second
-    // window where the page is visible but the banner isn't, making new
-    // visitors think it doesn't exist. Since the show/hide condition only
-    // reads localStorage, there's no reason to wait for remote data.
-    try {
-        const hasFeed = !!localStorage.getItem(FEED_KEY);
-        const dismissed = !!localStorage.getItem('welcomeDismissed');
-        if (!hasFeed && !dismissed) {
-            const wb = document.getElementById('welcome-banner');
-            if (wb) wb.style.display = 'block';
-        }
-    } catch (_) { /* localStorage blocked → banner stays hidden, no-op */ }
+    // Show the one-time swipe hint IMMEDIATELY on DOM ready (touch devices,
+    // home-destination loads only — see maybeShowSwipeHint). The show
+    // condition reads only localStorage + the URL, so there's no reason to
+    // wait for the data fetches — same rationale as the retired welcome
+    // banner's early show. try/catch so a failure here can't abort the rest
+    // of this handler (bumpVisitCount + initApp below must always run).
+    try { maybeShowSwipeHint(); } catch (_) { /* no hint → no-op */ }
 
     // Install prompt (Add to Home Screen). Bump the visit counter, then decide
     // whether to surface our custom install banner. Engagement-gated so it never

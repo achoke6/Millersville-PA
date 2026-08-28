@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-08-28T09:35:56.311Z",
-  "totalEvents": 1084,
-  "withDescription": 561,
-  "withImage": 126,
+  "generatedAt": "2026-08-28T21:08:43.282Z",
+  "totalEvents": 1135,
+  "withDescription": 563,
+  "withImage": 127,
   "familyFriendly": 75,
   "eventsToday": 7,
   "sources": {
-    "muAthletics": 255,
+    "muAthletics": 306,
     "muCalendar": 158,
-    "artsmu": 22,
+    "artsmu": 21,
     "campsAlumni": 39,
-    "muGetInvolved": 228,
+    "muGetInvolved": 229,
     "pennManor": 71,
     "borough": 69,
     "vfw": 7,
@@ -24,14 +24,14 @@
   "sourceDateRanges": {
     "muAthletics": {
       "earliest": "2026-08-27T20:00:00.000Z",
-      "latest": "2027-05-01T17:00:00.000Z"
+      "latest": "2027-05-08T19:00:00.000Z"
     },
     "muCalendar": {
       "earliest": "2026-06-30T00:00:00.000Z",
       "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
-      "earliest": "2026-08-07T21:00:00.000Z",
+      "earliest": "2026-09-13T22:00:00.000Z",
       "latest": "2027-05-02T18:30:00.000Z"
     },
     "campsAlumni": {
@@ -77,8 +77,8 @@
   },
   "staleness": {
     "muAthletics": {
-      "newest": "2027-05-01",
-      "daysSinceMoved": 51
+      "newest": "2027-05-08",
+      "daysSinceMoved": 0
     },
     "muCalendar": {
       "newest": "2027-06-04",
@@ -130,10 +130,10 @@
     }
   },
   "sports": {
-    "total": 298,
-    "scored": 4,
+    "total": 349,
+    "scored": 5,
     "wins": 2,
-    "losses": 1,
+    "losses": 2,
     "ties": 1
   },
   "registrations": {
@@ -149,79 +149,79 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-08-28T09:32:21.513Z"
+    "lastSyncAt": "2026-08-28T21:04:56.466Z"
   },
   "recentlyAdded": [
     {
-      "key": "Disciple of The Garden - Tribute to Chris Cornell, Soundgarden, Audioslave|2026-09-20T00:00:00.000Z",
-      "firstSeenAt": "2026-08-28T09:35:56.308Z",
-      "title": "Disciple of The Garden - Tribute to Chris Cornell, Soundgarden, Audioslave",
-      "source": "Other",
-      "date": "2026-09-20T00:00:00.000Z"
-    },
-    {
-      "key": "DMAX General Meeting|2026-09-01T17:30:00",
-      "firstSeenAt": "2026-08-27T23:38:47.686Z",
-      "title": "DMAX General Meeting",
-      "source": "MU",
-      "date": "2026-09-01T17:30:00"
-    },
-    {
-      "key": "Osburn Bible Study|2026-09-02T16:00:00.000Z",
-      "firstSeenAt": "2026-08-27T23:38:47.686Z",
-      "title": "Osburn Bible Study",
-      "source": "MU",
-      "date": "2026-09-02T16:00:00.000Z"
-    },
-    {
-      "key": "Mental Health Matters: Screening & Fair|2026-09-03T15:30:00.000Z",
-      "firstSeenAt": "2026-08-27T23:38:47.686Z",
+      "key": "Mental Health Matters: Screening & Fair|2026-09-02T15:30:00.000Z",
+      "firstSeenAt": "2026-08-28T21:08:43.280Z",
       "title": "Mental Health Matters: Screening & Fair",
       "source": "MU",
-      "date": "2026-09-03T15:30:00.000Z"
+      "date": "2026-09-02T15:30:00.000Z"
     },
     {
-      "key": "Club Cheer Chats and Crafts|2026-09-08T23:00:00.000Z",
-      "firstSeenAt": "2026-08-27T23:38:47.686Z",
-      "title": "Club Cheer Chats and Crafts",
+      "key": "September Coffee Program|2026-09-11T11:30:00.000Z",
+      "firstSeenAt": "2026-08-28T21:08:43.280Z",
+      "title": "September Coffee Program",
       "source": "MU",
-      "date": "2026-09-08T23:00:00.000Z"
+      "date": "2026-09-11T11:30:00.000Z"
     },
     {
-      "key": "Acacia Blood Drive|2026-09-09T12:00:00",
-      "firstSeenAt": "2026-08-27T23:38:47.686Z",
-      "title": "Acacia Blood Drive",
-      "source": "MU",
-      "date": "2026-09-09T12:00:00"
-    },
-    {
-      "key": "Millersville University Field Hockey at #7 Assumption|2026-09-11T20:00:00.000Z",
-      "firstSeenAt": "2026-08-27T23:38:47.686Z",
+      "key": "Millersville University Field Hockey at #7 Assumption|2026-09-11T18:00:00.000Z",
+      "firstSeenAt": "2026-08-28T21:08:43.280Z",
       "title": "Millersville University Field Hockey at #7 Assumption",
       "source": "MU",
-      "date": "2026-09-11T20:00:00.000Z"
+      "date": "2026-09-11T18:00:00.000Z"
     },
     {
-      "key": "DMAX General Meeting|2026-09-15T17:30:00",
-      "firstSeenAt": "2026-08-27T23:38:47.686Z",
-      "title": "DMAX General Meeting",
+      "key": "Millersville University Field Hockey at American International|2026-09-12T14:00:00.000Z",
+      "firstSeenAt": "2026-08-28T21:08:43.280Z",
+      "title": "Millersville University Field Hockey at American International",
       "source": "MU",
-      "date": "2026-09-15T17:30:00"
+      "date": "2026-09-12T14:00:00.000Z"
     },
     {
-      "key": "Osburn Bible Study|2026-09-16T16:00:00.000Z",
-      "firstSeenAt": "2026-08-27T23:38:47.686Z",
-      "title": "Osburn Bible Study",
+      "key": "WIXQ 91.7 Day|2026-09-17T16:00:00",
+      "firstSeenAt": "2026-08-28T21:08:43.280Z",
+      "title": "WIXQ 91.7 Day",
       "source": "MU",
-      "date": "2026-09-16T16:00:00.000Z"
+      "date": "2026-09-17T16:00:00"
     },
     {
-      "key": "Millersville University Field Hockey at #5 West Chester|2026-09-17T20:00:00.000Z",
-      "firstSeenAt": "2026-08-27T23:38:47.686Z",
-      "title": "Millersville University Field Hockey at #5 West Chester",
+      "key": "Zoning Hearing Board - Regarding 11 Millersville University Properties (see description for more details)|2026-09-24T22:30:00.000Z",
+      "firstSeenAt": "2026-08-28T21:08:43.280Z",
+      "title": "Zoning Hearing Board - Regarding 11 Millersville University Properties (see description for more details)",
+      "source": "Borough",
+      "date": "2026-09-24T22:30:00.000Z"
+    },
+    {
+      "key": "Millersville University Softball at Goldey-Beacom College|2027-02-07T18:00:00.000Z",
+      "firstSeenAt": "2026-08-28T21:08:43.280Z",
+      "title": "Millersville University Softball at Goldey-Beacom College",
       "source": "MU",
-      "date": "2026-09-17T20:00:00.000Z"
+      "date": "2027-02-07T18:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Softball at Goldey-Beacom College|2027-02-07T20:00:00.000Z",
+      "firstSeenAt": "2026-08-28T21:08:43.280Z",
+      "title": "Millersville University Softball at Goldey-Beacom College",
+      "source": "MU",
+      "date": "2027-02-07T20:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Softball at Wilmington University (Del.)|2027-02-20T18:00:00.000Z",
+      "firstSeenAt": "2026-08-28T21:08:43.280Z",
+      "title": "Millersville University Softball at Wilmington University (Del.)",
+      "source": "MU",
+      "date": "2027-02-20T18:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Softball at Wilmington University (Del.)|2027-02-20T20:00:00.000Z",
+      "firstSeenAt": "2026-08-28T21:08:43.280Z",
+      "title": "Millersville University Softball at Wilmington University (Del.)",
+      "source": "MU",
+      "date": "2027-02-20T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 57
 }

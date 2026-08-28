@@ -190,10 +190,8 @@
   },
   {
     "name": "Asian Student Inclusivity Association",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "ASIA",
     "id": ""
   },
@@ -252,8 +250,10 @@
   },
   {
     "name": "Board Game Club",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -706,12 +706,8 @@
   },
   {
     "name": "Fencing Guild",
-    "category": "Performance",
-    "categories": [
-      "Performance",
-      "Social",
-      "Sporting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1085,11 +1081,9 @@
     "id": "mensicehockey"
   },
   {
-    "name": "Men's Rugby Club of Millersville University",
-    "category": "Competition",
+    "name": "Men's Rugby Club",
+    "category": "Meeting",
     "categories": [
-      "Competition",
-      "Sporting",
       "Meeting"
     ],
     "shortName": "Men's Rugby Club",
@@ -1351,11 +1345,8 @@
   },
   {
     "name": "Reformed University Fellowship",
-    "category": "Meeting",
-    "categories": [
-      "Meeting",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "RUF",
     "id": ""
   },
@@ -1507,11 +1498,8 @@
   },
   {
     "name": "Student Business Association",
-    "category": "Lecture or Speaker",
-    "categories": [
-      "Lecture or Speaker",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "SBA",
     "id": ""
   },

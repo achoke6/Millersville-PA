@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-08-29T03:33:18.175Z",
+  "generatedAt": "2026-08-29T10:50:37.599Z",
   "totalEvents": 1135,
   "withDescription": 562,
   "withImage": 127,
   "familyFriendly": 75,
-  "eventsToday": 6,
+  "eventsToday": 14,
   "sources": {
     "muAthletics": 306,
     "muCalendar": 158,
@@ -78,55 +78,55 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-08",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 21
+      "daysSinceMoved": 22
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 21
+      "daysSinceMoved": 22
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 85
+      "daysSinceMoved": 86
     },
     "pennManor": {
       "newest": "2026-09-21",
-      "daysSinceMoved": 65
+      "daysSinceMoved": 66
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 31
+      "daysSinceMoved": 32
     },
     "vfw": {
       "newest": "2026-10-15",
-      "daysSinceMoved": 18
+      "daysSinceMoved": 19
     },
     "phantomPower": {
       "newest": "2026-10-04",
-      "daysSinceMoved": 37
+      "daysSinceMoved": 38
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 84
+      "daysSinceMoved": 85
     },
     "manor": {
       "newest": "2027-08-25",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "raneyCellars": {
       "newest": "2026-09-10",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 9
     },
     "theBackyard": {
       "newest": "2026-09-30",
-      "daysSinceMoved": 31
+      "daysSinceMoved": 32
     }
   },
   "sports": {
@@ -149,7 +149,7 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-08-29T03:29:28.528Z"
+    "lastSyncAt": "2026-08-29T10:46:32.454Z"
   },
   "recentlyAdded": [
     {
@@ -223,5 +223,5 @@
       "date": "2027-02-20T18:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 0
 }

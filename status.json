@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-29T10:50:37.599Z",
+  "generatedAt": "2026-08-29T15:31:46.029Z",
   "totalEvents": 1135,
   "withDescription": 562,
   "withImage": 127,
@@ -55,7 +55,7 @@
       "latest": "2026-10-15T20:30:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-08-29T00:00:00.000Z",
+      "earliest": "2026-08-30T00:00:00.000Z",
       "latest": "2026-10-04T00:00:00.000Z"
     },
     "community": {
@@ -149,9 +149,16 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-08-29T10:46:32.454Z"
+    "lastSyncAt": "2026-08-29T15:28:24.966Z"
   },
   "recentlyAdded": [
+    {
+      "key": "THE DEAD TONGUES|2026-09-20T23:00:00.000Z",
+      "firstSeenAt": "2026-08-29T15:31:46.027Z",
+      "title": "THE DEAD TONGUES",
+      "source": "Other",
+      "date": "2026-09-20T23:00:00.000Z"
+    },
     {
       "key": "Girls Varsity Tennis @ Dallastown Area High School|2026-09-03T20:00:00.000Z",
       "firstSeenAt": "2026-08-29T03:33:18.172Z",
@@ -214,14 +221,7 @@
       "title": "Millersville University Softball at Goldey-Beacom College",
       "source": "MU",
       "date": "2027-02-07T20:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Softball at Wilmington University (Del.)|2027-02-20T18:00:00.000Z",
-      "firstSeenAt": "2026-08-28T21:08:43.280Z",
-      "title": "Millersville University Softball at Wilmington University (Del.)",
-      "source": "MU",
-      "date": "2027-02-20T18:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

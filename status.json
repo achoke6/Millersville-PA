@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-08-28T21:08:43.282Z",
+  "generatedAt": "2026-08-29T03:33:18.175Z",
   "totalEvents": 1135,
-  "withDescription": 563,
+  "withDescription": 562,
   "withImage": 127,
   "familyFriendly": 75,
-  "eventsToday": 7,
+  "eventsToday": 6,
   "sources": {
     "muAthletics": 306,
     "muCalendar": 158,
     "artsmu": 21,
     "campsAlumni": 39,
     "muGetInvolved": 229,
-    "pennManor": 71,
+    "pennManor": 72,
     "borough": 69,
     "vfw": 7,
     "phantomPower": 14,
@@ -130,9 +130,9 @@
     }
   },
   "sports": {
-    "total": 349,
-    "scored": 5,
-    "wins": 2,
+    "total": 350,
+    "scored": 6,
+    "wins": 3,
     "losses": 2,
     "ties": 1
   },
@@ -149,9 +149,16 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-08-28T21:04:56.466Z"
+    "lastSyncAt": "2026-08-29T03:29:28.528Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Girls Varsity Tennis @ Dallastown Area High School|2026-09-03T20:00:00.000Z",
+      "firstSeenAt": "2026-08-29T03:33:18.172Z",
+      "title": "Girls Varsity Tennis @ Dallastown Area High School",
+      "source": "PM",
+      "date": "2026-09-03T20:00:00.000Z"
+    },
     {
       "key": "Mental Health Matters: Screening & Fair|2026-09-02T15:30:00.000Z",
       "firstSeenAt": "2026-08-28T21:08:43.280Z",
@@ -214,14 +221,7 @@
       "title": "Millersville University Softball at Wilmington University (Del.)",
       "source": "MU",
       "date": "2027-02-20T18:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Softball at Wilmington University (Del.)|2027-02-20T20:00:00.000Z",
-      "firstSeenAt": "2026-08-28T21:08:43.280Z",
-      "title": "Millersville University Softball at Wilmington University (Del.)",
-      "source": "MU",
-      "date": "2027-02-20T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 57
+  "addedLastRun": 1
 }

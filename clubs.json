@@ -104,10 +104,8 @@
   },
   {
     "name": "American Meteorological Society",
-    "category": "Educational Program",
-    "categories": [
-      "Educational Program"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "AMS",
     "id": ""
   },
@@ -707,8 +705,7 @@
     "name": "Equestrian Club",
     "category": "Service",
     "categories": [
-      "Service",
-      "Meeting"
+      "Service"
     ],
     "shortName": "",
     "id": ""
@@ -763,9 +760,9 @@
   },
   {
     "name": "Fraternity & Sorority Life",
-    "category": "Educational Program",
+    "category": "Social",
     "categories": [
-      "Educational Program"
+      "Social"
     ],
     "shortName": "FSL",
     "id": ""
@@ -1356,12 +1353,12 @@
   },
   {
     "name": "Pre-Health Club",
-    "category": "Academic",
+    "category": "Meeting",
     "categories": [
-      "Academic"
+      "Meeting"
     ],
-    "shortName": "PHC",
-    "id": "pre-healthclub"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "President's Commission on Gender and Sexual Diversity",

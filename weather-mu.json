@@ -10,69 +10,69 @@
   },
   "observations": [
     {
-      "time": "21:00",
-      "temp": "65",
-      "dewpoint": "57",
-      "rh": "76",
+      "time": "03:00",
+      "temp": "60",
+      "dewpoint": "59",
+      "rh": "95",
       "windDir": "SSW",
       "windSpeed": "1",
       "precip": "0.00",
-      "visibility": "10.1",
+      "visibility": "7.3",
       "condition": "None"
     },
     {
-      "time": "20:00",
-      "temp": "69",
-      "dewpoint": "55",
-      "rh": "62",
-      "windDir": "SSW",
+      "time": "02:00",
+      "temp": "61",
+      "dewpoint": "58",
+      "rh": "92",
+      "windDir": "ESE",
       "windSpeed": "1",
       "precip": "0.00",
-      "visibility": "10.5",
+      "visibility": "4.5",
       "condition": "None"
     },
     {
-      "time": "19:00",
-      "temp": "77",
-      "dewpoint": "50",
-      "rh": "38",
-      "windDir": "W",
+      "time": "01:00",
+      "temp": "59",
+      "dewpoint": "58",
+      "rh": "96",
+      "windDir": "S",
       "windSpeed": "1",
       "precip": "0.00",
-      "visibility": "10.2",
+      "visibility": "9.3",
       "condition": "None"
     },
     {
-      "time": "18:00",
-      "temp": "78",
-      "dewpoint": "52",
-      "rh": "40",
+      "time": "00:00",
+      "temp": "60",
+      "dewpoint": "59",
+      "rh": "95",
+      "windDir": "NNE",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "9.8",
+      "condition": "None"
+    },
+    {
+      "time": "23:00",
+      "temp": "61",
+      "dewpoint": "59",
+      "rh": "92",
       "windDir": "SSW",
       "windSpeed": "2",
       "precip": "0.00",
-      "visibility": "10.2",
+      "visibility": "9.7",
       "condition": "None"
     },
     {
-      "time": "17:00",
-      "temp": "78",
-      "dewpoint": "51",
-      "rh": "39",
-      "windDir": "NNW",
-      "windSpeed": "3",
+      "time": "22:00",
+      "temp": "64",
+      "dewpoint": "58",
+      "rh": "82",
+      "windDir": "SW",
+      "windSpeed": "2",
       "precip": "0.00",
-      "visibility": "9.9",
-      "condition": "None"
-    },
-    {
-      "time": "16:00",
-      "temp": "78",
-      "dewpoint": "53",
-      "rh": "42",
-      "windDir": "W",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "9.4",
+      "visibility": "10.1",
       "condition": "None"
     }
   ],
@@ -386,6 +386,17 @@
         "windSpeed": "14",
         "windTime": "13:41",
         "rain": "0.02"
+      },
+      {
+        "date": "08/29",
+        "max": "79",
+        "maxTime": "17:16",
+        "min": "59",
+        "minTime": "05:53",
+        "windDir": "3",
+        "windSpeed": "12",
+        "windTime": "11:10",
+        "rain": "0.00"
       }
     ],
     "totalRain": "5.96",
@@ -436,5 +447,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-08-30T01:02:37.287Z"
+  "updated": "2026-08-30T07:51:50.641Z"
 }

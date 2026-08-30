@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-08-30T01:05:56.178Z",
-  "totalEvents": 1131,
+  "generatedAt": "2026-08-30T07:56:03.365Z",
+  "totalEvents": 1135,
   "withDescription": 562,
   "withImage": 127,
   "familyFriendly": 75,
-  "eventsToday": 14,
+  "eventsToday": 3,
   "sources": {
     "muAthletics": 306,
     "muCalendar": 158,
-    "artsmu": 17,
+    "artsmu": 21,
     "campsAlumni": 39,
     "muGetInvolved": 229,
     "pennManor": 72,
@@ -32,7 +32,7 @@
     },
     "artsmu": {
       "earliest": "2026-09-13T22:00:00.000Z",
-      "latest": "2027-03-06T19:30:00.000Z"
+      "latest": "2027-05-02T18:30:00.000Z"
     },
     "campsAlumni": {
       "earliest": "2026-06-11T22:00:00.000Z",
@@ -55,7 +55,7 @@
       "latest": "2026-10-15T20:30:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-08-30T00:00:00.000Z",
+      "earliest": "2026-08-30T23:00:00.000Z",
       "latest": "2026-10-04T00:00:00.000Z"
     },
     "community": {
@@ -78,55 +78,55 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-08",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 9
     },
     "artsmu": {
-      "newest": "2027-03-06",
-      "daysSinceMoved": 0
+      "newest": "2027-05-02",
+      "daysSinceMoved": 23
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 22
+      "daysSinceMoved": 23
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 86
+      "daysSinceMoved": 87
     },
     "pennManor": {
       "newest": "2026-09-21",
-      "daysSinceMoved": 66
+      "daysSinceMoved": 67
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 32
+      "daysSinceMoved": 33
     },
     "vfw": {
       "newest": "2026-10-15",
-      "daysSinceMoved": 19
+      "daysSinceMoved": 20
     },
     "phantomPower": {
       "newest": "2026-10-04",
-      "daysSinceMoved": 38
+      "daysSinceMoved": 39
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 85
+      "daysSinceMoved": 86
     },
     "manor": {
       "newest": "2027-08-25",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "raneyCellars": {
       "newest": "2026-09-10",
-      "daysSinceMoved": 9
+      "daysSinceMoved": 10
     },
     "theBackyard": {
       "newest": "2026-09-30",
-      "daysSinceMoved": 32
+      "daysSinceMoved": 33
     }
   },
   "sports": {
@@ -138,7 +138,7 @@
   },
   "registrations": {
     "open": 14,
-    "next2Weeks": 1,
+    "next2Weeks": 2,
     "nextClose": "2026-09-09",
     "openNoDeadline": 1
   },
@@ -149,9 +149,51 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-08-30T01:02:34.733Z"
+    "lastSyncAt": "2026-08-30T07:51:48.357Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Girls JV Field Hockey vs Cumberland Valley High School|2026-09-03T21:30:00.000Z",
+      "firstSeenAt": "2026-08-30T07:56:03.362Z",
+      "title": "Girls JV Field Hockey vs Cumberland Valley High School",
+      "source": "PM",
+      "date": "2026-09-03T21:30:00.000Z"
+    },
+    {
+      "key": "EYEHATEGOD w. Whores. & No Mas|2026-09-24T00:00:00.000Z",
+      "firstSeenAt": "2026-08-30T07:56:03.362Z",
+      "title": "EYEHATEGOD w. Whores. & No Mas",
+      "source": "Other",
+      "date": "2026-09-24T00:00:00.000Z"
+    },
+    {
+      "key": "Concert Band & Wind Ensemble|2027-04-03T18:30:00.000Z",
+      "firstSeenAt": "2026-08-30T07:56:03.362Z",
+      "title": "Concert Band & Wind Ensemble",
+      "source": "MU",
+      "date": "2027-04-03T18:30:00.000Z"
+    },
+    {
+      "key": "Spring Orchestra Concert|2027-04-30T23:30:00.000Z",
+      "firstSeenAt": "2026-08-30T07:56:03.362Z",
+      "title": "Spring Orchestra Concert",
+      "source": "MU",
+      "date": "2027-04-30T23:30:00.000Z"
+    },
+    {
+      "key": "Spring Choral Concert|2027-05-01T23:30:00.000Z",
+      "firstSeenAt": "2026-08-30T07:56:03.362Z",
+      "title": "Spring Choral Concert",
+      "source": "MU",
+      "date": "2027-05-01T23:30:00.000Z"
+    },
+    {
+      "key": "Concert Band & Wind Ensemble|2027-05-02T18:30:00.000Z",
+      "firstSeenAt": "2026-08-30T07:56:03.362Z",
+      "title": "Concert Band & Wind Ensemble",
+      "source": "MU",
+      "date": "2027-05-02T18:30:00.000Z"
+    },
     {
       "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
       "firstSeenAt": "2026-08-30T01:05:56.176Z",
@@ -179,49 +221,7 @@
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2026-09-30T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
-      "firstSeenAt": "2026-08-30T01:05:56.176Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-10-05T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
-      "firstSeenAt": "2026-08-30T01:05:56.176Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-10-07T23:00:00.000Z"
-    },
-    {
-      "key": "Planning Commission|2026-10-12T23:00:00.000Z",
-      "firstSeenAt": "2026-08-30T01:05:56.176Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-10-12T23:00:00.000Z"
-    },
-    {
-      "key": "Moonlight Ride|2026-10-23T22:30:00.000Z",
-      "firstSeenAt": "2026-08-30T01:05:56.176Z",
-      "title": "Moonlight Ride",
-      "source": "Manor",
-      "date": "2026-10-23T22:30:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-10-28T12:30:00.000Z",
-      "firstSeenAt": "2026-08-30T01:05:56.176Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-10-28T12:30:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-11-05T00:00:00.000Z",
-      "firstSeenAt": "2026-08-30T01:05:56.176Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-11-05T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 41
+  "addedLastRun": 6
 }

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-08-29T22:24:09.300Z",
-  "totalEvents": 1094,
+  "generatedAt": "2026-08-30T01:05:56.178Z",
+  "totalEvents": 1131,
   "withDescription": 562,
   "withImage": 127,
   "familyFriendly": 75,
@@ -8,7 +8,7 @@
   "sources": {
     "muAthletics": 306,
     "muCalendar": 158,
-    "artsmu": 21,
+    "artsmu": 17,
     "campsAlumni": 39,
     "muGetInvolved": 229,
     "pennManor": 72,
@@ -16,7 +16,7 @@
     "vfw": 7,
     "phantomPower": 14,
     "community": 22,
-    "manor": 0,
+    "manor": 41,
     "raneyCellars": 5,
     "theBackyard": 11,
     "muHudlBroadcasts": 0
@@ -32,7 +32,7 @@
     },
     "artsmu": {
       "earliest": "2026-09-13T22:00:00.000Z",
-      "latest": "2027-05-02T18:30:00.000Z"
+      "latest": "2027-03-06T19:30:00.000Z"
     },
     "campsAlumni": {
       "earliest": "2026-06-11T22:00:00.000Z",
@@ -62,7 +62,10 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-09-02T23:00:00.000Z",
+      "latest": "2027-08-25T12:30:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-08-15T22:00:00.000Z",
       "latest": "2026-09-10T20:00:00.000Z"
@@ -82,8 +85,8 @@
       "daysSinceMoved": 8
     },
     "artsmu": {
-      "newest": "2027-05-02",
-      "daysSinceMoved": 22
+      "newest": "2027-03-06",
+      "daysSinceMoved": 0
     },
     "campsAlumni": {
       "newest": "2027-04-03",
@@ -113,7 +116,10 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 85
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-08-25",
+      "daysSinceMoved": 4
+    },
     "raneyCellars": {
       "newest": "2026-09-10",
       "daysSinceMoved": 9
@@ -125,8 +131,8 @@
   },
   "sports": {
     "total": 350,
-    "scored": 10,
-    "wins": 4,
+    "scored": 11,
+    "wins": 5,
     "losses": 5,
     "ties": 1
   },
@@ -143,79 +149,79 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-08-29T22:20:37.528Z"
+    "lastSyncAt": "2026-08-30T01:02:34.733Z"
   },
   "recentlyAdded": [
     {
-      "key": "THE DEAD TONGUES|2026-09-20T23:00:00.000Z",
-      "firstSeenAt": "2026-08-29T15:31:46.027Z",
-      "title": "THE DEAD TONGUES",
-      "source": "Other",
-      "date": "2026-09-20T23:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-08-30T01:05:56.176Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-09-02T23:00:00.000Z"
     },
     {
-      "key": "Girls Varsity Tennis @ Dallastown Area High School|2026-09-03T20:00:00.000Z",
-      "firstSeenAt": "2026-08-29T03:33:18.172Z",
-      "title": "Girls Varsity Tennis @ Dallastown Area High School",
-      "source": "PM",
-      "date": "2026-09-03T20:00:00.000Z"
+      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
+      "firstSeenAt": "2026-08-30T01:05:56.176Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-08T23:00:00.000Z"
     },
     {
-      "key": "Mental Health Matters: Screening & Fair|2026-09-02T15:30:00.000Z",
-      "firstSeenAt": "2026-08-28T21:08:43.280Z",
-      "title": "Mental Health Matters: Screening & Fair",
-      "source": "MU",
-      "date": "2026-09-02T15:30:00.000Z"
+      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
+      "firstSeenAt": "2026-08-30T01:05:56.176Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-09-14T23:00:00.000Z"
     },
     {
-      "key": "September Coffee Program|2026-09-11T11:30:00.000Z",
-      "firstSeenAt": "2026-08-28T21:08:43.280Z",
-      "title": "September Coffee Program",
-      "source": "MU",
-      "date": "2026-09-11T11:30:00.000Z"
+      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-08-30T01:05:56.176Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-09-30T12:30:00.000Z"
     },
     {
-      "key": "Millersville University Field Hockey at #7 Assumption|2026-09-11T18:00:00.000Z",
-      "firstSeenAt": "2026-08-28T21:08:43.280Z",
-      "title": "Millersville University Field Hockey at #7 Assumption",
-      "source": "MU",
-      "date": "2026-09-11T18:00:00.000Z"
+      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
+      "firstSeenAt": "2026-08-30T01:05:56.176Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-10-05T23:00:00.000Z"
     },
     {
-      "key": "Millersville University Field Hockey at American International|2026-09-12T14:00:00.000Z",
-      "firstSeenAt": "2026-08-28T21:08:43.280Z",
-      "title": "Millersville University Field Hockey at American International",
-      "source": "MU",
-      "date": "2026-09-12T14:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
+      "firstSeenAt": "2026-08-30T01:05:56.176Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-10-07T23:00:00.000Z"
     },
     {
-      "key": "WIXQ 91.7 Day|2026-09-17T16:00:00",
-      "firstSeenAt": "2026-08-28T21:08:43.280Z",
-      "title": "WIXQ 91.7 Day",
-      "source": "MU",
-      "date": "2026-09-17T16:00:00"
+      "key": "Planning Commission|2026-10-12T23:00:00.000Z",
+      "firstSeenAt": "2026-08-30T01:05:56.176Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-10-12T23:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board - Regarding 11 Millersville University Properties (see description for more details)|2026-09-24T22:30:00.000Z",
-      "firstSeenAt": "2026-08-28T21:08:43.280Z",
-      "title": "Zoning Hearing Board - Regarding 11 Millersville University Properties (see description for more details)",
-      "source": "Borough",
-      "date": "2026-09-24T22:30:00.000Z"
+      "key": "Moonlight Ride|2026-10-23T22:30:00.000Z",
+      "firstSeenAt": "2026-08-30T01:05:56.176Z",
+      "title": "Moonlight Ride",
+      "source": "Manor",
+      "date": "2026-10-23T22:30:00.000Z"
     },
     {
-      "key": "Millersville University Softball at Goldey-Beacom College|2027-02-07T18:00:00.000Z",
-      "firstSeenAt": "2026-08-28T21:08:43.280Z",
-      "title": "Millersville University Softball at Goldey-Beacom College",
-      "source": "MU",
-      "date": "2027-02-07T18:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-10-28T12:30:00.000Z",
+      "firstSeenAt": "2026-08-30T01:05:56.176Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-10-28T12:30:00.000Z"
     },
     {
-      "key": "Millersville University Softball at Goldey-Beacom College|2027-02-07T20:00:00.000Z",
-      "firstSeenAt": "2026-08-28T21:08:43.280Z",
-      "title": "Millersville University Softball at Goldey-Beacom College",
-      "source": "MU",
-      "date": "2027-02-07T20:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-11-05T00:00:00.000Z",
+      "firstSeenAt": "2026-08-30T01:05:56.176Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-11-05T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 41
 }

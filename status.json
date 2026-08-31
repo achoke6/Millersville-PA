@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-08-31T10:34:53.603Z",
-  "totalEvents": 1133,
-  "withDescription": 562,
-  "withImage": 126,
+  "generatedAt": "2026-08-31T17:58:02.393Z",
+  "totalEvents": 1097,
+  "withDescription": 568,
+  "withImage": 128,
   "familyFriendly": 75,
-  "eventsToday": 6,
+  "eventsToday": 8,
   "sources": {
     "muAthletics": 306,
     "muCalendar": 158,
     "artsmu": 21,
     "campsAlumni": 39,
-    "muGetInvolved": 229,
+    "muGetInvolved": 234,
     "pennManor": 72,
     "borough": 68,
     "vfw": 7,
     "phantomPower": 13,
     "community": 22,
-    "manor": 41,
+    "manor": 0,
     "raneyCellars": 5,
     "theBackyard": 11,
     "muHudlBroadcasts": 0
@@ -62,10 +62,7 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-09-02T23:00:00.000Z",
-      "latest": "2027-08-25T12:30:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-08-15T22:00:00.000Z",
       "latest": "2026-09-10T20:00:00.000Z"
@@ -116,10 +113,7 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 87
     },
-    "manor": {
-      "newest": "2027-08-25",
-      "daysSinceMoved": 6
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-09-10",
       "daysSinceMoved": 11
@@ -138,7 +132,7 @@
   },
   "registrations": {
     "open": 14,
-    "next2Weeks": 2,
+    "next2Weeks": 3,
     "nextClose": "2026-09-09",
     "openNoDeadline": 1
   },
@@ -149,79 +143,79 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-08-31T10:31:16.499Z"
+    "lastSyncAt": "2026-08-31T17:52:02.760Z"
   },
   "recentlyAdded": [
     {
-      "key": "Zoning Hearing Board|2026-09-02T23:00:00.000Z",
-      "firstSeenAt": "2026-08-31T10:34:53.601Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-09-02T23:00:00.000Z"
+      "key": "YDSA Tabling|2026-08-31T13:00:00",
+      "firstSeenAt": "2026-08-31T17:58:02.391Z",
+      "title": "YDSA Tabling",
+      "source": "MU",
+      "date": "2026-08-31T13:00:00"
     },
     {
-      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
-      "firstSeenAt": "2026-08-31T10:34:53.601Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-09-08T23:00:00.000Z"
+      "key": "YDSA Kick-Off Meeting|2026-08-31T18:00:00",
+      "firstSeenAt": "2026-08-31T17:58:02.391Z",
+      "title": "YDSA Kick-Off Meeting",
+      "source": "MU",
+      "date": "2026-08-31T18:00:00"
     },
     {
-      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
-      "firstSeenAt": "2026-08-31T10:34:53.601Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-09-14T23:00:00.000Z"
+      "key": "NSTA Meeting|2026-09-01T22:00:00.000Z",
+      "firstSeenAt": "2026-08-31T17:58:02.391Z",
+      "title": "NSTA Meeting",
+      "source": "MU",
+      "date": "2026-09-01T22:00:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
-      "firstSeenAt": "2026-08-31T10:34:53.601Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-09-30T12:30:00.000Z"
+      "key": "Planning Commission - Cancelled|2026-09-02T22:30:00.000Z",
+      "firstSeenAt": "2026-08-31T17:58:02.391Z",
+      "title": "Planning Commission - Cancelled",
+      "source": "Borough",
+      "date": "2026-09-02T22:30:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
-      "firstSeenAt": "2026-08-31T10:34:53.601Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-10-05T23:00:00.000Z"
+      "key": "YDSA Tabling|2026-09-03T13:00:00",
+      "firstSeenAt": "2026-08-31T17:58:02.391Z",
+      "title": "YDSA Tabling",
+      "source": "MU",
+      "date": "2026-09-03T13:00:00"
     },
     {
-      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
-      "firstSeenAt": "2026-08-31T10:34:53.601Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-10-07T23:00:00.000Z"
+      "key": "Intro to Paws on Deck|2026-09-03T20:30:00.000Z",
+      "firstSeenAt": "2026-08-31T17:58:02.391Z",
+      "title": "Intro to Paws on Deck",
+      "source": "MU",
+      "date": "2026-09-03T20:30:00.000Z"
     },
     {
-      "key": "Planning Commission|2026-10-12T23:00:00.000Z",
-      "firstSeenAt": "2026-08-31T10:34:53.601Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-10-12T23:00:00.000Z"
+      "key": "Oola Bowl - SGA|2026-09-16T15:00:00.000Z",
+      "firstSeenAt": "2026-08-31T17:58:02.391Z",
+      "title": "Oola Bowl - SGA",
+      "source": "The Backyard",
+      "date": "2026-09-16T15:00:00.000Z"
     },
     {
-      "key": "Moonlight Ride|2026-10-23T22:30:00.000Z",
-      "firstSeenAt": "2026-08-31T10:34:53.601Z",
-      "title": "Moonlight Ride",
-      "source": "Manor",
-      "date": "2026-10-23T22:30:00.000Z"
+      "key": "Duncan Kirkwood Keynote: Building Resilience: Unleashing Perseverance, Passion, and Purpose|2026-09-23T23:00:00.000Z",
+      "firstSeenAt": "2026-08-31T17:58:02.391Z",
+      "title": "Duncan Kirkwood Keynote: Building Resilience: Unleashing Perseverance, Passion, and Purpose",
+      "source": "MU",
+      "date": "2026-09-23T23:00:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2026-10-28T12:30:00.000Z",
-      "firstSeenAt": "2026-08-31T10:34:53.601Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-10-28T12:30:00.000Z"
+      "key": "EYEHATEGOD w. Whores. & No Mas|2026-09-24T00:00:00.000Z",
+      "firstSeenAt": "2026-08-30T17:58:04.985Z",
+      "title": "EYEHATEGOD w. Whores. & No Mas",
+      "source": "Other",
+      "date": "2026-09-24T00:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-11-05T00:00:00.000Z",
-      "firstSeenAt": "2026-08-31T10:34:53.601Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-11-05T00:00:00.000Z"
+      "key": "Girls JV Field Hockey vs Cumberland Valley High School|2026-09-03T21:30:00.000Z",
+      "firstSeenAt": "2026-08-30T07:56:03.362Z",
+      "title": "Girls JV Field Hockey vs Cumberland Valley High School",
+      "source": "PM",
+      "date": "2026-09-03T21:30:00.000Z"
     }
   ],
-  "addedLastRun": 41
+  "addedLastRun": 8
 }

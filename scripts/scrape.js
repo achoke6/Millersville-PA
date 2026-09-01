@@ -1352,8 +1352,15 @@ async function runScraper() {
             // Clean prefix like [W], [L], [N]
             let cleanTitle = summary.replace(/^\[.\]\s*/, '').trim();
 
-            // Determine home/away: "vs" = home, "at" = away
-            const isHome = /\bvs\b/i.test(summary) || loc.toLowerCase().includes('millersville');
+            // Determine home/away: location is authoritative when known ("Millersville, PA, <venue>"
+            // = home; any other real place = away/neutral -- Sidearm titles neutral-site tournament
+            // games "vs Opponent", so the title alone over-marks Home). Title convention ("vs" =
+            // home, "at" = away) is the fallback ONLY when location is empty/TBD (postseason
+            // placeholders keep status-quo Home until a site is announced).
+            const homeLoc = loc.toLowerCase().trim();
+            const isHome = (homeLoc && homeLoc !== 'tbd')
+                ? homeLoc.includes('millersville')
+                : /\bvs\b/i.test(summary);
 
             // Extract ticket link from description
             let ticketLink = '';

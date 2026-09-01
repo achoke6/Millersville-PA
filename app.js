@@ -8325,6 +8325,7 @@ function runSearch(q) {
     const now = new Date();
     const nowMs = now.getTime();
     const eventHits = allEvents.filter(e => {
+        if (isSportEvent(e)) return false; // games render in the Sports section below (exact complement of that bucket -- no dupes)
         if ((e._dateMs || 0) < nowMs) return false;
         const text = (e.title + ' ' + e.location + ' ' + (e.tags||[]).join(' ')).toLowerCase();
         return text.includes(ql);
@@ -8362,10 +8363,12 @@ function runSearch(q) {
 
     // Search Sports (upcoming games)
     const sportHits = allEvents.filter(e => {
-        const tags = e.tags || [];
-        if (!tags.includes('Athletic Competitions') && !tags.includes('Athletics')) return false;
+        // Shared predicate (sports page + timeline use it too): includes Club Sports
+        // and sport-tag-only events, excludes Athletic Camps. The Events bucket above
+        // excludes exactly this set, so the two sections partition cleanly.
+        if (!isSportEvent(e)) return false;
         if ((e._dateMs || 0) < nowMs) return false;
-        const text = (e.title + ' ' + e.location + ' ' + tags.join(' ')).toLowerCase();
+        const text = (e.title + ' ' + e.location + ' ' + (e.tags||[]).join(' ')).toLowerCase();
         return text.includes(ql);
     }).slice(0, 6);
     if (sportHits.length) {

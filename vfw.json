@@ -10,12 +10,12 @@
         "Saturday": "Burger Night"
     },
     "weeklySpecials": {
-        "dateRange": "Tuesday, August 25 through Saturday, August 29",
-        "validThrough": "2026-08-30",
+        "dateRange": "Tuesday, September 1 through Saturday, September 5",
+        "validThrough": "2026-09-06",
         "items": [
-            "Chipotle Chicken Sandwich – $12.95",
-            "Shrimp Stir Fry – $13.95",
-            "Garlic Maple Salmon – $17.95 (Fri only)"
+            "Pastrami Reuben – $13.95",
+            "Half Rack BBQ Ribs – $15.95",
+            "Fried Flounder – $14.95 (Fri only)"
         ]
     },
     "events": [
@@ -50,6 +50,12 @@
             "endTime": "2026-10-15T19:30:00-04:00",
             "description": "Car show presented by The Vagabonds Rod & Custom Club and the Millersville VFW Post 7294. Free to attend — all makes & models welcome. Donations support both organizations. Beverages & limited menu available.",
             "price": "Free (donations welcome)"
+        },
+        {
+            "title": "4th Annual Trunk or Treat",
+            "date": "2026-10-22T18:00:00-04:00",
+            "endTime": "2026-10-22T20:00:00-04:00",
+            "description": "Family-friendly Halloween event at Millersville VFW. Decorated trunks, police & fire department vehicles, hayride, games, face painting, food, and lots of candy. Bring costumes and trick-or-treat bags."
         }
     ]
 }

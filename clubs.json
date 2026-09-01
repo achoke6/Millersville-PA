@@ -188,8 +188,10 @@
   },
   {
     "name": "Asian Student Inclusivity Association",
-    "category": "",
-    "categories": [],
+    "category": "Meeting",
+    "categories": [
+      "Meeting"
+    ],
     "shortName": "ASIA",
     "id": ""
   },
@@ -1647,11 +1649,14 @@
     "id": "teamftk"
   },
   {
-    "name": "Technology and Engineering Education Collegiate Association At Millersville University",
-    "category": "",
-    "categories": [],
-    "shortName": "",
-    "id": ""
+    "name": "Technology and Engineering Education Collegiate Association",
+    "category": "Academic",
+    "categories": [
+      "Academic",
+      "University Departments "
+    ],
+    "shortName": "TEECA @ MU",
+    "id": "teeca"
   },
   {
     "name": "Technology Camp",
@@ -1790,6 +1795,15 @@
     ],
     "shortName": "VGDC",
     "id": "vgdc"
+  },
+  {
+    "name": "Ville Sports Officials Association Club",
+    "category": "Sports and Leisure",
+    "categories": [
+      "Sports and Leisure"
+    ],
+    "shortName": "VSOAC",
+    "id": "vsoa"
   },
   {
     "name": "VilleHarmonics",

@@ -83,7 +83,7 @@
       "Cantaloupes – $2.00-$3.50 each",
       "Watermelons – $4.00-$6.00 each"
     ],
-    "weeklyFetchedAt": "2026-09-01T17:39:10.185Z"
+    "weeklyFetchedAt": "2026-09-01T20:10:09.252Z"
   },
   "jesus-dogs": {
     "name": "Jesus Dogs",
@@ -111,8 +111,12 @@
       "Monday"
     ],
     "note": "Members & Guests · Weekly specials change each week",
-    "weekly": [],
-    "weeklyDateRange": "",
+    "weekly": [
+      "Pastrami Reuben – $13.95",
+      "Half Rack BBQ Ribs – $15.95",
+      "Fried Flounder – $14.95 (Friday only)"
+    ],
+    "weeklyDateRange": "Tuesday, September 1 through Saturday, September 5",
     "recurring": {
       "Tuesday": "Shrimp Night",
       "Wednesday": "Wing Night",

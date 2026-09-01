@@ -364,6 +364,13 @@ function extractPricing(desc, title = "", location = "", apiLink = "") {
         const priceRegex = /\$\d+(?:\.\d{2})?(?:\s+(student|public|general|admission|door|advance|mu|adult|child)s?)?/gi;
         const prices = desc.match(priceRegex);
         if (prices) price = [...new Set(prices)].join(' / ');
+        // Free-admission phrasing must beat the paid-signal sniff below:
+        // "\ud83c\udf9f\ufe0f Admission: Free" used to hit the else-if ("admission" ->
+        // Ticket Required), which then armed the Pucillo/Biemesderfer etix
+        // venue-page fallback -- a free Club Sports game shipped a paid
+        // Tickets button pointing at the BASEBALL venue listing (2026-09-01).
+        // $-amounts still win above ("$10, kids free" never reaches this).
+        else if (/free\s+admission|admission(?:\s+is)?\s*:?\s*free\b|\bno\s+(?:admission\s+)?(?:charge|cost|fee)\b/i.test(desc)) price = "Free";
         else if (/ticket|admission|cover charge|cost:/i.test(desc)) price = "Ticket Required";
 
         if (!link) {
@@ -416,7 +423,7 @@ function extractPricing(desc, title = "", location = "", apiLink = "") {
         // Ware Center. Title guesses now only apply when the location names
         // no known Ware-family venue (the Ware branch below handles those).
         if (/winter|lyte/.test(ll) || (!/ware|steinman/.test(ll) && /concert|recital|theatre/.test(lt))) link = "https://www.etix.com/ticket/v/23659/";
-        else if (/pucillo|biemesderfer/.test(ll) || /game|match|tournament/.test(lt)) link = "https://www.etix.com/ticket/v/23684/";
+        else if ((/pucillo|biemesderfer/.test(ll) || /game|match|tournament/.test(lt)) && !/club sport/.test(lt)) link = "https://www.etix.com/ticket/v/23684/"; // club sports are never ticketed via the varsity etix venue page
     }
     // Ware Center / Steinman Hall events with admission → etix
     if (!link) {
@@ -2477,6 +2484,34 @@ async function runScraper() {
         if (data.data.length === 0) throw new Error('MU Calendar returned 0 events — feed empty (body/auth?)');
 
         let muCount = 0;
+
+        // Club Sports double-entry sweep (2026-09-01): Campus Recreation enters
+        // one game as TWO same-day meetings -- a "<building> ... Lobby" check-in
+        // row plus the actual field/court row (first case: Women's Soccer vs
+        // Shippensburg, Anttonen Lobby 3 PM + Soccer Field 4 PM, same eventId).
+        // Keep the real venue; drop the lobby sibling. Fires ONLY when a
+        // same-event same-day NON-lobby row exists, so a lobby-only posting
+        // still publishes. Deliberately club-sports-scoped: the only other
+        // same-event same-day pair in the feed (Family Weekend, Atrium 5 PM +
+        // Galley 6:30 PM) is a legitimate two-part evening.
+        const isClubSportsRow = o => /^club sports? game\b/i.test(o.title || '');
+        const clubDropRows = new Set();
+        {
+            const rowLoc = o => [o.building, o.roomName, o.roomNumber].filter(Boolean).join(' ');
+            const byKey = {};
+            data.data.forEach(o => {
+                if (!isClubSportsRow(o)) return;
+                const k = (o.eventId || o.activityId || '') + '|' + String(o.startDate || '').slice(0, 10);
+                (byKey[k] = byKey[k] || []).push(o);
+            });
+            Object.values(byKey).forEach(rows => {
+                if (rows.length < 2) return;
+                if (rows.some(o => !/lobby/i.test(rowLoc(o)))) {
+                    rows.forEach(o => { if (/lobby/i.test(rowLoc(o))) clubDropRows.add(o); });
+                }
+            });
+        }
+
         data.data.forEach(obj => {
             const eventTitle = obj.title || "Campus Event";
             // category now plays the old MeetingType role: it drives the athletic
@@ -2509,6 +2544,12 @@ async function runScraper() {
                 return;
             }
 
+            // Club Sports lobby double-entry (see the sweep above the loop).
+            if (clubDropRows.has(obj)) {
+                console.log(`⏭️  Skipped Club Sports lobby double-entry: "${eventTitle}" (${obj.startDate || 'no date'})`);
+                return;
+            }
+
             // Build location from the split named fields (building + roomName +
             // roomNumber). The proxy also returns a pre-combined location, but we
             // compose from the parts to keep the existing cleanups working.
@@ -2538,6 +2579,39 @@ async function runScraper() {
             if (eventType) tags.push(eventType);
             const custName = (obj.customerName || '').trim();
             if (custName) tags.push(custName);
+
+            // Club Sports games posted on the MAIN calendar by Campus Recreation
+            // (first seen 2026-09: "Club Sports Game: Women's Soccer vs
+            // Shippensburg University", category Public Event -- so the
+            // Athletic Competitions skip above never sees them). Emit the SAME
+            // tag set the GetInvolved club-sports branch emits, so all EXISTING
+            // wiring lights up with zero matcher edits (Hard Rule 7 satisfied
+            // by tag parity, not new code): Clubs/Orgs + Club Sports + <Sport>
+            // + gender feed the cs-* per-sport prefs in lib/eventMatch.js and
+            // events.ics.php (both gate on Clubs/Orgs THEN Club Sports);
+            // Club Sports alone flips isSportEvent() in app.js -> Sports page,
+            // timeline sport treatment, and the search Sports bucket.
+            const isClubSportsGame = /^club sports? game\b/i.test(eventTitle) ||
+                (custName === 'Campus Recreation' && /\bvs\.?\b|\bversus\b/i.test(eventTitle));
+            if (isClubSportsGame) {
+                if (!tags.includes('Clubs/Orgs')) tags.push('Clubs/Orgs');
+                tags.push('Club Sports');
+                // Women-first else-if: "women's" CONTAINS "men's", so an
+                // unordered pair of substring tests double-tags women's games.
+                if (/women['\u2019]?s/i.test(eventTitle)) tags.push("Women's");
+                else if (/\bmen['\u2019]?s/i.test(eventTitle)) tags.push("Men's");
+                // Word-boundary sport match (mirrors the GetInvolved branch's
+                // sportWordMatch -- that helper is scoped to its own block).
+                const csEscape = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                sportsList.forEach(s => {
+                    if (new RegExp(`\\b${csEscape(s)}\\b`, 'i').test(eventTitle)) tags.push(s);
+                });
+                // Home detection: same venue-first rule as the GetInvolved club
+                // branch (campus playing surfaces), title "vs" as fallback.
+                const csLoc = eventLoc.toLowerCase();
+                const csHomeWords = ['pucillo', 'chryst', 'biemesderfer', 'cooper park', 'seaber', 'mccomsey', 'anttonen', 'millersville', 'comet'];
+                if (csHomeWords.some(k => csLoc.includes(k)) || /\bvs\b/i.test(eventTitle)) tags.push("Home Game Mode");
+            }
 
             // RELABEL: "Student Event" from the MU calendar is really the GetInvolved feed
             // being republished on the main calendar, creating duplicates. Treat these as
@@ -2998,8 +3072,12 @@ async function runScraper() {
 
             if ((isPermittedSport || tags.some(t => t.toLowerCase().includes('club sport'))) && isCompetitiveGame) {
                 tags.push("Club Sports");
-                if (/men's|mens/.test(name)) tags.push("Men's");
+                // Women-first else-if (2026-09-01): "women's" CONTAINS "men's",
+                // so the old unordered substring pair double-tagged women's
+                // games with Men's too (dormant -- zero club-sports rows in the
+                // feed when fixed -- but it bites the first women's posting).
                 if (/women's|womens/.test(name)) tags.push("Women's");
+                else if (/men's|mens/.test(name)) tags.push("Men's");
                 // Same word-boundary safety on the sportsList categorization —
                 // without it, "tennis" would match inside e.g. "antennis" (less
                 // realistic but still safer to be strict).

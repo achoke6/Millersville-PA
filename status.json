@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-01T20:36:56.573Z",
-  "totalEvents": 1154,
+  "generatedAt": "2026-09-01T23:04:08.356Z",
+  "totalEvents": 1164,
   "withDescription": 591,
   "withImage": 156,
   "familyFriendly": 79,
   "eventsToday": 13,
   "sources": {
-    "muAthletics": 306,
+    "muAthletics": 316,
     "muCalendar": 158,
     "artsmu": 21,
     "campsAlumni": 40,
@@ -24,7 +24,7 @@
   "sourceDateRanges": {
     "muAthletics": {
       "earliest": "2026-08-27T20:00:00.000Z",
-      "latest": "2027-05-08T19:00:00.000Z"
+      "latest": "2027-05-27T00:00:00.000Z"
     },
     "muCalendar": {
       "earliest": "2026-06-30T00:00:00.000Z",
@@ -77,8 +77,8 @@
   },
   "staleness": {
     "muAthletics": {
-      "newest": "2027-05-08",
-      "daysSinceMoved": 4
+      "newest": "2027-05-27",
+      "daysSinceMoved": 0
     },
     "muCalendar": {
       "newest": "2027-06-04",
@@ -130,11 +130,11 @@
     }
   },
   "sports": {
-    "total": 350,
-    "scored": 14,
+    "total": 360,
+    "scored": 13,
     "wins": 6,
     "losses": 7,
-    "ties": 1
+    "ties": 0
   },
   "registrations": {
     "open": 14,
@@ -149,79 +149,79 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-01T20:32:58.001Z"
+    "lastSyncAt": "2026-09-01T23:00:21.363Z"
   },
   "recentlyAdded": [
     {
-      "key": "Welcome Back Ramen Night and Jeopardy Game|2026-08-26T21:00:00.000Z",
-      "firstSeenAt": "2026-09-01T20:10:17.717Z",
-      "title": "Welcome Back Ramen Night and Jeopardy Game",
-      "source": "MU",
-      "date": "2026-08-26T21:00:00.000Z"
+      "key": "Girls Varsity Tennis @ Lampeter Strasburg High School|2026-09-04T13:00:00.000Z",
+      "firstSeenAt": "2026-09-01T23:04:08.348Z",
+      "title": "Girls Varsity Tennis @ Lampeter Strasburg High School",
+      "source": "PM",
+      "date": "2026-09-04T13:00:00.000Z"
     },
     {
-      "key": "General Meetings|2026-09-02T21:00:00.000Z",
-      "firstSeenAt": "2026-09-01T20:10:17.717Z",
-      "title": "General Meetings",
-      "source": "MU",
-      "date": "2026-09-02T21:00:00.000Z"
+      "key": "Girls JV Soccer @ Lampeter Strasburg High School|2026-09-04T19:00:00.000Z",
+      "firstSeenAt": "2026-09-01T23:04:08.348Z",
+      "title": "Girls JV Soccer @ Lampeter Strasburg High School",
+      "source": "PM",
+      "date": "2026-09-04T19:00:00.000Z"
     },
     {
-      "key": "General Meetings|2026-09-09T21:00:00.000Z",
-      "firstSeenAt": "2026-09-01T20:10:17.717Z",
-      "title": "General Meetings",
-      "source": "MU",
-      "date": "2026-09-09T21:00:00.000Z"
+      "key": "Girls Varsity Soccer @ Lampeter Strasburg High School|2026-09-04T19:00:00.000Z",
+      "firstSeenAt": "2026-09-01T23:04:08.348Z",
+      "title": "Girls Varsity Soccer @ Lampeter Strasburg High School",
+      "source": "PM",
+      "date": "2026-09-04T19:00:00.000Z"
     },
     {
-      "key": "General Meetings|2026-09-23T21:00:00.000Z",
-      "firstSeenAt": "2026-09-01T20:10:17.717Z",
-      "title": "General Meetings",
-      "source": "MU",
-      "date": "2026-09-23T21:00:00.000Z"
+      "key": "Boys Varsity Soccer vs Lampeter Strasburg High School|2026-09-04T20:00:00.000Z",
+      "firstSeenAt": "2026-09-01T23:04:08.348Z",
+      "title": "Boys Varsity Soccer vs Lampeter Strasburg High School",
+      "source": "PM",
+      "date": "2026-09-04T20:00:00.000Z"
     },
     {
-      "key": "General Meetings|2026-10-07T21:00:00.000Z",
-      "firstSeenAt": "2026-09-01T20:10:17.717Z",
-      "title": "General Meetings",
-      "source": "MU",
-      "date": "2026-10-07T21:00:00.000Z"
+      "key": "Boys JV Soccer vs Lampeter Strasburg High School|2026-09-04T20:00:00.000Z",
+      "firstSeenAt": "2026-09-01T23:04:08.348Z",
+      "title": "Boys JV Soccer vs Lampeter Strasburg High School",
+      "source": "PM",
+      "date": "2026-09-04T20:00:00.000Z"
     },
     {
-      "key": "General Meetings|2026-10-21T21:00:00.000Z",
-      "firstSeenAt": "2026-09-01T20:10:17.717Z",
-      "title": "General Meetings",
-      "source": "MU",
-      "date": "2026-10-21T21:00:00.000Z"
+      "key": "Boys Varsity Football vs Upper Dublin High School|2026-09-04T23:00:00.000Z",
+      "firstSeenAt": "2026-09-01T23:04:08.348Z",
+      "title": "Boys Varsity Football vs Upper Dublin High School",
+      "source": "PM",
+      "date": "2026-09-04T23:00:00.000Z"
     },
     {
-      "key": "CHEP Trivia|2026-10-22T20:00:00.000Z",
-      "firstSeenAt": "2026-09-01T20:10:17.717Z",
-      "title": "CHEP Trivia",
+      "key": "Millersville University Women's Outdoor Track and Field 49er Classic|2027-03-18T00:00:00.000Z",
+      "firstSeenAt": "2026-09-01T23:04:08.348Z",
+      "title": "Millersville University Women's Outdoor Track and Field 49er Classic",
       "source": "MU",
-      "date": "2026-10-22T20:00:00.000Z"
+      "date": "2027-03-18T00:00:00.000Z"
     },
     {
-      "key": "4th Annual Trunk or Treat|2026-10-22T22:00:00.000Z",
-      "firstSeenAt": "2026-09-01T20:10:17.717Z",
-      "title": "4th Annual Trunk or Treat",
-      "source": "Other",
-      "date": "2026-10-22T22:00:00.000Z"
+      "key": "Millersville University Women's Outdoor Track and Field Millersville Metrics|2027-04-02T17:00:00.000Z",
+      "firstSeenAt": "2026-09-01T23:04:08.348Z",
+      "title": "Millersville University Women's Outdoor Track and Field Millersville Metrics",
+      "source": "MU",
+      "date": "2027-04-02T17:00:00.000Z"
     },
     {
-      "key": "General Meetings|2026-11-04T22:00:00.000Z",
-      "firstSeenAt": "2026-09-01T20:10:17.717Z",
-      "title": "General Meetings",
+      "key": "Millersville University Women's Outdoor Track and Field Messiah Multi and Invite|2027-04-08T00:00:00.000Z",
+      "firstSeenAt": "2026-09-01T23:04:08.348Z",
+      "title": "Millersville University Women's Outdoor Track and Field Messiah Multi and Invite",
       "source": "MU",
-      "date": "2026-11-04T22:00:00.000Z"
+      "date": "2027-04-08T00:00:00.000Z"
     },
     {
-      "key": "General Meetings|2026-11-18T22:00:00.000Z",
-      "firstSeenAt": "2026-09-01T20:10:17.717Z",
-      "title": "General Meetings",
+      "key": "Millersville University Women's Outdoor Track and Field Bucknell Outdoor Classic|2027-04-10T00:00:00.000Z",
+      "firstSeenAt": "2026-09-01T23:04:08.348Z",
+      "title": "Millersville University Women's Outdoor Track and Field Bucknell Outdoor Classic",
       "source": "MU",
-      "date": "2026-11-18T22:00:00.000Z"
+      "date": "2027-04-10T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 16
 }

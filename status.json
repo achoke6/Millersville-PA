@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-01T13:08:26.590Z",
+  "generatedAt": "2026-09-01T14:00:16.146Z",
   "totalEvents": 1133,
   "withDescription": 568,
   "withImage": 127,
-  "familyFriendly": 75,
+  "familyFriendly": 76,
   "eventsToday": 14,
   "sources": {
     "muAthletics": 306,
-    "muCalendar": 158,
+    "muCalendar": 156,
     "artsmu": 21,
-    "campsAlumni": 39,
-    "muGetInvolved": 235,
+    "campsAlumni": 40,
+    "muGetInvolved": 236,
     "pennManor": 67,
     "borough": 68,
     "vfw": 6,
@@ -149,9 +149,23 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-01T13:04:51.550Z"
+    "lastSyncAt": "2026-09-01T13:56:22.382Z"
   },
   "recentlyAdded": [
+    {
+      "key": "MU Baseball Fall Team Camp 6|2026-10-24T13:00:00.000Z",
+      "firstSeenAt": "2026-09-01T14:00:16.143Z",
+      "title": "MU Baseball Fall Team Camp 6",
+      "source": "MU",
+      "date": "2026-10-24T13:00:00.000Z"
+    },
+    {
+      "key": "MU Baseball Summer Camp|2026-11-01T13:00:00.000Z",
+      "firstSeenAt": "2026-09-01T14:00:16.143Z",
+      "title": "MU Baseball Summer Camp",
+      "source": "MU",
+      "date": "2026-11-01T13:00:00.000Z"
+    },
     {
       "key": "Movie Discussion Night|2026-09-02T23:00:00.000Z",
       "firstSeenAt": "2026-08-31T22:30:48.680Z",
@@ -207,21 +221,7 @@
       "title": "Planning Commission",
       "source": "Manor",
       "date": "2026-09-14T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
-      "firstSeenAt": "2026-08-31T22:30:48.680Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-09-30T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
-      "firstSeenAt": "2026-08-31T22:30:48.680Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-10-05T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

@@ -5454,10 +5454,16 @@ async function runScraper() {
                 }
             }
 
+            // Digit exception (2026-09-01, the "988 Day" pair): digit-bearing
+            // short titles are high-entropy -- "988 day" (7 chars) substring-
+            // matched its MU Calendar twin but died on the >= 8 floor by ONE
+            // character. A bare short WORD ("concert") stays blocked: without
+            // a digit the length floor is unchanged.
+            const digitShort = /\d/.test(shorter);
             let titleMatch;
             if (exactMatch || noWsMatch || sortedMatch) titleMatch = true;
             else if (isGeneric) titleMatch = false;
-            else titleMatch = (substringMatch && shorter.length >= 8) || fuzzyMatch;
+            else titleMatch = (substringMatch && (shorter.length >= 8 || digitShort)) || fuzzyMatch;
 
             // Same-org-same-time-same-room rule: when two events share
             // orgName + location signature + nearly-identical time, they're
@@ -5502,7 +5508,13 @@ async function runScraper() {
             // legitimately publish the same event with different start times).
             if (!exactMatch && !noWsMatch && !sortedMatch) {
                 const timeDiff = Math.abs(ne.time - seed.time);
-                if (shorter.length < 10 && timeDiff > ONE_HALF_HOUR_MS) continue;
+                // digitShort rides here too: a digit-bearing short title is
+                // distinctive enough to trust same-day sameness even when the
+                // two sources publish different wall-clock times (the >= 10
+                // branch's own rationale). The 988 pair itself parses to the
+                // SAME instant (naive-ET vs Z spellings of 10 AM), so this
+                // half is future-proofing, not the live fix.
+                if (shorter.length < 10 && !digitShort && timeDiff > ONE_HALF_HOUR_MS) continue;
             }
 
             matched = g;
@@ -5520,18 +5532,30 @@ async function runScraper() {
         if (candidates.length <= 1) return; // no duplicates in this group
         // Rank candidates — best first
         candidates.sort((a, b) => {
-            // Primary: prefer the version with a meaningfully richer description.
+            // GetInvolved beats its MU Calendar republication OUTRIGHT
+            // (2026-09-01, Adam's rule): the GetInvolved copy carries the
+            // benefits badges, org context, and the RSVP-capable sourceLink,
+            // so it is the listing users should land on. Bucket-based, NOT
+            // rank-based: MU Calendar "Student Event" relabels carry the
+            // Clubs/Orgs TAG and tie on sourceRank (the 988 Day pair did),
+            // but their bucket is still 'mu'. A 3x-richer MU description no
+            // longer flips this pairing -- it rides the merge instead (see
+            // the description adoption in the merge loop below).
+            if (a.bucket === 'clubs' && b.bucket === 'mu') return -1;
+            if (b.bucket === 'clubs' && a.bucket === 'mu') return 1;
+
+            // Prefer the version with a meaningfully richer description.
             // When two sources have the same event but very different description
             // depth (e.g. artsmu has 200-char gallery blurb, MU Calendar has 20
             // chars), the user-visible value is richer with the longer one.
-            // Threshold: longer must be at least 3x the shorter to flip — small
+            // Threshold: longer must be at least 3x the shorter to flip -- small
             // differences shouldn't beat source-priority ordering.
             const aDescLen = (a.event.description || '').length;
             const bDescLen = (b.event.description || '').length;
             if (aDescLen > 50 && aDescLen > bDescLen * 3) return -1;
             if (bDescLen > 50 && bDescLen > aDescLen * 3) return 1;
 
-            // Source priority (MU Calendar > Clubs/Orgs > artsmu)
+            // Source priority (Clubs/Orgs > MU Calendar > artsmu -- see sourceRank)
             const rankDiff = sourceRank(b.event) - sourceRank(a.event);
             if (rankDiff !== 0) return rankDiff;
             // Tiebreaker: whichever has a ticketLink wins (more useful for users)
@@ -5587,6 +5611,22 @@ async function runScraper() {
             // signal from the GetInvolved duplicate that was being merged in.
             if (loser.event.audience === 'public' && winner.audience !== 'public') {
                 winner.audience = 'public';
+            }
+            // Carry a custom perk glyph (perkFoodIcon) -- benefits themselves
+            // merge above, but the glyph override didn't, so a losing copy's
+            // custom icon silently fell back to the default pizza glyph.
+            if (loser.event.perkFoodIcon && !winner.perkFoodIcon) {
+                winner.perkFoodIcon = loser.event.perkFoodIcon;
+            }
+            // Adopt a meaningfully richer description from the loser (same
+            // 3x-and->50 test the winner sort used back when description
+            // length could flip THIS pairing). GetInvolved now beats MU
+            // Calendar outright, so a longer MU description rides the merge
+            // onto the GetInvolved winner instead of dying with the loser.
+            const winDescLen = (winner.description || '').length;
+            const loseDescLen = (loser.event.description || '').length;
+            if (loseDescLen > 50 && loseDescLen > winDescLen * 3) {
+                winner.description = loser.event.description;
             }
 
             kept.delete(loser.idx);

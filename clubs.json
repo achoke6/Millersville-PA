@@ -32,16 +32,6 @@
     "id": ""
   },
   {
-    "name": "AI & Technology Society",
-    "category": "Academic",
-    "categories": [
-      "Academic",
-      "Service & Civic Engagement"
-    ],
-    "shortName": "AI & Tech  / AI Club",
-    "id": "ai_and_technology_society"
-  },
-  {
     "name": "All Campus Musical Organization",
     "category": "Performance",
     "categories": [
@@ -56,15 +46,6 @@
     "categories": [],
     "shortName": "",
     "id": ""
-  },
-  {
-    "name": "Alliance for Social Change",
-    "category": "Academic",
-    "categories": [
-      "Academic"
-    ],
-    "shortName": "ASC",
-    "id": "allianceforsocialchange"
   },
   {
     "name": "Alpha Sigma Alpha",
@@ -122,32 +103,20 @@
     "id": ""
   },
   {
-    "name": "American Choral Directors Association",
-    "category": "Arts & Culture",
-    "categories": [
-      "Arts & Culture"
-    ],
-    "shortName": "ACDA",
-    "id": "acda"
-  },
-  {
     "name": "American Meteorological Society",
-    "category": "Educational Program",
-    "categories": [
-      "Educational Program"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "AMS",
     "id": ""
   },
   {
-    "name": "American Society of Safety Professionals",
-    "category": "Academic",
+    "name": "American Society of Safety Professionals Millersville University Student Chapter",
+    "category": "Lecture or Speaker",
     "categories": [
-      "Academic",
       "Lecture or Speaker"
     ],
-    "shortName": "ASSP-MU",
-    "id": "assp"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Angler's Association of Millersville",
@@ -219,21 +188,10 @@
   },
   {
     "name": "Asian Student Inclusivity Association",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "ASIA",
     "id": ""
-  },
-  {
-    "name": "Association of Technology, Management and Applied Engineering",
-    "category": "Academic",
-    "categories": [
-      "Academic"
-    ],
-    "shortName": "ATMAE, Robotics Team",
-    "id": "atmae"
   },
   {
     "name": "Athletics",
@@ -259,15 +217,6 @@
     "id": "baseball"
   },
   {
-    "name": "BEA Student Media Club",
-    "category": "Academic",
-    "categories": [
-      "Academic"
-    ],
-    "shortName": "BEA",
-    "id": "bea"
-  },
-  {
     "name": "Best Buddies",
     "category": "Service",
     "categories": [
@@ -288,15 +237,6 @@
     "id": ""
   },
   {
-    "name": "Biology Club",
-    "category": "Academic",
-    "categories": [
-      "Academic"
-    ],
-    "shortName": "Bio Club",
-    "id": "bioclub"
-  },
-  {
     "name": "Black Student Union",
     "category": "Lecture or Speaker",
     "categories": [
@@ -308,8 +248,10 @@
   },
   {
     "name": "Board Game Club",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -443,15 +385,6 @@
     "id": "ccerp"
   },
   {
-    "name": "Climbing Club",
-    "category": "Sports and Leisure",
-    "categories": [
-      "Sports and Leisure"
-    ],
-    "shortName": "",
-    "id": "climbingclub"
-  },
-  {
     "name": "Clinical Psychology Student Association",
     "category": "",
     "categories": [],
@@ -462,19 +395,20 @@
     "name": "Club Baseball",
     "category": "Sports and Leisure",
     "categories": [
-      "Sports and Leisure"
+      "Sports and Leisure",
+      "Sporting"
     ],
     "shortName": "Club Baseball",
     "id": "millersvilleclubbaseball"
   },
   {
     "name": "Club Cheerleading",
-    "category": "Sports and Leisure",
+    "category": "Social",
     "categories": [
-      "Sports and Leisure"
+      "Social"
     ],
     "shortName": "Club Cheerleading",
-    "id": "na"
+    "id": ""
   },
   {
     "name": "Club Softball",
@@ -582,16 +516,6 @@
     "categories": [],
     "shortName": "CEP",
     "id": "conferenceoneducationandpoverty"
-  },
-  {
-    "name": "Construction Club",
-    "category": "Service & Civic Engagement",
-    "categories": [
-      "Service & Civic Engagement",
-      "University Departments "
-    ],
-    "shortName": "CC",
-    "id": "constuction_club"
   },
   {
     "name": "Construction Management Club",
@@ -782,8 +706,7 @@
     "name": "Equestrian Club",
     "category": "Service",
     "categories": [
-      "Service",
-      "Meeting"
+      "Service"
     ],
     "shortName": "",
     "id": ""
@@ -798,23 +721,9 @@
     "id": ""
   },
   {
-    "name": "Fellowship of Christian Athletes",
-    "category": "Spirituality",
-    "categories": [
-      "Spirituality",
-      "Sports and Leisure"
-    ],
-    "shortName": "FCA",
-    "id": "fca"
-  },
-  {
     "name": "Fencing Guild",
-    "category": "Performance",
-    "categories": [
-      "Performance",
-      "Social",
-      "Sporting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -826,15 +735,6 @@
     "id": "fieldhockey"
   },
   {
-    "name": "Film Club",
-    "category": "Academic",
-    "categories": [
-      "Academic"
-    ],
-    "shortName": "",
-    "id": "filmclubmu"
-  },
-  {
     "name": "First Gems of The Ville",
     "category": "Social",
     "categories": [
@@ -842,15 +742,6 @@
     ],
     "shortName": "First Gems",
     "id": ""
-  },
-  {
-    "name": "Flute Association",
-    "category": "Arts & Culture",
-    "categories": [
-      "Arts & Culture"
-    ],
-    "shortName": "FAMU",
-    "id": "fluteassociationatmu"
   },
   {
     "name": "Football",
@@ -869,19 +760,10 @@
     "id": "footprintspdm"
   },
   {
-    "name": "Forging & Blacksmithing Club",
-    "category": "Academic",
-    "categories": [
-      "Academic"
-    ],
-    "shortName": "Forging@MU",
-    "id": "forging"
-  },
-  {
     "name": "Fraternity & Sorority Life",
-    "category": "Educational Program",
+    "category": "Social",
     "categories": [
-      "Educational Program"
+      "Social"
     ],
     "shortName": "FSL",
     "id": ""
@@ -911,15 +793,6 @@
     "categories": [],
     "shortName": "",
     "id": ""
-  },
-  {
-    "name": "Geology Club",
-    "category": "Academic",
-    "categories": [
-      "Academic"
-    ],
-    "shortName": "GeoClub",
-    "id": "geologyclub"
   },
   {
     "name": "Get Involved Help",
@@ -1023,15 +896,6 @@
     "id": ""
   },
   {
-    "name": "International Friendships",
-    "category": "Spirituality",
-    "categories": [
-      "Spirituality"
-    ],
-    "shortName": "IFI",
-    "id": "ifi"
-  },
-  {
     "name": "It's On Us",
     "category": "Educational Program",
     "categories": [
@@ -1040,15 +904,6 @@
     ],
     "shortName": "",
     "id": ""
-  },
-  {
-    "name": "Jazz Bands",
-    "category": "Arts & Culture",
-    "categories": [
-      "Arts & Culture"
-    ],
-    "shortName": "MU Jazz Bands",
-    "id": "mujazzbands"
   },
   {
     "name": "Jewelry and Metal Arts Guild",
@@ -1083,14 +938,13 @@
     "id": ""
   },
   {
-    "name": "Korea Defense Veterans Association Campus Club",
-    "category": "Service & Civic Engagement",
+    "name": "Korea Defense Veterans Association Campus Club - Millersville University",
+    "category": "Social",
     "categories": [
-      "Service & Civic Engagement",
       "Social"
     ],
-    "shortName": "KCC-MU",
-    "id": "kcc-mu"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Lacrosse",
@@ -1232,7 +1086,7 @@
     "categories": [
       "Sports and Leisure"
     ],
-    "shortName": "",
+    "shortName": "MUMVB",
     "id": "millersvillemensvball"
   },
   {
@@ -1252,11 +1106,9 @@
     "id": "mensicehockey"
   },
   {
-    "name": "Men's Rugby Club of Millersville University",
-    "category": "Competition",
+    "name": "Men's Rugby Club",
+    "category": "Meeting",
     "categories": [
-      "Competition",
-      "Sporting",
       "Meeting"
     ],
     "shortName": "Men's Rugby Club",
@@ -1311,16 +1163,6 @@
     "id": ""
   },
   {
-    "name": "Millersville University Marauder Marching Band",
-    "category": "Academic",
-    "categories": [
-      "Academic",
-      "Arts & Culture"
-    ],
-    "shortName": "\"Marauder\" Marching Band",
-    "id": "mummb"
-  },
-  {
     "name": "Mixed Martial Arts Club",
     "category": "",
     "categories": [],
@@ -1370,34 +1212,11 @@
     "id": ""
   },
   {
-    "name": "National Association for Music Education",
-    "category": "Academic",
-    "categories": [
-      "Academic",
-      "Arts & Culture"
-    ],
-    "shortName": "NAfME, Collegiate Chapter 92",
-    "id": "nafme"
-  },
-  {
-    "name": "National Association for the Advancement of Colored People",
-    "category": "Academic",
-    "categories": [
-      "Academic",
-      "Service & Civic Engagement",
-      "Identity-Based"
-    ],
-    "shortName": "NAACP",
-    "id": "naacp"
-  },
-  {
     "name": "National Science Teachers Association MU",
-    "category": "Academic",
-    "categories": [
-      "Academic"
-    ],
-    "shortName": "NSTA MU",
-    "id": "nsta-mu"
+    "category": "",
+    "categories": [],
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "National Society of Black Engineers",
@@ -1458,30 +1277,11 @@
     "id": ""
   },
   {
-    "name": "Omicron Delta Kappa",
-    "category": "Academic",
-    "categories": [
-      "Academic",
-      "Service & Civic Engagement"
-    ],
-    "shortName": "ODK",
-    "id": "odk"
-  },
-  {
     "name": "Orientation Programs",
     "category": "",
     "categories": [],
     "shortName": "",
     "id": ""
-  },
-  {
-    "name": "Orthodox Christian Fellowship at MU",
-    "category": "Spirituality",
-    "categories": [
-      "Spirituality"
-    ],
-    "shortName": "OCF",
-    "id": "ocfclub"
   },
   {
     "name": "Panhellenic Council",
@@ -1495,12 +1295,12 @@
   },
   {
     "name": "Paws On Deck",
-    "category": "Service & Civic Engagement",
+    "category": "Meeting",
     "categories": [
-      "Service & Civic Engagement"
+      "Meeting"
     ],
-    "shortName": "POD",
-    "id": "pawsondeck"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Peer Educators",
@@ -1524,15 +1324,6 @@
     "categories": [],
     "shortName": "PSECU",
     "id": "psecu"
-  },
-  {
-    "name": "Percussion Ensembles",
-    "category": "Arts & Culture",
-    "categories": [
-      "Arts & Culture"
-    ],
-    "shortName": "MUPE",
-    "id": "muperc"
   },
   {
     "name": "Phi Alpha Theta",
@@ -1561,12 +1352,12 @@
   },
   {
     "name": "Pre-Health Club",
-    "category": "Academic",
+    "category": "Meeting",
     "categories": [
-      "Academic"
+      "Meeting"
     ],
-    "shortName": "PHC",
-    "id": "pre-healthclub"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "President's Commission on Gender and Sexual Diversity",
@@ -1585,22 +1376,9 @@
     "id": ""
   },
   {
-    "name": "Public Relations Student Society of America",
-    "category": "Academic",
-    "categories": [
-      "Academic",
-      "University Departments "
-    ],
-    "shortName": "PRSSA",
-    "id": "prssa"
-  },
-  {
     "name": "Reformed University Fellowship",
-    "category": "Meeting",
-    "categories": [
-      "Meeting",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "RUF",
     "id": ""
   },
@@ -1685,15 +1463,6 @@
     "id": ""
   },
   {
-    "name": "Society of Manufacturing Engineers",
-    "category": "Academic",
-    "categories": [
-      "Academic"
-    ],
-    "shortName": "SME",
-    "id": "society_of_manufacturing_engineers"
-  },
-  {
     "name": "Society of Motion Picture and Television Engineers",
     "category": "",
     "categories": [],
@@ -1751,22 +1520,18 @@
     "id": ""
   },
   {
-    "name": "Student Affiliates in School Psychology",
-    "category": "Academic",
+    "name": "Student Affiliates in School Psychology at Millersville University",
+    "category": "Social",
     "categories": [
-      "Academic",
       "Social"
     ],
-    "shortName": "SASP MU",
-    "id": "sasp-mu"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Student Business Association",
-    "category": "Lecture or Speaker",
-    "categories": [
-      "Lecture or Speaker",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "SBA",
     "id": ""
   },
@@ -1803,15 +1568,6 @@
     "id": "studentcenter"
   },
   {
-    "name": "Student PSEA at Millersville University",
-    "category": "Academic",
-    "categories": [
-      "Academic"
-    ],
-    "shortName": "Student PSEA",
-    "id": "spsea"
-  },
-  {
     "name": "Student Services Business Office",
     "category": "University Departments ",
     "categories": [
@@ -1830,13 +1586,13 @@
     "id": ""
   },
   {
-    "name": "Super Smash Club",
-    "category": "Sports and Leisure",
+    "name": "Super Smash Club at MU",
+    "category": "Competition",
     "categories": [
-      "Sports and Leisure"
+      "Competition"
     ],
     "shortName": "",
-    "id": "supersmashclubmu"
+    "id": ""
   },
   {
     "name": "Sustainability Club",
@@ -1873,14 +1629,11 @@
     "id": "teamftk"
   },
   {
-    "name": "Technology and Engineering Education Collegiate Association",
-    "category": "Academic",
-    "categories": [
-      "Academic",
-      "University Departments "
-    ],
-    "shortName": "TEECA @ MU",
-    "id": "teeca"
+    "name": "Technology and Engineering Education Collegiate Association At Millersville University",
+    "category": "",
+    "categories": [],
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Technology Camp",
@@ -1890,14 +1643,13 @@
     "id": "techcamp"
   },
   {
-    "name": "Technology Career Network",
-    "category": "Academic",
+    "name": "Technology Career Network at Millersville University",
+    "category": "Social",
     "categories": [
-      "Academic",
       "Social"
     ],
-    "shortName": "TCN",
-    "id": "tcn"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "The Career Center",
@@ -2020,15 +1772,6 @@
     ],
     "shortName": "VGDC",
     "id": "vgdc"
-  },
-  {
-    "name": "Ville Sports Officials Association Club",
-    "category": "Sports and Leisure",
-    "categories": [
-      "Sports and Leisure"
-    ],
-    "shortName": "VSOAC",
-    "id": "vsoa"
   },
   {
     "name": "VilleHarmonics",

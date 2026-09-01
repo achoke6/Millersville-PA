@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-08-27T17:40:46.000Z",
-  "totalEvents": 1059,
-  "withDescription": 535,
-  "withImage": 113,
+  "generatedAt": "2026-09-01T07:18:47.075Z",
+  "totalEvents": 1134,
+  "withDescription": 569,
+  "withImage": 127,
   "familyFriendly": 75,
-  "eventsToday": 15,
+  "eventsToday": 14,
   "sources": {
-    "muAthletics": 255,
-    "muCalendar": 155,
-    "artsmu": 22,
+    "muAthletics": 306,
+    "muCalendar": 158,
+    "artsmu": 21,
     "campsAlumni": 39,
-    "muGetInvolved": 205,
-    "pennManor": 71,
-    "borough": 69,
+    "muGetInvolved": 235,
+    "pennManor": 67,
+    "borough": 68,
     "vfw": 7,
-    "phantomPower": 14,
+    "phantomPower": 13,
     "community": 22,
     "manor": 41,
     "raneyCellars": 5,
@@ -24,14 +24,14 @@
   "sourceDateRanges": {
     "muAthletics": {
       "earliest": "2026-08-27T20:00:00.000Z",
-      "latest": "2027-05-01T17:00:00.000Z"
+      "latest": "2027-05-08T19:00:00.000Z"
     },
     "muCalendar": {
       "earliest": "2026-06-30T00:00:00.000Z",
       "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
-      "earliest": "2026-08-07T21:00:00.000Z",
+      "earliest": "2026-09-13T22:00:00.000Z",
       "latest": "2027-05-02T18:30:00.000Z"
     },
     "campsAlumni": {
@@ -43,11 +43,11 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-06-02T17:30:00.000Z",
+      "earliest": "2026-06-03T04:00:00.000Z",
       "latest": "2026-09-21T23:00:00.000Z"
     },
     "borough": {
-      "earliest": "2026-06-01T23:00:00.000Z",
+      "earliest": "2026-06-03T22:30:00.000Z",
       "latest": "2026-12-25T12:00:00.000Z"
     },
     "vfw": {
@@ -55,7 +55,7 @@
       "latest": "2026-10-15T20:30:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-08-27T23:00:00.000Z",
+      "earliest": "2026-09-05T01:00:00.000Z",
       "latest": "2026-10-04T00:00:00.000Z"
     },
     "community": {
@@ -77,68 +77,68 @@
   },
   "staleness": {
     "muAthletics": {
-      "newest": "2027-05-01",
-      "daysSinceMoved": 50
+      "newest": "2027-05-08",
+      "daysSinceMoved": 4
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 11
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 20
+      "daysSinceMoved": 25
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 20
+      "daysSinceMoved": 25
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
-      "daysSinceMoved": 84
+      "daysSinceMoved": 89
     },
     "pennManor": {
       "newest": "2026-09-21",
-      "daysSinceMoved": 64
+      "daysSinceMoved": 69
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 30
+      "daysSinceMoved": 35
     },
     "vfw": {
       "newest": "2026-10-15",
-      "daysSinceMoved": 17
+      "daysSinceMoved": 22
     },
     "phantomPower": {
       "newest": "2026-10-04",
-      "daysSinceMoved": 36
+      "daysSinceMoved": 41
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 83
+      "daysSinceMoved": 88
     },
     "manor": {
       "newest": "2027-08-25",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 7
     },
     "raneyCellars": {
       "newest": "2026-09-10",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 12
     },
     "theBackyard": {
       "newest": "2026-09-30",
-      "daysSinceMoved": 30
+      "daysSinceMoved": 35
     }
   },
   "sports": {
-    "total": 298,
-    "scored": 1,
-    "wins": 0,
-    "losses": 0,
+    "total": 350,
+    "scored": 14,
+    "wins": 6,
+    "losses": 7,
     "ties": 1
   },
   "registrations": {
     "open": 14,
-    "next2Weeks": 1,
+    "next2Weeks": 4,
     "nextClose": "2026-09-09",
     "openNoDeadline": 1
   },
@@ -149,79 +149,79 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-08-27T17:36:01.241Z"
+    "lastSyncAt": "2026-09-01T07:15:25.205Z"
   },
   "recentlyAdded": [
     {
-      "key": "Fellowship Night|2026-08-28T00:00:00.000Z",
-      "firstSeenAt": "2026-08-27T17:40:45.997Z",
-      "title": "Fellowship Night",
+      "key": "Movie Discussion Night|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-08-31T22:30:48.680Z",
+      "title": "Movie Discussion Night",
       "source": "MU",
-      "date": "2026-08-28T00:00:00.000Z"
+      "date": "2026-09-02T23:00:00.000Z"
     },
     {
-      "key": "AniMU Weekly Meeting|2026-08-28T22:00:00.000Z",
-      "firstSeenAt": "2026-08-27T17:40:45.997Z",
-      "title": "AniMU Weekly Meeting",
-      "source": "MU",
-      "date": "2026-08-28T22:00:00.000Z"
+      "key": "Zoning Hearing Board-CANCELED|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-08-31T22:30:48.680Z",
+      "title": "Zoning Hearing Board-CANCELED",
+      "source": "Manor",
+      "date": "2026-09-02T23:00:00.000Z"
     },
     {
-      "key": "Mental Health Matters: Screening and Fair|2026-09-02T11:00:00",
-      "firstSeenAt": "2026-08-27T17:40:45.997Z",
-      "title": "Mental Health Matters: Screening and Fair",
+      "key": "Intro to Paws on Deck|2026-09-03T16:30:00",
+      "firstSeenAt": "2026-08-31T22:30:48.680Z",
+      "title": "Intro to Paws on Deck",
       "source": "MU",
-      "date": "2026-09-02T11:00:00"
+      "date": "2026-09-03T16:30:00"
     },
     {
-      "key": "Fellowship Night|2026-09-04T00:00:00.000Z",
-      "firstSeenAt": "2026-08-27T17:40:45.997Z",
-      "title": "Fellowship Night",
-      "source": "MU",
-      "date": "2026-09-04T00:00:00.000Z"
+      "key": "Girls JV Volleyball @ Ephrata Area High School|2026-09-03T22:00:00.000Z",
+      "firstSeenAt": "2026-08-31T22:30:48.680Z",
+      "title": "Girls JV Volleyball @ Ephrata Area High School",
+      "source": "PM",
+      "date": "2026-09-03T22:00:00.000Z"
     },
     {
-      "key": "Fellowship Night|2026-09-11T00:00:00.000Z",
-      "firstSeenAt": "2026-08-27T17:40:45.997Z",
-      "title": "Fellowship Night",
-      "source": "MU",
-      "date": "2026-09-11T00:00:00.000Z"
+      "key": "Girls Varsity Volleyball @ Ephrata Area High School|2026-09-03T23:00:00.000Z",
+      "firstSeenAt": "2026-08-31T22:30:48.680Z",
+      "title": "Girls Varsity Volleyball @ Ephrata Area High School",
+      "source": "PM",
+      "date": "2026-09-03T23:00:00.000Z"
     },
     {
-      "key": "AniMU Weekly Meeting|2026-09-11T22:00:00.000Z",
-      "firstSeenAt": "2026-08-27T17:40:45.997Z",
-      "title": "AniMU Weekly Meeting",
-      "source": "MU",
-      "date": "2026-09-11T22:00:00.000Z"
+      "key": "Girls Varsity Field Hockey vs Cumberland Valley High School|2026-09-03T23:00:00.000Z",
+      "firstSeenAt": "2026-08-31T22:30:48.680Z",
+      "title": "Girls Varsity Field Hockey vs Cumberland Valley High School",
+      "source": "PM",
+      "date": "2026-09-03T23:00:00.000Z"
     },
     {
-      "key": "Fellowship Night|2026-09-18T00:00:00.000Z",
-      "firstSeenAt": "2026-08-27T17:40:45.997Z",
-      "title": "Fellowship Night",
-      "source": "MU",
-      "date": "2026-09-18T00:00:00.000Z"
+      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
+      "firstSeenAt": "2026-08-31T22:30:48.680Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-08T23:00:00.000Z"
     },
     {
-      "key": "AniMU Weekly Meeting|2026-09-18T22:00:00.000Z",
-      "firstSeenAt": "2026-08-27T17:40:45.997Z",
-      "title": "AniMU Weekly Meeting",
-      "source": "MU",
-      "date": "2026-09-18T22:00:00.000Z"
+      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
+      "firstSeenAt": "2026-08-31T22:30:48.680Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-09-14T23:00:00.000Z"
     },
     {
-      "key": "Fellowship Night|2026-09-25T00:00:00.000Z",
-      "firstSeenAt": "2026-08-27T17:40:45.997Z",
-      "title": "Fellowship Night",
-      "source": "MU",
-      "date": "2026-09-25T00:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-08-31T22:30:48.680Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-09-30T12:30:00.000Z"
     },
     {
-      "key": "AniMU Weekly Meeting|2026-09-25T22:00:00.000Z",
-      "firstSeenAt": "2026-08-27T17:40:45.997Z",
-      "title": "AniMU Weekly Meeting",
-      "source": "MU",
-      "date": "2026-09-25T22:00:00.000Z"
+      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
+      "firstSeenAt": "2026-08-31T22:30:48.680Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-10-05T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 27
+  "addedLastRun": 0
 }

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-02T20:20:22.948Z",
-  "totalEvents": 1196,
+  "generatedAt": "2026-09-02T22:25:06.766Z",
+  "totalEvents": 1193,
   "withDescription": 622,
   "withImage": 187,
   "familyFriendly": 79,
@@ -11,7 +11,7 @@
     "artsmu": 21,
     "campsAlumni": 40,
     "muGetInvolved": 286,
-    "pennManor": 65,
+    "pennManor": 62,
     "borough": 67,
     "vfw": 11,
     "phantomPower": 13,
@@ -130,9 +130,9 @@
     }
   },
   "sports": {
-    "total": 360,
-    "scored": 14,
-    "wins": 7,
+    "total": 357,
+    "scored": 13,
+    "wins": 6,
     "losses": 7,
     "ties": 0
   },
@@ -150,9 +150,23 @@
       "Borough": 2
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-02T20:16:32.434Z"
+    "lastSyncAt": "2026-09-02T22:20:58.332Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Boys Varsity Cross Country vs Upper Perkiomen|2026-09-05T13:10:00.000Z",
+      "firstSeenAt": "2026-09-02T22:25:06.764Z",
+      "title": "Boys Varsity Cross Country vs Upper Perkiomen",
+      "source": "PM",
+      "date": "2026-09-05T13:10:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Cross Country vs Upper Perkiomen|2026-09-05T13:40:00.000Z",
+      "firstSeenAt": "2026-09-02T22:25:06.764Z",
+      "title": "Girls Varsity Cross Country vs Upper Perkiomen",
+      "source": "PM",
+      "date": "2026-09-05T13:40:00.000Z"
+    },
     {
       "key": "Auxiliary Meeting|2026-09-02T23:00:00.000Z",
       "firstSeenAt": "2026-09-02T20:20:22.946Z",
@@ -208,21 +222,7 @@
       "title": "Tell School of Music Recital Hour",
       "source": "MU",
       "date": "2026-09-16T19:00:00.000Z"
-    },
-    {
-      "key": "Tell School of Music Recital Hour|2026-09-23T19:00:00.000Z",
-      "firstSeenAt": "2026-09-02T19:44:53.437Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2026-09-23T19:00:00.000Z"
-    },
-    {
-      "key": "Tell School of Music Recital Hour|2026-09-30T19:00:00.000Z",
-      "firstSeenAt": "2026-09-02T19:44:53.437Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2026-09-30T19:00:00.000Z"
     }
   ],
-  "addedLastRun": 4
+  "addedLastRun": 2
 }

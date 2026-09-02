@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-09-01T23:04:08.356Z",
-  "totalEvents": 1164,
+  "generatedAt": "2026-09-02T02:56:30.019Z",
+  "totalEvents": 1162,
   "withDescription": 591,
   "withImage": 156,
   "familyFriendly": 79,
-  "eventsToday": 13,
+  "eventsToday": 12,
   "sources": {
     "muAthletics": 316,
     "muCalendar": 158,
     "artsmu": 21,
     "campsAlumni": 40,
     "muGetInvolved": 255,
-    "pennManor": 67,
-    "borough": 68,
+    "pennManor": 65,
+    "borough": 67,
     "vfw": 7,
     "phantomPower": 13,
     "community": 22,
-    "manor": 41,
+    "manor": 42,
     "raneyCellars": 5,
     "theBackyard": 11,
     "muHudlBroadcasts": 0
@@ -43,11 +43,11 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-06-03T04:00:00.000Z",
-      "latest": "2026-09-21T23:00:00.000Z"
+      "earliest": "2026-06-04T04:00:00.000Z",
+      "latest": "2026-09-25T18:00:00.000Z"
     },
     "borough": {
-      "earliest": "2026-06-03T22:30:00.000Z",
+      "earliest": "2026-06-08T23:00:00.000Z",
       "latest": "2026-12-25T12:00:00.000Z"
     },
     "vfw": {
@@ -64,7 +64,7 @@
     },
     "manor": {
       "earliest": "2026-09-02T23:00:00.000Z",
-      "latest": "2027-08-25T12:30:00.000Z"
+      "latest": "2027-09-01T23:00:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-08-15T22:00:00.000Z",
@@ -97,8 +97,8 @@
       "daysSinceMoved": 89
     },
     "pennManor": {
-      "newest": "2026-09-21",
-      "daysSinceMoved": 69
+      "newest": "2026-09-25",
+      "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2026-12-25",
@@ -117,8 +117,8 @@
       "daysSinceMoved": 88
     },
     "manor": {
-      "newest": "2027-08-25",
-      "daysSinceMoved": 7
+      "newest": "2027-09-01",
+      "daysSinceMoved": 0
     },
     "raneyCellars": {
       "newest": "2026-09-10",
@@ -149,9 +149,44 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-01T23:00:21.363Z"
+    "lastSyncAt": "2026-09-02T02:52:53.734Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Girls Varsity Sideline Cheerleading vs Upper Dublin High School|2026-09-04T23:00:00.000Z",
+      "firstSeenAt": "2026-09-02T02:56:30.017Z",
+      "title": "Girls Varsity Sideline Cheerleading vs Upper Dublin High School",
+      "source": "PM",
+      "date": "2026-09-04T23:00:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Sideline Cheerleading @ Upper Dublin High School|2026-09-05T00:00:00.000Z",
+      "firstSeenAt": "2026-09-02T02:56:30.017Z",
+      "title": "Girls Varsity Sideline Cheerleading @ Upper Dublin High School",
+      "source": "PM",
+      "date": "2026-09-05T00:00:00.000Z"
+    },
+    {
+      "key": "Trivia Night|2026-09-23T00:00:00.000Z",
+      "firstSeenAt": "2026-09-02T02:56:30.017Z",
+      "title": "Trivia Night",
+      "source": "Jack's Tavern",
+      "date": "2026-09-23T00:00:00.000Z"
+    },
+    {
+      "key": "Den Time (PERSEVERANCE Activity) Followed by Laps Kick off Assembly|2026-09-25T18:00:00.000Z",
+      "firstSeenAt": "2026-09-02T02:56:30.017Z",
+      "title": "Den Time (PERSEVERANCE Activity) Followed by Laps Kick off Assembly",
+      "source": "PM",
+      "date": "2026-09-25T18:00:00.000Z"
+    },
+    {
+      "key": "Zoning Hearing Board|2027-09-01T23:00:00.000Z",
+      "firstSeenAt": "2026-09-02T02:56:30.017Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2027-09-01T23:00:00.000Z"
+    },
     {
       "key": "Girls Varsity Tennis @ Lampeter Strasburg High School|2026-09-04T13:00:00.000Z",
       "firstSeenAt": "2026-09-01T23:04:08.348Z",
@@ -186,42 +221,7 @@
       "title": "Boys JV Soccer vs Lampeter Strasburg High School",
       "source": "PM",
       "date": "2026-09-04T20:00:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Football vs Upper Dublin High School|2026-09-04T23:00:00.000Z",
-      "firstSeenAt": "2026-09-01T23:04:08.348Z",
-      "title": "Boys Varsity Football vs Upper Dublin High School",
-      "source": "PM",
-      "date": "2026-09-04T23:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Outdoor Track and Field 49er Classic|2027-03-18T00:00:00.000Z",
-      "firstSeenAt": "2026-09-01T23:04:08.348Z",
-      "title": "Millersville University Women's Outdoor Track and Field 49er Classic",
-      "source": "MU",
-      "date": "2027-03-18T00:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Outdoor Track and Field Millersville Metrics|2027-04-02T17:00:00.000Z",
-      "firstSeenAt": "2026-09-01T23:04:08.348Z",
-      "title": "Millersville University Women's Outdoor Track and Field Millersville Metrics",
-      "source": "MU",
-      "date": "2027-04-02T17:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Outdoor Track and Field Messiah Multi and Invite|2027-04-08T00:00:00.000Z",
-      "firstSeenAt": "2026-09-01T23:04:08.348Z",
-      "title": "Millersville University Women's Outdoor Track and Field Messiah Multi and Invite",
-      "source": "MU",
-      "date": "2027-04-08T00:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Outdoor Track and Field Bucknell Outdoor Classic|2027-04-10T00:00:00.000Z",
-      "firstSeenAt": "2026-09-01T23:04:08.348Z",
-      "title": "Millersville University Women's Outdoor Track and Field Bucknell Outdoor Classic",
-      "source": "MU",
-      "date": "2027-04-10T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 16
+  "addedLastRun": 5
 }

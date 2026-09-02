@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-02T02:56:30.019Z",
+  "generatedAt": "2026-09-02T07:40:58.840Z",
   "totalEvents": 1162,
   "withDescription": 591,
   "withImage": 156,
   "familyFriendly": 79,
-  "eventsToday": 12,
+  "eventsToday": 23,
   "sources": {
     "muAthletics": 316,
     "muCalendar": 158,
@@ -78,19 +78,19 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 11
+      "daysSinceMoved": 12
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 25
+      "daysSinceMoved": 26
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 25
+      "daysSinceMoved": 26
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
@@ -98,35 +98,35 @@
     },
     "pennManor": {
       "newest": "2026-09-25",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 35
+      "daysSinceMoved": 36
     },
     "vfw": {
       "newest": "2026-10-22",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "phantomPower": {
       "newest": "2026-10-04",
-      "daysSinceMoved": 41
+      "daysSinceMoved": 42
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 88
+      "daysSinceMoved": 89
     },
     "manor": {
       "newest": "2027-09-01",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "raneyCellars": {
       "newest": "2026-09-10",
-      "daysSinceMoved": 12
+      "daysSinceMoved": 13
     },
     "theBackyard": {
       "newest": "2026-09-30",
-      "daysSinceMoved": 35
+      "daysSinceMoved": 36
     }
   },
   "sports": {
@@ -149,7 +149,7 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-02T02:52:53.734Z"
+    "lastSyncAt": "2026-09-02T07:37:36.614Z"
   },
   "recentlyAdded": [
     {
@@ -223,5 +223,5 @@
       "date": "2026-09-04T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 5
+  "addedLastRun": 0
 }

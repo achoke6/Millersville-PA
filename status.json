@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-02T19:44:53.439Z",
-  "totalEvents": 1193,
+  "generatedAt": "2026-09-02T20:20:22.948Z",
+  "totalEvents": 1196,
   "withDescription": 622,
   "withImage": 187,
   "familyFriendly": 79,
-  "eventsToday": 26,
+  "eventsToday": 27,
   "sources": {
     "muAthletics": 316,
     "muCalendar": 158,
@@ -13,7 +13,7 @@
     "muGetInvolved": 286,
     "pennManor": 65,
     "borough": 67,
-    "vfw": 7,
+    "vfw": 11,
     "phantomPower": 13,
     "community": 22,
     "manor": 42,
@@ -143,15 +143,44 @@
     "openNoDeadline": 1
   },
   "reviewQueue": {
-    "pendingFuture": 1,
+    "pendingFuture": 4,
     "pendingPast": 1,
     "pendingBySource": {
-      "PM Community": 1
+      "PM Community": 2,
+      "Borough": 2
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-02T19:40:54.011Z"
+    "lastSyncAt": "2026-09-02T20:16:32.434Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Auxiliary Meeting|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-09-02T20:20:22.946Z",
+      "title": "Auxiliary Meeting",
+      "source": "Other",
+      "date": "2026-09-02T23:00:00.000Z"
+    },
+    {
+      "key": "Trivia Night|2026-09-16T22:00:00.000Z",
+      "firstSeenAt": "2026-09-02T20:20:22.946Z",
+      "title": "Trivia Night",
+      "source": "Other",
+      "date": "2026-09-16T22:00:00.000Z"
+    },
+    {
+      "key": "Meat Tray Bingo|2026-09-20T17:00:00.000Z",
+      "firstSeenAt": "2026-09-02T20:20:22.946Z",
+      "title": "Meat Tray Bingo",
+      "source": "Other",
+      "date": "2026-09-20T17:00:00.000Z"
+    },
+    {
+      "key": "Post Meeting|2026-09-23T22:00:00.000Z",
+      "firstSeenAt": "2026-09-02T20:20:22.946Z",
+      "title": "Post Meeting",
+      "source": "Other",
+      "date": "2026-09-23T22:00:00.000Z"
+    },
     {
       "key": "Tell School of Music Recital Hour|2026-09-02T19:00:00.000Z",
       "firstSeenAt": "2026-09-02T19:44:53.437Z",
@@ -193,35 +222,7 @@
       "title": "Tell School of Music Recital Hour",
       "source": "MU",
       "date": "2026-09-30T19:00:00.000Z"
-    },
-    {
-      "key": "Tell School of Music Recital Hour|2026-10-07T19:00:00.000Z",
-      "firstSeenAt": "2026-09-02T19:44:53.437Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2026-10-07T19:00:00.000Z"
-    },
-    {
-      "key": "Tell School of Music Recital Hour|2026-10-14T19:00:00.000Z",
-      "firstSeenAt": "2026-09-02T19:44:53.437Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2026-10-14T19:00:00.000Z"
-    },
-    {
-      "key": "Tell School of Music Recital Hour|2026-10-21T19:00:00.000Z",
-      "firstSeenAt": "2026-09-02T19:44:53.437Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2026-10-21T19:00:00.000Z"
-    },
-    {
-      "key": "Tell School of Music Recital Hour|2026-10-28T19:00:00.000Z",
-      "firstSeenAt": "2026-09-02T19:44:53.437Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2026-10-28T19:00:00.000Z"
     }
   ],
-  "addedLastRun": 29
+  "addedLastRun": 4
 }

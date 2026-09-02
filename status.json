@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-02T07:40:58.840Z",
-  "totalEvents": 1162,
-  "withDescription": 591,
-  "withImage": 156,
+  "generatedAt": "2026-09-02T12:36:08.964Z",
+  "totalEvents": 1164,
+  "withDescription": 593,
+  "withImage": 158,
   "familyFriendly": 79,
-  "eventsToday": 23,
+  "eventsToday": 25,
   "sources": {
     "muAthletics": 316,
     "muCalendar": 158,
     "artsmu": 21,
     "campsAlumni": 40,
-    "muGetInvolved": 255,
+    "muGetInvolved": 257,
     "pennManor": 65,
     "borough": 67,
     "vfw": 7,
@@ -149,9 +149,23 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-02T07:37:36.614Z"
+    "lastSyncAt": "2026-09-02T12:32:26.627Z"
   },
   "recentlyAdded": [
+    {
+      "key": "TKE x Kona Ice Fundraiser|2026-09-02T16:00:00.000Z",
+      "firstSeenAt": "2026-09-02T12:36:08.962Z",
+      "title": "TKE x Kona Ice Fundraiser",
+      "source": "MU",
+      "date": "2026-09-02T16:00:00.000Z"
+    },
+    {
+      "key": "Campus Picnic|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-09-02T12:36:08.962Z",
+      "title": "Campus Picnic",
+      "source": "MU",
+      "date": "2026-09-02T23:00:00.000Z"
+    },
     {
       "key": "Girls Varsity Sideline Cheerleading vs Upper Dublin High School|2026-09-04T23:00:00.000Z",
       "firstSeenAt": "2026-09-02T02:56:30.017Z",
@@ -207,21 +221,7 @@
       "title": "Girls Varsity Soccer @ Lampeter Strasburg High School",
       "source": "PM",
       "date": "2026-09-04T19:00:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Soccer vs Lampeter Strasburg High School|2026-09-04T20:00:00.000Z",
-      "firstSeenAt": "2026-09-01T23:04:08.348Z",
-      "title": "Boys Varsity Soccer vs Lampeter Strasburg High School",
-      "source": "PM",
-      "date": "2026-09-04T20:00:00.000Z"
-    },
-    {
-      "key": "Boys JV Soccer vs Lampeter Strasburg High School|2026-09-04T20:00:00.000Z",
-      "firstSeenAt": "2026-09-01T23:04:08.348Z",
-      "title": "Boys JV Soccer vs Lampeter Strasburg High School",
-      "source": "PM",
-      "date": "2026-09-04T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

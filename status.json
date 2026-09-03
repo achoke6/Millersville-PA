@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-02T22:25:06.766Z",
-  "totalEvents": 1193,
+  "generatedAt": "2026-09-03T01:00:11.856Z",
+  "totalEvents": 1191,
   "withDescription": 622,
   "withImage": 187,
   "familyFriendly": 79,
@@ -11,7 +11,7 @@
     "artsmu": 21,
     "campsAlumni": 40,
     "muGetInvolved": 286,
-    "pennManor": 62,
+    "pennManor": 60,
     "borough": 67,
     "vfw": 11,
     "phantomPower": 13,
@@ -43,7 +43,7 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-06-04T04:00:00.000Z",
+      "earliest": "2026-06-08T23:00:00.000Z",
       "latest": "2026-09-25T18:00:00.000Z"
     },
     "borough": {
@@ -130,9 +130,9 @@
     }
   },
   "sports": {
-    "total": 357,
-    "scored": 13,
-    "wins": 6,
+    "total": 356,
+    "scored": 15,
+    "wins": 8,
     "losses": 7,
     "ties": 0
   },
@@ -150,7 +150,7 @@
       "Borough": 2
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-02T22:20:58.332Z"
+    "lastSyncAt": "2026-09-03T00:56:12.898Z"
   },
   "recentlyAdded": [
     {
@@ -224,5 +224,5 @@
       "date": "2026-09-16T19:00:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 0
 }

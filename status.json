@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-09-02T19:44:53.439Z",
-  "totalEvents": 1193,
+  "generatedAt": "2026-09-03T10:43:57.342Z",
+  "totalEvents": 1190,
   "withDescription": 622,
   "withImage": 187,
   "familyFriendly": 79,
-  "eventsToday": 26,
+  "eventsToday": 20,
   "sources": {
     "muAthletics": 316,
     "muCalendar": 158,
     "artsmu": 21,
     "campsAlumni": 40,
     "muGetInvolved": 286,
-    "pennManor": 65,
+    "pennManor": 60,
     "borough": 67,
-    "vfw": 7,
+    "vfw": 11,
     "phantomPower": 13,
     "community": 22,
-    "manor": 42,
+    "manor": 41,
     "raneyCellars": 5,
     "theBackyard": 11,
     "muHudlBroadcasts": 0
@@ -43,7 +43,7 @@
       "latest": "2027-05-05T22:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-06-04T04:00:00.000Z",
+      "earliest": "2026-06-08T23:00:00.000Z",
       "latest": "2026-09-25T18:00:00.000Z"
     },
     "borough": {
@@ -63,7 +63,7 @@
       "latest": "2027-04-16T13:15:00.000Z"
     },
     "manor": {
-      "earliest": "2026-09-02T23:00:00.000Z",
+      "earliest": "2026-09-08T23:00:00.000Z",
       "latest": "2027-09-01T23:00:00.000Z"
     },
     "raneyCellars": {
@@ -78,19 +78,19 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 12
+      "daysSinceMoved": 13
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 26
+      "daysSinceMoved": 27
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 26
+      "daysSinceMoved": 27
     },
     "muGetInvolved": {
       "newest": "2027-05-05",
@@ -98,19 +98,19 @@
     },
     "pennManor": {
       "newest": "2026-09-25",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 36
+      "daysSinceMoved": 37
     },
     "vfw": {
       "newest": "2026-10-22",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "phantomPower": {
       "newest": "2026-10-04",
-      "daysSinceMoved": 42
+      "daysSinceMoved": 43
     },
     "community": {
       "newest": "2027-04-16",
@@ -118,21 +118,21 @@
     },
     "manor": {
       "newest": "2027-09-01",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "raneyCellars": {
       "newest": "2026-09-10",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 14
     },
     "theBackyard": {
       "newest": "2026-09-30",
-      "daysSinceMoved": 36
+      "daysSinceMoved": 37
     }
   },
   "sports": {
-    "total": 360,
-    "scored": 14,
-    "wins": 7,
+    "total": 356,
+    "scored": 16,
+    "wins": 9,
     "losses": 7,
     "ties": 0
   },
@@ -143,85 +143,86 @@
     "openNoDeadline": 1
   },
   "reviewQueue": {
-    "pendingFuture": 1,
+    "pendingFuture": 4,
     "pendingPast": 1,
     "pendingBySource": {
-      "PM Community": 1
+      "PM Community": 2,
+      "Borough": 2
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-02T19:40:54.011Z"
+    "lastSyncAt": "2026-09-03T10:40:31.514Z"
   },
   "recentlyAdded": [
     {
-      "key": "Tell School of Music Recital Hour|2026-09-02T19:00:00.000Z",
-      "firstSeenAt": "2026-09-02T19:44:53.437Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2026-09-02T19:00:00.000Z"
+      "key": "Supervisors Meeting|2026-09-08T23:00:00.000Z",
+      "firstSeenAt": "2026-09-03T10:43:57.337Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-09-08T23:00:00.000Z"
     },
     {
-      "key": "Tell School of Music Recital Hour|2026-09-09T19:00:00.000Z",
-      "firstSeenAt": "2026-09-02T19:44:53.437Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2026-09-09T19:00:00.000Z"
-    },
-    {
-      "key": "Ice Cream Social|2026-09-14T23:00:00.000Z",
-      "firstSeenAt": "2026-09-02T19:44:53.437Z",
-      "title": "Ice Cream Social",
-      "source": "MU",
+      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
+      "firstSeenAt": "2026-09-03T10:43:57.337Z",
+      "title": "Planning Commission",
+      "source": "Manor",
       "date": "2026-09-14T23:00:00.000Z"
     },
     {
-      "key": "Tell School of Music Recital Hour|2026-09-16T19:00:00.000Z",
-      "firstSeenAt": "2026-09-02T19:44:53.437Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2026-09-16T19:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-09-03T10:43:57.337Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-09-30T12:30:00.000Z"
     },
     {
-      "key": "Tell School of Music Recital Hour|2026-09-23T19:00:00.000Z",
-      "firstSeenAt": "2026-09-02T19:44:53.437Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2026-09-23T19:00:00.000Z"
+      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
+      "firstSeenAt": "2026-09-03T10:43:57.337Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-10-05T23:00:00.000Z"
     },
     {
-      "key": "Tell School of Music Recital Hour|2026-09-30T19:00:00.000Z",
-      "firstSeenAt": "2026-09-02T19:44:53.437Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2026-09-30T19:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
+      "firstSeenAt": "2026-09-03T10:43:57.337Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-10-07T23:00:00.000Z"
     },
     {
-      "key": "Tell School of Music Recital Hour|2026-10-07T19:00:00.000Z",
-      "firstSeenAt": "2026-09-02T19:44:53.437Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2026-10-07T19:00:00.000Z"
+      "key": "Planning Commission|2026-10-12T23:00:00.000Z",
+      "firstSeenAt": "2026-09-03T10:43:57.337Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-10-12T23:00:00.000Z"
     },
     {
-      "key": "Tell School of Music Recital Hour|2026-10-14T19:00:00.000Z",
-      "firstSeenAt": "2026-09-02T19:44:53.437Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2026-10-14T19:00:00.000Z"
+      "key": "Moonlight Ride|2026-10-23T22:30:00.000Z",
+      "firstSeenAt": "2026-09-03T10:43:57.337Z",
+      "title": "Moonlight Ride",
+      "source": "Manor",
+      "date": "2026-10-23T22:30:00.000Z"
     },
     {
-      "key": "Tell School of Music Recital Hour|2026-10-21T19:00:00.000Z",
-      "firstSeenAt": "2026-09-02T19:44:53.437Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2026-10-21T19:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-10-28T12:30:00.000Z",
+      "firstSeenAt": "2026-09-03T10:43:57.337Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-10-28T12:30:00.000Z"
     },
     {
-      "key": "Tell School of Music Recital Hour|2026-10-28T19:00:00.000Z",
-      "firstSeenAt": "2026-09-02T19:44:53.437Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2026-10-28T19:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-11-05T00:00:00.000Z",
+      "firstSeenAt": "2026-09-03T10:43:57.337Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-11-05T00:00:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2026-11-06T00:00:00.000Z",
+      "firstSeenAt": "2026-09-03T10:43:57.337Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-11-06T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 29
+  "addedLastRun": 41
 }

@@ -17,12 +17,23 @@
  * get populated (sheet sync instead of hand-editing / PRs).
  *
  * SHEET COLUMNS (header row, case-insensitive, position-independent):
- *   Approved, Family, Source, Title, Date, Time, Location, Opens, Deadline,
- *   Link, Description, Notes
+ *   Approved, Family, Source, Type, Audience, Title, Date, Time, Location,
+ *   Opens, Deadline, Link, Description, Notes
  *
  *   Approved:    non-blank (X) = publish; blank = skip (still a candidate).
  *   Family:      non-blank (X) = kidFriendly:true on the generated event.
  *   Source:      Borough | PM Community | Youth Sports (case-insensitive).
+ *   Type:        (2026-09-03) "Event" | "Signup" — any signup/registration
+ *                wording counts as Signup. Event = shows on its Date (a Deadline
+ *                additionally adds the Registration badge + Upcoming Signups).
+ *                Signup = shows ON THE DEADLINE DAY as "last day to sign up" +
+ *                Upcoming Signups; Date only anchors; Deadline REQUIRED (never
+ *                guessed). Blank = derived from Source (Youth Sports -> Signup,
+ *                everything else -> Event), so rows written before the column
+ *                existed behave exactly as before.
+ *   Audience:    (2026-09-03) "Both" | "Marauders" | "Townies" -> the site's
+ *                audience field (public | mu-only | townie-only). Blank = field
+ *                omitted = today's Source-based gating, unchanged.
  *   Date:        event date. Accepts ISO (2026-08-04T18:00:00-04:00) or a
  *                plain date (2026-08-04) — if no time, Time column is used.
  *   Time:        optional "6:00 PM" style; merged with Date when Date has no
@@ -169,11 +180,31 @@ async function main() {
     const deadlineDt = parseDateTime(col(row, 'deadline'), '');
     const opensDt = parseDateTime(col(row, 'opens'), '');   // optional registration-open date
 
+    // Type (2026-09-03): explicit Event | Signup. Blank derives from Source so
+    // pre-column rows behave exactly as before (Youth Sports were always signups).
+    const typeRaw = col(row, 'type');
+    let isSignup = typeRaw ? /signup|registration/i.test(typeRaw) : (source === 'youth sports');
+    if (typeRaw && !isSignup && !/^event$/i.test(typeRaw)) {
+      console.warn(`  ⚠ "${title}": unrecognized Type "${typeRaw}" — treating as Event`);
+    }
+    if (source === 'youth sports' && !isSignup) {
+      console.warn(`  ⚠ youth-sports "${title}": Type "${typeRaw}" ignored — Youth Sports rows are always signups`);
+      isSignup = true;
+    }
+    // Audience (2026-09-03): Both | Marauders | Townies -> the site's audience
+    // field (public | mu-only | townie-only). Blank = omit = Source-based default.
+    const audienceRaw = col(row, 'audience');
+    let audience = '';
+    if (/marauder|student|mu[- ]?only/i.test(audienceRaw)) audience = 'mu-only';
+    else if (/townie|resident|community[- ]?only/i.test(audienceRaw)) audience = 'townie-only';
+    else if (/both|public|everyone|\ball\b/i.test(audienceRaw)) audience = 'public';
+    else if (audienceRaw) console.warn(`  ⚠ "${title}": unrecognized Audience "${audienceRaw}" — leaving default`);
+
     // The date that decides whether a row is still relevant: Youth Sports keys
     // off Deadline (it has no Date column), everything else off Date. A row
     // whose date is already in the PAST won't produce a visible event (the
     // scraper/frontend hide past items) — it's just clutter sitting in the sheet.
-    const whenDt = (source === 'youth sports') ? deadlineDt : dt;
+    const whenDt = isSignup ? deadlineDt : dt;   // signups (any Source) key off Deadline
     const isPastRow = !!(whenDt && whenDt.getTime() < nowMs);
     if (isPastRow) stalePast++;
 
@@ -235,6 +266,7 @@ async function main() {
           sport: col(row, 'notes') || '',   // optional sport detail from Notes
           deadline: deadlineDt.toISOString(),
           ...(opensDt ? { opens: opensDt.toISOString() } : {}),
+          ...(audience ? { audience } : {}),
           registerLink: link || 'https://www.pennmanor.net/community/',
           note: description || ''
         });
@@ -251,6 +283,7 @@ async function main() {
           // homepage showed "Open now" for a registration that opens 9/1.
           // app.js renders "Opens <date> / closes TBA" until the date passes.
           ...(opensDt ? { opens: opensDt.toISOString() } : {}),
+          ...(audience ? { audience } : {}),
           registerLink: link || 'https://www.pennmanor.net/community/',
           note: description || ''
         });
@@ -261,28 +294,39 @@ async function main() {
         continue;
       }
     } else if (source === 'pm community' || source === 'penn manor' || source === 'pm') {
-      if (!dt) { console.warn(`  ⚠ PM "${title}" missing/invalid Date — skipped`); badRows++; continue; }
+      // Signup-type PM rows (2026-09-03) date on the DEADLINE day — the same
+      // convention as Youth Sports and the submissions sheet's Signup rows —
+      // so the calendar entry reads "last day to sign up". Deadline required.
+      if (isSignup && !deadlineDt) { console.warn(`  ⚠ PM signup "${title}" missing/invalid Deadline — skipped (never guess a deadline)`); badRows++; continue; }
+      if (!isSignup && !dt) { console.warn(`  ⚠ PM "${title}" missing/invalid Date — skipped`); badRows++; continue; }
       const e = {
         status: 'approved',
         title,
-        date: dt.toISOString(),
+        date: (isSignup ? deadlineDt : dt).toISOString(),
         location: location || 'Penn Manor',
         sourceLink: link || 'https://www.pennmanor.net/community/'
       };
       if (description) e.description = description;
       if (family) e.kidFriendly = true;
+      if (audience) e.audience = audience;
       if (deadlineDt) { e.registrationRequired = true; e.registrationDeadline = deadlineDt.toISOString(); if (opensDt) e.registrationOpens = opensDt.toISOString(); }
       else if (/registration|register|sign\s*up|rsvp/i.test(description + ' ' + title)) e.registrationRequired = true;
       pmEvents.push(e);
       approved++;
     } else if (source === 'borough') {
-      if (!dt) { console.warn(`  ⚠ Borough "${title}" missing/invalid Date — skipped`); badRows++; continue; }
+      // Signup-type Borough rows (2026-09-03) date on the DEADLINE day (see PM).
+      if (isSignup && !deadlineDt) { console.warn(`  ⚠ Borough signup "${title}" missing/invalid Deadline — skipped (never guess a deadline)`); badRows++; continue; }
+      if (!isSignup && !dt) { console.warn(`  ⚠ Borough "${title}" missing/invalid Date — skipped`); badRows++; continue; }
       // Borough events from curation are create-mode (not on the iCal).
-      const ov = { date: dt.toISOString(), create: true, newTitle: title };
+      const ov = { date: (isSignup ? deadlineDt : dt).toISOString(), create: true, newTitle: title };
       if (location) ov.location = location;
       if (description) ov.description = description;
       if (link) ov.sourceLink = link;
       if (family) ov.kidFriendly = true;
+      if (audience) ov.audience = audience;
+      // Registration fields ride along — the create consumer in scrape.js passes
+      // them through (2026-09-03) so Borough rows can be signups too.
+      if (deadlineDt) { ov.registrationRequired = true; ov.registrationDeadline = deadlineDt.toISOString(); if (opensDt) ov.registrationOpens = opensDt.toISOString(); }
       boroughOverrides.push(ov);
       approved++;
     } else {

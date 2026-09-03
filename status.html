@@ -457,15 +457,22 @@ async function render() {
     //   - "Past-dated rows" = sheet clutter Adam can safely delete (the bot
     //     only appends, so old rows accumulate until pruned by hand).
     let reviewQueueCard = '';
-    if (status.reviewQueue) {
-        const rq = status.reviewQueue;
+    if (status.reviewQueue || status.submissionsQueue) {
+        const rq = status.reviewQueue || {};
         const bySrc = Object.entries(rq.pendingBySource || {})
             .map(([k, v]) => `${k}: ${v}`).join(' · ');
         const pendOpts = (rq.pendingFuture || 0) >= 10 ? { status: 'warn' } : {};
         if (bySrc) pendOpts.hint = bySrc;
         const syncRel = rq.lastSyncAt ? formatRelative(rq.lastSyncAt) : '—';
-        reviewQueueCard = card('Review Queue (Candidate Sheet)',
-            metric('Awaiting approval', rq.pendingFuture ?? 0, pendOpts) +
+        // Form-submissions backlog (2026-09-03): the Community Submissions sheet
+        // (Google Form) has its own approval column; surface its un-approved,
+        // still-upcoming rows here so neither sheet's backlog can go invisible.
+        const sq = status.submissionsQueue;
+        const subOpts = { hint: 'Community Submissions sheet (Google Form) — approve via its Status column' };
+        if (sq && (sq.pendingFuture || 0) >= 5) subOpts.status = 'warn';
+        reviewQueueCard = card('Review Queue (Candidates + Submissions sheets)',
+            metric('Candidates awaiting approval', rq.pendingFuture ?? 0, pendOpts) +
+            (sq ? metric('Form submissions awaiting', sq.pendingFuture ?? 0, subOpts) : '') +
             metric('Past-dated rows', rq.stalePast ?? 0,
                 (rq.stalePast || 0) > 0 ? { hint: 'safe to delete from the sheet' } : {}) +
             metric('Last sheet sync', syncRel)

@@ -3575,6 +3575,16 @@ async function runScraper() {
                         // unmatched override stays a harmless no-op, so a renamed
                         // enrichment entry can never accidentally spawn a phantom.
                         if (ov.create === true) {
+                            // Registration deadline gate (2026-09-03, mirrors the PM
+                            // consumer): a create-mode signup whose deadline has passed
+                            // is hidden rather than dead-ending users at a closed form.
+                            if (ov.registrationDeadline) {
+                                const rdl = new Date(ov.registrationDeadline);
+                                if (!isNaN(rdl.getTime()) && rdl < new Date()) {
+                                    console.log(`  ⏰ Borough create skipped — registration closed: "${ov.newTitle}"`);
+                                    continue;
+                                }
+                            }
                             const createdDate = new Date(ov.date);
                             events.push({
                                 // Internal marker (stripped before write): flags
@@ -3591,7 +3601,16 @@ async function runScraper() {
                                 sourceLink: ov.sourceLink || 'https://millersvilleborough.org/news/',
                                 gameResult: '', gameScore: '', streamLink: '', isLive: false,
                                 ...(ov.description ? { description: ov.description } : {}),
-                                ...(ov.image ? { image: ov.image } : {})
+                                ...(ov.image ? { image: ov.image } : {}),
+                                // Curated fields from the candidates sheet (2026-09-03):
+                                // kidFriendly was emitted by sync-candidates but dropped
+                                // here (Family X on Borough rows did nothing); audience +
+                                // registration fields are new with the Type/Audience columns.
+                                ...(ov.kidFriendly ? { kidFriendly: true } : {}),
+                                ...(ov.audience ? { audience: ov.audience } : {}),
+                                ...(ov.registrationRequired ? { registrationRequired: true } : {}),
+                                ...(ov.registrationDeadline ? { registrationDeadline: ov.registrationDeadline } : {}),
+                                ...(ov.registrationOpens ? { registrationOpens: ov.registrationOpens } : {})
                             });
                             created++;
                             console.log(`  ➕ Borough override CREATED standalone event: "${ov.newTitle}" (${ov.date})`);
@@ -3991,6 +4010,10 @@ async function runScraper() {
                 // here is still open (or has no deadline at all).
                 if (ev.registrationDeadline) pushed.registrationDeadline = ev.registrationDeadline;
                 if (ev.registrationOpens) pushed.registrationOpens = ev.registrationOpens;
+                // kidFriendly was emitted by sync-candidates (Family X) but never passed
+                // through here (2026-09-03 fix); audience is new with the Audience column.
+                if (ev.kidFriendly === true) pushed.kidFriendly = true;
+                if (ev.audience) pushed.audience = ev.audience;
                 events.push(pushed);
                 added++;
             }
@@ -4066,6 +4089,7 @@ async function runScraper() {
                     registrationRequired: true,
                     registrationDeadline: reg.deadline,
                     ...(reg.opens ? { registrationOpens: reg.opens } : {}),
+                    ...(reg.audience ? { audience: reg.audience } : {}),
                     kidFriendly: true,
                     description: [
                         reg.season ? `${reg.season} season.` : '',
@@ -4550,6 +4574,10 @@ async function runScraper() {
         console.log(`✅ Specials saved (${Object.keys(specials).length} places · VFW: ${vfwWeeklySpecials.length}, Grocery: ${groceryDeals.length})`);
     } catch (e) { console.error("❌ VFW/Specials error:", e.message); }
 
+    // Form-submissions review backlog for the status dashboard (2026-09-03) — the
+    // submissions sheet's twin of candidates-status. Set inside §8; null if it didn't run.
+    let submissionsQueue = null;
+
     // ===== 8. COMMUNITY EVENT SUBMISSIONS (Google Sheet) =====
     // Sheet columns (expected order, based on the Google Form):
     //   0: Timestamp  1: Event Name  2: Date  3: Time  4: Location
@@ -4645,6 +4673,7 @@ async function runScraper() {
             const rows = allRows.slice(1); // skip header
             let communityCount = 0;
             let skippedNoStatus = 0;
+            let pendingFutureSubs = 0, pendingPastSubs = 0;   // review-backlog split (2026-09-03)
             let skippedBadDate = 0;
             let skippedOutOfRange = 0;
             for (const row of rows) {
@@ -4674,7 +4703,15 @@ async function runScraper() {
                 // Accept multiple "approved" signals: Approved, Yes, Y, ✓, true, 1
                 const statusApproved = /^(approved|yes|y|true|1|✓|✔)$/i.test(status);
                 if (!statusApproved) {
-                    if (eventName && dateStr) skippedNoStatus++;
+                    if (eventName && dateStr) {
+                        skippedNoStatus++;
+                        // Review-backlog split (2026-09-03): quick M/D/YYYY-or-ISO parse of
+                        // the anchor date — an unapproved row still ahead of its date is
+                        // the real to-do; a past one is sheet clutter.
+                        const qm = dateStr.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+                        const qd = qm ? new Date(Date.UTC(+qm[3], +qm[1] - 1, +qm[2], 23, 59)) : new Date(dateStr);
+                        if (!isNaN(qd.getTime()) && qd.getTime() >= Date.now()) pendingFutureSubs++; else pendingPastSubs++;
+                    }
                     continue;
                 }
                 if (!eventName || !dateStr) continue;
@@ -4905,6 +4942,12 @@ async function runScraper() {
                 (skippedNoStatus || skippedBadDate || skippedOutOfRange
                     ? ` (skipped: ${skippedNoStatus} not-approved, ${skippedBadDate} bad date, ${skippedOutOfRange} out of range)`
                     : ''));
+            submissionsQueue = {
+                pendingFuture: pendingFutureSubs,
+                pendingPast: pendingPastSubs,
+                approved: communityCount,
+                checkedAt: new Date().toISOString()
+            };
         } else {
             console.log(`  ⚠️ Community sheet fetch failed: ${submitRes.status}`);
         }
@@ -6352,6 +6395,9 @@ async function runScraper() {
                     };
                 } catch (_) { return null; }
             })(),
+            // Form-submissions backlog (2026-09-03) — the submissions sheet's twin of
+            // reviewQueue; null when §8 didn't run (fetch failed) so the card omits it.
+            submissionsQueue,
             // Event diff tracking — operator self-check. recentlyAdded is up
             // to 10 events first seen in the last 7 days (most recent first).
             // addedLastRun is the count of events new since the previous cron

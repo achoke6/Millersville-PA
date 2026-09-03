@@ -1,27 +1,27 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Thursday, September 03, 2026 at 12:11 PM (Biondo and Cressley, Student Meteorologists)",
+    "issued": "Thursday, September 03, 2026 at 05:31 PM (Bliss, Meier, Rooney, Zwolinski, Student Meteorologists)",
     "periods": [
-      {
-        "period": "This afternoon",
-        "text": "Mostly sunny, hot and humid. High: 88-92"
-      },
       {
         "period": "Tonight",
         "text": "Mostly cloudy, warm and muggy with scattered showers and T-storms. Low: 68-72"
       },
       {
-        "period": "Friday",
+        "period": "Tomorrow",
         "text": "Cooler but humid with clouds, some sun, and an afternoon shower or T-storm. High: 84-88"
       },
       {
-        "period": "Friday Night",
+        "period": "Tomorrow Night",
         "text": "Partly cloudy, warm, and muggy with scattered showers and T-storms. Low: 66-70"
       },
       {
         "period": "Saturday",
         "text": "Mostly sunny, pleasant, and less humid. High: 80-84"
+      },
+      {
+        "period": "Sunday",
+        "text": "Mostly sunny and seasonable. High: 76-80"
       }
     ]
   },
@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "19:00",
+      "temp": "83",
+      "dewpoint": "71",
+      "rh": "66",
+      "windDir": "SW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "10.5",
+      "condition": "None"
+    },
+    {
+      "time": "18:00",
+      "temp": "86",
+      "dewpoint": "70",
+      "rh": "59",
+      "windDir": "SW",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "10.0",
+      "condition": "None"
+    },
+    {
       "time": "17:00",
       "temp": "87",
       "dewpoint": "70",
@@ -169,28 +191,6 @@
       "windSpeed": "4",
       "precip": "0.00",
       "visibility": "11.1",
-      "condition": "None"
-    },
-    {
-      "time": "13:00",
-      "temp": "82",
-      "dewpoint": "72",
-      "rh": "72",
-      "windDir": "WNW",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "11.8",
-      "condition": "None"
-    },
-    {
-      "time": "12:00",
-      "temp": "79",
-      "dewpoint": "72",
-      "rh": "80",
-      "windDir": "SW",
-      "windSpeed": "7",
-      "precip": "0.00",
-      "visibility": "10.3",
       "condition": "None"
     }
   ],
@@ -268,5 +268,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-09-03T21:33:30.985Z"
+  "updated": "2026-09-03T23:48:26.551Z"
 }

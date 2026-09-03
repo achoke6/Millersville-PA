@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-03T21:36:37.451Z",
-  "totalEvents": 1129,
+  "generatedAt": "2026-09-03T23:51:38.239Z",
+  "totalEvents": 1123,
   "withDescription": 545,
   "withImage": 197,
   "familyFriendly": 73,
@@ -11,7 +11,7 @@
     "artsmu": 70,
     "campsAlumni": 40,
     "muGetInvolved": 281,
-    "pennManor": 58,
+    "pennManor": 52,
     "borough": 68,
     "vfw": 12,
     "phantomPower": 13,
@@ -130,10 +130,10 @@
     }
   },
   "sports": {
-    "total": 354,
-    "scored": 17,
-    "wins": 9,
-    "losses": 8,
+    "total": 348,
+    "scored": 14,
+    "wins": 8,
+    "losses": 6,
     "ties": 0
   },
   "registrations": {
@@ -149,15 +149,29 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-03T21:33:28.060Z"
+    "lastSyncAt": "2026-09-03T23:48:24.163Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-03T21:36:30.525Z"
+    "checkedAt": "2026-09-03T23:51:29.938Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Girls Varsity Field Hockey vs Manheim Township High School|2026-09-08T23:00:00.000Z",
+      "firstSeenAt": "2026-09-03T23:51:38.236Z",
+      "title": "Girls Varsity Field Hockey vs Manheim Township High School",
+      "source": "PM",
+      "date": "2026-09-08T23:00:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Volleyball vs Conestoga Valley High School|2026-09-08T23:00:00.000Z",
+      "firstSeenAt": "2026-09-03T23:51:38.236Z",
+      "title": "Girls Varsity Volleyball vs Conestoga Valley High School",
+      "source": "PM",
+      "date": "2026-09-08T23:00:00.000Z"
+    },
     {
       "key": "Labor Day - No Classes, Limited Campus Operations|2026-09-07T00:00:00",
       "firstSeenAt": "2026-09-03T21:36:37.449Z",
@@ -213,21 +227,7 @@
       "title": "Vision Boards with WVB",
       "source": "MU",
       "date": "2026-09-29T19:30:00.000Z"
-    },
-    {
-      "key": "Letters of Love|2026-10-06T19:00:00",
-      "firstSeenAt": "2026-09-03T21:36:37.449Z",
-      "title": "Letters of Love",
-      "source": "MU",
-      "date": "2026-10-06T19:00:00"
-    },
-    {
-      "key": "Letters of Love|2026-10-22T19:00:00",
-      "firstSeenAt": "2026-09-03T21:36:37.449Z",
-      "title": "Letters of Love",
-      "source": "MU",
-      "date": "2026-10-22T19:00:00"
     }
   ],
-  "addedLastRun": 13
+  "addedLastRun": 2
 }

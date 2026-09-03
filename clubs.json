@@ -422,8 +422,10 @@
   },
   {
     "name": "Club Softball",
-    "category": "",
-    "categories": [],
+    "category": "Sporting",
+    "categories": [
+      "Sporting"
+    ],
     "shortName": "Club Softball",
     "id": ""
   },
@@ -1203,9 +1205,9 @@
   },
   {
     "name": "Moose Ultimate",
-    "category": "Fundraiser",
+    "category": "Meeting",
     "categories": [
-      "Fundraiser"
+      "Meeting"
     ],
     "shortName": "",
     "id": ""

@@ -83,7 +83,7 @@
       "Cantaloupes – $2.00-$3.50 each",
       "Watermelons – $4.00-$6.00 each"
     ],
-    "weeklyFetchedAt": "2026-09-03T10:43:49.100Z"
+    "weeklyFetchedAt": "2026-09-03T14:03:32.633Z"
   },
   "jesus-dogs": {
     "name": "Jesus Dogs",
@@ -127,9 +127,128 @@
   },
   "john-herr-s-village-market": {
     "name": "John Herr's Village Market",
-    "note": "Weekly deals · Thu–Wed",
-    "weekly": [],
-    "weeklyDateRange": "",
-    "rawDeals": []
+    "note": "Weekly deals: Thursday, September 3 through Wednesday, September 9",
+    "weekly": [
+      "Fresh Grade A Boneless & Skinless Chicken Breasts (All Natural, sold in 10-lb bag @ $19.90) – $1.99/lb",
+      "Family Owned Markets Large White Eggs (18 ct) – $1.69",
+      "Bone-In Center Cut Pork Loin Chops (Value Pack, Fresh) – $2.29/lb ($0.20/lb)",
+      "Frozen Baby Back Ribs – $3.99/lb",
+      "Fresh 80% Lean Ground Beef (Our Own Store Made, Value Pack) – $5.49/lb ($0.50/lb)"
+    ],
+    "weeklyDateRange": "Thursday, September 3 through Wednesday, September 9",
+    "rawDeals": [
+      {
+        "item": "Fresh Grade A Boneless & Skinless Chicken Breasts (All Natural, sold in 10-lb bag @ $19.90)",
+        "salePrice": "$1.99/lb",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, September 3 through Wednesday, September 9"
+      },
+      {
+        "item": "Family Owned Markets Large White Eggs (18 ct)",
+        "salePrice": "$1.69",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, September 3 through Wednesday, September 9"
+      },
+      {
+        "item": "Bone-In Center Cut Pork Loin Chops (Value Pack, Fresh)",
+        "salePrice": "$2.29/lb",
+        "regularPrice": "$2.49/lb",
+        "savings": "$0.20/lb",
+        "dateRange": "Thursday, September 3 through Wednesday, September 9"
+      },
+      {
+        "item": "Frozen Baby Back Ribs",
+        "salePrice": "$3.99/lb",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, September 3 through Wednesday, September 9"
+      },
+      {
+        "item": "Fresh 80% Lean Ground Beef (Our Own Store Made, Value Pack)",
+        "salePrice": "$5.49/lb",
+        "regularPrice": "$5.99/lb",
+        "savings": "$0.50/lb",
+        "dateRange": "Thursday, September 3 through Wednesday, September 9"
+      },
+      {
+        "item": "Boneless New York Strip Steaks (Select Beef, Value Pack)",
+        "salePrice": "$10.99/lb",
+        "regularPrice": "$11.99/lb",
+        "savings": "$1.00/lb",
+        "dateRange": "Thursday, September 3 through Wednesday, September 9"
+      },
+      {
+        "item": "Certified Angus Beef Boneless Chuck Roast",
+        "salePrice": "$7.99/lb",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, September 3 through Wednesday, September 9"
+      },
+      {
+        "item": "Southern Seas 16/20-ct Cooked, Peeled & Deveined Shrimp (1-lb bag)",
+        "salePrice": "$9.99",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, September 3 through Wednesday, September 9"
+      },
+      {
+        "item": "Crisp Iceberg Lettuce (head) — Digital Coupon",
+        "salePrice": "$0.68",
+        "regularPrice": "$1.78",
+        "savings": "$1.10",
+        "dateRange": "Thursday, September 3 through Wednesday, September 9"
+      },
+      {
+        "item": "Whole Seedless Watermelon — Digital Coupon",
+        "salePrice": "$2.98",
+        "regularPrice": "$3.98",
+        "savings": "$1.00",
+        "dateRange": "Thursday, September 3 through Wednesday, September 9"
+      },
+      {
+        "item": "Frito Lay Classic Lay's Potato Chips or Poppables (4.75-8 oz)",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, September 3 through Wednesday, September 9"
+      },
+      {
+        "item": "Herr's Family Size Potato Chips (7-8 oz, Selected) — Weekly Door Buster (limit 4)",
+        "salePrice": "$1.99",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, September 3 through Wednesday, September 9"
+      },
+      {
+        "item": "Classico Pasta Sauce (15-24 oz, Selected) — Digital Coupon",
+        "salePrice": "$0.98",
+        "regularPrice": "$2.98",
+        "savings": "$2.00",
+        "dateRange": "Thursday, September 3 through Wednesday, September 9"
+      },
+      {
+        "item": "Kraft Shredded or Chunk Cheese (7-8 oz, Selected) — Mix & Match, when you buy 5",
+        "salePrice": "$1.78 each",
+        "regularPrice": "$2.78",
+        "savings": "$1.00",
+        "dateRange": "Thursday, September 3 through Wednesday, September 9"
+      },
+      {
+        "item": "Ball Park Meat Franks (15 oz) — Throwback Thursday (Thu Sep 3 & Sun Sep 6 only, Digital Coupon)",
+        "salePrice": "$1.98",
+        "regularPrice": "$2.98",
+        "savings": "$1.00",
+        "dateRange": "Thursday, September 3 through Wednesday, September 9"
+      },
+      {
+        "item": "Turkey Hill Tea or Drinks (gallon)",
+        "salePrice": "$2.99",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, September 3 through Wednesday, September 9"
+      }
+    ]
   }
 }

@@ -4974,9 +4974,14 @@ async function runScraper() {
         let isFamilyFriendly = false;
 
         // Respect pre-set kidFriendly for events that already declared themselves (e.g. Summer Camps, Athletic Camps)
+        // 2026-09-03: Borough + Other added — the Event Candidates sheet's Family X
+        // reaches Borough create-mode rows and PM Community / youth rows (tag 'Other')
+        // via sync-candidates + the override consumers, and this allowlist was the
+        // SECOND layer that silently discarded it (the first — the consumers dropping
+        // it — was fixed the same day). Curated true always wins over keyword guessing.
         if ((tags.includes('Summer Camp') || tags.includes('Athletic Camp') ||
              tags.includes('Summer Fun Series') || tags.includes('Alumni Event') ||
-             tags.includes('Community')) && e.kidFriendly === true) {
+             tags.includes('Community') || tags.includes('Borough') || tags.includes('Other')) && e.kidFriendly === true) {
             famCount++;
             return;
         }
@@ -5421,6 +5426,14 @@ async function runScraper() {
         };
     }).filter(n => n.norm && !CALENDAR_ARTIFACT_PATTERNS.test(n.norm));
 
+    // DEDUPE TRACE (temporary, 2026-09-03 — remove once the cause is found): the
+    // "Jazz at the 'Ville" mu-vs-artsmu pairs survive Pass 2 in production while a
+    // byte-faithful local replay of this same code merges them. Log the exact
+    // shape Pass 2 sees for traced titles so the Action log settles input-vs-logic.
+    const DEDUPE_TRACE_RE = /jazz at the ville/;
+    normalizedEvents.filter(n => DEDUPE_TRACE_RE.test(n.norm)).forEach(n =>
+        console.log(`  🔍 dedupe-trace IN: bucket=${n.bucket} day=${n.day} time=${n.time} norm="${n.norm}" date=${n.event.date} link=${n.event.sourceLink}`));
+
     const groups2 = [];
 
     for (const ne of normalizedEvents) {
@@ -5570,6 +5583,16 @@ async function runScraper() {
     const kept = new Set();
     const crossDupes = [];
     pass1.forEach((_, i) => kept.add(i)); // start by keeping all
+
+    // DEDUPE TRACE (temporary, 2026-09-03 — see the IN lines above): which group
+    // each traced event landed in, and who else is in it. Two traced events in
+    // two singleton groups = the grouping logic never paired them despite the
+    // shapes logged above; one group of two = they paired and something later
+    // un-merged them.
+    groups2.forEach((g, gi) => {
+        if (!g.some(m => DEDUPE_TRACE_RE.test(m.norm))) return;
+        console.log(`  🔍 dedupe-trace GROUP#${gi} size=${g.length}: ${g.map(m => `[${m.bucket} ${m.day} "${m.event.title}"]`).join(' ')}`);
+    });
 
     groups2.forEach((candidates) => {
         if (candidates.length <= 1) return; // no duplicates in this group

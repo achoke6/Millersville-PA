@@ -1,29 +1,8 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Thursday, September 03, 2026 at 08:05 AM (Kint, Smith, Zocco, Student Meteorologists)",
-    "periods": [
-      {
-        "period": "Today",
-        "text": "Partly sunny, hot and humid with an afternoon shower. High: 88-92"
-      },
-      {
-        "period": "Tonight",
-        "text": "Mostly cloudy, warm and muggy with scattered showers and T-storms. Low: 68-72"
-      },
-      {
-        "period": "Friday",
-        "text": "Cooler but humid with clouds, some sun, and an afternoon shower or T-storm. High: 84-88"
-      },
-      {
-        "period": "Friday Night",
-        "text": "Partly cloudy, warm, and muggy with scattered showers and T-storms. Low: 66-70"
-      },
-      {
-        "period": "Saturday",
-        "text": "Mostly sunny, pleasant, and less humid. High: 80-84"
-      }
-    ]
+    "issued": "",
+    "periods": []
   },
   "sevenDay": {
     "issued": "Thursday, September 03, 2026 at 08:24 AM (Kint, Smith, Zocco)",
@@ -128,6 +107,39 @@
   },
   "observations": [
     {
+      "time": "13:00",
+      "temp": "82",
+      "dewpoint": "72",
+      "rh": "72",
+      "windDir": "WNW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "11.8",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "79",
+      "dewpoint": "72",
+      "rh": "80",
+      "windDir": "SW",
+      "windSpeed": "7",
+      "precip": "0.00",
+      "visibility": "10.3",
+      "condition": "None"
+    },
+    {
+      "time": "11:00",
+      "temp": "78",
+      "dewpoint": "72",
+      "rh": "81",
+      "windDir": "WSW",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "10.8",
+      "condition": "None"
+    },
+    {
       "time": "10:00",
       "temp": "78",
       "dewpoint": "72",
@@ -159,39 +171,6 @@
       "precip": "0.06",
       "visibility": "12 +",
       "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "70",
-      "dewpoint": "69",
-      "rh": "100",
-      "windDir": "ESE",
-      "windSpeed": "1",
-      "precip": "0.02",
-      "visibility": "12 +",
-      "condition": "Light Showers Rain"
-    },
-    {
-      "time": "06:00",
-      "temp": "70",
-      "dewpoint": "69",
-      "rh": "99",
-      "windDir": "N",
-      "windSpeed": "4",
-      "precip": "0.02",
-      "visibility": "11.6",
-      "condition": "Light Showers Rain"
-    },
-    {
-      "time": "05:00",
-      "temp": "70",
-      "dewpoint": "70",
-      "rh": "100",
-      "windDir": "WNW",
-      "windSpeed": "2",
-      "precip": "0.02",
-      "visibility": "6.8",
-      "condition": "Light Showers Rain"
     }
   ],
   "dailySummary": {
@@ -239,6 +218,13 @@
   },
   "videos": [
     {
+      "title": "Short Term Forecast 09/03/2026",
+      "videoId": "GvuxC4COuvY",
+      "url": "https://www.youtube.com/watch?v=GvuxC4COuvY",
+      "published": "2026-09-03T15:57:54+00:00",
+      "thumbnail": "https://i4.ytimg.com/vi/GvuxC4COuvY/hqdefault.jpg"
+    },
+    {
       "title": "Medium Range Forecast 08/31/2026",
       "videoId": "9tuqCPRW2zk",
       "url": "https://www.youtube.com/watch?v=9tuqCPRW2zk",
@@ -258,15 +244,8 @@
       "url": "https://www.youtube.com/watch?v=cc28wo-BXls",
       "published": "2026-08-24T18:23:35+00:00",
       "thumbnail": "https://i4.ytimg.com/vi/cc28wo-BXls/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 08/24/2026",
-      "videoId": "oU-v3yr0SJM",
-      "url": "https://www.youtube.com/watch?v=oU-v3yr0SJM",
-      "published": "2026-08-24T16:08:25+00:00",
-      "thumbnail": "https://i4.ytimg.com/vi/oU-v3yr0SJM/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-09-03T14:51:29.520Z"
+  "updated": "2026-09-03T17:05:27.446Z"
 }

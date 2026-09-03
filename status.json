@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-03T14:55:01.258Z",
-  "totalEvents": 1197,
-  "withDescription": 629,
-  "withImage": 189,
-  "familyFriendly": 79,
-  "eventsToday": 23,
+  "generatedAt": "2026-09-03T17:08:54.184Z",
+  "totalEvents": 1203,
+  "withDescription": 635,
+  "withImage": 195,
+  "familyFriendly": 81,
+  "eventsToday": 25,
   "sources": {
     "muAthletics": 316,
     "muCalendar": 158,
     "artsmu": 21,
     "campsAlumni": 40,
-    "muGetInvolved": 289,
+    "muGetInvolved": 296,
     "pennManor": 60,
     "borough": 68,
     "vfw": 12,
@@ -131,9 +131,9 @@
   },
   "sports": {
     "total": 356,
-    "scored": 16,
+    "scored": 17,
     "wins": 9,
-    "losses": 7,
+    "losses": 8,
     "ties": 0
   },
   "registrations": {
@@ -149,15 +149,57 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-03T14:51:27.573Z"
+    "lastSyncAt": "2026-09-03T17:05:25.217Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-03T14:54:50.186Z"
+    "checkedAt": "2026-09-03T17:08:46.320Z"
   },
   "recentlyAdded": [
+    {
+      "key": "YDSA Tabling|2026-09-01T17:00:00.000Z",
+      "firstSeenAt": "2026-09-03T17:08:54.181Z",
+      "title": "YDSA Tabling",
+      "source": "MU",
+      "date": "2026-09-01T17:00:00.000Z"
+    },
+    {
+      "key": "Slime Making with American Chemical Society|2026-09-03T16:15:00.000Z",
+      "firstSeenAt": "2026-09-03T17:08:54.181Z",
+      "title": "Slime Making with American Chemical Society",
+      "source": "MU",
+      "date": "2026-09-03T16:15:00.000Z"
+    },
+    {
+      "key": "ADAPT General meeting|2026-09-03T17:30:00",
+      "firstSeenAt": "2026-09-03T17:08:54.181Z",
+      "title": "ADAPT General meeting",
+      "source": "MU",
+      "date": "2026-09-03T17:30:00"
+    },
+    {
+      "key": "AniMU Weekly Meeting|2026-09-04T22:00:00.000Z",
+      "firstSeenAt": "2026-09-03T17:08:54.181Z",
+      "title": "AniMU Weekly Meeting",
+      "source": "MU",
+      "date": "2026-09-04T22:00:00.000Z"
+    },
+    {
+      "key": "AniMU Weekly Meeting|2026-10-09T22:00:00.000Z",
+      "firstSeenAt": "2026-09-03T17:08:54.181Z",
+      "title": "AniMU Weekly Meeting",
+      "source": "MU",
+      "date": "2026-10-09T22:00:00.000Z"
+    },
+    {
+      "key": "AniMU Weekly Meeting|2026-11-27T23:00:00.000Z",
+      "firstSeenAt": "2026-09-03T17:08:54.181Z",
+      "title": "AniMU Weekly Meeting",
+      "source": "MU",
+      "date": "2026-11-27T23:00:00.000Z"
+    },
     {
       "key": "Academic Resilience Speaker Series|2026-09-02T12:00:00",
       "firstSeenAt": "2026-09-03T14:55:01.256Z",
@@ -185,49 +227,7 @@
       "title": "Moose Ultimate Team Meeting",
       "source": "MU",
       "date": "2026-09-04T00:00:00.000Z"
-    },
-    {
-      "key": "Academic Resilience Speaker Series|2026-09-30T12:00:00",
-      "firstSeenAt": "2026-09-03T14:55:01.256Z",
-      "title": "Academic Resilience Speaker Series",
-      "source": "MU",
-      "date": "2026-09-30T12:00:00"
-    },
-    {
-      "key": "Academic Resilience Speaker Series|2026-10-21T12:00:00",
-      "firstSeenAt": "2026-09-03T14:55:01.256Z",
-      "title": "Academic Resilience Speaker Series",
-      "source": "MU",
-      "date": "2026-10-21T12:00:00"
-    },
-    {
-      "key": "Academic Resilience Speaker Series|2026-11-18T12:00:00",
-      "firstSeenAt": "2026-09-03T14:55:01.256Z",
-      "title": "Academic Resilience Speaker Series",
-      "source": "MU",
-      "date": "2026-11-18T12:00:00"
-    },
-    {
-      "key": "Thurday Trivia 6PM|2026-09-03T22:00:00.000Z",
-      "firstSeenAt": "2026-09-03T14:03:43.372Z",
-      "title": "Thurday Trivia 6PM",
-      "source": "Raney Cellars",
-      "date": "2026-09-03T22:00:00.000Z"
-    },
-    {
-      "key": "Ember Food Truck|2026-09-04T20:00:00.000Z",
-      "firstSeenAt": "2026-09-03T14:03:43.372Z",
-      "title": "Ember Food Truck",
-      "source": "Raney Cellars",
-      "date": "2026-09-04T20:00:00.000Z"
-    },
-    {
-      "key": "Worship in the Quad|2026-09-11T19:30:00",
-      "firstSeenAt": "2026-09-03T14:03:43.372Z",
-      "title": "Worship in the Quad",
-      "source": "MU",
-      "date": "2026-09-11T19:30:00"
     }
   ],
-  "addedLastRun": 7
+  "addedLastRun": 6
 }

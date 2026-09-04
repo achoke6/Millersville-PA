@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-04T07:49:21.757Z",
-  "totalEvents": 1145,
-  "withDescription": 567,
+  "generatedAt": "2026-09-04T12:33:33.040Z",
+  "totalEvents": 1226,
+  "withDescription": 667,
   "withImage": 221,
-  "familyFriendly": 79,
+  "familyFriendly": 87,
   "eventsToday": 16,
   "sources": {
     "muAthletics": 316,
-    "muCalendar": 53,
-    "artsmu": 70,
+    "muCalendar": 159,
+    "artsmu": 21,
     "campsAlumni": 40,
-    "muGetInvolved": 303,
+    "muGetInvolved": 327,
     "pennManor": 52,
     "borough": 68,
     "vfw": 12,
@@ -27,12 +27,12 @@
       "latest": "2027-05-27T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-08-08T17:30:00.000Z",
-      "latest": "2027-05-02T14:30:00.000Z"
+      "earliest": "2026-06-30T00:00:00.000Z",
+      "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
-      "earliest": "2026-09-04T21:00:00.000Z",
-      "latest": "2027-06-04T22:30:00.000Z"
+      "earliest": "2026-09-13T22:00:00.000Z",
+      "latest": "2027-05-02T18:30:00.000Z"
     },
     "campsAlumni": {
       "earliest": "2026-06-11T22:00:00.000Z",
@@ -81,12 +81,12 @@
       "daysSinceMoved": 3
     },
     "muCalendar": {
-      "newest": "2027-05-02",
-      "daysSinceMoved": 39
+      "newest": "2027-06-04",
+      "daysSinceMoved": 14
     },
     "artsmu": {
-      "newest": "2027-06-04",
-      "daysSinceMoved": 16
+      "newest": "2027-05-02",
+      "daysSinceMoved": 28
     },
     "campsAlumni": {
       "newest": "2027-04-03",
@@ -149,85 +149,85 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-04T07:45:40.075Z"
+    "lastSyncAt": "2026-09-04T12:29:40.387Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-04T07:49:13.813Z"
+    "checkedAt": "2026-09-04T12:33:24.387Z"
   },
   "recentlyAdded": [
     {
-      "key": "Prayer & Pretzels|2026-09-10T16:00:00.000Z",
-      "firstSeenAt": "2026-09-04T07:49:21.755Z",
-      "title": "Prayer & Pretzels",
+      "key": "End of Fiscal Year 2025-2026|2026-06-30T00:00:00",
+      "firstSeenAt": "2026-09-04T12:33:33.038Z",
+      "title": "End of Fiscal Year 2025-2026",
       "source": "MU",
-      "date": "2026-09-10T16:00:00.000Z"
+      "date": "2026-06-30T00:00:00"
     },
     {
-      "key": "Students for Life General Meeting|2026-09-10T21:00:00.000Z",
-      "firstSeenAt": "2026-09-04T07:49:21.755Z",
-      "title": "Students for Life General Meeting",
+      "key": "Start of Fiscal Year 2026-2027|2026-07-01T00:00:00",
+      "firstSeenAt": "2026-09-04T12:33:33.038Z",
+      "title": "Start of Fiscal Year 2026-2027",
       "source": "MU",
-      "date": "2026-09-10T21:00:00.000Z"
+      "date": "2026-07-01T00:00:00"
     },
     {
-      "key": "Phi Alpha Theta Meeting|2026-09-14T20:30:00.000Z",
-      "firstSeenAt": "2026-09-04T07:49:21.755Z",
-      "title": "Phi Alpha Theta Meeting",
+      "key": "Fourth of July Holiday - No Classes, Limited Campus Operations|2026-07-03T00:00:00",
+      "firstSeenAt": "2026-09-04T12:33:33.038Z",
+      "title": "Fourth of July Holiday - No Classes, Limited Campus Operations",
       "source": "MU",
-      "date": "2026-09-14T20:30:00.000Z"
+      "date": "2026-07-03T00:00:00"
     },
     {
-      "key": "Letters of Love General Meeting|2026-09-17T23:00:00.000Z",
-      "firstSeenAt": "2026-09-04T07:49:21.755Z",
-      "title": "Letters of Love General Meeting",
+      "key": "Arts Smarts Camps|2026-07-06T09:00:00",
+      "firstSeenAt": "2026-09-04T12:33:33.038Z",
+      "title": "Arts Smarts Camps",
       "source": "MU",
-      "date": "2026-09-17T23:00:00.000Z"
+      "date": "2026-07-06T09:00:00"
     },
     {
-      "key": "Phi Alpha Theta Meeting|2026-09-28T20:30:00.000Z",
-      "firstSeenAt": "2026-09-04T07:49:21.755Z",
-      "title": "Phi Alpha Theta Meeting",
+      "key": "Summer Session 2 ENDS|2026-07-10T07:00:00",
+      "firstSeenAt": "2026-09-04T12:33:33.038Z",
+      "title": "Summer Session 2 ENDS",
       "source": "MU",
-      "date": "2026-09-28T20:30:00.000Z"
+      "date": "2026-07-10T07:00:00"
     },
     {
-      "key": "Letters of Love General Meeting|2026-10-06T23:00:00.000Z",
-      "firstSeenAt": "2026-09-04T07:49:21.755Z",
-      "title": "Letters of Love General Meeting",
+      "key": "Summer Session 3 BEGINS|2026-07-13T07:00:00",
+      "firstSeenAt": "2026-09-04T12:33:33.038Z",
+      "title": "Summer Session 3 BEGINS",
       "source": "MU",
-      "date": "2026-10-06T23:00:00.000Z"
+      "date": "2026-07-13T07:00:00"
     },
     {
-      "key": "Phi Alpha Theta Meeting|2026-10-19T20:30:00.000Z",
-      "firstSeenAt": "2026-09-04T07:49:21.755Z",
-      "title": "Phi Alpha Theta Meeting",
+      "key": "Summer Welcome Session|2026-07-17T09:00:00",
+      "firstSeenAt": "2026-09-04T12:33:33.038Z",
+      "title": "Summer Welcome Session",
       "source": "MU",
-      "date": "2026-10-19T20:30:00.000Z"
+      "date": "2026-07-17T09:00:00"
     },
     {
-      "key": "Letters of Love General Meeting|2026-10-22T23:00:00.000Z",
-      "firstSeenAt": "2026-09-04T07:49:21.755Z",
-      "title": "Letters of Love General Meeting",
+      "key": "Summer Welcome Session|2026-07-23T09:00:00",
+      "firstSeenAt": "2026-09-04T12:33:33.038Z",
+      "title": "Summer Welcome Session",
       "source": "MU",
-      "date": "2026-10-22T23:00:00.000Z"
+      "date": "2026-07-23T09:00:00"
     },
     {
-      "key": "Phi Alpha Theta Meeting|2026-11-02T21:30:00.000Z",
-      "firstSeenAt": "2026-09-04T07:49:21.755Z",
-      "title": "Phi Alpha Theta Meeting",
+      "key": "Summer Welcome Session|2026-07-24T09:00:00",
+      "firstSeenAt": "2026-09-04T12:33:33.038Z",
+      "title": "Summer Welcome Session",
       "source": "MU",
-      "date": "2026-11-02T21:30:00.000Z"
+      "date": "2026-07-24T09:00:00"
     },
     {
-      "key": "Letters of Love General Meeting|2026-11-04T00:00:00.000Z",
-      "firstSeenAt": "2026-09-04T07:49:21.755Z",
-      "title": "Letters of Love General Meeting",
+      "key": "Alumni Night at the Philadelphia Union|2026-07-25T19:30:00",
+      "firstSeenAt": "2026-09-04T12:33:33.038Z",
+      "title": "Alumni Night at the Philadelphia Union",
       "source": "MU",
-      "date": "2026-11-04T00:00:00.000Z"
+      "date": "2026-07-25T19:30:00"
     }
   ],
-  "addedLastRun": 15
+  "addedLastRun": 130
 }

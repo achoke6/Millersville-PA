@@ -369,9 +369,9 @@
   },
   {
     "name": "Citamard",
-    "category": "Performance",
+    "category": "Meeting",
     "categories": [
-      "Performance"
+      "Meeting"
     ],
     "shortName": "",
     "id": ""
@@ -725,10 +725,8 @@
   },
   {
     "name": "Expressions Dance",
-    "category": "Performance",
-    "categories": [
-      "Performance"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -748,12 +746,12 @@
   },
   {
     "name": "Film Club",
-    "category": "Academic",
+    "category": "Movie or Film",
     "categories": [
-      "Academic"
+      "Movie or Film"
     ],
     "shortName": "",
-    "id": "filmclubmu"
+    "id": ""
   },
   {
     "name": "First Gems of The Ville",
@@ -1190,13 +1188,10 @@
     "id": ""
   },
   {
-    "name": "Mock Trial Club",
-    "category": "Competition",
+    "name": "Mock Trial Club of Millersville University",
+    "category": "Meeting",
     "categories": [
-      "Competition",
-      "Educational Program",
       "Meeting",
-      "Performance",
       "Social"
     ],
     "shortName": "",
@@ -1397,11 +1392,8 @@
   },
   {
     "name": "Reformed University Fellowship",
-    "category": "Meeting",
-    "categories": [
-      "Meeting",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "RUF",
     "id": ""
   },
@@ -1847,8 +1839,10 @@
   },
   {
     "name": "WIXQ 91.7 FM",
-    "category": "",
-    "categories": [],
+    "category": "Meeting",
+    "categories": [
+      "Meeting"
+    ],
     "shortName": "",
     "id": ""
   },

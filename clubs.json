@@ -49,10 +49,8 @@
   },
   {
     "name": "Alpha Sigma Alpha",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -77,21 +75,13 @@
   },
   {
     "name": "Alumni",
-    "category": "University Departments ",
+    "category": "Homecoming ",
     "categories": [
-      "University Departments "
+      "Homecoming ",
+      "Tabling"
     ],
     "shortName": "",
-    "id": "alumni"
-  },
-  {
-    "name": "American Association of University Women Club",
-    "category": "Service & Civic Engagement",
-    "categories": [
-      "Service & Civic Engagement"
-    ],
-    "shortName": "AAUW",
-    "id": "aauw"
+    "id": ""
   },
   {
     "name": "American Chemical Society",
@@ -117,16 +107,6 @@
     "id": "assp"
   },
   {
-    "name": "Angler's Association of Millersville",
-    "category": "Service & Civic Engagement",
-    "categories": [
-      "Service & Civic Engagement",
-      "Sports and Leisure"
-    ],
-    "shortName": "AAM",
-    "id": "aam"
-  },
-  {
     "name": "AniMU: The Anime and Video Gaming Club",
     "category": "Meeting",
     "categories": [
@@ -136,17 +116,6 @@
     ],
     "shortName": "AniMU",
     "id": ""
-  },
-  {
-    "name": "Anthropology Club",
-    "category": "Academic",
-    "categories": [
-      "Academic",
-      "Arts & Culture",
-      "University Departments "
-    ],
-    "shortName": "Anth Club",
-    "id": "villeanth"
   },
   {
     "name": "Archived Account",
@@ -263,15 +232,6 @@
     ],
     "shortName": "",
     "id": ""
-  },
-  {
-    "name": "Body Empowerment Alliance",
-    "category": "Service & Civic Engagement",
-    "categories": [
-      "Service & Civic Engagement"
-    ],
-    "shortName": "Bea",
-    "id": "thebodyempowermentalliance"
   },
   {
     "name": "Body Project",
@@ -607,9 +567,11 @@
   },
   {
     "name": "Delta Sigma Theta Sorority, Inc.",
-    "category": "Meeting",
+    "category": "Educational Program",
     "categories": [
-      "Meeting"
+      "Educational Program",
+      "Social",
+      "Tabling"
     ],
     "shortName": "",
     "id": ""
@@ -785,15 +747,6 @@
     ],
     "shortName": "FSL",
     "id": ""
-  },
-  {
-    "name": "Friends of Advocates for Native Nations",
-    "category": "Identity-Based",
-    "categories": [
-      "Identity-Based"
-    ],
-    "shortName": "FANN",
-    "id": "fann"
   },
   {
     "name": "Gender and Sexuality Alliance",
@@ -1413,15 +1366,6 @@
     "id": "relayforlife"
   },
   {
-    "name": "Roundtable Organization of Abstract Discussions",
-    "category": "Spirituality",
-    "categories": [
-      "Spirituality"
-    ],
-    "shortName": "ROADS",
-    "id": "roads"
-  },
-  {
     "name": "Running Club",
     "category": "",
     "categories": [],
@@ -1624,9 +1568,9 @@
   },
   {
     "name": "Tau Kappa Epsilon",
-    "category": "Tabling",
+    "category": "Competition",
     "categories": [
-      "Tabling"
+      "Competition"
     ],
     "shortName": "",
     "id": ""
@@ -1752,13 +1696,6 @@
     "id": "tcg-club"
   },
   {
-    "name": "Turning Point Chapter",
-    "category": "",
-    "categories": [],
-    "shortName": "",
-    "id": "tpusamville"
-  },
-  {
     "name": "University Activities Board",
     "category": "",
     "categories": [],
@@ -1787,15 +1724,6 @@
     "categories": [],
     "shortName": "VSR",
     "id": "veteransresourcecenter"
-  },
-  {
-    "name": "Video Game Development Club",
-    "category": "Sports and Leisure",
-    "categories": [
-      "Sports and Leisure"
-    ],
-    "shortName": "VGDC",
-    "id": "vgdc"
   },
   {
     "name": "Ville Sports Officials Association Club",
@@ -1840,15 +1768,6 @@
     ],
     "shortName": "",
     "id": ""
-  },
-  {
-    "name": "Woman's Club Lacrosse",
-    "category": "Sports and Leisure",
-    "categories": [
-      "Sports and Leisure"
-    ],
-    "shortName": "Woman's Club LAX",
-    "id": "womensclublax"
   },
   {
     "name": "Women's Basketball",

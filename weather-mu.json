@@ -1,11 +1,11 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Friday, September 04, 2026 at 08:28 AM (Cokain, Ellison, McCarthy, Student Meteorologists)",
+    "issued": "Friday, September 04, 2026 at 12:19 PM (Banaszak, Nornhold, Reitz, Student Meteorologists)",
     "periods": [
       {
-        "period": "Today",
-        "text": "Mostly sunny, warm and humid. High: 84-88"
+        "period": "This afternoon",
+        "text": "Warm and humid with sunshine and some passing clouds. High: 84-88"
       },
       {
         "period": "Tonight",
@@ -128,6 +128,50 @@
   },
   "observations": [
     {
+      "time": "12:00",
+      "temp": "81",
+      "dewpoint": "67",
+      "rh": "63",
+      "windDir": "NNW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "10.0",
+      "condition": "None"
+    },
+    {
+      "time": "11:00",
+      "temp": "82",
+      "dewpoint": "69",
+      "rh": "64",
+      "windDir": "NW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "9.7",
+      "condition": "None"
+    },
+    {
+      "time": "10:00",
+      "temp": "79",
+      "dewpoint": "68",
+      "rh": "68",
+      "windDir": "NNW",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "9.9",
+      "condition": "None"
+    },
+    {
+      "time": "09:00",
+      "temp": "77",
+      "dewpoint": "68",
+      "rh": "75",
+      "windDir": "NW",
+      "windSpeed": "6",
+      "precip": "0.00",
+      "visibility": "9.6",
+      "condition": "None"
+    },
+    {
       "time": "08:00",
       "temp": "74",
       "dewpoint": "68",
@@ -147,50 +191,6 @@
       "windSpeed": "2",
       "precip": "0.00",
       "visibility": "8.9",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "70",
-      "dewpoint": "67",
-      "rh": "90",
-      "windDir": "SW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "9.6",
-      "condition": "None"
-    },
-    {
-      "time": "05:00",
-      "temp": "72",
-      "dewpoint": "67",
-      "rh": "84",
-      "windDir": "W",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "10.0",
-      "condition": "None"
-    },
-    {
-      "time": "04:00",
-      "temp": "73",
-      "dewpoint": "67",
-      "rh": "84",
-      "windDir": "WSW",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "9.7",
-      "condition": "None"
-    },
-    {
-      "time": "03:00",
-      "temp": "73",
-      "dewpoint": "68",
-      "rh": "85",
-      "windDir": "WNW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "9.9",
       "condition": "None"
     }
   ],
@@ -239,9 +239,9 @@
     "yearMinDate": "January 21"
   },
   "discussion": {
-    "headline": "hot, humid and stormy start to september",
-    "dateLine": "2:00 p.m. Tuesday, September 1, 2026",
-    "excerpt": "Meteorological summer, and August, ended on a warm and muggy note with high temperatures in the low-to-mid 80s across the Lower Susquehanna Valley Monday afternoon, and meteorological fall is kicking off on an ever hotter and stickier note this afternoon. …",
+    "headline": "cooler, drier and less humid for labor day weekend!",
+    "dateLine": "11:30 a.m. Friday, September 4, 2026, Update",
+    "excerpt": "As expected, multiple Mesoscale Convective Systems (MCS), or complexes of showers and heavy, gusty thunderstorms, have tracked from northwest-to-southeast through the Commonwealth along the northeastern periphery of a \"heat dome\" centered over the Southeast and Tennessee River Valley this week. On Tuesday, one such MCS was responsible for widespread wind damage in southeastern PA, the Lehigh Valley and eastern periphery of the Lower Susquehanna Valley. …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -249,6 +249,20 @@
     "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
   },
   "videos": [
+    {
+      "title": "Short Term Forecast 09/04/2026",
+      "videoId": "8ism6jsiXLQ",
+      "url": "https://www.youtube.com/watch?v=8ism6jsiXLQ",
+      "published": "2026-09-04T16:42:17+00:00",
+      "thumbnail": "https://i1.ytimg.com/vi/8ism6jsiXLQ/hqdefault.jpg"
+    },
+    {
+      "title": "Short Term Forecast 09/04/2026",
+      "videoId": "FiXUH_tN1dg",
+      "url": "https://www.youtube.com/watch?v=FiXUH_tN1dg",
+      "published": "2026-09-04T13:37:14+00:00",
+      "thumbnail": "https://i3.ytimg.com/vi/FiXUH_tN1dg/hqdefault.jpg"
+    },
     {
       "title": "Short Term Forecast 09/03/2026",
       "videoId": "GvuxC4COuvY",
@@ -262,22 +276,8 @@
       "url": "https://www.youtube.com/watch?v=9tuqCPRW2zk",
       "published": "2026-08-31T15:20:42+00:00",
       "thumbnail": "https://i2.ytimg.com/vi/9tuqCPRW2zk/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 08/31/2026",
-      "videoId": "KOWgNINfNno",
-      "url": "https://www.youtube.com/watch?v=KOWgNINfNno",
-      "published": "2026-08-31T14:37:02+00:00",
-      "thumbnail": "https://i4.ytimg.com/vi/KOWgNINfNno/hqdefault.jpg"
-    },
-    {
-      "title": "Medium Range Forecast 08/24/2026",
-      "videoId": "cc28wo-BXls",
-      "url": "https://www.youtube.com/watch?v=cc28wo-BXls",
-      "published": "2026-08-24T18:23:35+00:00",
-      "thumbnail": "https://i4.ytimg.com/vi/cc28wo-BXls/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-09-04T12:29:43.215Z"
+  "updated": "2026-09-04T16:43:10.994Z"
 }

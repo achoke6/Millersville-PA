@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-04T19:20:44.341Z",
+  "generatedAt": "2026-09-04T22:10:00.311Z",
   "totalEvents": 1231,
   "withDescription": 672,
   "withImage": 218,
@@ -149,15 +149,22 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-04T19:16:57.220Z"
+    "lastSyncAt": "2026-09-04T22:05:49.226Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-04T19:20:38.179Z"
+    "checkedAt": "2026-09-04T22:09:50.693Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Girls Varsity Soccer vs Cedar Crest High School|2026-09-09T23:00:00.000Z",
+      "firstSeenAt": "2026-09-04T22:10:00.308Z",
+      "title": "Girls Varsity Soccer vs Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-09-09T23:00:00.000Z"
+    },
     {
       "key": "Biology Club General Meeting|2026-09-15T23:00:00.000Z",
       "firstSeenAt": "2026-09-04T19:20:44.338Z",
@@ -220,14 +227,7 @@
       "title": "TKE Basketball Rush Event",
       "source": "MU",
       "date": "2026-09-04T21:30:00.000Z"
-    },
-    {
-      "key": "ASA Pie A Sig|2026-09-09T15:00:00.000Z",
-      "firstSeenAt": "2026-09-04T16:46:42.422Z",
-      "title": "ASA Pie A Sig",
-      "source": "MU",
-      "date": "2026-09-09T15:00:00.000Z"
     }
   ],
-  "addedLastRun": 8
+  "addedLastRun": 1
 }

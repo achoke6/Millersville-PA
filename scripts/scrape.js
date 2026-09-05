@@ -2174,27 +2174,60 @@ async function runScraper() {
         const parseBroadcastTitle = (title) => {
             if (!title) return null;
             const t = title.trim();
-            // Match "Sport vs. Opponent" / "Sport at Opponent" / "Sport vs Opponent"
-            const m = t.match(/^([A-Za-z][A-Za-z ]*?)\s+(?:vs\.?|at)\s+/i);
-            if (m) {
-                const sport = m[1].trim().toLowerCase();
-                // Common multi-word sports — collapse to single canonical token
+            const SPORT_WORD_RE = /\b(field hockey|cross country|track(?: (?:&|and) field)?|baseball|softball|lacrosse|volleyball|football|basketball|soccer|tennis|golf|swimming|wrestling)\b/i;
+            const canonSport = (s) => {
+                const sport = s.trim().toLowerCase();
                 if (sport.includes('field hockey'))  return 'field hockey';
                 if (sport.includes('cross country')) return 'cross country';
                 if (sport.includes('track'))         return 'track';
                 return sport;
+            };
+            // Opponent as it should appear in the Sidearm event title: drop
+            // parentheticals ("(Game 1)", "(PA)"), a trailing sport phrase, and
+            // any leading "Women's"/"Men's" that belongs to the sport, not the school.
+            const cleanOpponent = (s) => (s || '')
+                .replace(/\([^)]*\)/g, ' ')
+                .replace(new RegExp("\\b(?:women'?s|men'?s)?\\s*" + SPORT_WORD_RE.source + "\\s*$", 'i'), ' ')
+                .replace(/\s+/g, ' ').trim() || null;
+            const MU_SELF_RE = /^millersville(?:\s+(?:university|marauders))?$/i;
+            // "A vs. B" / "A at B" / "A vs B"
+            const m = t.match(/^([A-Za-z][A-Za-z .'&()-]*?)\s+(?:vs\.?|at)\s+(.+)$/i);
+            if (m) {
+                const lead = m[1].trim(), rest = m[2].trim();
+                // 2026-09 shape: "Millersville vs. Slippery Rock" - no sport word at
+                // all. Sport is '*' (wildcard bucket, paired by opponent + time below).
+                if (MU_SELF_RE.test(lead)) {
+                    const sw = rest.match(SPORT_WORD_RE);
+                    return { sport: sw ? canonSport(sw[1]) : '*', opponent: cleanOpponent(rest) };
+                }
+                // "West Chester vs Millersville Women's Volleyball" - opponent first,
+                // sport (if any) trails the Millersville side.
+                if (/\bmillersville\b/i.test(rest)) {
+                    const sw = rest.match(SPORT_WORD_RE) || lead.match(SPORT_WORD_RE);
+                    return { sport: sw ? canonSport(sw[1]) : '*', opponent: cleanOpponent(lead) };
+                }
+                // Legacy shape: "Baseball vs. West Chester (Game 1)"
+                return { sport: canonSport(lead), opponent: cleanOpponent(rest) };
             }
             // Fallbacks for sports without "vs." in the title (track meets, etc).
             // Order matters — check more-specific tokens first.
             const lower = t.toLowerCase();
             if (/\b(invitational|invite|relays|championships?)\b/.test(lower)) {
-                if (/\bswim/.test(lower))             return 'swimming';
-                if (/\bcross[- ]country/.test(lower)) return 'cross country';
-                if (/\btrack/.test(lower))            return 'track';
+                if (/\bswim/.test(lower))             return { sport: 'swimming', opponent: null };
+                if (/\bcross[- ]country/.test(lower)) return { sport: 'cross country', opponent: null };
+                if (/\btrack/.test(lower))            return { sport: 'track', opponent: null };
                 // Generic invite/meet — assume track since that's the most common
-                return 'track';
+                return { sport: 'track', opponent: null };
             }
             return null;
+        };
+        // Opponent-in-title test for wildcard ('*') broadcasts: normalize both sides
+        // (lowercase, punctuation -> space) and require the cleaned opponent to appear
+        // in the MU event title. "California" matches "...vs California (Pa.)".
+        const normOppText = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').replace(/\s+/g, ' ').trim();
+        const opponentInTitle = (opp, evTitle) => {
+            const o = normOppText(opp); if (!o) return false;
+            return (' ' + normOppText(evTitle) + ' ').includes(' ' + o + ' ');
         };
 
         // Pull broadcasts in two passes: current (LIVE/UPCOMING — we always want
@@ -2217,7 +2250,9 @@ async function runScraper() {
                 const node = edge.node;
                 const ms = new Date(node.broadcastDateUtc).getTime();
                 if (isNaN(ms) || ms < pastCutoff || ms > futureCutoff) continue;
-                const sport = parseBroadcastTitle(node.title);
+                const parsedTitle = parseBroadcastTitle(node.title);
+                const sport = parsedTitle && parsedTitle.sport;
+                const opponent = parsedTitle ? parsedTitle.opponent : null;
                 if (!sport || !node.internalId) continue;
                 // durationSeconds may be null/0 for UPCOMING broadcasts (length
                 // unknown until the broadcast actually airs). endMs is null in
@@ -2230,6 +2265,7 @@ async function runScraper() {
                 const endMs = (Number.isFinite(durSec) && durSec > 0) ? ms + durSec * 1000 : null;
                 broadcasts.push({
                     sport,
+                    opponent,
                     dateUtc: node.broadcastDateUtc,
                     ms,
                     endMs,
@@ -2262,7 +2298,9 @@ async function runScraper() {
                 if (isNaN(ms)) continue;
                 if (ms < pastCutoff) { crossedCutoff = true; continue; }
                 if (ms > futureCutoff) continue;  // shouldn't happen for archived but defensive
-                const sport = parseBroadcastTitle(node.title);
+                const parsedTitle = parseBroadcastTitle(node.title);
+                const sport = parsedTitle && parsedTitle.sport;
+                const opponent = parsedTitle ? parsedTitle.opponent : null;
                 if (!sport || !node.internalId) continue;
                 // ARCHIVED broadcasts have an actual recorded duration. Defensive
                 // fallback to null if Hudl returns an unexpected shape — step 7
@@ -2272,6 +2310,7 @@ async function runScraper() {
                 const endMs = (Number.isFinite(durSec) && durSec > 0) ? ms + durSec * 1000 : null;
                 broadcasts.push({
                     sport,
+                    opponent,
                     dateUtc: node.broadcastDateUtc,
                     ms,
                     endMs,
@@ -2381,6 +2420,10 @@ async function runScraper() {
         // a few weeks of cron logs will tell us whether moving to a
         // streamLinks[] array (one per session) is worth the engineering.
         const pairedEvents = new WeakSet();
+        // Wildcard ('*') broadcasts - title carried no sport word - search every MU
+        // sport event, gated by opponent-name match (see parseBroadcastTitle).
+        const allSportEvents = [...eventsBySport.values()].flat().sort((a, b) => a.ms - b.ms);
+        let muHudlOpponentMatches = 0;
         // Diagnostic: count broadcasts that overlap an already-paired event
         // (typical of Day-2+ broadcasts for multi-day meets like PSAC track
         // championships). High counts here = "users would benefit from
@@ -2388,7 +2431,7 @@ async function runScraper() {
         // Decision will be made from cron log data, not speculation.
         const multiDaySkips = []; // [{evTitle, evDate, dayNumber, totalDays}]
         for (const [sport, broadcastList] of broadcastsBySport) {
-            const eventList = eventsBySport.get(sport);
+            const eventList = sport === '*' ? allSportEvents : eventsBySport.get(sport);
             if (!eventList || !eventList.length) continue;
             const fbDur = sportDurationMs(sport);
             for (const b of broadcastList) {
@@ -2399,6 +2442,8 @@ async function runScraper() {
                 // signal for "would have wanted multiple streamLinks here."
                 let overlappedPairedEvent = null;
                 for (const er of eventList) {
+                    // Wildcard bucket: the event must name this broadcast's opponent.
+                    if (sport === '*' && !opponentInTitle(b.opponent, er.ev.title)) continue;
                     if (pairedEvents.has(er.ev)) {
                         // Check if this paired event overlaps the broadcast
                         if (er.ms < bEndMs && b.ms < er.endMs) {
@@ -2415,6 +2460,7 @@ async function runScraper() {
                     best.ev.streamLink = `https://psacsportsdigitalnetwork.com/millersvilleathletics/?B=${b.internalId}`;
                     pairedEvents.add(best.ev);
                     muHudlMatchCount++;
+                    if (sport === '*') muHudlOpponentMatches++;
 
                     // Re-evaluate isLive using the precomputed event interval
                     // (may include real endTime from step 3) instead of the old
@@ -2457,7 +2503,7 @@ async function runScraper() {
         // we don't have an event record for.
         let unpairedSportBroadcasts = 0;
         for (const [sport, broadcastList] of broadcastsBySport) {
-            const eventList = eventsBySport.get(sport) || [];
+            const eventList = (sport === '*' ? allSportEvents : eventsBySport.get(sport)) || [];
             for (const b of broadcastList) {
                 const matched = eventList.some(er => er.ev.streamLink &&
                     er.ev.streamLink.includes(`?B=${b.internalId}`));
@@ -2467,7 +2513,7 @@ async function runScraper() {
         if (unpairedSportBroadcasts > 0) {
             console.log(`  ⚠️  MU Hudl: ${unpairedSportBroadcasts} broadcasts had no overlapping event (away games or schema drift)`);
         }
-        console.log(`  📺 MU matched ${muHudlMatchCount} broadcasts to events`);
+        console.log(`  📺 MU matched ${muHudlMatchCount} broadcasts to events (${muHudlOpponentMatches} via opponent+time, title had no sport word)`);
     } catch (e) { console.log(`  ⚠️ MU Hudl broadcast check error: ${e.message}`); }
 
     // ===== 3. MU CALENDAR (NON-SPORT EVENTS ONLY) =====

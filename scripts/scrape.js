@@ -1423,9 +1423,13 @@ async function runScraper() {
             // misleading Watch button. Live games keep the URL regardless —
             // during game time the school landing page auto-features the
             // active broadcast, so even a "generic" URL resolves usefully.
+            // Path IDs must be 5+ digits: real broadcast ids are 7 digits, while Sidearm
+            // article paths carry a 4-digit YEAR (/sports/2022/12/19/watch-the-warriors.aspx)
+            // that used to pass this test and leave a Watch button pointing at an opponent's
+            // generic "how to watch" page (6 such away games observed 2026-09-05).
             if (streamLink && !isLive) {
                 const hasIdInQuery = /[?&][a-z_]+=\d{4,}/i.test(streamLink);
-                const hasIdInPath  = /\/\d{4,}(\?|\/|$)/.test(streamLink);
+                const hasIdInPath  = /\/\d{5,}(\?|\/|$)/.test(streamLink);
                 if (!hasIdInQuery && !hasIdInPath) streamLink = '';
             }
 

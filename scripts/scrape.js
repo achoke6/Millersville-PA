@@ -1725,49 +1725,62 @@ async function runScraper() {
     // object shape + tags as the old PM athletic events, so the MaxPreps/Hudl score
     // matchers and the Hudl broadcast check (section 2b, which runs immediately
     // after this) attach scores + stream links with no changes. Runs before 2b on
-    // purpose. URL: path form (/events/category/athletics/list/) and the
-    // ?tribe_events_cat=athletics query form were both verified to return the same
-    // feed; path form chosen to mirror the section-2 general feed. Past + future
-    // reuse the same pastDate/futureDate window as everything else, paginated like
-    // section 2.
+    // purpose. SOURCE (changed 2026-09-05): the site's Events Calendar upgrade (ECPv6.17.x)
+    // broke iCal pagination on this category feed - `tribe_paged=2` (and /page/2/, ?paged=2)
+    // return ZERO events, so the old loop saw only the first 30 games (~6 days) and every
+    // later game, including the whole varsity football season, was silently dropped. We now
+    // read the TEC REST API instead (/wp-json/tribe/events/v1/events, server-reported
+    // total_pages, 50/page, past+future in ONE start_date..end_date window) and map each
+    // record into the same {uid,start,end,summary,description,url,location} shape the iCal
+    // parser produced, so everything below this fetch is untouched. Description arrives as
+    // HTML; <br>/<p> become newlines so the "Sport:/Level:/Site:" regexes still match.
+    // Fallback if the REST call fails outright: the single-page iCal (?ical=1) so the
+    // next few days still render rather than nothing.
     try {
-        console.log("📡 Fetching Penn Manor Athletics (athletics-category iCal)...");
+        console.log("📡 Fetching Penn Manor Athletics (TEC REST API)...");
         const allPMAth = {};
-        const pmAthFutureUrl = 'https://www.pennmanor.net/events/category/athletics/list/?ical=1&tribe_event_display=list&tribe_paged=';
-        const pmAthPastUrl   = 'https://www.pennmanor.net/events/category/athletics/list/?ical=1&tribe_event_display=past&tribe_paged=';
-
-        // Forward (upcoming) pages — stop logic mirrors section 2
-        let aLatest = null;
-        for (let aPage = 1; aPage <= 20; aPage++) {
-            try {
-                const pageData = await ical.async.fromURL(pmAthFutureUrl + aPage, { headers: baseHeaders });
-                const pageEvents = Object.values(pageData).filter(e => e.type === 'VEVENT');
-                if (pageEvents.length === 0) break;
-                let newCount = 0;
-                for (const [key, val] of Object.entries(pageData)) {
-                    if (val.type === 'VEVENT') { const uid = val.uid || key; if (!allPMAth[uid]) newCount++; allPMAth[uid] = val; }
+        const pmAthHtmlToText = (html) => decodeEntities(String(html || '')
+            .replace(/<br\s*\/?>/gi, '\n')
+            .replace(/<\/p>\s*/gi, '\n')
+            .replace(/<[^>]+>/g, '')
+            .replace(/\r/g, '')
+            .replace(/[ \t]+\n/g, '\n')
+            .trim());
+        // TEC REST dates are "YYYY-MM-DD HH:MM:SS"; use the UTC pair so DST/offset never matters.
+        const pmAthUtc = (s) => (s ? new Date(String(s).replace(' ', 'T') + 'Z') : null);
+        const pmAthRestBase = 'https://www.pennmanor.net/wp-json/tribe/events/v1/events'
+            + `?categories=athletics&per_page=50&start_date=${startDay}&end_date=${endDay}&page=`;
+        let pmAthRestPages = 0, pmAthRestTotal = null;
+        try {
+            for (let rp = 1; rp <= 40; rp++) {
+                const res = await fetch(pmAthRestBase + rp, { headers: baseHeaders });
+                if (!res.ok) throw new Error(`HTTP ${res.status} on page ${rp}`);
+                const body = await res.json();
+                const recs = Array.isArray(body.events) ? body.events : [];
+                if (pmAthRestTotal === null) pmAthRestTotal = body.total;
+                pmAthRestPages++;
+                for (const r of recs) {
+                    const uid = `pm-rest-${r.id}`;
+                    allPMAth[uid] = {
+                        type: 'VEVENT', uid,
+                        start: pmAthUtc(r.utc_start_date || r.start_date),
+                        end: pmAthUtc(r.utc_end_date || r.end_date),
+                        summary: decodeEntities(r.title || ''),
+                        description: pmAthHtmlToText(r.description),
+                        url: r.url || '',
+                        location: (r.venue && (r.venue.venue || r.venue.address)) || ''
+                    };
                 }
-                let pageLatest = null;
-                pageEvents.forEach(ev => { const d = new Date(ev.start); if (!isNaN(d.getTime()) && (!pageLatest || d > pageLatest)) pageLatest = d; });
-                if (pageLatest) aLatest = pageLatest;
-                if (aLatest && aLatest >= futureDate) break;
-                if (pageEvents.length < 30) break;
-                if (newCount === 0) break;
-            } catch (err) { console.log(`  → Athletics page failed: ${err.message}`); break; }
-        }
-        // Past pages — mirrors section 2's backward pagination
-        for (let pp = 1; pp <= 20; pp++) {
-            try {
-                const pastData = await ical.async.fromURL(pmAthPastUrl + pp, { headers: baseHeaders });
-                const pastEvents = Object.values(pastData).filter(e => e.type === 'VEVENT');
-                if (pastEvents.length === 0) break;
-                let newPast = 0, oldest = null;
-                for (const [key, val] of Object.entries(pastData)) {
-                    if (val.type === 'VEVENT') { const uid = val.uid || key; if (!allPMAth[uid]) newPast++; allPMAth[uid] = val; const d = new Date(val.start); if (!oldest || d < oldest) oldest = d; }
-                }
-                if (newPast === 0) break;
-                if (oldest && oldest < pastDate) break;
-            } catch (err) { console.log(`  → Athletics past page failed: ${err.message}`); break; }
+                const totalPages = Number(body.total_pages) || 1;
+                if (recs.length === 0 || rp >= totalPages) break;
+            }
+            console.log(`  → Penn Manor Athletics REST: ${pmAthRestPages} page(s), ${Object.keys(allPMAth).length} records (server total ${pmAthRestTotal})`);
+        } catch (restErr) {
+            console.log(`  ⚠️ Penn Manor Athletics REST failed (${restErr.message}) - falling back to single-page iCal`);
+            const pageData = await ical.async.fromURL('https://www.pennmanor.net/events/category/athletics/list/?ical=1', { headers: baseHeaders });
+            for (const [key, val] of Object.entries(pageData)) {
+                if (val.type === 'VEVENT') allPMAth[val.uid || key] = val;
+            }
         }
 
         let pmAthEmit = 0, pmAthDropLevel = 0;
@@ -1790,9 +1803,12 @@ async function runScraper() {
             if (/\bpractice\b|\bscrimmage\b|\bopen gym\b|\btryout/i.test(lowerTitle)) continue;
 
             // Structured description fields: "Sport: X", "Level: <Gender> <Level>", "Site: <venue>"
-            const sportRaw = ((desc.match(/Sport:\s*(.+?)(?:\\n|\n|$)/i) || [])[1] || '').trim();
-            const levelRaw = ((desc.match(/Level:\s*(.+?)(?:\\n|\n|$)/i) || [])[1] || '').trim();
-            const siteRaw  = ((desc.match(/Site:\s*(.+?)(?:\\n|\n|$)/i)  || [])[1] || '').trim();
+            // Stop at a newline OR at the next "Label:" token - some rows (seen on football)
+            // arrive as one unbroken line, and without the lookahead "Sport:" swallowed the rest.
+            const PM_ATH_FIELD_END = '(?=\\s*(?:Sport|Level|Team|Site|Subsite):|\\\\n|\\n|$)';
+            const sportRaw = ((desc.match(new RegExp('Sport:\\s*(.+?)' + PM_ATH_FIELD_END, 'i')) || [])[1] || '').trim();
+            const levelRaw = ((desc.match(new RegExp('Level:\\s*(.+?)' + PM_ATH_FIELD_END, 'i')) || [])[1] || '').trim();
+            const siteRaw  = ((desc.match(new RegExp('(?<!Sub)Site:\\s*(.+?)' + PM_ATH_FIELD_END, 'i'))  || [])[1] || '').trim();
 
             // Varsity + JV only — drop 7th/8th/9th/freshman/jr-high
             const isVarsity = /\bvarsity\b/i.test(levelRaw);

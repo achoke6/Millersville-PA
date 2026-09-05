@@ -1871,6 +1871,8 @@ async function runScraper() {
     } catch (e) { console.error("❌ Penn Manor Athletics error:", e.message); }
 
     // ===== 2b. HUDL BROADCAST CHECK (Penn Manor) =====
+    // Hoisted for the sourceHealth invariants in status.json (see the status block).
+    let pmHudlMatched = 0, pmHudlWithBroadcasts = 0;
     try {
         console.log("📡 Checking Hudl broadcasts for PM games...");
         const hudlQuery = `query Web_Fan_GetScheduleEntrySummaries_r1($input: GetScheduleEntryPublicSummariesInput!) {
@@ -2042,6 +2044,7 @@ async function runScraper() {
             }
         }
         console.log(`  📺 Matched ${matchCount} broadcasts, ${highlightCount} highlight links`);
+        pmHudlMatched = matchCount; pmHudlWithBroadcasts = broadcastCount;
         // Store for score matching after MaxPreps
         global._hudlScores = hudlScores;
         global._hudlSportToId = sportToHudlId;
@@ -2055,6 +2058,7 @@ async function runScraper() {
     // degradation detector compares against the rolling 7-day median to flag
     // silent breakage — same mechanism that protects the per-source counts).
     let muHudlMatchCount = 0;
+    let muHudlInWindow = 0;   // broadcasts inside our date window (denominator for the sourceHealth pair-ratio invariant)
     //
     // MU broadcasts on PSAC Sports Digital Network (https://psacsportsdigitalnetwork.com/
     // millersvilleathletics/), which is powered by Hudl TV (BlueFrame became Hudl in
@@ -2324,6 +2328,7 @@ async function runScraper() {
             archCursor = result?.pageInfo?.endCursor || null;
         }
         console.log(`  📺 MU Hudl: ${muTotalBroadcasts} broadcasts queried, ${broadcasts.length} matched our window`);
+        muHudlInWindow = broadcasts.length;
         // Note: durationSeconds isn't exposed on Hudl's Broadcast GraphQL type
         // (verified empirically when adding the field broke the whole query).
         // We capture rawDur defensively in case the schema changes and starts
@@ -6483,6 +6488,48 @@ async function runScraper() {
             // Form-submissions backlog (2026-09-03) — the submissions sheet's twin of
             // reviewQueue; null when §8 didn't run (fetch failed) so the card omits it.
             submissionsQueue,
+            // SOURCE HEALTH INVARIANTS (2026-09-05). Absolute floors, NOT median-relative.
+            // Why: the dashboard's per-source degradation detector compares against a
+            // rolling 7-day median, so a metric that has been wrong long enough becomes
+            // its own baseline - muHudlBroadcasts read 0 for weeks unflagged, and Penn
+            // Manor athletics quietly shrank to a 6-day horizon. Each check here has a
+            // fixed threshold and a plain-English detail; status.json consumers (the
+            // weekly monitor, status.html) can read `sourceHealth.failing` directly.
+            //   *.horizonDays  - newest event date minus today. A paginated feed whose
+            //                    horizon collapses (PM athletics: 365d -> 6d) = pagination
+            //                    died upstream, regardless of the count.
+            //   *.count        - in-season floor for the two athletics feeds.
+            //   muHudl.pairRatio / pmHudl.matched - broadcasts that reached the pairing
+            //                    step must mostly attach; 0 attached with many in window =
+            //                    title/schema drift (the 2026-09-05 shape).
+            // Off-season gating: count floors skip Jun/Jul; horizon floors skip Apr-Jul.
+            sourceHealth: (() => {
+                const DAY = 86400000, nowMs = Date.now();
+                const monthET = Number(new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', month: 'numeric' }).format(nowMs));
+                const athleticsSeason = monthET !== 6 && monthET !== 7;          // count floors: Aug-May
+                const athleticsHorizonSeason = monthET >= 8 || monthET <= 3;      // horizon floors: Aug-Mar (spring schedules end in May, so Apr/May horizons legitimately shrink)
+                const isAth = e => (e.tags || []).includes('Athletics') || (e.tags || []).includes('Athletic Competitions');
+                const checks = [];
+                const add = (key, ok, detail) => checks.push({ key, ok, ...detail });
+                const horizon = (range) => range?.latest ? Math.round((new Date(range.latest).getTime() - nowMs) / DAY) : null;
+                const horizonCheck = (key, range, minDays, gate = true) => {
+                    const h = horizon(range);
+                    add(`${key}.horizonDays`, !gate || (h !== null && h >= minDays), { value: h, min: minDays, skipped: !gate });
+                };
+                horizonCheck('pennManorAthletics', dateRangeFor('PM', isAth), 45, athleticsHorizonSeason);
+                horizonCheck('muAthletics', dateRangeFor('MU', isAth), 60, athleticsHorizonSeason);
+                horizonCheck('muCalendar', dateRangeFor('MU', e => !isAth(e) && !(e.tags || []).includes('Clubs/Orgs') && !isArtsmuEvent(e) && !isCampsAlumniEvent(e)), 30);
+                horizonCheck('borough', dateRangeFor('Borough'), 21);
+                const pmAthCount = bySourceCount('PM', isAth);
+                add('pennManorAthletics.count', !athleticsSeason || pmAthCount >= 150, { value: pmAthCount, min: 150, skipped: !athleticsSeason });
+                const muAthCount = bySourceCount('MU', isAth);
+                add('muAthletics.count', !athleticsSeason || muAthCount >= 100, { value: muAthCount, min: 100, skipped: !athleticsSeason });
+                const ratio = muHudlInWindow ? muHudlMatchCount / muHudlInWindow : null;
+                add('muHudl.pairRatio', muHudlInWindow < 10 || ratio >= 0.5, { matched: muHudlMatchCount, inWindow: muHudlInWindow, value: ratio === null ? null : Number(ratio.toFixed(2)), min: 0.5 });
+                add('pmHudl.matched', pmHudlWithBroadcasts === 0 || pmHudlMatched > 0, { matched: pmHudlMatched, withBroadcasts: pmHudlWithBroadcasts });
+                const failing = checks.filter(c => !c.ok).map(c => c.key);
+                return { ok: failing.length === 0, failing, checks };
+            })(),
             // Event diff tracking — operator self-check. recentlyAdded is up
             // to 10 events first seen in the last 7 days (most recent first).
             // addedLastRun is the count of events new since the previous cron
@@ -6492,6 +6539,12 @@ async function runScraper() {
             addedLastRun: addedThisRun
         };
         fs.writeFileSync(path.join(__dirname, '../status.json'), JSON.stringify(status, null, 2));
+        if (status.sourceHealth.ok) {
+            console.log(`✅ Source health: ${status.sourceHealth.checks.length}/${status.sourceHealth.checks.length} invariants OK`);
+        } else {
+            console.log(`⚠️ SOURCE HEALTH: ${status.sourceHealth.failing.length} invariant(s) FAILING - ${status.sourceHealth.failing.join(', ')}`);
+            status.sourceHealth.checks.filter(c => !c.ok).forEach(c => console.log(`     - ${JSON.stringify(c)}`));
+        }
         console.log(`📊 Status file written (${status.totalEvents} events across ${Object.values(status.sources).filter(n => n > 0).length} active sources)`);
 
         // Maintain a 7-day rolling history of per-source counts. Used by

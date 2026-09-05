@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-05T14:10:20.418Z",
+  "generatedAt": "2026-09-05T14:30:23.447Z",
   "totalEvents": 1604,
   "withDescription": 675,
   "withImage": 221,
@@ -149,13 +149,75 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-05T14:06:30.647Z"
+    "lastSyncAt": "2026-09-05T14:26:26.803Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-05T14:10:13.459Z"
+    "checkedAt": "2026-09-05T14:30:16.011Z"
+  },
+  "sourceHealth": {
+    "ok": true,
+    "failing": [],
+    "checks": [
+      {
+        "key": "pennManorAthletics.horizonDays",
+        "ok": true,
+        "value": 363,
+        "min": 45,
+        "skipped": false
+      },
+      {
+        "key": "muAthletics.horizonDays",
+        "ok": true,
+        "value": 263,
+        "min": 60,
+        "skipped": false
+      },
+      {
+        "key": "muCalendar.horizonDays",
+        "ok": true,
+        "value": 272,
+        "min": 30,
+        "skipped": false
+      },
+      {
+        "key": "borough.horizonDays",
+        "ok": true,
+        "value": 111,
+        "min": 21,
+        "skipped": false
+      },
+      {
+        "key": "pennManorAthletics.count",
+        "ok": true,
+        "value": 403,
+        "min": 150,
+        "skipped": false
+      },
+      {
+        "key": "muAthletics.count",
+        "ok": true,
+        "value": 316,
+        "min": 100,
+        "skipped": false
+      },
+      {
+        "key": "muHudl.pairRatio",
+        "ok": true,
+        "matched": 61,
+        "inWindow": 62,
+        "value": 0.98,
+        "min": 0.5
+      },
+      {
+        "key": "pmHudl.matched",
+        "ok": true,
+        "matched": 16,
+        "withBroadcasts": 22
+      }
+    ]
   },
   "recentlyAdded": [
     {

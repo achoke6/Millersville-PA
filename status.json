@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-05T13:22:07.337Z",
-  "totalEvents": 1232,
+  "generatedAt": "2026-09-05T13:47:15.952Z",
+  "totalEvents": 1604,
   "withDescription": 675,
   "withImage": 221,
   "familyFriendly": 86,
@@ -11,7 +11,7 @@
     "artsmu": 22,
     "campsAlumni": 40,
     "muGetInvolved": 336,
-    "pennManor": 51,
+    "pennManor": 423,
     "borough": 68,
     "vfw": 12,
     "phantomPower": 13,
@@ -44,7 +44,7 @@
     },
     "pennManor": {
       "earliest": "2026-06-08T23:00:00.000Z",
-      "latest": "2026-09-25T18:00:00.000Z"
+      "latest": "2027-09-03T19:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-06-08T23:00:00.000Z",
@@ -97,8 +97,8 @@
       "daysSinceMoved": 2
     },
     "pennManor": {
-      "newest": "2026-09-25",
-      "daysSinceMoved": 4
+      "newest": "2027-09-03",
+      "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2026-12-25",
@@ -130,11 +130,11 @@
     }
   },
   "sports": {
-    "total": 347,
-    "scored": 17,
-    "wins": 10,
-    "losses": 7,
-    "ties": 0
+    "total": 719,
+    "scored": 24,
+    "wins": 14,
+    "losses": 9,
+    "ties": 1
   },
   "registrations": {
     "open": 14,
@@ -149,85 +149,85 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-05T13:18:32.721Z"
+    "lastSyncAt": "2026-09-05T13:43:32.532Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-05T13:22:00.155Z"
+    "checkedAt": "2026-09-05T13:47:10.440Z"
   },
   "recentlyAdded": [
     {
-      "key": "Texas Hippie Coalition|2026-09-26T22:30:00.000Z",
-      "firstSeenAt": "2026-09-05T10:01:18.047Z",
-      "title": "Texas Hippie Coalition",
-      "source": "Other",
-      "date": "2026-09-26T22:30:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Tennis vs Ephrata Area High School|2026-09-10T20:00:00.000Z",
-      "firstSeenAt": "2026-09-05T05:18:48.996Z",
-      "title": "Girls Varsity Tennis vs Ephrata Area High School",
+      "key": "Boys Varsity Golf @ Elizabethtown Area High School|2026-08-17T12:00:00.000Z",
+      "firstSeenAt": "2026-09-05T13:47:15.949Z",
+      "title": "Boys Varsity Golf @ Elizabethtown Area High School",
       "source": "PM",
-      "date": "2026-09-10T20:00:00.000Z"
+      "date": "2026-08-17T12:00:00.000Z"
     },
     {
-      "key": "RUF Bible Study|2026-11-25T00:00:00.000Z",
-      "firstSeenAt": "2026-09-05T00:40:09.443Z",
-      "title": "RUF Bible Study",
-      "source": "MU",
-      "date": "2026-11-25T00:00:00.000Z"
-    },
-    {
-      "key": "Wednesday Night Dinner|2026-11-25T23:00:00.000Z",
-      "firstSeenAt": "2026-09-05T00:40:09.443Z",
-      "title": "Wednesday Night Dinner",
-      "source": "MU",
-      "date": "2026-11-25T23:00:00.000Z"
-    },
-    {
-      "key": "AniMU Weekly Meeting|2026-11-27T23:00:00.000Z",
-      "firstSeenAt": "2026-09-05T00:40:09.443Z",
-      "title": "AniMU Weekly Meeting",
-      "source": "MU",
-      "date": "2026-11-27T23:00:00.000Z"
-    },
-    {
-      "key": "Phi Alpha Theta Meeting|2026-11-30T21:30:00.000Z",
-      "firstSeenAt": "2026-09-05T00:40:09.443Z",
-      "title": "Phi Alpha Theta Meeting",
-      "source": "MU",
-      "date": "2026-11-30T21:30:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Soccer vs Cedar Crest High School|2026-09-09T23:00:00.000Z",
-      "firstSeenAt": "2026-09-04T22:10:00.308Z",
-      "title": "Girls Varsity Soccer vs Cedar Crest High School",
+      "key": "Boys Varsity Golf @ Cedar Crest High School|2026-08-20T16:00:00.000Z",
+      "firstSeenAt": "2026-09-05T13:47:15.949Z",
+      "title": "Boys Varsity Golf @ Cedar Crest High School",
       "source": "PM",
-      "date": "2026-09-09T23:00:00.000Z"
+      "date": "2026-08-20T16:00:00.000Z"
     },
     {
-      "key": "Biology Club General Meeting|2026-09-15T23:00:00.000Z",
-      "firstSeenAt": "2026-09-04T19:20:44.338Z",
-      "title": "Biology Club General Meeting",
-      "source": "MU",
-      "date": "2026-09-15T23:00:00.000Z"
+      "key": "Girls JV Soccer vs Central Dauphin High School|2026-08-22T14:00:00.000Z",
+      "firstSeenAt": "2026-09-05T13:47:15.949Z",
+      "title": "Girls JV Soccer vs Central Dauphin High School",
+      "source": "PM",
+      "date": "2026-08-22T14:00:00.000Z"
     },
     {
-      "key": "Puppy Olympics|2026-09-17T16:30:00",
-      "firstSeenAt": "2026-09-04T19:20:44.338Z",
-      "title": "Puppy Olympics",
-      "source": "MU",
-      "date": "2026-09-17T16:30:00"
+      "key": "Girls Varsity Soccer vs Central Dauphin High School|2026-08-22T14:00:00.000Z",
+      "firstSeenAt": "2026-09-05T13:47:15.949Z",
+      "title": "Girls Varsity Soccer vs Central Dauphin High School",
+      "source": "PM",
+      "date": "2026-08-22T14:00:00.000Z"
     },
     {
-      "key": "Healthy Relationship Breakout Sessions|2026-09-19T08:00:00",
-      "firstSeenAt": "2026-09-04T19:20:44.338Z",
-      "title": "Healthy Relationship Breakout Sessions",
-      "source": "MU",
-      "date": "2026-09-19T08:00:00"
+      "key": "Boys Varsity Football vs Octorara Area High School|2026-08-22T15:00:00.000Z",
+      "firstSeenAt": "2026-09-05T13:47:15.949Z",
+      "title": "Boys Varsity Football vs Octorara Area High School",
+      "source": "PM",
+      "date": "2026-08-22T15:00:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Field Hockey vs Palmyra Area High School|2026-08-22T15:50:00.000Z",
+      "firstSeenAt": "2026-09-05T13:47:15.949Z",
+      "title": "Girls Varsity Field Hockey vs Palmyra Area High School",
+      "source": "PM",
+      "date": "2026-08-22T15:50:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Field Hockey vs Central Bucks West High School|2026-08-22T16:40:00.000Z",
+      "firstSeenAt": "2026-09-05T13:47:15.949Z",
+      "title": "Girls Varsity Field Hockey vs Central Bucks West High School",
+      "source": "PM",
+      "date": "2026-08-22T16:40:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Field Hockey vs Owen J Roberts|2026-08-22T17:30:00.000Z",
+      "firstSeenAt": "2026-09-05T13:47:15.949Z",
+      "title": "Girls Varsity Field Hockey vs Owen J Roberts",
+      "source": "PM",
+      "date": "2026-08-22T17:30:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Field Hockey vs Wilson High School (West Lawn)|2026-08-22T19:10:00.000Z",
+      "firstSeenAt": "2026-09-05T13:47:15.949Z",
+      "title": "Girls Varsity Field Hockey vs Wilson High School (West Lawn)",
+      "source": "PM",
+      "date": "2026-08-22T19:10:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Cross Country @ Solanco High School|2026-08-22T20:00:00.000Z",
+      "firstSeenAt": "2026-09-05T13:47:15.949Z",
+      "title": "Boys Varsity Cross Country @ Solanco High School",
+      "source": "PM",
+      "date": "2026-08-22T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 372
 }

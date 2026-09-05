@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-09-05T00:40:09.447Z",
-  "totalEvents": 1235,
-  "withDescription": 676,
+  "generatedAt": "2026-09-05T05:18:48.998Z",
+  "totalEvents": 1232,
+  "withDescription": 675,
   "withImage": 221,
   "familyFriendly": 86,
-  "eventsToday": 17,
+  "eventsToday": 8,
   "sources": {
     "muAthletics": 316,
     "muCalendar": 157,
     "artsmu": 22,
     "campsAlumni": 40,
     "muGetInvolved": 336,
-    "pennManor": 53,
+    "pennManor": 51,
     "borough": 68,
     "vfw": 12,
     "phantomPower": 13,
@@ -78,39 +78,39 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 15
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 28
+      "daysSinceMoved": 29
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 28
+      "daysSinceMoved": 29
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "pennManor": {
       "newest": "2026-09-25",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 38
+      "daysSinceMoved": 39
     },
     "vfw": {
       "newest": "2026-10-22",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "phantomPower": {
       "newest": "2026-10-04",
-      "daysSinceMoved": 44
+      "daysSinceMoved": 45
     },
     "community": {
       "newest": "2027-04-16",
@@ -118,21 +118,21 @@
     },
     "manor": {
       "newest": "2027-09-01",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "raneyCellars": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "theBackyard": {
       "newest": "2026-09-30",
-      "daysSinceMoved": 38
+      "daysSinceMoved": 39
     }
   },
   "sports": {
-    "total": 349,
-    "scored": 15,
-    "wins": 8,
+    "total": 347,
+    "scored": 17,
+    "wins": 10,
     "losses": 7,
     "ties": 0
   },
@@ -149,15 +149,22 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-05T00:36:14.135Z"
+    "lastSyncAt": "2026-09-05T05:15:11.642Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-05T00:39:59.317Z"
+    "checkedAt": "2026-09-05T05:18:41.840Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Girls Varsity Tennis vs Ephrata Area High School|2026-09-10T20:00:00.000Z",
+      "firstSeenAt": "2026-09-05T05:18:48.996Z",
+      "title": "Girls Varsity Tennis vs Ephrata Area High School",
+      "source": "PM",
+      "date": "2026-09-10T20:00:00.000Z"
+    },
     {
       "key": "RUF Bible Study|2026-11-25T00:00:00.000Z",
       "firstSeenAt": "2026-09-05T00:40:09.443Z",
@@ -220,14 +227,7 @@
       "title": "Healthy Relationship Conference",
       "source": "MU",
       "date": "2026-09-19T08:00:00"
-    },
-    {
-      "key": "Splash-A-Tau|2026-10-02T17:00:00.000Z",
-      "firstSeenAt": "2026-09-04T19:20:44.338Z",
-      "title": "Splash-A-Tau",
-      "source": "MU",
-      "date": "2026-10-02T17:00:00.000Z"
     }
   ],
-  "addedLastRun": 4
+  "addedLastRun": 1
 }

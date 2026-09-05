@@ -540,6 +540,12 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
     if (benefits.includes('Credit')) return 'mu-only';
     const combinedText = ((titleText || '') + ' ' + (descText || '') + ' ' + (orgName || '')).toLowerCase();
 
+    // Homecoming is campus-wide for EVERY viewer site-wide (the alumni
+    // FULLY_EXEMPT tier, 2026-08-18). The GetInvolved copies of Homecoming
+    // events were only public by luck of their wording; make it explicit so
+    // a future tightening of the soft rules below can never hide them.
+    if (ALUMNI_FULLY_EXEMPT_RE.test(titleText || '')) return 'public';
+
     // ===== Highest-priority public signals =====
     // Public org names ("Red Cross", "Habitat for Humanity") and explicit
     // public-facing event types (blood drive, 5K, food drive). Win over softer
@@ -556,7 +562,12 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
 
     // Fundraiser/bake sale/festival keywords in title or description. Same
     // reasoning as the Fundraising tag — these are public-facing event types.
-    const publicFundraisingKeywordRegex = /\b(fundraiser|bake sale|festival|fair|charity|donation|donate|benefit (for|concert))\b/i;
+    // 'fair' guarded (2026-09-05): meant for craft/street/vendor fairs, it was
+    // also matching Job & Internship Fair, Graduate School Fair, Major Fair
+    // and the Wellness Fair - student-services events that only students
+    // attend. A fair whose preceding word names a student service stays
+    // mu-only; "Arts and Crafts Fair", "Mid-Autumn Festival" etc. still win.
+    const publicFundraisingKeywordRegex = /\b(fundraiser|bake sale|festival|(?<!\b(?:career|job|internship|major|graduate school|grad school|wellness|health|resource|involvement|activities|activity|club|org|study abroad|housing)s?\s)fair|charity|donation|donate|benefit (for|concert))\b/i;
     if (publicFundraisingKeywordRegex.test(combinedText)) return 'public';
 
     // ===== Academic-internal signals =====
@@ -569,6 +580,16 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
     const muOnlyAcademicRegex = /\b(college of |department of |school of |office of (?!sustainability)|honors college|honors program|year[- ]end|end of (the )?year|end of (the )?semester|faculty (mixer|concert|event)|senior (recognition|celebration|class)|graduating class|provost'?s|dean'?s (list|reception)|alumni (and student|student)|student[- ]faculty|capstone|thesis defense|comprehensive exam)\b/i;
     if (muOnlyAcademicRegex.test(combinedText) && !hasExplicitPublicMarker) return 'mu-only';
 
+    // ===== GetInvolved CATEGORY signals (2026-09-05) =====
+    // Engage's categoryNames carry the same club-business words the text
+    // regex below looks for, but they were never checked here - "988 Day"
+    // (category Tabling) leaked to townies because its DESCRIPTION said
+    // "campus awareness event" and the text-only tabling check never saw the
+    // category. Tabling / Meeting / GroupBusiness are student-facing by
+    // construction; an explicit public marker in the text still wins.
+    const muOnlyCategoryRegex = /^(tabling|meeting|group ?business)$/i;
+    if (rawTags.some(t => muOnlyCategoryRegex.test(String(t).trim())) && !hasExplicitPublicMarker) return 'mu-only';
+
     // ===== Strong mu-only signals (club business) =====
     const muOnlyKeywordRegex = /\b(bible study|fellowship(?! hall)|chapter meeting|chapter business|weekly meeting|general body meeting|gbm|e-?board meeting|executive meeting|officer meeting|members only|tabling|orientation|info session|information session|club meeting|resume review|mock interview|study group|study session|homework help|office hours|interest meeting|rush|recruitment night|new member|initiation|brother hood|sister hood|sisterhood|brotherhood)\b/i;
     const muOnlyOrgRegex = /\b(fraternity|sorority|christian fellowship|campus ministry|cru |intervarsity|reformed university fellowship|ruf\b|gsa\b|gender and sexuality alliance|residence hall|housing community)\b/i;
@@ -580,12 +601,19 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
     // Run after mu-only-org regex because "fraternity" host can override loose
     // public language; but blood/food drives, fundraising, and explicit public
     // markers already handled above.
-    const publicKeywordRegex = /\b(open to (the )?(public|community|all)|community welcome|all (are )?welcome|public event|for the public|concert|performance|recital|exhibition|gallery|awareness (day|walk|event)|volunteer|service project|community service)\b/i;
+    // 'awareness walk' only (2026-09-05): a campus "awareness day/event" is
+    // tabling by another name ("988 Day": CHEP table on the Promenade); walks
+    // are the genuinely public form.
+    const publicKeywordRegex = /\b(open to (the )?(public|community|all)|community welcome|all (are )?welcome|public event|for the public|concert|performance|recital|exhibition|gallery|awareness walk|volunteer|service project|community service)\b/i;
     if (publicKeywordRegex.test(combinedText)) return 'public';
     if (tags.includes('Club Sports') && tags.includes('Home Game Mode')) return 'public';
 
     // ===== Loose category-only matches (last resort) =====
-    const publicCategoryRegex = /\b(fundraising|service|community service|sporting|athletic|philanthropy|volunteer)\b/i;
+    // 'sporting'/'athletic' REMOVED 2026-09-05: public club-sports HOME games
+    // are already handled explicitly above, so by the time we get here a
+    // Sporting-category row is Campus Rec programming on student-only
+    // facilities ("Ropes Course- Open Climb", 15 rows leaked to townies).
+    const publicCategoryRegex = /\b(fundraising|service|community service|philanthropy|volunteer)\b/i;
     if (rawTags.some(t => publicCategoryRegex.test(t))) return 'public';
     return 'mu-only';
 }

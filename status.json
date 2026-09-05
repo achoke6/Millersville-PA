@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-05T05:18:48.998Z",
+  "generatedAt": "2026-09-05T10:01:18.049Z",
   "totalEvents": 1232,
   "withDescription": 675,
   "withImage": 221,
@@ -55,7 +55,7 @@
       "latest": "2026-10-22T22:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-09-05T01:00:00.000Z",
+      "earliest": "2026-09-05T16:30:00.000Z",
       "latest": "2026-10-04T00:00:00.000Z"
     },
     "community": {
@@ -149,15 +149,22 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-05T05:15:11.642Z"
+    "lastSyncAt": "2026-09-05T09:57:37.921Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-05T05:18:41.840Z"
+    "checkedAt": "2026-09-05T10:01:09.389Z"
   },
   "recentlyAdded": [
+    {
+      "key": "Texas Hippie Coalition|2026-09-26T22:30:00.000Z",
+      "firstSeenAt": "2026-09-05T10:01:18.047Z",
+      "title": "Texas Hippie Coalition",
+      "source": "Other",
+      "date": "2026-09-26T22:30:00.000Z"
+    },
     {
       "key": "Girls Varsity Tennis vs Ephrata Area High School|2026-09-10T20:00:00.000Z",
       "firstSeenAt": "2026-09-05T05:18:48.996Z",
@@ -218,13 +225,6 @@
       "key": "Healthy Relationship Breakout Sessions|2026-09-19T08:00:00",
       "firstSeenAt": "2026-09-04T19:20:44.338Z",
       "title": "Healthy Relationship Breakout Sessions",
-      "source": "MU",
-      "date": "2026-09-19T08:00:00"
-    },
-    {
-      "key": "Healthy Relationship Conference|2026-09-19T08:00:00",
-      "firstSeenAt": "2026-09-04T19:20:44.338Z",
-      "title": "Healthy Relationship Conference",
       "source": "MU",
       "date": "2026-09-19T08:00:00"
     }

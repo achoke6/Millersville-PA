@@ -1,27 +1,27 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Sunday, September 06, 2026 at 08:00 AM (Corman, Funk, Student Meteorologists)",
+    "issued": "Sunday, September 06, 2026 at 03:35 PM (Zwolinski, Student Meteorologist)",
     "periods": [
-      {
-        "period": "Today",
-        "text": "Mostly sunny and seasonable with low humidity. High: 76-80"
-      },
       {
         "period": "Tonight",
         "text": "Mainly clear and comfortable. Low: 54-58"
       },
       {
-        "period": "Monday",
+        "period": "Tomorrow",
         "text": "Mostly sunny and pleasant. High: 76-80"
       },
       {
-        "period": "Monday Night",
+        "period": "Tomorrow Night",
         "text": "Mainly clear and comfortable. Low: 52-56"
       },
       {
         "period": "Tuesday",
         "text": "Mostly sunny and warmer. High: 82-86"
+      },
+      {
+        "period": "Wednesday",
+        "text": "Mostly sunny and warm. High: 86-90"
       }
     ]
   },
@@ -126,74 +126,7 @@
       }
     ]
   },
-  "observations": [
-    {
-      "time": "14:00",
-      "temp": "76",
-      "dewpoint": "59",
-      "rh": "56",
-      "windDir": "N",
-      "windSpeed": "5",
-      "precip": "0.00",
-      "visibility": "10.0",
-      "condition": "None"
-    },
-    {
-      "time": "13:00",
-      "temp": "76",
-      "dewpoint": "59",
-      "rh": "55",
-      "windDir": "NNE",
-      "windSpeed": "7",
-      "precip": "0.00",
-      "visibility": "10.1",
-      "condition": "None"
-    },
-    {
-      "time": "12:00",
-      "temp": "76",
-      "dewpoint": "62",
-      "rh": "60",
-      "windDir": "N",
-      "windSpeed": "10",
-      "precip": "0.00",
-      "visibility": "10.2",
-      "condition": "None"
-    },
-    {
-      "time": "11:00",
-      "temp": "74",
-      "dewpoint": "62",
-      "rh": "66",
-      "windDir": "NNE",
-      "windSpeed": "6",
-      "precip": "0.00",
-      "visibility": "9.6",
-      "condition": "None"
-    },
-    {
-      "time": "10:00",
-      "temp": "73",
-      "dewpoint": "62",
-      "rh": "67",
-      "windDir": "N",
-      "windSpeed": "5",
-      "precip": "0.00",
-      "visibility": "10.4",
-      "condition": "None"
-    },
-    {
-      "time": "09:00",
-      "temp": "69",
-      "dewpoint": "61",
-      "rh": "74",
-      "windDir": "NNE",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "10.4",
-      "condition": "None"
-    }
-  ],
+  "observations": [],
   "dailySummary": {
     "monthLabel": "September 2026",
     "days": [
@@ -301,5 +234,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-09-06T18:49:59.927Z"
+  "updated": "2026-09-06T21:01:55.879Z"
 }

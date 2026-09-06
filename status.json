@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-09-05T22:42:13.677Z",
+  "generatedAt": "2026-09-06T00:36:53.143Z",
   "totalEvents": 1604,
-  "withDescription": 675,
+  "withDescription": 676,
   "withImage": 221,
   "familyFriendly": 86,
-  "eventsToday": 8,
+  "eventsToday": 7,
   "sources": {
     "muAthletics": 316,
     "muCalendar": 157,
     "artsmu": 22,
     "campsAlumni": 40,
-    "muGetInvolved": 336,
+    "muGetInvolved": 337,
     "pennManor": 423,
     "borough": 68,
     "vfw": 12,
-    "phantomPower": 13,
+    "phantomPower": 12,
     "community": 22,
     "manor": 41,
     "raneyCellars": 7,
@@ -55,7 +55,7 @@
       "latest": "2026-10-22T22:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-09-05T16:30:00.000Z",
+      "earliest": "2026-09-09T23:30:00.000Z",
       "latest": "2026-10-04T00:00:00.000Z"
     },
     "community": {
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-05T22:38:29.859Z"
+    "lastSyncAt": "2026-09-06T00:33:27.604Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-05T22:42:06.375Z"
+    "checkedAt": "2026-09-06T00:36:45.063Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -185,7 +185,7 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 111,
+        "value": 110,
         "min": 21,
         "skipped": false
       },
@@ -220,6 +220,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Reformed University Fellowship Prayer Meeting|2026-11-30T22:00:00.000Z",
+      "firstSeenAt": "2026-09-06T00:36:53.140Z",
+      "title": "Reformed University Fellowship Prayer Meeting",
+      "source": "MU",
+      "date": "2026-11-30T22:00:00.000Z"
+    },
     {
       "key": "Boys Varsity Golf @ Elizabethtown Area High School|2026-08-17T12:00:00.000Z",
       "firstSeenAt": "2026-09-05T13:47:15.949Z",
@@ -282,14 +289,7 @@
       "title": "Girls Varsity Field Hockey vs Wilson High School (West Lawn)",
       "source": "PM",
       "date": "2026-08-22T19:10:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Cross Country @ Solanco High School|2026-08-22T20:00:00.000Z",
-      "firstSeenAt": "2026-09-05T13:47:15.949Z",
-      "title": "Boys Varsity Cross Country @ Solanco High School",
-      "source": "PM",
-      "date": "2026-08-22T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-06T21:05:29.824Z",
-  "totalEvents": 1585,
+  "generatedAt": "2026-09-06T23:31:42.882Z",
+  "totalEvents": 1574,
   "withDescription": 676,
   "withImage": 221,
   "familyFriendly": 86,
@@ -16,7 +16,7 @@
     "vfw": 12,
     "phantomPower": 12,
     "community": 22,
-    "manor": 41,
+    "manor": 30,
     "raneyCellars": 7,
     "theBackyard": 11,
     "muHudlBroadcasts": 61
@@ -64,7 +64,7 @@
     },
     "manor": {
       "earliest": "2026-09-08T23:00:00.000Z",
-      "latest": "2027-09-01T23:00:00.000Z"
+      "latest": "2027-05-05T23:00:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-08-15T22:00:00.000Z",
@@ -117,8 +117,8 @@
       "daysSinceMoved": 89
     },
     "manor": {
-      "newest": "2027-09-01",
-      "daysSinceMoved": 5
+      "newest": "2027-05-05",
+      "daysSinceMoved": 0
     },
     "raneyCellars": {
       "newest": "2026-09-11",
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-06T21:01:53.435Z"
+    "lastSyncAt": "2026-09-06T23:28:14.277Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-06T21:05:19.103Z"
+    "checkedAt": "2026-09-06T23:31:33.829Z"
   },
   "sourceHealth": {
     "ok": true,

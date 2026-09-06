@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-09-06T01:25:27.890Z",
-  "totalEvents": 1604,
+  "generatedAt": "2026-09-06T05:32:15.037Z",
+  "totalEvents": 1584,
   "withDescription": 676,
   "withImage": 221,
   "familyFriendly": 86,
-  "eventsToday": 7,
+  "eventsToday": 4,
   "sources": {
     "muAthletics": 316,
     "muCalendar": 157,
     "artsmu": 22,
     "campsAlumni": 40,
     "muGetInvolved": 337,
-    "pennManor": 423,
+    "pennManor": 403,
     "borough": 68,
     "vfw": 12,
     "phantomPower": 12,
@@ -43,7 +43,7 @@
       "latest": "2027-04-29T11:30:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-06-08T23:00:00.000Z",
+      "earliest": "2026-08-17T12:00:00.000Z",
       "latest": "2027-09-03T19:00:00.000Z"
     },
     "borough": {
@@ -78,39 +78,39 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 15
+      "daysSinceMoved": 16
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 29
+      "daysSinceMoved": 30
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 29
+      "daysSinceMoved": 30
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "pennManor": {
       "newest": "2027-09-03",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 39
+      "daysSinceMoved": 40
     },
     "vfw": {
       "newest": "2026-10-22",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "phantomPower": {
       "newest": "2026-10-04",
-      "daysSinceMoved": 45
+      "daysSinceMoved": 46
     },
     "community": {
       "newest": "2027-04-16",
@@ -118,15 +118,15 @@
     },
     "manor": {
       "newest": "2027-09-01",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "raneyCellars": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "theBackyard": {
       "newest": "2026-09-30",
-      "daysSinceMoved": 39
+      "daysSinceMoved": 40
     }
   },
   "sports": {
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-06T01:21:31.628Z"
+    "lastSyncAt": "2026-09-06T05:29:24.744Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-06T01:25:21.078Z"
+    "checkedAt": "2026-09-06T05:32:06.759Z"
   },
   "sourceHealth": {
     "ok": true,

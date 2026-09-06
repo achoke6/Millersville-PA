@@ -34,6 +34,49 @@
         ]
       }
     },
+    "nino-s-new-york-style-pizza": {
+      "name": "Nino's New York Style Pizza",
+      "note": "Lunch specials · until 2 PM · all include a medium fountain drink",
+      "closedDays": ["Monday"],
+      "daily": {
+        "Tuesday": [
+          "Two Cheese Slices – $7.25",
+          "California Burger w/ French Fries – $10.49",
+          "Cheesesteak w/ French Fries – $12.99",
+          "Chicken Sandwich w/ French Fries – $10.49"
+        ],
+        "Wednesday": [
+          "Two Cheese Slices – $7.25",
+          "California Burger w/ French Fries – $10.49",
+          "Cheesesteak w/ French Fries – $12.99",
+          "Chicken Sandwich w/ French Fries – $10.49"
+        ],
+        "Thursday": [
+          "Two Cheese Slices – $7.25",
+          "California Burger w/ French Fries – $10.49",
+          "Cheesesteak w/ French Fries – $12.99",
+          "Chicken Sandwich w/ French Fries – $10.49"
+        ],
+        "Friday": [
+          "Two Cheese Slices – $7.25",
+          "California Burger w/ French Fries – $10.49",
+          "Cheesesteak w/ French Fries – $12.99",
+          "Chicken Sandwich w/ French Fries – $10.49"
+        ],
+        "Saturday": [
+          "Two Cheese Slices – $7.25",
+          "California Burger w/ French Fries – $10.49",
+          "Cheesesteak w/ French Fries – $12.99",
+          "Chicken Sandwich w/ French Fries – $10.49"
+        ],
+        "Sunday": [
+          "Two Cheese Slices – $7.25",
+          "California Burger w/ French Fries – $10.49",
+          "Cheesesteak w/ French Fries – $12.99",
+          "Chicken Sandwich w/ French Fries – $10.49"
+        ]
+      }
+    },
     "bunker-at-crossgates": {
       "name": "The Bunker at Crossgates",
       "recurring": {

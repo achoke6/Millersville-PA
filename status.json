@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-06T16:44:48.947Z",
-  "totalEvents": 1584,
+  "generatedAt": "2026-09-06T18:53:00.386Z",
+  "totalEvents": 1585,
   "withDescription": 676,
   "withImage": 221,
   "familyFriendly": 86,
   "eventsToday": 4,
   "sources": {
-    "muAthletics": 316,
+    "muAthletics": 317,
     "muCalendar": 157,
     "artsmu": 22,
     "campsAlumni": 40,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 719,
+    "total": 720,
     "scored": 26,
     "wins": 16,
     "losses": 9,
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-06T16:41:46.973Z"
+    "lastSyncAt": "2026-09-06T18:49:58.188Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-06T16:44:40.510Z"
+    "checkedAt": "2026-09-06T18:52:48.282Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -199,7 +199,7 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 316,
+        "value": 317,
         "min": 100,
         "skipped": false
       },
@@ -220,6 +220,20 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Girls JV Soccer vs Cedar Crest High School|2026-09-09T21:30:00.000Z",
+      "firstSeenAt": "2026-09-06T18:53:00.382Z",
+      "title": "Girls JV Soccer vs Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-09-09T21:30:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Indoor Track and Field Coach I Invite|2027-01-23T14:30:00.000Z",
+      "firstSeenAt": "2026-09-06T18:53:00.382Z",
+      "title": "Millersville University Women's Indoor Track and Field Coach I Invite",
+      "source": "MU",
+      "date": "2027-01-23T14:30:00.000Z"
+    },
     {
       "key": "Reformed University Fellowship Prayer Meeting|2026-11-30T22:00:00.000Z",
       "firstSeenAt": "2026-09-06T00:36:53.140Z",
@@ -275,21 +289,7 @@
       "title": "Girls Varsity Field Hockey vs Central Bucks West High School",
       "source": "PM",
       "date": "2026-08-22T16:40:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Field Hockey vs Owen J Roberts|2026-08-22T17:30:00.000Z",
-      "firstSeenAt": "2026-09-05T13:47:15.949Z",
-      "title": "Girls Varsity Field Hockey vs Owen J Roberts",
-      "source": "PM",
-      "date": "2026-08-22T17:30:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Field Hockey vs Wilson High School (West Lawn)|2026-08-22T19:10:00.000Z",
-      "firstSeenAt": "2026-09-05T13:47:15.949Z",
-      "title": "Girls Varsity Field Hockey vs Wilson High School (West Lawn)",
-      "source": "PM",
-      "date": "2026-08-22T19:10:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

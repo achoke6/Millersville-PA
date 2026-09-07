@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-07T07:59:14.853Z",
-  "totalEvents": 1586,
-  "withDescription": 677,
-  "withImage": 224,
-  "familyFriendly": 87,
-  "eventsToday": 4,
+  "generatedAt": "2026-09-07T14:04:00.108Z",
+  "totalEvents": 1606,
+  "withDescription": 697,
+  "withImage": 189,
+  "familyFriendly": 84,
+  "eventsToday": 5,
   "sources": {
     "muAthletics": 317,
-    "muCalendar": 157,
+    "muCalendar": 158,
     "artsmu": 22,
     "campsAlumni": 40,
-    "muGetInvolved": 338,
+    "muGetInvolved": 357,
     "pennManor": 403,
     "borough": 67,
     "vfw": 12,
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-07T07:56:14.557Z"
+    "lastSyncAt": "2026-09-07T14:00:31.928Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-07T07:59:06.858Z"
+    "checkedAt": "2026-09-07T14:03:51.621Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -171,7 +171,7 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 262,
+        "value": 261,
         "min": 60,
         "skipped": false
       },
@@ -221,75 +221,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Delta Zeta's Holiday Cookie Sale|2026-12-01T15:30:00.000Z",
-      "firstSeenAt": "2026-09-07T02:57:32.137Z",
-      "title": "Delta Zeta's Holiday Cookie Sale",
+      "key": "Moose Ultimate Practice|2026-08-31T23:00:00.000Z",
+      "firstSeenAt": "2026-09-07T14:04:00.105Z",
+      "title": "Moose Ultimate Practice",
       "source": "MU",
-      "date": "2026-12-01T15:30:00.000Z"
+      "date": "2026-08-31T23:00:00.000Z"
     },
     {
-      "key": "RUF Bible Study|2026-12-02T00:00:00.000Z",
-      "firstSeenAt": "2026-09-07T02:57:32.137Z",
-      "title": "RUF Bible Study",
+      "key": "Club Tennis Practice|2026-08-31T23:00:00.000Z",
+      "firstSeenAt": "2026-09-07T14:04:00.105Z",
+      "title": "Club Tennis Practice",
       "source": "MU",
-      "date": "2026-12-02T00:00:00.000Z"
+      "date": "2026-08-31T23:00:00.000Z"
     },
     {
-      "key": "Letters of Love General Meeting|2026-12-02T00:00:00.000Z",
-      "firstSeenAt": "2026-09-07T02:57:32.137Z",
-      "title": "Letters of Love General Meeting",
+      "key": "Women's Rugby Club Practice|2026-09-01T21:00:00.000Z",
+      "firstSeenAt": "2026-09-07T14:04:00.105Z",
+      "title": "Women's Rugby Club Practice",
       "source": "MU",
-      "date": "2026-12-02T00:00:00.000Z"
+      "date": "2026-09-01T21:00:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2027-05-26T12:30:00.000Z",
-      "firstSeenAt": "2026-09-07T02:57:32.137Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-05-26T12:30:00.000Z"
+      "key": "Women's Rugby Club Practice|2026-09-02T21:00:00.000Z",
+      "firstSeenAt": "2026-09-07T14:04:00.105Z",
+      "title": "Women's Rugby Club Practice",
+      "source": "MU",
+      "date": "2026-09-02T21:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2027-06-02T23:00:00.000Z",
-      "firstSeenAt": "2026-09-07T02:57:32.137Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-06-02T23:00:00.000Z"
+      "key": "Moose Ultimate Practice|2026-09-02T23:00:00.000Z",
+      "firstSeenAt": "2026-09-07T14:04:00.105Z",
+      "title": "Moose Ultimate Practice",
+      "source": "MU",
+      "date": "2026-09-02T23:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2027-06-07T23:00:00.000Z",
-      "firstSeenAt": "2026-09-07T02:57:32.137Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-06-07T23:00:00.000Z"
+      "key": "Women's Rugby Club Practice|2026-09-03T21:00:00.000Z",
+      "firstSeenAt": "2026-09-07T14:04:00.105Z",
+      "title": "Women's Rugby Club Practice",
+      "source": "MU",
+      "date": "2026-09-03T21:00:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2027-06-30T12:30:00.000Z",
-      "firstSeenAt": "2026-09-07T02:57:32.137Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-06-30T12:30:00.000Z"
+      "key": "Moose Ultimate Practice|2026-09-03T23:00:00.000Z",
+      "firstSeenAt": "2026-09-07T14:04:00.105Z",
+      "title": "Moose Ultimate Practice",
+      "source": "MU",
+      "date": "2026-09-03T23:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2027-07-05T23:00:00.000Z",
-      "firstSeenAt": "2026-09-07T02:57:32.137Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-07-05T23:00:00.000Z"
+      "key": "Club Tennis Practice|2026-09-03T23:00:00.000Z",
+      "firstSeenAt": "2026-09-07T14:04:00.105Z",
+      "title": "Club Tennis Practice",
+      "source": "MU",
+      "date": "2026-09-03T23:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2027-07-07T23:00:00.000Z",
-      "firstSeenAt": "2026-09-07T02:57:32.137Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-07-07T23:00:00.000Z"
+      "key": "Moose Ultimate Practice|2026-09-07T23:00:00.000Z",
+      "firstSeenAt": "2026-09-07T14:04:00.105Z",
+      "title": "Moose Ultimate Practice",
+      "source": "MU",
+      "date": "2026-09-07T23:00:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2027-07-28T12:30:00.000Z",
-      "firstSeenAt": "2026-09-07T02:57:32.137Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-07-28T12:30:00.000Z"
+      "key": "Women's Rugby Club Practice|2026-09-08T21:00:00.000Z",
+      "firstSeenAt": "2026-09-07T14:04:00.105Z",
+      "title": "Women's Rugby Club Practice",
+      "source": "MU",
+      "date": "2026-09-08T21:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 59
 }

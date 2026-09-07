@@ -399,13 +399,12 @@
   },
   {
     "name": "Club Tennis",
-    "category": "Academic",
+    "category": "Sporting",
     "categories": [
-      "Academic",
-      "Sports and Leisure"
+      "Sporting"
     ],
-    "shortName": "MUCT",
-    "id": "muct"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Coding Club",
@@ -1041,11 +1040,8 @@
   },
   {
     "name": "Men's Club Soccer",
-    "category": "Competition",
-    "categories": [
-      "Competition",
-      "Sporting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "Men's Club Soccer",
     "id": ""
   },
@@ -1150,9 +1146,9 @@
   },
   {
     "name": "Moose Ultimate",
-    "category": "Meeting",
+    "category": "Sporting",
     "categories": [
-      "Meeting"
+      "Sporting"
     ],
     "shortName": "",
     "id": ""
@@ -1365,6 +1361,15 @@
     ],
     "shortName": "RFL",
     "id": "relayforlife"
+  },
+  {
+    "name": "Rugby Club, Women's",
+    "category": "Sporting",
+    "categories": [
+      "Sporting"
+    ],
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Running Club",
@@ -1801,16 +1806,6 @@
     "categories": [],
     "shortName": "",
     "id": "womensgolf"
-  },
-  {
-    "name": "Women's Rugby Club",
-    "category": "Sports and Leisure",
-    "categories": [
-      "Sports and Leisure",
-      "Sporting"
-    ],
-    "shortName": "",
-    "id": "wrugby"
   },
   {
     "name": "Women's Soccer",

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-07T02:57:32.140Z",
+  "generatedAt": "2026-09-07T07:59:14.853Z",
   "totalEvents": 1586,
   "withDescription": 677,
   "withImage": 224,
@@ -78,39 +78,39 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 16
+      "daysSinceMoved": 17
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 30
+      "daysSinceMoved": 31
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 30
+      "daysSinceMoved": 31
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "pennManor": {
       "newest": "2027-09-03",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 40
+      "daysSinceMoved": 41
     },
     "vfw": {
       "newest": "2026-10-22",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     },
     "phantomPower": {
       "newest": "2026-10-04",
-      "daysSinceMoved": 46
+      "daysSinceMoved": 47
     },
     "community": {
       "newest": "2027-04-16",
@@ -118,15 +118,15 @@
     },
     "manor": {
       "newest": "2027-09-06",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "raneyCellars": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "theBackyard": {
       "newest": "2026-09-30",
-      "daysSinceMoved": 40
+      "daysSinceMoved": 41
     }
   },
   "sports": {
@@ -138,7 +138,7 @@
   },
   "registrations": {
     "open": 14,
-    "next2Weeks": 4,
+    "next2Weeks": 5,
     "nextClose": "2026-09-09",
     "openNoDeadline": 1
   },
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-07T02:54:24.423Z"
+    "lastSyncAt": "2026-09-07T07:56:14.557Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-07T02:57:25.775Z"
+    "checkedAt": "2026-09-07T07:59:06.858Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -164,7 +164,7 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 362,
+        "value": 361,
         "min": 45,
         "skipped": false
       },
@@ -178,7 +178,7 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 271,
+        "value": 270,
         "min": 30,
         "skipped": false
       },
@@ -291,5 +291,5 @@
       "date": "2027-07-28T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 15
+  "addedLastRun": 0
 }

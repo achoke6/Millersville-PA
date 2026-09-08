@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-09-07T22:00:13.399Z",
-  "totalEvents": 1606,
-  "withDescription": 697,
-  "withImage": 189,
+  "generatedAt": "2026-09-08T00:06:14.702Z",
+  "totalEvents": 1610,
+  "withDescription": 700,
+  "withImage": 190,
   "familyFriendly": 84,
   "eventsToday": 5,
   "sources": {
@@ -10,9 +10,9 @@
     "muCalendar": 158,
     "artsmu": 22,
     "campsAlumni": 40,
-    "muGetInvolved": 357,
-    "pennManor": 403,
-    "borough": 67,
+    "muGetInvolved": 360,
+    "pennManor": 405,
+    "borough": 66,
     "vfw": 12,
     "phantomPower": 12,
     "community": 22,
@@ -44,10 +44,10 @@
     },
     "pennManor": {
       "earliest": "2026-08-17T12:00:00.000Z",
-      "latest": "2027-09-03T19:00:00.000Z"
+      "latest": "2027-09-07T21:30:00.000Z"
     },
     "borough": {
-      "earliest": "2026-06-09T23:00:00.000Z",
+      "earliest": "2026-06-15T22:00:00.000Z",
       "latest": "2026-12-25T12:00:00.000Z"
     },
     "vfw": {
@@ -97,8 +97,8 @@
       "daysSinceMoved": 4
     },
     "pennManor": {
-      "newest": "2027-09-03",
-      "daysSinceMoved": 2
+      "newest": "2027-09-07",
+      "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2026-12-25",
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 720,
+    "total": 722,
     "scored": 26,
     "wins": 16,
     "losses": 9,
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-07T21:57:02.557Z"
+    "lastSyncAt": "2026-09-08T00:02:48.075Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-07T22:00:05.736Z"
+    "checkedAt": "2026-09-08T00:06:07.311Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -164,7 +164,7 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 361,
+        "value": 365,
         "min": 45,
         "skipped": false
       },
@@ -185,14 +185,14 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 109,
+        "value": 108,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 403,
+        "value": 405,
         "min": 150,
         "skipped": false
       },
@@ -220,6 +220,41 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Phi Alpha Theta Meeting|2026-11-02T21:30:00.000Z",
+      "firstSeenAt": "2026-09-08T00:06:14.699Z",
+      "title": "Phi Alpha Theta Meeting",
+      "source": "MU",
+      "date": "2026-11-02T21:30:00.000Z"
+    },
+    {
+      "key": "Reformed University Fellowship Prayer Meeting|2026-11-02T22:00:00.000Z",
+      "firstSeenAt": "2026-09-08T00:06:14.699Z",
+      "title": "Reformed University Fellowship Prayer Meeting",
+      "source": "MU",
+      "date": "2026-11-02T22:00:00.000Z"
+    },
+    {
+      "key": "Club Tennis Practice|2026-11-03T00:00:00.000Z",
+      "firstSeenAt": "2026-09-08T00:06:14.699Z",
+      "title": "Club Tennis Practice",
+      "source": "MU",
+      "date": "2026-11-03T00:00:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Field Hockey @ Manheim Township High School|2027-09-07T20:00:00.000Z",
+      "firstSeenAt": "2026-09-08T00:06:14.699Z",
+      "title": "Girls Varsity Field Hockey @ Manheim Township High School",
+      "source": "PM",
+      "date": "2027-09-07T20:00:00.000Z"
+    },
+    {
+      "key": "Girls JV Field Hockey @ Manheim Township High School|2027-09-07T21:30:00.000Z",
+      "firstSeenAt": "2026-09-08T00:06:14.699Z",
+      "title": "Girls JV Field Hockey @ Manheim Township High School",
+      "source": "PM",
+      "date": "2027-09-07T21:30:00.000Z"
+    },
     {
       "key": "Moose Ultimate Practice|2026-08-31T23:00:00.000Z",
       "firstSeenAt": "2026-09-07T14:04:00.105Z",
@@ -254,42 +289,7 @@
       "title": "Moose Ultimate Practice",
       "source": "MU",
       "date": "2026-09-02T23:00:00.000Z"
-    },
-    {
-      "key": "Women's Rugby Club Practice|2026-09-03T21:00:00.000Z",
-      "firstSeenAt": "2026-09-07T14:04:00.105Z",
-      "title": "Women's Rugby Club Practice",
-      "source": "MU",
-      "date": "2026-09-03T21:00:00.000Z"
-    },
-    {
-      "key": "Moose Ultimate Practice|2026-09-03T23:00:00.000Z",
-      "firstSeenAt": "2026-09-07T14:04:00.105Z",
-      "title": "Moose Ultimate Practice",
-      "source": "MU",
-      "date": "2026-09-03T23:00:00.000Z"
-    },
-    {
-      "key": "Club Tennis Practice|2026-09-03T23:00:00.000Z",
-      "firstSeenAt": "2026-09-07T14:04:00.105Z",
-      "title": "Club Tennis Practice",
-      "source": "MU",
-      "date": "2026-09-03T23:00:00.000Z"
-    },
-    {
-      "key": "Moose Ultimate Practice|2026-09-07T23:00:00.000Z",
-      "firstSeenAt": "2026-09-07T14:04:00.105Z",
-      "title": "Moose Ultimate Practice",
-      "source": "MU",
-      "date": "2026-09-07T23:00:00.000Z"
-    },
-    {
-      "key": "Women's Rugby Club Practice|2026-09-08T21:00:00.000Z",
-      "firstSeenAt": "2026-09-07T14:04:00.105Z",
-      "title": "Women's Rugby Club Practice",
-      "source": "MU",
-      "date": "2026-09-08T21:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 5
 }

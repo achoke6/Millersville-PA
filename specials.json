@@ -2,6 +2,7 @@
   "house-of-pizza": {
     "name": "House of Pizza",
     "note": "Dine-in & Carryout Only · until 2 PM · Not for Delivery",
+    "until": "14:00",
     "daily": {
       "Monday": [
         "2 Slices & MD Drink – $4.50",
@@ -37,6 +38,7 @@
     "closedDays": [
       "Monday"
     ],
+    "until": "14:00",
     "daily": {
       "Tuesday": [
         "Two Cheese Slices – $7.25",
@@ -127,7 +129,7 @@
       "Cayenne Peppers – 4/$1.00",
       "Watermelons – $4.00-$6.00 each"
     ],
-    "weeklyFetchedAt": "2026-09-08T14:55:19.883Z"
+    "weeklyFetchedAt": "2026-09-08T15:25:00.459Z"
   },
   "jesus-dogs": {
     "name": "Jesus Dogs",
@@ -155,8 +157,12 @@
       "Monday"
     ],
     "note": "Members & Guests · Weekly specials change each week",
-    "weekly": [],
-    "weeklyDateRange": "",
+    "weekly": [
+      "Patty Melt – $12.95",
+      "Southwest Lime Chicken – $13.95",
+      "Yellowfin Tuna – $14.95 (Friday only)"
+    ],
+    "weeklyDateRange": "Tuesday, September 8 through Saturday, September 12",
     "recurring": {
       "Tuesday": "Shrimp Night",
       "Wednesday": "Wing Night",

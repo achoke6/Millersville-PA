@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-09-08T14:55:28.669Z",
-  "totalEvents": 1610,
-  "withDescription": 701,
+  "generatedAt": "2026-09-08T15:25:10.431Z",
+  "totalEvents": 1612,
+  "withDescription": 703,
   "withImage": 191,
-  "familyFriendly": 84,
-  "eventsToday": 25,
+  "familyFriendly": 86,
+  "eventsToday": 24,
   "sources": {
     "muAthletics": 317,
     "muCalendar": 159,
     "artsmu": 22,
-    "campsAlumni": 40,
+    "campsAlumni": 42,
     "muGetInvolved": 359,
     "pennManor": 405,
     "borough": 66,
@@ -18,7 +18,7 @@
     "community": 22,
     "manor": 42,
     "raneyCellars": 7,
-    "theBackyard": 11,
+    "theBackyard": 12,
     "muHudlBroadcasts": 61
   },
   "sourceDateRanges": {
@@ -72,7 +72,7 @@
     },
     "theBackyard": {
       "earliest": "2026-08-24T12:30:00.000Z",
-      "latest": "2026-09-30T15:00:00.000Z"
+      "latest": "2026-10-12T13:00:00.000Z"
     }
   },
   "staleness": {
@@ -125,8 +125,8 @@
       "daysSinceMoved": 5
     },
     "theBackyard": {
-      "newest": "2026-09-30",
-      "daysSinceMoved": 42
+      "newest": "2026-10-12",
+      "daysSinceMoved": 0
     }
   },
   "sports": {
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-08T14:52:03.208Z"
+    "lastSyncAt": "2026-09-08T15:22:08.216Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-08T14:55:20.268Z"
+    "checkedAt": "2026-09-08T15:25:00.914Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -221,6 +221,34 @@
   },
   "recentlyAdded": [
     {
+      "key": "MU Basketball Casey Stitzel Fall Elite Camp|2026-10-04T14:00:00.000Z",
+      "firstSeenAt": "2026-09-08T15:25:10.427Z",
+      "title": "MU Basketball Casey Stitzel Fall Elite Camp",
+      "source": "MU",
+      "date": "2026-10-04T14:00:00.000Z"
+    },
+    {
+      "key": "Shred-It Truck|2026-10-12T13:00:00.000Z",
+      "firstSeenAt": "2026-09-08T15:25:10.427Z",
+      "title": "Shred-It Truck",
+      "source": "The Backyard",
+      "date": "2026-10-12T13:00:00.000Z"
+    },
+    {
+      "key": "Homecoming 2026|2026-10-17T12:30:00.000Z",
+      "firstSeenAt": "2026-09-08T15:25:10.427Z",
+      "title": "Homecoming 2026",
+      "source": "MU",
+      "date": "2026-10-17T12:30:00.000Z"
+    },
+    {
+      "key": "MU Men's Soccer Winter Recruit ID Clinic|2026-12-19T18:00:00.000Z",
+      "firstSeenAt": "2026-09-08T15:25:10.427Z",
+      "title": "MU Men's Soccer Winter Recruit ID Clinic",
+      "source": "MU",
+      "date": "2026-12-19T18:00:00.000Z"
+    },
+    {
       "key": "Introduction / BYOP (Bring Your Own Project) Meeting|2026-09-08T22:00:00.000Z",
       "firstSeenAt": "2026-09-08T14:55:28.667Z",
       "title": "Introduction / BYOP (Bring Your Own Project) Meeting",
@@ -261,35 +289,7 @@
       "title": "Girls JV Field Hockey @ Manheim Township High School",
       "source": "PM",
       "date": "2027-09-07T21:30:00.000Z"
-    },
-    {
-      "key": "Moose Ultimate Practice|2026-08-31T23:00:00.000Z",
-      "firstSeenAt": "2026-09-07T14:04:00.105Z",
-      "title": "Moose Ultimate Practice",
-      "source": "MU",
-      "date": "2026-08-31T23:00:00.000Z"
-    },
-    {
-      "key": "Club Tennis Practice|2026-08-31T23:00:00.000Z",
-      "firstSeenAt": "2026-09-07T14:04:00.105Z",
-      "title": "Club Tennis Practice",
-      "source": "MU",
-      "date": "2026-08-31T23:00:00.000Z"
-    },
-    {
-      "key": "Women's Rugby Club Practice|2026-09-01T21:00:00.000Z",
-      "firstSeenAt": "2026-09-07T14:04:00.105Z",
-      "title": "Women's Rugby Club Practice",
-      "source": "MU",
-      "date": "2026-09-01T21:00:00.000Z"
-    },
-    {
-      "key": "Women's Rugby Club Practice|2026-09-02T21:00:00.000Z",
-      "firstSeenAt": "2026-09-07T14:04:00.105Z",
-      "title": "Women's Rugby Club Practice",
-      "source": "MU",
-      "date": "2026-09-02T21:00:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 4
 }

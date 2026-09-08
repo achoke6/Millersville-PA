@@ -226,8 +226,9 @@
   },
   {
     "name": "Board Game Club",
-    "category": "Social",
+    "category": "Meeting",
     "categories": [
+      "Meeting",
       "Social"
     ],
     "shortName": "",
@@ -1174,6 +1175,17 @@
     ],
     "shortName": "",
     "id": ""
+  },
+  {
+    "name": "National Association for the Advancement of Colored People",
+    "category": "Academic",
+    "categories": [
+      "Academic",
+      "Service & Civic Engagement",
+      "Identity-Based"
+    ],
+    "shortName": "NAACP",
+    "id": "naacp"
   },
   {
     "name": "National Science Teachers Association MU",

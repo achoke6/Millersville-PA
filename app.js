@@ -7280,6 +7280,8 @@ function updatePlacesFilterNote(){
 //   • "(Fri only)"-style day tags on items age out once that day has passed
 //     within the Monday-start week (generalizes the old VFW Saturday rule —
 //     a Fri-only item still previews Tue–Fri, drops Sat/Sun).
+//   • until: "HH:MM" 24h ET — after that time today the standing items drop,
+//     except items whose text contains "all day" (lunch-board cutoff).
 //   • Order: daily → recurring → weekly (matches the old VFW display; the
 //     other legacy entries never had both, so nothing visibly moved).
 // sp.daily is spread-copied so pushes never mutate the shared object.
@@ -7523,6 +7525,22 @@ function placesSpecialsItemsFor(sp, dayName){
     // specials boxes, the Today lens, and the map pins — they all flow
     // through this function. Also catches recurring items ("🔁 🍺 ...").
     if (!show21Plus) items = items.filter(i => !i.includes('🍺'));
+    // Time-of-day gate (2026-09-08): optional entry-level `until` ("HH:MM",
+    // 24h ET). Once that clock time has passed TODAY, the entry's standing
+    // items drop — a lunch board shouldn't greet a dinner browser. Items whose
+    // text contains "all day" are exempt (House of Pizza's Thursday draft:
+    // "(all day till midnight)"). Fires only when dayName is the current ET
+    // weekday (every caller passes today; a future-preview caller must not be
+    // clipped by the current clock). A malformed `until` is ignored — fails
+    // OPEN, since showing lunch at 5 PM beats hiding it at noon. Same single
+    // enforcement point as the 21+ gate, so the rail, both card boxes, the
+    // Today lens, the rail popup, and the pins can never disagree.
+    const untilM = typeof sp.until === 'string' ? sp.until.match(/^(\d{2}):(\d{2})$/) : null;
+    if (untilM) {
+        const nowET = hoursNowET();
+        const todayName = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][nowET.dayIdx];
+        if (todayName === dayName && nowET.mins >= (+untilM[1]*60 + +untilM[2])) items = items.filter(i => /all day/i.test(i));
+    }
     const todayIdx = SPECIALS_DAY_IDX[dayName];
     if (todayIdx !== undefined) {
         items = items.filter(i => {

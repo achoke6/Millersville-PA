@@ -4446,7 +4446,7 @@ async function runScraper() {
         // app.js slugifyPlace). Keys are hand-written slugs, so NO slugify
         // implementation lives in this file — Hard Rule 11 stays two-way.
         // Hand-maintained per place: name / note / audience / closedDays /
-        // season / activeRanges / daily / recurring / events. The Cowork specials task
+        // season / activeRanges / until / daily / recurring / events. The Cowork specials task
         // maintains each place's `weekly` block (dateRange + exclusive
         // validThrough + items), vfw.json-style. VFW + John Herr's keep their
         // dedicated pipelines and are assembled below under literal slug keys.
@@ -4463,6 +4463,7 @@ async function runScraper() {
             if (pl.note) entry.note = pl.note;
             if (pl.audience) entry.audience = pl.audience;
             if (Array.isArray(pl.closedDays) && pl.closedDays.length) entry.closedDays = pl.closedDays;
+            if (typeof pl.until === 'string' && /^\d{2}:\d{2}$/.test(pl.until)) entry.until = pl.until;   // time-of-day cutoff — enforced client-side in app.js placesSpecialsItemsFor
 
             // Entry-level activeRanges (optional): calendar windows during
             // which this place's STANDING content is live (parseActiveRanges,

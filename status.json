@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-08T05:38:12.731Z",
+  "generatedAt": "2026-09-08T10:37:33.567Z",
   "totalEvents": 1610,
   "withDescription": 700,
   "withImage": 190,
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-08T05:35:20.447Z"
+    "lastSyncAt": "2026-09-08T10:34:29.506Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-08T05:38:05.155Z"
+    "checkedAt": "2026-09-08T10:37:24.712Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -164,7 +164,7 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 365,
+        "value": 364,
         "min": 45,
         "skipped": false
       },
@@ -178,7 +178,7 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 270,
+        "value": 269,
         "min": 30,
         "skipped": false
       },

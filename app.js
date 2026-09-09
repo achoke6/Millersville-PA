@@ -4956,6 +4956,17 @@ function eventIsFree(e){
     const p = String((e && e.price) || '').trim().toLowerCase();
     return p === 'free' || p === 'free entry' || p === 'free admission' || p === 'free!' || /^\$?0(\.0+)?$/.test(p);
 }
+// MU students enter home varsity games free with their ID at the gate — a
+// "Buy Tickets" CTA is misleading for a confirmed Marauder (2026-09-09,
+// football case). Sidearm home games only (Athletics + Home Game Mode, never
+// Club Sports); unset viewers and townies still get the ticket button. ONE
+// predicate, both call sites (card + modal) — placeTodayContent no-drift.
+function isStudentFreeGateGame(e){
+    if (muAffiliation !== 'student') return false;
+    const t = (e && e.tags) || [];
+    return t.includes('Athletics') && t.includes('Home Game Mode') && !t.includes('Club Sports')
+        && /millersvilleathletics\.com/i.test((e && e.sourceLink) || '');
+}
 
 function buildEventCard(e,isSportsPage){
     const d=new Date(e.date), tags=e.tags||[];
@@ -5038,6 +5049,9 @@ function buildEventCard(e,isSportsPage){
         // unchanged (getRegisterUrl falls back to sourceLink, the packages page).
         const regCtaLabel = isTicketPackage(e) ? '🎟 Buy Tickets' : '📝 Register Now';
         actionHtml=`<a href="${escHtml(getRegisterUrl(e))}" target="_blank" rel="noopener" class="btn btn-sm btn-ticket" onclick="event.stopPropagation();">${regCtaLabel}</a>`;
+    } else if(hasLink && !isFree && isStudentFreeGateGame(e)){
+        // Confirmed Marauder + home varsity game → no purchase CTA; twin of the modal branch.
+        actionHtml=`<span class="badge badge-door">🎓 Free w/ MU ID</span>`;
     } else if(hasLink && !isFree){
         // Chip shows the real price when it's a clean single amount ('$45');
         // ranges and placeholders keep the generic label (width + honesty —
@@ -5899,6 +5913,12 @@ window.openEventDetails = function(key) {
         // — EXCEPT ticket packages (2026-08-06), where a purchase is exactly
         // what it is: the label flips to "🎟 Buy Tickets", link unchanged.
         actions += `<a href="${escHtml(getRegisterUrl(e))}" target="_blank" rel="noopener" class="btn btn-sm btn-ticket" style="text-decoration:none;">${isTicketPackage(e) ? '🎟 Buy Tickets' : '📝 Register Now'}</a>`;
+    } else if (e.ticketLink && !eventIsFree(e) && isStudentFreeGateGame(e)) {
+        // Confirmed Marauder + home varsity game (twin of the card branch):
+        // the gate is free with an ID, so the purchase link is demoted to a
+        // guest-ticket link rather than the headline CTA.
+        actions += `<span class="btn btn-sm btn-outline" style="cursor:default;">🎓 Free w/ MU ID at gate</span>`;
+        actions += `<a href="${e.ticketLink}" target="_blank" class="btn btn-sm btn-outline" style="text-decoration:none;">🎟️ Guest Tickets</a>`;
     } else if (e.ticketLink && !eventIsFree(e)) {
         // Paid/ticketed only. A free event never shows "Buy Tickets" — its link is
         // an info page, surfaced as "More Info" via the source button below.

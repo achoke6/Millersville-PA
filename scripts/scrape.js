@@ -331,7 +331,7 @@ function parseEtixTicketInfo(html) {
     return out;
 }
 
-function extractPricing(desc, title = "", location = "", apiLink = "") {
+function extractPricing(desc, title = "", location = "", apiLink = "", startET = "") {
     // Etix direct ticket links for known MU events
     const etixEvents = [
         // Picasso workshop series (verified from the etix page 2026-08-24 —
@@ -352,10 +352,19 @@ function extractPricing(desc, title = "", location = "", apiLink = "") {
         { match: /concert band.*wind ensemble|wind ensemble.*concert band/i, url: 'https://www.etix.com/ticket/p/74152110/concert-band-wind-ensemble-millersville-winter-visual-performing-arts-center', price: '$10' },
         { match: /spring choral concert/i, url: 'https://www.etix.com/ticket/p/42106815/spring-choral-concert-millersville-winter-visual-performing-arts-center', price: '$10' },
         { match: /making democracy work/i, url: 'https://www.etix.com/ticket/p/38495242/', price: '$0 - $20' },
+        // Glorious Sounds of the Season (2026-09-09): THREE performances, three
+        // etix pages, identical titles — the optional `start` field (naive ET
+        // "YYYY-MM-DDTHH:MM", prefix-matched against the calendar's startDate)
+        // is what tells them apart. Rows without `start` behave as before.
+        // Verified from the etix pages: Advanced $30 / Day-of $34; MU students
+        // $5 w/ ID (not free, so no muFreeTicket).
+        { match: /glorious sounds of the season/i, start: '2026-12-05T16:00', url: 'https://www.etix.com/ticket/p/77607860/glorious-sounds-of-the-season-millersville-winter-visual-performing-arts-center', price: '$30 - $34' },
+        { match: /glorious sounds of the season/i, start: '2026-12-05T19:30', url: 'https://www.etix.com/ticket/p/87843009/glorious-sounds-of-the-season-millersville-winter-visual-performing-arts-center', price: '$30 - $34' },
+        { match: /glorious sounds of the season/i, start: '2026-12-06T14:30', url: 'https://www.etix.com/ticket/p/47389845/glorious-sounds-of-the-season-millersville-winter-visual-performing-arts-center', price: '$30 - $34' },
     ];
 
     // Check for direct etix match first
-    const etixMatch = etixEvents.find(e => e.match.test(title));
+    const etixMatch = etixEvents.find(e => e.match.test(title) && (!e.start || String(startET || '').startsWith(e.start)));
     if (etixMatch) return { price: etixMatch.price, link: etixMatch.url };
 
     let price = "Free";
@@ -370,7 +379,10 @@ function extractPricing(desc, title = "", location = "", apiLink = "") {
         // venue-page fallback -- a free Club Sports game shipped a paid
         // Tickets button pointing at the BASEBALL venue listing (2026-09-01).
         // $-amounts still win above ("$10, kids free" never reaches this).
-        else if (/free\s+admission|admission(?:\s+is)?\s*:?\s*free\b|\bno\s+(?:admission\s+)?(?:charge|cost|fee)\b/i.test(desc)) price = "Free";
+        // + "free and open to the public" / "no ticket(s) required|needed|
+        //   necessary" (2026-09-09, Field Notes case): that boilerplate hit
+        //   the "ticket" sniff below and armed the Winter Center venue link.
+        else if (/free\s+admission|admission(?:\s+is)?\s*:?\s*free\b|\bno\s+(?:admission\s+)?(?:charge|cost|fee)\b|\bfree\s+and\s+open\s+to\s+(?:the\s+)?public\b|\bno\s+tickets?\s+(?:are\s+)?(?:required|needed|necessary)\b/i.test(desc)) price = "Free";
         else if (/ticket|admission|cover charge|cost:/i.test(desc)) price = "Ticket Required";
 
         if (!link) {
@@ -634,6 +646,14 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
 //   Future dual events: add the title here (Candlelighting precedent).
 const ALUMNI_FULLY_EXEMPT_RE = /homecoming/i;
 const ALUMNI_DUAL_AUDIENCE_RE = /candle\s*light/i;
+// Calendar/GetInvolved dual-audience twins (2026-09-09, Field Notes precedent):
+// when MU Calendar AND GetInvolved both publish an event on the same ET day and
+// the title matches here, the pair is SPLIT rather than merged — the calendar
+// copy (richer description, room number) goes townie-only, the GetInvolved
+// copy (Free Food perk, org branding) goes mu-only. Hand-curated like the
+// alumni table above: generalizing would flip every existing clubs-over-mu
+// merge. Post-dedupe pass; only fires when BOTH twins are present that day.
+const CALENDAR_CLUBS_SPLIT_RE = /field\s*notes/i;
 
 // ---- Academic-milestone cross-check (warn-only; 2026-07-23 arc, restored 2026-08-18) ----
 // MIRROR of app.js muFallStartISO/muCommencementISO (the academic-tradition
@@ -2672,7 +2692,7 @@ async function runScraper() {
             // so a column reorder upstream would surface as blank/garbage desc
             // (not 0 events) — worth watching.
             const descHtml = obj['11'] || obj['2'] || '';
-            const pricing = extractPricing(descHtml, eventTitle, eventLoc, '');
+            const pricing = extractPricing(descHtml, eventTitle, eventLoc, '', String(obj.startDate || ''));
 
             let tags = ["MU"];
             if (eventType) tags.push(eventType);
@@ -5767,7 +5787,11 @@ async function runScraper() {
             if (loser.event.muFreeTicket && !winner.muFreeTicket) { winner.muFreeTicket = true; muFreeMerged = true; }
             let ticketMerged = false;
             const loserLink = loser.event.ticketLink || '';
-            if (!winner.ticketLink && loserLink) {
+            // A /ticket/v/ venue-page link is a GUESS (extractPricing fallback),
+            // never evidence of a paid event — it must not ride onto a winner
+            // whose own source says exactly 'Free' (2026-09-09).
+            const loserLinkIsVenueGuess = /etix\.com\/ticket\/v\//i.test(loserLink) && (winner.price || '').trim() === 'Free';
+            if (!winner.ticketLink && loserLink && !loserLinkIsVenueGuess) {
                 winner.ticketLink = loserLink; ticketMerged = true;
             } else if (/etix\.com\/ticket\/v\//i.test(winner.ticketLink || '') && /etix\.com\/ticket\/p\//i.test(loserLink)) {
                 winner.ticketLink = loserLink; ticketMerged = true;
@@ -5919,6 +5943,32 @@ async function runScraper() {
     }
     // Strip the internal marker so it never lands in events.json.
     deduped.forEach(e => { if (e._overrideCreated) delete e._overrideCreated; });
+
+    // ── Calendar/GetInvolved twin split (2026-09-09) — see
+    // CALENDAR_CLUBS_SPLIT_RE. Explicit audience on both copies, so the camps
+    // stamp below and the fail-open default never touch them.
+    {
+        const splitDay = e => { const ms = parseEventInstant(e.date); return !isNaN(ms) ? deriveDayET(ms) : (e.date || '').slice(0, 10); };
+        const byDay = new Map();
+        deduped.forEach(e => {
+            if (!CALENDAR_CLUBS_SPLIT_RE.test(e.title || '')) return;
+            const link = (e.sourceLink || '').toLowerCase();
+            const side = link.includes('getinvolved.millersville.edu') ? 'clubs' : link.includes('millersville.edu/calendar') ? 'mu' : null;
+            if (!side) return;
+            const d = splitDay(e);
+            if (!byDay.has(d)) byDay.set(d, { mu: [], clubs: [] });
+            byDay.get(d)[side].push(e);
+        });
+        let split = 0;
+        for (const [d, g] of byDay) {
+            if (!g.mu.length || !g.clubs.length) continue;   // lone copy stays visible to everyone
+            g.mu.forEach(e => { e.audience = 'townie-only'; });
+            g.clubs.forEach(e => { e.audience = 'mu-only'; });
+            split++;
+            console.log(`🔀 Split calendar/GetInvolved twins (${d}): "${g.mu[0].title}" → townie-only · "${g.clubs[0].title}" → mu-only`);
+        }
+        if (split) console.log(`🔀 ${split} calendar/GetInvolved twin pair(s) split by audience`);
+    }
 
     // ── Camps → townie-only (2026-08-11): youth camps + Arts Smarts are
     // advertised to LOCALS only — marauders shouldn't see kids' camps on

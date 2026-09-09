@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-09-09T17:35:15.831Z",
-  "totalEvents": 1644,
-  "withDescription": 731,
-  "withImage": 205,
+  "generatedAt": "2026-09-09T20:26:57.968Z",
+  "totalEvents": 1649,
+  "withDescription": 736,
+  "withImage": 207,
   "familyFriendly": 86,
   "eventsToday": 24,
   "sources": {
@@ -10,7 +10,7 @@
     "muCalendar": 158,
     "artsmu": 22,
     "campsAlumni": 42,
-    "muGetInvolved": 389,
+    "muGetInvolved": 394,
     "pennManor": 410,
     "borough": 66,
     "vfw": 12,
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-09T17:32:55.498Z"
+    "lastSyncAt": "2026-09-09T20:24:55.866Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-09T17:35:01.893Z"
+    "checkedAt": "2026-09-09T20:26:50.211Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -221,6 +221,55 @@
   },
   "recentlyAdded": [
     {
+      "key": "FSL: Phi Mu Delta Tabling|2026-09-10T11:00:00",
+      "firstSeenAt": "2026-09-09T20:26:57.964Z",
+      "title": "FSL: Phi Mu Delta Tabling",
+      "source": "MU",
+      "date": "2026-09-10T11:00:00"
+    },
+    {
+      "key": "Clinical Psychology Student Association: First Meeting|2026-09-10T21:30:00.000Z",
+      "firstSeenAt": "2026-09-09T20:26:57.964Z",
+      "title": "Clinical Psychology Student Association: First Meeting",
+      "source": "MU",
+      "date": "2026-09-10T21:30:00.000Z"
+    },
+    {
+      "key": "FSL: Zeta Phi Beta tabling|2026-09-15T18:00:00",
+      "firstSeenAt": "2026-09-09T20:26:57.964Z",
+      "title": "FSL: Zeta Phi Beta tabling",
+      "source": "MU",
+      "date": "2026-09-15T18:00:00"
+    },
+    {
+      "key": "CGC Week: Meet Kappa Alpha Psi|2026-09-16T20:30:00",
+      "firstSeenAt": "2026-09-09T20:26:57.964Z",
+      "title": "CGC Week: Meet Kappa Alpha Psi",
+      "source": "MU",
+      "date": "2026-09-16T20:30:00"
+    },
+    {
+      "key": "Black Student Union Interest Meeting|2026-09-16T22:30:00.000Z",
+      "firstSeenAt": "2026-09-09T20:26:57.964Z",
+      "title": "Black Student Union Interest Meeting",
+      "source": "MU",
+      "date": "2026-09-16T22:30:00.000Z"
+    },
+    {
+      "key": "Skully's 22nd Birthday Party|2026-09-18T18:00:00.000Z",
+      "firstSeenAt": "2026-09-09T20:26:57.964Z",
+      "title": "Skully's 22nd Birthday Party",
+      "source": "MU",
+      "date": "2026-09-18T18:00:00.000Z"
+    },
+    {
+      "key": "FSL: Meet the Sisters of Mu Sigma Upsilon Pt. 2|2026-09-21T19:00:00",
+      "firstSeenAt": "2026-09-09T20:26:57.964Z",
+      "title": "FSL: Meet the Sisters of Mu Sigma Upsilon Pt. 2",
+      "source": "MU",
+      "date": "2026-09-21T19:00:00"
+    },
+    {
       "key": "Boys JV Baseball @ Octorara Area High School|2027-03-15T20:15:00.000Z",
       "firstSeenAt": "2026-09-09T17:35:15.828Z",
       "title": "Boys JV Baseball @ Octorara Area High School",
@@ -240,56 +289,7 @@
       "title": "ComMUnity Fest 2026",
       "source": "MU",
       "date": "2026-09-09T18:00:00.000Z"
-    },
-    {
-      "key": "Los Mal Hablados|2026-09-09T23:30:00.000Z",
-      "firstSeenAt": "2026-09-09T15:44:09.562Z",
-      "title": "Los Mal Hablados",
-      "source": "Other",
-      "date": "2026-09-09T23:30:00.000Z"
-    },
-    {
-      "key": "Why I Stay Tabling|2026-09-10T16:15:00.000Z",
-      "firstSeenAt": "2026-09-09T15:44:09.562Z",
-      "title": "Why I Stay Tabling",
-      "source": "MU",
-      "date": "2026-09-10T16:15:00.000Z"
-    },
-    {
-      "key": "INVOCATION: AGE OF FIRE - DRAG NIGHT|2026-09-11T00:00:00.000Z",
-      "firstSeenAt": "2026-09-09T15:44:09.562Z",
-      "title": "INVOCATION: AGE OF FIRE - DRAG NIGHT",
-      "source": "Other",
-      "date": "2026-09-11T00:00:00.000Z"
-    },
-    {
-      "key": "A Farewell To Kings - Rush Tribute (playing 2112 in its entirety)|2026-09-12T00:00:00.000Z",
-      "firstSeenAt": "2026-09-09T15:44:09.562Z",
-      "title": "A Farewell To Kings - Rush Tribute (playing 2112 in its entirety)",
-      "source": "Other",
-      "date": "2026-09-12T00:00:00.000Z"
-    },
-    {
-      "key": "CKY w. Anthrophobia & New Damage|2026-09-12T23:00:00.000Z",
-      "firstSeenAt": "2026-09-09T15:44:09.562Z",
-      "title": "CKY w. Anthrophobia & New Damage",
-      "source": "Other",
-      "date": "2026-09-12T23:00:00.000Z"
-    },
-    {
-      "key": "Nation of Language w. Anika|2026-09-17T00:00:00.000Z",
-      "firstSeenAt": "2026-09-09T15:44:09.562Z",
-      "title": "Nation of Language w. Anika",
-      "source": "Other",
-      "date": "2026-09-17T00:00:00.000Z"
-    },
-    {
-      "key": "Karaoke Night|2026-09-17T22:00:00.000Z",
-      "firstSeenAt": "2026-09-09T15:44:09.562Z",
-      "title": "Karaoke Night",
-      "source": "MU",
-      "date": "2026-09-17T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 7
 }

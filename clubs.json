@@ -48,6 +48,15 @@
     "id": ""
   },
   {
+    "name": "Alliance for Social Change",
+    "category": "Academic",
+    "categories": [
+      "Academic"
+    ],
+    "shortName": "ASC",
+    "id": "allianceforsocialchange"
+  },
+  {
     "name": "Alpha Sigma Alpha",
     "category": "",
     "categories": [],
@@ -216,9 +225,8 @@
   },
   {
     "name": "Black Student Union",
-    "category": "Lecture or Speaker",
+    "category": "Meeting",
     "categories": [
-      "Lecture or Speaker",
       "Meeting"
     ],
     "shortName": "",
@@ -348,8 +356,10 @@
   },
   {
     "name": "Clinical Psychology Student Association",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "CPSA",
     "id": ""
   },

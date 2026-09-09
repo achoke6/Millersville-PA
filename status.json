@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-09-08T23:52:30.712Z",
-  "totalEvents": 1633,
-  "withDescription": 724,
-  "withImage": 197,
+  "generatedAt": "2026-09-09T03:07:32.165Z",
+  "totalEvents": 1641,
+  "withDescription": 731,
+  "withImage": 203,
   "familyFriendly": 86,
-  "eventsToday": 25,
+  "eventsToday": 23,
   "sources": {
     "muAthletics": 317,
-    "muCalendar": 159,
+    "muCalendar": 158,
     "artsmu": 22,
     "campsAlumni": 42,
-    "muGetInvolved": 380,
-    "pennManor": 405,
+    "muGetInvolved": 388,
+    "pennManor": 407,
     "borough": 66,
     "vfw": 12,
     "phantomPower": 12,
     "community": 22,
-    "manor": 42,
+    "manor": 41,
     "raneyCellars": 7,
     "theBackyard": 12,
     "muHudlBroadcasts": 61
@@ -44,7 +44,7 @@
     },
     "pennManor": {
       "earliest": "2026-08-17T12:00:00.000Z",
-      "latest": "2027-09-07T21:30:00.000Z"
+      "latest": "2027-09-08T23:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-06-15T22:00:00.000Z",
@@ -63,7 +63,7 @@
       "latest": "2027-04-16T13:15:00.000Z"
     },
     "manor": {
-      "earliest": "2026-09-08T23:00:00.000Z",
+      "earliest": "2026-09-14T23:00:00.000Z",
       "latest": "2027-09-06T23:00:00.000Z"
     },
     "raneyCellars": {
@@ -97,8 +97,8 @@
       "daysSinceMoved": 5
     },
     "pennManor": {
-      "newest": "2027-09-07",
-      "daysSinceMoved": 1
+      "newest": "2027-09-08",
+      "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2026-12-25",
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 722,
+    "total": 724,
     "scored": 26,
     "wins": 16,
     "losses": 9,
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-08T23:49:18.947Z"
+    "lastSyncAt": "2026-09-09T03:05:25.495Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-08T23:52:24.546Z"
+    "checkedAt": "2026-09-09T03:07:24.169Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -164,7 +164,7 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 364,
+        "value": 365,
         "min": 45,
         "skipped": false
       },
@@ -185,14 +185,14 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 108,
+        "value": 107,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 405,
+        "value": 407,
         "min": 150,
         "skipped": false
       },
@@ -221,75 +221,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Millersville University Field Hockey vs #10 Pace|2026-09-09T22:00:00.000Z",
-      "firstSeenAt": "2026-09-08T23:52:30.708Z",
-      "title": "Millersville University Field Hockey vs #10 Pace",
-      "source": "MU",
-      "date": "2026-09-09T22:00:00.000Z"
+      "key": "Trivia Night|2026-09-30T00:00:00.000Z",
+      "firstSeenAt": "2026-09-09T03:07:32.162Z",
+      "title": "Trivia Night",
+      "source": "Jack's Tavern",
+      "date": "2026-09-30T00:00:00.000Z"
     },
     {
-      "key": "Millersville University Field Hockey at #8 Assumption|2026-09-11T18:00:00.000Z",
-      "firstSeenAt": "2026-09-08T23:52:30.708Z",
-      "title": "Millersville University Field Hockey at #8 Assumption",
+      "key": "SGA Weekly Meeting|2026-10-29T23:00:00.000Z",
+      "firstSeenAt": "2026-09-09T03:07:32.162Z",
+      "title": "SGA Weekly Meeting",
       "source": "MU",
-      "date": "2026-09-11T18:00:00.000Z"
+      "date": "2026-10-29T23:00:00.000Z"
     },
     {
-      "key": "Millersville University Field Hockey vs T-#10 Indiana (PA)|2026-09-19T22:00:00.000Z",
-      "firstSeenAt": "2026-09-08T23:52:30.708Z",
-      "title": "Millersville University Field Hockey vs T-#10 Indiana (PA)",
+      "key": "Club Tennis Practice|2026-10-29T23:00:00.000Z",
+      "firstSeenAt": "2026-09-09T03:07:32.162Z",
+      "title": "Club Tennis Practice",
       "source": "MU",
-      "date": "2026-09-19T22:00:00.000Z"
+      "date": "2026-10-29T23:00:00.000Z"
     },
     {
-      "key": "Millersville University Field Hockey at T-#10 Indiana (PA)|2026-10-11T16:00:00.000Z",
-      "firstSeenAt": "2026-09-08T23:52:30.708Z",
-      "title": "Millersville University Field Hockey at T-#10 Indiana (PA)",
+      "key": "Fellowship Night|2026-10-30T00:00:00.000Z",
+      "firstSeenAt": "2026-09-09T03:07:32.162Z",
+      "title": "Fellowship Night",
       "source": "MU",
-      "date": "2026-10-11T16:00:00.000Z"
+      "date": "2026-10-30T00:00:00.000Z"
     },
     {
-      "key": "Millersville University Field Hockey vs #6 Bloomsburg|2026-10-31T17:00:00.000Z",
-      "firstSeenAt": "2026-09-08T23:52:30.708Z",
-      "title": "Millersville University Field Hockey vs #6 Bloomsburg",
+      "key": "AniMU Weekly Meeting|2026-10-30T22:00:00.000Z",
+      "firstSeenAt": "2026-09-09T03:07:32.162Z",
+      "title": "AniMU Weekly Meeting",
       "source": "MU",
-      "date": "2026-10-31T17:00:00.000Z"
+      "date": "2026-10-30T22:00:00.000Z"
     },
     {
-      "key": "Acacia Blood Drive|2026-09-09T16:00:00.000Z",
-      "firstSeenAt": "2026-09-08T21:37:31.473Z",
-      "title": "Acacia Blood Drive",
+      "key": "Sunday Catholic Mass|2026-11-01T20:00:00.000Z",
+      "firstSeenAt": "2026-09-09T03:07:32.162Z",
+      "title": "Sunday Catholic Mass",
       "source": "MU",
-      "date": "2026-09-09T16:00:00.000Z"
+      "date": "2026-11-01T20:00:00.000Z"
     },
     {
-      "key": "Student Government Association (SGA) Weekly Meeting|2026-10-29T17:00:00",
-      "firstSeenAt": "2026-09-08T21:37:31.473Z",
-      "title": "Student Government Association (SGA) Weekly Meeting",
+      "key": "Phi Alpha Theta Meeting|2026-11-02T21:30:00.000Z",
+      "firstSeenAt": "2026-09-09T03:07:32.162Z",
+      "title": "Phi Alpha Theta Meeting",
       "source": "MU",
-      "date": "2026-10-29T17:00:00"
+      "date": "2026-11-02T21:30:00.000Z"
     },
     {
-      "key": "BGC Weekly Meeting|2026-08-26T22:00:00.000Z",
-      "firstSeenAt": "2026-09-08T18:21:01.297Z",
-      "title": "BGC Weekly Meeting",
+      "key": "Reformed University Fellowship Prayer Meeting|2026-11-02T22:00:00.000Z",
+      "firstSeenAt": "2026-09-09T03:07:32.162Z",
+      "title": "Reformed University Fellowship Prayer Meeting",
       "source": "MU",
-      "date": "2026-08-26T22:00:00.000Z"
+      "date": "2026-11-02T22:00:00.000Z"
     },
     {
-      "key": "BGC Weekly Meeting|2026-09-02T22:00:00.000Z",
-      "firstSeenAt": "2026-09-08T18:21:01.297Z",
-      "title": "BGC Weekly Meeting",
+      "key": "Club Tennis Practice|2026-11-03T00:00:00.000Z",
+      "firstSeenAt": "2026-09-09T03:07:32.162Z",
+      "title": "Club Tennis Practice",
       "source": "MU",
-      "date": "2026-09-02T22:00:00.000Z"
+      "date": "2026-11-03T00:00:00.000Z"
     },
     {
-      "key": "Tuesday Tabling|2026-09-08T00:00:00",
-      "firstSeenAt": "2026-09-08T18:21:01.297Z",
-      "title": "Tuesday Tabling",
+      "key": "RUF Bible Study|2026-11-04T00:00:00.000Z",
+      "firstSeenAt": "2026-09-09T03:07:32.162Z",
+      "title": "RUF Bible Study",
       "source": "MU",
-      "date": "2026-09-08T00:00:00"
+      "date": "2026-11-04T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 5
+  "addedLastRun": 12
 }

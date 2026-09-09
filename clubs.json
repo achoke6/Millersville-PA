@@ -235,16 +235,6 @@
     "id": ""
   },
   {
-    "name": "Body Project",
-    "category": "Educational Program",
-    "categories": [
-      "Educational Program",
-      "Social"
-    ],
-    "shortName": "",
-    "id": ""
-  },
-  {
     "name": "Books & Banter",
     "category": "Fundraiser",
     "categories": [
@@ -299,9 +289,10 @@
   },
   {
     "name": "Center for Health Education and Promotion",
-    "category": "Tabling",
+    "category": "Educational Program",
     "categories": [
-      "Tabling"
+      "Educational Program",
+      "Lecture or Speaker"
     ],
     "shortName": "CHEP",
     "id": ""
@@ -477,9 +468,9 @@
   },
   {
     "name": "Conestoga Outdoors Club",
-    "category": "Service",
+    "category": "Meeting",
     "categories": [
-      "Service"
+      "Meeting"
     ],
     "shortName": "Conestoga Outdoors",
     "id": ""
@@ -719,9 +710,9 @@
   },
   {
     "name": "First Gems of The Ville",
-    "category": "Social",
+    "category": "Meeting",
     "categories": [
-      "Social"
+      "Meeting"
     ],
     "shortName": "First Gems",
     "id": ""
@@ -896,8 +887,9 @@
   },
   {
     "name": "Kappa Alpha Psi Fraternity Incorporated",
-    "category": "Social",
+    "category": "Fundraiser",
     "categories": [
+      "Fundraiser",
       "Social"
     ],
     "shortName": "Kappa Alpha Psi",
@@ -1353,8 +1345,11 @@
   },
   {
     "name": "Reformed University Fellowship",
-    "category": "",
-    "categories": [],
+    "category": "Meeting",
+    "categories": [
+      "Meeting",
+      "Social"
+    ],
     "shortName": "RUF",
     "id": ""
   },

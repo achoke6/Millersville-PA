@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-09T08:38:58.255Z",
-  "totalEvents": 1630,
-  "withDescription": 730,
+  "generatedAt": "2026-09-09T13:25:57.598Z",
+  "totalEvents": 1631,
+  "withDescription": 731,
   "withImage": 193,
   "familyFriendly": 86,
   "eventsToday": 22,
@@ -10,7 +10,7 @@
     "muCalendar": 158,
     "artsmu": 22,
     "campsAlumni": 42,
-    "muGetInvolved": 388,
+    "muGetInvolved": 389,
     "pennManor": 407,
     "borough": 66,
     "vfw": 12,
@@ -131,8 +131,8 @@
   },
   "sports": {
     "total": 724,
-    "scored": 26,
-    "wins": 16,
+    "scored": 27,
+    "wins": 17,
     "losses": 9,
     "ties": 1
   },
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-09T08:36:58.673Z"
+    "lastSyncAt": "2026-09-09T13:23:44.966Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-09T08:38:50.533Z"
+    "checkedAt": "2026-09-09T13:25:50.530Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -164,14 +164,14 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 365,
+        "value": 364,
         "min": 45,
         "skipped": false
       },
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 260,
+        "value": 259,
         "min": 60,
         "skipped": false
       },
@@ -220,6 +220,20 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Shenks Residence Hall Game Night|2026-09-22T23:30:00.000Z",
+      "firstSeenAt": "2026-09-09T13:25:57.595Z",
+      "title": "Shenks Residence Hall Game Night",
+      "source": "MU",
+      "date": "2026-09-22T23:30:00.000Z"
+    },
+    {
+      "key": "RUF Bible Study|2026-11-03T19:00:00",
+      "firstSeenAt": "2026-09-09T13:25:57.595Z",
+      "title": "RUF Bible Study",
+      "source": "MU",
+      "date": "2026-11-03T19:00:00"
+    },
     {
       "key": "Trivia Night|2026-09-30T00:00:00.000Z",
       "firstSeenAt": "2026-09-09T03:07:32.162Z",
@@ -275,21 +289,7 @@
       "title": "Reformed University Fellowship Prayer Meeting",
       "source": "MU",
       "date": "2026-11-02T22:00:00.000Z"
-    },
-    {
-      "key": "Club Tennis Practice|2026-11-03T00:00:00.000Z",
-      "firstSeenAt": "2026-09-09T03:07:32.162Z",
-      "title": "Club Tennis Practice",
-      "source": "MU",
-      "date": "2026-11-03T00:00:00.000Z"
-    },
-    {
-      "key": "RUF Bible Study|2026-11-04T00:00:00.000Z",
-      "firstSeenAt": "2026-09-09T03:07:32.162Z",
-      "title": "RUF Bible Study",
-      "source": "MU",
-      "date": "2026-11-04T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

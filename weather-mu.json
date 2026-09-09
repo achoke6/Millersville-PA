@@ -1,11 +1,11 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Wednesday, September 09, 2026 at 08:40 AM (Jones, Reynolds, Shertzer, Whitehurst, Student Meteorologists)",
+    "issued": "Wednesday, September 09, 2026 at 12:20 PM (Doernberg, Morris, Zipko, Student Meteorologists)",
     "periods": [
       {
-        "period": "Today",
-        "text": "Mostly sunny, very warm and more humid with afternoon breeze. High: 86-90"
+        "period": "This afternoon",
+        "text": "Partly sunny, very warm and more humid with afternoon breeze. High: 86-90"
       },
       {
         "period": "Tonight",
@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "13:00",
+      "temp": "85",
+      "dewpoint": "65",
+      "rh": "52",
+      "windDir": "SSW",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "9.9",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "82",
+      "dewpoint": "66",
+      "rh": "60",
+      "windDir": "SSW",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "10.3",
+      "condition": "None"
+    },
+    {
       "time": "11:00",
       "temp": "81",
       "dewpoint": "66",
@@ -169,28 +191,6 @@
       "windSpeed": "2",
       "precip": "0.00",
       "visibility": "10.1",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "62",
-      "dewpoint": "62",
-      "rh": "98",
-      "windDir": "ESE",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "6.9",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "63",
-      "dewpoint": "63",
-      "rh": "99",
-      "windDir": "ENE",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "6.7",
       "condition": "None"
     }
   ],
@@ -305,6 +305,13 @@
   },
   "videos": [
     {
+      "title": "Short Term Forecast 09/09/2026",
+      "videoId": "lK9rF-XH_vw",
+      "url": "https://www.youtube.com/watch?v=lK9rF-XH_vw",
+      "published": "2026-09-09T16:47:02+00:00",
+      "thumbnail": "https://i1.ytimg.com/vi/lK9rF-XH_vw/hqdefault.jpg"
+    },
+    {
       "title": "Short Term Forecast 09/04/2026",
       "videoId": "8ism6jsiXLQ",
       "url": "https://www.youtube.com/watch?v=8ism6jsiXLQ",
@@ -324,15 +331,8 @@
       "url": "https://www.youtube.com/watch?v=GvuxC4COuvY",
       "published": "2026-09-03T15:57:54+00:00",
       "thumbnail": "https://i4.ytimg.com/vi/GvuxC4COuvY/hqdefault.jpg"
-    },
-    {
-      "title": "Medium Range Forecast 08/31/2026",
-      "videoId": "9tuqCPRW2zk",
-      "url": "https://www.youtube.com/watch?v=9tuqCPRW2zk",
-      "published": "2026-08-31T15:20:42+00:00",
-      "thumbnail": "https://i2.ytimg.com/vi/9tuqCPRW2zk/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-09-09T15:41:54.101Z"
+  "updated": "2026-09-09T17:32:57.646Z"
 }

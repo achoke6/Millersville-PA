@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-09T15:44:09.565Z",
-  "totalEvents": 1642,
+  "generatedAt": "2026-09-09T17:35:15.831Z",
+  "totalEvents": 1644,
   "withDescription": 731,
   "withImage": 205,
   "familyFriendly": 86,
@@ -11,7 +11,7 @@
     "artsmu": 22,
     "campsAlumni": 42,
     "muGetInvolved": 389,
-    "pennManor": 408,
+    "pennManor": 410,
     "borough": 66,
     "vfw": 12,
     "phantomPower": 12,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 725,
+    "total": 727,
     "scored": 27,
     "wins": 17,
     "losses": 9,
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-09T15:41:51.460Z"
+    "lastSyncAt": "2026-09-09T17:32:55.498Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-09T15:44:01.202Z"
+    "checkedAt": "2026-09-09T17:35:01.893Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -192,7 +192,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 408,
+        "value": 410,
         "min": 150,
         "skipped": false
       },
@@ -220,6 +220,20 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Boys JV Baseball @ Octorara Area High School|2027-03-15T20:15:00.000Z",
+      "firstSeenAt": "2026-09-09T17:35:15.828Z",
+      "title": "Boys JV Baseball @ Octorara Area High School",
+      "source": "PM",
+      "date": "2027-03-15T20:15:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Baseball @ Octorara Area High School|2027-03-15T20:15:00.000Z",
+      "firstSeenAt": "2026-09-09T17:35:15.828Z",
+      "title": "Boys Varsity Baseball @ Octorara Area High School",
+      "source": "PM",
+      "date": "2027-03-15T20:15:00.000Z"
+    },
     {
       "key": "ComMUnity Fest 2026|2026-09-09T18:00:00.000Z",
       "firstSeenAt": "2026-09-09T15:44:09.562Z",
@@ -275,21 +289,7 @@
       "title": "Karaoke Night",
       "source": "MU",
       "date": "2026-09-17T22:00:00.000Z"
-    },
-    {
-      "key": "Disciple of The Garden - Tribute to Chris Cornell, Soundgarden, Audioslave|2026-09-20T00:00:00.000Z",
-      "firstSeenAt": "2026-09-09T15:44:09.562Z",
-      "title": "Disciple of The Garden - Tribute to Chris Cornell, Soundgarden, Audioslave",
-      "source": "Other",
-      "date": "2026-09-20T00:00:00.000Z"
-    },
-    {
-      "key": "THE DEAD TONGUES|2026-09-20T23:00:00.000Z",
-      "firstSeenAt": "2026-09-09T15:44:09.562Z",
-      "title": "THE DEAD TONGUES",
-      "source": "Other",
-      "date": "2026-09-20T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 14
+  "addedLastRun": 2
 }

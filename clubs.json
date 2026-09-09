@@ -289,10 +289,9 @@
   },
   {
     "name": "Center for Health Education and Promotion",
-    "category": "Educational Program",
+    "category": "Tabling",
     "categories": [
-      "Educational Program",
-      "Lecture or Speaker"
+      "Tabling"
     ],
     "shortName": "CHEP",
     "id": ""
@@ -1535,10 +1534,12 @@
   },
   {
     "name": "Student Memorial Center",
-    "category": "",
-    "categories": [],
-    "shortName": "SMC",
-    "id": "studentcenter"
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Student PSEA at Millersville University",

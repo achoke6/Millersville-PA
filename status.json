@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-09-09T13:25:57.598Z",
-  "totalEvents": 1631,
+  "generatedAt": "2026-09-09T15:44:09.565Z",
+  "totalEvents": 1642,
   "withDescription": 731,
-  "withImage": 193,
+  "withImage": 205,
   "familyFriendly": 86,
-  "eventsToday": 22,
+  "eventsToday": 24,
   "sources": {
     "muAthletics": 317,
     "muCalendar": 158,
     "artsmu": 22,
     "campsAlumni": 42,
     "muGetInvolved": 389,
-    "pennManor": 407,
+    "pennManor": 408,
     "borough": 66,
     "vfw": 12,
-    "phantomPower": 2,
+    "phantomPower": 12,
     "community": 22,
     "manor": 41,
     "raneyCellars": 7,
@@ -55,7 +55,7 @@
       "latest": "2026-10-22T22:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-09-18T00:00:00.000Z",
+      "earliest": "2026-09-09T23:30:00.000Z",
       "latest": "2026-10-04T00:00:00.000Z"
     },
     "community": {
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 724,
+    "total": 725,
     "scored": 27,
     "wins": 17,
     "losses": 9,
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-09T13:23:44.966Z"
+    "lastSyncAt": "2026-09-09T15:41:51.460Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-09T13:25:50.530Z"
+    "checkedAt": "2026-09-09T15:44:01.202Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -192,7 +192,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 407,
+        "value": 408,
         "min": 150,
         "skipped": false
       },
@@ -221,75 +221,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Shenks Residence Hall Game Night|2026-09-22T23:30:00.000Z",
-      "firstSeenAt": "2026-09-09T13:25:57.595Z",
-      "title": "Shenks Residence Hall Game Night",
+      "key": "ComMUnity Fest 2026|2026-09-09T18:00:00.000Z",
+      "firstSeenAt": "2026-09-09T15:44:09.562Z",
+      "title": "ComMUnity Fest 2026",
       "source": "MU",
-      "date": "2026-09-22T23:30:00.000Z"
+      "date": "2026-09-09T18:00:00.000Z"
     },
     {
-      "key": "RUF Bible Study|2026-11-03T19:00:00",
-      "firstSeenAt": "2026-09-09T13:25:57.595Z",
-      "title": "RUF Bible Study",
-      "source": "MU",
-      "date": "2026-11-03T19:00:00"
+      "key": "Los Mal Hablados|2026-09-09T23:30:00.000Z",
+      "firstSeenAt": "2026-09-09T15:44:09.562Z",
+      "title": "Los Mal Hablados",
+      "source": "Other",
+      "date": "2026-09-09T23:30:00.000Z"
     },
     {
-      "key": "Trivia Night|2026-09-30T00:00:00.000Z",
-      "firstSeenAt": "2026-09-09T03:07:32.162Z",
-      "title": "Trivia Night",
-      "source": "Jack's Tavern",
-      "date": "2026-09-30T00:00:00.000Z"
+      "key": "Why I Stay Tabling|2026-09-10T16:15:00.000Z",
+      "firstSeenAt": "2026-09-09T15:44:09.562Z",
+      "title": "Why I Stay Tabling",
+      "source": "MU",
+      "date": "2026-09-10T16:15:00.000Z"
     },
     {
-      "key": "SGA Weekly Meeting|2026-10-29T23:00:00.000Z",
-      "firstSeenAt": "2026-09-09T03:07:32.162Z",
-      "title": "SGA Weekly Meeting",
-      "source": "MU",
-      "date": "2026-10-29T23:00:00.000Z"
+      "key": "INVOCATION: AGE OF FIRE - DRAG NIGHT|2026-09-11T00:00:00.000Z",
+      "firstSeenAt": "2026-09-09T15:44:09.562Z",
+      "title": "INVOCATION: AGE OF FIRE - DRAG NIGHT",
+      "source": "Other",
+      "date": "2026-09-11T00:00:00.000Z"
     },
     {
-      "key": "Club Tennis Practice|2026-10-29T23:00:00.000Z",
-      "firstSeenAt": "2026-09-09T03:07:32.162Z",
-      "title": "Club Tennis Practice",
-      "source": "MU",
-      "date": "2026-10-29T23:00:00.000Z"
+      "key": "A Farewell To Kings - Rush Tribute (playing 2112 in its entirety)|2026-09-12T00:00:00.000Z",
+      "firstSeenAt": "2026-09-09T15:44:09.562Z",
+      "title": "A Farewell To Kings - Rush Tribute (playing 2112 in its entirety)",
+      "source": "Other",
+      "date": "2026-09-12T00:00:00.000Z"
     },
     {
-      "key": "Fellowship Night|2026-10-30T00:00:00.000Z",
-      "firstSeenAt": "2026-09-09T03:07:32.162Z",
-      "title": "Fellowship Night",
-      "source": "MU",
-      "date": "2026-10-30T00:00:00.000Z"
+      "key": "CKY w. Anthrophobia & New Damage|2026-09-12T23:00:00.000Z",
+      "firstSeenAt": "2026-09-09T15:44:09.562Z",
+      "title": "CKY w. Anthrophobia & New Damage",
+      "source": "Other",
+      "date": "2026-09-12T23:00:00.000Z"
     },
     {
-      "key": "AniMU Weekly Meeting|2026-10-30T22:00:00.000Z",
-      "firstSeenAt": "2026-09-09T03:07:32.162Z",
-      "title": "AniMU Weekly Meeting",
-      "source": "MU",
-      "date": "2026-10-30T22:00:00.000Z"
+      "key": "Nation of Language w. Anika|2026-09-17T00:00:00.000Z",
+      "firstSeenAt": "2026-09-09T15:44:09.562Z",
+      "title": "Nation of Language w. Anika",
+      "source": "Other",
+      "date": "2026-09-17T00:00:00.000Z"
     },
     {
-      "key": "Sunday Catholic Mass|2026-11-01T20:00:00.000Z",
-      "firstSeenAt": "2026-09-09T03:07:32.162Z",
-      "title": "Sunday Catholic Mass",
+      "key": "Karaoke Night|2026-09-17T22:00:00.000Z",
+      "firstSeenAt": "2026-09-09T15:44:09.562Z",
+      "title": "Karaoke Night",
       "source": "MU",
-      "date": "2026-11-01T20:00:00.000Z"
+      "date": "2026-09-17T22:00:00.000Z"
     },
     {
-      "key": "Phi Alpha Theta Meeting|2026-11-02T21:30:00.000Z",
-      "firstSeenAt": "2026-09-09T03:07:32.162Z",
-      "title": "Phi Alpha Theta Meeting",
-      "source": "MU",
-      "date": "2026-11-02T21:30:00.000Z"
+      "key": "Disciple of The Garden - Tribute to Chris Cornell, Soundgarden, Audioslave|2026-09-20T00:00:00.000Z",
+      "firstSeenAt": "2026-09-09T15:44:09.562Z",
+      "title": "Disciple of The Garden - Tribute to Chris Cornell, Soundgarden, Audioslave",
+      "source": "Other",
+      "date": "2026-09-20T00:00:00.000Z"
     },
     {
-      "key": "Reformed University Fellowship Prayer Meeting|2026-11-02T22:00:00.000Z",
-      "firstSeenAt": "2026-09-09T03:07:32.162Z",
-      "title": "Reformed University Fellowship Prayer Meeting",
-      "source": "MU",
-      "date": "2026-11-02T22:00:00.000Z"
+      "key": "THE DEAD TONGUES|2026-09-20T23:00:00.000Z",
+      "firstSeenAt": "2026-09-09T15:44:09.562Z",
+      "title": "THE DEAD TONGUES",
+      "source": "Other",
+      "date": "2026-09-20T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 14
 }

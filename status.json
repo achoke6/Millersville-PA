@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-09T03:07:32.165Z",
-  "totalEvents": 1641,
-  "withDescription": 731,
-  "withImage": 203,
+  "generatedAt": "2026-09-09T08:38:58.255Z",
+  "totalEvents": 1630,
+  "withDescription": 730,
+  "withImage": 193,
   "familyFriendly": 86,
-  "eventsToday": 23,
+  "eventsToday": 22,
   "sources": {
     "muAthletics": 317,
     "muCalendar": 158,
@@ -14,7 +14,7 @@
     "pennManor": 407,
     "borough": 66,
     "vfw": 12,
-    "phantomPower": 12,
+    "phantomPower": 2,
     "community": 22,
     "manor": 41,
     "raneyCellars": 7,
@@ -55,7 +55,7 @@
       "latest": "2026-10-22T22:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-09-09T23:30:00.000Z",
+      "earliest": "2026-09-18T00:00:00.000Z",
       "latest": "2026-10-04T00:00:00.000Z"
     },
     "community": {
@@ -78,39 +78,39 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 18
+      "daysSinceMoved": 19
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 32
+      "daysSinceMoved": 33
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 32
+      "daysSinceMoved": 33
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     },
     "pennManor": {
       "newest": "2027-09-08",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 42
+      "daysSinceMoved": 43
     },
     "vfw": {
       "newest": "2026-10-22",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "phantomPower": {
       "newest": "2026-10-04",
-      "daysSinceMoved": 48
+      "daysSinceMoved": 49
     },
     "community": {
       "newest": "2027-04-16",
@@ -118,15 +118,15 @@
     },
     "manor": {
       "newest": "2027-09-06",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "raneyCellars": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     },
     "theBackyard": {
       "newest": "2026-10-12",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     }
   },
   "sports": {
@@ -137,9 +137,9 @@
     "ties": 1
   },
   "registrations": {
-    "open": 14,
-    "next2Weeks": 7,
-    "nextClose": "2026-09-09",
+    "open": 13,
+    "next2Weeks": 6,
+    "nextClose": "2026-09-13",
     "openNoDeadline": 1
   },
   "reviewQueue": {
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-09T03:05:25.495Z"
+    "lastSyncAt": "2026-09-09T08:36:58.673Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-09T03:07:24.169Z"
+    "checkedAt": "2026-09-09T08:38:50.533Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -178,7 +178,7 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 269,
+        "value": 268,
         "min": 30,
         "skipped": false
       },
@@ -291,5 +291,5 @@
       "date": "2026-11-04T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 12
+  "addedLastRun": 0
 }

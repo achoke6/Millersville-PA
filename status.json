@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-10T15:30:31.446Z",
-  "totalEvents": 1656,
+  "generatedAt": "2026-09-10T18:08:29.416Z",
+  "totalEvents": 1657,
   "withDescription": 743,
   "withImage": 213,
   "familyFriendly": 87,
@@ -11,7 +11,7 @@
     "artsmu": 22,
     "campsAlumni": 41,
     "muGetInvolved": 401,
-    "pennManor": 412,
+    "pennManor": 413,
     "borough": 66,
     "vfw": 11,
     "phantomPower": 12,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 729,
+    "total": 730,
     "scored": 34,
     "wins": 24,
     "losses": 9,
@@ -138,7 +138,7 @@
   },
   "registrations": {
     "open": 14,
-    "next2Weeks": 6,
+    "next2Weeks": 7,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-10T15:27:22.896Z"
+    "lastSyncAt": "2026-09-10T18:05:12.442Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-10T15:30:25.820Z"
+    "checkedAt": "2026-09-10T18:08:22.315Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -192,7 +192,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 412,
+        "value": 413,
         "min": 150,
         "skipped": false
       },
@@ -220,6 +220,20 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Boys Varsity Cross Country @ Solanco High School|2026-10-15T20:00:00.000Z",
+      "firstSeenAt": "2026-09-10T18:08:29.412Z",
+      "title": "Boys Varsity Cross Country @ Solanco High School",
+      "source": "PM",
+      "date": "2026-10-15T20:00:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Wrestling @ Conestoga Valley High School|2027-01-06T00:00:00.000Z",
+      "firstSeenAt": "2026-09-10T18:08:29.412Z",
+      "title": "Boys Varsity Wrestling @ Conestoga Valley High School",
+      "source": "PM",
+      "date": "2027-01-06T00:00:00.000Z"
+    },
     {
       "key": "Meet the Cabinet|2026-09-17T21:00:00.000Z",
       "firstSeenAt": "2026-09-10T15:30:31.443Z",
@@ -275,20 +289,6 @@
       "title": "Planning Commission",
       "source": "Manor",
       "date": "2026-10-12T23:00:00.000Z"
-    },
-    {
-      "key": "Moonlight Ride|2026-10-23T22:30:00.000Z",
-      "firstSeenAt": "2026-09-10T14:51:55.635Z",
-      "title": "Moonlight Ride",
-      "source": "Manor",
-      "date": "2026-10-23T22:30:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-10-28T12:30:00.000Z",
-      "firstSeenAt": "2026-09-10T14:51:55.635Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-10-28T12:30:00.000Z"
     }
   ],
   "addedLastRun": 2

@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-10T00:53:17.325Z",
+  "generatedAt": "2026-09-10T05:38:38.232Z",
   "totalEvents": 1656,
   "withDescription": 742,
   "withImage": 213,
   "familyFriendly": 86,
-  "eventsToday": 23,
+  "eventsToday": 21,
   "sources": {
     "muAthletics": 317,
     "muCalendar": 158,
@@ -78,39 +78,39 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 9
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 19
+      "daysSinceMoved": 20
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 33
+      "daysSinceMoved": 34
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 33
+      "daysSinceMoved": 34
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     },
     "pennManor": {
       "newest": "2027-09-09",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 43
+      "daysSinceMoved": 44
     },
     "vfw": {
       "newest": "2026-10-22",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 9
     },
     "phantomPower": {
       "newest": "2026-10-04",
-      "daysSinceMoved": 49
+      "daysSinceMoved": 50
     },
     "community": {
       "newest": "2027-04-16",
@@ -118,21 +118,21 @@
     },
     "manor": {
       "newest": "2027-09-06",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "raneyCellars": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     },
     "theBackyard": {
       "newest": "2026-10-12",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     }
   },
   "sports": {
     "total": 729,
-    "scored": 29,
-    "wins": 19,
+    "scored": 34,
+    "wins": 24,
     "losses": 9,
     "ties": 1
   },
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-10T00:50:57.184Z"
+    "lastSyncAt": "2026-09-10T05:35:38.937Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-10T00:53:10.908Z"
+    "checkedAt": "2026-09-10T05:38:31.236Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -215,11 +215,18 @@
         "key": "pmHudl.matched",
         "ok": true,
         "matched": 16,
-        "withBroadcasts": 22
+        "withBroadcasts": 21
       }
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Karake Night|2026-10-01T02:00:00.000Z",
+      "firstSeenAt": "2026-09-10T05:38:38.229Z",
+      "title": "Karake Night",
+      "source": "Jack's Tavern",
+      "date": "2026-10-01T02:00:00.000Z"
+    },
     {
       "key": "Sunday Catholic Mass|2026-11-01T20:00:00.000Z",
       "firstSeenAt": "2026-09-10T00:53:17.322Z",
@@ -282,14 +289,7 @@
       "title": "General Meetings",
       "source": "MU",
       "date": "2026-11-04T22:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Tennis @ Wilson High School (West Lawn)|2027-09-09T19:30:00.000Z",
-      "firstSeenAt": "2026-09-10T00:53:17.322Z",
-      "title": "Girls Varsity Tennis @ Wilson High School (West Lawn)",
-      "source": "PM",
-      "date": "2027-09-09T19:30:00.000Z"
     }
   ],
-  "addedLastRun": 11
+  "addedLastRun": 1
 }

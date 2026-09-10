@@ -9,13 +9,9 @@
     "lng": -76.360659,
     "slug": "benson-snacks",
     "hours": {
-      "mon": "12:00-20:00",
-      "tue": "12:00-20:00",
-      "wed": "12:00-20:00",
-      "thu": "12:00-20:00",
-      "fri": "12:00-20:00",
-      "sat": "12:00-20:00",
-      "sun": "12:00-20:00"
+      "thu": "17:00-19:30",
+      "fri": "17:00-19:30",
+      "sat": "14:00-19:30"
     }
   },
   {
@@ -546,6 +542,26 @@
       "fri": "11:00-21:00",
       "sat": "11:00-21:00",
       "sun": "11:00-20:00"
+    }
+  },
+  {
+    "name": "Sobol",
+    "cuisine": "",
+    "description": "Smoothies, acai bowls and waffles, with fresh ingredients.",
+    "address": "210 Rohrerstown Rd, Lancaster, PA 17603",
+    "status": "Order Online",
+    "link": "https://sobol.orderexperience.net/sobollancaster/menu",
+    "lat": 40.045606,
+    "lng": -76.363687,
+    "slug": "sobol",
+    "hours": {
+      "mon": "09:00-20:00",
+      "tue": "09:00-20:00",
+      "wed": "09:00-20:00",
+      "thu": "09:00-20:00",
+      "fri": "09:00-20:00",
+      "sat": "09:00-20:00",
+      "sun": "09:00-20:00"
     }
   }
 ]

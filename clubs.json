@@ -196,12 +196,8 @@
   },
   {
     "name": "Best Buddies",
-    "category": "Service",
-    "categories": [
-      "Service",
-      "Meeting",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -422,10 +418,9 @@
   },
   {
     "name": "College Bible Fellowship",
-    "category": "Lecture or Speaker",
+    "category": "Performance",
     "categories": [
-      "Lecture or Speaker",
-      "Meeting",
+      "Performance",
       "Social"
     ],
     "shortName": "CBF",
@@ -1078,7 +1073,7 @@
     "id": "mensicehockey"
   },
   {
-    "name": "Men's Rugby Club",
+    "name": "Men's Rugby Club of Millersville University",
     "category": "Meeting",
     "categories": [
       "Meeting"
@@ -1424,9 +1419,9 @@
   },
   {
     "name": "Slip n' Score Society",
-    "category": "Meeting",
+    "category": "Social",
     "categories": [
-      "Meeting"
+      "Social"
     ],
     "shortName": "",
     "id": ""
@@ -1811,12 +1806,12 @@
   },
   {
     "name": "Women's Club Soccer",
-    "category": "Sports and Leisure",
+    "category": "Fundraiser",
     "categories": [
-      "Sports and Leisure"
+      "Fundraiser"
     ],
     "shortName": "Women's Club Soccer",
-    "id": "womenclubsoccer"
+    "id": ""
   },
   {
     "name": "Women's Golf",

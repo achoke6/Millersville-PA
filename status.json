@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-09-10T05:38:38.232Z",
-  "totalEvents": 1656,
+  "generatedAt": "2026-09-10T10:40:19.274Z",
+  "totalEvents": 1657,
   "withDescription": 742,
-  "withImage": 213,
+  "withImage": 214,
   "familyFriendly": 86,
   "eventsToday": 21,
   "sources": {
@@ -14,7 +14,7 @@
     "pennManor": 412,
     "borough": 66,
     "vfw": 12,
-    "phantomPower": 11,
+    "phantomPower": 12,
     "community": 22,
     "manor": 41,
     "raneyCellars": 7,
@@ -56,7 +56,7 @@
     },
     "phantomPower": {
       "earliest": "2026-09-11T00:00:00.000Z",
-      "latest": "2026-10-04T00:00:00.000Z"
+      "latest": "2026-10-06T23:00:00.000Z"
     },
     "community": {
       "earliest": "2026-06-15T13:00:00.000Z",
@@ -109,8 +109,8 @@
       "daysSinceMoved": 9
     },
     "phantomPower": {
-      "newest": "2026-10-04",
-      "daysSinceMoved": 50
+      "newest": "2026-10-06",
+      "daysSinceMoved": 0
     },
     "community": {
       "newest": "2027-04-16",
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-10T05:35:38.937Z"
+    "lastSyncAt": "2026-09-10T10:37:02.843Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-10T05:38:31.236Z"
+    "checkedAt": "2026-09-10T10:40:10.763Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -164,7 +164,7 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 365,
+        "value": 364,
         "min": 45,
         "skipped": false
       },
@@ -178,7 +178,7 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 268,
+        "value": 267,
         "min": 30,
         "skipped": false
       },
@@ -220,6 +220,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "DAMAG3 w. Film And Gender, Connor Cristi|2026-10-06T23:00:00.000Z",
+      "firstSeenAt": "2026-09-10T10:40:19.270Z",
+      "title": "DAMAG3 w. Film And Gender, Connor Cristi",
+      "source": "Other",
+      "date": "2026-10-06T23:00:00.000Z"
+    },
     {
       "key": "Karake Night|2026-10-01T02:00:00.000Z",
       "firstSeenAt": "2026-09-10T05:38:38.229Z",
@@ -282,13 +289,6 @@
       "title": "Tell School of Music Recital Hour",
       "source": "MU",
       "date": "2026-11-04T20:00:00.000Z"
-    },
-    {
-      "key": "General Meetings|2026-11-04T22:00:00.000Z",
-      "firstSeenAt": "2026-09-10T00:53:17.322Z",
-      "title": "General Meetings",
-      "source": "MU",
-      "date": "2026-11-04T22:00:00.000Z"
     }
   ],
   "addedLastRun": 1

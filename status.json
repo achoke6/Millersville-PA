@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-10T12:55:35.357Z",
-  "totalEvents": 1617,
+  "generatedAt": "2026-09-10T14:51:55.638Z",
+  "totalEvents": 1658,
   "withDescription": 743,
   "withImage": 214,
   "familyFriendly": 87,
-  "eventsToday": 21,
+  "eventsToday": 22,
   "sources": {
     "muAthletics": 317,
     "muCalendar": 158,
@@ -16,7 +16,7 @@
     "vfw": 12,
     "phantomPower": 12,
     "community": 22,
-    "manor": 0,
+    "manor": 41,
     "raneyCellars": 7,
     "theBackyard": 12,
     "muHudlBroadcasts": 61
@@ -62,7 +62,10 @@
       "earliest": "2026-06-15T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-09-14T23:00:00.000Z",
+      "latest": "2027-09-06T23:00:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-08-15T22:00:00.000Z",
       "latest": "2026-09-11T20:00:00.000Z"
@@ -113,7 +116,10 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 89
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-09-06",
+      "daysSinceMoved": 4
+    },
     "raneyCellars": {
       "newest": "2026-09-11",
       "daysSinceMoved": 7
@@ -143,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-10T12:52:44.920Z"
+    "lastSyncAt": "2026-09-10T14:48:40.193Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-10T12:55:28.914Z"
+    "checkedAt": "2026-09-10T14:51:48.272Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -215,75 +221,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Penn Manor Rec Basketball - Winter 2026-27 Registration|2026-10-15T18:00:00.000Z",
-      "firstSeenAt": "2026-09-10T12:55:35.354Z",
-      "title": "Penn Manor Rec Basketball - Winter 2026-27 Registration",
-      "source": "Other",
-      "date": "2026-10-15T18:00:00.000Z"
-    },
-    {
-      "key": "DAMAG3 w. Film And Gender, Connor Cristi|2026-10-06T23:00:00.000Z",
-      "firstSeenAt": "2026-09-10T10:40:19.270Z",
-      "title": "DAMAG3 w. Film And Gender, Connor Cristi",
-      "source": "Other",
-      "date": "2026-10-06T23:00:00.000Z"
-    },
-    {
-      "key": "Karake Night|2026-10-01T02:00:00.000Z",
-      "firstSeenAt": "2026-09-10T05:38:38.229Z",
-      "title": "Karake Night",
-      "source": "Jack's Tavern",
-      "date": "2026-10-01T02:00:00.000Z"
-    },
-    {
-      "key": "Sunday Catholic Mass|2026-11-01T20:00:00.000Z",
-      "firstSeenAt": "2026-09-10T00:53:17.322Z",
-      "title": "Sunday Catholic Mass",
+      "key": "Meet Phi Mu Delta|2026-09-10T15:00:00.000Z",
+      "firstSeenAt": "2026-09-10T14:51:55.635Z",
+      "title": "Meet Phi Mu Delta",
       "source": "MU",
-      "date": "2026-11-01T20:00:00.000Z"
+      "date": "2026-09-10T15:00:00.000Z"
     },
     {
-      "key": "Phi Alpha Theta Meeting|2026-11-02T21:30:00.000Z",
-      "firstSeenAt": "2026-09-10T00:53:17.322Z",
-      "title": "Phi Alpha Theta Meeting",
-      "source": "MU",
-      "date": "2026-11-02T21:30:00.000Z"
+      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
+      "firstSeenAt": "2026-09-10T14:51:55.635Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-09-14T23:00:00.000Z"
     },
     {
-      "key": "Reformed University Fellowship Prayer Meeting|2026-11-02T22:00:00.000Z",
-      "firstSeenAt": "2026-09-10T00:53:17.322Z",
-      "title": "Reformed University Fellowship Prayer Meeting",
-      "source": "MU",
-      "date": "2026-11-02T22:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-09-10T14:51:55.635Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-09-30T12:30:00.000Z"
     },
     {
-      "key": "Club Tennis Practice|2026-11-03T00:00:00.000Z",
-      "firstSeenAt": "2026-09-10T00:53:17.322Z",
-      "title": "Club Tennis Practice",
-      "source": "MU",
-      "date": "2026-11-03T00:00:00.000Z"
+      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
+      "firstSeenAt": "2026-09-10T14:51:55.635Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-10-05T23:00:00.000Z"
     },
     {
-      "key": "RUF Bible Study|2026-11-04T00:00:00.000Z",
-      "firstSeenAt": "2026-09-10T00:53:17.322Z",
-      "title": "RUF Bible Study",
-      "source": "MU",
-      "date": "2026-11-04T00:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
+      "firstSeenAt": "2026-09-10T14:51:55.635Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-10-07T23:00:00.000Z"
     },
     {
-      "key": "Letters of Love General Meeting|2026-11-04T00:00:00.000Z",
-      "firstSeenAt": "2026-09-10T00:53:17.322Z",
-      "title": "Letters of Love General Meeting",
-      "source": "MU",
-      "date": "2026-11-04T00:00:00.000Z"
+      "key": "Planning Commission|2026-10-12T23:00:00.000Z",
+      "firstSeenAt": "2026-09-10T14:51:55.635Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-10-12T23:00:00.000Z"
     },
     {
-      "key": "Osburn Bible Study|2026-11-04T17:00:00.000Z",
-      "firstSeenAt": "2026-09-10T00:53:17.322Z",
-      "title": "Osburn Bible Study",
-      "source": "MU",
-      "date": "2026-11-04T17:00:00.000Z"
+      "key": "Moonlight Ride|2026-10-23T22:30:00.000Z",
+      "firstSeenAt": "2026-09-10T14:51:55.635Z",
+      "title": "Moonlight Ride",
+      "source": "Manor",
+      "date": "2026-10-23T22:30:00.000Z"
+    },
+    {
+      "key": "Traffic Commission Meeting|2026-10-28T12:30:00.000Z",
+      "firstSeenAt": "2026-09-10T14:51:55.635Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-10-28T12:30:00.000Z"
+    },
+    {
+      "key": "Zoning Hearing Board|2026-11-05T00:00:00.000Z",
+      "firstSeenAt": "2026-09-10T14:51:55.635Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-11-05T00:00:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2026-11-06T00:00:00.000Z",
+      "firstSeenAt": "2026-09-10T14:51:55.635Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-11-06T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 42
 }

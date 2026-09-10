@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-10T10:40:19.274Z",
-  "totalEvents": 1657,
-  "withDescription": 742,
+  "generatedAt": "2026-09-10T14:51:55.638Z",
+  "totalEvents": 1658,
+  "withDescription": 743,
   "withImage": 214,
-  "familyFriendly": 86,
-  "eventsToday": 21,
+  "familyFriendly": 87,
+  "eventsToday": 22,
   "sources": {
     "muAthletics": 317,
     "muCalendar": 158,
@@ -137,10 +137,10 @@
     "ties": 1
   },
   "registrations": {
-    "open": 13,
+    "open": 14,
     "next2Weeks": 6,
     "nextClose": "2026-09-13",
-    "openNoDeadline": 1
+    "openNoDeadline": 0
   },
   "reviewQueue": {
     "pendingFuture": 1,
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-10T10:37:02.843Z"
+    "lastSyncAt": "2026-09-10T14:48:40.193Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-10T10:40:10.763Z"
+    "checkedAt": "2026-09-10T14:51:48.272Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -171,7 +171,7 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 259,
+        "value": 258,
         "min": 60,
         "skipped": false
       },
@@ -221,75 +221,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "DAMAG3 w. Film And Gender, Connor Cristi|2026-10-06T23:00:00.000Z",
-      "firstSeenAt": "2026-09-10T10:40:19.270Z",
-      "title": "DAMAG3 w. Film And Gender, Connor Cristi",
-      "source": "Other",
-      "date": "2026-10-06T23:00:00.000Z"
-    },
-    {
-      "key": "Karake Night|2026-10-01T02:00:00.000Z",
-      "firstSeenAt": "2026-09-10T05:38:38.229Z",
-      "title": "Karake Night",
-      "source": "Jack's Tavern",
-      "date": "2026-10-01T02:00:00.000Z"
-    },
-    {
-      "key": "Sunday Catholic Mass|2026-11-01T20:00:00.000Z",
-      "firstSeenAt": "2026-09-10T00:53:17.322Z",
-      "title": "Sunday Catholic Mass",
+      "key": "Meet Phi Mu Delta|2026-09-10T15:00:00.000Z",
+      "firstSeenAt": "2026-09-10T14:51:55.635Z",
+      "title": "Meet Phi Mu Delta",
       "source": "MU",
-      "date": "2026-11-01T20:00:00.000Z"
+      "date": "2026-09-10T15:00:00.000Z"
     },
     {
-      "key": "Phi Alpha Theta Meeting|2026-11-02T21:30:00.000Z",
-      "firstSeenAt": "2026-09-10T00:53:17.322Z",
-      "title": "Phi Alpha Theta Meeting",
-      "source": "MU",
-      "date": "2026-11-02T21:30:00.000Z"
+      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
+      "firstSeenAt": "2026-09-10T14:51:55.635Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-09-14T23:00:00.000Z"
     },
     {
-      "key": "Reformed University Fellowship Prayer Meeting|2026-11-02T22:00:00.000Z",
-      "firstSeenAt": "2026-09-10T00:53:17.322Z",
-      "title": "Reformed University Fellowship Prayer Meeting",
-      "source": "MU",
-      "date": "2026-11-02T22:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-09-10T14:51:55.635Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-09-30T12:30:00.000Z"
     },
     {
-      "key": "Club Tennis Practice|2026-11-03T00:00:00.000Z",
-      "firstSeenAt": "2026-09-10T00:53:17.322Z",
-      "title": "Club Tennis Practice",
-      "source": "MU",
-      "date": "2026-11-03T00:00:00.000Z"
+      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
+      "firstSeenAt": "2026-09-10T14:51:55.635Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-10-05T23:00:00.000Z"
     },
     {
-      "key": "RUF Bible Study|2026-11-04T00:00:00.000Z",
-      "firstSeenAt": "2026-09-10T00:53:17.322Z",
-      "title": "RUF Bible Study",
-      "source": "MU",
-      "date": "2026-11-04T00:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
+      "firstSeenAt": "2026-09-10T14:51:55.635Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-10-07T23:00:00.000Z"
     },
     {
-      "key": "Letters of Love General Meeting|2026-11-04T00:00:00.000Z",
-      "firstSeenAt": "2026-09-10T00:53:17.322Z",
-      "title": "Letters of Love General Meeting",
-      "source": "MU",
-      "date": "2026-11-04T00:00:00.000Z"
+      "key": "Planning Commission|2026-10-12T23:00:00.000Z",
+      "firstSeenAt": "2026-09-10T14:51:55.635Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-10-12T23:00:00.000Z"
     },
     {
-      "key": "Osburn Bible Study|2026-11-04T17:00:00.000Z",
-      "firstSeenAt": "2026-09-10T00:53:17.322Z",
-      "title": "Osburn Bible Study",
-      "source": "MU",
-      "date": "2026-11-04T17:00:00.000Z"
+      "key": "Moonlight Ride|2026-10-23T22:30:00.000Z",
+      "firstSeenAt": "2026-09-10T14:51:55.635Z",
+      "title": "Moonlight Ride",
+      "source": "Manor",
+      "date": "2026-10-23T22:30:00.000Z"
     },
     {
-      "key": "Tell School of Music Recital Hour|2026-11-04T20:00:00.000Z",
-      "firstSeenAt": "2026-09-10T00:53:17.322Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2026-11-04T20:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-10-28T12:30:00.000Z",
+      "firstSeenAt": "2026-09-10T14:51:55.635Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-10-28T12:30:00.000Z"
+    },
+    {
+      "key": "Zoning Hearing Board|2026-11-05T00:00:00.000Z",
+      "firstSeenAt": "2026-09-10T14:51:55.635Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-11-05T00:00:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2026-11-06T00:00:00.000Z",
+      "firstSeenAt": "2026-09-10T14:51:55.635Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-11-06T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 42
 }

@@ -514,8 +514,7 @@
     "name": "Creative Writers Guild",
     "category": "Meeting",
     "categories": [
-      "Meeting",
-      "Social"
+      "Meeting"
     ],
     "shortName": "CWG",
     "id": ""
@@ -754,10 +753,9 @@
   },
   {
     "name": "Gender and Sexuality Alliance",
-    "category": "Lecture or Speaker",
+    "category": "Social",
     "categories": [
-      "Lecture or Speaker",
-      "Meeting"
+      "Social"
     ],
     "shortName": "GSA",
     "id": ""
@@ -1038,8 +1036,11 @@
   },
   {
     "name": "Men's Club Lacrosse",
-    "category": "",
-    "categories": [],
+    "category": "Competition",
+    "categories": [
+      "Competition",
+      "Sporting"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1418,15 +1419,6 @@
     "category": "",
     "categories": [],
     "shortName": "Sigma Gamma Rho",
-    "id": ""
-  },
-  {
-    "name": "Slip & Score Society",
-    "category": "Competition",
-    "categories": [
-      "Competition"
-    ],
-    "shortName": "",
     "id": ""
   },
   {

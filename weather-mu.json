@@ -126,7 +126,74 @@
       }
     ]
   },
-  "observations": [],
+  "observations": [
+    {
+      "time": "04:00",
+      "temp": "74",
+      "dewpoint": "68",
+      "rh": "83",
+      "windDir": "N",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "9.5",
+      "condition": "Light Showers Rain"
+    },
+    {
+      "time": "03:00",
+      "temp": "75",
+      "dewpoint": "70",
+      "rh": "85",
+      "windDir": "NNW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "8.6",
+      "condition": "None"
+    },
+    {
+      "time": "02:00",
+      "temp": "75",
+      "dewpoint": "71",
+      "rh": "86",
+      "windDir": "W",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "8.0",
+      "condition": "Light Showers Rain"
+    },
+    {
+      "time": "01:00",
+      "temp": "76",
+      "dewpoint": "70",
+      "rh": "82",
+      "windDir": "W",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "9.1",
+      "condition": "None"
+    },
+    {
+      "time": "00:00",
+      "temp": "76",
+      "dewpoint": "70",
+      "rh": "82",
+      "windDir": "W",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "8.5",
+      "condition": "None"
+    },
+    {
+      "time": "23:00",
+      "temp": "74",
+      "dewpoint": "70",
+      "rh": "87",
+      "windDir": "SSW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "8.5",
+      "condition": "None"
+    }
+  ],
   "dailySummary": {
     "monthLabel": "September 2026",
     "days": [
@@ -228,6 +295,17 @@
         "windSpeed": "18",
         "windTime": "12:45",
         "rain": "0.00"
+      },
+      {
+        "date": "09/10",
+        "max": "88",
+        "maxTime": "14:26",
+        "min": "70",
+        "minTime": "06:43",
+        "windDir": "321",
+        "windSpeed": "17",
+        "windTime": "10:52",
+        "rain": "0.00"
       }
     ],
     "totalRain": "1.29",
@@ -247,7 +325,36 @@
     "radar": "https://sirocco.accuweather.com/nx_mosaic_640x480c/RE/inmaREPA_.gif",
     "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
   },
-  "videos": [],
+  "videos": [
+    {
+      "title": "Short Term Forecast 09/10/2026",
+      "videoId": "KYpodRxDDzk",
+      "url": "https://www.youtube.com/watch?v=KYpodRxDDzk",
+      "published": "2026-09-10T15:47:37+00:00",
+      "thumbnail": "https://i4.ytimg.com/vi/KYpodRxDDzk/hqdefault.jpg"
+    },
+    {
+      "title": "Medium Range Forecast 09/10/2026",
+      "videoId": "1BjN4eIZAwU",
+      "url": "https://www.youtube.com/watch?v=1BjN4eIZAwU",
+      "published": "2026-09-10T13:38:20+00:00",
+      "thumbnail": "https://i2.ytimg.com/vi/1BjN4eIZAwU/hqdefault.jpg"
+    },
+    {
+      "title": "Short Term Forecast 09/09/2026",
+      "videoId": "lK9rF-XH_vw",
+      "url": "https://www.youtube.com/watch?v=lK9rF-XH_vw",
+      "published": "2026-09-09T16:47:02+00:00",
+      "thumbnail": "https://i1.ytimg.com/vi/lK9rF-XH_vw/hqdefault.jpg"
+    },
+    {
+      "title": "Short Term Forecast 09/04/2026",
+      "videoId": "8ism6jsiXLQ",
+      "url": "https://www.youtube.com/watch?v=8ism6jsiXLQ",
+      "published": "2026-09-04T16:42:17+00:00",
+      "thumbnail": "https://i1.ytimg.com/vi/8ism6jsiXLQ/hqdefault.jpg"
+    }
+  ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-09-11T03:00:53.728Z"
+  "updated": "2026-09-11T08:33:16.927Z"
 }

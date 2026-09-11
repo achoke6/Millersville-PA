@@ -616,6 +616,11 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
     // 'awareness walk' only (2026-09-05): a campus "awareness day/event" is
     // tabling by another name ("988 Day": CHEP table on the Promenade); walks
     // are the genuinely public form.
+	// Club/team practices, scrimmages, tryouts and open gyms are student
+    // programming whatever the blurb says ("open to all" = all students) —
+    // "Women's Rugby Club Practice" ×12 leaked to locals (2026-09-11).
+    // Fundraiser / drive / Homecoming rules above still win first.
+    if (/\b(practices?|scrimmages?|try-?outs?|open gym)\b/i.test(titleText || '')) return 'mu-only';
     const publicKeywordRegex = /\b(open to (the )?(public|community|all)|community welcome|all (are )?welcome|public event|for the public|concert|performance|recital|exhibition|gallery|awareness walk|volunteer|service project|community service)\b/i;
     if (publicKeywordRegex.test(combinedText)) return 'public';
     if (tags.includes('Club Sports') && tags.includes('Home Game Mode')) return 'public';

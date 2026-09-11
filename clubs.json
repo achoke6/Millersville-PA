@@ -32,18 +32,18 @@
     "id": ""
   },
   {
-    "name": "All Campus Musical Organization",
-    "category": "Performance",
-    "categories": [
-      "Performance"
-    ],
+    "name": "All Greek Council",
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
   {
-    "name": "All Greek Council",
-    "category": "",
-    "categories": [],
+    "name": "All-Campus Musical Organization",
+    "category": "Performance",
+    "categories": [
+      "Performance"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -203,9 +203,10 @@
   },
   {
     "name": "Bible Campus Ministries",
-    "category": "Tabling",
+    "category": "Educational Program",
     "categories": [
-      "Tabling"
+      "Educational Program",
+      "Social"
     ],
     "shortName": "BCM",
     "id": ""
@@ -249,13 +250,12 @@
   },
   {
     "name": "Bowling Club",
-    "category": "Meeting",
+    "category": "Sports and Leisure",
     "categories": [
-      "Meeting",
-      "Sporting"
+      "Sports and Leisure"
     ],
     "shortName": "",
-    "id": ""
+    "id": "bowlingclub"
   },
   {
     "name": "Campus Life",
@@ -268,8 +268,10 @@
   },
   {
     "name": "Campus Recreation",
-    "category": "Sporting",
+    "category": "Competition",
     "categories": [
+      "Competition",
+      "Social",
       "Sporting"
     ],
     "shortName": "",
@@ -464,9 +466,9 @@
   },
   {
     "name": "Commuter Services",
-    "category": "Educational Program",
+    "category": "Social",
     "categories": [
-      "Educational Program"
+      "Social"
     ],
     "shortName": "",
     "id": ""
@@ -1253,10 +1255,12 @@
   },
   {
     "name": "Orientation Programs",
-    "category": "",
-    "categories": [],
+    "category": "University Departments ",
+    "categories": [
+      "University Departments "
+    ],
     "shortName": "",
-    "id": ""
+    "id": "transitionprograms"
   },
   {
     "name": "Panhellenic Council",
@@ -1352,11 +1356,8 @@
   },
   {
     "name": "Reformed University Fellowship",
-    "category": "Meeting",
-    "categories": [
-      "Meeting",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "RUF",
     "id": ""
   },
@@ -1524,10 +1525,8 @@
   },
   {
     "name": "Student Government Association",
-    "category": "Meeting",
-    "categories": [
-      "Meeting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "SGA",
     "id": ""
   },

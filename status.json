@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-09-10T23:46:27.114Z",
-  "totalEvents": 1664,
-  "withDescription": 750,
-  "withImage": 219,
+  "generatedAt": "2026-09-11T03:03:55.764Z",
+  "totalEvents": 1667,
+  "withDescription": 751,
+  "withImage": 225,
   "familyFriendly": 86,
-  "eventsToday": 26,
+  "eventsToday": 25,
   "sources": {
     "muAthletics": 317,
-    "muCalendar": 159,
+    "muCalendar": 158,
     "artsmu": 22,
     "campsAlumni": 41,
-    "muGetInvolved": 407,
-    "pennManor": 413,
+    "muGetInvolved": 410,
+    "pennManor": 415,
     "borough": 66,
     "vfw": 11,
     "phantomPower": 12,
@@ -39,12 +39,12 @@
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-06-13T16:00:00.000Z",
+      "earliest": "2026-08-16T00:00:00.000Z",
       "latest": "2027-04-29T11:30:00.000Z"
     },
     "pennManor": {
       "earliest": "2026-08-17T12:00:00.000Z",
-      "latest": "2027-09-09T20:00:00.000Z"
+      "latest": "2027-09-10T20:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-06-15T22:00:00.000Z",
@@ -97,8 +97,8 @@
       "daysSinceMoved": 7
     },
     "pennManor": {
-      "newest": "2027-09-09",
-      "daysSinceMoved": 1
+      "newest": "2027-09-10",
+      "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2026-12-25",
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 730,
+    "total": 732,
     "scored": 34,
     "wins": 24,
     "losses": 9,
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-10T23:42:50.828Z"
+    "lastSyncAt": "2026-09-11T03:00:51.966Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-10T23:46:18.944Z"
+    "checkedAt": "2026-09-11T03:03:47.032Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -164,7 +164,7 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 364,
+        "value": 365,
         "min": 45,
         "skipped": false
       },
@@ -185,14 +185,14 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 106,
+        "value": 105,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 413,
+        "value": 415,
         "min": 150,
         "skipped": false
       },
@@ -221,75 +221,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Worship in the Quad|2026-08-24T20:00:00.000Z",
-      "firstSeenAt": "2026-09-10T21:27:00.842Z",
+      "key": "Worship in the Quad|2026-08-24T17:30:00",
+      "firstSeenAt": "2026-09-11T03:03:55.760Z",
       "title": "Worship in the Quad",
       "source": "MU",
-      "date": "2026-08-24T20:00:00.000Z"
+      "date": "2026-08-24T17:30:00"
     },
     {
-      "key": "Worship in the Quad|2026-08-31T20:00:00.000Z",
-      "firstSeenAt": "2026-09-10T21:27:00.842Z",
-      "title": "Worship in the Quad",
+      "key": "RUF Bible Study|2026-08-25T19:00:00",
+      "firstSeenAt": "2026-09-11T03:03:55.760Z",
+      "title": "RUF Bible Study",
       "source": "MU",
-      "date": "2026-08-31T20:00:00.000Z"
+      "date": "2026-08-25T19:00:00"
     },
     {
-      "key": "BCM Men's Bible Study|2026-08-31T23:00:00.000Z",
-      "firstSeenAt": "2026-09-10T21:27:00.842Z",
-      "title": "BCM Men's Bible Study",
+      "key": "AniMU Weekly Meeting|2026-10-23T22:00:00.000Z",
+      "firstSeenAt": "2026-09-11T03:03:55.760Z",
+      "title": "AniMU Weekly Meeting",
       "source": "MU",
-      "date": "2026-08-31T23:00:00.000Z"
+      "date": "2026-10-23T22:00:00.000Z"
     },
     {
-      "key": "BCM Women's Bible Study|2026-08-31T23:00:00.000Z",
-      "firstSeenAt": "2026-09-10T21:27:00.842Z",
+      "key": "Sunday Catholic Mass|2026-10-25T19:00:00.000Z",
+      "firstSeenAt": "2026-09-11T03:03:55.760Z",
+      "title": "Sunday Catholic Mass",
+      "source": "MU",
+      "date": "2026-10-25T19:00:00.000Z"
+    },
+    {
+      "key": "Reformed University Fellowship Prayer Meeting|2026-10-26T21:00:00.000Z",
+      "firstSeenAt": "2026-09-11T03:03:55.760Z",
+      "title": "Reformed University Fellowship Prayer Meeting",
+      "source": "MU",
+      "date": "2026-10-26T21:00:00.000Z"
+    },
+    {
+      "key": "Mock Trial Club Meeting|2026-10-26T21:00:00.000Z",
+      "firstSeenAt": "2026-09-11T03:03:55.760Z",
+      "title": "Mock Trial Club Meeting",
+      "source": "MU",
+      "date": "2026-10-26T21:00:00.000Z"
+    },
+    {
+      "key": "BCM Women's Bible Study|2026-10-26T23:00:00.000Z",
+      "firstSeenAt": "2026-09-11T03:03:55.760Z",
       "title": "BCM Women's Bible Study",
       "source": "MU",
-      "date": "2026-08-31T23:00:00.000Z"
+      "date": "2026-10-26T23:00:00.000Z"
     },
     {
-      "key": "Men's Rugby Practice|2026-09-10T20:00:00.000Z",
-      "firstSeenAt": "2026-09-10T21:27:00.842Z",
-      "title": "Men's Rugby Practice",
+      "key": "BCM Men's Bible Study|2026-10-26T23:00:00.000Z",
+      "firstSeenAt": "2026-09-11T03:03:55.760Z",
+      "title": "BCM Men's Bible Study",
       "source": "MU",
-      "date": "2026-09-10T20:00:00.000Z"
+      "date": "2026-10-26T23:00:00.000Z"
     },
     {
-      "key": "First Slip and Score Meeting|2026-09-10T21:00:00.000Z",
-      "firstSeenAt": "2026-09-10T21:27:00.842Z",
-      "title": "First Slip and Score Meeting",
+      "key": "Club Tennis Practice|2026-10-26T23:00:00.000Z",
+      "firstSeenAt": "2026-09-11T03:03:55.760Z",
+      "title": "Club Tennis Practice",
       "source": "MU",
-      "date": "2026-09-10T21:00:00.000Z"
+      "date": "2026-10-26T23:00:00.000Z"
     },
     {
-      "key": "Club Softball Practice|2026-09-10T22:00:00.000Z",
-      "firstSeenAt": "2026-09-10T21:27:00.842Z",
-      "title": "Club Softball Practice",
+      "key": "Ropes Course- Open Climb|2026-10-27T20:00:00.000Z",
+      "firstSeenAt": "2026-09-11T03:03:55.760Z",
+      "title": "Ropes Course- Open Climb",
       "source": "MU",
-      "date": "2026-09-10T22:00:00.000Z"
-    },
-    {
-      "key": "Welcome Back BINGO|2026-09-10T23:00:00.000Z",
-      "firstSeenAt": "2026-09-10T21:27:00.842Z",
-      "title": "Welcome Back BINGO",
-      "source": "MU",
-      "date": "2026-09-10T23:00:00.000Z"
-    },
-    {
-      "key": "Men's Club Soccer Practice|2026-09-11T00:00:00.000Z",
-      "firstSeenAt": "2026-09-10T21:27:00.842Z",
-      "title": "Men's Club Soccer Practice",
-      "source": "MU",
-      "date": "2026-09-11T00:00:00.000Z"
-    },
-    {
-      "key": "Sugar Bowl Fundraiser|2026-09-11T21:00:00.000Z",
-      "firstSeenAt": "2026-09-10T21:27:00.842Z",
-      "title": "Sugar Bowl Fundraiser",
-      "source": "MU",
-      "date": "2026-09-11T21:00:00.000Z"
+      "date": "2026-10-27T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 21
 }

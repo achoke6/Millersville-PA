@@ -364,13 +364,13 @@
   },
   {
     "name": "Club Baseball",
-    "category": "Sports and Leisure",
+    "category": "Competition",
     "categories": [
-      "Sports and Leisure",
+      "Competition",
       "Sporting"
     ],
     "shortName": "Club Baseball",
-    "id": "millersvilleclubbaseball"
+    "id": ""
   },
   {
     "name": "Club Cheerleading",
@@ -693,8 +693,11 @@
   },
   {
     "name": "Fencing Guild",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social",
+      "Sporting"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -849,12 +852,10 @@
   },
   {
     "name": "Inter-Fraternity Council",
-    "category": "Fraternity & Sorority Life",
-    "categories": [
-      "Fraternity & Sorority Life"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "IFC",
-    "id": "ifc"
+    "id": ""
   },
   {
     "name": "International Association of Emergency Managers",

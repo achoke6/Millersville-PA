@@ -128,6 +128,39 @@
   },
   "observations": [
     {
+      "time": "16:00",
+      "temp": "82",
+      "dewpoint": "60",
+      "rh": "49",
+      "windDir": "ENE",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "10.5",
+      "condition": "None"
+    },
+    {
+      "time": "15:00",
+      "temp": "79",
+      "dewpoint": "58",
+      "rh": "49",
+      "windDir": "N",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "10.1",
+      "condition": "None"
+    },
+    {
+      "time": "14:00",
+      "temp": "79",
+      "dewpoint": "59",
+      "rh": "51",
+      "windDir": "WNW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "10.2",
+      "condition": "None"
+    },
+    {
       "time": "13:00",
       "temp": "76",
       "dewpoint": "56",
@@ -158,39 +191,6 @@
       "windSpeed": "4",
       "precip": "0.00",
       "visibility": "10.1",
-      "condition": "None"
-    },
-    {
-      "time": "10:00",
-      "temp": "72",
-      "dewpoint": "62",
-      "rh": "72",
-      "windDir": "NE",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "10.3",
-      "condition": "Light Rain"
-    },
-    {
-      "time": "09:00",
-      "temp": "73",
-      "dewpoint": "62",
-      "rh": "69",
-      "windDir": "ESE",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "10.2",
-      "condition": "None"
-    },
-    {
-      "time": "08:00",
-      "temp": "71",
-      "dewpoint": "65",
-      "rh": "81",
-      "windDir": "SSE",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "9.7",
       "condition": "None"
     }
   ],
@@ -328,6 +328,13 @@
   "videos": [
     {
       "title": "Short Term Forecast 09/11/2026",
+      "videoId": "228TW-Qy5dQ",
+      "url": "https://www.youtube.com/watch?v=228TW-Qy5dQ",
+      "published": "2026-09-11T18:25:58+00:00",
+      "thumbnail": "https://i3.ytimg.com/vi/228TW-Qy5dQ/hqdefault.jpg"
+    },
+    {
+      "title": "Short Term Forecast 09/11/2026",
       "videoId": "lPHvPyuQs4M",
       "url": "https://www.youtube.com/watch?v=lPHvPyuQs4M",
       "published": "2026-09-11T14:05:19+00:00",
@@ -346,15 +353,8 @@
       "url": "https://www.youtube.com/watch?v=1BjN4eIZAwU",
       "published": "2026-09-10T13:38:20+00:00",
       "thumbnail": "https://i2.ytimg.com/vi/1BjN4eIZAwU/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 09/09/2026",
-      "videoId": "lK9rF-XH_vw",
-      "url": "https://www.youtube.com/watch?v=lK9rF-XH_vw",
-      "published": "2026-09-09T16:47:02+00:00",
-      "thumbnail": "https://i1.ytimg.com/vi/lK9rF-XH_vw/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-09-11T17:30:16.724Z"
+  "updated": "2026-09-11T20:12:50.258Z"
 }

@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-09-11T14:41:46.958Z",
+  "generatedAt": "2026-09-11T17:33:36.064Z",
   "totalEvents": 1672,
   "withDescription": 757,
-  "withImage": 225,
+  "withImage": 224,
   "familyFriendly": 86,
   "eventsToday": 21,
   "sources": {
@@ -131,9 +131,9 @@
   },
   "sports": {
     "total": 732,
-    "scored": 34,
+    "scored": 35,
     "wins": 24,
-    "losses": 9,
+    "losses": 10,
     "ties": 1
   },
   "registrations": {
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-11T14:38:37.164Z"
+    "lastSyncAt": "2026-09-11T17:30:14.639Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-11T14:41:37.509Z"
+    "checkedAt": "2026-09-11T17:33:28.040Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -221,6 +221,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Girls Who Code Tabling|2026-09-15T16:30:00.000Z",
+      "firstSeenAt": "2026-09-11T17:33:36.060Z",
+      "title": "Girls Who Code Tabling",
+      "source": "MU",
+      "date": "2026-09-15T16:30:00.000Z"
+    },
+    {
       "key": "Rosh Hashanah|2026-09-11T00:00:00",
       "firstSeenAt": "2026-09-11T14:41:46.954Z",
       "title": "Rosh Hashanah",
@@ -282,14 +289,7 @@
       "title": "Worship in the Quad",
       "source": "MU",
       "date": "2026-08-24T17:30:00"
-    },
-    {
-      "key": "RUF Bible Study|2026-08-25T19:00:00",
-      "firstSeenAt": "2026-09-11T03:03:55.760Z",
-      "title": "RUF Bible Study",
-      "source": "MU",
-      "date": "2026-08-25T19:00:00"
     }
   ],
-  "addedLastRun": 7
+  "addedLastRun": 1
 }

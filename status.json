@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-09-10T14:51:55.638Z",
-  "totalEvents": 1658,
-  "withDescription": 743,
-  "withImage": 214,
-  "familyFriendly": 87,
-  "eventsToday": 22,
+  "generatedAt": "2026-09-11T13:17:08.441Z",
+  "totalEvents": 1667,
+  "withDescription": 751,
+  "withImage": 225,
+  "familyFriendly": 86,
+  "eventsToday": 20,
   "sources": {
     "muAthletics": 317,
     "muCalendar": 158,
     "artsmu": 22,
     "campsAlumni": 41,
-    "muGetInvolved": 401,
-    "pennManor": 412,
+    "muGetInvolved": 410,
+    "pennManor": 415,
     "borough": 66,
-    "vfw": 12,
+    "vfw": 11,
     "phantomPower": 12,
     "community": 22,
     "manor": 41,
@@ -39,24 +39,24 @@
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-06-13T16:00:00.000Z",
+      "earliest": "2026-08-16T00:00:00.000Z",
       "latest": "2027-04-29T11:30:00.000Z"
     },
     "pennManor": {
       "earliest": "2026-08-17T12:00:00.000Z",
-      "latest": "2027-09-09T20:00:00.000Z"
+      "latest": "2027-09-10T20:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-06-15T22:00:00.000Z",
       "latest": "2026-12-25T12:00:00.000Z"
     },
     "vfw": {
-      "earliest": "2026-08-26T22:00:00.000Z",
+      "earliest": "2026-08-29T13:00:00.000Z",
       "latest": "2026-10-22T22:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-09-11T00:00:00.000Z",
-      "latest": "2026-10-06T23:00:00.000Z"
+      "earliest": "2026-09-12T00:00:00.000Z",
+      "latest": "2026-10-11T00:00:00.000Z"
     },
     "community": {
       "earliest": "2026-06-15T13:00:00.000Z",
@@ -78,38 +78,38 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 9
+      "daysSinceMoved": 10
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 20
+      "daysSinceMoved": 21
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 34
+      "daysSinceMoved": 35
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 34
+      "daysSinceMoved": 35
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "pennManor": {
-      "newest": "2027-09-09",
+      "newest": "2027-09-10",
       "daysSinceMoved": 1
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 44
+      "daysSinceMoved": 45
     },
     "vfw": {
       "newest": "2026-10-22",
-      "daysSinceMoved": 9
+      "daysSinceMoved": 10
     },
     "phantomPower": {
-      "newest": "2026-10-06",
+      "newest": "2026-10-11",
       "daysSinceMoved": 0
     },
     "community": {
@@ -118,19 +118,19 @@
     },
     "manor": {
       "newest": "2027-09-06",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "raneyCellars": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "theBackyard": {
       "newest": "2026-10-12",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     }
   },
   "sports": {
-    "total": 729,
+    "total": 732,
     "scored": 34,
     "wins": 24,
     "losses": 9,
@@ -138,7 +138,7 @@
   },
   "registrations": {
     "open": 14,
-    "next2Weeks": 6,
+    "next2Weeks": 7,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-10T14:48:40.193Z"
+    "lastSyncAt": "2026-09-11T13:13:33.891Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-10T14:51:48.272Z"
+    "checkedAt": "2026-09-11T13:17:00.560Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -171,28 +171,28 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 258,
+        "value": 257,
         "min": 60,
         "skipped": false
       },
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 267,
+        "value": 266,
         "min": 30,
         "skipped": false
       },
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 106,
+        "value": 105,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 412,
+        "value": 415,
         "min": 150,
         "skipped": false
       },
@@ -221,75 +221,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Meet Phi Mu Delta|2026-09-10T15:00:00.000Z",
-      "firstSeenAt": "2026-09-10T14:51:55.635Z",
-      "title": "Meet Phi Mu Delta",
+      "key": "GHOTI HOOK w. VROOM|2026-10-11T00:00:00.000Z",
+      "firstSeenAt": "2026-09-11T13:17:08.439Z",
+      "title": "GHOTI HOOK w. VROOM",
+      "source": "Other",
+      "date": "2026-10-11T00:00:00.000Z"
+    },
+    {
+      "key": "Worship in the Quad|2026-08-24T17:30:00",
+      "firstSeenAt": "2026-09-11T03:03:55.760Z",
+      "title": "Worship in the Quad",
       "source": "MU",
-      "date": "2026-09-10T15:00:00.000Z"
+      "date": "2026-08-24T17:30:00"
     },
     {
-      "key": "Planning Commission|2026-09-14T23:00:00.000Z",
-      "firstSeenAt": "2026-09-10T14:51:55.635Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-09-14T23:00:00.000Z"
+      "key": "RUF Bible Study|2026-08-25T19:00:00",
+      "firstSeenAt": "2026-09-11T03:03:55.760Z",
+      "title": "RUF Bible Study",
+      "source": "MU",
+      "date": "2026-08-25T19:00:00"
     },
     {
-      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
-      "firstSeenAt": "2026-09-10T14:51:55.635Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-09-30T12:30:00.000Z"
+      "key": "AniMU Weekly Meeting|2026-10-23T22:00:00.000Z",
+      "firstSeenAt": "2026-09-11T03:03:55.760Z",
+      "title": "AniMU Weekly Meeting",
+      "source": "MU",
+      "date": "2026-10-23T22:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
-      "firstSeenAt": "2026-09-10T14:51:55.635Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-10-05T23:00:00.000Z"
+      "key": "Sunday Catholic Mass|2026-10-25T19:00:00.000Z",
+      "firstSeenAt": "2026-09-11T03:03:55.760Z",
+      "title": "Sunday Catholic Mass",
+      "source": "MU",
+      "date": "2026-10-25T19:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
-      "firstSeenAt": "2026-09-10T14:51:55.635Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-10-07T23:00:00.000Z"
+      "key": "Reformed University Fellowship Prayer Meeting|2026-10-26T21:00:00.000Z",
+      "firstSeenAt": "2026-09-11T03:03:55.760Z",
+      "title": "Reformed University Fellowship Prayer Meeting",
+      "source": "MU",
+      "date": "2026-10-26T21:00:00.000Z"
     },
     {
-      "key": "Planning Commission|2026-10-12T23:00:00.000Z",
-      "firstSeenAt": "2026-09-10T14:51:55.635Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-10-12T23:00:00.000Z"
+      "key": "Mock Trial Club Meeting|2026-10-26T21:00:00.000Z",
+      "firstSeenAt": "2026-09-11T03:03:55.760Z",
+      "title": "Mock Trial Club Meeting",
+      "source": "MU",
+      "date": "2026-10-26T21:00:00.000Z"
     },
     {
-      "key": "Moonlight Ride|2026-10-23T22:30:00.000Z",
-      "firstSeenAt": "2026-09-10T14:51:55.635Z",
-      "title": "Moonlight Ride",
-      "source": "Manor",
-      "date": "2026-10-23T22:30:00.000Z"
+      "key": "BCM Women's Bible Study|2026-10-26T23:00:00.000Z",
+      "firstSeenAt": "2026-09-11T03:03:55.760Z",
+      "title": "BCM Women's Bible Study",
+      "source": "MU",
+      "date": "2026-10-26T23:00:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2026-10-28T12:30:00.000Z",
-      "firstSeenAt": "2026-09-10T14:51:55.635Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-10-28T12:30:00.000Z"
+      "key": "BCM Men's Bible Study|2026-10-26T23:00:00.000Z",
+      "firstSeenAt": "2026-09-11T03:03:55.760Z",
+      "title": "BCM Men's Bible Study",
+      "source": "MU",
+      "date": "2026-10-26T23:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-11-05T00:00:00.000Z",
-      "firstSeenAt": "2026-09-10T14:51:55.635Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-11-05T00:00:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2026-11-06T00:00:00.000Z",
-      "firstSeenAt": "2026-09-10T14:51:55.635Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-11-06T00:00:00.000Z"
+      "key": "Club Tennis Practice|2026-10-26T23:00:00.000Z",
+      "firstSeenAt": "2026-09-11T03:03:55.760Z",
+      "title": "Club Tennis Practice",
+      "source": "MU",
+      "date": "2026-10-26T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 42
+  "addedLastRun": 1
 }

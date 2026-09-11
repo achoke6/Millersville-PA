@@ -32,18 +32,18 @@
     "id": ""
   },
   {
-    "name": "All Campus Musical Organization",
-    "category": "Performance",
-    "categories": [
-      "Performance"
-    ],
+    "name": "All Greek Council",
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
   {
-    "name": "All Greek Council",
-    "category": "",
-    "categories": [],
+    "name": "All-Campus Musical Organization",
+    "category": "Performance",
+    "categories": [
+      "Performance"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -196,20 +196,17 @@
   },
   {
     "name": "Best Buddies",
-    "category": "Service",
-    "categories": [
-      "Service",
-      "Meeting",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
   {
     "name": "Bible Campus Ministries",
-    "category": "Tabling",
+    "category": "Educational Program",
     "categories": [
-      "Tabling"
+      "Educational Program",
+      "Social"
     ],
     "shortName": "BCM",
     "id": ""
@@ -253,13 +250,12 @@
   },
   {
     "name": "Bowling Club",
-    "category": "Meeting",
+    "category": "Sports and Leisure",
     "categories": [
-      "Meeting",
-      "Sporting"
+      "Sports and Leisure"
     ],
     "shortName": "",
-    "id": ""
+    "id": "bowlingclub"
   },
   {
     "name": "Campus Life",
@@ -272,8 +268,10 @@
   },
   {
     "name": "Campus Recreation",
-    "category": "Sporting",
+    "category": "Competition",
     "categories": [
+      "Competition",
+      "Social",
       "Sporting"
     ],
     "shortName": "",
@@ -422,10 +420,9 @@
   },
   {
     "name": "College Bible Fellowship",
-    "category": "Lecture or Speaker",
+    "category": "Performance",
     "categories": [
-      "Lecture or Speaker",
-      "Meeting",
+      "Performance",
       "Social"
     ],
     "shortName": "CBF",
@@ -469,9 +466,9 @@
   },
   {
     "name": "Commuter Services",
-    "category": "Educational Program",
+    "category": "Social",
     "categories": [
-      "Educational Program"
+      "Social"
     ],
     "shortName": "",
     "id": ""
@@ -1078,7 +1075,7 @@
     "id": "mensicehockey"
   },
   {
-    "name": "Men's Rugby Club",
+    "name": "Men's Rugby Club of Millersville University",
     "category": "Meeting",
     "categories": [
       "Meeting"
@@ -1258,10 +1255,12 @@
   },
   {
     "name": "Orientation Programs",
-    "category": "",
-    "categories": [],
+    "category": "University Departments ",
+    "categories": [
+      "University Departments "
+    ],
     "shortName": "",
-    "id": ""
+    "id": "transitionprograms"
   },
   {
     "name": "Panhellenic Council",
@@ -1357,11 +1356,8 @@
   },
   {
     "name": "Reformed University Fellowship",
-    "category": "Meeting",
-    "categories": [
-      "Meeting",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "RUF",
     "id": ""
   },
@@ -1424,9 +1420,9 @@
   },
   {
     "name": "Slip n' Score Society",
-    "category": "Meeting",
+    "category": "Social",
     "categories": [
-      "Meeting"
+      "Social"
     ],
     "shortName": "",
     "id": ""
@@ -1529,10 +1525,8 @@
   },
   {
     "name": "Student Government Association",
-    "category": "Meeting",
-    "categories": [
-      "Meeting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "SGA",
     "id": ""
   },
@@ -1590,9 +1584,11 @@
   },
   {
     "name": "Tau Kappa Epsilon",
-    "category": "Competition",
+    "category": "Fundraiser",
     "categories": [
-      "Competition"
+      "Fundraiser",
+      "Meeting",
+      "Social"
     ],
     "shortName": "",
     "id": ""
@@ -1809,12 +1805,12 @@
   },
   {
     "name": "Women's Club Soccer",
-    "category": "Sports and Leisure",
+    "category": "Fundraiser",
     "categories": [
-      "Sports and Leisure"
+      "Fundraiser"
     ],
     "shortName": "Women's Club Soccer",
-    "id": "womenclubsoccer"
+    "id": ""
   },
   {
     "name": "Women's Golf",

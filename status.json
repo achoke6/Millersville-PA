@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-11T13:17:08.441Z",
-  "totalEvents": 1667,
-  "withDescription": 751,
-  "withImage": 225,
+  "generatedAt": "2026-09-11T17:33:36.064Z",
+  "totalEvents": 1672,
+  "withDescription": 757,
+  "withImage": 224,
   "familyFriendly": 86,
-  "eventsToday": 20,
+  "eventsToday": 21,
   "sources": {
     "muAthletics": 317,
-    "muCalendar": 158,
-    "artsmu": 22,
+    "muCalendar": 163,
+    "artsmu": 21,
     "campsAlumni": 41,
-    "muGetInvolved": 410,
+    "muGetInvolved": 411,
     "pennManor": 415,
     "borough": 66,
     "vfw": 11,
@@ -31,7 +31,7 @@
       "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
-      "earliest": "2026-09-13T22:00:00.000Z",
+      "earliest": "2026-10-09T00:00:00.000Z",
       "latest": "2027-05-02T18:30:00.000Z"
     },
     "campsAlumni": {
@@ -131,9 +131,9 @@
   },
   "sports": {
     "total": 732,
-    "scored": 34,
+    "scored": 35,
     "wins": 24,
-    "losses": 9,
+    "losses": 10,
     "ties": 1
   },
   "registrations": {
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-11T13:13:33.891Z"
+    "lastSyncAt": "2026-09-11T17:30:14.639Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-11T13:17:00.560Z"
+    "checkedAt": "2026-09-11T17:33:28.040Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -214,12 +214,68 @@
       {
         "key": "pmHudl.matched",
         "ok": true,
-        "matched": 16,
-        "withBroadcasts": 21
+        "matched": 17,
+        "withBroadcasts": 22
       }
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Girls Who Code Tabling|2026-09-15T16:30:00.000Z",
+      "firstSeenAt": "2026-09-11T17:33:36.060Z",
+      "title": "Girls Who Code Tabling",
+      "source": "MU",
+      "date": "2026-09-15T16:30:00.000Z"
+    },
+    {
+      "key": "Rosh Hashanah|2026-09-11T00:00:00",
+      "firstSeenAt": "2026-09-11T14:41:46.954Z",
+      "title": "Rosh Hashanah",
+      "source": "MU",
+      "date": "2026-09-11T00:00:00"
+    },
+    {
+      "key": "Rosh Hashanah|2026-09-12T00:00:00",
+      "firstSeenAt": "2026-09-11T14:41:46.954Z",
+      "title": "Rosh Hashanah",
+      "source": "MU",
+      "date": "2026-09-12T00:00:00"
+    },
+    {
+      "key": "Rosh Hashanah|2026-09-13T00:00:00",
+      "firstSeenAt": "2026-09-11T14:41:46.954Z",
+      "title": "Rosh Hashanah",
+      "source": "MU",
+      "date": "2026-09-13T00:00:00"
+    },
+    {
+      "key": "Faculty Recital of Morgann Davis|2026-09-13T18:00:00",
+      "firstSeenAt": "2026-09-11T14:41:46.954Z",
+      "title": "Faculty Recital of Morgann Davis",
+      "source": "MU",
+      "date": "2026-09-13T18:00:00"
+    },
+    {
+      "key": "Books and Banter First Meeting|2026-09-14T18:30:00",
+      "firstSeenAt": "2026-09-11T14:41:46.954Z",
+      "title": "Books and Banter First Meeting",
+      "source": "MU",
+      "date": "2026-09-14T18:30:00"
+    },
+    {
+      "key": "Horror Movies & Media Club - Introductory Meeting and Mafia|2026-09-17T17:00:00",
+      "firstSeenAt": "2026-09-11T14:41:46.954Z",
+      "title": "Horror Movies & Media Club - Introductory Meeting and Mafia",
+      "source": "MU",
+      "date": "2026-09-17T17:00:00"
+    },
+    {
+      "key": "FSL: Meet Phi Mu Delta|2026-09-24T18:00:00",
+      "firstSeenAt": "2026-09-11T14:41:46.954Z",
+      "title": "FSL: Meet Phi Mu Delta",
+      "source": "MU",
+      "date": "2026-09-24T18:00:00"
+    },
     {
       "key": "GHOTI HOOK w. VROOM|2026-10-11T00:00:00.000Z",
       "firstSeenAt": "2026-09-11T13:17:08.439Z",
@@ -233,62 +289,6 @@
       "title": "Worship in the Quad",
       "source": "MU",
       "date": "2026-08-24T17:30:00"
-    },
-    {
-      "key": "RUF Bible Study|2026-08-25T19:00:00",
-      "firstSeenAt": "2026-09-11T03:03:55.760Z",
-      "title": "RUF Bible Study",
-      "source": "MU",
-      "date": "2026-08-25T19:00:00"
-    },
-    {
-      "key": "AniMU Weekly Meeting|2026-10-23T22:00:00.000Z",
-      "firstSeenAt": "2026-09-11T03:03:55.760Z",
-      "title": "AniMU Weekly Meeting",
-      "source": "MU",
-      "date": "2026-10-23T22:00:00.000Z"
-    },
-    {
-      "key": "Sunday Catholic Mass|2026-10-25T19:00:00.000Z",
-      "firstSeenAt": "2026-09-11T03:03:55.760Z",
-      "title": "Sunday Catholic Mass",
-      "source": "MU",
-      "date": "2026-10-25T19:00:00.000Z"
-    },
-    {
-      "key": "Reformed University Fellowship Prayer Meeting|2026-10-26T21:00:00.000Z",
-      "firstSeenAt": "2026-09-11T03:03:55.760Z",
-      "title": "Reformed University Fellowship Prayer Meeting",
-      "source": "MU",
-      "date": "2026-10-26T21:00:00.000Z"
-    },
-    {
-      "key": "Mock Trial Club Meeting|2026-10-26T21:00:00.000Z",
-      "firstSeenAt": "2026-09-11T03:03:55.760Z",
-      "title": "Mock Trial Club Meeting",
-      "source": "MU",
-      "date": "2026-10-26T21:00:00.000Z"
-    },
-    {
-      "key": "BCM Women's Bible Study|2026-10-26T23:00:00.000Z",
-      "firstSeenAt": "2026-09-11T03:03:55.760Z",
-      "title": "BCM Women's Bible Study",
-      "source": "MU",
-      "date": "2026-10-26T23:00:00.000Z"
-    },
-    {
-      "key": "BCM Men's Bible Study|2026-10-26T23:00:00.000Z",
-      "firstSeenAt": "2026-09-11T03:03:55.760Z",
-      "title": "BCM Men's Bible Study",
-      "source": "MU",
-      "date": "2026-10-26T23:00:00.000Z"
-    },
-    {
-      "key": "Club Tennis Practice|2026-10-26T23:00:00.000Z",
-      "firstSeenAt": "2026-09-11T03:03:55.760Z",
-      "title": "Club Tennis Practice",
-      "source": "MU",
-      "date": "2026-10-26T23:00:00.000Z"
     }
   ],
   "addedLastRun": 1

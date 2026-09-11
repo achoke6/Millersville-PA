@@ -79,6 +79,15 @@
         ]
       }
     },
+    "sobol": {
+      "name": "Sobol",
+      "note": "MU student Monday deal · September only · in-store only, show your student ID",
+      "audience": "marauders",
+      "activeRanges": [{ "from": "2026-09-01", "to": "2026-09-30" }],
+      "recurring": {
+        "Monday": "$5 Classic Bowl — MU students w/ ID, in-person purchase only"
+      }
+    },
     "bunker-at-crossgates": {
       "name": "The Bunker at Crossgates",
       "recurring": {

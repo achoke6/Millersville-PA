@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-11T08:36:29.759Z",
+  "generatedAt": "2026-09-11T13:17:08.441Z",
   "totalEvents": 1667,
   "withDescription": 751,
   "withImage": 225,
@@ -55,8 +55,8 @@
       "latest": "2026-10-22T22:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-09-11T00:00:00.000Z",
-      "latest": "2026-10-06T23:00:00.000Z"
+      "earliest": "2026-09-12T00:00:00.000Z",
+      "latest": "2026-10-11T00:00:00.000Z"
     },
     "community": {
       "earliest": "2026-06-15T13:00:00.000Z",
@@ -109,8 +109,8 @@
       "daysSinceMoved": 10
     },
     "phantomPower": {
-      "newest": "2026-10-06",
-      "daysSinceMoved": 1
+      "newest": "2026-10-11",
+      "daysSinceMoved": 0
     },
     "community": {
       "newest": "2027-04-16",
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-11T08:33:14.625Z"
+    "lastSyncAt": "2026-09-11T13:13:33.891Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-11T08:36:22.088Z"
+    "checkedAt": "2026-09-11T13:17:00.560Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -171,7 +171,7 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 258,
+        "value": 257,
         "min": 60,
         "skipped": false
       },
@@ -220,6 +220,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "GHOTI HOOK w. VROOM|2026-10-11T00:00:00.000Z",
+      "firstSeenAt": "2026-09-11T13:17:08.439Z",
+      "title": "GHOTI HOOK w. VROOM",
+      "source": "Other",
+      "date": "2026-10-11T00:00:00.000Z"
+    },
     {
       "key": "Worship in the Quad|2026-08-24T17:30:00",
       "firstSeenAt": "2026-09-11T03:03:55.760Z",
@@ -282,14 +289,7 @@
       "title": "Club Tennis Practice",
       "source": "MU",
       "date": "2026-10-26T23:00:00.000Z"
-    },
-    {
-      "key": "Ropes Course- Open Climb|2026-10-27T20:00:00.000Z",
-      "firstSeenAt": "2026-09-11T03:03:55.760Z",
-      "title": "Ropes Course- Open Climb",
-      "source": "MU",
-      "date": "2026-10-27T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

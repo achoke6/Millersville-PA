@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-12T10:08:41.406Z",
+  "generatedAt": "2026-09-12T13:55:28.508Z",
   "totalEvents": 1639,
   "withDescription": 763,
   "withImage": 225,
@@ -55,8 +55,8 @@
       "latest": "2026-10-22T22:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-09-12T00:00:00.000Z",
-      "latest": "2026-10-14T23:00:00.000Z"
+      "earliest": "2026-09-12T23:00:00.000Z",
+      "latest": "2026-10-15T23:00:00.000Z"
     },
     "community": {
       "earliest": "2026-06-15T13:00:00.000Z",
@@ -106,7 +106,7 @@
       "daysSinceMoved": 11
     },
     "phantomPower": {
-      "newest": "2026-10-14",
+      "newest": "2026-10-15",
       "daysSinceMoved": 0
     },
     "community": {
@@ -125,9 +125,9 @@
   },
   "sports": {
     "total": 734,
-    "scored": 38,
+    "scored": 39,
     "wins": 24,
-    "losses": 13,
+    "losses": 14,
     "ties": 1
   },
   "registrations": {
@@ -143,13 +143,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-12T10:05:42.499Z"
+    "lastSyncAt": "2026-09-12T13:52:20.960Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-12T10:08:33.888Z"
+    "checkedAt": "2026-09-12T13:55:21.946Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -165,7 +165,7 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 257,
+        "value": 256,
         "min": 60,
         "skipped": false
       },
@@ -214,6 +214,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "TALLAH|2026-10-15T23:00:00.000Z",
+      "firstSeenAt": "2026-09-12T13:55:28.504Z",
+      "title": "TALLAH",
+      "source": "Other",
+      "date": "2026-10-15T23:00:00.000Z"
+    },
     {
       "key": "GENITORTURERS - Live & Lewd Tour Part Deux|2026-10-14T23:00:00.000Z",
       "firstSeenAt": "2026-09-12T05:32:57.267Z",
@@ -276,14 +283,7 @@
       "title": "Club Tennis Practice",
       "source": "MU",
       "date": "2026-10-22T23:00:00.000Z"
-    },
-    {
-      "key": "Fellowship Night|2026-10-23T00:00:00.000Z",
-      "firstSeenAt": "2026-09-12T01:01:01.813Z",
-      "title": "Fellowship Night",
-      "source": "MU",
-      "date": "2026-10-23T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

@@ -1,32 +1,6 @@
 {
   "days": [
     {
-      "date": "2026-06-14",
-      "ts": "2026-06-15T00:08:48.225Z",
-      "totalEvents": 996,
-      "sources": {
-        "muAthletics": 215,
-        "muCalendar": 149,
-        "muGetInvolved": 223,
-        "pennManor": 228,
-        "borough": 105,
-        "vfw": 3,
-        "phantomPower": 11,
-        "community": 14,
-        "muHudlBroadcasts": 0
-      },
-      "newestDates": {
-        "muAthletics": "2027-03-12",
-        "muCalendar": "2027-04-03",
-        "muGetInvolved": "2027-05-05",
-        "pennManor": "2026-10-01",
-        "borough": "2027-06-12",
-        "vfw": "2026-09-11",
-        "phantomPower": "2026-07-26",
-        "community": "2027-04-16"
-      }
-    },
-    {
       "date": "2026-06-15",
       "ts": "2026-06-15T23:45:37.179Z",
       "totalEvents": 991,
@@ -2902,7 +2876,43 @@
         "raneyCellars": "2026-09-11",
         "theBackyard": "2026-10-12"
       }
+    },
+    {
+      "date": "2026-09-12",
+      "ts": "2026-09-12T05:32:57.270Z",
+      "totalEvents": 1680,
+      "sources": {
+        "muAthletics": 319,
+        "muCalendar": 165,
+        "artsmu": 21,
+        "campsAlumni": 41,
+        "muGetInvolved": 416,
+        "pennManor": 415,
+        "borough": 66,
+        "vfw": 11,
+        "phantomPower": 12,
+        "community": 22,
+        "manor": 41,
+        "raneyCellars": 7,
+        "theBackyard": 12,
+        "muHudlBroadcasts": 61
+      },
+      "newestDates": {
+        "muAthletics": "2027-05-27",
+        "muCalendar": "2027-06-04",
+        "artsmu": "2027-05-02",
+        "campsAlumni": "2027-04-03",
+        "muGetInvolved": "2027-04-29",
+        "pennManor": "2027-09-10",
+        "borough": "2026-12-25",
+        "vfw": "2026-10-22",
+        "phantomPower": "2026-10-14",
+        "community": "2027-04-16",
+        "manor": "2027-09-06",
+        "raneyCellars": "2026-09-11",
+        "theBackyard": "2026-10-12"
+      }
     }
   ],
-  "lastUpdated": "2026-09-12T01:01:01.816Z"
+  "lastUpdated": "2026-09-12T05:32:57.270Z"
 }

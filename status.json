@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-12T01:01:01.816Z",
+  "generatedAt": "2026-09-12T05:32:57.270Z",
   "totalEvents": 1680,
   "withDescription": 763,
   "withImage": 225,
   "familyFriendly": 86,
-  "eventsToday": 24,
+  "eventsToday": 14,
   "sources": {
     "muAthletics": 319,
     "muCalendar": 165,
@@ -56,7 +56,7 @@
     },
     "phantomPower": {
       "earliest": "2026-09-12T00:00:00.000Z",
-      "latest": "2026-10-11T00:00:00.000Z"
+      "latest": "2026-10-14T23:00:00.000Z"
     },
     "community": {
       "earliest": "2026-06-15T13:00:00.000Z",
@@ -78,38 +78,38 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 11
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 21
+      "daysSinceMoved": 22
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 35
+      "daysSinceMoved": 36
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 35
+      "daysSinceMoved": 36
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 9
     },
     "pennManor": {
       "newest": "2027-09-10",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 45
+      "daysSinceMoved": 46
     },
     "vfw": {
       "newest": "2026-10-22",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 11
     },
     "phantomPower": {
-      "newest": "2026-10-11",
+      "newest": "2026-10-14",
       "daysSinceMoved": 0
     },
     "community": {
@@ -118,22 +118,22 @@
     },
     "manor": {
       "newest": "2027-09-06",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     },
     "raneyCellars": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 9
     },
     "theBackyard": {
       "newest": "2026-10-12",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     }
   },
   "sports": {
     "total": 734,
-    "scored": 37,
+    "scored": 38,
     "wins": 24,
-    "losses": 12,
+    "losses": 13,
     "ties": 1
   },
   "registrations": {
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-12T00:57:42.203Z"
+    "lastSyncAt": "2026-09-12T05:29:50.003Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-12T01:00:53.488Z"
+    "checkedAt": "2026-09-12T05:32:49.312Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -221,6 +221,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "GENITORTURERS - Live & Lewd Tour Part Deux|2026-10-14T23:00:00.000Z",
+      "firstSeenAt": "2026-09-12T05:32:57.267Z",
+      "title": "GENITORTURERS - Live & Lewd Tour Part Deux",
+      "source": "Other",
+      "date": "2026-10-14T23:00:00.000Z"
+    },
+    {
       "key": "Student Government Association (SGA) Weekly Meeting|2026-08-27T17:00:00",
       "firstSeenAt": "2026-09-12T01:01:01.813Z",
       "title": "Student Government Association (SGA) Weekly Meeting",
@@ -240,13 +247,6 @@
       "title": "YDSA Tabling",
       "source": "MU",
       "date": "2026-08-31T13:00:00"
-    },
-    {
-      "key": "SPACEHOG|2026-09-26T00:00:00.000Z",
-      "firstSeenAt": "2026-09-12T01:01:01.813Z",
-      "title": "SPACEHOG",
-      "source": "Other",
-      "date": "2026-09-26T00:00:00.000Z"
     },
     {
       "key": "Ropes Course- Open Climb|2026-10-22T20:00:00.000Z",
@@ -291,5 +291,5 @@
       "date": "2026-10-23T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 11
+  "addedLastRun": 1
 }

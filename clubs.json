@@ -617,15 +617,6 @@
     "id": ""
   },
   {
-    "name": "Dr. Rita Smith-Wade-El Intercultural Center",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
-    "shortName": "Intercultural Center",
-    "id": ""
-  },
-  {
     "name": "Early Childhood Organization",
     "category": "Service",
     "categories": [
@@ -689,6 +680,15 @@
     "category": "",
     "categories": [],
     "shortName": "",
+    "id": ""
+  },
+  {
+    "name": "Fellowship of Christian Athletes",
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
+    "shortName": "FCA",
     "id": ""
   },
   {
@@ -1161,9 +1161,9 @@
   },
   {
     "name": "Music Production Club",
-    "category": "Competition",
+    "category": "Meeting",
     "categories": [
-      "Competition"
+      "Meeting"
     ],
     "shortName": "",
     "id": ""
@@ -1470,10 +1470,8 @@
   },
   {
     "name": "South Village Residence Hall",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "South Village",
     "id": ""
   },
@@ -1504,19 +1502,22 @@
   },
   {
     "name": "Student Business Association",
-    "category": "",
-    "categories": [],
+    "category": "Meeting",
+    "categories": [
+      "Meeting",
+      "Social"
+    ],
     "shortName": "SBA",
     "id": ""
   },
   {
     "name": "Student Conduct & Community Standards",
-    "category": "Educational Program",
+    "category": "University Departments ",
     "categories": [
-      "Educational Program"
+      "University Departments "
     ],
     "shortName": "SCCS",
-    "id": ""
+    "id": "judicialaffairs"
   },
   {
     "name": "Student Giving Network",
@@ -1632,10 +1633,8 @@
   },
   {
     "name": "Technology Career Network at Millersville University",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },

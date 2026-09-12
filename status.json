@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-11T23:00:51.238Z",
+  "generatedAt": "2026-09-12T01:01:01.816Z",
   "totalEvents": 1680,
-  "withDescription": 762,
+  "withDescription": 763,
   "withImage": 225,
-  "familyFriendly": 85,
-  "eventsToday": 25,
+  "familyFriendly": 86,
+  "eventsToday": 24,
   "sources": {
     "muAthletics": 319,
     "muCalendar": 165,
     "artsmu": 21,
     "campsAlumni": 41,
-    "muGetInvolved": 415,
+    "muGetInvolved": 416,
     "pennManor": 415,
     "borough": 66,
     "vfw": 11,
@@ -56,7 +56,7 @@
     },
     "phantomPower": {
       "earliest": "2026-09-12T00:00:00.000Z",
-      "latest": "2026-10-14T23:00:00.000Z"
+      "latest": "2026-10-11T00:00:00.000Z"
     },
     "community": {
       "earliest": "2026-06-15T13:00:00.000Z",
@@ -109,7 +109,7 @@
       "daysSinceMoved": 10
     },
     "phantomPower": {
-      "newest": "2026-10-14",
+      "newest": "2026-10-11",
       "daysSinceMoved": 0
     },
     "community": {
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-11T22:57:29.298Z"
+    "lastSyncAt": "2026-09-12T00:57:42.203Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-11T23:00:42.433Z"
+    "checkedAt": "2026-09-12T01:00:53.488Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -185,7 +185,7 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 105,
+        "value": 104,
         "min": 21,
         "skipped": false
       },
@@ -221,75 +221,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Millersville University Women's Tennis at WAC Invitational|2026-09-12T00:00:00.000Z",
-      "firstSeenAt": "2026-09-11T23:00:51.234Z",
-      "title": "Millersville University Women's Tennis at WAC Invitational",
+      "key": "Student Government Association (SGA) Weekly Meeting|2026-08-27T17:00:00",
+      "firstSeenAt": "2026-09-12T01:01:01.813Z",
+      "title": "Student Government Association (SGA) Weekly Meeting",
       "source": "MU",
-      "date": "2026-09-12T00:00:00.000Z"
+      "date": "2026-08-27T17:00:00"
     },
     {
-      "key": "Millersville University Men's Tennis at WAC Invitational|2026-09-12T00:00:00.000Z",
-      "firstSeenAt": "2026-09-11T23:00:51.234Z",
-      "title": "Millersville University Men's Tennis at WAC Invitational",
+      "key": "Splash a DZ|2026-08-28T12:00:00",
+      "firstSeenAt": "2026-09-12T01:01:01.813Z",
+      "title": "Splash a DZ",
       "source": "MU",
-      "date": "2026-09-12T00:00:00.000Z"
+      "date": "2026-08-28T12:00:00"
     },
     {
-      "key": "Men's Ice Hockey VS Penn State Harrisburg|2026-09-12T20:15:00.000Z",
-      "firstSeenAt": "2026-09-11T23:00:51.234Z",
-      "title": "Men's Ice Hockey VS Penn State Harrisburg",
+      "key": "YDSA Tabling|2026-08-31T13:00:00",
+      "firstSeenAt": "2026-09-12T01:01:01.813Z",
+      "title": "YDSA Tabling",
       "source": "MU",
-      "date": "2026-09-12T20:15:00.000Z"
+      "date": "2026-08-31T13:00:00"
     },
     {
-      "key": "GENITORTURERS - Live & Lewd Tour Part Deux|2026-10-14T23:00:00.000Z",
-      "firstSeenAt": "2026-09-11T23:00:51.234Z",
-      "title": "GENITORTURERS - Live & Lewd Tour Part Deux",
+      "key": "SPACEHOG|2026-09-26T00:00:00.000Z",
+      "firstSeenAt": "2026-09-12T01:01:01.813Z",
+      "title": "SPACEHOG",
       "source": "Other",
-      "date": "2026-10-14T23:00:00.000Z"
+      "date": "2026-09-26T00:00:00.000Z"
     },
     {
-      "key": "Men's Ice Hockey @ Penn State Harrisburg|2026-09-12T00:45:00.000Z",
-      "firstSeenAt": "2026-09-11T20:29:18.830Z",
-      "title": "Men's Ice Hockey @ Penn State Harrisburg",
+      "key": "Ropes Course- Open Climb|2026-10-22T20:00:00.000Z",
+      "firstSeenAt": "2026-09-12T01:01:01.813Z",
+      "title": "Ropes Course- Open Climb",
       "source": "MU",
-      "date": "2026-09-12T00:45:00.000Z"
+      "date": "2026-10-22T20:00:00.000Z"
     },
     {
-      "key": "CHEP Trivia|2026-10-22T14:00:00",
-      "firstSeenAt": "2026-09-11T20:29:18.830Z",
+      "key": "CHEP Trivia|2026-10-22T20:00:00.000Z",
+      "firstSeenAt": "2026-09-12T01:01:01.813Z",
       "title": "CHEP Trivia",
       "source": "MU",
-      "date": "2026-10-22T14:00:00"
+      "date": "2026-10-22T20:00:00.000Z"
     },
     {
-      "key": "Creative Writers Guild general meeting|2026-09-08T22:00:00.000Z",
-      "firstSeenAt": "2026-09-11T20:15:56.788Z",
-      "title": "Creative Writers Guild general meeting",
+      "key": "SGA Weekly Meeting|2026-10-22T23:00:00.000Z",
+      "firstSeenAt": "2026-09-12T01:01:01.813Z",
+      "title": "SGA Weekly Meeting",
       "source": "MU",
-      "date": "2026-09-08T22:00:00.000Z"
+      "date": "2026-10-22T23:00:00.000Z"
     },
     {
-      "key": "Fencing Guild Practice|2026-09-11T21:00:00.000Z",
-      "firstSeenAt": "2026-09-11T20:15:56.788Z",
-      "title": "Fencing Guild Practice",
+      "key": "Letters of Love General Meeting|2026-10-22T23:00:00.000Z",
+      "firstSeenAt": "2026-09-12T01:01:01.813Z",
+      "title": "Letters of Love General Meeting",
       "source": "MU",
-      "date": "2026-09-11T21:00:00.000Z"
+      "date": "2026-10-22T23:00:00.000Z"
     },
     {
-      "key": "Ville Club Ball vs Towson Club Ball DH|2026-09-12T14:00:00.000Z",
-      "firstSeenAt": "2026-09-11T20:15:56.788Z",
-      "title": "Ville Club Ball vs Towson Club Ball DH",
+      "key": "Club Tennis Practice|2026-10-22T23:00:00.000Z",
+      "firstSeenAt": "2026-09-12T01:01:01.813Z",
+      "title": "Club Tennis Practice",
       "source": "MU",
-      "date": "2026-09-12T14:00:00.000Z"
+      "date": "2026-10-22T23:00:00.000Z"
     },
     {
-      "key": "Creative Writers Guild general meeting|2026-09-15T22:00:00.000Z",
-      "firstSeenAt": "2026-09-11T20:15:56.788Z",
-      "title": "Creative Writers Guild general meeting",
+      "key": "Fellowship Night|2026-10-23T00:00:00.000Z",
+      "firstSeenAt": "2026-09-12T01:01:01.813Z",
+      "title": "Fellowship Night",
       "source": "MU",
-      "date": "2026-09-15T22:00:00.000Z"
+      "date": "2026-10-23T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 4
+  "addedLastRun": 11
 }

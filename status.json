@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-13T13:42:26.987Z",
+  "generatedAt": "2026-09-13T17:18:12.468Z",
   "totalEvents": 1639,
-  "withDescription": 763,
+  "withDescription": 762,
   "withImage": 225,
-  "familyFriendly": 86,
+  "familyFriendly": 85,
   "eventsToday": 8,
   "sources": {
     "muAthletics": 319,
@@ -125,8 +125,8 @@
   },
   "sports": {
     "total": 734,
-    "scored": 41,
-    "wins": 25,
+    "scored": 42,
+    "wins": 26,
     "losses": 15,
     "ties": 1
   },
@@ -143,13 +143,13 @@
       "PM Community": 1
     },
     "stalePast": 10,
-    "lastSyncAt": "2026-09-13T13:39:27.140Z"
+    "lastSyncAt": "2026-09-13T17:15:15.931Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-13T13:42:18.009Z"
+    "checkedAt": "2026-09-13T17:18:03.653Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -215,6 +215,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Saturday in the Park|2026-09-12T12:00:00.000Z",
+      "firstSeenAt": "2026-09-13T17:18:12.465Z",
+      "title": "Saturday in the Park",
+      "source": "Borough",
+      "date": "2026-09-12T12:00:00.000Z"
+    },
+    {
       "key": "THE DEAD TONGUES w/ Sarah Fiore|2026-09-20T23:00:00.000Z",
       "firstSeenAt": "2026-09-13T13:42:26.984Z",
       "title": "THE DEAD TONGUES w/ Sarah Fiore",
@@ -276,14 +283,7 @@
       "title": "Student Government Association (SGA) Weekly Meeting",
       "source": "MU",
       "date": "2026-08-27T17:00:00"
-    },
-    {
-      "key": "Splash a DZ|2026-08-28T12:00:00",
-      "firstSeenAt": "2026-09-12T01:01:01.813Z",
-      "title": "Splash a DZ",
-      "source": "MU",
-      "date": "2026-08-28T12:00:00"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 1
 }

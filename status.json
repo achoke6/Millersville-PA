@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-09-13T08:59:43.530Z",
-  "totalEvents": 1638,
+  "generatedAt": "2026-09-13T13:42:26.987Z",
+  "totalEvents": 1639,
   "withDescription": 763,
-  "withImage": 224,
+  "withImage": 225,
   "familyFriendly": 86,
   "eventsToday": 8,
   "sources": {
@@ -14,7 +14,7 @@
     "pennManor": 415,
     "borough": 66,
     "vfw": 11,
-    "phantomPower": 11,
+    "phantomPower": 12,
     "community": 22,
     "manor": 0,
     "raneyCellars": 7,
@@ -56,7 +56,7 @@
     },
     "phantomPower": {
       "earliest": "2026-09-17T00:00:00.000Z",
-      "latest": "2026-10-15T23:00:00.000Z"
+      "latest": "2026-10-16T23:30:00.000Z"
     },
     "community": {
       "earliest": "2026-06-15T13:00:00.000Z",
@@ -106,8 +106,8 @@
       "daysSinceMoved": 12
     },
     "phantomPower": {
-      "newest": "2026-10-15",
-      "daysSinceMoved": 1
+      "newest": "2026-10-16",
+      "daysSinceMoved": 0
     },
     "community": {
       "newest": "2027-04-16",
@@ -143,13 +143,13 @@
       "PM Community": 1
     },
     "stalePast": 10,
-    "lastSyncAt": "2026-09-13T08:56:56.112Z"
+    "lastSyncAt": "2026-09-13T13:39:27.140Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-13T08:59:35.916Z"
+    "checkedAt": "2026-09-13T13:42:18.009Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -165,7 +165,7 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 256,
+        "value": 255,
         "min": 60,
         "skipped": false
       },
@@ -214,6 +214,20 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "THE DEAD TONGUES w/ Sarah Fiore|2026-09-20T23:00:00.000Z",
+      "firstSeenAt": "2026-09-13T13:42:26.984Z",
+      "title": "THE DEAD TONGUES w/ Sarah Fiore",
+      "source": "Other",
+      "date": "2026-09-20T23:00:00.000Z"
+    },
+    {
+      "key": "Lords Of Acid|2026-10-16T23:30:00.000Z",
+      "firstSeenAt": "2026-09-13T13:42:26.984Z",
+      "title": "Lords Of Acid",
+      "source": "Other",
+      "date": "2026-10-16T23:30:00.000Z"
+    },
     {
       "key": "Worship in the Quad|2026-08-31T17:30:00",
       "firstSeenAt": "2026-09-13T03:13:14.864Z",
@@ -269,21 +283,7 @@
       "title": "Splash a DZ",
       "source": "MU",
       "date": "2026-08-28T12:00:00"
-    },
-    {
-      "key": "YDSA Tabling|2026-08-31T13:00:00",
-      "firstSeenAt": "2026-09-12T01:01:01.813Z",
-      "title": "YDSA Tabling",
-      "source": "MU",
-      "date": "2026-08-31T13:00:00"
-    },
-    {
-      "key": "Ropes Course- Open Climb|2026-10-22T20:00:00.000Z",
-      "firstSeenAt": "2026-09-12T01:01:01.813Z",
-      "title": "Ropes Course- Open Climb",
-      "source": "MU",
-      "date": "2026-10-22T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

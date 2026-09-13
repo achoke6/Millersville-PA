@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-12T23:49:30.959Z",
-  "totalEvents": 1639,
+  "generatedAt": "2026-09-13T03:13:14.866Z",
+  "totalEvents": 1638,
   "withDescription": 763,
-  "withImage": 225,
+  "withImage": 224,
   "familyFriendly": 86,
-  "eventsToday": 14,
+  "eventsToday": 13,
   "sources": {
     "muAthletics": 319,
     "muCalendar": 165,
@@ -14,7 +14,7 @@
     "pennManor": 415,
     "borough": 66,
     "vfw": 11,
-    "phantomPower": 12,
+    "phantomPower": 11,
     "community": 22,
     "manor": 0,
     "raneyCellars": 7,
@@ -55,7 +55,7 @@
       "latest": "2026-10-22T22:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-09-12T23:00:00.000Z",
+      "earliest": "2026-09-17T00:00:00.000Z",
       "latest": "2026-10-15T23:00:00.000Z"
     },
     "community": {
@@ -143,13 +143,13 @@
       "PM Community": 1
     },
     "stalePast": 10,
-    "lastSyncAt": "2026-09-12T23:43:58.679Z"
+    "lastSyncAt": "2026-09-13T03:10:10.380Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-12T23:49:24.424Z"
+    "checkedAt": "2026-09-13T03:13:02.230Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -179,7 +179,7 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 104,
+        "value": 103,
         "min": 21,
         "skipped": false
       },
@@ -214,6 +214,34 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Worship in the Quad|2026-08-31T17:30:00",
+      "firstSeenAt": "2026-09-13T03:13:14.864Z",
+      "title": "Worship in the Quad",
+      "source": "MU",
+      "date": "2026-08-31T17:30:00"
+    },
+    {
+      "key": "AniMU Weekly Meeting|2026-10-23T22:00:00.000Z",
+      "firstSeenAt": "2026-09-13T03:13:14.864Z",
+      "title": "AniMU Weekly Meeting",
+      "source": "MU",
+      "date": "2026-10-23T22:00:00.000Z"
+    },
+    {
+      "key": "Sunday Catholic Mass|2026-10-25T19:00:00.000Z",
+      "firstSeenAt": "2026-09-13T03:13:14.864Z",
+      "title": "Sunday Catholic Mass",
+      "source": "MU",
+      "date": "2026-10-25T19:00:00.000Z"
+    },
+    {
+      "key": "Reformed University Fellowship Prayer Meeting|2026-10-26T21:00:00.000Z",
+      "firstSeenAt": "2026-09-13T03:13:14.864Z",
+      "title": "Reformed University Fellowship Prayer Meeting",
+      "source": "MU",
+      "date": "2026-10-26T21:00:00.000Z"
+    },
     {
       "key": "TALLAH|2026-10-15T23:00:00.000Z",
       "firstSeenAt": "2026-09-12T13:55:28.504Z",
@@ -255,35 +283,7 @@
       "title": "Ropes Course- Open Climb",
       "source": "MU",
       "date": "2026-10-22T20:00:00.000Z"
-    },
-    {
-      "key": "CHEP Trivia|2026-10-22T20:00:00.000Z",
-      "firstSeenAt": "2026-09-12T01:01:01.813Z",
-      "title": "CHEP Trivia",
-      "source": "MU",
-      "date": "2026-10-22T20:00:00.000Z"
-    },
-    {
-      "key": "SGA Weekly Meeting|2026-10-22T23:00:00.000Z",
-      "firstSeenAt": "2026-09-12T01:01:01.813Z",
-      "title": "SGA Weekly Meeting",
-      "source": "MU",
-      "date": "2026-10-22T23:00:00.000Z"
-    },
-    {
-      "key": "Letters of Love General Meeting|2026-10-22T23:00:00.000Z",
-      "firstSeenAt": "2026-09-12T01:01:01.813Z",
-      "title": "Letters of Love General Meeting",
-      "source": "MU",
-      "date": "2026-10-22T23:00:00.000Z"
-    },
-    {
-      "key": "Club Tennis Practice|2026-10-22T23:00:00.000Z",
-      "firstSeenAt": "2026-09-12T01:01:01.813Z",
-      "title": "Club Tennis Practice",
-      "source": "MU",
-      "date": "2026-10-22T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 4
 }

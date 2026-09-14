@@ -364,13 +364,13 @@
   },
   {
     "name": "Club Baseball",
-    "category": "Sports and Leisure",
+    "category": "Competition",
     "categories": [
-      "Sports and Leisure",
+      "Competition",
       "Sporting"
     ],
     "shortName": "Club Baseball",
-    "id": "millersvilleclubbaseball"
+    "id": ""
   },
   {
     "name": "Club Cheerleading",
@@ -617,15 +617,6 @@
     "id": ""
   },
   {
-    "name": "Dr. Rita Smith-Wade-El Intercultural Center",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
-    "shortName": "Intercultural Center",
-    "id": ""
-  },
-  {
     "name": "Early Childhood Organization",
     "category": "Service",
     "categories": [
@@ -692,9 +683,22 @@
     "id": ""
   },
   {
+    "name": "Fellowship of Christian Athletes",
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
+    "shortName": "FCA",
+    "id": ""
+  },
+  {
     "name": "Fencing Guild",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social",
+      "Sporting",
+      "Fundraiser"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -849,12 +853,10 @@
   },
   {
     "name": "Inter-Fraternity Council",
-    "category": "Fraternity & Sorority Life",
-    "categories": [
-      "Fraternity & Sorority Life"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "IFC",
-    "id": "ifc"
+    "id": ""
   },
   {
     "name": "International Association of Emergency Managers",
@@ -1034,10 +1036,9 @@
   },
   {
     "name": "Men's Club Lacrosse",
-    "category": "Competition",
+    "category": "Fundraiser",
     "categories": [
-      "Competition",
-      "Sporting"
+      "Fundraiser"
     ],
     "shortName": "",
     "id": ""
@@ -1067,18 +1068,19 @@
   },
   {
     "name": "Men's Ice Hockey (D2)",
-    "category": "Sports and Leisure",
+    "category": "Competition",
     "categories": [
-      "Sports and Leisure"
+      "Competition",
+      "Sporting"
     ],
-    "shortName": "MIH",
-    "id": "mensicehockey"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Men's Rugby Club of Millersville University",
-    "category": "Meeting",
+    "category": "Fundraiser",
     "categories": [
-      "Meeting"
+      "Fundraiser"
     ],
     "shortName": "Men's Rugby Club",
     "id": ""
@@ -1159,9 +1161,9 @@
   },
   {
     "name": "Music Production Club",
-    "category": "Competition",
+    "category": "Meeting",
     "categories": [
-      "Competition"
+      "Meeting"
     ],
     "shortName": "",
     "id": ""
@@ -1390,8 +1392,11 @@
   },
   {
     "name": "Running Club",
-    "category": "",
-    "categories": [],
+    "category": "Meeting",
+    "categories": [
+      "Meeting",
+      "Social"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1468,10 +1473,8 @@
   },
   {
     "name": "South Village Residence Hall",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "South Village",
     "id": ""
   },
@@ -1502,19 +1505,22 @@
   },
   {
     "name": "Student Business Association",
-    "category": "",
-    "categories": [],
+    "category": "Meeting",
+    "categories": [
+      "Meeting",
+      "Social"
+    ],
     "shortName": "SBA",
     "id": ""
   },
   {
     "name": "Student Conduct & Community Standards",
-    "category": "Educational Program",
+    "category": "University Departments ",
     "categories": [
-      "Educational Program"
+      "University Departments "
     ],
     "shortName": "SCCS",
-    "id": ""
+    "id": "judicialaffairs"
   },
   {
     "name": "Student Giving Network",
@@ -1630,10 +1636,8 @@
   },
   {
     "name": "Technology Career Network at Millersville University",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1805,9 +1809,9 @@
   },
   {
     "name": "Women's Club Soccer",
-    "category": "Fundraiser",
+    "category": "Competition",
     "categories": [
-      "Fundraiser"
+      "Competition"
     ],
     "shortName": "Women's Club Soccer",
     "id": ""

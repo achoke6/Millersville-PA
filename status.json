@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-14T11:50:59.981Z",
-  "totalEvents": 1638,
+  "generatedAt": "2026-09-14T15:39:50.856Z",
+  "totalEvents": 1636,
   "withDescription": 761,
   "withImage": 226,
   "familyFriendly": 84,
@@ -13,7 +13,7 @@
     "muGetInvolved": 416,
     "pennManor": 416,
     "borough": 65,
-    "vfw": 11,
+    "vfw": 9,
     "phantomPower": 12,
     "community": 21,
     "manor": 0,
@@ -51,7 +51,7 @@
       "latest": "2026-12-25T12:00:00.000Z"
     },
     "vfw": {
-      "earliest": "2026-08-29T13:00:00.000Z",
+      "earliest": "2026-09-02T23:00:00.000Z",
       "latest": "2026-10-22T22:00:00.000Z"
     },
     "phantomPower": {
@@ -143,13 +143,13 @@
       "PM Community": 1
     },
     "stalePast": 10,
-    "lastSyncAt": "2026-09-14T11:48:01.267Z"
+    "lastSyncAt": "2026-09-14T15:36:47.752Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-14T11:50:53.332Z"
+    "checkedAt": "2026-09-14T15:39:43.905Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -165,7 +165,7 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 255,
+        "value": 254,
         "min": 60,
         "skipped": false
       },
@@ -215,6 +215,41 @@
   },
   "recentlyAdded": [
     {
+      "key": "Girls JV Volleyball @ Hempfield High School|2026-09-15T22:30:00.000Z",
+      "firstSeenAt": "2026-09-14T15:39:50.853Z",
+      "title": "Girls JV Volleyball @ Hempfield High School",
+      "source": "PM",
+      "date": "2026-09-15T22:30:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Volleyball @ Hempfield High School|2026-09-15T23:30:00.000Z",
+      "firstSeenAt": "2026-09-14T15:39:50.853Z",
+      "title": "Girls Varsity Volleyball @ Hempfield High School",
+      "source": "PM",
+      "date": "2026-09-15T23:30:00.000Z"
+    },
+    {
+      "key": "Intramural Flag Football|2026-09-22T03:59:00.000Z",
+      "firstSeenAt": "2026-09-14T15:39:50.853Z",
+      "title": "Intramural Flag Football",
+      "source": "Other",
+      "date": "2026-09-22T03:59:00.000Z"
+    },
+    {
+      "key": "Girls JV Soccer vs Wilson High School (West Lawn)|2026-09-26T14:00:00.000Z",
+      "firstSeenAt": "2026-09-14T15:39:50.853Z",
+      "title": "Girls JV Soccer vs Wilson High School (West Lawn)",
+      "source": "PM",
+      "date": "2026-09-26T14:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Field Hockey vs Molloy|2026-09-26T17:00:00.000Z",
+      "firstSeenAt": "2026-09-14T15:39:50.853Z",
+      "title": "Millersville University Field Hockey vs Molloy",
+      "source": "MU",
+      "date": "2026-09-26T17:00:00.000Z"
+    },
+    {
       "key": "Mock Trial Club Meeting|2026-10-26T21:00:00.000Z",
       "firstSeenAt": "2026-09-14T00:46:09.867Z",
       "title": "Mock Trial Club Meeting",
@@ -248,42 +283,7 @@
       "title": "Girls Varsity Tennis @ Hempfield High School",
       "source": "PM",
       "date": "2027-09-13T20:00:00.000Z"
-    },
-    {
-      "key": "Saturday in the Park|2026-09-12T12:00:00.000Z",
-      "firstSeenAt": "2026-09-13T17:18:12.465Z",
-      "title": "Saturday in the Park",
-      "source": "Borough",
-      "date": "2026-09-12T12:00:00.000Z"
-    },
-    {
-      "key": "THE DEAD TONGUES w/ Sarah Fiore|2026-09-20T23:00:00.000Z",
-      "firstSeenAt": "2026-09-13T13:42:26.984Z",
-      "title": "THE DEAD TONGUES w/ Sarah Fiore",
-      "source": "Other",
-      "date": "2026-09-20T23:00:00.000Z"
-    },
-    {
-      "key": "Lords Of Acid|2026-10-16T23:30:00.000Z",
-      "firstSeenAt": "2026-09-13T13:42:26.984Z",
-      "title": "Lords Of Acid",
-      "source": "Other",
-      "date": "2026-10-16T23:30:00.000Z"
-    },
-    {
-      "key": "Worship in the Quad|2026-08-31T17:30:00",
-      "firstSeenAt": "2026-09-13T03:13:14.864Z",
-      "title": "Worship in the Quad",
-      "source": "MU",
-      "date": "2026-08-31T17:30:00"
-    },
-    {
-      "key": "AniMU Weekly Meeting|2026-10-23T22:00:00.000Z",
-      "firstSeenAt": "2026-09-13T03:13:14.864Z",
-      "title": "AniMU Weekly Meeting",
-      "source": "MU",
-      "date": "2026-10-23T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 5
 }

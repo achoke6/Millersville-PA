@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-14T00:46:09.870Z",
+  "generatedAt": "2026-09-14T05:51:01.191Z",
   "totalEvents": 1638,
   "withDescription": 761,
   "withImage": 226,
   "familyFriendly": 84,
-  "eventsToday": 8,
+  "eventsToday": 26,
   "sources": {
     "muAthletics": 319,
     "muCalendar": 165,
@@ -75,39 +75,39 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 12
+      "daysSinceMoved": 13
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 23
+      "daysSinceMoved": 24
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 37
+      "daysSinceMoved": 38
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 37
+      "daysSinceMoved": 38
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 11
     },
     "pennManor": {
       "newest": "2027-09-13",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 47
+      "daysSinceMoved": 48
     },
     "vfw": {
       "newest": "2026-10-22",
-      "daysSinceMoved": 12
+      "daysSinceMoved": 13
     },
     "phantomPower": {
       "newest": "2026-10-16",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "community": {
       "newest": "2027-04-16",
@@ -116,18 +116,18 @@
     "manor": null,
     "raneyCellars": {
       "newest": "2026-09-11",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 11
     },
     "theBackyard": {
       "newest": "2026-10-12",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     }
   },
   "sports": {
     "total": 735,
-    "scored": 43,
+    "scored": 44,
     "wins": 26,
-    "losses": 16,
+    "losses": 17,
     "ties": 1
   },
   "registrations": {
@@ -143,13 +143,13 @@
       "PM Community": 1
     },
     "stalePast": 10,
-    "lastSyncAt": "2026-09-14T00:42:52.321Z"
+    "lastSyncAt": "2026-09-14T05:46:58.212Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-14T00:45:59.524Z"
+    "checkedAt": "2026-09-14T05:50:48.994Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -285,5 +285,5 @@
       "date": "2026-10-23T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 5
+  "addedLastRun": 0
 }

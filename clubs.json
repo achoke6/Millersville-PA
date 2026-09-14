@@ -696,7 +696,8 @@
     "category": "Social",
     "categories": [
       "Social",
-      "Sporting"
+      "Sporting",
+      "Fundraiser"
     ],
     "shortName": "",
     "id": ""
@@ -1035,10 +1036,9 @@
   },
   {
     "name": "Men's Club Lacrosse",
-    "category": "Competition",
+    "category": "Fundraiser",
     "categories": [
-      "Competition",
-      "Sporting"
+      "Fundraiser"
     ],
     "shortName": "",
     "id": ""
@@ -1078,9 +1078,9 @@
   },
   {
     "name": "Men's Rugby Club of Millersville University",
-    "category": "Meeting",
+    "category": "Fundraiser",
     "categories": [
-      "Meeting"
+      "Fundraiser"
     ],
     "shortName": "Men's Rugby Club",
     "id": ""
@@ -1809,9 +1809,9 @@
   },
   {
     "name": "Women's Club Soccer",
-    "category": "Fundraiser",
+    "category": "Competition",
     "categories": [
-      "Fundraiser"
+      "Competition"
     ],
     "shortName": "Women's Club Soccer",
     "id": ""

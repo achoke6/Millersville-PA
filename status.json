@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-09-14T21:31:58.279Z",
-  "totalEvents": 1682,
-  "withDescription": 764,
-  "withImage": 224,
+  "generatedAt": "2026-09-15T00:19:16.657Z",
+  "totalEvents": 1645,
+  "withDescription": 766,
+  "withImage": 225,
   "familyFriendly": 84,
-  "eventsToday": 26,
+  "eventsToday": 25,
   "sources": {
     "muAthletics": 319,
     "muCalendar": 165,
     "artsmu": 21,
     "campsAlumni": 40,
-    "muGetInvolved": 420,
-    "pennManor": 418,
+    "muGetInvolved": 422,
+    "pennManor": 420,
     "borough": 65,
     "vfw": 9,
     "phantomPower": 12,
     "community": 21,
-    "manor": 41,
+    "manor": 0,
     "raneyCellars": 7,
     "theBackyard": 12,
     "muHudlBroadcasts": 61
@@ -44,7 +44,7 @@
     },
     "pennManor": {
       "earliest": "2026-08-17T12:00:00.000Z",
-      "latest": "2027-09-13T20:00:00.000Z"
+      "latest": "2027-09-14T21:30:00.000Z"
     },
     "borough": {
       "earliest": "2026-06-22T22:00:00.000Z",
@@ -62,10 +62,7 @@
       "earliest": "2026-06-22T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-09-14T23:00:00.000Z",
-      "latest": "2027-09-06T23:00:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-08-15T22:00:00.000Z",
       "latest": "2026-09-11T20:00:00.000Z"
@@ -97,8 +94,8 @@
       "daysSinceMoved": 11
     },
     "pennManor": {
-      "newest": "2027-09-13",
-      "daysSinceMoved": 1
+      "newest": "2027-09-14",
+      "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2026-12-25",
@@ -116,10 +113,7 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 89
     },
-    "manor": {
-      "newest": "2027-09-06",
-      "daysSinceMoved": 8
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-09-11",
       "daysSinceMoved": 11
@@ -130,7 +124,7 @@
     }
   },
   "sports": {
-    "total": 737,
+    "total": 739,
     "scored": 44,
     "wins": 26,
     "losses": 17,
@@ -149,13 +143,13 @@
       "PM Community": 1
     },
     "stalePast": 10,
-    "lastSyncAt": "2026-09-14T21:28:44.745Z"
+    "lastSyncAt": "2026-09-15T00:16:26.502Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-14T21:31:50.147Z"
+    "checkedAt": "2026-09-15T00:19:09.253Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -164,7 +158,7 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 364,
+        "value": 365,
         "min": 45,
         "skipped": false
       },
@@ -185,14 +179,14 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 102,
+        "value": 101,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 418,
+        "value": 420,
         "min": 150,
         "skipped": false
       },
@@ -221,75 +215,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Introductory Meeting and Mafia|2026-09-17T21:00:00.000Z",
-      "firstSeenAt": "2026-09-14T21:31:58.260Z",
-      "title": "Introductory Meeting and Mafia",
+      "key": "YDSA Kick-Off Meeting|2026-08-31T18:00:00",
+      "firstSeenAt": "2026-09-15T00:19:16.652Z",
+      "title": "YDSA Kick-Off Meeting",
       "source": "MU",
-      "date": "2026-09-17T21:00:00.000Z"
+      "date": "2026-08-31T18:00:00"
     },
     {
-      "key": "ADAPT general meeting|2026-09-17T21:30:00.000Z",
-      "firstSeenAt": "2026-09-14T21:31:58.260Z",
-      "title": "ADAPT general meeting",
+      "key": "RUF Bible Study|2026-09-01T19:00:00",
+      "firstSeenAt": "2026-09-15T00:19:16.652Z",
+      "title": "RUF Bible Study",
       "source": "MU",
-      "date": "2026-09-17T21:30:00.000Z"
+      "date": "2026-09-01T19:00:00"
     },
     {
-      "key": "Pre-Health Club First General Meeting|2026-09-17T23:00:00.000Z",
-      "firstSeenAt": "2026-09-14T21:31:58.260Z",
-      "title": "Pre-Health Club First General Meeting",
+      "key": "Mental Health Matters: Screening and Fair|2026-09-02T11:00:00",
+      "firstSeenAt": "2026-09-15T00:19:16.652Z",
+      "title": "Mental Health Matters: Screening and Fair",
       "source": "MU",
-      "date": "2026-09-17T23:00:00.000Z"
+      "date": "2026-09-02T11:00:00"
     },
     {
-      "key": "JDogs Community Service|2026-09-18T01:30:00.000Z",
-      "firstSeenAt": "2026-09-14T21:31:58.260Z",
-      "title": "JDogs Community Service",
+      "key": "Pens vs. Flyers|2026-09-30T23:00:00.000Z",
+      "firstSeenAt": "2026-09-15T00:19:16.652Z",
+      "title": "Pens vs. Flyers",
       "source": "MU",
-      "date": "2026-09-18T01:30:00.000Z"
+      "date": "2026-09-30T23:00:00.000Z"
     },
     {
-      "key": "ADAPT general meeting|2026-10-01T21:30:00.000Z",
-      "firstSeenAt": "2026-09-14T21:31:58.260Z",
-      "title": "ADAPT general meeting",
+      "key": "Sunday Catholic Mass|2026-10-25T19:00:00.000Z",
+      "firstSeenAt": "2026-09-15T00:19:16.652Z",
+      "title": "Sunday Catholic Mass",
       "source": "MU",
-      "date": "2026-10-01T21:30:00.000Z"
+      "date": "2026-10-25T19:00:00.000Z"
     },
     {
-      "key": "Fall Break - Begins after last class|2026-10-09T19:00:00",
-      "firstSeenAt": "2026-09-14T21:31:58.260Z",
-      "title": "Fall Break - Begins after last class",
+      "key": "Reformed University Fellowship Prayer Meeting|2026-10-26T21:00:00.000Z",
+      "firstSeenAt": "2026-09-15T00:19:16.652Z",
+      "title": "Reformed University Fellowship Prayer Meeting",
       "source": "MU",
-      "date": "2026-10-09T19:00:00"
+      "date": "2026-10-26T21:00:00.000Z"
     },
     {
-      "key": "Fall Break|2026-10-10T00:00:00",
-      "firstSeenAt": "2026-09-14T21:31:58.260Z",
-      "title": "Fall Break",
+      "key": "Mock Trial Club Meeting|2026-10-26T21:00:00.000Z",
+      "firstSeenAt": "2026-09-15T00:19:16.652Z",
+      "title": "Mock Trial Club Meeting",
       "source": "MU",
-      "date": "2026-10-10T00:00:00"
+      "date": "2026-10-26T21:00:00.000Z"
     },
     {
-      "key": "Fall Break|2026-10-11T00:00:00",
-      "firstSeenAt": "2026-09-14T21:31:58.260Z",
-      "title": "Fall Break",
+      "key": "BCM Women's Bible Study|2026-10-26T23:00:00.000Z",
+      "firstSeenAt": "2026-09-15T00:19:16.652Z",
+      "title": "BCM Women's Bible Study",
       "source": "MU",
-      "date": "2026-10-11T00:00:00"
+      "date": "2026-10-26T23:00:00.000Z"
     },
     {
-      "key": "Fall Break|2026-10-12T00:00:00",
-      "firstSeenAt": "2026-09-14T21:31:58.260Z",
-      "title": "Fall Break",
+      "key": "BCM Men's Bible Study|2026-10-26T23:00:00.000Z",
+      "firstSeenAt": "2026-09-15T00:19:16.652Z",
+      "title": "BCM Men's Bible Study",
       "source": "MU",
-      "date": "2026-10-12T00:00:00"
+      "date": "2026-10-26T23:00:00.000Z"
     },
     {
-      "key": "Fall Break|2026-10-13T00:00:00",
-      "firstSeenAt": "2026-09-14T21:31:58.260Z",
-      "title": "Fall Break",
+      "key": "Club Tennis Practice|2026-10-26T23:00:00.000Z",
+      "firstSeenAt": "2026-09-15T00:19:16.652Z",
+      "title": "Club Tennis Practice",
       "source": "MU",
-      "date": "2026-10-13T00:00:00"
+      "date": "2026-10-26T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 13
+  "addedLastRun": 16
 }

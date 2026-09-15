@@ -1040,13 +1040,6 @@
     "id": ""
   },
   {
-    "name": "Men's Club Soccer",
-    "category": "",
-    "categories": [],
-    "shortName": "Men's Club Soccer",
-    "id": ""
-  },
-  {
     "name": "Men's Club Volleyball",
     "category": "Sports and Leisure",
     "categories": [
@@ -1110,6 +1103,15 @@
       "Movie or Film"
     ],
     "shortName": "MCW",
+    "id": ""
+  },
+  {
+    "name": "Millersville Men's Club Soccer",
+    "category": "Competition",
+    "categories": [
+      "Competition"
+    ],
+    "shortName": "Men's Club Soccer",
     "id": ""
   },
   {
@@ -1188,10 +1190,12 @@
   },
   {
     "name": "National Science Teachers Association MU",
-    "category": "",
-    "categories": [],
-    "shortName": "",
-    "id": ""
+    "category": "Academic",
+    "categories": [
+      "Academic"
+    ],
+    "shortName": "NSTA MU",
+    "id": "nsta-mu"
   },
   {
     "name": "National Society of Black Engineers",

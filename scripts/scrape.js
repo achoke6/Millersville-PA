@@ -4214,6 +4214,15 @@ async function runScraper() {
                     registrationDeadline: reg.deadline,
                     ...(reg.opens ? { registrationOpens: reg.opens } : {}),
                     ...(reg.audience ? { audience: reg.audience } : {}),
+                    // Provenance stamp (2026-09-16): these rows come from the
+                    // candidates sheet's Source=Youth Sports lane and are
+                    // otherwise indistinguishable client-side from any other
+                    // townie registration (tags ['Other'], no source field).
+                    // app.js renderSportsCamps keys on this boolean to list
+                    // youth-league signups on the Sports page. A FIELD, not a
+                    // tag — feed matching (eventMatch.js / events.ics.php)
+                    // never sees it, so no Hard Rule 7 exposure.
+                    youthSports: true,
                     kidFriendly: true,
                     description: [
                         reg.season ? `${reg.season} season.` : '',

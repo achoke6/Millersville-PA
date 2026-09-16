@@ -1370,13 +1370,169 @@ function isTicketPackage(e) {
 // Specials peeks above the fold and invites a scroll; this reveals them on tap.
 // Display flip + label swap, mirroring the clubs-browser toggle.
 window.toggleSignupsMore = function(btn) {
-    const more = document.getElementById('home-signups-more');
+    // Target comes from aria-controls so the same toggle serves the home box
+    // (#home-signups-more) and the Sports page block (#sp-signups-more).
+    const more = btn && document.getElementById(btn.getAttribute('aria-controls') || 'home-signups-more');
     if (!more || !btn) return;
     const expand = more.style.display === 'none';
     more.style.display = expand ? 'block' : 'none';
     btn.setAttribute('aria-expanded', expand ? 'true' : 'false');
     btn.textContent = expand ? '▴ Show less' : (btn.dataset.moreLabel || 'Show more');
 };
+
+// ===== SHARED SIGNUP ROW BUILDERS (2026-09-16) =====
+// One set of row renderers + timing helpers for BOTH signup surfaces: the
+// homepage "📝 Upcoming Signups" box (renderHomeUI) and the Sports page's
+// "⚾ Sports Signups & Tickets" block (renderSportsCamps). Extracted from
+// renderHomeUI verbatim so the two surfaces can never drift on label math
+// (Opens vs. by-date, 30-day countdown gate, urgent styling, 🎟 prefix,
+// "Opens X / closes TBA"). Rows use the existing .home-signup-* classes —
+// no style.css touch (Hard Rule 2).
+//
+// How close a DEADLINE must be before a row shows countdown pressure
+// ("N days left" + urgency styling). Farther out, the row reads "Open Now"
+// (invitational, no urgency yet). This does NOT gate visibility — the sheet's
+// Opens date / deadline do (2026-08-11 visibility model).
+const SIGNUP_LEAD_MS = 30 * 24 * 60 * 60 * 1000;
+// How far ahead of its OPEN date we start showing a not-yet-open signup,
+// as an "Opens <date>" heads-up (no countdown). ~1 week of "mark your
+// calendar" lead before registration actually opens.
+const OPEN_LEAD_MS = 7 * 24 * 60 * 60 * 1000;
+// How far ahead of a program's START date the HOME box surfaces its (open)
+// signup. Programs (camps, Arts Smarts) carry no deadline, so we anchor on
+// the start and show them within this window. 60d gives seasonal summer
+// camps real lead time. The Sports page block is deliberately UN-windowed
+// (all upcoming athletic camps) — it's the fuller list.
+const PROGRAM_LEAD_MS = 60 * 24 * 60 * 60 * 1000;
+
+// Attach parsed deadline / opens timestamps to a deadline-based signup event.
+// _dl = deadline ms; _op = registrationOpens ms or null when absent/unparseable.
+function signupTiming(e) {
+    const _dl = new Date(e.registrationDeadline).getTime();
+    const _opRaw = e.registrationOpens ? new Date(e.registrationOpens).getTime() : NaN;
+    return { ...e, _dl, _op: isNaN(_opRaw) ? null : _opRaw };
+}
+// Visibility model (2026-08-11): the sheet's Opens date controls when a
+// signup appears; the deadline controls when it expires. An open-now signup
+// shows for its whole run; a not-yet-open one shows inside OPEN_LEAD_MS.
+function signupVisibleNow(e, nowMs) {
+    if (isNaN(e._dl) || e._dl < nowMs) return false;            // invalid or closed
+    const notYetOpen = e._op !== null && e._op > nowMs;
+    return notYetOpen ? (e._op - nowMs) <= OPEN_LEAD_MS : true;
+}
+// Order by the most relevant upcoming moment: a not-yet-open signup by when
+// it opens, an open one by when it closes.
+function signupSortKey(e, nowMs) {
+    return (e._op !== null && e._op > nowMs) ? e._op : e._dl;
+}
+
+// Deadline-based row (events carrying registrationDeadline; e = signupTiming(event)).
+// Not-yet-open signups show an "Opens <date>" heads-up counting up to the open
+// date (no urgency styling — nothing's closing). Open signups keep the deadline
+// + closing countdown. Opens the event detail modal (its "Register Now" /
+// "🎟 Buy Tickets" button is the path to the signup page).
+function signupDeadlineRow(e, nowMs) {
+    const notYetOpen = e._op !== null && e._op > nowMs;
+    let byLabel, daysText, urgency = '';
+    if (notYetOpen) {
+        const opLabel = new Date(e._op).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        const daysToOpen = Math.ceil((e._op - nowMs) / (24 * 60 * 60 * 1000));
+        byLabel = `Opens ${opLabel}`;
+        daysText = daysToOpen <= 0 ? 'opens today' : daysToOpen === 1 ? 'opens tomorrow' : `in ${daysToOpen} days`;
+    } else {
+        const dlDate = new Date(e._dl);
+        const sameYear = dlDate.getFullYear() === new Date(nowMs).getFullYear();
+        const dlLabel = dlDate.toLocaleDateString('en-US', sameYear ? { month: 'short', day: 'numeric' } : { month: 'short', day: 'numeric', year: 'numeric' });
+        const daysLeft = Math.ceil((e._dl - nowMs) / (24 * 60 * 60 * 1000));
+        // Countdown pressure only inside SIGNUP_LEAD_MS — a far deadline reads
+        // "Open Now", flipping to the countdown inside the last 30 days.
+        const closingSoon = (e._dl - nowMs) <= SIGNUP_LEAD_MS;
+        urgency = closingSoon && daysLeft <= 3 ? ' home-signup-urgent' : '';
+        byLabel = `by ${dlLabel}`;
+        daysText = !closingSoon ? 'Open Now' : daysLeft <= 0 ? 'closes today' : daysLeft === 1 ? '1 day left' : `${daysLeft} days left`;
+    }
+    // The scraper no longer prefixes youth titles with "Register by <date>: ",
+    // but keep this strip as a defensive no-op for any older cached event.
+    const cleanTitle = (e.title || '').replace(/^Register by [^:]+:\s*/i, '');
+    const sub = e.location && !cleanTitle.toLowerCase().includes(e.location.toLowerCase())
+        ? e.location : '';
+    const signupKey = getEventKey(e);
+    // Ticket packages get a 🎟 marker so the row reads as a purchase, not a
+    // registration (2026-08-06); the popup's CTA is the matching "🎟 Buy Tickets".
+    const rowIcon = isTicketPackage(e) ? '🎟 ' : '';
+    return `<a href="#" class="home-signup-item${urgency}" onclick="event.preventDefault();window.openEventDetails(${JSON.stringify(signupKey).replace(/"/g, '&quot;')})">
+        <div class="home-signup-main">
+            <span class="home-signup-org">${rowIcon}${escHtml(cleanTitle)}</span>
+            ${sub ? `<span class="home-signup-sub">${escHtml(sub)}</span>` : ''}
+        </div>
+        <div class="home-signup-deadline">
+            <span class="home-signup-by">${byLabel}</span>
+            ${daysText ? `<span class="home-signup-days">${daysText}</span>` : ''}
+        </div>
+    </a>`;
+}
+
+// Open-ended row (allSignups entry flagged closesTBA): no calendar event exists
+// to open a modal for, so it links straight to the registration page. Honors
+// an Opens date — "Opens <date> / closes TBA" before it, "Open now" after.
+function signupTbaRow(r, nowMs) {
+    const titleText = (r.title && r.title.trim()) ? r.title.trim() : (r.org || 'Registration');
+    const sub = r.org && !titleText.toLowerCase().includes(r.org.toLowerCase()) ? r.org : '';
+    const opMs = r.opens ? new Date(r.opens).getTime() : NaN;
+    const tbaByLabel = (!isNaN(opMs) && opMs > nowMs)
+        ? `Opens ${new Date(opMs).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`
+        : 'Open now';
+    return `<a href="${escHtml(r.registerLink)}" target="_blank" rel="noopener" class="home-signup-item">
+        <div class="home-signup-main">
+            <span class="home-signup-org">${escHtml(titleText)}</span>
+            ${sub ? `<span class="home-signup-sub">${escHtml(sub)}</span>` : ''}
+        </div>
+        <div class="home-signup-deadline">
+            <span class="home-signup-by">${tbaByLabel}</span>
+            <span class="home-signup-days">closes TBA</span>
+        </div>
+    </a>`;
+}
+
+// Program row (camps / Arts Smarts; e carries _start ms): dated by START.
+// Real program events open the same popup card as the timeline (its CTA is
+// "Register Now"). The synthetic Tech-Camps rollup (e._synthetic) has no
+// backing event, so it links straight to the catalog.
+function signupProgramRow(e, nowMs) {
+    const startLabel = new Date(e._start).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    const daysToStart = Math.ceil((e._start - nowMs) / (24 * 60 * 60 * 1000));
+    const startsText = daysToStart <= 0 ? 'starts today' : daysToStart === 1 ? 'starts tomorrow' : `starts in ${daysToStart} days`;
+    const cleanTitle = (e.title || '');
+    const sub = e.location && !cleanTitle.toLowerCase().includes(e.location.toLowerCase()) ? e.location : '';
+    const url = getRegisterUrl(e);
+    const openTag = e._synthetic
+        ? `<a href="${escHtml(url)}" target="_blank" rel="noopener" class="home-signup-item">`
+        : `<a href="#" class="home-signup-item" onclick="event.preventDefault();window.openEventDetails(${JSON.stringify(getEventKey(e)).replace(/"/g, '&quot;')})">`;
+    return `${openTag}
+        <div class="home-signup-main">
+            <span class="home-signup-org">${escHtml(cleanTitle)}</span>
+            ${sub ? `<span class="home-signup-sub">${escHtml(sub)}</span>` : ''}
+        </div>
+        <div class="home-signup-deadline">
+            <span class="home-signup-by">Starts ${startLabel}</span>
+            <span class="home-signup-days">${startsText}</span>
+        </div>
+    </a>`;
+}
+
+// Render rows into a container with a "▾ Show N more" collapse past
+// collapsedCount. moreId must be unique per surface (aria-controls target
+// of the toggle). Toggle semantics live in window.toggleSignupsMore.
+function renderSignupRows(container, rows, collapsedCount, moreId) {
+    if (!container) return;
+    if (rows.length <= collapsedCount) { container.innerHTML = rows.join(''); return; }
+    const moreCount = rows.length - collapsedCount;
+    const moreLabel = `▾ Show ${moreCount} more`;
+    container.innerHTML =
+        rows.slice(0, collapsedCount).join('')
+        + `<div id="${moreId}" style="display:none;">${rows.slice(collapsedCount).join('')}</div>`
+        + `<button type="button" class="btn btn-sm btn-outline" aria-expanded="false" aria-controls="${moreId}" data-more-label="${moreLabel}" style="width:100%;margin-top:8px;font-size:0.8rem;" onclick="window.toggleSignupsMore(this)">${moreLabel}</button>`;
+}
 
 
 function newsMatchesFeed(n) {
@@ -4392,18 +4548,28 @@ window.clearSportsFilters=function(){
 };
 
 // ── Sports-page camps block (townie-only) ───────────────────────
-// The Sports page goes quiet in summer (MU/PM seasons are over) — but that's
-// exactly when youth sports camps run, so for LOCAL viewers we surface the
-// athletic camps here as a standalone section at the top of the page (above the date/filter bar). Deliberately
-// decoupled from the game render: it lives in its own container
-// (#sp-camps-section, created once and inserted before the sticky date/filter bar),
-// does NOT participate in the All/PM/MU + sport-type filters, the favorites
-// filter, or the "Load more games (N)" count, and self-hides whenever there are
-// no upcoming camps (so it simply vanishes in-season). Sports camps are the
-// Athletic-Camp subset of program signups (isProgramSignup) PLUS hand-entered
-// ticket packages (isTicketPackage — e.g. MU Football season tickets) — tech
-// camps and Arts Smarts stay on the home Upcoming Signups box only. Marauders/unset
-// viewers never see it (college kids aren't the audience for youth camps).
+// Sports page signups block — "⚾ Sports Signups & Tickets" (townie-only).
+// Rewritten 2026-09-16 from a full-card grid (which read as a wall of MU camp
+// ads before locals ever reached the schedule) to a COMPACT LIST: the same
+// .home-signup-item rows as the homepage Upcoming Signups box, collapsed to
+// SPORTS_SIGNUPS_COLLAPSED_COUNT with a "▾ Show N more" toggle. Pool (all
+// townie-facing; the section self-hides for Marauder/unset viewers):
+//   (1) youth-league registrations — deadline-dated events stamped
+//       youthSports:true by scrape.js §6c (candidates sheet Source=Youth
+//       Sports; NEW to this block), plus hand-entered ticket packages
+//       (isTicketPackage). Same visibility/sort model as the home box
+//       (signupTiming / signupVisibleNow / signupSortKey).
+//   (2) athletic camps — the Athletic-Camp subset of program signups
+//       (isProgramSignup), dated by START. Deliberately UN-windowed (all
+//       upcoming; the home box caps at PROGRAM_LEAD_MS) — this is the fuller list.
+//   (3) open-ended youth registrations (allSignups rows flagged closesTBA) —
+//       youth-sports-registration.json holds only Youth Sports rows, so no stamp needed.
+// Rows interleave by their next relevant moment (opens → deadline for regs,
+// start for camps; open-now TBA rows sort last). Tech camps and Arts Smarts
+// stay on the home box only. Lives in its own container (#sp-camps-section,
+// created once and inserted before the sticky date/filter bar), does NOT
+// participate in the All/PM/MU + sport-type filters, the favorites filter, or
+// the "Load more games (N)" count, and self-hides when the pool is empty.
 function renderSportsCamps() {
     const anchor = document.querySelector('#view-sports .sticky-nav-bar');
     if (!anchor || !anchor.parentNode) return;
@@ -4416,34 +4582,52 @@ function renderSportsCamps() {
     }
     const hide = () => { section.style.display = 'none'; section.innerHTML = ''; };
 
-    // Locals only — the default (Marauder/unset) viewer never sees youth camps.
+    // Locals only — the default (Marauder/unset) viewer never sees youth signups.
     const isTownie = muAffiliation === 'townie';
     if (!isTownie || !allEvents || allEvents.length === 0) return hide();
 
     const nowMs = Date.now();
-    const camps = allEvents
-        .filter(c => (isProgramSignup(c) && (c.tags || []).includes('Athletic Camp')) || isTicketPackage(c))
-        .map(c => ({ ...c, _start: new Date(c.date).getTime() }))
-        .filter(c => !isNaN(c._start) && c._start >= nowMs)   // upcoming only → self-hides off-season
-        .sort((a, b) => a._start - b._start);
-    if (camps.length === 0) return hide();
+    // Rows shown before "▾ Show N more". 4 to start (2026-09-16) — the page is
+    // the sports destination and has more room than the home box's 2; scale
+    // back here if it still crowds the schedule.
+    const SPORTS_SIGNUPS_COLLAPSED_COUNT = 4;
 
-    // Reuse the canonical event card in events-page mode (Family badge + a
-    // "📝 Register Now" CTA, not a sports "Away" badge). The cloned object adds
-    // registrationRequired so buildEventCard routes to the register CTA via
-    // getRegisterUrl; the original event in allEvents is left untouched.
-    const cards = camps
-        .map(c => buildEventCard({ ...c, registrationRequired: true }, false))
-        .join('');
+    // (1) Deadline-dated: youth-league regs + ticket packages. Mirrors the home
+    // box's townie audience terms (non-intramural, not mu-only).
+    const regs = allEvents
+        .filter(e => e && e.registrationDeadline && !isIntramural(e) && e.audience !== 'mu-only'
+            && (e.youthSports === true || isTicketPackage(e)))
+        .map(signupTiming)
+        .filter(e => signupVisibleNow(e, nowMs))
+        .map(e => ({ key: signupSortKey(e, nowMs), row: signupDeadlineRow(e, nowMs) }));
+    // (2) Athletic camps — all upcoming, dated by start.
+    const camps = allEvents
+        .filter(c => isProgramSignup(c) && (c.tags || []).includes('Athletic Camp'))
+        .map(c => ({ ...c, _start: new Date(c.date).getTime() }))
+        .filter(c => !isNaN(c._start) && c._start >= nowMs)
+        .map(c => ({ key: c._start, row: signupProgramRow(c, nowMs) }));
+    // (3) Open-ended youth regs (closesTBA) — a not-yet-open row sorts by its
+    // Opens date; an open-now row has no date and sorts last.
+    const tba = (allSignups || [])
+        .filter(r => r && r.status === 'active' && r.closesTBA === true && r.registerLink)
+        .map(r => {
+            const op = r.opens ? new Date(r.opens).getTime() : NaN;
+            return { key: (!isNaN(op) && op > nowMs) ? op : Infinity, row: signupTbaRow(r, nowMs) };
+        });
+
+    const rows = [...regs, ...camps, ...tba]
+        .sort((a, b) => a.key === b.key ? 0 : (a.key < b.key ? -1 : 1))
+        .map(x => x.row);
+    if (rows.length === 0) return hide();
+
     section.style.display = '';
     section.innerHTML =
-        '<div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin:4px 0 12px;">'
+        '<div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin:4px 0 4px;">'
             + '<span style="font-size:1.05rem;font-weight:700;color:var(--text);">⚾ Sports Signups & Tickets</span>'
-            + '<span style="font-size:0.8rem;color:var(--text-muted);">camps & ticket packages for locals — register now</span>'
+            + '<span style="font-size:0.8rem;color:var(--text-muted);">youth leagues, camps & tickets for locals</span>'
         + '</div>'
-        + '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:14px;margin-bottom:24px;">'
-            + cards
-        + '</div>';
+        + '<div id="sp-signups-list" style="margin-bottom:20px;"></div>';
+    renderSignupRows(document.getElementById('sp-signups-list'), rows, SPORTS_SIGNUPS_COLLAPSED_COUNT, 'sp-signups-more');
 }
 
 function renderSports(){
@@ -5312,21 +5496,9 @@ function renderHomeUI(){
     const signupsList = document.getElementById('home-signups-list');
     if (signupsSection && signupsList) {
         const nowMs = Date.now();
-        // How close a DEADLINE must be before a row shows countdown pressure
-        // ("N days left" + urgency styling). Farther out, the row shows the
-        // date alone — no need to pressure people yet. (Until 2026-08-11 this
-        // also gated VISIBILITY of open signups; visibility is now governed by
-        // the Opens date / deadline alone — see the filter below.)
-        const SIGNUP_LEAD_MS = 30 * 24 * 60 * 60 * 1000;
-        // How far ahead of its OPEN date we start showing a not-yet-open signup,
-        // as an "Opens <date>" heads-up (no countdown). ~1 week of "mark your
-        // calendar" lead before registration actually opens.
-        const OPEN_LEAD_MS = 7 * 24 * 60 * 60 * 1000;
-        // How far ahead of a program's START date we surface its (open) signup.
-        // Programs (camps, Arts Smarts) carry no deadline, so we anchor on the
-        // start and show them within this window. 60d gives seasonal summer camps
-        // real lead time; widen/narrow here (Infinity = show all upcoming).
-        const PROGRAM_LEAD_MS = 60 * 24 * 60 * 60 * 1000;
+        // SIGNUP_LEAD_MS / OPEN_LEAD_MS / PROGRAM_LEAD_MS and the row builders
+        // are module-level (SHARED SIGNUP ROW BUILDERS, beside isTicketPackage)
+        // since 2026-09-16 — the Sports page block uses the same ones.
         // How many signup rows to show before a "Show N more" toggle. Keeps the
         // box short on load so Today's Specials peeks above the fold and invites a
         // scroll; the toggle reveals the rest. Counts across all row types.
@@ -5346,31 +5518,9 @@ function renderHomeUI(){
         const upcoming = (allEvents || [])
             .filter(e => e && e.registrationDeadline)
             .filter(e => isTownie ? (!isIntramural(e) && e.audience !== 'mu-only') : (isIntramural(e) || e.audience === 'mu-only' || e.audience === 'public'))
-            .map(e => {
-                const _dl = new Date(e.registrationDeadline).getTime();
-                const _opRaw = e.registrationOpens ? new Date(e.registrationOpens).getTime() : NaN;
-                return { ...e, _dl, _op: isNaN(_opRaw) ? null : _opRaw };
-            })
-            .filter(e => {
-                if (isNaN(e._dl) || e._dl < nowMs) return false;            // invalid or closed
-                // Visibility model (2026-08-11): the sheet's Opens date controls
-                // when a signup appears; the deadline controls when it expires.
-                // An open-now signup shows for its whole run — the old 30-day
-                // SIGNUP_LEAD_MS visibility window is retired (it now only
-                // gates the countdown text at render), and the ticket-package
-                // lead bypass is retired with it (subsumed: open-now always shows).
-                const notYetOpen = e._op !== null && e._op > nowMs;
-                return notYetOpen
-                    ? (e._op - nowMs) <= OPEN_LEAD_MS                       // opens within the heads-up window
-                    : true;                                                 // open now → visible until the deadline
-            })
-            // Order by the most relevant upcoming moment: a not-yet-open signup
-            // by when it opens, an open one by when it closes.
-            .sort((a, b) => {
-                const ak = (a._op !== null && a._op > nowMs) ? a._op : a._dl;
-                const bk = (b._op !== null && b._op > nowMs) ? b._op : b._dl;
-                return ak - bk;
-            });
+            .map(signupTiming)
+            .filter(e => signupVisibleNow(e, nowMs))
+            .sort((a, b) => signupSortKey(a, nowMs) - signupSortKey(b, nowMs));
         // (2) Open-ended signups — youth registrations flagged closesTBA (open
         // now, no announced close date). Townie-only: these are community youth
         // registrations with no intramural equivalent. Sourced from the raw
@@ -5416,122 +5566,16 @@ function renderHomeUI(){
 
         if (upcoming.length > 0 || programSignups.length > 0 || tbaSignups.length > 0) {
             signupsSection.style.display = '';
-            const deadlineRows = upcoming.map(e => {
-                // Not-yet-open signups show an "Opens <date>" heads-up counting
-                // up to the open date (no urgency styling — nothing's closing).
-                // Open signups keep the deadline + closing countdown.
-                const notYetOpen = e._op !== null && e._op > nowMs;
-                let byLabel, daysText, urgency = '';
-                if (notYetOpen) {
-                    const opLabel = new Date(e._op).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                    const daysToOpen = Math.ceil((e._op - nowMs) / (24 * 60 * 60 * 1000));
-                    byLabel = `Opens ${opLabel}`;
-                    daysText = daysToOpen <= 0 ? 'opens today' : daysToOpen === 1 ? 'opens tomorrow' : `in ${daysToOpen} days`;
-                } else {
-                    const dlDate = new Date(e._dl);
-                    const sameYear = dlDate.getFullYear() === new Date(nowMs).getFullYear();
-                    const dlLabel = dlDate.toLocaleDateString('en-US', sameYear ? { month: 'short', day: 'numeric' } : { month: 'short', day: 'numeric', year: 'numeric' });
-                    const daysLeft = Math.ceil((e._dl - nowMs) / (24 * 60 * 60 * 1000));
-                    // Countdown pressure only inside SIGNUP_LEAD_MS — a far
-                    // deadline reads "Open Now" (invitational, no urgency yet;
-                    // 2026-08-11 third sitting), flipping to the countdown
-                    // inside the last 30 days.
-                    const closingSoon = (e._dl - nowMs) <= SIGNUP_LEAD_MS;
-                    urgency = closingSoon && daysLeft <= 3 ? ' home-signup-urgent' : '';
-                    byLabel = `by ${dlLabel}`;
-                    daysText = !closingSoon ? 'Open Now' : daysLeft <= 0 ? 'closes today' : daysLeft === 1 ? '1 day left' : `${daysLeft} days left`;
-                }
-                // The scraper no longer prefixes youth titles with "Register
-                // by <date>: ", but keep this strip as a defensive no-op so any
-                // older cached event still reads cleanly here.
-                const cleanTitle = (e.title || '').replace(/^Register by [^:]+:\s*/i, '');
-                const sub = e.location && !cleanTitle.toLowerCase().includes(e.location.toLowerCase())
-                    ? e.location : '';
-                // Open the same event detail modal the timeline/cards use,
-                // instead of jumping straight to the signup link — the modal's
-                // "Register Now" button is the path to the signup page. Kept as
-                // an <a> (with preventDefault) so existing styling and native
-                // keyboard focus/activation are preserved.
-                const signupKey = getEventKey(e);
-                // Ticket packages get a 🎟 marker so the row reads as a
-                // purchase, not a registration (2026-08-06); the popup's CTA
-                // is the matching "🎟 Buy Tickets" link.
-                const rowIcon = isTicketPackage(e) ? '🎟 ' : '';
-                return `<a href="#" class="home-signup-item${urgency}" onclick="event.preventDefault();window.openEventDetails(${JSON.stringify(signupKey).replace(/"/g, '&quot;')})">
-                    <div class="home-signup-main">
-                        <span class="home-signup-org">${rowIcon}${escHtml(cleanTitle)}</span>
-                        ${sub ? `<span class="home-signup-sub">${escHtml(sub)}</span>` : ''}
-                    </div>
-                    <div class="home-signup-deadline">
-                        <span class="home-signup-by">${byLabel}</span>
-                        ${daysText ? `<span class="home-signup-days">${daysText}</span>` : ''}
-                    </div>
-                </a>`;
-            });
+            const deadlineRows = upcoming.map(e => signupDeadlineRow(e, nowMs));
             // Open-ended rows: no calendar event exists to open a modal for, so
             // these link straight to the registration page. "Open now / closes
             // TBA" replaces the date/countdown.
-            const tbaRows = tbaSignups.map(r => {
-                const titleText = (r.title && r.title.trim()) ? r.title.trim() : (r.org || 'Registration');
-                const sub = r.org && !titleText.toLowerCase().includes(r.org.toLowerCase()) ? r.org : '';
-                // Honor an Opens date on open-ended rows (2026-08-06): before
-                // it, the label reads "Opens <date> / closes TBA" — "Open now"
-                // was factually wrong for a not-yet-open registration (Rec
-                // Basketball, opens 9/1). sync-candidates now emits `opens` on
-                // TBA rows; older JSON without the field keeps the prior
-                // "Open now" reading (graceful).
-                const opMs = r.opens ? new Date(r.opens).getTime() : NaN;
-                const tbaByLabel = (!isNaN(opMs) && opMs > nowMs)
-                    ? `Opens ${new Date(opMs).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}`
-                    : 'Open now';
-                return `<a href="${escHtml(r.registerLink)}" target="_blank" rel="noopener" class="home-signup-item">
-                    <div class="home-signup-main">
-                        <span class="home-signup-org">${escHtml(titleText)}</span>
-                        ${sub ? `<span class="home-signup-sub">${escHtml(sub)}</span>` : ''}
-                    </div>
-                    <div class="home-signup-deadline">
-                        <span class="home-signup-by">${tbaByLabel}</span>
-                        <span class="home-signup-days">closes TBA</span>
-                    </div>
-                </a>`;
-            });
+            const tbaRows = tbaSignups.map(r => signupTbaRow(r, nowMs));
             // Program rows: dated by START, linked straight to the register page.
-            const programRows = programRender.map(e => {
-                const startLabel = new Date(e._start).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-                const daysToStart = Math.ceil((e._start - nowMs) / (24 * 60 * 60 * 1000));
-                const startsText = daysToStart <= 0 ? 'starts today' : daysToStart === 1 ? 'starts tomorrow' : `starts in ${daysToStart} days`;
-                const cleanTitle = (e.title || '');
-                const sub = e.location && !cleanTitle.toLowerCase().includes(e.location.toLowerCase()) ? e.location : '';
-                const url = getRegisterUrl(e);
-                // Real program events open the same popup card as the timeline (its CTA
-                // is "Register Now" — see openEventDetails). The synthetic Tech-Camps
-                // rollup has no backing event, so it keeps linking to the catalog.
-                const openTag = e._synthetic
-                    ? `<a href="${escHtml(url)}" target="_blank" rel="noopener" class="home-signup-item">`
-                    : `<a href="#" class="home-signup-item" onclick="event.preventDefault();window.openEventDetails(${JSON.stringify(getEventKey(e)).replace(/"/g, '&quot;')})">`;
-                return `${openTag}
-                    <div class="home-signup-main">
-                        <span class="home-signup-org">${escHtml(cleanTitle)}</span>
-                        ${sub ? `<span class="home-signup-sub">${escHtml(sub)}</span>` : ''}
-                    </div>
-                    <div class="home-signup-deadline">
-                        <span class="home-signup-by">Starts ${startLabel}</span>
-                        <span class="home-signup-days">${startsText}</span>
-                    </div>
-                </a>`;
-            });
+            const programRows = programRender.map(e => signupProgramRow(e, nowMs));
             // Render order matches the prior concat: deadline, program, tba.
             const rows = [...deadlineRows, ...programRows, ...tbaRows];
-            if (rows.length <= SIGNUPS_COLLAPSED_COUNT) {
-                signupsList.innerHTML = rows.join('');
-            } else {
-                const moreCount = rows.length - SIGNUPS_COLLAPSED_COUNT;
-                const moreLabel = `▾ Show ${moreCount} more`;
-                signupsList.innerHTML =
-                    rows.slice(0, SIGNUPS_COLLAPSED_COUNT).join('')
-                    + `<div id="home-signups-more" style="display:none;">${rows.slice(SIGNUPS_COLLAPSED_COUNT).join('')}</div>`
-                    + `<button type="button" class="btn btn-sm btn-outline" aria-expanded="false" aria-controls="home-signups-more" data-more-label="${moreLabel}" style="width:100%;margin-top:8px;font-size:0.8rem;" onclick="window.toggleSignupsMore(this)">${moreLabel}</button>`;
-            }
+            renderSignupRows(signupsList, rows, SIGNUPS_COLLAPSED_COUNT, 'home-signups-more');
         } else {
             signupsSection.style.display = 'none';
         }

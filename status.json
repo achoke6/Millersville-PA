@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-16T18:43:47.528Z",
-  "totalEvents": 1701,
+  "generatedAt": "2026-09-16T19:13:23.962Z",
+  "totalEvents": 1663,
   "withDescription": 777,
   "withImage": 225,
   "familyFriendly": 81,
@@ -11,12 +11,12 @@
     "artsmu": 22,
     "campsAlumni": 40,
     "muGetInvolved": 438,
-    "pennManor": 422,
+    "pennManor": 424,
     "borough": 65,
     "vfw": 9,
     "phantomPower": 12,
     "community": 21,
-    "manor": 40,
+    "manor": 0,
     "raneyCellars": 7,
     "theBackyard": 12,
     "muHudlBroadcasts": 61
@@ -62,10 +62,7 @@
       "earliest": "2026-06-22T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-09-30T12:30:00.000Z",
-      "latest": "2027-09-06T23:00:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-08-15T22:00:00.000Z",
       "latest": "2026-09-11T20:00:00.000Z"
@@ -116,10 +113,7 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 89
     },
-    "manor": {
-      "newest": "2027-09-06",
-      "daysSinceMoved": 10
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-09-11",
       "daysSinceMoved": 13
@@ -130,7 +124,7 @@
     }
   },
   "sports": {
-    "total": 741,
+    "total": 743,
     "scored": 50,
     "wins": 28,
     "losses": 21,
@@ -149,13 +143,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-16T18:40:48.911Z"
+    "lastSyncAt": "2026-09-16T19:10:13.475Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-16T18:43:39.826Z"
+    "checkedAt": "2026-09-16T19:13:14.700Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -192,7 +186,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 422,
+        "value": 424,
         "min": 150,
         "skipped": false
       },
@@ -220,6 +214,41 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Legal Observer Training|2026-09-30T21:00:00.000Z",
+      "firstSeenAt": "2026-09-16T19:13:23.959Z",
+      "title": "Legal Observer Training",
+      "source": "MU",
+      "date": "2026-09-30T21:00:00.000Z"
+    },
+    {
+      "key": "Men's Ice Hockey VS Lehigh University|2026-10-03T20:15:00.000Z",
+      "firstSeenAt": "2026-09-16T19:13:23.959Z",
+      "title": "Men's Ice Hockey VS Lehigh University",
+      "source": "MU",
+      "date": "2026-10-03T20:15:00.000Z"
+    },
+    {
+      "key": "40th Annual Brossman Foundation and Ronald E. Frisbie Sr. Science Lectureship|2026-11-05T18:30:00",
+      "firstSeenAt": "2026-09-16T19:13:23.959Z",
+      "title": "40th Annual Brossman Foundation and Ronald E. Frisbie Sr. Science Lectureship",
+      "source": "MU",
+      "date": "2026-11-05T18:30:00"
+    },
+    {
+      "key": "Girls JV Softball vs Solanco High School|2027-04-09T20:00:00.000Z",
+      "firstSeenAt": "2026-09-16T19:13:23.959Z",
+      "title": "Girls JV Softball vs Solanco High School",
+      "source": "PM",
+      "date": "2027-04-09T20:00:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Softball vs Solanco High School|2027-04-09T20:00:00.000Z",
+      "firstSeenAt": "2026-09-16T19:13:23.959Z",
+      "title": "Girls Varsity Softball vs Solanco High School",
+      "source": "PM",
+      "date": "2027-04-09T20:00:00.000Z"
+    },
     {
       "key": "Moose Ultimate Scrimmage|2026-09-20T12:00:00.000Z",
       "firstSeenAt": "2026-09-16T18:43:47.524Z",
@@ -254,42 +283,7 @@
       "title": "CHEP presentation training",
       "source": "MU",
       "date": "2026-09-14T08:00:00"
-    },
-    {
-      "key": "Academic Resilience Speaker Series|2026-09-16T12:00:00",
-      "firstSeenAt": "2026-09-16T15:55:37.086Z",
-      "title": "Academic Resilience Speaker Series",
-      "source": "MU",
-      "date": "2026-09-16T12:00:00"
-    },
-    {
-      "key": "Oola Bowl Hosted by SGA|2026-09-16T14:00:00.000Z",
-      "firstSeenAt": "2026-09-16T15:55:37.086Z",
-      "title": "Oola Bowl Hosted by SGA",
-      "source": "The Backyard",
-      "date": "2026-09-16T14:00:00.000Z"
-    },
-    {
-      "key": "Sneakers 2 Stilettos Practice|2026-09-16T18:00:00",
-      "firstSeenAt": "2026-09-16T15:55:37.086Z",
-      "title": "Sneakers 2 Stilettos Practice",
-      "source": "MU",
-      "date": "2026-09-16T18:00:00"
-    },
-    {
-      "key": "FSL: Phi Mu Delta Tabling|2026-09-18T14:00:00",
-      "firstSeenAt": "2026-09-16T15:55:37.086Z",
-      "title": "FSL: Phi Mu Delta Tabling",
-      "source": "MU",
-      "date": "2026-09-18T14:00:00"
-    },
-    {
-      "key": "Hazing Prevention Week Online Seminar Viewings|2026-09-21T12:00:00",
-      "firstSeenAt": "2026-09-16T15:55:37.086Z",
-      "title": "Hazing Prevention Week Online Seminar Viewings",
-      "source": "MU",
-      "date": "2026-09-21T12:00:00"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 5
 }

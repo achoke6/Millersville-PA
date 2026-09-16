@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-16T14:41:13.137Z",
+  "generatedAt": "2026-09-16T14:55:36.942Z",
   "totalEvents": 1683,
   "withDescription": 761,
   "withImage": 225,
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 10,
-    "lastSyncAt": "2026-09-16T14:37:39.554Z"
+    "lastSyncAt": "2026-09-16T14:52:01.063Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-16T14:41:06.590Z"
+    "checkedAt": "2026-09-16T14:55:31.783Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -221,6 +221,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Planning Commission|2026-10-14T23:00:00.000Z",
+      "firstSeenAt": "2026-09-16T14:55:36.938Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-10-14T23:00:00.000Z"
+    },
+    {
       "key": "Between the Lines: Ville Commuter Life|2026-09-17T21:00:00.000Z",
       "firstSeenAt": "2026-09-16T14:41:13.133Z",
       "title": "Between the Lines: Ville Commuter Life",
@@ -282,14 +289,7 @@
       "title": "Fencing Guild Practice",
       "source": "MU",
       "date": "2026-10-21T21:00:00.000Z"
-    },
-    {
-      "key": "General Meetings|2026-10-21T21:00:00.000Z",
-      "firstSeenAt": "2026-09-16T01:07:47.713Z",
-      "title": "General Meetings",
-      "source": "MU",
-      "date": "2026-10-21T21:00:00.000Z"
     }
   ],
-  "addedLastRun": 5
+  "addedLastRun": 1
 }

@@ -4138,14 +4138,23 @@ function groupEventsByDay(events) {
     return [...groups.values()].sort((a, b) => a.dateKey.localeCompare(b.dateKey));
 }
 
-// Build HTML for a single day group: a sticky header + its card list
-function buildDayGroupHTML(group, buildCard) {
+// Build HTML for a single day group: a header + its card list.
+// Every header carries data-label="<date>" — that is what the sticky toolbar's
+// #ev-/#sp-current-day-label mirrors (updateCurrentDayLabel), NOT the visible
+// text. The FIRST header in a list renders count-only ("4 events"): the toolbar
+// label directly above it already names that day, so repeating the date read as
+// a double listing. Later headers keep their date because it differs from the
+// toolbar's until they scroll under it.
+function buildDayGroupHTML(group, buildCard, isFirst) {
     const todayStr = toDateStr(todayMidnight());
     const isToday = group.dateKey === todayStr;
     const label = formatDayHeader(group.dateObj);
     const count = group.events.length;
     const plural = count === 1 ? 'event' : 'events';
-    return `<div class="day-group-header${isToday ? ' today' : ''}">${label}<span class="day-count">${count} ${plural}</span></div>`
+    const inner = isFirst
+        ? `${count} ${plural}`
+        : `${label}<span class="day-count">${count} ${plural}</span>`;
+    return `<div class="day-group-header${isToday ? ' today' : ''}" data-label="${label}">${inner}</div>`
         + group.events.map(e => buildCard(e)).join('');
 }
 
@@ -4313,7 +4322,7 @@ function renderEvents(){
 
     // Day-grouped render
     const groups = groupEventsByDay(dayItems);
-    html += groups.map(g => buildDayGroupHTML(g, e => buildEventCard(e, false))).join('');
+    html += groups.map((g, i) => buildDayGroupHTML(g, e => buildEventCard(e, false), i === 0)).join('');
 
     // Load more / footer note
     if (beyondCount > 0) {
@@ -4377,14 +4386,11 @@ function updateCurrentDayLabel(pageKey) {
     const container = document.getElementById(prefix + '-events-container');
     if (!labelEl || !container) return;
     const headers = container.querySelectorAll('.day-group-header');
-    // The label is a stand-in for whichever day header has scrolled UNDER the
-    // toolbar. Until one has (first paint, or scrolled back to the top) it's
-    // hidden — otherwise "Today" sits directly above the "TODAY · N events"
-    // header and reads as a double listing. visibility (not display) so the
-    // toolbar layout doesn't shift when it appears.
+    // Header text is NOT the source of truth (the first header is count-only);
+    // every header carries its date in data-label — read that.
+    const dayLabelOf = (h) => (h.dataset && h.dataset.label) || (h.childNodes[0] ? h.childNodes[0].textContent.trim() : h.textContent.trim());
     if (headers.length === 0) {
         labelEl.textContent = 'Today';
-        labelEl.style.visibility = 'hidden';
         return;
     }
     // Defensive bail-out: when called immediately after innerHTML assignment,
@@ -4399,23 +4405,19 @@ function updateCurrentDayLabel(pageKey) {
     if (firstRect.top === 0 && lastRect.top === 0) {
         const todayHeader = container.querySelector('.day-group-header.today');
         const fallback = todayHeader || headers[0];
-        labelEl.textContent = (fallback.childNodes[0] ? fallback.childNodes[0].textContent.trim() : fallback.textContent.trim()) || 'Today';
-        labelEl.style.visibility = 'hidden';
+        labelEl.textContent = dayLabelOf(fallback) || 'Today';
         return;
     }
     // "Active" header = the last one whose top has scrolled above the toolbar offset
     const offsetTop = 120; // ~ site header (50) + toolbar height (70)
     let active = headers[0];
-    let scrolledUnder = false; // has ANY header passed under the toolbar yet?
     for (const h of headers) {
         const rect = h.getBoundingClientRect();
-        if (rect.top <= offsetTop + 8) { active = h; scrolledUnder = true; }
+        if (rect.top <= offsetTop + 8) active = h;
         else break;
     }
-    // Extract just the label (ignore the count span)
-    const labelText = active.childNodes[0] ? active.childNodes[0].textContent.trim() : active.textContent.trim();
+    const labelText = dayLabelOf(active);
     if (labelEl.textContent !== labelText) labelEl.textContent = labelText;
-    labelEl.style.visibility = scrolledUnder ? '' : 'hidden';
 }
 // Throttle to once-per-animation-frame to avoid jank on scroll
 let _dayLabelScrollPending = false;
@@ -4763,9 +4765,12 @@ function renderSports(){
         }
     }
 
-    // Day-grouped render
+    // Day-grouped render. groupEventsByDay() sorts days ascending regardless of the
+    // event sort above, so Results (past view) is reversed here to put the most
+    // recent day on top — a results list reads newest-first.
     const groups = groupEventsByDay(dayItems);
-    html += groups.map(g => buildDayGroupHTML(g, e => buildEventCard(e, true))).join('');
+    if (isPast) groups.reverse();
+    html += groups.map((g, i) => buildDayGroupHTML(g, e => buildEventCard(e, true), i === 0)).join('');
 
     if (beyondCount > 0) {
         html += '<button class="load-more-btn" onclick="spLoadMore()">Load more games (' + beyondCount + ' more available)</button>';

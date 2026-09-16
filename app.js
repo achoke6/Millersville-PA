@@ -3084,7 +3084,7 @@ let spDaysVisible = INITIAL_DAYS;
 let spPastDaysVisible = INITIAL_DAYS_PAST;
 let spMode='week', spAnchorDate=new Date();
 
-const sportsList=['Baseball','Softball','Track','Soccer','Lacrosse','Tennis','Volleyball','Wrestling','Basketball','Football','Field Hockey','Golf','Cross Country','Cheerleading','Swimming','Rugby','Fencing','Esports','Archery','Unified Track & Field','Unified Bocce'];
+const sportsList=['Baseball','Softball','Track','Soccer','Lacrosse','Tennis','Volleyball','Wrestling','Basketball','Football','Field Hockey','Golf','Cross Country','Cheerleading','Swimming','Bowling','Rugby','Fencing','Esports','Archery','Unified Track & Field','Unified Bocce'];
 const topSources=['MU','PM','Borough','Manor','Other'];
 const sportMetaTags=['Athletic Competitions','Athletics','Club Sports','Home Game Mode','H Games'];
 
@@ -4673,22 +4673,34 @@ function renderSports(){
         const d = localDateStr(e.date);
         return d >= rangeStart && d <= rangeEnd;
     });
-    renderSportTypeTags(windowMatching, allMatching);
+    // Pill pool = EVERY game in this direction (upcoming: today onward; Results:
+    // before today), not just the 60-day window — a team with a published schedule
+    // has a pill months before its opener (PM winter sports tip off in December;
+    // spring teams appear as Sidearm / PM publish). Off-season pills sit behind the
+    // "Off season (N)" toggle, so the flat row stays short.
+    const directionMatching = allMatching.filter(e => {
+        const d = localDateStr(e.date);
+        return isPast ? d < todayStr : d >= todayStr;
+    });
+    renderSportTypeTags(directionMatching, allMatching);
 
-    // Apply sport-type filter after the tag bar is rendered
-    let filtered = spSportTag ? windowMatching.filter(e => eventMatchesSportLabel(e.tags || [], spSportTag)) : windowMatching;
+    // Apply sport-type filter after the tag bar is rendered. A selected team shows
+    // ALL its games in this direction — a season is ~20–60 rows; the window exists to
+    // cap the mixed all-teams list, not one team's schedule. Tapping a spring pill
+    // in September therefore lists the spring schedule rather than "Nothing scheduled".
+    let filtered = spSportTag ? directionMatching.filter(e => eventMatchesSportLabel(e.tags || [], spSportTag)) : windowMatching;
 
     // Sort: past view newest-first (so "most recent" is at top); upcoming oldest-first
     filtered.sort((a, b) => isPast ? (b._dateMs - a._dateMs) : (a._dateMs - b._dateMs));
 
     // Count of events beyond the current window (for "Load more" label)
     let beyondCount = 0;
-    if (isPast) {
-        beyondCount = allMatching.filter(e => localDateStr(e.date) < rangeStart
-            && (!spSportTag || eventMatchesSportLabel(e.tags || [], spSportTag))).length;
+    if (spSportTag) {
+        // whole schedule already shown — nothing beyond, no Load more
+    } else if (isPast) {
+        beyondCount = allMatching.filter(e => localDateStr(e.date) < rangeStart).length;
     } else {
-        beyondCount = allMatching.filter(e => localDateStr(e.date) > rangeEnd
-            && (!spSportTag || eventMatchesSportLabel(e.tags || [], spSportTag))).length;
+        beyondCount = allMatching.filter(e => localDateStr(e.date) > rangeEnd).length;
     }
 
     const container = document.getElementById('sp-events-container');

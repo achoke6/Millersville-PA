@@ -552,12 +552,6 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
     if (benefits.includes('Credit')) return 'mu-only';
     const combinedText = ((titleText || '') + ' ' + (descText || '') + ' ' + (orgName || '')).toLowerCase();
 
-    // Homecoming is campus-wide for EVERY viewer site-wide (the alumni
-    // FULLY_EXEMPT tier, 2026-08-18). The GetInvolved copies of Homecoming
-    // events were only public by luck of their wording; make it explicit so
-    // a future tightening of the soft rules below can never hide them.
-    if (ALUMNI_FULLY_EXEMPT_RE.test(titleText || '')) return 'public';
-
     // ===== Highest-priority public signals =====
     // Public org names ("Red Cross", "Habitat for Humanity") and explicit
     // public-facing event types (blood drive, 5K, food drive). Win over softer
@@ -588,7 +582,13 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
     // soft public-keyword regex (so "End of Year Celebration" tagged
     // Community doesn't leak). Excludes "Office of Sustainability" since
     // it runs genuinely public events.
-    const hasExplicitPublicMarker = /\b(public|open to (the )?(public|community|all)|community welcome|all (are )?welcome)\b/i.test(combinedText);
+    // Tightened 2026-09-16: bare "public" ("public health" - CHEP), "all
+    // (are) welcome" and "open to all" dropped - from a student club those
+    // mean all STUDENTS ("Film Club: All are welcome!" x12 leaked; same trap
+    // as "practice open to all"). Only a phrase that NAMES the public or the
+    // community is an invitation. The last soft return below uses this same
+    // marker, so this list is the single gate for GetInvolved -> locals.
+    const hasExplicitPublicMarker = /\b(open to (the )?(public|community)|community (is )?welcome|public event|for the public|free and open to the (public|community))\b/i.test(combinedText);
     const muOnlyAcademicRegex = /\b(college of |department of |school of |office of (?!sustainability)|honors college|honors program|year[- ]end|end of (the )?year|end of (the )?semester|faculty (mixer|concert|event)|senior (recognition|celebration|class)|graduating class|provost'?s|dean'?s (list|reception)|alumni (and student|student)|student[- ]faculty|capstone|thesis defense|comprehensive exam)\b/i;
     if (muOnlyAcademicRegex.test(combinedText) && !hasExplicitPublicMarker) return 'mu-only';
 
@@ -609,29 +609,27 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
     if (muOnlyOrgRegex.test(orgName.toLowerCase() + ' ' + combinedText)) return 'mu-only';
     if (rawTags.some(t => /greek life|residence hall/i.test(t))) return 'mu-only';
 
-    // ===== Generic public-language signals =====
-    // Run after mu-only-org regex because "fraternity" host can override loose
-    // public language; but blood/food drives, fundraising, and explicit public
-    // markers already handled above.
-    // 'awareness walk' only (2026-09-05): a campus "awareness day/event" is
-    // tabling by another name ("988 Day": CHEP table on the Promenade); walks
-    // are the genuinely public form.
+    // ===== Explicit public-language signals =====
+    // STRICT POSTURE (Adam, 2026-09-16): GetInvolved reaches locals ONLY on a
+    // drive / fundraiser (above), a club-sports HOME game (no varsity program;
+    // the community may attend), or an explicit open-to-the-public phrase.
+    // The soft words that used to live here (concert, performance, recital,
+    // exhibition, gallery, volunteer, service project, community service,
+    // awareness walk) were how "JDogs Community Service", "Volunteer Day"
+    // and a CHEP "Homecoming Pre-Party" (Homecoming fast-path, also removed)
+    // reached the community view. Coursedog carries MU's genuinely public
+    // copies; a poster who wants a student-posted event public writes
+    // "open to the public" in the description.
 	// Club/team practices, scrimmages, tryouts and open gyms are student
     // programming whatever the blurb says ("open to all" = all students) —
     // "Women's Rugby Club Practice" ×12 leaked to locals (2026-09-11).
     // Fundraiser / drive / Homecoming rules above still win first.
     if (/\b(practices?|scrimmages?|try-?outs?|open gym)\b/i.test(titleText || '')) return 'mu-only';
-    const publicKeywordRegex = /\b(open to (the )?(public|community|all)|community welcome|all (are )?welcome|public event|for the public|concert|performance|recital|exhibition|gallery|awareness walk|volunteer|service project|community service)\b/i;
-    if (publicKeywordRegex.test(combinedText)) return 'public';
+    if (hasExplicitPublicMarker) return 'public';
     if (tags.includes('Club Sports') && tags.includes('Home Game Mode')) return 'public';
-
-    // ===== Loose category-only matches (last resort) =====
-    // 'sporting'/'athletic' REMOVED 2026-09-05: public club-sports HOME games
-    // are already handled explicitly above, so by the time we get here a
-    // Sporting-category row is Campus Rec programming on student-only
-    // facilities ("Ropes Course- Open Climb", 15 rows leaked to townies).
-    const publicCategoryRegex = /\b(fundraising|service|community service|philanthropy|volunteer)\b/i;
-    if (rawTags.some(t => publicCategoryRegex.test(t))) return 'public';
+    // No category-only last resort (removed 2026-09-16): an Engage
+    // "Service"/"Volunteer" category is a student-org activity type, not an
+    // invitation to the community. Default closed.
     return 'mu-only';
 }
 

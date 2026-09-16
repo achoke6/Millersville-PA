@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-09-16T19:20:45.623Z",
-  "totalEvents": 1703,
-  "withDescription": 777,
-  "withImage": 225,
+  "generatedAt": "2026-09-16T21:08:32.831Z",
+  "totalEvents": 1706,
+  "withDescription": 780,
+  "withImage": 226,
   "familyFriendly": 81,
   "eventsToday": 29,
   "sources": {
@@ -10,7 +10,7 @@
     "muCalendar": 164,
     "artsmu": 22,
     "campsAlumni": 40,
-    "muGetInvolved": 438,
+    "muGetInvolved": 441,
     "pennManor": 424,
     "borough": 65,
     "vfw": 9,
@@ -144,18 +144,18 @@
   },
   "reviewQueue": {
     "pendingFuture": 1,
-    "pendingPast": 1,
+    "pendingPast": 0,
     "pendingBySource": {
       "PM Community": 1
     },
-    "stalePast": 9,
-    "lastSyncAt": "2026-09-16T19:17:36.734Z"
+    "stalePast": 5,
+    "lastSyncAt": "2026-09-16T21:04:52.896Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-16T19:20:44.049Z"
+    "checkedAt": "2026-09-16T21:08:23.792Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -221,6 +221,55 @@
   },
   "recentlyAdded": [
     {
+      "key": "Men's Ice Hockey @ Kutztown University|2026-10-03T00:30:00.000Z",
+      "firstSeenAt": "2026-09-16T21:08:32.828Z",
+      "title": "Men's Ice Hockey @ Kutztown University",
+      "source": "MU",
+      "date": "2026-10-03T00:30:00.000Z"
+    },
+    {
+      "key": "Home game versus Maryland University Red team|2026-10-03T15:30:00.000Z",
+      "firstSeenAt": "2026-09-16T21:08:32.828Z",
+      "title": "Home game versus Maryland University Red team",
+      "source": "MU",
+      "date": "2026-10-03T15:30:00.000Z"
+    },
+    {
+      "key": "Home game versus Salisbury University|2026-10-04T15:00:00.000Z",
+      "firstSeenAt": "2026-09-16T21:08:32.828Z",
+      "title": "Home game versus Salisbury University",
+      "source": "MU",
+      "date": "2026-10-04T15:00:00.000Z"
+    },
+    {
+      "key": "Away Round Robin at Rowan University|2026-10-11T13:00:00.000Z",
+      "firstSeenAt": "2026-09-16T21:08:32.828Z",
+      "title": "Away Round Robin at Rowan University",
+      "source": "MU",
+      "date": "2026-10-11T13:00:00.000Z"
+    },
+    {
+      "key": "Home game versus Elizabethtown College|2026-10-18T22:00:00.000Z",
+      "firstSeenAt": "2026-09-16T21:08:32.828Z",
+      "title": "Home game versus Elizabethtown College",
+      "source": "MU",
+      "date": "2026-10-18T22:00:00.000Z"
+    },
+    {
+      "key": "Creative Writers Guild general meeting|2026-10-20T18:00:00",
+      "firstSeenAt": "2026-09-16T21:08:32.828Z",
+      "title": "Creative Writers Guild general meeting",
+      "source": "MU",
+      "date": "2026-10-20T18:00:00"
+    },
+    {
+      "key": "RUF Bible Study|2026-10-20T19:00:00",
+      "firstSeenAt": "2026-09-16T21:08:32.828Z",
+      "title": "RUF Bible Study",
+      "source": "MU",
+      "date": "2026-10-20T19:00:00"
+    },
+    {
       "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
       "firstSeenAt": "2026-09-16T19:20:45.620Z",
       "title": "Traffic Commission Meeting",
@@ -240,56 +289,7 @@
       "title": "Zoning Hearing Board",
       "source": "Manor",
       "date": "2026-10-07T23:00:00.000Z"
-    },
-    {
-      "key": "Planning Commission|2026-10-14T23:00:00.000Z",
-      "firstSeenAt": "2026-09-16T19:20:45.620Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-10-14T23:00:00.000Z"
-    },
-    {
-      "key": "Moonlight Ride|2026-10-23T22:30:00.000Z",
-      "firstSeenAt": "2026-09-16T19:20:45.620Z",
-      "title": "Moonlight Ride",
-      "source": "Manor",
-      "date": "2026-10-23T22:30:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-10-28T12:30:00.000Z",
-      "firstSeenAt": "2026-09-16T19:20:45.620Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-10-28T12:30:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-11-05T00:00:00.000Z",
-      "firstSeenAt": "2026-09-16T19:20:45.620Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-11-05T00:00:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2026-11-06T00:00:00.000Z",
-      "firstSeenAt": "2026-09-16T19:20:45.620Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-11-06T00:00:00.000Z"
-    },
-    {
-      "key": "Planning Commission|2026-11-10T00:00:00.000Z",
-      "firstSeenAt": "2026-09-16T19:20:45.620Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-11-10T00:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-11-25T13:30:00.000Z",
-      "firstSeenAt": "2026-09-16T19:20:45.620Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-11-25T13:30:00.000Z"
     }
   ],
-  "addedLastRun": 40
+  "addedLastRun": 7
 }

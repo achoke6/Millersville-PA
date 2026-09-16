@@ -224,10 +224,11 @@ function maybeShowInstallBanner() {
     if (isStandalonePWA()) return;                               // already installed
     if (installSnoozed()) return;                                // recently dismissed
     if (document.getElementById('mapp-install-banner')) return;  // already showing
-    // Don't compete with the one-time swipe hint — let that resolve first.
-    // (Normally can't collide: hint = first visit, install = visit ≥2 — this
-    // guards the ?resetHints=1 demo path.)
-    if (document.getElementById('mapp-swipe-hint')) return;
+    // Don't compete with the first-run identity gate — an undecided returning
+    // visitor (visit ≥2, affiliation still unset) picks first, installs later.
+    // The gate is created inside initApp() (after loadFeedPrefs), so the
+    // DOMContentLoaded install check runs AFTER initApp() for this guard to see it.
+    if (document.getElementById('mapp-welcome-gate')) return;
 
     const visits = parseInt(localStorage.getItem(VISIT_KEY) || '0', 10);
     if (isNaN(visits) || visits < 2) return;                     // wait for a return visit
@@ -2637,9 +2638,10 @@ window.clearFavoritesOnly = function() {
 };
 
 // Reset everything: favorites AND affiliation (back to unset — renders as
-// Marauder under the default-marauder policy; identity re-pickable in the
-// gear's mode band). Deliberately does NOT clear the swipe-hint key —
-// gesture education isn't identity (SHOW21_KEY survive-reset precedent).
+// Marauder under the default-marauder policy). The first-run identity gate
+// re-fires immediately (2026-09-16) — identity is mandatory, so "unset" is
+// never a resting state the user sits in. Also the demo path for the gate
+// (the old URL demo param is retired).
 window.resetEverything = function() {
     localStorage.removeItem(FEED_KEY);
     localStorage.removeItem(AFFILIATION_KEY);
@@ -2649,6 +2651,7 @@ window.resetEverything = function() {
     renderHomeFeed();
     renderEvents(); renderSports(); renderNewsUI();
     applyAdvertiseGate(); // affiliation back to unset — nav-advertise reappears
+    try { maybeShowWelcomeGate(); } catch (_) {}
 };
 
 function renderHomeFeed() {
@@ -2827,97 +2830,96 @@ function attachHomeSwipeHandlers() {
         else shiftHomeDay(-1);
     }, { passive: true });
 }
-// ===== One-time swipe-discovery hint (2026-08-26) =====
-// Replaces the retired welcome banner as the only first-run chrome. Pure
-// gesture education: tells touch users the home timeline swipes between days
-// (the gesture itself shipped long ago in attachHomeSwipeHandlers above —
-// this is discovery, not capability). Touch devices only: swipe is
-// meaningless with a mouse, and the ‹ › day buttons are visible affordances
-// for everyone else. Shows once per browser on its own key — SHOW21_KEY
-// precedent: survives Clear Favs AND resetEverything (gesture education
-// isn't identity). ?resetHints=1 clears it for demos (see DOMContentLoaded).
-const SWIPE_HINT_KEY = 'mapp_hint_swipe';
-function maybeShowSwipeHint() {
-    let seen = null;
-    try { seen = localStorage.getItem(SWIPE_HINT_KEY); }
-    catch (_) { return; } // localStorage blocked → can't record a dismissal, never show
-    if (seen) return;
-    // Touch-capable check: coarse primary pointer, or legacy touch-event support.
-    const coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
-    if (!coarse && !('ontouchstart' in window)) return;
-    // Destination-view check via the URL, NOT the active class: this runs at
-    // DOMContentLoaded, but initApp()'s router only switches views after the
-    // data fetches settle — so #view-home still wears .active on an /events
-    // deep link at this moment. Mirror the router's path logic (incl. the
-    // 404.html ?p= redirect and the /housing special case) to decide whether
-    // this load will actually land on home.
-    let dest = 'home';
+// ===== First-run identity gate (2026-09-16) =====
+// The site renders materially differently for MU Students and Locals, and
+// under the default-marauder policy an undecided visitor silently gets the
+// student view — so Locals who never open ⚙️ never see youth sports, borough
+// news or local deals. This gate makes the pick MANDATORY: a modal with two
+// equal-weight buttons, no skip, no scrim-tap/Escape dismissal, shown on
+// EVERY load while affiliation is unset, on every device and every landing
+// view (a Local arriving on desktop at /sports is exactly who was being
+// missed). Never shown once an identity is stored; resetEverything() brings
+// it straight back (identity, not gesture education). `?aud=` links bypass it
+// (loadFeedPrefs stores the identity before the check) — the parade-QR path.
+// It REPLACES the 2026-08-26 one-time swipe hint (its key, three functions
+// and the URL demo param are RETIRED — see manifest §6): the swipe
+// education lives on as a small animated footer line inside the gate, shown
+// only on touch + home-destination loads (same tests the hint used).
+// Picking calls pickAffiliation — the same setter the gear uses — so favorites
+// / onboarding plumbing is untouched; with affiliation unset it applies
+// immediately (no keep-favorites dialog). Inline styles only (Hard Rule 2);
+// z-index 10002 sits above the feed-settings modal and mappDialog (10000/10001)
+// so Reset everything from inside ⚙️ surfaces the gate on top.
+function maybeShowWelcomeGate() {
+    if (muAffiliation === 'student' || muAffiliation === 'townie') return;
+    if (document.getElementById('mapp-welcome-gate')) return; // already up
+    try { localStorage.setItem('mapp_probe', '1'); localStorage.removeItem('mapp_probe'); }
+    catch (_) { return; } // storage blocked → the pick couldn't persist; don't wall the site
+    showWelcomeGate();
+}
+function showWelcomeGate() {
+    // Swipe-education footer: touch devices, home-destination loads only.
+    // Destination via the URL, NOT the .active class — initApp()'s router only
+    // switches views after the data fetches settle, so #view-home wears
+    // .active on every deep link at this moment. Mirrors the router's path
+    // logic (incl. the 404.html ?p= redirect and the /housing special case).
+    let showSwipe = false;
     try {
-        let p = window.location.pathname.replace(/\/$/, '');
-        const params = new URLSearchParams(window.location.search);
-        if (params.has('p')) p = params.get('p').replace(/\/$/, '');
-        dest = pathToView[p] || 'home';
-        if (p === '/housing') dest = 'places';
-    } catch (_) { /* URL API missing → assume home (root is the dominant entry) */ }
-    if (dest !== 'home') return;
-    if (document.getElementById('mapp-swipe-hint')) return; // already showing
-    showSwipeHint();
-}
-function dismissSwipeHint() {
-    try { localStorage.setItem(SWIPE_HINT_KEY, '1'); } catch (_) { /* still dismiss visually */ }
-    const el = document.getElementById('mapp-swipe-hint');
-    if (el) el.remove();
-}
-function showSwipeHint() {
+        const coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+        if (coarse || ('ontouchstart' in window)) {
+            let p = window.location.pathname.replace(/\/$/, '');
+            const params = new URLSearchParams(window.location.search);
+            if (params.has('p')) p = params.get('p').replace(/\/$/, '');
+            let dest = pathToView[p] || 'home';
+            if (p === '/housing') dest = 'places';
+            showSwipe = dest === 'home';
+        }
+    } catch (_) { showSwipe = false; }
+
     const scrim = document.createElement('div');
-    scrim.id = 'mapp-swipe-hint';
+    scrim.id = 'mapp-welcome-gate';
     scrim.setAttribute('role', 'dialog');
-    scrim.setAttribute('aria-label', 'Tip: swipe the events list to change days');
-    scrim.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.45);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px;';
+    scrim.setAttribute('aria-modal', 'true');
+    scrim.setAttribute('aria-labelledby', 'mapp-welcome-title');
+    scrim.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.55);z-index:10002;display:flex;align-items:center;justify-content:center;padding:24px;';
+    const optBtn = (value, icon, label, sub) =>
+        `<button type="button" class="btn btn-outline" data-aff="${value}" style="display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;text-align:left;border-radius:12px;">`
+            + `<span style="font-size:1.6rem;line-height:1;">${icon}</span>`
+            + `<span style="display:flex;flex-direction:column;min-width:0;">`
+                + `<span style="font-weight:700;font-size:0.98rem;color:var(--text);">${label}</span>`
+                + `<span style="font-size:0.78rem;color:var(--text-muted);">${sub}</span>`
+            + `</span>`
+        + `</button>`;
     scrim.innerHTML = `
-        <div style="background:var(--surface);border-radius:var(--radius);max-width:340px;width:100%;padding:24px 22px;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,0.35);">
-            <div id="mapp-swipe-hint-glyph" style="font-size:2.1rem;line-height:1;">👆</div>
-            <p style="font-weight:700;font-size:1rem;color:var(--navy);margin:12px 0 6px;">Browse by day</p>
-            <p style="font-size:0.85rem;color:var(--text-muted);margin:0 0 16px;line-height:1.45;">Swipe the events list left or right — or tap ‹ › — to see other days.</p>
-            <button type="button" class="btn btn-sm btn-ticket" style="min-width:110px;">Got it</button>
+        <div style="background:var(--surface);border-radius:var(--radius);max-width:360px;width:100%;padding:24px 22px 18px;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,0.35);">
+            <div style="font-size:2rem;line-height:1;">👋</div>
+            <p id="mapp-welcome-title" style="font-weight:800;font-size:1.05rem;color:var(--navy);margin:10px 0 4px;">Welcome to Millersville.APP</p>
+            <p style="font-size:0.85rem;color:var(--text-muted);margin:0 0 16px;line-height:1.45;">The app shows different things to students and locals — who are you?</p>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+                ${optBtn('student', '🏴‍☠️', 'MU Student', 'campus events, dining, clubs & intramurals')}
+                ${optBtn('townie', '🌳', 'Local', 'youth sports, borough news, local deals')}
+            </div>
+            <p style="font-size:0.74rem;color:var(--text-muted);margin:14px 0 0;">You can change this anytime in ⚙️ settings.</p>
+            ${showSwipe ? `<div id="mapp-welcome-swipe" style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-size:0.78rem;color:var(--text-muted);"><span id="mapp-welcome-swipe-glyph" style="font-size:1.1rem;line-height:1;">👆</span><span>Tip: swipe the events list to change days</span></div>` : ''}
         </div>`;
-    // Tap anywhere dismisses — card and button included; their clicks bubble
-    // to this one scrim listener, so there's a single dismissal path.
-    scrim.addEventListener('click', dismissSwipeHint);
-    // Swiping the hint itself dismisses AND performs the day change — instant
-    // positive feedback that the gesture works. Same thresholds as
-    // attachHomeSwipeHandlers (own locals — the shared swipeStart* globals
-    // stay untouched). No ghost-click risk: a ≥60px move exceeds tap slop,
-    // so browsers suppress the synthetic click after a swipe.
-    let hintX = 0, hintY = 0, hintT = 0;
-    scrim.addEventListener('touchstart', (e) => {
-        if (e.touches.length !== 1) return;
-        hintX = e.touches[0].clientX;
-        hintY = e.touches[0].clientY;
-        hintT = Date.now();
-    }, { passive: true });
-    scrim.addEventListener('touchend', (e) => {
-        if (!hintT) return;
-        const t = e.changedTouches[0];
-        const dx = t.clientX - hintX;
-        const dy = t.clientY - hintY;
-        const duration = Date.now() - hintT;
-        hintT = 0;
-        if (duration > 600) return;
-        if (Math.abs(dx) < 60) return;
-        if (Math.abs(dx) < Math.abs(dy) * 1.5) return;
-        dismissSwipeHint();
-        if (typeof shiftHomeDay === 'function') shiftHomeDay(dx < 0 ? 1 : -1);
-    }, { passive: true });
+    // The ONLY way out is a pick. No scrim-tap handler, no Escape handler.
+    scrim.querySelectorAll('button[data-aff]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const v = btn.getAttribute('data-aff');
+            scrim.remove();
+            if (typeof window.pickAffiliation === 'function') window.pickAffiliation(v);
+        });
+    });
     document.body.appendChild(scrim);
-    // Nudge animation on the glyph — Web Animations API, so no style.css
-    // touch (Hard Rule 2) and no injected keyframes; skipped under
-    // prefers-reduced-motion, matching the timeline slide's respect for it.
+    const first = scrim.querySelector('button[data-aff]');
+    if (first) { try { first.focus(); } catch (_) {} }
+    // Glyph nudge — Web Animations API, no keyframes, no style.css (Hard Rule 2);
+    // skipped under prefers-reduced-motion.
     const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const glyph = document.getElementById('mapp-swipe-hint-glyph');
+    const glyph = document.getElementById('mapp-welcome-swipe-glyph');
     if (glyph && !reduceMotion && typeof glyph.animate === 'function') {
         glyph.animate(
-            [{ transform: 'translateX(16px)' }, { transform: 'translateX(-16px)' }],
+            [{ transform: 'translateX(8px)' }, { transform: 'translateX(-8px)' }],
             { duration: 900, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' }
         );
     }
@@ -3470,41 +3472,22 @@ function scheduleHeaderMeasure() {
 document.addEventListener("DOMContentLoaded",()=>{
     updateHeaderHeightVar();
 
-    // Admin/demo convenience: ?resetHints=1 in the URL clears ONLY the
-    // one-time hint keys (currently just the swipe hint — not favorites or
-    // affiliation), letting first-run hints resurface without losing real
-    // user state. Appended silently via history.replaceState so the URL bar
-    // stays clean. (Replaced ?resetWelcome=1 when the banner retired,
-    // 2026-08-26.)
-    try {
-        const params = new URLSearchParams(window.location.search);
-        if (params.has('resetHints')) {
-            localStorage.removeItem(SWIPE_HINT_KEY);
-            params.delete('resetHints');
-            const cleanSearch = params.toString();
-            const newUrl = window.location.pathname + (cleanSearch ? '?' + cleanSearch : '') + window.location.hash;
-            history.replaceState(null, '', newUrl);
-        }
-    } catch (_) { /* no URL params support → skip */ }
+    // (The one-time swipe hint and its URL demo param were RETIRED
+    // 2026-09-16 — first-run chrome is now the identity gate, created inside
+    // initApp() right after loadFeedPrefs(). Demo: ⚙️ → Reset everything.)
 
-    // Show the one-time swipe hint IMMEDIATELY on DOM ready (touch devices,
-    // home-destination loads only — see maybeShowSwipeHint). The show
-    // condition reads only localStorage + the URL, so there's no reason to
-    // wait for the data fetches — same rationale as the retired welcome
-    // banner's early show. try/catch so a failure here can't abort the rest
-    // of this handler (bumpVisitCount + initApp below must always run).
-    try { maybeShowSwipeHint(); } catch (_) { /* no hint → no-op */ }
+    initApp();
 
     // Install prompt (Add to Home Screen). Bump the visit counter, then decide
     // whether to surface our custom install banner. Engagement-gated so it never
     // fires on a first visit; Android/Chrome also re-trigger this via the
-    // captured beforeinstallprompt event, while iOS relies on this call.
+    // captured beforeinstallprompt event, while iOS relies on this call. Runs
+    // AFTER initApp() so the identity gate (created in initApp's synchronous
+    // prelude) is in the DOM for maybeShowInstallBanner's defer check.
     try {
         bumpVisitCount();
         maybeShowInstallBanner();
     } catch (_) { /* localStorage blocked / unsupported → no install nudge */ }
-
-    initApp();
 
     // Re-measure on viewport resize (covers mobile→desktop breakpoint flips
     // where the header's content swaps between hamburger and nav buttons).
@@ -3560,6 +3543,9 @@ document.addEventListener('keydown', (e) => {
 
 async function initApp(){
     loadFeedPrefs();
+    // First-run identity gate — AFTER loadFeedPrefs (stored identity + ?aud=
+    // links are known), BEFORE the data awaits (up before anything paints).
+    try { maybeShowWelcomeGate(); } catch (_) { /* never let the gate abort boot */ }
     applyAdvertiseGate();   // nav-advertise visibility depends on affiliation — set before first paint
     await Promise.allSettled([loadWeather(),loadWeatherMU(),loadSpecials(),loadEvents(),loadPlaces(),loadHousing(),loadNews(),loadSignups(),loadClubsDirectory(),loadVenueAliases()]);
     linkEventsToPlaces();   // event↔place venue matching (Today lens, card/popup event lines)

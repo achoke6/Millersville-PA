@@ -1,35 +1,6 @@
 {
   "days": [
     {
-      "date": "2026-06-18",
-      "ts": "2026-06-19T00:27:06.357Z",
-      "totalEvents": 1053,
-      "sources": {
-        "muAthletics": 211,
-        "muCalendar": 150,
-        "muGetInvolved": 318,
-        "pennManor": 222,
-        "borough": 106,
-        "vfw": 4,
-        "phantomPower": 12,
-        "community": 14,
-        "manor": 0,
-        "raneyCellars": 11,
-        "muHudlBroadcasts": 0
-      },
-      "newestDates": {
-        "muAthletics": "2027-03-12",
-        "muCalendar": "2027-04-03",
-        "muGetInvolved": "2027-05-05",
-        "pennManor": "2026-09-29",
-        "borough": "2027-06-12",
-        "vfw": "2026-09-11",
-        "phantomPower": "2026-08-15",
-        "community": "2027-04-16",
-        "raneyCellars": "2026-06-25"
-      }
-    },
-    {
       "date": "2026-06-19",
       "ts": "2026-06-20T00:10:44.870Z",
       "totalEvents": 1092,
@@ -2933,7 +2904,43 @@
         "raneyCellars": "2026-09-11",
         "theBackyard": "2026-10-12"
       }
+    },
+    {
+      "date": "2026-09-16",
+      "ts": "2026-09-16T07:16:37.632Z",
+      "totalEvents": 1680,
+      "sources": {
+        "muAthletics": 319,
+        "muCalendar": 160,
+        "artsmu": 22,
+        "campsAlumni": 40,
+        "muGetInvolved": 421,
+        "pennManor": 422,
+        "borough": 65,
+        "vfw": 9,
+        "phantomPower": 12,
+        "community": 21,
+        "manor": 40,
+        "raneyCellars": 7,
+        "theBackyard": 12,
+        "muHudlBroadcasts": 61
+      },
+      "newestDates": {
+        "muAthletics": "2027-05-27",
+        "muCalendar": "2027-06-04",
+        "artsmu": "2027-05-02",
+        "campsAlumni": "2027-04-03",
+        "muGetInvolved": "2027-04-29",
+        "pennManor": "2027-09-14",
+        "borough": "2026-12-25",
+        "vfw": "2026-10-22",
+        "phantomPower": "2026-10-16",
+        "community": "2027-04-16",
+        "manor": "2027-09-06",
+        "raneyCellars": "2026-09-11",
+        "theBackyard": "2026-10-12"
+      }
     }
   ],
-  "lastUpdated": "2026-09-16T01:07:47.741Z"
+  "lastUpdated": "2026-09-16T07:16:37.632Z"
 }

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-16T18:00:56.245Z",
+  "generatedAt": "2026-09-16T18:43:47.528Z",
   "totalEvents": 1701,
   "withDescription": 777,
   "withImage": 225,
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-16T17:57:35.875Z"
+    "lastSyncAt": "2026-09-16T18:40:48.911Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-16T18:00:48.064Z"
+    "checkedAt": "2026-09-16T18:43:39.826Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -221,6 +221,20 @@
   },
   "recentlyAdded": [
     {
+      "key": "Moose Ultimate Scrimmage|2026-09-20T12:00:00.000Z",
+      "firstSeenAt": "2026-09-16T18:43:47.524Z",
+      "title": "Moose Ultimate Scrimmage",
+      "source": "MU",
+      "date": "2026-09-20T12:00:00.000Z"
+    },
+    {
+      "key": "Parenting Students Meet Up|2026-09-23T21:30:00.000Z",
+      "firstSeenAt": "2026-09-16T18:43:47.524Z",
+      "title": "Parenting Students Meet Up",
+      "source": "MU",
+      "date": "2026-09-23T21:30:00.000Z"
+    },
+    {
       "key": "WIXQ 91.7 Day|2026-09-17T20:00:00.000Z",
       "firstSeenAt": "2026-09-16T18:00:56.243Z",
       "title": "WIXQ 91.7 Day",
@@ -275,20 +289,6 @@
       "title": "Hazing Prevention Week Online Seminar Viewings",
       "source": "MU",
       "date": "2026-09-21T12:00:00"
-    },
-    {
-      "key": "Periodic Table BINGO with American Chemical Society|2026-09-21T15:00:00",
-      "firstSeenAt": "2026-09-16T15:55:37.086Z",
-      "title": "Periodic Table BINGO with American Chemical Society",
-      "source": "MU",
-      "date": "2026-09-21T15:00:00"
-    },
-    {
-      "key": "Hazing Prevention Week Online Seminar Viewings|2026-09-23T12:00:00",
-      "firstSeenAt": "2026-09-16T15:55:37.086Z",
-      "title": "Hazing Prevention Week Online Seminar Viewings",
-      "source": "MU",
-      "date": "2026-09-23T12:00:00"
     }
   ],
   "addedLastRun": 2

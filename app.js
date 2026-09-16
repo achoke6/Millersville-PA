@@ -3077,6 +3077,7 @@ let evMode='upcoming', evAnchorDate=new Date();
 
 // Sports page state
 let spActiveSources=new Set(['PM','MU','Clubs']), spSportTag=null, spHomeOnly=false;
+let spOffSeasonOpen=false; // sport-pill row: off-season group expanded?
 // Sports view state: 'upcoming' (infinite-scroll forward) or 'past' (infinite-scroll backward)
 let spTimeView = 'upcoming';
 let spDaysVisible = INITIAL_DAYS;
@@ -4376,8 +4377,14 @@ function updateCurrentDayLabel(pageKey) {
     const container = document.getElementById(prefix + '-events-container');
     if (!labelEl || !container) return;
     const headers = container.querySelectorAll('.day-group-header');
+    // The label is a stand-in for whichever day header has scrolled UNDER the
+    // toolbar. Until one has (first paint, or scrolled back to the top) it's
+    // hidden — otherwise "Today" sits directly above the "TODAY · N events"
+    // header and reads as a double listing. visibility (not display) so the
+    // toolbar layout doesn't shift when it appears.
     if (headers.length === 0) {
         labelEl.textContent = 'Today';
+        labelEl.style.visibility = 'hidden';
         return;
     }
     // Defensive bail-out: when called immediately after innerHTML assignment,
@@ -4393,19 +4400,22 @@ function updateCurrentDayLabel(pageKey) {
         const todayHeader = container.querySelector('.day-group-header.today');
         const fallback = todayHeader || headers[0];
         labelEl.textContent = (fallback.childNodes[0] ? fallback.childNodes[0].textContent.trim() : fallback.textContent.trim()) || 'Today';
+        labelEl.style.visibility = 'hidden';
         return;
     }
     // "Active" header = the last one whose top has scrolled above the toolbar offset
     const offsetTop = 120; // ~ site header (50) + toolbar height (70)
     let active = headers[0];
+    let scrolledUnder = false; // has ANY header passed under the toolbar yet?
     for (const h of headers) {
         const rect = h.getBoundingClientRect();
-        if (rect.top <= offsetTop + 8) active = h;
+        if (rect.top <= offsetTop + 8) { active = h; scrolledUnder = true; }
         else break;
     }
     // Extract just the label (ignore the count span)
     const labelText = active.childNodes[0] ? active.childNodes[0].textContent.trim() : active.textContent.trim();
     if (labelEl.textContent !== labelText) labelEl.textContent = labelText;
+    labelEl.style.visibility = scrolledUnder ? '' : 'hidden';
 }
 // Throttle to once-per-animation-frame to avoid jank on scroll
 let _dayLabelScrollPending = false;
@@ -4520,7 +4530,7 @@ window.toggleHomeGameMode=function(){
     writeURLStateForView('sports');
 };
 window.clearSportsFilters=function(){
-    spSportTag=null; spHomeOnly=false; spAllMode=true;
+    spSportTag=null; spHomeOnly=false; spAllMode=true; spOffSeasonOpen=false;
     spActiveSources=new Set(['PM','MU','Clubs']);
     spTimeView='upcoming';
     spFavOnlyMode=false;
@@ -4661,7 +4671,7 @@ function renderSports(){
         const d = localDateStr(e.date);
         return d >= rangeStart && d <= rangeEnd;
     });
-    renderSportTypeTags(windowMatching);
+    renderSportTypeTags(windowMatching, allMatching);
 
     // Apply sport-type filter after the tag bar is rendered
     let filtered = spSportTag ? windowMatching.filter(e => eventMatchesSportLabel(e.tags || [], spSportTag)) : windowMatching;
@@ -4804,39 +4814,89 @@ window.setSportsTimeView = function(view) {
     if (spTimeView !== view) toggleSportsPast();
 };
 
-function renderSportTypeTags(baseEvents){
+// Pills split into IN-SEASON and OFF-SEASON. A team is in season if it has a
+// game within ±SP_NEAR_DAYS of today OR at least SP_SEASON_MIN games within
+// ±SP_IN_SEASON_DAYS. Two-sided on purpose: counting only forward demoted MU
+// swimming and tennis to "off season" over winter break. The 7-day clause keeps a
+// team whose season is ending (PM golf's last match) in season; the 2-in-21
+// clause filters one-off exhibitions (MU swimming's September Black & Gold
+// intrasquad meet). Off-season pills hide behind an "Off season (N) ▸" toggle so
+// the row stays scannable now that every team has a pill — in practice the group
+// doubles as a preview, showing next season's teams ~3 weeks before they start.
+// The group auto-opens when the active sport lives in it (arriving via
+// ?sport=Wrestling) so the highlighted pill is never hidden. If NOTHING is in
+// season (dead period) every pill renders flat — no toggle.
+// baseEvents = the visible window (decides WHICH pills exist);
+// seasonEvents = every matching game incl. past (decides in/off season).
+const SP_IN_SEASON_DAYS = 21;
+const SP_NEAR_DAYS = 7;
+const SP_SEASON_MIN = 2;
+function renderSportTypeTags(baseEvents, seasonEvents){
     const row=document.getElementById('sp-sport-tags');
     // Smart pill labels from the events in the window: split sports get a pill
     // per gender present ("Boys Soccer"); single sports get one pill ("Field
     // Hockey", "Cross Country"). Sorted by sport then gender so Boys/Girls sit together.
-    const labels=new Map(); // label -> sport display name (sort key)
-    baseEvents.forEach(e=>{
+    const labelFor=e=>{
         const tags=e.tags||[];
         const level=sportLevelFromTags(tags);
         const sportTag=sportsList.find(s=>tags.indexOf(s)!==-1);
-        if(!sportTag) return;
+        if(!sportTag) return null;
         const display=sportDisplayName(sportTag);
-        let label=display;
         if(level && isSplitSport(level,sportTag)){
             const g=sportGendersFor(level,sportTag).find(x=>tags.indexOf(x)!==-1);
-            if(!g) return; // split sport, no gender tag (e.g. a generic camp) — no sport pill
-            label=g+' '+display;
+            if(!g) return null; // split sport, no gender tag (e.g. a generic camp) — no sport pill
+            return {label:g+' '+display, display};
         }
-        labels.set(label, display);
-    });
+        return {label:display, display};
+    };
+    const labels=new Map(); // label -> display (sort key)
+    baseEvents.forEach(e=>{ const l=labelFor(e); if(l) labels.set(l.label,l.display); });
     if(labels.size===0){row.innerHTML='';return;}
-    let html=`<button class="sport-pill ${!spSportTag?'active':''}" onclick="setSportType(null)">All Sports</button>`;
-    Array.from(labels.keys()).sort((a,b)=>labels.get(a).localeCompare(labels.get(b))||a.localeCompare(b)).forEach(label=>{
+
+    // In-season counts over ALL matching games, both directions from today
+    const today=todayMidnight();
+    const seasonStart=toDateStr(addDays(today,-SP_IN_SEASON_DAYS)), seasonEnd=toDateStr(addDays(today,SP_IN_SEASON_DAYS));
+    const nearStart=toDateStr(addDays(today,-SP_NEAR_DAYS)), nearEnd=toDateStr(addDays(today,SP_NEAR_DAYS));
+    const counts=new Map(); // label -> {near, win}
+    (seasonEvents||baseEvents).forEach(e=>{
+        const d=localDateStr(e.date);
+        if(d<seasonStart || d>seasonEnd) return;
+        const l=labelFor(e); if(!l || !labels.has(l.label)) return;
+        const c=counts.get(l.label)||{near:0,win:0};
+        c.win++;
+        if(d>=nearStart && d<=nearEnd) c.near++;
+        counts.set(l.label,c);
+    });
+    const isIn=label=>{ const c=counts.get(label); return !!c && (c.near>=1 || c.win>=SP_SEASON_MIN); };
+
+    const sorted=Array.from(labels.keys()).sort((a,b)=>labels.get(a).localeCompare(labels.get(b))||a.localeCompare(b));
+    let inSeason=sorted.filter(isIn);
+    let offSeason=sorted.filter(l=>!isIn(l));
+    if(inSeason.length===0){inSeason=sorted;offSeason=[];} // dead period: flat row
+    const offOpen=spOffSeasonOpen||(spSportTag!==null && offSeason.indexOf(spSportTag)!==-1);
+    const pill=label=>{
         const feedSuffix=label.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
         const esc=label.replace(/'/g,"\\'");
-        html+=`<button class="sport-pill ${spSportTag===label?'active':''}" data-feed="sport-${feedSuffix}" onclick="setSportType('${esc}')">${label}</button>`;
-    });
+        return `<button class="sport-pill ${spSportTag===label?'active':''}" data-feed="sport-${feedSuffix}" onclick="setSportType('${esc}')">${label}</button>`;
+    };
+    let html=`<button class="sport-pill ${!spSportTag?'active':''}" onclick="setSportType(null)">All Sports</button>`;
+    html+=inSeason.map(pill).join('');
+    if(offSeason.length){
+        html+=`<button class="sport-pill" style="border-style:dashed;color:var(--text-muted);" onclick="toggleSpOffSeason()" aria-expanded="${offOpen?'true':'false'}" title="Teams not currently playing">Off season (${offSeason.length}) ${offOpen?'▾':'▸'}</button>`;
+        if(offOpen) html+=offSeason.map(pill).join('');
+    }
     row.innerHTML=html;
 }
 window.setSportType=function(sport){
     spSportTag=(spSportTag===sport)?null:sport;
     renderSports();
     writeURLStateForView('sports');
+};
+// Expand/collapse the off-season sport pills. Session-only state (no URL param —
+// it's a row-layout preference, not a filter); clearSportsFilters() resets it.
+window.toggleSpOffSeason=function(){
+    spOffSeasonOpen=!spOffSeasonOpen;
+    renderSports();
 };
 
 /* ==================== CARD BUILDER ==================== */

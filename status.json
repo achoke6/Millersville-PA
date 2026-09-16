@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-16T15:55:37.090Z",
-  "totalEvents": 1702,
-  "withDescription": 778,
+  "generatedAt": "2026-09-16T18:00:56.245Z",
+  "totalEvents": 1701,
+  "withDescription": 777,
   "withImage": 225,
   "familyFriendly": 81,
   "eventsToday": 29,
@@ -10,7 +10,7 @@
     "muCalendar": 164,
     "artsmu": 22,
     "campsAlumni": 40,
-    "muGetInvolved": 439,
+    "muGetInvolved": 438,
     "pennManor": 422,
     "borough": 65,
     "vfw": 9,
@@ -131,9 +131,9 @@
   },
   "sports": {
     "total": 741,
-    "scored": 48,
-    "wins": 27,
-    "losses": 20,
+    "scored": 50,
+    "wins": 28,
+    "losses": 21,
     "ties": 1
   },
   "registrations": {
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-09-16T15:52:09.891Z"
+    "lastSyncAt": "2026-09-16T17:57:35.875Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-16T15:55:28.947Z"
+    "checkedAt": "2026-09-16T18:00:48.064Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -221,6 +221,20 @@
   },
   "recentlyAdded": [
     {
+      "key": "WIXQ 91.7 Day|2026-09-17T20:00:00.000Z",
+      "firstSeenAt": "2026-09-16T18:00:56.243Z",
+      "title": "WIXQ 91.7 Day",
+      "source": "MU",
+      "date": "2026-09-17T20:00:00.000Z"
+    },
+    {
+      "key": "You Can't Taste Lace|2026-10-02T16:15:00.000Z",
+      "firstSeenAt": "2026-09-16T18:00:56.243Z",
+      "title": "You Can't Taste Lace",
+      "source": "MU",
+      "date": "2026-10-02T16:15:00.000Z"
+    },
+    {
       "key": "CHEP presentation training|2026-09-14T08:00:00",
       "firstSeenAt": "2026-09-16T15:55:37.086Z",
       "title": "CHEP presentation training",
@@ -275,21 +289,7 @@
       "title": "Hazing Prevention Week Online Seminar Viewings",
       "source": "MU",
       "date": "2026-09-23T12:00:00"
-    },
-    {
-      "key": "Lancaster Burger|2026-09-23T15:00:00.000Z",
-      "firstSeenAt": "2026-09-16T15:55:37.086Z",
-      "title": "Lancaster Burger",
-      "source": "The Backyard",
-      "date": "2026-09-23T15:00:00.000Z"
-    },
-    {
-      "key": "Sneakers 2 Stilettos Practice|2026-09-24T18:00:00",
-      "firstSeenAt": "2026-09-16T15:55:37.086Z",
-      "title": "Sneakers 2 Stilettos Practice",
-      "source": "MU",
-      "date": "2026-09-24T18:00:00"
     }
   ],
-  "addedLastRun": 24
+  "addedLastRun": 2
 }

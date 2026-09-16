@@ -5237,7 +5237,12 @@ function buildEventCard(e,isSportsPage){
         // floods it (~600/677 default to "Free"), so the link is the signal that
         // this is a real event worth flagging as no-cost rather than a routine
         // meeting/lecture. Sports skip it (default free admission).
-        actionHtml=`<span class="badge badge-free" style="background:var(--green);color:#fff;">Free</span>`;
+        // freeTicket (2026-09-16): free admission but a ticket must still be
+        // claimed (Ware film series on etix) — link the chip so the card CTA
+        // mirrors the modal's "Free Tickets" button instead of a dead badge.
+        actionHtml = e.freeTicket
+            ? `<a href="${e.ticketLink}" target="_blank" rel="noopener" class="btn btn-sm btn-ticket" onclick="event.stopPropagation();">🎟 Free Tickets</a>`
+            : `<span class="badge badge-free" style="background:var(--green);color:#fff;">Free</span>`;
     }
 
     // Game location badge (lower-left corner for sports) / Family badge for events
@@ -5715,6 +5720,10 @@ function buildTimelineItem(e, now) {
     if (hasTicket && !eventIsFree(e)) {
         const safeUrl = e.ticketLink.replace(/"/g, '&quot;');
         ticketBtn = `<a href="${safeUrl}" target="_blank" rel="noopener" class="tl-ticket" title="Buy tickets" onclick="event.stopPropagation();">🎟️</a>`;
+    } else if (hasTicket && e.freeTicket) {
+        // Free-but-ticketed (2026-09-16): keep the icon, retitle it.
+        const safeUrl = e.ticketLink.replace(/"/g, '&quot;');
+        ticketBtn = `<a href="${safeUrl}" target="_blank" rel="noopener" class="tl-ticket" title="Free tickets" onclick="event.stopPropagation();">🎟️</a>`;
     }
     // "Free" badge ONLY for free non-sport events that ALSO carry a ticket/info
     // link — i.e. events that otherwise look ticketed (Summer Fun Series, Candle
@@ -5953,6 +5962,10 @@ window.openEventDetails = function(key) {
         // Paid/ticketed only. A free event never shows "Buy Tickets" — its link is
         // an info page, surfaced as "More Info" via the source button below.
         actions += `<a href="${e.ticketLink}" target="_blank" class="btn btn-sm btn-ticket" style="text-decoration:none;">🎟️ Buy Tickets</a>`;
+    } else if (e.ticketLink && e.freeTicket) {
+        // Free admission, ticket still required (Ware film series, 2026-09-16):
+        // same green CTA, honest label — "Buy" was scaring people off a $0 show.
+        actions += `<a href="${e.ticketLink}" target="_blank" class="btn btn-sm btn-ticket" style="text-decoration:none;">🎟️ Free Tickets</a>`;
     }
     if (e.streamLink) {
         // State-aware label — same three cases as the card buttons. Clarifies
@@ -5987,7 +6000,7 @@ window.openEventDetails = function(key) {
     // Info/source link. For a free event, fall back to its ticketLink (an info
     // page, not a purchase) so the link still surfaces, and label it "More Info"
     // rather than the generic "View Source".
-    const infoUrl = e.sourceLink || (eventIsFree(e) ? e.ticketLink : '');
+    const infoUrl = e.sourceLink || (eventIsFree(e) && !e.freeTicket ? e.ticketLink : '');   // freeTicket: the link is already the CTA above
     const regDupesSource = (isRegistrationEvent(e) || isProgramSignup(e)) && infoUrl && infoUrl === getRegisterUrl(e);
     if (infoUrl && !regDupesSource) {
         const isPastGame = isSport && e.gameResult && e.gameScore;

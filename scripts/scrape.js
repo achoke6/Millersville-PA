@@ -2959,11 +2959,18 @@ async function runScraper() {
                 // challenge-walled, 2026-08-24). Same stable phrase as
                 // parseEtixTicketInfo keys on.
                 const muFreeTicket = /free ticket with a valid MU ID/i.test(evHtml);
+                // Ware film/First-Friday programs are titled "<Show> – FREE" on artsmu
+                // and ticketed at $0 on etix — free admission, but you still claim a
+                // ticket. freeTicket is a DISPLAY field (not a tag): it survives the
+                // false-Free veto downstream and flips "Buy Tickets" to "Free Tickets"
+                // (2026-09-16). A $ amount on the page still wins.
+                const freeTicket = !price && /\s[–—-]\s*free\s*$/i.test(title);
                 events.push({
                     title, date: eventDate.toISOString(), location: venue,
-                    tags, price: price || 'Open To Public',
+                    tags, price: price || (freeTicket ? 'Free' : 'Open To Public'),
                     ticketLink, sourceLink: eventUrl, description,
-                    ...(muFreeTicket ? { muFreeTicket: true } : {})
+                    ...(muFreeTicket ? { muFreeTicket: true } : {}),
+                    ...(freeTicket ? { freeTicket: true } : {})
                 });
                 existingKeys.add(key);
                 artsCount++;
@@ -5799,6 +5806,15 @@ async function runScraper() {
             // recitals that started this whole arc.
             let muFreeMerged = false;
             if (loser.event.muFreeTicket && !winner.muFreeTicket) { winner.muFreeTicket = true; muFreeMerged = true; }
+            // freeTicket rides the merge too (2026-09-16): the MU Calendar winner
+            // carries the Ware-branch 'Tickets Available' placeholder; artsmu's
+            // "– FREE" title is the venue's own word. Placeholder-only — a real $
+            // string on the winner is a conflicting signal and stays put.
+            let freeTicketMerged = false;
+            if (loser.event.freeTicket && !winner.freeTicket
+                && ['', 'Free', 'Open To Public', 'Ticket Required', 'Tickets Available'].includes((winner.price || '').trim())) {
+                winner.price = 'Free'; winner.freeTicket = true; freeTicketMerged = true;
+            }
             let ticketMerged = false;
             const loserLink = loser.event.ticketLink || '';
             // A /ticket/v/ venue-page link is a GUESS (extractPricing fallback),
@@ -5844,6 +5860,7 @@ async function runScraper() {
                     loser.event.kidFriendly && !winner.kidFriendly ? 'kidFriendly' : '',
                     ticketMerged ? 'ticketLink' : '',   // (2026-08-24: old condition read winner.ticketLink AFTER mutation — never fired)
                     muFreeMerged ? 'muFreeTicket' : '',
+                    freeTicketMerged ? 'freeTicket' : '',
                     loser.event.audience === 'public' && winner.audience === 'public' && candidates[0].event.audience !== 'public' ? 'audience:public' : ''
                 ].filter(Boolean).join('+')
             });
@@ -6105,7 +6122,7 @@ async function runScraper() {
             if (!pid) continue;
             const c = etixCache[pid];
             if (c && c.ok) {
-                if (c.price && ETIX_PLACEHOLDER_PRICES.has((ev.price || '').trim())) { ev.price = c.price; etixPriced++; }
+                if (c.price && !ev.freeTicket && ETIX_PLACEHOLDER_PRICES.has((ev.price || '').trim())) { ev.price = c.price; etixPriced++; }
                 if (c.muFreeTicket) { ev.muFreeTicket = true; etixFlagged++; }
             }
             // False-Free veto: a specific etix purchase link whose price is
@@ -6113,7 +6130,8 @@ async function runScraper() {
             // admission is a paid event we couldn't price — 'Ticket Required'
             // beats a lying green Free badge. (eventIsFree() is exact-match,
             // so this single string flip disarms the badge on every surface.)
-            if ((ev.price || '').trim() === 'Free' && !(c && c.ok && c.price === 'Free')) { ev.price = 'Ticket Required'; etixVetoed++; }
+            // freeTicket events are venue-confirmed free (artsmu "– FREE" title) — exempt (2026-09-16).
+            if (!ev.freeTicket && (ev.price || '').trim() === 'Free' && !(c && c.ok && c.price === 'Free')) { ev.price = 'Ticket Required'; etixVetoed++; }
         }
         console.log(`🎫 Etix enrichment: ${etixPriced} priced, ${etixFlagged} MU-free flagged, ${etixVetoed} false-Free vetoed (cache ${etixFromCache}, fetched ${etixFetched}, failed ${etixFailed})`);
     } catch (e) { console.error('❌ Etix enrichment error:', e.message); }

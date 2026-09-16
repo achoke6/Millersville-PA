@@ -68,13 +68,8 @@
   },
   {
     "name": "Alpha Xi Delta",
-    "category": "Competition",
-    "categories": [
-      "Competition",
-      "Fundraiser",
-      "Performance",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -90,8 +85,10 @@
   },
   {
     "name": "American Chemical Society",
-    "category": "",
-    "categories": [],
+    "category": "Educational Program",
+    "categories": [
+      "Educational Program"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -265,10 +262,8 @@
   },
   {
     "name": "Campus Recreation",
-    "category": "Competition",
+    "category": "Sporting",
     "categories": [
-      "Competition",
-      "Social",
       "Sporting"
     ],
     "shortName": "",
@@ -1446,15 +1441,6 @@
     "id": ""
   },
   {
-    "name": "Society of Physics Students",
-    "category": "Fundraiser",
-    "categories": [
-      "Fundraiser"
-    ],
-    "shortName": "SPS",
-    "id": ""
-  },
-  {
     "name": "Society On Latino Affairs",
     "category": "Social",
     "categories": [
@@ -1718,8 +1704,10 @@
   },
   {
     "name": "University Activities Board",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "UAB",
     "id": ""
   },

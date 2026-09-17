@@ -1632,7 +1632,7 @@ async function runScraper() {
         // Debug: check raw PM lacrosse events before any processing
         const rawLax = Object.values(pmData).filter(e => /lacrosse/i.test(e.summary || ''));
         const rawGirlsLax = rawLax.filter(e => /girl/i.test(e.summary || ''));
-        console.log(`    🔍 Raw iCal lacrosse: ${rawLax.length} total, ${rawGirlsLax.length} girls`);
+        console.log(`    🔍 Raw PM lacrosse: ${rawLax.length} total, ${rawGirlsLax.length} girls`);
         rawGirlsLax.filter(e => new Date(e.start) >= now).forEach(e => console.log(`      → ${e.summary} (${new Date(e.start).toISOString().split('T')[0]})`));
 
         let pmAthCount = 0, pmGenCount = 0;
@@ -1648,6 +1648,34 @@ async function runScraper() {
             { match: /senior awards/i, date: '2026-05-21', url: 'https://www.youtube.com/watch?v=R7PBpOK-ws8' },
         ];
 
+        // SCHOOL-AWARE ROWS (2026-09-17). The district leaves the venue blank on most
+        // general-calendar posts and several schools post the identical title ("PTO
+        // Meeting") at the identical minute, so before this the title+instant+location
+        // dedupe kept one and dropped the rest (8 PTO nights lost on the 09-17 run) and
+        // the survivor said "Penn Manor School District". REST gives us the school in
+        // `categories` ("Central Manor Elementary School"), so: location = the school
+        // when the venue is blank; rows that don't already name their school get a
+        // short-name prefix ("Central Manor PTO Meeting"); rows with the same base title
+        // at the same instant across schools MERGE into one event that lists every
+        // school ("Central Manor & Pequea PTO Meeting"). Rows are collected in
+        // pmGenPending and emitted after the loop so the merge can see all of them.
+        const PM_SCHOOL_RE = /^(.*?)\s+(elementary|middle|high)\s+school$/i;
+        const pmSchoolsOf = (categories) => String(categories || '').split(',')
+            .map(c => c.trim()).filter(c => PM_SCHOOL_RE.test(c));
+        const pmSchoolShort = (full) => {
+            const m = full.match(PM_SCHOOL_RE);
+            if (!m) return full;
+            const level = m[2].toLowerCase();
+            return level === 'elementary' ? m[1] : `${m[1]} ${level === 'middle' ? 'MS' : 'HS'}`;
+        };
+        // Title already names a school: the district's own abbreviations (ESH, HB, PEQ,
+        // CM, CON, LET, MAR, MMS, MTV, PMHS) as a leading token, or the school's short
+        // name anywhere in the title.
+        const PM_SCHOOL_ABBR_RE = /^(esh|hb|peq|cm|con|let|mar|mms|mtv|pmhs|pm ?hs)\b/i;
+        const pmTitleNamesSchool = (title, shorts) =>
+            PM_SCHOOL_ABBR_RE.test(title) || shorts.some(s => title.toLowerCase().includes(s.toLowerCase()));
+        const pmGenPending = []; // {key, title, eventDate, endTime, schools:Set, venue, tags, streamLink, sourceLink}
+
         for (const ev of Object.values(pmData)) {
             const eventDate = new Date(ev.start);
             if (isNaN(eventDate.getTime()) || eventDate < pastDate || eventDate >= futureDate) continue;
@@ -1660,8 +1688,9 @@ async function runScraper() {
                 .trim();
             const lowerTitle = title.toLowerCase();
             const desc = ev.description || '';
-            const loc = ev.location || 'Penn Manor School District';
             const categories = ev.categories ? (Array.isArray(ev.categories) ? ev.categories.join(',') : String(ev.categories)) : '';
+            const schools = pmSchoolsOf(categories);
+            const loc = ev.location || (schools.length ? schools.join(' · ') : 'Penn Manor School District');
 
             // Skip noise
             if (/cycle day|^start of|^end of/i.test(lowerTitle)) continue;
@@ -1717,18 +1746,46 @@ async function runScraper() {
                 const pmBoardStream = pmReplay ? pmReplay.url
                     : (/board/i.test(lt) ? 'https://www.youtube.com/@PennManorSchoolDistrict/streams' : '');
 
-                events.push({
-                    title, date: eventDate.toISOString(),
+                // Same base title + same instant across schools → one merged row (below).
+                const mergeKey = `${lowerTitle}|${eventDate.getTime()}`;
+                const prior = pmGenPending.find(p => p.key === mergeKey);
+                if (prior) {
+                    schools.forEach(s => prior.schools.add(s));
+                    continue;
+                }
+                pmGenPending.push({
+                    key: mergeKey, title, eventDate,
                     endTime: resolveEndTime({ origStart: ev.start, origEnd: ev.end, instanceStart: eventDate }),
-                    location: loc,
-                    tags: [...new Set(tags)], price: "Free", ticketLink: "",
+                    schools: new Set(schools), venue: ev.location || '',
+                    tags: [...new Set(tags)],
                     sourceLink: ev.url || "https://www.pennmanor.net/calendar/",
                     streamLink: pmBoardStream
                 });
-                pmGenCount++;
             }
         }
-        console.log(`✅ Penn Manor (general): ${pmGenCount} non-athletic events (athletics now come from the athletics-category feed below)`);
+        let pmGenMerged = 0, pmGenPrefixed = 0;
+        for (const p of pmGenPending) {
+            const schoolList = [...p.schools];
+            const shorts = schoolList.map(pmSchoolShort);
+            let title = p.title;
+            if (schoolList.length && !pmTitleNamesSchool(title, shorts)) {
+                const joined = shorts.length > 1 ? shorts.slice(0, -1).join(', ') + ' & ' + shorts[shorts.length - 1] : shorts[0];
+                title = `${joined} ${title}`;
+                pmGenPrefixed++;
+            }
+            if (schoolList.length > 1) pmGenMerged++;
+            const location = p.venue || (schoolList.length ? schoolList.join(' · ') : 'Penn Manor School District');
+            events.push({
+                title, date: p.eventDate.toISOString(),
+                endTime: p.endTime,
+                location,
+                tags: p.tags, price: "Free", ticketLink: "",
+                sourceLink: p.sourceLink,
+                streamLink: p.streamLink
+            });
+            pmGenCount++;
+        }
+        console.log(`✅ Penn Manor (general): ${pmGenCount} non-athletic events (${pmGenPrefixed} school-prefixed, ${pmGenMerged} multi-school merges; athletics come from the athletics-category feed below)`);
     } catch (e) { console.error("❌ Penn Manor error:", e.message); }
 
     // ===== 2a. PENN MANOR ATHLETICS (dedicated athletics-category iCal) =====

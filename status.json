@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-17T15:32:22.761Z",
-  "totalEvents": 1785,
-  "withDescription": 774,
+  "generatedAt": "2026-09-17T17:15:24.770Z",
+  "totalEvents": 1787,
+  "withDescription": 775,
   "withImage": 227,
   "familyFriendly": 91,
   "eventsToday": 30,
   "sources": {
     "muAthletics": 319,
-    "muCalendar": 165,
+    "muCalendar": 166,
     "artsmu": 22,
     "campsAlumni": 39,
-    "muGetInvolved": 439,
+    "muGetInvolved": 440,
     "pennManor": 511,
     "borough": 65,
     "vfw": 7,
@@ -150,13 +150,13 @@
       "PM Community": 1
     },
     "stalePast": 5,
-    "lastSyncAt": "2026-09-17T15:28:44.236Z"
+    "lastSyncAt": "2026-09-17T17:11:27.815Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-17T15:32:15.491Z"
+    "checkedAt": "2026-09-17T17:15:17.137Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -229,6 +229,27 @@
   },
   "recentlyAdded": [
     {
+      "key": "Staff Meeting|2026-09-22T16:00:00",
+      "firstSeenAt": "2026-09-17T17:15:24.768Z",
+      "title": "Staff Meeting",
+      "source": "MU",
+      "date": "2026-09-22T16:00:00"
+    },
+    {
+      "key": "Millersville Mens Club Soccer vs F&M FC|2026-10-02T01:00:00.000Z",
+      "firstSeenAt": "2026-09-17T17:15:24.768Z",
+      "title": "Millersville Mens Club Soccer vs F&M FC",
+      "source": "MU",
+      "date": "2026-10-02T01:00:00.000Z"
+    },
+    {
+      "key": "FSL: Sigma Alpha Iota Tabling|2026-10-14T07:00:00",
+      "firstSeenAt": "2026-09-17T17:15:24.768Z",
+      "title": "FSL: Sigma Alpha Iota Tabling",
+      "source": "MU",
+      "date": "2026-10-14T07:00:00"
+    },
+    {
       "key": "Men's Rugby Practice|2026-09-17T20:00:00.000Z",
       "firstSeenAt": "2026-09-17T15:32:22.757Z",
       "title": "Men's Rugby Practice",
@@ -276,28 +297,7 @@
       "title": "Conestoga PTO Meeting",
       "source": "PM",
       "date": "2026-09-10T20:00:00.000Z"
-    },
-    {
-      "key": "Millersville Men's Club Soccer vs Coal Region Soccer Club|2026-09-20T21:00:00.000Z",
-      "firstSeenAt": "2026-09-17T14:36:33.840Z",
-      "title": "Millersville Men's Club Soccer vs Coal Region Soccer Club",
-      "source": "MU",
-      "date": "2026-09-20T21:00:00.000Z"
-    },
-    {
-      "key": "Letort Den Time (PERSEVERANCE Activity) Followed by Laps Kick off Assembly|2026-09-25T18:00:00.000Z",
-      "firstSeenAt": "2026-09-17T14:36:33.840Z",
-      "title": "Letort Den Time (PERSEVERANCE Activity) Followed by Laps Kick off Assembly",
-      "source": "PM",
-      "date": "2026-09-25T18:00:00.000Z"
-    },
-    {
-      "key": "Conestoga PTO Meeting|2026-10-08T20:00:00.000Z",
-      "firstSeenAt": "2026-09-17T14:36:33.840Z",
-      "title": "Conestoga PTO Meeting",
-      "source": "PM",
-      "date": "2026-10-08T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 3
 }

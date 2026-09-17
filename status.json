@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-09-16T19:13:23.962Z",
-  "totalEvents": 1663,
-  "withDescription": 777,
-  "withImage": 225,
-  "familyFriendly": 81,
-  "eventsToday": 29,
+  "generatedAt": "2026-09-17T11:01:21.876Z",
+  "totalEvents": 1702,
+  "withDescription": 776,
+  "withImage": 229,
+  "familyFriendly": 80,
+  "eventsToday": 31,
   "sources": {
     "muAthletics": 319,
-    "muCalendar": 164,
+    "muCalendar": 165,
     "artsmu": 22,
-    "campsAlumni": 40,
-    "muGetInvolved": 438,
-    "pennManor": 424,
+    "campsAlumni": 39,
+    "muGetInvolved": 439,
+    "pennManor": 426,
     "borough": 65,
     "vfw": 9,
     "phantomPower": 12,
     "community": 21,
-    "manor": 0,
-    "raneyCellars": 7,
+    "manor": 40,
+    "raneyCellars": 3,
     "theBackyard": 12,
     "muHudlBroadcasts": 61
   },
@@ -35,7 +35,7 @@
       "latest": "2027-05-02T18:30:00.000Z"
     },
     "campsAlumni": {
-      "earliest": "2026-06-18T22:00:00.000Z",
+      "earliest": "2026-06-22T13:00:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
@@ -44,7 +44,7 @@
     },
     "pennManor": {
       "earliest": "2026-08-17T12:00:00.000Z",
-      "latest": "2027-09-14T21:30:00.000Z"
+      "latest": "2027-09-16T20:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-06-22T22:00:00.000Z",
@@ -55,17 +55,20 @@
       "latest": "2026-10-22T22:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-09-17T00:00:00.000Z",
-      "latest": "2026-10-16T23:30:00.000Z"
+      "earliest": "2026-09-18T00:00:00.000Z",
+      "latest": "2026-10-17T23:00:00.000Z"
     },
     "community": {
       "earliest": "2026-06-22T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-09-30T12:30:00.000Z",
+      "latest": "2027-09-06T23:00:00.000Z"
+    },
     "raneyCellars": {
-      "earliest": "2026-08-15T22:00:00.000Z",
-      "latest": "2026-09-11T20:00:00.000Z"
+      "earliest": "2026-09-17T20:00:00.000Z",
+      "latest": "2026-09-24T20:00:00.000Z"
     },
     "theBackyard": {
       "earliest": "2026-08-24T12:30:00.000Z",
@@ -75,58 +78,61 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 15
+      "daysSinceMoved": 16
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 26
+      "daysSinceMoved": 27
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 40
+      "daysSinceMoved": 41
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 40
+      "daysSinceMoved": 41
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 14
     },
     "pennManor": {
-      "newest": "2027-09-14",
-      "daysSinceMoved": 2
+      "newest": "2027-09-16",
+      "daysSinceMoved": 1
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 50
+      "daysSinceMoved": 51
     },
     "vfw": {
       "newest": "2026-10-22",
-      "daysSinceMoved": 15
+      "daysSinceMoved": 16
     },
     "phantomPower": {
-      "newest": "2026-10-16",
-      "daysSinceMoved": 3
+      "newest": "2026-10-17",
+      "daysSinceMoved": 0
     },
     "community": {
       "newest": "2027-04-16",
       "daysSinceMoved": 89
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-09-06",
+      "daysSinceMoved": 11
+    },
     "raneyCellars": {
-      "newest": "2026-09-11",
-      "daysSinceMoved": 13
+      "newest": "2026-09-24",
+      "daysSinceMoved": 0
     },
     "theBackyard": {
       "newest": "2026-10-12",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 9
     }
   },
   "sports": {
-    "total": 743,
-    "scored": 50,
-    "wins": 28,
+    "total": 745,
+    "scored": 52,
+    "wins": 30,
     "losses": 21,
     "ties": 1
   },
@@ -138,18 +144,18 @@
   },
   "reviewQueue": {
     "pendingFuture": 1,
-    "pendingPast": 1,
+    "pendingPast": 0,
     "pendingBySource": {
       "PM Community": 1
     },
-    "stalePast": 9,
-    "lastSyncAt": "2026-09-16T19:10:13.475Z"
+    "stalePast": 5,
+    "lastSyncAt": "2026-09-17T10:57:51.661Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-16T19:13:14.700Z"
+    "checkedAt": "2026-09-17T11:01:09.211Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -158,7 +164,7 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 363,
+        "value": 364,
         "min": 45,
         "skipped": false
       },
@@ -172,21 +178,21 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 261,
+        "value": 260,
         "min": 30,
         "skipped": false
       },
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 100,
+        "value": 99,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 424,
+        "value": 426,
         "min": 150,
         "skipped": false
       },
@@ -215,75 +221,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Legal Observer Training|2026-09-30T21:00:00.000Z",
-      "firstSeenAt": "2026-09-16T19:13:23.959Z",
-      "title": "Legal Observer Training",
-      "source": "MU",
-      "date": "2026-09-30T21:00:00.000Z"
+      "key": "THE NUMBER TWELVE LOOKS LIKE YOU w. Kaonashi, Differences, Samaritan Snare|2026-10-17T23:00:00.000Z",
+      "firstSeenAt": "2026-09-17T11:01:21.873Z",
+      "title": "THE NUMBER TWELVE LOOKS LIKE YOU w. Kaonashi, Differences, Samaritan Snare",
+      "source": "Other",
+      "date": "2026-10-17T23:00:00.000Z"
     },
     {
-      "key": "Men's Ice Hockey VS Lehigh University|2026-10-03T20:15:00.000Z",
-      "firstSeenAt": "2026-09-16T19:13:23.959Z",
-      "title": "Men's Ice Hockey VS Lehigh University",
-      "source": "MU",
-      "date": "2026-10-03T20:15:00.000Z"
-    },
-    {
-      "key": "40th Annual Brossman Foundation and Ronald E. Frisbie Sr. Science Lectureship|2026-11-05T18:30:00",
-      "firstSeenAt": "2026-09-16T19:13:23.959Z",
-      "title": "40th Annual Brossman Foundation and Ronald E. Frisbie Sr. Science Lectureship",
-      "source": "MU",
-      "date": "2026-11-05T18:30:00"
-    },
-    {
-      "key": "Girls JV Softball vs Solanco High School|2027-04-09T20:00:00.000Z",
-      "firstSeenAt": "2026-09-16T19:13:23.959Z",
-      "title": "Girls JV Softball vs Solanco High School",
-      "source": "PM",
-      "date": "2027-04-09T20:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Softball vs Solanco High School|2027-04-09T20:00:00.000Z",
-      "firstSeenAt": "2026-09-16T19:13:23.959Z",
-      "title": "Girls Varsity Softball vs Solanco High School",
-      "source": "PM",
-      "date": "2027-04-09T20:00:00.000Z"
-    },
-    {
-      "key": "Moose Ultimate Scrimmage|2026-09-20T12:00:00.000Z",
-      "firstSeenAt": "2026-09-16T18:43:47.524Z",
-      "title": "Moose Ultimate Scrimmage",
-      "source": "MU",
-      "date": "2026-09-20T12:00:00.000Z"
-    },
-    {
-      "key": "Parenting Students Meet Up|2026-09-23T21:30:00.000Z",
-      "firstSeenAt": "2026-09-16T18:43:47.524Z",
-      "title": "Parenting Students Meet Up",
-      "source": "MU",
-      "date": "2026-09-23T21:30:00.000Z"
-    },
-    {
-      "key": "WIXQ 91.7 Day|2026-09-17T20:00:00.000Z",
-      "firstSeenAt": "2026-09-16T18:00:56.243Z",
-      "title": "WIXQ 91.7 Day",
+      "key": "Millersville University Field Hockey at West Chester|2026-09-17T20:00:00.000Z",
+      "firstSeenAt": "2026-09-17T05:46:46.609Z",
+      "title": "Millersville University Field Hockey at West Chester",
       "source": "MU",
       "date": "2026-09-17T20:00:00.000Z"
     },
     {
-      "key": "You Can't Taste Lace|2026-10-02T16:15:00.000Z",
-      "firstSeenAt": "2026-09-16T18:00:56.243Z",
-      "title": "You Can't Taste Lace",
-      "source": "MU",
-      "date": "2026-10-02T16:15:00.000Z"
+      "key": "Walk O Taco|2026-09-17T20:00:00.000Z",
+      "firstSeenAt": "2026-09-17T05:46:46.609Z",
+      "title": "Walk O Taco",
+      "source": "Raney Cellars",
+      "date": "2026-09-17T20:00:00.000Z"
     },
     {
-      "key": "CHEP presentation training|2026-09-14T08:00:00",
-      "firstSeenAt": "2026-09-16T15:55:37.086Z",
-      "title": "CHEP presentation training",
+      "key": "Thurday Trivia 6PM|2026-09-17T22:00:00.000Z",
+      "firstSeenAt": "2026-09-17T05:46:46.609Z",
+      "title": "Thurday Trivia 6PM",
+      "source": "Raney Cellars",
+      "date": "2026-09-17T22:00:00.000Z"
+    },
+    {
+      "key": "Taco RV|2026-09-24T20:00:00.000Z",
+      "firstSeenAt": "2026-09-17T05:46:46.609Z",
+      "title": "Taco RV",
+      "source": "Raney Cellars",
+      "date": "2026-09-24T20:00:00.000Z"
+    },
+    {
+      "key": "Studio Ghibli Movie Night|2026-09-24T23:30:00.000Z",
+      "firstSeenAt": "2026-09-17T05:46:46.609Z",
+      "title": "Studio Ghibli Movie Night",
       "source": "MU",
-      "date": "2026-09-14T08:00:00"
+      "date": "2026-09-24T23:30:00.000Z"
+    },
+    {
+      "key": "Karake Night|2026-10-08T02:00:00.000Z",
+      "firstSeenAt": "2026-09-17T05:46:46.609Z",
+      "title": "Karake Night",
+      "source": "Jack's Tavern",
+      "date": "2026-10-08T02:00:00.000Z"
+    },
+    {
+      "key": "YDSA Tabling|2026-09-03T13:00:00",
+      "firstSeenAt": "2026-09-17T00:08:19.067Z",
+      "title": "YDSA Tabling",
+      "source": "MU",
+      "date": "2026-09-03T13:00:00"
+    },
+    {
+      "key": "Intro to Paws on Deck|2026-09-03T16:30:00",
+      "firstSeenAt": "2026-09-17T00:08:19.067Z",
+      "title": "Intro to Paws on Deck",
+      "source": "MU",
+      "date": "2026-09-03T16:30:00"
+    },
+    {
+      "key": "Student Government Association (SGA) Weekly Meeting|2026-09-03T17:00:00",
+      "firstSeenAt": "2026-09-17T00:08:19.067Z",
+      "title": "Student Government Association (SGA) Weekly Meeting",
+      "source": "MU",
+      "date": "2026-09-03T17:00:00"
     }
   ],
-  "addedLastRun": 5
+  "addedLastRun": 1
 }

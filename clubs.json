@@ -3,8 +3,7 @@
     "name": "Acacia",
     "category": "Service",
     "categories": [
-      "Service",
-      "Fundraiser"
+      "Service"
     ],
     "shortName": "",
     "id": ""
@@ -157,8 +156,9 @@
   },
   {
     "name": "Asian Student Inclusivity Association",
-    "category": "Social",
+    "category": "Performance",
     "categories": [
+      "Performance",
       "Social"
     ],
     "shortName": "ASIA",
@@ -1071,9 +1071,9 @@
   },
   {
     "name": "Men's Rugby Club of Millersville University",
-    "category": "Fundraiser",
+    "category": "Meeting",
     "categories": [
-      "Fundraiser"
+      "Meeting"
     ],
     "shortName": "Men's Rugby Club",
     "id": ""
@@ -1219,10 +1219,8 @@
   },
   {
     "name": "Ocean Science Club",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1280,12 +1278,12 @@
   },
   {
     "name": "Paws On Deck",
-    "category": "Meeting",
+    "category": "Service & Civic Engagement",
     "categories": [
-      "Meeting"
+      "Service & Civic Engagement"
     ],
-    "shortName": "",
-    "id": ""
+    "shortName": "POD",
+    "id": "pawsondeck"
   },
   {
     "name": "Peer Educators",
@@ -1360,8 +1358,11 @@
   },
   {
     "name": "Reformed University Fellowship",
-    "category": "",
-    "categories": [],
+    "category": "Meeting",
+    "categories": [
+      "Meeting",
+      "Social"
+    ],
     "shortName": "RUF",
     "id": ""
   },
@@ -1712,10 +1713,8 @@
   },
   {
     "name": "University Activities Board",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "UAB",
     "id": ""
   },

@@ -355,6 +355,13 @@ function extractPricing(desc, title = "", location = "", apiLink = "", startET =
         { match: /tanner bingaman/i,                      start: '2027-03-13', url: 'https://www.etix.com/ticket/p/67121509/seasons-with-tanner-bingaman-virginia-masland-lancaster-ware-center-for-the-arts', price: '$15.50' },
         { match: /taikoproject/i,                         start: '2027-04-18', url: 'https://www.etix.com/ticket/p/93081881/taikoproject-lancaster-ware-center-for-the-arts', price: '$10.50 - $15.50' },
         { match: /reji woods/i,                           start: '2027-04-24', url: 'https://www.etix.com/ticket/p/54094145/music-of-the-silver-screen-with-reji-woods-friends-lancaster-ware-center-for-the-arts', price: '$25.50' },
+        // Multi-session workshops (2026-09-17): one etix registration per series,
+        // but MU Calendar lists every session and only session 1 pairs with the
+        // artsmu twin's /p/ link. Sessions 2+ would fall to a bare 'Free'. Month
+        // guard (YYYY-MM prefix) covers the whole series; venue page is the only
+        // link that exists for them.
+        { match: /pablo picasso/i,                        start: '2026-09',    url: 'https://www.etix.com/ticket/v/23604/', price: '$45' },
+        { match: /georgia o.keeffe/i,                     start: '2026-11',    url: 'https://www.etix.com/ticket/v/23604/', price: 'Ticket Required' }, // sold out
         // Faculty Recital: Strings Faculty (2026-09-17): MU Calendar row carried
         // only the /v/23659/ venue fallback. Verified Free / $0.00 on etix; the
         // pid is in ETIX_KNOWN_FREE_PIDS so the sweep flips the placeholder.

@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-09-17T19:36:24.235Z",
-  "totalEvents": 1802,
+  "generatedAt": "2026-09-17T19:56:05.836Z",
+  "totalEvents": 1280,
   "withDescription": 779,
   "withImage": 231,
-  "familyFriendly": 91,
-  "eventsToday": 30,
+  "familyFriendly": 80,
+  "eventsToday": 26,
   "sources": {
     "muAthletics": 319,
     "muCalendar": 166,
     "artsmu": 22,
     "campsAlumni": 39,
     "muGetInvolved": 444,
-    "pennManor": 522,
+    "pennManor": 0,
     "borough": 65,
     "vfw": 7,
     "phantomPower": 12,
@@ -42,10 +42,7 @@
       "earliest": "2026-08-16T00:00:00.000Z",
       "latest": "2027-04-29T11:30:00.000Z"
     },
-    "pennManor": {
-      "earliest": "2026-06-22T23:00:00.000Z",
-      "latest": "2027-09-16T20:00:00.000Z"
-    },
+    "pennManor": null,
     "borough": {
       "earliest": "2026-06-22T22:00:00.000Z",
       "latest": "2026-12-25T12:00:00.000Z"
@@ -96,10 +93,7 @@
       "newest": "2027-04-29",
       "daysSinceMoved": 14
     },
-    "pennManor": {
-      "newest": "2027-09-16",
-      "daysSinceMoved": 1
-    },
+    "pennManor": null,
     "borough": {
       "newest": "2026-12-25",
       "daysSinceMoved": 51
@@ -130,11 +124,11 @@
     }
   },
   "sports": {
-    "total": 745,
-    "scored": 52,
-    "wins": 30,
-    "losses": 21,
-    "ties": 1
+    "total": 319,
+    "scored": 25,
+    "wins": 15,
+    "losses": 10,
+    "ties": 0
   },
   "registrations": {
     "open": 12,
@@ -150,22 +144,27 @@
       "PM Community": 3
     },
     "stalePast": 5,
-    "lastSyncAt": "2026-09-17T19:32:14.204Z"
+    "lastSyncAt": "2026-09-17T19:52:31.295Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-17T19:36:15.538Z"
+    "checkedAt": "2026-09-17T19:55:58.959Z"
   },
   "sourceHealth": {
-    "ok": true,
-    "failing": [],
+    "ok": false,
+    "failing": [
+      "pennManorAthletics.horizonDays",
+      "pennManorAthletics.count",
+      "pennManorGeneral.count",
+      "pmHudl.matched"
+    ],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
-        "ok": true,
-        "value": 364,
+        "ok": false,
+        "value": null,
         "min": 45,
         "skipped": false
       },
@@ -192,8 +191,8 @@
       },
       {
         "key": "pennManorAthletics.count",
-        "ok": true,
-        "value": 426,
+        "ok": false,
+        "value": 0,
         "min": 150,
         "skipped": false
       },
@@ -206,8 +205,8 @@
       },
       {
         "key": "pennManorGeneral.count",
-        "ok": true,
-        "value": 96,
+        "ok": false,
+        "value": 0,
         "min": 10,
         "skipped": false
       },
@@ -221,8 +220,8 @@
       },
       {
         "key": "pmHudl.matched",
-        "ok": true,
-        "matched": 17,
+        "ok": false,
+        "matched": 0,
         "withBroadcasts": 22
       }
     ]
@@ -285,19 +284,19 @@
       "date": "2026-09-30T01:00:00.000Z"
     },
     {
-      "key": "Eshleman Chorus|2026-09-30T04:00:00.000Z",
-      "firstSeenAt": "2026-09-17T19:36:24.232Z",
-      "title": "Eshleman Chorus",
-      "source": "PM",
-      "date": "2026-09-30T04:00:00.000Z"
-    },
-    {
       "key": "Ice Hockey Club (D3) Practice|2026-10-02T00:15:00.000Z",
       "firstSeenAt": "2026-09-17T19:36:24.232Z",
       "title": "Ice Hockey Club (D3) Practice",
       "source": "MU",
       "date": "2026-10-02T00:15:00.000Z"
+    },
+    {
+      "key": "Ice Hockey Club (D3) Practice|2026-10-07T01:00:00.000Z",
+      "firstSeenAt": "2026-09-17T19:36:24.232Z",
+      "title": "Ice Hockey Club (D3) Practice",
+      "source": "MU",
+      "date": "2026-10-07T01:00:00.000Z"
     }
   ],
-  "addedLastRun": 25
+  "addedLastRun": 0
 }

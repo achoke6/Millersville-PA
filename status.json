@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-17T11:01:21.876Z",
-  "totalEvents": 1702,
+  "generatedAt": "2026-09-17T13:34:47.903Z",
+  "totalEvents": 1701,
   "withDescription": 776,
   "withImage": 229,
   "familyFriendly": 80,
-  "eventsToday": 31,
+  "eventsToday": 30,
   "sources": {
     "muAthletics": 319,
     "muCalendar": 165,
@@ -13,12 +13,12 @@
     "muGetInvolved": 439,
     "pennManor": 426,
     "borough": 65,
-    "vfw": 9,
+    "vfw": 7,
     "phantomPower": 12,
     "community": 21,
     "manor": 40,
     "raneyCellars": 3,
-    "theBackyard": 12,
+    "theBackyard": 13,
     "muHudlBroadcasts": 61
   },
   "sourceDateRanges": {
@@ -51,7 +51,7 @@
       "latest": "2026-12-25T12:00:00.000Z"
     },
     "vfw": {
-      "earliest": "2026-09-02T23:00:00.000Z",
+      "earliest": "2026-09-11T17:00:00.000Z",
       "latest": "2026-10-22T22:00:00.000Z"
     },
     "phantomPower": {
@@ -72,7 +72,7 @@
     },
     "theBackyard": {
       "earliest": "2026-08-24T12:30:00.000Z",
-      "latest": "2026-10-12T13:00:00.000Z"
+      "latest": "2026-10-12T19:00:00.000Z"
     }
   },
   "staleness": {
@@ -143,19 +143,20 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 1,
-    "pendingPast": 0,
+    "pendingFuture": 2,
+    "pendingPast": 4,
     "pendingBySource": {
+      "Youth Sports": 1,
       "PM Community": 1
     },
     "stalePast": 5,
-    "lastSyncAt": "2026-09-17T10:57:51.661Z"
+    "lastSyncAt": "2026-09-17T13:31:26.732Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-17T11:01:09.211Z"
+    "checkedAt": "2026-09-17T13:34:41.324Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -171,7 +172,7 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 252,
+        "value": 251,
         "min": 60,
         "skipped": false
       },
@@ -220,6 +221,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Ready, Set, Retire - Getting on track in your 50s and 60s|2026-10-12T19:00:00.000Z",
+      "firstSeenAt": "2026-09-17T13:34:47.899Z",
+      "title": "Ready, Set, Retire - Getting on track in your 50s and 60s",
+      "source": "The Backyard",
+      "date": "2026-10-12T19:00:00.000Z"
+    },
     {
       "key": "THE NUMBER TWELVE LOOKS LIKE YOU w. Kaonashi, Differences, Samaritan Snare|2026-10-17T23:00:00.000Z",
       "firstSeenAt": "2026-09-17T11:01:21.873Z",
@@ -282,13 +290,6 @@
       "title": "Intro to Paws on Deck",
       "source": "MU",
       "date": "2026-09-03T16:30:00"
-    },
-    {
-      "key": "Student Government Association (SGA) Weekly Meeting|2026-09-03T17:00:00",
-      "firstSeenAt": "2026-09-17T00:08:19.067Z",
-      "title": "Student Government Association (SGA) Weekly Meeting",
-      "source": "MU",
-      "date": "2026-09-03T17:00:00"
     }
   ],
   "addedLastRun": 1

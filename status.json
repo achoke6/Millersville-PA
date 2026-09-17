@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-09-16T21:08:32.831Z",
+  "generatedAt": "2026-09-17T00:08:19.070Z",
   "totalEvents": 1706,
-  "withDescription": 780,
-  "withImage": 226,
-  "familyFriendly": 81,
+  "withDescription": 779,
+  "withImage": 229,
+  "familyFriendly": 80,
   "eventsToday": 29,
   "sources": {
     "muAthletics": 319,
-    "muCalendar": 164,
+    "muCalendar": 165,
     "artsmu": 22,
-    "campsAlumni": 40,
-    "muGetInvolved": 441,
-    "pennManor": 424,
+    "campsAlumni": 39,
+    "muGetInvolved": 439,
+    "pennManor": 426,
     "borough": 65,
     "vfw": 9,
     "phantomPower": 12,
@@ -35,7 +35,7 @@
       "latest": "2027-05-02T18:30:00.000Z"
     },
     "campsAlumni": {
-      "earliest": "2026-06-18T22:00:00.000Z",
+      "earliest": "2026-06-22T13:00:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
@@ -44,7 +44,7 @@
     },
     "pennManor": {
       "earliest": "2026-08-17T12:00:00.000Z",
-      "latest": "2027-09-14T21:30:00.000Z"
+      "latest": "2027-09-16T20:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-06-22T22:00:00.000Z",
@@ -97,8 +97,8 @@
       "daysSinceMoved": 13
     },
     "pennManor": {
-      "newest": "2027-09-14",
-      "daysSinceMoved": 2
+      "newest": "2027-09-16",
+      "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2026-12-25",
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 743,
+    "total": 745,
     "scored": 50,
     "wins": 28,
     "losses": 21,
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 5,
-    "lastSyncAt": "2026-09-16T21:04:52.896Z"
+    "lastSyncAt": "2026-09-17T00:04:42.651Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-16T21:08:23.792Z"
+    "checkedAt": "2026-09-17T00:08:11.277Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -164,7 +164,7 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 363,
+        "value": 365,
         "min": 45,
         "skipped": false
       },
@@ -185,14 +185,14 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 100,
+        "value": 99,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 424,
+        "value": 426,
         "min": 150,
         "skipped": false
       },
@@ -221,75 +221,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Men's Ice Hockey @ Kutztown University|2026-10-03T00:30:00.000Z",
-      "firstSeenAt": "2026-09-16T21:08:32.828Z",
-      "title": "Men's Ice Hockey @ Kutztown University",
+      "key": "YDSA Tabling|2026-09-03T13:00:00",
+      "firstSeenAt": "2026-09-17T00:08:19.067Z",
+      "title": "YDSA Tabling",
       "source": "MU",
-      "date": "2026-10-03T00:30:00.000Z"
+      "date": "2026-09-03T13:00:00"
     },
     {
-      "key": "Home game versus Maryland University Red team|2026-10-03T15:30:00.000Z",
-      "firstSeenAt": "2026-09-16T21:08:32.828Z",
-      "title": "Home game versus Maryland University Red team",
+      "key": "Intro to Paws on Deck|2026-09-03T16:30:00",
+      "firstSeenAt": "2026-09-17T00:08:19.067Z",
+      "title": "Intro to Paws on Deck",
       "source": "MU",
-      "date": "2026-10-03T15:30:00.000Z"
+      "date": "2026-09-03T16:30:00"
     },
     {
-      "key": "Home game versus Salisbury University|2026-10-04T15:00:00.000Z",
-      "firstSeenAt": "2026-09-16T21:08:32.828Z",
-      "title": "Home game versus Salisbury University",
+      "key": "Student Government Association (SGA) Weekly Meeting|2026-09-03T17:00:00",
+      "firstSeenAt": "2026-09-17T00:08:19.067Z",
+      "title": "Student Government Association (SGA) Weekly Meeting",
       "source": "MU",
-      "date": "2026-10-04T15:00:00.000Z"
+      "date": "2026-09-03T17:00:00"
     },
     {
-      "key": "Away Round Robin at Rowan University|2026-10-11T13:00:00.000Z",
-      "firstSeenAt": "2026-09-16T21:08:32.828Z",
-      "title": "Away Round Robin at Rowan University",
+      "key": "Ropes Course- Open Climb|2026-10-20T20:00:00.000Z",
+      "firstSeenAt": "2026-09-17T00:08:19.067Z",
+      "title": "Ropes Course- Open Climb",
       "source": "MU",
-      "date": "2026-10-11T13:00:00.000Z"
+      "date": "2026-10-20T20:00:00.000Z"
     },
     {
-      "key": "Home game versus Elizabethtown College|2026-10-18T22:00:00.000Z",
-      "firstSeenAt": "2026-09-16T21:08:32.828Z",
-      "title": "Home game versus Elizabethtown College",
-      "source": "MU",
-      "date": "2026-10-18T22:00:00.000Z"
-    },
-    {
-      "key": "Creative Writers Guild general meeting|2026-10-20T18:00:00",
-      "firstSeenAt": "2026-09-16T21:08:32.828Z",
+      "key": "Creative Writers Guild general meeting|2026-10-20T22:00:00.000Z",
+      "firstSeenAt": "2026-09-17T00:08:19.067Z",
       "title": "Creative Writers Guild general meeting",
       "source": "MU",
-      "date": "2026-10-20T18:00:00"
+      "date": "2026-10-20T22:00:00.000Z"
     },
     {
-      "key": "RUF Bible Study|2026-10-20T19:00:00",
-      "firstSeenAt": "2026-09-16T21:08:32.828Z",
+      "key": "RUF Bible Study|2026-10-20T23:00:00.000Z",
+      "firstSeenAt": "2026-09-17T00:08:19.067Z",
       "title": "RUF Bible Study",
       "source": "MU",
-      "date": "2026-10-20T19:00:00"
+      "date": "2026-10-20T23:00:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
-      "firstSeenAt": "2026-09-16T19:20:45.620Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-09-30T12:30:00.000Z"
+      "key": "Osburn Bible Study|2026-10-21T16:00:00.000Z",
+      "firstSeenAt": "2026-09-17T00:08:19.067Z",
+      "title": "Osburn Bible Study",
+      "source": "MU",
+      "date": "2026-10-21T16:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
-      "firstSeenAt": "2026-09-16T19:20:45.620Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-10-05T23:00:00.000Z"
+      "key": "Tell School of Music Recital Hour|2026-10-21T19:00:00.000Z",
+      "firstSeenAt": "2026-09-17T00:08:19.067Z",
+      "title": "Tell School of Music Recital Hour",
+      "source": "MU",
+      "date": "2026-10-21T19:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
-      "firstSeenAt": "2026-09-16T19:20:45.620Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-10-07T23:00:00.000Z"
+      "key": "Fencing Guild Practice|2026-10-21T21:00:00.000Z",
+      "firstSeenAt": "2026-09-17T00:08:19.067Z",
+      "title": "Fencing Guild Practice",
+      "source": "MU",
+      "date": "2026-10-21T21:00:00.000Z"
+    },
+    {
+      "key": "General Meetings|2026-10-21T21:00:00.000Z",
+      "firstSeenAt": "2026-09-17T00:08:19.067Z",
+      "title": "General Meetings",
+      "source": "MU",
+      "date": "2026-10-21T21:00:00.000Z"
     }
   ],
-  "addedLastRun": 7
+  "addedLastRun": 16
 }

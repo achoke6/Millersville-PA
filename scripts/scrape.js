@@ -6039,6 +6039,14 @@ async function runScraper() {
     // ticketLink / muFreeTicket are display fields only — no feed-matching
     // exposure (Hard Rule 7 untouched, events.ics.php untouched).
     const ETIX_PLACEHOLDER_PRICES = new Set(['', 'Free', 'Open To Public', 'Ticket Required', 'Tickets Available']);
+    // Hand-verified free-but-ticketed etix pids (etix is challenge-walled, so
+    // this is how "$0.00 / Register" pages become truth). Source-agnostic:
+    // covers MU Calendar winners AND standalone artsmu rows. Verify the etix
+    // page before adding; remove when the show ages out. 2026-09-17.
+    const ETIX_KNOWN_FREE_PIDS = new Set([
+        '77977956', // Xun Pan & Gabriel Chamber Ensemble -- 2026-10-03
+        '96368608', // 2026 Harriet Kenderdine Lecture -- 2026-10-15
+    ]);
     try {
         const etixCachePath = path.join(__dirname, '../etix-cache.json');
         let etixCache = {};
@@ -6108,6 +6116,9 @@ async function runScraper() {
             const pid = pidOf(ev.ticketLink);
             if (!pid) continue;
             const c = etixCache[pid];
+            // Known-free pid + placeholder price -> venue-confirmed free (same
+            // display contract as the artsmu "-- FREE" stamp). A real $ wins.
+            if (ETIX_KNOWN_FREE_PIDS.has(pid) && !ev.freeTicket && ETIX_PLACEHOLDER_PRICES.has((ev.price || '').trim())) { ev.price = 'Free'; ev.freeTicket = true; }
             if (c && c.ok) {
                 if (c.price && !ev.freeTicket && ETIX_PLACEHOLDER_PRICES.has((ev.price || '').trim())) { ev.price = c.price; etixPriced++; }
                 if (c.muFreeTicket) { ev.muFreeTicket = true; etixFlagged++; }

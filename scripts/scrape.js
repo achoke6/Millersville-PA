@@ -1561,110 +1561,73 @@ async function runScraper() {
         console.log(`✅ MU Athletics: ${muAthCount} events`);
     } catch (e) { console.error("❌ MU Athletics error:", e.message); }
 
-    // ===== 2. PENN MANOR iCAL (PAGINATED — fetch past + future events) =====
-    try {
-        console.log("📡 Fetching Penn Manor iCal (paginated until " + endDay + ")...");
-        let allPMEvents = {};
-
-        // Fetch UPCOMING events (paginated forward)
-        const pmFutureUrl = 'https://www.pennmanor.net/events/list/?ical=1&tribe_event_display=list&tribe_paged=';
-        let page = 1;
-        const maxPages = 20;
-        let latestEventDate = null;
-
-        while (page <= maxPages) {
-            try {
-                const url = pmFutureUrl + page;
-                console.log(`  Fetching page ${page}...`);
-                const pageData = await ical.async.fromURL(url, { headers: baseHeaders });
-                const pageEvents = Object.values(pageData).filter(e => e.type === 'VEVENT');
-                console.log(`  → Page ${page}: ${pageEvents.length} VEVENTs`);
-
-                if (pageEvents.length === 0) {
-                    console.log(`  → Empty page, stopping.`);
-                    break;
-                }
-
-                // Merge into allPMEvents, count truly new ones
-                let newCount = 0;
-                for (const [key, val] of Object.entries(pageData)) {
-                    if (val.type === 'VEVENT') {
-                        const uid = val.uid || key;
-                        if (!allPMEvents[uid]) newCount++;
-                        allPMEvents[uid] = val;
-                    }
-                }
-
-                // Find latest event date on this page
-                let pageLatest = null;
-                pageEvents.forEach(ev => {
-                    const d = new Date(ev.start);
-                    if (!isNaN(d.getTime()) && (!pageLatest || d > pageLatest)) pageLatest = d;
-                });
-                if (pageLatest) {
-                    latestEventDate = pageLatest;
-                    console.log(`  → Latest: ${pageLatest.toISOString().split('T')[0]} | New unique: ${newCount}`);
-                }
-
-                // Stop if we've reached the end of our date range
-                if (latestEventDate && latestEventDate >= futureDate) {
-                    console.log(`  → Covered full range through ${endDay}, stopping.`);
-                    break;
-                }
-                // Stop if partial page (no more data)
-                if (pageEvents.length < 30) {
-                    console.log(`  → Partial page (${pageEvents.length} < 30), likely last page.`);
-                    break;
-                }
-                // Stop if no new unique events (all dupes)
-                if (newCount === 0) {
-                    console.log(`  → No new unique events, stopping.`);
-                    break;
-                }
-
-                page++;
-            } catch (err) {
-                console.log(`  → Page ${page} failed: ${err.message}`);
-                break;
+    // ===== PENN MANOR — shared TEC REST fetcher (2026-09-17) =====
+    // Both Penn Manor blocks (2: general calendar, 2a: athletics category) read the
+    // district's The Events Calendar install through its REST API
+    // (/wp-json/tribe/events/v1/events). The iCal export the general feed used until
+    // 2026-09-16 now 302s to /calendar/ (an HTML page), so ical.fromURL saw 0 VEVENTs
+    // every run; the athletics feed had already moved to REST on 2026-09-05 when
+    // iCal PAGINATION broke. One fetcher, one mapper: each record is shaped like the
+    // VEVENT the old parser produced ({uid,start,end,summary,description,url,location})
+    // plus `categories` (TEC category names, comma-joined — block 2 routes athletics on
+    // it) and `allDay`, so the per-event loops below are untouched. Dates use the UTC
+    // pair so DST/offset never matters; description arrives as HTML → text.
+    const pmRestHtmlToText = (html) => decodeEntities(String(html || '')
+        .replace(/<br\s*\/?>/gi, '\n')
+        .replace(/<\/p>\s*/gi, '\n')
+        .replace(/<[^>]+>/g, '')
+        .replace(/\r/g, '')
+        .replace(/[ \t]+\n/g, '\n')
+        .trim());
+    const pmRestUtc = (s) => (s ? new Date(String(s).replace(' ', 'T') + 'Z') : null);
+    // extraQuery: '' for every category, or 'categories=athletics'. Returns {records, pages, total}.
+    // Throws on a non-2xx page so callers decide how to fall back.
+    const fetchPennManorRest = async (extraQuery, maxPages = 60) => {
+        const base = 'https://www.pennmanor.net/wp-json/tribe/events/v1/events'
+            + `?${extraQuery ? extraQuery + '&' : ''}per_page=50&start_date=${startDay}&end_date=${endDay}&page=`;
+        const records = {};
+        let pages = 0, total = null;
+        for (let rp = 1; rp <= maxPages; rp++) {
+            const res = await fetch(base + rp, { headers: baseHeaders });
+            if (!res.ok) throw new Error(`HTTP ${res.status} on page ${rp}`);
+            const body = await res.json();
+            const recs = Array.isArray(body.events) ? body.events : [];
+            if (total === null) total = body.total;
+            pages++;
+            for (const r of recs) {
+                const uid = `pm-rest-${r.id}`;
+                records[uid] = {
+                    type: 'VEVENT', uid,
+                    start: pmRestUtc(r.utc_start_date || r.start_date),
+                    end: pmRestUtc(r.utc_end_date || r.end_date),
+                    summary: decodeEntities(r.title || ''),
+                    description: pmRestHtmlToText(r.description),
+                    url: r.url || '',
+                    location: (r.venue && (r.venue.venue || r.venue.address)) || '',
+                    categories: (Array.isArray(r.categories) ? r.categories : []).map(c => c && c.name).filter(Boolean).join(','),
+                    allDay: !!r.all_day
+                };
             }
+            const totalPages = Number(body.total_pages) || 1;
+            if (recs.length === 0 || rp >= totalPages) break;
         }
+        return { records, pages, total };
+    };
 
-        const totalFutureRaw = Object.keys(allPMEvents).length;
-        const coverageEnd = latestEventDate ? latestEventDate.toISOString().split('T')[0] : 'unknown';
-        console.log(`  Future: ${totalFutureRaw} unique across ${page} page(s), coverage through ${coverageEnd}`);
+    // ===== 2. PENN MANOR GENERAL CALENDAR (TEC REST — past + future in one window) =====
+    // Every category; athletics rows are skipped in the loop below because block 2a
+    // emits them from the pre-filtered athletics query. The zero-record throw stays
+    // loud on purpose — a silent empty harvest is exactly what the 2026-09-16 iCal
+    // outage looked like for 28 hours.
+    try {
+        console.log("📡 Fetching Penn Manor calendar (TEC REST, " + startDay + " → " + endDay + ")...");
+        const pmGenRest = await fetchPennManorRest('');
+        console.log(`  → Penn Manor REST: ${pmGenRest.pages} page(s), ${Object.keys(pmGenRest.records).length} records (server total ${pmGenRest.total})`);
 
-        // Fetch PAST events (paginated backward until we cover PAST_DAYS or run out)
-        const pmPastUrl = 'https://www.pennmanor.net/events/list/?ical=1&tribe_event_display=past&tribe_paged=';
-        const maxPastPages = 20;
-        for (let pp = 1; pp <= maxPastPages; pp++) {
-            try {
-                const pastPageData = await ical.async.fromURL(pmPastUrl + pp, { headers: baseHeaders });
-                const pastPageEvents = Object.values(pastPageData).filter(e => e.type === 'VEVENT');
-                if (pastPageEvents.length === 0) break;
-                let newPast = 0;
-                let oldestDate = null;
-                for (const [key, val] of Object.entries(pastPageData)) {
-                    if (val.type === 'VEVENT') {
-                        const uid = val.uid || key;
-                        if (!allPMEvents[uid]) newPast++;
-                        allPMEvents[uid] = val;
-                        const d = new Date(val.start);
-                        if (!oldestDate || d < oldestDate) oldestDate = d;
-                    }
-                }
-                console.log(`  Past page ${pp}: ${pastPageEvents.length} VEVENTs, ${newPast} new`);
-                if (newPast === 0) break;
-                // Stop if we've reached far enough back
-                if (oldestDate && oldestDate < pastDate) { console.log(`  Past coverage reached ${oldestDate.toISOString().split('T')[0]}`); break; }
-            } catch (err) { console.log(`  Past page ${pp} failed: ${err.message}`); break; }
-        }
-
-        const totalPMRaw = Object.keys(allPMEvents).length;
-        console.log(`  Total unique (past+future): ${totalPMRaw}`);
-
+        const totalPMRaw = Object.keys(pmGenRest.records).length;
         if (totalPMRaw === 0) throw new Error('Penn Manor returned no events');
 
-        const pmData = allPMEvents;
+        const pmData = pmGenRest.records;
 
         // Debug: check raw PM lacrosse events before any processing
         const rawLax = Object.values(pmData).filter(e => /lacrosse/i.test(e.summary || ''));
@@ -1793,43 +1756,12 @@ async function runScraper() {
     // next few days still render rather than nothing.
     try {
         console.log("📡 Fetching Penn Manor Athletics (TEC REST API)...");
-        const allPMAth = {};
-        const pmAthHtmlToText = (html) => decodeEntities(String(html || '')
-            .replace(/<br\s*\/?>/gi, '\n')
-            .replace(/<\/p>\s*/gi, '\n')
-            .replace(/<[^>]+>/g, '')
-            .replace(/\r/g, '')
-            .replace(/[ \t]+\n/g, '\n')
-            .trim());
-        // TEC REST dates are "YYYY-MM-DD HH:MM:SS"; use the UTC pair so DST/offset never matters.
-        const pmAthUtc = (s) => (s ? new Date(String(s).replace(' ', 'T') + 'Z') : null);
-        const pmAthRestBase = 'https://www.pennmanor.net/wp-json/tribe/events/v1/events'
-            + `?categories=athletics&per_page=50&start_date=${startDay}&end_date=${endDay}&page=`;
-        let pmAthRestPages = 0, pmAthRestTotal = null;
+        let allPMAth = {};
+        // Shared fetcher (defined above block 2) — same record shape this loop always read.
         try {
-            for (let rp = 1; rp <= 40; rp++) {
-                const res = await fetch(pmAthRestBase + rp, { headers: baseHeaders });
-                if (!res.ok) throw new Error(`HTTP ${res.status} on page ${rp}`);
-                const body = await res.json();
-                const recs = Array.isArray(body.events) ? body.events : [];
-                if (pmAthRestTotal === null) pmAthRestTotal = body.total;
-                pmAthRestPages++;
-                for (const r of recs) {
-                    const uid = `pm-rest-${r.id}`;
-                    allPMAth[uid] = {
-                        type: 'VEVENT', uid,
-                        start: pmAthUtc(r.utc_start_date || r.start_date),
-                        end: pmAthUtc(r.utc_end_date || r.end_date),
-                        summary: decodeEntities(r.title || ''),
-                        description: pmAthHtmlToText(r.description),
-                        url: r.url || '',
-                        location: (r.venue && (r.venue.venue || r.venue.address)) || ''
-                    };
-                }
-                const totalPages = Number(body.total_pages) || 1;
-                if (recs.length === 0 || rp >= totalPages) break;
-            }
-            console.log(`  → Penn Manor Athletics REST: ${pmAthRestPages} page(s), ${Object.keys(allPMAth).length} records (server total ${pmAthRestTotal})`);
+            const pmAthRest = await fetchPennManorRest('categories=athletics', 40);
+            allPMAth = pmAthRest.records;
+            console.log(`  → Penn Manor Athletics REST: ${pmAthRest.pages} page(s), ${Object.keys(allPMAth).length} records (server total ${pmAthRest.total})`);
         } catch (restErr) {
             console.log(`  ⚠️ Penn Manor Athletics REST failed (${restErr.message}) - falling back to single-page iCal`);
             const pageData = await ical.async.fromURL('https://www.pennmanor.net/events/category/athletics/list/?ical=1', { headers: baseHeaders });
@@ -6637,6 +6569,13 @@ async function runScraper() {
                 add('pennManorAthletics.count', !athleticsSeason || pmAthCount >= 150, { value: pmAthCount, min: 150, skipped: !athleticsSeason });
                 const muAthCount = bySourceCount('MU', isAth);
                 add('muAthletics.count', !athleticsSeason || muAthCount >= 100, { value: muAthCount, min: 100, skipped: !athleticsSeason });
+                // Penn Manor GENERAL calendar (block 2, non-athletic PM rows: board, concerts,
+                // ceremonies). Added 2026-09-17 after its iCal export died and 0 rows harvested
+                // for 28 hours behind a green "8/8". Floor is low on purpose — the general loop
+                // drops most district rows as noise — but zero is never right during the school
+                // year. Skipped in July only (the board still meets in June and August).
+                const pmGenCount = bySourceCount('PM', e => !isAth(e));
+                add('pennManorGeneral.count', monthET === 7 || pmGenCount >= 10, { value: pmGenCount, min: 10, skipped: monthET === 7 });
                 const ratio = muHudlInWindow ? muHudlMatchCount / muHudlInWindow : null;
                 add('muHudl.pairRatio', muHudlInWindow < 10 || ratio >= 0.5, { matched: muHudlMatchCount, inWindow: muHudlInWindow, value: ratio === null ? null : Number(ratio.toFixed(2)), min: 0.5 });
                 add('pmHudl.matched', pmHudlWithBroadcasts === 0 || pmHudlMatched > 0, { matched: pmHudlMatched, withBroadcasts: pmHudlWithBroadcasts });

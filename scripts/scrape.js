@@ -344,14 +344,14 @@ function extractPricing(desc, title = "", location = "", apiLink = "", startET =
         { match: /making of life on our planet/i, url: 'https://www.etix.com/ticket/p/44575281/the-making-of-life-on-our-planet-lancaster-ware-center-for-the-arts', price: '$8 - $10' },
         { match: /kids.?\s*salsa/i, url: 'https://www.etix.com/ticket/p/34862669/kidssalsa-5-lancaster-ware-center-for-the-arts', price: '$15' },
         { match: /family fun fest.*doodle/i, url: 'https://www.etix.com/ticket/p/55340777/family-fun-fest-doodle-pop-lancaster-ware-center-for-the-arts', price: '$10 - $15' },
-        { match: /commercial lab band/i, url: 'https://www.etix.com/ticket/p/69670740/commercial-lab-band-millersville-winter-visual-performing-arts-center', price: '$10' },
-        { match: /commercial music ensemble/i, url: 'https://www.etix.com/ticket/p/36061167/commercial-music-ensemble-millersville-winter-visual-performing-arts-center', price: '$10' },
-        { match: /xun pan|gabriel chamber/i, url: 'https://www.etix.com/ticket/p/77977956/xun-pan-gabriel-chamber-ensemble-millersville-winter-visual-performing-arts-center', price: 'Tickets Available' },
-        { match: /orchestral masterworks/i, url: 'https://www.etix.com/ticket/p/71235627/orchestral-masterworks-millersville-winter-visual-performing-arts-center', price: '$10' },
         { match: /jazz ensembles|jazz.*java/i, url: 'https://www.etix.com/ticket/p/71762678/jazz-ensemblesjazz-java-with-alumni-band-millersville-winter-visual-performing-arts-center', price: '$18' },
-        { match: /concert band.*wind ensemble|wind ensemble.*concert band/i, url: 'https://www.etix.com/ticket/p/74152110/concert-band-wind-ensemble-millersville-winter-visual-performing-arts-center', price: '$10' },
-        { match: /spring choral concert/i, url: 'https://www.etix.com/ticket/p/42106815/spring-choral-concert-millersville-winter-visual-performing-arts-center', price: '$10' },
         { match: /making democracy work/i, url: 'https://www.etix.com/ticket/p/38495242/', price: '$0 - $20' },
+        // Faculty Recital: Strings Faculty (2026-09-17): MU Calendar row carried
+        // only the /v/23659/ venue fallback. Verified Free / $0.00 on etix; the
+        // pid is in ETIX_KNOWN_FREE_PIDS so the sweep flips the placeholder.
+        // `start`-guarded -- recurring recital titles MUST carry start (Xun Pan
+        // Apr/Oct pid mixup, same day).
+        { match: /strings faculty/i, start: '2026-10-24T19:30', url: 'https://www.etix.com/ticket/p/95826673/faculty-recitalstrings-faculty-millersville-winter-visual-performing-arts-center', price: 'Tickets Available' },
         // Glorious Sounds of the Season (2026-09-09): THREE performances, three
         // etix pages, identical titles — the optional `start` field (naive ET
         // "YYYY-MM-DDTHH:MM", prefix-matched against the calendar's startDate)
@@ -6044,8 +6044,11 @@ async function runScraper() {
     // covers MU Calendar winners AND standalone artsmu rows. Verify the etix
     // page before adding; remove when the show ages out. 2026-09-17.
     const ETIX_KNOWN_FREE_PIDS = new Set([
-        '77977956', // Xun Pan & Gabriel Chamber Ensemble -- 2026-10-03
+        '71525831', // Xun Pan & Gabriel Chamber Ensemble -- 2026-10-03 (77977956 was the Apr-11 show; sales ended)
         '96368608', // 2026 Harriet Kenderdine Lecture -- 2026-10-15
+        '42890890', // Faculty Recital: Ryan Kauffman -- 2026-09-27
+        '85146896', // Octubaween! -- 2026-10-28
+        '95826673', // Faculty Recital: Strings Faculty -- 2026-10-24
     ]);
     try {
         const etixCachePath = path.join(__dirname, '../etix-cache.json');

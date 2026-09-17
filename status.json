@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-09-17T13:34:47.903Z",
-  "totalEvents": 1701,
+  "generatedAt": "2026-09-17T13:44:56.366Z",
+  "totalEvents": 1786,
   "withDescription": 776,
   "withImage": 229,
-  "familyFriendly": 80,
+  "familyFriendly": 91,
   "eventsToday": 30,
   "sources": {
     "muAthletics": 319,
@@ -11,7 +11,7 @@
     "artsmu": 22,
     "campsAlumni": 39,
     "muGetInvolved": 439,
-    "pennManor": 426,
+    "pennManor": 511,
     "borough": 65,
     "vfw": 7,
     "phantomPower": 12,
@@ -43,7 +43,7 @@
       "latest": "2027-04-29T11:30:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-08-17T12:00:00.000Z",
+      "earliest": "2026-06-22T23:00:00.000Z",
       "latest": "2027-09-16T20:00:00.000Z"
     },
     "borough": {
@@ -150,13 +150,13 @@
       "PM Community": 1
     },
     "stalePast": 5,
-    "lastSyncAt": "2026-09-17T13:31:26.732Z"
+    "lastSyncAt": "2026-09-17T13:41:23.112Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-17T13:34:41.324Z"
+    "checkedAt": "2026-09-17T13:44:49.146Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -205,6 +205,13 @@
         "skipped": false
       },
       {
+        "key": "pennManorGeneral.count",
+        "ok": true,
+        "value": 85,
+        "min": 10,
+        "skipped": false
+      },
+      {
         "key": "muHudl.pairRatio",
         "ok": true,
         "matched": 61,
@@ -222,75 +229,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Ready, Set, Retire - Getting on track in your 50s and 60s|2026-10-12T19:00:00.000Z",
-      "firstSeenAt": "2026-09-17T13:34:47.899Z",
-      "title": "Ready, Set, Retire - Getting on track in your 50s and 60s",
-      "source": "The Backyard",
-      "date": "2026-10-12T19:00:00.000Z"
+      "key": "School Board Meeting|2026-06-22T23:00:00.000Z",
+      "firstSeenAt": "2026-09-17T13:44:56.363Z",
+      "title": "School Board Meeting",
+      "source": "PM",
+      "date": "2026-06-22T23:00:00.000Z"
     },
     {
-      "key": "THE NUMBER TWELVE LOOKS LIKE YOU w. Kaonashi, Differences, Samaritan Snare|2026-10-17T23:00:00.000Z",
-      "firstSeenAt": "2026-09-17T11:01:21.873Z",
-      "title": "THE NUMBER TWELVE LOOKS LIKE YOU w. Kaonashi, Differences, Samaritan Snare",
-      "source": "Other",
-      "date": "2026-10-17T23:00:00.000Z"
+      "key": "PEQ – Color the Playground with the PTO|2026-06-25T22:00:00.000Z",
+      "firstSeenAt": "2026-09-17T13:44:56.363Z",
+      "title": "PEQ – Color the Playground with the PTO",
+      "source": "PM",
+      "date": "2026-06-25T22:00:00.000Z"
     },
     {
-      "key": "Millersville University Field Hockey at West Chester|2026-09-17T20:00:00.000Z",
-      "firstSeenAt": "2026-09-17T05:46:46.609Z",
-      "title": "Millersville University Field Hockey at West Chester",
-      "source": "MU",
-      "date": "2026-09-17T20:00:00.000Z"
+      "key": "PEQ – Picnic on the Playground with the PTO|2026-07-15T22:00:00.000Z",
+      "firstSeenAt": "2026-09-17T13:44:56.363Z",
+      "title": "PEQ – Picnic on the Playground with the PTO",
+      "source": "PM",
+      "date": "2026-07-15T22:00:00.000Z"
     },
     {
-      "key": "Walk O Taco|2026-09-17T20:00:00.000Z",
-      "firstSeenAt": "2026-09-17T05:46:46.609Z",
-      "title": "Walk O Taco",
-      "source": "Raney Cellars",
-      "date": "2026-09-17T20:00:00.000Z"
+      "key": "School Board Meeting|2026-07-20T23:00:00.000Z",
+      "firstSeenAt": "2026-09-17T13:44:56.363Z",
+      "title": "School Board Meeting",
+      "source": "PM",
+      "date": "2026-07-20T23:00:00.000Z"
     },
     {
-      "key": "Thurday Trivia 6PM|2026-09-17T22:00:00.000Z",
-      "firstSeenAt": "2026-09-17T05:46:46.609Z",
-      "title": "Thurday Trivia 6PM",
-      "source": "Raney Cellars",
-      "date": "2026-09-17T22:00:00.000Z"
+      "key": "School Board Meeting|2026-08-03T23:00:00.000Z",
+      "firstSeenAt": "2026-09-17T13:44:56.363Z",
+      "title": "School Board Meeting",
+      "source": "PM",
+      "date": "2026-08-03T23:00:00.000Z"
     },
     {
-      "key": "Taco RV|2026-09-24T20:00:00.000Z",
-      "firstSeenAt": "2026-09-17T05:46:46.609Z",
-      "title": "Taco RV",
-      "source": "Raney Cellars",
-      "date": "2026-09-24T20:00:00.000Z"
+      "key": "ESH PTO Meeting|2026-08-17T22:00:00.000Z",
+      "firstSeenAt": "2026-09-17T13:44:56.363Z",
+      "title": "ESH PTO Meeting",
+      "source": "PM",
+      "date": "2026-08-17T22:00:00.000Z"
     },
     {
-      "key": "Studio Ghibli Movie Night|2026-09-24T23:30:00.000Z",
-      "firstSeenAt": "2026-09-17T05:46:46.609Z",
-      "title": "Studio Ghibli Movie Night",
-      "source": "MU",
-      "date": "2026-09-24T23:30:00.000Z"
+      "key": "School Board Meeting|2026-08-17T23:00:00.000Z",
+      "firstSeenAt": "2026-09-17T13:44:56.363Z",
+      "title": "School Board Meeting",
+      "source": "PM",
+      "date": "2026-08-17T23:00:00.000Z"
     },
     {
-      "key": "Karake Night|2026-10-08T02:00:00.000Z",
-      "firstSeenAt": "2026-09-17T05:46:46.609Z",
-      "title": "Karake Night",
-      "source": "Jack's Tavern",
-      "date": "2026-10-08T02:00:00.000Z"
+      "key": "Popsicles on the playground|2026-08-19T19:00:00.000Z",
+      "firstSeenAt": "2026-09-17T13:44:56.363Z",
+      "title": "Popsicles on the playground",
+      "source": "PM",
+      "date": "2026-08-19T19:00:00.000Z"
     },
     {
-      "key": "YDSA Tabling|2026-09-03T13:00:00",
-      "firstSeenAt": "2026-09-17T00:08:19.067Z",
-      "title": "YDSA Tabling",
-      "source": "MU",
-      "date": "2026-09-03T13:00:00"
+      "key": "PEQ – Popsicles on the Playground with the PTO|2026-08-20T22:00:00.000Z",
+      "firstSeenAt": "2026-09-17T13:44:56.363Z",
+      "title": "PEQ – Popsicles on the Playground with the PTO",
+      "source": "PM",
+      "date": "2026-08-20T22:00:00.000Z"
     },
     {
-      "key": "Intro to Paws on Deck|2026-09-03T16:30:00",
-      "firstSeenAt": "2026-09-17T00:08:19.067Z",
-      "title": "Intro to Paws on Deck",
-      "source": "MU",
-      "date": "2026-09-03T16:30:00"
+      "key": "Laptop Distribution|2026-08-24T04:00:00.000Z",
+      "firstSeenAt": "2026-09-17T13:44:56.363Z",
+      "title": "Laptop Distribution",
+      "source": "PM",
+      "date": "2026-08-24T04:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 85
 }

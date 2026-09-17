@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-17T05:46:46.612Z",
+  "generatedAt": "2026-09-17T11:01:21.876Z",
   "totalEvents": 1702,
   "withDescription": 776,
   "withImage": 229,
@@ -55,8 +55,8 @@
       "latest": "2026-10-22T22:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-09-17T00:00:00.000Z",
-      "latest": "2026-10-16T23:30:00.000Z"
+      "earliest": "2026-09-18T00:00:00.000Z",
+      "latest": "2026-10-17T23:00:00.000Z"
     },
     "community": {
       "earliest": "2026-06-22T13:00:00.000Z",
@@ -109,8 +109,8 @@
       "daysSinceMoved": 16
     },
     "phantomPower": {
-      "newest": "2026-10-16",
-      "daysSinceMoved": 4
+      "newest": "2026-10-17",
+      "daysSinceMoved": 0
     },
     "community": {
       "newest": "2027-04-16",
@@ -149,13 +149,13 @@
       "PM Community": 1
     },
     "stalePast": 5,
-    "lastSyncAt": "2026-09-17T05:43:35.957Z"
+    "lastSyncAt": "2026-09-17T10:57:51.661Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-17T05:46:37.925Z"
+    "checkedAt": "2026-09-17T11:01:09.211Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -164,7 +164,7 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 365,
+        "value": 364,
         "min": 45,
         "skipped": false
       },
@@ -178,7 +178,7 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 261,
+        "value": 260,
         "min": 30,
         "skipped": false
       },
@@ -220,6 +220,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "THE NUMBER TWELVE LOOKS LIKE YOU w. Kaonashi, Differences, Samaritan Snare|2026-10-17T23:00:00.000Z",
+      "firstSeenAt": "2026-09-17T11:01:21.873Z",
+      "title": "THE NUMBER TWELVE LOOKS LIKE YOU w. Kaonashi, Differences, Samaritan Snare",
+      "source": "Other",
+      "date": "2026-10-17T23:00:00.000Z"
+    },
     {
       "key": "Millersville University Field Hockey at West Chester|2026-09-17T20:00:00.000Z",
       "firstSeenAt": "2026-09-17T05:46:46.609Z",
@@ -282,14 +289,7 @@
       "title": "Student Government Association (SGA) Weekly Meeting",
       "source": "MU",
       "date": "2026-09-03T17:00:00"
-    },
-    {
-      "key": "Ropes Course- Open Climb|2026-10-20T20:00:00.000Z",
-      "firstSeenAt": "2026-09-17T00:08:19.067Z",
-      "title": "Ropes Course- Open Climb",
-      "source": "MU",
-      "date": "2026-10-20T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 6
+  "addedLastRun": 1
 }

@@ -128,67 +128,67 @@
   },
   "observations": [
     {
+      "time": "06:00",
+      "temp": "68",
+      "dewpoint": "67",
+      "rh": "96",
+      "windDir": "NNW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "8.2",
+      "condition": "None"
+    },
+    {
+      "time": "05:00",
+      "temp": "67",
+      "dewpoint": "66",
+      "rh": "96",
+      "windDir": "NNW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "8.8",
+      "condition": "None"
+    },
+    {
+      "time": "04:00",
+      "temp": "69",
+      "dewpoint": "67",
+      "rh": "92",
+      "windDir": "ENE",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "9.7",
+      "condition": "None"
+    },
+    {
+      "time": "03:00",
+      "temp": "69",
+      "dewpoint": "67",
+      "rh": "93",
+      "windDir": "ENE",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "10.0",
+      "condition": "None"
+    },
+    {
+      "time": "02:00",
+      "temp": "71",
+      "dewpoint": "67",
+      "rh": "88",
+      "windDir": "SE",
+      "windSpeed": "0",
+      "precip": "0.00",
+      "visibility": "10.4",
+      "condition": "None"
+    },
+    {
       "time": "01:00",
       "temp": "71",
       "dewpoint": "67",
       "rh": "87",
       "windDir": "ENE",
       "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "10.9",
-      "condition": "None"
-    },
-    {
-      "time": "00:00",
-      "temp": "71",
-      "dewpoint": "67",
-      "rh": "86",
-      "windDir": "SSW",
-      "windSpeed": "0",
-      "precip": "0.00",
-      "visibility": "10.8",
-      "condition": "None"
-    },
-    {
-      "time": "23:00",
-      "temp": "73",
-      "dewpoint": "66",
-      "rh": "79",
-      "windDir": "WSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "10.9",
-      "condition": "None"
-    },
-    {
-      "time": "22:00",
-      "temp": "72",
-      "dewpoint": "65",
-      "rh": "79",
-      "windDir": "SW",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "11.1",
-      "condition": "None"
-    },
-    {
-      "time": "21:00",
-      "temp": "73",
-      "dewpoint": "65",
-      "rh": "76",
-      "windDir": "SW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "11.1",
-      "condition": "None"
-    },
-    {
-      "time": "20:00",
-      "temp": "75",
-      "dewpoint": "66",
-      "rh": "74",
-      "windDir": "SSW",
-      "windSpeed": "3",
       "precip": "0.00",
       "visibility": "10.9",
       "condition": "None"
@@ -391,7 +391,36 @@
     "radar": "https://sirocco.accuweather.com/nx_mosaic_640x480c/RE/inmaREPA_.gif",
     "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
   },
-  "videos": [],
+  "videos": [
+    {
+      "title": "Short Term Forecast 9/16/2026",
+      "videoId": "Ae5rClsnREY",
+      "url": "https://www.youtube.com/watch?v=Ae5rClsnREY",
+      "published": "2026-09-16T17:24:31+00:00",
+      "thumbnail": "https://i2.ytimg.com/vi/Ae5rClsnREY/hqdefault.jpg"
+    },
+    {
+      "title": "Short Term Forecast 09/15/2026",
+      "videoId": "h-FsIO19Sug",
+      "url": "https://www.youtube.com/watch?v=h-FsIO19Sug",
+      "published": "2026-09-15T15:18:15+00:00",
+      "thumbnail": "https://i1.ytimg.com/vi/h-FsIO19Sug/hqdefault.jpg"
+    },
+    {
+      "title": "Short Term Forecast 09/14/2026",
+      "videoId": "37lTKBnc55o",
+      "url": "https://www.youtube.com/watch?v=37lTKBnc55o",
+      "published": "2026-09-14T13:51:01+00:00",
+      "thumbnail": "https://i4.ytimg.com/vi/37lTKBnc55o/hqdefault.jpg"
+    },
+    {
+      "title": "Short Term Forecast 09/11/2026",
+      "videoId": "228TW-Qy5dQ",
+      "url": "https://www.youtube.com/watch?v=228TW-Qy5dQ",
+      "published": "2026-09-11T18:25:58+00:00",
+      "thumbnail": "https://i3.ytimg.com/vi/228TW-Qy5dQ/hqdefault.jpg"
+    }
+  ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-09-17T05:43:38.866Z"
+  "updated": "2026-09-17T10:57:54.276Z"
 }

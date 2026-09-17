@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-09-17T19:56:05.836Z",
-  "totalEvents": 1280,
+  "generatedAt": "2026-09-17T22:43:07.984Z",
+  "totalEvents": 1802,
   "withDescription": 779,
   "withImage": 231,
-  "familyFriendly": 80,
-  "eventsToday": 26,
+  "familyFriendly": 91,
+  "eventsToday": 30,
   "sources": {
     "muAthletics": 319,
     "muCalendar": 166,
     "artsmu": 22,
     "campsAlumni": 39,
     "muGetInvolved": 444,
-    "pennManor": 0,
+    "pennManor": 522,
     "borough": 65,
     "vfw": 7,
     "phantomPower": 12,
@@ -42,7 +42,10 @@
       "earliest": "2026-08-16T00:00:00.000Z",
       "latest": "2027-04-29T11:30:00.000Z"
     },
-    "pennManor": null,
+    "pennManor": {
+      "earliest": "2026-06-22T23:00:00.000Z",
+      "latest": "2027-09-16T20:00:00.000Z"
+    },
     "borough": {
       "earliest": "2026-06-22T22:00:00.000Z",
       "latest": "2026-12-25T12:00:00.000Z"
@@ -93,7 +96,10 @@
       "newest": "2027-04-29",
       "daysSinceMoved": 14
     },
-    "pennManor": null,
+    "pennManor": {
+      "newest": "2027-09-16",
+      "daysSinceMoved": 1
+    },
     "borough": {
       "newest": "2026-12-25",
       "daysSinceMoved": 51
@@ -124,11 +130,11 @@
     }
   },
   "sports": {
-    "total": 319,
-    "scored": 25,
-    "wins": 15,
-    "losses": 10,
-    "ties": 0
+    "total": 745,
+    "scored": 53,
+    "wins": 30,
+    "losses": 22,
+    "ties": 1
   },
   "registrations": {
     "open": 12,
@@ -144,27 +150,22 @@
       "PM Community": 3
     },
     "stalePast": 5,
-    "lastSyncAt": "2026-09-17T19:52:31.295Z"
+    "lastSyncAt": "2026-09-17T22:39:23.412Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-17T19:55:58.959Z"
+    "checkedAt": "2026-09-17T22:42:56.920Z"
   },
   "sourceHealth": {
-    "ok": false,
-    "failing": [
-      "pennManorAthletics.horizonDays",
-      "pennManorAthletics.count",
-      "pennManorGeneral.count",
-      "pmHudl.matched"
-    ],
+    "ok": true,
+    "failing": [],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
-        "ok": false,
-        "value": null,
+        "ok": true,
+        "value": 364,
         "min": 45,
         "skipped": false
       },
@@ -191,8 +192,8 @@
       },
       {
         "key": "pennManorAthletics.count",
-        "ok": false,
-        "value": 0,
+        "ok": true,
+        "value": 426,
         "min": 150,
         "skipped": false
       },
@@ -205,8 +206,8 @@
       },
       {
         "key": "pennManorGeneral.count",
-        "ok": false,
-        "value": 0,
+        "ok": true,
+        "value": 96,
         "min": 10,
         "skipped": false
       },
@@ -220,83 +221,83 @@
       },
       {
         "key": "pmHudl.matched",
-        "ok": false,
-        "matched": 0,
+        "ok": true,
+        "matched": 17,
         "withBroadcasts": 22
       }
     ]
   },
   "recentlyAdded": [
     {
-      "key": "Ice Hockey Club (D3) Practice|2026-09-16T01:00:00.000Z",
-      "firstSeenAt": "2026-09-17T19:36:24.232Z",
-      "title": "Ice Hockey Club (D3) Practice",
-      "source": "MU",
-      "date": "2026-09-16T01:00:00.000Z"
+      "key": "School Board Meeting|2026-06-22T23:00:00.000Z",
+      "firstSeenAt": "2026-09-17T22:43:07.981Z",
+      "title": "School Board Meeting",
+      "source": "PM",
+      "date": "2026-06-22T23:00:00.000Z"
     },
     {
-      "key": "Game at Kutztown|2026-09-19T00:30:00.000Z",
-      "firstSeenAt": "2026-09-17T19:36:24.232Z",
-      "title": "Game at Kutztown",
-      "source": "MU",
-      "date": "2026-09-19T00:30:00.000Z"
+      "key": "PEQ – Color the Playground with the PTO|2026-06-25T22:00:00.000Z",
+      "firstSeenAt": "2026-09-17T22:43:07.981Z",
+      "title": "PEQ – Color the Playground with the PTO",
+      "source": "PM",
+      "date": "2026-06-25T22:00:00.000Z"
     },
     {
-      "key": "Game vs F&M|2026-09-20T20:15:00.000Z",
-      "firstSeenAt": "2026-09-17T19:36:24.232Z",
-      "title": "Game vs F&M",
-      "source": "MU",
-      "date": "2026-09-20T20:15:00.000Z"
+      "key": "PEQ – Picnic on the Playground with the PTO|2026-07-15T22:00:00.000Z",
+      "firstSeenAt": "2026-09-17T22:43:07.981Z",
+      "title": "PEQ – Picnic on the Playground with the PTO",
+      "source": "PM",
+      "date": "2026-07-15T22:00:00.000Z"
     },
     {
-      "key": "Ice Hockey Club (D3) Practice|2026-09-23T01:00:00.000Z",
-      "firstSeenAt": "2026-09-17T19:36:24.232Z",
-      "title": "Ice Hockey Club (D3) Practice",
-      "source": "MU",
-      "date": "2026-09-23T01:00:00.000Z"
+      "key": "School Board Meeting|2026-07-20T23:00:00.000Z",
+      "firstSeenAt": "2026-09-17T22:43:07.981Z",
+      "title": "School Board Meeting",
+      "source": "PM",
+      "date": "2026-07-20T23:00:00.000Z"
     },
     {
-      "key": "Ice Hockey Club (D3) Practice|2026-09-25T00:15:00.000Z",
-      "firstSeenAt": "2026-09-17T19:36:24.232Z",
-      "title": "Ice Hockey Club (D3) Practice",
-      "source": "MU",
-      "date": "2026-09-25T00:15:00.000Z"
+      "key": "School Board Meeting|2026-08-03T23:00:00.000Z",
+      "firstSeenAt": "2026-09-17T22:43:07.981Z",
+      "title": "School Board Meeting",
+      "source": "PM",
+      "date": "2026-08-03T23:00:00.000Z"
     },
     {
-      "key": "Game at Dickinson|2026-09-26T19:15:00.000Z",
-      "firstSeenAt": "2026-09-17T19:36:24.232Z",
-      "title": "Game at Dickinson",
-      "source": "MU",
-      "date": "2026-09-26T19:15:00.000Z"
+      "key": "Boys Varsity Golf @ Elizabethtown Area High School|2026-08-17T12:00:00.000Z",
+      "firstSeenAt": "2026-09-17T22:43:07.981Z",
+      "title": "Boys Varsity Golf @ Elizabethtown Area High School",
+      "source": "PM",
+      "date": "2026-08-17T12:00:00.000Z"
     },
     {
-      "key": "Game vs Shippensburg|2026-09-27T20:15:00.000Z",
-      "firstSeenAt": "2026-09-17T19:36:24.232Z",
-      "title": "Game vs Shippensburg",
-      "source": "MU",
-      "date": "2026-09-27T20:15:00.000Z"
+      "key": "ESH PTO Meeting|2026-08-17T22:00:00.000Z",
+      "firstSeenAt": "2026-09-17T22:43:07.981Z",
+      "title": "ESH PTO Meeting",
+      "source": "PM",
+      "date": "2026-08-17T22:00:00.000Z"
     },
     {
-      "key": "Ice Hockey Club (D3) Practice|2026-09-30T01:00:00.000Z",
-      "firstSeenAt": "2026-09-17T19:36:24.232Z",
-      "title": "Ice Hockey Club (D3) Practice",
-      "source": "MU",
-      "date": "2026-09-30T01:00:00.000Z"
+      "key": "School Board Meeting|2026-08-17T23:00:00.000Z",
+      "firstSeenAt": "2026-09-17T22:43:07.981Z",
+      "title": "School Board Meeting",
+      "source": "PM",
+      "date": "2026-08-17T23:00:00.000Z"
     },
     {
-      "key": "Ice Hockey Club (D3) Practice|2026-10-02T00:15:00.000Z",
-      "firstSeenAt": "2026-09-17T19:36:24.232Z",
-      "title": "Ice Hockey Club (D3) Practice",
-      "source": "MU",
-      "date": "2026-10-02T00:15:00.000Z"
+      "key": "Central Manor Popsicles on the playground|2026-08-19T19:00:00.000Z",
+      "firstSeenAt": "2026-09-17T22:43:07.981Z",
+      "title": "Central Manor Popsicles on the playground",
+      "source": "PM",
+      "date": "2026-08-19T19:00:00.000Z"
     },
     {
-      "key": "Ice Hockey Club (D3) Practice|2026-10-07T01:00:00.000Z",
-      "firstSeenAt": "2026-09-17T19:36:24.232Z",
-      "title": "Ice Hockey Club (D3) Practice",
-      "source": "MU",
-      "date": "2026-10-07T01:00:00.000Z"
+      "key": "Boys Varsity Golf @ Cedar Crest High School|2026-08-20T16:00:00.000Z",
+      "firstSeenAt": "2026-09-17T22:43:07.981Z",
+      "title": "Boys Varsity Golf @ Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-08-20T16:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 522
 }

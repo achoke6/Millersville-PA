@@ -339,13 +339,22 @@ function extractPricing(desc, title = "", location = "", apiLink = "", startET =
         // NOTE: with etix challenge-walled to GHA, this table is UN-RETIRED —
         // it is again how real prices enter, one hand-maintained row at a
         // time. The enrichment pass never overwrites a table price.
-        { match: /art as seen through the eyes of pablo picasso/i, url: 'https://www.etix.com/ticket/p/42699702/art-as-seen-through-the-eyes-of-pablo-picasso-lancaster-ware-center-for-the-arts', price: '$45' },
-        { match: /shawan rice/i, url: 'https://www.etix.com/ticket/p/52838436/shawan-rice-the-quiet-riders-lancaster-ware-center-for-the-arts', price: '$15' },
-        { match: /making of life on our planet/i, url: 'https://www.etix.com/ticket/p/44575281/the-making-of-life-on-our-planet-lancaster-ware-center-for-the-arts', price: '$8 - $10' },
-        { match: /kids.?\s*salsa/i, url: 'https://www.etix.com/ticket/p/34862669/kidssalsa-5-lancaster-ware-center-for-the-arts', price: '$15' },
-        { match: /family fun fest.*doodle/i, url: 'https://www.etix.com/ticket/p/55340777/family-fun-fest-doodle-pop-lancaster-ware-center-for-the-arts', price: '$10 - $15' },
         { match: /jazz ensembles|jazz.*java/i, url: 'https://www.etix.com/ticket/p/71762678/jazz-ensemblesjazz-java-with-alumni-band-millersville-winter-visual-performing-arts-center', price: '$18' },
-        { match: /making democracy work/i, url: 'https://www.etix.com/ticket/p/38495242/', price: '$0 - $20' },
+        // Ware Center season rows (2026-09-17, from etix.com/ticket/v/23604/list):
+        // MU Calendar winners that were reading 'Ticket Required' (false-Free
+        // veto). Prices are etix ALL-IN. `start` is DATE-ONLY on purpose -- MU
+        // Calendar's times disagree with etix on several (2pm vs 3pm; Rivers &
+        // Big Sky is stamped 07:30 upstream) and one show per date is enough.
+        // A guarded row goes inert after its date; nothing to prune.
+        { match: /lino cut stamps/i,                      start: '2026-10-12', url: 'https://www.etix.com/ticket/p/32151568/design-your-own-tote-baglino-cut-stamps-lancaster-ware-center-for-the-arts', price: '$25.50' },
+        { match: /cirque du canines/i,                    start: '2026-10-17', url: 'https://www.etix.com/ticket/p/57819498/cirque-du-canines-lancaster-ware-center-for-the-arts', price: '$10.50 - $15.50' },
+        { match: /layer the walls/i,                      start: '2026-11-21', url: 'https://www.etix.com/ticket/p/55463060/layer-the-wallsturn-of-the-century-lancaster-ware-center-for-the-arts', price: '$10.50 - $15.50' },
+        { match: /rivers (&|and) big sky/i,               start: '2026-12-11', url: 'https://www.etix.com/ticket/p/68682136/rivers-big-sky-quartet-lancaster-ware-center-for-the-arts', price: '$15.50' },
+        { match: /best brass christmas/i,                 start: '2026-12-20', url: 'https://www.etix.com/ticket/p/51499096/lbbb-presents-our-best-brass-christmas-lancaster-ware-center-for-the-arts', price: '$25.50' },
+        { match: /kita p\.? (&|and) hadassah/i,           start: '2027-02-19', url: 'https://www.etix.com/ticket/p/97599637/kita-phadassah-edith-lancaster-ware-center-for-the-arts', price: '$15.50' },
+        { match: /tanner bingaman/i,                      start: '2027-03-13', url: 'https://www.etix.com/ticket/p/67121509/seasons-with-tanner-bingaman-virginia-masland-lancaster-ware-center-for-the-arts', price: '$15.50' },
+        { match: /taikoproject/i,                         start: '2027-04-18', url: 'https://www.etix.com/ticket/p/93081881/taikoproject-lancaster-ware-center-for-the-arts', price: '$10.50 - $15.50' },
+        { match: /reji woods/i,                           start: '2027-04-24', url: 'https://www.etix.com/ticket/p/54094145/music-of-the-silver-screen-with-reji-woods-friends-lancaster-ware-center-for-the-arts', price: '$25.50' },
         // Faculty Recital: Strings Faculty (2026-09-17): MU Calendar row carried
         // only the /v/23659/ venue fallback. Verified Free / $0.00 on etix; the
         // pid is in ETIX_KNOWN_FREE_PIDS so the sweep flips the placeholder.

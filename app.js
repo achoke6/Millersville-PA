@@ -3070,7 +3070,7 @@ let evDaysVisible = INITIAL_DAYS;
 // Replaces the old "pin at top" behavior since pinning all future favorites under the
 // Today header was confusing when the first pinned card was weeks away.
 let evFavOnlyMode = false;
-let spFavOnlyMode = false;
+// spFavOnlyMode + the ⭐ Favs toolbar button RETIRED 2026-09-18 (Patch E): favorites are marked inline on rows (spGameRow) instead.
 // Events page retains mode/anchor only for back-compat with older functions that
 // reference them; actively ignored by the new render pipeline.
 let evMode='upcoming', evAnchorDate=new Date();
@@ -4524,7 +4524,7 @@ function updateSportsUI(){
     document.getElementById('sp-no-source').style.display = spActiveSources.size===0 ? 'block' : 'none';
     // "Clean state" for the clear-filters button: all sources on, no tag filter, no home-only,
     // viewing the default Upcoming tab. (Day/week paging no longer exists.)
-    const isClean = spAllMode && !spHomeOnly && !spSportTag && spTimeView === 'upcoming' && !spFavOnlyMode;
+    const isClean = spAllMode && !spHomeOnly && !spSportTag && spTimeView === 'upcoming';
     document.getElementById('sp-clear-btn').style.visibility = isClean ? 'hidden' : 'visible';
 }
 
@@ -4544,7 +4544,6 @@ window.clearSportsFilters=function(){
     spTeamLevel=null; spTeamShowJV=false; spTeamAllResults=false;
     spActiveSources=new Set(['PM','MU','Clubs']);
     spTimeView='upcoming';
-    spFavOnlyMode=false;
     spDaysVisible = INITIAL_DAYS;
     spPastDaysVisible = INITIAL_DAYS_PAST;
     // Past-toggle button's active class is refreshed by updateSportsUI below
@@ -4806,10 +4805,12 @@ function spGameRow(e, mode) {
         else if (spIsLiveNow(e)) right = '<span class="sp-pill sp-pill-live">🔴 Live</span>';
         else right = home ? '<span class="sp-pill sp-pill-home">🏡 Home</span>' : '<span class="sp-pill">Away</span>';
     }
-    const favCls = (typeof isEventFavorited === 'function' && isEventFavorited(e)) ? ' sp-row-fav' : '';
+    const isFavRow = typeof isEventFavorited === 'function' && isEventFavorited(e);
+    const favCls = isFavRow ? ' sp-row-fav' : '';
+    const favStar = isFavRow ? '<span class="sp-row-star" title="Favorite team">★</span>' : '';   // Patch E: inline favorite marker
     return `<a href="#" class="sp-row${home ? ' sp-row-home' : ''}${favCls}" data-event-key="${key}" onclick="event.preventDefault();window.openEventDetails(${key})">`
         + `<span class="sp-row-left">${left}</span>`
-        + `<span class="sp-row-main"><span class="sp-row-title">${escHtml(title)}</span>${sub ? `<span class="sp-row-sub">${escHtml(sub)}</span>` : ''}</span>`
+        + `<span class="sp-row-main"><span class="sp-row-title">${favStar}${escHtml(title)}</span>${sub ? `<span class="sp-row-sub">${escHtml(sub)}</span>` : ''}</span>`
         + `<span class="sp-row-right">${right}</span>`
         + `</a>`;
 }
@@ -5157,7 +5158,7 @@ function renderSports(){
             hint = beyondCount > 0 ? 'There are more games further out.' : (isPast ? 'Past games stream in after they finish.' : 'Check back later — new games come in hourly.');
         }
         let html = '<div class="empty-state"><p>' + msg + '</p><p style="font-size:0.82rem;color:var(--text-muted);margin-top:4px;">' + hint + '</p>';
-        const anyFilterActive = spHomeOnly || spSportTag || !spAllMode || spFavOnlyMode || spTimeView === 'past';
+        const anyFilterActive = spHomeOnly || spSportTag || !spAllMode || spTimeView === 'past';
         if (anyFilterActive) {
             html += '<button class="btn btn-sm btn-outline" onclick="clearSportsFilters()" style="margin-top:10px;">Clear all filters</button>';
         }
@@ -5167,19 +5168,10 @@ function renderSports(){
         return;
     }
 
-    // Favorites UX: toolbar ⭐ Favs button shown whenever user has sport favorites.
-    // Works in both Upcoming and Past views — users can jump to past games of their
-    // favorite teams to see scores, or upcoming games to see what's next.
+    // Favorites: rows mark favorited teams inline (★ + gold edge, spGameRow). The
+    // toolbar ⭐ Favs button + favorites-only mode were retired 2026-09-18 (Patch E).
     const hasAnyPrefs = feedPrefs && feedPrefs.length > 0;
     const hasSportPrefs = hasAnyPrefs && feedPrefs.some(p => sportFeedIds.has(p));
-    const sportFavCount = hasSportPrefs ? allMatching.filter(e => eventMatchesFeed(e)).length : 0;
-
-    const spFavBtn = document.getElementById('sp-fav-toggle');
-    if (spFavBtn) {
-        spFavBtn.style.display = (hasSportPrefs && sportFavCount > 0) ? '' : 'none';
-        spFavBtn.classList.toggle('active', spFavOnlyMode);
-        spFavBtn.title = spFavOnlyMode ? 'Showing favorites only — tap to show all' : 'Jump to your favorites (' + sportFavCount + ')';
-    }
 
     let html = '';
     let dayItems = filtered;
@@ -5191,20 +5183,6 @@ function renderSports(){
             html += '<div class="feed-setup-hint">⚙️ <a href="#" onclick="event.preventDefault();openFeedSettings();">Set up your favorites</a> to highlight your preferred games</div>';
         } else if (hasAnyPrefs && !hasSportPrefs) {
             html += '<div class="feed-setup-hint">No sport favorites set — <a href="#" onclick="event.preventDefault();openFeedSettings();">add some</a> to highlight them here</div>';
-        }
-    }
-
-    // Apply favorites-only filter in BOTH upcoming and past views
-    if (spFavOnlyMode && hasSportPrefs) {
-        dayItems = filtered.filter(e => eventMatchesFeed(e));
-        if (dayItems.length === 0) {
-            const timeLabel = isPast ? 'past ' + daysN + ' days' : 'next ' + daysN + ' days';
-            const kindLabel = isPast ? 'past favorite games' : 'upcoming favorite games';
-            html += '<p class="empty-state">No ' + kindLabel + ' in the ' + timeLabel + '. <a href="#" onclick="event.preventDefault();spToggleFavOnly();">Show all games</a></p>';
-            if (beyondCount > 0) html += '<button class="load-more-btn" onclick="spLoadMore()">Load more (' + beyondCount + ' more games)</button>';
-            container.innerHTML = html;
-            if (typeof refreshDayLabels === 'function') refreshDayLabels();
-            return;
         }
     }
 
@@ -5236,13 +5214,6 @@ window.spLoadMore = function() {
     if (spTimeView === 'past') spPastDaysVisible += LOAD_MORE_INCREMENT_PAST;
     else spDaysVisible += LOAD_MORE_INCREMENT;
     renderSports();
-};
-
-// Toggle favorites-only filter on Sports (Upcoming view only)
-window.spToggleFavOnly = function() {
-    spFavOnlyMode = !spFavOnlyMode;
-    renderSports();
-    window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
 // Toggle Past mode on the Sports page. Replaces the old two-tab Upcoming/Past switcher.

@@ -101,7 +101,10 @@
     .sp-row:has(+ .sp-next-divider) { border-radius: 0; }
     .sp-next-divider + .sp-row { border-radius: 0; border-top: none; }
     .sp-row-home { background: #f0fdf4; }
-    .sp-row-fav { box-shadow: inset 3px 0 0 var(--gold); }
+    .sp-row-fav { box-shadow: inset 4px 0 0 var(--gold); background: #fffbeb; }
+    .sp-row-fav.sp-row-home { background: #f0fdf4; }
+    .sp-row-fav .sp-row-title { color: #92400e; }
+    .sp-row-star { color: #d97706; margin-right: 4px; font-size: 0.9em; }
     .sp-row:hover { background: #f8fafc; }
     .sp-row-home:hover { background: #ecfdf5; }
     .sp-row-left { display: flex; flex-direction: column; gap: 2px; font-size: 0.74rem; color: var(--text-muted); line-height: 1.25; }
@@ -365,7 +368,6 @@
                 </div>
                 <div class="toolbar-right">
                     <button id="sp-clear-btn" class="clear-btn" onclick="clearSportsFilters()" title="Clear filters" aria-label="Clear filters">✕</button>
-                    <button class="family-toggle fav-toggle" id="sp-fav-toggle" onclick="spToggleFavOnly()" title="Jump to your favorites" style="display:none;">⭐ <span class="fav-toggle-label">Favs</span></button>
                     <button class="family-toggle past-toggle" id="sp-past-toggle" onclick="toggleSportsPast()" title="Scores from recent games"><span class="past-toggle-label">Scores</span></button>
                     <button class="home-toggle" id="hgame-toggle" onclick="toggleHomeGameMode()" title="Home Games Only" aria-label="Home games only">
                         <svg width="20" height="20" aria-hidden="true"><use href="#icon-house"/></svg>

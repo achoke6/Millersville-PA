@@ -1062,6 +1062,24 @@ function extractPhantomPowerEventFromHTML(html, url, eventsArray, now, futureLim
 
 // ===== MAIN SCRAPER =====
 
+// ---- Penn Manor fetch-failure carry-forward (2026-09-17) -------------------------
+// Pure and harness-testable. On a PM feed failure the run reuses that feed's rows
+// from the previous committed events.json, capped at 24h since the last GOOD
+// harvest of that feed (events-snapshot.json sourceLastGood[kind]). kind is
+// 'general' | 'athletics'; the split mirrors the sourceHealth isAth predicate.
+// Returns { rows, lastGood, reason } -- rows is [] whenever reason is set.
+const PM_CARRY_MAX_MS = 24 * 60 * 60 * 1000;
+function pmCarryForward(prevEvents, lastGoodIso, kind, nowMs) {
+    const isAth = e => (e.tags || []).includes('Athletics') || (e.tags || []).includes('Athletic Competitions');
+    if (!lastGoodIso) return { rows: [], lastGood: null, reason: 'no last-good timestamp for this feed' };
+    const ageMs = nowMs - new Date(lastGoodIso).getTime();
+    if (!(ageMs >= 0) || ageMs > PM_CARRY_MAX_MS) return { rows: [], lastGood: lastGoodIso, reason: `last good ${lastGoodIso} is >24h old` };
+    const want = kind === 'athletics' ? isAth : (e => !isAth(e));
+    const rows = (Array.isArray(prevEvents) ? prevEvents : []).filter(e => (e.tags || []).includes('PM') && want(e));
+    if (!rows.length) return { rows: [], lastGood: lastGoodIso, reason: 'previous events.json had no rows for this feed' };
+    return { rows, lastGood: lastGoodIso, reason: null };
+}
+
 async function runScraper() {
     const PAST_DAYS = 90;
     const FUTURE_DAYS = 365;
@@ -1630,6 +1648,51 @@ async function runScraper() {
         return { records, pages, total };
     };
 
+    // ---- Penn Manor carry-forward state + IO (2026-09-17) ----
+    // A TEC 503 at 19:53Z emptied both PM feeds; the run committed and deployed 0 PM
+    // rows (1787 -> 1280) and a cron gap left the site there for 2h+. On a feed
+    // failure, pmCarryApply pushes that feed's rows from the previous committed
+    // events.json into `events` HERE, at the fetch point, so Hudl / MaxPreps / dedupe
+    // treat them as real rows. 24h cap via sourceLastGood (events-snapshot.json);
+    // bootstraps from status.json generatedAt on the first run after the patch when
+    // the snapshot key does not exist yet. Carried runs keep their count invariants
+    // RED (see the sourceHealth block) -- the feed failed even if the display didn't.
+    const pmCarry = { general: 0, athletics: 0, ok: { general: false, athletics: false } };
+    const pmPrevLoad = (() => {
+        let cache = null;
+        return () => {
+            if (cache) return cache;
+            let prevEvents = [], lastGood = {};
+            try { prevEvents = JSON.parse(fs.readFileSync(path.join(__dirname, '../events.json'), 'utf8')); } catch (_) { prevEvents = []; }
+            if (!Array.isArray(prevEvents)) prevEvents = [];
+            try { const snap = JSON.parse(fs.readFileSync(path.join(__dirname, '../events-snapshot.json'), 'utf8')); lastGood = { ...((snap && snap.sourceLastGood) || {}) }; } catch (_) { lastGood = {}; }
+            if (!lastGood.general || !lastGood.athletics) {
+                // Bootstrap: before the snapshot carries sourceLastGood, trust the previous
+                // run's status.json if it counted any PM rows (combined feeds -- one-time).
+                try {
+                    const st = JSON.parse(fs.readFileSync(path.join(__dirname, '../status.json'), 'utf8'));
+                    if (st && st.generatedAt && st.sources && st.sources.pennManor > 0) {
+                        if (!lastGood.general) lastGood.general = st.generatedAt;
+                        if (!lastGood.athletics) lastGood.athletics = st.generatedAt;
+                    }
+                } catch (_) { /* no status.json -- no bootstrap */ }
+            }
+            cache = { prevEvents, lastGood };
+            return cache;
+        };
+    })();
+    const pmCarryApply = (kind, label) => {
+        const { prevEvents, lastGood } = pmPrevLoad();
+        const r = pmCarryForward(prevEvents, lastGood[kind], kind, Date.now());
+        if (r.rows.length) {
+            for (const row of r.rows) events.push(row);
+            pmCarry[kind] = r.rows.length;
+            console.log(`♻️ ${label}: carried forward ${r.rows.length} row(s) from last good run (${r.lastGood})`);
+        } else {
+            console.log(`♻️ ${label}: no carry-forward (${r.reason})`);
+        }
+    };
+
     // ===== 2. PENN MANOR GENERAL CALENDAR (TEC REST — past + future in one window) =====
     // Every category; athletics rows are skipped in the loop below because block 2a
     // emits them from the pre-filtered athletics query. The zero-record throw stays
@@ -1802,7 +1865,8 @@ async function runScraper() {
             pmGenCount++;
         }
         console.log(`✅ Penn Manor (general): ${pmGenCount} non-athletic events (${pmGenPrefixed} school-prefixed, ${pmGenMerged} multi-school merges; athletics come from the athletics-category feed below)`);
-    } catch (e) { console.error("❌ Penn Manor error:", e.message); }
+        pmCarry.ok.general = true;
+    } catch (e) { console.error("❌ Penn Manor error:", e.message); pmCarryApply('general', 'Penn Manor (general)'); }
 
     // ===== 2a. PENN MANOR ATHLETICS (dedicated athletics-category iCal) =====
     // Penn Manor athletic SCHEDULES now come straight from the district's
@@ -1923,12 +1987,13 @@ async function runScraper() {
             pmAthEmit++;
         }
         console.log(`✅ Penn Manor Athletics: ${pmAthEmit} games (Varsity/JV) emitted, ${pmAthDropLevel} sub-varsity dropped`);
+        pmCarry.ok.athletics = true;
         if (pmAthSuspectDrops.length) {
             console.log(`  ⚠️ Penn Manor Athletics: ${pmAthSuspectDrops.length} drop(s) with empty/unrecognized Level - verify the Level field format in the feed (a real Varsity/JV game may be getting dropped):`);
             pmAthSuspectDrops.slice(0, 20).forEach(t => console.log(`       - ${t}`));
             if (pmAthSuspectDrops.length > 20) console.log(`       ...and ${pmAthSuspectDrops.length - 20} more`);
         }
-    } catch (e) { console.error("❌ Penn Manor Athletics error:", e.message); }
+    } catch (e) { console.error("❌ Penn Manor Athletics error:", e.message); pmCarryApply('athletics', 'Penn Manor Athletics'); }
 
     // ===== 2b. HUDL BROADCAST CHECK (Penn Manor) =====
     // Hoisted for the sourceHealth invariants in status.json (see the status block).
@@ -6356,10 +6421,19 @@ async function runScraper() {
 
         // Persist for next run. Keep top 200 recently-added entries to
         // bound file size; at ~150 bytes each that's ~30KB.
+        // sourceLastGood (2026-09-17): ISO of the last run that harvested each PM feed
+        // successfully. Drives the 24h carry-forward cap; a failed feed keeps its old
+        // stamp so the cap measures time since real data, not since the last attempt.
+        const prevLastGood = (previous && previous.sourceLastGood) || {};
+        const nowIsoForLastGood = new Date().toISOString();
         const snapshot = {
             lastSnapshotAt: new Date().toISOString(),
             currentKeys,
-            recentlyAdded: merged.slice(0, 200)
+            recentlyAdded: merged.slice(0, 200),
+            sourceLastGood: {
+                general: pmCarry.ok.general ? nowIsoForLastGood : (prevLastGood.general || null),
+                athletics: pmCarry.ok.athletics ? nowIsoForLastGood : (prevLastGood.athletics || null)
+            }
         };
         fs.writeFileSync(snapshotPath, JSON.stringify(snapshot));
 
@@ -6653,7 +6727,8 @@ async function runScraper() {
                 horizonCheck('muCalendar', dateRangeFor('MU', e => !isAth(e) && !(e.tags || []).includes('Clubs/Orgs') && !isArtsmuEvent(e) && !isCampsAlumniEvent(e)), 30);
                 horizonCheck('borough', dateRangeFor('Borough'), 21);
                 const pmAthCount = bySourceCount('PM', isAth);
-                add('pennManorAthletics.count', !athleticsSeason || pmAthCount >= 150, { value: pmAthCount, min: 150, skipped: !athleticsSeason });
+                // Carried-forward rows populate the display, but the FEED failed -- stay red.
+                add('pennManorAthletics.count', !athleticsSeason || (pmAthCount >= 150 && !pmCarry.athletics), { value: pmAthCount, min: 150, skipped: !athleticsSeason, ...(pmCarry.athletics ? { carriedForward: pmCarry.athletics } : {}) });
                 const muAthCount = bySourceCount('MU', isAth);
                 add('muAthletics.count', !athleticsSeason || muAthCount >= 100, { value: muAthCount, min: 100, skipped: !athleticsSeason });
                 // Penn Manor GENERAL calendar (block 2, non-athletic PM rows: board, concerts,
@@ -6662,7 +6737,7 @@ async function runScraper() {
                 // drops most district rows as noise — but zero is never right during the school
                 // year. Skipped in July only (the board still meets in June and August).
                 const pmGenCount = bySourceCount('PM', e => !isAth(e));
-                add('pennManorGeneral.count', monthET === 7 || pmGenCount >= 10, { value: pmGenCount, min: 10, skipped: monthET === 7 });
+                add('pennManorGeneral.count', monthET === 7 || (pmGenCount >= 10 && !pmCarry.general), { value: pmGenCount, min: 10, skipped: monthET === 7, ...(pmCarry.general ? { carriedForward: pmCarry.general } : {}) });
                 const ratio = muHudlInWindow ? muHudlMatchCount / muHudlInWindow : null;
                 add('muHudl.pairRatio', muHudlInWindow < 10 || ratio >= 0.5, { matched: muHudlMatchCount, inWindow: muHudlInWindow, value: ratio === null ? null : Number(ratio.toFixed(2)), min: 0.5 });
                 add('pmHudl.matched', pmHudlWithBroadcasts === 0 || pmHudlMatched > 0, { matched: pmHudlMatched, withBroadcasts: pmHudlWithBroadcasts });

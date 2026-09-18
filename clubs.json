@@ -261,8 +261,10 @@
   },
   {
     "name": "Campus Recreation",
-    "category": "Sporting",
+    "category": "Competition",
     "categories": [
+      "Competition",
+      "Social",
       "Sporting"
     ],
     "shortName": "",
@@ -367,12 +369,12 @@
   },
   {
     "name": "Club Cheerleading",
-    "category": "Social",
+    "category": "Sports and Leisure",
     "categories": [
-      "Social"
+      "Sports and Leisure"
     ],
     "shortName": "Club Cheerleading",
-    "id": ""
+    "id": "na"
   },
   {
     "name": "Club Softball",
@@ -392,9 +394,9 @@
   },
   {
     "name": "Club Tennis",
-    "category": "Sporting",
+    "category": "Competition",
     "categories": [
-      "Sporting"
+      "Competition"
     ],
     "shortName": "",
     "id": ""
@@ -457,10 +459,8 @@
   },
   {
     "name": "Commuter Services",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -538,6 +538,15 @@
       "Social"
     ],
     "shortName": "CGC",
+    "id": ""
+  },
+  {
+    "name": "Cyber Defense Organization",
+    "category": "Educational Program",
+    "categories": [
+      "Educational Program"
+    ],
+    "shortName": "",
     "id": ""
   },
   {
@@ -1152,10 +1161,8 @@
   },
   {
     "name": "Moose Ultimate",
-    "category": "Sporting",
-    "categories": [
-      "Sporting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1347,8 +1354,10 @@
   },
   {
     "name": "Psychology Club",
-    "category": "Social",
+    "category": "Educational Program",
     "categories": [
+      "Educational Program",
+      "Meeting",
       "Social"
     ],
     "shortName": "",
@@ -1356,11 +1365,8 @@
   },
   {
     "name": "Reformed University Fellowship",
-    "category": "Meeting",
-    "categories": [
-      "Meeting",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "RUF",
     "id": ""
   },
@@ -1465,8 +1471,11 @@
   },
   {
     "name": "South Village Residence Hall",
-    "category": "",
-    "categories": [],
+    "category": "Movie or Film",
+    "categories": [
+      "Movie or Film",
+      "Social"
+    ],
     "shortName": "South Village",
     "id": ""
   },
@@ -1523,8 +1532,10 @@
   },
   {
     "name": "Student Government Association",
-    "category": "",
-    "categories": [],
+    "category": "Competition",
+    "categories": [
+      "Competition"
+    ],
     "shortName": "SGA",
     "id": ""
   },
@@ -1776,8 +1787,9 @@
   },
   {
     "name": "WIXQ 91.7 FM",
-    "category": "Social",
+    "category": "Meeting",
     "categories": [
+      "Meeting",
       "Social"
     ],
     "shortName": "",
@@ -1801,9 +1813,9 @@
   },
   {
     "name": "Women's Club Soccer",
-    "category": "Service",
+    "category": "Competition",
     "categories": [
-      "Service"
+      "Competition"
     ],
     "shortName": "Women's Club Soccer",
     "id": ""

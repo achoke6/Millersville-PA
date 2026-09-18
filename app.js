@@ -4789,7 +4789,8 @@ function spGameRow(e, mode) {
         title = mu.opp ? (home ? 'vs ' : '@ ') + mu.opp : mu.rest;
         if (lvl) title = lvl + ' · ' + title;
         const subBits = [];
-        if (home) subBits.push('🏡 ' + (venue || 'Home'));
+        const venueShort = venue.replace(/^Millersville,\s*PA,?\s*/i, '');   // 🏡 already says it (Patch D)
+        if (home) subBits.push('🏡 ' + (venueShort || 'Home'));
         else if (venue) subBits.push(venue);
         sub = subBits.concat(hints).join(' · ');
         right = spIsScored(e) ? spScoreCell(e) : spGameEnded(e) ? '<span class="sp-pill">Final</span>' : `<span class="sp-row-time">${escHtml(spTimeCell(e))}</span>`;
@@ -4863,7 +4864,7 @@ function spStripTeamsFor(level) {
         if (oa !== ob) return (oa === -1 ? 99 : oa) - (ob === -1 ? 99 : ob);
         return a.info.label.localeCompare(b.info.label);
     });
-    return { shown: inSeason.slice(0, SP_STRIP_CAP), more: all.length - Math.min(inSeason.length, SP_STRIP_CAP) };
+    return { shown: inSeason.slice(0, SP_STRIP_CAP).map(t => ({ ...t, fav: isFav(t) })), more: all.length - Math.min(inSeason.length, SP_STRIP_CAP) };   // fav → ★ tile badge (Patch D)
 }
 function spStripRow(level, heading, chipHtml) {
     const { shown, more } = spStripTeamsFor(level);
@@ -4871,7 +4872,8 @@ function spStripRow(level, heading, chipHtml) {
     const tiles = shown.map(t => {
         const active = spTeamModeActive() && spTeamLevel === level && spSportTag === t.info.label;
         const esc = t.info.label.replace(/'/g, "\\'");
-        return `<button type="button" class="sp-tile${active ? ' active' : ''}" onclick="setSportType('${esc}','${level}')" title="${escHtml(t.info.label)}">`
+        return `<button type="button" class="sp-tile${active ? ' active' : ''}${t.fav ? ' sp-tile-fav' : ''}" onclick="setSportType('${esc}','${level}')" title="${escHtml(t.info.label)}${t.fav ? ' (favorite)' : ''}">`
+            + (t.fav ? '<span class="sp-tile-star" aria-hidden="true">★</span>' : '')
             + `<span class="sp-tile-icon">${t.info.icon}</span><span class="sp-tile-label">${escHtml(t.info.label)}</span></button>`;
     }).join('');
     const moreTile = more > 0 ? `<button type="button" class="sp-tile sp-tile-more" onclick="spStripMore()" title="All teams"><span class="sp-tile-icon">+${more}</span><span class="sp-tile-label">more</span></button>` : '';

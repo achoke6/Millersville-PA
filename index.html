@@ -143,6 +143,12 @@
     .sp-tile-icon { font-size: 1.35rem; line-height: 1; }
     .sp-tile-label { font-size: 0.66rem; font-weight: 600; color: #374151; line-height: 1.1; text-align: center; max-height: 2.2em; overflow: hidden; }
     .sp-tile-more { background: #f9fafb; border-style: dashed; min-width: 48px; }
+    .sp-tile { position: relative; }
+    .sp-tile-star { position: absolute; top: -6px; right: -6px; width: 18px; height: 18px; border-radius: 50%; background: var(--gold); color: #000; font-size: 0.7rem; line-height: 18px; text-align: center; box-shadow: 0 1px 2px rgba(0,0,0,0.2); }
+    /* style.css hides .past-toggle-label under 768px (the 🏆 used to fill the button); Scores is text-only now, so keep it. */
+    #sp-past-toggle .past-toggle-label { display: inline; }
+    #view-sports .family-toggle.past-toggle { width: auto; padding: 0 10px; }
+    .sp-team-list .sp-row-sub { white-space: normal; }
     .sp-tile-more .sp-tile-icon { font-size: 0.95rem; font-weight: 700; color: var(--text-muted); }
     /* Team view */
     .sp-team-head { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }

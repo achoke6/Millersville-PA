@@ -89,6 +89,87 @@
          scrape runs. -->
 	<!-- JSONLD:START --><!-- JSONLD:END -->
     <link rel="stylesheet" href="style.css">
+    <style id="sports-list-css">
+    /* Sports page rows + team strip + team view (2026-09-18). Lives here, not in
+       style.css (mixed line endings — Hard Rule 1 note). */
+    .sp-list { display: block; }
+    .sp-list .day-group-header { margin-top: 14px; }
+    .sp-day-schools { font-weight: 500; color: var(--text-muted); text-transform: none; letter-spacing: 0; }
+    .sp-row { display: grid; grid-template-columns: 62px minmax(0,1fr) auto; gap: 10px; align-items: center; padding: 10px 12px; background: var(--surface); border: 1px solid var(--border); border-top: none; text-decoration: none; color: var(--text); }
+    .sp-list .day-group-header + .sp-row, .sp-team-list .sp-row:first-child, .sp-next-divider + .sp-row { border-top: 1px solid var(--border); border-radius: var(--radius, 12px) var(--radius, 12px) 0 0; }
+    .sp-row:last-child, .sp-row:has(+ .day-group-header), .sp-row:has(+ .sp-next-divider), .sp-row:has(+ .load-more-btn), .sp-row:has(+ .load-more-note) { border-radius: 0 0 var(--radius, 12px) var(--radius, 12px); }
+    .sp-row:has(+ .sp-next-divider) { border-radius: 0; }
+    .sp-next-divider + .sp-row { border-radius: 0; border-top: none; }
+    .sp-row-home { background: #f0fdf4; }
+    .sp-row-fav { box-shadow: inset 3px 0 0 var(--gold); }
+    .sp-row:hover { background: #f8fafc; }
+    .sp-row-home:hover { background: #ecfdf5; }
+    .sp-row-left { display: flex; flex-direction: column; gap: 2px; font-size: 0.74rem; color: var(--text-muted); line-height: 1.25; }
+    .sp-row-time { font-weight: 600; color: var(--text); font-size: 0.8rem; }
+    .sp-row-dow { font-size: 0.72rem; }
+    .sp-row-date { font-weight: 700; color: var(--text); font-size: 0.82rem; }
+    .sp-row-tag { display: flex; align-items: center; gap: 4px; }
+    .sp-school { font-weight: 800; font-size: 0.68rem; letter-spacing: 0.02em; }
+    .sp-school-pm { color: #3730a3; }
+    .sp-school-mu { color: #92400e; }
+    .sp-school-clubs { color: #475569; }
+    .sp-lvl { font-size: 0.66rem; font-weight: 700; color: var(--text-muted); }
+    .sp-row-main { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
+    .sp-row-title { font-weight: 700; font-size: 0.92rem; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .sp-row-sub { font-size: 0.76rem; color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .sp-row-right { display: flex; align-items: center; justify-content: flex-end; flex-shrink: 0; }
+    .sp-row-right .sp-row-time { font-weight: 700; color: var(--navy); font-size: 0.86rem; }
+    .sp-pill { font-size: 0.72rem; font-weight: 600; color: var(--text-muted); padding: 3px 8px; border: 1px solid var(--border); border-radius: 999px; white-space: nowrap; }
+    .sp-pill-home { color: #15803d; border-color: #86efac; font-weight: 700; }
+    .sp-pill-live { color: #b91c1c; border-color: #fca5a5; font-weight: 700; }
+    .sp-row-score { display: flex; align-items: baseline; gap: 6px; }
+    .sp-res { font-weight: 800; font-size: 0.9rem; }
+    .sp-res-w { color: #15803d; } .sp-res-l { color: #b91c1c; } .sp-res-t { color: var(--text-muted); }
+    .sp-score { font-weight: 700; font-size: 0.98rem; color: var(--text); }
+    #view-sports .toolbar-center { flex-direction: column; align-items: flex-start; gap: 0; }
+    .sp-scope-note { display: block; font-size: 0.7rem; color: var(--text-muted); font-weight: 500; line-height: 1.1; }
+    /* Team strip */
+    #sp-team-strip { margin: 4px 0 10px; }
+    .sp-strip-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 4px 0 6px; }
+    .sp-strip-title { font-weight: 700; font-size: 0.98rem; color: var(--text); }
+    .sp-strip-chip { height: 30px; padding: 0 10px; display: inline-flex; align-items: center; gap: 4px; background: var(--surface); border: 1px solid var(--border); border-radius: 999px; font-size: 0.76rem; font-weight: 700; color: var(--text); cursor: pointer; font-family: inherit; text-decoration: none; }
+    .sp-strip-chip.active { background: #fef3c7; border-color: #f59e0b; color: #92400e; }
+    .sp-strip-exit { color: var(--navy); border-color: var(--navy); }
+    .sp-strip-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 4px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    .sp-strip-row::-webkit-scrollbar { display: none; }
+    .sp-tile { flex: 0 0 auto; min-width: 62px; max-width: 92px; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 0 6px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; cursor: pointer; font-family: inherit; color: var(--text); }
+    .sp-tile.active { background: #fef3c7; border: 2px solid #f59e0b; }
+    .sp-tile.active .sp-tile-label { color: #92400e; }
+    .sp-tile-icon { font-size: 1.35rem; line-height: 1; }
+    .sp-tile-label { font-size: 0.66rem; font-weight: 600; color: #374151; line-height: 1.1; text-align: center; max-height: 2.2em; overflow: hidden; }
+    .sp-tile-more { background: #f9fafb; border-style: dashed; min-width: 48px; }
+    .sp-tile-more .sp-tile-icon { font-size: 0.95rem; font-weight: 700; color: var(--text-muted); }
+    /* Team view */
+    .sp-team-head { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
+    .sp-team-title { display: flex; align-items: center; gap: 10px; }
+    .sp-team-icon { font-size: 1.9rem; line-height: 1; }
+    .sp-team-name { display: flex; flex-direction: column; gap: 1px; flex: 1; min-width: 0; font-weight: 800; font-size: 1.08rem; color: var(--text); }
+    .sp-team-sub { font-size: 0.76rem; font-weight: 500; color: var(--text-muted); }
+    .sp-team-star { width: 44px; height: 44px; flex-shrink: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; font-size: 1.3rem; cursor: pointer; color: var(--text-muted); }
+    .sp-team-star.active { background: #fffbeb; border-color: #f59e0b; color: #b45309; }
+    .sp-record { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+    .sp-rec-cell { display: flex; flex-direction: column; align-items: center; padding: 8px 4px; background: #f8fafc; border-radius: 10px; }
+    .sp-rec-k { font-size: 0.7rem; color: var(--text-muted); }
+    .sp-rec-v { font-weight: 800; font-size: 1.15rem; color: var(--text); }
+    .sp-streak-w { color: #15803d; } .sp-streak-l { color: #b91c1c; }
+    .sp-team-note { font-size: 0.76rem; color: var(--text-muted); }
+    .sp-team-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .sp-jv-toggle { height: 32px; padding: 0 10px; background: var(--surface); border: 1px dashed #cbd5e1; border-radius: 8px; font-size: 0.76rem; font-weight: 600; color: #4b5563; cursor: pointer; font-family: inherit; }
+    .sp-team-link { font-size: 0.76rem; font-weight: 600; color: var(--navy); text-decoration: none; margin-left: auto; }
+    .sp-team-list { display: flex; flex-direction: column; }
+    .sp-team-list .sp-row { border-top: none; }
+    .sp-team-list .sp-row:first-child { border-top: 1px solid var(--border); border-radius: 12px 12px 0 0; }
+    .sp-team-list .sp-row:last-child { border-radius: 0 0 12px 12px; }
+    .sp-team-list .sp-row-title { white-space: normal; }
+    .sp-next-divider { display: flex; align-items: center; gap: 10px; padding: 8px 14px; background: #fffbeb; border: 1px solid #fde68a; border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
+    .sp-next-divider > span:first-child, .sp-next-divider > span:last-child { flex: 1; height: 1px; background: #f59e0b; }
+    .sp-next-label { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.08em; color: #92400e; white-space: nowrap; }
+    </style>
 </head>
 <body>
 
@@ -272,6 +353,7 @@
             <div class="toolbar-compact">
                 <div class="toolbar-center">
                     <span id="sp-current-day-label" class="current-day-label">Today</span>
+                    <span id="sp-scope-note" class="sp-scope-note"></span>
                 </div>
                 <div class="toolbar-right">
                     <button id="sp-clear-btn" class="clear-btn" onclick="clearSportsFilters()" title="Clear filters" aria-label="Clear filters">✕</button>

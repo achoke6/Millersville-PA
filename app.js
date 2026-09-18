@@ -3078,6 +3078,9 @@ let evMode='upcoming', evAnchorDate=new Date();
 // Sports page state
 let spActiveSources=new Set(['PM','MU','Clubs']), spSportTag=null, spHomeOnly=false;
 let spOffSeasonOpen=false; // sport-pill row: off-season group expanded?
+let spTeamLevel=null;      // team view: 'pm' | 'mu' — the school the chosen spSportTag belongs to (2026-09-18)
+let spTeamShowJV=false;    // team view: PM sub-varsity rows expanded (session-only)
+const SP_STRIP_OTHER_KEY='mapp_sports_strip_other'; // '1' = team strip also shows the OTHER school's row (display setting; survives Clear Favs)
 // Sports view state: 'upcoming' (infinite-scroll forward) or 'past' (infinite-scroll backward)
 let spTimeView = 'upcoming';
 let spDaysVisible = INITIAL_DAYS;
@@ -3350,9 +3353,11 @@ function applyURLStateToView(view) {
         // Sport name: case-insensitive match → canonical form from sportsList.
         // Unknown sport → null (treated as "no sport filter").
         const sportParam = params.get('sport');
-        spSportTag = sportParam
-            ? (sportsList.find(s => s.toLowerCase() === sportParam.trim().toLowerCase()) || null)
-            : null;
+        // 2026-09-18: gender-aware — pills are "Boys Soccer", not "Soccer"; the old
+        // sportsList-only match silently dropped every split-sport deep link.
+        spSportTag = sportParam ? spCanonicalSportLabel(sportParam) : null;
+        const lvlParam = (params.get('lvl') || '').toLowerCase();
+        spTeamLevel = (spSportTag && (lvlParam === 'pm' || lvlParam === 'mu')) ? lvlParam : null;   // null → resolved in renderSports
         spHomeOnly = params.get('home') === '1';
         spTimeView = params.get('past') === '1' ? 'past' : 'upcoming';
     }
@@ -3386,6 +3391,7 @@ function writeURLStateForView(view) {
             params.set('src', ordered.join(','));
         }
         if (spSportTag) params.set('sport', spSportTag);
+        if (spSportTag && spTeamLevel) params.set('lvl', spTeamLevel);
         if (spHomeOnly) params.set('home', '1');
         if (spTimeView === 'past') params.set('past', '1');
     }
@@ -4145,15 +4151,16 @@ function groupEventsByDay(events) {
 // label directly above it already names that day, so repeating the date read as
 // a double listing. Later headers keep their date because it differs from the
 // toolbar's until they scroll under it.
-function buildDayGroupHTML(group, buildCard, isFirst) {
+function buildDayGroupHTML(group, buildCard, isFirst, countText) {   // countText: optional override of "N events" (Sports rows pass per-school counts, 2026-09-18)
     const todayStr = toDateStr(todayMidnight());
     const isToday = group.dateKey === todayStr;
     const label = formatDayHeader(group.dateObj);
     const count = group.events.length;
     const plural = count === 1 ? 'event' : 'events';
+    const cnt = countText || `${count} ${plural}`;
     const inner = isFirst
-        ? `${count} ${plural}`
-        : `${label}<span class="day-count">${count} ${plural}</span>`;
+        ? cnt
+        : `${label}<span class="day-count">${cnt}</span>`;
     return `<div class="day-group-header${isToday ? ' today' : ''}" data-label="${label}">${inner}</div>`
         + group.events.map(e => buildCard(e)).join('');
 }
@@ -4533,6 +4540,7 @@ window.toggleHomeGameMode=function(){
 };
 window.clearSportsFilters=function(){
     spSportTag=null; spHomeOnly=false; spAllMode=true; spOffSeasonOpen=false;
+    spTeamLevel=null; spTeamShowJV=false;
     spActiveSources=new Set(['PM','MU','Clubs']);
     spTimeView='upcoming';
     spFavOnlyMode=false;
@@ -4632,7 +4640,416 @@ function renderSportsCamps() {
     renderSignupRows(document.getElementById('sp-signups-list'), rows, SPORTS_SIGNUPS_COLLAPSED_COUNT, 'sp-signups-more');
 }
 
+/* ==================== SPORTS: TEAM STRIP + COMPACT LIST + TEAM VIEW (2026-09-18) ==================== */
+// The Sports page renders GAMES AS ROWS (one line per game, grouped by day) instead
+// of .app-card tiles, and a tapped team (strip tile OR filter pill) opens the TEAM
+// VIEW: header (icon, name, ⭐, record), optional JV toggle, and the team's whole
+// schedule as one chronological list with a "Next game" divider. Team mode hides the
+// sticky toolbar + the Signups block; "✕ All sports" in the strip header returns.
+// app.js-only. Pref ids for the team ⭐ are the SAME buildSportSubs ids the favorites
+// modal + card stars use (mu-football / pm-soccer-boys …) — no new keys, no matcher
+// edits, no Hard Rule 7/10 exposure. New localStorage key: SP_STRIP_OTHER_KEY (the
+// "+ MU" / "+ PM" strip chip; deliberately outside the favorites keys so Clear Favs
+// leaves it alone — a display setting, SHOW21_KEY precedent).
+
+// Meets/tournaments with no W-L record concept — no record strip for these teams.
+const SP_NO_RECORD_SPORTS = ['Cross Country', 'Golf', 'Track', 'Swimming', 'Bowling', 'Unified Track & Field', 'Unified Bocce'];
+
+function spStripOtherOn() { try { return localStorage.getItem(SP_STRIP_OTHER_KEY) === '1'; } catch (e) { return false; } }
+window.spToggleStripOther = function() {
+    try { localStorage.setItem(SP_STRIP_OTHER_KEY, spStripOtherOn() ? '0' : '1'); } catch (e) {}
+    renderTeamStrip();
+};
+// Primary school for the strip: locals → Penn Manor, everyone else (Marauder or
+// unset — default-marauder rule) → MU.
+function spPrimaryLevel() { return muAffiliation === 'townie' ? 'pm' : 'mu'; }
+function spSchoolOf(e) {
+    const t = e.tags || [];
+    if (matchesSportSource(t, 'PM')) return 'PM';
+    if (matchesSportSource(t, 'MU')) return 'MU';
+    if (matchesSportSource(t, 'Clubs')) return 'Clubs';
+    return '';
+}
+// Team label for an event: the SAME shape the pill row + eventMatchesSportLabel use
+// ("Boys Soccer" for split sports, "Field Hockey" for single). Also returns level,
+// sport tag, gender and the favorites pref id. null = not a PM/MU varsity game.
+function spTeamInfo(e) {
+    const tags = e.tags || [];
+    const level = sportLevelFromTags(tags);
+    if (!level) return null;
+    if (!matchesSportSource(tags, level === 'pm' ? 'PM' : 'MU')) return null;
+    const sportTag = sportsList.find(s => tags.indexOf(s) !== -1);
+    if (!sportTag) return null;
+    const display = sportDisplayName(sportTag);
+    let gender = null;
+    if (isSplitSport(level, sportTag)) {
+        gender = sportGendersFor(level, sportTag).find(x => tags.indexOf(x) !== -1) || null;
+        if (!gender) return null;
+    }
+    const label = gender ? gender + ' ' + display : display;
+    const prefId = level + '-' + sportSuffix(sportTag) + (gender ? '-' + GENDER_SUFFIX[gender] : '');
+    return { level, sportTag, display, gender, label, prefId, icon: SPORT_ICON[sportTag] || '🏅' };
+}
+// Which level does a bare pill label belong to? Pills carry no level; resolve from
+// the active source buttons, then from the data, then from affiliation.
+function spResolveTeamLevel(label) {
+    if (!label) return null;
+    const pmOn = spActiveSources.has('PM'), muOn = spActiveSources.has('MU');
+    if (pmOn && !muOn) return 'pm';
+    if (muOn && !pmOn) return 'mu';
+    const levels = new Set();
+    (allEvents || []).forEach(e => {
+        if (!isSportEvent(e)) return;
+        const info = spTeamInfo(e);
+        if (info && info.label === label) levels.add(info.level);
+    });
+    if (levels.size === 1) return Array.from(levels)[0];
+    return spPrimaryLevel();
+}
+function spTeamModeActive() { return !!(spSportTag && spTeamLevel); }
+// Hide/show the mixed-view chrome (sticky toolbar + filter drawer, signups block).
+function spSetTeamChrome(on) {
+    const sticky = document.querySelector('#view-sports .sticky-nav-bar');
+    if (sticky) sticky.style.display = on ? 'none' : '';
+    const camps = document.getElementById('sp-camps-section');
+    if (camps && on) camps.style.display = 'none';
+    const noSrc = document.getElementById('sp-no-source');
+    if (noSrc && on) noSrc.style.display = 'none';
+}
+
+// ---- Matchup parsing -------------------------------------------------------
+// "Millersville University Football at Glenville State" → { opp: "Glenville State" }
+// "Boys Varsity Soccer vs J P McCaskey High School"    → { opp: "J P McCaskey" }
+// Home/away comes from the Home Game Mode tag (location-authoritative), never the
+// vs/at word. No matchup word (tournaments, invitationals) → opp null.
+function spParseMatchup(e) {
+    const title = (e.title || '').replace(/^Millersville University\s+/i, '');
+    const m = title.match(/\s(?:vs\.?|at|@)\s+(.+)$/i);
+    if (!m) return { opp: null, rest: title };
+    let opp = m[1].trim()
+        .replace(/\s+(?:Senior|Junior\/Senior|Jr\.?\/Sr\.?|Jr\.?|Sr\.?)\s+High School$/i, '')
+        .replace(/\s+High School$/i, '')
+        .replace(/\s+\((?:Game\s*\d+|DH)\)$/i, '');
+    return { opp, rest: title.slice(0, m.index).trim() };
+}
+function spIsHome(e) { const t = e.tags || []; return t.includes('Home Game Mode') || t.includes('H Games'); }
+function spLevelWord(e) { const t = e.tags || []; return t.includes('JV') ? 'JV' : t.includes('Jr High') ? 'Jr High' : ''; }
+function spIsScored(e) { return !!(e.gameResult && e.gameScore && e.gameScore !== '0-0'); }
+function spGameEnded(e) {
+    const start = new Date(e.date).getTime();
+    if (isNaN(start)) return false;
+    const end = e.endTime ? new Date(e.endTime).getTime() : start + 3 * 60 * 60 * 1000;
+    return Date.now() > (isNaN(end) ? start + 3 * 60 * 60 * 1000 : end);
+}
+function spIsLiveNow(e) {
+    const d = new Date(e.date); if (isNaN(d.getTime())) return false;
+    const end = e.endTime ? new Date(e.endTime) : new Date(d.getTime() + 3 * 60 * 60 * 1000);
+    const now = new Date();
+    return !!e.streamLink && d <= now && now <= end && !e.gameResult && !isMultiDay(e);
+}
+function spScoreCell(e) {
+    const r = e.gameResult;
+    const cls = r === 'W' ? 'sp-res-w' : r === 'L' ? 'sp-res-l' : 'sp-res-t';
+    return `<span class="sp-row-score"><span class="sp-res ${cls}">${escHtml(r)}</span><span class="sp-score">${escHtml(e.gameScore)}</span></span>`;
+}
+function spTimeCell(e) {
+    const d = new Date(e.date);
+    return e.allDay || isNaN(d.getTime()) ? 'All day' : formatTime(d);
+}
+// Availability hints under the title — tells the reader a tap is worth it.
+function spRowHints(e) {
+    const h = [];
+    if (spIsLiveNow(e)) h.push('🔴 Live');
+    else if (e.streamLink && (spIsScored(e) || spGameEnded(e))) h.push('📺 Replay');
+    else if (e.streamLink) h.push('📺 Stream');
+    if (spIsScored(e) && /millersvilleathletics\.com\/news\//i.test(e.sourceLink || '')) h.push('📊 Recap');
+    if (e.ticketLink && !spIsScored(e)) h.push('🎟 Tickets');
+    return h;
+}
+
+// ---- Row builders ----------------------------------------------------------
+// mode 'mixed': left = time + school + glyph, title carries the team name.
+// mode 'team' : left = date, title is just the matchup; home rows tinted.
+function spGameRow(e, mode) {
+    const info = spTeamInfo(e);
+    const school = spSchoolOf(e);
+    const mu = spParseMatchup(e);
+    const home = spIsHome(e);
+    const lvl = spLevelWord(e);
+    const icon = info ? info.icon : (SPORT_ICON[sportsList.find(s => (e.tags || []).includes(s))] || '🏅');
+    const key = JSON.stringify(getEventKey(e)).replace(/"/g, '&quot;');
+    const venue = (e.location && e.location !== 'TBD') ? e.location : '';
+    const hints = spRowHints(e);
+
+    let left, title, sub, right;
+    if (mode === 'team') {
+        const d = new Date(e.date);
+        left = `<span class="sp-row-dow">${escHtml(d.toLocaleDateString('en-US', { weekday: 'short' }))}</span><span class="sp-row-date">${escHtml(d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }))}</span>`;
+        title = mu.opp ? (home ? 'vs ' : '@ ') + mu.opp : mu.rest;
+        if (lvl) title = lvl + ' · ' + title;
+        const subBits = [];
+        if (home) subBits.push('🏡 ' + (venue || 'Home'));
+        else if (venue) subBits.push(venue);
+        sub = subBits.concat(hints).join(' · ');
+        right = spIsScored(e) ? spScoreCell(e) : spGameEnded(e) ? '<span class="sp-pill">Final</span>' : `<span class="sp-row-time">${escHtml(spTimeCell(e))}</span>`;
+    } else {
+        const schoolCls = school === 'PM' ? 'sp-school-pm' : school === 'MU' ? 'sp-school-mu' : 'sp-school-clubs';
+        const schoolTxt = school === 'Clubs' ? 'Club' : school;
+        left = `<span class="sp-row-time">${escHtml(spTimeCell(e))}</span><span class="sp-row-tag"><span class="sp-school ${schoolCls}">${escHtml(schoolTxt)}</span> ${icon}${lvl ? ' <span class="sp-lvl">' + escHtml(lvl) + '</span>' : ''}</span>`;
+        const team = info ? info.label : (mu.rest || '');
+        title = mu.opp ? `${team} ${home ? 'vs' : '@'} ${mu.opp}` : (e.title || '').replace(/^Millersville University\s+/i, '');
+        sub = [venue].concat(hints).filter(Boolean).join(' · ');
+        if (spIsScored(e)) right = spScoreCell(e);
+        else if (spGameEnded(e)) right = '<span class="sp-pill">Final</span>';
+        else if (spIsLiveNow(e)) right = '<span class="sp-pill sp-pill-live">🔴 Live</span>';
+        else right = home ? '<span class="sp-pill sp-pill-home">🏡 Home</span>' : '<span class="sp-pill">Away</span>';
+    }
+    const favCls = (typeof isEventFavorited === 'function' && isEventFavorited(e)) ? ' sp-row-fav' : '';
+    return `<a href="#" class="sp-row${home ? ' sp-row-home' : ''}${favCls}" data-event-key="${key}" onclick="event.preventDefault();window.openEventDetails(${key})">`
+        + `<span class="sp-row-left">${left}</span>`
+        + `<span class="sp-row-main"><span class="sp-row-title">${escHtml(title)}</span>${sub ? `<span class="sp-row-sub">${escHtml(sub)}</span>` : ''}</span>`
+        + `<span class="sp-row-right">${right}</span>`
+        + `</a>`;
+}
+// Day-header count for the mixed list: "4 games · 3 PM · 1 MU".
+function spDayCountText(events) {
+    const n = events.length;
+    let txt = n + (n === 1 ? ' game' : ' games');
+    const c = { PM: 0, MU: 0, Clubs: 0 };
+    events.forEach(e => { const s = spSchoolOf(e); if (c[s] !== undefined) c[s]++; });
+    const parts = [];
+    if (c.PM) parts.push(c.PM + ' PM');
+    if (c.MU) parts.push(c.MU + ' MU');
+    if (c.Clubs) parts.push(c.Clubs + ' Club');
+    if (parts.length > 1) txt += '<span class="sp-day-schools"> · ' + parts.join(' · ') + '</span>';
+    return txt;
+}
+
+// ---- Team strip ------------------------------------------------------------
+// One row of tiles per shown school: in-season teams (same two-sided 7/21-day rule
+// as the pill row), favorites first, cap 6, then a "+N more" tile that opens the
+// filter drawer with the off-season group expanded. Lives in #sp-team-strip,
+// created once above the Signups block. "+ MU" / "+ PM" chip adds the other
+// school's row (remembered per device).
+const SP_STRIP_CAP = 6;
+function spStripTeamsFor(level) {
+    const today = todayMidnight();
+    const seasonStart = toDateStr(addDays(today, -SP_IN_SEASON_DAYS)), seasonEnd = toDateStr(addDays(today, SP_IN_SEASON_DAYS));
+    const nearStart = toDateStr(addDays(today, -SP_NEAR_DAYS)), nearEnd = toDateStr(addDays(today, SP_NEAR_DAYS));
+    const teams = new Map(); // label -> {info, near, win, total}
+    (allEvents || []).forEach(e => {
+        if (!isSportEvent(e)) return;
+        const info = spTeamInfo(e);
+        if (!info || info.level !== level) return;
+        let t = teams.get(info.label);
+        if (!t) { t = { info, near: 0, win: 0, total: 0 }; teams.set(info.label, t); }
+        t.total++;
+        const d = localDateStr(e.date);
+        if (d < seasonStart || d > seasonEnd) return;
+        t.win++;
+        if (d >= nearStart && d <= nearEnd) t.near++;
+    });
+    const all = Array.from(teams.values());
+    const isIn = t => t.near >= 1 || t.win >= SP_SEASON_MIN;
+    let inSeason = all.filter(isIn);
+    if (inSeason.length === 0) inSeason = all; // dead period: show everything
+    const order = level === 'pm' ? PM_SPORT_ORDER : MU_SPORT_ORDER;
+    const isFav = t => !!(feedPrefs && feedPrefs.indexOf(t.info.prefId) !== -1);
+    inSeason.sort((a, b) => {
+        const fa = isFav(a) ? 0 : 1, fb = isFav(b) ? 0 : 1;
+        if (fa !== fb) return fa - fb;
+        const oa = order.indexOf(a.info.sportTag), ob = order.indexOf(b.info.sportTag);
+        if (oa !== ob) return (oa === -1 ? 99 : oa) - (ob === -1 ? 99 : ob);
+        return a.info.label.localeCompare(b.info.label);
+    });
+    return { shown: inSeason.slice(0, SP_STRIP_CAP), more: all.length - Math.min(inSeason.length, SP_STRIP_CAP) };
+}
+function spStripRow(level, heading, chipHtml) {
+    const { shown, more } = spStripTeamsFor(level);
+    if (shown.length === 0) return '';
+    const tiles = shown.map(t => {
+        const active = spTeamModeActive() && spTeamLevel === level && spSportTag === t.info.label;
+        const esc = t.info.label.replace(/'/g, "\\'");
+        return `<button type="button" class="sp-tile${active ? ' active' : ''}" onclick="setSportType('${esc}','${level}')" title="${escHtml(t.info.label)}">`
+            + `<span class="sp-tile-icon">${t.info.icon}</span><span class="sp-tile-label">${escHtml(t.info.label)}</span></button>`;
+    }).join('');
+    const moreTile = more > 0 ? `<button type="button" class="sp-tile sp-tile-more" onclick="spStripMore()" title="All teams"><span class="sp-tile-icon">+${more}</span><span class="sp-tile-label">more</span></button>` : '';
+    return `<div class="sp-strip-head"><span class="sp-strip-title">${heading}</span>${chipHtml || ''}</div>`
+        + `<div class="sp-strip-row">${tiles}${moreTile}</div>`;
+}
+function renderTeamStrip() {
+    const sticky = document.querySelector('#view-sports .sticky-nav-bar');
+    if (!sticky || !sticky.parentNode) return;
+    let strip = document.getElementById('sp-team-strip');
+    if (!strip) {
+        strip = document.createElement('div');
+        strip.id = 'sp-team-strip';
+        // Above the Signups block when it exists, else above the toolbar.
+        const camps = document.getElementById('sp-camps-section');
+        sticky.parentNode.insertBefore(strip, camps || sticky);
+    }
+    if (!allEvents || allEvents.length === 0) { strip.innerHTML = ''; return; }
+    const primary = spPrimaryLevel(), other = primary === 'pm' ? 'mu' : 'pm';
+    const name = l => l === 'pm' ? 'Penn Manor Comets' : '🏴‍☠️ Marauders';
+    const otherShort = other === 'mu' ? '🏴‍☠️ MU' : '<svg class="btn-icon" width="12" height="12" aria-hidden="true"><use href="#icon-comet"/></svg> PM';
+    const on = spStripOtherOn();
+    let chip;
+    if (spTeamModeActive()) {
+        chip = `<a href="#" class="sp-strip-chip sp-strip-exit" onclick="event.preventDefault();setSportType(null)">✕ All sports</a>`;
+    } else {
+        chip = `<button type="button" class="sp-strip-chip${on ? ' active' : ''}" onclick="spToggleStripOther()" aria-pressed="${on ? 'true' : 'false'}">${on ? '✓ ' : '+ '}${otherShort}${on ? ' shown' : ''}</button>`;
+    }
+    let html = spStripRow(primary, name(primary), chip);
+    if (on) html += spStripRow(other, name(other), '');
+    strip.innerHTML = html;
+    strip.style.display = html ? '' : 'none';
+}
+window.spStripMore = function() {
+    const wrap = document.getElementById('sp-filters-wrap');
+    if (wrap && getComputedStyle(wrap).display === 'none') toggleSpFilters();
+    spOffSeasonOpen = true;
+    renderSports();
+    const tags = document.getElementById('sp-sport-tags');
+    if (tags) tags.scrollIntoView({ behavior: 'smooth', block: 'center' });
+};
+
+// ---- Team view -------------------------------------------------------------
+// Record from SCORED games only (0-0 = unplayed/scrimmage artifact, excluded);
+// Varsity only for PM. `unreported` = games that have ended with no score, so the
+// header can say "4-1 · 3 unreported" instead of lying.
+function spTeamRecord(games) {
+    const rec = { w: 0, l: 0, t: 0, hw: 0, hl: 0, aw: 0, al: 0, streak: '', unreported: 0, played: 0 };
+    const scored = games.filter(spIsScored).sort((a, b) => new Date(a.date) - new Date(b.date));
+    scored.forEach(e => {
+        const r = e.gameResult, h = spIsHome(e);
+        if (r === 'W') { rec.w++; h ? rec.hw++ : rec.aw++; }
+        else if (r === 'L') { rec.l++; h ? rec.hl++ : rec.al++; }
+        else rec.t++;
+    });
+    rec.played = scored.length;
+    if (scored.length) {
+        const last = scored[scored.length - 1].gameResult;
+        let n = 0;
+        for (let i = scored.length - 1; i >= 0 && scored[i].gameResult === last; i--) n++;
+        rec.streak = (last === 'W' || last === 'L') ? last + n : '';
+    }
+    // Unreported = ended with NO result at all; a 0-0 'T' (scrimmage artifact) was reported, just not counted.
+    rec.unreported = games.filter(e => !e.gameResult && spGameEnded(e)).length;
+    return rec;
+}
+function spFmtRec(w, l, t) { return w + '-' + l + (t ? '-' + t : ''); }
+function spNextGameLabel(d) {
+    const today = todayMidnight();
+    const target = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    const diff = Math.round((target - today) / 86400000);
+    if (diff === 0) return d.getHours() >= 17 ? 'TONIGHT' : 'TODAY';
+    if (diff === 1) return 'TOMORROW';
+    if (diff > 1 && diff < 7) return d.toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase();
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }).toUpperCase();
+}
+window.spToggleTeamJV = function() { spTeamShowJV = !spTeamShowJV; renderSports(); };
+window.spTeamStar = function(prefId, btn) {
+    toggleCardFavorite(prefId, btn);
+    renderTeamStrip();
+};
+function renderTeamView() {
+    const container = document.getElementById('sp-events-container');
+    if (!container) return;
+    spSetTeamChrome(true);
+    container.className = 'sp-list';
+    const level = spTeamLevel, label = spSportTag;
+    const src = level === 'pm' ? 'PM' : 'MU';
+    const pool = (allEvents || []).filter(e => {
+        const t = e.tags || [];
+        return isSportEvent(e) && matchesSportSource(t, src) && eventMatchesSportLabel(t, label);
+    });
+    const info = pool.map(spTeamInfo).find(Boolean);
+    const icon = info ? info.icon : '🏅';
+    const prefId = info ? info.prefId : null;
+    const sportTag = info ? info.sportTag : null;
+    const isFav = !!(prefId && feedPrefs && feedPrefs.indexOf(prefId) !== -1);
+
+    const isSub = e => !!spLevelWord(e);
+    const varsity = pool.filter(e => !isSub(e));
+    const subs = level === 'pm' ? pool.filter(isSub) : [];
+    let games = spTeamShowJV ? pool : varsity;
+    games = games.slice().sort((a, b) => new Date(a.date) - new Date(b.date));
+
+    const school = level === 'pm' ? 'Comets' : 'Marauders';
+    const teamName = school + ' ' + label;
+    const hasRecord = sportTag && SP_NO_RECORD_SPORTS.indexOf(sportTag) === -1;
+    const rec = spTeamRecord(varsity);
+    const nowMs = Date.now();
+    const nextUp = games.find(e => new Date(e.date).getTime() >= nowMs && !spIsScored(e));
+    const muSchedule = level === 'mu' ? (pool.map(e => e.sourceLink).find(u => /millersvilleathletics\.com\/sports\//i.test(u || '')) || '') : '';
+
+    let head = `<div class="sp-team-head">`
+        + `<div class="sp-team-title"><span class="sp-team-icon">${icon}</span><span class="sp-team-name"><span>${escHtml(teamName)}</span>`
+        + `<span class="sp-team-sub">${level === 'pm' ? 'Varsity' : 'MU varsity'} · ${escHtml(String(new Date().getFullYear()))} season</span></span>`
+        + (prefId ? `<button type="button" class="sp-team-star${isFav ? ' active' : ''}" onclick="spTeamStar('${prefId}', this)" title="${isFav ? 'Remove from favorites' : 'Add to favorites'}" aria-label="${isFav ? 'Remove from favorites' : 'Add to favorites'}">${isFav ? '★' : '☆'}</button>` : '')
+        + `</div>`;
+    if (hasRecord && rec.played > 0) {
+        const streakCls = rec.streak.charAt(0) === 'W' ? 'sp-streak-w' : rec.streak.charAt(0) === 'L' ? 'sp-streak-l' : '';
+        head += `<div class="sp-record">`
+            + `<div class="sp-rec-cell"><span class="sp-rec-k">Overall</span><span class="sp-rec-v">${spFmtRec(rec.w, rec.l, rec.t)}</span></div>`
+            + `<div class="sp-rec-cell"><span class="sp-rec-k">Home</span><span class="sp-rec-v">${spFmtRec(rec.hw, rec.hl)}</span></div>`
+            + `<div class="sp-rec-cell"><span class="sp-rec-k">Away</span><span class="sp-rec-v">${spFmtRec(rec.aw, rec.al)}</span></div>`
+            + `<div class="sp-rec-cell"><span class="sp-rec-k">Streak</span><span class="sp-rec-v ${streakCls}">${rec.streak || '—'}</span></div>`
+            + `</div>`;
+        if (rec.unreported > 0) head += `<div class="sp-team-note">${rec.unreported} game${rec.unreported === 1 ? '' : 's'} unreported — record reflects posted scores only</div>`;
+    } else if (hasRecord && nextUp) {
+        head += `<div class="sp-team-note">Season opener ${escHtml(new Date(nextUp.date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }))}</div>`;
+    }
+    const foot = [];
+    if (subs.length) foot.push(`<button type="button" class="sp-jv-toggle" onclick="spToggleTeamJV()" aria-expanded="${spTeamShowJV ? 'true' : 'false'}">JV (${subs.length}) ${spTeamShowJV ? '▾' : '▸'}</button>`);
+    if (muSchedule) foot.push(`<a href="${escHtml(muSchedule)}" target="_blank" rel="noopener" class="sp-team-link">Schedule on MU Athletics ↗</a>`);
+    if (foot.length) head += `<div class="sp-team-foot">${foot.join('')}</div>`;
+    head += `</div>`;
+
+    let body = '';
+    if (games.length === 0) {
+        body = `<div class="empty-state"><p>No ${escHtml(label.toLowerCase())} games on the schedule yet.</p><p style="font-size:0.82rem;color:var(--text-muted);margin-top:4px;">Schedules arrive as ${level === 'pm' ? 'Penn Manor' : 'MU Athletics'} publishes them.</p></div>`;
+    } else {
+        const past = games.filter(e => new Date(e.date).getTime() < nowMs && (spIsScored(e) || spGameEnded(e)));
+        const upcoming = games.filter(e => past.indexOf(e) === -1);
+        body = '<div class="sp-team-list">' + past.map(e => spGameRow(e, 'team')).join('');
+        if (upcoming.length) {
+            body += `<div class="sp-next-divider" id="sp-next-divider"><span></span><span class="sp-next-label">NEXT GAME · ${escHtml(spNextGameLabel(new Date(upcoming[0].date)))}</span><span></span></div>`;
+            body += upcoming.map(e => spGameRow(e, 'team')).join('');
+        } else {
+            body += `<div class="sp-next-divider"><span></span><span class="sp-next-label">SEASON COMPLETE</span><span></span></div>`;
+        }
+        body += '</div>';
+        if (level === 'pm' && hasRecord) body += `<div class="load-more-note">Scores from MaxPreps &amp; Hudl${pool.some(e => e.gameScore === '0-0') ? ' · scrimmages not counted' : ''}</div>`;
+        // Land with the divider in view when there is a stack of results above it.
+        if (past.length > 4 && upcoming.length) {
+            requestAnimationFrame(() => {
+                const d = document.getElementById('sp-next-divider');
+                if (!d) return;
+                const y = d.getBoundingClientRect().top + window.scrollY - Math.round(window.innerHeight * 0.45);
+                window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+            });
+        }
+    }
+    container.innerHTML = head + body;
+}
+
+// Canonical team label from a URL/pill string: "boys soccer" → "Boys Soccer",
+// "field hockey" → "Field Hockey", "Track" → "Track & Field". null = unknown.
+function spCanonicalSportLabel(raw) {
+    const s = String(raw || '').trim().toLowerCase().replace(/\s+/g, ' ');
+    if (!s) return null;
+    const genders = { "boys": 'Boys', "girls": 'Girls', "men's": "Men's", "mens": "Men's", "women's": "Women's", "womens": "Women's" };
+    let gender = null, rest = s;
+    const first = s.split(' ')[0];
+    if (genders[first]) { gender = genders[first]; rest = s.slice(first.length).trim(); }
+    const tag = sportsList.find(t => t.toLowerCase() === rest || sportDisplayName(t).toLowerCase() === rest);
+    if (!tag) return null;
+    return (gender ? gender + ' ' : '') + sportDisplayName(tag);
+}
+
 function renderSports(){
+    renderTeamStrip();
     renderSportsCamps();
     // Loading state: events.json hasn't returned yet. Show skeletons in the
     // sports container so the page doesn't flash empty.
@@ -4650,6 +5067,12 @@ function renderSports(){
     }
 
     updateSportsUI();
+
+    // Team mode (2026-09-18): a chosen team renders its own view; nothing below applies.
+    if (spSportTag && !spTeamLevel) spTeamLevel = spResolveTeamLevel(spSportTag);
+    if (spTeamModeActive()) { renderTeamView(); renderTeamStrip(); return; }
+    spSetTeamChrome(false);
+    document.getElementById('sp-events-container').className = 'sp-list';   // rows, not the card grid (2026-09-18)
 
     const today = todayMidnight();
     const todayStr = toDateStr(today);
@@ -4786,7 +5209,14 @@ function renderSports(){
     // recent day on top — a results list reads newest-first.
     const groups = groupEventsByDay(dayItems);
     if (isPast) groups.reverse();
-    html += groups.map((g, i) => buildDayGroupHTML(g, e => buildEventCard(e, true), i === 0)).join('');
+    // Rows, not cards (2026-09-18): one line per game; day header counts by school.
+    html += groups.map((g, i) => buildDayGroupHTML(g, e => spGameRow(e, 'mixed'), i === 0, spDayCountText(g.events))).join('');
+    const scopeNote = document.getElementById('sp-scope-note');
+    if (scopeNote) {
+        const s = new Set(dayItems.map(spSchoolOf)), parts = [];
+        if (s.has('PM')) parts.push('Penn Manor'); if (s.has('MU')) parts.push('MU'); if (s.has('Clubs')) parts.push('MU Clubs');
+        scopeNote.textContent = parts.length ? parts.join(' & ') + ' games' : '';
+    }
 
     if (beyondCount > 0) {
         html += '<button class="load-more-btn" onclick="spLoadMore()">Load more games (' + beyondCount + ' more available)</button>';
@@ -4908,10 +5338,17 @@ function renderSportTypeTags(baseEvents, seasonEvents){
     }
     row.innerHTML=html;
 }
-window.setSportType=function(sport){
-    spSportTag=(spSportTag===sport)?null:sport;
+// (sport, level) — strip tiles pass the school; pills pass none and renderSports
+// resolves it. Tapping the active team again clears it. A chosen team opens the
+// TEAM VIEW (2026-09-18) — the old "pill = whole schedule as cards" is retired.
+window.setSportType=function(sport, level){
+    const same = spSportTag===sport && (!level || spTeamLevel===level);
+    spSportTag = same ? null : sport;
+    spTeamLevel = spSportTag ? (level || null) : null;
+    spTeamShowJV = false;
     renderSports();
     writeURLStateForView('sports');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 // Expand/collapse the off-season sport pills. Session-only state (no URL param —
 // it's a row-layout preference, not a filter); clearSportsFilters() resets it.

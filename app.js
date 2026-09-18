@@ -3077,7 +3077,7 @@ let evMode='upcoming', evAnchorDate=new Date();
 
 // Sports page state
 let spActiveSources=new Set(['PM','MU','Clubs']), spSportTag=null, spHomeOnly=false;
-let spOffSeasonOpen=false; // sport-pill row: off-season group expanded?
+let spStripOpen={};        // team strip: per-row "Off season" line expanded (level -> bool), session-only (Patch G)
 let spTeamLevel=null;      // team view: 'pm' | 'mu' — the school the chosen spSportTag belongs to (2026-09-18)
 let spTeamShowJV=false;    // team view: PM sub-varsity rows expanded (session-only)
 let spTeamAllResults=false; // team view: earlier results expanded — default shows only the latest (2026-09-18 Patch C)
@@ -3391,8 +3391,10 @@ function writeURLStateForView(view) {
             const ordered = canonicalSpSrc.filter(s => spActiveSources.has(s));
             params.set('src', ordered.join(','));
         }
-        if (spSportTag) params.set('sport', spSportTag);
-        if (spSportTag && spTeamLevel) params.set('lvl', spTeamLevel);
+        if (spSportTag && spTeamLevel !== 'clubs') {   // club team views are org-keyed, not deep-linkable (Patch G)
+            params.set('sport', spSportTag);
+            if (spTeamLevel) params.set('lvl', spTeamLevel);
+        }
         if (spHomeOnly) params.set('home', '1');
         if (spTimeView === 'past') params.set('past', '1');
     }
@@ -4058,13 +4060,6 @@ window.togglePlacesFilters=function(){
     menu.style.display = open ? 'block' : 'none'; if (open){ const r = menu.getBoundingClientRect(); menu.style.maxHeight = Math.max(160, window.innerHeight - r.top - 12) + 'px'; }
     if (arrow) arrow.textContent = open ? '▴' : '▾';
 };
-window.toggleSpFilters=function(){
-    const wrap = document.getElementById('sp-filters-wrap');
-    const arrow = document.getElementById('sp-filter-arrow');
-    const isVisible = getComputedStyle(wrap).display !== 'none';
-    wrap.style.display = isVisible ? 'none' : 'block';
-    arrow.textContent = isVisible ? '▸' : '▾';
-};
 // Sync filter arrows on load (mobile defaults to collapsed via CSS)
 function syncFilterArrows(){
     ['ev','sp'].forEach(p => {
@@ -4455,68 +4450,9 @@ function refreshDayLabels() {
 
 /* ==================== SPORTS PAGE ==================== */
 
-let spAllMode = true; // tracks if "All" is the active selection
-
-window.setSportsSourceAll=function(btn){
-    spAllMode = true;
-    spActiveSources = new Set(['PM','MU','Clubs']);
-    spSportTag = null;
-    updateSportsUI();
-    renderSports();
-    writeURLStateForView('sports');
-};
-
-window.toggleSportsSource=function(src){
-    spAllMode = false;
-    const visibleSources = ['PM','MU','Clubs'].filter(s =>
-        !(s === 'PM' && isSourceHidden('SP_PM')) &&
-        !(s === 'Clubs' && isSourceHidden('SP_Clubs'))
-    );
-    if (visibleSources.length <= 2) {
-        // Two-pill mode (Marauders: MU + Clubs; Townies: PM + MU): radio
-        // behavior — same 2026-07-27 fix as toggleEventSource. A tap selects
-        // just that source; tapping the ACTIVE pill returns to All.
-        if (spActiveSources.size === 1 && spActiveSources.has(src)) {
-            spAllMode = true;
-            spActiveSources = new Set(['PM','MU','Clubs']);
-        } else {
-            spActiveSources = new Set([src]);
-        }
-    } else {
-        // When switching from All, start fresh with just this source
-        if (spActiveSources.size === 3 && spActiveSources.has('PM') && spActiveSources.has('MU') && spActiveSources.has('Clubs')) {
-            spActiveSources = new Set([src]);
-        } else {
-            if(spActiveSources.has(src)) spActiveSources.delete(src);
-            else spActiveSources.add(src);
-        }
-        // If all VISIBLE sources are active, switch to All mode.
-        if (visibleSources.length > 0 && visibleSources.every(s => spActiveSources.has(s))) {
-            spAllMode = true;
-            // Ensure hidden sources are also in the set so event filter stays consistent
-            spActiveSources = new Set(['PM','MU','Clubs']);
-        }
-    }
-    spSportTag=null;
-    updateSportsUI();
-    renderSports();
-    writeURLStateForView('sports');
-};
+let spAllMode = true; // true unless a ?src= deep link narrowed the sources (the source pills are retired — Patch G; ?src= is parse-only)
 
 function updateSportsUI(){
-    const allBtn = document.getElementById('sp-src-all');
-    if (allBtn) allBtn.classList.toggle('active', spAllMode);
-    ['PM','MU','Clubs'].forEach(src=>{
-        const btn=document.getElementById('sp-src-'+src.toLowerCase());
-        if(!btn) return;
-        btn.classList.toggle('active', !spAllMode && spActiveSources.has(src));
-        // Hide PM pill for Marauders (unless they favorited PM sports);
-        // Hide Clubs pill for Townies (unless they favorited Club Sports)
-        let hidePill = false;
-        if (src === 'PM') hidePill = isSourceHidden('SP_PM');
-        else if (src === 'Clubs') hidePill = isSourceHidden('SP_Clubs');
-        btn.style.display = hidePill ? 'none' : '';
-    });
     document.getElementById('hgame-toggle').classList.toggle('active', spHomeOnly);
     // Past button active state — highlighted when viewing past games
     const pastBtn = document.getElementById('sp-past-toggle');
@@ -4540,7 +4476,7 @@ window.toggleHomeGameMode=function(){
     writeURLStateForView('sports');
 };
 window.clearSportsFilters=function(){
-    spSportTag=null; spHomeOnly=false; spAllMode=true; spOffSeasonOpen=false;
+    spSportTag=null; spHomeOnly=false; spAllMode=true; spStripOpen={};
     spTeamLevel=null; spTeamShowJV=false; spTeamAllResults=false;
     spActiveSources=new Set(['PM','MU','Clubs']);
     spTimeView='upcoming';
@@ -4828,58 +4764,132 @@ function spDayCountText(events) {
     return txt;
 }
 
-// ---- Team strip ------------------------------------------------------------
-// One row of tiles per shown school: in-season teams (same two-sided 7/21-day rule
-// as the pill row), favorites first, cap 6, then a "+N more" tile that opens the
-// filter drawer with the off-season group expanded. Lives in #sp-team-strip,
-// created once above the Signups block. "+ MU" / "+ PM" chip adds the other
-// school's row (remembered per device).
-const SP_STRIP_CAP = 6;
+// ---- Team strip (Patch G) --------------------------------------------------
+// The Sports page's ONLY team navigation (Patch G, 2026-09-18 — the Filter drawer
+// and the sport-pill row are retired). One row per shown school: EVERY in-season
+// team as a tile (favorites first, ★ badge; the old cap-6 is gone), then an
+// "Off season (N) ▸" tile that expands an inline second line holding the
+// off-season teams (next game date), season-complete teams, and not-yet-published
+// teams ("Schedule TBA"). The roster is STATIC — SPORT_GENDERS × *_SPORT_ORDER —
+// so MU Baseball has a tile in September even though Sidearm hasn't posted 2027;
+// the feed only decides each team's STATE. In/off season = the two-sided 7/21-day
+// rule (SP_IN_SEASON_DAYS / SP_NEAR_DAYS / SP_SEASON_MIN, defined below
+// renderSports). Marauders + unset: MU row, chip "+ 🎓 Clubs" adds the MU club
+// row; townies: PM row, chip "+ 🏴‍☠️ MU". The chip is remembered per device
+// (SP_STRIP_OTHER_KEY). Club rows are ORG-keyed (Club Softball, Men's Ice Hockey
+// (D2)…): GetInvolved club posts carry an org, rarely a clean sport tag, and have
+// no static roster — only orgs with a game in the 13-month window appear.
+function spClubLabel(e) { return String(e.orgShortName || e.orgName || '').trim(); }
+function spRosterTeams(level) {
+    const out = [];
+    const order = level === 'pm' ? PM_SPORT_ORDER : MU_SPORT_ORDER;
+    const table = SPORT_GENDERS[level] || {};
+    order.forEach(sportTag => {
+        if (!(sportTag in table)) return;
+        const display = sportDisplayName(sportTag);
+        const genders = sportGendersFor(level, sportTag);
+        (genders.length >= 2 ? genders : [null]).forEach(gender => {
+            const label = gender ? gender + ' ' + display : display;
+            const prefId = level + '-' + sportSuffix(sportTag) + (gender ? '-' + GENDER_SUFFIX[gender] : '');
+            out.push({ level, sportTag, display, gender, label, prefId, icon: SPORT_ICON[sportTag] || '🏅' });
+        });
+    });
+    return out;
+}
+// Sidearm schedule pages by team label — the team view's "Schedule on MU
+// Athletics ↗" link for teams with no games in the feed yet. Genderless MU
+// roster entries whose Sidearm pages are split by gender (XC, Track) are omitted.
+const SP_MU_SLUG = {
+    'Baseball': 'baseball', 'Softball': 'softball', 'Football': 'football', 'Wrestling': 'wrestling',
+    'Volleyball': 'volleyball', 'Field Hockey': 'field-hockey', 'Swimming': 'swimming', 'Lacrosse': 'womens-lacrosse',
+    "Men's Basketball": 'mens-basketball', "Women's Basketball": 'womens-basketball',
+    "Men's Soccer": 'mens-soccer', "Women's Soccer": 'womens-soccer',
+    "Men's Tennis": 'mens-tennis', "Women's Tennis": 'womens-tennis',
+    "Men's Golf": 'mens-golf', "Women's Golf": 'womens-golf'
+};
 function spStripTeamsFor(level) {
-    const today = todayMidnight();
+    const today = todayMidnight(), todayStr = toDateStr(today);
     const seasonStart = toDateStr(addDays(today, -SP_IN_SEASON_DAYS)), seasonEnd = toDateStr(addDays(today, SP_IN_SEASON_DAYS));
     const nearStart = toDateStr(addDays(today, -SP_NEAR_DAYS)), nearEnd = toDateStr(addDays(today, SP_NEAR_DAYS));
-    const teams = new Map(); // label -> {info, near, win, total}
+    const isClub = level === 'clubs';
+    const teams = new Map(); // label -> {info, near, win, total, next, last}
+    const touch = info => {
+        let t = teams.get(info.label);
+        if (!t) { t = { info, near: 0, win: 0, total: 0, next: null, last: null }; teams.set(info.label, t); }
+        return t;
+    };
+    if (!isClub) spRosterTeams(level).forEach(touch);
     (allEvents || []).forEach(e => {
         if (!isSportEvent(e)) return;
-        const info = spTeamInfo(e);
-        if (!info || info.level !== level) return;
-        let t = teams.get(info.label);
-        if (!t) { t = { info, near: 0, win: 0, total: 0 }; teams.set(info.label, t); }
+        const tags = e.tags || [];
+        let info;
+        if (isClub) {
+            if (!matchesSportSource(tags, 'Clubs')) return;
+            const label = spClubLabel(e);
+            if (!label) return;
+            const sportTag = sportsList.find(s => tags.indexOf(s) !== -1) || null;
+            info = { level: 'clubs', sportTag, display: label, gender: null, label, prefId: null, icon: (sportTag && SPORT_ICON[sportTag]) || '🎓' };
+        } else {
+            info = spTeamInfo(e);
+            if (!info || info.level !== level) return;
+        }
+        const t = touch(info);
+        if (isClub && !t.info.sportTag && info.sportTag) t.info = info;   // first sport-tagged game names the club's icon
         t.total++;
         const d = localDateStr(e.date);
+        if (d >= todayStr && (!t.next || d < t.next)) t.next = d;
+        if (d < todayStr && (!t.last || d > t.last)) t.last = d;
         if (d < seasonStart || d > seasonEnd) return;
         t.win++;
         if (d >= nearStart && d <= nearEnd) t.near++;
     });
     const all = Array.from(teams.values());
     const isIn = t => t.near >= 1 || t.win >= SP_SEASON_MIN;
-    let inSeason = all.filter(isIn);
-    if (inSeason.length === 0) inSeason = all; // dead period: show everything
+    const isFav = t => !!(t.info.prefId && feedPrefs && feedPrefs.indexOf(t.info.prefId) !== -1);
     const order = level === 'pm' ? PM_SPORT_ORDER : MU_SPORT_ORDER;
-    const isFav = t => !!(feedPrefs && feedPrefs.indexOf(t.info.prefId) !== -1);
-    inSeason.sort((a, b) => {
+    const cmp = (a, b) => {
         const fa = isFav(a) ? 0 : 1, fb = isFav(b) ? 0 : 1;
         if (fa !== fb) return fa - fb;
         const oa = order.indexOf(a.info.sportTag), ob = order.indexOf(b.info.sportTag);
         if (oa !== ob) return (oa === -1 ? 99 : oa) - (ob === -1 ? 99 : ob);
         return a.info.label.localeCompare(b.info.label);
-    });
-    return { shown: inSeason.slice(0, SP_STRIP_CAP).map(t => ({ ...t, fav: isFav(t) })), more: all.length - Math.min(inSeason.length, SP_STRIP_CAP) };   // fav → ★ tile badge (Patch D)
+    };
+    let inSeason = all.filter(isIn), off = all.filter(t => !isIn(t));
+    if (inSeason.length === 0) { inSeason = all; off = []; }   // dead period: everything on the main line
+    // Off-season order: published next game first (soonest), then season complete,
+    // then Schedule TBA; favorites/sport order break ties.
+    const offKey = t => t.next ? '0' + t.next : t.total ? '1' + (t.last || '') : '2';
+    off.sort((a, b) => { const ka = offKey(a), kb = offKey(b); return ka < kb ? -1 : ka > kb ? 1 : cmp(a, b); });
+    const dec = (t, isOff) => ({ ...t, fav: isFav(t), off: isOff });
+    return { inSeason: inSeason.sort(cmp).map(t => dec(t, false)), off: off.map(t => dec(t, true)) };
+}
+function spStripDate(d) { return new Date(d + 'T12:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' }); }
+function spTile(t, level) {
+    const active = spTeamModeActive() && spTeamLevel === level && spSportTag === t.info.label;
+    const esc = t.info.label.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    const tba = t.off && t.total === 0;
+    const sub = !t.off ? '' : t.next ? 'Next ' + spStripDate(t.next) : t.total ? 'Season over' : 'Schedule TBA';
+    return `<button type="button" class="sp-tile${active ? ' active' : ''}${t.fav ? ' sp-tile-fav' : ''}${tba ? ' sp-tile-tba' : ''}" onclick="setSportType('${esc}','${level}')" title="${escHtml(t.info.label)}${t.fav ? ' (favorite)' : ''}${sub ? ' — ' + escHtml(sub) : ''}">`
+        + (t.fav ? '<span class="sp-tile-star" aria-hidden="true">★</span>' : '')
+        + `<span class="sp-tile-icon">${t.info.icon}</span><span class="sp-tile-label">${escHtml(t.info.label)}</span>`
+        + (sub ? `<span class="sp-tile-sub">${escHtml(sub)}</span>` : '')
+        + `</button>`;
 }
 function spStripRow(level, heading, chipHtml) {
-    const { shown, more } = spStripTeamsFor(level);
-    if (shown.length === 0) return '';
-    const tiles = shown.map(t => {
-        const active = spTeamModeActive() && spTeamLevel === level && spSportTag === t.info.label;
-        const esc = t.info.label.replace(/'/g, "\\'");
-        return `<button type="button" class="sp-tile${active ? ' active' : ''}${t.fav ? ' sp-tile-fav' : ''}" onclick="setSportType('${esc}','${level}')" title="${escHtml(t.info.label)}${t.fav ? ' (favorite)' : ''}">`
-            + (t.fav ? '<span class="sp-tile-star" aria-hidden="true">★</span>' : '')
-            + `<span class="sp-tile-icon">${t.info.icon}</span><span class="sp-tile-label">${escHtml(t.info.label)}</span></button>`;
-    }).join('');
-    const moreTile = more > 0 ? `<button type="button" class="sp-tile sp-tile-more" onclick="spStripMore()" title="All teams"><span class="sp-tile-icon">+${more}</span><span class="sp-tile-label">more</span></button>` : '';
-    return `<div class="sp-strip-head"><span class="sp-strip-title">${heading}</span>${chipHtml || ''}</div>`
-        + `<div class="sp-strip-row">${tiles}${moreTile}</div>`;
+    const { inSeason, off } = spStripTeamsFor(level);
+    let html = `<div class="sp-strip-head"><span class="sp-strip-title">${heading}</span>${chipHtml || ''}</div>`;
+    if (inSeason.length === 0 && off.length === 0) {
+        return html + `<div class="sp-strip-empty">No ${level === 'clubs' ? 'club' : ''} games posted yet.</div>`;
+    }
+    // Auto-open the off-season line when the active team lives in it (deep link).
+    const open = !!spStripOpen[level] || off.some(t => spTeamModeActive() && spTeamLevel === level && spSportTag === t.info.label);
+    const tiles = inSeason.map(t => spTile(t, level)).join('');
+    const offTile = off.length
+        ? `<button type="button" class="sp-tile sp-tile-more" onclick="spStripToggle('${level}')" aria-expanded="${open ? 'true' : 'false'}" title="${open ? 'Hide' : 'Show'} off-season teams"><span class="sp-tile-icon">${off.length}</span><span class="sp-tile-label">off season ${open ? '▾' : '▸'}</span></button>`
+        : '';
+    html += `<div class="sp-strip-row">${tiles}${offTile}</div>`;
+    if (open && off.length) html += `<div class="sp-strip-row sp-strip-off">${off.map(t => spTile(t, level)).join('')}</div>`;
+    return html;
 }
 function renderTeamStrip() {
     const sticky = document.querySelector('#view-sports .sticky-nav-bar');
@@ -4893,9 +4903,9 @@ function renderTeamStrip() {
         sticky.parentNode.insertBefore(strip, camps || sticky);
     }
     if (!allEvents || allEvents.length === 0) { strip.innerHTML = ''; return; }
-    const primary = spPrimaryLevel(), other = primary === 'pm' ? 'mu' : 'pm';
-    const name = l => l === 'pm' ? 'Penn Manor Comets' : '🏴‍☠️ Marauders';
-    const otherShort = other === 'mu' ? '🏴‍☠️ MU' : '<svg class="btn-icon" width="12" height="12" aria-hidden="true"><use href="#icon-comet"/></svg> PM';
+    const primary = spPrimaryLevel(), other = primary === 'pm' ? 'mu' : 'clubs';
+    const name = l => l === 'pm' ? 'Penn Manor Comets' : l === 'mu' ? '🏴‍☠️ Marauders' : '🎓 MU Clubs';
+    const otherShort = other === 'mu' ? '🏴‍☠️ MU' : '🎓 Clubs';
     const on = spStripOtherOn();
     let chip;
     if (spTeamModeActive()) {
@@ -4908,13 +4918,9 @@ function renderTeamStrip() {
     strip.innerHTML = html;
     strip.style.display = html ? '' : 'none';
 }
-window.spStripMore = function() {
-    const wrap = document.getElementById('sp-filters-wrap');
-    if (wrap && getComputedStyle(wrap).display === 'none') toggleSpFilters();
-    spOffSeasonOpen = true;
-    renderSports();
-    const tags = document.getElementById('sp-sport-tags');
-    if (tags) tags.scrollIntoView({ behavior: 'smooth', block: 'center' });
+window.spStripToggle = function(level) {
+    spStripOpen[level] = !spStripOpen[level];
+    renderTeamStrip();
 };
 
 // ---- Team view -------------------------------------------------------------
@@ -4963,13 +4969,18 @@ function renderTeamView() {
     spSetTeamChrome(true);
     container.className = 'sp-list';
     const level = spTeamLevel, label = spSportTag;
-    const src = level === 'pm' ? 'PM' : 'MU';
+    const isClub = level === 'clubs';   // Patch G: org-keyed club team view
+    const src = level === 'pm' ? 'PM' : isClub ? 'Clubs' : 'MU';
     const pool = (allEvents || []).filter(e => {
         const t = e.tags || [];
-        return isSportEvent(e) && matchesSportSource(t, src) && eventMatchesSportLabel(t, label);
+        if (!isSportEvent(e) || !matchesSportSource(t, src)) return false;
+        return isClub ? spClubLabel(e) === label : eventMatchesSportLabel(t, label);
     });
-    const info = pool.map(spTeamInfo).find(Boolean);
-    const icon = info ? info.icon : '🏅';
+    // No games yet (Schedule TBA) → the static roster still names the team's icon,
+    // favorites id and sport tag (Patch G).
+    const info = pool.map(spTeamInfo).find(Boolean) || (isClub ? null : spRosterTeams(level).find(t => t.label === label) || null);
+    const clubSport = isClub ? sportsList.find(s => pool.some(e => (e.tags || []).indexOf(s) !== -1)) : null;
+    const icon = info ? info.icon : (clubSport && SPORT_ICON[clubSport]) || (isClub ? '🎓' : '🏅');
     const prefId = info ? info.prefId : null;
     const sportTag = info ? info.sportTag : null;
     const isFav = !!(prefId && feedPrefs && feedPrefs.indexOf(prefId) !== -1);
@@ -4980,17 +4991,18 @@ function renderTeamView() {
     let games = spTeamShowJV ? pool : varsity;
     games = games.slice().sort((a, b) => new Date(a.date) - new Date(b.date));
 
-    const school = level === 'pm' ? 'Comets' : 'Marauders';
-    const teamName = school + ' ' + label;
+    const school = level === 'pm' ? 'Comets' : isClub ? '' : 'Marauders';
+    const teamName = (school ? school + ' ' : '') + label;
     const hasRecord = sportTag && SP_NO_RECORD_SPORTS.indexOf(sportTag) === -1;
     const rec = spTeamRecord(varsity);
     const nowMs = Date.now();
     const nextUp = games.find(e => new Date(e.date).getTime() >= nowMs && !spIsScored(e));
-    const muSchedule = level === 'mu' ? (pool.map(e => e.sourceLink).find(u => /millersvilleathletics\.com\/sports\//i.test(u || '')) || '') : '';
+    const muSchedule = level === 'mu' ? (pool.map(e => e.sourceLink).find(u => /millersvilleathletics\.com\/sports\//i.test(u || ''))
+        || (SP_MU_SLUG[label] ? 'https://millersvilleathletics.com/sports/' + SP_MU_SLUG[label] + '/schedule' : '')) : '';
 
     let head = `<div class="sp-team-head">`
         + `<div class="sp-team-title"><span class="sp-team-icon">${icon}</span><span class="sp-team-name"><span>${escHtml(teamName)}</span>`
-        + `<span class="sp-team-sub">${level === 'pm' ? 'Varsity' : 'MU varsity'} · ${escHtml(String(new Date().getFullYear()))} season</span></span>`
+        + `<span class="sp-team-sub">${level === 'pm' ? 'Varsity' : isClub ? 'MU club sport' : 'MU varsity'} · ${escHtml(String(new Date().getFullYear()))} season</span></span>`
         + (prefId ? `<button type="button" class="sp-team-star${isFav ? ' active' : ''}" onclick="spTeamStar('${prefId}', this)" title="${isFav ? 'Remove from favorites' : 'Add to favorites'}" aria-label="${isFav ? 'Remove from favorites' : 'Add to favorites'}">${isFav ? '★' : '☆'}</button>` : '')
         + `</div>`;
     if (hasRecord && rec.played > 0) {
@@ -5013,7 +5025,7 @@ function renderTeamView() {
 
     let body = '';
     if (games.length === 0) {
-        body = `<div class="empty-state"><p>No ${escHtml(label.toLowerCase())} games on the schedule yet.</p><p style="font-size:0.82rem;color:var(--text-muted);margin-top:4px;">Schedules arrive as ${level === 'pm' ? 'Penn Manor' : 'MU Athletics'} publishes them.</p></div>`;
+        body = `<div class="empty-state"><p>No ${escHtml(label.toLowerCase())} games on the schedule yet.</p><p style="font-size:0.82rem;color:var(--text-muted);margin-top:4px;">Schedules arrive as ${level === 'pm' ? 'Penn Manor' : isClub ? 'the club posts them on GetInvolved' : 'MU Athletics'} publishes them.</p></div>`;
     } else {
         const past = games.filter(e => new Date(e.date).getTime() < nowMs && (spIsScored(e) || spGameEnded(e)));
         const upcoming = games.filter(e => past.indexOf(e) === -1);
@@ -5060,13 +5072,11 @@ function renderSports(){
     // sports container so the page doesn't flash empty.
     if (!allEvents || allEvents.length === 0) {
         document.getElementById('sp-events-container').innerHTML = renderSkeletonCards(4);
-        document.getElementById('sp-sport-tags').innerHTML = '';
         updateSportsUI();
         return;
     }
     if(spActiveSources.size===0){
         document.getElementById('sp-events-container').innerHTML='';
-        document.getElementById('sp-sport-tags').innerHTML='';
         updateSportsUI();
         return;
     }
@@ -5100,21 +5110,16 @@ function renderSports(){
     };
     const allMatching = allEvents.filter(filterSport);
 
-    // Sport-type tag row uses only the visible window's events (matches what the user sees)
+    // Visible window (the mixed list); directionMatching = every game in this
+    // direction (a chosen team's whole schedule, and the Load-more count).
     const windowMatching = allMatching.filter(e => {
         const d = localDateStr(e.date);
         return d >= rangeStart && d <= rangeEnd;
     });
-    // Pill pool = EVERY game in this direction (upcoming: today onward; Results:
-    // before today), not just the 60-day window — a team with a published schedule
-    // has a pill months before its opener (PM winter sports tip off in December;
-    // spring teams appear as Sidearm / PM publish). Off-season pills sit behind the
-    // "Off season (N)" toggle, so the flat row stays short.
     const directionMatching = allMatching.filter(e => {
         const d = localDateStr(e.date);
         return isPast ? d < todayStr : d >= todayStr;
     });
-    renderSportTypeTags(directionMatching, allMatching);
 
     // Apply sport-type filter after the tag bar is rendered. A selected team shows
     // ALL its games in this direction — a season is ~20–60 rows; the window exists to
@@ -5247,72 +5252,11 @@ window.setSportsTimeView = function(view) {
 // team whose season is ending (PM golf's last match) in season; the 2-in-21
 // clause filters one-off exhibitions (MU swimming's September Black & Gold
 // intrasquad meet). Off-season pills hide behind an "Off season (N) ▸" toggle so
-// the row stays scannable now that every team has a pill — in practice the group
-// doubles as a preview, showing next season's teams ~3 weeks before they start.
-// The group auto-opens when the active sport lives in it (arriving via
-// ?sport=Wrestling) so the highlighted pill is never hidden. If NOTHING is in
-// season (dead period) every pill renders flat — no toggle.
-// baseEvents = the visible window (decides WHICH pills exist);
-// seasonEvents = every matching game incl. past (decides in/off season).
+// the team strip's "Off season (N)" line holds the rest (spStripTeamsFor).
+// If NOTHING is in season (dead period) every team sits on the main line.
 const SP_IN_SEASON_DAYS = 21;
 const SP_NEAR_DAYS = 7;
 const SP_SEASON_MIN = 2;
-function renderSportTypeTags(baseEvents, seasonEvents){
-    const row=document.getElementById('sp-sport-tags');
-    // Smart pill labels from the events in the window: split sports get a pill
-    // per gender present ("Boys Soccer"); single sports get one pill ("Field
-    // Hockey", "Cross Country"). Sorted by sport then gender so Boys/Girls sit together.
-    const labelFor=e=>{
-        const tags=e.tags||[];
-        const level=sportLevelFromTags(tags);
-        const sportTag=sportsList.find(s=>tags.indexOf(s)!==-1);
-        if(!sportTag) return null;
-        const display=sportDisplayName(sportTag);
-        if(level && isSplitSport(level,sportTag)){
-            const g=sportGendersFor(level,sportTag).find(x=>tags.indexOf(x)!==-1);
-            if(!g) return null; // split sport, no gender tag (e.g. a generic camp) — no sport pill
-            return {label:g+' '+display, display};
-        }
-        return {label:display, display};
-    };
-    const labels=new Map(); // label -> display (sort key)
-    baseEvents.forEach(e=>{ const l=labelFor(e); if(l) labels.set(l.label,l.display); });
-    if(labels.size===0){row.innerHTML='';return;}
-
-    // In-season counts over ALL matching games, both directions from today
-    const today=todayMidnight();
-    const seasonStart=toDateStr(addDays(today,-SP_IN_SEASON_DAYS)), seasonEnd=toDateStr(addDays(today,SP_IN_SEASON_DAYS));
-    const nearStart=toDateStr(addDays(today,-SP_NEAR_DAYS)), nearEnd=toDateStr(addDays(today,SP_NEAR_DAYS));
-    const counts=new Map(); // label -> {near, win}
-    (seasonEvents||baseEvents).forEach(e=>{
-        const d=localDateStr(e.date);
-        if(d<seasonStart || d>seasonEnd) return;
-        const l=labelFor(e); if(!l || !labels.has(l.label)) return;
-        const c=counts.get(l.label)||{near:0,win:0};
-        c.win++;
-        if(d>=nearStart && d<=nearEnd) c.near++;
-        counts.set(l.label,c);
-    });
-    const isIn=label=>{ const c=counts.get(label); return !!c && (c.near>=1 || c.win>=SP_SEASON_MIN); };
-
-    const sorted=Array.from(labels.keys()).sort((a,b)=>labels.get(a).localeCompare(labels.get(b))||a.localeCompare(b));
-    let inSeason=sorted.filter(isIn);
-    let offSeason=sorted.filter(l=>!isIn(l));
-    if(inSeason.length===0){inSeason=sorted;offSeason=[];} // dead period: flat row
-    const offOpen=spOffSeasonOpen||(spSportTag!==null && offSeason.indexOf(spSportTag)!==-1);
-    const pill=label=>{
-        const feedSuffix=label.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
-        const esc=label.replace(/'/g,"\\'");
-        return `<button class="sport-pill ${spSportTag===label?'active':''}" data-feed="sport-${feedSuffix}" onclick="setSportType('${esc}')">${label}</button>`;
-    };
-    let html=`<button class="sport-pill ${!spSportTag?'active':''}" onclick="setSportType(null)">All Sports</button>`;
-    html+=inSeason.map(pill).join('');
-    if(offSeason.length){
-        html+=`<button class="sport-pill" style="border-style:dashed;color:var(--text-muted);" onclick="toggleSpOffSeason()" aria-expanded="${offOpen?'true':'false'}" title="Teams not currently playing">Off season (${offSeason.length}) ${offOpen?'▾':'▸'}</button>`;
-        if(offOpen) html+=offSeason.map(pill).join('');
-    }
-    row.innerHTML=html;
-}
 // (sport, level) — strip tiles pass the school; pills pass none and renderSports
 // resolves it. Tapping the active team again clears it. A chosen team opens the
 // TEAM VIEW (2026-09-18) — the old "pill = whole schedule as cards" is retired.
@@ -5325,12 +5269,6 @@ window.setSportType=function(sport, level){
     renderSports();
     writeURLStateForView('sports');
     window.scrollTo({ top: 0, behavior: 'smooth' });
-};
-// Expand/collapse the off-season sport pills. Session-only state (no URL param —
-// it's a row-layout preference, not a filter); clearSportsFilters() resets it.
-window.toggleSpOffSeason=function(){
-    spOffSeasonOpen=!spOffSeasonOpen;
-    renderSports();
 };
 
 /* ==================== CARD BUILDER ==================== */

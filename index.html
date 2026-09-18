@@ -153,6 +153,11 @@
     #view-sports .family-toggle.past-toggle { width: auto; padding: 0 10px; }
     .sp-team-list .sp-row-sub { white-space: normal; }
     .sp-tile-more .sp-tile-icon { font-size: 0.95rem; font-weight: 700; color: var(--text-muted); }
+    /* Off-season line (Patch G, 2026-09-18): second tile row under "Off season (N)" */
+    .sp-strip-off .sp-tile { height: 78px; }
+    .sp-tile-sub { font-size: 0.58rem; color: var(--text-muted); line-height: 1; white-space: nowrap; }
+    .sp-tile-tba { border-style: dashed; opacity: 0.65; }
+    .sp-strip-empty { font-size: 0.82rem; color: var(--text-muted); padding: 4px 0 8px; }
     /* Team view */
     .sp-team-head { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
     .sp-team-title { display: flex; align-items: center; gap: 10px; }
@@ -372,19 +377,7 @@
                     <button class="home-toggle" id="hgame-toggle" onclick="toggleHomeGameMode()" title="Home Games Only" aria-label="Home games only">
                         <svg width="20" height="20" aria-hidden="true"><use href="#icon-house"/></svg>
                     </button>
-                    <button id="sp-filter-toggle" class="filter-toggle" onclick="toggleSpFilters()">Filter <span id="sp-filter-arrow">▾</span></button>
                 </div>
-            </div>
-            <div id="sp-filters-wrap" class="filters-collapsible" style="margin-top:10px;">
-                <div class="filter-bar sp-source-row">
-                    <div class="filter-group" id="sp-source-group">
-                        <button class="src-btn active" id="sp-src-all" onclick="setSportsSourceAll(this)">All</button>
-                        <button class="src-btn" id="sp-src-pm" data-feed="pm-" onclick="toggleSportsSource('PM')"><svg class="btn-icon" width="14" height="14"><use href="#icon-comet"/></svg> PM</button>
-                        <button class="src-btn" id="sp-src-mu" data-feed="mu-" onclick="toggleSportsSource('MU')">🏴‍☠️ MU</button>
-                        <button class="src-btn" id="sp-src-clubs" data-feed="clubs-" onclick="toggleSportsSource('Clubs')">🎓 MU Clubs</button>
-                    </div>
-                </div>
-                <div id="sp-sport-tags" class="sport-tag-row"></div>
             </div>
         </div>
         <div id="sp-no-source" class="empty-state" style="display:none;">Select a source (PM, MU, or MU Clubs) to view games.</div>

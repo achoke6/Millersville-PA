@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-09-18T15:26:26.826Z",
-  "totalEvents": 1802,
-  "withDescription": 779,
+  "generatedAt": "2026-09-18T15:49:49.933Z",
+  "totalEvents": 1803,
+  "withDescription": 780,
   "withImage": 234,
   "familyFriendly": 91,
   "eventsToday": 15,
   "sources": {
     "muAthletics": 319,
-    "muCalendar": 165,
+    "muCalendar": 166,
     "artsmu": 22,
     "campsAlumni": 39,
     "muGetInvolved": 444,
@@ -150,13 +150,13 @@
       "PM Community": 3
     },
     "stalePast": 5,
-    "lastSyncAt": "2026-09-18T15:23:08.136Z"
+    "lastSyncAt": "2026-09-18T15:46:23.199Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-18T15:26:19.676Z"
+    "checkedAt": "2026-09-18T15:49:47.711Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -229,6 +229,27 @@
   },
   "recentlyAdded": [
     {
+      "key": "Civil Service Commission - Cancelled|2026-09-21T22:00:00.000Z",
+      "firstSeenAt": "2026-09-18T15:49:49.929Z",
+      "title": "Civil Service Commission - Cancelled",
+      "source": "Borough",
+      "date": "2026-09-21T22:00:00.000Z"
+    },
+    {
+      "key": "FSL: Professionalism Workshop with Phi Mu Delta|2026-09-24T22:00:00.000Z",
+      "firstSeenAt": "2026-09-18T15:49:49.929Z",
+      "title": "FSL: Professionalism Workshop with Phi Mu Delta",
+      "source": "MU",
+      "date": "2026-09-24T22:00:00.000Z"
+    },
+    {
+      "key": "Student Government Association (SGA) Weekly Meeting|2026-10-22T17:00:00",
+      "firstSeenAt": "2026-09-18T15:49:49.929Z",
+      "title": "Student Government Association (SGA) Weekly Meeting",
+      "source": "MU",
+      "date": "2026-10-22T17:00:00"
+    },
+    {
       "key": "Men's Rugby Vs American Univeristy|2026-09-19T15:30:00.000Z",
       "firstSeenAt": "2026-09-18T15:03:47.181Z",
       "title": "Men's Rugby Vs American Univeristy",
@@ -276,28 +297,7 @@
       "title": "Central Manor LifeTouch Picture Re-Take Day",
       "source": "PM",
       "date": "2026-11-09T05:00:00.000Z"
-    },
-    {
-      "key": "Acacia Blood Drive|2026-11-10T12:00:00",
-      "firstSeenAt": "2026-09-18T15:03:47.181Z",
-      "title": "Acacia Blood Drive",
-      "source": "MU",
-      "date": "2026-11-10T12:00:00"
-    },
-    {
-      "key": "988 Day - Mental Heath Suicide Information|2026-09-08T10:00:00",
-      "firstSeenAt": "2026-09-18T01:04:50.290Z",
-      "title": "988 Day - Mental Heath Suicide Information",
-      "source": "MU",
-      "date": "2026-09-08T10:00:00"
-    },
-    {
-      "key": "Creative Writers Guild general meeting|2026-09-08T18:00:00",
-      "firstSeenAt": "2026-09-18T01:04:50.290Z",
-      "title": "Creative Writers Guild general meeting",
-      "source": "MU",
-      "date": "2026-09-08T18:00:00"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 3
 }

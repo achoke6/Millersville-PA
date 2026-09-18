@@ -1708,12 +1708,6 @@ async function runScraper() {
 
         const pmData = pmGenRest.records;
 
-        // Debug: check raw PM lacrosse events before any processing
-        const rawLax = Object.values(pmData).filter(e => /lacrosse/i.test(e.summary || ''));
-        const rawGirlsLax = rawLax.filter(e => /girl/i.test(e.summary || ''));
-        console.log(`    🔍 Raw PM lacrosse: ${rawLax.length} total, ${rawGirlsLax.length} girls`);
-        rawGirlsLax.filter(e => new Date(e.start) >= now).forEach(e => console.log(`      → ${e.summary} (${new Date(e.start).toISOString().split('T')[0]})`));
-
         let pmAthCount = 0, pmGenCount = 0;
 
         // Hand-curated YouTube replay links for PM events streamed live and posted
@@ -1912,6 +1906,10 @@ async function runScraper() {
         // sub-varsity keyword - these could be real Varsity/JV games silently lost to a feed format
         // change, so we surface them in the run log (see manifest §8/§9).
         const pmAthSuspectDrops = [];
+        // Sport-tag fallback bookkeeping (2026-09-18): which Sport: values needed
+        // the word-boundary rescue, and which still resolve to nothing.
+        const pmAthSportFallback = new Map();   // sportRaw -> count (rescued)
+        const pmAthSportUnknown = new Map();    // sportRaw -> count (still bare Athletics)
         const PM_SUBVARSITY_RE = /\b(?:7th|8th|9th|seventh|eighth|ninth|freshman|frosh|jr\.?\s*high|junior\s*high|j\.?h\.?|middle\s*school)\b/i;
         for (const ev of Object.values(allPMAth)) {
             const eventDate = new Date(ev.start);
@@ -1966,9 +1964,17 @@ async function runScraper() {
             if (isUnified) {
                 tags.push((/bocce/i.test(lowerTitle) || /bocce/i.test(sportRaw)) ? 'Unified Bocce' : 'Unified Track & Field');
             } else {
-                const sportCanon = sportsList.find(s => s.toLowerCase() === sportRaw.toLowerCase());
+                // Exact match first; then the sport as a WORD inside the Sport: value
+                // ("Girls Lacrosse", "Lacrosse - Girls"); then inside the title. The
+                // exact-only form shipped 22 lacrosse rows as bare Athletics (2026-09-18).
+                const wordRe = s => new RegExp('\\b' + s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
+                let sportCanon = sportsList.find(s => s.toLowerCase() === sportRaw.toLowerCase());
+                if (!sportCanon) {
+                    sportCanon = sportsList.find(s => wordRe(s).test(sportRaw)) || sportsList.find(s => wordRe(s).test(title));
+                    if (sportCanon) pmAthSportFallback.set(sportRaw || '(empty)', (pmAthSportFallback.get(sportRaw || '(empty)') || 0) + 1);
+                }
                 if (sportCanon) tags.push(sportCanon);
-                else if (sportRaw) tags.push('Athletics'); // sport not in sportsList - keep tagged (e.g. Bocce)
+                else if (sportRaw) { tags.push('Athletics'); pmAthSportUnknown.set(sportRaw, (pmAthSportUnknown.get(sportRaw) || 0) + 1); } // not in sportsList - keep tagged
             }
 
             // Display location: prefer the venue name (Site:) over the raw address
@@ -1987,6 +1993,9 @@ async function runScraper() {
             pmAthEmit++;
         }
         console.log(`✅ Penn Manor Athletics: ${pmAthEmit} games (Varsity/JV) emitted, ${pmAthDropLevel} sub-varsity dropped`);
+        const fmtMap = m => Array.from(m.entries()).map(([k, v]) => `"${k}"×${v}`).join(', ');
+        if (pmAthSportFallback.size) console.log(`  ℹ️ Penn Manor Athletics: ${Array.from(pmAthSportFallback.values()).reduce((a, b) => a + b, 0)} sport tag(s) via fallback (Sport: field not an exact sportsList name) — ${fmtMap(pmAthSportFallback)}`);
+        if (pmAthSportUnknown.size) console.log(`  ⚠️ Penn Manor Athletics: unrecognized Sport: value(s) tagged bare Athletics — ${fmtMap(pmAthSportUnknown)}`);
         pmCarry.ok.athletics = true;
         if (pmAthSuspectDrops.length) {
             console.log(`  ⚠️ Penn Manor Athletics: ${pmAthSuspectDrops.length} drop(s) with empty/unrecognized Level - verify the Level field format in the feed (a real Varsity/JV game may be getting dropped):`);
@@ -2937,10 +2946,14 @@ async function runScraper() {
         // Stage 2: Fetch each event page and parse structured data
         const monthMap = {January:0,February:1,March:2,April:3,May:4,June:5,July:6,August:7,September:8,October:9,November:10,December:11};
         let artsCount = 0, artsFailed = 0, artsSkipped = 0;
-        // Dedup against MU Calendar entries already in `events`. Uses the
-        // shared buildCampDedupKey helper (module scope) so artsmu and
-        // camps.json apply identical TZ-aware key logic.
-        const existingKeys = new Set(events.map(e => buildCampDedupKey(e.title, e.date)));
+        // artsmu dedupes against ITSELF only (2026-09-18). It used to seed this set
+        // from MU Calendar rows too, which made the fetch-time skip a DROP: when
+        // "Jazz at the 'Ville" finally decoded its &#8216; the artsmu copy was
+        // skipped here and its $10 price / etix link / muFreeTicket never reached the
+        // kept row. Pass 2 (DEDUPLICATION & SAVE) merges the same pair WITH the
+        // enrichment carry, as it already does for every artsmu/MU pair whose titles
+        // differ (Kauffman, Xun Pan). buildCampDedupKey stays the TZ-aware key.
+        const existingKeys = new Set();
 
         for (const eventUrl of eventUrls) {
             try {

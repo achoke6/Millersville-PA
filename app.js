@@ -4805,7 +4805,7 @@ function spGameRow(e, mode) {
         else if (spIsLiveNow(e)) right = '<span class="sp-pill sp-pill-live">🔴 Live</span>';
         else right = home ? '<span class="sp-pill sp-pill-home">🏡 Home</span>' : '<span class="sp-pill">Away</span>';
     }
-    const isFavRow = typeof isEventFavorited === 'function' && isEventFavorited(e);
+    const isFavRow = mode !== 'team' && typeof isEventFavorited === 'function' && isEventFavorited(e);   // mixed list only — a team view's rows are all that team (Patch F)
     const favCls = isFavRow ? ' sp-row-fav' : '';
     const favStar = isFavRow ? '<span class="sp-row-star" title="Favorite team">★</span>' : '';   // Patch E: inline favorite marker
     return `<a href="#" class="sp-row${home ? ' sp-row-home' : ''}${favCls}" data-event-key="${key}" onclick="event.preventDefault();window.openEventDetails(${key})">`

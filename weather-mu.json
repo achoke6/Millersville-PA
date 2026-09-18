@@ -1,27 +1,27 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Thursday, September 17, 2026 at 11:42 AM (Biondo and Cressley, Student Meteorologists)",
+    "issued": "Thursday, September 17, 2026 at 05:28 PM (Bliss, Meier, Rooney, Zwolinski, Student Meteorologists)",
     "periods": [
-      {
-        "period": "This afternoon",
-        "text": "Partly sunny, warm and humid with scattered showers and T-storms. High: 84-88"
-      },
       {
         "period": "Tonight",
         "text": "Mostly cloudy, warm and muggy with an evening shower or T-storm. Low: 68-72"
       },
       {
-        "period": "Friday",
+        "period": "Tomorrow",
         "text": "Breezy and warm but turning less humid with decreasing clouds. High: 80-84"
       },
       {
-        "period": "Friday Night",
+        "period": "Tomorrow Night",
         "text": "Mainly clear and comfortable. Low: 54-58"
       },
       {
         "period": "Saturday",
         "text": "Seasonable and pleasant with a mix of clouds and sun. High: 76-80"
+      },
+      {
+        "period": "Sunday",
+        "text": "Mostly cloudy with periods of light rain High: 76-80"
       }
     ]
   },
@@ -126,74 +126,7 @@
       }
     ]
   },
-  "observations": [
-    {
-      "time": "15:00",
-      "temp": "80",
-      "dewpoint": "72",
-      "rh": "78",
-      "windDir": "WSW",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "11.8",
-      "condition": "None"
-    },
-    {
-      "time": "14:00",
-      "temp": "78",
-      "dewpoint": "73",
-      "rh": "85",
-      "windDir": "SW",
-      "windSpeed": "4",
-      "precip": "0.06",
-      "visibility": "10.2",
-      "condition": "None"
-    },
-    {
-      "time": "13:00",
-      "temp": "73",
-      "dewpoint": "72",
-      "rh": "96",
-      "windDir": "SSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "8.5",
-      "condition": "Light Showers Rain"
-    },
-    {
-      "time": "12:00",
-      "temp": "79",
-      "dewpoint": "71",
-      "rh": "74",
-      "windDir": "S",
-      "windSpeed": "4",
-      "precip": "0.02",
-      "visibility": "11.1",
-      "condition": "None"
-    },
-    {
-      "time": "11:00",
-      "temp": "74",
-      "dewpoint": "71",
-      "rh": "90",
-      "windDir": "S",
-      "windSpeed": "2",
-      "precip": "0.15",
-      "visibility": "9.5",
-      "condition": "None"
-    },
-    {
-      "time": "10:00",
-      "temp": "71",
-      "dewpoint": "69",
-      "rh": "94",
-      "windDir": "ENE",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "1.1",
-      "condition": "Heavy Rain"
-    }
-  ],
+  "observations": [],
   "dailySummary": {
     "monthLabel": "September 2026",
     "days": [
@@ -391,36 +324,7 @@
     "radar": "https://sirocco.accuweather.com/nx_mosaic_640x480c/RE/inmaREPA_.gif",
     "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
   },
-  "videos": [
-    {
-      "title": "Short Term Forecast 09/17/2026",
-      "videoId": "72O4w3s0pKQ",
-      "url": "https://www.youtube.com/watch?v=72O4w3s0pKQ",
-      "published": "2026-09-17T15:59:31+00:00",
-      "thumbnail": "https://i4.ytimg.com/vi/72O4w3s0pKQ/hqdefault.jpg"
-    },
-    {
-      "title": "Medium Range Video 09/17/2026",
-      "videoId": "tKMViPzVqzM",
-      "url": "https://www.youtube.com/watch?v=tKMViPzVqzM",
-      "published": "2026-09-17T14:20:14+00:00",
-      "thumbnail": "https://i1.ytimg.com/vi/tKMViPzVqzM/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 9/16/2026",
-      "videoId": "Ae5rClsnREY",
-      "url": "https://www.youtube.com/watch?v=Ae5rClsnREY",
-      "published": "2026-09-16T17:24:31+00:00",
-      "thumbnail": "https://i2.ytimg.com/vi/Ae5rClsnREY/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 09/15/2026",
-      "videoId": "h-FsIO19Sug",
-      "url": "https://www.youtube.com/watch?v=h-FsIO19Sug",
-      "published": "2026-09-15T15:18:15+00:00",
-      "thumbnail": "https://i1.ytimg.com/vi/h-FsIO19Sug/hqdefault.jpg"
-    }
-  ],
+  "videos": [],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-09-17T19:32:16.451Z"
+  "updated": "2026-09-18T01:01:00.008Z"
 }

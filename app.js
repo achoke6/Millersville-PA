@@ -3080,6 +3080,7 @@ let spActiveSources=new Set(['PM','MU','Clubs']), spSportTag=null, spHomeOnly=fa
 let spOffSeasonOpen=false; // sport-pill row: off-season group expanded?
 let spTeamLevel=null;      // team view: 'pm' | 'mu' — the school the chosen spSportTag belongs to (2026-09-18)
 let spTeamShowJV=false;    // team view: PM sub-varsity rows expanded (session-only)
+let spTeamAllResults=false; // team view: earlier results expanded — default shows only the latest (2026-09-18 Patch C)
 const SP_STRIP_OTHER_KEY='mapp_sports_strip_other'; // '1' = team strip also shows the OTHER school's row (display setting; survives Clear Favs)
 // Sports view state: 'upcoming' (infinite-scroll forward) or 'past' (infinite-scroll backward)
 let spTimeView = 'upcoming';
@@ -4540,7 +4541,7 @@ window.toggleHomeGameMode=function(){
 };
 window.clearSportsFilters=function(){
     spSportTag=null; spHomeOnly=false; spAllMode=true; spOffSeasonOpen=false;
-    spTeamLevel=null; spTeamShowJV=false;
+    spTeamLevel=null; spTeamShowJV=false; spTeamAllResults=false;
     spActiveSources=new Set(['PM','MU','Clubs']);
     spTimeView='upcoming';
     spFavOnlyMode=false;
@@ -4948,6 +4949,7 @@ function spNextGameLabel(d) {
     return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }).toUpperCase();
 }
 window.spToggleTeamJV = function() { spTeamShowJV = !spTeamShowJV; renderSports(); };
+window.spToggleTeamResults = function() { spTeamAllResults = !spTeamAllResults; renderSports(); };
 window.spTeamStar = function(prefId, btn) {
     toggleCardFavorite(prefId, btn);
     renderTeamStrip();
@@ -5012,7 +5014,15 @@ function renderTeamView() {
     } else {
         const past = games.filter(e => new Date(e.date).getTime() < nowMs && (spIsScored(e) || spGameEnded(e)));
         const upcoming = games.filter(e => past.indexOf(e) === -1);
-        body = '<div class="sp-team-list">' + past.map(e => spGameRow(e, 'team')).join('');
+        // Results collapsed to the LATEST one (Patch C): a season's worth of scores
+        // pushed the next game off-screen while flipping between teams. Earlier
+        // results sit behind a toggle; the record strip already summarizes them.
+        const hidden = spTeamAllResults ? [] : past.slice(0, Math.max(0, past.length - 1));
+        const shownPast = spTeamAllResults ? past : past.slice(-1);
+        body = '<div class="sp-team-list">';
+        if (hidden.length) body += `<button type="button" class="sp-results-toggle" onclick="spToggleTeamResults()" aria-expanded="false">▸ Show ${hidden.length} earlier result${hidden.length === 1 ? '' : 's'}</button>`;
+        else if (spTeamAllResults && past.length > 1) body += `<button type="button" class="sp-results-toggle" onclick="spToggleTeamResults()" aria-expanded="true">▾ Hide earlier results</button>`;
+        body += shownPast.map(e => spGameRow(e, 'team')).join('');
         if (upcoming.length) {
             body += `<div class="sp-next-divider" id="sp-next-divider"><span></span><span class="sp-next-label">NEXT GAME · ${escHtml(spNextGameLabel(new Date(upcoming[0].date)))}</span><span></span></div>`;
             body += upcoming.map(e => spGameRow(e, 'team')).join('');
@@ -5021,15 +5031,7 @@ function renderTeamView() {
         }
         body += '</div>';
         if (level === 'pm' && hasRecord) body += `<div class="load-more-note">Scores from MaxPreps &amp; Hudl${pool.some(e => e.gameScore === '0-0') ? ' · scrimmages not counted' : ''}</div>`;
-        // Land with the divider in view when there is a stack of results above it.
-        if (past.length > 4 && upcoming.length) {
-            requestAnimationFrame(() => {
-                const d = document.getElementById('sp-next-divider');
-                if (!d) return;
-                const y = d.getBoundingClientRect().top + window.scrollY - Math.round(window.innerHeight * 0.45);
-                window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
-            });
-        }
+        // (Patch B's divider auto-scroll retired in Patch C — the collapsed results keep the divider in the first screen.)
     }
     container.innerHTML = head + body;
 }
@@ -5346,6 +5348,7 @@ window.setSportType=function(sport, level){
     spSportTag = same ? null : sport;
     spTeamLevel = spSportTag ? (level || null) : null;
     spTeamShowJV = false;
+    spTeamAllResults = false;
     renderSports();
     writeURLStateForView('sports');
     window.scrollTo({ top: 0, behavior: 'smooth' });

@@ -2951,10 +2951,13 @@ async function runScraper() {
                 // Extract title from <title> or h1
                 const titleMatch = evHtml.match(/<h1[^>]*>([^<]+)<\/h1>/i);
                 if (!titleMatch) { artsFailed++; continue; }
-                let title = titleMatch[1].trim()
-                    .replace(/&#0?38;/g, '&').replace(/&#0?39;/g, "'").replace(/&#8217;/g, "'")
-                    .replace(/&#8220;|&#8221;/g, '"').replace(/&#8211;/g, '–')
-                    .replace(/&amp;/g, '&').replace(/&quot;/g, '"');
+                // Shared decodeEntities (2026-09-18): the inline chain here missed
+                // &#8216;/&lsquo; — the LEADING smart quote in "Jazz at the 'Ville"
+                // — so the title reached Pass 2 as "…the &#8216;Ville", norm
+                // "jazz at the 8216 ville", and never matched MU Calendar (two
+                // live dupe pairs, Oct 30 + Feb 26). The post-dedupe decode at
+                // write time masked it in events.json.
+                let title = decodeEntities(titleMatch[1]).trim();
                 if (/^CANCELLED\b/i.test(title)) { artsSkipped++; continue; }  // \b not ':' — "CANCELLED – Stars at the Break of Day" slipped the colon-only form (2026-08-23)
 
                 // Date: "Friday, May 01, 2026" pattern near the top of the event page
@@ -5635,14 +5638,6 @@ async function runScraper() {
         };
     }).filter(n => n.norm && !CALENDAR_ARTIFACT_PATTERNS.test(n.norm));
 
-    // DEDUPE TRACE (temporary, 2026-09-03 — remove once the cause is found): the
-    // "Jazz at the 'Ville" mu-vs-artsmu pairs survive Pass 2 in production while a
-    // byte-faithful local replay of this same code merges them. Log the exact
-    // shape Pass 2 sees for traced titles so the Action log settles input-vs-logic.
-    const DEDUPE_TRACE_RE = /jazz at the ville/;
-    normalizedEvents.filter(n => DEDUPE_TRACE_RE.test(n.norm)).forEach(n =>
-        console.log(`  🔍 dedupe-trace IN: bucket=${n.bucket} day=${n.day} time=${n.time} norm="${n.norm}" date=${n.event.date} link=${n.event.sourceLink}`));
-
     const groups2 = [];
 
     for (const ne of normalizedEvents) {
@@ -5792,16 +5787,6 @@ async function runScraper() {
     const kept = new Set();
     const crossDupes = [];
     pass1.forEach((_, i) => kept.add(i)); // start by keeping all
-
-    // DEDUPE TRACE (temporary, 2026-09-03 — see the IN lines above): which group
-    // each traced event landed in, and who else is in it. Two traced events in
-    // two singleton groups = the grouping logic never paired them despite the
-    // shapes logged above; one group of two = they paired and something later
-    // un-merged them.
-    groups2.forEach((g, gi) => {
-        if (!g.some(m => DEDUPE_TRACE_RE.test(m.norm))) return;
-        console.log(`  🔍 dedupe-trace GROUP#${gi} size=${g.length}: ${g.map(m => `[${m.bucket} ${m.day} "${m.event.title}"]`).join(' ')}`);
-    });
 
     groups2.forEach((candidates) => {
         if (candidates.length <= 1) return; // no duplicates in this group

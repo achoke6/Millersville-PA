@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "10:00",
+      "temp": "74",
+      "dewpoint": "71",
+      "rh": "89",
+      "windDir": "NE",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "10.9",
+      "condition": "None"
+    },
+    {
+      "time": "09:00",
+      "temp": "73",
+      "dewpoint": "72",
+      "rh": "97",
+      "windDir": "N",
+      "windSpeed": "5",
+      "precip": "0.01",
+      "visibility": "9.3",
+      "condition": "None"
+    },
+    {
       "time": "08:00",
       "temp": "70",
       "dewpoint": "70",
@@ -169,28 +191,6 @@
       "windSpeed": "1",
       "precip": "0.00",
       "visibility": "1.3",
-      "condition": "Mist"
-    },
-    {
-      "time": "04:00",
-      "temp": "69",
-      "dewpoint": "69",
-      "rh": "100",
-      "windDir": "ESE",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "1.2",
-      "condition": "Mist"
-    },
-    {
-      "time": "03:00",
-      "temp": "69",
-      "dewpoint": "69",
-      "rh": "100",
-      "windDir": "SW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "2.6",
       "condition": "Mist"
     }
   ],
@@ -393,9 +393,9 @@
     "yearMinDate": "January 21"
   },
   "discussion": {
-    "headline": "fairly quiet week with up-and-down temperatures",
-    "dateLine": "11:15 a.m. Tuesday, September 15, 2026",
-    "excerpt": "In the wake of Sunday night's cold frontal passage, northerly winds of 10-20 mph ushered much cooler and drier air into the Lower Susquehanna Valley on Monday. Despite mostly sunny skies, high temperatures only reached the mid-to-upper 70s, and dewpoints fell into the upper 40s by the afternoon hours. In fact, this morning's low of 48°F at Millersville University was the first sub-50°F reading since June 2.. a span of over 100 days (see below). …",
+    "headline": "Damp, Dreary, rainy and Much Cooler next week",
+    "dateLine": "11:30 a.m. Friday, September 18, 2026, Update",
+    "excerpt": "Thursday's heavy showers and torrential downpours ended up being more widespread than anticipated on Tuesday. None of the showers produced lightning or strong wind gusts, but they dumped 0.50-1.50\" of rain on the Route 11/Interstate 83 corridors of south-central PA. Outside of the eastern half of the Lower Susquehanna Valley, much less rain fell across northern MD, far southeastern PA and in Adams/Franklin Counties (see below). …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -403,6 +403,13 @@
     "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
   },
   "videos": [
+    {
+      "title": "Short Term Forecast 09/18/2026",
+      "videoId": "b9HwXn64dyE",
+      "url": "https://www.youtube.com/watch?v=b9HwXn64dyE",
+      "published": "2026-09-18T13:27:09+00:00",
+      "thumbnail": "https://i3.ytimg.com/vi/b9HwXn64dyE/hqdefault.jpg"
+    },
     {
       "title": "Short Term Forecast 09/17/2026",
       "videoId": "72O4w3s0pKQ",
@@ -423,15 +430,8 @@
       "url": "https://www.youtube.com/watch?v=Ae5rClsnREY",
       "published": "2026-09-16T17:24:31+00:00",
       "thumbnail": "https://i2.ytimg.com/vi/Ae5rClsnREY/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 09/15/2026",
-      "videoId": "h-FsIO19Sug",
-      "url": "https://www.youtube.com/watch?v=h-FsIO19Sug",
-      "published": "2026-09-15T15:18:15+00:00",
-      "thumbnail": "https://i1.ytimg.com/vi/h-FsIO19Sug/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-09-18T12:41:40.759Z"
+  "updated": "2026-09-18T15:00:05.751Z"
 }

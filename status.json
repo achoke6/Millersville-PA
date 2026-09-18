@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-09-18T19:39:21.491Z",
-  "totalEvents": 1801,
-  "withDescription": 778,
-  "withImage": 234,
-  "familyFriendly": 91,
+  "generatedAt": "2026-09-18T22:20:47.269Z",
+  "totalEvents": 1799,
+  "withDescription": 777,
+  "withImage": 233,
+  "familyFriendly": 90,
   "eventsToday": 15,
   "sources": {
     "muAthletics": 319,
-    "muCalendar": 164,
+    "muCalendar": 163,
     "artsmu": 22,
     "campsAlumni": 39,
     "muGetInvolved": 444,
     "pennManor": 523,
     "borough": 65,
     "vfw": 7,
-    "phantomPower": 13,
+    "phantomPower": 12,
     "community": 21,
     "manor": 40,
     "raneyCellars": 3,
@@ -55,7 +55,7 @@
       "latest": "2026-10-22T22:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-09-18T00:00:00.000Z",
+      "earliest": "2026-09-20T00:00:00.000Z",
       "latest": "2026-10-19T00:00:00.000Z"
     },
     "community": {
@@ -150,13 +150,13 @@
       "PM Community": 3
     },
     "stalePast": 5,
-    "lastSyncAt": "2026-09-18T19:35:44.768Z"
+    "lastSyncAt": "2026-09-18T22:16:42.084Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-18T19:39:18.989Z"
+    "checkedAt": "2026-09-18T22:20:39.678Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -229,6 +229,20 @@
   },
   "recentlyAdded": [
     {
+      "key": "Girls JV Volleyball vs Cocalico High School|2026-09-26T13:00:00.000Z",
+      "firstSeenAt": "2026-09-18T22:20:47.266Z",
+      "title": "Girls JV Volleyball vs Cocalico High School",
+      "source": "PM",
+      "date": "2026-09-26T13:00:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Volleyball vs Cocalico High School|2026-09-26T14:00:00.000Z",
+      "firstSeenAt": "2026-09-18T22:20:47.266Z",
+      "title": "Girls Varsity Volleyball vs Cocalico High School",
+      "source": "PM",
+      "date": "2026-09-26T14:00:00.000Z"
+    },
+    {
       "key": "Jazz at the 'Ville|2026-10-30T23:30:00.000Z",
       "firstSeenAt": "2026-09-18T19:39:21.488Z",
       "title": "Jazz at the 'Ville",
@@ -283,20 +297,6 @@
       "title": "Temple Scrimmage Game 2",
       "source": "MU",
       "date": "2026-09-27T16:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Swimming at Lock Haven University|2026-10-09T21:00:00.000Z",
-      "firstSeenAt": "2026-09-18T15:03:47.181Z",
-      "title": "Millersville University Women's Swimming at Lock Haven University",
-      "source": "MU",
-      "date": "2026-10-09T21:00:00.000Z"
-    },
-    {
-      "key": "NiNi w. Seven Kingdoms|2026-10-19T00:00:00.000Z",
-      "firstSeenAt": "2026-09-18T15:03:47.181Z",
-      "title": "NiNi w. Seven Kingdoms",
-      "source": "Other",
-      "date": "2026-10-19T00:00:00.000Z"
     }
   ],
   "addedLastRun": 2

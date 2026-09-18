@@ -4585,10 +4585,10 @@ function renderSportsCamps() {
     if (!isTownie || !allEvents || allEvents.length === 0) return hide();
 
     const nowMs = Date.now();
-    // Rows shown before "▾ Show N more". 4 to start (2026-09-16) — the page is
-    // the sports destination and has more room than the home box's 2; scale
-    // back here if it still crowds the schedule.
-    const SPORTS_SIGNUPS_COLLAPSED_COUNT = 4;
+    // Rows shown before "▾ Show N more". 4 at launch (2026-09-16); scaled back to
+    // 2 on 2026-09-18 to match the home box — the block was crowding the schedule
+    // and the two youth-lane rows are what locals need without a tap.
+    const SPORTS_SIGNUPS_COLLAPSED_COUNT = 2;
 
     // (1) Deadline-dated: youth-league regs + ticket packages. Mirrors the home
     // box's townie audience terms (non-intramural, not mu-only).
@@ -4597,24 +4597,28 @@ function renderSportsCamps() {
             && (e.youthSports === true || isTicketPackage(e)))
         .map(signupTiming)
         .filter(e => signupVisibleNow(e, nowMs))
-        .map(e => ({ key: signupSortKey(e, nowMs), row: signupDeadlineRow(e, nowMs) }));
+        .map(e => ({ lane: e.youthSports === true ? 0 : 1, key: signupSortKey(e, nowMs), row: signupDeadlineRow(e, nowMs) }));
     // (2) Athletic camps — all upcoming, dated by start.
     const camps = allEvents
         .filter(c => isProgramSignup(c) && (c.tags || []).includes('Athletic Camp'))
         .map(c => ({ ...c, _start: new Date(c.date).getTime() }))
         .filter(c => !isNaN(c._start) && c._start >= nowMs)
-        .map(c => ({ key: c._start, row: signupProgramRow(c, nowMs) }));
+        .map(c => ({ lane: 1, key: c._start, row: signupProgramRow(c, nowMs) }));
     // (3) Open-ended youth regs (closesTBA) — a not-yet-open row sorts by its
     // Opens date; an open-now row has no date and sorts last.
     const tba = (allSignups || [])
         .filter(r => r && r.status === 'active' && r.closesTBA === true && r.registerLink)
         .map(r => {
             const op = r.opens ? new Date(r.opens).getTime() : NaN;
-            return { key: (!isNaN(op) && op > nowMs) ? op : Infinity, row: signupTbaRow(r, nowMs) };
+            return { lane: 0, key: (!isNaN(op) && op > nowMs) ? op : Infinity, row: signupTbaRow(r, nowMs) };
         });
 
+    // Lane-first sort (2026-09-18): youth-league rows (Youth Sports regs +
+    // open-ended youth regs) always sit above MU camps + ticket packages —
+    // locals come here for the leagues; camps are the long tail. Within a
+    // lane the original next-moment ordering holds.
     const rows = [...regs, ...camps, ...tba]
-        .sort((a, b) => a.key === b.key ? 0 : (a.key < b.key ? -1 : 1))
+        .sort((a, b) => a.lane !== b.lane ? a.lane - b.lane : (a.key === b.key ? 0 : (a.key < b.key ? -1 : 1)))
         .map(x => x.row);
     if (rows.length === 0) return hide();
 
@@ -6083,7 +6087,8 @@ window.openEventDetails = function(key) {
         const isPastGame = isSport && e.gameResult && e.gameScore;
         const isMUSport = isSport && tags.includes('MU');
         let srcLabel;
-        if (isPastGame) srcLabel = '📊 Game Recap & Box Score';
+        if (isPastGame && /millersvilleathletics\.com\/news\//i.test(infoUrl)) srcLabel = '📊 Game Recap';   // Sidearm recap article only
+        else if (isPastGame) srcLabel = 'ℹ️ Game Details';   // PM event page / MU schedule page — not a recap (2026-09-18)
         else if (eventIsFree(e) && !isSport) srcLabel = 'ℹ️ More Info';
         else if (isMUSport && !e.ticketLink) srcLabel = '🎟️ View on MU Athletics';
         else srcLabel = '🔗 View Source';

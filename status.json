@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-19T14:13:31.066Z",
-  "totalEvents": 1797,
+  "generatedAt": "2026-09-19T17:49:01.164Z",
+  "totalEvents": 1757,
   "withDescription": 775,
   "withImage": 233,
   "familyFriendly": 90,
@@ -16,7 +16,7 @@
     "vfw": 7,
     "phantomPower": 12,
     "community": 21,
-    "manor": 40,
+    "manor": 0,
     "raneyCellars": 3,
     "theBackyard": 13,
     "muHudlBroadcasts": 61
@@ -62,10 +62,7 @@
       "earliest": "2026-06-22T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-09-30T12:30:00.000Z",
-      "latest": "2027-09-06T23:00:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-09-17T20:00:00.000Z",
       "latest": "2026-09-24T20:00:00.000Z"
@@ -116,10 +113,7 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 89
     },
-    "manor": {
-      "newest": "2027-09-06",
-      "daysSinceMoved": 13
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-09-24",
       "daysSinceMoved": 2
@@ -131,9 +125,9 @@
   },
   "sports": {
     "total": 745,
-    "scored": 59,
-    "wins": 33,
-    "losses": 25,
+    "scored": 61,
+    "wins": 34,
+    "losses": 26,
     "ties": 1
   },
   "registrations": {
@@ -150,13 +144,13 @@
       "PM Community": 3
     },
     "stalePast": 5,
-    "lastSyncAt": "2026-09-19T14:09:44.650Z"
+    "lastSyncAt": "2026-09-19T17:45:51.722Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-19T14:13:19.927Z"
+    "checkedAt": "2026-09-19T17:48:53.259Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -223,7 +217,7 @@
         "key": "pmHudl.matched",
         "ok": true,
         "matched": 17,
-        "withBroadcasts": 22
+        "withBroadcasts": 23
       }
     ]
   },
@@ -299,5 +293,5 @@
       "date": "2026-09-26T13:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 0
 }

@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-18T22:20:47.269Z",
-  "totalEvents": 1799,
-  "withDescription": 777,
+  "generatedAt": "2026-09-19T01:01:09.987Z",
+  "totalEvents": 1797,
+  "withDescription": 775,
   "withImage": 233,
   "familyFriendly": 90,
-  "eventsToday": 15,
+  "eventsToday": 14,
   "sources": {
     "muAthletics": 319,
     "muCalendar": 163,
     "artsmu": 22,
     "campsAlumni": 39,
-    "muGetInvolved": 444,
+    "muGetInvolved": 443,
     "pennManor": 523,
     "borough": 65,
     "vfw": 7,
@@ -150,13 +150,13 @@
       "PM Community": 3
     },
     "stalePast": 5,
-    "lastSyncAt": "2026-09-18T22:16:42.084Z"
+    "lastSyncAt": "2026-09-19T00:57:19.488Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-18T22:20:39.678Z"
+    "checkedAt": "2026-09-19T01:01:00.997Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -186,7 +186,7 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 98,
+        "value": 97,
         "min": 21,
         "skipped": false
       },
@@ -229,6 +229,62 @@
   },
   "recentlyAdded": [
     {
+      "key": "Acacia Blood Drive|2026-09-09T12:00:00",
+      "firstSeenAt": "2026-09-19T01:01:09.983Z",
+      "title": "Acacia Blood Drive",
+      "source": "MU",
+      "date": "2026-09-09T12:00:00"
+    },
+    {
+      "key": "JDogs Community Service|2026-09-18T01:30:00.000Z",
+      "firstSeenAt": "2026-09-19T01:01:09.983Z",
+      "title": "JDogs Community Service",
+      "source": "MU",
+      "date": "2026-09-18T01:30:00.000Z"
+    },
+    {
+      "key": "SGA Weekly Meeting|2026-10-22T23:00:00.000Z",
+      "firstSeenAt": "2026-09-19T01:01:09.983Z",
+      "title": "SGA Weekly Meeting",
+      "source": "MU",
+      "date": "2026-10-22T23:00:00.000Z"
+    },
+    {
+      "key": "Letters of Love General Meeting|2026-10-22T23:00:00.000Z",
+      "firstSeenAt": "2026-09-19T01:01:09.983Z",
+      "title": "Letters of Love General Meeting",
+      "source": "MU",
+      "date": "2026-10-22T23:00:00.000Z"
+    },
+    {
+      "key": "Club Tennis Practice|2026-10-22T23:00:00.000Z",
+      "firstSeenAt": "2026-09-19T01:01:09.983Z",
+      "title": "Club Tennis Practice",
+      "source": "MU",
+      "date": "2026-10-22T23:00:00.000Z"
+    },
+    {
+      "key": "Fellowship Night|2026-10-23T00:00:00.000Z",
+      "firstSeenAt": "2026-09-19T01:01:09.983Z",
+      "title": "Fellowship Night",
+      "source": "MU",
+      "date": "2026-10-23T00:00:00.000Z"
+    },
+    {
+      "key": "Ice Hockey Club (D3) Practice|2026-10-23T00:15:00.000Z",
+      "firstSeenAt": "2026-09-19T01:01:09.983Z",
+      "title": "Ice Hockey Club (D3) Practice",
+      "source": "MU",
+      "date": "2026-10-23T00:15:00.000Z"
+    },
+    {
+      "key": "Fencing Guild Practice|2026-10-23T21:00:00.000Z",
+      "firstSeenAt": "2026-09-19T01:01:09.983Z",
+      "title": "Fencing Guild Practice",
+      "source": "MU",
+      "date": "2026-10-23T21:00:00.000Z"
+    },
+    {
       "key": "Girls JV Volleyball vs Cocalico High School|2026-09-26T13:00:00.000Z",
       "firstSeenAt": "2026-09-18T22:20:47.266Z",
       "title": "Girls JV Volleyball vs Cocalico High School",
@@ -241,63 +297,7 @@
       "title": "Girls Varsity Volleyball vs Cocalico High School",
       "source": "PM",
       "date": "2026-09-26T14:00:00.000Z"
-    },
-    {
-      "key": "Jazz at the 'Ville|2026-10-30T23:30:00.000Z",
-      "firstSeenAt": "2026-09-18T19:39:21.488Z",
-      "title": "Jazz at the 'Ville",
-      "source": "MU",
-      "date": "2026-10-30T23:30:00.000Z"
-    },
-    {
-      "key": "Jazz at the 'Ville|2027-02-27T00:30:00.000Z",
-      "firstSeenAt": "2026-09-18T19:39:21.488Z",
-      "title": "Jazz at the 'Ville",
-      "source": "MU",
-      "date": "2027-02-27T00:30:00.000Z"
-    },
-    {
-      "key": "Civil Service Commission - Cancelled|2026-09-21T22:00:00.000Z",
-      "firstSeenAt": "2026-09-18T15:49:49.929Z",
-      "title": "Civil Service Commission - Cancelled",
-      "source": "Borough",
-      "date": "2026-09-21T22:00:00.000Z"
-    },
-    {
-      "key": "FSL: Professionalism Workshop with Phi Mu Delta|2026-09-24T22:00:00.000Z",
-      "firstSeenAt": "2026-09-18T15:49:49.929Z",
-      "title": "FSL: Professionalism Workshop with Phi Mu Delta",
-      "source": "MU",
-      "date": "2026-09-24T22:00:00.000Z"
-    },
-    {
-      "key": "Student Government Association (SGA) Weekly Meeting|2026-10-22T17:00:00",
-      "firstSeenAt": "2026-09-18T15:49:49.929Z",
-      "title": "Student Government Association (SGA) Weekly Meeting",
-      "source": "MU",
-      "date": "2026-10-22T17:00:00"
-    },
-    {
-      "key": "Men's Rugby Vs American Univeristy|2026-09-19T15:30:00.000Z",
-      "firstSeenAt": "2026-09-18T15:03:47.181Z",
-      "title": "Men's Rugby Vs American Univeristy",
-      "source": "MU",
-      "date": "2026-09-19T15:30:00.000Z"
-    },
-    {
-      "key": "Temple Scrimmage Game 1|2026-09-27T14:00:00.000Z",
-      "firstSeenAt": "2026-09-18T15:03:47.181Z",
-      "title": "Temple Scrimmage Game 1",
-      "source": "MU",
-      "date": "2026-09-27T14:00:00.000Z"
-    },
-    {
-      "key": "Temple Scrimmage Game 2|2026-09-27T16:00:00.000Z",
-      "firstSeenAt": "2026-09-18T15:03:47.181Z",
-      "title": "Temple Scrimmage Game 2",
-      "source": "MU",
-      "date": "2026-09-27T16:00:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 8
 }

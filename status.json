@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-19T17:49:01.164Z",
-  "totalEvents": 1757,
+  "generatedAt": "2026-09-19T20:05:34.407Z",
+  "totalEvents": 1797,
   "withDescription": 775,
   "withImage": 233,
   "familyFriendly": 90,
@@ -16,7 +16,7 @@
     "vfw": 7,
     "phantomPower": 12,
     "community": 21,
-    "manor": 0,
+    "manor": 40,
     "raneyCellars": 3,
     "theBackyard": 13,
     "muHudlBroadcasts": 61
@@ -62,7 +62,10 @@
       "earliest": "2026-06-22T13:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-09-30T12:30:00.000Z",
+      "latest": "2027-09-06T23:00:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-09-17T20:00:00.000Z",
       "latest": "2026-09-24T20:00:00.000Z"
@@ -113,7 +116,10 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 89
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-09-06",
+      "daysSinceMoved": 13
+    },
     "raneyCellars": {
       "newest": "2026-09-24",
       "daysSinceMoved": 2
@@ -125,9 +131,9 @@
   },
   "sports": {
     "total": 745,
-    "scored": 61,
+    "scored": 63,
     "wins": 34,
-    "losses": 26,
+    "losses": 28,
     "ties": 1
   },
   "registrations": {
@@ -144,13 +150,13 @@
       "PM Community": 3
     },
     "stalePast": 5,
-    "lastSyncAt": "2026-09-19T17:45:51.722Z"
+    "lastSyncAt": "2026-09-19T20:02:13.218Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-19T17:48:53.259Z"
+    "checkedAt": "2026-09-19T20:05:24.304Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -223,75 +229,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Girls Varsity Volleyball @ Hempfield High School|2026-09-19T12:00:00.000Z",
-      "firstSeenAt": "2026-09-19T14:13:31.042Z",
-      "title": "Girls Varsity Volleyball @ Hempfield High School",
-      "source": "PM",
-      "date": "2026-09-19T12:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-09-19T20:05:34.404Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-09-30T12:30:00.000Z"
     },
     {
-      "key": "Acacia Blood Drive|2026-09-09T12:00:00",
-      "firstSeenAt": "2026-09-19T01:01:09.983Z",
-      "title": "Acacia Blood Drive",
-      "source": "MU",
-      "date": "2026-09-09T12:00:00"
+      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
+      "firstSeenAt": "2026-09-19T20:05:34.404Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-10-05T23:00:00.000Z"
     },
     {
-      "key": "JDogs Community Service|2026-09-18T01:30:00.000Z",
-      "firstSeenAt": "2026-09-19T01:01:09.983Z",
-      "title": "JDogs Community Service",
-      "source": "MU",
-      "date": "2026-09-18T01:30:00.000Z"
+      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
+      "firstSeenAt": "2026-09-19T20:05:34.404Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-10-07T23:00:00.000Z"
     },
     {
-      "key": "SGA Weekly Meeting|2026-10-22T23:00:00.000Z",
-      "firstSeenAt": "2026-09-19T01:01:09.983Z",
-      "title": "SGA Weekly Meeting",
-      "source": "MU",
-      "date": "2026-10-22T23:00:00.000Z"
+      "key": "Planning Commission|2026-10-14T23:00:00.000Z",
+      "firstSeenAt": "2026-09-19T20:05:34.404Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-10-14T23:00:00.000Z"
     },
     {
-      "key": "Letters of Love General Meeting|2026-10-22T23:00:00.000Z",
-      "firstSeenAt": "2026-09-19T01:01:09.983Z",
-      "title": "Letters of Love General Meeting",
-      "source": "MU",
-      "date": "2026-10-22T23:00:00.000Z"
+      "key": "Moonlight Ride|2026-10-23T22:30:00.000Z",
+      "firstSeenAt": "2026-09-19T20:05:34.404Z",
+      "title": "Moonlight Ride",
+      "source": "Manor",
+      "date": "2026-10-23T22:30:00.000Z"
     },
     {
-      "key": "Club Tennis Practice|2026-10-22T23:00:00.000Z",
-      "firstSeenAt": "2026-09-19T01:01:09.983Z",
-      "title": "Club Tennis Practice",
-      "source": "MU",
-      "date": "2026-10-22T23:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-10-28T12:30:00.000Z",
+      "firstSeenAt": "2026-09-19T20:05:34.404Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-10-28T12:30:00.000Z"
     },
     {
-      "key": "Fellowship Night|2026-10-23T00:00:00.000Z",
-      "firstSeenAt": "2026-09-19T01:01:09.983Z",
-      "title": "Fellowship Night",
-      "source": "MU",
-      "date": "2026-10-23T00:00:00.000Z"
+      "key": "Zoning Hearing Board|2026-11-05T00:00:00.000Z",
+      "firstSeenAt": "2026-09-19T20:05:34.404Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-11-05T00:00:00.000Z"
     },
     {
-      "key": "Ice Hockey Club (D3) Practice|2026-10-23T00:15:00.000Z",
-      "firstSeenAt": "2026-09-19T01:01:09.983Z",
-      "title": "Ice Hockey Club (D3) Practice",
-      "source": "MU",
-      "date": "2026-10-23T00:15:00.000Z"
+      "key": "Supervisors Meeting|2026-11-06T00:00:00.000Z",
+      "firstSeenAt": "2026-09-19T20:05:34.404Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-11-06T00:00:00.000Z"
     },
     {
-      "key": "Fencing Guild Practice|2026-10-23T21:00:00.000Z",
-      "firstSeenAt": "2026-09-19T01:01:09.983Z",
-      "title": "Fencing Guild Practice",
-      "source": "MU",
-      "date": "2026-10-23T21:00:00.000Z"
+      "key": "Planning Commission|2026-11-10T00:00:00.000Z",
+      "firstSeenAt": "2026-09-19T20:05:34.404Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-11-10T00:00:00.000Z"
     },
     {
-      "key": "Girls JV Volleyball vs Cocalico High School|2026-09-26T13:00:00.000Z",
-      "firstSeenAt": "2026-09-18T22:20:47.266Z",
-      "title": "Girls JV Volleyball vs Cocalico High School",
-      "source": "PM",
-      "date": "2026-09-26T13:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-11-25T13:30:00.000Z",
+      "firstSeenAt": "2026-09-19T20:05:34.404Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-11-25T13:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 40
 }

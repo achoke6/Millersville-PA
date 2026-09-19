@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-19T10:22:08.504Z",
+  "generatedAt": "2026-09-19T14:13:31.066Z",
   "totalEvents": 1797,
   "withDescription": 775,
   "withImage": 233,
@@ -150,13 +150,13 @@
       "PM Community": 3
     },
     "stalePast": 5,
-    "lastSyncAt": "2026-09-19T10:18:35.112Z"
+    "lastSyncAt": "2026-09-19T14:09:44.650Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-19T10:21:59.798Z"
+    "checkedAt": "2026-09-19T14:13:19.927Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -172,7 +172,7 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 250,
+        "value": 249,
         "min": 60,
         "skipped": false
       },
@@ -228,6 +228,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Girls Varsity Volleyball @ Hempfield High School|2026-09-19T12:00:00.000Z",
+      "firstSeenAt": "2026-09-19T14:13:31.042Z",
+      "title": "Girls Varsity Volleyball @ Hempfield High School",
+      "source": "PM",
+      "date": "2026-09-19T12:00:00.000Z"
+    },
     {
       "key": "Acacia Blood Drive|2026-09-09T12:00:00",
       "firstSeenAt": "2026-09-19T01:01:09.983Z",
@@ -290,14 +297,7 @@
       "title": "Girls JV Volleyball vs Cocalico High School",
       "source": "PM",
       "date": "2026-09-26T13:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Volleyball vs Cocalico High School|2026-09-26T14:00:00.000Z",
-      "firstSeenAt": "2026-09-18T22:20:47.266Z",
-      "title": "Girls Varsity Volleyball vs Cocalico High School",
-      "source": "PM",
-      "date": "2026-09-26T14:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

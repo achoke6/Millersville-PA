@@ -128,6 +128,61 @@
   },
   "observations": [
     {
+      "time": "06:00",
+      "temp": "60",
+      "dewpoint": "55",
+      "rh": "84",
+      "windDir": "N",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "10.9",
+      "condition": "None"
+    },
+    {
+      "time": "05:00",
+      "temp": "61",
+      "dewpoint": "55",
+      "rh": "82",
+      "windDir": "N",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "11.0",
+      "condition": "None"
+    },
+    {
+      "time": "04:00",
+      "temp": "60",
+      "dewpoint": "55",
+      "rh": "85",
+      "windDir": "N",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "11.2",
+      "condition": "None"
+    },
+    {
+      "time": "03:00",
+      "temp": "60",
+      "dewpoint": "57",
+      "rh": "91",
+      "windDir": "NNW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "11.9",
+      "condition": "None"
+    },
+    {
+      "time": "02:00",
+      "temp": "60",
+      "dewpoint": "58",
+      "rh": "93",
+      "windDir": "SSW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "11.0",
+      "condition": "None"
+    },
+    {
       "time": "01:00",
       "temp": "64",
       "dewpoint": "56",
@@ -136,61 +191,6 @@
       "windSpeed": "3",
       "precip": "0.00",
       "visibility": "11.2",
-      "condition": "None"
-    },
-    {
-      "time": "00:00",
-      "temp": "65",
-      "dewpoint": "56",
-      "rh": "74",
-      "windDir": "N",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "11.0",
-      "condition": "None"
-    },
-    {
-      "time": "23:00",
-      "temp": "68",
-      "dewpoint": "56",
-      "rh": "65",
-      "windDir": "ENE",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "11.9",
-      "condition": "None"
-    },
-    {
-      "time": "22:00",
-      "temp": "70",
-      "dewpoint": "57",
-      "rh": "63",
-      "windDir": "NNE",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "11.5",
-      "condition": "None"
-    },
-    {
-      "time": "21:00",
-      "temp": "72",
-      "dewpoint": "58",
-      "rh": "62",
-      "windDir": "NNE",
-      "windSpeed": "5",
-      "precip": "0.00",
-      "visibility": "11.6",
-      "condition": "None"
-    },
-    {
-      "time": "20:00",
-      "temp": "74",
-      "dewpoint": "59",
-      "rh": "60",
-      "windDir": "N",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "11.5",
       "condition": "None"
     }
   ],
@@ -413,7 +413,36 @@
     "radar": "https://sirocco.accuweather.com/nx_mosaic_640x480c/RE/inmaREPA_.gif",
     "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
   },
-  "videos": [],
+  "videos": [
+    {
+      "title": "Short Term Forecast 09/18/2026",
+      "videoId": "dsJ6O3m5zcA",
+      "url": "https://www.youtube.com/watch?v=dsJ6O3m5zcA",
+      "published": "2026-09-18T17:00:16+00:00",
+      "thumbnail": "https://i1.ytimg.com/vi/dsJ6O3m5zcA/hqdefault.jpg"
+    },
+    {
+      "title": "Short Term Forecast 09/18/2026",
+      "videoId": "b9HwXn64dyE",
+      "url": "https://www.youtube.com/watch?v=b9HwXn64dyE",
+      "published": "2026-09-18T13:27:09+00:00",
+      "thumbnail": "https://i3.ytimg.com/vi/b9HwXn64dyE/hqdefault.jpg"
+    },
+    {
+      "title": "Short Term Forecast 09/17/2026",
+      "videoId": "72O4w3s0pKQ",
+      "url": "https://www.youtube.com/watch?v=72O4w3s0pKQ",
+      "published": "2026-09-17T15:59:31+00:00",
+      "thumbnail": "https://i4.ytimg.com/vi/72O4w3s0pKQ/hqdefault.jpg"
+    },
+    {
+      "title": "Medium Range Video 09/17/2026",
+      "videoId": "tKMViPzVqzM",
+      "url": "https://www.youtube.com/watch?v=tKMViPzVqzM",
+      "published": "2026-09-17T14:20:14+00:00",
+      "thumbnail": "https://i1.ytimg.com/vi/tKMViPzVqzM/hqdefault.jpg"
+    }
+  ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-09-19T05:33:59.555Z"
+  "updated": "2026-09-19T10:18:37.568Z"
 }

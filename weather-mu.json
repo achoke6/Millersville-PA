@@ -1,18 +1,14 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Saturday, September 19, 2026 at 10:53 PM (Fossa, Koefoot, Langenbach, Student Meteorologists)",
+    "issued": "Sunday, September 20, 2026 at 09:10 AM (Funk, White, Student Meteorologists)",
     "periods": [
       {
-        "period": "Tonight",
-        "text": "Mild and cloudy. Low: 62-66"
-      },
-      {
-        "period": "Tomorrow",
+        "period": "Today",
         "text": "Mostly cloudy and more humid with scattered showers and T-storms. High: 76-80"
       },
       {
-        "period": "Tomorrow Night",
+        "period": "Tonight",
         "text": "Mostly cloudy and mild with evening showers and T-storms. Low: 60-64"
       },
       {
@@ -20,30 +16,18 @@
         "text": "Mostly cloudy and cooler. High: 70-74"
       },
       {
+        "period": "Monday Night",
+        "text": "Cloudy and damp with periods of rain. Low: 56-60"
+      },
+      {
         "period": "Tuesday",
-        "text": "Cloudy and dreary with periods of rain. High: 64-68"
+        "text": "Cloudy and dreary with periods of rain. High: 62-66"
       }
     ]
   },
   "sevenDay": {
-    "issued": "Saturday, September 19, 2026 at 11:09 PM (Jones, Muller, Smith)",
+    "issued": "Sunday, September 20, 2026 at 09:41 AM (Funk, White)",
     "days": [
-      {
-        "period": "Saturday",
-        "sky": "Increasing Clouds",
-        "weather": "Seasonable",
-        "pop": "<10%",
-        "temp": "76",
-        "conf": "5"
-      },
-      {
-        "period": "Saturday night",
-        "sky": "Cloudy",
-        "weather": "Mild",
-        "pop": "20%",
-        "temp": "64",
-        "conf": "5"
-      },
       {
         "period": "Sunday",
         "sky": "Mostly Cloudy",
@@ -70,11 +54,11 @@
       },
       {
         "period": "Monday night",
-        "sky": "Mostly Cloudy",
+        "sky": "Cloudy",
         "weather": "Periods of Rain",
         "pop": "70%",
         "temp": "58",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Tuesday",
@@ -82,7 +66,7 @@
         "weather": "Periods of Rain",
         "pop": "70%",
         "temp": "64",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Tuesday night",
@@ -90,7 +74,7 @@
         "weather": "Chance of Rain",
         "pop": "40%",
         "temp": "54",
-        "conf": "3"
+        "conf": "4"
       },
       {
         "period": "Wednesday",
@@ -98,7 +82,7 @@
         "weather": "Chance of Rain",
         "pop": "40%",
         "temp": "62",
-        "conf": "3"
+        "conf": "4"
       },
       {
         "period": "Wednesday night",
@@ -110,23 +94,83 @@
       },
       {
         "period": "Thursday",
-        "sky": "Mostly Cloudy",
+        "sky": "Cloudy",
         "weather": "Cool",
         "pop": "30%",
-        "temp": "mid 60s",
+        "temp": "64",
+        "conf": "3"
+      },
+      {
+        "period": "Thursday night",
+        "sky": "Mostly Cloudy",
+        "weather": "Mild",
+        "pop": "30%",
+        "temp": "52",
         "conf": "3"
       },
       {
         "period": "Friday",
-        "sky": "Clouds & Sun",
+        "sky": "Mostly Sunny",
         "weather": "Cool",
-        "pop": "20%",
-        "temp": "mid 60s",
+        "pop": "<10%",
+        "temp": "upper 60s",
+        "conf": "3"
+      },
+      {
+        "period": "Saturday",
+        "sky": "Mostly Sunny",
+        "weather": "Cool",
+        "pop": "<10%",
+        "temp": "upper 60s",
         "conf": "3"
       }
     ]
   },
   "observations": [
+    {
+      "time": "10:00",
+      "temp": "69",
+      "dewpoint": "68",
+      "rh": "96",
+      "windDir": "SW",
+      "windSpeed": "3",
+      "precip": "0.09",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "09:00",
+      "temp": "68",
+      "dewpoint": "67",
+      "rh": "99",
+      "windDir": "SW",
+      "windSpeed": "4",
+      "precip": "0.15",
+      "visibility": "7.7",
+      "condition": "Light Rain"
+    },
+    {
+      "time": "08:00",
+      "temp": "67",
+      "dewpoint": "67",
+      "rh": "98",
+      "windDir": "SSW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "7.0",
+      "condition": "Light Rain"
+    },
+    {
+      "time": "07:00",
+      "temp": "68",
+      "dewpoint": "65",
+      "rh": "93",
+      "windDir": "SW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "11.1",
+      "condition": "None"
+    },
     {
       "time": "06:00",
       "temp": "67",
@@ -148,50 +192,6 @@
       "precip": "0.01",
       "visibility": "11.9",
       "condition": "Light Showers Rain"
-    },
-    {
-      "time": "04:00",
-      "temp": "66",
-      "dewpoint": "65",
-      "rh": "96",
-      "windDir": "SSW",
-      "windSpeed": "2",
-      "precip": "0.02",
-      "visibility": "3.7",
-      "condition": "Heavy Drizzle"
-    },
-    {
-      "time": "03:00",
-      "temp": "65",
-      "dewpoint": "64",
-      "rh": "95",
-      "windDir": "SSE",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "9.6",
-      "condition": "Light Showers Rain"
-    },
-    {
-      "time": "02:00",
-      "temp": "66",
-      "dewpoint": "63",
-      "rh": "91",
-      "windDir": "SE",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "8.4",
-      "condition": "None"
-    },
-    {
-      "time": "01:00",
-      "temp": "66",
-      "dewpoint": "63",
-      "rh": "91",
-      "windDir": "E",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "10.7",
-      "condition": "None"
     }
   ],
   "dailySummary": {
@@ -455,5 +455,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-09-20T10:37:47.197Z"
+  "updated": "2026-09-20T14:29:12.140Z"
 }

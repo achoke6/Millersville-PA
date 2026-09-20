@@ -4683,6 +4683,35 @@ function spIsLiveNow(e) {
     const now = new Date();
     return !!e.streamLink && d <= now && now <= end && !e.gameResult && !isMultiDay(e);
 }
+// Live-team set for the strip tiles' red dot: "level|label" for every PM/MU varsity
+// game that spIsLiveNow says is on right now (stream-gated, same rule as the rows).
+function spLiveTeamKeys() {
+    const keys = new Set();
+    (allEvents || []).forEach(e => {
+        if (!isSportEvent(e) || !spIsLiveNow(e)) return;
+        const info = spTeamInfo(e);
+        if (info) keys.add(info.level + '|' + info.label);
+    });
+    return keys;
+}
+// Sorted signature of what is live right now; the 60s tick compares it run-to-run
+// and re-renders ONLY on a change (a game window opening or closing).
+function spLiveSignature() {
+    return (allEvents || []).filter(e => isSportEvent(e) && spIsLiveNow(e)).map(e => getEventKey(e)).sort().join('\n');
+}
+let spLastLiveSig = null;
+function spLiveTick() {
+    if (!allEvents || allEvents.length === 0) return;
+    const sig = spLiveSignature();
+    if (spLastLiveSig === null) { spLastLiveSig = sig; return; }   // first run: baseline only
+    if (sig === spLastLiveSig) return;
+    spLastLiveSig = sig;
+    const active = document.querySelector('.app-view.active');
+    const id = active ? active.id : '';
+    if (id === 'view-sports' && typeof renderSports === 'function') renderSports();
+    else if (id === 'view-home' && typeof renderHomeUI === 'function') renderHomeUI();
+}
+setInterval(spLiveTick, 60000);   // live-state tick (2026-09-20); no-op until data loads
 function spScoreCell(e) {
     const r = e.gameResult;
     const cls = r === 'W' ? 'sp-res-w' : r === 'L' ? 'sp-res-l' : 'sp-res-t';
@@ -4695,7 +4724,7 @@ function spTimeCell(e) {
 // Availability hints under the title — tells the reader a tap is worth it.
 function spRowHints(e) {
     const h = [];
-    if (spIsLiveNow(e)) h.push('🔴 Live');
+    if (spIsLiveNow(e)) { h.push('🔴 Live'); if (e.liveStatsLink) h.push('📊 Stats'); }
     else if (e.streamLink && (spIsScored(e) || spGameEnded(e))) h.push('📺 Replay');
     else if (e.streamLink) h.push('📺 Stream');
     if (spIsScored(e) && /millersvilleathletics\.com\/news\//i.test(e.sourceLink || '')) h.push('📊 Recap');
@@ -4869,13 +4898,17 @@ function spTile(t, level) {
     const esc = t.info.label.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
     const tba = t.off && t.total === 0;
     const sub = !t.off ? '' : t.next ? 'Next ' + spStripDate(t.next) : t.total ? 'Season over' : 'Schedule TBA';
-    return `<button type="button" class="sp-tile${active ? ' active' : ''}${t.fav ? ' sp-tile-fav' : ''}${tba ? ' sp-tile-tba' : ''}" onclick="setSportType('${esc}','${level}')" title="${escHtml(t.info.label)}${t.fav ? ' (favorite)' : ''}${sub ? ' — ' + escHtml(sub) : ''}">`
+    const live = spTileLiveKeys.has(level + '|' + t.info.label);   // red dot while a game is live (2026-09-20)
+    return `<button type="button" class="sp-tile${active ? ' active' : ''}${t.fav ? ' sp-tile-fav' : ''}${tba ? ' sp-tile-tba' : ''}${live ? ' sp-tile-live' : ''}" onclick="setSportType('${esc}','${level}')" title="${escHtml(t.info.label)}${t.fav ? ' (favorite)' : ''}${live ? ' — LIVE now' : ''}${sub ? ' — ' + escHtml(sub) : ''}">`
         + (t.fav ? '<span class="sp-tile-star" aria-hidden="true">★</span>' : '')
+        + (live ? '<span class="sp-tile-livedot" aria-label="Live now"></span>' : '')
         + `<span class="sp-tile-icon">${t.info.icon}</span><span class="sp-tile-label">${escHtml(t.info.label)}</span>`
         + (sub ? `<span class="sp-tile-sub">${escHtml(sub)}</span>` : '')
         + `</button>`;
 }
+let spTileLiveKeys = new Set();   // refreshed by spStripRow; read by spTile
 function spStripRow(level, heading, chipHtml) {
+    spTileLiveKeys = spLiveTeamKeys();
     const { inSeason, off } = spStripTeamsFor(level);
     let html = `<div class="sp-strip-head"><span class="sp-strip-title">${heading}</span>${chipHtml || ''}</div>`;
     if (inSeason.length === 0 && off.length === 0) {
@@ -5260,6 +5293,18 @@ const SP_SEASON_MIN = 2;
 // (sport, level) — strip tiles pass the school; pills pass none and renderSports
 // resolves it. Tapping the active team again clears it. A chosen team opens the
 // TEAM VIEW (2026-09-18) — the old "pill = whole schedule as cards" is retired.
+// Force-enter a team view from another page (event modal button, 2026-09-20).
+// Unlike setSportType this never toggles OFF when the team is already active.
+window.spGoTeam=function(sport, level){
+    spSportTag = sport;
+    spTeamLevel = level || null;
+    spTeamShowJV = false;
+    spTeamAllResults = false;
+    switchView('sports');
+    renderSports();
+    writeURLStateForView('sports');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+};
 window.setSportType=function(sport, level){
     const same = spSportTag===sport && (!level || spTeamLevel===level);
     spSportTag = same ? null : sport;
@@ -6399,19 +6444,34 @@ window.openEventDetails = function(key) {
         // same green CTA, honest label — "Buy" was scaring people off a $0 show.
         actions += `<a href="${e.ticketLink}" target="_blank" class="btn btn-sm btn-ticket" style="text-decoration:none;">🎟️ Free Tickets</a>`;
     }
+    // Live state hoisted out of the stream block (2026-09-20) so the Live Stats
+    // button below can share it. Same stream-gated rule as spIsLiveNow.
+    const streamD = new Date(e.date);
+    const streamEnd = getEventEndTime(e) || new Date(streamD.getTime() + 3*60*60*1000);
+    const streamNow = new Date();
+    const isLiveNow = isSport && !!e.streamLink && streamD <= streamNow && streamNow <= streamEnd && !e.gameResult && !multiDay;
     if (e.streamLink) {
         // State-aware label — same three cases as the card buttons. Clarifies
         // that a future streamLink is a scheduled broadcast, not something
         // you can tune into right now.
-        const streamD = new Date(e.date);
-        const streamEnd = getEventEndTime(e) || new Date(streamD.getTime() + 3*60*60*1000);
-        const streamNow = new Date();
-        const isLiveNow = isSport && streamD <= streamNow && streamNow <= streamEnd && !e.gameResult && !multiDay;
         let streamLabel;
         if (isLiveNow) streamLabel = '🔴 Watch Live';
         else if (e.gameResult) streamLabel = '📺 Replay';
         else streamLabel = '📺 Live Stream';
         actions += `<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-outline" style="text-decoration:none;">${streamLabel}</a>`;
+    }
+    // Sidearm Live Stats (2026-09-20, #3 step 1): liveStatsLink is a display field
+    // stamped by scrape.js on unscored MU games; shown ONLY while the game is live.
+    if (isLiveNow && e.liveStatsLink) {
+        actions += `<a href="${escHtml(e.liveStatsLink)}" target="_blank" rel="noopener" class="btn btn-sm btn-outline" style="text-decoration:none;">📊 Live Stats</a>`;
+    }
+    // Team page (2026-09-20, #1): any PM/MU varsity game gets a route into the
+    // Sports team view. Closes the modal, then spGoTeam force-enters the team.
+    const teamInfo = isSport && typeof spTeamInfo === 'function' ? spTeamInfo(e) : null;
+    if (teamInfo && teamInfo.level !== 'clubs') {
+        const school = teamInfo.level === 'pm' ? 'Comets' : 'Marauders';
+        const lblJs = teamInfo.label.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        actions += `<a href="#" class="btn btn-sm btn-outline" style="text-decoration:none;" onclick="event.preventDefault();window.destroyEventDetailsMiniMap();this.closest('.event-details-overlay').remove();spGoTeam('${lblJs}','${teamInfo.level}')">${teamInfo.icon} ${escHtml(school + ' ' + teamInfo.label)} →</a>`;
     }
     // Add to Calendar / Share / Directions RETIRED from the event modal
     // 2026-08-07 (declutter, Adam); the owed mini locator map SHIPPED in the

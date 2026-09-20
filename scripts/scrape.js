@@ -1346,6 +1346,10 @@ async function runScraper() {
     // Sidearm doesn't expose this in the iCal (their ev.url is a useless composite link),
     // so we parse the schedule HTML directly. A single doubleheader usually shares one recap.
     const muRecapCache = new Map();
+    // Sidearm Live Stats page per schedule slug (2026-09-20): harvested from the same
+    // schedule HTML — first anchor whose href hits /sidearmstats/<code>/…, normalized
+    // to the /summary view. Display field only (liveStatsLink); no feed matching.
+    const muLiveStatsCache = new Map();
     // Fetch and parse one sport's schedule page. Extracts recap URLs keyed by date.
     async function fetchSportRecapMap(scheduleSlug, seasonYear) {
         // seasonYear optional — omit for current season (Sidearm's default view)
@@ -1360,6 +1364,11 @@ async function runScraper() {
             const res = await fetch(url, { headers: baseHeaders, signal: ctrl.signal });
             if (!res.ok) return;
             const html = await res.text();
+            // Live Stats page for this sport (2026-09-20): one per slug, first hit wins.
+            if (!muLiveStatsCache.has(scheduleSlug)) {
+                const ls = /href="(?:https?:\/\/[^"\/]*millersvilleathletics\.com)?\/sidearmstats\/([a-z0-9_-]+)\/[^"]*"/i.exec(html);
+                if (ls) muLiveStatsCache.set(scheduleSlug, `https://millersvilleathletics.com/sidearmstats/${ls[1].toLowerCase()}/summary`);
+            }
             // Match every anchor whose href is a Sidearm news article URL, then post-filter
             // to keep only the ones whose visible text is the schedule's "Recap" button.
             //
@@ -1414,6 +1423,7 @@ async function runScraper() {
             await Promise.all(chunk.map(slug => fetchSportRecapMap(slug)));
         }
         console.log(`  ✅ Loaded ${muRecapCache.size} recap URLs across ${allSlugs.length} sports`);
+        console.log(`  📊 Live Stats pages: ${muLiveStatsCache.size} of ${allSlugs.length} sports`);
     }
 
     // ===== 1. MU ATHLETICS (SIDEARM iCAL) =====
@@ -1588,7 +1598,9 @@ async function runScraper() {
                 gameResult,
                 gameScore,
                 streamLink,
-                isLive
+                isLive,
+                // liveStatsLink (2026-09-20): unscored games only — a live game is never scored.
+                ...(!gameResult && scheduleSlug && muLiveStatsCache.get(scheduleSlug) ? { liveStatsLink: muLiveStatsCache.get(scheduleSlug) } : {})
             });
             muAthCount++;
         }

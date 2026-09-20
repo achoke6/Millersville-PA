@@ -4700,18 +4700,85 @@ function spLiveSignature() {
     return (allEvents || []).filter(e => isSportEvent(e) && spIsLiveNow(e)).map(e => getEventKey(e)).sort().join('\n');
 }
 let spLastLiveSig = null;
-function spLiveTick() {
-    if (!allEvents || allEvents.length === 0) return;
-    const sig = spLiveSignature();
-    if (spLastLiveSig === null) { spLastLiveSig = sig; return; }   // first run: baseline only
-    if (sig === spLastLiveSig) return;
-    spLastLiveSig = sig;
+// ---- Live scores via livestats.php (2026-09-20, Step 2) --------------------
+// Sidearm's live-stats snapshot, proxied + cached 30s server-side. Polled every
+// tick for MU games that are live (stream-gated) OR ended <=3h ago and still
+// unscored (post-game bridge until the hourly iCal lands the W/L). The snapshot
+// is "the sport's CURRENT game", so every reader gates on its M/D/YYYY `date`
+// matching the game's ET day — Saturday's FINAL never dresses Sunday's row.
+const spLiveScores = {};                       // code -> normalized proxy JSON
+const SP_LIVE_BRIDGE_MS = 3 * 60 * 60 * 1000;
+function spLiveCode(e) { const m = /\/sidearmstats\/([a-z0-9_-]+)\//i.exec(e.liveStatsLink || ''); return m ? m[1].toLowerCase() : null; }
+function spLivePollWanted(e) {
+    if (!isSportEvent(e) || !e.liveStatsLink || e.gameResult) return false;
+    if (spIsLiveNow(e)) return true;
+    const start = new Date(e.date).getTime(); if (isNaN(start)) return false;
+    const end = e.endTime ? new Date(e.endTime).getTime() : start + 3 * 60 * 60 * 1000;
+    return Date.now() > end && Date.now() - end < SP_LIVE_BRIDGE_MS;
+}
+function spEventEtDay(e) { const d = new Date(e.date); return isNaN(d.getTime()) ? '' : d.toLocaleDateString('en-US', { timeZone: 'America/New_York' }); }   // "9/19/2026" — Sidearm's `Date` shape
+// The proxy snapshot for this game, or null when absent / wrong day / not started.
+function spLiveScoreFor(e) {
+    const code = spLiveCode(e); if (!code) return null;
+    const s = spLiveScores[code]; if (!s || !s.ok || s.state === 'pre') return null;
+    if (!s.date || s.date !== spEventEtDay(e)) return null;
+    if (e.gameResult && e.gameScore) return null;   // the iCal has landed; it wins
+    return s;
+}
+// Text pieces for the surfaces: {score:'2-1', letter:'W'|'L'|'T'|'', status:'3rd 12:03'|'OT'|'Final', live:bool}
+function spLiveScoreText(e) {
+    const s = spLiveScoreFor(e); if (!s) return null;
+    const muSide = s.mu === 'home' ? s.home : s.mu === 'away' ? s.away : null;
+    const opp = s.mu === 'home' ? s.away : s.mu === 'away' ? s.home : null;
+    const score = muSide ? `${muSide.score}-${opp.score}` : `${s.away.score}-${s.home.score}`;
+    let letter = '';
+    if (s.state === 'post' && muSide) letter = muSide.score > opp.score ? 'W' : muSide.score < opp.score ? 'L' : 'T';
+    let status;
+    if (s.state === 'post') status = 'Final';
+    else {
+        const secs = Math.max(0, s.clockSeconds | 0), mm = Math.floor(secs / 60), ss = String(secs % 60).padStart(2, '0');
+        status = [s.period, s.showClock ? `${mm}:${ss}` : ''].filter(Boolean).join(' ');
+    }
+    return { score, letter, status, live: s.state === 'mid', s };
+}
+let spLivePolling = false;
+async function spLiveScoresPoll() {
+    if (spLivePolling) return false;
+    const codes = Array.from(new Set((allEvents || []).filter(spLivePollWanted).map(spLiveCode).filter(Boolean)));
+    Object.keys(spLiveScores).forEach(c => { if (!codes.includes(c)) delete spLiveScores[c]; });
+    if (!codes.length) return false;
+    spLivePolling = true;
+    let changed = false;
+    await Promise.all(codes.map(async code => {
+        try {
+            const r = await fetch(`/livestats.php?sport=${encodeURIComponent(code)}`, { cache: 'no-store' });
+            if (!r.ok) return;
+            const j = await r.json();
+            const before = JSON.stringify(spLiveScores[code] || null);
+            spLiveScores[code] = j;
+            if (JSON.stringify(j) !== before) changed = true;
+        } catch (err) { /* fail soft: row keeps its last state */ }
+    }));
+    spLivePolling = false;
+    return changed;
+}
+function spLiveRerender() {
     const active = document.querySelector('.app-view.active');
     const id = active ? active.id : '';
     if (id === 'view-sports' && typeof renderSports === 'function') renderSports();
     else if (id === 'view-home' && typeof renderHomeUI === 'function') renderHomeUI();
 }
+async function spLiveTick() {
+    if (!allEvents || allEvents.length === 0) return;
+    const scoresChanged = await spLiveScoresPoll();
+    const sig = spLiveSignature();
+    if (spLastLiveSig === null) { spLastLiveSig = sig; if (scoresChanged) spLiveRerender(); return; }   // first run: baseline (+ paint any score that arrived)
+    if (sig === spLastLiveSig && !scoresChanged) return;
+    spLastLiveSig = sig;
+    spLiveRerender();
+}
 setInterval(spLiveTick, 60000);   // live-state tick (2026-09-20); no-op until data loads
+setTimeout(spLiveTick, 4000);     // first poll shortly after load so a live score paints without waiting 60s
 function spScoreCell(e) {
     const r = e.gameResult;
     const cls = r === 'W' ? 'sp-res-w' : r === 'L' ? 'sp-res-l' : 'sp-res-t';
@@ -4757,7 +4824,11 @@ function spGameRow(e, mode) {
         if (home) subBits.push('🏡 ' + (venueShort || 'Home'));
         else if (venue) subBits.push(venue);
         sub = subBits.concat(hints).join(' · ');
-        right = spIsScored(e) ? spScoreCell(e) : spGameEnded(e) ? '<span class="sp-pill">Final</span>' : `<span class="sp-row-time">${escHtml(spTimeCell(e))}</span>`;
+        const ltT = spLiveScoreText(e);   // Step 2 bridge/live inside a team view
+        right = spIsScored(e) ? spScoreCell(e)
+            : ltT && ltT.live ? `<span class="sp-pill sp-pill-live">🔴 ${escHtml(ltT.score)}${ltT.status ? ' · ' + escHtml(ltT.status) : ''}</span>`
+            : ltT ? `<span class="sp-row-score">${ltT.letter ? `<span class="sp-res ${ltT.letter === 'W' ? 'sp-res-w' : ltT.letter === 'L' ? 'sp-res-l' : 'sp-res-t'}">${ltT.letter}</span>` : ''}<span class="sp-score">${escHtml(ltT.score)}</span></span>`
+            : spGameEnded(e) ? '<span class="sp-pill">Final</span>' : `<span class="sp-row-time">${escHtml(spTimeCell(e))}</span>`;
     } else {
         const schoolCls = school === 'PM' ? 'sp-school-pm' : school === 'MU' ? 'sp-school-mu' : 'sp-school-clubs';
         const schoolTxt = school === 'Clubs' ? 'Club' : school;
@@ -4765,7 +4836,10 @@ function spGameRow(e, mode) {
         const team = info ? info.label : (mu.rest || '');
         title = mu.opp ? `${team} ${home ? 'vs' : '@'} ${mu.opp}` : (e.title || '').replace(/^Millersville University\s+/i, '');
         sub = [venue].concat(hints).filter(Boolean).join(' · ');
+        const lt = spLiveScoreText(e);   // Step 2: proxy score while live / post-game bridge
         if (spIsScored(e)) right = spScoreCell(e);
+        else if (lt && lt.live) right = `<span class="sp-pill sp-pill-live">🔴 ${escHtml(lt.score)}${lt.status ? ' · ' + escHtml(lt.status) : ''}</span>`;
+        else if (lt) right = `<span class="sp-row-score">${lt.letter ? `<span class="sp-res ${lt.letter === 'W' ? 'sp-res-w' : lt.letter === 'L' ? 'sp-res-l' : 'sp-res-t'}">${lt.letter}</span>` : ''}<span class="sp-score">${escHtml(lt.score)}</span></span>`;
         else if (spGameEnded(e)) right = '<span class="sp-pill">Final</span>';
         else if (spIsLiveNow(e)) right = '<span class="sp-pill sp-pill-live">🔴 Live</span>';
         else right = home ? '<span class="sp-pill sp-pill-home">🏡 Home</span>' : '<span class="sp-pill">Away</span>';
@@ -6164,7 +6238,9 @@ function buildTimelineItem(e, now) {
     // Live / Score — same end-time + multi-day rules as card render.
     const _end = getEventEndTime(e) || new Date(d.getTime() + 3*60*60*1000);
     const _live = isSport && e.streamLink && d <= now && now <= _end && !e.gameResult && !isMultiDay(e);
-    if (_live) badges += '<span class="badge badge-live" style="font-size:0.6rem;padding:1px 6px;">LIVE</span>';
+    const _lt = isSport && typeof spLiveScoreText === 'function' ? spLiveScoreText(e) : null;   // Step 2 (2026-09-20)
+    if (_live) badges += `<span class="badge badge-live" style="font-size:0.6rem;padding:1px 6px;">LIVE${_lt && _lt.live ? ' ' + escHtml(_lt.score) + (_lt.status ? ' · ' + escHtml(_lt.status) : '') : ''}</span>`;
+    else if (_lt && !_lt.live && !(e.gameResult && e.gameScore)) badges += `<span class="tl-badge ${_lt.letter === 'W' ? 'tl-win' : _lt.letter === 'L' ? 'tl-loss' : 'tl-tie'}">${_lt.letter ? _lt.letter + ' ' : ''}${escHtml(_lt.score)}</span>`;
     if (e.gameResult && e.gameScore) {
         const cls = e.gameResult==='W' ? 'tl-win' : e.gameResult==='L' ? 'tl-loss' : 'tl-tie';
         badges += `<span class="tl-badge ${cls}">${e.gameResult} ${e.gameScore}</span>`;
@@ -6459,6 +6535,15 @@ window.openEventDetails = function(key) {
         else if (e.gameResult) streamLabel = '📺 Replay';
         else streamLabel = '📺 Live Stream';
         actions += `<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-outline" style="text-decoration:none;">${streamLabel}</a>`;
+    }
+    // Live scoreboard line (2026-09-20, Step 2): proxy snapshot, day-gated, MU games only.
+    // Prepended to the actions row so it reads first; the Live Stats button follows.
+    const liveTxt = isSport && typeof spLiveScoreText === 'function' ? spLiveScoreText(e) : null;
+    if (liveTxt) {
+        const s = liveTxt.s;
+        const teamLine = `${escHtml(s.away.name.toUpperCase())} ${s.away.score} — ${escHtml(s.home.name.toUpperCase())} ${s.home.score}`;
+        const stateTxt = liveTxt.live ? `🔴 LIVE · ${escHtml(liveTxt.status)}` : `Final${liveTxt.letter ? ' (' + liveTxt.letter + ')' : ''}`;
+        actions = `<div style="flex-basis:100%;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 10px;margin-bottom:4px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);font-size:0.85rem;font-weight:700;"><span>${teamLine}</span><span style="color:${liveTxt.live ? '#dc2626' : 'var(--text-muted)'};white-space:nowrap;">${stateTxt}</span></div>` + actions;
     }
     // Sidearm Live Stats (2026-09-20, #3 step 1): liveStatsLink is a display field
     // stamped by scrape.js on unscored MU games; shown ONLY while the game is live.

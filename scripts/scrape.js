@@ -1350,6 +1350,13 @@ async function runScraper() {
     // schedule HTML — first anchor whose href hits /sidearmstats/<code>/…, normalized
     // to the /summary view. Display field only (liveStatsLink); no feed matching.
     const muLiveStatsCache = new Map();
+    // Schedule slug -> Sidearm GlobalSportShortname (the /sidearmstats/<code>/ segment and the
+    // game.json folder). Fixed vendor codes; the probe below decides which are configured.
+    const MU_LIVESTATS_CODES = {
+        'football': 'football', 'field-hockey': 'fhockey', 'mens-soccer': 'msoc', 'womens-soccer': 'wsoc',
+        'volleyball': 'wvball', 'mens-basketball': 'mbball', 'womens-basketball': 'wbball',
+        'baseball': 'baseball', 'softball': 'softball', 'womens-lacrosse': 'wlax'
+    };
     // Fetch and parse one sport's schedule page. Extracts recap URLs keyed by date.
     async function fetchSportRecapMap(scheduleSlug, seasonYear) {
         // seasonYear optional — omit for current season (Sidearm's default view)
@@ -1364,11 +1371,8 @@ async function runScraper() {
             const res = await fetch(url, { headers: baseHeaders, signal: ctrl.signal });
             if (!res.ok) return;
             const html = await res.text();
-            // Live Stats page for this sport (2026-09-20): one per slug, first hit wins.
-            if (!muLiveStatsCache.has(scheduleSlug)) {
-                const ls = /href="(?:https?:\/\/[^"\/]*millersvilleathletics\.com)?\/sidearmstats\/([a-z0-9_-]+)\/[^"]*"/i.exec(html);
-                if (ls) muLiveStatsCache.set(scheduleSlug, `https://millersvilleathletics.com/sidearmstats/${ls[1].toLowerCase()}/summary`);
-            }
+            // (2026-09-20 anchor harvest for Live Stats RETIRED same day — schedule HTML carries no
+            //  /sidearmstats/ anchor server-side; see the MU_LIVESTATS_CODES probe below.)
             // Match every anchor whose href is a Sidearm news article URL, then post-filter
             // to keep only the ones whose visible text is the schedule's "Recap" button.
             //
@@ -1423,7 +1427,20 @@ async function runScraper() {
             await Promise.all(chunk.map(slug => fetchSportRecapMap(slug)));
         }
         console.log(`  ✅ Loaded ${muRecapCache.size} recap URLs across ${allSlugs.length} sports`);
-        console.log(`  📊 Live Stats pages: ${muLiveStatsCache.size} of ${allSlugs.length} sports`);
+        // Live Stats probe (2026-09-20 Step 2): one tiny GET per code; 200 with a Game object =
+        // configured -> liveStatsLink stamps for that slug; 404/anything else = not (self-correcting).
+        const probeCodes = Object.entries(MU_LIVESTATS_CODES);
+        await Promise.all(probeCodes.map(async ([slug, code]) => {
+            const ctrl = new AbortController();
+            const timer = setTimeout(() => ctrl.abort(), 8000);
+            try {
+                const r = await fetch(`https://sidearmstats.com/millersville/${code}/game.json?detail=game`, { headers: baseHeaders, signal: ctrl.signal });
+                if (!r.ok) return;
+                const j = await r.json();
+                if (j && (j.Game || j.game)) muLiveStatsCache.set(slug, `https://millersvilleathletics.com/sidearmstats/${code}/summary`);
+            } catch (e) { /* probe miss = no stamp this run */ } finally { clearTimeout(timer); }
+        }));
+        console.log(`  📊 Live Stats probe: ${muLiveStatsCache.size} of ${probeCodes.length} codes live`);
     }
 
     // ===== 1. MU ATHLETICS (SIDEARM iCAL) =====

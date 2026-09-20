@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-20T05:46:09.714Z",
+  "generatedAt": "2026-09-20T10:41:11.361Z",
   "totalEvents": 1797,
   "withDescription": 774,
   "withImage": 234,
@@ -55,8 +55,8 @@
       "latest": "2026-10-22T22:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-09-20T00:00:00.000Z",
-      "latest": "2026-10-24T23:00:00.000Z"
+      "earliest": "2026-09-24T00:00:00.000Z",
+      "latest": "2026-11-01T00:00:00.000Z"
     },
     "community": {
       "earliest": "2026-06-22T13:00:00.000Z",
@@ -109,8 +109,8 @@
       "daysSinceMoved": 19
     },
     "phantomPower": {
-      "newest": "2026-10-24",
-      "daysSinceMoved": 1
+      "newest": "2026-11-01",
+      "daysSinceMoved": 0
     },
     "community": {
       "newest": "2027-04-16",
@@ -150,13 +150,13 @@
       "PM Community": 3
     },
     "stalePast": 5,
-    "lastSyncAt": "2026-09-20T05:42:32.799Z"
+    "lastSyncAt": "2026-09-20T10:37:45.674Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-20T05:46:01.334Z"
+    "checkedAt": "2026-09-20T10:41:02.740Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -165,7 +165,7 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 362,
+        "value": 361,
         "min": 45,
         "skipped": false
       },
@@ -179,7 +179,7 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 258,
+        "value": 257,
         "min": 30,
         "skipped": false
       },
@@ -228,6 +228,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "NIGHT OF THE LIVING DRAG - Halloween Drag Show|2026-11-01T00:00:00.000Z",
+      "firstSeenAt": "2026-09-20T10:41:11.358Z",
+      "title": "NIGHT OF THE LIVING DRAG - Halloween Drag Show",
+      "source": "Other",
+      "date": "2026-11-01T00:00:00.000Z"
+    },
     {
       "key": "AniMU Weekly Meeting|2026-10-23T22:00:00.000Z",
       "firstSeenAt": "2026-09-20T00:42:13.729Z",
@@ -290,14 +297,7 @@
       "title": "Planning Commission",
       "source": "Manor",
       "date": "2026-10-14T23:00:00.000Z"
-    },
-    {
-      "key": "Moonlight Ride|2026-10-23T22:30:00.000Z",
-      "firstSeenAt": "2026-09-19T20:05:34.404Z",
-      "title": "Moonlight Ride",
-      "source": "Manor",
-      "date": "2026-10-23T22:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

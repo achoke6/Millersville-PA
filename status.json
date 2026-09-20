@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-09-19T22:43:06.520Z",
-  "totalEvents": 1798,
-  "withDescription": 775,
-  "withImage": 233,
+  "generatedAt": "2026-09-20T00:42:13.733Z",
+  "totalEvents": 1797,
+  "withDescription": 774,
+  "withImage": 234,
   "familyFriendly": 90,
   "eventsToday": 21,
   "sources": {
@@ -10,7 +10,7 @@
     "muCalendar": 163,
     "artsmu": 22,
     "campsAlumni": 39,
-    "muGetInvolved": 443,
+    "muGetInvolved": 442,
     "pennManor": 524,
     "borough": 65,
     "vfw": 7,
@@ -56,7 +56,7 @@
     },
     "phantomPower": {
       "earliest": "2026-09-20T00:00:00.000Z",
-      "latest": "2026-10-19T00:00:00.000Z"
+      "latest": "2026-10-24T23:00:00.000Z"
     },
     "community": {
       "earliest": "2026-06-22T13:00:00.000Z",
@@ -109,8 +109,8 @@
       "daysSinceMoved": 18
     },
     "phantomPower": {
-      "newest": "2026-10-19",
-      "daysSinceMoved": 1
+      "newest": "2026-10-24",
+      "daysSinceMoved": 0
     },
     "community": {
       "newest": "2027-04-16",
@@ -131,9 +131,9 @@
   },
   "sports": {
     "total": 746,
-    "scored": 64,
+    "scored": 65,
     "wins": 34,
-    "losses": 29,
+    "losses": 30,
     "ties": 1
   },
   "registrations": {
@@ -150,13 +150,13 @@
       "PM Community": 3
     },
     "stalePast": 5,
-    "lastSyncAt": "2026-09-19T22:39:26.070Z"
+    "lastSyncAt": "2026-09-20T00:38:25.363Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-19T22:42:57.840Z"
+    "checkedAt": "2026-09-20T00:42:06.121Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -186,7 +186,7 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 97,
+        "value": 96,
         "min": 21,
         "skipped": false
       },
@@ -229,6 +229,34 @@
   },
   "recentlyAdded": [
     {
+      "key": "AniMU Weekly Meeting|2026-10-23T22:00:00.000Z",
+      "firstSeenAt": "2026-09-20T00:42:13.729Z",
+      "title": "AniMU Weekly Meeting",
+      "source": "MU",
+      "date": "2026-10-23T22:00:00.000Z"
+    },
+    {
+      "key": "HE IS LEGEND w. In Angles & Excide|2026-10-24T23:00:00.000Z",
+      "firstSeenAt": "2026-09-20T00:42:13.729Z",
+      "title": "HE IS LEGEND w. In Angles & Excide",
+      "source": "Other",
+      "date": "2026-10-24T23:00:00.000Z"
+    },
+    {
+      "key": "Away game at Franklin and Marshall College|2026-10-25T15:00:00.000Z",
+      "firstSeenAt": "2026-09-20T00:42:13.729Z",
+      "title": "Away game at Franklin and Marshall College",
+      "source": "MU",
+      "date": "2026-10-25T15:00:00.000Z"
+    },
+    {
+      "key": "Sunday Catholic Mass|2026-10-25T19:00:00.000Z",
+      "firstSeenAt": "2026-09-20T00:42:13.729Z",
+      "title": "Sunday Catholic Mass",
+      "source": "MU",
+      "date": "2026-10-25T19:00:00.000Z"
+    },
+    {
       "key": "Girls Varsity Volleyball @ Hempfield High School|2026-09-19T12:30:00.000Z",
       "firstSeenAt": "2026-09-19T22:43:06.517Z",
       "title": "Girls Varsity Volleyball @ Hempfield High School",
@@ -269,35 +297,7 @@
       "title": "Moonlight Ride",
       "source": "Manor",
       "date": "2026-10-23T22:30:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-10-28T12:30:00.000Z",
-      "firstSeenAt": "2026-09-19T20:05:34.404Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-10-28T12:30:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-11-05T00:00:00.000Z",
-      "firstSeenAt": "2026-09-19T20:05:34.404Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-11-05T00:00:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2026-11-06T00:00:00.000Z",
-      "firstSeenAt": "2026-09-19T20:05:34.404Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-11-06T00:00:00.000Z"
-    },
-    {
-      "key": "Planning Commission|2026-11-10T00:00:00.000Z",
-      "firstSeenAt": "2026-09-19T20:05:34.404Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-11-10T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 4
 }

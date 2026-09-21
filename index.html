@@ -176,6 +176,14 @@
     .sp-rec-v { font-weight: 800; font-size: 1.15rem; color: var(--text); }
     .sp-streak-w { color: #15803d; } .sp-streak-l { color: #b91c1c; }
     .sp-team-note { font-size: 0.76rem; color: var(--text-muted); }
+    /* Event-modal team bar (2026-09-21) */
+    .ev-team-bar { display: flex; align-items: center; gap: 10px; margin-top: 12px; padding: 10px 12px; border: 1px solid var(--border); border-left: 4px solid var(--gold); border-radius: 10px; background: var(--bg); text-decoration: none; color: inherit; }
+    .ev-team-bar:hover, .ev-team-bar:focus-visible { background: #f8fafc; border-color: var(--gold); }
+    .ev-team-glyph { font-size: 1.5rem; line-height: 1; }
+    .ev-team-txt { display: flex; flex-direction: column; min-width: 0; flex: 1; gap: 2px; }
+    .ev-team-name { font-weight: 800; color: var(--navy); font-size: 0.98rem; }
+    .ev-team-sub { font-size: 0.76rem; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .ev-team-chev { font-size: 1.5rem; line-height: 1; color: var(--text-muted); }
     .sp-team-foot { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; }
     .sp-jv-toggle { height: 32px; padding: 0 10px; background: var(--surface); border: 1px dashed #cbd5e1; border-radius: 8px; font-size: 0.76rem; font-weight: 600; color: #4b5563; cursor: pointer; font-family: inherit; }
     .sp-team-link { font-size: 0.76rem; font-weight: 600; color: var(--navy); text-decoration: none; margin-left: auto; }

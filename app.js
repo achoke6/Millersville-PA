@@ -4795,7 +4795,7 @@ function spRowHints(e) {
     else if (e.streamLink && (spIsScored(e) || spGameEnded(e))) h.push('📺 Replay');
     else if (e.streamLink) h.push('📺 Stream');
     if (spIsScored(e) && /millersvilleathletics\.com\/news\//i.test(e.sourceLink || '')) h.push('📊 Recap');
-    if (e.ticketLink && !spIsScored(e)) h.push('🎟 Tickets');
+    if (e.ticketLink && !spIsScored(e)) h.push(e.ticketStatus ? '🎟 ' + e.ticketStatus : '🎟 Tickets');
     return h;
 }
 
@@ -5034,6 +5034,15 @@ window.spStripToggle = function(level) {
 // Record from SCORED games only (0-0 = unplayed/scrimmage artifact, excluded);
 // Varsity only for PM. `unreported` = games that have ended with no score, so the
 // header can say "4-1 · 3 unreported" instead of lying.
+// A team's VARSITY games (no JV / Jr High rows) — the team view's pool filter,
+// factored out for the event-modal team bar (2026-09-21).
+function spTeamGamesFor(label, level) {
+    const src = level === 'pm' ? 'PM' : 'MU';
+    return (allEvents || []).filter(e => {
+        const t = e.tags || [];
+        return isSportEvent(e) && matchesSportSource(t, src) && eventMatchesSportLabel(t, label) && !spLevelWord(e);
+    }).sort((a, b) => new Date(a.date) - new Date(b.date));
+}
 function spTeamRecord(games) {
     const rec = { w: 0, l: 0, t: 0, hw: 0, hl: 0, aw: 0, al: 0, streak: '', unreported: 0, played: 0 };
     const scored = games.filter(spIsScored).sort((a, b) => new Date(a.date) - new Date(b.date));
@@ -5779,7 +5788,9 @@ function buildEventCard(e,isSportsPage){
         // '$0 - $20' on a chip misreads as a slider). Full string is on the
         // modal's 💵 line either way. (Etix enrichment arc, 2026-08-23.)
         const chipPrice = /^\$\d+(?:\.\d{2})?$/.test((e.price || '').trim()) ? (e.price || '').trim() : '';
-        actionHtml=`<a href="${e.ticketLink}" target="_blank" class="btn btn-sm btn-ticket">${chipPrice ? `🎟 ${chipPrice}` : '🎟 Tickets'}</a>`;
+        actionHtml = e.ticketStatus
+            ? `<a href="${e.ticketLink}" target="_blank" rel="noopener" class="btn btn-sm btn-outline" onclick="event.stopPropagation();">🎟 ${escHtml(e.ticketStatus)}</a>`   // sold out (2026-09-21)
+            : `<a href="${e.ticketLink}" target="_blank" class="btn btn-sm btn-ticket">${chipPrice ? `🎟 ${chipPrice}` : '🎟 Tickets'}</a>`;
     } else if(!isFree){
         actionHtml=`<span class="badge badge-door">${priceText}</span>`;
     } else if(!isSportsPage && eventIsFree(e) && hasLink){
@@ -6422,7 +6433,8 @@ window.openEventDetails = function(key) {
     // toggle21Plus switch-path wiring is needed.
     const realPrice = /^\$\d/.test((e.price || '').trim()) ? (e.price || '').trim() : '';
     let ticketInfoBlock = '';
-    if (realPrice) ticketInfoBlock += `<div style="margin-top:10px;font-size:0.88rem;font-weight:600;color:var(--text);">💵 ${escHtml(realPrice)}</div>`;
+    if (e.ticketStatus) ticketInfoBlock += `<div style="margin-top:10px;font-size:0.88rem;font-weight:700;color:#b91c1c;">🎟 ${escHtml(e.ticketStatus)}${realPrice ? ` <span style="color:var(--text-muted);font-weight:500;text-decoration:line-through;">${escHtml(realPrice)}</span>` : ''}</div>`;   // sold out (2026-09-21)
+    else if (realPrice) ticketInfoBlock += `<div style="margin-top:10px;font-size:0.88rem;font-weight:600;color:var(--text);">💵 ${escHtml(realPrice)}</div>`;
     if (e.muFreeTicket) ticketInfoBlock += `<div style="margin-top:6px;font-size:0.82rem;color:var(--text-muted);">🎓 MU students: one free ticket with valid MU ID — box office or phone only, not online</div>`;
 
     // Game score summary for past sports events. We store the score as "4-2"
@@ -6505,6 +6517,10 @@ window.openEventDetails = function(key) {
         // — EXCEPT ticket packages (2026-08-06), where a purchase is exactly
         // what it is: the label flips to "🎟 Buy Tickets", link unchanged.
         actions += `<a href="${escHtml(getRegisterUrl(e))}" target="_blank" rel="noopener" class="btn btn-sm btn-ticket" style="text-decoration:none;">${isTicketPackage(e) ? '🎟 Buy Tickets' : '📝 Register Now'}</a>`;
+    } else if (e.ticketLink && e.ticketStatus) {
+        // Sold out / at capacity (2026-09-21): honest label, STILL LINKS — the etix
+        // page is the proof and lists the venue's other events.
+        actions += `<a href="${e.ticketLink}" target="_blank" rel="noopener" class="btn btn-sm btn-outline" style="text-decoration:none;">🎟️ ${escHtml(e.ticketStatus)} ↗</a>`;
     } else if (e.ticketLink && !eventIsFree(e) && isStudentFreeGateGame(e)) {
         // Confirmed Marauder + home varsity game (twin of the card branch):
         // the gate is free with an ID, so the purchase link is demoted to a
@@ -6550,14 +6566,38 @@ window.openEventDetails = function(key) {
     if (isLiveNow && e.liveStatsLink) {
         actions += `<a href="${escHtml(e.liveStatsLink)}" target="_blank" rel="noopener" class="btn btn-sm btn-outline" style="text-decoration:none;">📊 Live Stats</a>`;
     }
-    // Team page (2026-09-20, #1): any PM/MU varsity game gets a route into the
-    // Sports team view. Closes the modal, then spGoTeam force-enters the team.
+    // TEAM BAR (2026-09-21; replaces the 2026-09-20 team BUTTON): any PM/MU varsity
+    // game gets a tappable bar under the location line — glyph, "Marauders <Team>",
+    // record strip, next game, › — that closes the modal and force-enters the
+    // team view (spGoTeam). Rendered into the header below, not the action row.
     const teamInfo = isSport && typeof spTeamInfo === 'function' ? spTeamInfo(e) : null;
+    let teamBar = '';
     if (teamInfo && teamInfo.level !== 'clubs') {
         const school = teamInfo.level === 'pm' ? 'Comets' : 'Marauders';
         const lblJs = teamInfo.label.replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '&quot;');
-        actions += `<a href="#" class="btn btn-sm btn-outline" style="text-decoration:none;" onclick="event.preventDefault();window.destroyEventDetailsMiniMap();this.closest('.event-details-overlay').remove();spGoTeam('${lblJs}','${teamInfo.level}')">${teamInfo.icon} ${escHtml(school + ' ' + teamInfo.label)} →</a>`;
+        const pool = spTeamGamesFor(teamInfo.label, teamInfo.level);
+        const rec = spTeamRecord(pool);
+        const hasRecord = teamInfo.sportTag && SP_NO_RECORD_SPORTS.indexOf(teamInfo.sportTag) === -1 && rec.played > 0;
+        const thisKey = getEventKey(e), nowMs = Date.now();
+        const next = pool.find(g => new Date(g.date).getTime() >= nowMs && !spIsScored(g) && getEventKey(g) !== thisKey);
+        const recTxt = hasRecord ? `${spFmtRec(rec.w, rec.l, rec.t)}${rec.streak ? ' · ' + rec.streak : ''} · Home ${spFmtRec(rec.hw, rec.hl)} · Away ${spFmtRec(rec.aw, rec.al)}` : '';
+        let nextTxt = '';
+        if (next) {
+            const m = spParseMatchup(next), d = new Date(next.date);
+            nextTxt = `Next: ${d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}${m.opp ? ` ${spIsHome(next) ? 'vs' : '@'} ${m.opp}` : ''}`;
+        }
+        teamBar = `<a href="#" class="ev-team-bar" aria-label="Open ${escHtml(school + ' ' + teamInfo.label)} team page" onclick="event.preventDefault();window.destroyEventDetailsMiniMap();this.closest('.event-details-overlay').remove();spGoTeam('${lblJs}','${teamInfo.level}')">`
+            + `<span class="ev-team-glyph" aria-hidden="true">${teamInfo.icon}</span>`
+            + `<span class="ev-team-txt"><span class="ev-team-name">${escHtml(school + ' ' + teamInfo.label)}</span>`
+            + (recTxt ? `<span class="ev-team-sub">${escHtml(recTxt)}</span>` : '')
+            + (nextTxt ? `<span class="ev-team-sub">${escHtml(nextTxt)}</span>` : '')
+            + `</span><span class="ev-team-chev" aria-hidden="true">›</span></a>`;
     }
+    // Modal title: sport games use the row's short form ("Volleyball vs Felician") —
+    // the team bar carries the school, so the long feed title is redundant.
+    const modalTitle = teamBar
+        ? cleanSportTitle((e.title || '').replace(/^Millersville University\s*/i, '').replace(/ - (Girls|Boys)\s+(vs |@ )/i, ' $2'), tags)
+        : (e.title || 'Event');
     // Add to Calendar / Share / Directions RETIRED from the event modal
     // 2026-08-07 (declutter, Adam); the owed mini locator map SHIPPED in the
     // same arc -- see the miniMapSlot/closeBtn block below, keyed off the
@@ -6641,15 +6681,16 @@ window.openEventDetails = function(key) {
     modal.innerHTML = `
         ${miniMapSlot}
         ${closeBtn}
-        <h2 style="margin:0 0 8px;font-size:1.25rem;color:var(--navy);line-height:1.3;padding-right:24px;">${escHtml(e.title || 'Event')}</h2>
+        <h2 style="margin:0 0 8px;font-size:1.25rem;color:var(--navy);line-height:1.3;padding-right:24px;">${escHtml(modalTitle)}</h2>
         <div style="font-size:0.92rem;color:var(--text);font-weight:600;">📅 ${dateStr}${timeStr ? ' · ' + timeStr : ''}</div>
         ${locBlock}
+        ${teamBar}
         ${ticketInfoBlock}
         ${scoreSummary}
         ${linescoreBlock}
         ${perks ? `<div class="modal-perks">${perks}</div>` : ''}
         ${badges ? `<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:4px;">${badges}</div>` : ''}
-        ${displayTags.length ? `<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:4px;">${displayTags.map(t => `<span class="card-tag">${t}</span>`).join('')}</div>` : ''}
+        ${(teamBar ? displayTags.filter(t => t !== relabelForTownie(teamInfo.sportTag)) : displayTags).length ? `<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:4px;">${(teamBar ? displayTags.filter(t => t !== relabelForTownie(teamInfo.sportTag)) : displayTags).map(t => `<span class="card-tag">${t}</span>`).join('')}</div>` : ''}
         ${descBlock}
         ${actions ? `<div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:8px;">${actions}</div>` : ''}
     `;

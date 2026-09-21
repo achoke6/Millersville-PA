@@ -360,8 +360,14 @@ function extractPricing(desc, title = "", location = "", apiLink = "", startET =
         // artsmu twin's /p/ link. Sessions 2+ would fall to a bare 'Free'. Month
         // guard (YYYY-MM prefix) covers the whole series; venue page is the only
         // link that exists for them.
-        { match: /pablo picasso/i,                        start: '2026-09',    url: 'https://www.etix.com/ticket/v/23604/', price: '$45' },
-        { match: /georgia o.keeffe/i,                     start: '2026-11',    url: 'https://www.etix.com/ticket/v/23604/', price: 'Ticket Required' }, // sold out
+        // `status` (2026-09-21): 'Sold Out' = etix shows "SOLD OUT -" / "This event is
+        // sold out." (Picasso, verified 09-21) or "This registration has reached
+        // capacity." (O'Keeffe, verified 09-21 — etix's wording for a full
+        // registration-type event). Both link through: the etix page is the proof.
+        // Real /p/ pages (found on the millersville.edu event pages 09-21) replace the
+        // /v/23604/ venue fallback — one registration page covers all sessions.
+        { match: /pablo picasso/i,                        start: '2026-09',    url: 'https://www.etix.com/ticket/p/42699702/', price: '$45', status: 'Sold Out' },
+        { match: /georgia o.keeffe/i,                     start: '2026-11',    url: 'https://www.etix.com/ticket/p/53909629/', price: '$45', status: 'Sold Out' },
         // Faculty Recital: Strings Faculty (2026-09-17): MU Calendar row carried
         // only the /v/23659/ venue fallback. Verified Free / $0.00 on etix; the
         // pid is in ETIX_KNOWN_FREE_PIDS so the sweep flips the placeholder.
@@ -381,7 +387,19 @@ function extractPricing(desc, title = "", location = "", apiLink = "", startET =
 
     // Check for direct etix match first
     const etixMatch = etixEvents.find(e => e.match.test(title) && (!e.start || String(startET || '').startsWith(e.start)));
-    if (etixMatch) return { price: etixMatch.price, link: etixMatch.url };
+    if (etixMatch) {
+        // /p/-beats-venue (2026-09-21): a table row that points at an etix VENUE page
+        // (/ticket/v/) is a fallback. When the description carries the event's own
+        // /p/ page (MU Calendar does for the Ware workshops), that link wins — the
+        // price still comes from the table (etix is challenge-walled to GHA).
+        let link = etixMatch.url;
+        if (/\/ticket\/v\//i.test(link || '')) {
+            const p = /https:\/\/www\.etix\.com\/ticket\/p\/\d+\/?[^"'\s<>)]*/i.exec(desc || '') || (/etix\.com\/ticket\/p\//i.test(apiLink || '') ? [apiLink] : null);
+            if (p) link = p[0];
+        }
+        // `status` (2026-09-21): hand-maintained sold-out / at-capacity flag → display field.
+        return { price: etixMatch.price, link, ...(etixMatch.status ? { ticketStatus: etixMatch.status } : {}) };
+    }
 
     let price = "Free";
     let link = apiLink || "";
@@ -2714,6 +2732,7 @@ async function runScraper() {
         if (data.data.length === 0) throw new Error('MU Calendar returned 0 events — feed empty (body/auth?)');
 
         let muCount = 0;
+        let muCalEtixRows = 0;   // rows carrying an etix /p/ link in ANY field (2026-09-21 canary)
 
         // Club Sports double-entry sweep (2026-09-01): Campus Recreation enters
         // one game as TWO same-day meetings -- a "<building> ... Lobby" check-in
@@ -2803,7 +2822,18 @@ async function runScraper() {
             // so a column reorder upstream would surface as blank/garbage desc
             // (not 0 events) — worth watching.
             const descHtml = obj['11'] || obj['2'] || '';
-            const pricing = extractPricing(descHtml, eventTitle, eventLoc, '', String(obj.startDate || ''));
+            // etix /p/ link anywhere on the API row (2026-09-21): the millersville.edu
+            // event page shows one for the Ware workshops but the description columns
+            // (11/2) don't carry it — scan every string field; passed as apiLink so
+            // extractPricing's fallback and the /p/-beats-venue rule can use it.
+            let objEtix = '';
+            for (const v of Object.values(obj)) {
+                if (typeof v !== 'string') continue;
+                const m = /https:\/\/www\.etix\.com\/ticket\/p\/\d+\/?[^"'\s<>)]*/i.exec(v);
+                if (m) { objEtix = m[0]; break; }
+            }
+            if (objEtix) muCalEtixRows++;
+            const pricing = extractPricing(descHtml, eventTitle, eventLoc, objEtix, String(obj.startDate || ''));
 
             let tags = ["MU"];
             if (eventType) tags.push(eventType);
@@ -2932,6 +2962,7 @@ async function runScraper() {
                 title: decoratedTitle, date: startRaw, location: eventLoc,
                 tags: [...new Set(tags)], price: pricing.price,
                 ticketLink: pricing.link, sourceLink,
+                ...(pricing.ticketStatus ? { ticketStatus: pricing.ticketStatus } : {}),
                 description: descHtml,
                 ...(calCustomerName ? { orgName: calCustomerName, orgShortName: resolveOrgShortName(calCustomerName) } : {}),
                 ...(audience ? { audience } : {})
@@ -2939,6 +2970,7 @@ async function runScraper() {
             muCount++;
         });
         console.log(`✅ MU Calendar (non-sport): ${muCount} events`);
+        console.log(`  🎫 MU Calendar rows with an etix /p/ link in any field: ${muCalEtixRows}`);
         checkAcademicMilestones(data.data);
     } catch (e) { console.error("❌ MU Calendar error:", e.message); }
 

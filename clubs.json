@@ -351,10 +351,8 @@
   },
   {
     "name": "Clinical Psychology Student Association",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "CPSA",
     "id": ""
   },
@@ -395,9 +393,9 @@
   },
   {
     "name": "Club Tennis",
-    "category": "Competition",
+    "category": "Sporting",
     "categories": [
-      "Competition"
+      "Sporting"
     ],
     "shortName": "",
     "id": ""
@@ -568,11 +566,9 @@
   },
   {
     "name": "Delta Sigma Theta Sorority, Inc.",
-    "category": "Educational Program",
+    "category": "Meeting",
     "categories": [
-      "Educational Program",
-      "Social",
-      "Tabling"
+      "Meeting"
     ],
     "shortName": "",
     "id": ""
@@ -843,8 +839,10 @@
   },
   {
     "name": "Ice Hockey Club (D3)",
-    "category": "",
-    "categories": [],
+    "category": "Sporting",
+    "categories": [
+      "Sporting"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1158,8 +1156,10 @@
   },
   {
     "name": "Moose Ultimate",
-    "category": "",
-    "categories": [],
+    "category": "Sporting",
+    "categories": [
+      "Sporting"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1429,9 +1429,9 @@
   },
   {
     "name": "Slip n' Score Society",
-    "category": "Social",
+    "category": "Meeting",
     "categories": [
-      "Social"
+      "Meeting"
     ],
     "shortName": "",
     "id": ""
@@ -1570,10 +1570,8 @@
   },
   {
     "name": "Super Smash Club at MU",
-    "category": "Competition",
-    "categories": [
-      "Competition"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1863,14 +1861,10 @@
   },
   {
     "name": "Women's, Gender, and Sexuality Studies",
-    "category": "Educational Program",
-    "categories": [
-      "Educational Program",
-      "Lecture or Speaker",
-      "Movie or Film"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "WGSS",
-    "id": ""
+    "id": "wstudies"
   },
   {
     "name": "Wrestling",

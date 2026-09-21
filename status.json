@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-21T18:31:59.282Z",
+  "generatedAt": "2026-09-21T22:30:00.623Z",
   "totalEvents": 1799,
   "withDescription": 771,
   "withImage": 234,
   "familyFriendly": 82,
-  "eventsToday": 24,
+  "eventsToday": 25,
   "sources": {
     "muAthletics": 319,
     "muCalendar": 164,
@@ -150,13 +150,13 @@
       "PM Community": 3
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-09-21T18:28:07.925Z"
+    "lastSyncAt": "2026-09-21T22:26:35.924Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-21T18:31:51.175Z"
+    "checkedAt": "2026-09-21T22:29:53.561Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -229,6 +229,20 @@
   },
   "recentlyAdded": [
     {
+      "key": "Yoga Club Meeting|2026-09-21T23:00:00.000Z",
+      "firstSeenAt": "2026-09-21T22:30:00.621Z",
+      "title": "Yoga Club Meeting",
+      "source": "MU",
+      "date": "2026-09-21T23:00:00.000Z"
+    },
+    {
+      "key": "UAB General Members Meeting|2026-09-23T23:00:00.000Z",
+      "firstSeenAt": "2026-09-21T22:30:00.621Z",
+      "title": "UAB General Members Meeting",
+      "source": "MU",
+      "date": "2026-09-23T23:00:00.000Z"
+    },
+    {
       "key": "Men's Rugby Practice|2026-09-21T20:30:00.000Z",
       "firstSeenAt": "2026-09-21T18:31:59.278Z",
       "title": "Men's Rugby Practice",
@@ -283,21 +297,7 @@
       "title": "REP your flag",
       "source": "MU",
       "date": "2026-09-23T18:00:00.000Z"
-    },
-    {
-      "key": "Men's Rugby Practice|2026-09-23T20:30:00.000Z",
-      "firstSeenAt": "2026-09-21T18:31:59.278Z",
-      "title": "Men's Rugby Practice",
-      "source": "MU",
-      "date": "2026-09-23T20:30:00.000Z"
-    },
-    {
-      "key": "MMA 101, Sparring Week 9/21 and 9/23|2026-09-23T23:00:00.000Z",
-      "firstSeenAt": "2026-09-21T18:31:59.278Z",
-      "title": "MMA 101, Sparring Week 9/21 and 9/23",
-      "source": "MU",
-      "date": "2026-09-23T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 28
+  "addedLastRun": 2
 }

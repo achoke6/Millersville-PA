@@ -1717,8 +1717,10 @@
   },
   {
     "name": "University Activities Board",
-    "category": "",
-    "categories": [],
+    "category": "Meeting",
+    "categories": [
+      "Meeting"
+    ],
     "shortName": "UAB",
     "id": ""
   },
@@ -1875,10 +1877,8 @@
   },
   {
     "name": "Yoga Club",
-    "category": "Meeting",
-    "categories": [
-      "Meeting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },

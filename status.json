@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-09-21T14:38:13.245Z",
-  "totalEvents": 1790,
-  "withDescription": 768,
-  "withImage": 233,
+  "generatedAt": "2026-09-21T15:17:40.987Z",
+  "totalEvents": 1793,
+  "withDescription": 769,
+  "withImage": 230,
   "familyFriendly": 83,
-  "eventsToday": 21,
+  "eventsToday": 22,
   "sources": {
     "muAthletics": 319,
     "muCalendar": 163,
     "artsmu": 22,
     "campsAlumni": 32,
-    "muGetInvolved": 442,
-    "pennManor": 524,
+    "muGetInvolved": 443,
+    "pennManor": 526,
     "borough": 64,
     "vfw": 8,
     "phantomPower": 12,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 747,
+    "total": 749,
     "scored": 65,
     "wins": 34,
     "losses": 30,
@@ -150,13 +150,13 @@
       "PM Community": 3
     },
     "stalePast": 5,
-    "lastSyncAt": "2026-09-21T14:34:09.509Z"
+    "lastSyncAt": "2026-09-21T15:14:10.329Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-21T14:38:00.453Z"
+    "checkedAt": "2026-09-21T15:17:30.396Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -193,7 +193,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 428,
+        "value": 430,
         "min": 150,
         "skipped": false
       },
@@ -229,6 +229,62 @@
   },
   "recentlyAdded": [
     {
+      "key": "Weekly Practice|2026-09-21T20:00:00.000Z",
+      "firstSeenAt": "2026-09-21T15:17:40.983Z",
+      "title": "Weekly Practice",
+      "source": "MU",
+      "date": "2026-09-21T20:00:00.000Z"
+    },
+    {
+      "key": "Weekly Practice|2026-09-28T20:00:00.000Z",
+      "firstSeenAt": "2026-09-21T15:17:40.983Z",
+      "title": "Weekly Practice",
+      "source": "MU",
+      "date": "2026-09-28T20:00:00.000Z"
+    },
+    {
+      "key": "Weekly Practice|2026-10-05T20:00:00.000Z",
+      "firstSeenAt": "2026-09-21T15:17:40.983Z",
+      "title": "Weekly Practice",
+      "source": "MU",
+      "date": "2026-10-05T20:00:00.000Z"
+    },
+    {
+      "key": "Weekly Practice|2026-10-19T20:00:00.000Z",
+      "firstSeenAt": "2026-09-21T15:17:40.983Z",
+      "title": "Weekly Practice",
+      "source": "MU",
+      "date": "2026-10-19T20:00:00.000Z"
+    },
+    {
+      "key": "Weekly Practice|2026-10-26T20:00:00.000Z",
+      "firstSeenAt": "2026-09-21T15:17:40.983Z",
+      "title": "Weekly Practice",
+      "source": "MU",
+      "date": "2026-10-26T20:00:00.000Z"
+    },
+    {
+      "key": "RUF Bible Study|2026-10-27T19:00:00",
+      "firstSeenAt": "2026-09-21T15:17:40.983Z",
+      "title": "RUF Bible Study",
+      "source": "MU",
+      "date": "2026-10-27T19:00:00"
+    },
+    {
+      "key": "Boys JV Volleyball @ Red Lion Area Junior/Senior High School|2027-05-11T21:30:00.000Z",
+      "firstSeenAt": "2026-09-21T15:17:40.983Z",
+      "title": "Boys JV Volleyball @ Red Lion Area Junior/Senior High School",
+      "source": "PM",
+      "date": "2027-05-11T21:30:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Volleyball @ Red Lion Area Junior/Senior High School|2027-05-11T22:45:00.000Z",
+      "firstSeenAt": "2026-09-21T15:17:40.983Z",
+      "title": "Boys Varsity Volleyball @ Red Lion Area Junior/Senior High School",
+      "source": "PM",
+      "date": "2027-05-11T22:45:00.000Z"
+    },
+    {
       "key": "Bonfire with Cowboy Chris|2026-10-03T21:30:00.000Z",
       "firstSeenAt": "2026-09-21T14:38:13.242Z",
       "title": "Bonfire with Cowboy Chris",
@@ -241,63 +297,7 @@
       "title": "Boys Varsity Wrestling @ Conestoga Valley High School",
       "source": "PM",
       "date": "2026-12-28T12:00:00.000Z"
-    },
-    {
-      "key": "Clinical Psychology Student Association: First Meeting|2026-09-10T17:30:00",
-      "firstSeenAt": "2026-09-21T01:00:31.894Z",
-      "title": "Clinical Psychology Student Association: First Meeting",
-      "source": "MU",
-      "date": "2026-09-10T17:30:00"
-    },
-    {
-      "key": "Reformed University Fellowship Prayer Meeting|2026-10-26T21:00:00.000Z",
-      "firstSeenAt": "2026-09-21T01:00:31.894Z",
-      "title": "Reformed University Fellowship Prayer Meeting",
-      "source": "MU",
-      "date": "2026-10-26T21:00:00.000Z"
-    },
-    {
-      "key": "Mock Trial Club Meeting|2026-10-26T21:00:00.000Z",
-      "firstSeenAt": "2026-09-21T01:00:31.894Z",
-      "title": "Mock Trial Club Meeting",
-      "source": "MU",
-      "date": "2026-10-26T21:00:00.000Z"
-    },
-    {
-      "key": "BCM Women's Bible Study|2026-10-26T23:00:00.000Z",
-      "firstSeenAt": "2026-09-21T01:00:31.894Z",
-      "title": "BCM Women's Bible Study",
-      "source": "MU",
-      "date": "2026-10-26T23:00:00.000Z"
-    },
-    {
-      "key": "BCM Men's Bible Study|2026-10-26T23:00:00.000Z",
-      "firstSeenAt": "2026-09-21T01:00:31.894Z",
-      "title": "BCM Men's Bible Study",
-      "source": "MU",
-      "date": "2026-10-26T23:00:00.000Z"
-    },
-    {
-      "key": "Club Tennis Practice|2026-10-26T23:00:00.000Z",
-      "firstSeenAt": "2026-09-21T01:00:31.894Z",
-      "title": "Club Tennis Practice",
-      "source": "MU",
-      "date": "2026-10-26T23:00:00.000Z"
-    },
-    {
-      "key": "Ropes Course- Open Climb|2026-10-27T20:00:00.000Z",
-      "firstSeenAt": "2026-09-21T01:00:31.894Z",
-      "title": "Ropes Course- Open Climb",
-      "source": "MU",
-      "date": "2026-10-27T20:00:00.000Z"
-    },
-    {
-      "key": "RUF Bible Study|2026-10-27T23:00:00.000Z",
-      "firstSeenAt": "2026-09-21T01:00:31.894Z",
-      "title": "RUF Bible Study",
-      "source": "MU",
-      "date": "2026-10-27T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 8
 }

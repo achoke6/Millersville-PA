@@ -19,10 +19,8 @@
   },
   {
     "name": "African Caribbean Student Association",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "ACSA",
     "id": ""
   },
@@ -44,12 +42,12 @@
   },
   {
     "name": "Alliance for Social Change",
-    "category": "Academic",
+    "category": "Meeting",
     "categories": [
-      "Academic"
+      "Meeting"
     ],
-    "shortName": "ASC",
-    "id": "allianceforsocialchange"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Alpha Sigma Alpha",
@@ -550,8 +548,10 @@
   },
   {
     "name": "Dance Team",
-    "category": "",
-    "categories": [],
+    "category": "Fundraiser",
+    "categories": [
+      "Fundraiser"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1429,10 +1429,8 @@
   },
   {
     "name": "Slip n' Score Society",
-    "category": "Meeting",
-    "categories": [
-      "Meeting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1529,9 +1527,9 @@
   },
   {
     "name": "Student Government Association",
-    "category": "Competition",
+    "category": "Tabling",
     "categories": [
-      "Competition"
+      "Tabling"
     ],
     "shortName": "SGA",
     "id": ""

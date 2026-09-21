@@ -502,6 +502,18 @@ function isHiddenForViewer(e) {
 // registration/source link (or an explicit 'Intramural' tag, if the scraper
 // ever adds one). Used to (a) hide them from townies everywhere and (b) route
 // them into the marauder "Upcoming Signups" box instead of the townie one.
+// Signup-only rows (2026-09-21): deadline-anchored registration windows —
+// intramurals (DSE Rec) and youth-sports programs — whose `date` IS the
+// deadline. They belong to the Upcoming Signups boxes (home + Sports page,
+// which filter on registrationDeadline themselves), NOT the event feeds: a
+// "Kickball · 12:00 PM" line on the Today strip reads as a game that isn't
+// happening. Dated events that merely carry a deadline (season-ticket promo,
+// PM community rows with a cutoff) keep their place in the feed. Search still
+// finds them (the modal's Register Now is the useful landing).
+function isSignupOnly(e) {
+    if (!e || !e.registrationDeadline) return false;
+    return e.date === e.registrationDeadline || e.youthSports === true || isIntramural(e);
+}
 function isIntramural(e) {
     if (!e) return false;
     if ((e.tags || []).includes('Intramural')) return true;
@@ -4204,6 +4216,7 @@ function renderEvents(){
     const filterEvent = (e) => {
         if (isSportEvent(e)) return false;
         if (isPMSportByTitle(e)) return false;
+        if (isSignupOnly(e)) return false;   // signups live in the Upcoming Signups boxes (2026-09-21)
         if (isHiddenForViewer(e)) return false;
         if (isEventFromHiddenSource(e)) return false;
         const tags = e.tags || [];
@@ -5950,6 +5963,7 @@ function renderHomeUI(){
     // source filtering as before — date is the only thing that changes.
     const dayEvents = allEvents.filter(e => {
         if(localDateStr(e.date) !== viewDateStr) return false;
+        if(isSignupOnly(e)) return false;   // signups live in the Upcoming Signups box below (2026-09-21)
         if(isHiddenForViewer(e)) return false;
         if(isEventFromHiddenSource(e)) return false;
         if(isSportsEventFromHiddenSource(e)) return false;
@@ -5964,6 +5978,7 @@ function renderHomeUI(){
         const upcoming = allEvents.filter(e => {
             const d = localDateStr(e.date);
             if (d <= viewDateStr) return false;
+            if (isSignupOnly(e)) return false;
             if (isHiddenForViewer(e)) return false;
             if (isEventFromHiddenSource(e)) return false;
             if (isSportsEventFromHiddenSource(e)) return false;
@@ -6067,7 +6082,9 @@ function renderHomeUI(){
         // (shown up to OPEN_LEAD_MS early as "Opens <date>"), open-now (shown
         // within SIGNUP_LEAD_MS of the deadline with a countdown), and closed
         // (deadline passed → hidden). Missing registrationOpens = treat as open
-        // now (prior behavior). All also appear on the calendar, dated on the deadline.
+        // now (prior behavior). Since 2026-09-21 these rows are ONLY here (and on the
+        // Sports-page block / in search) — isSignupOnly() keeps them out of the event
+        // list and the Today strip.
         const upcoming = (allEvents || [])
             .filter(e => e && e.registrationDeadline)
             .filter(e => isTownie ? (!isIntramural(e) && e.audience !== 'mu-only') : (isIntramural(e) || e.audience === 'mu-only' || e.audience === 'public'))

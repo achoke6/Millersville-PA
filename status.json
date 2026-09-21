@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-21T12:47:33.801Z",
-  "totalEvents": 1788,
-  "withDescription": 767,
+  "generatedAt": "2026-09-21T14:38:13.245Z",
+  "totalEvents": 1790,
+  "withDescription": 768,
   "withImage": 233,
   "familyFriendly": 83,
   "eventsToday": 21,
@@ -11,9 +11,9 @@
     "artsmu": 22,
     "campsAlumni": 32,
     "muGetInvolved": 442,
-    "pennManor": 523,
+    "pennManor": 524,
     "borough": 64,
-    "vfw": 7,
+    "vfw": 8,
     "phantomPower": 12,
     "community": 20,
     "manor": 40,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 746,
+    "total": 747,
     "scored": 65,
     "wins": 34,
     "losses": 30,
@@ -150,13 +150,13 @@
       "PM Community": 3
     },
     "stalePast": 5,
-    "lastSyncAt": "2026-09-21T12:44:17.272Z"
+    "lastSyncAt": "2026-09-21T14:34:09.509Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-21T12:47:31.761Z"
+    "checkedAt": "2026-09-21T14:38:00.453Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -193,7 +193,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 427,
+        "value": 428,
         "min": 150,
         "skipped": false
       },
@@ -228,6 +228,20 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Bonfire with Cowboy Chris|2026-10-03T21:30:00.000Z",
+      "firstSeenAt": "2026-09-21T14:38:13.242Z",
+      "title": "Bonfire with Cowboy Chris",
+      "source": "Other",
+      "date": "2026-10-03T21:30:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Wrestling @ Conestoga Valley High School|2026-12-28T12:00:00.000Z",
+      "firstSeenAt": "2026-09-21T14:38:13.242Z",
+      "title": "Boys Varsity Wrestling @ Conestoga Valley High School",
+      "source": "PM",
+      "date": "2026-12-28T12:00:00.000Z"
+    },
     {
       "key": "Clinical Psychology Student Association: First Meeting|2026-09-10T17:30:00",
       "firstSeenAt": "2026-09-21T01:00:31.894Z",
@@ -283,21 +297,7 @@
       "title": "RUF Bible Study",
       "source": "MU",
       "date": "2026-10-27T23:00:00.000Z"
-    },
-    {
-      "key": "IFC Meeting|2026-10-28T00:30:00.000Z",
-      "firstSeenAt": "2026-09-21T01:00:31.894Z",
-      "title": "IFC Meeting",
-      "source": "MU",
-      "date": "2026-10-28T00:30:00.000Z"
-    },
-    {
-      "key": "NIGHT OF THE LIVING DRAG - Halloween Drag Show|2026-11-01T00:00:00.000Z",
-      "firstSeenAt": "2026-09-20T10:41:11.358Z",
-      "title": "NIGHT OF THE LIVING DRAG - Halloween Drag Show",
-      "source": "Other",
-      "date": "2026-11-01T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

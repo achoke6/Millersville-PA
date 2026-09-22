@@ -767,7 +767,7 @@ function decodeEntities(str) {
 // The Corn Wagon current-info parser. Input: raw HTML of
 // https://www.thecornwagon.com/current-info (Duda site, server-rendered —
 // plain text in the markup, no JS rendering needed). Output: array of
-// "Item – price text" strings (en-dash house style), max 15. Priced lines
+// "Item – price text" strings (en-dash house style), max 20. Priced lines
 // look like "Sweet Corn (bi-color) - Price drop - now only $4.00/13 ears":
 // the item name is the text before the FIRST " - "; the remainder keeps its
 // own wording. Lines without a $ amount ("coming soon", "expected mid-July",
@@ -781,11 +781,37 @@ function parseCornWagonItems(html) {
         .replace(/<style[\s\S]*?<\/style>/gi, ' ')
         .replace(/<[^>]+>/g, '\n');
     const items = [];
+    // Tiered-pricing support (2026-09-22): a $-free header line ("Cabbage")
+    // followed by quantity-tier lines ("1-9 - $1.50/head", "50+ - $1.00/head")
+    // folds into ONE item: "Cabbage – 1-9 $1.50/head · 10-49 $1.25/head · …".
+    // Without this the tiers surfaced as orphan items named "1-9"/"10-49"/"50+"
+    // and burned cap slots (Cayenne + Watermelons fell off the bottom).
+    let header = null;   // last short $-free candidate name, or null
+    let tiers = null;    // {name, parts[]} while consuming tier lines
+    const flushTiers = () => {
+        if (tiers && tiers.parts.length) items.push(`${tiers.name} – ${tiers.parts.join(' · ')}`);
+        tiers = null;
+    };
     for (let line of text.split('\n')) {
         line = decodeEntities(line).replace(/\s+/g, ' ').trim();
         if (!line || line.startsWith('*')) continue;   // price/availability disclaimers
-        if (!/\$\s?\d/.test(line)) continue;           // must carry a price
-        if (line.length > 120) continue;               // paragraph, not an item line
+        if (!/\$\s?\d/.test(line)) {
+            flushTiers();
+            // Header candidate: short, letter-led, no prose punctuation, not a status note.
+            header = (/^[A-Za-z][A-Za-z0-9 .,'()/&-]{1,44}$/.test(line)
+                      && !/[!?]/.test(line)
+                      && !/coming soon|crop lost|expected|sold out/i.test(line)) ? line : null;
+            continue;
+        }
+        if (line.length > 120) { flushTiers(); header = null; continue; }   // paragraph, not an item line
+        // Quantity-tier line under a header: "1-9 - $1.50/head" / "50+ - $1.00/head"
+        const t = line.match(/^(\d+(?:\s*-\s*\d+|\+)?)\s*[-–—]\s*(\$\d.*)$/);
+        if (t && (tiers || header)) {
+            if (!tiers) { tiers = { name: header, parts: [] }; header = null; }
+            tiers.parts.push(`${t[1].replace(/\s+/g, '')} ${t[2].trim()}`);
+            continue;
+        }
+        flushTiers(); header = null;
         let m = line.match(/^(.{2,60}?)\s+[-–—]\s+(.+)$/);
         // Dash-less fallback (2026-08-06): the stand sometimes omits the
         // separator ("Cayenne Peppers 4/$1.00"). Accept "ShortName <price...>"
@@ -794,9 +820,10 @@ function parseCornWagonItems(html) {
         if (!m) m = line.match(/^([A-Za-z][A-Za-z0-9 .,'()/&-]{1,44}?)\s+((?:\d+\s*\/\s*)?\$\d.*)$/);
         if (!m) continue;
         items.push(`${m[1].trim()} – ${m[2].trim()}`);
-        if (items.length >= 15) break;
+        if (items.length >= 20) break;
     }
-    return items;
+    flushTiers();
+    return items.slice(0, 20);
 }
 
 // Corn Wagon carry-forward (2026-07-15): the Duda host intermittently drops
@@ -5820,7 +5847,20 @@ async function runScraper() {
                 const aSig = roomSignature(seed.event.location);
                 const bSig = roomSignature(ne.event.location);
                 const FIFTEEN_MIN_MS = 15 * 60 * 1000;
-                if (aOrg && aOrg === bOrg && aSig && aSig === bSig &&
+                // Leading-token org proxy (2026-09-22, the YDSA pair): MU
+                // Calendar rows carry no orgName, so "YDSA General Meeting —
+                // SMC 24" (mu) and "YDSA Meetings — SMC, Room 24" (clubs)
+                // dodged this rule despite identical room signature + instant.
+                // When either side lacks an org, a shared DISTINCTIVE first
+                // title word (>= 4 chars, not a generic/weekday word) stands
+                // in for it. Same room + same 15-min window + same lead token
+                // is conclusive: two orgs can't hold one room at one time.
+                const LEAD_GENERIC = /^(general|weekly|monthly|annual|open|free|night|meeting|meetings|student|campus|club|spring|fall|winter|summer|monday|tuesday|wednesday|thursday|friday|saturday|sunday|first|second|third|last|welcome)$/;
+                const aLead = seed.norm.split(' ')[0] || '';
+                const bLead = ne.norm.split(' ')[0] || '';
+                const leadProxy = (!aOrg || !bOrg) && aLead.length >= 4 && aLead === bLead && !LEAD_GENERIC.test(aLead);
+                const sameOrg = (aOrg && aOrg === bOrg) || leadProxy;
+                if (sameOrg && aSig && aSig === bSig &&
                     Math.abs(seed.time - ne.time) <= FIFTEEN_MIN_MS) {
                     titleMatch = true;
                 }

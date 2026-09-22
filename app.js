@@ -1384,7 +1384,8 @@ function isTicketPackage(e) {
 // Display flip + label swap, mirroring the clubs-browser toggle.
 window.toggleSignupsMore = function(btn) {
     // Target comes from aria-controls so the same toggle serves the home box
-    // (#home-signups-more) and the Sports page block (#sp-signups-more).
+    // (#home-signups-more), the Sports page block (#sp-signups-more), and the
+    // specials 5-then-expand folds (#sp-more-<slug> cards, #home-special-more popup).
     const more = btn && document.getElementById(btn.getAttribute('aria-controls') || 'home-signups-more');
     if (!more || !btn) return;
     const expand = more.style.display === 'none';
@@ -6893,7 +6894,13 @@ window.openHomeSpecialPopup = function(slug){
     if (items.length){
         html += `<p style="font-weight:700;font-size:0.85rem;margin:12px 0 4px;color:var(--navy);">Today's Specials (${dayName}):</p>`;
         if (sp.note) html += `<p style="font-size:0.74rem;color:var(--text-muted);font-style:italic;margin:2px 0 6px;">${sp.note}</p>`;
-        html += items.map(i=>`<p class="home-special-item">• ${i}</p>`).join('');
+        // 5-then-expand, mirroring the directory card (placeSpecialsSectionHtml).
+        html += items.slice(0,5).map(i=>`<p class="home-special-item">• ${i}</p>`).join('');
+        if (items.length > 5){
+            const moreLabel = `▾ Show ${items.length-5} more`;
+            html += `<div id="home-special-more" style="display:none;">${items.slice(5).map(i=>`<p class="home-special-item">• ${i}</p>`).join('')}</div>`
+                + `<button type="button" class="btn btn-sm btn-outline" aria-expanded="false" aria-controls="home-special-more" data-more-label="${moreLabel}" style="margin-top:6px;font-size:0.75rem;width:100%;text-align:center;" onclick="window.toggleSignupsMore(this)">${moreLabel}</button>`;
+        }
     }
     evToday.slice(0,3).forEach(e => { html += `<p class="home-special-item">📅 ${e.title} · ${formatTime(new Date(e.t))}</p>`; });
     if (evToday.length > 3) html += `<p class="home-special-item" style="color:var(--text-muted);">+${evToday.length-3} more today</p>`;
@@ -8536,13 +8543,22 @@ function placeSpecialsSectionHtml(pslug, dayName){
     const dateRange = (!isGrocery && sp.weeklyDateRange) ? `<p style="font-size:0.7rem;color:var(--gold);font-weight:600;margin-bottom:4px;">${sp.weeklyDateRange}</p>` : '';
     const isVFW = pslug === 'vfw-post-7294';
     const heading = isGrocery ? '🏷️ Top Weekly Deals:' : isVFW ? `Specials (${dayName}):` : `Today's Specials (${dayName}):`;
-    const topItems = isGrocery ? items.slice(0, 5) : items;
-    const moreItems = isGrocery ? items.slice(5) : [];
+    // 5-then-expand (2026-09-22): long lists (the Corn Wagon's 15-line price
+    // sheet) no longer stretch the card. Grocery keeps its View-All modal;
+    // everything else folds inline via the shared toggleSignupsMore toggle
+    // (aria-controls-driven, so no new handler). Collapsed count = 5.
+    const itemP = i=>`<p style="font-size:0.8rem;color:var(--text);margin:2px 0;">• ${i}</p>`;
+    const topItems = items.slice(0, 5);
+    const moreItems = items.slice(5);
     let moreHtml = '';
-    if(moreItems.length > 0){
+    if(moreItems.length > 0 && isGrocery){
         moreHtml = `<button onclick="showGroceryDeals(event)" class="btn btn-sm btn-outline" style="margin-top:6px;font-size:0.75rem;width:100%;text-align:center;">View All ${items.length} Deals</button>`;
+    } else if(moreItems.length > 0){
+        const moreId = `sp-more-${pslug}`, moreLabel = `▾ Show ${moreItems.length} more`;
+        moreHtml = `<div id="${moreId}" style="display:none;">${moreItems.map(itemP).join('')}</div>`
+            + `<button type="button" class="btn btn-sm btn-outline" aria-expanded="false" aria-controls="${moreId}" data-more-label="${moreLabel}" style="margin-top:6px;font-size:0.75rem;width:100%;text-align:center;" onclick="window.toggleSignupsMore(this)">${moreLabel}</button>`;
     }
-    return `<div class="specials-section">${dateRange}<p style="font-size:0.8rem;font-weight:700;margin-bottom:4px;">${heading}</p>${note}${topItems.map(i=>`<p style="font-size:0.8rem;color:var(--text);margin:2px 0;">• ${i}</p>`).join('')}${moreHtml}</div>`;
+    return `<div class="specials-section">${dateRange}<p style="font-size:0.8rem;font-weight:700;margin-bottom:4px;">${heading}</p>${note}${topItems.map(itemP).join('')}${moreHtml}</div>`;
 }
 
 function buildFoodCard(p, specials, dayName) {

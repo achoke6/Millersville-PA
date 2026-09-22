@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-22T07:21:34.737Z",
-  "totalEvents": 1800,
+  "generatedAt": "2026-09-22T13:09:11.778Z",
+  "totalEvents": 1801,
   "withDescription": 770,
   "withImage": 236,
   "familyFriendly": 82,
@@ -12,7 +12,7 @@
     "campsAlumni": 32,
     "muGetInvolved": 446,
     "pennManor": 533,
-    "borough": 63,
+    "borough": 64,
     "vfw": 8,
     "phantomPower": 12,
     "community": 20,
@@ -150,13 +150,13 @@
       "PM Community": 3
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-09-22T07:18:12.411Z"
+    "lastSyncAt": "2026-09-22T13:05:31.080Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-22T07:21:26.757Z"
+    "checkedAt": "2026-09-22T13:09:02.424Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -165,14 +165,14 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 365,
+        "value": 364,
         "min": 45,
         "skipped": false
       },
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 247,
+        "value": 246,
         "min": 60,
         "skipped": false
       },
@@ -228,6 +228,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Borough Council Special Budget Meeting|2026-10-08T22:00:00.000Z",
+      "firstSeenAt": "2026-09-22T13:09:11.775Z",
+      "title": "Borough Council Special Budget Meeting",
+      "source": "Borough",
+      "date": "2026-10-08T22:00:00.000Z"
+    },
     {
       "key": "Student Government Association (SGA) Weekly Meeting|2026-09-10T17:00:00",
       "firstSeenAt": "2026-09-22T01:29:20.905Z",
@@ -290,14 +297,7 @@
       "title": "Club Softball Practice",
       "source": "MU",
       "date": "2026-10-22T22:00:00.000Z"
-    },
-    {
-      "key": "SGA Weekly Meeting|2026-10-22T23:00:00.000Z",
-      "firstSeenAt": "2026-09-22T01:29:20.905Z",
-      "title": "SGA Weekly Meeting",
-      "source": "MU",
-      "date": "2026-10-22T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

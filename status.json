@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-22T17:59:18.428Z",
-  "totalEvents": 1798,
-  "withDescription": 763,
+  "generatedAt": "2026-09-22T20:59:44.940Z",
+  "totalEvents": 1799,
+  "withDescription": 764,
   "withImage": 237,
   "familyFriendly": 82,
-  "eventsToday": 18,
+  "eventsToday": 19,
   "sources": {
     "muAthletics": 320,
     "muCalendar": 163,
     "artsmu": 22,
     "campsAlumni": 32,
-    "muGetInvolved": 441,
+    "muGetInvolved": 442,
     "pennManor": 536,
     "borough": 64,
     "vfw": 8,
@@ -150,13 +150,13 @@
       "PM Community": 3
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-09-22T17:55:58.888Z"
+    "lastSyncAt": "2026-09-22T20:56:24.184Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-22T17:59:10.483Z"
+    "checkedAt": "2026-09-22T20:59:38.651Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -229,6 +229,34 @@
   },
   "recentlyAdded": [
     {
+      "key": "FSL Leadership Series #2: Risk Management 101|2026-09-22T21:00:00.000Z",
+      "firstSeenAt": "2026-09-22T20:59:44.938Z",
+      "title": "FSL Leadership Series #2: Risk Management 101",
+      "source": "MU",
+      "date": "2026-09-22T21:00:00.000Z"
+    },
+    {
+      "key": "15th Annual Breast-a-Ville|2026-10-07T14:30:00.000Z",
+      "firstSeenAt": "2026-09-22T20:59:44.938Z",
+      "title": "15th Annual Breast-a-Ville",
+      "source": "MU",
+      "date": "2026-10-07T14:30:00.000Z"
+    },
+    {
+      "key": "Student Government Association (SGA) Weekly Meeting|2026-10-22T17:00:00",
+      "firstSeenAt": "2026-09-22T20:59:44.938Z",
+      "title": "Student Government Association (SGA) Weekly Meeting",
+      "source": "MU",
+      "date": "2026-10-22T17:00:00"
+    },
+    {
+      "key": "Letters of Love|2026-10-22T19:00:00",
+      "firstSeenAt": "2026-09-22T20:59:44.938Z",
+      "title": "Letters of Love",
+      "source": "MU",
+      "date": "2026-10-22T19:00:00"
+    },
+    {
       "key": "Online Webinar, Live viewing - National hazing Prevention Week|2026-09-21T16:00:00.000Z",
       "firstSeenAt": "2026-09-22T17:59:18.424Z",
       "title": "Online Webinar, Live viewing - National hazing Prevention Week",
@@ -269,35 +297,7 @@
       "title": "Millersville University Men's Tennis vs Juniata",
       "source": "MU",
       "date": "2026-10-05T18:00:00.000Z"
-    },
-    {
-      "key": "HIGH ON FIRE|2026-10-30T00:00:00.000Z",
-      "firstSeenAt": "2026-09-22T17:59:18.424Z",
-      "title": "HIGH ON FIRE",
-      "source": "Other",
-      "date": "2026-10-30T00:00:00.000Z"
-    },
-    {
-      "key": "Girls JV Basketball vs Lampeter Strasburg High School|2026-12-10T23:00:00.000Z",
-      "firstSeenAt": "2026-09-22T14:41:32.155Z",
-      "title": "Girls JV Basketball vs Lampeter Strasburg High School",
-      "source": "PM",
-      "date": "2026-12-10T23:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Basketball vs Lampeter Strasburg High School|2026-12-11T00:30:00.000Z",
-      "firstSeenAt": "2026-09-22T14:41:32.155Z",
-      "title": "Girls Varsity Basketball vs Lampeter Strasburg High School",
-      "source": "PM",
-      "date": "2026-12-11T00:30:00.000Z"
-    },
-    {
-      "key": "Girls JV Basketball @ Governor Mifflin High School|2027-01-02T16:00:00.000Z",
-      "firstSeenAt": "2026-09-22T14:41:32.155Z",
-      "title": "Girls JV Basketball @ Governor Mifflin High School",
-      "source": "PM",
-      "date": "2027-01-02T16:00:00.000Z"
     }
   ],
-  "addedLastRun": 7
+  "addedLastRun": 4
 }

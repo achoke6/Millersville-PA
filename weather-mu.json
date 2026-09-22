@@ -128,6 +128,39 @@
   },
   "observations": [
     {
+      "time": "16:00",
+      "temp": "60",
+      "dewpoint": "55",
+      "rh": "83",
+      "windDir": "ENE",
+      "windSpeed": "7",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "Light Drizzle"
+    },
+    {
+      "time": "15:00",
+      "temp": "61",
+      "dewpoint": "55",
+      "rh": "78",
+      "windDir": "ENE",
+      "windSpeed": "8",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "14:00",
+      "temp": "61",
+      "dewpoint": "56",
+      "rh": "82",
+      "windDir": "ENE",
+      "windSpeed": "7",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "13:00",
       "temp": "60",
       "dewpoint": "56",
@@ -159,39 +192,6 @@
       "precip": "0.08",
       "visibility": "10.0",
       "condition": "Light Showers Rain"
-    },
-    {
-      "time": "10:00",
-      "temp": "56",
-      "dewpoint": "55",
-      "rh": "98",
-      "windDir": "ENE",
-      "windSpeed": "4",
-      "precip": "0.05",
-      "visibility": "5.3",
-      "condition": "Drizzle"
-    },
-    {
-      "time": "09:00",
-      "temp": "55",
-      "dewpoint": "55",
-      "rh": "98",
-      "windDir": "NE",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "6.4",
-      "condition": "Light Showers Rain"
-    },
-    {
-      "time": "08:00",
-      "temp": "56",
-      "dewpoint": "55",
-      "rh": "97",
-      "windDir": "ENE",
-      "windSpeed": "5",
-      "precip": "0.06",
-      "visibility": "5.1",
-      "condition": "None"
     }
   ],
   "dailySummary": {
@@ -437,9 +437,9 @@
     "yearMinDate": "January 21"
   },
   "discussion": {
-    "headline": "Damp, Dreary, rainy and Much Cooler next week",
-    "dateLine": "11:30 a.m. Friday, September 18, 2026, Update",
-    "excerpt": "Thursday's heavy showers and torrential downpours ended up being more widespread than anticipated on Tuesday. None of the showers produced lightning or strong wind gusts, but they dumped 0.50-1.50\" of rain on the Route 11/Interstate 83 corridors of south-central PA. Outside of the eastern half of the Lower Susquehanna Valley, much less rain fell across northern MD, far southeastern PA and in Adams/Franklin Counties (see below). …",
+    "headline": "breezy and cool start to autumn",
+    "dateLine": "2:00 p.m. Tuesday, September 22, 2026",
+    "excerpt": "In the wake of Sunday night's cold frontal passage, northeasterly winds ushered much cooler and drier air into the Lower Susquehanna Valley on Monday. Under mostly cloudy skies, temperatures only peaked in the mid 60s to low 70s from west-to-east across the region. A few showers dampened northern MD and south-central PA Monday afternoon and evening, but steadier rain held off until the overnight hours. …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -477,5 +477,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-09-22T17:56:01.447Z"
+  "updated": "2026-09-22T20:56:26.623Z"
 }

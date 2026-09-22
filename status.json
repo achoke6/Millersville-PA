@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-09-21T15:17:40.987Z",
-  "totalEvents": 1793,
-  "withDescription": 769,
-  "withImage": 230,
-  "familyFriendly": 83,
-  "eventsToday": 22,
+  "generatedAt": "2026-09-22T13:09:11.778Z",
+  "totalEvents": 1801,
+  "withDescription": 770,
+  "withImage": 236,
+  "familyFriendly": 82,
+  "eventsToday": 21,
   "sources": {
     "muAthletics": 319,
-    "muCalendar": 163,
+    "muCalendar": 164,
     "artsmu": 22,
     "campsAlumni": 32,
-    "muGetInvolved": 443,
-    "pennManor": 526,
+    "muGetInvolved": 446,
+    "pennManor": 533,
     "borough": 64,
     "vfw": 8,
     "phantomPower": 12,
@@ -44,10 +44,10 @@
     },
     "pennManor": {
       "earliest": "2026-06-25T22:00:00.000Z",
-      "latest": "2027-09-16T20:00:00.000Z"
+      "latest": "2027-09-21T23:00:00.000Z"
     },
     "borough": {
-      "earliest": "2026-06-23T23:00:00.000Z",
+      "earliest": "2026-06-25T22:30:00.000Z",
       "latest": "2026-12-25T12:00:00.000Z"
     },
     "vfw": {
@@ -78,39 +78,39 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 20
+      "daysSinceMoved": 21
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 31
+      "daysSinceMoved": 32
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 45
+      "daysSinceMoved": 46
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 45
+      "daysSinceMoved": 46
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 18
+      "daysSinceMoved": 19
     },
     "pennManor": {
-      "newest": "2027-09-16",
-      "daysSinceMoved": 5
+      "newest": "2027-09-21",
+      "daysSinceMoved": 1
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 55
+      "daysSinceMoved": 56
     },
     "vfw": {
       "newest": "2026-10-22",
-      "daysSinceMoved": 20
+      "daysSinceMoved": 21
     },
     "phantomPower": {
       "newest": "2026-11-01",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "community": {
       "newest": "2027-04-16",
@@ -118,27 +118,27 @@
     },
     "manor": {
       "newest": "2027-09-06",
-      "daysSinceMoved": 15
+      "daysSinceMoved": 16
     },
     "raneyCellars": {
       "newest": "2026-09-24",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "theBackyard": {
       "newest": "2026-10-12",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 14
     }
   },
   "sports": {
-    "total": 749,
-    "scored": 65,
-    "wins": 34,
-    "losses": 30,
+    "total": 753,
+    "scored": 68,
+    "wins": 36,
+    "losses": 31,
     "ties": 1
   },
   "registrations": {
-    "open": 12,
-    "next2Weeks": 4,
+    "open": 9,
+    "next2Weeks": 2,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
@@ -149,14 +149,14 @@
       "Youth Sports": 1,
       "PM Community": 3
     },
-    "stalePast": 5,
-    "lastSyncAt": "2026-09-21T15:14:10.329Z"
+    "stalePast": 6,
+    "lastSyncAt": "2026-09-22T13:05:31.080Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-21T15:17:30.396Z"
+    "checkedAt": "2026-09-22T13:09:02.424Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -165,35 +165,35 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 360,
+        "value": 364,
         "min": 45,
         "skipped": false
       },
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 247,
+        "value": 246,
         "min": 60,
         "skipped": false
       },
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 256,
+        "value": 255,
         "min": 30,
         "skipped": false
       },
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 95,
+        "value": 94,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 430,
+        "value": 434,
         "min": 150,
         "skipped": false
       },
@@ -207,7 +207,7 @@
       {
         "key": "pennManorGeneral.count",
         "ok": true,
-        "value": 96,
+        "value": 99,
         "min": 10,
         "skipped": false
       },
@@ -229,75 +229,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Weekly Practice|2026-09-21T20:00:00.000Z",
-      "firstSeenAt": "2026-09-21T15:17:40.983Z",
-      "title": "Weekly Practice",
+      "key": "Borough Council Special Budget Meeting|2026-10-08T22:00:00.000Z",
+      "firstSeenAt": "2026-09-22T13:09:11.775Z",
+      "title": "Borough Council Special Budget Meeting",
+      "source": "Borough",
+      "date": "2026-10-08T22:00:00.000Z"
+    },
+    {
+      "key": "Student Government Association (SGA) Weekly Meeting|2026-09-10T17:00:00",
+      "firstSeenAt": "2026-09-22T01:29:20.905Z",
+      "title": "Student Government Association (SGA) Weekly Meeting",
       "source": "MU",
-      "date": "2026-09-21T20:00:00.000Z"
+      "date": "2026-09-10T17:00:00"
     },
     {
-      "key": "Weekly Practice|2026-09-28T20:00:00.000Z",
-      "firstSeenAt": "2026-09-21T15:17:40.983Z",
-      "title": "Weekly Practice",
+      "key": "Students for Life at Millersville University General Meeting|2026-09-10T17:00:00",
+      "firstSeenAt": "2026-09-22T01:29:20.905Z",
+      "title": "Students for Life at Millersville University General Meeting",
       "source": "MU",
-      "date": "2026-09-28T20:00:00.000Z"
+      "date": "2026-09-10T17:00:00"
     },
     {
-      "key": "Weekly Practice|2026-10-05T20:00:00.000Z",
-      "firstSeenAt": "2026-09-21T15:17:40.983Z",
-      "title": "Weekly Practice",
+      "key": "General Meetings|2026-10-21T21:00:00.000Z",
+      "firstSeenAt": "2026-09-22T01:29:20.905Z",
+      "title": "General Meetings",
       "source": "MU",
-      "date": "2026-10-05T20:00:00.000Z"
+      "date": "2026-10-21T21:00:00.000Z"
     },
     {
-      "key": "Weekly Practice|2026-10-19T20:00:00.000Z",
-      "firstSeenAt": "2026-09-21T15:17:40.983Z",
-      "title": "Weekly Practice",
+      "key": "Mock Trial Club Meeting|2026-10-21T21:00:00.000Z",
+      "firstSeenAt": "2026-09-22T01:29:20.905Z",
+      "title": "Mock Trial Club Meeting",
       "source": "MU",
-      "date": "2026-10-19T20:00:00.000Z"
+      "date": "2026-10-21T21:00:00.000Z"
     },
     {
-      "key": "Weekly Practice|2026-10-26T20:00:00.000Z",
-      "firstSeenAt": "2026-09-21T15:17:40.983Z",
-      "title": "Weekly Practice",
+      "key": "Wednesday Night Dinner|2026-10-21T22:00:00.000Z",
+      "firstSeenAt": "2026-09-22T01:29:20.905Z",
+      "title": "Wednesday Night Dinner",
       "source": "MU",
-      "date": "2026-10-26T20:00:00.000Z"
+      "date": "2026-10-21T22:00:00.000Z"
     },
     {
-      "key": "RUF Bible Study|2026-10-27T19:00:00",
-      "firstSeenAt": "2026-09-21T15:17:40.983Z",
-      "title": "RUF Bible Study",
+      "key": "UAB General Members Meeting|2026-10-21T23:00:00.000Z",
+      "firstSeenAt": "2026-09-22T01:29:20.905Z",
+      "title": "UAB General Members Meeting",
       "source": "MU",
-      "date": "2026-10-27T19:00:00"
+      "date": "2026-10-21T23:00:00.000Z"
     },
     {
-      "key": "Boys JV Volleyball @ Red Lion Area Junior/Senior High School|2027-05-11T21:30:00.000Z",
-      "firstSeenAt": "2026-09-21T15:17:40.983Z",
-      "title": "Boys JV Volleyball @ Red Lion Area Junior/Senior High School",
-      "source": "PM",
-      "date": "2027-05-11T21:30:00.000Z"
+      "key": "Ropes Course- Open Climb|2026-10-22T20:00:00.000Z",
+      "firstSeenAt": "2026-09-22T01:29:20.905Z",
+      "title": "Ropes Course- Open Climb",
+      "source": "MU",
+      "date": "2026-10-22T20:00:00.000Z"
     },
     {
-      "key": "Boys Varsity Volleyball @ Red Lion Area Junior/Senior High School|2027-05-11T22:45:00.000Z",
-      "firstSeenAt": "2026-09-21T15:17:40.983Z",
-      "title": "Boys Varsity Volleyball @ Red Lion Area Junior/Senior High School",
-      "source": "PM",
-      "date": "2027-05-11T22:45:00.000Z"
+      "key": "CHEP Trivia|2026-10-22T20:00:00.000Z",
+      "firstSeenAt": "2026-09-22T01:29:20.905Z",
+      "title": "CHEP Trivia",
+      "source": "MU",
+      "date": "2026-10-22T20:00:00.000Z"
     },
     {
-      "key": "Bonfire with Cowboy Chris|2026-10-03T21:30:00.000Z",
-      "firstSeenAt": "2026-09-21T14:38:13.242Z",
-      "title": "Bonfire with Cowboy Chris",
-      "source": "Other",
-      "date": "2026-10-03T21:30:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Wrestling @ Conestoga Valley High School|2026-12-28T12:00:00.000Z",
-      "firstSeenAt": "2026-09-21T14:38:13.242Z",
-      "title": "Boys Varsity Wrestling @ Conestoga Valley High School",
-      "source": "PM",
-      "date": "2026-12-28T12:00:00.000Z"
+      "key": "Club Softball Practice|2026-10-22T22:00:00.000Z",
+      "firstSeenAt": "2026-09-22T01:29:20.905Z",
+      "title": "Club Softball Practice",
+      "source": "MU",
+      "date": "2026-10-22T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 8
+  "addedLastRun": 1
 }

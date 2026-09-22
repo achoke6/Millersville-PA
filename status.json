@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-22T01:29:20.909Z",
-  "totalEvents": 1801,
-  "withDescription": 771,
+  "generatedAt": "2026-09-22T07:21:34.737Z",
+  "totalEvents": 1800,
+  "withDescription": 770,
   "withImage": 236,
   "familyFriendly": 82,
-  "eventsToday": 25,
+  "eventsToday": 21,
   "sources": {
     "muAthletics": 319,
     "muCalendar": 164,
@@ -78,39 +78,39 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 20
+      "daysSinceMoved": 21
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 31
+      "daysSinceMoved": 32
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 45
+      "daysSinceMoved": 46
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 45
+      "daysSinceMoved": 46
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 18
+      "daysSinceMoved": 19
     },
     "pennManor": {
       "newest": "2027-09-21",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 55
+      "daysSinceMoved": 56
     },
     "vfw": {
       "newest": "2026-10-22",
-      "daysSinceMoved": 20
+      "daysSinceMoved": 21
     },
     "phantomPower": {
       "newest": "2026-11-01",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "community": {
       "newest": "2027-04-16",
@@ -118,27 +118,27 @@
     },
     "manor": {
       "newest": "2027-09-06",
-      "daysSinceMoved": 15
+      "daysSinceMoved": 16
     },
     "raneyCellars": {
       "newest": "2026-09-24",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "theBackyard": {
       "newest": "2026-10-12",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 14
     }
   },
   "sports": {
     "total": 753,
-    "scored": 67,
-    "wins": 35,
+    "scored": 68,
+    "wins": 36,
     "losses": 31,
     "ties": 1
   },
   "registrations": {
-    "open": 10,
-    "next2Weeks": 3,
+    "open": 9,
+    "next2Weeks": 2,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
@@ -150,13 +150,13 @@
       "PM Community": 3
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-09-22T01:25:56.442Z"
+    "lastSyncAt": "2026-09-22T07:18:12.411Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-22T01:29:13.562Z"
+    "checkedAt": "2026-09-22T07:21:26.757Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -179,7 +179,7 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 256,
+        "value": 255,
         "min": 30,
         "skipped": false
       },
@@ -223,7 +223,7 @@
         "key": "pmHudl.matched",
         "ok": true,
         "matched": 17,
-        "withBroadcasts": 24
+        "withBroadcasts": 23
       }
     ]
   },
@@ -299,5 +299,5 @@
       "date": "2026-10-22T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 17
+  "addedLastRun": 0
 }

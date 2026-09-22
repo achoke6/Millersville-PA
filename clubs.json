@@ -188,8 +188,11 @@
   },
   {
     "name": "Best Buddies",
-    "category": "",
-    "categories": [],
+    "category": "Service",
+    "categories": [
+      "Service",
+      "Social"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -664,9 +667,9 @@
   },
   {
     "name": "Equestrian Club",
-    "category": "Sporting",
+    "category": "Service",
     "categories": [
-      "Sporting"
+      "Service"
     ],
     "shortName": "",
     "id": ""
@@ -862,8 +865,9 @@
   },
   {
     "name": "International Association of Emergency Managers",
-    "category": "Social",
+    "category": "Meeting",
     "categories": [
+      "Meeting",
       "Social"
     ],
     "shortName": "IAEM",
@@ -1561,8 +1565,10 @@
   },
   {
     "name": "Students for Life",
-    "category": "",
-    "categories": [],
+    "category": "Tabling",
+    "categories": [
+      "Tabling"
+    ],
     "shortName": "",
     "id": ""
   },

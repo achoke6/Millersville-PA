@@ -174,8 +174,10 @@
   },
   {
     "name": "Bard Hall Residence Hall",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "Bard Hall",
     "id": ""
   },
@@ -254,10 +256,8 @@
   },
   {
     "name": "Campus Life",
-    "category": "Educational Program",
-    "categories": [
-      "Educational Program"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -359,13 +359,13 @@
   },
   {
     "name": "Club Baseball",
-    "category": "Competition",
+    "category": "Sports and Leisure",
     "categories": [
-      "Competition",
+      "Sports and Leisure",
       "Sporting"
     ],
     "shortName": "Club Baseball",
-    "id": ""
+    "id": "millersvilleclubbaseball"
   },
   {
     "name": "Club Cheerleading",
@@ -413,9 +413,10 @@
   },
   {
     "name": "College Bible Fellowship",
-    "category": "Performance",
+    "category": "Lecture or Speaker",
     "categories": [
-      "Performance",
+      "Lecture or Speaker",
+      "Meeting",
       "Social"
     ],
     "shortName": "CBF",
@@ -717,9 +718,9 @@
   },
   {
     "name": "First Gems of The Ville",
-    "category": "Meeting",
+    "category": "Social",
     "categories": [
-      "Meeting"
+      "Social"
     ],
     "shortName": "First Gems",
     "id": ""
@@ -751,9 +752,9 @@
   },
   {
     "name": "Fraternity & Sorority Life",
-    "category": "Educational Program",
+    "category": "Tabling",
     "categories": [
-      "Educational Program"
+      "Tabling"
     ],
     "shortName": "FSL",
     "id": ""
@@ -1830,6 +1831,15 @@
       "Competition"
     ],
     "shortName": "Women's Club Soccer",
+    "id": ""
+  },
+  {
+    "name": "Women's Club Volleyball of Millersville University",
+    "category": "Competition",
+    "categories": [
+      "Competition"
+    ],
+    "shortName": "",
     "id": ""
   },
   {

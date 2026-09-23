@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-09-23T09:08:03.576Z",
-  "totalEvents": 1799,
-  "withDescription": 762,
+  "generatedAt": "2026-09-23T14:44:53.387Z",
+  "totalEvents": 1802,
+  "withDescription": 763,
   "withImage": 237,
   "familyFriendly": 82,
   "eventsToday": 31,
   "sources": {
-    "muAthletics": 320,
+    "muAthletics": 322,
     "muCalendar": 162,
     "artsmu": 22,
     "campsAlumni": 32,
     "muGetInvolved": 441,
-    "pennManor": 538,
+    "pennManor": 539,
     "borough": 64,
     "vfw": 8,
     "phantomPower": 12,
@@ -130,10 +130,10 @@
     }
   },
   "sports": {
-    "total": 759,
-    "scored": 68,
-    "wins": 36,
-    "losses": 31,
+    "total": 761,
+    "scored": 70,
+    "wins": 37,
+    "losses": 32,
     "ties": 1
   },
   "registrations": {
@@ -150,13 +150,13 @@
       "PM Community": 3
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-09-23T09:04:15.461Z"
+    "lastSyncAt": "2026-09-23T14:40:31.077Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 10,
-    "checkedAt": "2026-09-23T09:07:54.386Z"
+    "checkedAt": "2026-09-23T14:44:45.128Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -165,14 +165,14 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 365,
+        "value": 364,
         "min": 45,
         "skipped": false
       },
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 246,
+        "value": 245,
         "min": 60,
         "skipped": false
       },
@@ -200,14 +200,14 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 320,
+        "value": 322,
         "min": 100,
         "skipped": false
       },
       {
         "key": "pennManorGeneral.count",
         "ok": true,
-        "value": 99,
+        "value": 100,
         "min": 10,
         "skipped": false
       },
@@ -228,6 +228,27 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Men's and Women's Tennis vs. Davie and Elkins College|2026-10-02T14:00:00",
+      "firstSeenAt": "2026-09-23T14:44:53.384Z",
+      "title": "Men's and Women's Tennis vs. Davie and Elkins College",
+      "source": "MU",
+      "date": "2026-10-02T14:00:00"
+    },
+    {
+      "key": "Eshleman School Board Breakfast|2026-10-15T04:00:00.000Z",
+      "firstSeenAt": "2026-09-23T14:44:53.384Z",
+      "title": "Eshleman School Board Breakfast",
+      "source": "PM",
+      "date": "2026-10-15T04:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Volleyball vs Bowie State University|2026-10-20T22:00:00.000Z",
+      "firstSeenAt": "2026-09-23T14:44:53.384Z",
+      "title": "Millersville University Women's Volleyball vs Bowie State University",
+      "source": "MU",
+      "date": "2026-10-20T22:00:00.000Z"
+    },
     {
       "key": "Worship in the Quad|2026-09-11T19:30:00",
       "firstSeenAt": "2026-09-23T03:24:48.184Z",
@@ -276,28 +297,7 @@
       "title": "Ice Hockey Club (D3) Practice",
       "source": "MU",
       "date": "2026-10-23T00:15:00.000Z"
-    },
-    {
-      "key": "Fencing Guild Practice|2026-10-23T21:00:00.000Z",
-      "firstSeenAt": "2026-09-23T03:24:48.184Z",
-      "title": "Fencing Guild Practice",
-      "source": "MU",
-      "date": "2026-10-23T21:00:00.000Z"
-    },
-    {
-      "key": "AniMU Weekly Meeting|2026-10-23T22:00:00.000Z",
-      "firstSeenAt": "2026-09-23T03:24:48.184Z",
-      "title": "AniMU Weekly Meeting",
-      "source": "MU",
-      "date": "2026-10-23T22:00:00.000Z"
-    },
-    {
-      "key": "Away game at Franklin and Marshall College|2026-10-25T15:00:00.000Z",
-      "firstSeenAt": "2026-09-23T03:24:48.184Z",
-      "title": "Away game at Franklin and Marshall College",
-      "source": "MU",
-      "date": "2026-10-25T15:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 3
 }

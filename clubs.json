@@ -26,8 +26,10 @@
   },
   {
     "name": "All Greek Council",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -210,12 +212,12 @@
   },
   {
     "name": "Biology Club",
-    "category": "Social",
+    "category": "Academic",
     "categories": [
-      "Social"
+      "Academic"
     ],
-    "shortName": "",
-    "id": ""
+    "shortName": "Bio Club",
+    "id": "bioclub"
   },
   {
     "name": "Black Student Union",
@@ -238,9 +240,9 @@
   },
   {
     "name": "Books & Banter",
-    "category": "Fundraiser",
+    "category": "Social",
     "categories": [
-      "Fundraiser"
+      "Social"
     ],
     "shortName": "",
     "id": ""
@@ -290,10 +292,9 @@
   },
   {
     "name": "Center for Health Education and Promotion",
-    "category": "Educational Program",
+    "category": "Tabling",
     "categories": [
-      "Educational Program",
-      "Lecture or Speaker"
+      "Tabling"
     ],
     "shortName": "CHEP",
     "id": ""
@@ -569,15 +570,6 @@
     "id": ""
   },
   {
-    "name": "Delta Sigma Theta",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
-    "shortName": "DST",
-    "id": ""
-  },
-  {
     "name": "Delta Sigma Theta Sorority, Inc.",
     "category": "Meeting",
     "categories": [
@@ -770,8 +762,9 @@
   },
   {
     "name": "Gender and Sexuality Alliance",
-    "category": "Social",
+    "category": "Meeting",
     "categories": [
+      "Meeting",
       "Social"
     ],
     "shortName": "GSA",
@@ -988,13 +981,6 @@
       "Meeting"
     ],
     "shortName": "MGC",
-    "id": ""
-  },
-  {
-    "name": "Marauder Music",
-    "category": "",
-    "categories": [],
-    "shortName": "",
     "id": ""
   },
   {
@@ -1385,8 +1371,11 @@
   },
   {
     "name": "Reformed University Fellowship",
-    "category": "",
-    "categories": [],
+    "category": "Meeting",
+    "categories": [
+      "Meeting",
+      "Social"
+    ],
     "shortName": "RUF",
     "id": ""
   },
@@ -1550,9 +1539,9 @@
   },
   {
     "name": "Student Government Association",
-    "category": "Tabling",
+    "category": "Competition",
     "categories": [
-      "Tabling"
+      "Competition"
     ],
     "shortName": "SGA",
     "id": ""
@@ -1742,10 +1731,8 @@
   },
   {
     "name": "University Activities Board",
-    "category": "Meeting",
-    "categories": [
-      "Meeting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "UAB",
     "id": ""
   },
@@ -1783,9 +1770,8 @@
   },
   {
     "name": "VilleHarmonics",
-    "category": "Fundraiser",
+    "category": "Performance",
     "categories": [
-      "Fundraiser",
       "Performance"
     ],
     "shortName": "",

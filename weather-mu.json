@@ -1,49 +1,33 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Wednesday, September 23, 2026 at 05:32 PM (Curtorillo, Gray, Negherbon , Student Meteorologists)",
+    "issued": "Thursday, September 24, 2026 at 07:59 AM (Kint, Smith, Student Meteorologists)",
     "periods": [
+      {
+        "period": "Today",
+        "text": "Turning out mostly sunny, breezy, and cool. High: 66-70"
+      },
       {
         "period": "Tonight",
         "text": "Mainly clear and comfortably cool. Low: 46-50"
       },
       {
-        "period": "Tomorrow",
-        "text": "Mostly sunny, breezy, and cool. High: 66-70"
-      },
-      {
-        "period": "Tomorrow Night",
-        "text": "Mainly clear and comfortably cool. Low: 46-50"
-      },
-      {
         "period": "Friday",
-        "text": "Mostly sunny, breezy, and pleasant. High: 70-74"
+        "text": "Mostly sunny, breezy, and pleasant. High: 72-76"
+      },
+      {
+        "period": "Friday Night",
+        "text": "Mainly clear and comfortable. Low: 50-54"
       },
       {
         "period": "Saturday",
-        "text": "Mostly sunny, breezy, and pleasant. High: 70-74"
+        "text": "Breezy and seasonable with sunshine and a few clouds. High: 70-74"
       }
     ]
   },
   "sevenDay": {
-    "issued": "Wednesday, September 23, 2026 at 08:29 AM (Nathan Shertzer)",
+    "issued": "Thursday, September 24, 2026 at 08:33 AM (Kint, Smith)",
     "days": [
-      {
-        "period": "Wednesday",
-        "sky": "Decreasing Clouds",
-        "weather": "Breezy",
-        "pop": "<10%",
-        "temp": "66",
-        "conf": "5"
-      },
-      {
-        "period": "Wednesday night",
-        "sky": "Mainly Clear",
-        "weather": "Fair",
-        "pop": "<10%",
-        "temp": "48",
-        "conf": "5"
-      },
       {
         "period": "Thursday",
         "sky": "Mostly Sunny",
@@ -65,7 +49,7 @@
         "sky": "Mostly Sunny",
         "weather": "Pleasant",
         "pop": "<10%",
-        "temp": "72",
+        "temp": "74",
         "conf": "5"
       },
       {
@@ -88,14 +72,14 @@
         "period": "Saturday night",
         "sky": "Partly Cloudy",
         "weather": "Breezy",
-        "pop": "<10%",
+        "pop": "20%",
         "temp": "56",
         "conf": "4"
       },
       {
         "period": "Sunday",
-        "sky": "Partly Sunny",
-        "weather": "Seasonable",
+        "sky": "Clouds & Sun",
+        "weather": "Breezy",
         "pop": "20%",
         "temp": "70",
         "conf": "4"
@@ -110,87 +94,103 @@
       },
       {
         "period": "Monday",
-        "sky": "Mostly Sunny",
+        "sky": "Clouds & Sun",
+        "weather": "Seasonable",
+        "pop": "<10%",
+        "temp": "72",
+        "conf": "4"
+      },
+      {
+        "period": "Monday night",
+        "sky": "Partly Cloudy",
+        "weather": "Fair",
+        "pop": "<10%",
+        "temp": "56",
+        "conf": "4"
+      },
+      {
+        "period": "Tuesday",
+        "sky": "Partly Sunny",
         "weather": "Pleasant",
         "pop": "<10%",
         "temp": "mid 70s",
         "conf": "4"
       },
       {
-        "period": "Tuesday",
-        "sky": "Sunny",
-        "weather": "Pleasant",
+        "period": "Wednesday",
+        "sky": "Mostly Sunny",
+        "weather": "Warm",
         "pop": "<10%",
         "temp": "upper 70s",
-        "conf": "4"
+        "conf": "3"
       }
     ]
   },
   "observations": [
     {
-      "time": "03:00",
-      "temp": "50",
-      "dewpoint": "45",
-      "rh": "82",
-      "windDir": "NNE",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "11.1",
-      "condition": "None"
-    },
-    {
-      "time": "02:00",
-      "temp": "52",
-      "dewpoint": "47",
-      "rh": "82",
-      "windDir": "NE",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "11.1",
-      "condition": "None"
-    },
-    {
-      "time": "01:00",
+      "time": "09:00",
       "temp": "53",
-      "dewpoint": "47",
-      "rh": "83",
+      "dewpoint": "46",
+      "rh": "76",
       "windDir": "ENE",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "11.2",
+      "condition": "None"
+    },
+    {
+      "time": "08:00",
+      "temp": "51",
+      "dewpoint": "44",
+      "rh": "77",
+      "windDir": "NE",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "11.1",
+      "condition": "None"
+    },
+    {
+      "time": "07:00",
+      "temp": "49",
+      "dewpoint": "43",
+      "rh": "80",
+      "windDir": "NNE",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "11.3",
+      "condition": "None"
+    },
+    {
+      "time": "06:00",
+      "temp": "48",
+      "dewpoint": "43",
+      "rh": "83",
+      "windDir": "NNE",
       "windSpeed": "2",
       "precip": "0.00",
       "visibility": "11.3",
       "condition": "None"
     },
     {
-      "time": "00:00",
-      "temp": "52",
-      "dewpoint": "48",
-      "rh": "86",
-      "windDir": "NE",
-      "windSpeed": "2",
+      "time": "05:00",
+      "temp": "49",
+      "dewpoint": "43",
+      "rh": "80",
+      "windDir": "NNE",
+      "windSpeed": "3",
       "precip": "0.00",
-      "visibility": "11.1",
+      "visibility": "11.2",
       "condition": "None"
     },
     {
-      "time": "23:00",
-      "temp": "52",
-      "dewpoint": "49",
-      "rh": "92",
-      "windDir": "ENE",
-      "windSpeed": "1",
+      "time": "04:00",
+      "temp": "51",
+      "dewpoint": "44",
+      "rh": "75",
+      "windDir": "NE",
+      "windSpeed": "4",
       "precip": "0.00",
       "visibility": "11.4",
-      "condition": "None"
-    },
-    {
-      "time": "22:00",
-      "temp": "53",
-      "dewpoint": "51",
-      "rh": "90",
-      "windDir": "E",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "11.0",
       "condition": "None"
     }
   ],
@@ -499,5 +499,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-09-24T07:11:05.443Z"
+  "updated": "2026-09-24T13:11:54.363Z"
 }

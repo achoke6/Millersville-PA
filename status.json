@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-09-22T13:09:11.778Z",
-  "totalEvents": 1801,
-  "withDescription": 770,
-  "withImage": 236,
-  "familyFriendly": 82,
-  "eventsToday": 21,
+  "generatedAt": "2026-09-24T13:14:16.105Z",
+  "totalEvents": 1743,
+  "withDescription": 765,
+  "withImage": 238,
+  "familyFriendly": 80,
+  "eventsToday": 26,
   "sources": {
-    "muAthletics": 319,
+    "muAthletics": 322,
     "muCalendar": 164,
-    "artsmu": 22,
-    "campsAlumni": 32,
-    "muGetInvolved": 446,
-    "pennManor": 533,
-    "borough": 64,
+    "artsmu": 0,
+    "campsAlumni": 31,
+    "muGetInvolved": 443,
+    "pennManor": 541,
+    "borough": 63,
     "vfw": 8,
     "phantomPower": 12,
-    "community": 20,
-    "manor": 40,
+    "community": 19,
+    "manor": 0,
     "raneyCellars": 3,
     "theBackyard": 13,
     "muHudlBroadcasts": 61
@@ -30,12 +30,9 @@
       "earliest": "2026-06-30T00:00:00.000Z",
       "latest": "2027-06-04T18:30:00.000Z"
     },
-    "artsmu": {
-      "earliest": "2026-10-09T00:00:00.000Z",
-      "latest": "2027-05-02T18:30:00.000Z"
-    },
+    "artsmu": null,
     "campsAlumni": {
-      "earliest": "2026-06-25T22:00:00.000Z",
+      "earliest": "2026-07-02T22:00:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
@@ -43,11 +40,11 @@
       "latest": "2027-04-29T11:30:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-06-25T22:00:00.000Z",
-      "latest": "2027-09-21T23:00:00.000Z"
+      "earliest": "2026-07-15T22:00:00.000Z",
+      "latest": "2027-09-23T21:30:00.000Z"
     },
     "borough": {
-      "earliest": "2026-06-25T22:30:00.000Z",
+      "earliest": "2026-07-01T23:30:00.000Z",
       "latest": "2026-12-25T12:00:00.000Z"
     },
     "vfw": {
@@ -55,17 +52,14 @@
       "latest": "2026-10-22T22:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-09-24T00:00:00.000Z",
-      "latest": "2026-11-01T00:00:00.000Z"
+      "earliest": "2026-09-26T22:30:00.000Z",
+      "latest": "2026-10-24T23:00:00.000Z"
     },
     "community": {
-      "earliest": "2026-06-25T22:15:00.000Z",
+      "earliest": "2026-07-02T12:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-09-30T12:30:00.000Z",
-      "latest": "2027-09-06T23:00:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-09-17T20:00:00.000Z",
       "latest": "2026-09-24T20:00:00.000Z"
@@ -78,62 +72,56 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 21
+      "daysSinceMoved": 23
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 32
+      "daysSinceMoved": 34
     },
-    "artsmu": {
-      "newest": "2027-05-02",
-      "daysSinceMoved": 46
-    },
+    "artsmu": null,
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 46
+      "daysSinceMoved": 48
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 19
+      "daysSinceMoved": 21
     },
     "pennManor": {
-      "newest": "2027-09-21",
+      "newest": "2027-09-23",
       "daysSinceMoved": 1
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 56
+      "daysSinceMoved": 58
     },
     "vfw": {
       "newest": "2026-10-22",
-      "daysSinceMoved": 21
+      "daysSinceMoved": 23
     },
     "phantomPower": {
-      "newest": "2026-11-01",
-      "daysSinceMoved": 2
+      "newest": "2026-10-24",
+      "daysSinceMoved": 5
     },
     "community": {
       "newest": "2027-04-16",
       "daysSinceMoved": 89
     },
-    "manor": {
-      "newest": "2027-09-06",
-      "daysSinceMoved": 16
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-09-24",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 7
     },
     "theBackyard": {
       "newest": "2026-10-12",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 16
     }
   },
   "sports": {
-    "total": 753,
-    "scored": 68,
-    "wins": 36,
-    "losses": 31,
+    "total": 764,
+    "scored": 74,
+    "wins": 39,
+    "losses": 34,
     "ties": 1
   },
   "registrations": {
@@ -150,13 +138,13 @@
       "PM Community": 3
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-09-22T13:05:31.080Z"
+    "lastSyncAt": "2026-09-24T13:11:51.921Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
-    "approved": 10,
-    "checkedAt": "2026-09-22T13:09:02.424Z"
+    "approved": 9,
+    "checkedAt": "2026-09-24T13:14:07.748Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -172,35 +160,35 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 246,
+        "value": 244,
         "min": 60,
         "skipped": false
       },
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 255,
+        "value": 253,
         "min": 30,
         "skipped": false
       },
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 94,
+        "value": 92,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 434,
+        "value": 442,
         "min": 150,
         "skipped": false
       },
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 319,
+        "value": 322,
         "min": 100,
         "skipped": false
       },
@@ -229,75 +217,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Borough Council Special Budget Meeting|2026-10-08T22:00:00.000Z",
-      "firstSeenAt": "2026-09-22T13:09:11.775Z",
-      "title": "Borough Council Special Budget Meeting",
-      "source": "Borough",
-      "date": "2026-10-08T22:00:00.000Z"
+      "key": "Networking & Nibbles|2026-09-30T22:00:00.000Z",
+      "firstSeenAt": "2026-09-24T13:14:16.102Z",
+      "title": "Networking & Nibbles",
+      "source": "MU",
+      "date": "2026-09-30T22:00:00.000Z"
     },
     {
-      "key": "Student Government Association (SGA) Weekly Meeting|2026-09-10T17:00:00",
-      "firstSeenAt": "2026-09-22T01:29:20.905Z",
-      "title": "Student Government Association (SGA) Weekly Meeting",
-      "source": "MU",
-      "date": "2026-09-10T17:00:00"
+      "key": "Girls Varsity Volleyball vs Dallastown Area High School|2026-10-05T23:15:00.000Z",
+      "firstSeenAt": "2026-09-24T13:14:16.102Z",
+      "title": "Girls Varsity Volleyball vs Dallastown Area High School",
+      "source": "PM",
+      "date": "2026-10-05T23:15:00.000Z"
     },
     {
-      "key": "Students for Life at Millersville University General Meeting|2026-09-10T17:00:00",
-      "firstSeenAt": "2026-09-22T01:29:20.905Z",
-      "title": "Students for Life at Millersville University General Meeting",
+      "key": "Jazz at the 'Ville|2026-10-30T19:30:00",
+      "firstSeenAt": "2026-09-24T13:14:16.102Z",
+      "title": "Jazz at the 'Ville",
       "source": "MU",
-      "date": "2026-09-10T17:00:00"
+      "date": "2026-10-30T19:30:00"
     },
     {
-      "key": "General Meetings|2026-10-21T21:00:00.000Z",
-      "firstSeenAt": "2026-09-22T01:29:20.905Z",
-      "title": "General Meetings",
+      "key": "Jazz at the 'Ville|2027-02-26T19:30:00",
+      "firstSeenAt": "2026-09-24T13:14:16.102Z",
+      "title": "Jazz at the 'Ville",
       "source": "MU",
-      "date": "2026-10-21T21:00:00.000Z"
+      "date": "2027-02-26T19:30:00"
     },
     {
-      "key": "Mock Trial Club Meeting|2026-10-21T21:00:00.000Z",
-      "firstSeenAt": "2026-09-22T01:29:20.905Z",
-      "title": "Mock Trial Club Meeting",
-      "source": "MU",
-      "date": "2026-10-21T21:00:00.000Z"
+      "key": "Karake Night|2026-10-15T02:00:00.000Z",
+      "firstSeenAt": "2026-09-24T07:15:29.486Z",
+      "title": "Karake Night",
+      "source": "Jack's Tavern",
+      "date": "2026-10-15T02:00:00.000Z"
     },
     {
-      "key": "Wednesday Night Dinner|2026-10-21T22:00:00.000Z",
-      "firstSeenAt": "2026-09-22T01:29:20.905Z",
-      "title": "Wednesday Night Dinner",
-      "source": "MU",
-      "date": "2026-10-21T22:00:00.000Z"
+      "key": "DAIKAIJU|2026-10-23T00:00:00.000Z",
+      "firstSeenAt": "2026-09-24T07:15:29.486Z",
+      "title": "DAIKAIJU",
+      "source": "Other",
+      "date": "2026-10-23T00:00:00.000Z"
     },
     {
-      "key": "UAB General Members Meeting|2026-10-21T23:00:00.000Z",
-      "firstSeenAt": "2026-09-22T01:29:20.905Z",
-      "title": "UAB General Members Meeting",
+      "key": "RUF Bible Study|2026-09-15T19:00:00",
+      "firstSeenAt": "2026-09-24T01:08:08.885Z",
+      "title": "RUF Bible Study",
       "source": "MU",
-      "date": "2026-10-21T23:00:00.000Z"
+      "date": "2026-09-15T19:00:00"
     },
     {
-      "key": "Ropes Course- Open Climb|2026-10-22T20:00:00.000Z",
-      "firstSeenAt": "2026-09-22T01:29:20.905Z",
-      "title": "Ropes Course- Open Climb",
-      "source": "MU",
-      "date": "2026-10-22T20:00:00.000Z"
+      "key": "Mentalia & Poppet&#x27;s Spooky Drag Show|2026-10-03T00:00:00.000Z",
+      "firstSeenAt": "2026-09-24T01:08:08.885Z",
+      "title": "Mentalia & Poppet&#x27;s Spooky Drag Show",
+      "source": "Other",
+      "date": "2026-10-03T00:00:00.000Z"
     },
     {
-      "key": "CHEP Trivia|2026-10-22T20:00:00.000Z",
-      "firstSeenAt": "2026-09-22T01:29:20.905Z",
-      "title": "CHEP Trivia",
+      "key": "Away game at Franklin and Marshall College|2026-10-25T15:00:00.000Z",
+      "firstSeenAt": "2026-09-24T01:08:08.885Z",
+      "title": "Away game at Franklin and Marshall College",
       "source": "MU",
-      "date": "2026-10-22T20:00:00.000Z"
+      "date": "2026-10-25T15:00:00.000Z"
     },
     {
-      "key": "Club Softball Practice|2026-10-22T22:00:00.000Z",
-      "firstSeenAt": "2026-09-22T01:29:20.905Z",
-      "title": "Club Softball Practice",
+      "key": "Sunday Catholic Mass|2026-10-25T19:00:00.000Z",
+      "firstSeenAt": "2026-09-24T01:08:08.885Z",
+      "title": "Sunday Catholic Mass",
       "source": "MU",
-      "date": "2026-10-22T22:00:00.000Z"
+      "date": "2026-10-25T19:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 4
 }

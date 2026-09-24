@@ -26,8 +26,10 @@
   },
   {
     "name": "All Greek Council",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -174,8 +176,10 @@
   },
   {
     "name": "Bard Hall Residence Hall",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "Bard Hall",
     "id": ""
   },
@@ -208,12 +212,12 @@
   },
   {
     "name": "Biology Club",
-    "category": "Social",
+    "category": "Academic",
     "categories": [
-      "Social"
+      "Academic"
     ],
-    "shortName": "",
-    "id": ""
+    "shortName": "Bio Club",
+    "id": "bioclub"
   },
   {
     "name": "Black Student Union",
@@ -236,9 +240,9 @@
   },
   {
     "name": "Books & Banter",
-    "category": "Fundraiser",
+    "category": "Social",
     "categories": [
-      "Fundraiser"
+      "Social"
     ],
     "shortName": "",
     "id": ""
@@ -254,10 +258,8 @@
   },
   {
     "name": "Campus Life",
-    "category": "Educational Program",
-    "categories": [
-      "Educational Program"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -290,10 +292,9 @@
   },
   {
     "name": "Center for Health Education and Promotion",
-    "category": "Educational Program",
+    "category": "Tabling",
     "categories": [
-      "Educational Program",
-      "Lecture or Speaker"
+      "Tabling"
     ],
     "shortName": "CHEP",
     "id": ""
@@ -351,6 +352,15 @@
     "id": "ccerp"
   },
   {
+    "name": "Climbing Club",
+    "category": "Sports and Leisure",
+    "categories": [
+      "Sports and Leisure"
+    ],
+    "shortName": "",
+    "id": "climbingclub"
+  },
+  {
     "name": "Clinical Psychology Student Association",
     "category": "",
     "categories": [],
@@ -359,13 +369,13 @@
   },
   {
     "name": "Club Baseball",
-    "category": "Competition",
+    "category": "Sports and Leisure",
     "categories": [
-      "Competition",
+      "Sports and Leisure",
       "Sporting"
     ],
     "shortName": "Club Baseball",
-    "id": ""
+    "id": "millersvilleclubbaseball"
   },
   {
     "name": "Club Cheerleading",
@@ -413,9 +423,10 @@
   },
   {
     "name": "College Bible Fellowship",
-    "category": "Performance",
+    "category": "Lecture or Speaker",
     "categories": [
-      "Performance",
+      "Lecture or Speaker",
+      "Meeting",
       "Social"
     ],
     "shortName": "CBF",
@@ -559,15 +570,6 @@
     "id": ""
   },
   {
-    "name": "Delta Sigma Theta",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
-    "shortName": "DST",
-    "id": ""
-  },
-  {
     "name": "Delta Sigma Theta Sorority, Inc.",
     "category": "Meeting",
     "categories": [
@@ -625,10 +627,8 @@
   },
   {
     "name": "East Village Residence Hall",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "East Village",
     "id": ""
   },
@@ -717,9 +717,9 @@
   },
   {
     "name": "First Gems of The Ville",
-    "category": "Meeting",
+    "category": "Social",
     "categories": [
-      "Meeting"
+      "Social"
     ],
     "shortName": "First Gems",
     "id": ""
@@ -751,17 +751,18 @@
   },
   {
     "name": "Fraternity & Sorority Life",
-    "category": "Educational Program",
+    "category": "Tabling",
     "categories": [
-      "Educational Program"
+      "Tabling"
     ],
     "shortName": "FSL",
     "id": ""
   },
   {
     "name": "Gender and Sexuality Alliance",
-    "category": "Social",
+    "category": "Meeting",
     "categories": [
+      "Meeting",
       "Social"
     ],
     "shortName": "GSA",
@@ -874,6 +875,15 @@
     "id": ""
   },
   {
+    "name": "International Friendships",
+    "category": "Spirituality",
+    "categories": [
+      "Spirituality"
+    ],
+    "shortName": "IFI",
+    "id": "ifi"
+  },
+  {
     "name": "It's On Us",
     "category": "Educational Program",
     "categories": [
@@ -969,13 +979,6 @@
       "Meeting"
     ],
     "shortName": "MGC",
-    "id": ""
-  },
-  {
-    "name": "Marauder Music",
-    "category": "",
-    "categories": [],
-    "shortName": "",
     "id": ""
   },
   {
@@ -1366,8 +1369,11 @@
   },
   {
     "name": "Reformed University Fellowship",
-    "category": "",
-    "categories": [],
+    "category": "Meeting",
+    "categories": [
+      "Meeting",
+      "Social"
+    ],
     "shortName": "RUF",
     "id": ""
   },
@@ -1531,9 +1537,9 @@
   },
   {
     "name": "Student Government Association",
-    "category": "Tabling",
+    "category": "Competition",
     "categories": [
-      "Tabling"
+      "Competition"
     ],
     "shortName": "SGA",
     "id": ""
@@ -1723,10 +1729,8 @@
   },
   {
     "name": "University Activities Board",
-    "category": "Meeting",
-    "categories": [
-      "Meeting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "UAB",
     "id": ""
   },
@@ -1764,9 +1768,8 @@
   },
   {
     "name": "VilleHarmonics",
-    "category": "Fundraiser",
+    "category": "Performance",
     "categories": [
-      "Fundraiser",
       "Performance"
     ],
     "shortName": "",
@@ -1821,6 +1824,15 @@
       "Competition"
     ],
     "shortName": "Women's Club Soccer",
+    "id": ""
+  },
+  {
+    "name": "Women's Club Volleyball of Millersville University",
+    "category": "Competition",
+    "categories": [
+      "Competition"
+    ],
+    "shortName": "",
     "id": ""
   },
   {

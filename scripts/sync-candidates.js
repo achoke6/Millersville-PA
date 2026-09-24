@@ -12,6 +12,11 @@
  *   Source "Borough"      -> borough-overrides.json   (create-mode entries)
  *   Source "PM Community"  -> penn-manor-overrides.json (status: approved)
  *   Source "Youth Sports" -> youth-sports-registration.json (status: active)
+ *   Source "Campus Life"  -> campus-life-overrides.json  (status: approved)
+ *                            (2026-09-24) Instagram-discovered MU student events
+ *                            (@millersvillecampuslife weekend-rundown carousels)
+ *                            that GetInvolved keeps private-visibility. Consumed
+ *                            by scrape.js under the GetInvolved tag set.
  *
  * The scraper (scrape.js) is UNCHANGED — we only change how these three files
  * get populated (sheet sync instead of hand-editing / PRs).
@@ -95,8 +100,51 @@ const sourceLabel = raw => {
   if (s === 'borough') return 'Borough';
   if (s === 'youth sports') return 'Youth Sports';
   if (s === 'pm community' || s === 'penn manor' || s === 'pm') return 'PM Community';
+  if (s === 'campus life' || s === 'instagram' || s === 'ig') return 'Campus Life';
   return raw ? clean(raw) : 'Unknown';
 };
+
+// Time-cell parser shared by parseDateTime/parseEndTime (2026-09-24). Accepts a
+// single time ("6:00 PM", "7pm") or a RANGE ("8:00-9:30PM", "4:15 - 7:15 PM",
+// "8pm to 9pm"). A start with no am/pm inherits the end's; if that makes the
+// start later than the end, the start flips (11:00-1:00 PM => 11 AM). Returns
+// { start:'HH:MM:SS', end:'HH:MM:SS'|null } or null when no time is present.
+function splitTimeRange(timeStr) {
+  const s = clean(timeStr);
+  if (!s) return null;
+  const T = /(\d{1,2})(?::(\d{2}))?\s*(am|pm|a\.m\.|p\.m\.)?/gi;
+  const found = [];
+  let m;
+  while ((m = T.exec(s)) && found.length < 2) {
+    found.push({ h: parseInt(m[1], 10), min: m[2] || '00', ap: (m[3] || '').toLowerCase().replace(/\./g, '') });
+  }
+  if (!found.length || found[0].h > 23) return null;
+  const to24 = (h, ap) => { if (ap === 'pm' && h < 12) h += 12; if (ap === 'am' && h === 12) h = 0; return h; };
+  const fmt = (h, min) => String(h).padStart(2, '0') + ':' + min + ':00';
+  const a = found[0], b = found[1];
+  const aHadAp = !!a.ap;
+  if (b && !aHadAp && b.ap) a.ap = b.ap;             // "8:00-9:30PM": start inherits PM
+  let ah = to24(a.h, a.ap);
+  let bh = b ? to24(b.h, b.ap) : null;
+  if (b && !aHadAp && bh !== null && ah > bh) ah -= 12;   // "11:00-1:00 PM" => 11 AM
+  if (ah < 0) ah += 24;
+  return { start: fmt(ah, a.min), end: b && bh !== null && bh > 23 ? null : (b ? fmt(bh, b.min) : null) };
+}
+
+// End instant from a Time RANGE cell, on the same calendar day as dateStr.
+// Returns null when the Time cell is a single time (the common case) or the
+// Date is already a full ISO datetime (ranges aren't expressed that way).
+function parseEndTime(dateStr, timeStr) {
+  dateStr = clean(dateStr);
+  if (!dateStr || /\d{4}-\d{2}-\d{2}T/.test(dateStr)) return null;
+  const tr = splitTimeRange(timeStr);
+  if (!tr || !tr.end) return null;
+  let base = dateStr;
+  const us = base.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (us) base = `${us[3]}-${us[1].padStart(2, '0')}-${us[2].padStart(2, '0')}`;
+  const d = new Date(`${base}T${tr.end}`);
+  return isNaN(d.getTime()) ? null : d;
+}
 
 // Parse a Date (+ optional Time) cell into a JS Date. Returns null if unusable.
 // If the Date has no time component and a Time is given, merge them. Default
@@ -117,14 +165,8 @@ function parseDateTime(dateStr, timeStr) {
   let base = dateStr;
   let timePart = '18:00:00';
   if (timeStr) {
-    const m = timeStr.match(/(\d{1,2}):(\d{2})\s*(am|pm)?/i);
-    if (m) {
-      let h = parseInt(m[1], 10); const min = m[2];
-      const ap = (m[3] || '').toLowerCase();
-      if (ap === 'pm' && h < 12) h += 12;
-      if (ap === 'am' && h === 12) h = 0;
-      timePart = String(h).padStart(2, '0') + ':' + min + ':00';
-    }
+    const tr = splitTimeRange(timeStr);
+    if (tr) timePart = tr.start;
   }
   // Normalize M/D/YYYY -> YYYY-MM-DD
   const us = base.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
@@ -161,6 +203,7 @@ async function main() {
   const boroughOverrides = [];
   const pmEvents = [];
   const youthRegs = [];
+  const campusLifeEvents = [];   // Source = Campus Life (2026-09-24)
   let approved = 0, badRows = 0;
   // Review-backlog + sheet-hygiene counters (surfaced on the status dashboard).
   // pendingFuture = un-X'd rows still ahead of their date (the real backlog);
@@ -235,6 +278,7 @@ async function main() {
 
     const family = yes(col(row, 'family'));
     const link = col(row, 'link');
+    const endDt = parseEndTime(col(row, 'date'), col(row, 'time'));   // Time RANGE cells only (2026-09-24)
     const description = col(row, 'description');
     const location = col(row, 'location');
 
@@ -306,6 +350,7 @@ async function main() {
         location: location || 'Penn Manor',
         sourceLink: link || 'https://www.pennmanor.net/community/'
       };
+      if (endDt && endDt > dt && !isSignup) e.endTime = endDt.toISOString();   // Time RANGE (2026-09-24)
       if (description) e.description = description;
       if (family) e.kidFriendly = true;
       if (audience) e.audience = audience;
@@ -320,6 +365,7 @@ async function main() {
       // Borough events from curation are create-mode (not on the iCal).
       const ov = { date: (isSignup ? deadlineDt : dt).toISOString(), create: true, newTitle: title };
       if (location) ov.location = location;
+      if (endDt && dt && endDt > dt && !isSignup) ov.endTime = endDt.toISOString();   // Time RANGE (2026-09-24)
       if (description) ov.description = description;
       if (link) ov.sourceLink = link;
       if (family) ov.kidFriendly = true;
@@ -328,6 +374,29 @@ async function main() {
       // them through (2026-09-03) so Borough rows can be signups too.
       if (deadlineDt) { ov.registrationRequired = true; ov.registrationDeadline = deadlineDt.toISOString(); if (opensDt) ov.registrationOpens = opensDt.toISOString(); }
       boroughOverrides.push(ov);
+      approved++;
+    } else if (source === 'campus life' || source === 'instagram' || source === 'ig') {
+      // Campus Life (2026-09-24): MU student events discovered on Campus Life's
+      // Instagram (weekend-rundown carousels) that GetInvolved keeps at private
+      // visibility, so the §4 API never returns them. Event-typed only (a
+      // Signup row here is a spec error — Campus Life registrations route via
+      // GetInvolved forms the API DOES expose). Default audience mu-only:
+      // private-visibility IS student intent; the flyer saying "open to the
+      // public" is what earns Both (the Cowork spec decides, never this script).
+      if (isSignup) { console.warn(`  ⚠ Campus Life "${title}" is Type=Signup — not supported on this lane, skipped`); badRows++; continue; }
+      if (!dt) { console.warn(`  ⚠ Campus Life "${title}" missing/invalid Date — skipped`); badRows++; continue; }
+      const e = {
+        status: 'approved',
+        title,
+        date: dt.toISOString(),
+        location: location || 'Student Memorial Center',
+        sourceLink: link || 'https://getinvolved.millersville.edu/events',
+        audience: audience || 'mu-only'
+      };
+      if (endDt && endDt > dt) e.endTime = endDt.toISOString();
+      if (description) e.description = description;
+      if (family) e.kidFriendly = true;
+      campusLifeEvents.push(e);
       approved++;
     } else {
       console.warn(`  ⚠ unknown Source "${col(row, 'source')}" for "${title}" — skipped`);
@@ -363,6 +432,12 @@ async function main() {
   fs.writeFileSync(boroughPath, JSON.stringify(boroughFile, null, 2) + '\n');
   fs.writeFileSync(path.join(OUT_DIR, 'penn-manor-overrides.json'), JSON.stringify(pmFile, null, 2) + '\n');
   fs.writeFileSync(youthPath, JSON.stringify(youthFile, null, 2) + '\n');
+  // Campus Life: fully sheet-owned (PM-style wholesale replace).
+  const campusLifeFile = {
+    _comment: 'GENERATED by scripts/sync-candidates.js from the Event Candidates sheet (Source = Campus Life). Do not hand-edit — edit the sheet. Only Approved rows appear here.',
+    events: campusLifeEvents
+  };
+  fs.writeFileSync(path.join(OUT_DIR, 'campus-life-overrides.json'), JSON.stringify(campusLifeFile, null, 2) + '\n');
 
   // Review-queue / hygiene metrics for the status dashboard. scrape.js reads
   // this file later in the SAME cron (sync runs before scrape) and folds the
@@ -389,6 +464,7 @@ async function main() {
   console.log(`  borough create:   ${boroughOverrides.length} (+${keptEnrichment.length} enrichment kept)`);
   console.log(`  pm community:     ${pmEvents.length}`);
   console.log(`  youth sports:     ${youthRegs.length}`);
+  console.log(`  campus life:      ${campusLifeEvents.length}`);
   console.log(`  pending (no X):   ${pendingTotal} (${pendingFuture} upcoming, ${pendingPast} past)`);
   if (staleApprovedSkipped) console.log(`  ⏭️ stale approved rows skipped (not emitted): ${staleApprovedSkipped}`);
   if (stalePast) console.log(`  ⚠ stale rows (past-dated, prunable): ${stalePast}`);

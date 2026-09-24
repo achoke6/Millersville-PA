@@ -113,7 +113,7 @@ jobs:
       # Sync curated event candidates from the "Event Candidates" Google Sheet
       # BEFORE scrape.js, because scrape.js READS the override files this
       # generates (borough-overrides.json, penn-manor-overrides.json,
-      # youth-sports-registration.json). If this ran after the scrape, the
+      # youth-sports-registration.json, campus-life-overrides.json). If this ran after the scrape, the
       # scraper would use stale overrides until the next hourly run.
       #
       # Only Approved-X'd rows are published; routes by the Source column.

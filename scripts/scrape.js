@@ -4328,6 +4328,72 @@ async function runScraper() {
     } catch (e) { console.log(`  ⚠️ Penn Manor overrides error: ${e.message}`); }
 
 
+    // ===== 6b-2. CAMPUS LIFE (INSTAGRAM-DISCOVERED STUDENT EVENTS) =====
+    //
+    // (2026-09-24) @millersvillecampuslife posts weekend-rundown carousels whose
+    // flyer slides list MU student events that GetInvolved holds at PRIVATE
+    // visibility — the §4 API never returns them, so nothing upstream self-heals
+    // (landing-week audit: Music Bingo, Cider & Choir, Yoga with Gia all absent
+    // from a 1,802-event feed). The Tue/Fri Cowork task reads the carousel in
+    // Adam's signed-in Chrome, cross-checks the LIVE events.json, and writes
+    // ABSENT events to the Event Candidates sheet (Source = Campus Life); Adam
+    // X-approves; sync-candidates.js regenerates campus-life-overrides.json.
+    //
+    // Emits the GetInvolved TAG SET so every existing consumer lights up with
+    // zero matcher edits (Hard Rule 7 satisfied by tag parity — the Club Sports
+    // Game precedent in §2): app.js Clubs chip/filters, lib/eventMatch.js and
+    // events.ics.php both key on Clubs/Orgs. Audience is ALWAYS explicit
+    // (sheet default mu-only) so the fail-open default never touches these.
+    // _overrideCreated lets the override-collision pass absorb the feed copy if
+    // GetInvolved/MU Calendar later publishes the same event (same ET day +
+    // exact/prefix title) — the curated row wins, as for Borough creates.
+    // Stale (>30d past) entries skip, same as Borough/PM. No sourceHealth
+    // invariant: a sheet-fed lane is legitimately empty most weeks.
+    try {
+        const clPath = path.join(__dirname, '../campus-life-overrides.json');
+        let clData = null;
+        try {
+            clData = JSON.parse(fs.readFileSync(clPath, 'utf8'));
+        } catch (_) { /* file may not exist yet — that's fine */ }
+
+        if (clData && Array.isArray(clData.events)) {
+            const now = new Date();
+            const cutoff = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+            let added = 0, stale = 0, skipped = 0;
+
+            for (const ev of clData.events) {
+                if (!ev.date || !ev.title) { skipped++; continue; }
+                const evDate = new Date(ev.date);
+                if (isNaN(evDate.getTime())) { skipped++; continue; }
+                if (evDate < cutoff) { stale++; continue; }
+                if (ev.status !== 'approved') { skipped++; continue; }
+
+                events.push({
+                    _overrideCreated: true,
+                    title: ev.title,
+                    date: evDate.toISOString(),
+                    endTime: ev.endTime ? new Date(ev.endTime).toISOString() : '',
+                    location: ev.location || 'Student Memorial Center',
+                    tags: ['MU', 'Campus Life', 'GetInvolved', 'Clubs/Orgs'],
+                    price: ev.price || 'Free',
+                    ticketLink: '',
+                    sourceLink: ev.sourceLink || 'https://getinvolved.millersville.edu/events',
+                    gameResult: '', gameScore: '', streamLink: '', isLive: false,
+                    audience: ev.audience || 'mu-only',
+                    ...(ev.description ? { description: ev.description } : {}),
+                    ...(ev.kidFriendly === true ? { kidFriendly: true } : {})
+                });
+                added++;
+                console.log(`  ➕ Campus Life (IG) CREATED: "${ev.title}" (${ev.date})`);
+            }
+
+            if (added > 0 || stale > 0 || skipped > 0) {
+                console.log(`  ✅ Campus Life (Instagram): ${added} added, ${stale} stale, ${skipped} skipped`);
+            }
+        }
+    } catch (e) { console.log(`  ⚠️ Campus Life overrides error: ${e.message}`); }
+
+
     // ===== 6c. YOUTH SPORTS REGISTRATION DEADLINES =====
     //
     // Local youth sports orgs (Penn Manor Youth Baseball/Softball, Penn Manor
@@ -6128,13 +6194,13 @@ async function runScraper() {
             if (collisionDay(other) !== ovDay) return;
             if (titleAbsorbs(ovEv.title, other.title)) {
                 overrideCollisionIdx.add(xi);
-                overrideCollisions.push({ dropped: other.title, kept: ovEv.title, day: ovDay });
+                overrideCollisions.push({ dropped: other.title, kept: ovEv.title, day: ovDay, tag: (other.tags || [])[0] || 'Other' });
             }
         });
     });
     if (overrideCollisions.length > 0) {
         console.log(`🔗 Removed ${overrideCollisions.length} override-collision duplicate(s):`);
-        overrideCollisions.forEach(c => console.log(`   ✕ [Borough] "${c.dropped}" (${c.day}) → kept curated "${c.kept}"`));
+        overrideCollisions.forEach(c => console.log(`   ✕ [${c.tag}] "${c.dropped}" (${c.day}) → kept curated "${c.kept}"`));
         const afterCollision = deduped.filter((_, i) => !overrideCollisionIdx.has(i));
         deduped.length = 0;
         Array.prototype.push.apply(deduped, afterCollision);

@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-09-24T13:14:16.105Z",
-  "totalEvents": 1743,
-  "withDescription": 765,
+  "generatedAt": "2026-09-24T13:33:37.932Z",
+  "totalEvents": 1803,
+  "withDescription": 763,
   "withImage": 238,
   "familyFriendly": 80,
   "eventsToday": 26,
   "sources": {
     "muAthletics": 322,
-    "muCalendar": 164,
-    "artsmu": 0,
+    "muCalendar": 162,
+    "artsmu": 22,
     "campsAlumni": 31,
     "muGetInvolved": 443,
     "pennManor": 541,
@@ -16,7 +16,7 @@
     "vfw": 8,
     "phantomPower": 12,
     "community": 19,
-    "manor": 0,
+    "manor": 40,
     "raneyCellars": 3,
     "theBackyard": 13,
     "muHudlBroadcasts": 61
@@ -30,7 +30,10 @@
       "earliest": "2026-06-30T00:00:00.000Z",
       "latest": "2027-06-04T18:30:00.000Z"
     },
-    "artsmu": null,
+    "artsmu": {
+      "earliest": "2026-10-09T00:00:00.000Z",
+      "latest": "2027-05-02T18:30:00.000Z"
+    },
     "campsAlumni": {
       "earliest": "2026-07-02T22:00:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
@@ -59,7 +62,10 @@
       "earliest": "2026-07-02T12:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": null,
+    "manor": {
+      "earliest": "2026-09-30T12:30:00.000Z",
+      "latest": "2027-09-06T23:00:00.000Z"
+    },
     "raneyCellars": {
       "earliest": "2026-09-17T20:00:00.000Z",
       "latest": "2026-09-24T20:00:00.000Z"
@@ -78,7 +84,10 @@
       "newest": "2027-06-04",
       "daysSinceMoved": 34
     },
-    "artsmu": null,
+    "artsmu": {
+      "newest": "2027-05-02",
+      "daysSinceMoved": 48
+    },
     "campsAlumni": {
       "newest": "2027-04-03",
       "daysSinceMoved": 48
@@ -107,7 +116,10 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 89
     },
-    "manor": null,
+    "manor": {
+      "newest": "2027-09-06",
+      "daysSinceMoved": 18
+    },
     "raneyCellars": {
       "newest": "2026-09-24",
       "daysSinceMoved": 7
@@ -138,13 +150,13 @@
       "PM Community": 3
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-09-24T13:11:51.921Z"
+    "lastSyncAt": "2026-09-24T13:29:26.975Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 9,
-    "checkedAt": "2026-09-24T13:14:07.748Z"
+    "checkedAt": "2026-09-24T13:33:27.117Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -217,75 +229,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Networking & Nibbles|2026-09-30T22:00:00.000Z",
-      "firstSeenAt": "2026-09-24T13:14:16.102Z",
-      "title": "Networking & Nibbles",
+      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-09-24T13:33:37.928Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-09-30T12:30:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
+      "firstSeenAt": "2026-09-24T13:33:37.928Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2026-10-05T23:00:00.000Z"
+    },
+    {
+      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
+      "firstSeenAt": "2026-09-24T13:33:37.928Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2026-10-07T23:00:00.000Z"
+    },
+    {
+      "key": "MMC 2026 Engaging Community Reception featuring Rob Bell|2026-10-09T00:00:00.000Z",
+      "firstSeenAt": "2026-09-24T13:33:37.928Z",
+      "title": "MMC 2026 Engaging Community Reception featuring Rob Bell",
       "source": "MU",
-      "date": "2026-09-30T22:00:00.000Z"
+      "date": "2026-10-09T00:00:00.000Z"
     },
     {
-      "key": "Girls Varsity Volleyball vs Dallastown Area High School|2026-10-05T23:15:00.000Z",
-      "firstSeenAt": "2026-09-24T13:14:16.102Z",
-      "title": "Girls Varsity Volleyball vs Dallastown Area High School",
-      "source": "PM",
-      "date": "2026-10-05T23:15:00.000Z"
+      "key": "Planning Commission|2026-10-14T23:00:00.000Z",
+      "firstSeenAt": "2026-09-24T13:33:37.928Z",
+      "title": "Planning Commission",
+      "source": "Manor",
+      "date": "2026-10-14T23:00:00.000Z"
     },
     {
-      "key": "Jazz at the 'Ville|2026-10-30T19:30:00",
-      "firstSeenAt": "2026-09-24T13:14:16.102Z",
-      "title": "Jazz at the 'Ville",
+      "key": "2026 Harriet Kenderdine Lecture with Dr. Christina Wolbrecht|2026-10-15T23:00:00.000Z",
+      "firstSeenAt": "2026-09-24T13:33:37.928Z",
+      "title": "2026 Harriet Kenderdine Lecture with Dr. Christina Wolbrecht",
       "source": "MU",
-      "date": "2026-10-30T19:30:00"
+      "date": "2026-10-15T23:00:00.000Z"
     },
     {
-      "key": "Jazz at the 'Ville|2027-02-26T19:30:00",
-      "firstSeenAt": "2026-09-24T13:14:16.102Z",
-      "title": "Jazz at the 'Ville",
+      "key": "Moonlight Ride|2026-10-23T22:30:00.000Z",
+      "firstSeenAt": "2026-09-24T13:33:37.928Z",
+      "title": "Moonlight Ride",
+      "source": "Manor",
+      "date": "2026-10-23T22:30:00.000Z"
+    },
+    {
+      "key": "Jeffrey Gaines with Special Guest Meaghan Farrell|2026-10-23T23:00:00.000Z",
+      "firstSeenAt": "2026-09-24T13:33:37.928Z",
+      "title": "Jeffrey Gaines with Special Guest Meaghan Farrell",
       "source": "MU",
-      "date": "2027-02-26T19:30:00"
+      "date": "2026-10-23T23:00:00.000Z"
     },
     {
-      "key": "Karake Night|2026-10-15T02:00:00.000Z",
-      "firstSeenAt": "2026-09-24T07:15:29.486Z",
-      "title": "Karake Night",
-      "source": "Jack's Tavern",
-      "date": "2026-10-15T02:00:00.000Z"
-    },
-    {
-      "key": "DAIKAIJU|2026-10-23T00:00:00.000Z",
-      "firstSeenAt": "2026-09-24T07:15:29.486Z",
-      "title": "DAIKAIJU",
-      "source": "Other",
-      "date": "2026-10-23T00:00:00.000Z"
-    },
-    {
-      "key": "RUF Bible Study|2026-09-15T19:00:00",
-      "firstSeenAt": "2026-09-24T01:08:08.885Z",
-      "title": "RUF Bible Study",
+      "key": "Concert Band & Wind Ensemble|2026-10-25T18:30:00.000Z",
+      "firstSeenAt": "2026-09-24T13:33:37.928Z",
+      "title": "Concert Band & Wind Ensemble",
       "source": "MU",
-      "date": "2026-09-15T19:00:00"
+      "date": "2026-10-25T18:30:00.000Z"
     },
     {
-      "key": "Mentalia & Poppet&#x27;s Spooky Drag Show|2026-10-03T00:00:00.000Z",
-      "firstSeenAt": "2026-09-24T01:08:08.885Z",
-      "title": "Mentalia & Poppet&#x27;s Spooky Drag Show",
-      "source": "Other",
-      "date": "2026-10-03T00:00:00.000Z"
-    },
-    {
-      "key": "Away game at Franklin and Marshall College|2026-10-25T15:00:00.000Z",
-      "firstSeenAt": "2026-09-24T01:08:08.885Z",
-      "title": "Away game at Franklin and Marshall College",
-      "source": "MU",
-      "date": "2026-10-25T15:00:00.000Z"
-    },
-    {
-      "key": "Sunday Catholic Mass|2026-10-25T19:00:00.000Z",
-      "firstSeenAt": "2026-09-24T01:08:08.885Z",
-      "title": "Sunday Catholic Mass",
-      "source": "MU",
-      "date": "2026-10-25T19:00:00.000Z"
+      "key": "Traffic Commission Meeting|2026-10-28T12:30:00.000Z",
+      "firstSeenAt": "2026-09-24T13:33:37.928Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2026-10-28T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 4
+  "addedLastRun": 62
 }

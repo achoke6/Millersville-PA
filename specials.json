@@ -140,7 +140,7 @@
       "Cayenne Peppers – 4/$1.00",
       "Watermelons – $4.00-$6.00 each"
     ],
-    "weeklyFetchedAt": "2026-09-24T13:14:07.257Z"
+    "weeklyFetchedAt": "2026-09-24T13:33:26.559Z"
   },
   "jesus-dogs": {
     "name": "Jesus Dogs",
@@ -184,9 +184,135 @@
   },
   "john-herr-s-village-market": {
     "name": "John Herr's Village Market",
-    "note": "Weekly deals · Thu–Wed",
-    "weekly": [],
-    "weeklyDateRange": "",
-    "rawDeals": []
+    "note": "Weekly deals: Thursday, September 24 through Wednesday, September 30",
+    "weekly": [
+      "Whole Boneless Pork Loin (cut into chops or roasts at no extra cost) – $2.49/lb",
+      "Fresh Boneless & Skinless Chicken Breast Tenders (Value Pack) – $2.49/lb ($0.50/lb)",
+      "General Mills Giant Size Cereal (18-24 oz, Selected) – Buy 1 Get 1 FREE",
+      "Herr's Original Potato Chips (7.75-8 oz, Selected) – Buy 1 Get 1 FREE",
+      "Fresh 80% Lean Ground Beef (Value Pack, Our Own Store Made) – $5.49/lb ($1.00/lb)"
+    ],
+    "weeklyDateRange": "Thursday, September 24 through Wednesday, September 30",
+    "rawDeals": [
+      {
+        "item": "Whole Boneless Pork Loin (cut into chops or roasts at no extra cost)",
+        "salePrice": "$2.49/lb",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, September 24 through Wednesday, September 30"
+      },
+      {
+        "item": "Fresh Boneless & Skinless Chicken Breast Tenders (Value Pack)",
+        "salePrice": "$2.49/lb",
+        "regularPrice": "$2.99/lb",
+        "savings": "$0.50/lb",
+        "dateRange": "Thursday, September 24 through Wednesday, September 30"
+      },
+      {
+        "item": "General Mills Giant Size Cereal (18-24 oz, Selected)",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, September 24 through Wednesday, September 30"
+      },
+      {
+        "item": "Herr's Original Potato Chips (7.75-8 oz, Selected)",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, September 24 through Wednesday, September 30"
+      },
+      {
+        "item": "Fresh 80% Lean Ground Beef (Value Pack, Our Own Store Made)",
+        "salePrice": "$5.49/lb",
+        "regularPrice": "$6.49/lb",
+        "savings": "$1.00/lb",
+        "dateRange": "Thursday, September 24 through Wednesday, September 30"
+      },
+      {
+        "item": "Southern Seas EZ Peel Raw Shrimp (26/30 ct, 1-lb bag)",
+        "salePrice": "$7.49",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, September 24 through Wednesday, September 30"
+      },
+      {
+        "item": "Deer Park Spring Water (10-pack, 12 oz btls) — Weekly Door Buster (limit per Rewards card)",
+        "salePrice": "2 for $4",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, September 24 through Wednesday, September 30"
+      },
+      {
+        "item": "Hatfield Premium Cooked Ham — Weekly Door Buster",
+        "salePrice": "$4.99/lb",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, September 24 through Wednesday, September 30"
+      },
+      {
+        "item": "Kunzler Bacon (1-lb, Selected) — Weekly Door Buster",
+        "salePrice": "$4.49",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, September 24 through Wednesday, September 30"
+      },
+      {
+        "item": "Gala Apples (Tote Bag)",
+        "salePrice": "$1.49/lb",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, September 24 through Wednesday, September 30"
+      },
+      {
+        "item": "Fresh Broccoli Crowns",
+        "salePrice": "$1.69/lb",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, September 24 through Wednesday, September 30"
+      },
+      {
+        "item": "Crisp Romaine Hearts (3-pack, limit 3)",
+        "salePrice": "$1.99",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, September 24 through Wednesday, September 30"
+      },
+      {
+        "item": "Tombstone Original Pizza (18.5-29.8 oz, Selected)",
+        "salePrice": "2 for $6",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, September 24 through Wednesday, September 30"
+      },
+      {
+        "item": "Turkey Hill Premium Ice Cream or Frozen Dessert (48 oz, Selected) — Digital Coupon",
+        "salePrice": "2 for $5",
+        "regularPrice": "2 for $7",
+        "savings": "$2.00 on 2",
+        "dateRange": "Thursday, September 24 through Wednesday, September 30"
+      },
+      {
+        "item": "Tide, Downy or Gain Products (Selected sizes) — Digital Coupon",
+        "salePrice": "3 for $10",
+        "regularPrice": "3 for $15",
+        "savings": "$5.00 on 3",
+        "dateRange": "Thursday, September 24 through Wednesday, September 30"
+      },
+      {
+        "item": "Gorton's Frozen Fish Fillets or Sticks — Throwback Thursday Digital Coupon (Thu 9/24-Sun 9/27 only)",
+        "salePrice": "$3.48",
+        "regularPrice": "$5.48",
+        "savings": "$2.00",
+        "dateRange": "Thursday, September 24 through Wednesday, September 30"
+      },
+      {
+        "item": "Certified Angus Beef Boneless Ribeye (Delmonico) Steaks (Value Pack)",
+        "salePrice": "$15.99/lb",
+        "regularPrice": "$16.99/lb",
+        "savings": "$1.00/lb",
+        "dateRange": "Thursday, September 24 through Wednesday, September 30"
+      }
+    ]
   }
 }

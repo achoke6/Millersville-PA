@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-09-24T13:33:37.932Z",
-  "totalEvents": 1803,
-  "withDescription": 763,
-  "withImage": 238,
+  "generatedAt": "2026-09-24T18:14:48.424Z",
+  "totalEvents": 1763,
+  "withDescription": 761,
+  "withImage": 236,
   "familyFriendly": 80,
-  "eventsToday": 26,
+  "eventsToday": 24,
   "sources": {
     "muAthletics": 322,
     "muCalendar": 162,
     "artsmu": 22,
     "campsAlumni": 31,
     "muGetInvolved": 443,
-    "pennManor": 541,
+    "pennManor": 543,
     "borough": 63,
     "vfw": 8,
     "phantomPower": 12,
     "community": 19,
-    "manor": 40,
+    "manor": 0,
     "raneyCellars": 3,
     "theBackyard": 13,
     "muHudlBroadcasts": 61
@@ -62,10 +62,7 @@
       "earliest": "2026-07-02T12:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-09-30T12:30:00.000Z",
-      "latest": "2027-09-06T23:00:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-09-17T20:00:00.000Z",
       "latest": "2026-09-24T20:00:00.000Z"
@@ -116,10 +113,7 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 89
     },
-    "manor": {
-      "newest": "2027-09-06",
-      "daysSinceMoved": 18
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-09-24",
       "daysSinceMoved": 7
@@ -130,15 +124,15 @@
     }
   },
   "sports": {
-    "total": 764,
+    "total": 766,
     "scored": 74,
     "wins": 39,
     "losses": 34,
     "ties": 1
   },
   "registrations": {
-    "open": 9,
-    "next2Weeks": 2,
+    "open": 8,
+    "next2Weeks": 1,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
@@ -150,13 +144,13 @@
       "PM Community": 3
     },
     "stalePast": 6,
-    "lastSyncAt": "2026-09-24T13:29:26.975Z"
+    "lastSyncAt": "2026-09-24T18:10:46.627Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 9,
-    "checkedAt": "2026-09-24T13:33:27.117Z"
+    "checkedAt": "2026-09-24T18:14:39.661Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -193,7 +187,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 442,
+        "value": 444,
         "min": 150,
         "skipped": false
       },
@@ -229,25 +223,67 @@
   },
   "recentlyAdded": [
     {
-      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
-      "firstSeenAt": "2026-09-24T13:33:37.928Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-09-30T12:30:00.000Z"
+      "key": "Biology Club General Meeting|2026-09-15T23:00:00.000Z",
+      "firstSeenAt": "2026-09-24T18:14:48.421Z",
+      "title": "Biology Club General Meeting",
+      "source": "MU",
+      "date": "2026-09-15T23:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
-      "firstSeenAt": "2026-09-24T13:33:37.928Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-10-05T23:00:00.000Z"
+      "key": "Weekly Practice|2026-09-25T18:00:00.000Z",
+      "firstSeenAt": "2026-09-24T18:14:48.421Z",
+      "title": "Weekly Practice",
+      "source": "MU",
+      "date": "2026-09-25T18:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
-      "firstSeenAt": "2026-09-24T13:33:37.928Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-10-07T23:00:00.000Z"
+      "key": "Block Party|2026-09-26T20:00:00.000Z",
+      "firstSeenAt": "2026-09-24T18:14:48.421Z",
+      "title": "Block Party",
+      "source": "MU",
+      "date": "2026-09-26T20:00:00.000Z"
+    },
+    {
+      "key": "TKE Car Meet|2026-09-27T17:00:00.000Z",
+      "firstSeenAt": "2026-09-24T18:14:48.421Z",
+      "title": "TKE Car Meet",
+      "source": "MU",
+      "date": "2026-09-27T17:00:00.000Z"
+    },
+    {
+      "key": "Weekly Practice|2026-10-02T18:00:00.000Z",
+      "firstSeenAt": "2026-09-24T18:14:48.421Z",
+      "title": "Weekly Practice",
+      "source": "MU",
+      "date": "2026-10-02T18:00:00.000Z"
+    },
+    {
+      "key": "Weekly Practice|2026-10-16T18:00:00.000Z",
+      "firstSeenAt": "2026-09-24T18:14:48.421Z",
+      "title": "Weekly Practice",
+      "source": "MU",
+      "date": "2026-10-16T18:00:00.000Z"
+    },
+    {
+      "key": "Weekly Practice|2026-10-23T18:00:00.000Z",
+      "firstSeenAt": "2026-09-24T18:14:48.421Z",
+      "title": "Weekly Practice",
+      "source": "MU",
+      "date": "2026-10-23T18:00:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Wrestling vs Perkiomen Valley High School|2026-12-11T05:01:00.000Z",
+      "firstSeenAt": "2026-09-24T18:14:48.421Z",
+      "title": "Boys Varsity Wrestling vs Perkiomen Valley High School",
+      "source": "PM",
+      "date": "2026-12-11T05:01:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Wrestling vs Perkiomen Valley High School|2026-12-12T05:01:00.000Z",
+      "firstSeenAt": "2026-09-24T18:14:48.421Z",
+      "title": "Boys Varsity Wrestling vs Perkiomen Valley High School",
+      "source": "PM",
+      "date": "2026-12-12T05:01:00.000Z"
     },
     {
       "key": "MMC 2026 Engaging Community Reception featuring Rob Bell|2026-10-09T00:00:00.000Z",
@@ -255,49 +291,7 @@
       "title": "MMC 2026 Engaging Community Reception featuring Rob Bell",
       "source": "MU",
       "date": "2026-10-09T00:00:00.000Z"
-    },
-    {
-      "key": "Planning Commission|2026-10-14T23:00:00.000Z",
-      "firstSeenAt": "2026-09-24T13:33:37.928Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-10-14T23:00:00.000Z"
-    },
-    {
-      "key": "2026 Harriet Kenderdine Lecture with Dr. Christina Wolbrecht|2026-10-15T23:00:00.000Z",
-      "firstSeenAt": "2026-09-24T13:33:37.928Z",
-      "title": "2026 Harriet Kenderdine Lecture with Dr. Christina Wolbrecht",
-      "source": "MU",
-      "date": "2026-10-15T23:00:00.000Z"
-    },
-    {
-      "key": "Moonlight Ride|2026-10-23T22:30:00.000Z",
-      "firstSeenAt": "2026-09-24T13:33:37.928Z",
-      "title": "Moonlight Ride",
-      "source": "Manor",
-      "date": "2026-10-23T22:30:00.000Z"
-    },
-    {
-      "key": "Jeffrey Gaines with Special Guest Meaghan Farrell|2026-10-23T23:00:00.000Z",
-      "firstSeenAt": "2026-09-24T13:33:37.928Z",
-      "title": "Jeffrey Gaines with Special Guest Meaghan Farrell",
-      "source": "MU",
-      "date": "2026-10-23T23:00:00.000Z"
-    },
-    {
-      "key": "Concert Band & Wind Ensemble|2026-10-25T18:30:00.000Z",
-      "firstSeenAt": "2026-09-24T13:33:37.928Z",
-      "title": "Concert Band & Wind Ensemble",
-      "source": "MU",
-      "date": "2026-10-25T18:30:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-10-28T12:30:00.000Z",
-      "firstSeenAt": "2026-09-24T13:33:37.928Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-10-28T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 62
+  "addedLastRun": 9
 }

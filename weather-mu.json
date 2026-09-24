@@ -1,11 +1,11 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Thursday, September 24, 2026 at 07:59 AM (Kint, Smith, Student Meteorologists)",
+    "issued": "Thursday, September 24, 2026 at 12:06 PM (Biondo and Cressley, Student Meteorologists)",
     "periods": [
       {
-        "period": "Today",
-        "text": "Turning out mostly sunny, breezy, and cool. High: 66-70"
+        "period": "This afternoon",
+        "text": "Mostly sunny, breezy, and cool. High: 66-70"
       },
       {
         "period": "Tonight",
@@ -21,7 +21,7 @@
       },
       {
         "period": "Saturday",
-        "text": "Breezy and seasonable with sunshine and a few clouds. High: 70-74"
+        "text": "Breezy and seasonable with increasing clouds. High: 70-74"
       }
     ]
   },
@@ -128,6 +128,61 @@
   },
   "observations": [
     {
+      "time": "14:00",
+      "temp": "65",
+      "dewpoint": "45",
+      "rh": "48",
+      "windDir": "E",
+      "windSpeed": "6",
+      "precip": "0.00",
+      "visibility": "10.6",
+      "condition": "None"
+    },
+    {
+      "time": "13:00",
+      "temp": "64",
+      "dewpoint": "46",
+      "rh": "53",
+      "windDir": "E",
+      "windSpeed": "6",
+      "precip": "0.00",
+      "visibility": "9.9",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "60",
+      "dewpoint": "44",
+      "rh": "57",
+      "windDir": "N",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "10.3",
+      "condition": "None"
+    },
+    {
+      "time": "11:00",
+      "temp": "58",
+      "dewpoint": "46",
+      "rh": "63",
+      "windDir": "ENE",
+      "windSpeed": "9",
+      "precip": "0.00",
+      "visibility": "10.9",
+      "condition": "None"
+    },
+    {
+      "time": "10:00",
+      "temp": "56",
+      "dewpoint": "46",
+      "rh": "69",
+      "windDir": "ENE",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "11.1",
+      "condition": "None"
+    },
+    {
       "time": "09:00",
       "temp": "53",
       "dewpoint": "46",
@@ -136,61 +191,6 @@
       "windSpeed": "5",
       "precip": "0.00",
       "visibility": "11.2",
-      "condition": "None"
-    },
-    {
-      "time": "08:00",
-      "temp": "51",
-      "dewpoint": "44",
-      "rh": "77",
-      "windDir": "NE",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "11.1",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "49",
-      "dewpoint": "43",
-      "rh": "80",
-      "windDir": "NNE",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "11.3",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "48",
-      "dewpoint": "43",
-      "rh": "83",
-      "windDir": "NNE",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "11.3",
-      "condition": "None"
-    },
-    {
-      "time": "05:00",
-      "temp": "49",
-      "dewpoint": "43",
-      "rh": "80",
-      "windDir": "NNE",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "11.2",
-      "condition": "None"
-    },
-    {
-      "time": "04:00",
-      "temp": "51",
-      "dewpoint": "44",
-      "rh": "75",
-      "windDir": "NE",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "11.4",
       "condition": "None"
     }
   ],
@@ -470,6 +470,20 @@
   },
   "videos": [
     {
+      "title": "Short Term Forecast 09/24/2026",
+      "videoId": "FzbH9Hc7n5E",
+      "url": "https://www.youtube.com/watch?v=FzbH9Hc7n5E",
+      "published": "2026-09-24T16:00:04+00:00",
+      "thumbnail": "https://i3.ytimg.com/vi/FzbH9Hc7n5E/hqdefault.jpg"
+    },
+    {
+      "title": "Medium Range Forecast 09/24/2026",
+      "videoId": "nY5IFTiql10",
+      "url": "https://www.youtube.com/watch?v=nY5IFTiql10",
+      "published": "2026-09-24T14:17:43+00:00",
+      "thumbnail": "https://i3.ytimg.com/vi/nY5IFTiql10/hqdefault.jpg"
+    },
+    {
       "title": "Short term Forecast 09/23/2026",
       "videoId": "O7KNo7OBjow",
       "url": "https://www.youtube.com/watch?v=O7KNo7OBjow",
@@ -482,22 +496,8 @@
       "url": "https://www.youtube.com/watch?v=QECA_ygI5sg",
       "published": "2026-09-22T15:37:20+00:00",
       "thumbnail": "https://i2.ytimg.com/vi/QECA_ygI5sg/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 09/21/2026",
-      "videoId": "UT4QWecQAh8",
-      "url": "https://www.youtube.com/watch?v=UT4QWecQAh8",
-      "published": "2026-09-21T14:06:43+00:00",
-      "thumbnail": "https://i2.ytimg.com/vi/UT4QWecQAh8/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 09/18/2026",
-      "videoId": "dsJ6O3m5zcA",
-      "url": "https://www.youtube.com/watch?v=dsJ6O3m5zcA",
-      "published": "2026-09-18T17:00:16+00:00",
-      "thumbnail": "https://i1.ytimg.com/vi/dsJ6O3m5zcA/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-09-24T13:29:29.152Z"
+  "updated": "2026-09-24T18:10:48.604Z"
 }

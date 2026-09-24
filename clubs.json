@@ -166,6 +166,15 @@
     "id": ""
   },
   {
+    "name": "Association of Technology, Management and Applied Engineering",
+    "category": "Academic",
+    "categories": [
+      "Academic"
+    ],
+    "shortName": "ATMAE, Robotics Team",
+    "id": "atmae"
+  },
+  {
     "name": "Athletics",
     "category": "University Departments ",
     "categories": [
@@ -212,12 +221,12 @@
   },
   {
     "name": "Biology Club",
-    "category": "Academic",
+    "category": "Social",
     "categories": [
-      "Academic"
+      "Social"
     ],
-    "shortName": "Bio Club",
-    "id": "bioclub"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Black Student Union",
@@ -667,9 +676,9 @@
   },
   {
     "name": "Equestrian Club",
-    "category": "Service",
+    "category": "Sporting",
     "categories": [
-      "Service"
+      "Sporting"
     ],
     "shortName": "",
     "id": ""
@@ -774,6 +783,15 @@
     "categories": [],
     "shortName": "",
     "id": ""
+  },
+  {
+    "name": "Geology Club",
+    "category": "Academic",
+    "categories": [
+      "Academic"
+    ],
+    "shortName": "GeoClub",
+    "id": "geologyclub"
   },
   {
     "name": "Get Involved Help",
@@ -1267,6 +1285,16 @@
     "id": ""
   },
   {
+    "name": "Omicron Delta Kappa",
+    "category": "Academic",
+    "categories": [
+      "Academic",
+      "Service & Civic Engagement"
+    ],
+    "shortName": "ODK",
+    "id": "odk"
+  },
+  {
     "name": "Orientation Programs",
     "category": "University Departments ",
     "categories": [
@@ -1729,8 +1757,11 @@
   },
   {
     "name": "University Activities Board",
-    "category": "",
-    "categories": [],
+    "category": "Performance",
+    "categories": [
+      "Performance",
+      "Social"
+    ],
     "shortName": "UAB",
     "id": ""
   },

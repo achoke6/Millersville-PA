@@ -3,7 +3,8 @@
     "name": "Acacia",
     "category": "Service",
     "categories": [
-      "Service"
+      "Service",
+      "Fundraiser"
     ],
     "shortName": "",
     "id": ""
@@ -221,17 +222,18 @@
   },
   {
     "name": "Biology Club",
-    "category": "Social",
+    "category": "Academic",
     "categories": [
-      "Social"
+      "Academic"
     ],
-    "shortName": "",
-    "id": ""
+    "shortName": "Bio Club",
+    "id": "bioclub"
   },
   {
     "name": "Black Student Union",
-    "category": "Meeting",
+    "category": "Lecture or Speaker",
     "categories": [
+      "Lecture or Speaker",
       "Meeting"
     ],
     "shortName": "",
@@ -276,10 +278,8 @@
   },
   {
     "name": "Campus Recreation",
-    "category": "Competition",
+    "category": "Sporting",
     "categories": [
-      "Competition",
-      "Social",
       "Sporting"
     ],
     "shortName": "",
@@ -762,9 +762,9 @@
   },
   {
     "name": "Fraternity & Sorority Life",
-    "category": "Tabling",
+    "category": "Educational Program",
     "categories": [
-      "Tabling"
+      "Educational Program"
     ],
     "shortName": "FSL",
     "id": ""
@@ -863,10 +863,8 @@
   },
   {
     "name": "Ice Hockey Club (D3)",
-    "category": "Sporting",
-    "categories": [
-      "Sporting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1399,11 +1397,8 @@
   },
   {
     "name": "Reformed University Fellowship",
-    "category": "Meeting",
-    "categories": [
-      "Meeting",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "RUF",
     "id": ""
   },
@@ -1468,6 +1463,15 @@
     "id": ""
   },
   {
+    "name": "Slip & Score Society",
+    "category": "Meeting",
+    "categories": [
+      "Meeting"
+    ],
+    "shortName": "",
+    "id": ""
+  },
+  {
     "name": "Slip n' Score Society",
     "category": "",
     "categories": [],
@@ -1506,9 +1510,8 @@
   },
   {
     "name": "South Village Residence Hall",
-    "category": "Movie or Film",
+    "category": "Social",
     "categories": [
-      "Movie or Film",
       "Social"
     ],
     "shortName": "South Village",
@@ -1567,9 +1570,9 @@
   },
   {
     "name": "Student Government Association",
-    "category": "Competition",
+    "category": "Tabling",
     "categories": [
-      "Competition"
+      "Tabling"
     ],
     "shortName": "SGA",
     "id": ""

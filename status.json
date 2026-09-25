@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-25T20:19:23.417Z",
-  "totalEvents": 1842,
+  "generatedAt": "2026-09-25T23:52:53.257Z",
+  "totalEvents": 1843,
   "withDescription": 799,
   "withImage": 210,
   "familyFriendly": 81,
@@ -11,7 +11,7 @@
     "artsmu": 20,
     "campsAlumni": 31,
     "muGetInvolved": 280,
-    "pennManor": 545,
+    "pennManor": 546,
     "borough": 63,
     "vfw": 8,
     "phantomPower": 12,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 803,
+    "total": 804,
     "scored": 74,
     "wins": 39,
     "losses": 34,
@@ -151,13 +151,13 @@
       "Campus Life": 9
     },
     "stalePast": 7,
-    "lastSyncAt": "2026-09-25T20:14:50.245Z"
+    "lastSyncAt": "2026-09-25T23:48:42.532Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 9,
-    "checkedAt": "2026-09-25T20:19:13.604Z"
+    "checkedAt": "2026-09-25T23:52:45.862Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -194,7 +194,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 446,
+        "value": 447,
         "min": 150,
         "skipped": false
       },
@@ -229,6 +229,20 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "POSTPONED Millersville University Field Hockey vs Molloy|2026-09-26T17:00:00.000Z",
+      "firstSeenAt": "2026-09-25T23:52:53.253Z",
+      "title": "POSTPONED Millersville University Field Hockey vs Molloy",
+      "source": "MU",
+      "date": "2026-09-26T17:00:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Wrestling @ Conestoga Valley High School|2026-12-29T12:00:00.000Z",
+      "firstSeenAt": "2026-09-25T23:52:53.253Z",
+      "title": "Boys Varsity Wrestling @ Conestoga Valley High School",
+      "source": "PM",
+      "date": "2026-12-29T12:00:00.000Z"
+    },
     {
       "key": "Meet The Cabinet|2026-09-17T17:00:00",
       "firstSeenAt": "2026-09-25T20:19:23.413Z",
@@ -284,21 +298,7 @@
       "title": "MMA 101 Classes, 9/28 and 9/30",
       "source": "MU",
       "date": "2026-09-30T23:00:00.000Z"
-    },
-    {
-      "key": "Study Hours / Chapter|2026-10-01T22:00:00.000Z",
-      "firstSeenAt": "2026-09-25T20:19:23.413Z",
-      "title": "Study Hours / Chapter",
-      "source": "MU",
-      "date": "2026-10-01T22:00:00.000Z"
-    },
-    {
-      "key": "Study Hours / Chapter|2026-10-04T22:00:00.000Z",
-      "firstSeenAt": "2026-09-25T20:19:23.413Z",
-      "title": "Study Hours / Chapter",
-      "source": "MU",
-      "date": "2026-10-04T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 35
+  "addedLastRun": 2
 }

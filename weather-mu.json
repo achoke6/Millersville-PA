@@ -1,49 +1,33 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Thursday, September 24, 2026 at 05:23 PM (Bliss, Meier, Rooney, Zwolinski, Student Meteorologists)",
+    "issued": "Friday, September 25, 2026 at 11:52 AM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "Tonight",
-        "text": "Mainly clear and comfortably cool. Low: 46-50"
-      },
-      {
-        "period": "Tomorrow",
+        "period": "This afternoon",
         "text": "Mostly sunny, breezy, and pleasant. High: 72-76"
       },
       {
-        "period": "Tomorrow Night",
-        "text": "Mainly clear and comfortable. Low: 50-54"
+        "period": "Tonight",
+        "text": "Mainly clear, breezy, and comfortable. Low: 54-58"
       },
       {
         "period": "Saturday",
-        "text": "Breezy and seasonable with increasing clouds. High: 70-74"
+        "text": "Turning out mostly cloudy and windy with a few passing showers. High: 68-72"
+      },
+      {
+        "period": "Saturday Night",
+        "text": "Mostly cloudy and breezy with periods of light rain, mainly after midnight. Low: 54-58"
       },
       {
         "period": "Sunday",
-        "text": "Breezy with a mix of clouds and sun. High: 68-72"
+        "text": "Cloudy, windy, and cool with periods of rain. High: 60-64"
       }
     ]
   },
   "sevenDay": {
-    "issued": "Thursday, September 24, 2026 at 08:33 AM (Kint, Smith)",
+    "issued": "Friday, September 25, 2026 at 08:44 AM (Cokain, McCarthy)",
     "days": [
-      {
-        "period": "Thursday",
-        "sky": "Mostly Sunny",
-        "weather": "Cool",
-        "pop": "<10%",
-        "temp": "68",
-        "conf": "5"
-      },
-      {
-        "period": "Thursday night",
-        "sky": "Mainly Clear",
-        "weather": "Fair",
-        "pop": "<10%",
-        "temp": "48",
-        "conf": "5"
-      },
       {
         "period": "Friday",
         "sky": "Mostly Sunny",
@@ -55,50 +39,50 @@
       {
         "period": "Friday night",
         "sky": "Mainly Clear",
-        "weather": "Fair",
+        "weather": "Breezy",
         "pop": "<10%",
-        "temp": "52",
+        "temp": "56",
         "conf": "5"
       },
       {
         "period": "Saturday",
-        "sky": "Mostly Sunny",
-        "weather": "Breezy",
-        "pop": "<10%",
-        "temp": "72",
+        "sky": "Increasing Clouds",
+        "weather": "Scattered Showers",
+        "pop": "40%",
+        "temp": "70",
         "conf": "4"
       },
       {
         "period": "Saturday night",
-        "sky": "Partly Cloudy",
-        "weather": "Breezy",
-        "pop": "20%",
+        "sky": "Mostly Cloudy",
+        "weather": "Rain Developing",
+        "pop": "60%",
         "temp": "56",
         "conf": "4"
       },
       {
         "period": "Sunday",
-        "sky": "Clouds & Sun",
-        "weather": "Breezy",
-        "pop": "20%",
-        "temp": "70",
+        "sky": "Cloudy",
+        "weather": "Periods of Rain",
+        "pop": "90%",
+        "temp": "62",
         "conf": "4"
       },
       {
         "period": "Sunday night",
-        "sky": "Partly Cloudy",
-        "weather": "Fair",
-        "pop": "<10%",
-        "temp": "56",
+        "sky": "Cloudy",
+        "weather": "Light Rain",
+        "pop": "80%",
+        "temp": "58",
         "conf": "4"
       },
       {
         "period": "Monday",
-        "sky": "Clouds & Sun",
-        "weather": "Seasonable",
-        "pop": "<10%",
-        "temp": "72",
-        "conf": "4"
+        "sky": "Mostly Cloudy",
+        "weather": "Warmer",
+        "pop": "20%",
+        "temp": "70",
+        "conf": "3"
       },
       {
         "period": "Monday night",
@@ -106,15 +90,23 @@
         "weather": "Fair",
         "pop": "<10%",
         "temp": "56",
-        "conf": "4"
+        "conf": "3"
       },
       {
         "period": "Tuesday",
         "sky": "Partly Sunny",
         "weather": "Pleasant",
         "pop": "<10%",
-        "temp": "mid 70s",
-        "conf": "4"
+        "temp": "74",
+        "conf": "3"
+      },
+      {
+        "period": "Tuesday night",
+        "sky": "Mainly Clear",
+        "weather": "Mild",
+        "pop": "<10%",
+        "temp": "56",
+        "conf": "3"
       },
       {
         "period": "Wednesday",
@@ -123,10 +115,73 @@
         "pop": "<10%",
         "temp": "upper 70s",
         "conf": "3"
+      },
+      {
+        "period": "Thursday",
+        "sky": "Partly Sunny",
+        "weather": "Unseasonably Warm",
+        "pop": "<10%",
+        "temp": "low 80s",
+        "conf": "3"
       }
     ]
   },
   "observations": [
+    {
+      "time": "12:00",
+      "temp": "67",
+      "dewpoint": "44",
+      "rh": "42",
+      "windDir": "NNE",
+      "windSpeed": "9",
+      "precip": "0.00",
+      "visibility": "11.3",
+      "condition": "None"
+    },
+    {
+      "time": "11:00",
+      "temp": "63",
+      "dewpoint": "43",
+      "rh": "48",
+      "windDir": "NE",
+      "windSpeed": "8",
+      "precip": "0.00",
+      "visibility": "10.7",
+      "condition": "None"
+    },
+    {
+      "time": "10:00",
+      "temp": "62",
+      "dewpoint": "45",
+      "rh": "53",
+      "windDir": "NNE",
+      "windSpeed": "8",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "09:00",
+      "temp": "59",
+      "dewpoint": "45",
+      "rh": "60",
+      "windDir": "NNE",
+      "windSpeed": "6",
+      "precip": "0.00",
+      "visibility": "10.4",
+      "condition": "None"
+    },
+    {
+      "time": "08:00",
+      "temp": "55",
+      "dewpoint": "43",
+      "rh": "64",
+      "windDir": "N",
+      "windSpeed": "6",
+      "precip": "0.00",
+      "visibility": "11.4",
+      "condition": "None"
+    },
     {
       "time": "07:00",
       "temp": "50",
@@ -136,61 +191,6 @@
       "windSpeed": "3",
       "precip": "0.00",
       "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "52",
-      "dewpoint": "41",
-      "rh": "67",
-      "windDir": "N",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "11.1",
-      "condition": "None"
-    },
-    {
-      "time": "05:00",
-      "temp": "53",
-      "dewpoint": "42",
-      "rh": "65",
-      "windDir": "N",
-      "windSpeed": "8",
-      "precip": "0.00",
-      "visibility": "11.6",
-      "condition": "None"
-    },
-    {
-      "time": "04:00",
-      "temp": "53",
-      "dewpoint": "42",
-      "rh": "67",
-      "windDir": "N",
-      "windSpeed": "7",
-      "precip": "0.00",
-      "visibility": "11.4",
-      "condition": "None"
-    },
-    {
-      "time": "03:00",
-      "temp": "54",
-      "dewpoint": "42",
-      "rh": "64",
-      "windDir": "N",
-      "windSpeed": "5",
-      "precip": "0.00",
-      "visibility": "11.7",
-      "condition": "None"
-    },
-    {
-      "time": "02:00",
-      "temp": "54",
-      "dewpoint": "43",
-      "rh": "67",
-      "windDir": "N",
-      "windSpeed": "5",
-      "precip": "0.00",
-      "visibility": "11.1",
       "condition": "None"
     }
   ],
@@ -470,9 +470,9 @@
     "yearMinDate": "January 21"
   },
   "discussion": {
-    "headline": "breezy and cool start to autumn",
-    "dateLine": "2:00 p.m. Tuesday, September 22, 2026",
-    "excerpt": "In the wake of Sunday night's cold frontal passage, northeasterly winds ushered much cooler and drier air into the Lower Susquehanna Valley on Monday. Under mostly cloudy skies, temperatures only peaked in the mid 60s to low 70s from west-to-east across the region. A few showers dampened northern MD and south-central PA Monday afternoon and evening, but steadier rain held off until the overnight hours. …",
+    "headline": "Nor'Easter to spoil weekend plans with wind, rain",
+    "dateLine": "12:30 p.m. Friday, September 25, 2026, Update",
+    "excerpt": "The last full week of September will end on a mostly sunny, dry, breezy and pleasant note this afternoon with high temperatures in the low-to-mid 70s and dewpoints around 50°F. A sprawling high pressure system over southeastern Canada and the Great Lakes region will promote the beautiful conditions. …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -480,6 +480,13 @@
     "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
   },
   "videos": [
+    {
+      "title": "Short Term Forecast 09/25/2026",
+      "videoId": "7awGTsr7-eE",
+      "url": "https://www.youtube.com/watch?v=7awGTsr7-eE",
+      "published": "2026-09-25T14:59:14+00:00",
+      "thumbnail": "https://i4.ytimg.com/vi/7awGTsr7-eE/hqdefault.jpg"
+    },
     {
       "title": "Short Term Forecast 09/24/2026",
       "videoId": "FzbH9Hc7n5E",
@@ -500,15 +507,8 @@
       "url": "https://www.youtube.com/watch?v=O7KNo7OBjow",
       "published": "2026-09-23T16:40:37+00:00",
       "thumbnail": "https://i4.ytimg.com/vi/O7KNo7OBjow/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 09/22/2026",
-      "videoId": "QECA_ygI5sg",
-      "url": "https://www.youtube.com/watch?v=QECA_ygI5sg",
-      "published": "2026-09-22T15:37:20+00:00",
-      "thumbnail": "https://i2.ytimg.com/vi/QECA_ygI5sg/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-09-25T11:08:57.922Z"
+  "updated": "2026-09-25T16:32:22.540Z"
 }

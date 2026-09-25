@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-25T11:14:12.983Z",
-  "totalEvents": 1841,
-  "withDescription": 799,
-  "withImage": 237,
+  "generatedAt": "2026-09-25T16:38:18.296Z",
+  "totalEvents": 1838,
+  "withDescription": 796,
+  "withImage": 224,
   "familyFriendly": 81,
-  "eventsToday": 13,
+  "eventsToday": 15,
   "sources": {
     "muAthletics": 357,
-    "muCalendar": 325,
+    "muCalendar": 326,
     "artsmu": 20,
     "campsAlumni": 31,
-    "muGetInvolved": 284,
+    "muGetInvolved": 280,
     "pennManor": 545,
     "borough": 63,
     "vfw": 8,
@@ -40,7 +40,7 @@
     },
     "muGetInvolved": {
       "earliest": "2026-09-06T16:00:00.000Z",
-      "latest": "2026-10-29T20:00:00.000Z"
+      "latest": "2026-10-26T21:00:00.000Z"
     },
     "pennManor": {
       "earliest": "2026-07-15T22:00:00.000Z",
@@ -93,7 +93,7 @@
       "daysSinceMoved": 49
     },
     "muGetInvolved": {
-      "newest": "2026-10-29",
+      "newest": "2026-10-26",
       "daysSinceMoved": 0
     },
     "pennManor": {
@@ -143,20 +143,21 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 5,
-    "pendingPast": 4,
+    "pendingFuture": 14,
+    "pendingPast": 5,
     "pendingBySource": {
       "Youth Sports": 2,
-      "PM Community": 3
+      "PM Community": 3,
+      "Campus Life": 9
     },
-    "stalePast": 6,
-    "lastSyncAt": "2026-09-25T11:08:55.462Z"
+    "stalePast": 7,
+    "lastSyncAt": "2026-09-25T16:32:20.589Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 9,
-    "checkedAt": "2026-09-25T11:14:05.668Z"
+    "checkedAt": "2026-09-25T16:38:04.776Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -172,7 +173,7 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 244,
+        "value": 243,
         "min": 60,
         "skipped": false
       },
@@ -229,75 +230,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Splash a DZ|2026-08-28T12:00:00",
-      "firstSeenAt": "2026-09-25T11:14:12.980Z",
-      "title": "Splash a DZ",
+      "key": "Weekly Run|2026-09-18T20:30:00.000Z",
+      "firstSeenAt": "2026-09-25T16:38:18.293Z",
+      "title": "Weekly Run",
       "source": "MU",
-      "date": "2026-08-28T12:00:00"
+      "date": "2026-09-18T20:30:00.000Z"
     },
     {
-      "key": "Field Hockey vs. Dominican|2026-09-03T16:00:00",
-      "firstSeenAt": "2026-09-25T11:14:12.980Z",
-      "title": "Field Hockey vs. Dominican",
+      "key": "Weekly Practice|2026-09-22T20:00:00.000Z",
+      "firstSeenAt": "2026-09-25T16:38:18.293Z",
+      "title": "Weekly Practice",
       "source": "MU",
-      "date": "2026-09-03T16:00:00"
+      "date": "2026-09-22T20:00:00.000Z"
     },
     {
-      "key": "Field Hockey vs. Pace|2026-09-09T18:00:00",
-      "firstSeenAt": "2026-09-25T11:14:12.980Z",
-      "title": "Field Hockey vs. Pace",
+      "key": "Weekly Practice|2026-09-22T21:00:00.000Z",
+      "firstSeenAt": "2026-09-25T16:38:18.293Z",
+      "title": "Weekly Practice",
       "source": "MU",
-      "date": "2026-09-09T18:00:00"
+      "date": "2026-09-22T21:00:00.000Z"
     },
     {
-      "key": "Football vs. California (Pa.)|2026-09-12T12:00:00",
-      "firstSeenAt": "2026-09-25T11:14:12.980Z",
-      "title": "Football vs. California (Pa.)",
+      "key": "Weekly Run|2026-09-22T22:00:00.000Z",
+      "firstSeenAt": "2026-09-25T16:38:18.293Z",
+      "title": "Weekly Run",
       "source": "MU",
-      "date": "2026-09-12T12:00:00"
+      "date": "2026-09-22T22:00:00.000Z"
     },
     {
-      "key": "Women's Soccer vs. Lackawanna College|2026-09-12T13:00:00",
-      "firstSeenAt": "2026-09-25T11:14:12.980Z",
-      "title": "Women's Soccer vs. Lackawanna College",
+      "key": "YDSA Tabling|2026-09-25T19:30:00.000Z",
+      "firstSeenAt": "2026-09-25T16:38:18.293Z",
+      "title": "YDSA Tabling",
       "source": "MU",
-      "date": "2026-09-12T13:00:00"
+      "date": "2026-09-25T19:30:00.000Z"
     },
     {
-      "key": "Women's Volleyball vs. Lincoln University|2026-09-15T19:00:00",
-      "firstSeenAt": "2026-09-25T11:14:12.980Z",
-      "title": "Women's Volleyball vs. Lincoln University",
+      "key": "Weekly Run|2026-09-25T20:30:00.000Z",
+      "firstSeenAt": "2026-09-25T16:38:18.293Z",
+      "title": "Weekly Run",
       "source": "MU",
-      "date": "2026-09-15T19:00:00"
+      "date": "2026-09-25T20:30:00.000Z"
     },
     {
-      "key": "Men's Soccer vs. West Chester|2026-09-16T19:00:00",
-      "firstSeenAt": "2026-09-25T11:14:12.980Z",
-      "title": "Men's Soccer vs. West Chester",
+      "key": "Weekly Practice|2026-09-29T21:00:00.000Z",
+      "firstSeenAt": "2026-09-25T16:38:18.293Z",
+      "title": "Weekly Practice",
       "source": "MU",
-      "date": "2026-09-16T19:00:00"
+      "date": "2026-09-29T21:00:00.000Z"
     },
     {
-      "key": "Women's Volleyball vs. Shepherd|2026-09-18T19:00:00",
-      "firstSeenAt": "2026-09-25T11:14:12.980Z",
-      "title": "Women's Volleyball vs. Shepherd",
+      "key": "Weekly Run|2026-09-29T22:00:00.000Z",
+      "firstSeenAt": "2026-09-25T16:38:18.293Z",
+      "title": "Weekly Run",
       "source": "MU",
-      "date": "2026-09-18T19:00:00"
+      "date": "2026-09-29T22:00:00.000Z"
     },
     {
-      "key": "Football vs. Slippery Rock|2026-09-19T12:00:00",
-      "firstSeenAt": "2026-09-25T11:14:12.980Z",
-      "title": "Football vs. Slippery Rock",
+      "key": "Weekly Run|2026-10-02T20:30:00.000Z",
+      "firstSeenAt": "2026-09-25T16:38:18.293Z",
+      "title": "Weekly Run",
       "source": "MU",
-      "date": "2026-09-19T12:00:00"
+      "date": "2026-10-02T20:30:00.000Z"
     },
     {
-      "key": "Men's Soccer vs East Stroudsburg|2026-09-19T16:00:00",
-      "firstSeenAt": "2026-09-25T11:14:12.980Z",
-      "title": "Men's Soccer vs East Stroudsburg",
+      "key": "Weekly Practice|2026-10-06T21:00:00.000Z",
+      "firstSeenAt": "2026-09-25T16:38:18.293Z",
+      "title": "Weekly Practice",
       "source": "MU",
-      "date": "2026-09-19T16:00:00"
+      "date": "2026-10-06T21:00:00.000Z"
     }
   ],
-  "addedLastRun": 38
+  "addedLastRun": 16
 }

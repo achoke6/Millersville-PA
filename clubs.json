@@ -1,9 +1,8 @@
 [
   {
-    "name": "Acacia",
-    "category": "Service",
+    "name": "Acacia Fraternity",
+    "category": "Fundraiser",
     "categories": [
-      "Service",
       "Fundraiser"
     ],
     "shortName": "",
@@ -222,12 +221,12 @@
   },
   {
     "name": "Biology Club",
-    "category": "Academic",
+    "category": "Social",
     "categories": [
-      "Academic"
+      "Social"
     ],
-    "shortName": "Bio Club",
-    "id": "bioclub"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Black Student Union",
@@ -373,8 +372,10 @@
   },
   {
     "name": "Clinical Psychology Student Association",
-    "category": "",
-    "categories": [],
+    "category": "Meeting",
+    "categories": [
+      "Meeting"
+    ],
     "shortName": "CPSA",
     "id": ""
   },
@@ -1028,13 +1029,12 @@
   },
   {
     "name": "Mathematics Educators",
-    "category": "Academic",
+    "category": "Social",
     "categories": [
-      "Academic",
-      "Service & Civic Engagement"
+      "Social"
     ],
-    "shortName": "MEMU",
-    "id": "memu"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "McNairy Library",
@@ -1852,9 +1852,9 @@
   },
   {
     "name": "Women's Club Soccer",
-    "category": "Competition",
+    "category": "Service",
     "categories": [
-      "Competition"
+      "Service"
     ],
     "shortName": "Women's Club Soccer",
     "id": ""

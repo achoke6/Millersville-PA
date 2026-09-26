@@ -1,9 +1,9 @@
 [
   {
-    "name": "Acacia",
-    "category": "Service",
+    "name": "Acacia Fraternity",
+    "category": "Fundraiser",
     "categories": [
-      "Service"
+      "Fundraiser"
     ],
     "shortName": "",
     "id": ""
@@ -166,6 +166,15 @@
     "id": ""
   },
   {
+    "name": "Association of Technology, Management and Applied Engineering",
+    "category": "Academic",
+    "categories": [
+      "Academic"
+    ],
+    "shortName": "ATMAE, Robotics Team",
+    "id": "atmae"
+  },
+  {
     "name": "Athletics",
     "category": "University Departments ",
     "categories": [
@@ -195,6 +204,7 @@
     "category": "Service",
     "categories": [
       "Service",
+      "Meeting",
       "Social"
     ],
     "shortName": "",
@@ -212,17 +222,18 @@
   },
   {
     "name": "Biology Club",
-    "category": "Academic",
+    "category": "Social",
     "categories": [
-      "Academic"
+      "Social"
     ],
-    "shortName": "Bio Club",
-    "id": "bioclub"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Black Student Union",
-    "category": "Meeting",
+    "category": "Lecture or Speaker",
     "categories": [
+      "Lecture or Speaker",
       "Meeting"
     ],
     "shortName": "",
@@ -258,17 +269,17 @@
   },
   {
     "name": "Campus Life",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "",
     "id": ""
   },
   {
     "name": "Campus Recreation",
-    "category": "Competition",
+    "category": "Sporting",
     "categories": [
-      "Competition",
-      "Social",
       "Sporting"
     ],
     "shortName": "",
@@ -301,9 +312,9 @@
   },
   {
     "name": "CHAARG",
-    "category": "Social",
+    "category": "Fundraiser",
     "categories": [
-      "Social"
+      "Fundraiser"
     ],
     "shortName": "",
     "id": ""
@@ -362,8 +373,10 @@
   },
   {
     "name": "Clinical Psychology Student Association",
-    "category": "",
-    "categories": [],
+    "category": "Meeting",
+    "categories": [
+      "Meeting"
+    ],
     "shortName": "CPSA",
     "id": ""
   },
@@ -751,9 +764,9 @@
   },
   {
     "name": "Fraternity & Sorority Life",
-    "category": "Tabling",
+    "category": "Educational Program",
     "categories": [
-      "Tabling"
+      "Educational Program"
     ],
     "shortName": "FSL",
     "id": ""
@@ -774,6 +787,15 @@
     "categories": [],
     "shortName": "",
     "id": ""
+  },
+  {
+    "name": "Geology Club",
+    "category": "Academic",
+    "categories": [
+      "Academic"
+    ],
+    "shortName": "GeoClub",
+    "id": "geologyclub"
   },
   {
     "name": "Get Involved Help",
@@ -827,9 +849,9 @@
   },
   {
     "name": "Horror Movies and Media",
-    "category": "Meeting",
+    "category": "Movie or Film",
     "categories": [
-      "Meeting"
+      "Movie or Film"
     ],
     "shortName": "Horror Movies",
     "id": ""
@@ -843,10 +865,8 @@
   },
   {
     "name": "Ice Hockey Club (D3)",
-    "category": "Sporting",
-    "categories": [
-      "Sporting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1010,13 +1030,12 @@
   },
   {
     "name": "Mathematics Educators",
-    "category": "Academic",
+    "category": "Social",
     "categories": [
-      "Academic",
-      "Service & Civic Engagement"
+      "Social"
     ],
-    "shortName": "MEMU",
-    "id": "memu"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "McNairy Library",
@@ -1267,6 +1286,16 @@
     "id": ""
   },
   {
+    "name": "Omicron Delta Kappa",
+    "category": "Academic",
+    "categories": [
+      "Academic",
+      "Service & Civic Engagement"
+    ],
+    "shortName": "ODK",
+    "id": "odk"
+  },
+  {
     "name": "Orientation Programs",
     "category": "University Departments ",
     "categories": [
@@ -1369,11 +1398,8 @@
   },
   {
     "name": "Reformed University Fellowship",
-    "category": "Meeting",
-    "categories": [
-      "Meeting",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "RUF",
     "id": ""
   },
@@ -1406,11 +1432,8 @@
   },
   {
     "name": "Running Club",
-    "category": "Meeting",
-    "categories": [
-      "Meeting",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1435,6 +1458,15 @@
     "category": "",
     "categories": [],
     "shortName": "Sigma Gamma Rho",
+    "id": ""
+  },
+  {
+    "name": "Slip & Score Society",
+    "category": "Meeting",
+    "categories": [
+      "Meeting"
+    ],
+    "shortName": "",
     "id": ""
   },
   {
@@ -1476,9 +1508,8 @@
   },
   {
     "name": "South Village Residence Hall",
-    "category": "Movie or Film",
+    "category": "Social",
     "categories": [
-      "Movie or Film",
       "Social"
     ],
     "shortName": "South Village",
@@ -1511,10 +1542,9 @@
   },
   {
     "name": "Student Business Association",
-    "category": "Meeting",
+    "category": "Lecture or Speaker",
     "categories": [
-      "Meeting",
-      "Social"
+      "Lecture or Speaker"
     ],
     "shortName": "SBA",
     "id": ""
@@ -1537,9 +1567,9 @@
   },
   {
     "name": "Student Government Association",
-    "category": "Competition",
+    "category": "Tabling",
     "categories": [
-      "Competition"
+      "Tabling"
     ],
     "shortName": "SGA",
     "id": ""
@@ -1729,8 +1759,11 @@
   },
   {
     "name": "University Activities Board",
-    "category": "",
-    "categories": [],
+    "category": "Performance",
+    "categories": [
+      "Performance",
+      "Social"
+    ],
     "shortName": "UAB",
     "id": ""
   },
@@ -1819,9 +1852,9 @@
   },
   {
     "name": "Women's Club Soccer",
-    "category": "Competition",
+    "category": "Service",
     "categories": [
-      "Competition"
+      "Service"
     ],
     "shortName": "Women's Club Soccer",
     "id": ""

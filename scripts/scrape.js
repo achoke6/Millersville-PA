@@ -2761,6 +2761,32 @@ async function runScraper() {
         let muCount = 0;
         let muCalEtixRows = 0;   // rows carrying an etix /p/ link in ANY field (2026-09-21 canary)
 
+        // ---- Coursedog `category` OUTAGE (2026-09-25) ----
+        // The API's positional column 9 (`category`) went blank on every row
+        // (probe 2026-09-26: 197/197 empty; MU's own homepage lost its featured
+        // events and the per-category calendar views are empty too). That field
+        // drove the Athletic-Competitions skip and the Student-Event relabel, so
+        // 35 home games began duplicating Sidearm and ~170 student-org rows
+        // landed un-gated (muCalendar 162→333). Until it returns, `customerName`
+        // stands in: 'Athletics' + a "vs." title = a game (Sidearm covers it);
+        // a customerName that matches a GetInvolved org in clubs.json (the
+        // previous build's 228-org roster, committed hourly) = a student event.
+        // EVERY heuristic below is guarded by `!eventType` so the original
+        // category logic resumes the moment Coursedog restores the field; the
+        // canary after the loop reports which mode ran.
+        let muCalCatEmpty = 0, muCalAthSkipHeur = 0, muCalStudentHeur = 0, muCalNoCustomer = 0;
+        const normOrg = s => String(s || '').toLowerCase()
+            .replace(/\b(at|of)\s+millersville(\s+university)?\b/g, ' ')
+            .replace(/\bmillersville university\b|\bstudent chapter\b|\bmu\b/g, ' ')
+            .replace(/[^a-z0-9]+/g, '');
+        const muCalOrgRoster = new Set();
+        try {
+            const roster = JSON.parse(fs.readFileSync(path.join(__dirname, '../clubs.json'), 'utf8'));
+            (Array.isArray(roster) ? roster : []).forEach(o => {
+                [o && o.name, o && o.shortName].forEach(n => { const k = normOrg(n); if (k) muCalOrgRoster.add(k); });
+            });
+        } catch (_) { /* first run / missing file: relabel heuristic simply never fires */ }
+
         // Club Sports double-entry sweep (2026-09-01): Campus Recreation enters
         // one game as TWO same-day meetings -- a "<building> ... Lobby" check-in
         // row plus the actual field/court row (first case: Women's Soccer vs
@@ -2793,9 +2819,16 @@ async function runScraper() {
             // category now plays the old MeetingType role: it drives the athletic
             // skip, the tag, and the "Student Event" relabel below — all unchanged.
             const eventType = (obj.category || '').trim();
+            const custName = (obj.customerName || '').trim();
+            if (!eventType) muCalCatEmpty++;
+            if (!custName) muCalNoCustomer++;
 
             // SKIP Athletic Competitions — we get those from Sidearm now
             if (eventType === 'Athletic Competitions') return;
+            // Category-outage twin (2026-09-25): the Athletics department's own
+            // bookings of a game ("Football vs. Slippery Rock", "WBB vs. Virginia
+            // State"). Requires the `vs.` so the Hall of Fame Dinner still publishes.
+            if (!eventType && custName === 'Athletics' && /\bvs\.?\s/i.test(eventTitle)) { muCalAthSkipHeur++; return; }
 
             // --- TEMP SKIP: bare "Summer Fun Series" calendar phantoms (added 2026-06-24) ---
             // After MU's calendar migration (Ad Astra -> Coursedog, June 2026), the
@@ -2864,7 +2897,6 @@ async function runScraper() {
 
             let tags = ["MU"];
             if (eventType) tags.push(eventType);
-            const custName = (obj.customerName || '').trim();
             if (custName) tags.push(custName);
 
             // Club Sports games posted on the MAIN calendar by Campus Recreation
@@ -2904,7 +2936,15 @@ async function runScraper() {
             // being republished on the main calendar, creating duplicates. Treat these as
             // GetInvolved events so they filter/display/dedupe consistently.
             let audience;
-            if (tags.includes('Student Event')) {
+            // Category-outage twin (2026-09-25): no category, but the booking
+            // customer is a GetInvolved org -> this is the calendar republish of
+            // a student event, same as the old 'Student Event' category.
+            // 'Athletics' is in the roster too (GetInvolved has a department
+            // account) -- excluded so the Hall of Fame Dinner stays a public
+            // calendar row rather than a mu-only student event.
+            const studentByRoster = !eventType && !!custName && custName !== 'Athletics' && muCalOrgRoster.has(normOrg(custName));
+            if (studentByRoster) muCalStudentHeur++;
+            if (tags.includes('Student Event') || studentByRoster) {
                 tags = tags.filter(t => t !== 'Student Event');
                 if (!tags.includes('GetInvolved')) tags.push('GetInvolved');
                 if (!tags.includes('Clubs/Orgs')) tags.push('Clubs/Orgs');
@@ -2997,6 +3037,11 @@ async function runScraper() {
             muCount++;
         });
         console.log(`✅ MU Calendar (non-sport): ${muCount} events`);
+        if (muCalCatEmpty > 0) {
+            console.log(`  ⚠️ MU Calendar: category EMPTY on ${muCalCatEmpty}/${data.data.length} rows (Coursedog dropped the field 2026-09-25) — customerName heuristics: ${muCalAthSkipHeur} athletics game(s) skipped, ${muCalStudentHeur} student-org row(s) relabeled, ${muCalNoCustomer} row(s) with no customerName, roster ${muCalOrgRoster.size} org keys`);
+        } else {
+            console.log(`  ✓ MU Calendar: category populated on all ${data.data.length} rows (customerName heuristics dormant)`);
+        }
         console.log(`  🎫 MU Calendar rows with an etix /p/ link in any field: ${muCalEtixRows}`);
         checkAcademicMilestones(data.data);
     } catch (e) { console.error("❌ MU Calendar error:", e.message); }

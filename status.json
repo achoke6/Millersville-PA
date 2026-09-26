@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-26T14:09:20.017Z",
-  "totalEvents": 1846,
-  "withDescription": 802,
+  "generatedAt": "2026-09-26T17:53:33.813Z",
+  "totalEvents": 1811,
+  "withDescription": 767,
   "withImage": 213,
-  "familyFriendly": 81,
-  "eventsToday": 22,
+  "familyFriendly": 79,
+  "eventsToday": 19,
   "sources": {
-    "muAthletics": 357,
-    "muCalendar": 333,
+    "muAthletics": 322,
+    "muCalendar": 211,
     "artsmu": 20,
     "campsAlumni": 31,
-    "muGetInvolved": 282,
+    "muGetInvolved": 404,
     "pennManor": 546,
     "borough": 63,
     "vfw": 8,
@@ -39,8 +39,8 @@
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-09-06T16:00:00.000Z",
-      "latest": "2026-10-21T23:00:00.000Z"
+      "earliest": "2026-07-06T09:00:00.000Z",
+      "latest": "2027-04-29T11:30:00.000Z"
     },
     "pennManor": {
       "earliest": "2026-07-15T22:00:00.000Z",
@@ -93,8 +93,8 @@
       "daysSinceMoved": 50
     },
     "muGetInvolved": {
-      "newest": "2026-10-21",
-      "daysSinceMoved": 1
+      "newest": "2027-04-29",
+      "daysSinceMoved": 23
     },
     "pennManor": {
       "newest": "2027-09-24",
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 804,
+    "total": 769,
     "scored": 76,
     "wins": 40,
     "losses": 35,
@@ -143,21 +143,21 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 14,
-    "pendingPast": 5,
+    "pendingFuture": 13,
+    "pendingPast": 6,
     "pendingBySource": {
       "Youth Sports": 2,
       "PM Community": 3,
-      "Campus Life": 9
+      "Campus Life": 8
     },
-    "stalePast": 7,
-    "lastSyncAt": "2026-09-26T14:05:36.452Z"
+    "stalePast": 8,
+    "lastSyncAt": "2026-09-26T17:49:00.803Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 9,
-    "checkedAt": "2026-09-26T14:09:13.105Z"
+    "checkedAt": "2026-09-26T17:53:20.814Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -201,7 +201,7 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 357,
+        "value": 322,
         "min": 100,
         "skipped": false
       },
@@ -223,8 +223,8 @@
       {
         "key": "pmHudl.matched",
         "ok": true,
-        "matched": 17,
-        "withBroadcasts": 23
+        "matched": 25,
+        "withBroadcasts": 27
       }
     ]
   },

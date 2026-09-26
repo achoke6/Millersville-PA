@@ -204,6 +204,7 @@
     "category": "Service",
     "categories": [
       "Service",
+      "Meeting",
       "Social"
     ],
     "shortName": "",
@@ -679,9 +680,9 @@
   },
   {
     "name": "Equestrian Club",
-    "category": "Sporting",
+    "category": "Service",
     "categories": [
-      "Sporting"
+      "Service"
     ],
     "shortName": "",
     "id": ""
@@ -1541,10 +1542,9 @@
   },
   {
     "name": "Student Business Association",
-    "category": "Meeting",
+    "category": "Lecture or Speaker",
     "categories": [
-      "Meeting",
-      "Social"
+      "Lecture or Speaker"
     ],
     "shortName": "SBA",
     "id": ""

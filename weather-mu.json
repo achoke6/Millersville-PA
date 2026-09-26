@@ -1,27 +1,27 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Saturday, September 26, 2026 at 08:13 AM (Corman, Smith, Student Meteorologists)",
+    "issued": "Saturday, September 26, 2026 at 03:35 PM (Corman, Langenbach , Student Meteorologists)",
     "periods": [
-      {
-        "period": "Today",
-        "text": "Mostly cloudy and windy with passing showers. High: 66-70"
-      },
       {
         "period": "Tonight",
         "text": "Mostly cloudy and breezy with periods of light rain, mainly after midnight. Low: 56-60"
       },
       {
-        "period": "Sunday",
+        "period": "Tomorrow",
         "text": "Cloudy, windy, and cool with periods of rain. High: 60-64"
       },
       {
-        "period": "Sunday Night",
+        "period": "Tomorrow Night",
         "text": "Cloudy and breezy with periods of light rain in the evening. Low: 56-60"
       },
       {
         "period": "Monday",
         "text": "Mostly cloudy, breezy, and warmer. High: 68-72"
+      },
+      {
+        "period": "Tuesday",
+        "text": "Partly sunny and pleasant. High: 72-76"
       }
     ]
   },
@@ -128,6 +128,39 @@
   },
   "observations": [
     {
+      "time": "17:00",
+      "temp": "58",
+      "dewpoint": "55",
+      "rh": "92",
+      "windDir": "N",
+      "windSpeed": "8",
+      "precip": "0.02",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "16:00",
+      "temp": "57",
+      "dewpoint": "55",
+      "rh": "95",
+      "windDir": "N",
+      "windSpeed": "5",
+      "precip": "0.20",
+      "visibility": "7.3",
+      "condition": "Light Showers Rain"
+    },
+    {
+      "time": "15:00",
+      "temp": "56",
+      "dewpoint": "55",
+      "rh": "96",
+      "windDir": "NNW",
+      "windSpeed": "8",
+      "precip": "0.19",
+      "visibility": "9.6",
+      "condition": "Light Rain"
+    },
+    {
       "time": "14:00",
       "temp": "56",
       "dewpoint": "55",
@@ -159,39 +192,6 @@
       "precip": "0.00",
       "visibility": "3.7",
       "condition": "Light Rain"
-    },
-    {
-      "time": "11:00",
-      "temp": "66",
-      "dewpoint": "47",
-      "rh": "51",
-      "windDir": "N",
-      "windSpeed": "11",
-      "precip": "0.00",
-      "visibility": "10.3",
-      "condition": "None"
-    },
-    {
-      "time": "10:00",
-      "temp": "65",
-      "dewpoint": "48",
-      "rh": "54",
-      "windDir": "NNE",
-      "windSpeed": "10",
-      "precip": "0.00",
-      "visibility": "11.1",
-      "condition": "None"
-    },
-    {
-      "time": "09:00",
-      "temp": "64",
-      "dewpoint": "48",
-      "rh": "57",
-      "windDir": "N",
-      "windSpeed": "11",
-      "precip": "0.00",
-      "visibility": "11.0",
-      "condition": "None"
     }
   ],
   "dailySummary": {
@@ -521,5 +521,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-09-26T18:19:05.143Z"
+  "updated": "2026-09-26T21:49:17.274Z"
 }

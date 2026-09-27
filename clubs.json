@@ -366,7 +366,8 @@
     "name": "Climbing Club",
     "category": "Sports and Leisure",
     "categories": [
-      "Sports and Leisure"
+      "Sports and Leisure",
+      "Meeting"
     ],
     "shortName": "",
     "id": "climbingclub"
@@ -680,17 +681,19 @@
   },
   {
     "name": "Equestrian Club",
-    "category": "Service",
+    "category": "Sporting",
     "categories": [
-      "Service"
+      "Sporting"
     ],
     "shortName": "",
     "id": ""
   },
   {
     "name": "Expressions Dance",
-    "category": "",
-    "categories": [],
+    "category": "Fundraiser",
+    "categories": [
+      "Fundraiser"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -999,6 +1002,15 @@
       "Meeting"
     ],
     "shortName": "MGC",
+    "id": ""
+  },
+  {
+    "name": "Marauder Music",
+    "category": "Performance",
+    "categories": [
+      "Performance"
+    ],
+    "shortName": "",
     "id": ""
   },
   {
@@ -1612,7 +1624,8 @@
     "name": "Super Smash Club",
     "category": "Sports and Leisure",
     "categories": [
-      "Sports and Leisure"
+      "Sports and Leisure",
+      "Competition"
     ],
     "shortName": "",
     "id": "supersmashclubmu"
@@ -1759,11 +1772,8 @@
   },
   {
     "name": "University Activities Board",
-    "category": "Performance",
-    "categories": [
-      "Performance",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "UAB",
     "id": ""
   },

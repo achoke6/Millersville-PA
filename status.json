@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-09-27T06:16:26.139Z",
-  "totalEvents": 1810,
+  "generatedAt": "2026-09-27T12:48:17.603Z",
+  "totalEvents": 1811,
   "withDescription": 768,
-  "withImage": 213,
+  "withImage": 214,
   "familyFriendly": 79,
   "eventsToday": 12,
   "sources": {
@@ -14,7 +14,7 @@
     "pennManor": 546,
     "borough": 63,
     "vfw": 8,
-    "phantomPower": 11,
+    "phantomPower": 12,
     "community": 19,
     "manor": 40,
     "raneyCellars": 3,
@@ -56,7 +56,7 @@
     },
     "phantomPower": {
       "earliest": "2026-10-03T00:00:00.000Z",
-      "latest": "2026-10-24T23:00:00.000Z"
+      "latest": "2026-10-30T00:00:00.000Z"
     },
     "community": {
       "earliest": "2026-07-02T12:00:00.000Z",
@@ -109,8 +109,8 @@
       "daysSinceMoved": 26
     },
     "phantomPower": {
-      "newest": "2026-10-24",
-      "daysSinceMoved": 8
+      "newest": "2026-10-30",
+      "daysSinceMoved": 5
     },
     "community": {
       "newest": "2027-04-16",
@@ -143,21 +143,21 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 13,
-    "pendingPast": 6,
+    "pendingFuture": 12,
+    "pendingPast": 7,
     "pendingBySource": {
       "Youth Sports": 2,
       "PM Community": 3,
-      "Campus Life": 8
+      "Campus Life": 7
     },
-    "stalePast": 8,
-    "lastSyncAt": "2026-09-27T06:12:33.266Z"
+    "stalePast": 9,
+    "lastSyncAt": "2026-09-27T12:44:28.443Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 9,
-    "checkedAt": "2026-09-27T06:16:17.572Z"
+    "checkedAt": "2026-09-27T12:48:09.032Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -166,21 +166,21 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 363,
+        "value": 362,
         "min": 45,
         "skipped": false
       },
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 242,
+        "value": 241,
         "min": 60,
         "skipped": false
       },
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 251,
+        "value": 250,
         "min": 30,
         "skipped": false
       },
@@ -229,6 +229,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "HIGH ON FIRE|2026-10-30T00:00:00.000Z",
+      "firstSeenAt": "2026-09-27T12:48:17.600Z",
+      "title": "HIGH ON FIRE",
+      "source": "Other",
+      "date": "2026-10-30T00:00:00.000Z"
+    },
     {
       "key": "Letters of Love|2026-09-17T19:00:00",
       "firstSeenAt": "2026-09-27T00:17:46.467Z",
@@ -291,14 +298,7 @@
       "title": "Study Hours / Chapter",
       "source": "MU",
       "date": "2026-10-20T22:00:00.000Z"
-    },
-    {
-      "key": "Creative Writers Guild general meeting|2026-10-20T22:00:00.000Z",
-      "firstSeenAt": "2026-09-26T03:37:07.147Z",
-      "title": "Creative Writers Guild general meeting",
-      "source": "MU",
-      "date": "2026-10-20T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

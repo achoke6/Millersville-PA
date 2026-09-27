@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-09-27T12:48:17.603Z",
-  "totalEvents": 1811,
+  "generatedAt": "2026-09-27T17:32:48.170Z",
+  "totalEvents": 1771,
   "withDescription": 768,
   "withImage": 214,
   "familyFriendly": 79,
@@ -16,10 +16,10 @@
     "vfw": 8,
     "phantomPower": 12,
     "community": 19,
-    "manor": 40,
+    "manor": 0,
     "raneyCellars": 3,
     "theBackyard": 12,
-    "muHudlBroadcasts": 60
+    "muHudlBroadcasts": 59
   },
   "sourceDateRanges": {
     "muAthletics": {
@@ -62,10 +62,7 @@
       "earliest": "2026-07-02T12:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-09-30T12:30:00.000Z",
-      "latest": "2027-09-06T23:00:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-09-17T20:00:00.000Z",
       "latest": "2026-09-24T20:00:00.000Z"
@@ -116,10 +113,7 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 89
     },
-    "manor": {
-      "newest": "2027-09-06",
-      "daysSinceMoved": 21
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-09-24",
       "daysSinceMoved": 10
@@ -131,9 +125,9 @@
   },
   "sports": {
     "total": 769,
-    "scored": 81,
+    "scored": 82,
     "wins": 44,
-    "losses": 36,
+    "losses": 37,
     "ties": 1
   },
   "registrations": {
@@ -143,21 +137,21 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 12,
-    "pendingPast": 7,
+    "pendingFuture": 10,
+    "pendingPast": 9,
     "pendingBySource": {
       "Youth Sports": 2,
       "PM Community": 3,
-      "Campus Life": 7
+      "Campus Life": 5
     },
-    "stalePast": 9,
-    "lastSyncAt": "2026-09-27T12:44:28.443Z"
+    "stalePast": 11,
+    "lastSyncAt": "2026-09-27T17:29:01.713Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 9,
-    "checkedAt": "2026-09-27T12:48:09.032Z"
+    "checkedAt": "2026-09-27T17:32:40.070Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -215,9 +209,9 @@
       {
         "key": "muHudl.pairRatio",
         "ok": true,
-        "matched": 60,
+        "matched": 59,
         "inWindow": 62,
-        "value": 0.97,
+        "value": 0.95,
         "min": 0.5
       },
       {
@@ -229,6 +223,27 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Millersville University Wrestling vs East Stroudsburg University|2026-12-04T00:00:00.000Z",
+      "firstSeenAt": "2026-09-27T17:32:48.167Z",
+      "title": "Millersville University Wrestling vs East Stroudsburg University",
+      "source": "MU",
+      "date": "2026-12-04T00:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Wrestling at Shippensburg Duals|2026-12-05T15:00:00.000Z",
+      "firstSeenAt": "2026-09-27T17:32:48.167Z",
+      "title": "Millersville University Wrestling at Shippensburg Duals",
+      "source": "MU",
+      "date": "2026-12-05T15:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Wrestling at Kutztown University|2027-02-06T00:00:00.000Z",
+      "firstSeenAt": "2026-09-27T17:32:48.167Z",
+      "title": "Millersville University Wrestling at Kutztown University",
+      "source": "MU",
+      "date": "2027-02-06T00:00:00.000Z"
+    },
     {
       "key": "HIGH ON FIRE|2026-10-30T00:00:00.000Z",
       "firstSeenAt": "2026-09-27T12:48:17.600Z",
@@ -277,28 +292,7 @@
       "title": "WIXQ 91.7 Day",
       "source": "MU",
       "date": "2026-09-17T16:00:00"
-    },
-    {
-      "key": "Horror Movies & Media Club - Introductory Meeting and Mafia|2026-09-17T17:00:00",
-      "firstSeenAt": "2026-09-26T03:37:07.147Z",
-      "title": "Horror Movies & Media Club - Introductory Meeting and Mafia",
-      "source": "MU",
-      "date": "2026-09-17T17:00:00"
-    },
-    {
-      "key": "ADAPT General meeting|2026-09-17T17:30:00",
-      "firstSeenAt": "2026-09-26T03:37:07.147Z",
-      "title": "ADAPT General meeting",
-      "source": "MU",
-      "date": "2026-09-17T17:30:00"
-    },
-    {
-      "key": "Study Hours / Chapter|2026-10-20T22:00:00.000Z",
-      "firstSeenAt": "2026-09-26T03:37:07.147Z",
-      "title": "Study Hours / Chapter",
-      "source": "MU",
-      "date": "2026-10-20T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 3
 }

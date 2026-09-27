@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-09-27T20:57:43.452Z",
-  "totalEvents": 1809,
+  "generatedAt": "2026-09-27T23:42:33.915Z",
+  "totalEvents": 1808,
   "withDescription": 768,
   "withImage": 214,
   "familyFriendly": 79,
   "eventsToday": 12,
   "sources": {
-    "muAthletics": 320,
+    "muAthletics": 318,
     "muCalendar": 210,
     "artsmu": 20,
     "campsAlumni": 31,
     "muGetInvolved": 405,
-    "pennManor": 546,
+    "pennManor": 547,
     "borough": 63,
     "vfw": 8,
     "phantomPower": 12,
@@ -19,11 +19,11 @@
     "manor": 40,
     "raneyCellars": 3,
     "theBackyard": 12,
-    "muHudlBroadcasts": 58
+    "muHudlBroadcasts": 57
   },
   "sourceDateRanges": {
     "muAthletics": {
-      "earliest": "2026-08-27T22:00:00.000Z",
+      "earliest": "2026-08-28T17:00:00.000Z",
       "latest": "2027-05-27T00:00:00.000Z"
     },
     "muCalendar": {
@@ -130,10 +130,10 @@
     }
   },
   "sports": {
-    "total": 767,
-    "scored": 81,
+    "total": 766,
+    "scored": 80,
     "wins": 43,
-    "losses": 37,
+    "losses": 36,
     "ties": 1
   },
   "registrations": {
@@ -151,13 +151,13 @@
       "Campus Life": 4
     },
     "stalePast": 13,
-    "lastSyncAt": "2026-09-27T20:53:02.530Z"
+    "lastSyncAt": "2026-09-27T23:38:36.398Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 9,
-    "checkedAt": "2026-09-27T20:57:34.685Z"
+    "checkedAt": "2026-09-27T23:42:24.254Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -194,14 +194,14 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 447,
+        "value": 448,
         "min": 150,
         "skipped": false
       },
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 320,
+        "value": 318,
         "min": 100,
         "skipped": false
       },
@@ -215,9 +215,9 @@
       {
         "key": "muHudl.pairRatio",
         "ok": true,
-        "matched": 58,
+        "matched": 57,
         "inWindow": 62,
-        "value": 0.94,
+        "value": 0.92,
         "min": 0.5
       },
       {
@@ -229,6 +229,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Girls JV Volleyball vs Dallastown Area High School|2026-10-05T22:00:00.000Z",
+      "firstSeenAt": "2026-09-27T23:42:33.912Z",
+      "title": "Girls JV Volleyball vs Dallastown Area High School",
+      "source": "PM",
+      "date": "2026-10-05T22:00:00.000Z"
+    },
     {
       "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
       "firstSeenAt": "2026-09-27T20:57:43.449Z",
@@ -291,14 +298,7 @@
       "title": "Planning Commission",
       "source": "Manor",
       "date": "2026-11-10T00:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2026-11-25T13:30:00.000Z",
-      "firstSeenAt": "2026-09-27T20:57:43.449Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2026-11-25T13:30:00.000Z"
     }
   ],
-  "addedLastRun": 40
+  "addedLastRun": 1
 }

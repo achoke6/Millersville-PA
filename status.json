@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-28T03:43:55.330Z",
+  "generatedAt": "2026-09-28T10:37:36.621Z",
   "totalEvents": 1810,
   "withDescription": 767,
   "withImage": 212,
   "familyFriendly": 79,
-  "eventsToday": 12,
+  "eventsToday": 20,
   "sources": {
     "muAthletics": 318,
     "muCalendar": 210,
@@ -78,39 +78,39 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 26
+      "daysSinceMoved": 27
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 37
+      "daysSinceMoved": 38
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 51
+      "daysSinceMoved": 52
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 51
+      "daysSinceMoved": 52
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 24
+      "daysSinceMoved": 25
     },
     "pennManor": {
       "newest": "2027-09-27",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 61
+      "daysSinceMoved": 62
     },
     "vfw": {
       "newest": "2026-10-22",
-      "daysSinceMoved": 26
+      "daysSinceMoved": 27
     },
     "phantomPower": {
       "newest": "2026-10-30",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     },
     "community": {
       "newest": "2027-04-16",
@@ -118,15 +118,15 @@
     },
     "manor": {
       "newest": "2027-09-06",
-      "daysSinceMoved": 21
+      "daysSinceMoved": 22
     },
     "raneyCellars": {
       "newest": "2026-09-24",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 11
     },
     "theBackyard": {
       "newest": "2026-10-12",
-      "daysSinceMoved": 19
+      "daysSinceMoved": 20
     }
   },
   "sports": {
@@ -151,13 +151,13 @@
       "Campus Life": 4
     },
     "stalePast": 13,
-    "lastSyncAt": "2026-09-28T03:39:42.284Z"
+    "lastSyncAt": "2026-09-28T10:33:35.646Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 9,
-    "checkedAt": "2026-09-28T03:43:46.983Z"
+    "checkedAt": "2026-09-28T10:37:28.851Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -180,7 +180,7 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 250,
+        "value": 249,
         "min": 30,
         "skipped": false
       },
@@ -300,5 +300,5 @@
       "date": "2027-09-03T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 12
+  "addedLastRun": 0
 }

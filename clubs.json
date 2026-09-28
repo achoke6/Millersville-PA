@@ -793,12 +793,12 @@
   },
   {
     "name": "Geology Club",
-    "category": "Academic",
+    "category": "Trip",
     "categories": [
-      "Academic"
+      "Trip"
     ],
-    "shortName": "GeoClub",
-    "id": "geologyclub"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Get Involved Help",
@@ -868,8 +868,10 @@
   },
   {
     "name": "Ice Hockey Club (D3)",
-    "category": "",
-    "categories": [],
+    "category": "Sporting",
+    "categories": [
+      "Sporting"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -947,15 +949,6 @@
     "category": "",
     "categories": [],
     "shortName": "Kappa Alpha Psi",
-    "id": ""
-  },
-  {
-    "name": "Korea Defense Veterans Association Campus Club - Millersville University",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
-    "shortName": "",
     "id": ""
   },
   {
@@ -1111,9 +1104,9 @@
   },
   {
     "name": "Men's Rugby Club of Millersville University",
-    "category": "Meeting",
+    "category": "Fundraiser",
     "categories": [
-      "Meeting"
+      "Fundraiser"
     ],
     "shortName": "Men's Rugby Club",
     "id": ""
@@ -1862,9 +1855,9 @@
   },
   {
     "name": "Women's Club Soccer",
-    "category": "Service",
+    "category": "Competition",
     "categories": [
-      "Service"
+      "Competition"
     ],
     "shortName": "Women's Club Soccer",
     "id": ""

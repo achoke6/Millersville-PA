@@ -1453,7 +1453,7 @@ async function runScraper() {
     // game.json folder). Fixed vendor codes; the probe below decides which are configured.
     const MU_LIVESTATS_CODES = {
         'football': 'football', 'field-hockey': 'fhockey', 'mens-soccer': 'msoc', 'womens-soccer': 'wsoc',
-        'volleyball': 'wvball', 'mens-basketball': 'mbball', 'womens-basketball': 'wbball',
+        'womens-volleyball': 'wvball', 'mens-basketball': 'mbball', 'womens-basketball': 'wbball',
         'baseball': 'baseball', 'softball': 'softball', 'womens-lacrosse': 'wlax'
     };
     // Fetch and parse one sport's schedule page. Extracts recap URLs keyed by date.
@@ -1518,8 +1518,10 @@ async function runScraper() {
     // 60-day past horizon) still fall back to the schedule-page source link.
     {
         console.log("📡 Pre-fetching MU sport schedule pages for recap URLs...");
-        const allSlugs = ['baseball', 'softball', 'football', 'wrestling', 'volleyball',
-            'field-hockey', 'swimming', 'womens-basketball', 'mens-basketball',
+        // 'womens-volleyball' / 'womens-swimming' (2026-09-28): the real Sidearm slugs. The short
+        // forms never decoded a payload and never matched the iCal mapper's recap/Live-Stats keys.
+        const allSlugs = ['baseball', 'softball', 'football', 'wrestling', 'womens-volleyball',
+            'field-hockey', 'womens-swimming', 'womens-basketball', 'mens-basketball',
             'womens-soccer', 'mens-soccer', 'womens-lacrosse', 'womens-tennis',
             'mens-tennis', 'womens-golf', 'mens-golf', 'womens-cross-country',
             'mens-cross-country', 'womens-outdoor-track-and-field',
@@ -1731,7 +1733,7 @@ async function runScraper() {
             };
             events.push(muRow);
             const oppMatch = summary.replace(/^\[.\]\s*/, '').match(/\s(?:vs\.?|at)\s+(.+)$/i);
-            muIcalRows.push({ row: muRow, sportKey: normSportTitle(sportName), dayET: deriveDayET(eventDate.getTime()), oppNorm: normSportTitle(oppMatch ? oppMatch[1] : ''), scheduleSlug, tags: [...new Set(tags)], ticketLink, streamLink, scheduleSlugForLive: scheduleSlug });
+            muIcalRows.push({ row: muRow, sportKey: normSportTitle(sportName), dayET: deriveDayET(eventDate.getTime()), dayUTC: eventDate.toISOString().slice(0, 10), allDayExport: /T00:00:00\.000Z$/.test(eventDate.toISOString()), oppNorm: normSportTitle(oppMatch ? oppMatch[1] : ''), scheduleSlug, tags: [...new Set(tags)], ticketLink, streamLink, scheduleSlugForLive: scheduleSlug });
             muAthCount++;
         }
         console.log(`✅ MU Athletics: ${muAthCount} events`);
@@ -1744,7 +1746,7 @@ async function runScraper() {
         // bucket — matcher/ICS parity, not a new event source). Games outside the scrape
         // window are ignored.
         try {
-            let recFilled = 0, recCreated = 0, neutralStamped = 0, recapFilled = 0;
+            let recFilled = 0, recCreated = 0, neutralStamped = 0, recapFilled = 0, timeFixed = 0, placeholdersSkipped = 0;
             const missing = [];
             const recordMismatch = [];
             const oppKey = s => normSportTitle(s).replace(/\b(university|college|the|of|state|st)\b/g, ' ').replace(/\s+/g, ' ').trim();
@@ -1759,7 +1761,8 @@ async function runScraper() {
                     if (inst < pastDate || inst >= futureDate) continue;
                     const dayET = deriveDayET(ms);
                     const gOpp = oppKey(g.opponent);
-                    const cands = rowsForSport.filter(r => r.dayET === dayET && !seen.has(r));
+                    // ET day, OR the UTC date for the iCal's all-day export (T00:00Z = previous ET day).
+                    const cands = rowsForSport.filter(r => (r.dayET === dayET || r.dayUTC === dayET) && !seen.has(r));
                     let hit = cands.find(r => { const ro = oppKey(r.oppNorm); return ro && gOpp && (ro === gOpp || ro.includes(gOpp) || gOpp.includes(ro)); });
                     if (!hit && cands.length === 1 && !gOpp) hit = cands[0];
                     if (!hit && cands.length === 1) {
@@ -1775,10 +1778,16 @@ async function runScraper() {
                         if (res && (row.gameResult !== res.status || row.gameScore !== score)) { row.gameResult = res.status; row.gameScore = score; recFilled++; }
                         if (g.indicator === 'N' && !row.neutralSite) { row.neutralSite = true; neutralStamped++; }
                         if (g.indicator !== 'N' && row.neutralSite) delete row.neutralSite;
+                        // All-day iCal export but the payload has a real start time → use it (the row
+                        // was rendering on the previous ET day at 8 PM).
+                        if (hit.allDayExport && !/T00:00(?::00)?$/.test(g.date) && inst.toISOString() !== row.date) { row.date = inst.toISOString(); timeFixed++; }
                         if (res && res.recap && /\/schedule(\/\d{4})?$/.test(row.sourceLink || '')) { row.sourceLink = 'https://millersvilleathletics.com' + res.recap; recapFilled++; }
                         continue;
                     }
-                    // Not in the iCal → create it (the Goldey-Beacom case).
+                    // Not in the iCal → create it (the Goldey-Beacom case). Postseason / bracket
+                    // placeholders ("vs First Round", "at NCAA Championships") stay out, as they do
+                    // in the iCal, until Sidearm names an opponent.
+                    if (!res && (!g.opponent || /\b(first|second|third) round\b|\b(quarter|semi)finals?\b|\bchampionships?\b|\bregionals?\b|\bplayoffs?\b|\btournament\b|\btba\b|\btbd\b/i.test(g.opponent))) { placeholdersSkipped++; continue; }
                     const isHome = g.indicator === 'H';
                     const sportTitle = sched.sportTitle;
                     const tags = ["MU", "Athletic Competitions", "Athletics"];
@@ -1807,10 +1816,10 @@ async function runScraper() {
                 if (pub) {
                     const tally = { w: 0, l: 0, t: 0 };
                     events.forEach(e => { if ((e.tags || []).includes('MU') && (e.tags || []).includes('Athletic Competitions') && normSportTitle(e.title.replace(/^Millersville University\s+/, '').split(/\s(?:vs\.?|at)\s/i)[0]) === sportKey && e.gameResult) { if (e.gameResult === 'W') tally.w++; else if (e.gameResult === 'L') tally.l++; else if (e.gameResult === 'T') tally.t++; } });
-                    if (tally.w !== pub.w || tally.l !== pub.l || tally.t !== pub.t) recordMismatch.push(`${sched.sportTitle}: rows ${tally.w}-${tally.l}${tally.t ? '-' + tally.t : ''} vs Sidearm ${pub.w}-${pub.l}${pub.t ? '-' + pub.t : ''}`);
+                    if ((tally.w + tally.l + tally.t) > 0 && (tally.w !== pub.w || tally.l !== pub.l || tally.t !== pub.t)) recordMismatch.push(`${sched.sportTitle}: rows ${tally.w}-${tally.l}${tally.t ? '-' + tally.t : ''} vs Sidearm ${pub.w}-${pub.l}${pub.t ? '-' + pub.t : ''}`);
                 }
             }
-            console.log(`  🧾 Sidearm payload: ${muScheduleCache.size} sport(s) decoded — ${recFilled} result(s) set, ${neutralStamped} neutral-site stamp(s), ${recapFilled} recap link(s), ${recCreated} game(s) CREATED that the iCal lacks`);
+            console.log(`  🧾 Sidearm payload: ${muScheduleCache.size} sport(s) decoded — ${recFilled} result(s) set, ${neutralStamped} neutral-site stamp(s), ${recapFilled} recap link(s), ${timeFixed} all-day row(s) given real start times, ${placeholdersSkipped} bracket placeholder(s) skipped, ${recCreated} game(s) CREATED that the iCal lacks`);
             if (missing.length) { console.log(`  ⚠️ Sidearm iCal is missing ${missing.length} game(s) the schedule payload has (created from the payload):`); missing.forEach(m => console.log(`     • ${m}`)); }
             if (recordMismatch.length) { console.log(`  ⚠️ MU record mismatch (rows vs Sidearm published — window-limited seasons are expected to differ early/late):`); recordMismatch.forEach(m => console.log(`     • ${m}`)); }
             else if (muScheduleCache.size) console.log(`  ✓ MU records match Sidearm for every decoded sport`);

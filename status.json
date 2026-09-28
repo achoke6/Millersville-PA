@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-09-28T18:29:51.818Z",
-  "totalEvents": 1831,
-  "withDescription": 774,
-  "withImage": 218,
+  "generatedAt": "2026-09-28T23:45:23.790Z",
+  "totalEvents": 1793,
+  "withDescription": 776,
+  "withImage": 221,
   "familyFriendly": 79,
   "eventsToday": 21,
   "sources": {
@@ -10,13 +10,13 @@
     "muCalendar": 211,
     "artsmu": 20,
     "campsAlumni": 31,
-    "muGetInvolved": 412,
+    "muGetInvolved": 414,
     "pennManor": 550,
     "borough": 63,
     "vfw": 6,
     "phantomPower": 12,
     "community": 19,
-    "manor": 40,
+    "manor": 0,
     "raneyCellars": 3,
     "theBackyard": 12,
     "muHudlBroadcasts": 59
@@ -62,10 +62,7 @@
       "earliest": "2026-07-02T12:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
-    "manor": {
-      "earliest": "2026-09-30T12:30:00.000Z",
-      "latest": "2027-09-06T23:00:00.000Z"
-    },
+    "manor": null,
     "raneyCellars": {
       "earliest": "2026-09-17T20:00:00.000Z",
       "latest": "2026-09-24T20:00:00.000Z"
@@ -116,10 +113,7 @@
       "newest": "2027-04-16",
       "daysSinceMoved": 89
     },
-    "manor": {
-      "newest": "2027-09-06",
-      "daysSinceMoved": 22
-    },
+    "manor": null,
     "raneyCellars": {
       "newest": "2026-09-24",
       "daysSinceMoved": 11
@@ -131,10 +125,10 @@
   },
   "sports": {
     "total": 783,
-    "scored": 102,
-    "wins": 53,
-    "losses": 43,
-    "ties": 6
+    "scored": 86,
+    "wins": 45,
+    "losses": 37,
+    "ties": 4
   },
   "registrations": {
     "open": 9,
@@ -151,13 +145,13 @@
       "Campus Life": 1
     },
     "stalePast": 13,
-    "lastSyncAt": "2026-09-28T18:26:13.474Z"
+    "lastSyncAt": "2026-09-28T23:41:43.077Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 9,
-    "checkedAt": "2026-09-28T18:29:43.489Z"
+    "checkedAt": "2026-09-28T23:45:10.048Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -230,75 +224,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Men's Volleyball Club Practice|2026-09-22T23:00:00.000Z",
-      "firstSeenAt": "2026-09-28T18:29:51.814Z",
-      "title": "Men's Volleyball Club Practice",
+      "key": "Moon Festival|2026-09-30T21:00:00.000Z",
+      "firstSeenAt": "2026-09-28T23:45:23.787Z",
+      "title": "Moon Festival",
       "source": "MU",
-      "date": "2026-09-22T23:00:00.000Z"
+      "date": "2026-09-30T21:00:00.000Z"
     },
     {
-      "key": "Men's Club Soccer Practice|2026-09-22T23:00:00.000Z",
-      "firstSeenAt": "2026-09-28T18:29:51.814Z",
-      "title": "Men's Club Soccer Practice",
+      "key": "Line Dancing|2026-09-30T23:00:00.000Z",
+      "firstSeenAt": "2026-09-28T23:45:23.787Z",
+      "title": "Line Dancing",
       "source": "MU",
-      "date": "2026-09-22T23:00:00.000Z"
+      "date": "2026-09-30T23:00:00.000Z"
     },
     {
-      "key": "Men's Volleyball Club Practice|2026-09-24T23:00:00.000Z",
-      "firstSeenAt": "2026-09-28T18:29:51.814Z",
-      "title": "Men's Volleyball Club Practice",
+      "key": "IFI Millersville Student Mixer|2026-10-02T22:00:00.000Z",
+      "firstSeenAt": "2026-09-28T23:45:23.787Z",
+      "title": "IFI Millersville Student Mixer",
       "source": "MU",
-      "date": "2026-09-24T23:00:00.000Z"
+      "date": "2026-10-02T22:00:00.000Z"
     },
     {
-      "key": "Men's Rugby Practice|2026-09-28T20:30:00.000Z",
-      "firstSeenAt": "2026-09-28T18:29:51.814Z",
-      "title": "Men's Rugby Practice",
+      "key": "Millersville Mens Club Soccer vs Lancaster City FC|2026-10-09T01:00:00.000Z",
+      "firstSeenAt": "2026-09-28T23:45:23.787Z",
+      "title": "Millersville Mens Club Soccer vs Lancaster City FC",
       "source": "MU",
-      "date": "2026-09-28T20:30:00.000Z"
+      "date": "2026-10-09T01:00:00.000Z"
     },
     {
-      "key": "Men's Rugby Practice|2026-09-29T20:00:00.000Z",
-      "firstSeenAt": "2026-09-28T18:29:51.814Z",
-      "title": "Men's Rugby Practice",
+      "key": "Spooky minute to win it|2026-10-14T23:00:00.000Z",
+      "firstSeenAt": "2026-09-28T23:45:23.787Z",
+      "title": "Spooky minute to win it",
       "source": "MU",
-      "date": "2026-09-29T20:00:00.000Z"
+      "date": "2026-10-14T23:00:00.000Z"
     },
     {
-      "key": "Men's Club Soccer Practice|2026-09-29T23:00:00.000Z",
-      "firstSeenAt": "2026-09-28T18:29:51.814Z",
-      "title": "Men's Club Soccer Practice",
+      "key": "Domestic Violence Awareness Month: Resources and Education|2026-10-15T15:00:00.000Z",
+      "firstSeenAt": "2026-09-28T23:45:23.787Z",
+      "title": "Domestic Violence Awareness Month: Resources and Education",
       "source": "MU",
-      "date": "2026-09-29T23:00:00.000Z"
+      "date": "2026-10-15T15:00:00.000Z"
     },
     {
-      "key": "Men's Volleyball Club Practice|2026-09-29T23:00:00.000Z",
-      "firstSeenAt": "2026-09-28T18:29:51.814Z",
-      "title": "Men's Volleyball Club Practice",
+      "key": "JDogs Community Service|2026-10-16T01:30:00.000Z",
+      "firstSeenAt": "2026-09-28T23:45:23.787Z",
+      "title": "JDogs Community Service",
       "source": "MU",
-      "date": "2026-09-29T23:00:00.000Z"
+      "date": "2026-10-16T01:30:00.000Z"
     },
     {
-      "key": "MMA Club Open Mat, 9/29 and 10/1|2026-09-29T23:00:00.000Z",
-      "firstSeenAt": "2026-09-28T18:29:51.814Z",
-      "title": "MMA Club Open Mat, 9/29 and 10/1",
+      "key": "Sugar Bowl Fundraiser|2026-10-16T20:00:00.000Z",
+      "firstSeenAt": "2026-09-28T23:45:23.787Z",
+      "title": "Sugar Bowl Fundraiser",
       "source": "MU",
-      "date": "2026-09-29T23:00:00.000Z"
+      "date": "2026-10-16T20:00:00.000Z"
     },
     {
-      "key": "Men's Rugby Practice|2026-09-30T20:30:00.000Z",
-      "firstSeenAt": "2026-09-28T18:29:51.814Z",
-      "title": "Men's Rugby Practice",
+      "key": "TCNJ Conference Game 1|2026-10-17T14:00:00.000Z",
+      "firstSeenAt": "2026-09-28T23:45:23.787Z",
+      "title": "TCNJ Conference Game 1",
       "source": "MU",
-      "date": "2026-09-30T20:30:00.000Z"
+      "date": "2026-10-17T14:00:00.000Z"
     },
     {
-      "key": "Men's Rugby Practice|2026-10-01T20:00:00.000Z",
-      "firstSeenAt": "2026-09-28T18:29:51.814Z",
-      "title": "Men's Rugby Practice",
+      "key": "TCNJ Conference Game 3|2026-10-17T18:00:00.000Z",
+      "firstSeenAt": "2026-09-28T23:45:23.787Z",
+      "title": "TCNJ Conference Game 3",
       "source": "MU",
-      "date": "2026-10-01T20:00:00.000Z"
+      "date": "2026-10-17T18:00:00.000Z"
     }
   ],
-  "addedLastRun": 34
+  "addedLastRun": 11
 }

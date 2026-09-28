@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-09-28T16:03:23.691Z",
-  "totalEvents": 1860,
+  "generatedAt": "2026-09-28T17:12:46.744Z",
+  "totalEvents": 1824,
   "withDescription": 768,
   "withImage": 213,
   "familyFriendly": 79,
-  "eventsToday": 21,
+  "eventsToday": 20,
   "sources": {
-    "muAthletics": 368,
+    "muAthletics": 332,
     "muCalendar": 210,
     "artsmu": 20,
     "campsAlumni": 31,
@@ -130,10 +130,10 @@
     }
   },
   "sports": {
-    "total": 819,
-    "scored": 101,
+    "total": 783,
+    "scored": 102,
     "wins": 53,
-    "losses": 42,
+    "losses": 43,
     "ties": 6
   },
   "registrations": {
@@ -151,13 +151,13 @@
       "Campus Life": 1
     },
     "stalePast": 13,
-    "lastSyncAt": "2026-09-28T15:59:07.262Z"
+    "lastSyncAt": "2026-09-28T17:08:47.654Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 9,
-    "checkedAt": "2026-09-28T16:03:12.021Z"
+    "checkedAt": "2026-09-28T17:12:38.254Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -201,7 +201,7 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 368,
+        "value": 332,
         "min": 100,
         "skipped": false
       },
@@ -230,6 +230,20 @@
   },
   "recentlyAdded": [
     {
+      "key": "Millersville University Women's Volleyball at Goldey-Beacom|2026-08-27T22:00:00.000Z",
+      "firstSeenAt": "2026-09-28T17:12:46.741Z",
+      "title": "Millersville University Women's Volleyball at Goldey-Beacom",
+      "source": "MU",
+      "date": "2026-08-27T22:00:00.000Z"
+    },
+    {
+      "key": "Millersville Mens Club Soccer vs Alloy Soccer Club|2026-10-04T22:00:00.000Z",
+      "firstSeenAt": "2026-09-28T17:12:46.741Z",
+      "title": "Millersville Mens Club Soccer vs Alloy Soccer Club",
+      "source": "MU",
+      "date": "2026-10-04T22:00:00.000Z"
+    },
+    {
       "key": "Millersville University Women's Soccer vs Lock Haven|2026-08-27T20:00:00.000Z",
       "firstSeenAt": "2026-09-28T16:03:23.688Z",
       "title": "Millersville University Women's Soccer vs Lock Haven",
@@ -251,13 +265,6 @@
       "date": "2026-09-03T04:00:00.000Z"
     },
     {
-      "key": "Millersville University Men's Golf at Vulcan Invitational|2026-09-03T04:00:00.000Z",
-      "firstSeenAt": "2026-09-28T16:03:23.688Z",
-      "title": "Millersville University Men's Golf at Vulcan Invitational",
-      "source": "MU",
-      "date": "2026-09-03T04:00:00.000Z"
-    },
-    {
       "key": "Millersville University Women's Cross Country at Dutchmen Invitational|2026-09-05T14:15:00.000Z",
       "firstSeenAt": "2026-09-28T16:03:23.688Z",
       "title": "Millersville University Women's Cross Country at Dutchmen Invitational",
@@ -265,40 +272,33 @@
       "date": "2026-09-05T14:15:00.000Z"
     },
     {
-      "key": "Millersville University Men's Golf at Dickinson Invitational|2026-09-06T04:00:00.000Z",
-      "firstSeenAt": "2026-09-28T16:03:23.688Z",
-      "title": "Millersville University Men's Golf at Dickinson Invitational",
-      "source": "MU",
-      "date": "2026-09-06T04:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Men's Tennis at WAC Invitational|2026-09-12T04:00:00.000Z",
-      "firstSeenAt": "2026-09-28T16:03:23.688Z",
-      "title": "Millersville University Men's Tennis at WAC Invitational",
-      "source": "MU",
-      "date": "2026-09-12T04:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Tennis at WAC Invitational|2026-09-12T04:00:00.000Z",
-      "firstSeenAt": "2026-09-28T16:03:23.688Z",
-      "title": "Millersville University Women's Tennis at WAC Invitational",
-      "source": "MU",
-      "date": "2026-09-12T04:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Men's Golf at Husky Fall Invitational|2026-09-12T04:00:00.000Z",
-      "firstSeenAt": "2026-09-28T16:03:23.688Z",
-      "title": "Millersville University Men's Golf at Husky Fall Invitational",
-      "source": "MU",
-      "date": "2026-09-12T04:00:00.000Z"
-    },
-    {
       "key": "Millersville University Women's Golf vs Millersville Invitational|2026-09-14T04:00:00.000Z",
       "firstSeenAt": "2026-09-28T16:03:23.688Z",
       "title": "Millersville University Women's Golf vs Millersville Invitational",
       "source": "MU",
       "date": "2026-09-14T04:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Golf at WCU Battlefield Classic|2026-09-21T04:00:00.000Z",
+      "firstSeenAt": "2026-09-28T16:03:23.688Z",
+      "title": "Millersville University Women's Golf at WCU Battlefield Classic",
+      "source": "MU",
+      "date": "2026-09-21T04:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Golf at PennWest Clarion Invitational|2026-09-26T04:00:00.000Z",
+      "firstSeenAt": "2026-09-28T16:03:23.688Z",
+      "title": "Millersville University Women's Golf at PennWest Clarion Invitational",
+      "source": "MU",
+      "date": "2026-09-26T04:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Cross Country at Lock Haven Invitational|2026-09-26T14:45:00.000Z",
+      "firstSeenAt": "2026-09-28T16:03:23.688Z",
+      "title": "Millersville University Women's Cross Country at Lock Haven Invitational",
+      "source": "MU",
+      "date": "2026-09-26T14:45:00.000Z"
     }
   ],
-  "addedLastRun": 54
+  "addedLastRun": 2
 }

@@ -4831,11 +4831,15 @@ function spGameRow(e, mode) {
     if (mode === 'team') {
         const d = new Date(e.date);
         left = `<span class="sp-row-dow">${escHtml(d.toLocaleDateString('en-US', { weekday: 'short' }))}</span><span class="sp-row-date">${escHtml(d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }))}</span>`;
-        title = mu.opp ? (home ? 'vs ' : '@ ') + mu.opp : mu.rest;
+        // Neutral-site games (neutralSite from the Sidearm payload, 2026-09-28) read "vs X",
+        // never "@ X" — the opponent isn't hosting either.
+        const neutral = !home && e.neutralSite === true;
+        title = mu.opp ? ((home || neutral) ? 'vs ' : '@ ') + mu.opp : mu.rest;
         if (lvl) title = lvl + ' · ' + title;
         const subBits = [];
         const venueShort = venue.replace(/^Millersville,\s*PA,?\s*/i, '');   // 🏡 already says it (Patch D)
         if (home) subBits.push('🏡 ' + (venueShort || 'Home'));
+        else if (neutral) subBits.push('Neutral' + (venue ? ' · ' + venue : ''));
         else if (venue) subBits.push(venue);
         sub = subBits.concat(hints).join(' · ');
         const ltT = spLiveScoreText(e);   // Step 2 bridge/live inside a team view
@@ -5058,12 +5062,15 @@ function spTeamGamesFor(label, level) {
     }).sort((a, b) => new Date(a.date) - new Date(b.date));
 }
 function spTeamRecord(games) {
-    const rec = { w: 0, l: 0, t: 0, hw: 0, hl: 0, aw: 0, al: 0, streak: '', unreported: 0, played: 0 };
+    const rec = { w: 0, l: 0, t: 0, hw: 0, hl: 0, aw: 0, al: 0, nw: 0, nl: 0, neutralGames: 0, streak: '', unreported: 0, played: 0 };
     const scored = games.filter(spIsScored).sort((a, b) => new Date(a.date) - new Date(b.date));
     scored.forEach(e => {
-        const r = e.gameResult, h = spIsHome(e);
-        if (r === 'W') { rec.w++; h ? rec.hw++ : rec.aw++; }
-        else if (r === 'L') { rec.l++; h ? rec.hl++ : rec.al++; }
+        // Three-way split (2026-09-28): neutral-site games are their own column, matching
+        // Sidearm's own Home/Away/Neutral record — they were counted as Away before.
+        const r = e.gameResult, h = spIsHome(e), n = !h && e.neutralSite === true;
+        if (n) rec.neutralGames++;
+        if (r === 'W') { rec.w++; h ? rec.hw++ : n ? rec.nw++ : rec.aw++; }
+        else if (r === 'L') { rec.l++; h ? rec.hl++ : n ? rec.nl++ : rec.al++; }
         else rec.t++;
     });
     rec.played = scored.length;
@@ -5137,10 +5144,14 @@ function renderTeamView() {
         + `</div>`;
     if (hasRecord && rec.played > 0) {
         const streakCls = rec.streak.charAt(0) === 'W' ? 'sp-streak-w' : rec.streak.charAt(0) === 'L' ? 'sp-streak-l' : '';
-        head += `<div class="sp-record">`
+        // Neutral tile only when the team has played at a neutral site (2026-09-28, 2b);
+        // five tiles via an inline grid override so index.html's 4-column rule is untouched.
+        const hasNeutral = rec.neutralGames > 0;
+        head += `<div class="sp-record"${hasNeutral ? ' style="grid-template-columns:repeat(5,1fr)"' : ''}>`
             + `<div class="sp-rec-cell"><span class="sp-rec-k">Overall</span><span class="sp-rec-v">${spFmtRec(rec.w, rec.l, rec.t)}</span></div>`
             + `<div class="sp-rec-cell"><span class="sp-rec-k">Home</span><span class="sp-rec-v">${spFmtRec(rec.hw, rec.hl)}</span></div>`
             + `<div class="sp-rec-cell"><span class="sp-rec-k">Away</span><span class="sp-rec-v">${spFmtRec(rec.aw, rec.al)}</span></div>`
+            + (hasNeutral ? `<div class="sp-rec-cell"><span class="sp-rec-k">Neutral</span><span class="sp-rec-v">${spFmtRec(rec.nw, rec.nl)}</span></div>` : '')
             + `<div class="sp-rec-cell"><span class="sp-rec-k">Streak</span><span class="sp-rec-v ${streakCls}">${rec.streak || '—'}</span></div>`
             + `</div>`;
         if (rec.unreported > 0) head += `<div class="sp-team-note">${rec.unreported} game${rec.unreported === 1 ? '' : 's'} unreported — record reflects posted scores only</div>`;

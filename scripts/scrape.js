@@ -1395,6 +1395,60 @@ async function runScraper() {
     // schedule HTML — first anchor whose href hits /sidearmstats/<code>/…, normalized
     // to the /summary view. Display field only (liveStatsLink); no feed matching.
     const muLiveStatsCache = new Map();
+    // ---- Sidearm schedule PAYLOAD (2026-09-28) ----
+    // Each /sports/<slug>/schedule page inlines its Nuxt state (<script id="__NUXT_DATA__">,
+    // devalue-encoded: a flat array where objects hold key→index). The schedule object in
+    // it carries every game with location_indicator H/A/N, opponent, result {status W/L/T,
+    // team_score, opponent_score, boxscore, recap} and a record {overall, home, away,
+    // neutral, streak, conference}. The iCal we build rows from OMITS some games (probe
+    // 2026-09-28: the 8/27 Women's Volleyball opener at Goldey-Beacom — feed 3-8 vs official
+    // 3-9) and cannot say "neutral". Decoded on the SAME fetch the recap prefetch already
+    // makes, so this costs zero extra requests. Keyed by the payload's own sport.title
+    // (e.g. "Women's Volleyball") — the iCal summary carries the identical string.
+    const muScheduleCache = new Map();   // normSportTitle -> { slug, sportTitle, shortname, record, games[] }
+    const normSportTitle = s => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+    function decodeSidearmSchedule(html) {
+        const m = html.match(/<script[^>]*id="__NUXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
+        if (!m) return null;
+        let raw; try { raw = JSON.parse(m[1]); } catch (_) { return null; }
+        if (!Array.isArray(raw)) return null;
+        const out = new Map();
+        const res = (i, depth = 0) => {
+            if (typeof i !== 'number') return i;
+            if (i < 0) return i === -1 ? undefined : null;
+            if (out.has(i)) return out.get(i);
+            if (depth > 60) return null;
+            const v = raw[i];
+            if (Array.isArray(v)) {
+                if (typeof v[0] === 'string' && v.length === 2 && /^(Date|ShallowRef|Ref|Reactive|ShallowReactive|EmptyRef|EmptyShallowRef|Set|Map|Object)$/.test(v[0])) {
+                    const r = res(v[1], depth + 1); out.set(i, r); return r;
+                }
+                const a = []; out.set(i, a); v.forEach(x => a.push(res(x, depth + 1))); return a;
+            }
+            if (v && typeof v === 'object') { const o = {}; out.set(i, o); for (const [k, x] of Object.entries(v)) o[k] = res(x, depth + 1); return o; }
+            out.set(i, v); return v;
+        };
+        const idx = raw.findIndex(v => v && !Array.isArray(v) && typeof v === 'object' && 'games' in v && 'record' in v && 'sport' in v);
+        if (idx < 0) return null;
+        const s = res(idx);
+        if (!s || !Array.isArray(s.games)) return null;
+        const rec = s.record || {};
+        const digits = h => { const d = String(h || '').replace(/<[^>]+>/g, '').match(/(\d+)\s*-\s*(\d+)(?:\s*-\s*(\d+))?/); return d ? { w: +d[1], l: +d[2], t: +(d[3] || 0) } : null; };
+        return {
+            sportTitle: s.sport && s.sport.title || '', shortname: s.sport && s.sport.shortname || '',
+            record: { overall: digits(rec.overall), home: rec.home || '', away: rec.away || '', neutral: rec.neutral || '', streak: rec.streak || '', conference: rec.conference || '' },
+            games: s.games.map(g => ({
+                id: g.id, date: g.date || '', indicator: String(g.location_indicator || '').toUpperCase(), atVs: g.at_vs || '',
+                type: g.type || '', status: g.status || '', location: g.location || '', facility: g.facility && (g.facility.title || g.facility) || '',
+                opponent: g.opponent && g.opponent.title || '', opponentPrefix: g.opponent && g.opponent.prefix || '',
+                result: g.result && typeof g.result === 'object' ? {
+                    status: String(g.result.status || '').toUpperCase(), team: g.result.team_score, opp: g.result.opponent_score,
+                    recap: g.result.recap && g.result.recap.url || '', box: g.result.boxscore && g.result.boxscore.url || ''
+                } : null,
+                stream: g.media && g.media.video && g.media.video.url || ''
+            }))
+        };
+    }
     // Schedule slug -> Sidearm GlobalSportShortname (the /sidearmstats/<code>/ segment and the
     // game.json folder). Fixed vendor codes; the probe below decides which are configured.
     const MU_LIVESTATS_CODES = {
@@ -1416,6 +1470,11 @@ async function runScraper() {
             const res = await fetch(url, { headers: baseHeaders, signal: ctrl.signal });
             if (!res.ok) return;
             const html = await res.text();
+            // Payload decode (2026-09-28): same HTML, no second request.
+            try {
+                const sched = decodeSidearmSchedule(html);
+                if (sched && sched.sportTitle) muScheduleCache.set(normSportTitle(sched.sportTitle), { slug: scheduleSlug, ...sched });
+            } catch (e) { console.log(`  ⚠️ Sidearm payload decode failed for ${scheduleSlug}: ${e.message}`); }
             // (2026-09-20 anchor harvest for Live Stats RETIRED same day — schedule HTML carries no
             //  /sidearmstats/ anchor server-side; see the MU_LIVESTATS_CODES probe below.)
             // Match every anchor whose href is a Sidearm news article URL, then post-filter
@@ -1496,6 +1555,7 @@ async function runScraper() {
             { headers: baseHeaders }
         );
         let muAthCount = 0;
+        const muIcalRows = [];   // { row, sportKey, dayET, oppNorm } for the payload reconcile below (2026-09-28)
 
         for (const ev of Object.values(muAthData)) {
             if (ev.type !== 'VEVENT') continue;
@@ -1648,7 +1708,11 @@ async function runScraper() {
                 sourceUrl = 'https://millersvilleathletics.com/calendar';
             }
 
-            events.push({
+            // neutralSite fallback (2026-09-28): Sidearm titles neutral-site tournament games
+            // "vs X" with a non-Millersville location. The payload reconcile below overrides
+            // this with location_indicator 'N' when it has the sport.
+            const neutralFallback = !isHome && !!homeLoc && homeLoc !== 'tbd' && /\bvs\b/i.test(summary);
+            const muRow = {
                 title: cleanTitle,
                 date: eventDate.toISOString(),
                 endTime: resolveEndTime({ origStart: ev.start, origEnd: ev.end, instanceStart: eventDate }),
@@ -1661,12 +1725,96 @@ async function runScraper() {
                 gameScore,
                 streamLink,
                 isLive,
+                ...(neutralFallback ? { neutralSite: true } : {}),
                 // liveStatsLink (2026-09-20): unscored games only — a live game is never scored.
                 ...(!gameResult && scheduleSlug && muLiveStatsCache.get(scheduleSlug) ? { liveStatsLink: muLiveStatsCache.get(scheduleSlug) } : {})
-            });
+            };
+            events.push(muRow);
+            const oppMatch = summary.replace(/^\[.\]\s*/, '').match(/\s(?:vs\.?|at)\s+(.+)$/i);
+            muIcalRows.push({ row: muRow, sportKey: normSportTitle(sportName), dayET: deriveDayET(eventDate.getTime()), oppNorm: normSportTitle(oppMatch ? oppMatch[1] : ''), scheduleSlug, tags: [...new Set(tags)], ticketLink, streamLink, scheduleSlugForLive: scheduleSlug });
             muAthCount++;
         }
         console.log(`✅ MU Athletics: ${muAthCount} events`);
+
+        // ===== 1b. SIDEARM PAYLOAD RECONCILE (2026-09-28) =====
+        // The schedule payload (decoded in the recap prefetch) is the authority for results,
+        // home/away/NEUTRAL, and completeness. iCal rows are matched by sport + ET day +
+        // opponent; matched rows take the payload's result/score/neutral/recap; games the
+        // iCal never published are CREATED with the same tag set as iCal rows (same source
+        // bucket — matcher/ICS parity, not a new event source). Games outside the scrape
+        // window are ignored.
+        try {
+            let recFilled = 0, recCreated = 0, neutralStamped = 0, recapFilled = 0;
+            const missing = [];
+            const recordMismatch = [];
+            const oppKey = s => normSportTitle(s).replace(/\b(university|college|the|of|state|st)\b/g, ' ').replace(/\s+/g, ' ').trim();
+            for (const [sportKey, sched] of muScheduleCache) {
+                const rowsForSport = muIcalRows.filter(r => r.sportKey === sportKey);
+                if (!rowsForSport.length && !sched.games.length) continue;
+                const seen = new Set();
+                for (const g of sched.games) {
+                    const ms = parseEventInstant(g.date);     // payload dates are ET wall-clock (no offset)
+                    if (isNaN(ms)) continue;
+                    const inst = new Date(ms);
+                    if (inst < pastDate || inst >= futureDate) continue;
+                    const dayET = deriveDayET(ms);
+                    const gOpp = oppKey(g.opponent);
+                    const cands = rowsForSport.filter(r => r.dayET === dayET && !seen.has(r));
+                    let hit = cands.find(r => { const ro = oppKey(r.oppNorm); return ro && gOpp && (ro === gOpp || ro.includes(gOpp) || gOpp.includes(ro)); });
+                    if (!hit && cands.length === 1 && !gOpp) hit = cands[0];
+                    if (!hit && cands.length === 1) {
+                        // same sport, same day, one candidate, opponent spelled differently
+                        // (e.g. "Indiana (PA)" vs "IUP") — accept it; doubleheaders always have 2+.
+                        hit = cands[0];
+                    }
+                    const res = g.result && /^[WLT]$/.test(g.result.status) && g.result.team != null && g.result.opp != null ? g.result : null;
+                    const score = res ? `${res.team}-${res.opp}` : '';
+                    if (hit) {
+                        seen.add(hit);
+                        const row = hit.row;
+                        if (res && (row.gameResult !== res.status || row.gameScore !== score)) { row.gameResult = res.status; row.gameScore = score; recFilled++; }
+                        if (g.indicator === 'N' && !row.neutralSite) { row.neutralSite = true; neutralStamped++; }
+                        if (g.indicator !== 'N' && row.neutralSite) delete row.neutralSite;
+                        if (res && res.recap && /\/schedule(\/\d{4})?$/.test(row.sourceLink || '')) { row.sourceLink = 'https://millersvilleathletics.com' + res.recap; recapFilled++; }
+                        continue;
+                    }
+                    // Not in the iCal → create it (the Goldey-Beacom case).
+                    const isHome = g.indicator === 'H';
+                    const sportTitle = sched.sportTitle;
+                    const tags = ["MU", "Athletic Competitions", "Athletics"];
+                    if (isHome) tags.push("Home Game Mode");
+                    if (/women's/i.test(sportTitle)) tags.push("Women's"); else if (/men's/i.test(sportTitle)) tags.push("Men's");
+                    sportsList.forEach(s => { if (sportTitle.toLowerCase().includes(s.toLowerCase())) tags.push(s); });
+                    if (/track/i.test(sportTitle) && !tags.includes('Track')) tags.push('Track');
+                    if (/golf/i.test(sportTitle) && !tags.includes('Golf')) tags.push('Golf');
+                    const atVs = g.atVs || (isHome ? 'vs' : 'at');
+                    const title = `Millersville University ${sportTitle} ${atVs} ${g.opponent}`.trim();
+                    const location = isHome ? ('Millersville, PA' + (g.facility ? ', ' + g.facility : '')) : (g.location || 'TBD');
+                    const sourceLink = res && res.recap ? 'https://millersvilleathletics.com' + res.recap
+                        : `https://millersvilleathletics.com/sports/${sched.slug}` + (res ? '/schedule' : '');
+                    events.push({
+                        title, date: inst.toISOString(), endTime: undefined, location,
+                        tags: [...new Set(tags)], price: 'Free', ticketLink: '', sourceLink,
+                        gameResult: res ? res.status : '', gameScore: score, streamLink: '', isLive: false,
+                        ...(g.indicator === 'N' ? { neutralSite: true } : {}),
+                        _sidearmPayloadCreated: true
+                    });
+                    recCreated++;
+                    missing.push(`${sportTitle} ${dayET} ${atVs} ${g.opponent}${res ? ' (' + res.status + ' ' + score + ')' : ''}`);
+                }
+                // Record canary: rows (after fill + create) vs Sidearm's published overall.
+                const pub = sched.record && sched.record.overall;
+                if (pub) {
+                    const tally = { w: 0, l: 0, t: 0 };
+                    events.forEach(e => { if ((e.tags || []).includes('MU') && (e.tags || []).includes('Athletic Competitions') && normSportTitle(e.title.replace(/^Millersville University\s+/, '').split(/\s(?:vs\.?|at)\s/i)[0]) === sportKey && e.gameResult) { if (e.gameResult === 'W') tally.w++; else if (e.gameResult === 'L') tally.l++; else if (e.gameResult === 'T') tally.t++; } });
+                    if (tally.w !== pub.w || tally.l !== pub.l || tally.t !== pub.t) recordMismatch.push(`${sched.sportTitle}: rows ${tally.w}-${tally.l}${tally.t ? '-' + tally.t : ''} vs Sidearm ${pub.w}-${pub.l}${pub.t ? '-' + pub.t : ''}`);
+                }
+            }
+            console.log(`  🧾 Sidearm payload: ${muScheduleCache.size} sport(s) decoded — ${recFilled} result(s) set, ${neutralStamped} neutral-site stamp(s), ${recapFilled} recap link(s), ${recCreated} game(s) CREATED that the iCal lacks`);
+            if (missing.length) { console.log(`  ⚠️ Sidearm iCal is missing ${missing.length} game(s) the schedule payload has (created from the payload):`); missing.forEach(m => console.log(`     • ${m}`)); }
+            if (recordMismatch.length) { console.log(`  ⚠️ MU record mismatch (rows vs Sidearm published — window-limited seasons are expected to differ early/late):`); recordMismatch.forEach(m => console.log(`     • ${m}`)); }
+            else if (muScheduleCache.size) console.log(`  ✓ MU records match Sidearm for every decoded sport`);
+        } catch (e) { console.log(`  ⚠️ Sidearm payload reconcile error: ${e.message}`); }
     } catch (e) { console.error("❌ MU Athletics error:", e.message); }
 
     // ===== PENN MANOR — shared TEC REST fetcher (2026-09-17) =====
@@ -5508,6 +5656,88 @@ async function runScraper() {
     // Hard-Rule-7 wiring: hub-all in lib/eventMatch.js + events.ics.php +
     // app.js. Directory row: slug `the-hub` (separate from the Campus
     // Cupboard row — two listings, one building).
+
+    // ===== PENN MANOR SCORES FROM DISTRICT 3 POWER RANKINGS (2026-09-28) =====
+    // powerranking.gimpsoftware.com is the PIAA District 3 power-ranking site: one static
+    // per-team schedule file per sport (Schedules/Penn_Manor<Sport>.html, spaces → "_")
+    // with every game as "YYYY-MM-DD H|A vs Opponent(3) W|L|T n-n", plus the ranking page
+    // (<Sport>3Ranking.html) whose Penn Manor row carries the official W-L-T. This is the
+    // qualifying record — it carries TIES and posts before MaxPreps (2026-09-28: Girls
+    // Soccer feed 2-6 vs District 2-7-1; the 9/23 T 1-1 and 9/26 L 0-3 were absent from
+    // MaxPreps). Score-fill ONLY — never creates rows; runs BEFORE MaxPreps/Hudl so the
+    // precedence is D3 → MaxPreps → Hudl (both later blocks skip rows that already carry
+    // gameResult). No page for Cross Country or Wrestling (MaxPreps stays their source).
+    try {
+        const D3_BASE = 'https://powerranking.gimpsoftware.com/';
+        // PM sport tag + gender tag -> D3 sport name (file & ranking page share it).
+        const D3_SPORTS = [
+            { sport: 'Football', gender: '', d3: 'Football' },
+            { sport: 'Soccer', gender: 'Boys', d3: 'Soccer - Boys' }, { sport: 'Soccer', gender: 'Girls', d3: 'Soccer - Girls' },
+            { sport: 'Field Hockey', gender: '', d3: 'Field Hockey' },
+            { sport: 'Volleyball', gender: 'Girls', d3: 'Volleyball - Girls' }, { sport: 'Volleyball', gender: 'Boys', d3: 'Volleyball - Boys' },
+            { sport: 'Tennis', gender: 'Girls', d3: 'Tennis - Girls' }, { sport: 'Tennis', gender: 'Boys', d3: 'Tennis - Boys' },
+            { sport: 'Golf', gender: '', d3: 'Golf - Boys' },
+            { sport: 'Basketball', gender: 'Boys', d3: 'Basketball - Boys' }, { sport: 'Basketball', gender: 'Girls', d3: 'Basketball - Girls' },
+            { sport: 'Baseball', gender: '', d3: 'Baseball' }, { sport: 'Softball', gender: '', d3: 'Softball' },
+            { sport: 'Lacrosse', gender: 'Boys', d3: 'Lacrosse - Boys' }, { sport: 'Lacrosse', gender: 'Girls', d3: 'Lacrosse - Girls' }
+        ];
+        const nowMs = Date.now();
+        const isVarsityRow = ev => { const t = ev.tags || []; return t.includes('PM') && t.includes('Athletics') && !t.includes('JV') && !t.includes('Jr High'); };
+        const rowGender = ev => { const t = ev.tags || []; return t.includes('Girls') ? 'Girls' : t.includes('Boys') ? 'Boys' : ''; };
+        const rowSport = ev => (ev.tags || []).find(t => sportsList.includes(t)) || '';
+        const oppNorm = s => String(s || '').toLowerCase().replace(/\(\d+\)/g, '').replace(/\b(high school|senior high school|senior|jr\/sr|junior|area|hs)\b/g, ' ').replace(/[^a-z0-9]+/g, ' ').trim().split(' ')[0] || '';
+        const stripHtml = h => String(h || '').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ');
+        // In-season only: a varsity row for that sport/gender within ±30 days.
+        const active = D3_SPORTS.filter(d => events.some(ev => isVarsityRow(ev) && rowSport(ev) === d.sport && (!d.gender || rowGender(ev) === d.gender)
+            && Math.abs(new Date(ev.date).getTime() - nowMs) < 30 * 864e5));
+        if (active.length) {
+            console.log(`📡 Fetching Penn Manor results from District 3 power rankings (${active.map(a => a.d3).join(', ')})...`);
+            let d3Filled = 0; const d3Orphans = []; const d3Mismatch = [];
+            for (const d of active) {
+                const fileUrl = D3_BASE + 'Schedules/' + encodeURIComponent('Penn_Manor' + d.d3.replace(/ /g, '_') + '.html');
+                const rankUrl = D3_BASE + 'Rankings/' + encodeURIComponent(d.d3 + '3Ranking.html');
+                const ctrl = new AbortController(); const timer = setTimeout(() => ctrl.abort(), 10000);
+                try {
+                    const r = await fetch(fileUrl, { headers: baseHeaders, signal: ctrl.signal });
+                    if (!r.ok) { console.log(`  ⚠️ D3 ${d.d3}: HTTP ${r.status} on schedule file`); continue; }
+                    const text = stripHtml(await r.text());
+                    // "2026-09-23 A vs Cedar Crest(3) T 1-1"  (upcoming rows read "0-0" with no letter)
+                    const games = [...text.matchAll(/(\d{4}-\d{2}-\d{2})\s+([HAN])\s+(?:vs|at)\s+(.+?)\s+([WLT])\s+(\d+)\s*-\s*(\d+)\b/g)]
+                        .map(m => ({ date: m[1], ha: m[2], opp: m[3].trim(), result: m[4], score: `${m[5]}-${m[6]}` }));
+                    if (!games.length) { console.log(`  ⚠️ D3 ${d.d3}: 0 played games parsed — first 200 chars: ${text.slice(0, 200)}`); continue; }
+                    let sportFilled = 0;
+                    for (const g of games) {
+                        const rows = events.filter(ev => isVarsityRow(ev) && rowSport(ev) === d.sport && (!d.gender || rowGender(ev) === d.gender) && deriveDayET(new Date(ev.date).getTime()) === g.date);
+                        let hit = rows.length === 1 ? rows[0] : rows.find(ev => { const t = (ev.title || '').toLowerCase(); const o = oppNorm(g.opp); return o && t.includes(o); });
+                        if (!hit) { d3Orphans.push(`${d.d3} ${g.date} ${g.ha} vs ${g.opp} ${g.result} ${g.score}`); continue; }
+                        if (hit.gameResult !== g.result || hit.gameScore !== g.score) { hit.gameResult = g.result; hit.gameScore = g.score; hit.scoreSource = 'D3'; sportFilled++; }
+                    }
+                    d3Filled += sportFilled;
+                    console.log(`  ✅ D3 ${d.d3}: ${games.length} played game(s) on file, ${sportFilled} row(s) set/corrected`);
+                    // Record canary from the ranking page (Penn Manor row: W- / L- / T cells).
+                    try {
+                        const rr = await fetch(rankUrl, { headers: baseHeaders, signal: ctrl.signal });
+                        if (rr.ok) {
+                            const rh = await rr.text();
+                            const mm = rh.match(/showPos\(event,'Penn Manor'\)[\s\S]*?<td[^>]*>\s*(\d+)-\s*<\/td><td[^>]*>\s*(\d+)-\s*<\/td><td[^>]*>\s*(\d+)\s*<\/td>/);
+                            if (mm) {
+                                const pub = { w: +mm[1], l: +mm[2], t: +mm[3] };
+                                const tally = { w: 0, l: 0, t: 0 };
+                                events.forEach(ev => { if (isVarsityRow(ev) && rowSport(ev) === d.sport && (!d.gender || rowGender(ev) === d.gender) && ev.gameResult) { if (ev.gameResult === 'W') tally.w++; else if (ev.gameResult === 'L') tally.l++; else if (ev.gameResult === 'T') tally.t++; } });
+                                if (tally.w !== pub.w || tally.l !== pub.l || tally.t !== pub.t) d3Mismatch.push(`${d.d3}: rows ${tally.w}-${tally.l}-${tally.t} vs District ${pub.w}-${pub.l}-${pub.t}`);
+                            }
+                        }
+                    } catch (_) { /* canary only */ }
+                } catch (e) {
+                    console.log(`  ⚠️ D3 ${d.d3}: ${e.name === 'AbortError' ? 'timeout after 10s' : e.message}`);
+                } finally { clearTimeout(timer); }
+            }
+            console.log(`🏆 D3 results applied: ${d3Filled} game(s) across ${active.length} sport(s)`);
+            if (d3Orphans.length) { console.log(`  ⚠️ D3 game(s) with no matching TEC varsity row (feed gap or opponent spelling):`); d3Orphans.forEach(o => console.log(`     • ${o}`)); }
+            if (d3Mismatch.length) { console.log(`  ⚠️ PM record mismatch (rows vs District 3):`); d3Mismatch.forEach(o => console.log(`     • ${o}`)); }
+            else console.log(`  ✓ PM records match District 3 for every active sport`);
+        }
+    } catch (e) { console.log(`  ⚠️ District 3 results error: ${e.message}`); }
 
     // ===== PENN MANOR SCORES FROM MAXPREPS =====
     try {

@@ -394,6 +394,12 @@ async function main() {
         audience: audience || 'mu-only'
       };
       if (endDt && endDt > dt) e.endTime = endDt.toISOString();
+      // Registration (2026-09-28): a Deadline makes the row a full signup — it
+      // keeps its timeline slot on its Date AND joins the Marauder Upcoming
+      // Signups box with a countdown (app.js: registrationDeadline + audience
+      // mu-only). Register-ish text with no Deadline = badge + Register Now only.
+      if (deadlineDt) { e.registrationRequired = true; e.registrationDeadline = deadlineDt.toISOString(); if (opensDt) e.registrationOpens = opensDt.toISOString(); }
+      else if (/registration|register|sign\s*up|rsvp/i.test(description + ' ' + title)) e.registrationRequired = true;
       if (description) e.description = description;
       if (family) e.kidFriendly = true;
       campusLifeEvents.push(e);

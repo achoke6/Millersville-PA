@@ -4412,6 +4412,8 @@ async function runScraper() {
                 if (isNaN(evDate.getTime())) { skipped++; continue; }
                 if (evDate < cutoff) { stale++; continue; }
                 if (ev.status !== 'approved') { skipped++; continue; }
+                const regDl = ev.registrationDeadline ? new Date(ev.registrationDeadline) : null;
+                const regOpen = !(regDl && !isNaN(regDl.getTime()) && regDl < now);
 
                 events.push({
                     _overrideCreated: true,
@@ -4426,10 +4428,17 @@ async function runScraper() {
                     gameResult: '', gameScore: '', streamLink: '', isLive: false,
                     audience: ev.audience || 'mu-only',
                     ...(ev.description ? { description: ev.description } : {}),
-                    ...(ev.kidFriendly === true ? { kidFriendly: true } : {})
+                    ...(ev.kidFriendly === true ? { kidFriendly: true } : {}),
+                    // Registration pass-through (2026-09-28). A dated workshop whose
+                    // sign-up has CLOSED still happens, so unlike the PM consumer the
+                    // event stays; only the registration fields are dropped (badge
+                    // and Upcoming-Signups row vanish on their own).
+                    ...(regOpen && ev.registrationRequired === true ? { registrationRequired: true } : {}),
+                    ...(regOpen && ev.registrationDeadline ? { registrationDeadline: new Date(ev.registrationDeadline).toISOString() } : {}),
+                    ...(regOpen && ev.registrationOpens ? { registrationOpens: new Date(ev.registrationOpens).toISOString() } : {})
                 });
                 added++;
-                console.log(`  ➕ Campus Life (IG) CREATED: "${ev.title}" (${ev.date})`);
+                console.log(`  ➕ Campus Life (IG) CREATED: "${ev.title}" (${ev.date})${ev.registrationDeadline ? (regOpen ? ' [signup, closes ' + ev.registrationDeadline + ']' : ' [registration closed — event kept]') : ''}`);
             }
 
             if (added > 0 || stale > 0 || skipped > 0) {

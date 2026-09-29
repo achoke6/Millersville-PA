@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "10:00",
+      "temp": "67",
+      "dewpoint": "58",
+      "rh": "73",
+      "windDir": "NNW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "10.9",
+      "condition": "None"
+    },
+    {
+      "time": "09:00",
+      "temp": "65",
+      "dewpoint": "59",
+      "rh": "79",
+      "windDir": "NW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "11.0",
+      "condition": "None"
+    },
+    {
       "time": "08:00",
       "temp": "64",
       "dewpoint": "59",
@@ -169,28 +191,6 @@
       "windSpeed": "1",
       "precip": "0.00",
       "visibility": "10.1",
-      "condition": "None"
-    },
-    {
-      "time": "04:00",
-      "temp": "63",
-      "dewpoint": "60",
-      "rh": "91",
-      "windDir": "WSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "11.0",
-      "condition": "None"
-    },
-    {
-      "time": "03:00",
-      "temp": "63",
-      "dewpoint": "60",
-      "rh": "89",
-      "windDir": "W",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "10.9",
       "condition": "None"
     }
   ],
@@ -514,9 +514,9 @@
     "yearMinDate": "January 21"
   },
   "discussion": {
-    "headline": "Nor'Easter to spoil weekend plans with wind, rain",
-    "dateLine": "12:30 p.m. Friday, September 25, 2026, Update",
-    "excerpt": "The last full week of September will end on a mostly sunny, dry, breezy and pleasant note this afternoon with high temperatures in the low-to-mid 70s and dewpoints around 50°F. A sprawling high pressure system over southeastern Canada and the Great Lakes region will promote the beautiful conditions. …",
+    "headline": "October to kick off on unseasonably warm and muggy note",
+    "dateLine": "10:30 a.m. Tuesday, September 29, 2026",
+    "excerpt": "As expected, the Nor'easter spoiled outdoor plans across central and eastern PA during the last weekend of September. Gusty winds, showers and bands of steadier rain rotated around the backside of the system from northeast-to-southwest across the region. Rainfall amounts gradually increased from west-to-east and ranged from 0.25\" or less in parts of Franklin and Adams Counties to over 2\" in Philadelphia (see below). …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -554,5 +554,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-09-29T12:59:12.833Z"
+  "updated": "2026-09-29T14:21:08.888Z"
 }

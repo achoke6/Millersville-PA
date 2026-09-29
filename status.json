@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-09-29T13:02:19.286Z",
-  "totalEvents": 1835,
-  "withDescription": 773,
+  "generatedAt": "2026-09-29T14:23:54.077Z",
+  "totalEvents": 1836,
+  "withDescription": 774,
   "withImage": 218,
   "familyFriendly": 79,
   "eventsToday": 32,
@@ -10,7 +10,7 @@
     "muCalendar": 210,
     "artsmu": 20,
     "campsAlumni": 31,
-    "muGetInvolved": 411,
+    "muGetInvolved": 412,
     "pennManor": 556,
     "borough": 63,
     "vfw": 6,
@@ -151,13 +151,13 @@
       "Campus Life": 1
     },
     "stalePast": 13,
-    "lastSyncAt": "2026-09-29T12:59:09.453Z"
+    "lastSyncAt": "2026-09-29T14:21:07.104Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 9,
-    "checkedAt": "2026-09-29T13:02:11.392Z"
+    "checkedAt": "2026-09-29T14:23:41.500Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -224,17 +224,73 @@
         "key": "pmHudl.matched",
         "ok": true,
         "matched": 25,
-        "withBroadcasts": 26
+        "withBroadcasts": 25
       }
     ]
   },
   "recentlyAdded": [
     {
-      "key": "Traffic Commission Meeting|2026-09-30T12:30:00.000Z",
-      "firstSeenAt": "2026-09-29T04:18:13.613Z",
-      "title": "Traffic Commission Meeting",
+      "key": "Yoga Club Meeting|2026-09-21T23:00:00.000Z",
+      "firstSeenAt": "2026-09-29T14:23:54.073Z",
+      "title": "Yoga Club Meeting",
+      "source": "MU",
+      "date": "2026-09-21T23:00:00.000Z"
+    },
+    {
+      "key": "Traffic Commission Meeting-CANCELED|2026-09-30T12:30:00.000Z",
+      "firstSeenAt": "2026-09-29T14:23:54.073Z",
+      "title": "Traffic Commission Meeting-CANCELED",
       "source": "Manor",
       "date": "2026-09-30T12:30:00.000Z"
+    },
+    {
+      "key": "Leadership Foundations: Who Am I as a Leader?|2026-09-30T16:00:00.000Z",
+      "firstSeenAt": "2026-09-29T14:23:54.073Z",
+      "title": "Leadership Foundations: Who Am I as a Leader?",
+      "source": "MU",
+      "date": "2026-09-30T16:00:00.000Z"
+    },
+    {
+      "key": "Leadership Foundations: Walking Your Talk|2026-10-07T16:00:00.000Z",
+      "firstSeenAt": "2026-09-29T14:23:54.073Z",
+      "title": "Leadership Foundations: Walking Your Talk",
+      "source": "MU",
+      "date": "2026-10-07T16:00:00.000Z"
+    },
+    {
+      "key": "Big Chef THC \"No Sleep\" Release Show|2026-10-08T21:00:00.000Z",
+      "firstSeenAt": "2026-09-29T14:23:54.073Z",
+      "title": "Big Chef THC \"No Sleep\" Release Show",
+      "source": "MU",
+      "date": "2026-10-08T21:00:00.000Z"
+    },
+    {
+      "key": "Leadership Foundations: Leadership Through Commitment|2026-10-14T16:00:00.000Z",
+      "firstSeenAt": "2026-09-29T14:23:54.073Z",
+      "title": "Leadership Foundations: Leadership Through Commitment",
+      "source": "MU",
+      "date": "2026-10-14T16:00:00.000Z"
+    },
+    {
+      "key": "Beyond the Surface: Recognizing When Someone Needs Support|2026-10-14T18:30:00.000Z",
+      "firstSeenAt": "2026-09-29T14:23:54.073Z",
+      "title": "Beyond the Surface: Recognizing When Someone Needs Support",
+      "source": "MU",
+      "date": "2026-10-14T18:30:00.000Z"
+    },
+    {
+      "key": "Penn Manor Rec Basketball - Winter 2026-27 Registration|2026-10-15T22:00:00.000Z",
+      "firstSeenAt": "2026-09-29T14:23:54.073Z",
+      "title": "Penn Manor Rec Basketball - Winter 2026-27 Registration",
+      "source": "Other",
+      "date": "2026-10-15T22:00:00.000Z"
+    },
+    {
+      "key": "RUF Bible Study|2026-10-20T19:00:00",
+      "firstSeenAt": "2026-09-29T14:23:54.073Z",
+      "title": "RUF Bible Study",
+      "source": "MU",
+      "date": "2026-10-20T19:00:00"
     },
     {
       "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
@@ -242,63 +298,7 @@
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2026-10-05T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-10-07T23:00:00.000Z",
-      "firstSeenAt": "2026-09-29T04:18:13.613Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-10-07T23:00:00.000Z"
-    },
-    {
-      "key": "Planning Commission|2026-10-14T23:00:00.000Z",
-      "firstSeenAt": "2026-09-29T04:18:13.613Z",
-      "title": "Planning Commission",
-      "source": "Manor",
-      "date": "2026-10-14T23:00:00.000Z"
-    },
-    {
-      "key": "Mock Trial Club Meeting|2026-10-19T21:00:00.000Z",
-      "firstSeenAt": "2026-09-29T04:18:13.613Z",
-      "title": "Mock Trial Club Meeting",
-      "source": "MU",
-      "date": "2026-10-19T21:00:00.000Z"
-    },
-    {
-      "key": "Club Softball Practice|2026-10-19T22:00:00.000Z",
-      "firstSeenAt": "2026-09-29T04:18:13.613Z",
-      "title": "Club Softball Practice",
-      "source": "MU",
-      "date": "2026-10-19T22:00:00.000Z"
-    },
-    {
-      "key": "Study Hours / Chapter|2026-10-19T22:00:00.000Z",
-      "firstSeenAt": "2026-09-29T04:18:13.613Z",
-      "title": "Study Hours / Chapter",
-      "source": "MU",
-      "date": "2026-10-19T22:00:00.000Z"
-    },
-    {
-      "key": "BCM Men's Bible Study|2026-10-19T23:00:00.000Z",
-      "firstSeenAt": "2026-09-29T04:18:13.613Z",
-      "title": "BCM Men's Bible Study",
-      "source": "MU",
-      "date": "2026-10-19T23:00:00.000Z"
-    },
-    {
-      "key": "BCM Women's Bible Study|2026-10-19T23:00:00.000Z",
-      "firstSeenAt": "2026-09-29T04:18:13.613Z",
-      "title": "BCM Women's Bible Study",
-      "source": "MU",
-      "date": "2026-10-19T23:00:00.000Z"
-    },
-    {
-      "key": "Club Tennis Practice|2026-10-19T23:00:00.000Z",
-      "firstSeenAt": "2026-09-29T04:18:13.613Z",
-      "title": "Club Tennis Practice",
-      "source": "MU",
-      "date": "2026-10-19T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 9
 }

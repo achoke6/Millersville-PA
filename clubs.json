@@ -44,12 +44,12 @@
   },
   {
     "name": "Alliance for Social Change",
-    "category": "Meeting",
+    "category": "Academic",
     "categories": [
-      "Meeting"
+      "Academic"
     ],
-    "shortName": "",
-    "id": ""
+    "shortName": "ASC",
+    "id": "allianceforsocialchange"
   },
   {
     "name": "Alpha Sigma Alpha",
@@ -690,10 +690,8 @@
   },
   {
     "name": "Expressions Dance",
-    "category": "Fundraiser",
-    "categories": [
-      "Fundraiser"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1142,9 +1140,9 @@
   },
   {
     "name": "Millersville Men's Club Soccer",
-    "category": "Competition",
+    "category": "Sporting",
     "categories": [
-      "Competition"
+      "Sporting"
     ],
     "shortName": "Men's Club Soccer",
     "id": ""
@@ -1827,8 +1825,7 @@
     "name": "WIXQ 91.7 FM",
     "category": "Meeting",
     "categories": [
-      "Meeting",
-      "Social"
+      "Meeting"
     ],
     "shortName": "",
     "id": ""
@@ -1927,8 +1924,10 @@
   },
   {
     "name": "Yoga Club",
-    "category": "",
-    "categories": [],
+    "category": "Meeting",
+    "categories": [
+      "Meeting"
+    ],
     "shortName": "",
     "id": ""
   },

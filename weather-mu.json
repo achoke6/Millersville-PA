@@ -128,6 +128,61 @@
   },
   "observations": [
     {
+      "time": "00:00",
+      "temp": "64",
+      "dewpoint": "60",
+      "rh": "86",
+      "windDir": "NW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "11.2",
+      "condition": "None"
+    },
+    {
+      "time": "23:00",
+      "temp": "64",
+      "dewpoint": "60",
+      "rh": "86",
+      "windDir": "SW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "11.5",
+      "condition": "None"
+    },
+    {
+      "time": "22:00",
+      "temp": "65",
+      "dewpoint": "60",
+      "rh": "85",
+      "windDir": "W",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "11.6",
+      "condition": "None"
+    },
+    {
+      "time": "21:00",
+      "temp": "65",
+      "dewpoint": "60",
+      "rh": "84",
+      "windDir": "WSW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "11.6",
+      "condition": "None"
+    },
+    {
+      "time": "20:00",
+      "temp": "65",
+      "dewpoint": "60",
+      "rh": "82",
+      "windDir": "W",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "11.8",
+      "condition": "None"
+    },
+    {
       "time": "19:00",
       "temp": "66",
       "dewpoint": "59",
@@ -136,61 +191,6 @@
       "windSpeed": "2",
       "precip": "0.00",
       "visibility": "12.0",
-      "condition": "None"
-    },
-    {
-      "time": "18:00",
-      "temp": "67",
-      "dewpoint": "59",
-      "rh": "75",
-      "windDir": "NNW",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "12.0",
-      "condition": "None"
-    },
-    {
-      "time": "17:00",
-      "temp": "68",
-      "dewpoint": "59",
-      "rh": "74",
-      "windDir": "NNW",
-      "windSpeed": "5",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "16:00",
-      "temp": "67",
-      "dewpoint": "59",
-      "rh": "74",
-      "windDir": "NW",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "11.9",
-      "condition": "None"
-    },
-    {
-      "time": "15:00",
-      "temp": "68",
-      "dewpoint": "59",
-      "rh": "75",
-      "windDir": "WSW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "14:00",
-      "temp": "67",
-      "dewpoint": "59",
-      "rh": "77",
-      "windDir": "NNW",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "12 +",
       "condition": "None"
     }
   ],
@@ -493,10 +493,21 @@
         "windSpeed": "23",
         "windTime": "13:56",
         "rain": "0.59"
+      },
+      {
+        "date": "09/28",
+        "max": "68",
+        "maxTime": "14:57",
+        "min": "59",
+        "minTime": "05:08",
+        "windDir": "330",
+        "windSpeed": "13",
+        "windTime": "16:12",
+        "rain": "0.13"
       }
     ],
-    "totalRain": "5.10",
-    "ytdRain": "29.49",
+    "totalRain": "5.23",
+    "ytdRain": "29.62",
     "yearMax": "102",
     "yearMaxDate": "July 03",
     "yearMin": "1",
@@ -512,36 +523,7 @@
     "radar": "https://sirocco.accuweather.com/nx_mosaic_640x480c/RE/inmaREPA_.gif",
     "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
   },
-  "videos": [
-    {
-      "title": "Short Term Forecast 09/28/2026",
-      "videoId": "oaTHEk2dRqk",
-      "url": "https://www.youtube.com/watch?v=oaTHEk2dRqk",
-      "published": "2026-09-28T13:43:01+00:00",
-      "thumbnail": "https://i4.ytimg.com/vi/oaTHEk2dRqk/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 09/25/2026",
-      "videoId": "7awGTsr7-eE",
-      "url": "https://www.youtube.com/watch?v=7awGTsr7-eE",
-      "published": "2026-09-25T14:59:14+00:00",
-      "thumbnail": "https://i4.ytimg.com/vi/7awGTsr7-eE/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 09/24/2026",
-      "videoId": "FzbH9Hc7n5E",
-      "url": "https://www.youtube.com/watch?v=FzbH9Hc7n5E",
-      "published": "2026-09-24T16:00:04+00:00",
-      "thumbnail": "https://i3.ytimg.com/vi/FzbH9Hc7n5E/hqdefault.jpg"
-    },
-    {
-      "title": "Medium Range Forecast 09/24/2026",
-      "videoId": "nY5IFTiql10",
-      "url": "https://www.youtube.com/watch?v=nY5IFTiql10",
-      "published": "2026-09-24T14:17:43+00:00",
-      "thumbnail": "https://i3.ytimg.com/vi/nY5IFTiql10/hqdefault.jpg"
-    }
-  ],
+  "videos": [],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-09-28T23:41:45.267Z"
+  "updated": "2026-09-29T04:14:54.892Z"
 }

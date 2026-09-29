@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-29T04:18:13.618Z",
+  "generatedAt": "2026-09-29T11:08:48.280Z",
   "totalEvents": 1835,
   "withDescription": 773,
   "withImage": 218,
@@ -151,13 +151,13 @@
       "Campus Life": 1
     },
     "stalePast": 13,
-    "lastSyncAt": "2026-09-29T04:14:52.352Z"
+    "lastSyncAt": "2026-09-29T11:05:36.904Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 9,
-    "checkedAt": "2026-09-29T04:18:03.965Z"
+    "checkedAt": "2026-09-29T11:08:38.508Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -166,7 +166,7 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 365,
+        "value": 364,
         "min": 45,
         "skipped": false
       },
@@ -180,7 +180,7 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 249,
+        "value": 248,
         "min": 30,
         "skipped": false
       },
@@ -300,5 +300,5 @@
       "date": "2026-10-19T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 59
+  "addedLastRun": 0
 }

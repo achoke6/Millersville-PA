@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-09-29T17:41:11.481Z",
-  "totalEvents": 1872,
-  "withDescription": 810,
+  "generatedAt": "2026-09-29T21:56:02.763Z",
+  "totalEvents": 1889,
+  "withDescription": 824,
   "withImage": 219,
   "familyFriendly": 80,
   "eventsToday": 31,
   "sources": {
-    "muAthletics": 331,
-    "muCalendar": 215,
+    "muAthletics": 332,
+    "muCalendar": 218,
     "artsmu": 20,
     "campsAlumni": 31,
-    "muGetInvolved": 445,
-    "pennManor": 556,
+    "muGetInvolved": 457,
+    "pennManor": 557,
     "borough": 63,
     "vfw": 6,
     "phantomPower": 12,
@@ -130,10 +130,10 @@
     }
   },
   "sports": {
-    "total": 788,
-    "scored": 103,
+    "total": 790,
+    "scored": 104,
     "wins": 54,
-    "losses": 42,
+    "losses": 43,
     "ties": 7
   },
   "registrations": {
@@ -151,13 +151,13 @@
       "Campus Life": 1
     },
     "stalePast": 13,
-    "lastSyncAt": "2026-09-29T17:37:58.550Z"
+    "lastSyncAt": "2026-09-29T21:51:43.676Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 9,
-    "checkedAt": "2026-09-29T17:41:01.767Z"
+    "checkedAt": "2026-09-29T21:54:50.022Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -194,14 +194,14 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 457,
+        "value": 458,
         "min": 150,
         "skipped": false
       },
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 331,
+        "value": 332,
         "min": 100,
         "skipped": false
       },
@@ -230,75 +230,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Tuesday Tabling|2026-09-08T11:30:00",
-      "firstSeenAt": "2026-09-29T17:41:11.478Z",
-      "title": "Tuesday Tabling",
+      "key": "Millersville University Women's Volleyball vs Caldwell|2026-08-29T17:00:00.000Z",
+      "firstSeenAt": "2026-09-29T21:56:02.760Z",
+      "title": "Millersville University Women's Volleyball vs Caldwell",
       "source": "MU",
-      "date": "2026-09-08T11:30:00"
+      "date": "2026-08-29T17:00:00.000Z"
     },
     {
-      "key": "'Ville Men's Club Soccer vs Coal Region Soccer Club|2026-09-20T17:00:00",
-      "firstSeenAt": "2026-09-29T17:41:11.478Z",
-      "title": "'Ville Men's Club Soccer vs Coal Region Soccer Club",
+      "key": "Yoga Club Meeting|2026-09-21T23:00:00.000Z",
+      "firstSeenAt": "2026-09-29T21:56:02.760Z",
+      "title": "Yoga Club Meeting",
       "source": "MU",
-      "date": "2026-09-20T17:00:00"
+      "date": "2026-09-21T23:00:00.000Z"
     },
     {
-      "key": "Alliance for social change general meeting|2026-09-21T18:00:00",
-      "firstSeenAt": "2026-09-29T17:41:11.478Z",
-      "title": "Alliance for social change general meeting",
+      "key": "Bevs and Ballots - Civic Engagement|2026-10-06T17:00:00",
+      "firstSeenAt": "2026-09-29T21:56:02.760Z",
+      "title": "Bevs and Ballots - Civic Engagement",
       "source": "MU",
-      "date": "2026-09-21T18:00:00"
+      "date": "2026-10-06T17:00:00"
     },
     {
-      "key": "Club Softball Practice|2026-09-21T22:00:00.000Z",
-      "firstSeenAt": "2026-09-29T17:41:11.478Z",
-      "title": "Club Softball Practice",
+      "key": "Real Talk, Real Skills|2026-10-08T16:00:00.000Z",
+      "firstSeenAt": "2026-09-29T21:56:02.760Z",
+      "title": "Real Talk, Real Skills",
       "source": "MU",
-      "date": "2026-09-21T22:00:00.000Z"
+      "date": "2026-10-08T16:00:00.000Z"
     },
     {
-      "key": "Tuesday Tabling|2026-09-22T11:30:00",
-      "firstSeenAt": "2026-09-29T17:41:11.478Z",
-      "title": "Tuesday Tabling",
+      "key": "Men's Club Soccer Home Game|2026-10-08T20:00:00",
+      "firstSeenAt": "2026-09-29T21:56:02.760Z",
+      "title": "Men's Club Soccer Home Game",
       "source": "MU",
-      "date": "2026-09-22T11:30:00"
+      "date": "2026-10-08T20:00:00"
     },
     {
-      "key": "FSL: Phi Mu Delta Tabling|2026-09-23T12:00:00",
-      "firstSeenAt": "2026-09-29T17:41:11.478Z",
-      "title": "FSL: Phi Mu Delta Tabling",
+      "key": "Staff Meeting|2026-10-13T16:00:00",
+      "firstSeenAt": "2026-09-29T21:56:02.760Z",
+      "title": "Staff Meeting",
       "source": "MU",
-      "date": "2026-09-23T12:00:00"
+      "date": "2026-10-13T16:00:00"
     },
     {
-      "key": "FSL: Phi Mu Delta Tabling|2026-09-24T12:00:00",
-      "firstSeenAt": "2026-09-29T17:41:11.478Z",
-      "title": "FSL: Phi Mu Delta Tabling",
+      "key": "YDSA General Meeting|2026-10-20T18:30:00",
+      "firstSeenAt": "2026-09-29T21:56:02.760Z",
+      "title": "YDSA General Meeting",
       "source": "MU",
-      "date": "2026-09-24T12:00:00"
+      "date": "2026-10-20T18:30:00"
     },
     {
-      "key": "Sneakers 2 Stilettos Presents Yearbook Rewind|2026-09-25T16:00:00",
-      "firstSeenAt": "2026-09-29T17:41:11.478Z",
-      "title": "Sneakers 2 Stilettos Presents Yearbook Rewind",
+      "key": "Palestine Bakesale|2026-10-21T11:00:00",
+      "firstSeenAt": "2026-09-29T21:56:02.760Z",
+      "title": "Palestine Bakesale",
       "source": "MU",
-      "date": "2026-09-25T16:00:00"
+      "date": "2026-10-21T11:00:00"
     },
     {
-      "key": "Tuesday Tabling|2026-09-29T11:30:00",
-      "firstSeenAt": "2026-09-29T17:41:11.478Z",
-      "title": "Tuesday Tabling",
+      "key": "Palestine Bakesale|2026-10-22T11:00:00",
+      "firstSeenAt": "2026-09-29T21:56:02.760Z",
+      "title": "Palestine Bakesale",
       "source": "MU",
-      "date": "2026-09-29T11:30:00"
+      "date": "2026-10-22T11:00:00"
     },
     {
-      "key": "Puppy Raising Info Session|2026-10-01T16:30:00",
-      "firstSeenAt": "2026-09-29T17:41:11.478Z",
-      "title": "Puppy Raising Info Session",
+      "key": "Real Talk, Real Skills: Make It Make Cents!|2026-10-22T12:00:00",
+      "firstSeenAt": "2026-09-29T21:56:02.760Z",
+      "title": "Real Talk, Real Skills: Make It Make Cents!",
       "source": "MU",
-      "date": "2026-10-01T16:30:00"
+      "date": "2026-10-22T12:00:00"
     }
   ],
-  "addedLastRun": 58
+  "addedLastRun": 19
 }

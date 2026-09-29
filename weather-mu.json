@@ -1,27 +1,27 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Monday, September 28, 2026 at 07:56 AM (Harris, Leopold, Muller, Student Meteorologists)",
+    "issued": "Monday, September 28, 2026 at 05:28 PM (McGrath, White, Student Meteorologists)",
     "periods": [
-      {
-        "period": "Today",
-        "text": "Mostly cloudy and seasonable. High: 68-72"
-      },
       {
         "period": "Tonight",
         "text": "Partly cloudy and mild. Low: 56-60"
       },
       {
-        "period": "Tuesday",
+        "period": "Tomorrow",
         "text": "Partly sunny and pleasant. High: 72-76"
       },
       {
-        "period": "Tuesday Night",
+        "period": "Tomorrow Night",
         "text": "Mainly clear and mild. Low: 54-58"
       },
       {
         "period": "Wednesday",
         "text": "Mostly sunny and warmer. High: 76-80"
+      },
+      {
+        "period": "Thursday",
+        "text": "Mostly sunny and unseasonably warm. High: 80-84"
       }
     ]
   },
@@ -128,69 +128,69 @@
   },
   "observations": [
     {
-      "time": "11:00",
-      "temp": "65",
-      "dewpoint": "59",
-      "rh": "81",
-      "windDir": "NNE",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "11.5",
-      "condition": "None"
-    },
-    {
-      "time": "10:00",
+      "time": "07:00",
       "temp": "63",
       "dewpoint": "60",
-      "rh": "88",
-      "windDir": "NNW",
-      "windSpeed": "3",
+      "rh": "91",
+      "windDir": "W",
+      "windSpeed": "1",
       "precip": "0.00",
-      "visibility": "11.9",
-      "condition": "None"
-    },
-    {
-      "time": "09:00",
-      "temp": "61",
-      "dewpoint": "59",
-      "rh": "93",
-      "windDir": "NNW",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "08:00",
-      "temp": "60",
-      "dewpoint": "59",
-      "rh": "97",
-      "windDir": "NNW",
-      "windSpeed": "4",
-      "precip": "0.01",
-      "visibility": "9.7",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "60",
-      "dewpoint": "59",
-      "rh": "97",
-      "windDir": "NNW",
-      "windSpeed": "3",
-      "precip": "0.06",
       "visibility": "10.4",
       "condition": "None"
     },
     {
       "time": "06:00",
-      "temp": "60",
-      "dewpoint": "59",
-      "rh": "98",
-      "windDir": "NNW",
-      "windSpeed": "3",
-      "precip": "0.03",
-      "visibility": "12 +",
+      "temp": "62",
+      "dewpoint": "60",
+      "rh": "93",
+      "windDir": "W",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "10.0",
+      "condition": "None"
+    },
+    {
+      "time": "05:00",
+      "temp": "62",
+      "dewpoint": "60",
+      "rh": "93",
+      "windDir": "W",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "10.1",
+      "condition": "None"
+    },
+    {
+      "time": "04:00",
+      "temp": "63",
+      "dewpoint": "60",
+      "rh": "91",
+      "windDir": "WSW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "11.0",
+      "condition": "None"
+    },
+    {
+      "time": "03:00",
+      "temp": "63",
+      "dewpoint": "60",
+      "rh": "89",
+      "windDir": "W",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "10.9",
+      "condition": "None"
+    },
+    {
+      "time": "02:00",
+      "temp": "63",
+      "dewpoint": "60",
+      "rh": "90",
+      "windDir": "WSW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "10.9",
       "condition": "None"
     }
   ],
@@ -493,10 +493,21 @@
         "windSpeed": "23",
         "windTime": "13:56",
         "rain": "0.59"
+      },
+      {
+        "date": "09/28",
+        "max": "68",
+        "maxTime": "14:57",
+        "min": "59",
+        "minTime": "05:08",
+        "windDir": "330",
+        "windSpeed": "13",
+        "windTime": "16:12",
+        "rain": "0.13"
       }
     ],
-    "totalRain": "5.10",
-    "ytdRain": "29.49",
+    "totalRain": "5.23",
+    "ytdRain": "29.62",
     "yearMax": "102",
     "yearMaxDate": "July 03",
     "yearMin": "1",
@@ -543,5 +554,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-09-28T15:59:09.018Z"
+  "updated": "2026-09-29T11:05:38.986Z"
 }

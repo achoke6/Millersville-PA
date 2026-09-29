@@ -66,6 +66,14 @@
 const fs = require('fs');
 const path = require('path');
 
+// Plain Date/Time cells (Campus Life writes Date PLAIN + Time-as-printed by
+// spec) are Eastern wall-clock. The GitHub runner is UTC, so without this
+// pin `new Date('2026-09-30T12:00:00')` lands at 8 AM ET (Leadership
+// Foundations, 2026-09-29). Node re-reads TZ on assignment; must run before
+// any Date construction. No-op on an ET dev box. ISO-with-offset cells are
+// unaffected; Date.now()/toISOString() are TZ-independent.
+process.env.TZ = 'America/New_York';
+
 const SHEET_URL = process.env.CANDIDATES_SHEET_CSV_URL;
 const OUT_DIR = process.env.CANDIDATES_OUT_DIR || path.join(__dirname, '..');
 
@@ -148,10 +156,10 @@ function parseEndTime(dateStr, timeStr) {
 
 // Parse a Date (+ optional Time) cell into a JS Date. Returns null if unusable.
 // If the Date has no time component and a Time is given, merge them. Default
-// time is 18:00. We DON'T force a timezone here — if the cell carries an
-// offset (ISO), it's respected; otherwise it's parsed in the runner's TZ, so
-// the sheet should use ISO-with-offset for precision. The Cowork task instructs
-// ISO-with-offset to avoid ambiguity.
+// time is 18:00. Plain cells are parsed as EASTERN wall-clock (process.env.TZ
+// is pinned at the top of this file, 2026-09-29); a cell that carries an
+// offset (ISO) is respected as written. Part 3 writes full ISO, Part 4
+// (Campus Life) writes plain Date + Time — both are correct under the pin.
 function parseDateTime(dateStr, timeStr) {
   dateStr = clean(dateStr);
   timeStr = clean(timeStr);

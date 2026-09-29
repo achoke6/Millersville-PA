@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-29T14:23:54.077Z",
-  "totalEvents": 1836,
-  "withDescription": 774,
-  "withImage": 218,
-  "familyFriendly": 79,
-  "eventsToday": 32,
+  "generatedAt": "2026-09-29T17:41:11.481Z",
+  "totalEvents": 1872,
+  "withDescription": 810,
+  "withImage": 219,
+  "familyFriendly": 80,
+  "eventsToday": 31,
   "sources": {
-    "muAthletics": 332,
-    "muCalendar": 210,
+    "muAthletics": 331,
+    "muCalendar": 215,
     "artsmu": 20,
     "campsAlumni": 31,
-    "muGetInvolved": 412,
+    "muGetInvolved": 445,
     "pennManor": 556,
     "borough": 63,
     "vfw": 6,
@@ -130,10 +130,10 @@
     }
   },
   "sports": {
-    "total": 789,
-    "scored": 104,
+    "total": 788,
+    "scored": 103,
     "wins": 54,
-    "losses": 43,
+    "losses": 42,
     "ties": 7
   },
   "registrations": {
@@ -151,13 +151,13 @@
       "Campus Life": 1
     },
     "stalePast": 13,
-    "lastSyncAt": "2026-09-29T14:21:07.104Z"
+    "lastSyncAt": "2026-09-29T17:37:58.550Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 9,
-    "checkedAt": "2026-09-29T14:23:41.500Z"
+    "checkedAt": "2026-09-29T17:41:01.767Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -201,7 +201,7 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 332,
+        "value": 331,
         "min": 100,
         "skipped": false
       },
@@ -224,81 +224,81 @@
         "key": "pmHudl.matched",
         "ok": true,
         "matched": 25,
-        "withBroadcasts": 25
+        "withBroadcasts": 26
       }
     ]
   },
   "recentlyAdded": [
     {
-      "key": "Yoga Club Meeting|2026-09-21T23:00:00.000Z",
-      "firstSeenAt": "2026-09-29T14:23:54.073Z",
-      "title": "Yoga Club Meeting",
+      "key": "Tuesday Tabling|2026-09-08T11:30:00",
+      "firstSeenAt": "2026-09-29T17:41:11.478Z",
+      "title": "Tuesday Tabling",
       "source": "MU",
-      "date": "2026-09-21T23:00:00.000Z"
+      "date": "2026-09-08T11:30:00"
     },
     {
-      "key": "Traffic Commission Meeting-CANCELED|2026-09-30T12:30:00.000Z",
-      "firstSeenAt": "2026-09-29T14:23:54.073Z",
-      "title": "Traffic Commission Meeting-CANCELED",
-      "source": "Manor",
-      "date": "2026-09-30T12:30:00.000Z"
-    },
-    {
-      "key": "Leadership Foundations: Who Am I as a Leader?|2026-09-30T16:00:00.000Z",
-      "firstSeenAt": "2026-09-29T14:23:54.073Z",
-      "title": "Leadership Foundations: Who Am I as a Leader?",
+      "key": "'Ville Men's Club Soccer vs Coal Region Soccer Club|2026-09-20T17:00:00",
+      "firstSeenAt": "2026-09-29T17:41:11.478Z",
+      "title": "'Ville Men's Club Soccer vs Coal Region Soccer Club",
       "source": "MU",
-      "date": "2026-09-30T16:00:00.000Z"
+      "date": "2026-09-20T17:00:00"
     },
     {
-      "key": "Leadership Foundations: Walking Your Talk|2026-10-07T16:00:00.000Z",
-      "firstSeenAt": "2026-09-29T14:23:54.073Z",
-      "title": "Leadership Foundations: Walking Your Talk",
+      "key": "Alliance for social change general meeting|2026-09-21T18:00:00",
+      "firstSeenAt": "2026-09-29T17:41:11.478Z",
+      "title": "Alliance for social change general meeting",
       "source": "MU",
-      "date": "2026-10-07T16:00:00.000Z"
+      "date": "2026-09-21T18:00:00"
     },
     {
-      "key": "Big Chef THC \"No Sleep\" Release Show|2026-10-08T21:00:00.000Z",
-      "firstSeenAt": "2026-09-29T14:23:54.073Z",
-      "title": "Big Chef THC \"No Sleep\" Release Show",
+      "key": "Club Softball Practice|2026-09-21T22:00:00.000Z",
+      "firstSeenAt": "2026-09-29T17:41:11.478Z",
+      "title": "Club Softball Practice",
       "source": "MU",
-      "date": "2026-10-08T21:00:00.000Z"
+      "date": "2026-09-21T22:00:00.000Z"
     },
     {
-      "key": "Leadership Foundations: Leadership Through Commitment|2026-10-14T16:00:00.000Z",
-      "firstSeenAt": "2026-09-29T14:23:54.073Z",
-      "title": "Leadership Foundations: Leadership Through Commitment",
+      "key": "Tuesday Tabling|2026-09-22T11:30:00",
+      "firstSeenAt": "2026-09-29T17:41:11.478Z",
+      "title": "Tuesday Tabling",
       "source": "MU",
-      "date": "2026-10-14T16:00:00.000Z"
+      "date": "2026-09-22T11:30:00"
     },
     {
-      "key": "Beyond the Surface: Recognizing When Someone Needs Support|2026-10-14T18:30:00.000Z",
-      "firstSeenAt": "2026-09-29T14:23:54.073Z",
-      "title": "Beyond the Surface: Recognizing When Someone Needs Support",
+      "key": "FSL: Phi Mu Delta Tabling|2026-09-23T12:00:00",
+      "firstSeenAt": "2026-09-29T17:41:11.478Z",
+      "title": "FSL: Phi Mu Delta Tabling",
       "source": "MU",
-      "date": "2026-10-14T18:30:00.000Z"
+      "date": "2026-09-23T12:00:00"
     },
     {
-      "key": "Penn Manor Rec Basketball - Winter 2026-27 Registration|2026-10-15T22:00:00.000Z",
-      "firstSeenAt": "2026-09-29T14:23:54.073Z",
-      "title": "Penn Manor Rec Basketball - Winter 2026-27 Registration",
-      "source": "Other",
-      "date": "2026-10-15T22:00:00.000Z"
-    },
-    {
-      "key": "RUF Bible Study|2026-10-20T19:00:00",
-      "firstSeenAt": "2026-09-29T14:23:54.073Z",
-      "title": "RUF Bible Study",
+      "key": "FSL: Phi Mu Delta Tabling|2026-09-24T12:00:00",
+      "firstSeenAt": "2026-09-29T17:41:11.478Z",
+      "title": "FSL: Phi Mu Delta Tabling",
       "source": "MU",
-      "date": "2026-10-20T19:00:00"
+      "date": "2026-09-24T12:00:00"
     },
     {
-      "key": "Supervisors Meeting|2026-10-05T23:00:00.000Z",
-      "firstSeenAt": "2026-09-29T04:18:13.613Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2026-10-05T23:00:00.000Z"
+      "key": "Sneakers 2 Stilettos Presents Yearbook Rewind|2026-09-25T16:00:00",
+      "firstSeenAt": "2026-09-29T17:41:11.478Z",
+      "title": "Sneakers 2 Stilettos Presents Yearbook Rewind",
+      "source": "MU",
+      "date": "2026-09-25T16:00:00"
+    },
+    {
+      "key": "Tuesday Tabling|2026-09-29T11:30:00",
+      "firstSeenAt": "2026-09-29T17:41:11.478Z",
+      "title": "Tuesday Tabling",
+      "source": "MU",
+      "date": "2026-09-29T11:30:00"
+    },
+    {
+      "key": "Puppy Raising Info Session|2026-10-01T16:30:00",
+      "firstSeenAt": "2026-09-29T17:41:11.478Z",
+      "title": "Puppy Raising Info Session",
+      "source": "MU",
+      "date": "2026-10-01T16:30:00"
     }
   ],
-  "addedLastRun": 9
+  "addedLastRun": 58
 }

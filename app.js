@@ -879,6 +879,7 @@ const SOURCE_UNLOCK_IDS = {
         'cs-dance','cs-running','cs-softball','cs-tennis','cs-frisbee'],
     // Sports page source pills
     'SP_PM':      allSportFeedIds('pm'),
+    'SP_MU':      allSportFeedIds('mu'),   // townie-side MU varsity gate (2026-09-30)
     'SP_Clubs':   ['clubs-sports'],
     // News page — Penn Manor and Borough news are community-side; hidden from
     // marauders by default. Each "unlocks" only via its matching news-* fav.
@@ -918,6 +919,7 @@ function shownKeyForItem(id) { return UNCOMMON_SUB_SOURCES[id] || id; }
 // Sources whose Show state can also live in per-item pref ids.
 const SOURCE_SHOW_ITEM_IDS = {
     'SP_PM': allSportFeedIds('pm'),
+    'SP_MU': allSportFeedIds('mu'),   // 2026-09-30
     'PM':    ['pm-music', 'pm-board']
 };
 // Render-time init for a chip's 👁 bit: its own key, plus the group's legacy
@@ -940,8 +942,11 @@ function isItemShownOrFaved(id) {
 // so that's the majority-optimal default. Townies explicitly opt in.
 function isSourceHiddenByAffiliation(source) {
     if (muAffiliation === 'townie') {
-        // Townies hide GetInvolved + MU Club Sports
-        return source === 'GetInvolved' || source === 'SP_Clubs';
+        // Townies hide GetInvolved + MU Club Sports + (2026-09-30) MU VARSITY sports
+        // ('SP_MU'): PM families largely don't follow MU athletics. Revealed by the
+        // Sports-page "+ MU" strip chip (blanket) or by starring an MU team (that team
+        // only -- muSportsEventHidden). Reverses the 09-18 "Option 2" mixed list.
+        return source === 'GetInvolved' || source === 'SP_Clubs' || source === 'SP_MU';
     }
     // Marauder OR unset/default: hide PM, Borough, Manor Twp., the whole Other
     // family (VFW, Phantom Power, Community, Raney Cellars, Jack's Tavern),
@@ -980,10 +985,12 @@ function isSourceHidden(source) {
 // split-sport id (gender tag missing on the event) matches either gender
 // variant; an unidentifiable sport rides along whenever ANY PM sport is
 // shown/faved (never silently stranded).
-function pmSportsEventHidden(e) {
-    if (!isSourceHiddenByAffiliation('SP_PM')) return false;
-    if (shownSources.has('SP_PM')) return false;
-    const ids = SOURCE_SHOW_ITEM_IDS['SP_PM'];
+// Generalized 2026-09-30 so the same per-sport gate serves SP_PM (students) and
+// SP_MU (townies). Body is the 08-03 pmSportsEventHidden verbatim, keyed by srcKey.
+function schoolSportsEventHidden(e, srcKey) {
+    if (!isSourceHiddenByAffiliation(srcKey)) return false;
+    if (shownSources.has(srcKey)) return false;
+    const ids = SOURCE_SHOW_ITEM_IDS[srcKey];
     const id = suggestFeedIdForEvent(e, true);
     if (id) {
         if (ids.indexOf(id) !== -1) return !isItemShownOrFaved(id);
@@ -991,6 +998,18 @@ function pmSportsEventHidden(e) {
         if (variants.length) return !variants.some(isItemShownOrFaved);
     }
     return !ids.some(isItemShownOrFaved);
+}
+function pmSportsEventHidden(e) { return schoolSportsEventHidden(e, 'SP_PM'); }
+// MU varsity for TOWNIES (2026-09-30): the Sports-page "+ MU" strip chip
+// (mapp_sports_strip_other, a display setting -- survives Clear Favs) is a
+// blanket reveal; otherwise per-team via ★ / 👁 exactly like PM sports for
+// students. Marauder/unset: never hidden (isSourceHiddenByAffiliation is false).
+// Consulted ONLY by renderSports' filterSport -- the home timeline keeps MU
+// games for townies on purpose (a local who sees the football game may go).
+function muSportsEventHidden(e) {
+    if (!isSourceHiddenByAffiliation('SP_MU')) return false;
+    if (spStripOtherOn()) return false;
+    return schoolSportsEventHidden(e, 'SP_MU');
 }
 // PM general events, parallel: pm-music / pm-board are individually
 // shown/faved; PM events matching neither item (no Music/Arts or Board/PTO
@@ -4608,7 +4627,9 @@ const SP_NO_RECORD_SPORTS = ['Cross Country', 'Golf', 'Track', 'Swimming', 'Bowl
 function spStripOtherOn() { try { return localStorage.getItem(SP_STRIP_OTHER_KEY) === '1'; } catch (e) { return false; } }
 window.spToggleStripOther = function() {
     try { localStorage.setItem(SP_STRIP_OTHER_KEY, spStripOtherOn() ? '0' : '1'); } catch (e) {}
-    renderTeamStrip();
+    // 2026-09-30: for townies the chip also governs the LIST (muSportsEventHidden),
+    // so re-render the rows too; renderSports() re-renders the strip itself.
+    renderSports();
 };
 // Primary school for the strip: locals → Penn Manor, everyone else (Marauder or
 // unset — default-marauder rule) → MU.
@@ -5245,6 +5266,11 @@ function renderSports(){
         if (!isSportEvent(e)) return false;
         if (isSportsEventFromHiddenSource(e)) return false;
         const tags = e.tags || [];
+        // 2026-09-30: townie MU-varsity gate -- SPORTS LIST ONLY (not the shared
+        // isSportsEventFromHiddenSource, which also feeds the home timeline, where
+        // MU games stay for locals). matchesSportSource 'MU' = MU + Athletics, so
+        // MU Clubs rows are untouched (governed by SP_Clubs above).
+        if (matchesSportSource(tags, 'MU') && muSportsEventHidden(e)) return false;
         if (!Array.from(spActiveSources).some(src => matchesSportSource(tags, src))) return false;
         if (spHomeOnly && !tags.includes('Home Game Mode') && !tags.includes('H Games')) return false;
         return true;

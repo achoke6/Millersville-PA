@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-09-29T21:56:02.763Z",
-  "totalEvents": 1889,
+  "generatedAt": "2026-09-30T01:07:07.449Z",
+  "totalEvents": 1888,
   "withDescription": 824,
-  "withImage": 219,
+  "withImage": 223,
   "familyFriendly": 80,
-  "eventsToday": 31,
+  "eventsToday": 30,
   "sources": {
     "muAthletics": 332,
     "muCalendar": 218,
     "artsmu": 20,
     "campsAlumni": 31,
-    "muGetInvolved": 457,
+    "muGetInvolved": 456,
     "pennManor": 557,
-    "borough": 63,
+    "borough": 62,
     "vfw": 6,
     "phantomPower": 12,
     "community": 19,
-    "manor": 40,
+    "manor": 41,
     "raneyCellars": 3,
     "theBackyard": 12,
     "muHudlBroadcasts": 59
@@ -27,7 +27,7 @@
       "latest": "2027-05-27T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-07-01T00:00:00.000Z",
+      "earliest": "2026-07-03T00:00:00.000Z",
       "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
@@ -47,7 +47,7 @@
       "latest": "2027-09-28T23:00:00.000Z"
     },
     "borough": {
-      "earliest": "2026-07-01T23:30:00.000Z",
+      "earliest": "2026-07-03T12:00:00.000Z",
       "latest": "2026-12-25T12:00:00.000Z"
     },
     "vfw": {
@@ -64,7 +64,7 @@
     },
     "manor": {
       "earliest": "2026-09-30T12:30:00.000Z",
-      "latest": "2027-09-06T23:00:00.000Z"
+      "latest": "2027-09-29T12:30:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-09-17T20:00:00.000Z",
@@ -117,8 +117,8 @@
       "daysSinceMoved": 89
     },
     "manor": {
-      "newest": "2027-09-06",
-      "daysSinceMoved": 23
+      "newest": "2027-09-29",
+      "daysSinceMoved": 0
     },
     "raneyCellars": {
       "newest": "2026-09-24",
@@ -131,9 +131,9 @@
   },
   "sports": {
     "total": 790,
-    "scored": 104,
-    "wins": 54,
-    "losses": 43,
+    "scored": 107,
+    "wins": 55,
+    "losses": 45,
     "ties": 7
   },
   "registrations": {
@@ -151,13 +151,13 @@
       "Campus Life": 1
     },
     "stalePast": 13,
-    "lastSyncAt": "2026-09-29T21:51:43.676Z"
+    "lastSyncAt": "2026-09-30T01:03:44.535Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 9,
-    "checkedAt": "2026-09-29T21:54:50.022Z"
+    "checkedAt": "2026-09-30T01:06:55.180Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -187,7 +187,7 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 87,
+        "value": 86,
         "min": 21,
         "skipped": false
       },
@@ -230,75 +230,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Millersville University Women's Volleyball vs Caldwell|2026-08-29T17:00:00.000Z",
-      "firstSeenAt": "2026-09-29T21:56:02.760Z",
-      "title": "Millersville University Women's Volleyball vs Caldwell",
+      "key": "Hazing Prevention Week Online Seminar Viewings|2026-09-21T12:00:00",
+      "firstSeenAt": "2026-09-30T01:07:07.445Z",
+      "title": "Hazing Prevention Week Online Seminar Viewings",
       "source": "MU",
-      "date": "2026-08-29T17:00:00.000Z"
+      "date": "2026-09-21T12:00:00"
     },
     {
-      "key": "Yoga Club Meeting|2026-09-21T23:00:00.000Z",
-      "firstSeenAt": "2026-09-29T21:56:02.760Z",
-      "title": "Yoga Club Meeting",
-      "source": "MU",
-      "date": "2026-09-21T23:00:00.000Z"
-    },
-    {
-      "key": "Bevs and Ballots - Civic Engagement|2026-10-06T17:00:00",
-      "firstSeenAt": "2026-09-29T21:56:02.760Z",
-      "title": "Bevs and Ballots - Civic Engagement",
-      "source": "MU",
-      "date": "2026-10-06T17:00:00"
-    },
-    {
-      "key": "Real Talk, Real Skills|2026-10-08T16:00:00.000Z",
-      "firstSeenAt": "2026-09-29T21:56:02.760Z",
-      "title": "Real Talk, Real Skills",
-      "source": "MU",
-      "date": "2026-10-08T16:00:00.000Z"
-    },
-    {
-      "key": "Men's Club Soccer Home Game|2026-10-08T20:00:00",
-      "firstSeenAt": "2026-09-29T21:56:02.760Z",
-      "title": "Men's Club Soccer Home Game",
-      "source": "MU",
-      "date": "2026-10-08T20:00:00"
-    },
-    {
-      "key": "Staff Meeting|2026-10-13T16:00:00",
-      "firstSeenAt": "2026-09-29T21:56:02.760Z",
-      "title": "Staff Meeting",
-      "source": "MU",
-      "date": "2026-10-13T16:00:00"
-    },
-    {
-      "key": "YDSA General Meeting|2026-10-20T18:30:00",
-      "firstSeenAt": "2026-09-29T21:56:02.760Z",
+      "key": "YDSA General Meeting|2026-09-22T18:30:00",
+      "firstSeenAt": "2026-09-30T01:07:07.445Z",
       "title": "YDSA General Meeting",
       "source": "MU",
-      "date": "2026-10-20T18:30:00"
+      "date": "2026-09-22T18:30:00"
     },
     {
-      "key": "Palestine Bakesale|2026-10-21T11:00:00",
-      "firstSeenAt": "2026-09-29T21:56:02.760Z",
-      "title": "Palestine Bakesale",
+      "key": "RUF Bible Study|2026-09-22T19:00:00",
+      "firstSeenAt": "2026-09-30T01:07:07.445Z",
+      "title": "RUF Bible Study",
       "source": "MU",
-      "date": "2026-10-21T11:00:00"
+      "date": "2026-09-22T19:00:00"
     },
     {
-      "key": "Palestine Bakesale|2026-10-22T11:00:00",
-      "firstSeenAt": "2026-09-29T21:56:02.760Z",
-      "title": "Palestine Bakesale",
+      "key": "SGA Advocacy Tabling|2026-10-20T21:00:00.000Z",
+      "firstSeenAt": "2026-09-30T01:07:07.445Z",
+      "title": "SGA Advocacy Tabling",
       "source": "MU",
-      "date": "2026-10-22T11:00:00"
+      "date": "2026-10-20T21:00:00.000Z"
     },
     {
-      "key": "Real Talk, Real Skills: Make It Make Cents!|2026-10-22T12:00:00",
-      "firstSeenAt": "2026-09-29T21:56:02.760Z",
-      "title": "Real Talk, Real Skills: Make It Make Cents!",
+      "key": "Weekly Run|2026-10-20T22:00:00.000Z",
+      "firstSeenAt": "2026-09-30T01:07:07.445Z",
+      "title": "Weekly Run",
       "source": "MU",
-      "date": "2026-10-22T12:00:00"
+      "date": "2026-10-20T22:00:00.000Z"
+    },
+    {
+      "key": "Project Meeting: Bats & Glow-in-the-Dark Ghosts!|2026-10-20T22:00:00.000Z",
+      "firstSeenAt": "2026-09-30T01:07:07.445Z",
+      "title": "Project Meeting: Bats & Glow-in-the-Dark Ghosts!",
+      "source": "MU",
+      "date": "2026-10-20T22:00:00.000Z"
+    },
+    {
+      "key": "Study Hours / Chapter|2026-10-20T22:00:00.000Z",
+      "firstSeenAt": "2026-09-30T01:07:07.445Z",
+      "title": "Study Hours / Chapter",
+      "source": "MU",
+      "date": "2026-10-20T22:00:00.000Z"
+    },
+    {
+      "key": "Creative Writers Guild general meeting|2026-10-20T22:00:00.000Z",
+      "firstSeenAt": "2026-09-30T01:07:07.445Z",
+      "title": "Creative Writers Guild general meeting",
+      "source": "MU",
+      "date": "2026-10-20T22:00:00.000Z"
+    },
+    {
+      "key": "YDSA Meeting|2026-10-20T22:30:00.000Z",
+      "firstSeenAt": "2026-09-30T01:07:07.445Z",
+      "title": "YDSA Meeting",
+      "source": "MU",
+      "date": "2026-10-20T22:30:00.000Z"
+    },
+    {
+      "key": "RUF Bible Study|2026-10-20T23:00:00.000Z",
+      "firstSeenAt": "2026-09-30T01:07:07.445Z",
+      "title": "RUF Bible Study",
+      "source": "MU",
+      "date": "2026-10-20T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 19
+  "addedLastRun": 21
 }

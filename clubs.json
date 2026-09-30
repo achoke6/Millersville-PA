@@ -1274,13 +1274,10 @@
   },
   {
     "name": "Office of Sustainability",
-    "category": "Service",
-    "categories": [
-      "Service",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "Sustainability",
-    "id": ""
+    "id": "sustainability"
   },
   {
     "name": "Omicron Delta Kappa",
@@ -1564,9 +1561,9 @@
   },
   {
     "name": "Student Government Association",
-    "category": "Tabling",
+    "category": "Meeting",
     "categories": [
-      "Tabling"
+      "Meeting"
     ],
     "shortName": "SGA",
     "id": ""
@@ -1924,8 +1921,10 @@
   },
   {
     "name": "Yoga Club",
-    "category": "",
-    "categories": [],
+    "category": "Meeting",
+    "categories": [
+      "Meeting"
+    ],
     "shortName": "",
     "id": ""
   },

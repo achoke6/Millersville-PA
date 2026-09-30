@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-30T15:11:20.125Z",
-  "totalEvents": 1884,
-  "withDescription": 821,
+  "generatedAt": "2026-09-30T18:58:06.159Z",
+  "totalEvents": 1881,
+  "withDescription": 819,
   "withImage": 219,
   "familyFriendly": 80,
-  "eventsToday": 25,
+  "eventsToday": 24,
   "sources": {
     "muAthletics": 332,
     "muCalendar": 218,
-    "artsmu": 20,
+    "artsmu": 19,
     "campsAlumni": 31,
-    "muGetInvolved": 453,
+    "muGetInvolved": 451,
     "pennManor": 557,
     "borough": 62,
     "vfw": 6,
@@ -137,27 +137,26 @@
     "ties": 7
   },
   "registrations": {
-    "open": 9,
-    "next2Weeks": 2,
+    "open": 8,
+    "next2Weeks": 1,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 5,
+    "pendingFuture": 4,
     "pendingPast": 11,
     "pendingBySource": {
       "Youth Sports": 2,
-      "PM Community": 2,
-      "Campus Life": 1
+      "PM Community": 2
     },
     "stalePast": 13,
-    "lastSyncAt": "2026-09-30T15:07:40.606Z"
+    "lastSyncAt": "2026-09-30T18:53:09.505Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 9,
-    "checkedAt": "2026-09-30T15:11:11.275Z"
+    "checkedAt": "2026-09-30T18:57:56.623Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -230,18 +229,46 @@
   },
   "recentlyAdded": [
     {
+      "key": "Be Responsi'VILLE|2026-10-15T16:00:00.000Z",
+      "firstSeenAt": "2026-09-30T18:58:06.156Z",
+      "title": "Be Responsi'VILLE",
+      "source": "MU",
+      "date": "2026-10-15T16:00:00.000Z"
+    },
+    {
+      "key": "The Monster Ball|2026-10-15T23:00:00.000Z",
+      "firstSeenAt": "2026-09-30T18:58:06.156Z",
+      "title": "The Monster Ball",
+      "source": "MU",
+      "date": "2026-10-15T23:00:00.000Z"
+    },
+    {
+      "key": "HE IS LEGEND w. In Angles & Excide|2026-10-24T23:00:00.000Z",
+      "firstSeenAt": "2026-09-30T18:58:06.156Z",
+      "title": "HE IS LEGEND w. In Angles & Excide",
+      "source": "Other",
+      "date": "2026-10-24T23:00:00.000Z"
+    },
+    {
+      "key": "Concert Band and Wind Ensemble Concert|2026-10-25T14:30:00",
+      "firstSeenAt": "2026-09-30T18:58:06.156Z",
+      "title": "Concert Band and Wind Ensemble Concert",
+      "source": "MU",
+      "date": "2026-10-25T14:30:00"
+    },
+    {
+      "key": "Thanksgiving Break - Begins after last class|2026-11-24T00:00:00",
+      "firstSeenAt": "2026-09-30T18:58:06.156Z",
+      "title": "Thanksgiving Break - Begins after last class",
+      "source": "MU",
+      "date": "2026-11-24T00:00:00"
+    },
+    {
       "key": "'Ville Mens Club Soccer vs Lancaster City FC|2026-10-18T15:00:00",
       "firstSeenAt": "2026-09-30T15:11:20.121Z",
       "title": "'Ville Mens Club Soccer vs Lancaster City FC",
       "source": "MU",
       "date": "2026-10-18T15:00:00"
-    },
-    {
-      "key": "HE IS LEGEND w. Excide|2026-10-24T23:00:00.000Z",
-      "firstSeenAt": "2026-09-30T15:11:20.121Z",
-      "title": "HE IS LEGEND w. Excide",
-      "source": "Other",
-      "date": "2026-10-24T23:00:00.000Z"
     },
     {
       "key": "ROCKY HORROR PICTURE SHOW|2026-10-09T23:30:00.000Z",
@@ -270,35 +297,7 @@
       "title": "RUF Bible Study",
       "source": "MU",
       "date": "2026-09-22T19:00:00"
-    },
-    {
-      "key": "SGA Advocacy Tabling|2026-10-20T21:00:00.000Z",
-      "firstSeenAt": "2026-09-30T01:07:07.445Z",
-      "title": "SGA Advocacy Tabling",
-      "source": "MU",
-      "date": "2026-10-20T21:00:00.000Z"
-    },
-    {
-      "key": "Weekly Run|2026-10-20T22:00:00.000Z",
-      "firstSeenAt": "2026-09-30T01:07:07.445Z",
-      "title": "Weekly Run",
-      "source": "MU",
-      "date": "2026-10-20T22:00:00.000Z"
-    },
-    {
-      "key": "Project Meeting: Bats & Glow-in-the-Dark Ghosts!|2026-10-20T22:00:00.000Z",
-      "firstSeenAt": "2026-09-30T01:07:07.445Z",
-      "title": "Project Meeting: Bats & Glow-in-the-Dark Ghosts!",
-      "source": "MU",
-      "date": "2026-10-20T22:00:00.000Z"
-    },
-    {
-      "key": "Study Hours / Chapter|2026-10-20T22:00:00.000Z",
-      "firstSeenAt": "2026-09-30T01:07:07.445Z",
-      "title": "Study Hours / Chapter",
-      "source": "MU",
-      "date": "2026-10-20T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 5
 }

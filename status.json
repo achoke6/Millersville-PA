@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-30T08:02:40.037Z",
-  "totalEvents": 1888,
+  "generatedAt": "2026-09-30T14:52:00.244Z",
+  "totalEvents": 1887,
   "withDescription": 824,
   "withImage": 223,
   "familyFriendly": 80,
-  "eventsToday": 26,
+  "eventsToday": 25,
   "sources": {
     "muAthletics": 332,
     "muCalendar": 218,
@@ -16,7 +16,7 @@
     "vfw": 6,
     "phantomPower": 12,
     "community": 19,
-    "manor": 41,
+    "manor": 40,
     "raneyCellars": 3,
     "theBackyard": 12,
     "muHudlBroadcasts": 59
@@ -63,7 +63,7 @@
       "latest": "2027-04-16T13:15:00.000Z"
     },
     "manor": {
-      "earliest": "2026-09-30T12:30:00.000Z",
+      "earliest": "2026-10-05T23:00:00.000Z",
       "latest": "2027-09-29T12:30:00.000Z"
     },
     "raneyCellars": {
@@ -131,9 +131,9 @@
   },
   "sports": {
     "total": 790,
-    "scored": 108,
-    "wins": 55,
-    "losses": 46,
+    "scored": 110,
+    "wins": 56,
+    "losses": 47,
     "ties": 7
   },
   "registrations": {
@@ -151,13 +151,13 @@
       "Campus Life": 1
     },
     "stalePast": 13,
-    "lastSyncAt": "2026-09-30T07:58:13.850Z"
+    "lastSyncAt": "2026-09-30T14:48:02.169Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 9,
-    "checkedAt": "2026-09-30T08:02:31.139Z"
+    "checkedAt": "2026-09-30T14:51:51.898Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -166,14 +166,14 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 364,
+        "value": 363,
         "min": 45,
         "skipped": false
       },
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 239,
+        "value": 238,
         "min": 60,
         "skipped": false
       },
@@ -300,5 +300,5 @@
       "date": "2026-10-20T22:30:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 0
 }

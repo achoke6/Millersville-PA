@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-30T01:07:07.449Z",
+  "generatedAt": "2026-09-30T08:02:40.037Z",
   "totalEvents": 1888,
   "withDescription": 824,
   "withImage": 223,
   "familyFriendly": 80,
-  "eventsToday": 30,
+  "eventsToday": 26,
   "sources": {
     "muAthletics": 332,
     "muCalendar": 218,
@@ -56,7 +56,7 @@
     },
     "phantomPower": {
       "earliest": "2026-10-03T00:00:00.000Z",
-      "latest": "2026-10-30T00:00:00.000Z"
+      "latest": "2026-10-24T23:00:00.000Z"
     },
     "community": {
       "earliest": "2026-07-02T12:00:00.000Z",
@@ -78,39 +78,39 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 28
+      "daysSinceMoved": 29
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 39
+      "daysSinceMoved": 40
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 53
+      "daysSinceMoved": 54
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 53
+      "daysSinceMoved": 54
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 26
+      "daysSinceMoved": 27
     },
     "pennManor": {
       "newest": "2027-09-28",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 63
+      "daysSinceMoved": 64
     },
     "vfw": {
       "newest": "2026-10-22",
-      "daysSinceMoved": 28
+      "daysSinceMoved": 29
     },
     "phantomPower": {
-      "newest": "2026-10-30",
-      "daysSinceMoved": 7
+      "newest": "2026-10-24",
+      "daysSinceMoved": 11
     },
     "community": {
       "newest": "2027-04-16",
@@ -118,22 +118,22 @@
     },
     "manor": {
       "newest": "2027-09-29",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "raneyCellars": {
       "newest": "2026-09-24",
-      "daysSinceMoved": 12
+      "daysSinceMoved": 13
     },
     "theBackyard": {
       "newest": "2026-10-12",
-      "daysSinceMoved": 21
+      "daysSinceMoved": 22
     }
   },
   "sports": {
     "total": 790,
-    "scored": 107,
+    "scored": 108,
     "wins": 55,
-    "losses": 45,
+    "losses": 46,
     "ties": 7
   },
   "registrations": {
@@ -151,13 +151,13 @@
       "Campus Life": 1
     },
     "stalePast": 13,
-    "lastSyncAt": "2026-09-30T01:03:44.535Z"
+    "lastSyncAt": "2026-09-30T07:58:13.850Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 9,
-    "checkedAt": "2026-09-30T01:06:55.180Z"
+    "checkedAt": "2026-09-30T08:02:31.139Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -180,7 +180,7 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 248,
+        "value": 247,
         "min": 30,
         "skipped": false
       },
@@ -224,11 +224,18 @@
         "key": "pmHudl.matched",
         "ok": true,
         "matched": 25,
-        "withBroadcasts": 26
+        "withBroadcasts": 25
       }
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "ROCKY HORROR PICTURE SHOW|2026-10-09T23:30:00.000Z",
+      "firstSeenAt": "2026-09-30T08:02:40.034Z",
+      "title": "ROCKY HORROR PICTURE SHOW",
+      "source": "Other",
+      "date": "2026-10-09T23:30:00.000Z"
+    },
     {
       "key": "Hazing Prevention Week Online Seminar Viewings|2026-09-21T12:00:00",
       "firstSeenAt": "2026-09-30T01:07:07.445Z",
@@ -291,14 +298,7 @@
       "title": "YDSA Meeting",
       "source": "MU",
       "date": "2026-10-20T22:30:00.000Z"
-    },
-    {
-      "key": "RUF Bible Study|2026-10-20T23:00:00.000Z",
-      "firstSeenAt": "2026-09-30T01:07:07.445Z",
-      "title": "RUF Bible Study",
-      "source": "MU",
-      "date": "2026-10-20T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 21
+  "addedLastRun": 1
 }

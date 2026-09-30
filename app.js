@@ -1011,6 +1011,20 @@ function muSportsEventHidden(e) {
     if (spStripOtherOn()) return false;
     return schoolSportsEventHidden(e, 'SP_MU');
 }
+// MU CLUB SPORTS for MARAUDER/UNSET viewers (2026-09-30, second sitting) -- the
+// mirror of muSportsEventHidden: the Sports list shows varsity by default; the
+// "+ 🎓 Clubs" strip chip (same mapp_sports_strip_other switch) is a blanket
+// reveal; otherwise per-club via the team-view ★ (`club:<orgName>` pref) or the
+// whole-lane `clubs-sports` fav/👁. Townies never reach this (their club rows
+// are governed by SP_Clubs). Sports LIST only -- the home timeline keeps club
+// games, and the team view pools from allEvents.
+function clubSportsEventHidden(e) {
+    if (spPrimaryLevel() !== 'mu') return false;
+    if (spStripOtherOn()) return false;
+    const org = (e.orgName || '').trim();
+    if (org && isItemShownOrFaved('club:' + org)) return false;
+    return !isItemShownOrFaved('clubs-sports');
+}
 // PM general events, parallel: pm-music / pm-board are individually
 // shown/faved; PM events matching neither item (no Music/Arts or Board/PTO
 // tag) ride along when either item is shown/faved. Legacy 'PM' Show honored.
@@ -5269,8 +5283,11 @@ function renderSports(){
         // 2026-09-30: townie MU-varsity gate -- SPORTS LIST ONLY (not the shared
         // isSportsEventFromHiddenSource, which also feeds the home timeline, where
         // MU games stay for locals). matchesSportSource 'MU' = MU + Athletics, so
-        // MU Clubs rows are untouched (governed by SP_Clubs above).
+        // the line below never touches club rows; the Clubs line (second sitting)
+        // is the Marauder/unset mirror -- varsity by default, "+ Clubs" chip or a
+        // club ★ reveals. Both chips share one switch (mapp_sports_strip_other).
         if (matchesSportSource(tags, 'MU') && muSportsEventHidden(e)) return false;
+        if (matchesSportSource(tags, 'Clubs') && clubSportsEventHidden(e)) return false;
         if (!Array.from(spActiveSources).some(src => matchesSportSource(tags, src))) return false;
         if (spHomeOnly && !tags.includes('Home Game Mode') && !tags.includes('H Games')) return false;
         return true;

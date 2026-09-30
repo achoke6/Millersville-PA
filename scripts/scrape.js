@@ -3067,8 +3067,19 @@ async function runScraper() {
             // events.ics.php (both gate on Clubs/Orgs THEN Club Sports);
             // Club Sports alone flips isSportEvent() in app.js -> Sports page,
             // timeline sport treatment, and the search Sports bucket.
+            // 2026-09-30: the orgs now post their OWN games ("'Ville Women's Club
+            // Soccer Game vs ...", "'Ville Men's Club Soccer vs Franklin & Marshall
+            // FC", "Men's Club Soccer Home Game") -- no prefix, customer = the org,
+            // so neither original trigger fired and Club Soccer never reached the
+            // Sports page. Third trigger: "club" + a sportsList word + a game word
+            // in the title. A no-game-word posting ("Club Soccer Friendly") still
+            // stays a plain event (documented monitor watch).
+            const csTitleHasSport = sportsList.some(s =>
+                new RegExp(`\\b${s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(eventTitle));
             const isClubSportsGame = /^club sports? game\b/i.test(eventTitle) ||
-                (custName === 'Campus Recreation' && /\bvs\.?\b|\bversus\b/i.test(eventTitle));
+                (custName === 'Campus Recreation' && /\bvs\.?\b|\bversus\b/i.test(eventTitle)) ||
+                (/\bclub\b/i.test(eventTitle) && csTitleHasSport &&
+                    /\bvs\.?\b|\bversus\b|\bgames?\b|\bmatch\b|\bscrimmages?\b/i.test(eventTitle));
             if (isClubSportsGame) {
                 if (!tags.includes('Clubs/Orgs')) tags.push('Clubs/Orgs');
                 tags.push('Club Sports');
@@ -3086,7 +3097,7 @@ async function runScraper() {
                 // branch (campus playing surfaces), title "vs" as fallback.
                 const csLoc = eventLoc.toLowerCase();
                 const csHomeWords = ['pucillo', 'chryst', 'biemesderfer', 'cooper park', 'seaber', 'mccomsey', 'anttonen', 'millersville', 'comet'];
-                if (csHomeWords.some(k => csLoc.includes(k)) || /\bvs\b/i.test(eventTitle)) tags.push("Home Game Mode");
+                if (csHomeWords.some(k => csLoc.includes(k)) || /\bvs\b|\bhome game\b/i.test(eventTitle)) tags.push("Home Game Mode");
             }
 
             // RELABEL: "Student Event" from the MU calendar is really the GetInvolved feed
@@ -3569,7 +3580,15 @@ async function runScraper() {
             // to appear as its own whole word(s).
             const escapeRe = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             const sportWordMatch = (haystack, needle) => new RegExp(`\\b${escapeRe(needle)}\\b`, 'i').test(haystack);
-            let isPermittedSport = hGameClubSports.some(s => sportWordMatch(name, s) || sportWordMatch(orgName, s));
+            // Club-stripped copies (2026-09-30): Engage names the orgs "Women's Club
+            // Soccer" / "Men's Club Soccer" -- the word "club" sits between gender
+            // and sport, so hGameClubSports' "women's soccer" never word-matched
+            // (only "Ice Hockey Club (D3)" passed: sport words adjacent). Strip
+            // "club" + a trailing "(dN)" division marker before matching. Both
+            // inputs are already lower-cased above.
+            const stripClub = s => s.replace(/\bclub\b/g, ' ').replace(/\(d\d\)/g, ' ').replace(/\s+/g, ' ').trim();
+            const nameCS = stripClub(name), orgCS = stripClub(orgName);
+            let isPermittedSport = hGameClubSports.some(s => sportWordMatch(nameCS, s) || sportWordMatch(orgCS, s));
 
             // Only classify as Club Sports if the event looks like an actual game/match
             // Practices, fundraisers, trips, community service etc. stay as regular events
@@ -3581,17 +3600,23 @@ async function runScraper() {
                 // so the old unordered substring pair double-tagged women's
                 // games with Men's too (dormant -- zero club-sports rows in the
                 // feed when fixed -- but it bites the first women's posting).
-                if (/women's|womens/.test(name)) tags.push("Women's");
-                else if (/men's|mens/.test(name)) tags.push("Men's");
+                // Gender: title first, else the org ("Home game versus Salisbury
+                // University" carries none; org = "women's club soccer") -- the
+                // cs-soccer-womens pref needs Women's + Soccer to fire.
+                const csGenderSrc = /women's|womens|\bmen's|\bmens\b/.test(name) ? name : orgName;
+                if (/women's|womens/.test(csGenderSrc)) tags.push("Women's");
+                else if (/men's|mens/.test(csGenderSrc)) tags.push("Men's");
                 // Same word-boundary safety on the sportsList categorization —
                 // without it, "tennis" would match inside e.g. "antennis" (less
                 // realistic but still safer to be strict).
-                sportsList.forEach(s => { if (sportWordMatch(name, s)) tags.push(s); });
+                // Sport: title first, else the club-stripped org (same reason).
+                const csSportSrc = sportsList.some(s => sportWordMatch(name, s)) ? name : orgCS;
+                sportsList.forEach(s => { if (sportWordMatch(csSportSrc, s)) tags.push(s); });
 
                 // Home game detection for club sports
                 const loc = (item.location || '').toLowerCase();
                 const homeWords = ['pucillo', 'chryst', 'biemesderfer', 'cooper park', 'seaber', 'mccomsey', 'anttonen', 'millersville', 'comet'];
-                if (homeWords.some(k => loc.includes(k)) || /\bvs\b/.test(name)) tags.push("Home Game Mode");
+                if (homeWords.some(k => loc.includes(k)) || /\bvs\b|\bhome game\b/.test(name)) tags.push("Home Game Mode");
             }
 
             // Audience classification: default mu-only (student-only), promote to public if signals match.
@@ -6026,6 +6051,42 @@ async function runScraper() {
     if (roomTwinDrop.size) {
         pass1 = pass1.filter((_, i) => !roomTwinDrop.has(i));
         console.log(`🚪 Collapsed ${roomTwinCollapsed} MU Calendar room-booking twin row(s) (same event id + instant, different rooms)`);
+    }
+
+    // ===== CLUB-SPORTS TWIN COLLAPSE (2026-09-30) =====
+    // The club orgs post each game on BOTH Engage and the main calendar with
+    // the same instant but unrelated titles ("'Ville Women's Club Soccer Game
+    // vs University of Maryland (Red)" vs "Home game versus Maryland University
+    // Red team"), so the title-keyed passes never pair them. Same orgName +
+    // same instant + both Club Sports = one game, conclusively (an org can't
+    // play two games at once). Keep the calendar copy (descriptive title,
+    // real venue) over Engage; else first-seen. Scoped to Club Sports rows
+    // only -- Varsity/JV, Boys/Girls and the Family Weekend two-part evening
+    // never carry the tag. Runs BEFORE the cross-source pass.
+    const csTwinGroups = new Map();
+    pass1.forEach((e, i) => {
+        if (!(e.tags || []).includes('Club Sports')) return;
+        const org = (e.orgName || '').trim().toLowerCase();
+        if (!org) return;
+        const ms = parseEventInstant(e.date);
+        if (isNaN(ms)) return;
+        const key = org + '|' + ms;
+        if (!csTwinGroups.has(key)) csTwinGroups.set(key, []);
+        csTwinGroups.get(key).push(i);
+    });
+    const csTwinDrop = new Set();
+    for (const idxs of csTwinGroups.values()) {
+        if (idxs.length < 2) continue;
+        const csRank = i => MU_CAL_EVENT_RE.test(pass1[i].sourceLink || '') ? 0 : 1;
+        idxs.sort((a, b) => csRank(a) - csRank(b) || a - b);
+        for (let k = 1; k < idxs.length; k++) {
+            csTwinDrop.add(idxs[k]);
+            console.log(`   ✕ club-sport twin: "${pass1[idxs[k]].title}" (${(pass1[idxs[k]].date || '').substring(0, 10)}) → kept "${pass1[idxs[0]].title}"`);
+        }
+    }
+    if (csTwinDrop.size) {
+        pass1 = pass1.filter((_, i) => !csTwinDrop.has(i));
+        console.log(`⚽ Collapsed ${csTwinDrop.size} club-sport twin row(s) (same org + instant, Engage + calendar)`);
     }
 
     // Pass 2: cross-source dedupe — group by (normalized title, same day) and pick the best one.

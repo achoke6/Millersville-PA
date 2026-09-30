@@ -621,9 +621,9 @@
   },
   {
     "name": "Dr. Rita Smith-Wade-El Center for Intercultural Student Engagement",
-    "category": "Social",
+    "category": "Lecture or Speaker",
     "categories": [
-      "Social"
+      "Lecture or Speaker"
     ],
     "shortName": "",
     "id": ""
@@ -1211,6 +1211,16 @@
     "id": ""
   },
   {
+    "name": "National Association for Music Education",
+    "category": "Academic",
+    "categories": [
+      "Academic",
+      "Arts & Culture"
+    ],
+    "shortName": "NAfME, Collegiate Chapter 92",
+    "id": "nafme"
+  },
+  {
     "name": "National Association for the Advancement of Colored People",
     "category": "",
     "categories": [],
@@ -1274,13 +1284,10 @@
   },
   {
     "name": "Office of Sustainability",
-    "category": "Service",
-    "categories": [
-      "Service",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "Sustainability",
-    "id": ""
+    "id": "sustainability"
   },
   {
     "name": "Omicron Delta Kappa",
@@ -1564,9 +1571,9 @@
   },
   {
     "name": "Student Government Association",
-    "category": "Tabling",
+    "category": "Meeting",
     "categories": [
-      "Tabling"
+      "Meeting"
     ],
     "shortName": "SGA",
     "id": ""
@@ -1924,8 +1931,10 @@
   },
   {
     "name": "Yoga Club",
-    "category": "",
-    "categories": [],
+    "category": "Meeting",
+    "categories": [
+      "Meeting"
+    ],
     "shortName": "",
     "id": ""
   },

@@ -1,12 +1,14 @@
 {
   "_meta": {
-    "purpose": "Override orgName for MU Calendar events when the Customer field is empty. Many MU events leave the host org blank in the calendar API; this file fills the gap by matching the event title to a known host. Applied AFTER customerName check — explicit Customer values are not overridden.",
-    "rule": "Each entry: titlePattern (regex string, case-insensitive) + orgName. First match wins. Add new entries as you spot events with 'MU' pills that should be attributed to a specific host."
+    "purpose": "Override orgName for MU Calendar events by title pattern. Applied AFTER customerName is read and WINS over it — an explicit Customer value IS replaced when a pattern matches (scrape.js: 'Title-pattern override wins over whatever generic customerName the calendar carries'). Also applied to GetInvolved event titles. Two uses: (1) fill the host when the calendar's Customer is blank; (2) re-attribute rows the poster filed under themselves — e.g. Campus Recreation posts club-sport games on the main calendar, and the Sports page keys its MU Clubs tiles on orgName, so without an override Campus Rec shows up as a club (2026-09-30).",
+    "rule": "Each entry: titlePattern (regex string, case-insensitive) + orgName. First match wins. orgName must be the exact Engage roster name (clubs.json) so tiles, twin-collapse keys and orgShortName all line up. Add new entries as you spot events with 'MU' pills that should be attributed to a specific host."
   },
   "overrides": [
     { "titlePattern": "^Lavender Legacy", "orgName": "GSA" },
     { "titlePattern": "^EPPIIC", "orgName": "Advancement Department" },
     { "titlePattern": "Co-?Ed Bible Study", "orgName": "RUF" },
-    { "titlePattern": "RUF Wednesday Night Bible Study", "orgName": "RUF" }
+    { "titlePattern": "RUF Wednesday Night Bible Study", "orgName": "RUF" },
+    { "titlePattern": "^Club Sports Game:\\s*Women[’']s Soccer\\b", "orgName": "Women's Club Soccer" },
+    { "titlePattern": "^Club Sports Game:\\s*Men[’']s Soccer\\b", "orgName": "Men's Club Soccer" }
   ]
 }

@@ -158,9 +158,9 @@
   },
   {
     "name": "Asian Student Inclusivity Association",
-    "category": "Social",
+    "category": "Meeting",
     "categories": [
-      "Social"
+      "Meeting"
     ],
     "shortName": "ASIA",
     "id": ""
@@ -269,8 +269,10 @@
   },
   {
     "name": "Campus Life",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1097,9 +1099,8 @@
   },
   {
     "name": "Men's Ice Hockey (D2)",
-    "category": "Competition",
+    "category": "Sporting",
     "categories": [
-      "Competition",
       "Sporting"
     ],
     "shortName": "",
@@ -1107,9 +1108,9 @@
   },
   {
     "name": "Men's Rugby Club of Millersville University",
-    "category": "Fundraiser",
+    "category": "Meeting",
     "categories": [
-      "Fundraiser"
+      "Meeting"
     ],
     "shortName": "Men's Rugby Club",
     "id": ""
@@ -1207,11 +1208,9 @@
     "id": ""
   },
   {
-    "name": "Muslim Student Association of Millersville University",
-    "category": "Educational Program",
+    "name": "Muslim Student Association",
+    "category": "Social",
     "categories": [
-      "Educational Program",
-      "Lecture or Speaker",
       "Social"
     ],
     "shortName": "",
@@ -1409,8 +1408,11 @@
   },
   {
     "name": "Reformed University Fellowship",
-    "category": "",
-    "categories": [],
+    "category": "Meeting",
+    "categories": [
+      "Meeting",
+      "Social"
+    ],
     "shortName": "RUF",
     "id": ""
   },
@@ -1540,15 +1542,6 @@
     "category": "",
     "categories": [],
     "shortName": "Student Affairs",
-    "id": ""
-  },
-  {
-    "name": "Student Affiliates in School Psychology at Millersville University",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
-    "shortName": "",
     "id": ""
   },
   {
@@ -1771,10 +1764,8 @@
   },
   {
     "name": "University Activities Board",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "UAB",
     "id": ""
   },

@@ -1,18 +1,14 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Wednesday, September 30, 2026 at 05:43 PM (Gray, Negherbon, Student Meteorologists)",
+    "issued": "Thursday, October 01, 2026 at 08:00 AM (Kint, Smith, Zocco, Student Meteorologists)",
     "periods": [
       {
-        "period": "Tonight",
-        "text": "Mostly cloudy and warm. Low: 60-64"
-      },
-      {
-        "period": "Tomorrow",
+        "period": "Today",
         "text": "Unseasonably warm and humid with decreasing clouds. High: 80-84"
       },
       {
-        "period": "Tomorrow Night",
+        "period": "Tonight",
         "text": "Mainly clear and warm. Low: 60-64"
       },
       {
@@ -20,33 +16,21 @@
         "text": "Unseasonably warm and humid with increasing clouds and a late-day shower. High: 84-88"
       },
       {
+        "period": "Friday Night",
+        "text": "Mostly cloudy and mild with a few evening showers. Low: 56-60"
+      },
+      {
         "period": "Saturday",
-        "text": "Mostly sunny and pleasant High: 70-74"
+        "text": "Partly sunny and pleasant. High: 70-74"
       }
     ]
   },
   "sevenDay": {
-    "issued": "Wednesday, September 30, 2026 at 08:22 AM (Jones, Reynolds, Shertzer, Whitehurst)",
+    "issued": "Thursday, October 01, 2026 at 08:13 AM (Kint, Smith, Zocco)",
     "days": [
       {
-        "period": "Wednesday",
-        "sky": "Decreasing Clouds",
-        "weather": "Warmer",
-        "pop": "<10%",
-        "temp": "78",
-        "conf": "5"
-      },
-      {
-        "period": "Wednesday night",
-        "sky": "Mostly Cloudy",
-        "weather": "Warm",
-        "pop": "<10%",
-        "temp": "62",
-        "conf": "5"
-      },
-      {
         "period": "Thursday",
-        "sky": "Increasing Clouds",
+        "sky": "Decreasing Clouds",
         "weather": "Unseasonably Warm",
         "pop": "<10%",
         "temp": "82",
@@ -66,7 +50,7 @@
         "weather": "Unseasonably Warm",
         "pop": "30%",
         "temp": "86",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Friday night",
@@ -74,11 +58,11 @@
         "weather": "Evening Showers",
         "pop": "40%",
         "temp": "58",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Saturday",
-        "sky": "Mostly Sunny",
+        "sky": "Partly Sunny",
         "weather": "Pleasant",
         "pop": "<10%",
         "temp": "72",
@@ -86,19 +70,19 @@
       },
       {
         "period": "Saturday night",
-        "sky": "Partly Cloudy",
+        "sky": "Mostly Cloudy",
         "weather": "Fair",
-        "pop": "<10%",
-        "temp": "52",
+        "pop": "20%",
+        "temp": "54",
         "conf": "4"
       },
       {
         "period": "Sunday",
-        "sky": "Variably Cloudy",
+        "sky": "Mostly Cloudy",
         "weather": "Chc. of Showers",
-        "pop": "30%",
-        "temp": "69",
-        "conf": "3"
+        "pop": "40%",
+        "temp": "66",
+        "conf": "4"
       },
       {
         "period": "Sunday night",
@@ -106,14 +90,22 @@
         "weather": "Fair",
         "pop": "<10%",
         "temp": "52",
-        "conf": "3"
+        "conf": "4"
       },
       {
         "period": "Monday",
         "sky": "Mostly Sunny",
         "weather": "Seasonable",
         "pop": "<10%",
-        "temp": "upper 60s",
+        "temp": "68",
+        "conf": "3"
+      },
+      {
+        "period": "Monday night",
+        "sky": "Clear Skies",
+        "weather": "Cool",
+        "pop": "<10%",
+        "temp": "46",
         "conf": "3"
       },
       {
@@ -123,10 +115,62 @@
         "pop": "<10%",
         "temp": "low 60s",
         "conf": "3"
+      },
+      {
+        "period": "Wednesday",
+        "sky": "Mostly Sunny",
+        "weather": "Pleasant",
+        "pop": "<10%",
+        "temp": "mid 60s",
+        "conf": "3"
       }
     ]
   },
   "observations": [
+    {
+      "time": "11:00",
+      "temp": "69",
+      "dewpoint": "64",
+      "rh": "85",
+      "windDir": "NW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "8.1",
+      "condition": "None"
+    },
+    {
+      "time": "10:00",
+      "temp": "67",
+      "dewpoint": "64",
+      "rh": "90",
+      "windDir": "SSW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "8.5",
+      "condition": "None"
+    },
+    {
+      "time": "09:00",
+      "temp": "65",
+      "dewpoint": "63",
+      "rh": "93",
+      "windDir": "SW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "7.8",
+      "condition": "None"
+    },
+    {
+      "time": "08:00",
+      "temp": "64",
+      "dewpoint": "62",
+      "rh": "96",
+      "windDir": "S",
+      "windSpeed": "0",
+      "precip": "0.00",
+      "visibility": "4.5",
+      "condition": "None"
+    },
     {
       "time": "07:00",
       "temp": "62",
@@ -147,50 +191,6 @@
       "windSpeed": "1",
       "precip": "0.00",
       "visibility": "5.0",
-      "condition": "None"
-    },
-    {
-      "time": "05:00",
-      "temp": "63",
-      "dewpoint": "62",
-      "rh": "96",
-      "windDir": "WNW",
-      "windSpeed": "0",
-      "precip": "0.00",
-      "visibility": "6.1",
-      "condition": "None"
-    },
-    {
-      "time": "04:00",
-      "temp": "64",
-      "dewpoint": "62",
-      "rh": "94",
-      "windDir": "WSW",
-      "windSpeed": "0",
-      "precip": "0.00",
-      "visibility": "9.3",
-      "condition": "None"
-    },
-    {
-      "time": "03:00",
-      "temp": "65",
-      "dewpoint": "62",
-      "rh": "90",
-      "windDir": "WSW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "9.7",
-      "condition": "None"
-    },
-    {
-      "time": "02:00",
-      "temp": "64",
-      "dewpoint": "61",
-      "rh": "92",
-      "windDir": "SW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "8.4",
       "condition": "None"
     }
   ],
@@ -547,6 +547,13 @@
   },
   "videos": [
     {
+      "title": "Medium Range Forecast 10/01/2026",
+      "videoId": "Vq1m_YhGEkg",
+      "url": "https://www.youtube.com/watch?v=Vq1m_YhGEkg",
+      "published": "2026-10-01T13:17:02+00:00",
+      "thumbnail": "https://i3.ytimg.com/vi/Vq1m_YhGEkg/hqdefault.jpg"
+    },
+    {
       "title": "Short Term Forecast 09/30/2026",
       "videoId": "VX7Sjmzfhvg",
       "url": "https://www.youtube.com/watch?v=VX7Sjmzfhvg",
@@ -566,15 +573,8 @@
       "url": "https://www.youtube.com/watch?v=oaTHEk2dRqk",
       "published": "2026-09-28T13:43:01+00:00",
       "thumbnail": "https://i4.ytimg.com/vi/oaTHEk2dRqk/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 09/25/2026",
-      "videoId": "7awGTsr7-eE",
-      "url": "https://www.youtube.com/watch?v=7awGTsr7-eE",
-      "published": "2026-09-25T14:59:14+00:00",
-      "thumbnail": "https://i4.ytimg.com/vi/7awGTsr7-eE/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-01T11:21:45.273Z"
+  "updated": "2026-10-01T15:21:10.246Z"
 }

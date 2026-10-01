@@ -660,7 +660,9 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
     // Fundraiser / drive / Homecoming rules above still win first.
     if (/\b(practices?|scrimmages?|try-?outs?|open gym)\b/i.test(titleText || '')) return 'mu-only';
     if (hasExplicitPublicMarker) return 'public';
-    if (tags.includes('Club Sports') && tags.includes('Home Game Mode')) return 'public';
+    // Club-sport HOME games are MU-only like every other club row (gate retired
+    // 2026-10-01, Adam's call — it had made GetInvolved-sourced club games public
+    // while the calendar-sourced copies of the same games stayed student-only).
     // No category-only last resort (removed 2026-09-16): an Engage
     // "Service"/"Volunteer" category is a student-org activity type, not an
     // invitation to the community. Default closed.
@@ -1558,6 +1560,16 @@ async function runScraper() {
         );
         let muAthCount = 0;
         const muIcalRows = [];   // { row, sportKey, dayET, oppNorm } for the payload reconcile below (2026-09-28)
+        // Sport names for the meet-title fallback below — the scheduleSlugMap keys, LONGEST
+        // first so "women's cross country" wins over "women's" + anything (2026-10-01).
+        const muSportNamesLongestFirst = [
+            "women's indoor track and field", "women's outdoor track and field",
+            "women's indoor track & field", "women's outdoor track & field", "women's cross country",
+            "men's cross country", "women's track and field", "men's track and field",
+            "women's basketball", "men's basketball", "women's lacrosse", "women's soccer", "men's soccer",
+            "women's tennis", "men's tennis", "women's golf", "men's golf", "field hockey",
+            "volleyball", "wrestling", "swimming", "baseball", "softball", "football"
+        ];
 
         for (const ev of Object.values(muAthData)) {
             if (ev.type !== 'VEVENT') continue;
@@ -1575,6 +1587,19 @@ async function runScraper() {
             // Determine sport from summary: "Millersville University {Sport} vs/at {Opponent}"
             const sportMatch = summary.match(/Millersville University\s+([\w''&\s]+?)\s+(?:vs|at)\s/i);
             let sportName = sportMatch ? sportMatch[1].trim() : '';
+            // Meet/invitational titles have no " vs "/" at " ("Millersville University Women's
+            // Golf Vulcan Invitational", every XC meet): take the LONGEST known sport name the
+            // title starts with, and keep the remainder as the "opponent" (meet name) for the
+            // 1b reconcile. Without this the row carried no sport/gender tag, the empty-string
+            // slug lookup fell on the FIRST map key (baseball links), and 1b created a twin —
+            // 11 of the 19 "created" rows and 27 untagged iCal rows on 2026-10-01.
+            let meetRemainder = '';
+            if (!sportName) {
+                const afterSchool = summary.replace(/^\[.\]\s*/, '').replace(/^Millersville University\s+/i, '');
+                const probe = afterSchool.toLowerCase().replace(/[\u2018\u2019]/g, "'");
+                const hit = muSportNamesLongestFirst.find(n => probe.startsWith(n) && !/[a-z0-9]/i.test(probe.charAt(n.length)));
+                if (hit) { sportName = afterSchool.slice(0, hit.length).trim(); meetRemainder = afterSchool.slice(hit.length).trim(); }
+            }
             // Clean prefix like [W], [L], [N]
             let cleanTitle = summary.replace(/^\[.\]\s*/, '').trim();
 
@@ -1666,12 +1691,14 @@ async function runScraper() {
                 "women's cross country": 'womens-cross-country', "men's cross country": 'mens-cross-country',
                 "women's indoor track & field": 'womens-indoor-track-and-field',
                 "women's outdoor track & field": 'womens-outdoor-track-and-field',
+                "women's indoor track and field": 'womens-indoor-track-and-field',   // iCal meet titles spell it "and" (2026-10-01)
+                "women's outdoor track and field": 'womens-outdoor-track-and-field',
                 "men's track and field": 'mens-track-and-field',
                 "women's track and field": 'womens-track-and-field'
             };
             const sportLower = sportName.toLowerCase();
             let scheduleSlug = scheduleSlugMap[sportLower];
-            if (!scheduleSlug) {
+            if (!scheduleSlug && sportLower) {   // '' would match the FIRST key via key.includes('') — baseball links (fixed 2026-10-01)
                 for (const [key, slug] of Object.entries(scheduleSlugMap)) {
                     if (sportLower.includes(key) || key.includes(sportLower)) { scheduleSlug = slug; break; }
                 }
@@ -1733,7 +1760,7 @@ async function runScraper() {
             };
             events.push(muRow);
             const oppMatch = summary.replace(/^\[.\]\s*/, '').match(/\s(?:vs\.?|at)\s+(.+)$/i);
-            muIcalRows.push({ row: muRow, sportKey: normSportTitle(sportName), dayET: deriveDayET(eventDate.getTime()), dayUTC: eventDate.toISOString().slice(0, 10), allDayExport: /T00:00:00\.000Z$/.test(eventDate.toISOString()), oppNorm: normSportTitle(oppMatch ? oppMatch[1] : ''), scheduleSlug, tags: [...new Set(tags)], ticketLink, streamLink, scheduleSlugForLive: scheduleSlug });
+            muIcalRows.push({ row: muRow, sportKey: normSportTitle(sportName), dayET: deriveDayET(eventDate.getTime()), dayUTC: eventDate.toISOString().slice(0, 10), allDayExport: /T00:00:00\.000Z$/.test(eventDate.toISOString()), oppNorm: normSportTitle(oppMatch ? oppMatch[1] : meetRemainder), scheduleSlug, tags: [...new Set(tags)], ticketLink, streamLink, scheduleSlugForLive: scheduleSlug });
             muAthCount++;
         }
         console.log(`✅ MU Athletics: ${muAthCount} events`);

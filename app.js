@@ -6698,7 +6698,7 @@ window.openEventDetails = function(key) {
         if (isPastGame && /millersvilleathletics\.com\/news\//i.test(infoUrl)) srcLabel = '📊 Game Recap';   // Sidearm recap article only
         else if (isPastGame) srcLabel = 'ℹ️ Game Details';   // PM event page / MU schedule page — not a recap (2026-09-18)
         else if (eventIsFree(e) && !isSport) srcLabel = 'ℹ️ More Info';
-        else if (isMUSport && !e.ticketLink) srcLabel = '🎟️ View on MU Athletics';
+		else if (isMUSport && !e.ticketLink && /millersvilleathletics\.com/i.test(infoUrl)) srcLabel = '🎟️ View on MU Athletics';
         else srcLabel = '🔗 View Source';
         actions += `<a href="${infoUrl}" target="_blank" class="btn btn-sm btn-outline" style="text-decoration:none;">${srcLabel}</a>`;
     }

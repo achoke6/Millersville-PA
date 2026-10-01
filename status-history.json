@@ -1,35 +1,6 @@
 {
   "days": [
     {
-      "date": "2026-07-03",
-      "ts": "2026-07-04T02:48:07.080Z",
-      "totalEvents": 693,
-      "sources": {
-        "muAthletics": 207,
-        "muCalendar": 84,
-        "muGetInvolved": 171,
-        "pennManor": 83,
-        "borough": 102,
-        "vfw": 3,
-        "phantomPower": 13,
-        "community": 23,
-        "manor": 0,
-        "raneyCellars": 3,
-        "muHudlBroadcasts": 0
-      },
-      "newestDates": {
-        "muAthletics": "2027-03-12",
-        "muCalendar": "2027-04-03",
-        "muGetInvolved": "2027-05-05",
-        "pennManor": "2026-09-21",
-        "borough": "2027-06-12",
-        "vfw": "2026-09-11",
-        "phantomPower": "2026-09-18",
-        "community": "2027-04-16",
-        "raneyCellars": "2026-07-09"
-      }
-    },
-    {
       "date": "2026-07-04",
       "ts": "2026-07-05T02:58:42.553Z",
       "totalEvents": 734,
@@ -3025,7 +2996,43 @@
         "raneyCellars": "2026-09-24",
         "theBackyard": "2026-10-12"
       }
+    },
+    {
+      "date": "2026-10-01",
+      "ts": "2026-10-01T04:14:28.557Z",
+      "totalEvents": 1887,
+      "sources": {
+        "muAthletics": 332,
+        "muCalendar": 220,
+        "artsmu": 19,
+        "campsAlumni": 30,
+        "muGetInvolved": 457,
+        "pennManor": 557,
+        "borough": 62,
+        "vfw": 6,
+        "phantomPower": 12,
+        "community": 18,
+        "manor": 40,
+        "raneyCellars": 3,
+        "theBackyard": 12,
+        "muHudlBroadcasts": 59
+      },
+      "newestDates": {
+        "muAthletics": "2027-05-27",
+        "muCalendar": "2027-06-04",
+        "artsmu": "2027-05-02",
+        "campsAlumni": "2027-04-03",
+        "muGetInvolved": "2027-04-29",
+        "pennManor": "2027-09-28",
+        "borough": "2026-12-25",
+        "vfw": "2026-10-22",
+        "phantomPower": "2026-10-24",
+        "community": "2027-04-16",
+        "manor": "2027-09-29",
+        "raneyCellars": "2026-09-24",
+        "theBackyard": "2026-10-12"
+      }
     }
   ],
-  "lastUpdated": "2026-09-30T23:32:30.516Z"
+  "lastUpdated": "2026-10-01T04:14:28.557Z"
 }

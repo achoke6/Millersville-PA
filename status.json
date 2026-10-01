@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-09-30T23:32:30.516Z",
-  "totalEvents": 1890,
-  "withDescription": 828,
-  "withImage": 221,
-  "familyFriendly": 80,
-  "eventsToday": 26,
+  "generatedAt": "2026-10-01T04:14:28.557Z",
+  "totalEvents": 1887,
+  "withDescription": 825,
+  "withImage": 218,
+  "familyFriendly": 78,
+  "eventsToday": 29,
   "sources": {
     "muAthletics": 332,
     "muCalendar": 220,
     "artsmu": 19,
-    "campsAlumni": 31,
-    "muGetInvolved": 458,
+    "campsAlumni": 30,
+    "muGetInvolved": 457,
     "pennManor": 557,
     "borough": 62,
     "vfw": 6,
     "phantomPower": 12,
-    "community": 19,
+    "community": 18,
     "manor": 40,
     "raneyCellars": 3,
     "theBackyard": 12,
@@ -35,7 +35,7 @@
       "latest": "2027-05-02T18:30:00.000Z"
     },
     "campsAlumni": {
-      "earliest": "2026-07-02T22:00:00.000Z",
+      "earliest": "2026-07-06T13:00:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
@@ -59,7 +59,7 @@
       "latest": "2026-10-24T23:00:00.000Z"
     },
     "community": {
-      "earliest": "2026-07-02T12:00:00.000Z",
+      "earliest": "2026-07-07T22:15:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
     "manor": {
@@ -78,39 +78,39 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 29
+      "daysSinceMoved": 30
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 40
+      "daysSinceMoved": 41
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 54
+      "daysSinceMoved": 55
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 54
+      "daysSinceMoved": 55
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 27
+      "daysSinceMoved": 28
     },
     "pennManor": {
       "newest": "2027-09-28",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 64
+      "daysSinceMoved": 65
     },
     "vfw": {
       "newest": "2026-10-22",
-      "daysSinceMoved": 29
+      "daysSinceMoved": 30
     },
     "phantomPower": {
       "newest": "2026-10-24",
-      "daysSinceMoved": 11
+      "daysSinceMoved": 12
     },
     "community": {
       "newest": "2027-04-16",
@@ -118,23 +118,23 @@
     },
     "manor": {
       "newest": "2027-09-29",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "raneyCellars": {
       "newest": "2026-09-24",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 14
     },
     "theBackyard": {
       "newest": "2026-10-12",
-      "daysSinceMoved": 22
+      "daysSinceMoved": 23
     }
   },
   "sports": {
     "total": 790,
-    "scored": 111,
-    "wins": 56,
+    "scored": 113,
+    "wins": 57,
     "losses": 48,
-    "ties": 7
+    "ties": 8
   },
   "registrations": {
     "open": 8,
@@ -150,13 +150,13 @@
       "PM Community": 2
     },
     "stalePast": 13,
-    "lastSyncAt": "2026-09-30T23:27:53.774Z"
+    "lastSyncAt": "2026-10-01T04:10:44.953Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
-    "approved": 9,
-    "checkedAt": "2026-09-30T23:32:21.539Z"
+    "approved": 8,
+    "checkedAt": "2026-10-01T04:14:12.582Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -186,7 +186,7 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 86,
+        "value": 85,
         "min": 21,
         "skipped": false
       },
@@ -229,75 +229,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Millersville University Field Hockey at #2 Shippensburg|2026-09-30T20:00:00.000Z",
-      "firstSeenAt": "2026-09-30T23:32:30.512Z",
-      "title": "Millersville University Field Hockey at #2 Shippensburg",
-      "source": "MU",
-      "date": "2026-09-30T20:00:00.000Z"
-    },
-    {
-      "key": "10/1 Practice|2026-10-02T01:30:00.000Z",
-      "firstSeenAt": "2026-09-30T23:32:30.512Z",
-      "title": "10/1 Practice",
-      "source": "MU",
-      "date": "2026-10-02T01:30:00.000Z"
-    },
-    {
-      "key": "First IHSA Hunt Seat Show!!!|2026-10-04T12:00:00.000Z",
-      "firstSeenAt": "2026-09-30T23:32:30.512Z",
-      "title": "First IHSA Hunt Seat Show!!!",
-      "source": "MU",
-      "date": "2026-10-04T12:00:00.000Z"
-    },
-    {
-      "key": "10/6 Practice|2026-10-06T10:00:00.000Z",
-      "firstSeenAt": "2026-09-30T23:32:30.512Z",
-      "title": "10/6 Practice",
-      "source": "MU",
-      "date": "2026-10-06T10:00:00.000Z"
-    },
-    {
-      "key": "10/7 Practice|2026-10-07T10:00:00.000Z",
-      "firstSeenAt": "2026-09-30T23:32:30.512Z",
-      "title": "10/7 Practice",
-      "source": "MU",
-      "date": "2026-10-07T10:00:00.000Z"
-    },
-    {
-      "key": "10/8 Practice|2026-10-09T01:30:00.000Z",
-      "firstSeenAt": "2026-09-30T23:32:30.512Z",
-      "title": "10/8 Practice",
-      "source": "MU",
-      "date": "2026-10-09T01:30:00.000Z"
-    },
-    {
-      "key": "Men's Rugby Vs The College of New Jersey|2026-10-17T16:00:00.000Z",
-      "firstSeenAt": "2026-09-30T23:32:30.512Z",
-      "title": "Men's Rugby Vs The College of New Jersey",
-      "source": "MU",
-      "date": "2026-10-17T16:00:00.000Z"
-    },
-    {
-      "key": "Bucknell University Match|2026-10-18T16:00:00.000Z",
-      "firstSeenAt": "2026-09-30T23:32:30.512Z",
-      "title": "Bucknell University Match",
-      "source": "MU",
-      "date": "2026-10-18T16:00:00.000Z"
-    },
-    {
-      "key": "Creative Writers Guild general meeting|2026-10-20T18:00:00",
-      "firstSeenAt": "2026-09-30T23:32:30.512Z",
+      "key": "Creative Writers Guild general meeting|2026-09-22T18:00:00",
+      "firstSeenAt": "2026-10-01T04:14:28.554Z",
       "title": "Creative Writers Guild general meeting",
       "source": "MU",
-      "date": "2026-10-20T18:00:00"
+      "date": "2026-09-22T18:00:00"
     },
     {
-      "key": "YDSA General Meeting|2026-10-20T18:30:00",
-      "firstSeenAt": "2026-09-30T23:32:30.512Z",
-      "title": "YDSA General Meeting",
+      "key": "SGA Tabling - Dining|2026-09-23T11:00:00",
+      "firstSeenAt": "2026-10-01T04:14:28.554Z",
+      "title": "SGA Tabling - Dining",
       "source": "MU",
-      "date": "2026-10-20T18:30:00"
+      "date": "2026-09-23T11:00:00"
+    },
+    {
+      "key": "Hazing Prevention Week Online Seminar Viewings|2026-09-23T12:00:00",
+      "firstSeenAt": "2026-10-01T04:14:28.554Z",
+      "title": "Hazing Prevention Week Online Seminar Viewings",
+      "source": "MU",
+      "date": "2026-09-23T12:00:00"
+    },
+    {
+      "key": "Study Hours / Chapter|2026-10-20T22:00:00.000Z",
+      "firstSeenAt": "2026-10-01T04:14:28.554Z",
+      "title": "Study Hours / Chapter",
+      "source": "MU",
+      "date": "2026-10-20T22:00:00.000Z"
+    },
+    {
+      "key": "Creative Writers Guild general meeting|2026-10-20T22:00:00.000Z",
+      "firstSeenAt": "2026-10-01T04:14:28.554Z",
+      "title": "Creative Writers Guild general meeting",
+      "source": "MU",
+      "date": "2026-10-20T22:00:00.000Z"
+    },
+    {
+      "key": "YDSA Meeting|2026-10-20T22:30:00.000Z",
+      "firstSeenAt": "2026-10-01T04:14:28.554Z",
+      "title": "YDSA Meeting",
+      "source": "MU",
+      "date": "2026-10-20T22:30:00.000Z"
+    },
+    {
+      "key": "RUF Bible Study|2026-10-20T23:00:00.000Z",
+      "firstSeenAt": "2026-10-01T04:14:28.554Z",
+      "title": "RUF Bible Study",
+      "source": "MU",
+      "date": "2026-10-20T23:00:00.000Z"
+    },
+    {
+      "key": "Men's Club Soccer Practice|2026-10-20T23:00:00.000Z",
+      "firstSeenAt": "2026-10-01T04:14:28.554Z",
+      "title": "Men's Club Soccer Practice",
+      "source": "MU",
+      "date": "2026-10-20T23:00:00.000Z"
+    },
+    {
+      "key": "Men's Volleyball Club Practice|2026-10-20T23:00:00.000Z",
+      "firstSeenAt": "2026-10-01T04:14:28.554Z",
+      "title": "Men's Volleyball Club Practice",
+      "source": "MU",
+      "date": "2026-10-20T23:00:00.000Z"
+    },
+    {
+      "key": "Equestrian Club Weekly Meeting|2026-10-20T23:30:00.000Z",
+      "firstSeenAt": "2026-10-01T04:14:28.554Z",
+      "title": "Equestrian Club Weekly Meeting",
+      "source": "MU",
+      "date": "2026-10-20T23:30:00.000Z"
     }
   ],
-  "addedLastRun": 12
+  "addedLastRun": 20
 }

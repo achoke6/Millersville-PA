@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-10-01T18:05:56.461Z",
-  "totalEvents": 1881,
-  "withDescription": 824,
-  "withImage": 215,
+  "generatedAt": "2026-10-01T23:04:31.645Z",
+  "totalEvents": 1873,
+  "withDescription": 826,
+  "withImage": 214,
   "familyFriendly": 79,
   "eventsToday": 30,
   "sources": {
-    "muAthletics": 320,
+    "muAthletics": 319,
     "muCalendar": 173,
     "artsmu": 20,
     "campsAlumni": 30,
-    "muGetInvolved": 505,
-    "pennManor": 557,
+    "muGetInvolved": 507,
+    "pennManor": 558,
     "borough": 62,
     "vfw": 5,
     "phantomPower": 12,
     "community": 18,
-    "manor": 40,
+    "manor": 30,
     "raneyCellars": 3,
     "theBackyard": 18,
     "muHudlBroadcasts": 59
@@ -64,7 +64,7 @@
     },
     "manor": {
       "earliest": "2026-10-05T23:00:00.000Z",
-      "latest": "2027-09-29T12:30:00.000Z"
+      "latest": "2027-06-07T23:00:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-10-01T20:00:00.000Z",
@@ -117,8 +117,8 @@
       "daysSinceMoved": 89
     },
     "manor": {
-      "newest": "2027-09-29",
-      "daysSinceMoved": 2
+      "newest": "2027-06-07",
+      "daysSinceMoved": 0
     },
     "raneyCellars": {
       "newest": "2026-10-07",
@@ -130,15 +130,15 @@
     }
   },
   "sports": {
-    "total": 778,
-    "scored": 113,
-    "wins": 57,
+    "total": 777,
+    "scored": 114,
+    "wins": 58,
     "losses": 48,
     "ties": 8
   },
   "registrations": {
     "open": 8,
-    "next2Weeks": 2,
+    "next2Weeks": 3,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
@@ -150,13 +150,13 @@
       "PM Community": 3
     },
     "stalePast": 13,
-    "lastSyncAt": "2026-10-01T18:01:00.354Z"
+    "lastSyncAt": "2026-10-01T22:59:23.842Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 8,
-    "checkedAt": "2026-10-01T18:05:47.179Z"
+    "checkedAt": "2026-10-01T23:04:23.532Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -200,14 +200,14 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 320,
+        "value": 319,
         "min": 100,
         "skipped": false
       },
       {
         "key": "pennManorGeneral.count",
         "ok": true,
-        "value": 99,
+        "value": 100,
         "min": 10,
         "skipped": false
       },
@@ -228,6 +228,41 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Club Baseball Practice|2026-09-30T20:00:00.000Z",
+      "firstSeenAt": "2026-10-01T23:04:31.641Z",
+      "title": "Club Baseball Practice",
+      "source": "MU",
+      "date": "2026-09-30T20:00:00.000Z"
+    },
+    {
+      "key": "Food Can Drive|2026-10-03T14:00:00.000Z",
+      "firstSeenAt": "2026-10-01T23:04:31.641Z",
+      "title": "Food Can Drive",
+      "source": "MU",
+      "date": "2026-10-03T14:00:00.000Z"
+    },
+    {
+      "key": "HOCO: Friday Night At The Patch|2026-10-16T18:00:00",
+      "firstSeenAt": "2026-10-01T23:04:31.641Z",
+      "title": "HOCO: Friday Night At The Patch",
+      "source": "MU",
+      "date": "2026-10-16T18:00:00"
+    },
+    {
+      "key": "RUF Bible Study|2026-10-20T19:00:00",
+      "firstSeenAt": "2026-10-01T23:04:31.641Z",
+      "title": "RUF Bible Study",
+      "source": "MU",
+      "date": "2026-10-20T19:00:00"
+    },
+    {
+      "key": "Conestoga SNAPOLOGY Assembly|2026-11-06T05:00:00.000Z",
+      "firstSeenAt": "2026-10-01T23:04:31.641Z",
+      "title": "Conestoga SNAPOLOGY Assembly",
+      "source": "PM",
+      "date": "2026-11-06T05:00:00.000Z"
+    },
     {
       "key": "Moose Ultimate Practice|2026-10-05T23:00:00.000Z",
       "firstSeenAt": "2026-10-01T18:05:56.458Z",
@@ -262,42 +297,7 @@
       "title": "Moose Ultimate Practice",
       "source": "MU",
       "date": "2026-10-12T23:00:00.000Z"
-    },
-    {
-      "key": "Men's Ice Hockey Practice (D2)|2026-10-13T10:00:00.000Z",
-      "firstSeenAt": "2026-10-01T18:05:56.458Z",
-      "title": "Men's Ice Hockey Practice (D2)",
-      "source": "MU",
-      "date": "2026-10-13T10:00:00.000Z"
-    },
-    {
-      "key": "Men's Ice Hockey Practice (D2)|2026-10-14T10:00:00.000Z",
-      "firstSeenAt": "2026-10-01T18:05:56.458Z",
-      "title": "Men's Ice Hockey Practice (D2)",
-      "source": "MU",
-      "date": "2026-10-14T10:00:00.000Z"
-    },
-    {
-      "key": "Board Game Club Weekly Meeting|2026-10-14T22:00:00.000Z",
-      "firstSeenAt": "2026-10-01T18:05:56.458Z",
-      "title": "Board Game Club Weekly Meeting",
-      "source": "MU",
-      "date": "2026-10-14T22:00:00.000Z"
-    },
-    {
-      "key": "Moose Ultimate Practice|2026-10-14T23:00:00.000Z",
-      "firstSeenAt": "2026-10-01T18:05:56.458Z",
-      "title": "Moose Ultimate Practice",
-      "source": "MU",
-      "date": "2026-10-14T23:00:00.000Z"
-    },
-    {
-      "key": "Moose Ultimate Practice|2026-10-15T23:00:00.000Z",
-      "firstSeenAt": "2026-10-01T18:05:56.458Z",
-      "title": "Moose Ultimate Practice",
-      "source": "MU",
-      "date": "2026-10-15T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 15
+  "addedLastRun": 5
 }

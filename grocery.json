@@ -2,88 +2,82 @@
     "_comment": "Hand-maintained John Herr's Village Market weekly deals. Maintained weekly via Claude Cowork — circular runs Thursday-Wednesday. Transcribe ~15 top deals from the weekly circular. Update validThrough to one day past the last valid day so deals auto-disappear when the new week starts (Thursday morning).",
     "_format": "dateRange: human-readable string shown in UI (e.g. 'Thursday, May 7 through Wednesday, May 13'). validThrough: ISO date (YYYY-MM-DD), exclusive end. deals: array of { item, salePrice, regularPrice (optional), savings (optional) }. salePrice can be flexible — '$2.99/lb', '2 for $5', 'BOGO Free', etc.",
     "_source": "Circular page typically at https://www.familyownedmarkets.com/print-weekly-specials/?circularstoreidentifier=54348 or via the store's main page.",
-    "dateRange": "Thursday, September 24 through Wednesday, September 30",
-    "validThrough": "2026-10-01",
+    "dateRange": "Thursday, October 1 through Wednesday, October 7",
+    "validThrough": "2026-10-08",
     "deals": [
         {
-            "item": "Whole Boneless Pork Loin (cut into chops or roasts at no extra cost)",
-            "salePrice": "$2.49/lb"
+            "item": "Fresh Boneless & Skinless Chicken Breasts (Grade A, All Natural — sold in 10-lb bag only, $19.90/bag)",
+            "salePrice": "$1.99/lb"
         },
         {
-            "item": "Fresh Boneless & Skinless Chicken Breast Tenders (Value Pack)",
-            "salePrice": "$2.49/lb",
-            "regularPrice": "$2.99/lb",
+            "item": "Smithfield Pork Tenderloins, Fillets or Picnic Roasts (18.4-27.2 oz, Selected)",
+            "salePrice": "Buy 1 Get 1 FREE"
+        },
+        {
+            "item": "Certified Angus Beef Boneless Top Sirloin Steaks (Value Pack)",
+            "salePrice": "$9.99/lb",
+            "regularPrice": "$11.99/lb",
+            "savings": "$2.00/lb"
+        },
+        {
+            "item": "Coke Products (12-pack, 12-oz cans, Selected)",
+            "salePrice": "Buy 2 Get 1 FREE"
+        },
+        {
+            "item": "Fresh Bone-In Center Cut Pork Loin Roast",
+            "salePrice": "$1.99/lb"
+        },
+        {
+            "item": "Fresh 85% Lean Ground Beef (Value Pack, Our Own Store Made)",
+            "salePrice": "$6.49/lb",
+            "regularPrice": "$6.99/lb",
             "savings": "$0.50/lb"
         },
         {
-            "item": "General Mills Giant Size Cereal (18-24 oz, Selected)",
+            "item": "Bone-In Center Cut Pork Loin Chops (Value Pack, Fresh)",
+            "salePrice": "$2.29/lb",
+            "regularPrice": "$2.49/lb",
+            "savings": "$0.20/lb"
+        },
+        {
+            "item": "General Mills Cereals (10.5-12 oz, Selected)",
             "salePrice": "Buy 1 Get 1 FREE"
         },
         {
-            "item": "Herr's Original Potato Chips (7.75-8 oz, Selected)",
+            "item": "Martin's Kettle Cooked Potato Chips (8 oz, Selected) — Weekly Door Buster (limit 4 per Rewards card)",
             "salePrice": "Buy 1 Get 1 FREE"
         },
         {
-            "item": "Fresh 80% Lean Ground Beef (Value Pack, Our Own Store Made)",
-            "salePrice": "$5.49/lb",
-            "regularPrice": "$6.49/lb",
-            "savings": "$1.00/lb"
+            "item": "Clearfield White American Cheese — Weekly Door Buster (limit 5 lbs per Rewards card)",
+            "salePrice": "$4.49/lb"
         },
         {
-            "item": "Southern Seas EZ Peel Raw Shrimp (26/30 ct, 1-lb bag)",
-            "salePrice": "$7.49"
+            "item": "Mrs. T's Pierogies (12-16 oz, Selected) — Weekly Door Buster (limit 3 per Rewards card)",
+            "salePrice": "$1.98"
         },
         {
-            "item": "Deer Park Spring Water (10-pack, 12 oz btls) — Weekly Door Buster (limit per Rewards card)",
-            "salePrice": "2 for $4"
+            "item": "Food Club Pasta (16 oz, Selected) — Weekly Door Buster (limit 10 per Rewards card)",
+            "salePrice": "5 for $4"
         },
         {
-            "item": "Hatfield Premium Cooked Ham — Weekly Door Buster",
-            "salePrice": "$4.99/lb"
-        },
-        {
-            "item": "Kunzler Bacon (1-lb, Selected) — Weekly Door Buster",
-            "salePrice": "$4.49"
-        },
-        {
-            "item": "Gala Apples (Tote Bag)",
-            "salePrice": "$1.49/lb"
-        },
-        {
-            "item": "Fresh Broccoli Crowns",
-            "salePrice": "$1.69/lb"
-        },
-        {
-            "item": "Crisp Romaine Hearts (3-pack, limit 3)",
-            "salePrice": "$1.99"
-        },
-        {
-            "item": "Tombstone Original Pizza (18.5-29.8 oz, Selected)",
-            "salePrice": "2 for $6"
-        },
-        {
-            "item": "Turkey Hill Premium Ice Cream or Frozen Dessert (48 oz, Selected) — Digital Coupon",
+            "item": "Turkey Hill Ice Cream (46 oz, Selected, excludes Simply Natural) — Digital Coupon",
             "salePrice": "2 for $5",
             "regularPrice": "2 for $7",
             "savings": "$2.00 on 2"
         },
         {
-            "item": "Tide, Downy or Gain Products (Selected sizes) — Digital Coupon",
-            "salePrice": "3 for $10",
-            "regularPrice": "3 for $15",
-            "savings": "$5.00 on 3"
+            "item": "Bounty Paper Towels (4-6 ct Double/Triple Roll) or Charmin Bathroom Tissue (6-9 ct Mega Roll)",
+            "salePrice": "$11.98 each, or 2 for $20 when you buy 2 (Rewards)"
         },
         {
-            "item": "Gorton's Frozen Fish Fillets or Sticks — Throwback Thursday Digital Coupon (Thu 9/24-Sun 9/27 only)",
-            "salePrice": "$3.48",
-            "regularPrice": "$5.48",
-            "savings": "$2.00"
+            "item": "New Crop Honeycrisp Apples",
+            "salePrice": "$1.69/lb"
         },
         {
-            "item": "Certified Angus Beef Boneless Ribeye (Delmonico) Steaks (Value Pack)",
-            "salePrice": "$15.99/lb",
-            "regularPrice": "$16.99/lb",
-            "savings": "$1.00/lb"
+            "item": "Totino's Party Pizza (9.8-10.9 oz, Selected) — Throwback Thursday Digital Coupon (Thu 10/1 - Sun 10/4 only)",
+            "salePrice": "$0.58",
+            "regularPrice": "$1.58",
+            "savings": "$1.00"
         }
     ]
 }

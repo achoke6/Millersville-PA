@@ -2915,6 +2915,49 @@ async function runScraper() {
         // makes it obvious in the build log instead of a misleading "✅ 0".
         if (data.data.length === 0) throw new Error('MU Calendar returned 0 events — feed empty (body/auth?)');
 
+        // ---- Coursedog "Event Category" LOOKUP (2026-10-01) ----
+        // The category did NOT vanish on 09-25: MU moved it onto the Coursedog event
+        // form as custom field `lB8e3` ("Event Category": Public Event / Student Event /
+        // Athletic Competitions / Arts Concert / Performance, + legacy Alumni Event) and
+        // the index.php proxy does not forward customFields. The public events site
+        // (events.millersville.edu, Nuxt SSR) reads the same Coursedog API with a
+        // caller-chosen returnFields list, so ONE GET for the whole window yields
+        // eventId -> category (probe 2026-10-01: 599 meetings / 188 KB / 1.1 s; proxy
+        // eventId == eventData.id on 511/511; lB8e3 populated on 591/599). The Origin
+        // header is REQUIRED by the API (401 without it). Any failure here leaves the
+        // map empty and the customerName heuristics below carry the run as before.
+        const cdCategory = new Map();
+        let cdLookupNote = '';
+        try {
+            const cdT0 = Date.now();
+            const cdUrl = 'https://app.coursedog.com/api/v1/em/millersville_banner_sql/meetings'
+                + `?startDate=${startDay}&endDate=${endDay}`
+                + '&skipPendingEvents=true&skipSetupMeetings=true&skipTeardownMeetings=true'
+                + '&skipPrivateMeetings=true&skipHiddenPublicMeetings=true'
+                + '&excludeInvalidDates=true&excludeInvalidTimes=true&limit=5000&orderBy=startDate%2CstartTime'
+                + '&returnFields=' + encodeURIComponent('eventData.id,eventData.customFields.lB8e3');
+            const cdRes = await fetch(cdUrl, {
+                headers: { ...baseHeaders, 'Accept': 'application/json', 'Origin': 'https://events.millersville.edu', 'Referer': 'https://events.millersville.edu/' },
+                signal: AbortSignal.timeout(20000)
+            });
+            if (!cdRes.ok) throw new Error(`HTTP ${cdRes.status}`);
+            const cdJson = JSON.parse(await cdRes.text());
+            // Shape: object keyed by meeting id (bare call) or {meetings:{...}} (related-data call).
+            const cdRows = Array.isArray(cdJson) ? cdJson
+                : Object.values(cdJson && cdJson.meetings ? cdJson.meetings : (cdJson || {}));
+            if (cdRows.length === 0) throw new Error('0 meetings returned');
+            let cdBlank = 0;
+            cdRows.forEach(m => {
+                const ed = (m && m.eventData) || {};
+                if (!ed.id) return;
+                const cat = String((ed.customFields || {}).lB8e3 || '').trim();
+                if (cat) cdCategory.set(ed.id, cat); else cdBlank++;
+            });
+            cdLookupNote = `lookup ${cdRows.length} meetings -> ${cdCategory.size} categorized event ids, ${cdBlank} blank, ${Date.now() - cdT0} ms`;
+        } catch (e) {
+            cdLookupNote = `lookup FAILED (${e.message})`;
+        }
+
         let muCount = 0;
         let muCalEtixRows = 0;   // rows carrying an etix /p/ link in ANY field (2026-09-21 canary)
 
@@ -2930,8 +2973,12 @@ async function runScraper() {
         // previous build's 228-org roster, committed hourly) = a student event.
         // EVERY heuristic below is guarded by `!eventType` so the original
         // category logic resumes the moment Coursedog restores the field; the
-        // canary after the loop reports which mode ran.
+        // canary after the loop reports which mode ran. Since 2026-10-01 the
+        // Coursedog lookup above fills `eventType` first, so these heuristics
+        // only see rows the lookup could not categorize (blank lB8e3 / fetch fail).
         let muCalCatEmpty = 0, muCalAthSkipHeur = 0, muCalStudentHeur = 0, muCalNoCustomer = 0;
+        let muCalProxyBlank = 0, muCalViaLookup = 0;
+        const muCalStillBlankTitles = [];
         const normOrg = s => String(s || '').toLowerCase()
             .replace(/\b(at|of)\s+millersville(\s+university)?\b/g, ' ')
             .replace(/\bmillersville university\b|\bstudent chapter\b|\bmu\b/g, ' ')
@@ -2975,9 +3022,16 @@ async function runScraper() {
             const eventTitle = obj.title || "Campus Event";
             // category now plays the old MeetingType role: it drives the athletic
             // skip, the tag, and the "Student Event" relabel below — all unchanged.
-            const eventType = (obj.category || '').trim();
+            // Proxy value wins if MU ever restores the field; the Coursedog
+            // lookup fills the 09-25 gap; blank falls through to the heuristics.
+            const proxyCat = (obj.category || '').trim();
+            const eventType = proxyCat || cdCategory.get(obj.eventId || obj.activityId || '') || '';
             const custName = (obj.customerName || '').trim();
-            if (!eventType) muCalCatEmpty++;
+            if (!proxyCat) muCalProxyBlank++;
+            if (!eventType) {
+                muCalCatEmpty++;
+                if (muCalStillBlankTitles.length < 10) muCalStillBlankTitles.push(`${String(obj.startDate || '').slice(0, 10)} ${eventTitle}`);
+            } else if (!proxyCat) muCalViaLookup++;
             if (!custName) muCalNoCustomer++;
 
             // SKIP Athletic Competitions — we get those from Sidearm now
@@ -3205,10 +3259,13 @@ async function runScraper() {
             muCount++;
         });
         console.log(`✅ MU Calendar (non-sport): ${muCount} events`);
-        if (muCalCatEmpty > 0) {
-            console.log(`  ⚠️ MU Calendar: category EMPTY on ${muCalCatEmpty}/${data.data.length} rows (Coursedog dropped the field 2026-09-25) — customerName heuristics: ${muCalAthSkipHeur} athletics game(s) skipped, ${muCalStudentHeur} student-org row(s) relabeled, ${muCalNoCustomer} row(s) with no customerName, roster ${muCalOrgRoster.size} org keys`);
+        if (muCalProxyBlank === 0) {
+            console.log(`  ✓ MU Calendar: category populated by proxy on all ${data.data.length} rows (Coursedog lookup + customerName heuristics dormant; ${cdLookupNote})`);
+        } else if (muCalCatEmpty === 0) {
+            console.log(`  ✓ MU Calendar: category via Coursedog lookup on ${muCalViaLookup}/${data.data.length} rows (proxy blank on ${muCalProxyBlank}; customerName heuristics dormant; ${cdLookupNote})`);
         } else {
-            console.log(`  ✓ MU Calendar: category populated on all ${data.data.length} rows (customerName heuristics dormant)`);
+            console.log(`  ⚠️ MU Calendar: category still EMPTY on ${muCalCatEmpty}/${data.data.length} rows (proxy blank ${muCalProxyBlank}, lookup filled ${muCalViaLookup}; ${cdLookupNote}) — customerName heuristics: ${muCalAthSkipHeur} athletics game(s) skipped, ${muCalStudentHeur} student-org row(s) relabeled, ${muCalNoCustomer} row(s) with no customerName, roster ${muCalOrgRoster.size} org keys`);
+            if (muCalStillBlankTitles.length) console.log(`     still-blank sample: ${muCalStillBlankTitles.join(' | ')}`);
         }
         console.log(`  🎫 MU Calendar rows with an etix /p/ link in any field: ${muCalEtixRows}`);
         checkAcademicMilestones(data.data);

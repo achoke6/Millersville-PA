@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-02T16:09:56.143Z",
-  "totalEvents": 1892,
+  "generatedAt": "2026-10-02T21:12:21.553Z",
+  "totalEvents": 1893,
   "withDescription": 828,
-  "withImage": 213,
+  "withImage": 214,
   "familyFriendly": 81,
-  "eventsToday": 27,
+  "eventsToday": 28,
   "sources": {
-    "muAthletics": 323,
+    "muAthletics": 324,
     "muCalendar": 174,
     "artsmu": 20,
     "campsAlumni": 30,
@@ -130,10 +130,10 @@
     }
   },
   "sports": {
-    "total": 783,
-    "scored": 115,
+    "total": 784,
+    "scored": 117,
     "wins": 59,
-    "losses": 48,
+    "losses": 50,
     "ties": 8
   },
   "registrations": {
@@ -150,13 +150,13 @@
       "PM Community": 2
     },
     "stalePast": 13,
-    "lastSyncAt": "2026-10-02T16:05:31.676Z"
+    "lastSyncAt": "2026-10-02T21:08:58.505Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 8,
-    "checkedAt": "2026-10-02T16:09:45.935Z"
+    "checkedAt": "2026-10-02T21:12:11.183Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -200,7 +200,7 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 323,
+        "value": 324,
         "min": 100,
         "skipped": false
       },
@@ -228,6 +228,34 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "CANCELLED Millersville University Women's Cross Country Paul Short Run|2026-10-02T18:00:00.000Z",
+      "firstSeenAt": "2026-10-02T21:12:21.528Z",
+      "title": "CANCELLED Millersville University Women's Cross Country Paul Short Run",
+      "source": "MU",
+      "date": "2026-10-02T18:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Cross Country at Paul Short Run|2026-10-02T18:00:00.000Z",
+      "firstSeenAt": "2026-10-02T21:12:21.528Z",
+      "title": "Millersville University Women's Cross Country at Paul Short Run",
+      "source": "MU",
+      "date": "2026-10-02T18:00:00.000Z"
+    },
+    {
+      "key": "D9 Jeopardy|2026-10-07T21:00:00.000Z",
+      "firstSeenAt": "2026-10-02T21:12:21.528Z",
+      "title": "D9 Jeopardy",
+      "source": "MU",
+      "date": "2026-10-07T21:00:00.000Z"
+    },
+    {
+      "key": "Zoning Hearing Board - Cancelled|2026-10-07T23:00:00.000Z",
+      "firstSeenAt": "2026-10-02T21:12:21.528Z",
+      "title": "Zoning Hearing Board - Cancelled",
+      "source": "Manor",
+      "date": "2026-10-07T23:00:00.000Z"
+    },
     {
       "key": "BCM Bingo|2026-10-02T23:00:00.000Z",
       "firstSeenAt": "2026-10-02T16:09:56.136Z",
@@ -269,35 +297,7 @@
       "title": "Letters of Love x Acacia Veterans Day Thank You Cards",
       "source": "MU",
       "date": "2026-10-06T23:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Wrestling vs Frostburg State University|2026-12-05T16:30:00.000Z",
-      "firstSeenAt": "2026-10-02T16:09:56.136Z",
-      "title": "Millersville University Wrestling vs Frostburg State University",
-      "source": "MU",
-      "date": "2026-12-05T16:30:00.000Z"
-    },
-    {
-      "key": "Millersville University Wrestling vs Felician University|2026-12-05T18:00:00.000Z",
-      "firstSeenAt": "2026-10-02T16:09:56.136Z",
-      "title": "Millersville University Wrestling vs Felician University",
-      "source": "MU",
-      "date": "2026-12-05T18:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Wrestling vs Bridgeport|2026-12-05T19:30:00.000Z",
-      "firstSeenAt": "2026-10-02T16:09:56.136Z",
-      "title": "Millersville University Wrestling vs Bridgeport",
-      "source": "MU",
-      "date": "2026-12-05T19:30:00.000Z"
-    },
-    {
-      "key": "Millersville University Wrestling at Hilltopper Duals|2026-12-20T15:00:00.000Z",
-      "firstSeenAt": "2026-10-02T16:09:56.136Z",
-      "title": "Millersville University Wrestling at Hilltopper Duals",
-      "source": "MU",
-      "date": "2026-12-20T15:00:00.000Z"
     }
   ],
-  "addedLastRun": 12
+  "addedLastRun": 4
 }

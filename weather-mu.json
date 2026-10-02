@@ -1,11 +1,11 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Friday, October 02, 2026 at 08:09 AM (Cokain and McCarthy, Student Meteorologists)",
+    "issued": "Friday, October 02, 2026 at 11:59 AM (Banaszak, Nornhold and Reitz, Student Meteorologists)",
     "periods": [
       {
-        "period": "Today",
-        "text": "Unseasonably warm and humid with increasing clouds and a late-day shower. High: 84-88"
+        "period": "This afternoon",
+        "text": "Unseasonably warm and humid with increasing clouds and a shower late. High: 86-90"
       },
       {
         "period": "Tonight",
@@ -128,6 +128,61 @@
   },
   "observations": [
     {
+      "time": "17:00",
+      "temp": "79",
+      "dewpoint": "69",
+      "rh": "71",
+      "windDir": "W",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "10.2",
+      "condition": "None"
+    },
+    {
+      "time": "16:00",
+      "temp": "85",
+      "dewpoint": "66",
+      "rh": "53",
+      "windDir": "WSW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "10.5",
+      "condition": "None"
+    },
+    {
+      "time": "15:00",
+      "temp": "86",
+      "dewpoint": "65",
+      "rh": "50",
+      "windDir": "WNW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "10.3",
+      "condition": "None"
+    },
+    {
+      "time": "14:00",
+      "temp": "86",
+      "dewpoint": "65",
+      "rh": "50",
+      "windDir": "WNW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "10.1",
+      "condition": "None"
+    },
+    {
+      "time": "13:00",
+      "temp": "85",
+      "dewpoint": "63",
+      "rh": "48",
+      "windDir": "W",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "10.7",
+      "condition": "None"
+    },
+    {
       "time": "12:00",
       "temp": "83",
       "dewpoint": "62",
@@ -136,61 +191,6 @@
       "windSpeed": "4",
       "precip": "0.00",
       "visibility": "11.2",
-      "condition": "None"
-    },
-    {
-      "time": "11:00",
-      "temp": "78",
-      "dewpoint": "65",
-      "rh": "66",
-      "windDir": "SSW",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "11.1",
-      "condition": "None"
-    },
-    {
-      "time": "10:00",
-      "temp": "73",
-      "dewpoint": "63",
-      "rh": "72",
-      "windDir": "S",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "10.9",
-      "condition": "None"
-    },
-    {
-      "time": "09:00",
-      "temp": "68",
-      "dewpoint": "63",
-      "rh": "83",
-      "windDir": "SSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "8.4",
-      "condition": "None"
-    },
-    {
-      "time": "08:00",
-      "temp": "62",
-      "dewpoint": "61",
-      "rh": "98",
-      "windDir": "SE",
-      "windSpeed": "0",
-      "precip": "0.00",
-      "visibility": "8.8",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "60",
-      "dewpoint": "60",
-      "rh": "99",
-      "windDir": "NW",
-      "windSpeed": "0",
-      "precip": "0.00",
-      "visibility": "6.7",
       "condition": "None"
     }
   ],
@@ -217,9 +217,9 @@
     "yearMinDate": "January 21"
   },
   "discussion": {
-    "headline": "October to kick off on unseasonably warm and muggy note",
-    "dateLine": "10:30 a.m. Tuesday, September 29, 2026",
-    "excerpt": "As expected, the Nor'easter spoiled outdoor plans across central and eastern PA during the last weekend of September. Gusty winds, showers and bands of steadier rain rotated around the backside of the system from northeast-to-southwest across the region. Rainfall amounts gradually increased from west-to-east and ranged from 0.25\" or less in parts of Franklin and Adams Counties to over 2\" in Philadelphia (see below). …",
+    "headline": "big cooldown this weekend.. welcome to autumn!",
+    "dateLine": "1:30 p.m. Friday, October 2, 2026, Update",
+    "excerpt": "Due primarily to very mild nights, September 2026 concluded as the 13th-warmest on record at Millersville University since 1914. Frequent storm systems and bouts of heavier showers and storms caused monthly rainfall to be about 1.5\" above normal (see below). Despite a cool final third of the month, October kicked off on a much warmer and summery note. …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -257,5 +257,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-02T16:05:34.154Z"
+  "updated": "2026-10-02T21:09:01.509Z"
 }

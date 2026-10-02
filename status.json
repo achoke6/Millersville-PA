@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-10-02T09:24:29.323Z",
-  "totalEvents": 1883,
-  "withDescription": 826,
-  "withImage": 212,
-  "familyFriendly": 79,
-  "eventsToday": 25,
+  "generatedAt": "2026-10-02T16:09:56.143Z",
+  "totalEvents": 1892,
+  "withDescription": 828,
+  "withImage": 213,
+  "familyFriendly": 81,
+  "eventsToday": 27,
   "sources": {
-    "muAthletics": 319,
+    "muAthletics": 323,
     "muCalendar": 174,
     "artsmu": 20,
     "campsAlumni": 30,
-    "muGetInvolved": 506,
+    "muGetInvolved": 510,
     "pennManor": 560,
     "borough": 61,
     "vfw": 5,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 779,
+    "total": 783,
     "scored": 115,
     "wins": 59,
     "losses": 48,
@@ -143,20 +143,20 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 5,
+    "pendingFuture": 4,
     "pendingPast": 11,
     "pendingBySource": {
       "Youth Sports": 2,
-      "PM Community": 3
+      "PM Community": 2
     },
     "stalePast": 13,
-    "lastSyncAt": "2026-10-02T09:21:03.066Z"
+    "lastSyncAt": "2026-10-02T16:05:31.676Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 8,
-    "checkedAt": "2026-10-02T09:24:14.738Z"
+    "checkedAt": "2026-10-02T16:09:45.935Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -165,14 +165,14 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 365,
+        "value": 364,
         "min": 45,
         "skipped": false
       },
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 237,
+        "value": 236,
         "min": 60,
         "skipped": false
       },
@@ -200,7 +200,7 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 319,
+        "value": 323,
         "min": 100,
         "skipped": false
       },
@@ -229,75 +229,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Noche de Juegos|2026-09-23T18:00:00",
-      "firstSeenAt": "2026-10-02T02:12:14.839Z",
-      "title": "Noche de Juegos",
+      "key": "BCM Bingo|2026-10-02T23:00:00.000Z",
+      "firstSeenAt": "2026-10-02T16:09:56.136Z",
+      "title": "BCM Bingo",
       "source": "MU",
-      "date": "2026-09-23T18:00:00"
+      "date": "2026-10-02T23:00:00.000Z"
     },
     {
-      "key": "Student Government Association (SGA) Weekly Meeting|2026-09-24T17:00:00",
-      "firstSeenAt": "2026-10-02T02:12:14.839Z",
-      "title": "Student Government Association (SGA) Weekly Meeting",
+      "key": "ACMO Coffeehouse|2026-10-03T00:00:00.000Z",
+      "firstSeenAt": "2026-10-02T16:09:56.136Z",
+      "title": "ACMO Coffeehouse",
       "source": "MU",
-      "date": "2026-09-24T17:00:00"
+      "date": "2026-10-03T00:00:00.000Z"
     },
     {
-      "key": "FSL: Meet Phi Mu Delta|2026-09-24T18:00:00",
-      "firstSeenAt": "2026-10-02T02:12:14.839Z",
-      "title": "FSL: Meet Phi Mu Delta",
-      "source": "MU",
-      "date": "2026-09-24T18:00:00"
+      "key": "Safe Harbor Fish & Fun|2026-10-03T12:00:00.000Z",
+      "firstSeenAt": "2026-10-02T16:09:56.136Z",
+      "title": "Safe Harbor Fish & Fun",
+      "source": "Other",
+      "date": "2026-10-03T12:00:00.000Z"
     },
     {
-      "key": "Study Hours / Chapter|2026-10-20T22:00:00.000Z",
-      "firstSeenAt": "2026-10-02T02:12:14.839Z",
-      "title": "Study Hours / Chapter",
+      "key": "Yoga w/ Gia|2026-10-04T23:00:00.000Z",
+      "firstSeenAt": "2026-10-02T16:09:56.136Z",
+      "title": "Yoga w/ Gia",
       "source": "MU",
-      "date": "2026-10-20T22:00:00.000Z"
+      "date": "2026-10-04T23:00:00.000Z"
     },
     {
-      "key": "Creative Writers Guild general meeting|2026-10-20T22:00:00.000Z",
-      "firstSeenAt": "2026-10-02T02:12:14.839Z",
-      "title": "Creative Writers Guild general meeting",
-      "source": "MU",
-      "date": "2026-10-20T22:00:00.000Z"
+      "key": "Park Commission - Cancelled|2026-10-05T22:00:00.000Z",
+      "firstSeenAt": "2026-10-02T16:09:56.136Z",
+      "title": "Park Commission - Cancelled",
+      "source": "Borough",
+      "date": "2026-10-05T22:00:00.000Z"
     },
     {
-      "key": "RUF Bible Study|2026-10-20T23:00:00.000Z",
-      "firstSeenAt": "2026-10-02T02:12:14.839Z",
-      "title": "RUF Bible Study",
+      "key": "Letters of Love x Acacia Veterans Day Thank You Cards|2026-10-06T23:00:00.000Z",
+      "firstSeenAt": "2026-10-02T16:09:56.136Z",
+      "title": "Letters of Love x Acacia Veterans Day Thank You Cards",
       "source": "MU",
-      "date": "2026-10-20T23:00:00.000Z"
+      "date": "2026-10-06T23:00:00.000Z"
     },
     {
-      "key": "Men's Club Soccer Practice|2026-10-20T23:00:00.000Z",
-      "firstSeenAt": "2026-10-02T02:12:14.839Z",
-      "title": "Men's Club Soccer Practice",
+      "key": "Millersville University Wrestling vs Frostburg State University|2026-12-05T16:30:00.000Z",
+      "firstSeenAt": "2026-10-02T16:09:56.136Z",
+      "title": "Millersville University Wrestling vs Frostburg State University",
       "source": "MU",
-      "date": "2026-10-20T23:00:00.000Z"
+      "date": "2026-12-05T16:30:00.000Z"
     },
     {
-      "key": "Men's Volleyball Club Practice|2026-10-20T23:00:00.000Z",
-      "firstSeenAt": "2026-10-02T02:12:14.839Z",
-      "title": "Men's Volleyball Club Practice",
+      "key": "Millersville University Wrestling vs Felician University|2026-12-05T18:00:00.000Z",
+      "firstSeenAt": "2026-10-02T16:09:56.136Z",
+      "title": "Millersville University Wrestling vs Felician University",
       "source": "MU",
-      "date": "2026-10-20T23:00:00.000Z"
+      "date": "2026-12-05T18:00:00.000Z"
     },
     {
-      "key": "Equestrian Club Weekly Meeting|2026-10-20T23:30:00.000Z",
-      "firstSeenAt": "2026-10-02T02:12:14.839Z",
-      "title": "Equestrian Club Weekly Meeting",
+      "key": "Millersville University Wrestling vs Bridgeport|2026-12-05T19:30:00.000Z",
+      "firstSeenAt": "2026-10-02T16:09:56.136Z",
+      "title": "Millersville University Wrestling vs Bridgeport",
       "source": "MU",
-      "date": "2026-10-20T23:30:00.000Z"
+      "date": "2026-12-05T19:30:00.000Z"
     },
     {
-      "key": "Ice Hockey Club (D3) Practice|2026-10-21T01:00:00.000Z",
-      "firstSeenAt": "2026-10-02T02:12:14.839Z",
-      "title": "Ice Hockey Club (D3) Practice",
+      "key": "Millersville University Wrestling at Hilltopper Duals|2026-12-20T15:00:00.000Z",
+      "firstSeenAt": "2026-10-02T16:09:56.136Z",
+      "title": "Millersville University Wrestling at Hilltopper Duals",
       "source": "MU",
-      "date": "2026-10-21T01:00:00.000Z"
+      "date": "2026-12-20T15:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 12
 }

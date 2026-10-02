@@ -19,8 +19,10 @@
   },
   {
     "name": "African Caribbean Student Association",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "ACSA",
     "id": ""
   },
@@ -417,9 +419,9 @@
   },
   {
     "name": "Club Tennis",
-    "category": "Sporting",
+    "category": "Service",
     "categories": [
-      "Sporting"
+      "Service"
     ],
     "shortName": "",
     "id": ""
@@ -492,8 +494,11 @@
   },
   {
     "name": "Commuter Services",
-    "category": "",
-    "categories": [],
+    "category": "Educational Program",
+    "categories": [
+      "Educational Program",
+      "Social"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -773,9 +778,9 @@
   },
   {
     "name": "Fraternity & Sorority Life",
-    "category": "Educational Program",
+    "category": "Social",
     "categories": [
-      "Educational Program"
+      "Social"
     ],
     "shortName": "FSL",
     "id": ""
@@ -788,13 +793,6 @@
       "Social"
     ],
     "shortName": "GSA",
-    "id": ""
-  },
-  {
-    "name": "Geography Club",
-    "category": "",
-    "categories": [],
-    "shortName": "",
     "id": ""
   },
   {
@@ -860,7 +858,8 @@
     "name": "Horror Movies and Media",
     "category": "Movie or Film",
     "categories": [
-      "Movie or Film"
+      "Movie or Film",
+      "Social"
     ],
     "shortName": "Horror Movies",
     "id": ""
@@ -874,10 +873,8 @@
   },
   {
     "name": "Ice Hockey Club (D3)",
-    "category": "Sporting",
-    "categories": [
-      "Sporting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1099,8 +1096,9 @@
   },
   {
     "name": "Men's Ice Hockey (D2)",
-    "category": "Sporting",
+    "category": "Competition",
     "categories": [
+      "Competition",
       "Sporting"
     ],
     "shortName": "",
@@ -1191,10 +1189,8 @@
   },
   {
     "name": "Moose Ultimate",
-    "category": "Sporting",
-    "categories": [
-      "Sporting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1408,11 +1404,8 @@
   },
   {
     "name": "Reformed University Fellowship",
-    "category": "Meeting",
-    "categories": [
-      "Meeting",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "RUF",
     "id": ""
   },
@@ -1571,9 +1564,9 @@
   },
   {
     "name": "Student Government Association",
-    "category": "Meeting",
+    "category": "Lecture or Speaker",
     "categories": [
-      "Meeting"
+      "Lecture or Speaker"
     ],
     "shortName": "SGA",
     "id": ""
@@ -1621,15 +1614,6 @@
     ],
     "shortName": "",
     "id": "supersmashclubmu"
-  },
-  {
-    "name": "Sustainability Club",
-    "category": "Performance",
-    "categories": [
-      "Performance"
-    ],
-    "shortName": "",
-    "id": ""
   },
   {
     "name": "Tau Kappa Epsilon",

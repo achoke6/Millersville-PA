@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-03T00:58:33.700Z",
-  "totalEvents": 1892,
-  "withDescription": 826,
+  "generatedAt": "2026-10-03T06:06:50.713Z",
+  "totalEvents": 1891,
+  "withDescription": 825,
   "withImage": 217,
   "familyFriendly": 81,
-  "eventsToday": 28,
+  "eventsToday": 18,
   "sources": {
     "muAthletics": 324,
     "muCalendar": 172,
@@ -78,39 +78,39 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 31
+      "daysSinceMoved": 32
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 42
+      "daysSinceMoved": 43
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 56
+      "daysSinceMoved": 57
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 56
+      "daysSinceMoved": 57
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 29
+      "daysSinceMoved": 30
     },
     "pennManor": {
       "newest": "2027-10-02",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 66
+      "daysSinceMoved": 67
     },
     "vfw": {
       "newest": "2026-10-22",
-      "daysSinceMoved": 31
+      "daysSinceMoved": 32
     },
     "phantomPower": {
       "newest": "2026-10-24",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 14
     },
     "community": {
       "newest": "2027-04-16",
@@ -118,21 +118,21 @@
     },
     "manor": {
       "newest": "2027-09-29",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "raneyCellars": {
       "newest": "2026-10-07",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "theBackyard": {
       "newest": "2026-11-11",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     }
   },
   "sports": {
     "total": 786,
-    "scored": 119,
-    "wins": 59,
+    "scored": 120,
+    "wins": 60,
     "losses": 52,
     "ties": 8
   },
@@ -150,13 +150,13 @@
       "PM Community": 2
     },
     "stalePast": 15,
-    "lastSyncAt": "2026-10-03T00:55:15.214Z"
+    "lastSyncAt": "2026-10-03T06:02:02.780Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 8,
-    "checkedAt": "2026-10-03T00:58:23.224Z"
+    "checkedAt": "2026-10-03T06:06:41.332Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -165,7 +165,7 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 365,
+        "value": 364,
         "min": 45,
         "skipped": false
       },
@@ -229,6 +229,20 @@
   },
   "recentlyAdded": [
     {
+      "key": "Millersville University Men's Golf at Vulcan Invitational|2026-09-03T04:00:00.000Z",
+      "firstSeenAt": "2026-10-03T06:06:50.710Z",
+      "title": "Millersville University Men's Golf at Vulcan Invitational",
+      "source": "MU",
+      "date": "2026-09-03T04:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Golf at Vulcan Invitational|2026-09-03T04:00:00.000Z",
+      "firstSeenAt": "2026-10-03T06:06:50.710Z",
+      "title": "Millersville University Women's Golf at Vulcan Invitational",
+      "source": "MU",
+      "date": "2026-09-03T04:00:00.000Z"
+    },
+    {
       "key": "Pie a DZ|2026-09-25T12:00:00",
       "firstSeenAt": "2026-10-03T00:58:33.697Z",
       "title": "Pie a DZ",
@@ -283,21 +297,7 @@
       "title": "Ropes Course- Open Climb",
       "source": "MU",
       "date": "2026-10-22T20:00:00.000Z"
-    },
-    {
-      "key": "CHEP Trivia|2026-10-22T20:00:00.000Z",
-      "firstSeenAt": "2026-10-03T00:58:33.697Z",
-      "title": "CHEP Trivia",
-      "source": "MU",
-      "date": "2026-10-22T20:00:00.000Z"
-    },
-    {
-      "key": "Slip n' Score Meeting|2026-10-22T21:00:00.000Z",
-      "firstSeenAt": "2026-10-03T00:58:33.697Z",
-      "title": "Slip n' Score Meeting",
-      "source": "MU",
-      "date": "2026-10-22T21:00:00.000Z"
     }
   ],
-  "addedLastRun": 16
+  "addedLastRun": 2
 }

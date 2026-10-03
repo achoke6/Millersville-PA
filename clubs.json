@@ -19,10 +19,8 @@
   },
   {
     "name": "African Caribbean Student Association",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "ACSA",
     "id": ""
   },
@@ -305,8 +303,9 @@
   },
   {
     "name": "Center for Health Education and Promotion",
-    "category": "Tabling",
+    "category": "Educational Program",
     "categories": [
+      "Educational Program",
       "Tabling"
     ],
     "shortName": "CHEP",
@@ -589,10 +588,8 @@
   },
   {
     "name": "Dance Team",
-    "category": "Fundraiser",
-    "categories": [
-      "Fundraiser"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -607,10 +604,8 @@
   },
   {
     "name": "Delta Zeta",
-    "category": "Fundraiser",
-    "categories": [
-      "Fundraiser"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -694,9 +689,9 @@
   },
   {
     "name": "Equestrian Club",
-    "category": "Sporting",
+    "category": "Competition",
     "categories": [
-      "Sporting"
+      "Competition"
     ],
     "shortName": "",
     "id": ""
@@ -1240,12 +1235,12 @@
   },
   {
     "name": "National Society of Black Engineers",
-    "category": "Service",
+    "category": "Identity-Based",
     "categories": [
-      "Service"
+      "Identity-Based"
     ],
     "shortName": "NSBE",
-    "id": ""
+    "id": "nsbe"
   },
   {
     "name": "Navigators",
@@ -1426,15 +1421,6 @@
     ],
     "shortName": "RFL",
     "id": "relayforlife"
-  },
-  {
-    "name": "Rugby Club, Women's",
-    "category": "Sporting",
-    "categories": [
-      "Sporting"
-    ],
-    "shortName": "",
-    "id": ""
   },
   {
     "name": "Running Club",
@@ -1859,6 +1845,13 @@
     "categories": [],
     "shortName": "",
     "id": "womensgolf"
+  },
+  {
+    "name": "Women's Rugby Club",
+    "category": "",
+    "categories": [],
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Women's Soccer",

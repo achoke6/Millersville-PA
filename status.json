@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-10-02T21:12:21.553Z",
-  "totalEvents": 1893,
-  "withDescription": 828,
-  "withImage": 214,
+  "generatedAt": "2026-10-03T00:58:33.700Z",
+  "totalEvents": 1892,
+  "withDescription": 826,
+  "withImage": 217,
   "familyFriendly": 81,
   "eventsToday": 28,
   "sources": {
     "muAthletics": 324,
-    "muCalendar": 174,
+    "muCalendar": 172,
     "artsmu": 20,
     "campsAlumni": 30,
-    "muGetInvolved": 510,
-    "pennManor": 560,
+    "muGetInvolved": 509,
+    "pennManor": 562,
     "borough": 61,
     "vfw": 5,
     "phantomPower": 12,
@@ -19,7 +19,7 @@
     "manor": 40,
     "raneyCellars": 3,
     "theBackyard": 18,
-    "muHudlBroadcasts": 59
+    "muHudlBroadcasts": 57
   },
   "sourceDateRanges": {
     "muAthletics": {
@@ -44,7 +44,7 @@
     },
     "pennManor": {
       "earliest": "2026-07-15T22:00:00.000Z",
-      "latest": "2027-10-01T21:30:00.000Z"
+      "latest": "2027-10-02T14:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-07-06T22:00:00.000Z",
@@ -97,8 +97,8 @@
       "daysSinceMoved": 29
     },
     "pennManor": {
-      "newest": "2027-10-01",
-      "daysSinceMoved": 1
+      "newest": "2027-10-02",
+      "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2026-12-25",
@@ -130,10 +130,10 @@
     }
   },
   "sports": {
-    "total": 784,
-    "scored": 117,
+    "total": 786,
+    "scored": 119,
     "wins": 59,
-    "losses": 50,
+    "losses": 52,
     "ties": 8
   },
   "registrations": {
@@ -149,14 +149,14 @@
       "Youth Sports": 2,
       "PM Community": 2
     },
-    "stalePast": 13,
-    "lastSyncAt": "2026-10-02T21:08:58.505Z"
+    "stalePast": 15,
+    "lastSyncAt": "2026-10-03T00:55:15.214Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 8,
-    "checkedAt": "2026-10-02T21:12:11.183Z"
+    "checkedAt": "2026-10-03T00:58:23.224Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -165,7 +165,7 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 364,
+        "value": 365,
         "min": 45,
         "skipped": false
       },
@@ -186,14 +186,14 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 84,
+        "value": 83,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 460,
+        "value": 462,
         "min": 150,
         "skipped": false
       },
@@ -214,8 +214,8 @@
       {
         "key": "muHudl.pairRatio",
         "ok": true,
-        "matched": 59,
-        "inWindow": 62,
+        "matched": 57,
+        "inWindow": 60,
         "value": 0.95,
         "min": 0.5
       },
@@ -229,75 +229,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "CANCELLED Millersville University Women's Cross Country Paul Short Run|2026-10-02T18:00:00.000Z",
-      "firstSeenAt": "2026-10-02T21:12:21.528Z",
-      "title": "CANCELLED Millersville University Women's Cross Country Paul Short Run",
+      "key": "Pie a DZ|2026-09-25T12:00:00",
+      "firstSeenAt": "2026-10-03T00:58:33.697Z",
+      "title": "Pie a DZ",
+      "source": "MU",
+      "date": "2026-09-25T12:00:00"
+    },
+    {
+      "key": "POSTPONED Millersville University Men's Tennis vs Davis & Elkins|2026-10-02T18:00:00.000Z",
+      "firstSeenAt": "2026-10-03T00:58:33.697Z",
+      "title": "POSTPONED Millersville University Men's Tennis vs Davis & Elkins",
       "source": "MU",
       "date": "2026-10-02T18:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Cross Country at Paul Short Run|2026-10-02T18:00:00.000Z",
-      "firstSeenAt": "2026-10-02T21:12:21.528Z",
-      "title": "Millersville University Women's Cross Country at Paul Short Run",
+      "key": "POSTPONED Millersville University Women's Tennis vs Davis & Elkins|2026-10-02T18:00:00.000Z",
+      "firstSeenAt": "2026-10-03T00:58:33.697Z",
+      "title": "POSTPONED Millersville University Women's Tennis vs Davis & Elkins",
       "source": "MU",
       "date": "2026-10-02T18:00:00.000Z"
     },
     {
-      "key": "D9 Jeopardy|2026-10-07T21:00:00.000Z",
-      "firstSeenAt": "2026-10-02T21:12:21.528Z",
-      "title": "D9 Jeopardy",
+      "key": "MUMUS AND MOCKTAILS|2026-10-21T21:30:00.000Z",
+      "firstSeenAt": "2026-10-03T00:58:33.697Z",
+      "title": "MUMUS AND MOCKTAILS",
       "source": "MU",
-      "date": "2026-10-07T21:00:00.000Z"
+      "date": "2026-10-21T21:30:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board - Cancelled|2026-10-07T23:00:00.000Z",
-      "firstSeenAt": "2026-10-02T21:12:21.528Z",
-      "title": "Zoning Hearing Board - Cancelled",
-      "source": "Manor",
-      "date": "2026-10-07T23:00:00.000Z"
-    },
-    {
-      "key": "BCM Bingo|2026-10-02T23:00:00.000Z",
-      "firstSeenAt": "2026-10-02T16:09:56.136Z",
-      "title": "BCM Bingo",
+      "key": "Moose Ultimate Practice|2026-10-21T23:00:00.000Z",
+      "firstSeenAt": "2026-10-03T00:58:33.697Z",
+      "title": "Moose Ultimate Practice",
       "source": "MU",
-      "date": "2026-10-02T23:00:00.000Z"
+      "date": "2026-10-21T23:00:00.000Z"
     },
     {
-      "key": "ACMO Coffeehouse|2026-10-03T00:00:00.000Z",
-      "firstSeenAt": "2026-10-02T16:09:56.136Z",
-      "title": "ACMO Coffeehouse",
+      "key": "Real Talk, Real Skills|2026-10-22T16:00:00.000Z",
+      "firstSeenAt": "2026-10-03T00:58:33.697Z",
+      "title": "Real Talk, Real Skills",
       "source": "MU",
-      "date": "2026-10-03T00:00:00.000Z"
+      "date": "2026-10-22T16:00:00.000Z"
     },
     {
-      "key": "Safe Harbor Fish & Fun|2026-10-03T12:00:00.000Z",
-      "firstSeenAt": "2026-10-02T16:09:56.136Z",
-      "title": "Safe Harbor Fish & Fun",
-      "source": "Other",
-      "date": "2026-10-03T12:00:00.000Z"
-    },
-    {
-      "key": "Yoga w/ Gia|2026-10-04T23:00:00.000Z",
-      "firstSeenAt": "2026-10-02T16:09:56.136Z",
-      "title": "Yoga w/ Gia",
+      "key": "Pie-A-Tau|2026-10-22T17:00:00.000Z",
+      "firstSeenAt": "2026-10-03T00:58:33.697Z",
+      "title": "Pie-A-Tau",
       "source": "MU",
-      "date": "2026-10-04T23:00:00.000Z"
+      "date": "2026-10-22T17:00:00.000Z"
     },
     {
-      "key": "Park Commission - Cancelled|2026-10-05T22:00:00.000Z",
-      "firstSeenAt": "2026-10-02T16:09:56.136Z",
-      "title": "Park Commission - Cancelled",
-      "source": "Borough",
-      "date": "2026-10-05T22:00:00.000Z"
-    },
-    {
-      "key": "Letters of Love x Acacia Veterans Day Thank You Cards|2026-10-06T23:00:00.000Z",
-      "firstSeenAt": "2026-10-02T16:09:56.136Z",
-      "title": "Letters of Love x Acacia Veterans Day Thank You Cards",
+      "key": "Ropes Course- Open Climb|2026-10-22T20:00:00.000Z",
+      "firstSeenAt": "2026-10-03T00:58:33.697Z",
+      "title": "Ropes Course- Open Climb",
       "source": "MU",
-      "date": "2026-10-06T23:00:00.000Z"
+      "date": "2026-10-22T20:00:00.000Z"
+    },
+    {
+      "key": "CHEP Trivia|2026-10-22T20:00:00.000Z",
+      "firstSeenAt": "2026-10-03T00:58:33.697Z",
+      "title": "CHEP Trivia",
+      "source": "MU",
+      "date": "2026-10-22T20:00:00.000Z"
+    },
+    {
+      "key": "Slip n' Score Meeting|2026-10-22T21:00:00.000Z",
+      "firstSeenAt": "2026-10-03T00:58:33.697Z",
+      "title": "Slip n' Score Meeting",
+      "source": "MU",
+      "date": "2026-10-22T21:00:00.000Z"
     }
   ],
-  "addedLastRun": 4
+  "addedLastRun": 16
 }

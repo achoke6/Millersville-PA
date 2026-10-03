@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-03T06:06:50.713Z",
+  "generatedAt": "2026-10-03T12:16:32.040Z",
   "totalEvents": 1891,
   "withDescription": 825,
   "withImage": 217,
@@ -55,8 +55,8 @@
       "latest": "2026-10-22T22:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-10-03T00:00:00.000Z",
-      "latest": "2026-10-24T23:00:00.000Z"
+      "earliest": "2026-10-04T00:00:00.000Z",
+      "latest": "2026-10-30T00:00:00.000Z"
     },
     "community": {
       "earliest": "2026-07-07T22:15:00.000Z",
@@ -109,8 +109,8 @@
       "daysSinceMoved": 32
     },
     "phantomPower": {
-      "newest": "2026-10-24",
-      "daysSinceMoved": 14
+      "newest": "2026-10-30",
+      "daysSinceMoved": 11
     },
     "community": {
       "newest": "2027-04-16",
@@ -149,14 +149,14 @@
       "Youth Sports": 2,
       "PM Community": 2
     },
-    "stalePast": 15,
-    "lastSyncAt": "2026-10-03T06:02:02.780Z"
+    "stalePast": 16,
+    "lastSyncAt": "2026-10-03T12:13:16.829Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 8,
-    "checkedAt": "2026-10-03T06:06:41.332Z"
+    "checkedAt": "2026-10-03T12:16:20.233Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -172,14 +172,14 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 236,
+        "value": 235,
         "min": 60,
         "skipped": false
       },
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 245,
+        "value": 244,
         "min": 30,
         "skipped": false
       },
@@ -228,6 +228,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "HIGH ON FIRE|2026-10-30T00:00:00.000Z",
+      "firstSeenAt": "2026-10-03T12:16:32.038Z",
+      "title": "HIGH ON FIRE",
+      "source": "Other",
+      "date": "2026-10-30T00:00:00.000Z"
+    },
     {
       "key": "Millersville University Men's Golf at Vulcan Invitational|2026-09-03T04:00:00.000Z",
       "firstSeenAt": "2026-10-03T06:06:50.710Z",
@@ -290,14 +297,7 @@
       "title": "Pie-A-Tau",
       "source": "MU",
       "date": "2026-10-22T17:00:00.000Z"
-    },
-    {
-      "key": "Ropes Course- Open Climb|2026-10-22T20:00:00.000Z",
-      "firstSeenAt": "2026-10-03T00:58:33.697Z",
-      "title": "Ropes Course- Open Climb",
-      "source": "MU",
-      "date": "2026-10-22T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 1
 }

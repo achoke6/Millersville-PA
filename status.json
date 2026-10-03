@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-03T12:16:32.040Z",
+  "generatedAt": "2026-10-03T17:01:35.879Z",
   "totalEvents": 1891,
   "withDescription": 825,
   "withImage": 217,
   "familyFriendly": 81,
-  "eventsToday": 18,
+  "eventsToday": 20,
   "sources": {
     "muAthletics": 324,
     "muCalendar": 172,
@@ -131,9 +131,9 @@
   },
   "sports": {
     "total": 786,
-    "scored": 120,
-    "wins": 60,
-    "losses": 52,
+    "scored": 122,
+    "wins": 61,
+    "losses": 53,
     "ties": 8
   },
   "registrations": {
@@ -150,13 +150,13 @@
       "PM Community": 2
     },
     "stalePast": 16,
-    "lastSyncAt": "2026-10-03T12:13:16.829Z"
+    "lastSyncAt": "2026-10-03T16:58:17.942Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 8,
-    "checkedAt": "2026-10-03T12:16:20.233Z"
+    "checkedAt": "2026-10-03T17:01:24.546Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -229,6 +229,20 @@
   },
   "recentlyAdded": [
     {
+      "key": "Millersville University Women's Tennis vs Davis & Elkins|2026-10-03T12:30:00.000Z",
+      "firstSeenAt": "2026-10-03T17:01:35.876Z",
+      "title": "Millersville University Women's Tennis vs Davis & Elkins",
+      "source": "MU",
+      "date": "2026-10-03T12:30:00.000Z"
+    },
+    {
+      "key": "Millersville University Men's Tennis vs Davis & Elkins|2026-10-03T18:00:00.000Z",
+      "firstSeenAt": "2026-10-03T17:01:35.876Z",
+      "title": "Millersville University Men's Tennis vs Davis & Elkins",
+      "source": "MU",
+      "date": "2026-10-03T18:00:00.000Z"
+    },
+    {
       "key": "HIGH ON FIRE|2026-10-30T00:00:00.000Z",
       "firstSeenAt": "2026-10-03T12:16:32.038Z",
       "title": "HIGH ON FIRE",
@@ -255,20 +269,6 @@
       "title": "Pie a DZ",
       "source": "MU",
       "date": "2026-09-25T12:00:00"
-    },
-    {
-      "key": "POSTPONED Millersville University Men's Tennis vs Davis & Elkins|2026-10-02T18:00:00.000Z",
-      "firstSeenAt": "2026-10-03T00:58:33.697Z",
-      "title": "POSTPONED Millersville University Men's Tennis vs Davis & Elkins",
-      "source": "MU",
-      "date": "2026-10-02T18:00:00.000Z"
-    },
-    {
-      "key": "POSTPONED Millersville University Women's Tennis vs Davis & Elkins|2026-10-02T18:00:00.000Z",
-      "firstSeenAt": "2026-10-03T00:58:33.697Z",
-      "title": "POSTPONED Millersville University Women's Tennis vs Davis & Elkins",
-      "source": "MU",
-      "date": "2026-10-02T18:00:00.000Z"
     },
     {
       "key": "MUMUS AND MOCKTAILS|2026-10-21T21:30:00.000Z",
@@ -299,5 +299,5 @@
       "date": "2026-10-22T17:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 2
 }

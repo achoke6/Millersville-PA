@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-10-03T22:43:51.081Z",
-  "totalEvents": 1891,
+  "generatedAt": "2026-10-04T02:26:49.583Z",
+  "totalEvents": 1889,
   "withDescription": 825,
-  "withImage": 217,
+  "withImage": 215,
   "familyFriendly": 81,
   "eventsToday": 20,
   "sources": {
@@ -10,7 +10,7 @@
     "muCalendar": 172,
     "artsmu": 20,
     "campsAlumni": 30,
-    "muGetInvolved": 509,
+    "muGetInvolved": 507,
     "pennManor": 562,
     "borough": 61,
     "vfw": 5,
@@ -150,13 +150,13 @@
       "PM Community": 2
     },
     "stalePast": 16,
-    "lastSyncAt": "2026-10-03T22:40:25.692Z"
+    "lastSyncAt": "2026-10-04T02:23:37.225Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 8,
-    "checkedAt": "2026-10-03T22:43:40.267Z"
+    "checkedAt": "2026-10-04T02:26:41.449Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -165,7 +165,7 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 364,
+        "value": 363,
         "min": 45,
         "skipped": false
       },
@@ -186,7 +186,7 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 83,
+        "value": 82,
         "min": 21,
         "skipped": false
       },
@@ -228,6 +228,27 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Study Hours / Chapter|2026-10-22T22:00:00.000Z",
+      "firstSeenAt": "2026-10-04T02:26:49.581Z",
+      "title": "Study Hours / Chapter",
+      "source": "MU",
+      "date": "2026-10-22T22:00:00.000Z"
+    },
+    {
+      "key": "Club Tennis Practice|2026-10-22T23:00:00.000Z",
+      "firstSeenAt": "2026-10-04T02:26:49.581Z",
+      "title": "Club Tennis Practice",
+      "source": "MU",
+      "date": "2026-10-22T23:00:00.000Z"
+    },
+    {
+      "key": "Moose Ultimate Practice|2026-10-22T23:00:00.000Z",
+      "firstSeenAt": "2026-10-04T02:26:49.581Z",
+      "title": "Moose Ultimate Practice",
+      "source": "MU",
+      "date": "2026-10-22T23:00:00.000Z"
+    },
     {
       "key": "Millersville University Men's Tennis vs Davis & Elkins|2026-10-03T12:30:00.000Z",
       "firstSeenAt": "2026-10-03T19:47:52.844Z",
@@ -276,28 +297,7 @@
       "title": "MUMUS AND MOCKTAILS",
       "source": "MU",
       "date": "2026-10-21T21:30:00.000Z"
-    },
-    {
-      "key": "Moose Ultimate Practice|2026-10-21T23:00:00.000Z",
-      "firstSeenAt": "2026-10-03T00:58:33.697Z",
-      "title": "Moose Ultimate Practice",
-      "source": "MU",
-      "date": "2026-10-21T23:00:00.000Z"
-    },
-    {
-      "key": "Real Talk, Real Skills|2026-10-22T16:00:00.000Z",
-      "firstSeenAt": "2026-10-03T00:58:33.697Z",
-      "title": "Real Talk, Real Skills",
-      "source": "MU",
-      "date": "2026-10-22T16:00:00.000Z"
-    },
-    {
-      "key": "Pie-A-Tau|2026-10-22T17:00:00.000Z",
-      "firstSeenAt": "2026-10-03T00:58:33.697Z",
-      "title": "Pie-A-Tau",
-      "source": "MU",
-      "date": "2026-10-22T17:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 3
 }

@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-04T09:24:23.425Z",
-  "totalEvents": 1890,
-  "withDescription": 825,
+  "generatedAt": "2026-10-04T15:12:29.666Z",
+  "totalEvents": 1889,
+  "withDescription": 824,
   "withImage": 216,
-  "familyFriendly": 81,
+  "familyFriendly": 80,
   "eventsToday": 10,
   "sources": {
     "muAthletics": 324,
@@ -150,13 +150,13 @@
       "PM Community": 2
     },
     "stalePast": 16,
-    "lastSyncAt": "2026-10-04T09:20:25.084Z"
+    "lastSyncAt": "2026-10-04T15:08:27.535Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 8,
-    "checkedAt": "2026-10-04T09:24:13.633Z"
+    "checkedAt": "2026-10-04T15:12:16.489Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -172,7 +172,7 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 235,
+        "value": 234,
         "min": 60,
         "skipped": false
       },
@@ -299,5 +299,5 @@
       "date": "2026-09-25T12:00:00"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 0
 }

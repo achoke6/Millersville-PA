@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-04T02:26:49.583Z",
-  "totalEvents": 1889,
+  "generatedAt": "2026-10-04T09:24:23.425Z",
+  "totalEvents": 1890,
   "withDescription": 825,
-  "withImage": 215,
+  "withImage": 216,
   "familyFriendly": 81,
-  "eventsToday": 20,
+  "eventsToday": 10,
   "sources": {
     "muAthletics": 324,
     "muCalendar": 172,
@@ -14,7 +14,7 @@
     "pennManor": 562,
     "borough": 61,
     "vfw": 5,
-    "phantomPower": 12,
+    "phantomPower": 13,
     "community": 18,
     "manor": 40,
     "raneyCellars": 3,
@@ -56,7 +56,7 @@
     },
     "phantomPower": {
       "earliest": "2026-10-04T00:00:00.000Z",
-      "latest": "2026-10-30T00:00:00.000Z"
+      "latest": "2026-11-01T00:00:00.000Z"
     },
     "community": {
       "earliest": "2026-07-07T22:15:00.000Z",
@@ -78,39 +78,39 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 32
+      "daysSinceMoved": 33
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 43
+      "daysSinceMoved": 44
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 57
+      "daysSinceMoved": 58
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 57
+      "daysSinceMoved": 58
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 30
+      "daysSinceMoved": 31
     },
     "pennManor": {
       "newest": "2027-10-02",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 67
+      "daysSinceMoved": 68
     },
     "vfw": {
       "newest": "2026-10-22",
-      "daysSinceMoved": 32
+      "daysSinceMoved": 33
     },
     "phantomPower": {
-      "newest": "2026-10-30",
-      "daysSinceMoved": 11
+      "newest": "2026-11-01",
+      "daysSinceMoved": 14
     },
     "community": {
       "newest": "2027-04-16",
@@ -118,15 +118,15 @@
     },
     "manor": {
       "newest": "2027-09-29",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "raneyCellars": {
       "newest": "2026-10-07",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "theBackyard": {
       "newest": "2026-11-11",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     }
   },
   "sports": {
@@ -150,13 +150,13 @@
       "PM Community": 2
     },
     "stalePast": 16,
-    "lastSyncAt": "2026-10-04T02:23:37.225Z"
+    "lastSyncAt": "2026-10-04T09:20:25.084Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 8,
-    "checkedAt": "2026-10-04T02:26:41.449Z"
+    "checkedAt": "2026-10-04T09:24:13.633Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -179,7 +179,7 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 244,
+        "value": 243,
         "min": 30,
         "skipped": false
       },
@@ -228,6 +228,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "NIGHT OF THE LIVING DRAG - Halloween Drag Show|2026-11-01T00:00:00.000Z",
+      "firstSeenAt": "2026-10-04T09:24:23.422Z",
+      "title": "NIGHT OF THE LIVING DRAG - Halloween Drag Show",
+      "source": "Other",
+      "date": "2026-11-01T00:00:00.000Z"
+    },
     {
       "key": "Study Hours / Chapter|2026-10-22T22:00:00.000Z",
       "firstSeenAt": "2026-10-04T02:26:49.581Z",
@@ -290,14 +297,7 @@
       "title": "Pie a DZ",
       "source": "MU",
       "date": "2026-09-25T12:00:00"
-    },
-    {
-      "key": "MUMUS AND MOCKTAILS|2026-10-21T21:30:00.000Z",
-      "firstSeenAt": "2026-10-03T00:58:33.697Z",
-      "title": "MUMUS AND MOCKTAILS",
-      "source": "MU",
-      "date": "2026-10-21T21:30:00.000Z"
     }
   ],
-  "addedLastRun": 3
+  "addedLastRun": 1
 }

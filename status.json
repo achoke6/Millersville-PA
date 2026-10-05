@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-10-04T22:48:17.218Z",
-  "totalEvents": 1889,
-  "withDescription": 824,
-  "withImage": 216,
-  "familyFriendly": 80,
+  "generatedAt": "2026-10-05T01:39:54.916Z",
+  "totalEvents": 1885,
+  "withDescription": 817,
+  "withImage": 214,
+  "familyFriendly": 72,
   "eventsToday": 10,
   "sources": {
     "muAthletics": 324,
-    "muCalendar": 172,
+    "muCalendar": 171,
     "artsmu": 20,
-    "campsAlumni": 30,
-    "muGetInvolved": 507,
-    "pennManor": 562,
-    "borough": 61,
+    "campsAlumni": 23,
+    "muGetInvolved": 508,
+    "pennManor": 566,
+    "borough": 60,
     "vfw": 5,
-    "phantomPower": 13,
+    "phantomPower": 12,
     "community": 18,
-    "manor": 40,
+    "manor": 41,
     "raneyCellars": 3,
     "theBackyard": 18,
     "muHudlBroadcasts": 57
@@ -27,7 +27,7 @@
       "latest": "2027-05-27T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-07-06T09:00:00.000Z",
+      "earliest": "2026-07-10T07:00:00.000Z",
       "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
@@ -35,19 +35,19 @@
       "latest": "2027-05-02T18:30:00.000Z"
     },
     "campsAlumni": {
-      "earliest": "2026-07-06T13:00:00.000Z",
+      "earliest": "2026-07-09T22:00:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-08-16T00:00:00.000Z",
+      "earliest": "2026-07-06T09:00:00.000Z",
       "latest": "2027-04-29T11:30:00.000Z"
     },
     "pennManor": {
       "earliest": "2026-07-15T22:00:00.000Z",
-      "latest": "2027-10-02T14:00:00.000Z"
+      "latest": "2027-10-04T23:15:00.000Z"
     },
     "borough": {
-      "earliest": "2026-07-06T22:00:00.000Z",
+      "earliest": "2026-07-09T22:00:00.000Z",
       "latest": "2026-12-25T12:00:00.000Z"
     },
     "vfw": {
@@ -55,7 +55,7 @@
       "latest": "2026-10-22T22:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-10-04T00:00:00.000Z",
+      "earliest": "2026-10-06T23:00:00.000Z",
       "latest": "2026-11-01T00:00:00.000Z"
     },
     "community": {
@@ -64,7 +64,7 @@
     },
     "manor": {
       "earliest": "2026-10-05T23:00:00.000Z",
-      "latest": "2027-09-29T12:30:00.000Z"
+      "latest": "2027-10-04T23:00:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-10-01T20:00:00.000Z",
@@ -97,8 +97,8 @@
       "daysSinceMoved": 31
     },
     "pennManor": {
-      "newest": "2027-10-02",
-      "daysSinceMoved": 2
+      "newest": "2027-10-04",
+      "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2026-12-25",
@@ -117,8 +117,8 @@
       "daysSinceMoved": 89
     },
     "manor": {
-      "newest": "2027-09-29",
-      "daysSinceMoved": 5
+      "newest": "2027-10-04",
+      "daysSinceMoved": 0
     },
     "raneyCellars": {
       "newest": "2026-10-07",
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 786,
+    "total": 790,
     "scored": 128,
     "wins": 62,
     "losses": 57,
@@ -149,14 +149,14 @@
       "Youth Sports": 2,
       "PM Community": 2
     },
-    "stalePast": 16,
-    "lastSyncAt": "2026-10-04T22:43:39.631Z"
+    "stalePast": 17,
+    "lastSyncAt": "2026-10-05T01:35:40.802Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 8,
-    "checkedAt": "2026-10-04T22:48:06.405Z"
+    "checkedAt": "2026-10-05T01:39:46.309Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -165,7 +165,7 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 363,
+        "value": 365,
         "min": 45,
         "skipped": false
       },
@@ -186,14 +186,14 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 82,
+        "value": 81,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 462,
+        "value": 466,
         "min": 150,
         "skipped": false
       },
@@ -229,75 +229,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "NIGHT OF THE LIVING DRAG - Halloween Drag Show|2026-11-01T00:00:00.000Z",
-      "firstSeenAt": "2026-10-04T09:24:23.422Z",
-      "title": "NIGHT OF THE LIVING DRAG - Halloween Drag Show",
-      "source": "Other",
-      "date": "2026-11-01T00:00:00.000Z"
-    },
-    {
-      "key": "Study Hours / Chapter|2026-10-22T22:00:00.000Z",
-      "firstSeenAt": "2026-10-04T02:26:49.581Z",
-      "title": "Study Hours / Chapter",
-      "source": "MU",
-      "date": "2026-10-22T22:00:00.000Z"
-    },
-    {
-      "key": "Club Tennis Practice|2026-10-22T23:00:00.000Z",
-      "firstSeenAt": "2026-10-04T02:26:49.581Z",
-      "title": "Club Tennis Practice",
+      "key": "Men's Volleyball Club Practice|2026-10-22T23:00:00.000Z",
+      "firstSeenAt": "2026-10-05T01:39:54.912Z",
+      "title": "Men's Volleyball Club Practice",
       "source": "MU",
       "date": "2026-10-22T23:00:00.000Z"
     },
     {
-      "key": "Moose Ultimate Practice|2026-10-22T23:00:00.000Z",
-      "firstSeenAt": "2026-10-04T02:26:49.581Z",
-      "title": "Moose Ultimate Practice",
+      "key": "Fellowship Night|2026-10-23T00:00:00.000Z",
+      "firstSeenAt": "2026-10-05T01:39:54.912Z",
+      "title": "Fellowship Night",
       "source": "MU",
-      "date": "2026-10-22T23:00:00.000Z"
+      "date": "2026-10-23T00:00:00.000Z"
     },
     {
-      "key": "Millersville University Men's Tennis vs Davis & Elkins|2026-10-03T12:30:00.000Z",
-      "firstSeenAt": "2026-10-03T19:47:52.844Z",
-      "title": "Millersville University Men's Tennis vs Davis & Elkins",
+      "key": "Men's Club Soccer Practice|2026-10-23T00:00:00.000Z",
+      "firstSeenAt": "2026-10-05T01:39:54.912Z",
+      "title": "Men's Club Soccer Practice",
       "source": "MU",
-      "date": "2026-10-03T12:30:00.000Z"
+      "date": "2026-10-23T00:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Tennis vs Davis & Elkins|2026-10-03T12:30:00.000Z",
-      "firstSeenAt": "2026-10-03T17:01:35.876Z",
-      "title": "Millersville University Women's Tennis vs Davis & Elkins",
+      "key": "Ice Hockey Club (D3) Practice|2026-10-23T00:15:00.000Z",
+      "firstSeenAt": "2026-10-05T01:39:54.912Z",
+      "title": "Ice Hockey Club (D3) Practice",
       "source": "MU",
-      "date": "2026-10-03T12:30:00.000Z"
+      "date": "2026-10-23T00:15:00.000Z"
     },
     {
-      "key": "HIGH ON FIRE|2026-10-30T00:00:00.000Z",
-      "firstSeenAt": "2026-10-03T12:16:32.038Z",
-      "title": "HIGH ON FIRE",
-      "source": "Other",
-      "date": "2026-10-30T00:00:00.000Z"
+      "key": "Men's Ice Hockey Practice (D2)|2026-10-23T01:30:00.000Z",
+      "firstSeenAt": "2026-10-05T01:39:54.912Z",
+      "title": "Men's Ice Hockey Practice (D2)",
+      "source": "MU",
+      "date": "2026-10-23T01:30:00.000Z"
     },
     {
-      "key": "Millersville University Men's Golf at Vulcan Invitational|2026-09-03T04:00:00.000Z",
-      "firstSeenAt": "2026-10-03T06:06:50.710Z",
-      "title": "Millersville University Men's Golf at Vulcan Invitational",
+      "key": "Weekly Practice|2026-10-23T18:00:00.000Z",
+      "firstSeenAt": "2026-10-05T01:39:54.912Z",
+      "title": "Weekly Practice",
       "source": "MU",
-      "date": "2026-09-03T04:00:00.000Z"
+      "date": "2026-10-23T18:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Golf at Vulcan Invitational|2026-09-03T04:00:00.000Z",
-      "firstSeenAt": "2026-10-03T06:06:50.710Z",
-      "title": "Millersville University Women's Golf at Vulcan Invitational",
+      "key": "Benefit show|2026-10-23T20:00:00.000Z",
+      "firstSeenAt": "2026-10-05T01:39:54.912Z",
+      "title": "Benefit show",
       "source": "MU",
-      "date": "2026-09-03T04:00:00.000Z"
+      "date": "2026-10-23T20:00:00.000Z"
     },
     {
-      "key": "Pie a DZ|2026-09-25T12:00:00",
-      "firstSeenAt": "2026-10-03T00:58:33.697Z",
-      "title": "Pie a DZ",
+      "key": "Weekly Run|2026-10-23T20:30:00.000Z",
+      "firstSeenAt": "2026-10-05T01:39:54.912Z",
+      "title": "Weekly Run",
       "source": "MU",
-      "date": "2026-09-25T12:00:00"
+      "date": "2026-10-23T20:30:00.000Z"
+    },
+    {
+      "key": "Fencing Guild Practice|2026-10-23T21:00:00.000Z",
+      "firstSeenAt": "2026-10-05T01:39:54.912Z",
+      "title": "Fencing Guild Practice",
+      "source": "MU",
+      "date": "2026-10-23T21:00:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Wrestling vs Central Mountain High/Middle School|2026-12-11T21:00:00.000Z",
+      "firstSeenAt": "2026-10-05T01:39:54.912Z",
+      "title": "Boys Varsity Wrestling vs Central Mountain High/Middle School",
+      "source": "PM",
+      "date": "2026-12-11T21:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 16
 }

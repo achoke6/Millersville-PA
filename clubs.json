@@ -401,9 +401,12 @@
     "id": "na"
   },
   {
-    "name": "Club Softball",
-    "category": "",
-    "categories": [],
+    "name": "Club Softball of Millersville University",
+    "category": "Competition",
+    "categories": [
+      "Competition",
+      "Sporting"
+    ],
     "shortName": "Club Softball",
     "id": ""
   },
@@ -418,9 +421,9 @@
   },
   {
     "name": "Club Tennis",
-    "category": "Service",
+    "category": "Sporting",
     "categories": [
-      "Service"
+      "Sporting"
     ],
     "shortName": "",
     "id": ""
@@ -689,9 +692,9 @@
   },
   {
     "name": "Equestrian Club",
-    "category": "Competition",
+    "category": "Sporting",
     "categories": [
-      "Competition"
+      "Sporting"
     ],
     "shortName": "",
     "id": ""
@@ -868,8 +871,10 @@
   },
   {
     "name": "Ice Hockey Club (D3)",
-    "category": "",
-    "categories": [],
+    "category": "Sporting",
+    "categories": [
+      "Sporting"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1069,9 +1074,9 @@
   },
   {
     "name": "Men's Club Lacrosse",
-    "category": "Fundraiser",
+    "category": "Competition",
     "categories": [
-      "Fundraiser"
+      "Competition"
     ],
     "shortName": "",
     "id": ""
@@ -1141,9 +1146,9 @@
   },
   {
     "name": "Millersville Men's Club Soccer",
-    "category": "Sporting",
+    "category": "Competition",
     "categories": [
-      "Sporting"
+      "Competition"
     ],
     "shortName": "Men's Club Soccer",
     "id": ""
@@ -1823,9 +1828,9 @@
   },
   {
     "name": "Women's Club Soccer",
-    "category": "Competition",
+    "category": "Fundraiser",
     "categories": [
-      "Competition"
+      "Fundraiser"
     ],
     "shortName": "Women's Club Soccer",
     "id": ""

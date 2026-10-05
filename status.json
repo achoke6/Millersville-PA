@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-10-01T15:25:15.703Z",
-  "totalEvents": 1890,
-  "withDescription": 821,
-  "withImage": 219,
-  "familyFriendly": 79,
-  "eventsToday": 30,
+  "generatedAt": "2026-10-05T08:24:25.038Z",
+  "totalEvents": 1885,
+  "withDescription": 817,
+  "withImage": 214,
+  "familyFriendly": 72,
+  "eventsToday": 27,
   "sources": {
-    "muAthletics": 331,
-    "muCalendar": 173,
+    "muAthletics": 324,
+    "muCalendar": 171,
     "artsmu": 20,
-    "campsAlumni": 30,
-    "muGetInvolved": 503,
-    "pennManor": 557,
-    "borough": 62,
+    "campsAlumni": 23,
+    "muGetInvolved": 508,
+    "pennManor": 566,
+    "borough": 60,
     "vfw": 5,
     "phantomPower": 12,
     "community": 18,
-    "manor": 40,
+    "manor": 41,
     "raneyCellars": 3,
     "theBackyard": 18,
-    "muHudlBroadcasts": 59
+    "muHudlBroadcasts": 57
   },
   "sourceDateRanges": {
     "muAthletics": {
@@ -27,7 +27,7 @@
       "latest": "2027-05-27T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-07-03T00:00:00.000Z",
+      "earliest": "2026-07-10T07:00:00.000Z",
       "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
@@ -35,19 +35,19 @@
       "latest": "2027-05-02T18:30:00.000Z"
     },
     "campsAlumni": {
-      "earliest": "2026-07-06T13:00:00.000Z",
+      "earliest": "2026-07-09T22:00:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-08-16T00:00:00.000Z",
+      "earliest": "2026-07-06T09:00:00.000Z",
       "latest": "2027-04-29T11:30:00.000Z"
     },
     "pennManor": {
       "earliest": "2026-07-15T22:00:00.000Z",
-      "latest": "2027-09-28T23:00:00.000Z"
+      "latest": "2027-10-04T23:15:00.000Z"
     },
     "borough": {
-      "earliest": "2026-07-03T12:00:00.000Z",
+      "earliest": "2026-07-09T22:00:00.000Z",
       "latest": "2026-12-25T12:00:00.000Z"
     },
     "vfw": {
@@ -55,8 +55,8 @@
       "latest": "2026-10-22T22:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-10-03T00:00:00.000Z",
-      "latest": "2026-10-24T23:00:00.000Z"
+      "earliest": "2026-10-06T23:00:00.000Z",
+      "latest": "2026-11-01T00:00:00.000Z"
     },
     "community": {
       "earliest": "2026-07-07T22:15:00.000Z",
@@ -64,11 +64,11 @@
     },
     "manor": {
       "earliest": "2026-10-05T23:00:00.000Z",
-      "latest": "2027-09-29T12:30:00.000Z"
+      "latest": "2027-10-04T23:00:00.000Z"
     },
     "raneyCellars": {
-      "earliest": "2026-09-24T20:00:00.000Z",
-      "latest": "2026-10-01T22:00:00.000Z"
+      "earliest": "2026-10-01T20:00:00.000Z",
+      "latest": "2026-10-07T20:30:00.000Z"
     },
     "theBackyard": {
       "earliest": "2026-08-24T12:30:00.000Z",
@@ -78,85 +78,85 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 30
+      "daysSinceMoved": 34
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 41
+      "daysSinceMoved": 45
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 55
+      "daysSinceMoved": 59
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 55
+      "daysSinceMoved": 59
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 28
+      "daysSinceMoved": 32
     },
     "pennManor": {
-      "newest": "2027-09-28",
-      "daysSinceMoved": 2
+      "newest": "2027-10-04",
+      "daysSinceMoved": 1
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 65
+      "daysSinceMoved": 69
     },
     "vfw": {
       "newest": "2026-10-22",
-      "daysSinceMoved": 30
+      "daysSinceMoved": 34
     },
     "phantomPower": {
-      "newest": "2026-10-24",
-      "daysSinceMoved": 12
+      "newest": "2026-11-01",
+      "daysSinceMoved": 15
     },
     "community": {
       "newest": "2027-04-16",
       "daysSinceMoved": 89
     },
     "manor": {
-      "newest": "2027-09-29",
-      "daysSinceMoved": 2
+      "newest": "2027-10-04",
+      "daysSinceMoved": 1
     },
     "raneyCellars": {
-      "newest": "2026-10-01",
-      "daysSinceMoved": 0
+      "newest": "2026-10-07",
+      "daysSinceMoved": 4
     },
     "theBackyard": {
       "newest": "2026-11-11",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 4
     }
   },
   "sports": {
-    "total": 789,
-    "scored": 113,
-    "wins": 57,
-    "losses": 48,
-    "ties": 8
+    "total": 790,
+    "scored": 128,
+    "wins": 62,
+    "losses": 57,
+    "ties": 9
   },
   "registrations": {
     "open": 8,
-    "next2Weeks": 1,
+    "next2Weeks": 4,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 5,
+    "pendingFuture": 4,
     "pendingPast": 11,
     "pendingBySource": {
       "Youth Sports": 2,
-      "PM Community": 3
+      "PM Community": 2
     },
-    "stalePast": 13,
-    "lastSyncAt": "2026-10-01T15:21:07.976Z"
+    "stalePast": 17,
+    "lastSyncAt": "2026-10-05T08:19:46.382Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 8,
-    "checkedAt": "2026-10-01T15:25:05.415Z"
+    "checkedAt": "2026-10-05T08:24:15.723Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -165,57 +165,57 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 362,
+        "value": 365,
         "min": 45,
         "skipped": false
       },
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 237,
+        "value": 234,
         "min": 60,
         "skipped": false
       },
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 246,
+        "value": 242,
         "min": 30,
         "skipped": false
       },
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 85,
+        "value": 81,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 458,
+        "value": 466,
         "min": 150,
         "skipped": false
       },
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 331,
+        "value": 324,
         "min": 100,
         "skipped": false
       },
       {
         "key": "pennManorGeneral.count",
         "ok": true,
-        "value": 99,
+        "value": 100,
         "min": 10,
         "skipped": false
       },
       {
         "key": "muHudl.pairRatio",
         "ok": true,
-        "matched": 59,
-        "inWindow": 62,
+        "matched": 57,
+        "inWindow": 60,
         "value": 0.95,
         "min": 0.5
       },
@@ -229,75 +229,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Rootbeer Float Night!|2026-09-27T21:30:00.000Z",
-      "firstSeenAt": "2026-10-01T15:25:15.699Z",
-      "title": "Rootbeer Float Night!",
+      "key": "Men's Volleyball Club Practice|2026-10-22T23:00:00.000Z",
+      "firstSeenAt": "2026-10-05T01:39:54.912Z",
+      "title": "Men's Volleyball Club Practice",
       "source": "MU",
-      "date": "2026-09-27T21:30:00.000Z"
+      "date": "2026-10-22T23:00:00.000Z"
     },
     {
-      "key": "Walk O Taco|2026-10-01T20:00:00.000Z",
-      "firstSeenAt": "2026-10-01T15:25:15.699Z",
-      "title": "Walk O Taco",
-      "source": "Raney Cellars",
-      "date": "2026-10-01T20:00:00.000Z"
-    },
-    {
-      "key": "Thurday Trivia 6PM|2026-10-01T22:00:00.000Z",
-      "firstSeenAt": "2026-10-01T15:25:15.699Z",
-      "title": "Thurday Trivia 6PM",
-      "source": "Raney Cellars",
-      "date": "2026-10-01T22:00:00.000Z"
-    },
-    {
-      "key": "BSU Family Feud|2026-10-05T21:00:00.000Z",
-      "firstSeenAt": "2026-10-01T15:25:15.699Z",
-      "title": "BSU Family Feud",
+      "key": "Fellowship Night|2026-10-23T00:00:00.000Z",
+      "firstSeenAt": "2026-10-05T01:39:54.912Z",
+      "title": "Fellowship Night",
       "source": "MU",
-      "date": "2026-10-05T21:00:00.000Z"
+      "date": "2026-10-23T00:00:00.000Z"
     },
     {
-      "key": "Halo's Eatery|2026-10-07T15:00:00.000Z",
-      "firstSeenAt": "2026-10-01T15:25:15.699Z",
-      "title": "Halo's Eatery",
-      "source": "The Backyard",
-      "date": "2026-10-07T15:00:00.000Z"
+      "key": "Men's Club Soccer Practice|2026-10-23T00:00:00.000Z",
+      "firstSeenAt": "2026-10-05T01:39:54.912Z",
+      "title": "Men's Club Soccer Practice",
+      "source": "MU",
+      "date": "2026-10-23T00:00:00.000Z"
     },
     {
-      "key": "Nino's Pizza and Ice Cream Novelties|2026-10-14T15:00:00.000Z",
-      "firstSeenAt": "2026-10-01T15:25:15.699Z",
-      "title": "Nino's Pizza and Ice Cream Novelties",
-      "source": "The Backyard",
-      "date": "2026-10-14T15:00:00.000Z"
+      "key": "Ice Hockey Club (D3) Practice|2026-10-23T00:15:00.000Z",
+      "firstSeenAt": "2026-10-05T01:39:54.912Z",
+      "title": "Ice Hockey Club (D3) Practice",
+      "source": "MU",
+      "date": "2026-10-23T00:15:00.000Z"
     },
     {
-      "key": "Food Truck Sponsored by SGA|2026-10-21T15:00:00.000Z",
-      "firstSeenAt": "2026-10-01T15:25:15.699Z",
-      "title": "Food Truck Sponsored by SGA",
-      "source": "The Backyard",
-      "date": "2026-10-21T15:00:00.000Z"
+      "key": "Men's Ice Hockey Practice (D2)|2026-10-23T01:30:00.000Z",
+      "firstSeenAt": "2026-10-05T01:39:54.912Z",
+      "title": "Men's Ice Hockey Practice (D2)",
+      "source": "MU",
+      "date": "2026-10-23T01:30:00.000Z"
     },
     {
-      "key": "Pip And Lily's Loaded tots|2026-10-28T15:00:00.000Z",
-      "firstSeenAt": "2026-10-01T15:25:15.699Z",
-      "title": "Pip And Lily's Loaded tots",
-      "source": "The Backyard",
-      "date": "2026-10-28T15:00:00.000Z"
+      "key": "Weekly Practice|2026-10-23T18:00:00.000Z",
+      "firstSeenAt": "2026-10-05T01:39:54.912Z",
+      "title": "Weekly Practice",
+      "source": "MU",
+      "date": "2026-10-23T18:00:00.000Z"
     },
     {
-      "key": "Walking tacos|2026-11-04T16:00:00.000Z",
-      "firstSeenAt": "2026-10-01T15:25:15.699Z",
-      "title": "Walking tacos",
-      "source": "The Backyard",
-      "date": "2026-11-04T16:00:00.000Z"
+      "key": "Benefit show|2026-10-23T20:00:00.000Z",
+      "firstSeenAt": "2026-10-05T01:39:54.912Z",
+      "title": "Benefit show",
+      "source": "MU",
+      "date": "2026-10-23T20:00:00.000Z"
     },
     {
-      "key": "Food Truck Sponsored by SGA|2026-11-11T16:00:00.000Z",
-      "firstSeenAt": "2026-10-01T15:25:15.699Z",
-      "title": "Food Truck Sponsored by SGA",
-      "source": "The Backyard",
-      "date": "2026-11-11T16:00:00.000Z"
+      "key": "Weekly Run|2026-10-23T20:30:00.000Z",
+      "firstSeenAt": "2026-10-05T01:39:54.912Z",
+      "title": "Weekly Run",
+      "source": "MU",
+      "date": "2026-10-23T20:30:00.000Z"
+    },
+    {
+      "key": "Fencing Guild Practice|2026-10-23T21:00:00.000Z",
+      "firstSeenAt": "2026-10-05T01:39:54.912Z",
+      "title": "Fencing Guild Practice",
+      "source": "MU",
+      "date": "2026-10-23T21:00:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Wrestling vs Central Mountain High/Middle School|2026-12-11T21:00:00.000Z",
+      "firstSeenAt": "2026-10-05T01:39:54.912Z",
+      "title": "Boys Varsity Wrestling vs Central Mountain High/Middle School",
+      "source": "PM",
+      "date": "2026-12-11T21:00:00.000Z"
     }
   ],
-  "addedLastRun": 11
+  "addedLastRun": 0
 }

@@ -123,6 +123,7 @@
     "weekly": [
       "Cabbage – 1-9 $1.50/head · 10-49 $1.25/head · 50+ $1.00/head",
       "Broccoli – $1.50/head",
+      "Cauliflower – $2.00/head",
       "Round Tomatoes – priced by size, $3/quart, $10/peck, or $18/basket (5/8 bushel)",
       "Roma Tomatoes – $2.50/quart, $12/peck, or $20/basket (5/8 bushel)",
       "Grape Tomatoes – $2/pint, $4.00/quart",
@@ -134,14 +135,13 @@
       "Jalapeno Peppers – $1.00/pint or $2.00/quart",
       "Banana Peppers (sweet) – 4/$1.00",
       "Cayenne Peppers – 4/$1.00",
-      "Watermelons – $4.00-$6.00 each",
       "Neck Pumpkins – $4.00 each",
       "Butternut Squash – $2.00 each",
       "Spaghetti Squash – $2.00 each",
       "Acorn Squash – $1.50 each",
       "Delicata Squash – $1.00 each"
     ],
-    "weeklyFetchedAt": "2026-10-01T15:25:04.807Z"
+    "weeklyFetchedAt": "2026-10-05T08:24:15.226Z"
   },
   "jesus-dogs": {
     "name": "Jesus Dogs",
@@ -169,12 +169,8 @@
       "Monday"
     ],
     "note": "Members & Guests · Weekly specials change each week",
-    "weekly": [
-      "Fiery Crispy Chicken – $13.95",
-      "Stuffed Shells – $13.95",
-      "Crab Legs – $9.25 per ½ lb or $17.50 per lb (Friday only)"
-    ],
-    "weeklyDateRange": "Tuesday, September 29 through Friday, October 2",
+    "weekly": [],
+    "weeklyDateRange": "",
     "recurring": {
       "Tuesday": "Shrimp Night",
       "Wednesday": "Wing Night",

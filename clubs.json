@@ -303,8 +303,9 @@
   },
   {
     "name": "Center for Health Education and Promotion",
-    "category": "Tabling",
+    "category": "Educational Program",
     "categories": [
+      "Educational Program",
       "Tabling"
     ],
     "shortName": "CHEP",
@@ -383,13 +384,12 @@
   },
   {
     "name": "Club Baseball",
-    "category": "Sports and Leisure",
+    "category": "Sporting",
     "categories": [
-      "Sports and Leisure",
       "Sporting"
     ],
     "shortName": "Club Baseball",
-    "id": "millersvilleclubbaseball"
+    "id": ""
   },
   {
     "name": "Club Cheerleading",
@@ -401,9 +401,12 @@
     "id": "na"
   },
   {
-    "name": "Club Softball",
-    "category": "",
-    "categories": [],
+    "name": "Club Softball of Millersville University",
+    "category": "Competition",
+    "categories": [
+      "Competition",
+      "Sporting"
+    ],
     "shortName": "Club Softball",
     "id": ""
   },
@@ -493,8 +496,11 @@
   },
   {
     "name": "Commuter Services",
-    "category": "",
-    "categories": [],
+    "category": "Educational Program",
+    "categories": [
+      "Educational Program",
+      "Social"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -585,10 +591,8 @@
   },
   {
     "name": "Dance Team",
-    "category": "Fundraiser",
-    "categories": [
-      "Fundraiser"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -603,10 +607,8 @@
   },
   {
     "name": "Delta Zeta",
-    "category": "Fundraiser",
-    "categories": [
-      "Fundraiser"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -774,9 +776,9 @@
   },
   {
     "name": "Fraternity & Sorority Life",
-    "category": "Educational Program",
+    "category": "Social",
     "categories": [
-      "Educational Program"
+      "Social"
     ],
     "shortName": "FSL",
     "id": ""
@@ -789,13 +791,6 @@
       "Social"
     ],
     "shortName": "GSA",
-    "id": ""
-  },
-  {
-    "name": "Geography Club",
-    "category": "",
-    "categories": [],
-    "shortName": "",
     "id": ""
   },
   {
@@ -861,7 +856,8 @@
     "name": "Horror Movies and Media",
     "category": "Movie or Film",
     "categories": [
-      "Movie or Film"
+      "Movie or Film",
+      "Social"
     ],
     "shortName": "Horror Movies",
     "id": ""
@@ -927,9 +923,10 @@
   },
   {
     "name": "Jewelry and Metal Arts Guild",
-    "category": "Fundraiser",
+    "category": "Service",
     "categories": [
-      "Fundraiser"
+      "Service",
+      "Lecture or Speaker"
     ],
     "shortName": "Jewelry & Metals",
     "id": ""
@@ -1033,8 +1030,9 @@
   },
   {
     "name": "Math Club",
-    "category": "Social",
+    "category": "Competition",
     "categories": [
+      "Competition",
       "Social"
     ],
     "shortName": "",
@@ -1076,9 +1074,9 @@
   },
   {
     "name": "Men's Club Lacrosse",
-    "category": "Fundraiser",
+    "category": "Competition",
     "categories": [
-      "Fundraiser"
+      "Competition"
     ],
     "shortName": "",
     "id": ""
@@ -1148,9 +1146,9 @@
   },
   {
     "name": "Millersville Men's Club Soccer",
-    "category": "Sporting",
+    "category": "Competition",
     "categories": [
-      "Sporting"
+      "Competition"
     ],
     "shortName": "Men's Club Soccer",
     "id": ""
@@ -1191,10 +1189,8 @@
   },
   {
     "name": "Moose Ultimate",
-    "category": "Sporting",
-    "categories": [
-      "Sporting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1244,12 +1240,12 @@
   },
   {
     "name": "National Society of Black Engineers",
-    "category": "Service",
+    "category": "Identity-Based",
     "categories": [
-      "Service"
+      "Identity-Based"
     ],
     "shortName": "NSBE",
-    "id": ""
+    "id": "nsbe"
   },
   {
     "name": "Navigators",
@@ -1408,11 +1404,8 @@
   },
   {
     "name": "Reformed University Fellowship",
-    "category": "Meeting",
-    "categories": [
-      "Meeting",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "RUF",
     "id": ""
   },
@@ -1433,15 +1426,6 @@
     ],
     "shortName": "RFL",
     "id": "relayforlife"
-  },
-  {
-    "name": "Rugby Club, Women's",
-    "category": "Sporting",
-    "categories": [
-      "Sporting"
-    ],
-    "shortName": "",
-    "id": ""
   },
   {
     "name": "Running Club",
@@ -1571,9 +1555,9 @@
   },
   {
     "name": "Student Government Association",
-    "category": "Meeting",
+    "category": "Lecture or Speaker",
     "categories": [
-      "Meeting"
+      "Lecture or Speaker"
     ],
     "shortName": "SGA",
     "id": ""
@@ -1621,15 +1605,6 @@
     ],
     "shortName": "",
     "id": "supersmashclubmu"
-  },
-  {
-    "name": "Sustainability Club",
-    "category": "Performance",
-    "categories": [
-      "Performance"
-    ],
-    "shortName": "",
-    "id": ""
   },
   {
     "name": "Tau Kappa Epsilon",
@@ -1853,9 +1828,9 @@
   },
   {
     "name": "Women's Club Soccer",
-    "category": "Competition",
+    "category": "Fundraiser",
     "categories": [
-      "Competition"
+      "Fundraiser"
     ],
     "shortName": "Women's Club Soccer",
     "id": ""
@@ -1875,6 +1850,13 @@
     "categories": [],
     "shortName": "",
     "id": "womensgolf"
+  },
+  {
+    "name": "Women's Rugby Club",
+    "category": "",
+    "categories": [],
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Women's Soccer",

@@ -1,544 +1,258 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Thursday, October 01, 2026 at 08:00 AM (Kint, Smith, Zocco, Student Meteorologists)",
+    "issued": "Sunday, October 04, 2026 at 03:37 PM (Bellenoit, Zwolinski, Student Meteorologists)",
     "periods": [
       {
-        "period": "Today",
-        "text": "Unseasonably warm and humid with decreasing clouds. High: 80-84"
-      },
-      {
         "period": "Tonight",
-        "text": "Mainly clear and warm. Low: 60-64"
+        "text": "Mild with decreasing clouds. Low: 54-58"
       },
       {
-        "period": "Friday",
-        "text": "Unseasonably warm and humid with increasing clouds and a late-day shower. High: 84-88"
+        "period": "Tomorrow",
+        "text": "Mostly sunny, breezy, and seasonable. High: 68-72"
       },
       {
-        "period": "Friday Night",
-        "text": "Mostly cloudy and mild with a few evening showers. Low: 56-60"
+        "period": "Tomorrow Night",
+        "text": "Clear and cool with winds gradually subsiding. Low: 42-46"
       },
       {
-        "period": "Saturday",
-        "text": "Partly sunny and pleasant. High: 70-74"
+        "period": "Tuesday",
+        "text": "Sunny and cooler. High: 60-64"
+      },
+      {
+        "period": "Wednesday",
+        "text": "Sunny and warmer. High: 70-74"
       }
     ]
   },
   "sevenDay": {
-    "issued": "Thursday, October 01, 2026 at 08:13 AM (Kint, Smith, Zocco)",
+    "issued": "Sunday, October 04, 2026 at 09:08 AM (Corman, Funk)",
     "days": [
-      {
-        "period": "Thursday",
-        "sky": "Decreasing Clouds",
-        "weather": "Unseasonably Warm",
-        "pop": "<10%",
-        "temp": "82",
-        "conf": "5"
-      },
-      {
-        "period": "Thursday night",
-        "sky": "Mainly Clear",
-        "weather": "Warm",
-        "pop": "<10%",
-        "temp": "62",
-        "conf": "5"
-      },
-      {
-        "period": "Friday",
-        "sky": "Increasing Clouds",
-        "weather": "Unseasonably Warm",
-        "pop": "30%",
-        "temp": "86",
-        "conf": "5"
-      },
-      {
-        "period": "Friday night",
-        "sky": "Mostly Cloudy",
-        "weather": "Evening Showers",
-        "pop": "40%",
-        "temp": "58",
-        "conf": "5"
-      },
-      {
-        "period": "Saturday",
-        "sky": "Partly Sunny",
-        "weather": "Pleasant",
-        "pop": "<10%",
-        "temp": "72",
-        "conf": "4"
-      },
-      {
-        "period": "Saturday night",
-        "sky": "Mostly Cloudy",
-        "weather": "Fair",
-        "pop": "20%",
-        "temp": "54",
-        "conf": "4"
-      },
       {
         "period": "Sunday",
         "sky": "Mostly Cloudy",
-        "weather": "Chc. of Showers",
+        "weather": "Isolated Shower",
         "pop": "40%",
-        "temp": "66",
-        "conf": "4"
+        "temp": "64",
+        "conf": "5"
       },
       {
         "period": "Sunday night",
-        "sky": "Partly Cloudy",
-        "weather": "Fair",
+        "sky": "Decreasing Clouds",
+        "weather": "Mild",
         "pop": "<10%",
-        "temp": "52",
-        "conf": "4"
+        "temp": "56",
+        "conf": "5"
       },
       {
         "period": "Monday",
         "sky": "Mostly Sunny",
         "weather": "Seasonable",
         "pop": "<10%",
-        "temp": "68",
-        "conf": "3"
+        "temp": "70",
+        "conf": "5"
       },
       {
         "period": "Monday night",
         "sky": "Clear Skies",
         "weather": "Cool",
         "pop": "<10%",
-        "temp": "46",
-        "conf": "3"
+        "temp": "44",
+        "conf": "5"
       },
       {
         "period": "Tuesday",
         "sky": "Sunny",
         "weather": "Cooler",
         "pop": "<10%",
-        "temp": "low 60s",
-        "conf": "3"
+        "temp": "62",
+        "conf": "5"
+      },
+      {
+        "period": "Tuesday night",
+        "sky": "Clear Skies",
+        "weather": "Cool",
+        "pop": "<10%",
+        "temp": "40",
+        "conf": "5"
       },
       {
         "period": "Wednesday",
+        "sky": "Sunny",
+        "weather": "Warmer",
+        "pop": "<10%",
+        "temp": "72",
+        "conf": "5"
+      },
+      {
+        "period": "Wednesday night",
+        "sky": "Mainly Clear",
+        "weather": "Fair",
+        "pop": "<10%",
+        "temp": "52",
+        "conf": "5"
+      },
+      {
+        "period": "Thursday",
         "sky": "Mostly Sunny",
         "weather": "Pleasant",
         "pop": "<10%",
-        "temp": "mid 60s",
+        "temp": "74",
+        "conf": "4"
+      },
+      {
+        "period": "Thursday night",
+        "sky": "Mainly Clear",
+        "weather": "Fair",
+        "pop": "<10%",
+        "temp": "50",
+        "conf": "4"
+      },
+      {
+        "period": "Friday",
+        "sky": "Mostly Sunny",
+        "weather": "Pleasant",
+        "pop": "<10%",
+        "temp": "low 70s",
+        "conf": "3"
+      },
+      {
+        "period": "Saturday",
+        "sky": "Partly Sunny",
+        "weather": "Pleasant",
+        "pop": "<10%",
+        "temp": "upper 60s",
         "conf": "3"
       }
     ]
   },
   "observations": [
     {
-      "time": "11:00",
-      "temp": "69",
-      "dewpoint": "64",
-      "rh": "85",
-      "windDir": "NW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "8.1",
-      "condition": "None"
-    },
-    {
-      "time": "10:00",
-      "temp": "67",
-      "dewpoint": "64",
-      "rh": "90",
-      "windDir": "SSW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "8.5",
-      "condition": "None"
-    },
-    {
-      "time": "09:00",
-      "temp": "65",
-      "dewpoint": "63",
-      "rh": "93",
+      "time": "04:00",
+      "temp": "59",
+      "dewpoint": "58",
+      "rh": "99",
       "windDir": "SW",
       "windSpeed": "2",
       "precip": "0.00",
-      "visibility": "7.8",
+      "visibility": "5.6",
       "condition": "None"
     },
     {
-      "time": "08:00",
-      "temp": "64",
-      "dewpoint": "62",
-      "rh": "96",
-      "windDir": "S",
-      "windSpeed": "0",
+      "time": "03:00",
+      "temp": "59",
+      "dewpoint": "58",
+      "rh": "99",
+      "windDir": "SW",
+      "windSpeed": "2",
       "precip": "0.00",
-      "visibility": "4.5",
+      "visibility": "5.5",
       "condition": "None"
     },
     {
-      "time": "07:00",
-      "temp": "62",
-      "dewpoint": "62",
-      "rh": "97",
-      "windDir": "E",
+      "time": "02:00",
+      "temp": "58",
+      "dewpoint": "58",
+      "rh": "99",
+      "windDir": "NW",
       "windSpeed": "0",
-      "precip": "0.00",
-      "visibility": "6.1",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "63",
-      "dewpoint": "62",
-      "rh": "96",
-      "windDir": "ENE",
-      "windSpeed": "1",
       "precip": "0.00",
       "visibility": "5.0",
+      "condition": "None"
+    },
+    {
+      "time": "01:00",
+      "temp": "58",
+      "dewpoint": "58",
+      "rh": "99",
+      "windDir": "NE",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "4.9",
+      "condition": "None"
+    },
+    {
+      "time": "00:00",
+      "temp": "58",
+      "dewpoint": "58",
+      "rh": "98",
+      "windDir": "NE",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "7.5",
+      "condition": "None"
+    },
+    {
+      "time": "23:00",
+      "temp": "58",
+      "dewpoint": "58",
+      "rh": "99",
+      "windDir": "ESE",
+      "windSpeed": "1",
+      "precip": "0.01",
+      "visibility": "4.9",
       "condition": "None"
     }
   ],
   "dailySummary": {
-    "monthLabel": "September 2026",
+    "monthLabel": "October 2026",
     "days": [
       {
-        "date": "09/01",
-        "max": "93",
-        "maxTime": "16:14",
-        "min": "70",
-        "minTime": "05:13",
-        "windDir": "55",
-        "windSpeed": "17",
-        "windTime": "20:15",
-        "rain": "0.09"
-      },
-      {
-        "date": "09/02",
-        "max": "78",
-        "maxTime": "16:55",
-        "min": "70",
-        "minTime": "07:14",
-        "windDir": "152",
-        "windSpeed": "14",
-        "windTime": "11:03",
-        "rain": "0.77"
-      },
-      {
-        "date": "09/03",
-        "max": "89",
-        "maxTime": "16:20",
-        "min": "69",
-        "minTime": "05:30",
-        "windDir": "4",
-        "windSpeed": "23",
-        "windTime": "01:13",
-        "rain": "0.43"
-      },
-      {
-        "date": "09/04",
-        "max": "88",
-        "maxTime": "15:36",
-        "min": "70",
-        "minTime": "06:42",
-        "windDir": "319",
-        "windSpeed": "15",
-        "windTime": "13:11",
-        "rain": "0.00"
-      },
-      {
-        "date": "09/05",
-        "max": "83",
-        "maxTime": "14:32",
-        "min": "63",
-        "minTime": "23:53",
-        "windDir": "26",
-        "windSpeed": "16",
-        "windTime": "17:05",
-        "rain": "0.00"
-      },
-      {
-        "date": "09/06",
-        "max": "81",
-        "maxTime": "16:18",
-        "min": "59",
-        "minTime": "06:42",
-        "windDir": "17",
-        "windSpeed": "15",
-        "windTime": "14:29",
-        "rain": "0.00"
-      },
-      {
-        "date": "09/07",
-        "max": "80",
-        "maxTime": "16:03",
-        "min": "56",
-        "minTime": "06:16",
-        "windDir": "343",
-        "windSpeed": "13",
-        "windTime": "13:14",
-        "rain": "0.00"
-      },
-      {
-        "date": "09/08",
+        "date": "10/01",
         "max": "85",
-        "maxTime": "15:38",
-        "min": "54",
-        "minTime": "06:29",
-        "windDir": "196",
-        "windSpeed": "10",
-        "windTime": "15:47",
-        "rain": "0.00"
-      },
-      {
-        "date": "09/09",
-        "max": "90",
-        "maxTime": "15:00",
-        "min": "62",
-        "minTime": "06:57",
-        "windDir": "206",
-        "windSpeed": "18",
-        "windTime": "12:45",
-        "rain": "0.00"
-      },
-      {
-        "date": "09/10",
-        "max": "88",
-        "maxTime": "14:26",
-        "min": "70",
-        "minTime": "06:43",
-        "windDir": "321",
-        "windSpeed": "17",
-        "windTime": "10:52",
-        "rain": "0.00"
-      },
-      {
-        "date": "09/11",
-        "max": "82",
-        "maxTime": "16:06",
-        "min": "63",
-        "minTime": "23:57",
-        "windDir": "11",
-        "windSpeed": "11",
-        "windTime": "11:08",
-        "rain": "0.01"
-      },
-      {
-        "date": "09/12",
-        "max": "80",
-        "maxTime": "15:24",
-        "min": "59",
-        "minTime": "05:11",
-        "windDir": "141",
-        "windSpeed": "14",
-        "windTime": "20:21",
-        "rain": "0.00"
-      },
-      {
-        "date": "09/13",
-        "max": "85",
-        "maxTime": "16:13",
-        "min": "69",
-        "minTime": "03:07",
-        "windDir": "309",
-        "windSpeed": "10",
-        "windTime": "15:26",
-        "rain": "0.04"
-      },
-      {
-        "date": "09/14",
-        "max": "77",
-        "maxTime": "15:02",
-        "min": "55",
-        "minTime": "23:39",
-        "windDir": "354",
-        "windSpeed": "20",
-        "windTime": "13:35",
-        "rain": "0.00"
-      },
-      {
-        "date": "09/15",
-        "max": "78",
-        "maxTime": "15:26",
-        "min": "48",
-        "minTime": "06:55",
-        "windDir": "219",
-        "windSpeed": "12",
-        "windTime": "12:43",
-        "rain": "0.00"
-      },
-      {
-        "date": "09/16",
-        "max": "85",
-        "maxTime": "15:40",
-        "min": "56",
-        "minTime": "06:03",
-        "windDir": "196",
-        "windSpeed": "12",
-        "windTime": "13:57",
-        "rain": "0.00"
-      },
-      {
-        "date": "09/17",
-        "max": "82",
-        "maxTime": "15:33",
-        "min": "67",
-        "minTime": "06:46",
-        "windDir": "351",
-        "windSpeed": "18",
-        "windTime": "20:57",
-        "rain": "0.70"
-      },
-      {
-        "date": "09/18",
-        "max": "83",
-        "maxTime": "15:22",
-        "min": "65",
-        "minTime": "23:59",
-        "windDir": "348",
-        "windSpeed": "14",
-        "windTime": "16:30",
-        "rain": "0.00"
-      },
-      {
-        "date": "09/19",
-        "max": "75",
-        "maxTime": "13:41",
-        "min": "59",
-        "minTime": "02:38",
-        "windDir": "141",
-        "windSpeed": "13",
-        "windTime": "19:30",
-        "rain": "0.00"
-      },
-      {
-        "date": "09/20",
-        "max": "79",
-        "maxTime": "13:10",
-        "min": "65",
-        "minTime": "00:50",
-        "windDir": "237",
-        "windSpeed": "19",
-        "windTime": "18:07",
-        "rain": "1.05"
-      },
-      {
-        "date": "09/21",
-        "max": "71",
-        "maxTime": "11:22",
-        "min": "60",
-        "minTime": "21:56",
-        "windDir": "35",
-        "windSpeed": "16",
-        "windTime": "10:13",
-        "rain": "0.06"
-      },
-      {
-        "date": "09/22",
-        "max": "62",
-        "maxTime": "14:37",
-        "min": "55",
-        "minTime": "08:42",
-        "windDir": "63",
-        "windSpeed": "16",
-        "windTime": "17:21",
-        "rain": "0.78"
-      },
-      {
-        "date": "09/23",
-        "max": "67",
-        "maxTime": "16:34",
-        "min": "52",
-        "minTime": "23:06",
-        "windDir": "83",
-        "windSpeed": "18",
-        "windTime": "13:06",
-        "rain": "0.00"
-      },
-      {
-        "date": "09/24",
-        "max": "69",
-        "maxTime": "15:45",
-        "min": "47",
-        "minTime": "06:13",
-        "windDir": "59",
-        "windSpeed": "17",
-        "windTime": "10:02",
-        "rain": "0.00"
-      },
-      {
-        "date": "09/25",
-        "max": "76",
         "maxTime": "15:32",
-        "min": "50",
-        "minTime": "07:02",
-        "windDir": "9",
-        "windSpeed": "23",
-        "windTime": "16:26",
+        "min": "62",
+        "minTime": "01:35",
+        "windDir": "197",
+        "windSpeed": "9",
+        "windTime": "18:25",
         "rain": "0.00"
       },
       {
-        "date": "09/26",
-        "max": "66",
-        "maxTime": "11:22",
-        "min": "56",
-        "minTime": "14:16",
-        "windDir": "39",
-        "windSpeed": "30",
-        "windTime": "11:24",
-        "rain": "0.58"
+        "date": "10/02",
+        "max": "88",
+        "maxTime": "14:50",
+        "min": "60",
+        "minTime": "06:49",
+        "windDir": "3",
+        "windSpeed": "21",
+        "windTime": "19:10",
+        "rain": "0.00"
       },
       {
-        "date": "09/27",
-        "max": "64",
-        "maxTime": "14:59",
-        "min": "56",
-        "minTime": "09:00",
-        "windDir": "351",
-        "windSpeed": "23",
-        "windTime": "13:56",
-        "rain": "0.59"
-      },
-      {
-        "date": "09/28",
-        "max": "68",
-        "maxTime": "14:57",
-        "min": "59",
-        "minTime": "05:08",
-        "windDir": "330",
-        "windSpeed": "13",
-        "windTime": "16:12",
-        "rain": "0.13"
-      },
-      {
-        "date": "09/29",
+        "date": "10/03",
         "max": "72",
-        "maxTime": "11:56",
-        "min": "62",
-        "minTime": "05:10",
-        "windDir": "339",
-        "windSpeed": "16",
-        "windTime": "11:46",
+        "maxTime": "14:31",
+        "min": "58",
+        "minTime": "07:24",
+        "windDir": "9",
+        "windSpeed": "17",
+        "windTime": "01:24",
         "rain": "0.00"
       },
       {
-        "date": "09/30",
-        "max": "78",
-        "maxTime": "14:18",
-        "min": "62",
-        "minTime": "23:32",
-        "windDir": "217",
+        "date": "10/04",
+        "max": "62",
+        "maxTime": "00:17",
+        "min": "58",
+        "minTime": "07:15",
+        "windDir": "85",
         "windSpeed": "12",
-        "windTime": "14:34",
-        "rain": "0.00"
+        "windTime": "11:52",
+        "rain": "0.06"
       }
     ],
-    "totalRain": "5.23",
-    "ytdRain": "29.62",
+    "totalRain": "0.06",
+    "ytdRain": "29.68",
     "yearMax": "102",
     "yearMaxDate": "July 03",
     "yearMin": "1",
     "yearMinDate": "January 21"
   },
   "discussion": {
-    "headline": "October to kick off on unseasonably warm and muggy note",
-    "dateLine": "10:30 a.m. Tuesday, September 29, 2026",
-    "excerpt": "As expected, the Nor'easter spoiled outdoor plans across central and eastern PA during the last weekend of September. Gusty winds, showers and bands of steadier rain rotated around the backside of the system from northeast-to-southwest across the region. Rainfall amounts gradually increased from west-to-east and ranged from 0.25\" or less in parts of Franklin and Adams Counties to over 2\" in Philadelphia (see below). …",
+    "headline": "big cooldown this weekend.. welcome to autumn!",
+    "dateLine": "1:30 p.m. Friday, October 2, 2026, Update",
+    "excerpt": "Due primarily to very mild nights, September 2026 concluded as the 13th-warmest on record at Millersville University since 1914. Frequent storm systems and bouts of heavier showers and storms caused monthly rainfall to be about 1.5\" above normal (see below). Despite a cool final third of the month, October kicked off on a much warmer and summery note. …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -546,6 +260,20 @@
     "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
   },
   "videos": [
+    {
+      "title": "Short Term Forecast 10/02/2026",
+      "videoId": "cY9T9n9eLEs",
+      "url": "https://www.youtube.com/watch?v=cY9T9n9eLEs",
+      "published": "2026-10-02T14:15:13+00:00",
+      "thumbnail": "https://i4.ytimg.com/vi/cY9T9n9eLEs/hqdefault.jpg"
+    },
+    {
+      "title": "Short Term Forecast 10/01/2026",
+      "videoId": "QX-o2i8zEj8",
+      "url": "https://www.youtube.com/watch?v=QX-o2i8zEj8",
+      "published": "2026-10-01T15:41:18+00:00",
+      "thumbnail": "https://i2.ytimg.com/vi/QX-o2i8zEj8/hqdefault.jpg"
+    },
     {
       "title": "Medium Range Forecast 10/01/2026",
       "videoId": "Vq1m_YhGEkg",
@@ -559,22 +287,8 @@
       "url": "https://www.youtube.com/watch?v=VX7Sjmzfhvg",
       "published": "2026-09-30T21:46:55+00:00",
       "thumbnail": "https://i3.ytimg.com/vi/VX7Sjmzfhvg/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 09/29/2026",
-      "videoId": "WAA4E61Y99g",
-      "url": "https://www.youtube.com/watch?v=WAA4E61Y99g",
-      "published": "2026-09-29T15:39:16+00:00",
-      "thumbnail": "https://i4.ytimg.com/vi/WAA4E61Y99g/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 09/28/2026",
-      "videoId": "oaTHEk2dRqk",
-      "url": "https://www.youtube.com/watch?v=oaTHEk2dRqk",
-      "published": "2026-09-28T13:43:01+00:00",
-      "thumbnail": "https://i4.ytimg.com/vi/oaTHEk2dRqk/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-01T15:21:10.246Z"
+  "updated": "2026-10-05T08:19:48.250Z"
 }

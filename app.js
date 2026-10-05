@@ -7567,12 +7567,13 @@ async function loadHousing(){try{allHousing=await(await fetch('housing.json')).j
 function renderHousing(){const c=document.getElementById('housing-container');if(!c)return;const visible=(allHousing||[]).filter(placeAudienceVisible);visible.sort((a,b)=>(b.featured===true)-(a.featured===true));c.innerHTML=visible.map(p=>{return `<div class="app-card"><h3 class="card-title">${p.name}</h3><p class="card-meta" style="font-weight:bold;text-transform:uppercase;margin-bottom:8px;">${p.landlord}</p><p style="font-size:0.9rem;margin-bottom:16px;">${p.description}</p><div class="card-footer"><a href="${p.link}" target="_blank" class="btn btn-sm btn-outline" style="display:block;text-align:center;">View Property</a></div></div>`;}).join('');}
 
 async function loadPlaces(){try{
-    const [restaurants, services, specials, vfw, cupboardData] = await Promise.all([
+    const [restaurants, services, specials, vfw, cupboardData, diningMenus] = await Promise.all([
         fetch('restaurants.json').then(r=>r.json()).catch(()=>[]),
         fetch('services.json').then(r=>r.json()).catch(()=>[]),
         fetch('specials.json').then(r=>r.json()).catch(()=>({})),
         fetch('vfw.json').then(r=>r.json()).catch(()=>null),
         fetch('campus-cupboard.json').then(r=>r.json()).catch(()=>undefined),
+        fetch('dining-menus.json').then(r=>r.json()).catch(()=>null),   // weekly dining-hall menus (hand/task-maintained; null = absent)
         loadAssociation()   // populate mbaMembers/mbaSpotlight before render
     ]);
     // Campus Cupboard static info from the sheet-synced file. undefined = fetch
@@ -7595,6 +7596,7 @@ async function loadPlaces(){try{
     allPlaces = [...foodPlaces, ...svcPlaces];
     // Store specials globally for rendering
     window._placesSpecials = specials;
+    window._diningMenus = diningMenus;   // dining-menus.json (slug → weekly menu block) — read by buildFoodCard
     // Diagnostic (mirrors `venue-match: unmatched locations`): specials
     // entries whose slug matches no food/service listing — usually a
     // hand-typed place-specials.json key that doesn't equal the directory
@@ -8615,6 +8617,41 @@ function placeSpecialsSectionHtml(pslug, dayName){
     return `<div class="specials-section">${dateRange}<p style="font-size:0.8rem;font-weight:700;margin-bottom:4px;">${heading}</p>${note}${topItems.map(itemP).join('')}${moreHtml}</div>`;
 }
 
+// Weekly dining-hall menus (dining-menus.json, 2026-10-05). Hand/task-maintained
+// mirror of Ville Dining's Sunday Instagram carousel — slug-keyed under .places,
+// per-ET-date under .days, per-meal (brunch/breakfast/lunch/dinner) → line
+// label → items, plus an optional 'also' string. validThrough is EXCLUSIVE
+// (vfw.json convention): on/after that ET date the block is stale and ignored.
+// Deliberately NOT a specials surface — no rail tile, no gold border, no 🔥
+// lens, no specials canary; it only renders inside the food card.
+function diningMenuFor(p){
+    const places = (window._diningMenus || {}).places;
+    const e = places && places[placeSlug(p)];
+    if(!e || !e.days) return null;
+    const today = hoursTodayISO();
+    if(e.validThrough && today >= String(e.validThrough)) return null;
+    return { entry: e, day: e.days[today] || null };
+}
+function diningMenuSectionHtml(p){
+    const m = diningMenuFor(p);
+    if(!m || !m.day) return '';
+    const meals = [['brunch','Brunch'],['breakfast','Breakfast'],['lunch','Lunch'],['dinner','Dinner']];
+    const mealHtml = meals.map(([key,label])=>{
+        const meal = m.day[key];
+        if(!meal || typeof meal !== 'object') return '';
+        const lines = Object.keys(meal).filter(l=>l!=='also').map(l=>{
+            const items = meal[l];
+            if(!Array.isArray(items) || !items.length) return '';
+            return `<p style="font-size:0.8rem;color:var(--text);margin:2px 0;"><span style="font-weight:600;">${escHtml(l)}:</span> ${items.map(escHtml).join(', ')}</p>`;
+        }).join('');
+        const also = meal.also ? `<p style="font-size:0.75rem;color:var(--text-muted);margin:2px 0;">${escHtml(meal.also)}</p>` : '';
+        if(!lines && !also) return '';
+        return `<p style="font-size:0.8rem;font-weight:700;margin:6px 0 2px;">${label}</p>${lines}${also}`;
+    }).join('');
+    if(!mealHtml) return '';
+    return `<details class="specials-section" style="margin-top:6px;"><summary style="font-size:0.8rem;font-weight:700;cursor:pointer;">🍽 Today's Menu</summary>${mealHtml}<p style="font-size:0.7rem;color:var(--text-muted);font-style:italic;margin-top:4px;">Menus are subject to change without notice.</p></details>`;
+}
+
 function buildFoodCard(p, specials, dayName) {
     // Action buttons
     let actionBtn='';
@@ -8641,7 +8678,14 @@ function buildFoodCard(p, specials, dayName) {
         actionBtn=`<a href="${moHref}"${moIntent?'':' target="_blank" rel="noopener"'} class="btn btn-sm btn-ticket" style="display:block;text-align:center;">📱 Mobile Order</a>`;
     }
     else if(p.status==='Order Online') actionBtn=`<a href="${p.link}" target="_blank" class="btn btn-sm btn-ticket" style="display:block;text-align:center;">🛒 Order Online</a>`;
-    else actionBtn=`<a href="${p.link}" target="_blank" class="btn btn-sm btn-outline" style="display:block;text-align:center;">📄 View Menu</a>`;
+    else {
+        // Weekly menu block present (dining-menus.json) → link the week's Instagram
+        // post instead of the generic dining page; no block → unchanged View Menu.
+        const dm = diningMenuFor(p);
+        const menuHref = (dm && dm.entry.sourceLink) || p.link;
+        const menuLabel = dm ? '📄 This Week\'s Menu ↗' : '📄 View Menu';
+        actionBtn=`<a href="${menuHref}" target="_blank" rel="noopener" class="btn btn-sm btn-outline" style="display:block;text-align:center;">${menuLabel}</a>`;
+    }
 
     const membersBadge = p.status==='Members Only' ? '<span class="badge-members-only">Members Only</span>' : '';
     const addr = p.address ? `<p class="card-meta" style="margin-bottom:4px;">📍 ${p.address}</p>` : '';
@@ -8656,12 +8700,13 @@ function buildFoodCard(p, specials, dayName) {
 
     const evT = placeEventsToday(p);
     const eventsHtml = evT.length ? `<div class="specials-section"><p style="font-size:0.8rem;font-weight:700;margin-bottom:4px;">📅 Here today:</p>${evT.slice(0,3).map(e=>`<p style="font-size:0.8rem;color:var(--text);margin:2px 0;">• ${e.title} · ${formatTime(new Date(e.t))}</p>`).join('')}</div>` : '';
+    const menuHtml = diningMenuSectionHtml(p);   // collapsed 🍽 Today's Menu — '' when no current block for this slug/day
     return `<div class="app-card" data-place="${placeSlug(p)}" style="position:relative;display:flex;flex-direction:column;justify-content:flex-start;">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;"><span class="card-tag">🍴 ${p.cuisine || 'Food & Drink'}</span><span style="display:inline-flex;gap:6px;align-items:center;flex-shrink:0;">${membersBadge}${mbaBadge(p.name)}</span></div>
         <h3 class="card-title" style="margin-top:6px;">${p.name}</h3>
         ${ratingRow}${addr}${placeHoursDetailsHtml(p, false)}
         <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:8px;">${p.description||''}</p>
-        ${specialsHtml}${eventsHtml}
+        ${specialsHtml}${eventsHtml}${menuHtml}
         <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:auto;">
             <div style="flex:1;">${actionBtn}</div>
         </div>

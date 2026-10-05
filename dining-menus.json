@@ -1,0 +1,271 @@
+{
+  "_comment": "Weekly campus dining-hall menus, transcribed from Ville Dining's Sunday Instagram carousel (@ville_dining). Keyed by DIRECTORY PLACE SLUG under .places (upper-deck today; cove joins when they post one). Menus are subject to change without notice — this is a convenience mirror, not the source of truth. Maintained by the weekly 'Ville Dining menu sync' Cowork task (Sunday evenings) or hand-transcribed — never scraper-generated. CRLF.",
+  "_format": "places.<slug>: { name, sourceLink (the week's Instagram POST permalink — the profile URL is the fallback), dateRange (human), validThrough (ISO date, EXCLUSIVE — the first ET day the block is stale; the app ignores the block on/after it, vfw.json convention), days: { 'YYYY-MM-DD' (ET): { brunch|breakfast|lunch|dinner: { '<Line label>': [items], ..., 'also': '<free text, e.g. Salad Bar | Healthy Bar | Dessert Bar>' } } } }. Meal keys are optional per day (Sat/Sun carry brunch + dinner only). Line labels render verbatim. Transcription is CORRECTED (obvious typos fixed), not verbatim. Validated in main.yml (syntax + shape).",
+  "places": {
+    "upper-deck": {
+      "name": "Upper Deck",
+      "sourceLink": "https://www.instagram.com/ville_dining/",
+      "dateRange": "Oct 4 – Oct 10, 2026",
+      "validThrough": "2026-10-11",
+      "days": {
+        "2026-10-04": {
+          "brunch": {
+            "Breakfast Line": [
+              "Scrambled Eggs",
+              "French Toast"
+            ],
+            "Lunch Line": [
+              "Cheese Pizza",
+              "Burgers",
+              "French Fries",
+              "Mixed Vegetables"
+            ],
+            "also": "Yogurt Bar with Fruit"
+          },
+          "dinner": {
+            "Hot Line": [
+              "Fried Chicken",
+              "Mashed Potatoes",
+              "Steamed Broccoli",
+              "Burgers",
+              "French Fries",
+              "Mozzarella Sticks with Marinara"
+            ],
+            "also": "Salad Bar | Healthy Bar | Dessert Bar"
+          }
+        },
+        "2026-10-05": {
+          "brunch": {
+            "Hot Line": [
+              "Scrambled Eggs",
+              "Waffles",
+              "Sausage Links",
+              "Tater Tots",
+              "Oatmeal"
+            ],
+            "also": "Yogurt Bar with Fruit"
+          },
+          "lunch": {
+            "Hot Line": [
+              "Pasta with Marinara",
+              "Chicken Tenders",
+              "Crinkle Cut Carrots",
+              "French Fries"
+            ],
+            "Stations": [
+              "Made to Order Burger Bar",
+              "Made to Order Pizza Bar",
+              "Acai Bowl"
+            ],
+            "also": "Salad Bar | Healthy Bar | Dessert Bar"
+          },
+          "dinner": {
+            "Hot Line": [
+              "Lasagna Casserole",
+              "Grilled Chicken Breast",
+              "Green Beans",
+              "Quinoa Casserole",
+              "French Fries"
+            ],
+            "Stations": [
+              "Pasta Bar",
+              "Made to Order Burger Bar",
+              "Made to Order Pizza Bar",
+              "Acai Bowl"
+            ],
+            "also": "Salad Bar | Healthy Bar | Dessert Bar"
+          }
+        },
+        "2026-10-06": {
+          "brunch": {
+            "Hot Line": [
+              "Scrambled Eggs",
+              "Pancakes",
+              "Bacon",
+              "Tater Tots",
+              "Oatmeal"
+            ],
+            "also": "Yogurt Bar with Fruit"
+          },
+          "lunch": {
+            "Hot Line": [
+              "Penne Pasta",
+              "Meatballs",
+              "Marinara",
+              "Green Peas"
+            ],
+            "Stations": [
+              "Made to Order Burger Bar",
+              "Made to Order Pizza Bar",
+              "Walking Taco"
+            ],
+            "also": "Salad Bar | Healthy Bar | Dessert Bar"
+          },
+          "dinner": {
+            "Hot Line": [
+              "Italian Chicken",
+              "Quinoa Casserole",
+              "French Fries",
+              "Mixed Vegetables"
+            ],
+            "Stations": [
+              "Pasta Bar",
+              "Made to Order Burger Bar",
+              "Made to Order Pizza Bar",
+              "Walking Taco"
+            ],
+            "also": "Salad Bar | Healthy Bar | Dessert Bar"
+          }
+        },
+        "2026-10-07": {
+          "brunch": {
+            "Hot Line": [
+              "Scrambled Eggs",
+              "French Toast",
+              "Sausage Links",
+              "Tater Tots",
+              "Oatmeal"
+            ],
+            "also": "Yogurt Bar with Fruit"
+          },
+          "lunch": {
+            "Hot Line": [
+              "Mac-n-Cheese",
+              "Lentil Stew",
+              "French Fries",
+              "Mixed Vegetables"
+            ],
+            "Stations": [
+              "Made to Order Sliced Roast Beef & Cheddar",
+              "Made to Order Pizza Bar",
+              "Wing Bar"
+            ],
+            "also": "Salad Bar | Healthy Bar | Dessert Bar"
+          },
+          "dinner": {
+            "Hot Line": [
+              "Grilled Pesto Chicken",
+              "Quinoa Casserole",
+              "White Rice",
+              "Malibu Blend"
+            ],
+            "Stations": [
+              "Pasta Bar",
+              "Made to Order Sliced Roast Beef & Cheddar",
+              "Made to Order Pizza Bar",
+              "Wing Bar"
+            ],
+            "also": "Salad Bar | Healthy Bar | Dessert Bar"
+          }
+        },
+        "2026-10-08": {
+          "brunch": {
+            "Hot Line": [
+              "Scrambled Eggs",
+              "Waffles",
+              "Sausage Links",
+              "Tater Tots",
+              "Oatmeal"
+            ],
+            "also": "Yogurt Bar with Fruit"
+          },
+          "lunch": {
+            "Hot Line": [
+              "Grilled Ham & Cheese",
+              "White Rice",
+              "Broccoli",
+              "French Fries"
+            ],
+            "Stations": [
+              "Made to Order Burger Bar",
+              "Made to Order Pizza Bar",
+              "Chicken Caesar Wrap"
+            ],
+            "also": "Salad Bar | Healthy Bar | Dessert Bar"
+          },
+          "dinner": {
+            "Hot Line": [
+              "Pepper Steak",
+              "Chicken Tikka Masala",
+              "White Rice",
+              "Yellow Corn"
+            ],
+            "Stations": [
+              "Pasta Bar",
+              "Made to Order Burger Bar",
+              "Made to Order Pizza Bar",
+              "Chicken Caesar Wrap"
+            ],
+            "also": "Salad Bar | Healthy Bar | Dessert Bar"
+          }
+        },
+        "2026-10-09": {
+          "brunch": {
+            "Hot Line": [
+              "Scrambled Eggs",
+              "Pancakes",
+              "Bacon",
+              "Tater Tots",
+              "Oatmeal"
+            ],
+            "also": "Yogurt Bar with Fruit"
+          },
+          "lunch": {
+            "Hot Line": [
+              "Chicken Chunks with Sauce",
+              "Chili",
+              "White Rice",
+              "Green Peas"
+            ],
+            "Stations": [
+              "Made to Order Burger Bar",
+              "Made to Order Pizza Bar",
+              "Poke Bowl"
+            ],
+            "also": "Salad Bar | Healthy Bar | Dessert Bar"
+          },
+          "dinner": {
+            "Hot Line": [
+              "Hot Roast Beef Sandwich",
+              "Mashed Potatoes",
+              "French Fries",
+              "Green Beans"
+            ],
+            "Stations": [
+              "Pasta Bar",
+              "Made to Order Burger Bar",
+              "Made to Order Pizza Bar",
+              "Poke Bowl"
+            ],
+            "also": "Salad Bar | Healthy Bar | Dessert Bar"
+          }
+        },
+        "2026-10-10": {
+          "brunch": {
+            "Breakfast Line": [
+              "Scrambled Eggs",
+              "French Toast"
+            ],
+            "Lunch Line": [
+              "Cheese Pizza",
+              "Burgers",
+              "French Fries",
+              "Mixed Vegetables"
+            ],
+            "also": "Yogurt Bar with Fruit"
+          },
+          "dinner": {
+            "Hot Line": [
+              "Salmon Mediterranean",
+              "Cheese Pizza",
+              "Burgers",
+              "French Fries",
+              "Steamed Broccoli"
+            ],
+            "also": "Salad Bar | Healthy Bar | Dessert Bar"
+          }
+        }
+      }
+    }
+  }
+}

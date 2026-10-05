@@ -38,7 +38,7 @@ jobs:
       - name: Validate hand-maintained JSON
         run: |
           set -e
-          for f in camps.json org-overrides.json shortnames-overlay.json imleagues.json venue-aliases.json place-specials.json; do
+          for f in camps.json org-overrides.json shortnames-overlay.json imleagues.json venue-aliases.json place-specials.json dining-menus.json; do
             if [ -f "$f" ]; then
               echo "Checking $f..."
               jq empty "$f" || { echo "❌ $f has invalid JSON syntax"; exit 1; }
@@ -83,6 +83,14 @@ jobs:
               || { echo "❌ place-specials.json: every until must be an HH:MM 24h string"; exit 1; }
             jq -e '[.places[] | select(has("activeRanges")) | .activeRanges] | all(type == "array" and length > 0 and all(has("from") and has("to") and (.from | test("^[0-9]{4}-[0-9]{2}-[0-9]{2}$")) and (.to | test("^[0-9]{4}-[0-9]{2}-[0-9]{2}$"))))' place-specials.json > /dev/null \
               || { echo "❌ place-specials.json: every activeRanges must be a non-empty array of {from,to} ISO dates (YYYY-MM-DD)"; exit 1; }
+          fi
+          if [ -f dining-menus.json ]; then
+            jq -e '.places | type == "object"' dining-menus.json > /dev/null \
+              || { echo "❌ dining-menus.json must have a .places object (slug → weekly menu block)"; exit 1; }
+            jq -e '.places | keys | all(test("^[a-z0-9][a-z0-9-]*$"))' dining-menus.json > /dev/null \
+              || { echo "❌ dining-menus.json keys must be directory place slugs (lowercase letters/digits/hyphens)"; exit 1; }
+            jq -e '[.places[]] | all(has("validThrough") and has("days") and (.validThrough | test("^[0-9]{4}-[0-9]{2}-[0-9]{2}$")) and (.days | type == "object") and (.days | keys | all(test("^[0-9]{4}-[0-9]{2}-[0-9]{2}$"))))' dining-menus.json > /dev/null \
+              || { echo "❌ dining-menus.json: every place needs validThrough (YYYY-MM-DD) + a .days object keyed by YYYY-MM-DD"; exit 1; }
           fi
           echo "✓ All JSON files valid"
 

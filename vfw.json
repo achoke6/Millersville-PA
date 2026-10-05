@@ -10,20 +10,15 @@
         "Saturday": "Burger Night"
     },
     "weeklySpecials": {
-        "dateRange": "Tuesday, September 29 through Friday, October 2",
-        "validThrough": "2026-10-03",
+        "dateRange": "Tuesday, October 6 through Saturday, October 10",
+        "validThrough": "2026-10-11",
         "items": [
-            "Fiery Crispy Chicken – $13.95",
-            "Stuffed Shells – $13.95",
-            "Crab Legs – $9.25 per ½ lb or $17.50 per lb (Fri only)"
+            "Pittsburgh Cheesesteak – $13.95",
+            "Beef Stroganoff – $13.95",
+            "Fried Catfish – $14.95 (Fri only)"
         ]
     },
     "events": [
-        {
-            "title": "Meat Tray Bingo",
-            "date": "2026-09-20T13:00:00-04:00",
-            "description": "Doors open at 12:00 PM."
-        },
         {
             "title": "Post Meeting",
             "date": "2026-09-23T18:00:00-04:00"
@@ -32,6 +27,13 @@
             "title": "Bonfire with Cowboy Chris",
             "date": "2026-10-03T17:30:00-04:00",
             "description": "Join us and Cowboy Chris for good food, cold drinks, and a hot fire at the Trooper John S. Rohrer Pavilion."
+        },
+        {
+            "title": "Music Bingo",
+            "date": "2026-10-09T18:00:00-04:00",
+            "endTime": "2026-10-09T20:00:00-04:00",
+            "description": "Test your music knowledge in the Banquet Hall at the Millersville VFW. Open to members and their guests.",
+            "price": "Guests $5 to play"
         },
         {
             "title": "Make Cruisin' Fun Again",

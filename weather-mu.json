@@ -1,11 +1,11 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Monday, October 05, 2026 at 08:04 AM (Harris, Leopold, Muller, Student Meteorologists)",
+    "issued": "Monday, October 05, 2026 at 12:06 PM (Neidlinger, Nornhold, Peiffer, Student Meteorologists)",
     "periods": [
       {
-        "period": "Today",
-        "text": "Mostly sunny, seasonable, and turning breezy. High: 68-72"
+        "period": "This afternoon",
+        "text": "Mostly sunny, breezy, and seasonable. High: 68-72"
       },
       {
         "period": "Tonight",
@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "13:00",
+      "temp": "67",
+      "dewpoint": "45",
+      "rh": "45",
+      "windDir": "NNW",
+      "windSpeed": "11",
+      "precip": "0.01",
+      "visibility": "11.6",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "67",
+      "dewpoint": "50",
+      "rh": "54",
+      "windDir": "W",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "11.0",
+      "condition": "None"
+    },
+    {
       "time": "11:00",
       "temp": "66",
       "dewpoint": "54",
@@ -169,28 +191,6 @@
       "windSpeed": "1",
       "precip": "0.00",
       "visibility": "6.0",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "57",
-      "dewpoint": "57",
-      "rh": "99",
-      "windDir": "WSW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "5.2",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "58",
-      "dewpoint": "58",
-      "rh": "98",
-      "windDir": "NW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "6.1",
       "condition": "None"
     }
   ],
@@ -290,5 +290,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-05T15:47:52.810Z"
+  "updated": "2026-10-05T17:10:07.452Z"
 }

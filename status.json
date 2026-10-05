@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-10-05T15:51:49.766Z",
-  "totalEvents": 1886,
-  "withDescription": 817,
+  "generatedAt": "2026-10-05T17:15:16.933Z",
+  "totalEvents": 1887,
+  "withDescription": 816,
   "withImage": 215,
   "familyFriendly": 72,
-  "eventsToday": 27,
+  "eventsToday": 26,
   "sources": {
     "muAthletics": 325,
     "muCalendar": 171,
     "artsmu": 20,
     "campsAlumni": 23,
     "muGetInvolved": 508,
-    "pennManor": 566,
+    "pennManor": 568,
     "borough": 60,
     "vfw": 5,
     "phantomPower": 12,
@@ -130,15 +130,15 @@
     }
   },
   "sports": {
-    "total": 791,
+    "total": 793,
     "scored": 128,
     "wins": 62,
     "losses": 57,
     "ties": 9
   },
   "registrations": {
-    "open": 8,
-    "next2Weeks": 4,
+    "open": 7,
+    "next2Weeks": 3,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
@@ -150,13 +150,13 @@
       "PM Community": 2
     },
     "stalePast": 17,
-    "lastSyncAt": "2026-10-05T15:47:50.098Z"
+    "lastSyncAt": "2026-10-05T17:10:05.855Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 8,
-    "checkedAt": "2026-10-05T15:51:38.280Z"
+    "checkedAt": "2026-10-05T17:14:59.409Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -193,7 +193,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 466,
+        "value": 468,
         "min": 150,
         "skipped": false
       },
@@ -222,12 +222,33 @@
       {
         "key": "pmHudl.matched",
         "ok": true,
-        "matched": 25,
-        "withBroadcasts": 25
+        "matched": 26,
+        "withBroadcasts": 26
       }
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Planning Commission - Cancelled|2026-10-07T22:30:00.000Z",
+      "firstSeenAt": "2026-10-05T17:15:16.930Z",
+      "title": "Planning Commission - Cancelled",
+      "source": "Borough",
+      "date": "2026-10-07T22:30:00.000Z"
+    },
+    {
+      "key": "Girls JV Soccer vs Manheim Central High School|2026-10-13T21:30:00.000Z",
+      "firstSeenAt": "2026-10-05T17:15:16.930Z",
+      "title": "Girls JV Soccer vs Manheim Central High School",
+      "source": "PM",
+      "date": "2026-10-13T21:30:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Soccer vs Manheim Central High School|2026-10-13T23:00:00.000Z",
+      "firstSeenAt": "2026-10-05T17:15:16.930Z",
+      "title": "Girls Varsity Soccer vs Manheim Central High School",
+      "source": "PM",
+      "date": "2026-10-13T23:00:00.000Z"
+    },
     {
       "key": "Millersville University Women's Cross Country at Dutchmen Invitational|2026-09-05T14:15:00.000Z",
       "firstSeenAt": "2026-10-05T14:36:41.265Z",
@@ -276,28 +297,7 @@
       "title": "Men's Volleyball Club Practice",
       "source": "MU",
       "date": "2026-10-22T23:00:00.000Z"
-    },
-    {
-      "key": "Fellowship Night|2026-10-23T00:00:00.000Z",
-      "firstSeenAt": "2026-10-05T01:39:54.912Z",
-      "title": "Fellowship Night",
-      "source": "MU",
-      "date": "2026-10-23T00:00:00.000Z"
-    },
-    {
-      "key": "Men's Club Soccer Practice|2026-10-23T00:00:00.000Z",
-      "firstSeenAt": "2026-10-05T01:39:54.912Z",
-      "title": "Men's Club Soccer Practice",
-      "source": "MU",
-      "date": "2026-10-23T00:00:00.000Z"
-    },
-    {
-      "key": "Ice Hockey Club (D3) Practice|2026-10-23T00:15:00.000Z",
-      "firstSeenAt": "2026-10-05T01:39:54.912Z",
-      "title": "Ice Hockey Club (D3) Practice",
-      "source": "MU",
-      "date": "2026-10-23T00:15:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 3
 }

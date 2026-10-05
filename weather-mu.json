@@ -1,23 +1,23 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Sunday, October 04, 2026 at 03:37 PM (Bellenoit, Zwolinski, Student Meteorologists)",
+    "issued": "Monday, October 05, 2026 at 08:04 AM (Harris, Leopold, Muller, Student Meteorologists)",
     "periods": [
       {
+        "period": "Today",
+        "text": "Mostly sunny, seasonable, and turning breezy. High: 68-72"
+      },
+      {
         "period": "Tonight",
-        "text": "Mild with decreasing clouds. Low: 54-58"
-      },
-      {
-        "period": "Tomorrow",
-        "text": "Mostly sunny, breezy, and seasonable. High: 68-72"
-      },
-      {
-        "period": "Tomorrow Night",
-        "text": "Clear and cool with winds gradually subsiding. Low: 42-46"
+        "text": "Clear and cool. Low: 42-46"
       },
       {
         "period": "Tuesday",
-        "text": "Sunny and cooler. High: 60-64"
+        "text": "Sunny and cooler. High: 62-66"
+      },
+      {
+        "period": "Tuesday Night",
+        "text": "Clear and cool. Low: 38-42"
       },
       {
         "period": "Wednesday",
@@ -26,28 +26,12 @@
     ]
   },
   "sevenDay": {
-    "issued": "Sunday, October 04, 2026 at 09:08 AM (Corman, Funk)",
+    "issued": "Monday, October 05, 2026 at 08:19 AM (Harris, Leopold, Muller)",
     "days": [
-      {
-        "period": "Sunday",
-        "sky": "Mostly Cloudy",
-        "weather": "Isolated Shower",
-        "pop": "40%",
-        "temp": "64",
-        "conf": "5"
-      },
-      {
-        "period": "Sunday night",
-        "sky": "Decreasing Clouds",
-        "weather": "Mild",
-        "pop": "<10%",
-        "temp": "56",
-        "conf": "5"
-      },
       {
         "period": "Monday",
         "sky": "Mostly Sunny",
-        "weather": "Seasonable",
+        "weather": "Breezy",
         "pop": "<10%",
         "temp": "70",
         "conf": "5"
@@ -65,7 +49,7 @@
         "sky": "Sunny",
         "weather": "Cooler",
         "pop": "<10%",
-        "temp": "62",
+        "temp": "64",
         "conf": "5"
       },
       {
@@ -86,7 +70,7 @@
       },
       {
         "period": "Wednesday night",
-        "sky": "Mainly Clear",
+        "sky": "Clear Skies",
         "weather": "Fair",
         "pop": "<10%",
         "temp": "52",
@@ -94,11 +78,11 @@
       },
       {
         "period": "Thursday",
-        "sky": "Mostly Sunny",
+        "sky": "Sunny",
         "weather": "Pleasant",
         "pop": "<10%",
-        "temp": "74",
-        "conf": "4"
+        "temp": "78",
+        "conf": "5"
       },
       {
         "period": "Thursday night",
@@ -106,91 +90,107 @@
         "weather": "Fair",
         "pop": "<10%",
         "temp": "50",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Friday",
         "sky": "Mostly Sunny",
-        "weather": "Pleasant",
+        "weather": "Seasonable",
         "pop": "<10%",
-        "temp": "low 70s",
-        "conf": "3"
+        "temp": "72",
+        "conf": "4"
+      },
+      {
+        "period": "Friday night",
+        "sky": "Clear Skies",
+        "weather": "Fair",
+        "pop": "<10%",
+        "temp": "50",
+        "conf": "4"
       },
       {
         "period": "Saturday",
-        "sky": "Partly Sunny",
+        "sky": "Mostly Sunny",
         "weather": "Pleasant",
         "pop": "<10%",
         "temp": "upper 60s",
+        "conf": "4"
+      },
+      {
+        "period": "Sunday",
+        "sky": "Clouds & Sun",
+        "weather": "Seasonable",
+        "pop": "20%",
+        "temp": "low 70s",
         "conf": "3"
       }
     ]
   },
   "observations": [
     {
-      "time": "04:00",
-      "temp": "59",
-      "dewpoint": "58",
-      "rh": "99",
-      "windDir": "SW",
-      "windSpeed": "2",
+      "time": "10:00",
+      "temp": "64",
+      "dewpoint": "56",
+      "rh": "77",
+      "windDir": "NNW",
+      "windSpeed": "5",
       "precip": "0.00",
-      "visibility": "5.6",
+      "visibility": "10.0",
       "condition": "None"
     },
     {
-      "time": "03:00",
-      "temp": "59",
-      "dewpoint": "58",
-      "rh": "99",
-      "windDir": "SW",
-      "windSpeed": "2",
+      "time": "09:00",
+      "temp": "61",
+      "dewpoint": "57",
+      "rh": "88",
+      "windDir": "W",
+      "windSpeed": "4",
       "precip": "0.00",
-      "visibility": "5.5",
+      "visibility": "7.6",
       "condition": "None"
     },
     {
-      "time": "02:00",
-      "temp": "58",
-      "dewpoint": "58",
-      "rh": "99",
-      "windDir": "NW",
-      "windSpeed": "0",
-      "precip": "0.00",
-      "visibility": "5.0",
-      "condition": "None"
-    },
-    {
-      "time": "01:00",
-      "temp": "58",
-      "dewpoint": "58",
-      "rh": "99",
-      "windDir": "NE",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "4.9",
-      "condition": "None"
-    },
-    {
-      "time": "00:00",
+      "time": "08:00",
       "temp": "58",
       "dewpoint": "58",
       "rh": "98",
-      "windDir": "NE",
+      "windDir": "W",
       "windSpeed": "1",
       "precip": "0.00",
-      "visibility": "7.5",
+      "visibility": "6.0",
       "condition": "None"
     },
     {
-      "time": "23:00",
+      "time": "07:00",
+      "temp": "57",
+      "dewpoint": "57",
+      "rh": "99",
+      "windDir": "WSW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "5.2",
+      "condition": "None"
+    },
+    {
+      "time": "06:00",
       "temp": "58",
       "dewpoint": "58",
-      "rh": "99",
-      "windDir": "ESE",
+      "rh": "98",
+      "windDir": "NW",
       "windSpeed": "1",
-      "precip": "0.01",
-      "visibility": "4.9",
+      "precip": "0.00",
+      "visibility": "6.1",
+      "condition": "None"
+    },
+    {
+      "time": "05:00",
+      "temp": "59",
+      "dewpoint": "58",
+      "rh": "97",
+      "windDir": "NW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "6.4",
       "condition": "None"
     }
   ],
@@ -290,5 +290,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-05T08:19:48.250Z"
+  "updated": "2026-10-05T14:32:47.301Z"
 }

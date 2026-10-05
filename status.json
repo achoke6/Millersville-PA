@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-05T17:15:16.933Z",
+  "generatedAt": "2026-10-05T17:56:03.499Z",
   "totalEvents": 1887,
   "withDescription": 816,
   "withImage": 215,
@@ -150,17 +150,20 @@
       "PM Community": 2
     },
     "stalePast": 17,
-    "lastSyncAt": "2026-10-05T17:10:05.855Z"
+    "lastSyncAt": "2026-10-05T17:52:48.586Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 8,
-    "checkedAt": "2026-10-05T17:14:59.409Z"
+    "checkedAt": "2026-10-05T17:55:52.453Z"
   },
   "sourceHealth": {
-    "ok": true,
-    "failing": [],
+    "ok": false,
+    "failing": [
+      "pennManorAthletics.count",
+      "pennManorGeneral.count"
+    ],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -192,10 +195,11 @@
       },
       {
         "key": "pennManorAthletics.count",
-        "ok": true,
+        "ok": false,
         "value": 468,
         "min": 150,
-        "skipped": false
+        "skipped": false,
+        "carriedForward": 468
       },
       {
         "key": "muAthletics.count",
@@ -206,10 +210,11 @@
       },
       {
         "key": "pennManorGeneral.count",
-        "ok": true,
+        "ok": false,
         "value": 100,
         "min": 10,
-        "skipped": false
+        "skipped": false,
+        "carriedForward": 100
       },
       {
         "key": "muHudl.pairRatio",
@@ -299,5 +304,5 @@
       "date": "2026-10-22T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 3
+  "addedLastRun": 0
 }

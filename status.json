@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-05T17:56:03.499Z",
-  "totalEvents": 1887,
+  "generatedAt": "2026-10-05T23:48:11.333Z",
+  "totalEvents": 1889,
   "withDescription": 816,
   "withImage": 215,
   "familyFriendly": 72,
@@ -10,14 +10,14 @@
     "muCalendar": 171,
     "artsmu": 20,
     "campsAlumni": 23,
-    "muGetInvolved": 508,
-    "pennManor": 568,
+    "muGetInvolved": 507,
+    "pennManor": 569,
     "borough": 60,
     "vfw": 5,
     "phantomPower": 12,
     "community": 18,
     "manor": 41,
-    "raneyCellars": 3,
+    "raneyCellars": 5,
     "theBackyard": 18,
     "muHudlBroadcasts": 57
   },
@@ -68,7 +68,7 @@
     },
     "raneyCellars": {
       "earliest": "2026-10-01T20:00:00.000Z",
-      "latest": "2026-10-07T20:30:00.000Z"
+      "latest": "2026-10-09T20:00:00.000Z"
     },
     "theBackyard": {
       "earliest": "2026-08-24T12:30:00.000Z",
@@ -121,8 +121,8 @@
       "daysSinceMoved": 1
     },
     "raneyCellars": {
-      "newest": "2026-10-07",
-      "daysSinceMoved": 4
+      "newest": "2026-10-09",
+      "daysSinceMoved": 0
     },
     "theBackyard": {
       "newest": "2026-11-11",
@@ -150,20 +150,17 @@
       "PM Community": 2
     },
     "stalePast": 17,
-    "lastSyncAt": "2026-10-05T17:52:48.586Z"
+    "lastSyncAt": "2026-10-05T23:44:49.895Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 8,
-    "checkedAt": "2026-10-05T17:55:52.453Z"
+    "checkedAt": "2026-10-05T23:47:58.129Z"
   },
   "sourceHealth": {
-    "ok": false,
-    "failing": [
-      "pennManorAthletics.count",
-      "pennManorGeneral.count"
-    ],
+    "ok": true,
+    "failing": [],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -195,11 +192,10 @@
       },
       {
         "key": "pennManorAthletics.count",
-        "ok": false,
+        "ok": true,
         "value": 468,
         "min": 150,
-        "skipped": false,
-        "carriedForward": 468
+        "skipped": false
       },
       {
         "key": "muAthletics.count",
@@ -210,11 +206,10 @@
       },
       {
         "key": "pennManorGeneral.count",
-        "ok": false,
-        "value": 100,
+        "ok": true,
+        "value": 101,
         "min": 10,
-        "skipped": false,
-        "carriedForward": 100
+        "skipped": false
       },
       {
         "key": "muHudl.pairRatio",
@@ -227,12 +222,33 @@
       {
         "key": "pmHudl.matched",
         "ok": true,
-        "matched": 26,
-        "withBroadcasts": 26
+        "matched": 28,
+        "withBroadcasts": 27
       }
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Taco RV|2026-10-08T20:00:00.000Z",
+      "firstSeenAt": "2026-10-05T23:48:11.330Z",
+      "title": "Taco RV",
+      "source": "Raney Cellars",
+      "date": "2026-10-08T20:00:00.000Z"
+    },
+    {
+      "key": "Cousins Maine Lobster|2026-10-09T20:00:00.000Z",
+      "firstSeenAt": "2026-10-05T23:48:11.330Z",
+      "title": "Cousins Maine Lobster",
+      "source": "Raney Cellars",
+      "date": "2026-10-09T20:00:00.000Z"
+    },
+    {
+      "key": "Eshleman School Board Breakfast|2026-10-15T11:00:00.000Z",
+      "firstSeenAt": "2026-10-05T23:48:11.330Z",
+      "title": "Eshleman School Board Breakfast",
+      "source": "PM",
+      "date": "2026-10-15T11:00:00.000Z"
+    },
     {
       "key": "Planning Commission - Cancelled|2026-10-07T22:30:00.000Z",
       "firstSeenAt": "2026-10-05T17:15:16.930Z",
@@ -281,28 +297,7 @@
       "title": "DAIKAIJU & Mid Rats",
       "source": "Other",
       "date": "2026-10-23T00:00:00.000Z"
-    },
-    {
-      "key": "AniMU Weekly Meeting|2026-10-23T22:00:00.000Z",
-      "firstSeenAt": "2026-10-05T14:36:41.265Z",
-      "title": "AniMU Weekly Meeting",
-      "source": "MU",
-      "date": "2026-10-23T22:00:00.000Z"
-    },
-    {
-      "key": "HE IS LEGEND w. Excide & Gabe Woodrow|2026-10-24T23:00:00.000Z",
-      "firstSeenAt": "2026-10-05T14:36:41.265Z",
-      "title": "HE IS LEGEND w. Excide & Gabe Woodrow",
-      "source": "Other",
-      "date": "2026-10-24T23:00:00.000Z"
-    },
-    {
-      "key": "Men's Volleyball Club Practice|2026-10-22T23:00:00.000Z",
-      "firstSeenAt": "2026-10-05T01:39:54.912Z",
-      "title": "Men's Volleyball Club Practice",
-      "source": "MU",
-      "date": "2026-10-22T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 3
 }

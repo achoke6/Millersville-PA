@@ -1,27 +1,27 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Monday, October 05, 2026 at 12:06 PM (Neidlinger, Nornhold, Peiffer, Student Meteorologists)",
+    "issued": "Monday, October 05, 2026 at 05:27 PM (McGrath, White, Student Meteorologists)",
     "periods": [
-      {
-        "period": "This afternoon",
-        "text": "Mostly sunny, breezy, and seasonable. High: 68-72"
-      },
       {
         "period": "Tonight",
         "text": "Clear and cool. Low: 42-46"
       },
       {
-        "period": "Tuesday",
+        "period": "Tomorrow",
         "text": "Sunny and cooler. High: 62-66"
       },
       {
-        "period": "Tuesday Night",
+        "period": "Tomorrow Night",
         "text": "Clear and cool. Low: 38-42"
       },
       {
         "period": "Wednesday",
         "text": "Sunny and warmer. High: 70-74"
+      },
+      {
+        "period": "Thursday",
+        "text": "Sunny and pleasant. High: 76-80"
       }
     ]
   },
@@ -128,69 +128,69 @@
   },
   "observations": [
     {
-      "time": "13:00",
-      "temp": "67",
+      "time": "19:00",
+      "temp": "64",
       "dewpoint": "45",
-      "rh": "45",
-      "windDir": "NNW",
-      "windSpeed": "11",
-      "precip": "0.01",
-      "visibility": "11.6",
-      "condition": "None"
-    },
-    {
-      "time": "12:00",
-      "temp": "67",
-      "dewpoint": "50",
-      "rh": "54",
-      "windDir": "W",
-      "windSpeed": "4",
+      "rh": "50",
+      "windDir": "NW",
+      "windSpeed": "3",
       "precip": "0.00",
       "visibility": "11.0",
       "condition": "None"
     },
     {
-      "time": "11:00",
-      "temp": "66",
-      "dewpoint": "54",
-      "rh": "65",
+      "time": "18:00",
+      "temp": "67",
+      "dewpoint": "44",
+      "rh": "44",
+      "windDir": "NW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "10.7",
+      "condition": "None"
+    },
+    {
+      "time": "17:00",
+      "temp": "69",
+      "dewpoint": "43",
+      "rh": "40",
+      "windDir": "NW",
+      "windSpeed": "8",
+      "precip": "0.00",
+      "visibility": "10.9",
+      "condition": "None"
+    },
+    {
+      "time": "16:00",
+      "temp": "69",
+      "dewpoint": "44",
+      "rh": "40",
       "windDir": "NNW",
-      "windSpeed": "11",
+      "windSpeed": "8",
+      "precip": "0.00",
+      "visibility": "10.6",
+      "condition": "None"
+    },
+    {
+      "time": "15:00",
+      "temp": "69",
+      "dewpoint": "44",
+      "rh": "39",
+      "windDir": "NNW",
+      "windSpeed": "8",
       "precip": "0.00",
       "visibility": "11.1",
       "condition": "None"
     },
     {
-      "time": "10:00",
-      "temp": "64",
-      "dewpoint": "56",
-      "rh": "77",
+      "time": "14:00",
+      "temp": "69",
+      "dewpoint": "42",
+      "rh": "38",
       "windDir": "NNW",
-      "windSpeed": "5",
+      "windSpeed": "8",
       "precip": "0.00",
-      "visibility": "10.0",
-      "condition": "None"
-    },
-    {
-      "time": "09:00",
-      "temp": "61",
-      "dewpoint": "57",
-      "rh": "88",
-      "windDir": "W",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "7.6",
-      "condition": "None"
-    },
-    {
-      "time": "08:00",
-      "temp": "58",
-      "dewpoint": "58",
-      "rh": "98",
-      "windDir": "W",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "6.0",
+      "visibility": "11.6",
       "condition": "None"
     }
   ],
@@ -290,5 +290,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-05T17:52:51.537Z"
+  "updated": "2026-10-05T23:44:51.350Z"
 }

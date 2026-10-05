@@ -8912,8 +8912,11 @@ window.foodPickDay = function(iso){
     if (!c) return;
     const openRows = [...c.querySelectorAll('details[data-place][open]')].map(el => el.dataset.place);
     let anchor = null;
+    // Fold = bottom of the sticky stack (header + day bar) — the line a
+    // reader's eye sits just under. Falls back to the header alone.
+    const bar = document.getElementById('food-day-bar');
     const hdr = document.querySelector('.header') || document.querySelector('header');
-    const fold = (hdr ? hdr.getBoundingClientRect().bottom : 0) + 8;
+    const fold = ((bar && bar.offsetHeight ? bar : hdr) ? (bar && bar.offsetHeight ? bar : hdr).getBoundingClientRect().bottom : 0) + 8;
     for (const el of c.querySelectorAll('details[data-place][open]')){
         const r = el.getBoundingClientRect();
         if (r.bottom <= 0) continue;
@@ -9014,18 +9017,27 @@ function renderFoodPage(){
         }
     }
 
-    // --- 1.8 Date strip (2026-10-05): Today + 6, ‹ › arrows, selected pill
-    // gold. Pills call foodPickDay (keep-your-place re-render). Inline styles
-    // only (Hard Rule 2); spans the grid. A "Back to today" context line
-    // appears on preview days so a planning view is never mistaken for live.
+    // --- 1.8 Date strip (2026-10-05; v2 same day after the live eyeball): Today
+    // + 6 as SEVEN flex:1 pills that always fit the viewport — no horizontal
+    // scroll, no ‹ › arrows (the first cut scrolled, gave no swipe cue, and
+    // re-rendered with scrollLeft reset so a tapped Sat/Sun slid out of view).
+    // Labels are weekday + day-of-month ("Fri / 9"); the full date lives in the
+    // context line. Host: #food-day-bar (index.html, a .sticky-nav-bar under
+    // the header — the Sports/Events pattern) so the picker stays put while
+    // the list scrolls; falls back to an inline grid row if the host is
+    // absent. Pills call foodPickDay (keep-your-place re-render). Inline
+    // styles only (Hard Rule 2). The "Back to today" context line is the
+    // container's first row on preview days (scrolls with the page; the Today
+    // pill itself is the always-visible way back).
     {
         const days = []; for (let i = 0; i < 7; i++) days.push(isoAddDays(todayIso, i));
-        const idx = Math.max(0, days.indexOf(selIso));
         const pill = iso => { const [y, m, d] = iso.split('-').map(Number); const dt = new Date(y, m - 1, d); const on = iso === selIso;
-            return `<button type="button" onclick="foodPickDay('${iso}')" aria-pressed="${on}" style="flex:0 0 auto;min-width:64px;border:1px solid ${on ? 'var(--gold)' : 'var(--border)'};background:${on ? 'var(--gold)' : 'var(--surface)'};color:${on ? 'var(--navy)' : 'var(--text)'};border-radius:var(--radius-sm);padding:6px 10px;font-size:0.78rem;line-height:1.15;text-align:center;cursor:pointer;"><span style="display:block;font-size:0.68rem;font-weight:600;${on ? '' : 'color:var(--text-muted);'}">${iso === todayIso ? 'Today' : dt.toLocaleDateString('en-US',{weekday:'short'})}</span>${dt.toLocaleDateString('en-US',{month:'short',day:'numeric'})}</button>`; };
-        const arrow = (dir, target, disabled) => `<button type="button" ${disabled ? 'disabled' : `onclick="foodPickDay('${target}')"`} aria-label="${dir === '‹' ? 'Previous day' : 'Next day'}" style="flex:0 0 auto;width:34px;border:1px solid var(--border);background:var(--surface);border-radius:var(--radius-sm);cursor:${disabled ? 'default' : 'pointer'};opacity:${disabled ? '.35' : '1'};font-size:1rem;color:var(--text);">${dir}</button>`;
-        html += `<div style="grid-column:1/-1;display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch;" aria-label="Pick a day">${arrow('‹', days[idx - 1], idx <= 0)}${days.map(pill).join('')}${arrow('›', days[idx + 1], idx >= 6)}</div>`;
-        if (previewIso) html += `<p style="grid-column:1/-1;font-size:0.8rem;color:var(--text-muted);margin:0 0 8px;">Planning for <b style="color:var(--text);">${dayLong}</b> — status shows that day's posted hours, not live. <a href="#" onclick="event.preventDefault();foodPickDay('${todayIso}')" style="color:var(--gold-text);font-weight:600;">Back to today</a></p>`;
+            return `<button type="button" onclick="foodPickDay('${iso}')" aria-pressed="${on}" aria-label="${dt.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'})}" style="flex:1 1 0;min-width:0;max-width:120px;border:1px solid ${on ? 'var(--gold)' : 'var(--border)'};background:${on ? 'var(--gold)' : 'var(--surface)'};color:${on ? 'var(--navy)' : 'var(--text)'};border-radius:var(--radius-sm);padding:5px 2px;font-size:0.9rem;font-weight:700;line-height:1.1;text-align:center;cursor:pointer;"><span style="display:block;font-size:0.66rem;font-weight:600;${on ? '' : 'color:var(--text-muted);'}">${iso === todayIso ? 'Today' : dt.toLocaleDateString('en-US',{weekday:'short'})}</span>${d}</button>`; };
+        const stripHtml = `<div style="display:flex;gap:6px;justify-content:center;padding:8px 16px 8px;">${days.map(pill).join('')}</div>`;
+        const bar = document.getElementById('food-day-bar');
+        if (bar) bar.innerHTML = stripHtml;
+        else html += `<div style="grid-column:1/-1;margin:0 -16px 4px;">${stripHtml}</div>`;
+        if (previewIso) html = `<p style="grid-column:1/-1;font-size:0.8rem;color:var(--text-muted);margin:0 0 8px;">Planning for <b style="color:var(--text);">${dayLong}</b> — status shows that day's posted hours, not live. <a href="#" onclick="event.preventDefault();foodPickDay('${todayIso}')" style="color:var(--gold-text);font-weight:600;">Back to today</a></p>` + html;
     }
 
     // --- 2. Listings: open TODAY by default (open now + opens later today,

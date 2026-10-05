@@ -454,6 +454,9 @@
 
     <!-- FOOD (took the Board nav slot 2026-07-28; all rendering in app.js renderFoodPage) -->
     <section id="view-food" class="app-view">
+        <!-- Date strip host (2026-10-05, plan-ahead v2): renderFoodPage() fills this with the
+             seven day pills; .sticky-nav-bar pins it under the header like the Sports/Events bars. -->
+        <div class="sticky-nav-bar" id="food-day-bar" aria-label="Pick a day"></div>
         <div id="food-container" class="card-grid"></div>
     </section>
 

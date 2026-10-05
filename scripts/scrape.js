@@ -5091,6 +5091,7 @@ async function runScraper() {
                     if (vt && new Date() < vt) {
                         entry.weekly = pl.weekly.items;
                         entry.weeklyDateRange = pl.weekly.dateRange || '';
+                        entry.weeklyValidThrough = pl.weekly.validThrough || '';   // bounds the /food date-strip preview (app.js placesSpecialsItemsFor)
                     } else {
                         console.log(`  ⏭️  ${entry.name}: weekly specials ${vt ? 'expired' : 'undated'} — dropped`);
                     }

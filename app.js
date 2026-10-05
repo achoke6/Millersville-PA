@@ -3767,7 +3767,7 @@ function injectEcwidCSS(){
 window.switchView=function(view,skipPush){
     if(view==='advertise' && viewerIsMarauder()) view='home';   // Advertise is Marauder-AND-unset-hidden (default-marauder 2026-08-24) — nav click, /advertise deep link, and popstate all funnel here (URL left as typed on skipPush loads, same as the /board fallthrough)
     if(view==='places') initPlacesMap();   // lazy map init; invalidateSize on return visits
-    if(view==='food' && typeof renderFoodPage==='function'){ foodShowClosedOn=false; foodShowClosedOff=false; renderFoodPage(); }   // Food page rebuilds on every entry; BOTH per-group closed toggles reset for the quick-look default
+    if(view==='food' && typeof renderFoodPage==='function'){ foodShowClosedOn=false; foodShowClosedOff=false; foodSelIso=null; renderFoodPage(); }   // Food page rebuilds on every entry; BOTH per-group closed toggles reset for the quick-look default
     document.querySelectorAll('.app-view').forEach(v=>v.classList.remove('active'));
     document.getElementById(`view-${view}`).classList.add('active');
     document.querySelectorAll('.nav-link').forEach(b=>b.classList.remove('active'));
@@ -7857,6 +7857,13 @@ function placeEventsToday(p){
     const today = new Date().toDateString();
     return list.filter(e => new Date(e.t).toDateString() === today);
 }
+// Dated place events on a specific ET day (YYYY-MM-DD) — the /food date
+// strip's counterpart to placeEventsToday (same _placeEvents map).
+function placeEventsOn(p, iso){
+    const [y, m, d] = String(iso).split('-').map(Number);
+    const key = new Date(y, m - 1, d).toDateString();
+    return (_placeEvents.get(placeSlug(p)) || []).filter(e => new Date(e.t).toDateString() === key);
+}
 function placeNextUpcoming(p){
     const today = new Date().toDateString();
     return (_placeEvents.get(placeSlug(p)) || []).find(e => e.t > Date.now() && new Date(e.t).toDateString() !== today) || null;
@@ -8273,13 +8280,19 @@ function placeEffectiveHours(p){
     return Object.keys(out).length ? out : null;
 }
 const SPECIALS_DAY_IDX = {Monday:0,Tuesday:1,Wednesday:2,Thursday:3,Friday:4,Saturday:5,Sunday:6};
-function placesSpecialsItemsFor(sp, dayName){
+// previewIso (2026-10-05, /food date strip): an ET YYYY-MM-DD when the caller is
+// rendering a day OTHER than today. Three things change in preview: weekly
+// blocks are bounded by their exclusive weeklyValidThrough (so a dated
+// preview never shows an expired week), the `until` clock gate is skipped,
+// and "(Fri only)" items match their day EXACTLY instead of "show through".
+// Omitted/null = today, identical to the pre-strip behavior.
+function placesSpecialsItemsFor(sp, dayName, previewIso){
     if (!sp) return [];
     if (Array.isArray(sp.closedDays) && sp.closedDays.includes(dayName)) return [];
     let items = [];
     if (sp.daily && sp.daily[dayName]) items = [...sp.daily[dayName]];
     if (sp.recurring && sp.recurring[dayName]) items.push(`🔁 ${sp.recurring[dayName]}`);
-    if (sp.weekly && sp.weekly.length > 0) items = [...items, ...sp.weekly];
+    if (sp.weekly && sp.weekly.length > 0 && !(previewIso && sp.weeklyValidThrough && String(previewIso) >= String(sp.weeklyValidThrough))) items = [...items, ...sp.weekly];
     // 21+ gate: any item containing 🍺 is alcohol-flagged (data convention,
     // documented in place-specials.json _format) and hidden for EVERY viewer
     // until they opt in via the My Favorites "Show 21+ drink specials"
@@ -8298,7 +8311,7 @@ function placesSpecialsItemsFor(sp, dayName){
     // enforcement point as the 21+ gate, so the rail, both card boxes, the
     // Today lens, the rail popup, and the pins can never disagree.
     const untilM = typeof sp.until === 'string' ? sp.until.match(/^(\d{2}):(\d{2})$/) : null;
-    if (untilM) {
+    if (untilM && !previewIso) {
         const nowET = hoursNowET();
         const todayName = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][nowET.dayIdx];
         if (todayName === dayName && nowET.mins >= (+untilM[1]*60 + +untilM[2])) items = items.filter(i => /all day/i.test(i));
@@ -8309,15 +8322,15 @@ function placesSpecialsItemsFor(sp, dayName){
             const m = i.match(/\((Mon|Tues?|Wed(?:nes)?|Thur?s?|Fri|Sat(?:ur)?|Sun)(?:day)?\.?\s+only\)/i);
             if (!m) return true;
             const idx = {mon:0,tue:1,wed:2,thu:3,fri:4,sat:5,sun:6}[m[1].slice(0,3).toLowerCase()];
-            return idx === undefined ? true : todayIdx <= idx;
+            return idx === undefined ? true : (previewIso ? todayIdx === idx : todayIdx <= idx);
         });
     }
     return items;
 }
 // Slug-keyed wrapper over the global map (specials.json is keyed by directory
 // place slug — Hard Rule 11's derivation; callers pass placeSlug(p)).
-function placesSpecialsItems(slug, dayName){
-    return placesSpecialsItemsFor((window._placesSpecials || {})[slug], dayName);
+function placesSpecialsItems(slug, dayName, previewIso){
+    return placesSpecialsItemsFor((window._placesSpecials || {})[slug], dayName, previewIso);
 }
 function placeHasSpecialsToday(slug){
     return placesSpecialsItems(slug, new Date().toLocaleDateString('en-US',{weekday:'long'})).length > 0;
@@ -8341,6 +8354,7 @@ function vfwSpecialsEntryFromJson(vfw){
         note: vfw.note || '',
         weekly: current ? (vfw.weeklySpecials.items || []) : [],
         weeklyDateRange: current ? (vfw.weeklySpecials.dateRange || '') : '',
+        weeklyValidThrough: current ? (vfw.weeklySpecials.validThrough || '') : '',   // bounds the /food date-strip preview
         recurring: vfw.recurring || {}
     };
 }
@@ -8589,16 +8603,23 @@ function buildCampusCupboardCard(dayName) {
 // identically — placesSpecialsItems stays the single source of truth for
 // closed days, day-only tags, and daily→recurring→weekly order. Returns ''
 // when the place has no specials entry or nothing lands on this day.
-function placeSpecialsSectionHtml(pslug, dayName){
+function placeSpecialsSectionHtml(pslug, dayName, previewIso){
     const sp = (window._placesSpecials || {})[pslug];
     if(!sp) return '';
-    const items = placesSpecialsItems(pslug, dayName);   // single source of truth (also drives the Today lens + home rail)
-    if(items.length === 0) return '';
     const isGrocery = !!(sp.rawDeals && sp.rawDeals.length);
+    // Week-list places (John Herr's circular, the Corn Wagon's scraped price
+    // sheet) have no per-day shape — the /food date strip leaves them alone:
+    // same list every day of the week, rendered as today (Adam, 2026-10-05).
+    const isWeekList = isGrocery || !!sp.weeklyFetchedAt;
+    const itemsIso = isWeekList ? null : previewIso;
+    const itemsDay = isWeekList ? new Date().toLocaleDateString('en-US',{weekday:'long'}) : dayName;
+    const items = placesSpecialsItems(pslug, itemsDay, itemsIso);   // single source of truth (also drives the Today lens + home rail)
+    if(items.length === 0) return '';
     const note = sp.note ? `<p style="font-size:0.7rem;color:var(--text-muted);margin-bottom:4px;font-style:italic;">${sp.note}</p>` : '';
     const dateRange = (!isGrocery && sp.weeklyDateRange) ? `<p style="font-size:0.7rem;color:var(--gold);font-weight:600;margin-bottom:4px;">${sp.weeklyDateRange}</p>` : '';
     const isVFW = pslug === 'vfw-post-7294';
-    const heading = isGrocery ? '🏷️ Top Weekly Deals:' : isVFW ? `Specials (${dayName}):` : `Today's Specials (${dayName}):`;
+    const heading = isGrocery ? '🏷️ Top Weekly Deals:' : (isVFW || previewIso) ? `Specials (${dayName}):` : `Today's Specials (${dayName}):`;
+    const weekNote = (isWeekList && previewIso) ? `<p style="font-size:0.7rem;color:var(--text-muted);font-style:italic;margin-top:4px;">Weekly list — same every day this week.</p>` : '';
     // 5-then-expand (2026-09-22): long lists (the Corn Wagon's 15-line price
     // sheet) no longer stretch the card. Grocery keeps its View-All modal;
     // everything else folds inline via the shared toggleSignupsMore toggle
@@ -8614,7 +8635,7 @@ function placeSpecialsSectionHtml(pslug, dayName){
         moreHtml = `<div id="${moreId}" style="display:none;">${moreItems.map(itemP).join('')}</div>`
             + `<button type="button" class="btn btn-sm btn-outline" aria-expanded="false" aria-controls="${moreId}" data-more-label="${moreLabel}" style="margin-top:6px;font-size:0.75rem;width:100%;text-align:center;" onclick="window.toggleSignupsMore(this)">${moreLabel}</button>`;
     }
-    return `<div class="specials-section">${dateRange}<p style="font-size:0.8rem;font-weight:700;margin-bottom:4px;">${heading}</p>${note}${topItems.map(itemP).join('')}${moreHtml}</div>`;
+    return `<div class="specials-section">${dateRange}<p style="font-size:0.8rem;font-weight:700;margin-bottom:4px;">${heading}</p>${note}${topItems.map(itemP).join('')}${moreHtml}${weekNote}</div>`;
 }
 
 // Weekly dining-hall menus (dining-menus.json, 2026-10-05). Hand/task-maintained
@@ -8624,16 +8645,16 @@ function placeSpecialsSectionHtml(pslug, dayName){
 // (vfw.json convention): on/after that ET date the block is stale and ignored.
 // Deliberately NOT a specials surface — no rail tile, no gold border, no 🔥
 // lens, no specials canary; it only renders inside the food card.
-function diningMenuFor(p){
+function diningMenuFor(p, iso){
     const places = (window._diningMenus || {}).places;
     const e = places && places[placeSlug(p)];
     if(!e || !e.days) return null;
-    const today = hoursTodayISO();
+    const today = iso || hoursTodayISO();   // iso = /food date-strip preview day (2026-10-05); default today
     if(e.validThrough && today >= String(e.validThrough)) return null;
     return { entry: e, day: e.days[today] || null };
 }
-function diningMenuSectionHtml(p){
-    const m = diningMenuFor(p);
+function diningMenuSectionHtml(p, iso){
+    const m = diningMenuFor(p, iso);
     if(!m || !m.day) return '';
     const meals = [['brunch','Brunch'],['breakfast','Breakfast'],['lunch','Lunch'],['dinner','Dinner']];
     const mealHtml = meals.map(([key,label])=>{
@@ -8646,13 +8667,16 @@ function diningMenuSectionHtml(p){
         }).join('');
         const also = meal.also ? `<p style="font-size:0.75rem;color:var(--text-muted);margin:2px 0;">${escHtml(meal.also)}</p>` : '';
         if(!lines && !also) return '';
-        return `<p style="font-size:0.8rem;font-weight:700;margin:6px 0 2px;">${label}</p>${lines}${also}`;
+        return `<p data-meal="${placeSlug(p)}:${key}" style="font-size:0.8rem;font-weight:700;margin:6px 0 2px;">${label}</p>${lines}${also}`;
     }).join('');
     if(!mealHtml) return '';
-    return `<details class="specials-section" style="margin-top:6px;"><summary style="font-size:0.8rem;font-weight:700;cursor:pointer;">🍽 Today's Menu</summary>${mealHtml}<p style="font-size:0.7rem;color:var(--text-muted);font-style:italic;margin-top:4px;">Menus are subject to change without notice.</p></details>`;
+    // Always-visible block (2026-10-05, was a collapsed <details>): the menu
+    // IS what a planning reader came for. Header names the day when previewing.
+    const dayLbl = iso && iso !== hoursTodayISO() ? (() => { const [y, mo, d] = String(iso).split('-').map(Number); return new Date(y, mo - 1, d).toLocaleDateString('en-US',{weekday:'long'}) + "'s"; })() : "Today's";
+    return `<div class="specials-section" style="margin-top:6px;"><p style="font-size:0.8rem;font-weight:700;margin-bottom:2px;">🍽 ${dayLbl} Menu</p>${mealHtml}<p style="font-size:0.7rem;color:var(--text-muted);font-style:italic;margin-top:4px;">Menus are subject to change without notice.</p></div>`;
 }
 
-function buildFoodCard(p, specials, dayName) {
+function buildFoodCard(p, specials, dayName, previewIso) {   // previewIso: /food date-strip day (YYYY-MM-DD) or undefined = today
     // Action buttons
     let actionBtn='';
     // App Required → one device-resolved 📱 Mobile Order button — v2
@@ -8681,9 +8705,9 @@ function buildFoodCard(p, specials, dayName) {
     else {
         // Weekly menu block present (dining-menus.json) → link the week's Instagram
         // post instead of the generic dining page; no block → unchanged View Menu.
-        const dm = diningMenuFor(p);
+        const dm = diningMenuFor(p, previewIso);
         const menuHref = (dm && dm.entry.sourceLink) || p.link;
-        const menuLabel = dm ? '📄 This Week\'s Menu ↗' : '📄 View Menu';
+        const menuLabel = dm ? '📷 View Source ↗' : '📄 View Menu';   // sourceLink = Ville Dining's Instagram page (Adam, 2026-10-05)
         actionBtn=`<a href="${menuHref}" target="_blank" rel="noopener" class="btn btn-sm btn-outline" style="display:block;text-align:center;">${menuLabel}</a>`;
     }
 
@@ -8696,11 +8720,11 @@ function buildFoodCard(p, specials, dayName) {
     // needs name special-casing here. Grocery styling keys off rawDeals.
     // Specials section — shared with buildServiceCard via placeSpecialsSectionHtml.
     const pslug = placeSlug(p);
-    let specialsHtml = placeSpecialsSectionHtml(pslug, dayName);
+    let specialsHtml = placeSpecialsSectionHtml(pslug, dayName, previewIso);
 
-    const evT = placeEventsToday(p);
-    const eventsHtml = evT.length ? `<div class="specials-section"><p style="font-size:0.8rem;font-weight:700;margin-bottom:4px;">📅 Here today:</p>${evT.slice(0,3).map(e=>`<p style="font-size:0.8rem;color:var(--text);margin:2px 0;">• ${e.title} · ${formatTime(new Date(e.t))}</p>`).join('')}</div>` : '';
-    const menuHtml = diningMenuSectionHtml(p);   // collapsed 🍽 Today's Menu — '' when no current block for this slug/day
+    const evT = previewIso ? placeEventsOn(p, previewIso) : placeEventsToday(p);
+    const eventsHtml = evT.length ? `<div class="specials-section"><p style="font-size:0.8rem;font-weight:700;margin-bottom:4px;">📅 Here ${previewIso ? 'that day' : 'today'}:</p>${evT.slice(0,3).map(e=>`<p style="font-size:0.8rem;color:var(--text);margin:2px 0;">• ${e.title} · ${formatTime(new Date(e.t))}</p>`).join('')}</div>` : '';
+    const menuHtml = diningMenuSectionHtml(p, previewIso);   // 🍽 Today's/<Day>'s Menu block — '' when no current block for this slug/day
     return `<div class="app-card" data-place="${placeSlug(p)}" style="position:relative;display:flex;flex-direction:column;justify-content:flex-start;">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:6px;"><span class="card-tag">🍴 ${p.cuisine || 'Food & Drink'}</span><span style="display:inline-flex;gap:6px;align-items:center;flex-shrink:0;">${membersBadge}${mbaBadge(p.name)}</span></div>
         <h3 class="card-title" style="margin-top:6px;">${p.name}</h3>
@@ -8835,6 +8859,7 @@ async function loadSignups(){try{const d=await(await fetch('youth-sports-registr
 // (the home skeleton markup suggests so); if the free-food lines render
 // unstyled, the rules are #home-timeline-scoped — add a shared class then.
 let foodShowClosedOn = false, foodShowClosedOff = false;   // per-group session toggles (On/Off Campus; the flat non-student list drives both in lockstep); reset on every /food entry
+let foodSelIso = null;   // /food date strip (2026-10-05): selected ET day as YYYY-MM-DD, null = today; reset on every /food entry like the closed toggles
 window.toggleFoodClosed = function(grp){
     if (grp === 'on') foodShowClosedOn = !foodShowClosedOn;
     else if (grp === 'off') foodShowClosedOff = !foodShowClosedOff;
@@ -8861,12 +8886,77 @@ function foodOpenState(p){
         .filter(r => r.start > now.mins).sort((a,b) => a.start - b.start)[0];
     return nxt ? { rank: 1, opensAt: nxt.start } : { rank: 2 };
 }
+// Open state for a specific ET day. Today → foodOpenState (live clock). A
+// future day → that day's posted hours: rank 0 with future:true + rangesTxt
+// ("7:30 AM–2 PM, 4:30–7 PM"), rank 2 when the cell is closed, rank 3 when
+// unlisted. Reads placeEffectiveHours, so break/summer cells resolve per day.
+function foodOpenStateOn(p, iso){
+    if (!iso || iso === hoursTodayISO()) return foodOpenState(p);
+    const eh = placeEffectiveHours(p);
+    if (!eh) return { rank: 3 };
+    const [y, m, d] = String(iso).split('-').map(Number);
+    const cell = eh[HOURS_DAY_KEYS[new Date(y, m - 1, d).getDay()]];
+    if (cell === undefined) return { rank: 3 };
+    const rs = hoursParseRanges(cell);
+    if (!rs.length) return { rank: 2 };
+    return { rank: 0, future: true, until: rs[0].end, rangesTxt: rs.map(r => `${hoursFmtMins(r.start)}–${hoursFmtMins(r.end)}`).join(', ') };
+}
+// Date-strip pick (2026-10-05). Keeps the reader where they are: snapshot the
+// expanded rows and the deepest stable anchor under the sticky header (the
+// expanded row nearest the top, or the Brunch/Lunch/Dinner header at/above
+// the fold when the viewport is inside a menu), re-render, re-open the rows
+// (flipping the owning group's closed toggle when a row landed behind the fold), then
+// scrollBy the anchor's delta. Never scrolls to top.
+window.foodPickDay = function(iso){
+    const c = document.getElementById('food-container');
+    if (!c) return;
+    const openRows = [...c.querySelectorAll('details[data-place][open]')].map(el => el.dataset.place);
+    let anchor = null;
+    const hdr = document.querySelector('.header') || document.querySelector('header');
+    const fold = (hdr ? hdr.getBoundingClientRect().bottom : 0) + 8;
+    for (const el of c.querySelectorAll('details[data-place][open]')){
+        const r = el.getBoundingClientRect();
+        if (r.bottom <= 0) continue;
+        anchor = { sel: `details[data-place="${el.dataset.place}"]`, top: r.top };
+        const meals = [...el.querySelectorAll('[data-meal]')].filter(mh => mh.getBoundingClientRect().top <= fold);
+        if (meals.length){ const mh = meals[meals.length - 1]; anchor = { sel: `[data-meal="${mh.dataset.meal}"]`, top: mh.getBoundingClientRect().top, fallback: anchor }; }
+        break;
+    }
+    foodSelIso = (iso && iso !== hoursTodayISO()) ? iso : null;
+    renderFoodPage();
+    const reopen = () => openRows.map(sl => { const el = c.querySelector(`details[data-place="${sl}"]`); if (el) el.open = true; return el; });
+    let els = reopen();
+    // A snapshotted row that did NOT render is behind a collapsed "Show N
+    // closed" fold on the new day (closed/unlisted then): flip the owning
+    // group's flag through the real state model and render once more.
+    const missing = openRows.filter((sl, i) => !els[i]);
+    if (missing.length){
+        const grpOf = sl => { const p = (typeof allPlaces !== 'undefined' ? allPlaces : []).find(x => placeSlug(x) === sl); return (typeof viewerIsMarauder === 'function' && viewerIsMarauder()) ? (p && p.onCampus === true ? 'on' : 'off') : 'all'; };
+        for (const sl of missing){ const grp = grpOf(sl); if (grp === 'on') foodShowClosedOn = true; else if (grp === 'off') foodShowClosedOff = true; else foodShowClosedOn = foodShowClosedOff = true; }
+        renderFoodPage(); els = reopen();
+    }
+    if (anchor){
+        let a = anchor, el = c.querySelector(a.sel);
+        if (!el && a.fallback){ a = a.fallback; el = c.querySelector(a.sel); }
+        if (el){ const r = el.getBoundingClientRect(); window.scrollBy({ top: r.top - a.top, left: 0, behavior: 'instant' }); }
+    }
+};
 function renderFoodPage(){
     const c = document.getElementById('food-container');
     if (!c) return;
     const specials = window._placesSpecials || {};
     const now = new Date();
-    const dayName = now.toLocaleDateString('en-US',{weekday:'long'});
+    // Date strip (2026-10-05): foodSelIso = a future ET day or null (today).
+    // Every day-keyed read below (dayName, previewIso, open state, free food,
+    // Cupboard line, specials, menus) follows the selected day; identity gates,
+    // groups, buttons and week-list places (John Herr's, Corn Wagon) do not.
+    const todayIso = hoursTodayISO();
+    const previewIso = (foodSelIso && foodSelIso !== todayIso) ? foodSelIso : undefined;
+    const selIso = previewIso || todayIso;
+    const selDate = (() => { const [y, m, d] = selIso.split('-').map(Number); return new Date(y, m - 1, d); })();
+    const dayName = selDate.toLocaleDateString('en-US',{weekday:'long'});
+    const dayShort = selDate.toLocaleDateString('en-US',{weekday:'short'});
+    const dayLong = selDate.toLocaleDateString('en-US',{weekday:'long',month:'short',day:'numeric'});
     const isStudent = viewerIsMarauder();   // default-marauder (2026-08-24): unset sees the Free Groceries block
     const secHdr = (label, count) => `<div class="day-group-header">${label}${count !== undefined ? `<span class="day-count">${count}</span>` : ''}</div>`;
     let html = '';
@@ -8876,13 +8966,17 @@ function renderFoodPage(){
     const ffAll = (typeof allEvents !== 'undefined' ? allEvents : []).filter(e =>
         e && Array.isArray(e.benefits) && e.benefits.includes('Free Food') && !isHiddenForViewer(e)
     );
-    const ffToday = ffAll.filter(e =>
+    const ffToday = previewIso
+        ? ffAll.filter(e => new Date(e._dateMs || e.date).toDateString() === selDate.toDateString())   // preview day: whole day, no started-grace
+        : ffAll.filter(e =>
         new Date(e._dateMs || e.date).toDateString() === todayStr &&
         (e._dateMs || 0) >= now.getTime() - 3*60*60*1000
     );
     if (ffToday.length){
-        html += secHdr('🍕 Free Food Today', String(ffToday.length));
+        html += secHdr(previewIso ? `🍕 Free Food ${dayLong}` : '🍕 Free Food Today', String(ffToday.length));
         html += `<div style="grid-column:1/-1;margin-bottom:14px;">${ffToday.map(e => buildTimelineItem(e, now)).join('')}</div>`;
+    } else if (previewIso){
+        if (muAffiliation !== 'townie') html += `<p style="grid-column:1/-1;font-size:0.8rem;color:var(--text-muted);margin:2px 0 12px;">🍕 No free food posted for ${dayLong}.</p>`;
     } else {
         const next = ffAll.find(e => (e._dateMs || 0) > now.getTime());
         if (next){
@@ -8920,6 +9014,20 @@ function renderFoodPage(){
         }
     }
 
+    // --- 1.8 Date strip (2026-10-05): Today + 6, ‹ › arrows, selected pill
+    // gold. Pills call foodPickDay (keep-your-place re-render). Inline styles
+    // only (Hard Rule 2); spans the grid. A "Back to today" context line
+    // appears on preview days so a planning view is never mistaken for live.
+    {
+        const days = []; for (let i = 0; i < 7; i++) days.push(isoAddDays(todayIso, i));
+        const idx = Math.max(0, days.indexOf(selIso));
+        const pill = iso => { const [y, m, d] = iso.split('-').map(Number); const dt = new Date(y, m - 1, d); const on = iso === selIso;
+            return `<button type="button" onclick="foodPickDay('${iso}')" aria-pressed="${on}" style="flex:0 0 auto;min-width:64px;border:1px solid ${on ? 'var(--gold)' : 'var(--border)'};background:${on ? 'var(--gold)' : 'var(--surface)'};color:${on ? 'var(--navy)' : 'var(--text)'};border-radius:var(--radius-sm);padding:6px 10px;font-size:0.78rem;line-height:1.15;text-align:center;cursor:pointer;"><span style="display:block;font-size:0.68rem;font-weight:600;${on ? '' : 'color:var(--text-muted);'}">${iso === todayIso ? 'Today' : dt.toLocaleDateString('en-US',{weekday:'short'})}</span>${dt.toLocaleDateString('en-US',{month:'short',day:'numeric'})}</button>`; };
+        const arrow = (dir, target, disabled) => `<button type="button" ${disabled ? 'disabled' : `onclick="foodPickDay('${target}')"`} aria-label="${dir === '‹' ? 'Previous day' : 'Next day'}" style="flex:0 0 auto;width:34px;border:1px solid var(--border);background:var(--surface);border-radius:var(--radius-sm);cursor:${disabled ? 'default' : 'pointer'};opacity:${disabled ? '.35' : '1'};font-size:1rem;color:var(--text);">${dir}</button>`;
+        html += `<div style="grid-column:1/-1;display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;scrollbar-width:none;-webkit-overflow-scrolling:touch;" aria-label="Pick a day">${arrow('‹', days[idx - 1], idx <= 0)}${days.map(pill).join('')}${arrow('›', days[idx + 1], idx >= 6)}</div>`;
+        if (previewIso) html += `<p style="grid-column:1/-1;font-size:0.8rem;color:var(--text-muted);margin:0 0 8px;">Planning for <b style="color:var(--text);">${dayLong}</b> — status shows that day's posted hours, not live. <a href="#" onclick="event.preventDefault();foodPickDay('${todayIso}')" style="color:var(--gold-text);font-weight:600;">Back to today</a></p>`;
+    }
+
     // --- 2. Listings: open TODAY by default (open now + opens later today,
     // via foodOpenState); done-for-the-day + unlisted rows behind PER-GROUP
     // toggles. Collapsed native <details> rows -- summary keeps the default
@@ -8928,21 +9036,25 @@ function renderFoodPage(){
     const food = (typeof allPlaces !== 'undefined' ? allPlaces : [])
         .filter(p => p && p.placeType === 'food' && placeAudienceVisible(p));
     const stCache = new Map();
-    const stOf = p => { if (!stCache.has(p)) stCache.set(p, foodOpenState(p)); return stCache.get(p); };
+    const stOf = p => { if (!stCache.has(p)) stCache.set(p, foodOpenStateOn(p, selIso)); return stCache.get(p); };
     // Within-rank time sort (2026-08-26): rank-0 rows close-soonest first,
     // rank-1 rows by next opening time ("what opens next"); ranks 2/3 have
     // no time key and stay alphabetical. Name is always the final tiebreak.
     const stKey = st => st.rank === 0 ? (st.until ?? 1e9) : st.rank === 1 ? (st.opensAt ?? 1e9) : 0;
     const byState = (a,b) => (stOf(a).rank - stOf(b).rank) || (stKey(stOf(a)) - stKey(stOf(b))) || a.name.localeCompare(b.name);
     const stTxt = st =>
-        st.rank === 0 ? `<span style="color:#15803d;font-weight:700;">Open</span>${st.until !== undefined ? ' · until ' + hoursFmtMins(st.until) : ''}`
+        (st.rank === 0 && st.future) ? `<span style="color:#15803d;font-weight:700;">Open ${dayShort}</span> · ${st.rangesTxt}`
+      : st.rank === 0 ? `<span style="color:#15803d;font-weight:700;">Open</span>${st.until !== undefined ? ' · until ' + hoursFmtMins(st.until) : ''}`
       : st.rank === 1 ? `<span style="color:#b45309;font-weight:700;">Opens ${hoursFmtMins(st.opensAt)}</span>`
-      : st.rank === 2 ? `<span style="color:#b91c1c;font-weight:700;">Closed</span> today`
+      : st.rank === 2 ? `<span style="color:#b91c1c;font-weight:700;">Closed</span> ${previewIso ? dayShort : 'today'}`
       : `<span style="color:var(--text-muted);">Hours unlisted</span>`;
     const sumRow = (label, st) => `<summary style="cursor:pointer;padding:10px 12px;font-size:0.9rem;"><span style="display:inline-flex;width:calc(100% - 22px);justify-content:space-between;align-items:center;gap:8px;vertical-align:middle;"><span style="font-weight:600;">${label}</span><span style="font-size:0.78rem;white-space:nowrap;">${stTxt(st)}</span></span></summary>`;
     const rowFor = p => {
-        const hasSp = placesSpecialsItems(placeSlug(p), dayName).length > 0;
-        return `<details style="border:1px solid ${hasSp ? 'var(--gold)' : 'var(--border)'};border-radius:var(--radius-sm);background:var(--surface);margin:6px 0;">${sumRow(`${p.name}${hasSp ? ' 🏷️' : ''}`, stOf(p))}<div style="padding:0 8px 10px;">${buildFoodCard(p, specials, dayName)}</div></details>`;
+        // Gold border/dot: specials items on the SELECTED day (same predicate as
+        // the card box). Week-list places read as today via placeSpecialsSectionHtml,
+        // but their border follows the same rule — their items are the same all week.
+        const hasSp = placesSpecialsItems(placeSlug(p), dayName, previewIso).length > 0;
+        return `<details data-place="${placeSlug(p)}" style="border:1px solid ${hasSp ? 'var(--gold)' : 'var(--border)'};border-radius:var(--radius-sm);background:var(--surface);margin:6px 0;">${sumRow(`${p.name}${hasSp ? ' 🏷️' : ''}`, stOf(p))}<div style="padding:0 8px 10px;">${buildFoodCard(p, specials, dayName, previewIso)}</div></details>`;
     };
     // Cupboard: pinned <details> card RETIRED in v4 (2026-07-31) -- the
     // Cupboard now rides the section-1.5 specials strip like every other
@@ -8956,7 +9068,7 @@ function renderFoodPage(){
         const hid = list.filter(p => stOf(p).rank >= 2).sort(byState);
         if (!vis.length && !hid.length) return;
         anyRows = true;
-        html += secHdr(label, `${vis.length} open today`);   // 0-open groups keep their header + toggle (v3 -- no more empty-group vanish)
+        html += secHdr(label, `${vis.length} open ${previewIso ? dayShort : 'today'}`);   // 0-open groups keep their header + toggle (v3 -- no more empty-group vanish)
         html += vis.map(rowFor).join('');
         if (on && hid.length) html += closedHdr + hid.map(rowFor).join('');
         if (hid.length) html += toggleBtn(grp, on, hid.length);
@@ -8968,7 +9080,7 @@ function renderFoodPage(){
         renderGroup('Open Today', food, 'all', foodShowClosedOn && foodShowClosedOff);
     }
     if (!anyRows){
-        html += `<p class="empty-state">Nothing's open today.</p>`;
+        html += `<p class="empty-state">Nothing's open ${previewIso ? dayShort : 'today'}.</p>`;
     }
 
     // --- 3. Food-pantry pointer (townies only). Primary action is the

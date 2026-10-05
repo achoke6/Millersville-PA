@@ -1,10 +1,11 @@
 {
   "_comment": "Weekly campus dining-hall menus, transcribed from Ville Dining's Sunday Instagram carousel (@ville_dining). Keyed by DIRECTORY PLACE SLUG under .places (upper-deck today; cove joins when they post one). Menus are subject to change without notice — this is a convenience mirror, not the source of truth. Maintained by the weekly 'Ville Dining menu sync' Cowork task (Sunday evenings) or hand-transcribed — never scraper-generated. CRLF.",
-  "_format": "places.<slug>: { name, sourceLink (the week's Instagram POST permalink — the profile URL is the fallback), dateRange (human), validThrough (ISO date, EXCLUSIVE — the first ET day the block is stale; the app ignores the block on/after it, vfw.json convention), days: { 'YYYY-MM-DD' (ET): { brunch|breakfast|lunch|dinner: { '<Line label>': [items], ..., 'also': '<free text, e.g. Salad Bar | Healthy Bar | Dessert Bar>' } } } }. Meal keys are optional per day (Sat/Sun carry brunch + dinner only). Line labels render verbatim. Transcription is CORRECTED (obvious typos fixed), not verbatim. Validated in main.yml (syntax + shape).",
+  "_format": "places.<slug>: { name, sourceLink (ALWAYS Ville Dining's Instagram PAGE https://www.instagram.com/ville_dining/ — the app's View Source button), postLink (the week's Instagram POST permalink — the sync task's dedupe key, never displayed), dateRange (human), validThrough (ISO date, EXCLUSIVE — the first ET day the block is stale; the app ignores the block on/after it, vfw.json convention), days: { 'YYYY-MM-DD' (ET): { brunch|breakfast|lunch|dinner: { '<Line label>': [items], ..., 'also': '<free text, e.g. Salad Bar | Healthy Bar | Dessert Bar>' } } } }. Meal keys are optional per day (Sat/Sun carry brunch + dinner only). Line labels render verbatim. Transcription is CORRECTED (obvious typos fixed), not verbatim. Validated in main.yml (syntax + shape).",
   "places": {
     "upper-deck": {
       "name": "Upper Deck",
       "sourceLink": "https://www.instagram.com/ville_dining/",
+      "postLink": "",
       "dateRange": "Oct 4 – Oct 10, 2026",
       "validThrough": "2026-10-11",
       "days": {

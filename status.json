@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-05T08:24:25.038Z",
-  "totalEvents": 1885,
+  "generatedAt": "2026-10-05T14:36:41.269Z",
+  "totalEvents": 1886,
   "withDescription": 817,
-  "withImage": 214,
+  "withImage": 215,
   "familyFriendly": 72,
   "eventsToday": 27,
   "sources": {
-    "muAthletics": 324,
+    "muAthletics": 325,
     "muCalendar": 171,
     "artsmu": 20,
     "campsAlumni": 23,
@@ -51,7 +51,7 @@
       "latest": "2026-12-25T12:00:00.000Z"
     },
     "vfw": {
-      "earliest": "2026-09-20T17:00:00.000Z",
+      "earliest": "2026-09-23T22:00:00.000Z",
       "latest": "2026-10-22T22:00:00.000Z"
     },
     "phantomPower": {
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 790,
+    "total": 791,
     "scored": 128,
     "wins": 62,
     "losses": 57,
@@ -150,13 +150,13 @@
       "PM Community": 2
     },
     "stalePast": 17,
-    "lastSyncAt": "2026-10-05T08:19:46.382Z"
+    "lastSyncAt": "2026-10-05T14:32:44.356Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 8,
-    "checkedAt": "2026-10-05T08:24:15.723Z"
+    "checkedAt": "2026-10-05T14:36:31.561Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -165,14 +165,14 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 365,
+        "value": 364,
         "min": 45,
         "skipped": false
       },
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 234,
+        "value": 233,
         "min": 60,
         "skipped": false
       },
@@ -200,7 +200,7 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 324,
+        "value": 325,
         "min": 100,
         "skipped": false
       },
@@ -229,6 +229,48 @@
   },
   "recentlyAdded": [
     {
+      "key": "Millersville University Women's Cross Country at Dutchmen Invitational|2026-09-05T14:15:00.000Z",
+      "firstSeenAt": "2026-10-05T14:36:41.265Z",
+      "title": "Millersville University Women's Cross Country at Dutchmen Invitational",
+      "source": "MU",
+      "date": "2026-09-05T14:15:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Cross Country Franklin and Marshall|2026-10-08T21:30:00.000Z",
+      "firstSeenAt": "2026-10-05T14:36:41.265Z",
+      "title": "Millersville University Women's Cross Country Franklin and Marshall",
+      "source": "MU",
+      "date": "2026-10-08T21:30:00.000Z"
+    },
+    {
+      "key": "Music Bingo|2026-10-09T22:00:00.000Z",
+      "firstSeenAt": "2026-10-05T14:36:41.265Z",
+      "title": "Music Bingo",
+      "source": "Other",
+      "date": "2026-10-09T22:00:00.000Z"
+    },
+    {
+      "key": "DAIKAIJU & Mid Rats|2026-10-23T00:00:00.000Z",
+      "firstSeenAt": "2026-10-05T14:36:41.265Z",
+      "title": "DAIKAIJU & Mid Rats",
+      "source": "Other",
+      "date": "2026-10-23T00:00:00.000Z"
+    },
+    {
+      "key": "AniMU Weekly Meeting|2026-10-23T22:00:00.000Z",
+      "firstSeenAt": "2026-10-05T14:36:41.265Z",
+      "title": "AniMU Weekly Meeting",
+      "source": "MU",
+      "date": "2026-10-23T22:00:00.000Z"
+    },
+    {
+      "key": "HE IS LEGEND w. Excide & Gabe Woodrow|2026-10-24T23:00:00.000Z",
+      "firstSeenAt": "2026-10-05T14:36:41.265Z",
+      "title": "HE IS LEGEND w. Excide & Gabe Woodrow",
+      "source": "Other",
+      "date": "2026-10-24T23:00:00.000Z"
+    },
+    {
       "key": "Men's Volleyball Club Practice|2026-10-22T23:00:00.000Z",
       "firstSeenAt": "2026-10-05T01:39:54.912Z",
       "title": "Men's Volleyball Club Practice",
@@ -255,49 +297,7 @@
       "title": "Ice Hockey Club (D3) Practice",
       "source": "MU",
       "date": "2026-10-23T00:15:00.000Z"
-    },
-    {
-      "key": "Men's Ice Hockey Practice (D2)|2026-10-23T01:30:00.000Z",
-      "firstSeenAt": "2026-10-05T01:39:54.912Z",
-      "title": "Men's Ice Hockey Practice (D2)",
-      "source": "MU",
-      "date": "2026-10-23T01:30:00.000Z"
-    },
-    {
-      "key": "Weekly Practice|2026-10-23T18:00:00.000Z",
-      "firstSeenAt": "2026-10-05T01:39:54.912Z",
-      "title": "Weekly Practice",
-      "source": "MU",
-      "date": "2026-10-23T18:00:00.000Z"
-    },
-    {
-      "key": "Benefit show|2026-10-23T20:00:00.000Z",
-      "firstSeenAt": "2026-10-05T01:39:54.912Z",
-      "title": "Benefit show",
-      "source": "MU",
-      "date": "2026-10-23T20:00:00.000Z"
-    },
-    {
-      "key": "Weekly Run|2026-10-23T20:30:00.000Z",
-      "firstSeenAt": "2026-10-05T01:39:54.912Z",
-      "title": "Weekly Run",
-      "source": "MU",
-      "date": "2026-10-23T20:30:00.000Z"
-    },
-    {
-      "key": "Fencing Guild Practice|2026-10-23T21:00:00.000Z",
-      "firstSeenAt": "2026-10-05T01:39:54.912Z",
-      "title": "Fencing Guild Practice",
-      "source": "MU",
-      "date": "2026-10-23T21:00:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Wrestling vs Central Mountain High/Middle School|2026-12-11T21:00:00.000Z",
-      "firstSeenAt": "2026-10-05T01:39:54.912Z",
-      "title": "Boys Varsity Wrestling vs Central Mountain High/Middle School",
-      "source": "PM",
-      "date": "2026-12-11T21:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 6
 }

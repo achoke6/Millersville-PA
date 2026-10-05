@@ -1,36 +1,6 @@
 {
   "days": [
     {
-      "date": "2026-07-07",
-      "ts": "2026-07-08T00:08:46.202Z",
-      "totalEvents": 728,
-      "sources": {
-        "muAthletics": 207,
-        "muCalendar": 90,
-        "muGetInvolved": 159,
-        "pennManor": 84,
-        "borough": 102,
-        "vfw": 2,
-        "phantomPower": 13,
-        "community": 21,
-        "manor": 42,
-        "raneyCellars": 3,
-        "muHudlBroadcasts": 0
-      },
-      "newestDates": {
-        "muAthletics": "2027-03-12",
-        "muCalendar": "2027-04-03",
-        "muGetInvolved": "2027-05-05",
-        "pennManor": "2026-09-21",
-        "borough": "2027-06-12",
-        "vfw": "2026-09-11",
-        "phantomPower": "2026-09-18",
-        "community": "2027-04-16",
-        "manor": "2027-07-07",
-        "raneyCellars": "2026-07-09"
-      }
-    },
-    {
       "date": "2026-07-08",
       "ts": "2026-07-09T02:52:30.825Z",
       "totalEvents": 706,
@@ -3051,7 +3021,43 @@
         "raneyCellars": "2026-10-07",
         "theBackyard": "2026-11-11"
       }
+    },
+    {
+      "date": "2026-10-05",
+      "ts": "2026-10-05T08:24:25.038Z",
+      "totalEvents": 1885,
+      "sources": {
+        "muAthletics": 324,
+        "muCalendar": 171,
+        "artsmu": 20,
+        "campsAlumni": 23,
+        "muGetInvolved": 508,
+        "pennManor": 566,
+        "borough": 60,
+        "vfw": 5,
+        "phantomPower": 12,
+        "community": 18,
+        "manor": 41,
+        "raneyCellars": 3,
+        "theBackyard": 18,
+        "muHudlBroadcasts": 57
+      },
+      "newestDates": {
+        "muAthletics": "2027-05-27",
+        "muCalendar": "2027-06-04",
+        "artsmu": "2027-05-02",
+        "campsAlumni": "2027-04-03",
+        "muGetInvolved": "2027-04-29",
+        "pennManor": "2027-10-04",
+        "borough": "2026-12-25",
+        "vfw": "2026-10-22",
+        "phantomPower": "2026-11-01",
+        "community": "2027-04-16",
+        "manor": "2027-10-04",
+        "raneyCellars": "2026-10-07",
+        "theBackyard": "2026-11-11"
+      }
     }
   ],
-  "lastUpdated": "2026-10-05T01:39:54.916Z"
+  "lastUpdated": "2026-10-05T08:24:25.038Z"
 }

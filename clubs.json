@@ -53,9 +53,9 @@
   },
   {
     "name": "Alpha Sigma Alpha",
-    "category": "Social",
+    "category": "Fundraiser",
     "categories": [
-      "Social"
+      "Fundraiser"
     ],
     "shortName": "",
     "id": ""
@@ -278,10 +278,8 @@
   },
   {
     "name": "Campus Life",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -347,9 +345,9 @@
   },
   {
     "name": "Citamard",
-    "category": "Meeting",
+    "category": "Performance",
     "categories": [
-      "Meeting"
+      "Performance"
     ],
     "shortName": "",
     "id": ""
@@ -515,9 +513,9 @@
   },
   {
     "name": "Conestoga Outdoors Club",
-    "category": "Meeting",
+    "category": "Social",
     "categories": [
-      "Meeting"
+      "Social"
     ],
     "shortName": "Conestoga Outdoors",
     "id": ""
@@ -616,8 +614,13 @@
   },
   {
     "name": "Delta Zeta",
-    "category": "",
-    "categories": [],
+    "category": "Competition",
+    "categories": [
+      "Competition",
+      "Fundraiser",
+      "Social",
+      "Sporting"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -685,12 +688,12 @@
   },
   {
     "name": "Entomology Club",
-    "category": "Meeting",
+    "category": "Academic",
     "categories": [
-      "Meeting"
+      "Academic"
     ],
-    "shortName": "",
-    "id": ""
+    "shortName": "Ent Club",
+    "id": "entclub"
   },
   {
     "name": "Epsilon Pi Tau",
@@ -1564,9 +1567,9 @@
   },
   {
     "name": "Student Government Association",
-    "category": "Lecture or Speaker",
+    "category": "Tabling",
     "categories": [
-      "Lecture or Speaker"
+      "Tabling"
     ],
     "shortName": "SGA",
     "id": ""
@@ -1617,12 +1620,8 @@
   },
   {
     "name": "Tau Kappa Epsilon",
-    "category": "Fundraiser",
-    "categories": [
-      "Fundraiser",
-      "Meeting",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },

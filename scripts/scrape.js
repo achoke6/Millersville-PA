@@ -4660,6 +4660,11 @@ async function runScraper() {
     // exact/prefix title) — the curated row wins, as for Borough creates.
     // Stale (>30d past) entries skip, same as Borough/PM. No sourceHealth
     // invariant: a sheet-fed lane is legitimately empty most weeks.
+    // Hand-maintained etix pid → all-in price for ticketed Campus Life rows
+    // (same role as extractPricing's etixEvents table; the build cannot read etix).
+    const CAMPUS_LIFE_TICKET_PRICES = {
+        '48976436': '$5 - $20'   // 13th Annual Pride Fest: Drag Show / The Monster Ball, 2026-10-15 (MU students $5, non-MU students & faculty/staff $10, community/alumni $20; read 2026-10-06)
+    };
     try {
         const clPath = path.join(__dirname, '../campus-life-overrides.json');
         let clData = null;
@@ -4680,6 +4685,22 @@ async function runScraper() {
                 if (ev.status !== 'approved') { skipped++; continue; }
                 const regDl = ev.registrationDeadline ? new Date(ev.registrationDeadline) : null;
                 const regOpen = !(regDl && !isNaN(regDl.getTime()) && regDl < now);
+                // Ticketed Campus Life rows (2026-10-06): when the sheet's Link is an
+                // etix /ticket/p/ or Eventbrite /e/ page the event is NOT free — the
+                // Monster Ball (etix 48976436, $5–$20) landed as "Free / More Info"
+                // because this lane hard-coded ticketLink '' + price 'Free'. The link
+                // becomes ticketLink (app.js draws 🎟 Buy Tickets off ticketLink only);
+                // the price comes from CAMPUS_LIFE_TICKET_PRICES (etix is challenge-
+                // walled to the build, so prices are hand-read like the etixEvents
+                // table), falling back to 'Tickets Available' so the event is never
+                // mis-labelled Free. sourceLink is BLANKED when promoted so the modal
+                // doesn't draw Buy Tickets + View Source to a page that never names
+                // the event; getRegisterUrl falls through to ticketLink, so signup
+                // rows are unaffected.
+                const clLink = String(ev.sourceLink || '');
+                const clTicketed = /etix\.com\/ticket\/p\/|eventbrite\.com\/e\//i.test(clLink);
+                const clPid = (clLink.match(/etix\.com\/ticket\/p\/(\d+)/i) || [])[1] || '';
+                const clPrice = ev.price || (clTicketed ? (CAMPUS_LIFE_TICKET_PRICES[clPid] || 'Tickets Available') : 'Free');
 
                 events.push({
                     _overrideCreated: true,
@@ -4688,9 +4709,9 @@ async function runScraper() {
                     endTime: ev.endTime ? new Date(ev.endTime).toISOString() : '',
                     location: ev.location || 'Student Memorial Center',
                     tags: ['MU', 'Campus Life', 'GetInvolved', 'Clubs/Orgs'],
-                    price: ev.price || 'Free',
-                    ticketLink: '',
-                    sourceLink: ev.sourceLink || 'https://getinvolved.millersville.edu/events',
+                    price: clPrice,
+                    ticketLink: clTicketed ? clLink : '',
+                    sourceLink: clTicketed ? '' : (clLink || 'https://getinvolved.millersville.edu/events'),
                     gameResult: '', gameScore: '', streamLink: '', isLive: false,
                     audience: ev.audience || 'mu-only',
                     ...(ev.description ? { description: ev.description } : {}),

@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-10-06T15:51:51.107Z",
-  "totalEvents": 1898,
-  "withDescription": 822,
+  "generatedAt": "2026-10-06T17:59:11.885Z",
+  "totalEvents": 1903,
+  "withDescription": 821,
   "withImage": 214,
   "familyFriendly": 71,
   "eventsToday": 37,
   "sources": {
     "muAthletics": 325,
-    "muCalendar": 174,
+    "muCalendar": 173,
     "artsmu": 20,
     "campsAlumni": 23,
     "muGetInvolved": 511,
-    "pennManor": 573,
+    "pennManor": 579,
     "borough": 60,
     "vfw": 6,
     "phantomPower": 12,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 797,
+    "total": 803,
     "scored": 133,
     "wins": 65,
     "losses": 58,
@@ -143,20 +143,20 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 4,
+    "pendingFuture": 3,
     "pendingPast": 5,
     "pendingBySource": {
-      "Youth Sports": 2,
-      "PM Community": 2
+      "PM Community": 2,
+      "Youth Sports": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-10-06T15:48:09.683Z"
+    "lastSyncAt": "2026-10-06T17:55:31.155Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 7,
-    "checkedAt": "2026-10-06T15:51:40.653Z"
+    "checkedAt": "2026-10-06T17:59:01.550Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -193,7 +193,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 472,
+        "value": 478,
         "min": 150,
         "skipped": false
       },
@@ -229,6 +229,55 @@
   },
   "recentlyAdded": [
     {
+      "key": "PRIDEFEST: Monster Ball Drag Show|2026-10-15T23:00:00.000Z",
+      "firstSeenAt": "2026-10-06T17:59:11.881Z",
+      "title": "PRIDEFEST: Monster Ball Drag Show",
+      "source": "MU",
+      "date": "2026-10-15T23:00:00.000Z"
+    },
+    {
+      "key": "Boys JV Wrestling vs Central Bucks South High School|2026-12-11T14:00:00.000Z",
+      "firstSeenAt": "2026-10-06T17:59:11.881Z",
+      "title": "Boys JV Wrestling vs Central Bucks South High School",
+      "source": "PM",
+      "date": "2026-12-11T14:00:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Wrestling vs Central Bucks South High School|2026-12-11T14:00:00.000Z",
+      "firstSeenAt": "2026-10-06T17:59:11.881Z",
+      "title": "Boys Varsity Wrestling vs Central Bucks South High School",
+      "source": "PM",
+      "date": "2026-12-11T14:00:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Wrestling vs Central Bucks South High School|2026-12-12T14:00:00.000Z",
+      "firstSeenAt": "2026-10-06T17:59:11.881Z",
+      "title": "Boys Varsity Wrestling vs Central Bucks South High School",
+      "source": "PM",
+      "date": "2026-12-12T14:00:00.000Z"
+    },
+    {
+      "key": "Boys JV Wrestling vs Central Bucks South High School|2026-12-12T14:00:00.000Z",
+      "firstSeenAt": "2026-10-06T17:59:11.881Z",
+      "title": "Boys JV Wrestling vs Central Bucks South High School",
+      "source": "PM",
+      "date": "2026-12-12T14:00:00.000Z"
+    },
+    {
+      "key": "Basketball, Girls JV Basketball @ Lampeter Strasburg High School|2026-12-29T18:30:00.000Z",
+      "firstSeenAt": "2026-10-06T17:59:11.881Z",
+      "title": "Basketball, Girls JV Basketball @ Lampeter Strasburg High School",
+      "source": "PM",
+      "date": "2026-12-29T18:30:00.000Z"
+    },
+    {
+      "key": "Basketball, Girls Varsity Basketball @ Lampeter Strasburg High School|2026-12-29T20:00:00.000Z",
+      "firstSeenAt": "2026-10-06T17:59:11.881Z",
+      "title": "Basketball, Girls Varsity Basketball @ Lampeter Strasburg High School",
+      "source": "PM",
+      "date": "2026-12-29T20:00:00.000Z"
+    },
+    {
       "key": "CHEP Homecoming Football Table|2026-10-17T17:00:00.000Z",
       "firstSeenAt": "2026-10-06T15:51:51.098Z",
       "title": "CHEP Homecoming Football Table",
@@ -248,56 +297,7 @@
       "title": "Trick-or-Treat Trail",
       "source": "MU",
       "date": "2026-10-30T15:30:00.000Z"
-    },
-    {
-      "key": "Steelers vs Eagles Chili & Soup Cookoff|2026-11-22T21:00:00.000Z",
-      "firstSeenAt": "2026-10-06T15:51:51.098Z",
-      "title": "Steelers vs Eagles Chili & Soup Cookoff",
-      "source": "Other",
-      "date": "2026-11-22T21:00:00.000Z"
-    },
-    {
-      "key": "FSL: Meet Phi Mu Delta|2026-10-02T14:00:00",
-      "firstSeenAt": "2026-10-06T14:45:54.972Z",
-      "title": "FSL: Meet Phi Mu Delta",
-      "source": "MU",
-      "date": "2026-10-02T14:00:00"
-    },
-    {
-      "key": "Books or Brownies|2026-10-06T17:30:00",
-      "firstSeenAt": "2026-10-06T14:45:54.972Z",
-      "title": "Books or Brownies",
-      "source": "MU",
-      "date": "2026-10-06T17:30:00"
-    },
-    {
-      "key": "Karaoke Night|2026-10-08T02:00:00.000Z",
-      "firstSeenAt": "2026-10-06T14:45:54.972Z",
-      "title": "Karaoke Night",
-      "source": "Jack's Tavern",
-      "date": "2026-10-08T02:00:00.000Z"
-    },
-    {
-      "key": "Karaoke Night|2026-10-15T02:00:00.000Z",
-      "firstSeenAt": "2026-10-06T14:45:54.972Z",
-      "title": "Karaoke Night",
-      "source": "Jack's Tavern",
-      "date": "2026-10-15T02:00:00.000Z"
-    },
-    {
-      "key": "PRIDEFEST|2026-10-15T16:30:00",
-      "firstSeenAt": "2026-10-06T14:45:54.972Z",
-      "title": "PRIDEFEST",
-      "source": "MU",
-      "date": "2026-10-15T16:30:00"
-    },
-    {
-      "key": "PRIDEFEST: Monster Ball Drag Show|2026-10-15T19:00:00",
-      "firstSeenAt": "2026-10-06T14:45:54.972Z",
-      "title": "PRIDEFEST: Monster Ball Drag Show",
-      "source": "MU",
-      "date": "2026-10-15T19:00:00"
     }
   ],
-  "addedLastRun": 4
+  "addedLastRun": 7
 }

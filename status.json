@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-10-05T15:51:49.766Z",
-  "totalEvents": 1886,
-  "withDescription": 817,
-  "withImage": 215,
-  "familyFriendly": 72,
-  "eventsToday": 27,
+  "generatedAt": "2026-10-06T11:51:22.961Z",
+  "totalEvents": 1890,
+  "withDescription": 814,
+  "withImage": 214,
+  "familyFriendly": 71,
+  "eventsToday": 37,
   "sources": {
     "muAthletics": 325,
-    "muCalendar": 171,
+    "muCalendar": 170,
     "artsmu": 20,
     "campsAlumni": 23,
-    "muGetInvolved": 508,
-    "pennManor": 566,
+    "muGetInvolved": 507,
+    "pennManor": 573,
     "borough": 60,
     "vfw": 5,
     "phantomPower": 12,
-    "community": 18,
-    "manor": 41,
-    "raneyCellars": 3,
+    "community": 17,
+    "manor": 40,
+    "raneyCellars": 5,
     "theBackyard": 18,
     "muHudlBroadcasts": 57
   },
@@ -44,7 +44,7 @@
     },
     "pennManor": {
       "earliest": "2026-07-15T22:00:00.000Z",
-      "latest": "2027-10-04T23:15:00.000Z"
+      "latest": "2027-10-05T23:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-07-09T22:00:00.000Z",
@@ -59,16 +59,16 @@
       "latest": "2026-11-01T00:00:00.000Z"
     },
     "community": {
-      "earliest": "2026-07-07T22:15:00.000Z",
+      "earliest": "2026-07-09T22:15:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
     "manor": {
-      "earliest": "2026-10-05T23:00:00.000Z",
+      "earliest": "2026-10-07T23:00:00.000Z",
       "latest": "2027-10-04T23:00:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-10-01T20:00:00.000Z",
-      "latest": "2026-10-07T20:30:00.000Z"
+      "latest": "2026-10-09T20:00:00.000Z"
     },
     "theBackyard": {
       "earliest": "2026-08-24T12:30:00.000Z",
@@ -78,39 +78,39 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 34
+      "daysSinceMoved": 35
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 45
+      "daysSinceMoved": 46
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 59
+      "daysSinceMoved": 60
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 59
+      "daysSinceMoved": 60
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 32
+      "daysSinceMoved": 33
     },
     "pennManor": {
-      "newest": "2027-10-04",
-      "daysSinceMoved": 1
+      "newest": "2027-10-05",
+      "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 69
+      "daysSinceMoved": 70
     },
     "vfw": {
       "newest": "2026-10-22",
-      "daysSinceMoved": 34
+      "daysSinceMoved": 35
     },
     "phantomPower": {
       "newest": "2026-11-01",
-      "daysSinceMoved": 15
+      "daysSinceMoved": 16
     },
     "community": {
       "newest": "2027-04-16",
@@ -118,27 +118,27 @@
     },
     "manor": {
       "newest": "2027-10-04",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "raneyCellars": {
-      "newest": "2026-10-07",
-      "daysSinceMoved": 4
+      "newest": "2026-10-09",
+      "daysSinceMoved": 1
     },
     "theBackyard": {
       "newest": "2026-11-11",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     }
   },
   "sports": {
-    "total": 791,
-    "scored": 128,
-    "wins": 62,
-    "losses": 57,
-    "ties": 9
+    "total": 797,
+    "scored": 133,
+    "wins": 65,
+    "losses": 58,
+    "ties": 10
   },
   "registrations": {
-    "open": 8,
-    "next2Weeks": 4,
+    "open": 7,
+    "next2Weeks": 5,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
@@ -150,13 +150,13 @@
       "PM Community": 2
     },
     "stalePast": 17,
-    "lastSyncAt": "2026-10-05T15:47:50.098Z"
+    "lastSyncAt": "2026-10-06T11:47:24.389Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
-    "approved": 8,
-    "checkedAt": "2026-10-05T15:51:38.280Z"
+    "approved": 7,
+    "checkedAt": "2026-10-06T11:51:13.437Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -179,21 +179,21 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 242,
+        "value": 241,
         "min": 30,
         "skipped": false
       },
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 81,
+        "value": 80,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 466,
+        "value": 472,
         "min": 150,
         "skipped": false
       },
@@ -207,7 +207,7 @@
       {
         "key": "pennManorGeneral.count",
         "ok": true,
-        "value": 100,
+        "value": 101,
         "min": 10,
         "skipped": false
       },
@@ -222,81 +222,81 @@
       {
         "key": "pmHudl.matched",
         "ok": true,
-        "matched": 25,
-        "withBroadcasts": 25
+        "matched": 28,
+        "withBroadcasts": 27
       }
     ]
   },
   "recentlyAdded": [
     {
-      "key": "Millersville University Women's Cross Country at Dutchmen Invitational|2026-09-05T14:15:00.000Z",
-      "firstSeenAt": "2026-10-05T14:36:41.265Z",
-      "title": "Millersville University Women's Cross Country at Dutchmen Invitational",
+      "key": "Millersville University Men's Golf at Dickinson Invitational|2026-09-06T04:00:00.000Z",
+      "firstSeenAt": "2026-10-06T04:57:05.167Z",
+      "title": "Millersville University Men's Golf at Dickinson Invitational",
       "source": "MU",
-      "date": "2026-09-05T14:15:00.000Z"
+      "date": "2026-09-06T04:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Cross Country Franklin and Marshall|2026-10-08T21:30:00.000Z",
-      "firstSeenAt": "2026-10-05T14:36:41.265Z",
-      "title": "Millersville University Women's Cross Country Franklin and Marshall",
+      "key": "'Ville Women's Club Soccer Game vs John's Hopkins University|2026-09-27T15:00:00",
+      "firstSeenAt": "2026-10-06T04:57:05.167Z",
+      "title": "'Ville Women's Club Soccer Game vs John's Hopkins University",
       "source": "MU",
-      "date": "2026-10-08T21:30:00.000Z"
+      "date": "2026-09-27T15:00:00"
     },
     {
-      "key": "Music Bingo|2026-10-09T22:00:00.000Z",
-      "firstSeenAt": "2026-10-05T14:36:41.265Z",
-      "title": "Music Bingo",
-      "source": "Other",
-      "date": "2026-10-09T22:00:00.000Z"
-    },
-    {
-      "key": "DAIKAIJU & Mid Rats|2026-10-23T00:00:00.000Z",
-      "firstSeenAt": "2026-10-05T14:36:41.265Z",
-      "title": "DAIKAIJU & Mid Rats",
-      "source": "Other",
-      "date": "2026-10-23T00:00:00.000Z"
-    },
-    {
-      "key": "AniMU Weekly Meeting|2026-10-23T22:00:00.000Z",
-      "firstSeenAt": "2026-10-05T14:36:41.265Z",
-      "title": "AniMU Weekly Meeting",
+      "key": "Alpha Sigma Alpha Cornhole|2026-10-24T13:00:00.000Z",
+      "firstSeenAt": "2026-10-06T04:57:05.167Z",
+      "title": "Alpha Sigma Alpha Cornhole",
       "source": "MU",
-      "date": "2026-10-23T22:00:00.000Z"
+      "date": "2026-10-24T13:00:00.000Z"
     },
     {
-      "key": "HE IS LEGEND w. Excide & Gabe Woodrow|2026-10-24T23:00:00.000Z",
-      "firstSeenAt": "2026-10-05T14:36:41.265Z",
-      "title": "HE IS LEGEND w. Excide & Gabe Woodrow",
-      "source": "Other",
-      "date": "2026-10-24T23:00:00.000Z"
-    },
-    {
-      "key": "Men's Volleyball Club Practice|2026-10-22T23:00:00.000Z",
-      "firstSeenAt": "2026-10-05T01:39:54.912Z",
-      "title": "Men's Volleyball Club Practice",
+      "key": "Rider Scrimmage Game 1|2026-10-24T15:00:00.000Z",
+      "firstSeenAt": "2026-10-06T04:57:05.167Z",
+      "title": "Rider Scrimmage Game 1",
       "source": "MU",
-      "date": "2026-10-22T23:00:00.000Z"
+      "date": "2026-10-24T15:00:00.000Z"
     },
     {
-      "key": "Fellowship Night|2026-10-23T00:00:00.000Z",
-      "firstSeenAt": "2026-10-05T01:39:54.912Z",
-      "title": "Fellowship Night",
+      "key": "Rider Scrimmage Game 2|2026-10-24T17:00:00.000Z",
+      "firstSeenAt": "2026-10-06T04:57:05.167Z",
+      "title": "Rider Scrimmage Game 2",
       "source": "MU",
-      "date": "2026-10-23T00:00:00.000Z"
+      "date": "2026-10-24T17:00:00.000Z"
     },
     {
-      "key": "Men's Club Soccer Practice|2026-10-23T00:00:00.000Z",
-      "firstSeenAt": "2026-10-05T01:39:54.912Z",
-      "title": "Men's Club Soccer Practice",
+      "key": "Hoops for Hearing|2026-10-25T14:00:00.000Z",
+      "firstSeenAt": "2026-10-06T04:57:05.167Z",
+      "title": "Hoops for Hearing",
       "source": "MU",
-      "date": "2026-10-23T00:00:00.000Z"
+      "date": "2026-10-25T14:00:00.000Z"
     },
     {
-      "key": "Ice Hockey Club (D3) Practice|2026-10-23T00:15:00.000Z",
-      "firstSeenAt": "2026-10-05T01:39:54.912Z",
-      "title": "Ice Hockey Club (D3) Practice",
+      "key": "Away game at Franklin and Marshall College|2026-10-25T15:00:00.000Z",
+      "firstSeenAt": "2026-10-06T04:57:05.167Z",
+      "title": "Away game at Franklin and Marshall College",
       "source": "MU",
-      "date": "2026-10-23T00:15:00.000Z"
+      "date": "2026-10-25T15:00:00.000Z"
+    },
+    {
+      "key": "Mothering Justice PA Gathering|2026-10-25T15:00:00.000Z",
+      "firstSeenAt": "2026-10-06T04:57:05.167Z",
+      "title": "Mothering Justice PA Gathering",
+      "source": "MU",
+      "date": "2026-10-25T15:00:00.000Z"
+    },
+    {
+      "key": "Sunday Catholic Mass|2026-10-25T19:00:00.000Z",
+      "firstSeenAt": "2026-10-06T04:57:05.167Z",
+      "title": "Sunday Catholic Mass",
+      "source": "MU",
+      "date": "2026-10-25T19:00:00.000Z"
+    },
+    {
+      "key": "Study Hours / Chapter|2026-10-25T22:00:00.000Z",
+      "firstSeenAt": "2026-10-06T04:57:05.167Z",
+      "title": "Study Hours / Chapter",
+      "source": "MU",
+      "date": "2026-10-25T22:00:00.000Z"
     }
   ],
   "addedLastRun": 0

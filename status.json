@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-06T17:59:11.885Z",
+  "generatedAt": "2026-10-06T22:24:54.693Z",
   "totalEvents": 1903,
   "withDescription": 821,
   "withImage": 214,
@@ -150,13 +150,13 @@
       "Youth Sports": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-10-06T17:55:31.155Z"
+    "lastSyncAt": "2026-10-06T22:21:21.217Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 7,
-    "checkedAt": "2026-10-06T17:59:01.550Z"
+    "checkedAt": "2026-10-06T22:24:44.263Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -229,6 +229,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "ESH Book Fair|2026-10-08T19:30:00.000Z",
+      "firstSeenAt": "2026-10-06T22:24:54.689Z",
+      "title": "ESH Book Fair",
+      "source": "PM",
+      "date": "2026-10-08T19:30:00.000Z"
+    },
+    {
       "key": "PRIDEFEST: Monster Ball Drag Show|2026-10-15T23:00:00.000Z",
       "firstSeenAt": "2026-10-06T17:59:11.881Z",
       "title": "PRIDEFEST: Monster Ball Drag Show",
@@ -290,14 +297,7 @@
       "title": "What's Bugging You? A Look at Communication",
       "source": "MU",
       "date": "2026-10-22T18:30:00.000Z"
-    },
-    {
-      "key": "Trick-or-Treat Trail|2026-10-30T15:30:00.000Z",
-      "firstSeenAt": "2026-10-06T15:51:51.098Z",
-      "title": "Trick-or-Treat Trail",
-      "source": "MU",
-      "date": "2026-10-30T15:30:00.000Z"
     }
   ],
-  "addedLastRun": 7
+  "addedLastRun": 1
 }

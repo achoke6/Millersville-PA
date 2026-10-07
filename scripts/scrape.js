@@ -1140,8 +1140,12 @@ function pmCarryForward(prevEvents, lastGoodIso, kind, nowMs) {
     if (!lastGoodIso) return { rows: [], lastGood: null, reason: 'no last-good timestamp for this feed' };
     const ageMs = nowMs - new Date(lastGoodIso).getTime();
     if (!(ageMs >= 0) || ageMs > PM_CARRY_MAX_MS) return { rows: [], lastGood: lastGoodIso, reason: `last good ${lastGoodIso} is >24h old` };
-    const want = kind === 'athletics' ? isAth : (e => !isAth(e));
-    const rows = (Array.isArray(prevEvents) ? prevEvents : []).filter(e => (e.tags || []).includes('PM') && want(e));
+    // kind 'manor' (Manor carry-forward (2026-10-07)): Manor Township rows carry a
+    // single 'Manor' tag; the PM kinds split 'PM' rows by the athletics predicate.
+    const rows = kind === 'manor'
+        ? (Array.isArray(prevEvents) ? prevEvents : []).filter(e => (e.tags || []).includes('Manor'))
+        : (() => { const want = kind === 'athletics' ? isAth : (e => !isAth(e));
+                   return (Array.isArray(prevEvents) ? prevEvents : []).filter(e => (e.tags || []).includes('PM') && want(e)); })();
     if (!rows.length) return { rows: [], lastGood: lastGoodIso, reason: 'previous events.json had no rows for this feed' };
     return { rows, lastGood: lastGoodIso, reason: null };
 }
@@ -1934,7 +1938,7 @@ async function runScraper() {
     // bootstraps from status.json generatedAt on the first run after the patch when
     // the snapshot key does not exist yet. Carried runs keep their count invariants
     // RED (see the sourceHealth block) -- the feed failed even if the display didn't.
-    const pmCarry = { general: 0, athletics: 0, ok: { general: false, athletics: false } };
+    const pmCarry = { general: 0, athletics: 0, manor: 0, ok: { general: false, athletics: false, manor: false } };   // manor added 2026-10-07
     const pmPrevLoad = (() => {
         let cache = null;
         return () => {
@@ -1952,6 +1956,13 @@ async function runScraper() {
                         if (!lastGood.general) lastGood.general = st.generatedAt;
                         if (!lastGood.athletics) lastGood.athletics = st.generatedAt;
                     }
+                } catch (_) { /* no status.json -- no bootstrap */ }
+            }
+            if (!lastGood.manor) {
+                // Manor bootstrap (2026-10-07): same one-time trust of the previous status.json.
+                try {
+                    const st = JSON.parse(fs.readFileSync(path.join(__dirname, '../status.json'), 'utf8'));
+                    if (st && st.generatedAt && st.sources && st.sources.manor > 0) lastGood.manor = st.generatedAt;
                 } catch (_) { /* no status.json -- no bootstrap */ }
             }
             cache = { prevEvents, lastGood };
@@ -4334,6 +4345,7 @@ async function runScraper() {
     try {
         console.log("📡 Fetching Manor Township iCal...");
         let allManorEvents = {};
+        let manorFirstErr = '';   // Manor carry-forward (2026-10-07): a page failure is remembered, not swallowed
         const manorUrl = 'https://manortownship.net/calendar/list/?ical=1&tribe_event_display=list&tribe_paged=';
         const manorMaxPages = 10;
         for (let page = 1; page <= manorMaxPages; page++) {
@@ -4353,9 +4365,16 @@ async function runScraper() {
                 if (pageEvents.length < 30 || newCount === 0) break;  // partial/last page or all dupes
             } catch (err) {
                 console.log(`  → Manor page ${page} failed: ${err.message}`);
+                if (!manorFirstErr) manorFirstErr = `page ${page}: ${err.message}`;
                 break;
             }
         }
+        // Zero-harvest guard (2026-10-07): the 17:45Z 403 on page 1 fell through
+        // here as "✅ Manor Township: 0 events" and 41 rows vanished with Source
+        // health still 9/9. An empty harvest is a FAILURE -- throw so the catch
+        // below carries the previous run's Manor rows forward (24h cap), exactly
+        // like the Penn Manor general loader's zero-record throw.
+        if (Object.keys(allManorEvents).length === 0) throw new Error(manorFirstErr || 'Manor Township returned no events');
 
         let manorCount = 0;
         for (const ev of Object.values(allManorEvents)) {
@@ -4374,7 +4393,8 @@ async function runScraper() {
             manorCount++;
         }
         console.log(`✅ Manor Township: ${manorCount} events`);
-    } catch (e) { console.error("❌ Manor Township error:", e.message); }
+        pmCarry.ok.manor = true;
+    } catch (e) { console.error("❌ Manor Township error:", e.message); pmCarryApply('manor', 'Manor Township'); }
 
 
     // ===== 6e. RANEY CELLARS BREWING (The Events Calendar iCal) =====
@@ -7088,7 +7108,8 @@ async function runScraper() {
             recentlyAdded: merged.slice(0, 200),
             sourceLastGood: {
                 general: pmCarry.ok.general ? nowIsoForLastGood : (prevLastGood.general || null),
-                athletics: pmCarry.ok.athletics ? nowIsoForLastGood : (prevLastGood.athletics || null)
+                athletics: pmCarry.ok.athletics ? nowIsoForLastGood : (prevLastGood.athletics || null),
+                manor: pmCarry.ok.manor ? nowIsoForLastGood : (prevLastGood.manor || null)   // 2026-10-07
             }
         };
         fs.writeFileSync(snapshotPath, JSON.stringify(snapshot));
@@ -7394,6 +7415,11 @@ async function runScraper() {
                 // year. Skipped in July only (the board still meets in June and August).
                 const pmGenCount = bySourceCount('PM', e => !isAth(e));
                 add('pennManorGeneral.count', monthET === 7 || (pmGenCount >= 10 && !pmCarry.general), { value: pmGenCount, min: 10, skipped: monthET === 7, ...(pmCarry.general ? { carriedForward: pmCarry.general } : {}) });
+                // Manor Township (2026-10-07): government meetings run year-round, so zero is
+                // never right; the 17:45Z 403 shipped 0 rows behind a green 9/9. Floor is low
+                // (typically ~40 rows). Carried-forward rows keep this RED -- the FEED failed.
+                const manorCount = bySourceCount('Manor');
+                add('manor.count', manorCount >= 10 && !pmCarry.manor, { value: manorCount, min: 10, ...(pmCarry.manor ? { carriedForward: pmCarry.manor } : {}) });
                 const ratio = muHudlInWindow ? muHudlMatchCount / muHudlInWindow : null;
                 add('muHudl.pairRatio', muHudlInWindow < 10 || ratio >= 0.5, { matched: muHudlMatchCount, inWindow: muHudlInWindow, value: ratio === null ? null : Number(ratio.toFixed(2)), min: 0.5 });
                 add('pmHudl.matched', pmHudlWithBroadcasts === 0 || pmHudlMatched > 0, { matched: pmHudlMatched, withBroadcasts: pmHudlWithBroadcasts });

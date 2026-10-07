@@ -7041,11 +7041,20 @@ function buildCampusCupboardItems(dayName) {
     const cb = window._cupboard;
     if (!cb) return null;
     const eh = placeEffectiveHours(cb);
-    const todayVal = eh ? eh[HOURS_DAY_KEYS[hoursNowET().dayIdx]] : undefined;
-    if (!todayVal || todayVal === 'closed') return null;   // closed/unknown today — hide
+    // dayName: resolve the requested weekday (2026-10-07) -- the /food date
+    // bar previews Sat/Sun and must see THAT day's hours (closed -> no FREE
+    // GROCERIES section). Unknown/absent dayName falls back to today, so the
+    // home strip, popup and Places card (all pass today) are unchanged.
+    const reqIdx = typeof dayName === 'string'
+        ? ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'].indexOf(dayName)
+        : -1;
+    const dayIdx = reqIdx >= 0 ? reqIdx : hoursNowET().dayIdx;
+    const isToday = dayIdx === hoursNowET().dayIdx;
+    const todayVal = eh ? eh[HOURS_DAY_KEYS[dayIdx]] : undefined;
+    if (!todayVal || todayVal === 'closed') return null;   // closed/unknown that day — hide
     const desc = cb.description
         || 'Fresh produce, dairy, eggs, frozen, canned & dry goods, hygiene products. Bring student ID.';
-    return [`Open today: ${hoursFmtRanges(todayVal)}`, desc];
+    return [`Open ${isToday ? 'today' : dayName.slice(0, 3)}: ${hoursFmtRanges(todayVal)}`, desc];
 }
 
 // Cupboard visibility predicate -- ONE function shared by the Places-page
@@ -9010,7 +9019,7 @@ function renderFoodPage(){
             // cbItems[0] is "Open today: <hours>" (buildCampusCupboardItems)
             // -- strip that prefix for the line text; if the wording ever
             // changes, the full text shows instead (graceful, never wrong).
-            const cbHours = String(cbItems[0]).replace(/^Open today:\s*/i, '');
+            const cbHours = String(cbItems[0]).replace(/^Open \w+:\s*/i, '');   // "Open today:" or "Open Sun:" (preview day, 2026-10-07)
             const cbDesc = escHtml(String(cbItems[1] || ''));
             html += secHdr('Free Groceries');
             html += `<div style="grid-column:1/-1;margin-bottom:14px;"><p role="button" tabindex="0" onclick="openHomeSpecialPopup('campus-cupboard')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openHomeSpecialPopup('campus-cupboard')}" style="cursor:pointer;font-size:0.85rem;margin:6px 0;padding:9px 12px;background:var(--surface);border:1px solid var(--gold);border-radius:var(--radius-sm);">🏷️ <strong>Campus Cupboard</strong> — ${cbDesc} <span style="color:var(--text-muted);">· ${cbHours}</span></p></div>`;

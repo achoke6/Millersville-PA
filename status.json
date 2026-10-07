@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-07T02:08:20.187Z",
-  "totalEvents": 1906,
+  "generatedAt": "2026-10-07T09:51:43.301Z",
+  "totalEvents": 1907,
   "withDescription": 824,
-  "withImage": 212,
+  "withImage": 213,
   "familyFriendly": 71,
-  "eventsToday": 35,
+  "eventsToday": 30,
   "sources": {
     "muAthletics": 325,
     "muCalendar": 173,
@@ -14,7 +14,7 @@
     "pennManor": 579,
     "borough": 60,
     "vfw": 6,
-    "phantomPower": 11,
+    "phantomPower": 12,
     "community": 17,
     "manor": 41,
     "raneyCellars": 5,
@@ -56,7 +56,7 @@
     },
     "phantomPower": {
       "earliest": "2026-10-09T23:30:00.000Z",
-      "latest": "2026-11-01T00:00:00.000Z"
+      "latest": "2026-11-06T00:00:00.000Z"
     },
     "community": {
       "earliest": "2026-07-09T22:15:00.000Z",
@@ -78,39 +78,39 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 35
+      "daysSinceMoved": 36
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 46
+      "daysSinceMoved": 47
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 60
+      "daysSinceMoved": 61
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 60
+      "daysSinceMoved": 61
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 33
+      "daysSinceMoved": 34
     },
     "pennManor": {
       "newest": "2027-10-05",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 70
+      "daysSinceMoved": 71
     },
     "vfw": {
       "newest": "2026-11-22",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "phantomPower": {
-      "newest": "2026-11-01",
-      "daysSinceMoved": 16
+      "newest": "2026-11-06",
+      "daysSinceMoved": 0
     },
     "community": {
       "newest": "2027-04-16",
@@ -118,15 +118,15 @@
     },
     "manor": {
       "newest": "2027-10-06",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "raneyCellars": {
       "newest": "2026-10-09",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "theBackyard": {
       "newest": "2026-11-11",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     }
   },
   "sports": {
@@ -150,13 +150,13 @@
       "Youth Sports": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-10-07T02:04:47.549Z"
+    "lastSyncAt": "2026-10-07T09:48:12.235Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 7,
-    "checkedAt": "2026-10-07T02:08:09.078Z"
+    "checkedAt": "2026-10-07T09:51:35.393Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -179,7 +179,7 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 241,
+        "value": 240,
         "min": 30,
         "skipped": false
       },
@@ -228,6 +228,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "BRASS AGAINST|2026-11-06T00:00:00.000Z",
+      "firstSeenAt": "2026-10-07T09:51:43.298Z",
+      "title": "BRASS AGAINST",
+      "source": "Other",
+      "date": "2026-11-06T00:00:00.000Z"
+    },
     {
       "key": "Men's Club Soccer Practice|2026-09-25T00:00:00.000Z",
       "firstSeenAt": "2026-10-07T02:08:20.183Z",
@@ -290,14 +297,7 @@
       "title": "BCM Men's Bible Study",
       "source": "MU",
       "date": "2026-10-26T23:00:00.000Z"
-    },
-    {
-      "key": "Club Tennis Practice|2026-10-26T23:00:00.000Z",
-      "firstSeenAt": "2026-10-07T02:08:20.183Z",
-      "title": "Club Tennis Practice",
-      "source": "MU",
-      "date": "2026-10-26T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 25
+  "addedLastRun": 1
 }

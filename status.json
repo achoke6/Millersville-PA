@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-07T15:48:53.738Z",
-  "totalEvents": 1905,
+  "generatedAt": "2026-10-07T16:08:41.532Z",
+  "totalEvents": 1906,
   "withDescription": 823,
   "withImage": 213,
   "familyFriendly": 71,
@@ -11,7 +11,7 @@
     "artsmu": 20,
     "campsAlumni": 23,
     "muGetInvolved": 514,
-    "pennManor": 579,
+    "pennManor": 580,
     "borough": 60,
     "vfw": 5,
     "phantomPower": 12,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 803,
+    "total": 804,
     "scored": 135,
     "wins": 67,
     "losses": 58,
@@ -151,13 +151,13 @@
       "Campus Life": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-10-07T15:44:10.479Z"
+    "lastSyncAt": "2026-10-07T16:04:49.203Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 7,
-    "checkedAt": "2026-10-07T15:48:45.980Z"
+    "checkedAt": "2026-10-07T16:08:26.389Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -194,7 +194,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 478,
+        "value": 479,
         "min": 150,
         "skipped": false
       },
@@ -224,11 +224,18 @@
         "key": "pmHudl.matched",
         "ok": true,
         "matched": 28,
-        "withBroadcasts": 27
+        "withBroadcasts": 28
       }
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Boys Varsity Wrestling vs Manheim Township High School|2026-12-11T21:00:00.000Z",
+      "firstSeenAt": "2026-10-07T16:08:41.529Z",
+      "title": "Boys Varsity Wrestling vs Manheim Township High School",
+      "source": "PM",
+      "date": "2026-12-11T21:00:00.000Z"
+    },
     {
       "key": "Men's Ice Hockey Practice (D2)|2026-10-28T10:00:00.000Z",
       "firstSeenAt": "2026-10-07T14:23:16.063Z",
@@ -291,14 +298,7 @@
       "title": "Club Softball Practice",
       "source": "MU",
       "date": "2026-10-26T22:00:00.000Z"
-    },
-    {
-      "key": "Study Hours / Chapter|2026-10-26T22:00:00.000Z",
-      "firstSeenAt": "2026-10-07T02:08:20.183Z",
-      "title": "Study Hours / Chapter",
-      "source": "MU",
-      "date": "2026-10-26T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

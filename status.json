@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-07T18:04:45.149Z",
+  "generatedAt": "2026-10-07T19:02:34.923Z",
   "totalEvents": 1906,
-  "withDescription": 823,
+  "withDescription": 822,
   "withImage": 213,
   "familyFriendly": 71,
   "eventsToday": 29,
@@ -10,8 +10,8 @@
     "muCalendar": 172,
     "artsmu": 20,
     "campsAlumni": 23,
-    "muGetInvolved": 514,
-    "pennManor": 580,
+    "muGetInvolved": 513,
+    "pennManor": 581,
     "borough": 60,
     "vfw": 5,
     "phantomPower": 12,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 804,
+    "total": 805,
     "scored": 135,
     "wins": 67,
     "losses": 58,
@@ -151,17 +151,19 @@
       "Campus Life": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-10-07T18:00:33.396Z"
+    "lastSyncAt": "2026-10-07T18:59:14.880Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 7,
-    "checkedAt": "2026-10-07T18:04:36.119Z"
+    "checkedAt": "2026-10-07T19:02:26.808Z"
   },
   "sourceHealth": {
-    "ok": true,
-    "failing": [],
+    "ok": false,
+    "failing": [
+      "manor.count"
+    ],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -194,7 +196,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 479,
+        "value": 480,
         "min": 150,
         "skipped": false
       },
@@ -214,9 +216,10 @@
       },
       {
         "key": "manor.count",
-        "ok": true,
+        "ok": false,
         "value": 41,
-        "min": 10
+        "min": 10,
+        "carriedForward": 41
       },
       {
         "key": "muHudl.pairRatio",
@@ -235,6 +238,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Boys Varsity Wrestling vs Manheim Township High School|2026-12-12T14:00:00.000Z",
+      "firstSeenAt": "2026-10-07T19:02:34.920Z",
+      "title": "Boys Varsity Wrestling vs Manheim Township High School",
+      "source": "PM",
+      "date": "2026-12-12T14:00:00.000Z"
+    },
     {
       "key": "Zoning Hearing Board - Cancelled|2026-10-07T23:00:00.000Z",
       "firstSeenAt": "2026-10-07T18:04:45.146Z",
@@ -297,14 +307,7 @@
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2026-11-25T13:30:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2026-12-03T00:00:00.000Z",
-      "firstSeenAt": "2026-10-07T18:04:45.146Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2026-12-03T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 42
+  "addedLastRun": 1
 }

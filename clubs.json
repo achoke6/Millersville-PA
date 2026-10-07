@@ -231,8 +231,9 @@
   },
   {
     "name": "Biology Club",
-    "category": "Social",
+    "category": "Meeting",
     "categories": [
+      "Meeting",
       "Social"
     ],
     "shortName": "",
@@ -484,12 +485,12 @@
   },
   {
     "name": "Collegiate Middle Level Association",
-    "category": "Academic",
+    "category": "Lecture or Speaker",
     "categories": [
-      "Academic"
+      "Lecture or Speaker"
     ],
-    "shortName": "CMLA",
-    "id": "mucmla"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Color of Teaching Mentoring Program",
@@ -1052,9 +1053,9 @@
   },
   {
     "name": "Mathematics Educators",
-    "category": "Social",
+    "category": "Meeting",
     "categories": [
-      "Social"
+      "Meeting"
     ],
     "shortName": "",
     "id": ""

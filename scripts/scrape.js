@@ -614,7 +614,9 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
     // Tabling (tables on the lawn), genuinely public via the "fair" keyword.
     // Category-Tabling rows keep the ORIGINAL path: the category check below,
     // after the fundraising gates, exactly as before this guard existed.
-    if (/\btabling\b/i.test(titleText || '') && !hasExplicitPublicMarker) return 'mu-only';
+    // "meeting" added same evening (2026-10-07): "MEMU Meeting" leaked public via
+    // "Math Fair" in its description -- a GI row TITLED ...Meeting is club business.
+    if (/\b(tabling|meetings?)\b/i.test(titleText || '') && !hasExplicitPublicMarker) return 'mu-only';
 
     // Fundraising-tagged events. A frat bake sale or sorority charity event
     // is still a fundraiser open to the public — the tag is the signal.

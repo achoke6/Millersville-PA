@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-07T20:02:14.589Z",
-  "totalEvents": 1900,
+  "generatedAt": "2026-10-07T21:21:48.627Z",
+  "totalEvents": 1901,
   "withDescription": 823,
   "withImage": 214,
   "familyFriendly": 71,
@@ -11,7 +11,7 @@
     "artsmu": 13,
     "campsAlumni": 23,
     "muGetInvolved": 514,
-    "pennManor": 581,
+    "pennManor": 582,
     "borough": 60,
     "vfw": 5,
     "phantomPower": 12,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 805,
+    "total": 806,
     "scored": 135,
     "wins": 67,
     "losses": 58,
@@ -151,13 +151,13 @@
       "Campus Life": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-10-07T19:58:31.528Z"
+    "lastSyncAt": "2026-10-07T21:17:21.930Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 7,
-    "checkedAt": "2026-10-07T20:02:07.313Z"
+    "checkedAt": "2026-10-07T21:21:41.673Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -194,7 +194,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 480,
+        "value": 481,
         "min": 150,
         "skipped": false
       },
@@ -235,6 +235,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Boys Varsity Basketball vs Conestoga Valley High School|2027-01-24T00:30:00.000Z",
+      "firstSeenAt": "2026-10-07T21:21:48.624Z",
+      "title": "Boys Varsity Basketball vs Conestoga Valley High School",
+      "source": "PM",
+      "date": "2027-01-24T00:30:00.000Z"
+    },
     {
       "key": "The Pretzel Spot Cafe|2026-11-11T16:00:00.000Z",
       "firstSeenAt": "2026-10-07T20:02:14.586Z",
@@ -297,13 +304,6 @@
       "title": "Boys Varsity Wrestling vs Manheim Township High School",
       "source": "PM",
       "date": "2026-12-12T14:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board - Cancelled|2026-10-07T23:00:00.000Z",
-      "firstSeenAt": "2026-10-07T18:04:45.146Z",
-      "title": "Zoning Hearing Board - Cancelled",
-      "source": "Manor",
-      "date": "2026-10-07T23:00:00.000Z"
     }
   ],
   "addedLastRun": 1

@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-10-07T09:51:43.301Z",
-  "totalEvents": 1907,
-  "withDescription": 824,
+  "generatedAt": "2026-10-07T14:23:16.066Z",
+  "totalEvents": 1905,
+  "withDescription": 823,
   "withImage": 213,
   "familyFriendly": 71,
-  "eventsToday": 30,
+  "eventsToday": 29,
   "sources": {
     "muAthletics": 325,
-    "muCalendar": 173,
+    "muCalendar": 172,
     "artsmu": 20,
     "campsAlumni": 23,
     "muGetInvolved": 514,
     "pennManor": 579,
     "borough": 60,
-    "vfw": 6,
+    "vfw": 5,
     "phantomPower": 12,
     "community": 17,
     "manor": 41,
@@ -51,7 +51,7 @@
       "latest": "2026-12-25T12:00:00.000Z"
     },
     "vfw": {
-      "earliest": "2026-09-23T22:00:00.000Z",
+      "earliest": "2026-10-03T21:30:00.000Z",
       "latest": "2026-11-22T21:00:00.000Z"
     },
     "phantomPower": {
@@ -131,8 +131,8 @@
   },
   "sports": {
     "total": 803,
-    "scored": 134,
-    "wins": 66,
+    "scored": 135,
+    "wins": 67,
     "losses": 58,
     "ties": 10
   },
@@ -143,20 +143,21 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 3,
+    "pendingFuture": 4,
     "pendingPast": 5,
     "pendingBySource": {
       "PM Community": 2,
-      "Youth Sports": 1
+      "Youth Sports": 1,
+      "Campus Life": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-10-07T09:48:12.235Z"
+    "lastSyncAt": "2026-10-07T14:19:12.690Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 7,
-    "checkedAt": "2026-10-07T09:51:35.393Z"
+    "checkedAt": "2026-10-07T14:23:06.253Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -165,14 +166,14 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 364,
+        "value": 363,
         "min": 45,
         "skipped": false
       },
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 232,
+        "value": 231,
         "min": 60,
         "skipped": false
       },
@@ -229,6 +230,20 @@
   },
   "recentlyAdded": [
     {
+      "key": "Men's Ice Hockey Practice (D2)|2026-10-28T10:00:00.000Z",
+      "firstSeenAt": "2026-10-07T14:23:16.063Z",
+      "title": "Men's Ice Hockey Practice (D2)",
+      "source": "MU",
+      "date": "2026-10-28T10:00:00.000Z"
+    },
+    {
+      "key": "Osburn Bible Study|2026-10-28T16:00:00.000Z",
+      "firstSeenAt": "2026-10-07T14:23:16.063Z",
+      "title": "Osburn Bible Study",
+      "source": "MU",
+      "date": "2026-10-28T16:00:00.000Z"
+    },
+    {
       "key": "BRASS AGAINST|2026-11-06T00:00:00.000Z",
       "firstSeenAt": "2026-10-07T09:51:43.298Z",
       "title": "BRASS AGAINST",
@@ -283,21 +298,7 @@
       "title": "Study Hours / Chapter",
       "source": "MU",
       "date": "2026-10-26T22:00:00.000Z"
-    },
-    {
-      "key": "BCM Women's Bible Study|2026-10-26T23:00:00.000Z",
-      "firstSeenAt": "2026-10-07T02:08:20.183Z",
-      "title": "BCM Women's Bible Study",
-      "source": "MU",
-      "date": "2026-10-26T23:00:00.000Z"
-    },
-    {
-      "key": "BCM Men's Bible Study|2026-10-26T23:00:00.000Z",
-      "firstSeenAt": "2026-10-07T02:08:20.183Z",
-      "title": "BCM Men's Bible Study",
-      "source": "MU",
-      "date": "2026-10-26T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 2
 }

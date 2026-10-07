@@ -160,7 +160,12 @@ function parseEndTime(dateStr, timeStr) {
 // is pinned at the top of this file, 2026-09-29); a cell that carries an
 // offset (ISO) is respected as written. Part 3 writes full ISO, Part 4
 // (Campus Life) writes plain Date + Time — both are correct under the pin.
-function parseDateTime(dateStr, timeStr) {
+function parseDateTime(dateStr, timeStr, defaultTime = '18:00:00') {
+  // defaultTime (2026-10-07): the time a PLAIN date takes when no Time cell is
+  // given. Event dates keep 18:00; Deadline passes 23:59:00 (a registration is
+  // open through its deadline DAY -- the Signups-box countdown must not expire
+  // at dinnertime) and Opens passes 00:00:00 (live from midnight). Matches the
+  // community-submissions lane in scrape.js (T23:59:00 end-of-deadline-day).
   dateStr = clean(dateStr);
   timeStr = clean(timeStr);
   if (!dateStr) return null;
@@ -171,7 +176,7 @@ function parseDateTime(dateStr, timeStr) {
   }
   // Plain date (YYYY-MM-DD or M/D/YYYY). Merge with Time if present.
   let base = dateStr;
-  let timePart = '18:00:00';
+  let timePart = defaultTime;
   if (timeStr) {
     const tr = splitTimeRange(timeStr);
     if (tr) timePart = tr.start;
@@ -228,8 +233,8 @@ async function main() {
 
     const source = col(row, 'source').toLowerCase();
     const dt = parseDateTime(col(row, 'date'), col(row, 'time'));
-    const deadlineDt = parseDateTime(col(row, 'deadline'), '');
-    const opensDt = parseDateTime(col(row, 'opens'), '');   // optional registration-open date
+    const deadlineDt = parseDateTime(col(row, 'deadline'), '', '23:59:00');   // end of the deadline DAY (2026-10-07)
+    const opensDt = parseDateTime(col(row, 'opens'), '', '00:00:00');   // optional registration-open date -- live from midnight
 
     // Type (2026-09-03): explicit Event | Signup. Blank derives from Source so
     // pre-column rows behave exactly as before (Youth Sports were always signups).

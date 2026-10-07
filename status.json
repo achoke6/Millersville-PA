@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-10-06T14:45:54.975Z",
-  "totalEvents": 1897,
-  "withDescription": 821,
-  "withImage": 214,
+  "generatedAt": "2026-10-07T09:51:43.301Z",
+  "totalEvents": 1907,
+  "withDescription": 824,
+  "withImage": 213,
   "familyFriendly": 71,
-  "eventsToday": 38,
+  "eventsToday": 30,
   "sources": {
     "muAthletics": 325,
-    "muCalendar": 174,
+    "muCalendar": 173,
     "artsmu": 20,
     "campsAlumni": 23,
-    "muGetInvolved": 510,
-    "pennManor": 573,
+    "muGetInvolved": 514,
+    "pennManor": 579,
     "borough": 60,
-    "vfw": 5,
+    "vfw": 6,
     "phantomPower": 12,
     "community": 17,
-    "manor": 40,
+    "manor": 41,
     "raneyCellars": 5,
     "theBackyard": 18,
     "muHudlBroadcasts": 57
@@ -52,11 +52,11 @@
     },
     "vfw": {
       "earliest": "2026-09-23T22:00:00.000Z",
-      "latest": "2026-10-22T22:00:00.000Z"
+      "latest": "2026-11-22T21:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-10-06T23:00:00.000Z",
-      "latest": "2026-11-01T00:00:00.000Z"
+      "earliest": "2026-10-09T23:30:00.000Z",
+      "latest": "2026-11-06T00:00:00.000Z"
     },
     "community": {
       "earliest": "2026-07-09T22:15:00.000Z",
@@ -64,7 +64,7 @@
     },
     "manor": {
       "earliest": "2026-10-07T23:00:00.000Z",
-      "latest": "2027-10-04T23:00:00.000Z"
+      "latest": "2027-10-06T23:00:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-10-01T20:00:00.000Z",
@@ -78,61 +78,61 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 35
+      "daysSinceMoved": 36
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 46
+      "daysSinceMoved": 47
     },
     "artsmu": {
       "newest": "2027-05-02",
-      "daysSinceMoved": 60
+      "daysSinceMoved": 61
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 60
+      "daysSinceMoved": 61
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 33
+      "daysSinceMoved": 34
     },
     "pennManor": {
       "newest": "2027-10-05",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 70
+      "daysSinceMoved": 71
     },
     "vfw": {
-      "newest": "2026-10-22",
-      "daysSinceMoved": 35
+      "newest": "2026-11-22",
+      "daysSinceMoved": 1
     },
     "phantomPower": {
-      "newest": "2026-11-01",
-      "daysSinceMoved": 16
+      "newest": "2026-11-06",
+      "daysSinceMoved": 0
     },
     "community": {
       "newest": "2027-04-16",
       "daysSinceMoved": 89
     },
     "manor": {
-      "newest": "2027-10-04",
-      "daysSinceMoved": 2
+      "newest": "2027-10-06",
+      "daysSinceMoved": 1
     },
     "raneyCellars": {
       "newest": "2026-10-09",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "theBackyard": {
       "newest": "2026-11-11",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     }
   },
   "sports": {
-    "total": 797,
-    "scored": 133,
-    "wins": 65,
+    "total": 803,
+    "scored": 134,
+    "wins": 66,
     "losses": 58,
     "ties": 10
   },
@@ -143,20 +143,20 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 4,
-    "pendingPast": 11,
+    "pendingFuture": 3,
+    "pendingPast": 5,
     "pendingBySource": {
-      "Youth Sports": 2,
-      "PM Community": 2
+      "PM Community": 2,
+      "Youth Sports": 1
     },
-    "stalePast": 17,
-    "lastSyncAt": "2026-10-06T14:41:10.465Z"
+    "stalePast": 8,
+    "lastSyncAt": "2026-10-07T09:48:12.235Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 7,
-    "checkedAt": "2026-10-06T14:45:46.208Z"
+    "checkedAt": "2026-10-07T09:51:35.393Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -179,21 +179,21 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 241,
+        "value": 240,
         "min": 30,
         "skipped": false
       },
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 80,
+        "value": 79,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 472,
+        "value": 478,
         "min": 150,
         "skipped": false
       },
@@ -229,75 +229,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "FSL: Meet Phi Mu Delta|2026-10-02T14:00:00",
-      "firstSeenAt": "2026-10-06T14:45:54.972Z",
-      "title": "FSL: Meet Phi Mu Delta",
+      "key": "BRASS AGAINST|2026-11-06T00:00:00.000Z",
+      "firstSeenAt": "2026-10-07T09:51:43.298Z",
+      "title": "BRASS AGAINST",
+      "source": "Other",
+      "date": "2026-11-06T00:00:00.000Z"
+    },
+    {
+      "key": "Men's Club Soccer Practice|2026-09-25T00:00:00.000Z",
+      "firstSeenAt": "2026-10-07T02:08:20.183Z",
+      "title": "Men's Club Soccer Practice",
       "source": "MU",
-      "date": "2026-10-02T14:00:00"
+      "date": "2026-09-25T00:00:00.000Z"
     },
     {
-      "key": "Books or Brownies|2026-10-06T17:30:00",
-      "firstSeenAt": "2026-10-06T14:45:54.972Z",
-      "title": "Books or Brownies",
+      "key": "SGA Advocacy Tabling|2026-09-29T17:00:00",
+      "firstSeenAt": "2026-10-07T02:08:20.183Z",
+      "title": "SGA Advocacy Tabling",
       "source": "MU",
-      "date": "2026-10-06T17:30:00"
+      "date": "2026-09-29T17:00:00"
     },
     {
-      "key": "Karaoke Night|2026-10-08T02:00:00.000Z",
-      "firstSeenAt": "2026-10-06T14:45:54.972Z",
-      "title": "Karaoke Night",
-      "source": "Jack's Tavern",
-      "date": "2026-10-08T02:00:00.000Z"
-    },
-    {
-      "key": "Karaoke Night|2026-10-15T02:00:00.000Z",
-      "firstSeenAt": "2026-10-06T14:45:54.972Z",
-      "title": "Karaoke Night",
-      "source": "Jack's Tavern",
-      "date": "2026-10-15T02:00:00.000Z"
-    },
-    {
-      "key": "PRIDEFEST|2026-10-15T16:30:00",
-      "firstSeenAt": "2026-10-06T14:45:54.972Z",
-      "title": "PRIDEFEST",
+      "key": "Creative Writers Guild general meeting|2026-09-29T18:00:00",
+      "firstSeenAt": "2026-10-07T02:08:20.183Z",
+      "title": "Creative Writers Guild general meeting",
       "source": "MU",
-      "date": "2026-10-15T16:30:00"
+      "date": "2026-09-29T18:00:00"
     },
     {
-      "key": "PRIDEFEST: Monster Ball Drag Show|2026-10-15T19:00:00",
-      "firstSeenAt": "2026-10-06T14:45:54.972Z",
-      "title": "PRIDEFEST: Monster Ball Drag Show",
+      "key": "YDSA General Meeting|2026-09-29T18:30:00",
+      "firstSeenAt": "2026-10-07T02:08:20.183Z",
+      "title": "YDSA General Meeting",
       "source": "MU",
-      "date": "2026-10-15T19:00:00"
+      "date": "2026-09-29T18:30:00"
     },
     {
-      "key": "FSL: Groove Phi Groove Cookout|2026-10-17T11:00:00",
-      "firstSeenAt": "2026-10-06T14:45:54.972Z",
-      "title": "FSL: Groove Phi Groove Cookout",
+      "key": "RUF Bible Study|2026-09-29T19:00:00",
+      "firstSeenAt": "2026-10-07T02:08:20.183Z",
+      "title": "RUF Bible Study",
       "source": "MU",
-      "date": "2026-10-17T11:00:00"
+      "date": "2026-09-29T19:00:00"
     },
     {
-      "key": "Karaoke Night|2026-10-22T02:00:00.000Z",
-      "firstSeenAt": "2026-10-06T14:45:54.972Z",
-      "title": "Karaoke Night",
-      "source": "Jack's Tavern",
-      "date": "2026-10-22T02:00:00.000Z"
-    },
-    {
-      "key": "FSL: Zeta Phi Beta Informational|2026-10-22T19:00:00",
-      "firstSeenAt": "2026-10-06T14:45:54.972Z",
-      "title": "FSL: Zeta Phi Beta Informational",
+      "key": "Club Softball Practice|2026-10-26T22:00:00.000Z",
+      "firstSeenAt": "2026-10-07T02:08:20.183Z",
+      "title": "Club Softball Practice",
       "source": "MU",
-      "date": "2026-10-22T19:00:00"
+      "date": "2026-10-26T22:00:00.000Z"
     },
     {
-      "key": "Millersville University Men's Golf at Dickinson Invitational|2026-09-06T04:00:00.000Z",
-      "firstSeenAt": "2026-10-06T04:57:05.167Z",
-      "title": "Millersville University Men's Golf at Dickinson Invitational",
+      "key": "Study Hours / Chapter|2026-10-26T22:00:00.000Z",
+      "firstSeenAt": "2026-10-07T02:08:20.183Z",
+      "title": "Study Hours / Chapter",
       "source": "MU",
-      "date": "2026-09-06T04:00:00.000Z"
+      "date": "2026-10-26T22:00:00.000Z"
+    },
+    {
+      "key": "BCM Women's Bible Study|2026-10-26T23:00:00.000Z",
+      "firstSeenAt": "2026-10-07T02:08:20.183Z",
+      "title": "BCM Women's Bible Study",
+      "source": "MU",
+      "date": "2026-10-26T23:00:00.000Z"
+    },
+    {
+      "key": "BCM Men's Bible Study|2026-10-26T23:00:00.000Z",
+      "firstSeenAt": "2026-10-07T02:08:20.183Z",
+      "title": "BCM Men's Bible Study",
+      "source": "MU",
+      "date": "2026-10-26T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 9
+  "addedLastRun": 1
 }

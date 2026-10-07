@@ -345,9 +345,9 @@
   },
   {
     "name": "Citamard",
-    "category": "Performance",
+    "category": "Meeting",
     "categories": [
-      "Performance"
+      "Meeting"
     ],
     "shortName": "",
     "id": ""
@@ -513,9 +513,9 @@
   },
   {
     "name": "Conestoga Outdoors Club",
-    "category": "Social",
+    "category": "Meeting",
     "categories": [
-      "Social"
+      "Meeting"
     ],
     "shortName": "Conestoga Outdoors",
     "id": ""
@@ -1200,12 +1200,9 @@
     "id": ""
   },
   {
-    "name": "Mock Trial Club of Millersville University",
-    "category": "Meeting",
-    "categories": [
-      "Meeting",
-      "Social"
-    ],
+    "name": "Mock Trial Club",
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1545,10 +1542,12 @@
   },
   {
     "name": "Student Affairs Division at Millersville University",
-    "category": "",
-    "categories": [],
+    "category": "University Departments ",
+    "categories": [
+      "University Departments "
+    ],
     "shortName": "Student Affairs",
-    "id": ""
+    "id": "studentaffairs"
   },
   {
     "name": "Student Business Association",
@@ -1577,8 +1576,9 @@
   },
   {
     "name": "Student Government Association",
-    "category": "Tabling",
+    "category": "Educational Program",
     "categories": [
+      "Educational Program",
       "Tabling"
     ],
     "shortName": "SGA",
@@ -1757,8 +1757,10 @@
   },
   {
     "name": "University Activities Board",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "UAB",
     "id": ""
   },
@@ -1814,7 +1816,8 @@
     "name": "West Village Residence Hall",
     "category": "Social",
     "categories": [
-      "Social"
+      "Social",
+      "Tabling"
     ],
     "shortName": "West Village",
     "id": ""

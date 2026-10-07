@@ -609,7 +609,12 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
     // category "Tabling" -> mu-only here, ahead of the fundraiser gates. An
     // explicit open-to-the-public phrase still wins, as in the category check.
     // Description-only mentions ("stop by our table") are NOT a tabling.
-    if ((/\btabling\b/i.test(titleText || '') || rawTags.some(t => /^tabling$/i.test(String(t).trim()))) && !hasExplicitPublicMarker) return 'mu-only';
+    // TITLE word only (v2, same day): the landing run showed the category
+    // branch swallowing "Homecoming Block Party 2026" -- Engage category
+    // Tabling (tables on the lawn), genuinely public via the "fair" keyword.
+    // Category-Tabling rows keep the ORIGINAL path: the category check below,
+    // after the fundraising gates, exactly as before this guard existed.
+    if (/\btabling\b/i.test(titleText || '') && !hasExplicitPublicMarker) return 'mu-only';
 
     // Fundraising-tagged events. A frat bake sale or sorority charity event
     // is still a fundraiser open to the public — the tag is the signal.

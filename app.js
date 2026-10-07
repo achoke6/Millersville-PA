@@ -9289,12 +9289,20 @@ function runSearch(q) {
     // Search Events (non-sport, upcoming)
     const now = new Date();
     const nowMs = now.getTime();
-    const eventHits = allEvents.filter(e => {
-        if (isSportEvent(e)) return false; // games render in the Sports section below (exact complement of that bucket -- no dupes)
-        if ((e._dateMs || 0) < nowMs) return false;
-        const text = (e.title + ' ' + e.location + ' ' + (e.tags||[]).join(' ')).toLowerCase();
-        return text.includes(ql);
-    }).slice(0, 6);
+    // title-first ranking (2026-10-07): a TITLE hit outranks a location/tag hit,
+    // then soonest first. "concert" used to fill all six slots with near-term
+    // rows at "Biemesderfer Concert Hall" and never reach the Oct 25 "Concert
+    // Band and Wind Ensemble Concert". Same match set and cap; only the order.
+    const eventHits = allEvents.map(e => {
+        if (!e || isSportEvent(e)) return null; // games render in the Sports section below (exact complement of that bucket -- no dupes)
+        if ((e._dateMs || 0) < nowMs) return null;
+        const titleHit = String(e.title || '').toLowerCase().includes(ql);
+        const otherHit = (String(e.location || '') + ' ' + (e.tags||[]).join(' ')).toLowerCase().includes(ql);
+        return titleHit ? { e, s: 2 } : otherHit ? { e, s: 1 } : null;
+    }).filter(Boolean)
+      .sort((a, b) => (b.s - a.s) || ((a.e._dateMs || 0) - (b.e._dateMs || 0)))
+      .slice(0, 6)
+      .map(x => x.e);
     if (eventHits.length) {
         html += `<div style="margin-bottom:20px;"><h4 class="modal-section-label">📅 Events</h4>`;
         eventHits.forEach(e => {

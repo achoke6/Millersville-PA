@@ -5926,6 +5926,7 @@ async function runScraper() {
             console.log(`🏆 D3 results applied: ${d3Filled} game(s) across ${active.length} sport(s)`);
             if (d3Orphans.length) { console.log(`  ⚠️ D3 game(s) with no matching TEC varsity row (feed gap or opponent spelling):`); d3Orphans.forEach(o => console.log(`     • ${o}`)); }
             if (d3Mismatch.length) { console.log(`  ⚠️ PM record mismatch (rows vs District 3):`); d3Mismatch.forEach(o => console.log(`     • ${o}`)); }
+            else if (d3Filled === 0) console.log(`  ⚠️ D3: 0 games parsed across all sports (challenge page or feed change?) — records check skipped; MaxPreps/Hudl fill scores this run`);   // 2026-10-07: the 17:45Z "One moment, please" wall printed a vacuous ✓
             else console.log(`  ✓ PM records match District 3 for every active sport`);
         }
     } catch (e) { console.log(`  ⚠️ District 3 results error: ${e.message}`); }

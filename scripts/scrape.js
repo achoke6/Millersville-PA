@@ -6289,6 +6289,24 @@ async function runScraper() {
         return 'other';
     };
 
+    // WINTER CENTER ENSEMBLE ALIAS tier (2026-10-07). Coursedog titles Tell
+    // School of Music concerts "Tell School of Music <Ensemble> Concert"; artsmu
+    // titles the same concerts by ensemble ("Concert Band & Wind Ensemble",
+    // "Fall Choral Concert"). No title tier fires, so 7 pairs rendered twice.
+    // Key = the ensemble family, ONLY for rows located in the Winter Center
+    // (either spelling: "Winter Visual & Performing Arts Center" / "Winter Vis
+    // & Perf Arts Center 101"). Same ET day + same key + different source
+    // buckets = the same concert. Extend the key map when a new ensemble pair
+    // shows up (jazz / percussion are not split today).
+    const winterEnsembleKey = (e) => {
+        if (!/winter\s+vis/i.test(e.location || '')) return null;
+        const t = (e.title || '').toLowerCase();
+        if (/\bwind\b/.test(t)) return 'wind';
+        if (/\borchestra\b/.test(t)) return 'orchestra';
+        if (/\b(choral|choir)\b/.test(t)) return 'choral';
+        return null;
+    };
+
     const normalizedEvents = pass1.map((e, i) => {
         // Resolve the absolute instant first, then derive day from it in ET.
         // Doing both via parseEventInstant keeps naive-vs-Z duplicates aligned
@@ -6321,6 +6339,7 @@ async function runScraper() {
 
     for (const ne of normalizedEvents) {
         let matched = null;
+        let aliasHit = false;   // set when the ensemble-alias tier made the match (2026-10-07)
         for (const g of groups2) {
             const seed = g[0];
             if (seed.day !== ne.day) continue;
@@ -6404,6 +6423,13 @@ async function runScraper() {
             else if (isGeneric) titleMatch = false;
             else titleMatch = (substringMatch && (shorter.length >= 8 || digitShort)) || fuzzyMatch;
 
+            // Ensemble alias tier (2026-10-07): see winterEnsembleKey above.
+            let ensembleAlias = false;
+            if (!titleMatch) {
+                const kA = winterEnsembleKey(seed.event), kB = winterEnsembleKey(ne.event);
+                if (kA && kA === kB) { titleMatch = true; ensembleAlias = true; }
+            }
+
             // Same-org-same-time-same-room rule: when two events share
             // orgName + location signature + nearly-identical time, they're
             // the same event regardless of title differences. Catches cases
@@ -6458,7 +6484,7 @@ async function runScraper() {
             // letter-identical or word-set-identical, strong enough to
             // cross-source merge regardless of time gap (different sources
             // legitimately publish the same event with different start times).
-            if (!exactMatch && !noWsMatch && !sortedMatch) {
+            if (!exactMatch && !noWsMatch && !sortedMatch && !ensembleAlias) {   // alias pairs merge regardless of time gap -- Coursedog's room booking can be hours off (Apr 3)
                 const timeDiff = Math.abs(ne.time - seed.time);
                 // digitShort rides here too: a digit-bearing short title is
                 // distinctive enough to trust same-day sameness even when the
@@ -6470,9 +6496,10 @@ async function runScraper() {
             }
 
             matched = g;
+            aliasHit = ensembleAlias;
             break;
         }
-        if (matched) matched.push(ne);
+        if (matched) { matched.push(ne); if (aliasHit) matched.forEach(m => { m.ensembleAlias = true; }); }
         else groups2.push([ne]);
     }
 
@@ -6593,6 +6620,27 @@ async function runScraper() {
             if (loseDescLen > 50 && loseDescLen > winDescLen * 3) {
                 winner.description = loser.event.description;
             }
+            // Ensemble-alias merges (2026-10-07): the artsmu copy is the box
+            // office's own listing -- its showtime is authoritative. Adam
+            // verified Apr 3 (artsmu 2:30 PM right; Coursedog's 7:30 PM room
+            // booking stale). MU Calendar outranks artsmu on sourceRank, so
+            // without this the wrong time survives the merge.
+            let timeMerged = false;
+            if (candidates[0].ensembleAlias && isArtsmuEvent(loser.event) && !isArtsmuEvent(winner)
+                && loser.event.date && parseEventInstant(loser.event.date) !== parseEventInstant(winner.date)) {
+                winner.date = loser.event.date;
+                if (loser.event.endTime) winner.endTime = loser.event.endTime; else if (winner.endTime) delete winner.endTime;
+                timeMerged = true;
+            }
+            // A loser's REAL "$" price replaces a placeholder on the winner
+            // (2026-10-07) -- the etix sweep can't price these (challenge wall),
+            // and the artsmu copy already read the box office.
+            let priceMerged = false;
+            if (/^\$\d/.test((loser.event.price || '').trim())
+                && ['', 'Free', 'Open To Public', 'Ticket Required', 'Tickets Available'].includes((winner.price || '').trim())
+                && !winner.freeTicket) {
+                winner.price = loser.event.price.trim(); priceMerged = true;
+            }
 
             kept.delete(loser.idx);
             crossDupes.push({
@@ -6606,6 +6654,8 @@ async function runScraper() {
                     ticketMerged ? 'ticketLink' : '',   // (2026-08-24: old condition read winner.ticketLink AFTER mutation — never fired)
                     muFreeMerged ? 'muFreeTicket' : '',
                     freeTicketMerged ? 'freeTicket' : '',
+                    timeMerged ? 'time:artsmu' : '',     // ensemble-alias merges only (2026-10-07)
+                    priceMerged ? 'price' : '',          // real $ onto a placeholder (2026-10-07)
                     loser.event.audience === 'public' && winner.audience === 'public' && candidates[0].event.audience !== 'public' ? 'audience:public' : ''
                 ].filter(Boolean).join('+')
             });

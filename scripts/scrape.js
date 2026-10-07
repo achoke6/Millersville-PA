@@ -596,6 +596,21 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
     if (publicNamedEventRegex.test(combinedText)) return 'public';
     if (publicOrgRegex.test(orgName)) return 'public';
 
+    // Explicit public marker -- hoisted here (2026-10-07) so the tabling guard
+    // below can honor it; semantics unchanged for every later use.
+    const hasExplicitPublicMarker = /\b(open to (the )?(public|community)|community (is )?welcome|public event|for the public|free and open to the (public|community))\b/i.test(combinedText);
+
+    // ===== Tabling guard (2026-10-07) =====
+    // A tabling is student-facing by construction, whatever the blurb says --
+    // "FSL: Sigma Alpha Iota Tabling" leaked to locals because its description
+    // said "recruitment and fundraising efforts" and the Fundraising gates below
+    // ran BEFORE the tabling checks further down (the header comment always
+    // listed tabling as step 2; the code had drifted). Title word or Engage
+    // category "Tabling" -> mu-only here, ahead of the fundraiser gates. An
+    // explicit open-to-the-public phrase still wins, as in the category check.
+    // Description-only mentions ("stop by our table") are NOT a tabling.
+    if ((/\btabling\b/i.test(titleText || '') || rawTags.some(t => /^tabling$/i.test(String(t).trim()))) && !hasExplicitPublicMarker) return 'mu-only';
+
     // Fundraising-tagged events. A frat bake sale or sorority charity event
     // is still a fundraiser open to the public — the tag is the signal.
     if (tags.includes('Fundraising')) return 'public';
@@ -622,7 +637,6 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
     // as "practice open to all"). Only a phrase that NAMES the public or the
     // community is an invitation. The last soft return below uses this same
     // marker, so this list is the single gate for GetInvolved -> locals.
-    const hasExplicitPublicMarker = /\b(open to (the )?(public|community)|community (is )?welcome|public event|for the public|free and open to the (public|community))\b/i.test(combinedText);
     const muOnlyAcademicRegex = /\b(college of |department of |school of |office of (?!sustainability)|honors college|honors program|year[- ]end|end of (the )?year|end of (the )?semester|faculty (mixer|concert|event)|senior (recognition|celebration|class)|graduating class|provost'?s|dean'?s (list|reception)|alumni (and student|student)|student[- ]faculty|capstone|thesis defense|comprehensive exam)\b/i;
     if (muOnlyAcademicRegex.test(combinedText) && !hasExplicitPublicMarker) return 'mu-only';
 

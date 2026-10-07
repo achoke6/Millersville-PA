@@ -2236,7 +2236,19 @@ async function runScraper() {
             }
 
             // Display location: prefer the venue name (Site:) over the raw address
-            const loc = siteRaw || ev.location || 'Penn Manor School District';
+            let loc = siteRaw || ev.location || 'Penn Manor School District';
+            // Bare "Millersville University" site (2026-10-07): the feed uses the
+            // campus name for every PM game hosted at MU, so the venue matcher can't
+            // place it (the bare string is shared with intramurals, Homecoming, camps
+            // -- an alias would route them all to the stadium). Sharpen by SPORT to
+            // the two existing alias targets: football/cheer -> Chryst Field
+            // (Biemesderfer), swimming -> Anttonen Natatorium (Pucillo). The strings
+            // below normalize to the live venue-aliases.json keys -- keep them in sync.
+            // Other sports stay on the bare string (honest: no better venue known).
+            if (/^\s*millersville\s+university\s*$/i.test(loc)) {
+                if (tags.includes('Football') || tags.includes('Cheerleading')) loc = 'Millersville University - Chryst Field';
+                else if (tags.includes('Swimming')) loc = 'Millersville, PA - Anttonen Natatorium';
+            }
 
             events.push({
                 title, date: eventDate.toISOString(),

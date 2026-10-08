@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-10-08T12:24:53.487Z",
-  "totalEvents": 1898,
-  "withDescription": 822,
-  "withImage": 214,
+  "generatedAt": "2026-10-08T15:03:07.191Z",
+  "totalEvents": 1910,
+  "withDescription": 821,
+  "withImage": 216,
   "familyFriendly": 69,
   "eventsToday": 37,
   "sources": {
     "muAthletics": 325,
-    "muCalendar": 173,
-    "artsmu": 7,
+    "muCalendar": 172,
+    "artsmu": 13,
     "campsAlumni": 22,
     "muGetInvolved": 514,
     "pennManor": 588,
@@ -18,7 +18,7 @@
     "community": 16,
     "manor": 40,
     "raneyCellars": 5,
-    "theBackyard": 18,
+    "theBackyard": 26,
     "muHudlBroadcasts": 57
   },
   "sourceDateRanges": {
@@ -72,7 +72,7 @@
     },
     "theBackyard": {
       "earliest": "2026-08-24T12:30:00.000Z",
-      "latest": "2026-11-11T16:00:00.000Z"
+      "latest": "2027-04-28T15:00:00.000Z"
     }
   },
   "staleness": {
@@ -125,8 +125,8 @@
       "daysSinceMoved": 3
     },
     "theBackyard": {
-      "newest": "2026-11-11",
-      "daysSinceMoved": 7
+      "newest": "2027-04-28",
+      "daysSinceMoved": 0
     }
   },
   "sports": {
@@ -151,13 +151,13 @@
       "Campus Life": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-10-08T12:16:20.461Z"
+    "lastSyncAt": "2026-10-08T14:59:16.798Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 6,
-    "checkedAt": "2026-10-08T12:24:45.211Z"
+    "checkedAt": "2026-10-08T15:02:56.980Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -236,75 +236,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Jazz at the 'Ville|2027-02-26T19:30:00",
-      "firstSeenAt": "2026-10-08T12:24:53.484Z",
-      "title": "Jazz at the 'Ville",
+      "key": "MMA 101 Classes 10/5 and 10/7|2026-10-05T23:00:00.000Z",
+      "firstSeenAt": "2026-10-08T15:03:07.188Z",
+      "title": "MMA 101 Classes 10/5 and 10/7",
       "source": "MU",
-      "date": "2027-02-26T19:30:00"
+      "date": "2026-10-05T23:00:00.000Z"
     },
     {
-      "key": "Karaoke Night|2026-10-29T02:00:00.000Z",
-      "firstSeenAt": "2026-10-08T08:59:23.296Z",
-      "title": "Karaoke Night",
-      "source": "Jack's Tavern",
-      "date": "2026-10-29T02:00:00.000Z"
-    },
-    {
-      "key": "HB PTO Craft Night|2026-11-13T22:00:00.000Z",
-      "firstSeenAt": "2026-10-08T08:59:23.296Z",
-      "title": "HB PTO Craft Night",
-      "source": "PM",
-      "date": "2026-11-13T22:00:00.000Z"
-    },
-    {
-      "key": "Boys JV Basketball vs Cedar Crest High School|2027-01-08T23:00:00.000Z",
-      "firstSeenAt": "2026-10-08T08:59:23.296Z",
-      "title": "Boys JV Basketball vs Cedar Crest High School",
-      "source": "PM",
-      "date": "2027-01-08T23:00:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Basketball vs Cedar Crest High School|2027-01-09T00:30:00.000Z",
-      "firstSeenAt": "2026-10-08T08:59:23.296Z",
-      "title": "Boys Varsity Basketball vs Cedar Crest High School",
-      "source": "PM",
-      "date": "2027-01-09T00:30:00.000Z"
-    },
-    {
-      "key": "Boys JV Basketball vs Conestoga Valley High School|2027-01-23T23:00:00.000Z",
-      "firstSeenAt": "2026-10-08T08:59:23.296Z",
-      "title": "Boys JV Basketball vs Conestoga Valley High School",
-      "source": "PM",
-      "date": "2027-01-23T23:00:00.000Z"
-    },
-    {
-      "key": "Boys JV Basketball vs Manheim Township High School|2027-02-04T23:00:00.000Z",
-      "firstSeenAt": "2026-10-08T08:59:23.296Z",
-      "title": "Boys JV Basketball vs Manheim Township High School",
-      "source": "PM",
-      "date": "2027-02-04T23:00:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Basketball vs Manheim Township High School|2027-02-05T00:30:00.000Z",
-      "firstSeenAt": "2026-10-08T08:59:23.296Z",
-      "title": "Boys Varsity Basketball vs Manheim Township High School",
-      "source": "PM",
-      "date": "2027-02-05T00:30:00.000Z"
-    },
-    {
-      "key": "Men's Club Soccer Practice|2026-10-27T23:00:00.000Z",
-      "firstSeenAt": "2026-10-08T01:58:45.056Z",
-      "title": "Men's Club Soccer Practice",
+      "key": "Men's Rugby Practice|2026-10-06T20:00:00.000Z",
+      "firstSeenAt": "2026-10-08T15:03:07.188Z",
+      "title": "Men's Rugby Practice",
       "source": "MU",
-      "date": "2026-10-27T23:00:00.000Z"
+      "date": "2026-10-06T20:00:00.000Z"
     },
     {
-      "key": "IFC Meeting|2026-10-28T00:30:00.000Z",
-      "firstSeenAt": "2026-10-08T01:58:45.056Z",
-      "title": "IFC Meeting",
+      "key": "MMA 101 Classes 10/5 and 10/7|2026-10-07T23:00:00.000Z",
+      "firstSeenAt": "2026-10-08T15:03:07.188Z",
+      "title": "MMA 101 Classes 10/5 and 10/7",
       "source": "MU",
-      "date": "2026-10-28T00:30:00.000Z"
+      "date": "2026-10-07T23:00:00.000Z"
+    },
+    {
+      "key": "Men's Rugby Practice|2026-10-08T20:00:00.000Z",
+      "firstSeenAt": "2026-10-08T15:03:07.188Z",
+      "title": "Men's Rugby Practice",
+      "source": "MU",
+      "date": "2026-10-08T20:00:00.000Z"
+    },
+    {
+      "key": "Men's Rugby Practice|2026-10-14T20:30:00.000Z",
+      "firstSeenAt": "2026-10-08T15:03:07.188Z",
+      "title": "Men's Rugby Practice",
+      "source": "MU",
+      "date": "2026-10-14T20:30:00.000Z"
+    },
+    {
+      "key": "Men's Rugby Practice|2026-10-15T20:00:00.000Z",
+      "firstSeenAt": "2026-10-08T15:03:07.188Z",
+      "title": "Men's Rugby Practice",
+      "source": "MU",
+      "date": "2026-10-15T20:00:00.000Z"
+    },
+    {
+      "key": "Murder Mystery|2026-10-16T22:00:00.000Z",
+      "firstSeenAt": "2026-10-08T15:03:07.188Z",
+      "title": "Murder Mystery",
+      "source": "MU",
+      "date": "2026-10-16T22:00:00.000Z"
+    },
+    {
+      "key": "Men's Rugby Practice|2026-10-19T20:30:00.000Z",
+      "firstSeenAt": "2026-10-08T15:03:07.188Z",
+      "title": "Men's Rugby Practice",
+      "source": "MU",
+      "date": "2026-10-19T20:30:00.000Z"
+    },
+    {
+      "key": "Men's Rugby Practice|2026-10-20T20:00:00.000Z",
+      "firstSeenAt": "2026-10-08T15:03:07.188Z",
+      "title": "Men's Rugby Practice",
+      "source": "MU",
+      "date": "2026-10-20T20:00:00.000Z"
+    },
+    {
+      "key": "Men's Rugby Practice|2026-10-21T20:30:00.000Z",
+      "firstSeenAt": "2026-10-08T15:03:07.188Z",
+      "title": "Men's Rugby Practice",
+      "source": "MU",
+      "date": "2026-10-21T20:30:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 29
 }

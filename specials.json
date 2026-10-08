@@ -141,7 +141,7 @@
       "Acorn Squash – $1.50 each",
       "Delicata Squash – $1.00 each"
     ],
-    "weeklyFetchedAt": "2026-10-08T08:59:13.470Z"
+    "weeklyFetchedAt": "2026-10-08T12:24:44.650Z"
   },
   "jesus-dogs": {
     "name": "Jesus Dogs",
@@ -185,9 +185,135 @@
   },
   "john-herr-s-village-market": {
     "name": "John Herr's Village Market",
-    "note": "Weekly deals · Thu–Wed",
-    "weekly": [],
-    "weeklyDateRange": "",
-    "rawDeals": []
+    "note": "Weekly deals: Thursday, October 8 through Wednesday, October 14",
+    "weekly": [
+      "Fresh 80% Lean Ground Beef (Value Pack, Our Own Store Made) — Beef Roundup 4-Day Sale, Thu 10/8 - Sun 10/11 only – $4.99/lb ($1.00/lb)",
+      "Choice Beef Whole-in-Bag Eye of Round (cut into steaks or roast at no extra cost) — Beef Roundup 4-Day Sale, Thu 10/8 - Sun 10/11 only – $4.99/lb",
+      "New Crop Gala Apples (3-lb bag) — Digital Coupon – $1.48 ($1.00)",
+      "Fresh Boneless Pork Sirloin Roast – $2.29/lb",
+      "Martin's Tortilla Chips, Popcorn or Cheese Curls (7.5-11 oz, Selected) – Buy 1 Get 1 FREE"
+    ],
+    "weeklyDateRange": "Thursday, October 8 through Wednesday, October 14",
+    "rawDeals": [
+      {
+        "item": "Fresh 80% Lean Ground Beef (Value Pack, Our Own Store Made) — Beef Roundup 4-Day Sale, Thu 10/8 - Sun 10/11 only",
+        "salePrice": "$4.99/lb",
+        "regularPrice": "$5.99/lb (less amount)",
+        "savings": "$1.00/lb",
+        "dateRange": "Thursday, October 8 through Wednesday, October 14"
+      },
+      {
+        "item": "Choice Beef Whole-in-Bag Eye of Round (cut into steaks or roast at no extra cost) — Beef Roundup 4-Day Sale, Thu 10/8 - Sun 10/11 only",
+        "salePrice": "$4.99/lb",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, October 8 through Wednesday, October 14"
+      },
+      {
+        "item": "New Crop Gala Apples (3-lb bag) — Digital Coupon",
+        "salePrice": "$1.48",
+        "regularPrice": "$2.48",
+        "savings": "$1.00",
+        "dateRange": "Thursday, October 8 through Wednesday, October 14"
+      },
+      {
+        "item": "Fresh Boneless Pork Sirloin Roast",
+        "salePrice": "$2.29/lb",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, October 8 through Wednesday, October 14"
+      },
+      {
+        "item": "Martin's Tortilla Chips, Popcorn or Cheese Curls (7.5-11 oz, Selected)",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, October 8 through Wednesday, October 14"
+      },
+      {
+        "item": "Herr's Original Potato Chips (9.5-10 oz, Selected)",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, October 8 through Wednesday, October 14"
+      },
+      {
+        "item": "Thomas' English Muffins (6-pack, Selected)",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, October 8 through Wednesday, October 14"
+      },
+      {
+        "item": "Progresso Soups (18-19 oz, Selected) — Throwback Thursday Digital Coupon (Thu 10/8 - Sun 10/11 only, limit 1 offer)",
+        "salePrice": "$0.98",
+        "regularPrice": "$2.48",
+        "savings": "$1.50",
+        "dateRange": "Thursday, October 8 through Wednesday, October 14"
+      },
+      {
+        "item": "Land O' Lakes Butter (16-oz Half Sticks or Quarters) — Weekly Door Buster (limit 8 per Rewards card)",
+        "salePrice": "$3.48",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, October 8 through Wednesday, October 14"
+      },
+      {
+        "item": "Crav'n Flavor Microwave Popcorn (3-pack, Selected) — Weekly Door Buster (limit 4 per Rewards card)",
+        "salePrice": "$0.99",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, October 8 through Wednesday, October 14"
+      },
+      {
+        "item": "San Giorgio Pasta (12-16 oz, Selected) — Weekly Door Buster (limit 10 per Rewards card)",
+        "salePrice": "5 for $4",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, October 8 through Wednesday, October 14"
+      },
+      {
+        "item": "Green Cabbage",
+        "salePrice": "$0.59/lb",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, October 8 through Wednesday, October 14"
+      },
+      {
+        "item": "Fresh Green Beans",
+        "salePrice": "$0.99/lb",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, October 8 through Wednesday, October 14"
+      },
+      {
+        "item": "Fresh Boneless & Skinless Chicken Thighs (Value Pack)",
+        "salePrice": "$2.99/lb",
+        "regularPrice": "$3.49/lb (less amount)",
+        "savings": "$0.50/lb",
+        "dateRange": "Thursday, October 8 through Wednesday, October 14"
+      },
+      {
+        "item": "Boneless New York Strip Steaks (Value Pack, Select Beef) — Beef Roundup 4-Day Sale, Thu 10/8 - Sun 10/11 only",
+        "salePrice": "$10.99/lb",
+        "regularPrice": "$11.99/lb (less amount)",
+        "savings": "$1.00/lb",
+        "dateRange": "Thursday, October 8 through Wednesday, October 14"
+      },
+      {
+        "item": "Coke Products (6-pack, 16.9-oz bottles, Selected)",
+        "salePrice": "3 for $10",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, October 8 through Wednesday, October 14"
+      },
+      {
+        "item": "Tony's Classic Pizza (18.56-20.6 oz, Selected) — Throwback Thursday Digital Coupon (Thu 10/8 - Sun 10/11 only, limit 1 offer)",
+        "salePrice": "$1.98",
+        "regularPrice": "$2.98",
+        "savings": "$1.00",
+        "dateRange": "Thursday, October 8 through Wednesday, October 14"
+      }
+    ]
   }
 }

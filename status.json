@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-10-07T19:52:11.369Z",
-  "totalEvents": 1900,
-  "withDescription": 823,
+  "generatedAt": "2026-10-08T08:59:23.298Z",
+  "totalEvents": 1903,
+  "withDescription": 821,
   "withImage": 214,
-  "familyFriendly": 71,
-  "eventsToday": 29,
+  "familyFriendly": 69,
+  "eventsToday": 37,
   "sources": {
     "muAthletics": 325,
     "muCalendar": 172,
     "artsmu": 13,
-    "campsAlumni": 23,
+    "campsAlumni": 22,
     "muGetInvolved": 514,
-    "pennManor": 581,
-    "borough": 60,
+    "pennManor": 588,
+    "borough": 59,
     "vfw": 5,
     "phantomPower": 12,
-    "community": 17,
-    "manor": 41,
+    "community": 16,
+    "manor": 40,
     "raneyCellars": 5,
     "theBackyard": 18,
     "muHudlBroadcasts": 57
@@ -35,7 +35,7 @@
       "latest": "2027-03-06T19:30:00.000Z"
     },
     "campsAlumni": {
-      "earliest": "2026-07-09T22:00:00.000Z",
+      "earliest": "2026-07-11T13:00:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
@@ -47,7 +47,7 @@
       "latest": "2027-10-05T23:00:00.000Z"
     },
     "borough": {
-      "earliest": "2026-07-09T22:00:00.000Z",
+      "earliest": "2026-07-13T23:00:00.000Z",
       "latest": "2026-12-25T12:00:00.000Z"
     },
     "vfw": {
@@ -59,11 +59,11 @@
       "latest": "2026-11-06T00:00:00.000Z"
     },
     "community": {
-      "earliest": "2026-07-09T22:15:00.000Z",
+      "earliest": "2026-07-14T22:15:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
     "manor": {
-      "earliest": "2026-10-07T23:00:00.000Z",
+      "earliest": "2026-10-14T23:00:00.000Z",
       "latest": "2027-10-06T23:00:00.000Z"
     },
     "raneyCellars": {
@@ -78,39 +78,39 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 36
+      "daysSinceMoved": 37
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 47
+      "daysSinceMoved": 48
     },
     "artsmu": {
       "newest": "2027-03-06",
-      "daysSinceMoved": 39
+      "daysSinceMoved": 40
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 61
+      "daysSinceMoved": 62
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 34
+      "daysSinceMoved": 35
     },
     "pennManor": {
       "newest": "2027-10-05",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 71
+      "daysSinceMoved": 72
     },
     "vfw": {
       "newest": "2026-11-22",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "phantomPower": {
       "newest": "2026-11-06",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "community": {
       "newest": "2027-04-16",
@@ -118,23 +118,23 @@
     },
     "manor": {
       "newest": "2027-10-06",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "raneyCellars": {
       "newest": "2026-10-09",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "theBackyard": {
       "newest": "2026-11-11",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     }
   },
   "sports": {
-    "total": 805,
-    "scored": 135,
-    "wins": 67,
-    "losses": 58,
-    "ties": 10
+    "total": 811,
+    "scored": 140,
+    "wins": 68,
+    "losses": 60,
+    "ties": 12
   },
   "registrations": {
     "open": 7,
@@ -151,13 +151,13 @@
       "Campus Life": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-10-07T19:48:04.438Z"
+    "lastSyncAt": "2026-10-08T08:55:50.062Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
-    "approved": 7,
-    "checkedAt": "2026-10-07T19:52:01.242Z"
+    "approved": 6,
+    "checkedAt": "2026-10-08T08:59:13.952Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -180,21 +180,21 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 240,
+        "value": 239,
         "min": 30,
         "skipped": false
       },
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 79,
+        "value": 78,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 480,
+        "value": 486,
         "min": 150,
         "skipped": false
       },
@@ -208,14 +208,14 @@
       {
         "key": "pennManorGeneral.count",
         "ok": true,
-        "value": 101,
+        "value": 102,
         "min": 10,
         "skipped": false
       },
       {
         "key": "manor.count",
         "ok": true,
-        "value": 41,
+        "value": 40,
         "min": 10
       },
       {
@@ -236,74 +236,74 @@
   },
   "recentlyAdded": [
     {
-      "key": "Puppy Olympics|2026-09-17T16:30:00",
-      "firstSeenAt": "2026-10-07T19:52:11.366Z",
-      "title": "Puppy Olympics",
-      "source": "MU",
-      "date": "2026-09-17T16:30:00"
+      "key": "Karaoke Night|2026-10-29T02:00:00.000Z",
+      "firstSeenAt": "2026-10-08T08:59:23.296Z",
+      "title": "Karaoke Night",
+      "source": "Jack's Tavern",
+      "date": "2026-10-29T02:00:00.000Z"
     },
     {
-      "key": "SGA Weekly Meeting|2026-10-15T23:00:00.000Z",
-      "firstSeenAt": "2026-10-07T19:52:11.366Z",
-      "title": "SGA Weekly Meeting",
-      "source": "MU",
-      "date": "2026-10-15T23:00:00.000Z"
-    },
-    {
-      "key": "Guest Speaker - \"Understanding Trauma in the Classroom\"|2026-10-19T21:00:00.000Z",
-      "firstSeenAt": "2026-10-07T19:52:11.366Z",
-      "title": "Guest Speaker - \"Understanding Trauma in the Classroom\"",
-      "source": "MU",
-      "date": "2026-10-19T21:00:00.000Z"
-    },
-    {
-      "key": "Biology Club Meeting|2026-10-20T22:00:00.000Z",
-      "firstSeenAt": "2026-10-07T19:52:11.366Z",
-      "title": "Biology Club Meeting",
-      "source": "MU",
-      "date": "2026-10-20T22:00:00.000Z"
-    },
-    {
-      "key": "MEMU Meeting|2026-10-26T22:00:00.000Z",
-      "firstSeenAt": "2026-10-07T19:52:11.366Z",
-      "title": "MEMU Meeting",
-      "source": "MU",
-      "date": "2026-10-26T22:00:00.000Z"
-    },
-    {
-      "key": "Tell School of Music Choral Concert|2026-11-07T23:30:00.000Z",
-      "firstSeenAt": "2026-10-07T19:52:11.366Z",
-      "title": "Tell School of Music Choral Concert",
-      "source": "MU",
-      "date": "2026-11-07T23:30:00.000Z"
-    },
-    {
-      "key": "Tell School of Music Wind Bands Concert|2027-04-03T18:30:00.000Z",
-      "firstSeenAt": "2026-10-07T19:52:11.366Z",
-      "title": "Tell School of Music Wind Bands Concert",
-      "source": "MU",
-      "date": "2027-04-03T18:30:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Wrestling vs Manheim Township High School|2026-12-12T14:00:00.000Z",
-      "firstSeenAt": "2026-10-07T19:02:34.920Z",
-      "title": "Boys Varsity Wrestling vs Manheim Township High School",
+      "key": "HB PTO Craft Night|2026-11-13T22:00:00.000Z",
+      "firstSeenAt": "2026-10-08T08:59:23.296Z",
+      "title": "HB PTO Craft Night",
       "source": "PM",
-      "date": "2026-12-12T14:00:00.000Z"
+      "date": "2026-11-13T22:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board - Cancelled|2026-10-07T23:00:00.000Z",
-      "firstSeenAt": "2026-10-07T18:04:45.146Z",
-      "title": "Zoning Hearing Board - Cancelled",
-      "source": "Manor",
-      "date": "2026-10-07T23:00:00.000Z"
+      "key": "Boys JV Basketball vs Cedar Crest High School|2027-01-08T23:00:00.000Z",
+      "firstSeenAt": "2026-10-08T08:59:23.296Z",
+      "title": "Boys JV Basketball vs Cedar Crest High School",
+      "source": "PM",
+      "date": "2027-01-08T23:00:00.000Z"
     },
     {
-      "key": "Meeting with Dr. Chris|2026-10-08T22:00:00.000Z",
-      "firstSeenAt": "2026-10-07T18:04:45.146Z",
-      "title": "Meeting with Dr. Chris",
+      "key": "Boys Varsity Basketball vs Cedar Crest High School|2027-01-09T00:30:00.000Z",
+      "firstSeenAt": "2026-10-08T08:59:23.296Z",
+      "title": "Boys Varsity Basketball vs Cedar Crest High School",
+      "source": "PM",
+      "date": "2027-01-09T00:30:00.000Z"
+    },
+    {
+      "key": "Boys JV Basketball vs Conestoga Valley High School|2027-01-23T23:00:00.000Z",
+      "firstSeenAt": "2026-10-08T08:59:23.296Z",
+      "title": "Boys JV Basketball vs Conestoga Valley High School",
+      "source": "PM",
+      "date": "2027-01-23T23:00:00.000Z"
+    },
+    {
+      "key": "Boys JV Basketball vs Manheim Township High School|2027-02-04T23:00:00.000Z",
+      "firstSeenAt": "2026-10-08T08:59:23.296Z",
+      "title": "Boys JV Basketball vs Manheim Township High School",
+      "source": "PM",
+      "date": "2027-02-04T23:00:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Basketball vs Manheim Township High School|2027-02-05T00:30:00.000Z",
+      "firstSeenAt": "2026-10-08T08:59:23.296Z",
+      "title": "Boys Varsity Basketball vs Manheim Township High School",
+      "source": "PM",
+      "date": "2027-02-05T00:30:00.000Z"
+    },
+    {
+      "key": "Men's Club Soccer Practice|2026-10-27T23:00:00.000Z",
+      "firstSeenAt": "2026-10-08T01:58:45.056Z",
+      "title": "Men's Club Soccer Practice",
       "source": "MU",
-      "date": "2026-10-08T22:00:00.000Z"
+      "date": "2026-10-27T23:00:00.000Z"
+    },
+    {
+      "key": "IFC Meeting|2026-10-28T00:30:00.000Z",
+      "firstSeenAt": "2026-10-08T01:58:45.056Z",
+      "title": "IFC Meeting",
+      "source": "MU",
+      "date": "2026-10-28T00:30:00.000Z"
+    },
+    {
+      "key": "Ice Hockey Club (D3) Practice|2026-10-28T01:00:00.000Z",
+      "firstSeenAt": "2026-10-08T01:58:45.056Z",
+      "title": "Ice Hockey Club (D3) Practice",
+      "source": "MU",
+      "date": "2026-10-28T01:00:00.000Z"
     }
   ],
   "addedLastRun": 7

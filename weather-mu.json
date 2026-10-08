@@ -1,27 +1,27 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Wednesday, October 07, 2026 at 12:04 PM (Doernberg, Morris, Zipko, Student Meteorologist)",
+    "issued": "Wednesday, October 07, 2026 at 05:34 PM (Curtorillo, Gray, Negherbon, Student Meteorologists)",
     "periods": [
-      {
-        "period": "This afternoon",
-        "text": "Sunny and warmer. High: 70-74"
-      },
       {
         "period": "Tonight",
         "text": "Mainly clear and comfortable. Low: 50-54"
       },
       {
-        "period": "Thursday",
+        "period": "Tomorrow",
         "text": "Sunny, pleasant and turning breezy in the afternoon. High: 74-78"
       },
       {
-        "period": "Thursday Night",
+        "period": "Tomorrow Night",
         "text": "Clear and comfortably cool. Low: 46-50"
       },
       {
         "period": "Friday",
         "text": "Mostly sunny and seasonable. High: 70-74"
+      },
+      {
+        "period": "Saturday",
+        "text": "Mix of clouds and sun with pleasant conditions. High: 68-72"
       }
     ]
   },
@@ -128,69 +128,69 @@
   },
   "observations": [
     {
-      "time": "15:00",
-      "temp": "71",
-      "dewpoint": "50",
-      "rh": "48",
-      "windDir": "SSW",
-      "windSpeed": "5",
-      "precip": "0.00",
-      "visibility": "9.6",
-      "condition": "None"
-    },
-    {
-      "time": "14:00",
-      "temp": "70",
-      "dewpoint": "48",
-      "rh": "45",
-      "windDir": "SSW",
-      "windSpeed": "5",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "13:00",
-      "temp": "67",
-      "dewpoint": "48",
-      "rh": "51",
+      "time": "04:00",
+      "temp": "56",
+      "dewpoint": "54",
+      "rh": "93",
       "windDir": "SW",
-      "windSpeed": "7",
+      "windSpeed": "2",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
     },
     {
-      "time": "12:00",
-      "temp": "65",
-      "dewpoint": "47",
-      "rh": "52",
+      "time": "03:00",
+      "temp": "56",
+      "dewpoint": "54",
+      "rh": "91",
       "windDir": "SW",
-      "windSpeed": "6",
+      "windSpeed": "2",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
     },
     {
-      "time": "11:00",
-      "temp": "62",
-      "dewpoint": "46",
-      "rh": "55",
+      "time": "02:00",
+      "temp": "57",
+      "dewpoint": "54",
+      "rh": "91",
+      "windDir": "SW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "01:00",
+      "temp": "58",
+      "dewpoint": "55",
+      "rh": "90",
+      "windDir": "SW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "00:00",
+      "temp": "58",
+      "dewpoint": "55",
+      "rh": "90",
+      "windDir": "WSW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "23:00",
+      "temp": "59",
+      "dewpoint": "55",
+      "rh": "86",
       "windDir": "SSW",
       "windSpeed": "4",
       "precip": "0.00",
-      "visibility": "11.4",
-      "condition": "None"
-    },
-    {
-      "time": "10:00",
-      "temp": "59",
-      "dewpoint": "47",
-      "rh": "65",
-      "windDir": "SSW",
-      "windSpeed": "6",
-      "precip": "0.00",
-      "visibility": "11.0",
+      "visibility": "12 +",
       "condition": "None"
     }
   ],
@@ -262,6 +262,17 @@
         "windSpeed": "15",
         "windTime": "11:11",
         "rain": "0.00"
+      },
+      {
+        "date": "10/07",
+        "max": "72",
+        "maxTime": "15:49",
+        "min": "40",
+        "minTime": "06:18",
+        "windDir": "212",
+        "windSpeed": "17",
+        "windTime": "12:19",
+        "rain": "0.00"
       }
     ],
     "totalRain": "0.07",
@@ -312,5 +323,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-07T19:48:06.805Z"
+  "updated": "2026-10-08T08:55:51.581Z"
 }

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-08T16:30:47.248Z",
-  "totalEvents": 1911,
+  "generatedAt": "2026-10-08T18:20:40.792Z",
+  "totalEvents": 1913,
   "withDescription": 821,
   "withImage": 216,
   "familyFriendly": 69,
@@ -11,7 +11,7 @@
     "artsmu": 13,
     "campsAlumni": 22,
     "muGetInvolved": 514,
-    "pennManor": 589,
+    "pennManor": 591,
     "borough": 59,
     "vfw": 5,
     "phantomPower": 12,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 812,
+    "total": 814,
     "scored": 140,
     "wins": 68,
     "losses": 60,
@@ -151,13 +151,13 @@
       "Campus Life": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-10-08T16:27:04.690Z"
+    "lastSyncAt": "2026-10-08T18:16:11.316Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 6,
-    "checkedAt": "2026-10-08T16:30:38.145Z"
+    "checkedAt": "2026-10-08T18:20:30.586Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -194,7 +194,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 487,
+        "value": 489,
         "min": 150,
         "skipped": false
       },
@@ -235,6 +235,20 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Boys Varsity Wrestling vs Schuylkill Valley High School|2026-12-11T05:01:00.000Z",
+      "firstSeenAt": "2026-10-08T18:20:40.788Z",
+      "title": "Boys Varsity Wrestling vs Schuylkill Valley High School",
+      "source": "PM",
+      "date": "2026-12-11T05:01:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Wrestling vs Schuylkill Valley High School|2026-12-12T05:01:00.000Z",
+      "firstSeenAt": "2026-10-08T18:20:40.788Z",
+      "title": "Boys Varsity Wrestling vs Schuylkill Valley High School",
+      "source": "PM",
+      "date": "2026-12-12T05:01:00.000Z"
+    },
     {
       "key": "MMA Club Open Mat, 10/6 and 10/8|2026-10-06T23:00:00.000Z",
       "firstSeenAt": "2026-10-08T16:30:47.243Z",
@@ -290,21 +304,7 @@
       "title": "MMA 101 Classes 10/5 and 10/7",
       "source": "MU",
       "date": "2026-10-07T23:00:00.000Z"
-    },
-    {
-      "key": "Men's Rugby Practice|2026-10-08T20:00:00.000Z",
-      "firstSeenAt": "2026-10-08T15:03:07.188Z",
-      "title": "Men's Rugby Practice",
-      "source": "MU",
-      "date": "2026-10-08T20:00:00.000Z"
-    },
-    {
-      "key": "Men's Rugby Practice|2026-10-14T20:30:00.000Z",
-      "firstSeenAt": "2026-10-08T15:03:07.188Z",
-      "title": "Men's Rugby Practice",
-      "source": "MU",
-      "date": "2026-10-14T20:30:00.000Z"
     }
   ],
-  "addedLastRun": 5
+  "addedLastRun": 2
 }

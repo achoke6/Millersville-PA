@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-10-08T18:20:40.792Z",
-  "totalEvents": 1913,
-  "withDescription": 821,
+  "generatedAt": "2026-10-08T20:10:37.824Z",
+  "totalEvents": 1930,
+  "withDescription": 826,
   "withImage": 216,
   "familyFriendly": 69,
-  "eventsToday": 38,
+  "eventsToday": 39,
   "sources": {
     "muAthletics": 325,
-    "muCalendar": 172,
+    "muCalendar": 174,
     "artsmu": 13,
     "campsAlumni": 22,
-    "muGetInvolved": 514,
-    "pennManor": 591,
+    "muGetInvolved": 517,
+    "pennManor": 603,
     "borough": 59,
     "vfw": 5,
     "phantomPower": 12,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 814,
+    "total": 826,
     "scored": 140,
     "wins": 68,
     "losses": 60,
@@ -143,21 +143,21 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 4,
+    "pendingFuture": 5,
     "pendingPast": 5,
     "pendingBySource": {
-      "PM Community": 2,
+      "PM Community": 3,
       "Youth Sports": 1,
       "Campus Life": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-10-08T18:16:11.316Z"
+    "lastSyncAt": "2026-10-08T20:06:47.176Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 6,
-    "checkedAt": "2026-10-08T18:20:30.586Z"
+    "checkedAt": "2026-10-08T20:10:29.943Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -194,7 +194,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 489,
+        "value": 501,
         "min": 150,
         "skipped": false
       },
@@ -236,75 +236,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Boys Varsity Wrestling vs Schuylkill Valley High School|2026-12-11T05:01:00.000Z",
-      "firstSeenAt": "2026-10-08T18:20:40.788Z",
-      "title": "Boys Varsity Wrestling vs Schuylkill Valley High School",
+      "key": "SPSEA|2026-10-08T18:00:00",
+      "firstSeenAt": "2026-10-08T20:10:37.820Z",
+      "title": "SPSEA",
+      "source": "MU",
+      "date": "2026-10-08T18:00:00"
+    },
+    {
+      "key": "FAFSA To Go|2026-10-15T11:00:00",
+      "firstSeenAt": "2026-10-08T20:10:37.820Z",
+      "title": "FAFSA To Go",
+      "source": "MU",
+      "date": "2026-10-15T11:00:00"
+    },
+    {
+      "key": "RUF Worship and Discussion|2026-10-28T19:00:00",
+      "firstSeenAt": "2026-10-08T20:10:37.820Z",
+      "title": "RUF Worship and Discussion",
+      "source": "MU",
+      "date": "2026-10-28T19:00:00"
+    },
+    {
+      "key": "FSL: Zeta Phi Beta Line Dancing Event|2026-11-02T18:00:00",
+      "firstSeenAt": "2026-10-08T20:10:37.820Z",
+      "title": "FSL: Zeta Phi Beta Line Dancing Event",
+      "source": "MU",
+      "date": "2026-11-02T18:00:00"
+    },
+    {
+      "key": "Alumni Marauder Mixer @ Loxley's Restaurant|2026-11-12T17:30:00",
+      "firstSeenAt": "2026-10-08T20:10:37.820Z",
+      "title": "Alumni Marauder Mixer @ Loxley's Restaurant",
+      "source": "MU",
+      "date": "2026-11-12T17:30:00"
+    },
+    {
+      "key": "Boys Varsity Bowling vs Warwick High School|2026-12-03T20:30:00.000Z",
+      "firstSeenAt": "2026-10-08T20:10:37.820Z",
+      "title": "Boys Varsity Bowling vs Warwick High School",
       "source": "PM",
-      "date": "2026-12-11T05:01:00.000Z"
+      "date": "2026-12-03T20:30:00.000Z"
     },
     {
-      "key": "Boys Varsity Wrestling vs Schuylkill Valley High School|2026-12-12T05:01:00.000Z",
-      "firstSeenAt": "2026-10-08T18:20:40.788Z",
-      "title": "Boys Varsity Wrestling vs Schuylkill Valley High School",
+      "key": "Girls Varsity Bowling vs Warwick High School|2026-12-03T20:30:00.000Z",
+      "firstSeenAt": "2026-10-08T20:10:37.820Z",
+      "title": "Girls Varsity Bowling vs Warwick High School",
       "source": "PM",
-      "date": "2026-12-12T05:01:00.000Z"
+      "date": "2026-12-03T20:30:00.000Z"
     },
     {
-      "key": "MMA Club Open Mat, 10/6 and 10/8|2026-10-06T23:00:00.000Z",
-      "firstSeenAt": "2026-10-08T16:30:47.243Z",
-      "title": "MMA Club Open Mat, 10/6 and 10/8",
-      "source": "MU",
-      "date": "2026-10-06T23:00:00.000Z"
-    },
-    {
-      "key": "MMA Club Open Mat, 10/6 and 10/8|2026-10-08T23:00:00.000Z",
-      "firstSeenAt": "2026-10-08T16:30:47.243Z",
-      "title": "MMA Club Open Mat, 10/6 and 10/8",
-      "source": "MU",
-      "date": "2026-10-08T23:00:00.000Z"
-    },
-    {
-      "key": "Beyond the Surface: Is it just stress?|2026-10-14T18:30:00.000Z",
-      "firstSeenAt": "2026-10-08T16:30:47.243Z",
-      "title": "Beyond the Surface: Is it just stress?",
-      "source": "MU",
-      "date": "2026-10-14T18:30:00.000Z"
-    },
-    {
-      "key": "Boys JV Wrestling vs Central Bucks South High School|2026-12-11T05:01:00.000Z",
-      "firstSeenAt": "2026-10-08T16:30:47.243Z",
-      "title": "Boys JV Wrestling vs Central Bucks South High School",
+      "key": "Boys Varsity Bowling vs Manheim Township High School|2026-12-08T20:30:00.000Z",
+      "firstSeenAt": "2026-10-08T20:10:37.820Z",
+      "title": "Boys Varsity Bowling vs Manheim Township High School",
       "source": "PM",
-      "date": "2026-12-11T05:01:00.000Z"
+      "date": "2026-12-08T20:30:00.000Z"
     },
     {
-      "key": "Boys Varsity Wrestling|2026-12-11T14:00:00.000Z",
-      "firstSeenAt": "2026-10-08T16:30:47.243Z",
-      "title": "Boys Varsity Wrestling",
+      "key": "Girls Varsity Bowling vs Manheim Township High School|2026-12-08T20:30:00.000Z",
+      "firstSeenAt": "2026-10-08T20:10:37.820Z",
+      "title": "Girls Varsity Bowling vs Manheim Township High School",
       "source": "PM",
-      "date": "2026-12-11T14:00:00.000Z"
+      "date": "2026-12-08T20:30:00.000Z"
     },
     {
-      "key": "MMA 101 Classes 10/5 and 10/7|2026-10-05T23:00:00.000Z",
-      "firstSeenAt": "2026-10-08T15:03:07.188Z",
-      "title": "MMA 101 Classes 10/5 and 10/7",
-      "source": "MU",
-      "date": "2026-10-05T23:00:00.000Z"
-    },
-    {
-      "key": "Men's Rugby Practice|2026-10-06T20:00:00.000Z",
-      "firstSeenAt": "2026-10-08T15:03:07.188Z",
-      "title": "Men's Rugby Practice",
-      "source": "MU",
-      "date": "2026-10-06T20:00:00.000Z"
-    },
-    {
-      "key": "MMA 101 Classes 10/5 and 10/7|2026-10-07T23:00:00.000Z",
-      "firstSeenAt": "2026-10-08T15:03:07.188Z",
-      "title": "MMA 101 Classes 10/5 and 10/7",
-      "source": "MU",
-      "date": "2026-10-07T23:00:00.000Z"
+      "key": "Girls Varsity Bowling vs Cedar Crest High School|2026-12-17T20:30:00.000Z",
+      "firstSeenAt": "2026-10-08T20:10:37.820Z",
+      "title": "Girls Varsity Bowling vs Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-12-17T20:30:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 17
 }

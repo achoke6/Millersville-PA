@@ -10,9 +10,11 @@
   },
   {
     "name": "ADAPT",
-    "category": "Meeting",
+    "category": "Service",
     "categories": [
-      "Meeting"
+      "Service",
+      "Meeting",
+      "Social"
     ],
     "shortName": "",
     "id": ""
@@ -158,9 +160,10 @@
   },
   {
     "name": "Asian Student Inclusivity Association",
-    "category": "Meeting",
+    "category": "Performance",
     "categories": [
-      "Meeting"
+      "Performance",
+      "Social"
     ],
     "shortName": "ASIA",
     "id": ""
@@ -311,9 +314,8 @@
   },
   {
     "name": "Center for Health Education and Promotion",
-    "category": "Educational Program",
+    "category": "Tabling",
     "categories": [
-      "Educational Program",
       "Tabling"
     ],
     "shortName": "CHEP",
@@ -392,12 +394,13 @@
   },
   {
     "name": "Club Baseball",
-    "category": "Sporting",
+    "category": "Sports and Leisure",
     "categories": [
+      "Sports and Leisure",
       "Sporting"
     ],
     "shortName": "Club Baseball",
-    "id": ""
+    "id": "millersvilleclubbaseball"
   },
   {
     "name": "Club Cheerleading",
@@ -605,6 +608,15 @@
     "id": ""
   },
   {
+    "name": "Delta Sigma Theta",
+    "category": "Educational Program",
+    "categories": [
+      "Educational Program"
+    ],
+    "shortName": "DST",
+    "id": ""
+  },
+  {
     "name": "Delta Sigma Theta Sorority, Inc.",
     "category": "Meeting",
     "categories": [
@@ -665,8 +677,10 @@
   },
   {
     "name": "East Village Residence Hall",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "East Village",
     "id": ""
   },
@@ -1424,8 +1438,11 @@
   },
   {
     "name": "Reformed University Fellowship",
-    "category": "",
-    "categories": [],
+    "category": "Meeting",
+    "categories": [
+      "Meeting",
+      "Social"
+    ],
     "shortName": "RUF",
     "id": ""
   },
@@ -1534,9 +1551,9 @@
   },
   {
     "name": "Spanish Club",
-    "category": "Meeting",
+    "category": "Social",
     "categories": [
-      "Meeting"
+      "Social"
     ],
     "shortName": "",
     "id": ""
@@ -1577,10 +1594,9 @@
   },
   {
     "name": "Student Government Association",
-    "category": "Educational Program",
+    "category": "Meeting",
     "categories": [
-      "Educational Program",
-      "Tabling"
+      "Meeting"
     ],
     "shortName": "SGA",
     "id": ""
@@ -1631,10 +1647,12 @@
   },
   {
     "name": "Tau Kappa Epsilon",
-    "category": "",
-    "categories": [],
-    "shortName": "",
-    "id": ""
+    "category": "Fraternity & Sorority Life",
+    "categories": [
+      "Fraternity & Sorority Life"
+    ],
+    "shortName": "TKE",
+    "id": "taukappaepsilon"
   },
   {
     "name": "TCG Players of Millersville",

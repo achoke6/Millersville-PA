@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-10-08T01:58:45.060Z",
-  "totalEvents": 1897,
+  "generatedAt": "2026-10-08T08:59:23.298Z",
+  "totalEvents": 1903,
   "withDescription": 821,
   "withImage": 214,
   "familyFriendly": 69,
-  "eventsToday": 28,
+  "eventsToday": 37,
   "sources": {
     "muAthletics": 325,
     "muCalendar": 172,
     "artsmu": 13,
     "campsAlumni": 22,
     "muGetInvolved": 514,
-    "pennManor": 582,
+    "pennManor": 588,
     "borough": 59,
     "vfw": 5,
     "phantomPower": 12,
@@ -78,39 +78,39 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 36
+      "daysSinceMoved": 37
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 47
+      "daysSinceMoved": 48
     },
     "artsmu": {
       "newest": "2027-03-06",
-      "daysSinceMoved": 39
+      "daysSinceMoved": 40
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 61
+      "daysSinceMoved": 62
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 34
+      "daysSinceMoved": 35
     },
     "pennManor": {
       "newest": "2027-10-05",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 71
+      "daysSinceMoved": 72
     },
     "vfw": {
       "newest": "2026-11-22",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "phantomPower": {
       "newest": "2026-11-06",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "community": {
       "newest": "2027-04-16",
@@ -118,23 +118,23 @@
     },
     "manor": {
       "newest": "2027-10-06",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "raneyCellars": {
       "newest": "2026-10-09",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "theBackyard": {
       "newest": "2026-11-11",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     }
   },
   "sports": {
-    "total": 806,
-    "scored": 138,
+    "total": 811,
+    "scored": 140,
     "wins": 68,
-    "losses": 59,
-    "ties": 11
+    "losses": 60,
+    "ties": 12
   },
   "registrations": {
     "open": 7,
@@ -151,13 +151,13 @@
       "Campus Life": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-10-08T01:54:43.593Z"
+    "lastSyncAt": "2026-10-08T08:55:50.062Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 6,
-    "checkedAt": "2026-10-08T01:58:32.438Z"
+    "checkedAt": "2026-10-08T08:59:13.952Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -180,7 +180,7 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 240,
+        "value": 239,
         "min": 30,
         "skipped": false
       },
@@ -194,7 +194,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 481,
+        "value": 486,
         "min": 150,
         "skipped": false
       },
@@ -208,7 +208,7 @@
       {
         "key": "pennManorGeneral.count",
         "ok": true,
-        "value": 101,
+        "value": 102,
         "min": 10,
         "skipped": false
       },
@@ -236,6 +236,55 @@
   },
   "recentlyAdded": [
     {
+      "key": "Karaoke Night|2026-10-29T02:00:00.000Z",
+      "firstSeenAt": "2026-10-08T08:59:23.296Z",
+      "title": "Karaoke Night",
+      "source": "Jack's Tavern",
+      "date": "2026-10-29T02:00:00.000Z"
+    },
+    {
+      "key": "HB PTO Craft Night|2026-11-13T22:00:00.000Z",
+      "firstSeenAt": "2026-10-08T08:59:23.296Z",
+      "title": "HB PTO Craft Night",
+      "source": "PM",
+      "date": "2026-11-13T22:00:00.000Z"
+    },
+    {
+      "key": "Boys JV Basketball vs Cedar Crest High School|2027-01-08T23:00:00.000Z",
+      "firstSeenAt": "2026-10-08T08:59:23.296Z",
+      "title": "Boys JV Basketball vs Cedar Crest High School",
+      "source": "PM",
+      "date": "2027-01-08T23:00:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Basketball vs Cedar Crest High School|2027-01-09T00:30:00.000Z",
+      "firstSeenAt": "2026-10-08T08:59:23.296Z",
+      "title": "Boys Varsity Basketball vs Cedar Crest High School",
+      "source": "PM",
+      "date": "2027-01-09T00:30:00.000Z"
+    },
+    {
+      "key": "Boys JV Basketball vs Conestoga Valley High School|2027-01-23T23:00:00.000Z",
+      "firstSeenAt": "2026-10-08T08:59:23.296Z",
+      "title": "Boys JV Basketball vs Conestoga Valley High School",
+      "source": "PM",
+      "date": "2027-01-23T23:00:00.000Z"
+    },
+    {
+      "key": "Boys JV Basketball vs Manheim Township High School|2027-02-04T23:00:00.000Z",
+      "firstSeenAt": "2026-10-08T08:59:23.296Z",
+      "title": "Boys JV Basketball vs Manheim Township High School",
+      "source": "PM",
+      "date": "2027-02-04T23:00:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Basketball vs Manheim Township High School|2027-02-05T00:30:00.000Z",
+      "firstSeenAt": "2026-10-08T08:59:23.296Z",
+      "title": "Boys Varsity Basketball vs Manheim Township High School",
+      "source": "PM",
+      "date": "2027-02-05T00:30:00.000Z"
+    },
+    {
       "key": "Men's Club Soccer Practice|2026-10-27T23:00:00.000Z",
       "firstSeenAt": "2026-10-08T01:58:45.056Z",
       "title": "Men's Club Soccer Practice",
@@ -255,56 +304,7 @@
       "title": "Ice Hockey Club (D3) Practice",
       "source": "MU",
       "date": "2026-10-28T01:00:00.000Z"
-    },
-    {
-      "key": "Men's Ice Hockey Practice (D2)|2026-10-28T10:00:00.000Z",
-      "firstSeenAt": "2026-10-08T01:58:45.056Z",
-      "title": "Men's Ice Hockey Practice (D2)",
-      "source": "MU",
-      "date": "2026-10-28T10:00:00.000Z"
-    },
-    {
-      "key": "Osburn Bible Study|2026-10-28T16:00:00.000Z",
-      "firstSeenAt": "2026-10-08T01:58:45.056Z",
-      "title": "Osburn Bible Study",
-      "source": "MU",
-      "date": "2026-10-28T16:00:00.000Z"
-    },
-    {
-      "key": "Tell School of Music Recital Hour|2026-10-28T19:00:00.000Z",
-      "firstSeenAt": "2026-10-08T01:58:45.056Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2026-10-28T19:00:00.000Z"
-    },
-    {
-      "key": "Fencing Guild Practice|2026-10-28T21:00:00.000Z",
-      "firstSeenAt": "2026-10-08T01:58:45.056Z",
-      "title": "Fencing Guild Practice",
-      "source": "MU",
-      "date": "2026-10-28T21:00:00.000Z"
-    },
-    {
-      "key": "Mock Trial Club Meeting|2026-10-28T21:00:00.000Z",
-      "firstSeenAt": "2026-10-08T01:58:45.056Z",
-      "title": "Mock Trial Club Meeting",
-      "source": "MU",
-      "date": "2026-10-28T21:00:00.000Z"
-    },
-    {
-      "key": "MEMU Math Fair|2026-10-28T21:30:00.000Z",
-      "firstSeenAt": "2026-10-08T01:58:45.056Z",
-      "title": "MEMU Math Fair",
-      "source": "MU",
-      "date": "2026-10-28T21:30:00.000Z"
-    },
-    {
-      "key": "Board Game Club Weekly Meeting|2026-10-28T22:00:00.000Z",
-      "firstSeenAt": "2026-10-08T01:58:45.056Z",
-      "title": "Board Game Club Weekly Meeting",
-      "source": "MU",
-      "date": "2026-10-28T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 15
+  "addedLastRun": 7
 }

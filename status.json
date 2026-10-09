@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-10-08T23:56:38.025Z",
-  "totalEvents": 1930,
-  "withDescription": 826,
-  "withImage": 216,
+  "generatedAt": "2026-10-09T01:46:27.987Z",
+  "totalEvents": 1924,
+  "withDescription": 824,
+  "withImage": 219,
   "familyFriendly": 69,
   "eventsToday": 39,
   "sources": {
-    "muAthletics": 325,
-    "muCalendar": 174,
+    "muAthletics": 323,
+    "muCalendar": 173,
     "artsmu": 13,
     "campsAlumni": 22,
-    "muGetInvolved": 517,
+    "muGetInvolved": 514,
     "pennManor": 603,
     "borough": 59,
     "vfw": 5,
@@ -27,7 +27,7 @@
       "latest": "2027-05-27T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-07-10T07:00:00.000Z",
+      "earliest": "2026-07-13T07:00:00.000Z",
       "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
@@ -39,7 +39,7 @@
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-07-06T09:00:00.000Z",
+      "earliest": "2026-08-16T00:00:00.000Z",
       "latest": "2027-04-29T11:30:00.000Z"
     },
     "pennManor": {
@@ -56,7 +56,7 @@
     },
     "phantomPower": {
       "earliest": "2026-10-09T23:30:00.000Z",
-      "latest": "2026-11-06T00:00:00.000Z"
+      "latest": "2026-11-01T00:00:00.000Z"
     },
     "community": {
       "earliest": "2026-07-14T22:15:00.000Z",
@@ -109,8 +109,8 @@
       "daysSinceMoved": 2
     },
     "phantomPower": {
-      "newest": "2026-11-06",
-      "daysSinceMoved": 1
+      "newest": "2026-11-01",
+      "daysSinceMoved": 18
     },
     "community": {
       "newest": "2027-04-16",
@@ -130,9 +130,9 @@
     }
   },
   "sports": {
-    "total": 826,
-    "scored": 140,
-    "wins": 68,
+    "total": 824,
+    "scored": 141,
+    "wins": 69,
     "losses": 60,
     "ties": 12
   },
@@ -151,13 +151,13 @@
       "Campus Life": 1
     },
     "stalePast": 8,
-    "lastSyncAt": "2026-10-08T23:52:59.549Z"
+    "lastSyncAt": "2026-10-09T01:42:14.992Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 6,
-    "checkedAt": "2026-10-08T23:56:28.103Z"
+    "checkedAt": "2026-10-09T01:46:18.646Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -187,7 +187,7 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 78,
+        "value": 77,
         "min": 21,
         "skipped": false
       },
@@ -201,7 +201,7 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 325,
+        "value": 323,
         "min": 100,
         "skipped": false
       },
@@ -236,75 +236,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "SPSEA|2026-10-08T18:00:00",
-      "firstSeenAt": "2026-10-08T20:10:37.820Z",
-      "title": "SPSEA",
+      "key": "Student Government Association (SGA) Weekly Meeting|2026-10-01T17:00:00",
+      "firstSeenAt": "2026-10-09T01:46:27.983Z",
+      "title": "Student Government Association (SGA) Weekly Meeting",
       "source": "MU",
-      "date": "2026-10-08T18:00:00"
+      "date": "2026-10-01T17:00:00"
     },
     {
-      "key": "FAFSA To Go|2026-10-15T11:00:00",
-      "firstSeenAt": "2026-10-08T20:10:37.820Z",
-      "title": "FAFSA To Go",
+      "key": "MY COUSIN VLAD|2026-10-21T00:00:00.000Z",
+      "firstSeenAt": "2026-10-09T01:46:27.983Z",
+      "title": "MY COUSIN VLAD",
+      "source": "Other",
+      "date": "2026-10-21T00:00:00.000Z"
+    },
+    {
+      "key": "Osburn Bible Study|2026-10-28T16:00:00.000Z",
+      "firstSeenAt": "2026-10-09T01:46:27.983Z",
+      "title": "Osburn Bible Study",
       "source": "MU",
-      "date": "2026-10-15T11:00:00"
+      "date": "2026-10-28T16:00:00.000Z"
     },
     {
-      "key": "RUF Worship and Discussion|2026-10-28T19:00:00",
-      "firstSeenAt": "2026-10-08T20:10:37.820Z",
-      "title": "RUF Worship and Discussion",
+      "key": "Tell School of Music Recital Hour|2026-10-28T19:00:00.000Z",
+      "firstSeenAt": "2026-10-09T01:46:27.983Z",
+      "title": "Tell School of Music Recital Hour",
       "source": "MU",
-      "date": "2026-10-28T19:00:00"
+      "date": "2026-10-28T19:00:00.000Z"
     },
     {
-      "key": "FSL: Zeta Phi Beta Line Dancing Event|2026-11-02T18:00:00",
-      "firstSeenAt": "2026-10-08T20:10:37.820Z",
-      "title": "FSL: Zeta Phi Beta Line Dancing Event",
+      "key": "Men's Rugby Practice|2026-10-28T20:30:00.000Z",
+      "firstSeenAt": "2026-10-09T01:46:27.983Z",
+      "title": "Men's Rugby Practice",
       "source": "MU",
-      "date": "2026-11-02T18:00:00"
+      "date": "2026-10-28T20:30:00.000Z"
     },
     {
-      "key": "Alumni Marauder Mixer @ Loxley's Restaurant|2026-11-12T17:30:00",
-      "firstSeenAt": "2026-10-08T20:10:37.820Z",
-      "title": "Alumni Marauder Mixer @ Loxley's Restaurant",
+      "key": "Fencing Guild Practice|2026-10-28T21:00:00.000Z",
+      "firstSeenAt": "2026-10-09T01:46:27.983Z",
+      "title": "Fencing Guild Practice",
       "source": "MU",
-      "date": "2026-11-12T17:30:00"
+      "date": "2026-10-28T21:00:00.000Z"
     },
     {
-      "key": "Boys Varsity Bowling vs Warwick High School|2026-12-03T20:30:00.000Z",
-      "firstSeenAt": "2026-10-08T20:10:37.820Z",
-      "title": "Boys Varsity Bowling vs Warwick High School",
-      "source": "PM",
-      "date": "2026-12-03T20:30:00.000Z"
+      "key": "Mock Trial Club Meeting|2026-10-28T21:00:00.000Z",
+      "firstSeenAt": "2026-10-09T01:46:27.983Z",
+      "title": "Mock Trial Club Meeting",
+      "source": "MU",
+      "date": "2026-10-28T21:00:00.000Z"
     },
     {
-      "key": "Girls Varsity Bowling vs Warwick High School|2026-12-03T20:30:00.000Z",
-      "firstSeenAt": "2026-10-08T20:10:37.820Z",
-      "title": "Girls Varsity Bowling vs Warwick High School",
-      "source": "PM",
-      "date": "2026-12-03T20:30:00.000Z"
+      "key": "MEMU Math Fair|2026-10-28T21:30:00.000Z",
+      "firstSeenAt": "2026-10-09T01:46:27.983Z",
+      "title": "MEMU Math Fair",
+      "source": "MU",
+      "date": "2026-10-28T21:30:00.000Z"
     },
     {
-      "key": "Boys Varsity Bowling vs Manheim Township High School|2026-12-08T20:30:00.000Z",
-      "firstSeenAt": "2026-10-08T20:10:37.820Z",
-      "title": "Boys Varsity Bowling vs Manheim Township High School",
-      "source": "PM",
-      "date": "2026-12-08T20:30:00.000Z"
+      "key": "Board Game Club Weekly Meeting|2026-10-28T22:00:00.000Z",
+      "firstSeenAt": "2026-10-09T01:46:27.983Z",
+      "title": "Board Game Club Weekly Meeting",
+      "source": "MU",
+      "date": "2026-10-28T22:00:00.000Z"
     },
     {
-      "key": "Girls Varsity Bowling vs Manheim Township High School|2026-12-08T20:30:00.000Z",
-      "firstSeenAt": "2026-10-08T20:10:37.820Z",
-      "title": "Girls Varsity Bowling vs Manheim Township High School",
-      "source": "PM",
-      "date": "2026-12-08T20:30:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Bowling vs Cedar Crest High School|2026-12-17T20:30:00.000Z",
-      "firstSeenAt": "2026-10-08T20:10:37.820Z",
-      "title": "Girls Varsity Bowling vs Cedar Crest High School",
-      "source": "PM",
-      "date": "2026-12-17T20:30:00.000Z"
+      "key": "Wednesday Night Dinner|2026-10-28T22:00:00.000Z",
+      "firstSeenAt": "2026-10-09T01:46:27.983Z",
+      "title": "Wednesday Night Dinner",
+      "source": "MU",
+      "date": "2026-10-28T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 22
 }

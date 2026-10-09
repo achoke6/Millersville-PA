@@ -10,9 +10,11 @@
   },
   {
     "name": "ADAPT",
-    "category": "Meeting",
+    "category": "Service",
     "categories": [
-      "Meeting"
+      "Service",
+      "Meeting",
+      "Social"
     ],
     "shortName": "",
     "id": ""
@@ -158,10 +160,9 @@
   },
   {
     "name": "Asian Student Inclusivity Association",
-    "category": "Performance",
+    "category": "Meeting",
     "categories": [
-      "Performance",
-      "Social"
+      "Meeting"
     ],
     "shortName": "ASIA",
     "id": ""
@@ -287,8 +288,10 @@
   },
   {
     "name": "Campus Recreation",
-    "category": "Sporting",
+    "category": "Competition",
     "categories": [
+      "Competition",
+      "Social",
       "Sporting"
     ],
     "shortName": "",
@@ -346,9 +349,9 @@
   },
   {
     "name": "Citamard",
-    "category": "Meeting",
+    "category": "Performance",
     "categories": [
-      "Meeting"
+      "Performance"
     ],
     "shortName": "",
     "id": ""
@@ -383,9 +386,10 @@
   },
   {
     "name": "Clinical Psychology Student Association",
-    "category": "Meeting",
+    "category": "Educational Program",
     "categories": [
-      "Meeting"
+      "Educational Program",
+      "Tabling"
     ],
     "shortName": "CPSA",
     "id": ""
@@ -965,10 +969,10 @@
   },
   {
     "name": "Kappa Alpha Psi Fraternity Incorporated",
-    "category": "Fundraiser",
+    "category": "Social",
     "categories": [
-      "Fundraiser",
-      "Social"
+      "Social",
+      "Tabling"
     ],
     "shortName": "Kappa Alpha Psi",
     "id": ""
@@ -1393,8 +1397,10 @@
   },
   {
     "name": "Phi Delta Theta",
-    "category": "",
-    "categories": [],
+    "category": "Fundraiser",
+    "categories": [
+      "Fundraiser"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1436,11 +1442,8 @@
   },
   {
     "name": "Reformed University Fellowship",
-    "category": "Meeting",
-    "categories": [
-      "Meeting",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "RUF",
     "id": ""
   },
@@ -1590,9 +1593,9 @@
   },
   {
     "name": "Student Government Association",
-    "category": "Meeting",
+    "category": "Service",
     "categories": [
-      "Meeting"
+      "Service"
     ],
     "shortName": "SGA",
     "id": ""
@@ -1771,6 +1774,13 @@
     "id": "tcg-club"
   },
   {
+    "name": "Turning Point Chapter at Millersville University",
+    "category": "",
+    "categories": [],
+    "shortName": "",
+    "id": ""
+  },
+  {
     "name": "University Activities Board",
     "category": "Social",
     "categories": [
@@ -1864,9 +1874,9 @@
   },
   {
     "name": "Women's Club Soccer",
-    "category": "Fundraiser",
+    "category": "Competition",
     "categories": [
-      "Fundraiser"
+      "Competition"
     ],
     "shortName": "Women's Club Soccer",
     "id": ""

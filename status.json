@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-09T16:14:11.757Z",
-  "totalEvents": 1927,
+  "generatedAt": "2026-10-09T18:04:30.725Z",
+  "totalEvents": 1928,
   "withDescription": 824,
   "withImage": 218,
   "familyFriendly": 69,
@@ -11,7 +11,7 @@
     "artsmu": 12,
     "campsAlumni": 22,
     "muGetInvolved": 515,
-    "pennManor": 607,
+    "pennManor": 608,
     "borough": 59,
     "vfw": 5,
     "phantomPower": 12,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 828,
+    "total": 829,
     "scored": 143,
     "wins": 70,
     "losses": 61,
@@ -151,13 +151,13 @@
       "Campus Life": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-09T16:09:58.322Z"
+    "lastSyncAt": "2026-10-09T17:59:33.698Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 6,
-    "checkedAt": "2026-10-09T16:13:59.522Z"
+    "checkedAt": "2026-10-09T18:04:20.859Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -194,7 +194,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 505,
+        "value": 506,
         "min": 150,
         "skipped": false
       },
@@ -235,6 +235,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Coed Varsity Bocce @ Elizabethtown Area High School – Varsity Unified Bocce|2026-12-17T20:30:00.000Z",
+      "firstSeenAt": "2026-10-09T18:04:30.720Z",
+      "title": "Coed Varsity Bocce @ Elizabethtown Area High School – Varsity Unified Bocce",
+      "source": "PM",
+      "date": "2026-12-17T20:30:00.000Z"
+    },
     {
       "key": "Historic Commission - Cancelled|2026-10-12T23:00:00.000Z",
       "firstSeenAt": "2026-10-09T16:14:11.754Z",
@@ -297,14 +304,7 @@
       "title": "Students for Life October Meeting",
       "source": "MU",
       "date": "2026-10-29T21:15:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Wrestling vs Solanco High School|2027-01-14T00:00:00.000Z",
-      "firstSeenAt": "2026-10-09T16:14:11.754Z",
-      "title": "Boys Varsity Wrestling vs Solanco High School",
-      "source": "PM",
-      "date": "2027-01-14T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 13
+  "addedLastRun": 1
 }

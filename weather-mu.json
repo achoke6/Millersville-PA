@@ -1,8 +1,29 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "",
-    "periods": []
+    "issued": "Thursday, October 08, 2026 at 05:26 PM (Bliss, Meier, Rooney, Zwolinski, Student Meteorologists)",
+    "periods": [
+      {
+        "period": "Tonight",
+        "text": "Clear and comfortably cool. Low: 46-50"
+      },
+      {
+        "period": "Tomorrow",
+        "text": "Sunny and seasonable. High: 70-74"
+      },
+      {
+        "period": "Tomorrow Night",
+        "text": "Mainly clear and comfortably cool. Low: 46-50"
+      },
+      {
+        "period": "Saturday",
+        "text": "Beautiful with sunshine filtered through high clouds. High: 70-74"
+      },
+      {
+        "period": "Sunday",
+        "text": "Cloudy with periods of rain. High: 64-68"
+      }
+    ]
   },
   "sevenDay": {
     "issued": "Thursday, October 08, 2026 at 08:22 AM (Kint, Smith, Zocco)",
@@ -107,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "03:00",
+      "temp": "47",
+      "dewpoint": "46",
+      "rh": "98",
+      "windDir": "SW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "02:00",
+      "temp": "48",
+      "dewpoint": "47",
+      "rh": "96",
+      "windDir": "SW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "01:00",
       "temp": "49",
       "dewpoint": "47",
@@ -146,28 +189,6 @@
       "rh": "74",
       "windDir": "SSW",
       "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "21:00",
-      "temp": "60",
-      "dewpoint": "46",
-      "rh": "59",
-      "windDir": "WNW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "20:00",
-      "temp": "63",
-      "dewpoint": "44",
-      "rh": "51",
-      "windDir": "NW",
-      "windSpeed": "2",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
@@ -282,7 +303,36 @@
     "radar": "https://sirocco.accuweather.com/nx_mosaic_640x480c/RE/inmaREPA_.gif",
     "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
   },
-  "videos": [],
+  "videos": [
+    {
+      "title": "Short Term Forecast 10/08/2026",
+      "videoId": "keRAvfsPEe0",
+      "url": "https://www.youtube.com/watch?v=keRAvfsPEe0",
+      "published": "2026-10-08T15:30:37+00:00",
+      "thumbnail": "https://i4.ytimg.com/vi/keRAvfsPEe0/hqdefault.jpg"
+    },
+    {
+      "title": "Medium Range Forecast 10/08/2026",
+      "videoId": "1UYcCIM2vFQ",
+      "url": "https://www.youtube.com/watch?v=1UYcCIM2vFQ",
+      "published": "2026-10-08T13:48:12+00:00",
+      "thumbnail": "https://i2.ytimg.com/vi/1UYcCIM2vFQ/hqdefault.jpg"
+    },
+    {
+      "title": "Short Term Forecast 10/07/2026",
+      "videoId": "hna-rbaRBDw",
+      "url": "https://www.youtube.com/watch?v=hna-rbaRBDw",
+      "published": "2026-10-07T17:03:32+00:00",
+      "thumbnail": "https://i1.ytimg.com/vi/hna-rbaRBDw/hqdefault.jpg"
+    },
+    {
+      "title": "Short Term Forecast 10/06/2026",
+      "videoId": "q4zfSX4T5RM",
+      "url": "https://www.youtube.com/watch?v=q4zfSX4T5RM",
+      "published": "2026-10-06T15:22:38+00:00",
+      "thumbnail": "https://i2.ytimg.com/vi/q4zfSX4T5RM/hqdefault.jpg"
+    }
+  ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-09T05:46:32.591Z"
+  "updated": "2026-10-09T07:36:39.960Z"
 }

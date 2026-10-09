@@ -1,27 +1,27 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Friday, October 09, 2026 at 12:19 PM (Banaszak, Nornhold, Reitz, Student Meteorologists)",
+    "issued": "Friday, October 09, 2026 at 04:40 PM (Cokain, Student Meteorologist)",
     "periods": [
-      {
-        "period": "This afternoon",
-        "text": "Mostly sunny and seasonable. High: 70-74"
-      },
       {
         "period": "Tonight",
         "text": "Mainly clear and comfortably cool. Low: 44-48"
       },
       {
-        "period": "Saturday",
+        "period": "Tomorrow",
         "text": "Beautiful with sunshine dimmed by high clouds. High: 70-74"
       },
       {
-        "period": "Saturday Night",
+        "period": "Tomorrow Night",
         "text": "Mostly cloudy and mild with light rain arriving after midnight. Low: 54-58"
       },
       {
         "period": "Sunday",
         "text": "Cloudy, breezy, and cool with periods of rain. High: 64-68"
+      },
+      {
+        "period": "Monday",
+        "text": "Mostly cloudy and warmer. High: 72-76"
       }
     ]
   },
@@ -126,7 +126,74 @@
       }
     ]
   },
-  "observations": [],
+  "observations": [
+    {
+      "time": "16:00",
+      "temp": "73",
+      "dewpoint": "44",
+      "rh": "35",
+      "windDir": "N",
+      "windSpeed": "8",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "14:00",
+      "temp": "72",
+      "dewpoint": "41",
+      "rh": "33",
+      "windDir": "W",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "13:00",
+      "temp": "73",
+      "dewpoint": "44",
+      "rh": "35",
+      "windDir": "WSW",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "71",
+      "dewpoint": "43",
+      "rh": "37",
+      "windDir": "NNW",
+      "windSpeed": "7",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "11:00",
+      "temp": "67",
+      "dewpoint": "47",
+      "rh": "48",
+      "windDir": "NNW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "10:00",
+      "temp": "61",
+      "dewpoint": "49",
+      "rh": "64",
+      "windDir": "SW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    }
+  ],
   "dailySummary": {
     "monthLabel": "October 2026",
     "days": [
@@ -267,5 +334,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-09T19:49:55.514Z"
+  "updated": "2026-10-09T20:52:16.181Z"
 }

@@ -1,29 +1,8 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Thursday, October 08, 2026 at 05:26 PM (Bliss, Meier, Rooney, Zwolinski, Student Meteorologists)",
-    "periods": [
-      {
-        "period": "Tonight",
-        "text": "Clear and comfortably cool. Low: 46-50"
-      },
-      {
-        "period": "Tomorrow",
-        "text": "Sunny and seasonable. High: 70-74"
-      },
-      {
-        "period": "Tomorrow Night",
-        "text": "Mainly clear and comfortably cool. Low: 46-50"
-      },
-      {
-        "period": "Saturday",
-        "text": "Beautiful with sunshine filtered through high clouds. High: 70-74"
-      },
-      {
-        "period": "Sunday",
-        "text": "Cloudy with periods of rain. High: 64-68"
-      }
-    ]
+    "issued": "",
+    "periods": []
   },
   "sevenDay": {
     "issued": "Thursday, October 08, 2026 at 08:22 AM (Kint, Smith, Zocco)",
@@ -128,6 +107,28 @@
   },
   "observations": [
     {
+      "time": "01:00",
+      "temp": "49",
+      "dewpoint": "47",
+      "rh": "95",
+      "windDir": "SW",
+      "windSpeed": "0",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "00:00",
+      "temp": "51",
+      "dewpoint": "48",
+      "rh": "90",
+      "windDir": "SSW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "23:00",
       "temp": "53",
       "dewpoint": "48",
@@ -167,28 +168,6 @@
       "rh": "51",
       "windDir": "NW",
       "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "19:00",
-      "temp": "68",
-      "dewpoint": "41",
-      "rh": "38",
-      "windDir": "NNW",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "18:00",
-      "temp": "72",
-      "dewpoint": "42",
-      "rh": "34",
-      "windDir": "NNW",
-      "windSpeed": "5",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
@@ -273,6 +252,17 @@
         "windSpeed": "17",
         "windTime": "12:19",
         "rain": "0.00"
+      },
+      {
+        "date": "10/08",
+        "max": "77",
+        "maxTime": "14:39",
+        "min": "51",
+        "minTime": "23:58",
+        "windDir": "307",
+        "windSpeed": "20",
+        "windTime": "14:02",
+        "rain": "0.00"
       }
     ],
     "totalRain": "0.07",
@@ -294,5 +284,5 @@
   },
   "videos": [],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-09T03:57:23.990Z"
+  "updated": "2026-10-09T05:46:32.591Z"
 }

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-09T12:43:06.727Z",
+  "generatedAt": "2026-10-09T14:32:28.521Z",
   "totalEvents": 1922,
   "withDescription": 823,
   "withImage": 219,
@@ -143,21 +143,21 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 5,
-    "pendingPast": 5,
+    "pendingFuture": 4,
+    "pendingPast": 6,
     "pendingBySource": {
-      "PM Community": 3,
+      "PM Community": 2,
       "Youth Sports": 1,
       "Campus Life": 1
     },
-    "stalePast": 8,
-    "lastSyncAt": "2026-10-09T12:39:22.370Z"
+    "stalePast": 9,
+    "lastSyncAt": "2026-10-09T14:28:33.192Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 6,
-    "checkedAt": "2026-10-09T12:42:51.935Z"
+    "checkedAt": "2026-10-09T14:32:20.391Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -236,6 +236,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Pie a BSU Member|2026-10-19T16:00:00.000Z",
+      "firstSeenAt": "2026-10-09T14:32:28.518Z",
+      "title": "Pie a BSU Member",
+      "source": "MU",
+      "date": "2026-10-19T16:00:00.000Z"
+    },
+    {
       "key": "Student Government Association (SGA) Weekly Meeting|2026-10-01T17:00:00",
       "firstSeenAt": "2026-10-09T01:46:27.983Z",
       "title": "Student Government Association (SGA) Weekly Meeting",
@@ -297,14 +304,7 @@
       "title": "Board Game Club Weekly Meeting",
       "source": "MU",
       "date": "2026-10-28T22:00:00.000Z"
-    },
-    {
-      "key": "Wednesday Night Dinner|2026-10-28T22:00:00.000Z",
-      "firstSeenAt": "2026-10-09T01:46:27.983Z",
-      "title": "Wednesday Night Dinner",
-      "source": "MU",
-      "date": "2026-10-28T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

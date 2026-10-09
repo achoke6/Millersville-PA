@@ -55,10 +55,8 @@
   },
   {
     "name": "Alpha Sigma Alpha",
-    "category": "Fundraiser",
-    "categories": [
-      "Fundraiser"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -139,15 +137,6 @@
     ],
     "shortName": "",
     "id": "rotc"
-  },
-  {
-    "name": "Army ROTC: Special Team",
-    "category": "Service & Civic Engagement",
-    "categories": [
-      "Service & Civic Engagement"
-    ],
-    "shortName": "",
-    "id": "rotcspecialteams"
   },
   {
     "name": "Art Club",
@@ -551,6 +540,15 @@
     "id": "contratreblesdiversitychoir"
   },
   {
+    "name": "Corps of Cadets",
+    "category": "Service & Civic Engagement",
+    "categories": [
+      "Service & Civic Engagement"
+    ],
+    "shortName": "",
+    "id": "rotcspecialteams"
+  },
+  {
     "name": "Creative Writers Guild",
     "category": "Meeting",
     "categories": [
@@ -813,11 +811,8 @@
   },
   {
     "name": "Gender and Sexuality Alliance",
-    "category": "Meeting",
-    "categories": [
-      "Meeting",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "GSA",
     "id": ""
   },
@@ -1626,10 +1621,8 @@
   },
   {
     "name": "Students for Life",
-    "category": "Tabling",
-    "categories": [
-      "Tabling"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1645,12 +1638,14 @@
   },
   {
     "name": "Tau Kappa Epsilon",
-    "category": "Fraternity & Sorority Life",
+    "category": "Service",
     "categories": [
-      "Fraternity & Sorority Life"
+      "Service",
+      "Fundraiser",
+      "Tabling"
     ],
-    "shortName": "TKE",
-    "id": "taukappaepsilon"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "TCG Players of Millersville",

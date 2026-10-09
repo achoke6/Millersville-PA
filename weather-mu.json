@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "12:00",
+      "temp": "71",
+      "dewpoint": "43",
+      "rh": "37",
+      "windDir": "NNW",
+      "windSpeed": "7",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "11:00",
+      "temp": "67",
+      "dewpoint": "47",
+      "rh": "48",
+      "windDir": "NNW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "10:00",
       "temp": "61",
       "dewpoint": "49",
@@ -165,28 +187,6 @@
       "temp": "43",
       "dewpoint": "43",
       "rh": "98",
-      "windDir": "SSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "44",
-      "dewpoint": "44",
-      "rh": "99",
-      "windDir": "SSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "05:00",
-      "temp": "45",
-      "dewpoint": "44",
-      "rh": "97",
       "windDir": "SSW",
       "windSpeed": "1",
       "precip": "0.00",
@@ -294,9 +294,9 @@
     "yearMinDate": "January 21"
   },
   "discussion": {
-    "headline": "sunny, dry and beautiful autumn week!",
-    "dateLine": "12:30 p.m. Tuesday, October 6, 2026",
-    "excerpt": "Following a cloudy, cool, damp and dreary Sunday, the first full week of October kicked off on a mostly sunny, breezy and pleasant note with high temperatures in the upper 60s to low 70s Monday afternoon. A high pressure system of Canadian origin has since settled into the Commonwealth and caused winds to subside behind last evening's cold frontal passage. …",
+    "headline": "remnants of isaias to bring soaking rain, wind on sunday",
+    "dateLine": "11:30 a.m. Friday, October 9, 2026, Update",
+    "excerpt": "This week's weather has been nothing short of spectacular across northern MD, southeastern PA and the Lower Susquehanna Valley. High pressure has promoted lots of sunshine, dry conditions, seasonably cool nights and pleasantly warm afternoons. A weak cold front moved through the Commonwealth from Thursday into Thursday night, but the air mass behind it is similar to the one ahead of it. Moreoever, a high pressure system is still situated over eastern Ohio and western PA. …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -334,5 +334,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-09T14:28:35.326Z"
+  "updated": "2026-10-09T16:09:59.979Z"
 }

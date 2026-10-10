@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-10-10T06:19:22.858Z",
-  "totalEvents": 1925,
+  "generatedAt": "2026-10-10T07:07:22.457Z",
+  "totalEvents": 1926,
   "withDescription": 821,
-  "withImage": 219,
+  "withImage": 220,
   "familyFriendly": 68,
   "eventsToday": 11,
   "sources": {
@@ -14,7 +14,7 @@
     "pennManor": 608,
     "borough": 59,
     "vfw": 5,
-    "phantomPower": 12,
+    "phantomPower": 13,
     "community": 16,
     "manor": 40,
     "raneyCellars": 5,
@@ -151,13 +151,13 @@
       "Campus Life": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-10T06:15:06.368Z"
+    "lastSyncAt": "2026-10-10T07:03:51.636Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 6,
-    "checkedAt": "2026-10-10T06:19:13.941Z"
+    "checkedAt": "2026-10-10T07:07:13.080Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -180,7 +180,7 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 238,
+        "value": 237,
         "min": 30,
         "skipped": false
       },
@@ -235,6 +235,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "BRASS AGAINST|2026-11-06T00:00:00.000Z",
+      "firstSeenAt": "2026-10-10T07:07:22.454Z",
+      "title": "BRASS AGAINST",
+      "source": "Other",
+      "date": "2026-11-06T00:00:00.000Z"
+    },
     {
       "key": "Game Day - The Walking Dead|2026-10-29T21:00:00.000Z",
       "firstSeenAt": "2026-10-10T00:36:51.845Z",
@@ -297,14 +304,7 @@
       "title": "TKE Tabling",
       "source": "MU",
       "date": "2026-10-21T16:30:00.000Z"
-    },
-    {
-      "key": "GSA's Halloween Party with Costume Contest|2026-10-27T22:00:00.000Z",
-      "firstSeenAt": "2026-10-09T16:14:11.754Z",
-      "title": "GSA's Halloween Party with Costume Contest",
-      "source": "MU",
-      "date": "2026-10-27T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

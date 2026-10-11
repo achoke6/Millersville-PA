@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-11T05:34:12.526Z",
+  "generatedAt": "2026-10-11T07:23:10.389Z",
   "totalEvents": 1926,
   "withDescription": 821,
   "withImage": 220,
@@ -55,7 +55,7 @@
       "latest": "2026-11-22T21:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-10-11T00:00:00.000Z",
+      "earliest": "2026-10-14T23:00:00.000Z",
       "latest": "2026-12-09T01:00:00.000Z"
     },
     "community": {
@@ -151,13 +151,13 @@
       "Campus Life": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-11T05:29:58.059Z"
+    "lastSyncAt": "2026-10-11T07:19:37.552Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 6,
-    "checkedAt": "2026-10-11T05:34:00.633Z"
+    "checkedAt": "2026-10-11T07:22:59.304Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -180,7 +180,7 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 237,
+        "value": 236,
         "min": 30,
         "skipped": false
       },
@@ -235,6 +235,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "NAILBITE w. Strange Culture, Traverse The Abyss, & Desolation|2026-11-07T00:00:00.000Z",
+      "firstSeenAt": "2026-10-11T07:23:10.386Z",
+      "title": "NAILBITE w. Strange Culture, Traverse The Abyss, & Desolation",
+      "source": "Other",
+      "date": "2026-11-07T00:00:00.000Z"
+    },
     {
       "key": "BRASS AGAINST|2026-11-06T00:00:00.000Z",
       "firstSeenAt": "2026-10-10T07:07:22.454Z",
@@ -297,14 +304,7 @@
       "title": "AS Pumpkin Painting",
       "source": "MU",
       "date": "2026-10-20T21:00:00.000Z"
-    },
-    {
-      "key": "TKE Tabling|2026-10-21T16:30:00.000Z",
-      "firstSeenAt": "2026-10-09T16:14:11.754Z",
-      "title": "TKE Tabling",
-      "source": "MU",
-      "date": "2026-10-21T16:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

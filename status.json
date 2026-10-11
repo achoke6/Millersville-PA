@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-11T17:30:58.567Z",
-  "totalEvents": 1925,
+  "generatedAt": "2026-10-11T19:20:35.377Z",
+  "totalEvents": 1926,
   "withDescription": 821,
   "withImage": 220,
   "familyFriendly": 68,
   "eventsToday": 4,
   "sources": {
-    "muAthletics": 322,
+    "muAthletics": 323,
     "muCalendar": 172,
     "artsmu": 12,
     "campsAlumni": 21,
@@ -130,10 +130,10 @@
     }
   },
   "sports": {
-    "total": 828,
-    "scored": 151,
+    "total": 829,
+    "scored": 152,
     "wins": 75,
-    "losses": 64,
+    "losses": 65,
     "ties": 12
   },
   "registrations": {
@@ -151,13 +151,13 @@
       "Campus Life": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-11T17:27:08.354Z"
+    "lastSyncAt": "2026-10-11T19:16:21.232Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 6,
-    "checkedAt": "2026-10-11T17:30:48.961Z"
+    "checkedAt": "2026-10-11T19:20:22.439Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -201,7 +201,7 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 322,
+        "value": 323,
         "min": 100,
         "skipped": false
       },
@@ -235,6 +235,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Millersville University Women's Volleyball vs Pitt-Johnstown|2026-09-11T15:00:00.000Z",
+      "firstSeenAt": "2026-10-11T19:20:35.374Z",
+      "title": "Millersville University Women's Volleyball vs Pitt-Johnstown",
+      "source": "MU",
+      "date": "2026-09-11T15:00:00.000Z"
+    },
     {
       "key": "NAILBITE w. Strange Culture, Traverse The Abyss, & Desolation|2026-11-07T00:00:00.000Z",
       "firstSeenAt": "2026-10-11T14:16:53.497Z",
@@ -297,14 +304,7 @@
       "title": "ASA Big/Little + Big/Little Basket Room",
       "source": "MU",
       "date": "2026-10-18T22:00:00.000Z"
-    },
-    {
-      "key": "AS Pumpkin Painting|2026-10-20T21:00:00.000Z",
-      "firstSeenAt": "2026-10-09T16:14:11.754Z",
-      "title": "AS Pumpkin Painting",
-      "source": "MU",
-      "date": "2026-10-20T21:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

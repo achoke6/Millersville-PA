@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-11T14:16:53.501Z",
-  "totalEvents": 1926,
+  "generatedAt": "2026-10-11T15:41:42.538Z",
+  "totalEvents": 1925,
   "withDescription": 821,
   "withImage": 220,
   "familyFriendly": 68,
   "eventsToday": 4,
   "sources": {
-    "muAthletics": 323,
+    "muAthletics": 322,
     "muCalendar": 172,
     "artsmu": 12,
     "campsAlumni": 21,
@@ -130,10 +130,10 @@
     }
   },
   "sports": {
-    "total": 829,
-    "scored": 152,
+    "total": 828,
+    "scored": 151,
     "wins": 75,
-    "losses": 65,
+    "losses": 64,
     "ties": 12
   },
   "registrations": {
@@ -151,13 +151,13 @@
       "Campus Life": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-11T14:12:54.945Z"
+    "lastSyncAt": "2026-10-11T15:38:10.916Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 6,
-    "checkedAt": "2026-10-11T14:16:44.097Z"
+    "checkedAt": "2026-10-11T15:41:33.266Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -201,7 +201,7 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 323,
+        "value": 322,
         "min": 100,
         "skipped": false
       },
@@ -306,5 +306,5 @@
       "date": "2026-10-20T21:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 0
 }

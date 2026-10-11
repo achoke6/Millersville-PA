@@ -26,24 +26,8 @@
     ]
   },
   "sevenDay": {
-    "issued": "Saturday, October 10, 2026 at 09:59 AM (Corman )",
+    "issued": "Sunday, October 11, 2026 at 10:21 AM (Corman )",
     "days": [
-      {
-        "period": "Saturday",
-        "sky": "Clouds & Sun",
-        "weather": "Pleasant",
-        "pop": "<10%",
-        "temp": "72",
-        "conf": "5"
-      },
-      {
-        "period": "Saturday night",
-        "sky": "Mostly Cloudy",
-        "weather": "Rain Developing",
-        "pop": "70%",
-        "temp": "58",
-        "conf": "5"
-      },
       {
         "period": "Sunday",
         "sky": "Cloudy",
@@ -56,17 +40,17 @@
         "period": "Sunday night",
         "sky": "Cloudy",
         "weather": "Rain Ending",
-        "pop": "70%",
+        "pop": "80%",
         "temp": "62",
         "conf": "5"
       },
       {
         "period": "Monday",
-        "sky": "Mostly Cloudy",
+        "sky": "Decreasing Clouds",
         "weather": "Warmer",
         "pop": "<10%",
         "temp": "74",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Monday night",
@@ -74,59 +58,86 @@
         "weather": "Mild",
         "pop": "<10%",
         "temp": "56",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Tuesday",
-        "sky": "Partly Sunny",
+        "sky": "Mostly Sunny",
         "weather": "Unseasonably Warm",
         "pop": "<10%",
         "temp": "82",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Tuesday night",
-        "sky": "Partly Cloudy",
-        "weather": "Mild",
-        "pop": "20%",
-        "temp": "60",
-        "conf": "4"
+        "sky": "Mainly Clear",
+        "weather": "Warm",
+        "pop": "<10%",
+        "temp": "64",
+        "conf": "5"
       },
       {
         "period": "Wednesday",
-        "sky": "Partly Sunny",
-        "weather": "Warm",
+        "sky": "Mostly Sunny",
+        "weather": "Unseasonably Warm",
         "pop": "<10%",
-        "temp": "78",
-        "conf": "3"
+        "temp": "84",
+        "conf": "4"
       },
       {
         "period": "Wednesday night",
         "sky": "Partly Cloudy",
-        "weather": "Fair",
+        "weather": "Mild",
         "pop": "<10%",
-        "temp": "50",
-        "conf": "3"
+        "temp": "58",
+        "conf": "4"
       },
       {
         "period": "Thursday",
         "sky": "Clouds & Sun",
         "weather": "Cooler",
         "pop": "<10%",
-        "temp": "mid 60s",
+        "temp": "68",
+        "conf": "3"
+      },
+      {
+        "period": "Thursday night",
+        "sky": "Variably Cloudy",
+        "weather": "Chc. of Showers",
+        "pop": "40%",
+        "temp": "54",
         "conf": "3"
       },
       {
         "period": "Friday",
+        "sky": "Mostly Cloudy",
+        "weather": "Chc. of Showers",
+        "pop": "40%",
+        "temp": "low 70s",
+        "conf": "3"
+      },
+      {
+        "period": "Saturday",
         "sky": "Clouds & Sun",
-        "weather": "Fair",
-        "pop": "20%",
-        "temp": "mid 60s",
+        "weather": "Cooler",
+        "pop": "<10%",
+        "temp": "upper 50s",
         "conf": "3"
       }
     ]
   },
   "observations": [
+    {
+      "time": "11:00",
+      "temp": "57",
+      "dewpoint": "57",
+      "rh": "99",
+      "windDir": "NE",
+      "windSpeed": "8",
+      "precip": "0.13",
+      "visibility": "1.6",
+      "condition": "Heavy Rain"
+    },
     {
       "time": "10:00",
       "temp": "57",
@@ -180,17 +191,6 @@
       "windSpeed": "6",
       "precip": "0.00",
       "visibility": "6.0",
-      "condition": "Light Showers Rain"
-    },
-    {
-      "time": "05:00",
-      "temp": "60",
-      "dewpoint": "55",
-      "rh": "86",
-      "windDir": "E",
-      "windSpeed": "6",
-      "precip": "0.00",
-      "visibility": "12 +",
       "condition": "Light Showers Rain"
     }
   ],
@@ -356,5 +356,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-11T14:12:57.664Z"
+  "updated": "2026-10-11T15:38:12.993Z"
 }

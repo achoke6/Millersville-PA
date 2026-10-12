@@ -1,8 +1,29 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "",
-    "periods": []
+    "issued": "Monday, October 12, 2026 at 01:53 PM (Kyle Elliott, Meteorologist)",
+    "periods": [
+      {
+        "period": "This afternoon",
+        "text": "Partly sunny and warmer with a gentle breeze. High: 72-76"
+      },
+      {
+        "period": "Tonight",
+        "text": "Mainly clear and mild with patchy, dense fog developing late. Low: 50-54"
+      },
+      {
+        "period": "Tuesday",
+        "text": "Patchy, dense fog early, then mostly sunny, humid and unseasonably warm. High: 80-84"
+      },
+      {
+        "period": "Tuesday Night",
+        "text": "Mainly clear, warm and muggy. Low: 60-64"
+      },
+      {
+        "period": "Wednesday",
+        "text": "Partly sunny, very warm and humid. High: 80-84"
+      }
+    ]
   },
   "sevenDay": {
     "issued": "Monday, October 12, 2026 at 09:18 AM (Kyle Elliott)",
@@ -107,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "16:00",
+      "temp": "71",
+      "dewpoint": "59",
+      "rh": "65",
+      "windDir": "NW",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "15:00",
+      "temp": "71",
+      "dewpoint": "59",
+      "rh": "66",
+      "windDir": "NW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "14:00",
       "temp": "72",
       "dewpoint": "59",
@@ -147,28 +190,6 @@
       "windDir": "NNW",
       "windSpeed": "5",
       "precip": "0.01",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "10:00",
-      "temp": "62",
-      "dewpoint": "55",
-      "rh": "78",
-      "windDir": "N",
-      "windSpeed": "6",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "09:00",
-      "temp": "60",
-      "dewpoint": "56",
-      "rh": "87",
-      "windDir": "N",
-      "windSpeed": "5",
-      "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
     }
@@ -346,5 +367,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-12T18:58:50.886Z"
+  "updated": "2026-10-12T20:49:56.957Z"
 }

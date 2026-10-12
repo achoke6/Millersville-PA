@@ -13,8 +13,10 @@
     "category": "Service",
     "categories": [
       "Service",
-      "Meeting",
-      "Social"
+      "Competition",
+      "Fundraiser",
+      "Social",
+      "Tabling"
     ],
     "shortName": "",
     "id": ""
@@ -149,9 +151,11 @@
   },
   {
     "name": "Asian Student Inclusivity Association",
-    "category": "Meeting",
+    "category": "Performance",
     "categories": [
-      "Meeting"
+      "Performance",
+      "Social",
+      "Tabling"
     ],
     "shortName": "ASIA",
     "id": ""
@@ -211,9 +215,8 @@
   },
   {
     "name": "Bible Campus Ministries",
-    "category": "Educational Program",
+    "category": "Social",
     "categories": [
-      "Educational Program",
       "Social"
     ],
     "shortName": "BCM",
@@ -231,9 +234,10 @@
   },
   {
     "name": "Black Student Union",
-    "category": "Fundraiser",
+    "category": "Social",
     "categories": [
-      "Fundraiser"
+      "Social",
+      "Tabling"
     ],
     "shortName": "",
     "id": ""
@@ -345,12 +349,12 @@
   },
   {
     "name": "Citamard Players",
-    "category": "Arts & Culture",
+    "category": "Performance",
     "categories": [
-      "Arts & Culture"
+      "Performance"
     ],
-    "shortName": "Citamard",
-    "id": "citamardplayers"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Civic & Community Engagement",
@@ -866,10 +870,8 @@
   },
   {
     "name": "Honors College Student Association",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "HCSA",
     "id": ""
   },
@@ -1407,10 +1409,8 @@
   },
   {
     "name": "Pre-Health Club",
-    "category": "Meeting",
-    "categories": [
-      "Meeting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1619,8 +1619,10 @@
   },
   {
     "name": "Students for Life",
-    "category": "",
-    "categories": [],
+    "category": "Tabling",
+    "categories": [
+      "Tabling"
+    ],
     "shortName": "",
     "id": ""
   },

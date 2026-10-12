@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-12T11:23:36.446Z",
+  "generatedAt": "2026-10-12T13:13:42.942Z",
   "totalEvents": 1921,
   "withDescription": 816,
   "withImage": 221,
@@ -131,9 +131,9 @@
   },
   "sports": {
     "total": 831,
-    "scored": 153,
-    "wins": 75,
-    "losses": 66,
+    "scored": 139,
+    "wins": 66,
+    "losses": 61,
     "ties": 12
   },
   "registrations": {
@@ -151,13 +151,13 @@
       "Campus Life": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-12T11:19:34.345Z"
+    "lastSyncAt": "2026-10-12T13:09:00.401Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 6,
-    "checkedAt": "2026-10-12T11:23:27.092Z"
+    "checkedAt": "2026-10-12T13:12:35.726Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -173,7 +173,7 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 227,
+        "value": 226,
         "min": 60,
         "skipped": false
       },

@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-10-11T23:43:56.300Z",
-  "totalEvents": 1926,
-  "withDescription": 821,
-  "withImage": 220,
-  "familyFriendly": 68,
+  "generatedAt": "2026-10-12T01:28:29.103Z",
+  "totalEvents": 1921,
+  "withDescription": 816,
+  "withImage": 221,
+  "familyFriendly": 63,
   "eventsToday": 4,
   "sources": {
     "muAthletics": 323,
-    "muCalendar": 172,
+    "muCalendar": 171,
     "artsmu": 12,
-    "campsAlumni": 21,
+    "campsAlumni": 16,
     "muGetInvolved": 515,
-    "pennManor": 608,
-    "borough": 59,
+    "pennManor": 610,
+    "borough": 58,
     "vfw": 5,
     "phantomPower": 13,
     "community": 16,
@@ -27,7 +27,7 @@
       "latest": "2027-05-27T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-07-13T07:00:00.000Z",
+      "earliest": "2026-07-17T09:00:00.000Z",
       "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
@@ -35,7 +35,7 @@
       "latest": "2027-03-06T19:30:00.000Z"
     },
     "campsAlumni": {
-      "earliest": "2026-07-13T13:00:00.000Z",
+      "earliest": "2026-07-16T22:00:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
@@ -44,10 +44,10 @@
     },
     "pennManor": {
       "earliest": "2026-07-15T22:00:00.000Z",
-      "latest": "2027-10-05T23:00:00.000Z"
+      "latest": "2027-10-11T22:30:00.000Z"
     },
     "borough": {
-      "earliest": "2026-07-13T23:00:00.000Z",
+      "earliest": "2026-07-14T23:00:00.000Z",
       "latest": "2026-12-25T12:00:00.000Z"
     },
     "vfw": {
@@ -97,8 +97,8 @@
       "daysSinceMoved": 38
     },
     "pennManor": {
-      "newest": "2027-10-05",
-      "daysSinceMoved": 5
+      "newest": "2027-10-11",
+      "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2026-12-25",
@@ -130,10 +130,10 @@
     }
   },
   "sports": {
-    "total": 829,
-    "scored": 152,
+    "total": 831,
+    "scored": 153,
     "wins": 75,
-    "losses": 65,
+    "losses": 66,
     "ties": 12
   },
   "registrations": {
@@ -151,13 +151,13 @@
       "Campus Life": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-11T23:39:38.320Z"
+    "lastSyncAt": "2026-10-12T01:24:04.802Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 6,
-    "checkedAt": "2026-10-11T23:43:46.720Z"
+    "checkedAt": "2026-10-12T01:28:21.490Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -166,7 +166,7 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 359,
+        "value": 365,
         "min": 45,
         "skipped": false
       },
@@ -187,14 +187,14 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 75,
+        "value": 74,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 506,
+        "value": 508,
         "min": 150,
         "skipped": false
       },
@@ -236,6 +236,34 @@
   },
   "recentlyAdded": [
     {
+      "key": "Men's Volleyball Club Practice|2026-10-29T23:00:00.000Z",
+      "firstSeenAt": "2026-10-12T01:28:29.100Z",
+      "title": "Men's Volleyball Club Practice",
+      "source": "MU",
+      "date": "2026-10-29T23:00:00.000Z"
+    },
+    {
+      "key": "Club Tennis Practice|2026-10-29T23:00:00.000Z",
+      "firstSeenAt": "2026-10-12T01:28:29.100Z",
+      "title": "Club Tennis Practice",
+      "source": "MU",
+      "date": "2026-10-29T23:00:00.000Z"
+    },
+    {
+      "key": "Girls JV Volleyball @ Central York High School|2027-10-11T21:30:00.000Z",
+      "firstSeenAt": "2026-10-12T01:28:29.100Z",
+      "title": "Girls JV Volleyball @ Central York High School",
+      "source": "PM",
+      "date": "2027-10-11T21:30:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Volleyball @ Central York High School|2027-10-11T22:30:00.000Z",
+      "firstSeenAt": "2026-10-12T01:28:29.100Z",
+      "title": "Girls Varsity Volleyball @ Central York High School",
+      "source": "PM",
+      "date": "2027-10-11T22:30:00.000Z"
+    },
+    {
       "key": "Millersville University Women's Volleyball vs Pitt-Johnstown|2026-09-11T15:00:00.000Z",
       "firstSeenAt": "2026-10-11T19:20:35.374Z",
       "title": "Millersville University Women's Volleyball vs Pitt-Johnstown",
@@ -276,35 +304,7 @@
       "title": "BLACK STONE CHERRY - Bonfire Nights: An Acoustic Evening",
       "source": "Other",
       "date": "2026-12-09T01:00:00.000Z"
-    },
-    {
-      "key": "Coed Varsity Bocce @ Elizabethtown Area High School – Varsity Unified Bocce|2026-12-17T20:30:00.000Z",
-      "firstSeenAt": "2026-10-09T18:04:30.720Z",
-      "title": "Coed Varsity Bocce @ Elizabethtown Area High School – Varsity Unified Bocce",
-      "source": "PM",
-      "date": "2026-12-17T20:30:00.000Z"
-    },
-    {
-      "key": "Historic Commission - Cancelled|2026-10-12T23:00:00.000Z",
-      "firstSeenAt": "2026-10-09T16:14:11.754Z",
-      "title": "Historic Commission - Cancelled",
-      "source": "Borough",
-      "date": "2026-10-12T23:00:00.000Z"
-    },
-    {
-      "key": "Planning Commission-CANCELED|2026-10-14T23:00:00.000Z",
-      "firstSeenAt": "2026-10-09T16:14:11.754Z",
-      "title": "Planning Commission-CANCELED",
-      "source": "Manor",
-      "date": "2026-10-14T23:00:00.000Z"
-    },
-    {
-      "key": "ASA Big/Little + Big/Little Basket Room|2026-10-18T22:00:00.000Z",
-      "firstSeenAt": "2026-10-09T16:14:11.754Z",
-      "title": "ASA Big/Little + Big/Little Basket Room",
-      "source": "MU",
-      "date": "2026-10-18T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 4
 }

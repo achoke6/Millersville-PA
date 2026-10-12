@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-10-12T17:13:21.012Z",
+  "generatedAt": "2026-10-12T19:04:14.516Z",
   "totalEvents": 1920,
   "withDescription": 815,
-  "withImage": 221,
+  "withImage": 222,
   "familyFriendly": 63,
   "eventsToday": 11,
   "sources": {
@@ -151,13 +151,13 @@
       "Campus Life": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-12T17:08:15.155Z"
+    "lastSyncAt": "2026-10-12T18:58:48.818Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 6,
-    "checkedAt": "2026-10-12T17:12:01.646Z"
+    "checkedAt": "2026-10-12T19:02:54.743Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -236,6 +236,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Snacks & Facts Commuter Luncheon|2026-10-21T16:00:00.000Z",
+      "firstSeenAt": "2026-10-12T19:04:14.512Z",
+      "title": "Snacks & Facts Commuter Luncheon",
+      "source": "MU",
+      "date": "2026-10-21T16:00:00.000Z"
+    },
+    {
       "key": "Boys Varsity Wrestling vs Brandywine Heights High School|2026-12-11T21:00:00.000Z",
       "firstSeenAt": "2026-10-12T15:04:01.351Z",
       "title": "Boys Varsity Wrestling vs Brandywine Heights High School",
@@ -278,13 +285,6 @@
       "date": "2026-10-29T23:00:00.000Z"
     },
     {
-      "key": "Club Tennis Practice|2026-10-29T23:00:00.000Z",
-      "firstSeenAt": "2026-10-12T01:28:29.100Z",
-      "title": "Club Tennis Practice",
-      "source": "MU",
-      "date": "2026-10-29T23:00:00.000Z"
-    },
-    {
       "key": "Girls JV Volleyball @ Central York High School|2027-10-11T21:30:00.000Z",
       "firstSeenAt": "2026-10-12T01:28:29.100Z",
       "title": "Girls JV Volleyball @ Central York High School",
@@ -306,5 +306,5 @@
       "date": "2026-09-11T15:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

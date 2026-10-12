@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-10-08T08:59:23.298Z",
-  "totalEvents": 1903,
+  "generatedAt": "2026-10-11T23:43:56.300Z",
+  "totalEvents": 1926,
   "withDescription": 821,
-  "withImage": 214,
-  "familyFriendly": 69,
-  "eventsToday": 37,
+  "withImage": 220,
+  "familyFriendly": 68,
+  "eventsToday": 4,
   "sources": {
-    "muAthletics": 325,
+    "muAthletics": 323,
     "muCalendar": 172,
-    "artsmu": 13,
-    "campsAlumni": 22,
-    "muGetInvolved": 514,
-    "pennManor": 588,
+    "artsmu": 12,
+    "campsAlumni": 21,
+    "muGetInvolved": 515,
+    "pennManor": 608,
     "borough": 59,
     "vfw": 5,
-    "phantomPower": 12,
+    "phantomPower": 13,
     "community": 16,
     "manor": 40,
     "raneyCellars": 5,
-    "theBackyard": 18,
+    "theBackyard": 26,
     "muHudlBroadcasts": 57
   },
   "sourceDateRanges": {
@@ -27,19 +27,19 @@
       "latest": "2027-05-27T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-07-10T07:00:00.000Z",
+      "earliest": "2026-07-13T07:00:00.000Z",
       "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
-      "earliest": "2026-10-09T00:00:00.000Z",
+      "earliest": "2026-10-15T23:00:00.000Z",
       "latest": "2027-03-06T19:30:00.000Z"
     },
     "campsAlumni": {
-      "earliest": "2026-07-11T13:00:00.000Z",
+      "earliest": "2026-07-13T13:00:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-07-06T09:00:00.000Z",
+      "earliest": "2026-08-16T00:00:00.000Z",
       "latest": "2027-04-29T11:30:00.000Z"
     },
     "pennManor": {
@@ -55,8 +55,8 @@
       "latest": "2026-11-22T21:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-10-09T23:30:00.000Z",
-      "latest": "2026-11-06T00:00:00.000Z"
+      "earliest": "2026-10-14T23:00:00.000Z",
+      "latest": "2026-12-09T01:00:00.000Z"
     },
     "community": {
       "earliest": "2026-07-14T22:15:00.000Z",
@@ -72,45 +72,45 @@
     },
     "theBackyard": {
       "earliest": "2026-08-24T12:30:00.000Z",
-      "latest": "2026-11-11T16:00:00.000Z"
+      "latest": "2027-04-28T15:00:00.000Z"
     }
   },
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 37
+      "daysSinceMoved": 40
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 48
+      "daysSinceMoved": 51
     },
     "artsmu": {
       "newest": "2027-03-06",
-      "daysSinceMoved": 40
+      "daysSinceMoved": 43
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 62
+      "daysSinceMoved": 65
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 35
+      "daysSinceMoved": 38
     },
     "pennManor": {
       "newest": "2027-10-05",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 5
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 72
+      "daysSinceMoved": 75
     },
     "vfw": {
       "newest": "2026-11-22",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 5
     },
     "phantomPower": {
-      "newest": "2026-11-06",
-      "daysSinceMoved": 1
+      "newest": "2026-12-09",
+      "daysSinceMoved": 2
     },
     "community": {
       "newest": "2027-04-16",
@@ -118,22 +118,22 @@
     },
     "manor": {
       "newest": "2027-10-06",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 5
     },
     "raneyCellars": {
       "newest": "2026-10-09",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 6
     },
     "theBackyard": {
-      "newest": "2026-11-11",
-      "daysSinceMoved": 7
+      "newest": "2027-04-28",
+      "daysSinceMoved": 3
     }
   },
   "sports": {
-    "total": 811,
-    "scored": 140,
-    "wins": 68,
-    "losses": 60,
+    "total": 829,
+    "scored": 152,
+    "wins": 75,
+    "losses": 65,
     "ties": 12
   },
   "registrations": {
@@ -144,20 +144,20 @@
   },
   "reviewQueue": {
     "pendingFuture": 4,
-    "pendingPast": 5,
+    "pendingPast": 6,
     "pendingBySource": {
       "PM Community": 2,
       "Youth Sports": 1,
       "Campus Life": 1
     },
-    "stalePast": 8,
-    "lastSyncAt": "2026-10-08T08:55:50.062Z"
+    "stalePast": 9,
+    "lastSyncAt": "2026-10-11T23:39:38.320Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 6,
-    "checkedAt": "2026-10-08T08:59:13.952Z"
+    "checkedAt": "2026-10-11T23:43:46.720Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -166,42 +166,42 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 363,
+        "value": 359,
         "min": 45,
         "skipped": false
       },
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 231,
+        "value": 227,
         "min": 60,
         "skipped": false
       },
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 239,
+        "value": 236,
         "min": 30,
         "skipped": false
       },
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 78,
+        "value": 75,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 486,
+        "value": 506,
         "min": 150,
         "skipped": false
       },
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 325,
+        "value": 323,
         "min": 100,
         "skipped": false
       },
@@ -236,75 +236,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Karaoke Night|2026-10-29T02:00:00.000Z",
-      "firstSeenAt": "2026-10-08T08:59:23.296Z",
-      "title": "Karaoke Night",
-      "source": "Jack's Tavern",
-      "date": "2026-10-29T02:00:00.000Z"
-    },
-    {
-      "key": "HB PTO Craft Night|2026-11-13T22:00:00.000Z",
-      "firstSeenAt": "2026-10-08T08:59:23.296Z",
-      "title": "HB PTO Craft Night",
-      "source": "PM",
-      "date": "2026-11-13T22:00:00.000Z"
-    },
-    {
-      "key": "Boys JV Basketball vs Cedar Crest High School|2027-01-08T23:00:00.000Z",
-      "firstSeenAt": "2026-10-08T08:59:23.296Z",
-      "title": "Boys JV Basketball vs Cedar Crest High School",
-      "source": "PM",
-      "date": "2027-01-08T23:00:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Basketball vs Cedar Crest High School|2027-01-09T00:30:00.000Z",
-      "firstSeenAt": "2026-10-08T08:59:23.296Z",
-      "title": "Boys Varsity Basketball vs Cedar Crest High School",
-      "source": "PM",
-      "date": "2027-01-09T00:30:00.000Z"
-    },
-    {
-      "key": "Boys JV Basketball vs Conestoga Valley High School|2027-01-23T23:00:00.000Z",
-      "firstSeenAt": "2026-10-08T08:59:23.296Z",
-      "title": "Boys JV Basketball vs Conestoga Valley High School",
-      "source": "PM",
-      "date": "2027-01-23T23:00:00.000Z"
-    },
-    {
-      "key": "Boys JV Basketball vs Manheim Township High School|2027-02-04T23:00:00.000Z",
-      "firstSeenAt": "2026-10-08T08:59:23.296Z",
-      "title": "Boys JV Basketball vs Manheim Township High School",
-      "source": "PM",
-      "date": "2027-02-04T23:00:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Basketball vs Manheim Township High School|2027-02-05T00:30:00.000Z",
-      "firstSeenAt": "2026-10-08T08:59:23.296Z",
-      "title": "Boys Varsity Basketball vs Manheim Township High School",
-      "source": "PM",
-      "date": "2027-02-05T00:30:00.000Z"
-    },
-    {
-      "key": "Men's Club Soccer Practice|2026-10-27T23:00:00.000Z",
-      "firstSeenAt": "2026-10-08T01:58:45.056Z",
-      "title": "Men's Club Soccer Practice",
+      "key": "Millersville University Women's Volleyball vs Pitt-Johnstown|2026-09-11T15:00:00.000Z",
+      "firstSeenAt": "2026-10-11T19:20:35.374Z",
+      "title": "Millersville University Women's Volleyball vs Pitt-Johnstown",
       "source": "MU",
-      "date": "2026-10-27T23:00:00.000Z"
+      "date": "2026-09-11T15:00:00.000Z"
     },
     {
-      "key": "IFC Meeting|2026-10-28T00:30:00.000Z",
-      "firstSeenAt": "2026-10-08T01:58:45.056Z",
-      "title": "IFC Meeting",
-      "source": "MU",
-      "date": "2026-10-28T00:30:00.000Z"
+      "key": "NAILBITE w. Strange Culture, Traverse The Abyss, & Desolation|2026-11-07T00:00:00.000Z",
+      "firstSeenAt": "2026-10-11T14:16:53.497Z",
+      "title": "NAILBITE w. Strange Culture, Traverse The Abyss, & Desolation",
+      "source": "Other",
+      "date": "2026-11-07T00:00:00.000Z"
     },
     {
-      "key": "Ice Hockey Club (D3) Practice|2026-10-28T01:00:00.000Z",
-      "firstSeenAt": "2026-10-08T01:58:45.056Z",
-      "title": "Ice Hockey Club (D3) Practice",
+      "key": "BRASS AGAINST|2026-11-06T00:00:00.000Z",
+      "firstSeenAt": "2026-10-10T07:07:22.454Z",
+      "title": "BRASS AGAINST",
+      "source": "Other",
+      "date": "2026-11-06T00:00:00.000Z"
+    },
+    {
+      "key": "Game Day - The Walking Dead|2026-10-29T21:00:00.000Z",
+      "firstSeenAt": "2026-10-10T00:36:51.845Z",
+      "title": "Game Day - The Walking Dead",
       "source": "MU",
-      "date": "2026-10-28T01:00:00.000Z"
+      "date": "2026-10-29T21:00:00.000Z"
+    },
+    {
+      "key": "SGA Weekly Meeting|2026-10-29T23:00:00.000Z",
+      "firstSeenAt": "2026-10-10T00:36:51.845Z",
+      "title": "SGA Weekly Meeting",
+      "source": "MU",
+      "date": "2026-10-29T23:00:00.000Z"
+    },
+    {
+      "key": "BLACK STONE CHERRY - Bonfire Nights: An Acoustic Evening|2026-12-09T01:00:00.000Z",
+      "firstSeenAt": "2026-10-10T00:36:51.845Z",
+      "title": "BLACK STONE CHERRY - Bonfire Nights: An Acoustic Evening",
+      "source": "Other",
+      "date": "2026-12-09T01:00:00.000Z"
+    },
+    {
+      "key": "Coed Varsity Bocce @ Elizabethtown Area High School – Varsity Unified Bocce|2026-12-17T20:30:00.000Z",
+      "firstSeenAt": "2026-10-09T18:04:30.720Z",
+      "title": "Coed Varsity Bocce @ Elizabethtown Area High School – Varsity Unified Bocce",
+      "source": "PM",
+      "date": "2026-12-17T20:30:00.000Z"
+    },
+    {
+      "key": "Historic Commission - Cancelled|2026-10-12T23:00:00.000Z",
+      "firstSeenAt": "2026-10-09T16:14:11.754Z",
+      "title": "Historic Commission - Cancelled",
+      "source": "Borough",
+      "date": "2026-10-12T23:00:00.000Z"
+    },
+    {
+      "key": "Planning Commission-CANCELED|2026-10-14T23:00:00.000Z",
+      "firstSeenAt": "2026-10-09T16:14:11.754Z",
+      "title": "Planning Commission-CANCELED",
+      "source": "Manor",
+      "date": "2026-10-14T23:00:00.000Z"
+    },
+    {
+      "key": "ASA Big/Little + Big/Little Basket Room|2026-10-18T22:00:00.000Z",
+      "firstSeenAt": "2026-10-09T16:14:11.754Z",
+      "title": "ASA Big/Little + Big/Little Basket Room",
+      "source": "MU",
+      "date": "2026-10-18T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 7
+  "addedLastRun": 0
 }

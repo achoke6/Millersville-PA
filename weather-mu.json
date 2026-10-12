@@ -26,27 +26,11 @@
     ]
   },
   "sevenDay": {
-    "issued": "Sunday, October 11, 2026 at 10:21 AM (Corman )",
+    "issued": "Monday, October 12, 2026 at 09:18 AM (Kyle Elliott)",
     "days": [
       {
-        "period": "Sunday",
-        "sky": "Cloudy",
-        "weather": "Periods of Rain",
-        "pop": ">90%",
-        "temp": "66",
-        "conf": "5"
-      },
-      {
-        "period": "Sunday night",
-        "sky": "Cloudy",
-        "weather": "Rain Ending",
-        "pop": "80%",
-        "temp": "62",
-        "conf": "5"
-      },
-      {
         "period": "Monday",
-        "sky": "Decreasing Clouds",
+        "sky": "Partly Sunny",
         "weather": "Warmer",
         "pop": "<10%",
         "temp": "74",
@@ -55,9 +39,9 @@
       {
         "period": "Monday night",
         "sky": "Mainly Clear",
-        "weather": "Mild",
+        "weather": "Fog Late",
         "pop": "<10%",
-        "temp": "56",
+        "temp": "52",
         "conf": "5"
       },
       {
@@ -71,55 +55,71 @@
       {
         "period": "Tuesday night",
         "sky": "Mainly Clear",
-        "weather": "Warm",
+        "weather": "Warm & Muggy",
         "pop": "<10%",
-        "temp": "64",
+        "temp": "62",
         "conf": "5"
       },
       {
         "period": "Wednesday",
-        "sky": "Mostly Sunny",
-        "weather": "Unseasonably Warm",
-        "pop": "<10%",
-        "temp": "84",
+        "sky": "Partly Sunny",
+        "weather": "Warm & Muggy",
+        "pop": "20%",
+        "temp": "82",
         "conf": "4"
       },
       {
         "period": "Wednesday night",
         "sky": "Partly Cloudy",
         "weather": "Mild",
-        "pop": "<10%",
+        "pop": "20%",
         "temp": "58",
         "conf": "4"
       },
       {
         "period": "Thursday",
-        "sky": "Clouds & Sun",
+        "sky": "Partly Sunny",
         "weather": "Cooler",
         "pop": "<10%",
         "temp": "68",
-        "conf": "3"
+        "conf": "4"
       },
       {
         "period": "Thursday night",
-        "sky": "Variably Cloudy",
-        "weather": "Chc. of Showers",
-        "pop": "40%",
-        "temp": "54",
-        "conf": "3"
+        "sky": "Mostly Cloudy",
+        "weather": "Scattered Showers",
+        "pop": "60%",
+        "temp": "56",
+        "conf": "4"
       },
       {
         "period": "Friday",
-        "sky": "Mostly Cloudy",
+        "sky": "Clouds & Sun",
         "weather": "Chc. of Showers",
         "pop": "40%",
-        "temp": "low 70s",
+        "temp": "74",
+        "conf": "3"
+      },
+      {
+        "period": "Friday night",
+        "sky": "Mainly Clear",
+        "weather": "Windy",
+        "pop": "<10%",
+        "temp": "46",
         "conf": "3"
       },
       {
         "period": "Saturday",
-        "sky": "Clouds & Sun",
+        "sky": "Mostly Sunny",
         "weather": "Cooler",
+        "pop": "<10%",
+        "temp": "mid 50s",
+        "conf": "3"
+      },
+      {
+        "period": "Sunday",
+        "sky": "Mostly Sunny",
+        "weather": "Cool",
         "pop": "<10%",
         "temp": "upper 50s",
         "conf": "3"
@@ -127,6 +127,17 @@
     ]
   },
   "observations": [
+    {
+      "time": "10:00",
+      "temp": "62",
+      "dewpoint": "55",
+      "rh": "78",
+      "windDir": "N",
+      "windSpeed": "6",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
     {
       "time": "09:00",
       "temp": "60",
@@ -178,17 +189,6 @@
       "rh": "96",
       "windDir": "N",
       "windSpeed": "5",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "04:00",
-      "temp": "56",
-      "dewpoint": "55",
-      "rh": "97",
-      "windDir": "NNE",
-      "windSpeed": "8",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
@@ -367,5 +367,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-12T13:09:03.484Z"
+  "updated": "2026-10-12T14:59:10.941Z"
 }

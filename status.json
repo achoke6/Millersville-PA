@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-10-13T11:47:54.229Z",
-  "totalEvents": 1920,
-  "withDescription": 816,
+  "generatedAt": "2026-10-13T13:04:59.667Z",
+  "totalEvents": 1923,
+  "withDescription": 818,
   "withImage": 219,
-  "familyFriendly": 62,
+  "familyFriendly": 64,
   "eventsToday": 18,
   "sources": {
     "muAthletics": 323,
-    "muCalendar": 171,
+    "muCalendar": 170,
     "artsmu": 12,
     "campsAlumni": 16,
-    "muGetInvolved": 517,
+    "muGetInvolved": 519,
     "pennManor": 610,
     "borough": 57,
     "vfw": 5,
@@ -131,33 +131,31 @@
   },
   "sports": {
     "total": 831,
-    "scored": 154,
-    "wins": 76,
+    "scored": 155,
+    "wins": 77,
     "losses": 66,
     "ties": 12
   },
   "registrations": {
-    "open": 7,
-    "next2Weeks": 5,
+    "open": 9,
+    "next2Weeks": 6,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 4,
+    "pendingFuture": 1,
     "pendingPast": 6,
     "pendingBySource": {
-      "PM Community": 2,
-      "Youth Sports": 1,
-      "Campus Life": 1
+      "Youth Sports": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-13T11:44:29.046Z"
+    "lastSyncAt": "2026-10-13T13:01:31.398Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-13T11:47:46.030Z"
+    "checkedAt": "2026-10-13T13:04:49.782Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -173,7 +171,7 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 226,
+        "value": 225,
         "min": 60,
         "skipped": false
       },
@@ -236,6 +234,34 @@
   },
   "recentlyAdded": [
     {
+      "key": "PrideFest Open Mic Hour|2026-10-15T20:30:00.000Z",
+      "firstSeenAt": "2026-10-13T13:04:59.663Z",
+      "title": "PrideFest Open Mic Hour",
+      "source": "MU",
+      "date": "2026-10-15T20:30:00.000Z"
+    },
+    {
+      "key": "Drag Bingo|2026-10-16T01:00:00.000Z",
+      "firstSeenAt": "2026-10-13T13:04:59.663Z",
+      "title": "Drag Bingo",
+      "source": "MU",
+      "date": "2026-10-16T01:00:00.000Z"
+    },
+    {
+      "key": "Salvation Army Christmas Assistance Applications|2026-11-03T14:00:00.000Z",
+      "firstSeenAt": "2026-10-13T13:04:59.663Z",
+      "title": "Salvation Army Christmas Assistance Applications",
+      "source": "Other",
+      "date": "2026-11-03T14:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Dance Team Kids Camp|2026-11-07T14:00:00.000Z",
+      "firstSeenAt": "2026-10-13T13:04:59.663Z",
+      "title": "Millersville University Dance Team Kids Camp",
+      "source": "Other",
+      "date": "2026-11-07T14:00:00.000Z"
+    },
+    {
       "key": "IFI Millersville Student Mixer|2026-10-02T18:00:00",
       "firstSeenAt": "2026-10-13T00:51:56.712Z",
       "title": "IFI Millersville Student Mixer",
@@ -276,35 +302,7 @@
       "title": "HCSA Bake Sale",
       "source": "MU",
       "date": "2026-10-14T15:30:00.000Z"
-    },
-    {
-      "key": "Night Market|2026-10-14T22:00:00.000Z",
-      "firstSeenAt": "2026-10-12T20:55:14.849Z",
-      "title": "Night Market",
-      "source": "MU",
-      "date": "2026-10-14T22:00:00.000Z"
-    },
-    {
-      "key": "Improv Molotov Performance|2026-10-14T23:00:00.000Z",
-      "firstSeenAt": "2026-10-12T20:55:14.849Z",
-      "title": "Improv Molotov Performance",
-      "source": "MU",
-      "date": "2026-10-14T23:00:00.000Z"
-    },
-    {
-      "key": "HCSA Bake Sale|2026-10-15T15:30:00.000Z",
-      "firstSeenAt": "2026-10-12T20:55:14.849Z",
-      "title": "HCSA Bake Sale",
-      "source": "MU",
-      "date": "2026-10-15T15:30:00.000Z"
-    },
-    {
-      "key": "MCAT Breakdown with Pre-Health Club|2026-10-15T23:00:00.000Z",
-      "firstSeenAt": "2026-10-12T20:55:14.849Z",
-      "title": "MCAT Breakdown with Pre-Health Club",
-      "source": "MU",
-      "date": "2026-10-15T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 4
 }

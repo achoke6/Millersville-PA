@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-10-13T18:53:28.545Z",
-  "totalEvents": 1921,
-  "withDescription": 816,
-  "withImage": 220,
+  "generatedAt": "2026-10-13T19:19:02.678Z",
+  "totalEvents": 1920,
+  "withDescription": 815,
+  "withImage": 221,
   "familyFriendly": 65,
   "eventsToday": 17,
   "sources": {
@@ -10,7 +10,7 @@
     "muCalendar": 169,
     "artsmu": 12,
     "campsAlumni": 16,
-    "muGetInvolved": 519,
+    "muGetInvolved": 518,
     "pennManor": 610,
     "borough": 57,
     "vfw": 5,
@@ -149,13 +149,13 @@
       "Youth Sports": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-13T18:49:40.957Z"
+    "lastSyncAt": "2026-10-13T19:15:01.583Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-13T18:53:18.277Z"
+    "checkedAt": "2026-10-13T19:18:52.182Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -234,6 +234,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Friday Night at the Pumpkin Patch|2026-10-16T22:00:00.000Z",
+      "firstSeenAt": "2026-10-13T19:19:02.674Z",
+      "title": "Friday Night at the Pumpkin Patch",
+      "source": "MU",
+      "date": "2026-10-16T22:00:00.000Z"
+    },
+    {
       "key": "Campus Life cheers on MU Field Hockey!|2026-10-16T19:00:00.000Z",
       "firstSeenAt": "2026-10-13T18:53:28.542Z",
       "title": "Campus Life cheers on MU Field Hockey!",
@@ -295,14 +302,7 @@
       "title": "Millersville University Dance Team Kids Camp",
       "source": "Other",
       "date": "2026-11-07T14:00:00.000Z"
-    },
-    {
-      "key": "IFI Millersville Student Mixer|2026-10-02T18:00:00",
-      "firstSeenAt": "2026-10-13T00:51:56.712Z",
-      "title": "IFI Millersville Student Mixer",
-      "source": "MU",
-      "date": "2026-10-02T18:00:00"
     }
   ],
-  "addedLastRun": 4
+  "addedLastRun": 1
 }

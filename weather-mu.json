@@ -1,11 +1,11 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Tuesday, October 13, 2026 at 08:39 AM (Kyle Elliott, Meteorologist)",
+    "issued": "Tuesday, October 13, 2026 at 11:55 AM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "Today",
-        "text": "Mostly sunny, humid and unseasonably warm with an afternoon breeze. High: 80-84"
+        "period": "This afternoon",
+        "text": "Sunny, more humid and unseasonably warm with a gentle breeze. High: 80-84"
       },
       {
         "period": "Tonight",
@@ -126,74 +126,7 @@
       }
     ]
   },
-  "observations": [
-    {
-      "time": "11:00",
-      "temp": "73",
-      "dewpoint": "60",
-      "rh": "64",
-      "windDir": "SSW",
-      "windSpeed": "6",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "10:00",
-      "temp": "66",
-      "dewpoint": "59",
-      "rh": "79",
-      "windDir": "SSW",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "09:00",
-      "temp": "59",
-      "dewpoint": "57",
-      "rh": "93",
-      "windDir": "S",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "9.0",
-      "condition": "None"
-    },
-    {
-      "time": "08:00",
-      "temp": "53",
-      "dewpoint": "52",
-      "rh": "100",
-      "windDir": "SSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "8.5",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "51",
-      "dewpoint": "51",
-      "rh": "100",
-      "windDir": "WNW",
-      "windSpeed": "0",
-      "precip": "0.00",
-      "visibility": "7.6",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "52",
-      "dewpoint": "52",
-      "rh": "99",
-      "windDir": "WSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "5.7",
-      "condition": "None"
-    }
-  ],
+  "observations": [],
   "dailySummary": {
     "monthLabel": "October 2026",
     "days": [
@@ -378,5 +311,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-13T15:11:09.058Z"
+  "updated": "2026-10-13T17:00:30.151Z"
 }

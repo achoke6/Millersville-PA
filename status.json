@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-10-13T15:15:05.081Z",
-  "totalEvents": 1922,
-  "withDescription": 817,
+  "generatedAt": "2026-10-13T17:04:21.768Z",
+  "totalEvents": 1923,
+  "withDescription": 818,
   "withImage": 219,
-  "familyFriendly": 64,
+  "familyFriendly": 65,
   "eventsToday": 17,
   "sources": {
     "muAthletics": 323,
-    "muCalendar": 170,
+    "muCalendar": 171,
     "artsmu": 12,
     "campsAlumni": 16,
     "muGetInvolved": 519,
@@ -137,8 +137,8 @@
     "ties": 12
   },
   "registrations": {
-    "open": 9,
-    "next2Weeks": 6,
+    "open": 8,
+    "next2Weeks": 5,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
@@ -149,13 +149,13 @@
       "Youth Sports": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-13T15:11:07.373Z"
+    "lastSyncAt": "2026-10-13T17:00:27.767Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-13T15:14:52.824Z"
+    "checkedAt": "2026-10-13T17:04:09.018Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -234,6 +234,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Disability Film Festival|2026-10-27T18:00:00",
+      "firstSeenAt": "2026-10-13T17:04:21.764Z",
+      "title": "Disability Film Festival",
+      "source": "MU",
+      "date": "2026-10-27T18:00:00"
+    },
+    {
       "key": "Salvation Army Christmas Assistance Applications|2026-11-23T04:59:00.000Z",
       "firstSeenAt": "2026-10-13T13:25:44.950Z",
       "title": "Salvation Army Christmas Assistance Applications",
@@ -295,14 +302,7 @@
       "title": "ADAPT general meeting- Halloween Party Edition!",
       "source": "MU",
       "date": "2026-10-29T21:30:00.000Z"
-    },
-    {
-      "key": "HCSA Bake Sale|2026-10-14T15:30:00.000Z",
-      "firstSeenAt": "2026-10-12T20:55:14.849Z",
-      "title": "HCSA Bake Sale",
-      "source": "MU",
-      "date": "2026-10-14T15:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

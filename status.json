@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-10-12T23:01:34.861Z",
-  "totalEvents": 1921,
+  "generatedAt": "2026-10-13T00:51:56.727Z",
+  "totalEvents": 1920,
   "withDescription": 816,
   "withImage": 219,
-  "familyFriendly": 63,
+  "familyFriendly": 62,
   "eventsToday": 11,
   "sources": {
     "muAthletics": 323,
     "muCalendar": 171,
     "artsmu": 12,
     "campsAlumni": 16,
-    "muGetInvolved": 516,
+    "muGetInvolved": 517,
     "pennManor": 610,
-    "borough": 58,
+    "borough": 57,
     "vfw": 5,
     "phantomPower": 13,
-    "community": 16,
+    "community": 15,
     "manor": 40,
     "raneyCellars": 5,
     "theBackyard": 25,
@@ -47,7 +47,7 @@
       "latest": "2027-10-11T22:30:00.000Z"
     },
     "borough": {
-      "earliest": "2026-07-14T23:00:00.000Z",
+      "earliest": "2026-07-20T23:00:00.000Z",
       "latest": "2026-12-25T12:00:00.000Z"
     },
     "vfw": {
@@ -59,7 +59,7 @@
       "latest": "2026-12-09T01:00:00.000Z"
     },
     "community": {
-      "earliest": "2026-07-14T22:15:00.000Z",
+      "earliest": "2026-07-18T16:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
     "manor": {
@@ -151,13 +151,13 @@
       "Campus Life": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-12T22:56:50.715Z"
+    "lastSyncAt": "2026-10-13T00:46:53.548Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
-    "approved": 6,
-    "checkedAt": "2026-10-12T23:00:17.024Z"
+    "approved": 5,
+    "checkedAt": "2026-10-13T00:50:38.993Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -187,7 +187,7 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 74,
+        "value": 73,
         "min": 21,
         "skipped": false
       },
@@ -236,6 +236,41 @@
   },
   "recentlyAdded": [
     {
+      "key": "IFI Millersville Student Mixer|2026-10-02T18:00:00",
+      "firstSeenAt": "2026-10-13T00:51:56.712Z",
+      "title": "IFI Millersville Student Mixer",
+      "source": "MU",
+      "date": "2026-10-02T18:00:00"
+    },
+    {
+      "key": "Men's Rugby Practice|2026-10-29T20:00:00.000Z",
+      "firstSeenAt": "2026-10-13T00:51:56.712Z",
+      "title": "Men's Rugby Practice",
+      "source": "MU",
+      "date": "2026-10-29T20:00:00.000Z"
+    },
+    {
+      "key": "Ropes Course- Open Climb|2026-10-29T20:00:00.000Z",
+      "firstSeenAt": "2026-10-13T00:51:56.712Z",
+      "title": "Ropes Course- Open Climb",
+      "source": "MU",
+      "date": "2026-10-29T20:00:00.000Z"
+    },
+    {
+      "key": "Students for Life October Meeting|2026-10-29T21:15:00.000Z",
+      "firstSeenAt": "2026-10-13T00:51:56.712Z",
+      "title": "Students for Life October Meeting",
+      "source": "MU",
+      "date": "2026-10-29T21:15:00.000Z"
+    },
+    {
+      "key": "ADAPT general meeting- Halloween Party Edition!|2026-10-29T21:30:00.000Z",
+      "firstSeenAt": "2026-10-13T00:51:56.712Z",
+      "title": "ADAPT general meeting- Halloween Party Edition!",
+      "source": "MU",
+      "date": "2026-10-29T21:30:00.000Z"
+    },
+    {
       "key": "HCSA Bake Sale|2026-10-14T15:30:00.000Z",
       "firstSeenAt": "2026-10-12T20:55:14.849Z",
       "title": "HCSA Bake Sale",
@@ -269,42 +304,7 @@
       "title": "MCAT Breakdown with Pre-Health Club",
       "source": "MU",
       "date": "2026-10-15T23:00:00.000Z"
-    },
-    {
-      "key": "Coffee And Crafts|2026-10-16T21:00:00.000Z",
-      "firstSeenAt": "2026-10-12T20:55:14.849Z",
-      "title": "Coffee And Crafts",
-      "source": "MU",
-      "date": "2026-10-16T21:00:00.000Z"
-    },
-    {
-      "key": "BCM Game Night|2026-10-16T22:00:00.000Z",
-      "firstSeenAt": "2026-10-12T20:55:14.849Z",
-      "title": "BCM Game Night",
-      "source": "MU",
-      "date": "2026-10-16T22:00:00.000Z"
-    },
-    {
-      "key": "The Marauder Network|2026-10-16T22:00:00.000Z",
-      "firstSeenAt": "2026-10-12T20:55:14.849Z",
-      "title": "The Marauder Network",
-      "source": "MU",
-      "date": "2026-10-16T22:00:00.000Z"
-    },
-    {
-      "key": "Student Government Association (SGA) Weekly Meeting|2026-10-29T17:00:00",
-      "firstSeenAt": "2026-10-12T20:55:14.849Z",
-      "title": "Student Government Association (SGA) Weekly Meeting",
-      "source": "MU",
-      "date": "2026-10-29T17:00:00"
-    },
-    {
-      "key": "Game Day - The Walking Dead|2026-10-29T17:00:00",
-      "firstSeenAt": "2026-10-12T20:55:14.849Z",
-      "title": "Game Day - The Walking Dead",
-      "source": "MU",
-      "date": "2026-10-29T17:00:00"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 5
 }

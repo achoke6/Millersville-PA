@@ -13,10 +13,8 @@
     "category": "Service",
     "categories": [
       "Service",
-      "Competition",
-      "Fundraiser",
-      "Social",
-      "Tabling"
+      "Meeting",
+      "Social"
     ],
     "shortName": "",
     "id": ""
@@ -927,12 +925,12 @@
   },
   {
     "name": "International Friendships",
-    "category": "Social",
+    "category": "Spirituality",
     "categories": [
-      "Social"
+      "Spirituality"
     ],
-    "shortName": "",
-    "id": ""
+    "shortName": "IFI",
+    "id": "ifi"
   },
   {
     "name": "It's On Us",
@@ -1254,10 +1252,14 @@
   },
   {
     "name": "National Association for the Advancement of Colored People",
-    "category": "",
-    "categories": [],
-    "shortName": "",
-    "id": ""
+    "category": "Academic",
+    "categories": [
+      "Academic",
+      "Service & Civic Engagement",
+      "Identity-Based"
+    ],
+    "shortName": "NAACP",
+    "id": "naacp"
   },
   {
     "name": "National Science Teachers Association MU",
@@ -1619,10 +1621,8 @@
   },
   {
     "name": "Students for Life",
-    "category": "Tabling",
-    "categories": [
-      "Tabling"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },

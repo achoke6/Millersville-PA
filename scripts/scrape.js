@@ -4268,7 +4268,8 @@ async function runScraper() {
                                 ...(ov.audience ? { audience: ov.audience } : {}),
                                 ...(ov.registrationRequired ? { registrationRequired: true } : {}),
                                 ...(ov.registrationDeadline ? { registrationDeadline: ov.registrationDeadline } : {}),
-                                ...(ov.registrationOpens ? { registrationOpens: ov.registrationOpens } : {})
+                                ...(ov.registrationOpens ? { registrationOpens: ov.registrationOpens } : {}),
+                                ...eventPerkFields(ov)   // Benefits column (2026-10-13)
                             });
                             created++;
                             console.log(`  ➕ Borough override CREATED standalone event: "${ov.newTitle}" (${ov.date})`);
@@ -4681,6 +4682,9 @@ async function runScraper() {
                 // through here (2026-09-03 fix); audience is new with the Audience column.
                 if (ev.kidFriendly === true) pushed.kidFriendly = true;
                 if (ev.audience) pushed.audience = ev.audience;
+                // Benefits column (2026-10-13): sanitized once, same helper as the
+                // place-specials emitters; drives perk badges + the free-food lens.
+                Object.assign(pushed, eventPerkFields(ev));
                 events.push(pushed);
                 added++;
             }
@@ -4775,7 +4779,8 @@ async function runScraper() {
                     // and Upcoming-Signups row vanish on their own).
                     ...(regOpen && ev.registrationRequired === true ? { registrationRequired: true } : {}),
                     ...(regOpen && ev.registrationDeadline ? { registrationDeadline: new Date(ev.registrationDeadline).toISOString() } : {}),
-                    ...(regOpen && ev.registrationOpens ? { registrationOpens: new Date(ev.registrationOpens).toISOString() } : {})
+                    ...(regOpen && ev.registrationOpens ? { registrationOpens: new Date(ev.registrationOpens).toISOString() } : {}),
+                    ...eventPerkFields(ev)   // Benefits column (2026-10-13): 🍕 / 🎁 / 📚 badges + free-food lens
                 });
                 added++;
                 console.log(`  ➕ Campus Life (IG) CREATED: "${ev.title}" (${ev.date})${ev.registrationDeadline ? (regOpen ? ' [signup, closes ' + ev.registrationDeadline + ']' : ' [registration closed — event kept]') : ''}`);

@@ -23,7 +23,7 @@
  *
  * SHEET COLUMNS (header row, case-insensitive, position-independent):
  *   Approved, Family, Source, Type, Audience, Title, Date, Time, Location,
- *   Opens, Deadline, Link, Description, Notes
+ *   Opens, Deadline, Link, Description, Notes, Benefits
  *
  *   Approved:    non-blank (X) = publish; blank = skip (still a candidate).
  *   Family:      non-blank (X) = kidFriendly:true on the generated event.
@@ -49,6 +49,11 @@
  *   Deadline:    (Youth Sports + any registration) ISO or plain date; the
  *                registration close date. For Youth Sports this is required.
  *   Link:        register/source URL.
+ *   Benefits:    (2026-10-13, optional, rightmost) comma list from the fixed badge
+ *                vocabulary Free Food | Free Stuff | Credit -> events[].benefits
+ *                (app.js perk badges + the Marauder free-food lens). Emitted on
+ *                PM Community / Borough / Campus Life rows; Youth Sports ignores it.
+ *                Unknown tokens warn + drop (a typo never invents a badge).
  *
  * USAGE:
  *   CANDIDATES_SHEET_CSV_URL="https://docs.google.com/.../pub?...output=csv" \
@@ -111,6 +116,25 @@ const sourceLabel = raw => {
   if (s === 'campus life' || s === 'instagram' || s === 'ig') return 'Campus Life';
   return raw ? clean(raw) : 'Unknown';
 };
+
+// Benefits column (2026-10-13) -> the site's `benefits` array. Vocabulary is the
+// three labels app.js renders (Free Food / Free Stuff / Credit), plus a few
+// aliases for how a flyer actually reads. Case-insensitive, split on , ; or /.
+// Unknown tokens WARN and DROP; deduped; sheet order kept. Pure for the harness.
+const BENEFIT_LABELS = [
+  [/^(free\s*)?(food|pizza|snacks?|refreshments|lunch|dinner|breakfast)$/i, 'Free Food'],
+  [/^(free\s*)?(stuff|swag|giveaways?|merch|prizes?|t-?shirts?)$/i,         'Free Stuff'],
+  [/^((class|extra|course)\s*)?credit$/i,                                     'Credit']
+];
+function parseBenefits(raw, title) {
+  const out = [];
+  for (const tok of clean(raw).split(/[,;/]/).map(clean).filter(Boolean)) {
+    const hit = BENEFIT_LABELS.find(([re]) => re.test(tok));
+    if (!hit) { console.warn(`  ⚠ "${title}": unrecognized Benefit "${tok}" — dropped (use Free Food, Free Stuff or Credit)`); continue; }
+    if (!out.includes(hit[1])) out.push(hit[1]);
+  }
+  return out;
+}
 
 // Time-cell parser shared by parseDateTime/parseEndTime (2026-09-24). Accepts a
 // single time ("6:00 PM", "7pm") or a RANGE ("8:00-9:30PM", "4:15 - 7:15 PM",
@@ -290,6 +314,7 @@ async function main() {
     }
 
     const family = yes(col(row, 'family'));
+    const benefits = parseBenefits(col(row, 'benefits'), title);   // Benefits column (2026-10-13); [] when absent
     const link = col(row, 'link');
     const endDt = parseEndTime(col(row, 'date'), col(row, 'time'));   // Time RANGE cells only (2026-09-24)
     const description = col(row, 'description');
@@ -369,6 +394,7 @@ async function main() {
       if (audience) e.audience = audience;
       if (deadlineDt) { e.registrationRequired = true; e.registrationDeadline = deadlineDt.toISOString(); if (opensDt) e.registrationOpens = opensDt.toISOString(); }
       else if (/registration|register|sign\s*up|rsvp/i.test(description + ' ' + title)) e.registrationRequired = true;
+      if (benefits.length) e.benefits = benefits;   // Benefits column (2026-10-13)
       pmEvents.push(e);
       approved++;
     } else if (source === 'borough') {
@@ -386,6 +412,7 @@ async function main() {
       // Registration fields ride along — the create consumer in scrape.js passes
       // them through (2026-09-03) so Borough rows can be signups too.
       if (deadlineDt) { ov.registrationRequired = true; ov.registrationDeadline = deadlineDt.toISOString(); if (opensDt) ov.registrationOpens = opensDt.toISOString(); }
+      if (benefits.length) ov.benefits = benefits;   // Benefits column (2026-10-13); the create consumer spreads eventPerkFields
       boroughOverrides.push(ov);
       approved++;
     } else if (source === 'campus life' || source === 'instagram' || source === 'ig') {
@@ -415,6 +442,7 @@ async function main() {
       else if (/registration|register|sign\s*up|rsvp/i.test(description + ' ' + title)) e.registrationRequired = true;
       if (description) e.description = description;
       if (family) e.kidFriendly = true;
+      if (benefits.length) e.benefits = benefits;   // Benefits column (2026-10-13)
       campusLifeEvents.push(e);
       approved++;
     } else {
@@ -484,6 +512,7 @@ async function main() {
   console.log(`  pm community:     ${pmEvents.length}`);
   console.log(`  youth sports:     ${youthRegs.length}`);
   console.log(`  campus life:      ${campusLifeEvents.length}`);
+  console.log(`  benefits tagged:  ${[...boroughOverrides, ...pmEvents, ...campusLifeEvents].filter(e => e.benefits).length}`);
   console.log(`  pending (no X):   ${pendingTotal} (${pendingFuture} upcoming, ${pendingPast} past)`);
   if (staleApprovedSkipped) console.log(`  ⏭️ stale approved rows skipped (not emitted): ${staleApprovedSkipped}`);
   if (stalePast) console.log(`  ⚠ stale rows (past-dated, prunable): ${stalePast}`);

@@ -149,9 +149,11 @@
   },
   {
     "name": "Asian Student Inclusivity Association",
-    "category": "Meeting",
+    "category": "Performance",
     "categories": [
-      "Meeting"
+      "Performance",
+      "Social",
+      "Tabling"
     ],
     "shortName": "ASIA",
     "id": ""
@@ -211,9 +213,8 @@
   },
   {
     "name": "Bible Campus Ministries",
-    "category": "Educational Program",
+    "category": "Social",
     "categories": [
-      "Educational Program",
       "Social"
     ],
     "shortName": "BCM",
@@ -231,9 +232,10 @@
   },
   {
     "name": "Black Student Union",
-    "category": "Fundraiser",
+    "category": "Social",
     "categories": [
-      "Fundraiser"
+      "Social",
+      "Tabling"
     ],
     "shortName": "",
     "id": ""
@@ -345,12 +347,12 @@
   },
   {
     "name": "Citamard Players",
-    "category": "Arts & Culture",
+    "category": "Performance",
     "categories": [
-      "Arts & Culture"
+      "Performance"
     ],
-    "shortName": "Citamard",
-    "id": "citamardplayers"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Civic & Community Engagement",
@@ -866,10 +868,8 @@
   },
   {
     "name": "Honors College Student Association",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "HCSA",
     "id": ""
   },
@@ -925,12 +925,12 @@
   },
   {
     "name": "International Friendships",
-    "category": "Social",
+    "category": "Spirituality",
     "categories": [
-      "Social"
+      "Spirituality"
     ],
-    "shortName": "",
-    "id": ""
+    "shortName": "IFI",
+    "id": "ifi"
   },
   {
     "name": "It's On Us",
@@ -1127,9 +1127,9 @@
   },
   {
     "name": "Men's Rugby Club of Millersville University",
-    "category": "Meeting",
+    "category": "Fundraiser",
     "categories": [
-      "Meeting"
+      "Fundraiser"
     ],
     "shortName": "Men's Rugby Club",
     "id": ""
@@ -1252,10 +1252,14 @@
   },
   {
     "name": "National Association for the Advancement of Colored People",
-    "category": "",
-    "categories": [],
-    "shortName": "",
-    "id": ""
+    "category": "Academic",
+    "categories": [
+      "Academic",
+      "Service & Civic Engagement",
+      "Identity-Based"
+    ],
+    "shortName": "NAACP",
+    "id": "naacp"
   },
   {
     "name": "National Science Teachers Association MU",
@@ -1407,10 +1411,8 @@
   },
   {
     "name": "Pre-Health Club",
-    "category": "Meeting",
-    "categories": [
-      "Meeting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1866,9 +1868,9 @@
   },
   {
     "name": "Women's Club Soccer",
-    "category": "Competition",
+    "category": "Service",
     "categories": [
-      "Competition"
+      "Service"
     ],
     "shortName": "Women's Club Soccer",
     "id": ""

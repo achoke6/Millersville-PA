@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-13T13:04:59.667Z",
+  "generatedAt": "2026-10-13T13:25:44.955Z",
   "totalEvents": 1923,
   "withDescription": 818,
   "withImage": 219,
@@ -149,13 +149,13 @@
       "Youth Sports": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-13T13:01:31.398Z"
+    "lastSyncAt": "2026-10-13T13:22:02.182Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-13T13:04:49.782Z"
+    "checkedAt": "2026-10-13T13:25:33.421Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -234,6 +234,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Salvation Army Christmas Assistance Applications|2026-11-23T04:59:00.000Z",
+      "firstSeenAt": "2026-10-13T13:25:44.950Z",
+      "title": "Salvation Army Christmas Assistance Applications",
+      "source": "Other",
+      "date": "2026-11-23T04:59:00.000Z"
+    },
+    {
       "key": "PrideFest Open Mic Hour|2026-10-15T20:30:00.000Z",
       "firstSeenAt": "2026-10-13T13:04:59.663Z",
       "title": "PrideFest Open Mic Hour",
@@ -246,13 +253,6 @@
       "title": "Drag Bingo",
       "source": "MU",
       "date": "2026-10-16T01:00:00.000Z"
-    },
-    {
-      "key": "Salvation Army Christmas Assistance Applications|2026-11-03T14:00:00.000Z",
-      "firstSeenAt": "2026-10-13T13:04:59.663Z",
-      "title": "Salvation Army Christmas Assistance Applications",
-      "source": "Other",
-      "date": "2026-11-03T14:00:00.000Z"
     },
     {
       "key": "Millersville University Dance Team Kids Camp|2026-11-07T14:00:00.000Z",
@@ -304,5 +304,5 @@
       "date": "2026-10-14T15:30:00.000Z"
     }
   ],
-  "addedLastRun": 4
+  "addedLastRun": 1
 }

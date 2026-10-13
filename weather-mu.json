@@ -26,24 +26,8 @@
     ]
   },
   "sevenDay": {
-    "issued": "Monday, October 12, 2026 at 09:18 AM (Kyle Elliott)",
+    "issued": "Tuesday, October 13, 2026 at 09:01 AM (Kyle Elliott)",
     "days": [
-      {
-        "period": "Monday",
-        "sky": "Partly Sunny",
-        "weather": "Warmer",
-        "pop": "<10%",
-        "temp": "74",
-        "conf": "5"
-      },
-      {
-        "period": "Monday night",
-        "sky": "Mainly Clear",
-        "weather": "Fog Late",
-        "pop": "<10%",
-        "temp": "52",
-        "conf": "5"
-      },
       {
         "period": "Tuesday",
         "sky": "Mostly Sunny",
@@ -54,7 +38,7 @@
       },
       {
         "period": "Tuesday night",
-        "sky": "Mainly Clear",
+        "sky": "Clear Skies",
         "weather": "Warm & Muggy",
         "pop": "<10%",
         "temp": "62",
@@ -64,7 +48,7 @@
         "period": "Wednesday",
         "sky": "Partly Sunny",
         "weather": "Warm & Muggy",
-        "pop": "20%",
+        "pop": "30%",
         "temp": "82",
         "conf": "4"
       },
@@ -78,9 +62,9 @@
       },
       {
         "period": "Thursday",
-        "sky": "Partly Sunny",
+        "sky": "Clouds & Sun",
         "weather": "Cooler",
-        "pop": "<10%",
+        "pop": "20%",
         "temp": "68",
         "conf": "4"
       },
@@ -89,16 +73,16 @@
         "sky": "Mostly Cloudy",
         "weather": "Scattered Showers",
         "pop": "60%",
-        "temp": "56",
+        "temp": "58",
         "conf": "4"
       },
       {
         "period": "Friday",
         "sky": "Clouds & Sun",
-        "weather": "Chc. of Showers",
-        "pop": "40%",
-        "temp": "74",
-        "conf": "3"
+        "weather": "Scattered Showers",
+        "pop": "60%",
+        "temp": "76",
+        "conf": "4"
       },
       {
         "period": "Friday night",
@@ -106,14 +90,22 @@
         "weather": "Windy",
         "pop": "<10%",
         "temp": "46",
-        "conf": "3"
+        "conf": "4"
       },
       {
         "period": "Saturday",
         "sky": "Mostly Sunny",
-        "weather": "Cooler",
+        "weather": "Blustery",
         "pop": "<10%",
-        "temp": "mid 50s",
+        "temp": "56",
+        "conf": "3"
+      },
+      {
+        "period": "Saturday night",
+        "sky": "Clear Skies",
+        "weather": "Cold",
+        "pop": "<10%",
+        "temp": "36",
         "conf": "3"
       },
       {
@@ -123,10 +115,85 @@
         "pop": "<10%",
         "temp": "upper 50s",
         "conf": "3"
+      },
+      {
+        "period": "Monday",
+        "sky": "Mostly Sunny",
+        "weather": "Milder",
+        "pop": "<10%",
+        "temp": "mid 60s",
+        "conf": "3"
       }
     ]
   },
-  "observations": [],
+  "observations": [
+    {
+      "time": "09:00",
+      "temp": "59",
+      "dewpoint": "57",
+      "rh": "93",
+      "windDir": "S",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "9.0",
+      "condition": "None"
+    },
+    {
+      "time": "08:00",
+      "temp": "53",
+      "dewpoint": "52",
+      "rh": "100",
+      "windDir": "SSW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "8.5",
+      "condition": "None"
+    },
+    {
+      "time": "07:00",
+      "temp": "51",
+      "dewpoint": "51",
+      "rh": "100",
+      "windDir": "WNW",
+      "windSpeed": "0",
+      "precip": "0.00",
+      "visibility": "7.6",
+      "condition": "None"
+    },
+    {
+      "time": "06:00",
+      "temp": "52",
+      "dewpoint": "52",
+      "rh": "99",
+      "windDir": "WSW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "5.7",
+      "condition": "None"
+    },
+    {
+      "time": "05:00",
+      "temp": "53",
+      "dewpoint": "53",
+      "rh": "99",
+      "windDir": "WNW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "9.3",
+      "condition": "None"
+    },
+    {
+      "time": "04:00",
+      "temp": "54",
+      "dewpoint": "53",
+      "rh": "99",
+      "windDir": "NNE",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "7.8",
+      "condition": "None"
+    }
+  ],
   "dailySummary": {
     "monthLabel": "October 2026",
     "days": [
@@ -311,5 +378,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-13T13:01:33.548Z"
+  "updated": "2026-10-13T13:22:03.962Z"
 }

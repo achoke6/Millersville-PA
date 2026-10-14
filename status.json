@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-14T14:38:10.217Z",
+  "generatedAt": "2026-10-14T16:27:12.362Z",
   "totalEvents": 1928,
-  "withDescription": 824,
+  "withDescription": 823,
   "withImage": 222,
   "familyFriendly": 66,
   "eventsToday": 30,
@@ -10,8 +10,8 @@
     "muCalendar": 169,
     "artsmu": 11,
     "campsAlumni": 16,
-    "muGetInvolved": 526,
-    "pennManor": 610,
+    "muGetInvolved": 525,
+    "pennManor": 611,
     "borough": 57,
     "vfw": 6,
     "phantomPower": 13,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 831,
+    "total": 832,
     "scored": 156,
     "wins": 78,
     "losses": 66,
@@ -156,7 +156,7 @@
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-14T14:38:02.227Z"
+    "checkedAt": "2026-10-14T16:27:01.564Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -193,7 +193,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 508,
+        "value": 509,
         "min": 150,
         "skipped": false
       },
@@ -235,11 +235,39 @@
   },
   "recentlyAdded": [
     {
-      "key": "Block Party|2026-10-17T10:00:00",
-      "firstSeenAt": "2026-10-14T14:38:10.214Z",
-      "title": "Block Party",
+      "key": "Girls Varsity Tennis @ Hempfield High School|2026-10-15T20:00:00.000Z",
+      "firstSeenAt": "2026-10-14T16:27:12.358Z",
+      "title": "Girls Varsity Tennis @ Hempfield High School",
+      "source": "PM",
+      "date": "2026-10-15T20:00:00.000Z"
+    },
+    {
+      "key": "'Ville Block Party|2026-10-17T10:00:00",
+      "firstSeenAt": "2026-10-14T16:27:12.358Z",
+      "title": "'Ville Block Party",
       "source": "MU",
       "date": "2026-10-17T10:00:00"
+    },
+    {
+      "key": "Game Day - The Walking Dead|2026-10-29T21:00:00.000Z",
+      "firstSeenAt": "2026-10-14T16:27:12.358Z",
+      "title": "Game Day - The Walking Dead",
+      "source": "MU",
+      "date": "2026-10-29T21:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Swimming at Franklin and Marshall College|2026-11-07T17:00:00.000Z",
+      "firstSeenAt": "2026-10-14T16:27:12.358Z",
+      "title": "Millersville University Women's Swimming at Franklin and Marshall College",
+      "source": "MU",
+      "date": "2026-11-07T17:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Swimming vs Kutztown University|2026-11-07T17:00:00.000Z",
+      "firstSeenAt": "2026-10-14T16:27:12.358Z",
+      "title": "Millersville University Women's Swimming vs Kutztown University",
+      "source": "MU",
+      "date": "2026-11-07T17:00:00.000Z"
     },
     {
       "key": "Meat Tray Bingo|2026-10-18T17:00:00.000Z",
@@ -275,35 +303,7 @@
       "title": "Winter Term - Classes Begin",
       "source": "MU",
       "date": "2026-12-14T00:00:00"
-    },
-    {
-      "key": "Winter Term - Classes End after last Final Exam|2027-01-17T00:00:00",
-      "firstSeenAt": "2026-10-14T14:38:10.214Z",
-      "title": "Winter Term - Classes End after last Final Exam",
-      "source": "MU",
-      "date": "2027-01-17T00:00:00"
-    },
-    {
-      "key": "Martin Luther King, Jr. Day - No Classes, Limited Campus Operations|2027-01-18T00:00:00",
-      "firstSeenAt": "2026-10-14T14:38:10.214Z",
-      "title": "Martin Luther King, Jr. Day - No Classes, Limited Campus Operations",
-      "source": "MU",
-      "date": "2027-01-18T00:00:00"
-    },
-    {
-      "key": "*CANCELLED* Faculty Recital - Strings Faculty|2026-10-24T19:30:00",
-      "firstSeenAt": "2026-10-14T13:45:35.254Z",
-      "title": "*CANCELLED* Faculty Recital - Strings Faculty",
-      "source": "MU",
-      "date": "2026-10-24T19:30:00"
-    },
-    {
-      "key": "Tell School of Music Wind Ensemble and Concert Band Concert|2026-11-22T14:30:00",
-      "firstSeenAt": "2026-10-14T13:45:35.254Z",
-      "title": "Tell School of Music Wind Ensemble and Concert Band Concert",
-      "source": "MU",
-      "date": "2026-11-22T14:30:00"
     }
   ],
-  "addedLastRun": 8
+  "addedLastRun": 5
 }

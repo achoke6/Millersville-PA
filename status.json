@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-14T13:05:20.577Z",
-  "totalEvents": 1921,
+  "generatedAt": "2026-10-14T13:45:35.258Z",
+  "totalEvents": 1920,
   "withDescription": 816,
   "withImage": 222,
   "familyFriendly": 65,
@@ -8,7 +8,7 @@
   "sources": {
     "muAthletics": 323,
     "muCalendar": 168,
-    "artsmu": 12,
+    "artsmu": 11,
     "campsAlumni": 16,
     "muGetInvolved": 520,
     "pennManor": 610,
@@ -31,7 +31,7 @@
       "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
-      "earliest": "2026-10-15T23:00:00.000Z",
+      "earliest": "2026-10-23T23:00:00.000Z",
       "latest": "2027-03-06T19:30:00.000Z"
     },
     "campsAlumni": {
@@ -143,25 +143,24 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 1,
+    "pendingFuture": 2,
     "pendingPast": 6,
     "pendingBySource": {
-      "Youth Sports": 1
+      "Youth Sports": 1,
+      "Campus Life": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-14T13:01:58.921Z"
+    "lastSyncAt": "2026-10-14T13:41:41.369Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-14T13:05:12.089Z"
+    "checkedAt": "2026-10-14T13:45:25.775Z"
   },
   "sourceHealth": {
-    "ok": false,
-    "failing": [
-      "manor.count"
-    ],
+    "ok": true,
+    "failing": [],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -214,10 +213,9 @@
       },
       {
         "key": "manor.count",
-        "ok": false,
+        "ok": true,
         "value": 40,
-        "min": 10,
-        "carriedForward": 40
+        "min": 10
       },
       {
         "key": "muHudl.pairRatio",
@@ -236,6 +234,20 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "*CANCELLED* Faculty Recital - Strings Faculty|2026-10-24T19:30:00",
+      "firstSeenAt": "2026-10-14T13:45:35.254Z",
+      "title": "*CANCELLED* Faculty Recital - Strings Faculty",
+      "source": "MU",
+      "date": "2026-10-24T19:30:00"
+    },
+    {
+      "key": "Tell School of Music Wind Ensemble and Concert Band Concert|2026-11-22T14:30:00",
+      "firstSeenAt": "2026-10-14T13:45:35.254Z",
+      "title": "Tell School of Music Wind Ensemble and Concert Band Concert",
+      "source": "MU",
+      "date": "2026-11-22T14:30:00"
+    },
     {
       "key": "Millersville University Women's Golf vs Millersville Invitational|2026-09-14T04:00:00.000Z",
       "firstSeenAt": "2026-10-14T05:37:56.557Z",
@@ -291,21 +303,7 @@
       "title": "Club Softball Practice",
       "source": "MU",
       "date": "2026-10-29T22:00:00.000Z"
-    },
-    {
-      "key": "SGA Weekly Meeting|2026-10-29T23:00:00.000Z",
-      "firstSeenAt": "2026-10-14T01:07:57.441Z",
-      "title": "SGA Weekly Meeting",
-      "source": "MU",
-      "date": "2026-10-29T23:00:00.000Z"
-    },
-    {
-      "key": "Trivia Night|2026-11-04T01:00:00.000Z",
-      "firstSeenAt": "2026-10-14T01:07:57.441Z",
-      "title": "Trivia Night",
-      "source": "Jack's Tavern",
-      "date": "2026-11-04T01:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

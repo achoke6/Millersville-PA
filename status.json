@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-10-14T13:45:35.258Z",
-  "totalEvents": 1920,
-  "withDescription": 816,
+  "generatedAt": "2026-10-14T14:38:10.217Z",
+  "totalEvents": 1928,
+  "withDescription": 824,
   "withImage": 222,
-  "familyFriendly": 65,
+  "familyFriendly": 66,
   "eventsToday": 30,
   "sources": {
     "muAthletics": 323,
-    "muCalendar": 168,
+    "muCalendar": 169,
     "artsmu": 11,
     "campsAlumni": 16,
-    "muGetInvolved": 520,
+    "muGetInvolved": 526,
     "pennManor": 610,
     "borough": 57,
-    "vfw": 5,
+    "vfw": 6,
     "phantomPower": 13,
     "community": 15,
     "manor": 40,
@@ -143,20 +143,20 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 2,
+    "pendingFuture": 5,
     "pendingPast": 6,
     "pendingBySource": {
       "Youth Sports": 1,
-      "Campus Life": 1
+      "Campus Life": 4
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-14T13:41:41.369Z"
+    "lastSyncAt": "2026-10-14T14:34:27.974Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-14T13:45:25.775Z"
+    "checkedAt": "2026-10-14T14:38:02.227Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -235,6 +235,62 @@
   },
   "recentlyAdded": [
     {
+      "key": "Block Party|2026-10-17T10:00:00",
+      "firstSeenAt": "2026-10-14T14:38:10.214Z",
+      "title": "Block Party",
+      "source": "MU",
+      "date": "2026-10-17T10:00:00"
+    },
+    {
+      "key": "Meat Tray Bingo|2026-10-18T17:00:00.000Z",
+      "firstSeenAt": "2026-10-14T14:38:10.214Z",
+      "title": "Meat Tray Bingo",
+      "source": "Other",
+      "date": "2026-10-18T17:00:00.000Z"
+    },
+    {
+      "key": "Thanksgiving Break Ends - Classes resume at 7:00AM|2026-11-30T00:00:00",
+      "firstSeenAt": "2026-10-14T14:38:10.214Z",
+      "title": "Thanksgiving Break Ends - Classes resume at 7:00AM",
+      "source": "MU",
+      "date": "2026-11-30T00:00:00"
+    },
+    {
+      "key": "Last day of Fall Classes!|2026-12-07T00:00:00",
+      "firstSeenAt": "2026-10-14T14:38:10.214Z",
+      "title": "Last day of Fall Classes!",
+      "source": "MU",
+      "date": "2026-12-07T00:00:00"
+    },
+    {
+      "key": "Finals Week and Evaluation Period (special class schedule)|2026-12-08T00:00:00",
+      "firstSeenAt": "2026-10-14T14:38:10.214Z",
+      "title": "Finals Week and Evaluation Period (special class schedule)",
+      "source": "MU",
+      "date": "2026-12-08T00:00:00"
+    },
+    {
+      "key": "Winter Term - Classes Begin|2026-12-14T00:00:00",
+      "firstSeenAt": "2026-10-14T14:38:10.214Z",
+      "title": "Winter Term - Classes Begin",
+      "source": "MU",
+      "date": "2026-12-14T00:00:00"
+    },
+    {
+      "key": "Winter Term - Classes End after last Final Exam|2027-01-17T00:00:00",
+      "firstSeenAt": "2026-10-14T14:38:10.214Z",
+      "title": "Winter Term - Classes End after last Final Exam",
+      "source": "MU",
+      "date": "2027-01-17T00:00:00"
+    },
+    {
+      "key": "Martin Luther King, Jr. Day - No Classes, Limited Campus Operations|2027-01-18T00:00:00",
+      "firstSeenAt": "2026-10-14T14:38:10.214Z",
+      "title": "Martin Luther King, Jr. Day - No Classes, Limited Campus Operations",
+      "source": "MU",
+      "date": "2027-01-18T00:00:00"
+    },
+    {
       "key": "*CANCELLED* Faculty Recital - Strings Faculty|2026-10-24T19:30:00",
       "firstSeenAt": "2026-10-14T13:45:35.254Z",
       "title": "*CANCELLED* Faculty Recital - Strings Faculty",
@@ -247,63 +303,7 @@
       "title": "Tell School of Music Wind Ensemble and Concert Band Concert",
       "source": "MU",
       "date": "2026-11-22T14:30:00"
-    },
-    {
-      "key": "Millersville University Women's Golf vs Millersville Invitational|2026-09-14T04:00:00.000Z",
-      "firstSeenAt": "2026-10-14T05:37:56.557Z",
-      "title": "Millersville University Women's Golf vs Millersville Invitational",
-      "source": "MU",
-      "date": "2026-09-14T04:00:00.000Z"
-    },
-    {
-      "key": "Central Manor PTO Movie Night|2026-10-23T21:30:00.000Z",
-      "firstSeenAt": "2026-10-14T01:07:57.441Z",
-      "title": "Central Manor PTO Movie Night",
-      "source": "PM",
-      "date": "2026-10-23T21:30:00.000Z"
-    },
-    {
-      "key": "Moose Ultimate Practice|2026-10-28T23:00:00.000Z",
-      "firstSeenAt": "2026-10-14T01:07:57.441Z",
-      "title": "Moose Ultimate Practice",
-      "source": "MU",
-      "date": "2026-10-28T23:00:00.000Z"
-    },
-    {
-      "key": "Men's Rugby Practice|2026-10-29T20:00:00.000Z",
-      "firstSeenAt": "2026-10-14T01:07:57.441Z",
-      "title": "Men's Rugby Practice",
-      "source": "MU",
-      "date": "2026-10-29T20:00:00.000Z"
-    },
-    {
-      "key": "Ropes Course- Open Climb|2026-10-29T20:00:00.000Z",
-      "firstSeenAt": "2026-10-14T01:07:57.441Z",
-      "title": "Ropes Course- Open Climb",
-      "source": "MU",
-      "date": "2026-10-29T20:00:00.000Z"
-    },
-    {
-      "key": "Students for Life October Meeting|2026-10-29T21:15:00.000Z",
-      "firstSeenAt": "2026-10-14T01:07:57.441Z",
-      "title": "Students for Life October Meeting",
-      "source": "MU",
-      "date": "2026-10-29T21:15:00.000Z"
-    },
-    {
-      "key": "ADAPT general meeting- Halloween Party Edition!|2026-10-29T21:30:00.000Z",
-      "firstSeenAt": "2026-10-14T01:07:57.441Z",
-      "title": "ADAPT general meeting- Halloween Party Edition!",
-      "source": "MU",
-      "date": "2026-10-29T21:30:00.000Z"
-    },
-    {
-      "key": "Club Softball Practice|2026-10-29T22:00:00.000Z",
-      "firstSeenAt": "2026-10-14T01:07:57.441Z",
-      "title": "Club Softball Practice",
-      "source": "MU",
-      "date": "2026-10-29T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 8
 }

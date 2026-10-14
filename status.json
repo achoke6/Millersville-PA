@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-14T13:05:20.577Z",
-  "totalEvents": 1921,
+  "generatedAt": "2026-10-14T13:17:18.514Z",
+  "totalEvents": 1920,
   "withDescription": 816,
   "withImage": 222,
   "familyFriendly": 65,
@@ -8,7 +8,7 @@
   "sources": {
     "muAthletics": 323,
     "muCalendar": 168,
-    "artsmu": 12,
+    "artsmu": 11,
     "campsAlumni": 16,
     "muGetInvolved": 520,
     "pennManor": 610,
@@ -31,7 +31,7 @@
       "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
-      "earliest": "2026-10-15T23:00:00.000Z",
+      "earliest": "2026-10-23T23:00:00.000Z",
       "latest": "2027-03-06T19:30:00.000Z"
     },
     "campsAlumni": {
@@ -149,19 +149,17 @@
       "Youth Sports": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-14T13:01:58.921Z"
+    "lastSyncAt": "2026-10-14T13:13:35.520Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-14T13:05:12.089Z"
+    "checkedAt": "2026-10-14T13:17:08.813Z"
   },
   "sourceHealth": {
-    "ok": false,
-    "failing": [
-      "manor.count"
-    ],
+    "ok": true,
+    "failing": [],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -214,10 +212,9 @@
       },
       {
         "key": "manor.count",
-        "ok": false,
+        "ok": true,
         "value": 40,
-        "min": 10,
-        "carriedForward": 40
+        "min": 10
       },
       {
         "key": "muHudl.pairRatio",

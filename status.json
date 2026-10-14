@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-14T03:48:25.299Z",
+  "generatedAt": "2026-10-14T05:37:56.559Z",
   "totalEvents": 1921,
   "withDescription": 816,
   "withImage": 222,
   "familyFriendly": 65,
-  "eventsToday": 16,
+  "eventsToday": 30,
   "sources": {
     "muAthletics": 323,
     "muCalendar": 168,
@@ -78,55 +78,55 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 42
+      "daysSinceMoved": 43
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 53
+      "daysSinceMoved": 54
     },
     "artsmu": {
       "newest": "2027-03-06",
-      "daysSinceMoved": 45
+      "daysSinceMoved": 46
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 67
+      "daysSinceMoved": 68
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 40
+      "daysSinceMoved": 41
     },
     "pennManor": {
       "newest": "2027-10-11",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 77
+      "daysSinceMoved": 78
     },
     "vfw": {
       "newest": "2026-11-22",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "phantomPower": {
       "newest": "2026-12-09",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 89
+      "daysSinceMoved": 79
     },
     "manor": {
       "newest": "2027-10-06",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "raneyCellars": {
       "newest": "2026-10-09",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 9
     },
     "theBackyard": {
       "newest": "2027-04-28",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     }
   },
   "sports": {
@@ -149,13 +149,13 @@
       "Youth Sports": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-14T03:44:20.272Z"
+    "lastSyncAt": "2026-10-14T05:33:53.506Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-14T03:48:17.023Z"
+    "checkedAt": "2026-10-14T05:37:48.383Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -234,6 +234,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Millersville University Women's Golf vs Millersville Invitational|2026-09-14T04:00:00.000Z",
+      "firstSeenAt": "2026-10-14T05:37:56.557Z",
+      "title": "Millersville University Women's Golf vs Millersville Invitational",
+      "source": "MU",
+      "date": "2026-09-14T04:00:00.000Z"
+    },
+    {
       "key": "Central Manor PTO Movie Night|2026-10-23T21:30:00.000Z",
       "firstSeenAt": "2026-10-14T01:07:57.441Z",
       "title": "Central Manor PTO Movie Night",
@@ -295,14 +302,7 @@
       "title": "Trivia Night",
       "source": "Jack's Tavern",
       "date": "2026-11-04T01:00:00.000Z"
-    },
-    {
-      "key": "Friday Night at the Pumpkin Patch|2026-10-16T22:00:00.000Z",
-      "firstSeenAt": "2026-10-13T19:19:02.674Z",
-      "title": "Friday Night at the Pumpkin Patch",
-      "source": "MU",
-      "date": "2026-10-16T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-14T20:28:40.797Z",
+  "generatedAt": "2026-10-14T22:17:39.677Z",
   "totalEvents": 1932,
   "withDescription": 825,
   "withImage": 222,
@@ -131,8 +131,8 @@
   },
   "sports": {
     "total": 834,
-    "scored": 157,
-    "wins": 78,
+    "scored": 158,
+    "wins": 79,
     "losses": 67,
     "ties": 12
   },
@@ -150,13 +150,13 @@
       "Campus Life": 4
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-14T20:24:57.256Z"
+    "lastSyncAt": "2026-10-14T22:14:07.220Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-14T20:28:31.601Z"
+    "checkedAt": "2026-10-14T22:17:25.810Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -235,6 +235,20 @@
   },
   "recentlyAdded": [
     {
+      "key": "Eshleman School Board Breakfast|2026-10-15T12:15:00.000Z",
+      "firstSeenAt": "2026-10-14T22:17:39.673Z",
+      "title": "Eshleman School Board Breakfast",
+      "source": "PM",
+      "date": "2026-10-15T12:15:00.000Z"
+    },
+    {
+      "key": "HIGH ON FIRE w. Virgos|2026-10-30T00:00:00.000Z",
+      "firstSeenAt": "2026-10-14T22:17:39.673Z",
+      "title": "HIGH ON FIRE w. Virgos",
+      "source": "Other",
+      "date": "2026-10-30T00:00:00.000Z"
+    },
+    {
       "key": "MMA Club, Open Mat 10/15|2026-10-14T23:00:00.000Z",
       "firstSeenAt": "2026-10-14T20:28:40.794Z",
       "title": "MMA Club, Open Mat 10/15",
@@ -277,13 +291,6 @@
       "date": "2026-10-29T17:00:00"
     },
     {
-      "key": "HIGH ON FIRE|2026-10-30T00:00:00.000Z",
-      "firstSeenAt": "2026-10-14T20:28:40.794Z",
-      "title": "HIGH ON FIRE",
-      "source": "Other",
-      "date": "2026-10-30T00:00:00.000Z"
-    },
-    {
       "key": "Pilates with Gia|2026-10-14T19:00:00.000Z",
       "firstSeenAt": "2026-10-14T18:16:36.359Z",
       "title": "Pilates with Gia",
@@ -296,14 +303,7 @@
       "title": "Game Day - The Walking Dead",
       "source": "MU",
       "date": "2026-10-29T17:00:00"
-    },
-    {
-      "key": "Boys Varsity Basketball @ Palmyra Area High School|2027-01-03T00:00:00.000Z",
-      "firstSeenAt": "2026-10-14T18:16:36.359Z",
-      "title": "Boys Varsity Basketball @ Palmyra Area High School",
-      "source": "PM",
-      "date": "2027-01-03T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 7
+  "addedLastRun": 2
 }

@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-10-13T23:19:35.104Z",
-  "totalEvents": 1920,
-  "withDescription": 815,
-  "withImage": 221,
+  "generatedAt": "2026-10-14T01:07:57.444Z",
+  "totalEvents": 1921,
+  "withDescription": 816,
+  "withImage": 222,
   "familyFriendly": 65,
-  "eventsToday": 17,
+  "eventsToday": 16,
   "sources": {
     "muAthletics": 323,
-    "muCalendar": 169,
+    "muCalendar": 168,
     "artsmu": 12,
     "campsAlumni": 16,
-    "muGetInvolved": 518,
+    "muGetInvolved": 520,
     "pennManor": 610,
     "borough": 57,
     "vfw": 5,
@@ -43,7 +43,7 @@
       "latest": "2027-04-29T11:30:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-07-15T22:00:00.000Z",
+      "earliest": "2026-07-20T23:00:00.000Z",
       "latest": "2027-10-11T22:30:00.000Z"
     },
     "borough": {
@@ -149,13 +149,13 @@
       "Youth Sports": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-13T23:16:53.161Z"
+    "lastSyncAt": "2026-10-14T01:04:59.362Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-13T23:19:26.754Z"
+    "checkedAt": "2026-10-14T01:07:52.796Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -185,7 +185,7 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 73,
+        "value": 72,
         "min": 21,
         "skipped": false
       },
@@ -234,75 +234,75 @@
   },
   "recentlyAdded": [
     {
+      "key": "Central Manor PTO Movie Night|2026-10-23T21:30:00.000Z",
+      "firstSeenAt": "2026-10-14T01:07:57.441Z",
+      "title": "Central Manor PTO Movie Night",
+      "source": "PM",
+      "date": "2026-10-23T21:30:00.000Z"
+    },
+    {
+      "key": "Moose Ultimate Practice|2026-10-28T23:00:00.000Z",
+      "firstSeenAt": "2026-10-14T01:07:57.441Z",
+      "title": "Moose Ultimate Practice",
+      "source": "MU",
+      "date": "2026-10-28T23:00:00.000Z"
+    },
+    {
+      "key": "Men's Rugby Practice|2026-10-29T20:00:00.000Z",
+      "firstSeenAt": "2026-10-14T01:07:57.441Z",
+      "title": "Men's Rugby Practice",
+      "source": "MU",
+      "date": "2026-10-29T20:00:00.000Z"
+    },
+    {
+      "key": "Ropes Course- Open Climb|2026-10-29T20:00:00.000Z",
+      "firstSeenAt": "2026-10-14T01:07:57.441Z",
+      "title": "Ropes Course- Open Climb",
+      "source": "MU",
+      "date": "2026-10-29T20:00:00.000Z"
+    },
+    {
+      "key": "Students for Life October Meeting|2026-10-29T21:15:00.000Z",
+      "firstSeenAt": "2026-10-14T01:07:57.441Z",
+      "title": "Students for Life October Meeting",
+      "source": "MU",
+      "date": "2026-10-29T21:15:00.000Z"
+    },
+    {
+      "key": "ADAPT general meeting- Halloween Party Edition!|2026-10-29T21:30:00.000Z",
+      "firstSeenAt": "2026-10-14T01:07:57.441Z",
+      "title": "ADAPT general meeting- Halloween Party Edition!",
+      "source": "MU",
+      "date": "2026-10-29T21:30:00.000Z"
+    },
+    {
+      "key": "Club Softball Practice|2026-10-29T22:00:00.000Z",
+      "firstSeenAt": "2026-10-14T01:07:57.441Z",
+      "title": "Club Softball Practice",
+      "source": "MU",
+      "date": "2026-10-29T22:00:00.000Z"
+    },
+    {
+      "key": "SGA Weekly Meeting|2026-10-29T23:00:00.000Z",
+      "firstSeenAt": "2026-10-14T01:07:57.441Z",
+      "title": "SGA Weekly Meeting",
+      "source": "MU",
+      "date": "2026-10-29T23:00:00.000Z"
+    },
+    {
+      "key": "Trivia Night|2026-11-04T01:00:00.000Z",
+      "firstSeenAt": "2026-10-14T01:07:57.441Z",
+      "title": "Trivia Night",
+      "source": "Jack's Tavern",
+      "date": "2026-11-04T01:00:00.000Z"
+    },
+    {
       "key": "Friday Night at the Pumpkin Patch|2026-10-16T22:00:00.000Z",
       "firstSeenAt": "2026-10-13T19:19:02.674Z",
       "title": "Friday Night at the Pumpkin Patch",
       "source": "MU",
       "date": "2026-10-16T22:00:00.000Z"
-    },
-    {
-      "key": "Campus Life cheers on MU Field Hockey!|2026-10-16T19:00:00.000Z",
-      "firstSeenAt": "2026-10-13T18:53:28.542Z",
-      "title": "Campus Life cheers on MU Field Hockey!",
-      "source": "MU",
-      "date": "2026-10-16T19:00:00.000Z"
-    },
-    {
-      "key": "Victoria's Secret Fashion Show Watch Party 💕|2026-10-18T22:30:00.000Z",
-      "firstSeenAt": "2026-10-13T18:53:28.542Z",
-      "title": "Victoria's Secret Fashion Show Watch Party 💕",
-      "source": "MU",
-      "date": "2026-10-18T22:30:00.000Z"
-    },
-    {
-      "key": "Palestine Bake-Sale|2026-10-21T15:00:00.000Z",
-      "firstSeenAt": "2026-10-13T18:53:28.542Z",
-      "title": "Palestine Bake-Sale",
-      "source": "MU",
-      "date": "2026-10-21T15:00:00.000Z"
-    },
-    {
-      "key": "Palestine Bake-Sale|2026-10-22T15:00:00.000Z",
-      "firstSeenAt": "2026-10-13T18:53:28.542Z",
-      "title": "Palestine Bake-Sale",
-      "source": "MU",
-      "date": "2026-10-22T15:00:00.000Z"
-    },
-    {
-      "key": "Disability Film Festival|2026-10-27T18:00:00",
-      "firstSeenAt": "2026-10-13T17:04:21.764Z",
-      "title": "Disability Film Festival",
-      "source": "MU",
-      "date": "2026-10-27T18:00:00"
-    },
-    {
-      "key": "Salvation Army Christmas Assistance Applications|2026-11-23T04:59:00.000Z",
-      "firstSeenAt": "2026-10-13T13:25:44.950Z",
-      "title": "Salvation Army Christmas Assistance Applications",
-      "source": "Other",
-      "date": "2026-11-23T04:59:00.000Z"
-    },
-    {
-      "key": "PrideFest Open Mic Hour|2026-10-15T20:30:00.000Z",
-      "firstSeenAt": "2026-10-13T13:04:59.663Z",
-      "title": "PrideFest Open Mic Hour",
-      "source": "MU",
-      "date": "2026-10-15T20:30:00.000Z"
-    },
-    {
-      "key": "Drag Bingo|2026-10-16T01:00:00.000Z",
-      "firstSeenAt": "2026-10-13T13:04:59.663Z",
-      "title": "Drag Bingo",
-      "source": "MU",
-      "date": "2026-10-16T01:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Dance Team Kids Camp|2026-11-07T14:00:00.000Z",
-      "firstSeenAt": "2026-10-13T13:04:59.663Z",
-      "title": "Millersville University Dance Team Kids Camp",
-      "source": "Other",
-      "date": "2026-11-07T14:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 9
 }

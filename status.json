@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-14T11:16:34.566Z",
+  "generatedAt": "2026-10-14T13:05:20.577Z",
   "totalEvents": 1921,
   "withDescription": 816,
   "withImage": 222,
@@ -149,17 +149,19 @@
       "Youth Sports": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-14T11:13:01.926Z"
+    "lastSyncAt": "2026-10-14T13:01:58.921Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-14T11:16:26.099Z"
+    "checkedAt": "2026-10-14T13:05:12.089Z"
   },
   "sourceHealth": {
-    "ok": true,
-    "failing": [],
+    "ok": false,
+    "failing": [
+      "manor.count"
+    ],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -171,7 +173,7 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 225,
+        "value": 224,
         "min": 60,
         "skipped": false
       },
@@ -212,9 +214,10 @@
       },
       {
         "key": "manor.count",
-        "ok": true,
+        "ok": false,
         "value": 40,
-        "min": 10
+        "min": 10,
+        "carriedForward": 40
       },
       {
         "key": "muHudl.pairRatio",

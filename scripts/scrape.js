@@ -2264,6 +2264,11 @@ async function runScraper() {
                     if (sportCanon) pmAthSportFallback.set(sportRaw || '(empty)', (pmAthSportFallback.get(sportRaw || '(empty)') || 0) + 1);
                 }
                 if (sportCanon) tags.push(sportCanon);
+                // Bocce (2026-10-13): PM's only bocce program is Unified, but the
+                // feed can post it under a plain Level (no "Unified" word), so it
+                // fell to bare Athletics. Route to the Unified Bocce tag so the
+                // row is followable from the Unified Bocce tile.
+                else if (/\bbocce\b/i.test(sportRaw)) { tags.push('Unified Bocce'); pmAthSportFallback.set(sportRaw, (pmAthSportFallback.get(sportRaw) || 0) + 1); }
                 else if (sportRaw) { tags.push('Athletics'); pmAthSportUnknown.set(sportRaw, (pmAthSportUnknown.get(sportRaw) || 0) + 1); } // not in sportsList - keep tagged
             }
 
@@ -6379,7 +6384,14 @@ async function runScraper() {
             // that could collide on unrelated events). Requires ≥3 words to
             // fire — pairs of 1-2 word titles are too fragile to merge this
             // way.
-            const sortedDistinctive = norm => norm.split(' ').filter(w => w.length >= 4).sort().join(' ');
+            // Kenderdine fix (2026-10-13): a leading season/year token ("2026
+            // Harriet Kenderdine Lecture…") and the 4-letter function words
+            // "with"/"from"/"that"/"this"/"your"/"into" are NOT distinctive —
+            // they slipped past the length filter and split a word-set-
+            // identical MU Calendar / artsmu pair ("… Lecture - Dr. X" vs
+            // "2026 … Lecture with Dr. X"; neither substring nor a 4-word run).
+            const SORTED_SKIP = /^(?:(?:19|20)\d\d|with|from|that|this|your|into)$/;
+            const sortedDistinctive = norm => norm.split(' ').filter(w => w.length >= 4 && !SORTED_SKIP.test(w)).sort().join(' ');
             const seedSorted = sortedDistinctive(seed.norm);
             const neSorted = sortedDistinctive(ne.norm);
             const sortedWordCount = seedSorted.split(' ').filter(Boolean).length;

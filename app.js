@@ -4871,6 +4871,14 @@ function spGameRow(e, mode) {
         const neutral = !home && e.neutralSite === true;
         title = mu.opp ? ((home || neutral) ? 'vs ' : '@ ') + mu.opp : mu.rest;
         if (lvl) title = lvl + ' · ' + title;
+        // Single-pill both-gender PM sports (Bowling, XC, Swimming, Track, Golf)
+        // pool boys and girls into ONE team view, so paired rows read as
+        // duplicates ("vs Warwick" twice, 2026-10-13). Name the gender on the
+        // row unless the view label already carries it.
+        if (school === 'PM' && info && PM_KEEP_GENDER_SINGLE_PILL.indexOf(info.sportTag) !== -1 && !/^(Boys|Girls)\s/.test(spSportTag || '')) {
+            const gw = (e.tags || []).find(t => t === 'Boys' || t === 'Girls');
+            if (gw) title = gw + ' · ' + title;
+        }
         const subBits = [];
         const venueShort = venue.replace(/^Millersville,\s*PA,?\s*/i, '');   // 🏡 already says it (Patch D)
         if (home) subBits.push('🏡 ' + (venueShort || 'Home'));

@@ -59,6 +59,12 @@
  *                summer cell INHERITS that day's regular hours cell, so a
  *                place that only changes weekdays fills 5 cells. A place
  *                closed all summer fills all 7 with "closed" explicitly.
+ *   services:    optional " | "-joined list of the offices / services housed in a
+ *                CAMPUS row ("Police | Parking | ID Services"), harvested from
+ *                millersville.edu/directions (2026-10-14). Emitted as a
+ *                `services` string array (trimmed, deduped, empties dropped);
+ *                blank = no field. The app indexes it in search and lists it
+ *                on the card + pin popup. Non-campus rows ignore the column.
  *   break_closed: "yes" = closed during MU academic breaks (Thanksgiving /
  *                winter / spring break — app.js MU_BREAK_RANGES). Emitted as
  *                `breakClosed: true`. Summer is NOT a break — use the
@@ -180,6 +186,17 @@ async function main() {
   let hoursListings = 0;
   let summerHoursListings = 0;
   let breakClosedListings = 0;
+  let servicesListings = 0;
+  // services passthrough (campus rows): split the " | " cell, trim, dedupe.
+  const servicesFor = row => {
+    const raw = get(row, 'services');
+    if (!raw) return null;
+    const out = []; const seen = new Set();
+    raw.split('|').forEach(x => { const v = x.trim().replace(/[.;,]+$/, ''); const k = v.toLowerCase(); if (v && !seen.has(k)) { seen.add(k); out.push(v); } });
+    if (!out.length) return null;
+    servicesListings++;
+    return out;
+  };
 
   // lat/lng passthrough: parse + sanity-check the optional coordinate columns.
   // Returns {lat, lng} rounded to 6 dp, or null. A blank pair = silently no
@@ -331,6 +348,7 @@ async function main() {
       const h = hoursFor(row, name); if (h) o.hours = h;
       const sh = summerHoursFor(row, name); if (sh) o.summerHours = sh;
       if (breakClosedFor(row)) o.breakClosed = true;
+      const sv = servicesFor(row); if (sv) o.services = sv;
       services.push(o);
     } else if (type === 'institution') {
       // No directory card — only eligible for the spotlight rotation.
@@ -392,6 +410,7 @@ async function main() {
   console.log(`  listings with hours: ${hoursListings}`);
   console.log(`  listings with summer hours: ${summerHoursListings}`);
   console.log(`  listings with break closed: ${breakClosedListings}`);
+  console.log(`  campus listings with services: ${servicesListings}`);
   if (warnings) console.log(`  ⚠ ${warnings} warning(s) above`);
 }
 

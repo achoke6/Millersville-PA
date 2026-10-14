@@ -7806,6 +7806,12 @@ function placesMapPopup(p){
     if (p.address) html += `<div class="map-popup-meta">📍 ${p.address}</div>`;
     const _ht = placeHoursText(p);
     if (_ht) html += `<div class="map-popup-meta">🕐 ${_ht}</div>`;
+    // Building services (2026-10-14): first four, "+N more" points at the card.
+    if (p.services && p.services.length) {
+        const shown = p.services.slice(0, 4).map(escHtml).join(' · ');
+        const more = p.services.length - 4;
+        html += `<div class="map-popup-meta">🏢 ${shown}${more > 0 ? ` <span style="white-space:nowrap;">+${more} more</span>` : ''}</div>`;
+    }
     // "Today" cluster — visually separated from the identity block above.
     const today = [];
     if (p.category === 'Cupboard') today.push('🔥 Free groceries today');
@@ -8769,6 +8775,12 @@ function buildServiceCard(p) {
     // cells — suppress the line instead of rendering a bare "📍" / empty <p> (2026-08-07).
     const addrLine = p.address ? `<p class="card-meta" style="margin-bottom:4px;">📍 ${p.address}</p>` : '';
     const descLine = p.description ? `<p style="font-size:0.85rem;color:var(--text-muted);margin:8px 0;">${p.description}</p>` : '';
+    // Building services (2026-10-14): the sheet's " | " list, rendered as one
+    // wrapped line so a search hit ("ID Services") is visible on the card it
+    // lands on. Campus rows only carry the field.
+    const servicesLine = (p.services && p.services.length)
+        ? `<p class="place-services" style="font-size:0.8rem;color:var(--text);margin:6px 0 2px;line-height:1.5;"><span style="font-weight:700;">🏢 Services here:</span> ${p.services.map(escHtml).join(' · ')}</p>`
+        : '';
 
     // Enhanced listing for Featured Spotlight buyers: logo header, marketing
     // tagline, gold-accented card, and a hook for live-feed content (scraped
@@ -8796,7 +8808,7 @@ function buildServiceCard(p) {
             ${ratingRow}
             ${addrLine}
             ${hours}
-            ${descLine}
+            ${descLine}${servicesLine}
             ${liveFeedHtml}${specialsHtml}${eventsHtml}
             <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:auto;">
                 ${phone}
@@ -8816,7 +8828,7 @@ function buildServiceCard(p) {
         ${ratingRow}
         ${addrLine}
         ${hours}
-        ${descLine}
+        ${descLine}${servicesLine}
         ${specialsHtml}${eventsHtml}
         <div class="card-footer" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-top:auto;">
             ${phone}
@@ -9159,6 +9171,28 @@ window.openPantryOnMap = function(slug){
     const p = (typeof allPlaces !== 'undefined' ? allPlaces : []).find(x => placeSlug(x) === slug);
     if (p) setTimeout(() => window.scrollToPlaceCard(p), 350);
 };
+// Search hit -> /map with that place's card pulled up AND its pin focused
+// (2026-10-14). A category chip or a lens (Today / MBA / Marauder Gold) that
+// would hide the card is cleared first; an audience-hidden listing (campus
+// row for a townie) just lands on the map — the search row already says so.
+// The map is lazy (initPlacesMap runs inside switchView, assets async), so
+// the pin focus polls for the marker instead of guessing a settle time.
+window.openPlaceFromSearch = function(slug){
+    switchView('places');
+    const p = (typeof allPlaces !== 'undefined' ? allPlaces : []).find(x => placeSlug(x) === slug);
+    if (!p || !placeAudienceVisible(p)) return;
+    if (placesMGMode && p.marauderGold !== true) window.togglePlacesMarauderGold();
+    if (placesMBAMode && !getMembership(p.name)) window.togglePlacesMBA();
+    if (placesTodayMode && !placeTodayContent(p)) window.togglePlacesToday();
+    if (placesFilter !== 'All' && !placeMatchesCategory(p)) window.setPlacesFilter('All', null);
+    setTimeout(() => window.scrollToPlaceCard(p), 350);
+    let tries = 0;
+    const tick = () => {
+        if (typeof placesMapMarkerBySlug !== 'undefined' && placesMapMarkerBySlug.get(slug)) { window.focusPlaceOnMap(slug); return; }
+        if (++tries < 40) setTimeout(tick, 150);   // up to ~6 s for the first-visit asset load
+    };
+    setTimeout(tick, 400);
+};
 
 window.openSubmitBusiness=function(){
     openAdvertiseForm();
@@ -9388,15 +9422,34 @@ function runSearch(q) {
     }
 
     // Search Places (food + services)
+    // Building services (2026-10-14): campus rows carry a `services` array
+    // from the sheet; a hit on one of them outranks a name/description hit
+    // and the row says WHICH service matched ("ID Services · at Boyer Building").
+    const svcMatch = s => (s.services || []).find(x => x.toLowerCase().includes(ql)) || '';
     const svcHits = (allPlaces||[]).filter(s => {
-        return (s.name + ' ' + (s.category||'') + ' ' + (s.cuisine||'') + ' ' + (s.description||'')).toLowerCase().includes(ql);
-    }).slice(0, 5);
+        return svcMatch(s) || (s.name + ' ' + (s.category||'') + ' ' + (s.cuisine||'') + ' ' + (s.description||'')).toLowerCase().includes(ql);
+    }).sort((a, b) => (svcMatch(b) ? 1 : 0) - (svcMatch(a) ? 1 : 0)).slice(0, 5);
     if (svcHits.length) {
         html += `<div style="margin-bottom:20px;"><h4 class="modal-section-label">📍 Places</h4>`;
         svcHits.forEach(s => {
-            html += `<div class="search-result" onclick="document.getElementById('search-overlay').remove();switchView('places');">
-                <p style="font-weight:600;margin:2px 0;">${s.name}</p>
-                <span style="font-size:0.8rem;color:var(--text-muted);">${s.category||s.cuisine||''} · ${s.description?.substring(0,60)||''}</span>
+            // Land ON the place (2026-10-14): the old handler only switched to
+            // /map, so "ID Services" → Boyer loaded the page with nothing
+            // highlighted. openPlaceFromSearch clears a blocking chip/lens,
+            // pulls the card up and opens the pin's popup once the map is up.
+            const slug = placeSlug(s).replace(/'/g, "\\'");
+            const hiddenPlace = !placeAudienceVisible(s);
+            const hiddenPlaceNote = hiddenPlace
+                ? `<div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;font-style:italic;">Not shown on your map — you marked yourself as a ${muAffiliation === 'townie' ? 'townie' : 'Marauder'}</div>`
+                : '';
+            const matchedSvc = svcMatch(s);
+            const titleLine = matchedSvc ? `${escHtml(matchedSvc)} <span style="font-weight:400;color:var(--text-muted);">· at ${escHtml(s.name)}</span>` : escHtml(s.name);
+            const subLine = matchedSvc
+                ? `${s.category||''} · ${(s.services||[]).length} service${(s.services||[]).length === 1 ? '' : 's'} here`
+                : `${s.category||s.cuisine||''} · ${s.description?.substring(0,60)||''}`;
+            html += `<div class="search-result" onclick="document.getElementById('search-overlay').remove();window.openPlaceFromSearch('${slug}');">
+                <p style="font-weight:600;margin:2px 0;">${titleLine}</p>
+                <span style="font-size:0.8rem;color:var(--text-muted);">${subLine}</span>
+                ${hiddenPlaceNote}
             </div>`;
         });
         html += '</div>';

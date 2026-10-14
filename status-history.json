@@ -1,35 +1,6 @@
 {
   "days": [
     {
-      "date": "2026-07-16",
-      "ts": "2026-07-17T02:58:25.576Z",
-      "totalEvents": 681,
-      "sources": {
-        "muAthletics": 238,
-        "muCalendar": 96,
-        "muGetInvolved": 171,
-        "pennManor": 83,
-        "borough": 0,
-        "vfw": 5,
-        "phantomPower": 13,
-        "community": 21,
-        "manor": 41,
-        "raneyCellars": 3,
-        "muHudlBroadcasts": 0
-      },
-      "newestDates": {
-        "muAthletics": "2027-05-01",
-        "muCalendar": "2027-04-03",
-        "muGetInvolved": "2027-05-05",
-        "pennManor": "2026-09-21",
-        "vfw": "2026-09-11",
-        "phantomPower": "2026-09-18",
-        "community": "2027-04-16",
-        "manor": "2027-07-07",
-        "raneyCellars": "2026-07-23"
-      }
-    },
-    {
       "date": "2026-07-17",
       "ts": "2026-07-18T02:15:12.947Z",
       "totalEvents": 710,
@@ -3080,14 +3051,50 @@
     },
     {
       "date": "2026-10-13",
-      "ts": "2026-10-13T13:25:44.955Z",
-      "totalEvents": 1923,
+      "ts": "2026-10-14T03:48:25.299Z",
+      "totalEvents": 1921,
       "sources": {
         "muAthletics": 323,
-        "muCalendar": 170,
+        "muCalendar": 168,
         "artsmu": 12,
         "campsAlumni": 16,
-        "muGetInvolved": 519,
+        "muGetInvolved": 520,
+        "pennManor": 610,
+        "borough": 57,
+        "vfw": 5,
+        "phantomPower": 13,
+        "community": 15,
+        "manor": 40,
+        "raneyCellars": 5,
+        "theBackyard": 25,
+        "muHudlBroadcasts": 57
+      },
+      "newestDates": {
+        "muAthletics": "2027-05-27",
+        "muCalendar": "2027-06-04",
+        "artsmu": "2027-03-06",
+        "campsAlumni": "2027-04-03",
+        "muGetInvolved": "2027-04-29",
+        "pennManor": "2027-10-11",
+        "borough": "2026-12-25",
+        "vfw": "2026-11-22",
+        "phantomPower": "2026-12-09",
+        "community": "2027-04-16",
+        "manor": "2027-10-06",
+        "raneyCellars": "2026-10-09",
+        "theBackyard": "2027-04-28"
+      }
+    },
+    {
+      "date": "2026-10-14",
+      "ts": "2026-10-14T13:05:20.577Z",
+      "totalEvents": 1921,
+      "sources": {
+        "muAthletics": 323,
+        "muCalendar": 168,
+        "artsmu": 12,
+        "campsAlumni": 16,
+        "muGetInvolved": 520,
         "pennManor": 610,
         "borough": 57,
         "vfw": 5,
@@ -3115,5 +3122,5 @@
       }
     }
   ],
-  "lastUpdated": "2026-10-13T13:25:44.955Z"
+  "lastUpdated": "2026-10-14T13:05:20.577Z"
 }

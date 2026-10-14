@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-10-13T13:25:44.955Z",
-  "totalEvents": 1923,
-  "withDescription": 818,
-  "withImage": 219,
-  "familyFriendly": 64,
-  "eventsToday": 18,
+  "generatedAt": "2026-10-14T13:05:20.577Z",
+  "totalEvents": 1921,
+  "withDescription": 816,
+  "withImage": 222,
+  "familyFriendly": 65,
+  "eventsToday": 30,
   "sources": {
     "muAthletics": 323,
-    "muCalendar": 170,
+    "muCalendar": 168,
     "artsmu": 12,
     "campsAlumni": 16,
-    "muGetInvolved": 519,
+    "muGetInvolved": 520,
     "pennManor": 610,
     "borough": 57,
     "vfw": 5,
@@ -43,7 +43,7 @@
       "latest": "2027-04-29T11:30:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-07-15T22:00:00.000Z",
+      "earliest": "2026-07-20T23:00:00.000Z",
       "latest": "2027-10-11T22:30:00.000Z"
     },
     "borough": {
@@ -78,67 +78,67 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 42
+      "daysSinceMoved": 43
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 53
+      "daysSinceMoved": 54
     },
     "artsmu": {
       "newest": "2027-03-06",
-      "daysSinceMoved": 45
+      "daysSinceMoved": 46
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 67
+      "daysSinceMoved": 68
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 40
+      "daysSinceMoved": 41
     },
     "pennManor": {
       "newest": "2027-10-11",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 77
+      "daysSinceMoved": 78
     },
     "vfw": {
       "newest": "2026-11-22",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "phantomPower": {
       "newest": "2026-12-09",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 89
+      "daysSinceMoved": 79
     },
     "manor": {
       "newest": "2027-10-06",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "raneyCellars": {
       "newest": "2026-10-09",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 9
     },
     "theBackyard": {
       "newest": "2027-04-28",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     }
   },
   "sports": {
     "total": 831,
-    "scored": 155,
-    "wins": 77,
+    "scored": 156,
+    "wins": 78,
     "losses": 66,
     "ties": 12
   },
   "registrations": {
-    "open": 9,
-    "next2Weeks": 6,
+    "open": 8,
+    "next2Weeks": 5,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
@@ -149,43 +149,45 @@
       "Youth Sports": 1
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-13T13:22:02.182Z"
+    "lastSyncAt": "2026-10-14T13:01:58.921Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-13T13:25:33.421Z"
+    "checkedAt": "2026-10-14T13:05:12.089Z"
   },
   "sourceHealth": {
-    "ok": true,
-    "failing": [],
+    "ok": false,
+    "failing": [
+      "manor.count"
+    ],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 363,
+        "value": 362,
         "min": 45,
         "skipped": false
       },
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 225,
+        "value": 224,
         "min": 60,
         "skipped": false
       },
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 234,
+        "value": 233,
         "min": 30,
         "skipped": false
       },
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 73,
+        "value": 72,
         "min": 21,
         "skipped": false
       },
@@ -212,9 +214,10 @@
       },
       {
         "key": "manor.count",
-        "ok": true,
+        "ok": false,
         "value": 40,
-        "min": 10
+        "min": 10,
+        "carriedForward": 40
       },
       {
         "key": "muHudl.pairRatio",
@@ -234,75 +237,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Salvation Army Christmas Assistance Applications|2026-11-23T04:59:00.000Z",
-      "firstSeenAt": "2026-10-13T13:25:44.950Z",
-      "title": "Salvation Army Christmas Assistance Applications",
-      "source": "Other",
-      "date": "2026-11-23T04:59:00.000Z"
-    },
-    {
-      "key": "PrideFest Open Mic Hour|2026-10-15T20:30:00.000Z",
-      "firstSeenAt": "2026-10-13T13:04:59.663Z",
-      "title": "PrideFest Open Mic Hour",
+      "key": "Millersville University Women's Golf vs Millersville Invitational|2026-09-14T04:00:00.000Z",
+      "firstSeenAt": "2026-10-14T05:37:56.557Z",
+      "title": "Millersville University Women's Golf vs Millersville Invitational",
       "source": "MU",
-      "date": "2026-10-15T20:30:00.000Z"
+      "date": "2026-09-14T04:00:00.000Z"
     },
     {
-      "key": "Drag Bingo|2026-10-16T01:00:00.000Z",
-      "firstSeenAt": "2026-10-13T13:04:59.663Z",
-      "title": "Drag Bingo",
+      "key": "Central Manor PTO Movie Night|2026-10-23T21:30:00.000Z",
+      "firstSeenAt": "2026-10-14T01:07:57.441Z",
+      "title": "Central Manor PTO Movie Night",
+      "source": "PM",
+      "date": "2026-10-23T21:30:00.000Z"
+    },
+    {
+      "key": "Moose Ultimate Practice|2026-10-28T23:00:00.000Z",
+      "firstSeenAt": "2026-10-14T01:07:57.441Z",
+      "title": "Moose Ultimate Practice",
       "source": "MU",
-      "date": "2026-10-16T01:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Dance Team Kids Camp|2026-11-07T14:00:00.000Z",
-      "firstSeenAt": "2026-10-13T13:04:59.663Z",
-      "title": "Millersville University Dance Team Kids Camp",
-      "source": "Other",
-      "date": "2026-11-07T14:00:00.000Z"
-    },
-    {
-      "key": "IFI Millersville Student Mixer|2026-10-02T18:00:00",
-      "firstSeenAt": "2026-10-13T00:51:56.712Z",
-      "title": "IFI Millersville Student Mixer",
-      "source": "MU",
-      "date": "2026-10-02T18:00:00"
+      "date": "2026-10-28T23:00:00.000Z"
     },
     {
       "key": "Men's Rugby Practice|2026-10-29T20:00:00.000Z",
-      "firstSeenAt": "2026-10-13T00:51:56.712Z",
+      "firstSeenAt": "2026-10-14T01:07:57.441Z",
       "title": "Men's Rugby Practice",
       "source": "MU",
       "date": "2026-10-29T20:00:00.000Z"
     },
     {
       "key": "Ropes Course- Open Climb|2026-10-29T20:00:00.000Z",
-      "firstSeenAt": "2026-10-13T00:51:56.712Z",
+      "firstSeenAt": "2026-10-14T01:07:57.441Z",
       "title": "Ropes Course- Open Climb",
       "source": "MU",
       "date": "2026-10-29T20:00:00.000Z"
     },
     {
       "key": "Students for Life October Meeting|2026-10-29T21:15:00.000Z",
-      "firstSeenAt": "2026-10-13T00:51:56.712Z",
+      "firstSeenAt": "2026-10-14T01:07:57.441Z",
       "title": "Students for Life October Meeting",
       "source": "MU",
       "date": "2026-10-29T21:15:00.000Z"
     },
     {
       "key": "ADAPT general meeting- Halloween Party Edition!|2026-10-29T21:30:00.000Z",
-      "firstSeenAt": "2026-10-13T00:51:56.712Z",
+      "firstSeenAt": "2026-10-14T01:07:57.441Z",
       "title": "ADAPT general meeting- Halloween Party Edition!",
       "source": "MU",
       "date": "2026-10-29T21:30:00.000Z"
     },
     {
-      "key": "HCSA Bake Sale|2026-10-14T15:30:00.000Z",
-      "firstSeenAt": "2026-10-12T20:55:14.849Z",
-      "title": "HCSA Bake Sale",
+      "key": "Club Softball Practice|2026-10-29T22:00:00.000Z",
+      "firstSeenAt": "2026-10-14T01:07:57.441Z",
+      "title": "Club Softball Practice",
       "source": "MU",
-      "date": "2026-10-14T15:30:00.000Z"
+      "date": "2026-10-29T22:00:00.000Z"
+    },
+    {
+      "key": "SGA Weekly Meeting|2026-10-29T23:00:00.000Z",
+      "firstSeenAt": "2026-10-14T01:07:57.441Z",
+      "title": "SGA Weekly Meeting",
+      "source": "MU",
+      "date": "2026-10-29T23:00:00.000Z"
+    },
+    {
+      "key": "Trivia Night|2026-11-04T01:00:00.000Z",
+      "firstSeenAt": "2026-10-14T01:07:57.441Z",
+      "title": "Trivia Night",
+      "source": "Jack's Tavern",
+      "date": "2026-11-04T01:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 0
 }

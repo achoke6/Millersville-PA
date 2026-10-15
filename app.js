@@ -7383,6 +7383,15 @@ window.togglePlacesCampus = function(){
     placesCampusMode = !placesCampusMode;
     const btn = document.getElementById('places-campus-toggle');
     if (btn){ btn.classList.toggle('active', placesCampusMode); btn.setAttribute('aria-pressed', placesCampusMode ? 'true' : 'false'); }
+    // The two modes use different filter vocabularies — reset to All and
+    // swap the menu (2026-10-16). setPlacesFilter renders; skip the double render.
+    placesFilter = 'All';
+    document.querySelectorAll('#places-filter-menu .filter-menu-item').forEach(b => b.classList.remove('active'));
+    const fl = document.getElementById('places-filter-toggle');
+    if (fl) fl.innerHTML = 'Filter <span id="places-filter-arrow">▾</span>';
+    const fm = document.getElementById('places-filter-menu');
+    if (fm) fm.style.display = 'none';
+    pruneEmptyPlaceCategories();
     updatePlacesFilterNote();
     renderPlaces();
     if (placesMap){ const v = placesMapDefaultView(); placesMap.setView(v.center, v.zoom); }
@@ -7762,10 +7771,17 @@ function placesMapHasCoords(p){ return !!p && isFinite(p.lat) && isFinite(p.lng)
 // Store, ...). Every other chip stays a pure category match; the All
 // view is unaffected (onCampus rows keep rendering inline in their
 // real sections there).
+// Two filter vocabularies (2026-10-16): Local mode uses the sheet's
+// `category`; Campus mode uses `campusType` behind a `campus:` prefix
+// ("campus:Academic") so the two can never collide (both have a "Student
+// Housing" label). The Filter menu shows one vocabulary at a time
+// (pruneEmptyPlaceCategories, keyed on data-mode); the mode toggle resets
+// to All so a stale town category can't empty the campus list.
+const CAMPUS_FILTER_PREFIX = 'campus:';
 function placeMatchesCategory(p){
     if (placesFilter === 'All') return true;
-    if (p.category === placesFilter) return true;
-    return placesFilter === 'Campus' && p.onCampus === true;
+    if (placesFilter.startsWith(CAMPUS_FILTER_PREFIX)) return p.campusType === placesFilter.slice(CAMPUS_FILTER_PREFIX.length);
+    return p.category === placesFilter;
 }
 function placesMapPinList(){
     const pins = [];
@@ -8057,12 +8073,21 @@ function placesMapOnLocationError(err){
 function pruneEmptyPlaceCategories(){
     const menu = document.getElementById('places-filter-menu');
     if (!menu) return;
-    const present = new Set((allPlaces || []).filter(p => placeAudienceVisible(p)).map(p => p && p.category).filter(Boolean));
+    // Mode-aware (2026-10-16): only the current mode's rows count, and only
+    // the current mode's vocabulary shows (data-mode="local" | "campus";
+    // items with no data-mode — All Categories — show in both).
+    const rows = (allPlaces || []).filter(p => p && placeAudienceVisible(p) && placeInMode(p));
+    const present = new Set(placesCampusMode
+        ? rows.map(p => p.campusType && (CAMPUS_FILTER_PREFIX + p.campusType)).filter(Boolean)
+        : rows.map(p => p.category).filter(Boolean));
     const hc = document.getElementById('housing-container');
-    if (hc && hc.children.length) present.add('Housing');
+    if (!placesCampusMode && hc && hc.children.length) present.add('Housing');
+    const mode = placesCampusMode ? 'campus' : 'local';
     menu.querySelectorAll('.filter-menu-item').forEach(b => {
+        const m = b.dataset.mode;
+        if (m && m !== mode) { b.style.display = 'none'; return; }   // other vocabulary
         const cat = b.dataset.cat;
-        if (!cat || cat === 'All') return;          // never hide "All Categories"
+        if (!cat || cat === 'All') { b.style.display = ''; return; }   // never hide "All Categories" (or the Food & Drink ↗ nav item in Local)
         b.style.display = present.has(cat) ? '' : 'none';
     });
 }

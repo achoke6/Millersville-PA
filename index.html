@@ -440,24 +440,35 @@
                  pins stay reachable via All or the 🔥 Today lens. -->
             <div id="places-filter-menu" class="filter-menu" style="display:none;">
                 <button class="filter-menu-item" data-cat="All" onclick="setPlacesFilter('All', this)">All Categories</button>
-                <button class="filter-menu-item" onclick="openFoodFromMap()">🍴 Food &amp; Drink ↗</button>
-                <button class="filter-menu-item" data-cat="Housing" onclick="setPlacesFilter('Housing', this)">🏠 Housing</button>
-                <button class="filter-menu-item" data-cat="Student Housing" onclick="setPlacesFilter('Student Housing', this)">🎓 Student Housing</button>
-                <button class="filter-menu-item" data-cat="Shopping" onclick="setPlacesFilter('Shopping', this)">🛒 Shopping</button>
-                <button class="filter-menu-item" data-cat="Health" onclick="setPlacesFilter('Health', this)">🏥 Health</button>
-                <button class="filter-menu-item" data-cat="Beauty/Grooming" onclick="setPlacesFilter('Beauty/Grooming', this)">💈 Beauty</button>
-                <button class="filter-menu-item" data-cat="Finance" onclick="setPlacesFilter('Finance', this)">🏦 Finance</button>
-                <button class="filter-menu-item" data-cat="Real Estate" onclick="setPlacesFilter('Real Estate', this)">🏘 Real Estate</button>
-                <button class="filter-menu-item" data-cat="Home Services" onclick="setPlacesFilter('Home Services', this)">🔨 Home Services</button>
-                <button class="filter-menu-item" data-cat="Services" onclick="setPlacesFilter('Services', this)">🛠 Services</button>
-                <button class="filter-menu-item" data-cat="Government" onclick="setPlacesFilter('Government', this)">🏛 Government</button>
-                <button class="filter-menu-item" data-cat="Education" onclick="setPlacesFilter('Education', this)">📚 Education</button>
-                <button class="filter-menu-item" data-cat="Recreation" onclick="setPlacesFilter('Recreation', this)">🏞 Recreation</button>
-                <button class="filter-menu-item" data-cat="Entertainment" onclick="setPlacesFilter('Entertainment', this)">🎵 Entertainment</button>
-                <button class="filter-menu-item" data-cat="Venue" onclick="setPlacesFilter('Venue', this)">🎉 Venue</button>
-                <button class="filter-menu-item" data-cat="Lodging" onclick="setPlacesFilter('Lodging', this)">🛏 Lodging</button>
-                <button class="filter-menu-item" data-cat="Transport" onclick="setPlacesFilter('Transport', this)">🚌 Transport</button>
-                <button class="filter-menu-item" data-cat="Shipping" onclick="setPlacesFilter('Shipping', this)">📦 Shipping</button>
+                <button class="filter-menu-item" data-mode="local" onclick="openFoodFromMap()">🍴 Food &amp; Drink ↗</button>
+                <!-- Campus-mode vocabulary (2026-10-16): the sheet's campusType
+                     column, six fixed labels. Shown only in 🏛 Campus mode
+                     (pruneEmptyPlaceCategories keys on data-mode); the
+                     `campus:` prefix keeps "Student Housing" distinct from the
+                     town category of the same name. -->
+                <button class="filter-menu-item" data-mode="campus" data-cat="campus:Academic" onclick="setPlacesFilter('campus:Academic', this)">🎓 Academic Buildings</button>
+                <button class="filter-menu-item" data-mode="campus" data-cat="campus:Administrative" onclick="setPlacesFilter('campus:Administrative', this)">🏛 Administrative Buildings</button>
+                <button class="filter-menu-item" data-mode="campus" data-cat="campus:Student Housing" onclick="setPlacesFilter('campus:Student Housing', this)">🛏 Student Housing</button>
+                <button class="filter-menu-item" data-mode="campus" data-cat="campus:Athletics" onclick="setPlacesFilter('campus:Athletics', this)">🏈 Athletics</button>
+                <button class="filter-menu-item" data-mode="campus" data-cat="campus:Dining &amp; Retail" onclick="setPlacesFilter('campus:Dining &amp; Retail', this)">🍴 Dining &amp; Retail</button>
+                <button class="filter-menu-item" data-mode="campus" data-cat="campus:Student Life &amp; Arts" onclick="setPlacesFilter('campus:Student Life &amp; Arts', this)">🎭 Student Life &amp; Arts</button>
+                <button class="filter-menu-item" data-mode="local" data-cat="Housing" onclick="setPlacesFilter('Housing', this)">🏠 Housing</button>
+                <button class="filter-menu-item" data-mode="local" data-cat="Student Housing" onclick="setPlacesFilter('Student Housing', this)">🎓 Student Housing</button>
+                <button class="filter-menu-item" data-mode="local" data-cat="Shopping" onclick="setPlacesFilter('Shopping', this)">🛒 Shopping</button>
+                <button class="filter-menu-item" data-mode="local" data-cat="Health" onclick="setPlacesFilter('Health', this)">🏥 Health</button>
+                <button class="filter-menu-item" data-mode="local" data-cat="Beauty/Grooming" onclick="setPlacesFilter('Beauty/Grooming', this)">💈 Beauty</button>
+                <button class="filter-menu-item" data-mode="local" data-cat="Finance" onclick="setPlacesFilter('Finance', this)">🏦 Finance</button>
+                <button class="filter-menu-item" data-mode="local" data-cat="Real Estate" onclick="setPlacesFilter('Real Estate', this)">🏘 Real Estate</button>
+                <button class="filter-menu-item" data-mode="local" data-cat="Home Services" onclick="setPlacesFilter('Home Services', this)">🔨 Home Services</button>
+                <button class="filter-menu-item" data-mode="local" data-cat="Services" onclick="setPlacesFilter('Services', this)">🛠 Services</button>
+                <button class="filter-menu-item" data-mode="local" data-cat="Government" onclick="setPlacesFilter('Government', this)">🏛 Government</button>
+                <button class="filter-menu-item" data-mode="local" data-cat="Education" onclick="setPlacesFilter('Education', this)">📚 Education</button>
+                <button class="filter-menu-item" data-mode="local" data-cat="Recreation" onclick="setPlacesFilter('Recreation', this)">🏞 Recreation</button>
+                <button class="filter-menu-item" data-mode="local" data-cat="Entertainment" onclick="setPlacesFilter('Entertainment', this)">🎵 Entertainment</button>
+                <button class="filter-menu-item" data-mode="local" data-cat="Venue" onclick="setPlacesFilter('Venue', this)">🎉 Venue</button>
+                <button class="filter-menu-item" data-mode="local" data-cat="Lodging" onclick="setPlacesFilter('Lodging', this)">🛏 Lodging</button>
+                <button class="filter-menu-item" data-mode="local" data-cat="Transport" onclick="setPlacesFilter('Transport', this)">🚌 Transport</button>
+                <button class="filter-menu-item" data-mode="local" data-cat="Shipping" onclick="setPlacesFilter('Shipping', this)">📦 Shipping</button>
             </div>
         </div>
         <div id="housing-container" class="card-grid"></div>

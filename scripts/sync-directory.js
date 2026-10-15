@@ -23,7 +23,9 @@
  *   name, active, type, category, cuisine, landlord, address, phone, website,
  *   iosLink, status, onCampus, marauderGold, verified, audience, spotlight,
  *   tagline, logo, description, lat, lng, slug, hours_mon..hours_sun,
- *   summer_hours_mon..summer_hours_sun, break_closed, mapTier (A|M|L|blank)
+ *   summer_hours_mon..summer_hours_sun, break_closed, mapTier (A|M|L|blank),
+ *   campusType (Academic | Administrative | Student Housing | Athletics |
+ *   Dining & Retail | Student Life & Arts — campus/onCampus rows only)
  *
  *   active:      non-blank (e.g. "X") = listed; blank = hidden/skipped entirely.
  *                (If the column is absent, all rows are treated as active.)
@@ -188,6 +190,22 @@ async function main() {
   let breakClosedListings = 0;
   let servicesListings = 0;
   let mapTierListings = 0;
+  let campusTypeListings = 0;
+  // campusType passthrough (2026-10-16): the Campus-mode Filter menu's
+  // grouping for campus + onCampus rows. Six fixed labels (the menu items
+  // in index.html are hardcoded to match); matched case-insensitively,
+  // emitted in canonical case; anything else is warned + dropped.
+  const CAMPUS_TYPES = ['Academic', 'Administrative', 'Student Housing', 'Athletics', 'Dining & Retail', 'Student Life & Arts'];
+  const campusTypeFor = (row, name) => {
+    if (idx('campusType') === -1) return null;
+    const v = get(row, 'campusType').trim();
+    if (!v) return null;
+    const hit = CAMPUS_TYPES.find(x => x.toLowerCase() === v.toLowerCase());
+    if (hit) { campusTypeListings++; return hit; }
+    console.warn(`  ⚠ bad campusType ("${v}") for ${name} — ignored (use one of: ${CAMPUS_TYPES.join(' | ')})`);
+    warnings++;
+    return null;
+  };
   // mapTier passthrough (2026-10-15): optional per-row default-pin tier for
   // the /map page — A = always on the map (both audiences), M = Marauder
   // default only, L = local default only, blank = search / chip / zoom /
@@ -310,6 +328,7 @@ async function main() {
       const sh = summerHoursFor(row, name); if (sh) o.summerHours = sh;
       if (breakClosedFor(row)) o.breakClosed = true;
       const mt = tierFor(row, name); if (mt) o.mapTier = mt;
+      const ct = campusTypeFor(row, name); if (ct) o.campusType = ct;
       restaurants.push(o);
     } else if (type === 'service') {
       const o = { name, category: get(row, 'category'), address: get(row, 'address'),
@@ -323,6 +342,7 @@ async function main() {
       const sh = summerHoursFor(row, name); if (sh) o.summerHours = sh;
       if (breakClosedFor(row)) o.breakClosed = true;
       const mt = tierFor(row, name); if (mt) o.mapTier = mt;
+      const ct = campusTypeFor(row, name); if (ct) o.campusType = ct;
       services.push(o);
     } else if (type === 'housing') {
       const o = { name, landlord: get(row, 'landlord'), description: get(row, 'description') };
@@ -367,6 +387,7 @@ async function main() {
       if (breakClosedFor(row)) o.breakClosed = true;
       const sv = servicesFor(row); if (sv) o.services = sv;
       const mt = tierFor(row, name); if (mt) o.mapTier = mt;
+      const ct = campusTypeFor(row, name); if (ct) o.campusType = ct;
       services.push(o);
     } else if (type === 'institution') {
       // No directory card — only eligible for the spotlight rotation.
@@ -430,6 +451,7 @@ async function main() {
   console.log(`  listings with break closed: ${breakClosedListings}`);
   console.log(`  campus listings with services: ${servicesListings}`);
   console.log(`  listings with map tier: ${mapTierListings}`);
+  console.log(`  campus listings with type: ${campusTypeListings}`);
   if (warnings) console.log(`  ⚠ ${warnings} warning(s) above`);
 }
 

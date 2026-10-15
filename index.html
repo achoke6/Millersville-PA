@@ -89,6 +89,14 @@
          scrape runs. -->
 	<!-- JSONLD:START --><!-- JSONLD:END -->
     <link rel="stylesheet" href="style.css">
+    <style id="places-list-css">
+    /* /map compact rows (2026-10-15). Block container (the card-grid rule is
+       swapped off the container in renderPlaces); the summary's native
+       marker is hidden because the row carries its own glyph. */
+    .place-list { display: block; }
+    .place-list details.place-row > summary::-webkit-details-marker { display: none; }
+    .place-list details.place-row[open] > summary { border-bottom: 1px solid var(--border); }
+    </style>
     <style id="sports-list-css">
     /* Sports page rows + team strip + team view (2026-09-18). Lives here, not in
        style.css (mixed line endings — Hard Rule 1 note). */
@@ -412,6 +420,11 @@
                          entry points, one destination. -->
                     <button class="family-toggle" id="places-food-link" onclick="switchView('food')" title="Open the Food page — menus &amp; ordering" style="width:auto;padding:0 10px;gap:4px;font-size:0.78rem;font-weight:700;color:var(--navy);border-color:var(--navy);white-space:nowrap;">🍽 Menus</button>
                     <button class="family-toggle today-toggle" id="places-today-toggle" onclick="togglePlacesToday()" title="Places with specials or events today"><span class="today-toggle-label">🔥 Today</span></button>
+                    <!-- Show all (2026-10-15): default pins/rows are the sheet's
+                         mapTier essentials per identity; this flips to every
+                         listing. Per-device display setting (mapp_places_show_all).
+                         Hidden by app.js until the data carries tiers. -->
+                    <button class="family-toggle" id="places-all-toggle" onclick="togglePlacesShowAll()" title="Show every listing on the map and list" style="width:auto;padding:0 10px;gap:4px;font-size:0.78rem;font-weight:700;color:var(--navy);border-color:var(--navy);white-space:nowrap;display:none;">Show all</button>
                     <button class="family-toggle mg-toggle" id="places-mg-toggle" onclick="togglePlacesMarauderGold()" title="Businesses that accept Marauder Gold"><img src="/img/mu-coin.png" alt="Marauder Gold" class="mg-coin-img"></button>
                     <button id="places-filter-toggle" class="filter-toggle" onclick="togglePlacesFilters()">Filter <span id="places-filter-arrow">▾</span></button>
                 </div>

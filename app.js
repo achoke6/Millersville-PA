@@ -7363,6 +7363,51 @@ let placesMap=null, placesMapMarkers=null, placesMapLibReady=false, placesMapLib
 let placesMapMarkerBySlug = new Map();   // slug → Leaflet marker (card-tap → pin focus)
 let placesMapUserDot = null, placesMapUserAcc = null;   // "My location" dot + accuracy circle (session-only, never stored)
 let placesTodayMode=false;   // "Today" lens: places with a specials box today (see placesSpecialsItems)
+// /map DEFAULT-PIN TIERS (2026-10-15). The sheet's `mapTier` column marks
+// which listings belong on the map BEFORE the viewer asks for anything:
+// A = both audiences, M = Marauder default, L = local default, blank = only
+// via search, a category chip, a lens, or the "Show all" toggle. The tier
+// gate applies ONLY to the untouched default view (All, no lens): the moment
+// a chip or lens is active the viewer has asked for a set and gets all of it.
+// "Show all" is a per-device display setting (SHOW21_KEY / strip-chip
+// precedent — survives Clear Favs, never a favorites key).
+const PLACES_SHOW_ALL_KEY = 'mapp_places_show_all';
+let placesShowAll = false;
+try { placesShowAll = localStorage.getItem(PLACES_SHOW_ALL_KEY) === '1'; } catch (e) {}
+function placesTiersActive(){
+    return !placesShowAll && !placesTodayMode && !placesMBAMode && !placesMGMode && placesFilter === 'All';
+}
+function placeTierVisible(p){
+    if (!placesTiersActive()) return true;
+    const tier = (p && p.mapTier) || '';
+    if (tier === 'A') return true;
+    if (tier === 'M') return viewerIsMarauder();
+    if (tier === 'L') return !viewerIsMarauder();
+    return false;
+}
+// Initial map view per identity: Marauders open on campus one zoom step in;
+// locals on the George St / Manor Ave core. "Show all" (or no tiers in the
+// data yet) falls back to the town default so nothing is ever hidden by
+// framing alone.
+function placesMapDefaultView(){
+    const tiered = (allPlaces || []).some(p => p && p.mapTier);
+    if (placesShowAll || !tiered) return { center: PLACES_MAP_CFG.center, zoom: PLACES_MAP_CFG.zoom };
+    return viewerIsMarauder()
+        ? { center: PLACES_MAP_CFG.centerMarauder, zoom: PLACES_MAP_CFG.zoomMarauder }
+        : { center: PLACES_MAP_CFG.centerTownie,   zoom: PLACES_MAP_CFG.zoomTownie };
+}
+window.togglePlacesShowAll = function(){
+    placesShowAll = !placesShowAll;
+    try { localStorage.setItem(PLACES_SHOW_ALL_KEY, placesShowAll ? '1' : '0'); } catch (e) {}
+    const btn = document.getElementById('places-all-toggle');
+    if (btn){
+        btn.classList.toggle('active', placesShowAll);
+        btn.textContent = placesShowAll ? '✓ All shown' : 'Show all';
+        btn.title = placesShowAll ? 'Showing every listing — tap for the essentials' : 'Show every listing on the map and list';
+    }
+    renderPlaces();
+    if (placesMap){ const v = placesMapDefaultView(); placesMap.setView(v.center, v.zoom); }
+};
 
 // --- MBA (Millersville Business Association) membership integration ----------
 // association.json is the SINGLE SOURCE OF TRUTH for membership. We load it
@@ -7634,8 +7679,10 @@ async function loadPlaces(){try{
 // call in renderPlaces(), so map and list can never disagree.
 const PLACES_MAP_CFG = {
     pmtiles: '/millersville.pmtiles',
-    center: [40.0015, -76.3545],                 // between the square and campus
+    center: [40.0015, -76.3545],                 // between the square and campus (Show-all / untiered fallback)
     zoom: 15, minZoom: 13, maxZoom: 18,          // basemap data is z15, overzoomed
+    centerMarauder: [39.9982, -76.3540], zoomMarauder: 16,   // tiered default (2026-10-15): campus core, one step in
+    centerTownie:   [40.0030, -76.3578], zoomTownie: 15,     // tiered default: George St / Manor Ave
     bounds: [[39.95, -76.44], [40.07, -76.27]]   // = the pmtiles extract bbox
 };
 // Pin glyphs per category. NOTE: separate from the card-side catIcons map
@@ -7683,8 +7730,9 @@ function initPlacesMap(){
     placesMapAssetsLoad().then(() => {
         if (placesMap) return;
         el.classList.add('map-ready');
+        const _v0 = placesMapDefaultView();   // per-identity tiered default (2026-10-15)
         placesMap = L.map(el, {
-            center: PLACES_MAP_CFG.center, zoom: PLACES_MAP_CFG.zoom,
+            center: _v0.center, zoom: _v0.zoom,
             minZoom: PLACES_MAP_CFG.minZoom, maxZoom: PLACES_MAP_CFG.maxZoom,
             maxBounds: PLACES_MAP_CFG.bounds, maxBoundsViscosity: 1.0,
             gestureHandling: true, zoomControl: true, attributionControl: true
@@ -7747,6 +7795,7 @@ function placesMapPinList(){
     if (placesMGMode)  list = list.filter(p => p.marauderGold === true);
     if (placesFilter !== 'All') list = list.filter(placeMatchesCategory);
     if (placesTodayMode) list = list.filter(p => placeTodayContent(p));
+    list = list.filter(placeTierVisible);   // default-pin tiers (2026-10-15) — no-op once any chip/lens/Show-all is on
     list.filter(placesMapHasCoords).forEach(p => pins.push({ place: p, group: (p.placeType==='food') ? 'food' : 'service' }));
     if (!placesMGMode && !placesMBAMode && !placesTodayMode && (placesFilter==='All' || placesFilter==='Housing')){
         (allHousing||[]).filter(placeAudienceVisible).filter(placesMapHasCoords)
@@ -7898,6 +7947,7 @@ function placeTodayContent(p){ return placeHasSpecialsToday(placeSlug(p)) || pla
 window.scrollToPlaceCard = function(p){
     const el = document.querySelector(`#view-places [data-place="${placeSlug(p)}"]`);
     if (!el) return;
+    if (el.tagName === 'DETAILS') el.open = true;   // compact row (2026-10-15): a pin tap / search landing opens the card
     el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     el.classList.remove('place-card-flash'); void el.offsetWidth;
     el.classList.add('place-card-flash');
@@ -7936,6 +7986,14 @@ window.focusPlaceOnMap = function(pOrSlug){
 ['places-container', 'housing-container'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.addEventListener('click', ev => {
+        const sum = ev.target.closest('summary');
+        if (sum && sum.parentElement && sum.parentElement.classList.contains('place-row')) {
+            // Compact row (2026-10-15): the native toggle runs, and the pin
+            // follows ONLY when the row is being opened — closing a row must
+            // not pan the map.
+            if (!sum.parentElement.open) focusPlaceOnMap(sum.parentElement.getAttribute('data-place'));
+            return;
+        }
         if (ev.target.closest('a,button,summary')) return;   // summary, NOT details: a details ancestor swallowed every campus-group card tap (fixed 2026-08-07)
         const card = ev.target.closest('[data-place]');
         if (card) focusPlaceOnMap(card.getAttribute('data-place'));
@@ -8058,6 +8116,7 @@ function updatePlacesFilterNote(){
     const note = document.getElementById('places-filter-note');
     if (!note) return;
     if (placesMBAMode) note.textContent = 'Showing only verified businesses.';
+    else if (placesTiersActive() && (allPlaces || []).some(p => p && p.mapTier)) note.textContent = 'Showing the essentials — tap Show all, a category, or search for everything else.';
     else if (placesMGMode) note.textContent = 'Showing only businesses that accept Marauder Gold.';
     else if (placesTodayMode) note.textContent = 'Showing places with specials or events today.';
     else note.textContent = '';
@@ -8466,6 +8525,13 @@ function renderPlaces(){
     // (2026-08-24): the toggle shows for undecided viewers too — only
     // confirmed townies hide it; if a townie somehow had MG mode active,
     // drop it so they're not stuck in a filtered view with no toggle.
+    const allBtn = document.getElementById('places-all-toggle');
+    if (allBtn){
+        const tiered = (allPlaces || []).some(p => p && p.mapTier);
+        allBtn.style.display = tiered ? '' : 'none';   // no tiers in the data yet → nothing to toggle
+        allBtn.classList.toggle('active', placesShowAll);
+        allBtn.textContent = placesShowAll ? '✓ All shown' : 'Show all';
+    }
     const mgBtn = document.getElementById('places-mg-toggle');
     const showMG = viewerIsMarauder();
     if (mgBtn) mgBtn.style.display = showMG ? '' : 'none';
@@ -8488,6 +8554,7 @@ function renderPlaces(){
     if(placesMGMode){
         hc.style.display='none';
         pc.style.display='';
+        pc.classList.remove('place-list'); pc.classList.add('card-grid');   // MG mode keeps the card grid (2026-10-15)
         let mgFiltered = allPlaces.filter(p => p.marauderGold === true);
         if(placesFilter !== 'All'){
             mgFiltered = mgFiltered.filter(placeMatchesCategory);
@@ -8541,6 +8608,7 @@ function renderPlaces(){
     // applies; non-targeted listings always pass. Unset affiliation is treated as
     // townie here (Directory-specific convention — see placeAudienceVisible).
     filtered = filtered.filter(p => placeAudienceVisible(p));
+    filtered = filtered.filter(placeTierVisible);   // same tier gate as the pins (2026-10-15): map and list never disagree
 
     // Directory order: food before services (outermost, unchanged), then
     // open → closed → unknown within each section (hoursSortRank — open
@@ -8571,24 +8639,33 @@ function renderPlaces(){
     // only per Hard Rule 2). The Campus category chip shows them expanded via
     // the normal flow; the 🔥 Today lens keeps event-day campus places
     // INLINE (decision: they earned the spot); MBA mode never includes them.
+    // With tiers active (2026-10-15) the campus rows that survive are the
+    // essentials (SMC, McNairy, Store…) and render INLINE; the collapsed
+    // group only returns under Show all, where the full campus directory
+    // would otherwise swamp the list.
     let campusGroup = '';
-    if (placesFilter === 'All' && !placesTodayMode) {
+    if (placesFilter === 'All' && !placesTodayMode && !placesTiersActive()) {
         const campusList = filtered.filter(p => p.category === 'Campus');
         if (campusList.length) {
             filtered = filtered.filter(p => p.category !== 'Campus');
-            campusGroup = `<details class="place-group" style="grid-column:1/-1;"><summary style="cursor:pointer;font-weight:700;padding:8px 0;">🏛 Campus<span class="day-count" style="font-size:0.7rem;font-weight:500;color:var(--text-muted);margin-left:8px;">${campusList.length} place${campusList.length===1?'':'s'}</span></summary><div class="card-grid" style="margin-top:4px;">`
-                + campusList.map(p => buildServiceCard(p)).join('') + '</div></details>';   // inner card-grid (EXISTING class, no new CSS rule): details children aren't grid items of #places-container, so gap/columns were lost; day-count style inline — the CSS rule is scoped to .day-group-header
+            campusGroup = `<details class="place-group" style="grid-column:1/-1;"><summary style="cursor:pointer;font-weight:700;padding:8px 0;">🏛 Campus<span class="day-count" style="font-size:0.7rem;font-weight:500;color:var(--text-muted);margin-left:8px;">${campusList.length} place${campusList.length===1?'':'s'}</span></summary><div class="place-list" style="margin-top:4px;">`
+                + campusList.map(p => placeRowHtml(p, buildServiceCard(p))).join('') + '</div></details>';   // inner place-list (2026-10-15: rows, not cards); day-count style inline — the CSS rule is scoped to .day-group-header
         }
     }
+    // Compact expandable ROWS (2026-10-15) — the /food <details> pattern.
+    // The full card is unchanged and lives inside the row; the row is the
+    // browse surface, the card the detail surface.
     const cards = filtered.map(p => {
-        if (p.placeType === 'food') return buildFoodCard(p, specials, dayName);
-        return buildServiceCard(p);
+        if (p.placeType === 'food') return placeRowHtml(p, buildFoodCard(p, specials, dayName));
+        return placeRowHtml(p, buildServiceCard(p));
     });
+    pc.classList.remove('card-grid'); pc.classList.add('place-list');
     const emptyMsg = placesMBAMode
         ? '<p class="empty-state">No verified businesses match this filter.</p>'
         : placesTodayMode
         ? '<p class="empty-state">No specials listed for today — check back tomorrow.</p>'
         : '<p class="empty-state">No listings found in this category. Know a local business? <a href="#" onclick="event.preventDefault();openSubmitBusiness();">Add it here →</a></p>';
+    if (cupboardCard) cupboardCard = placeRowHtml({ name: 'Campus Cupboard', slug: 'campus-cupboard', category: 'Cupboard', placeType: 'cupboard' }, cupboardCard, { glyph: '🧺', status: '<span style="color:#15803d;font-weight:700;">Open today</span> · free groceries' });
     pc.innerHTML = (cupboardCard + cards.join('') + campusGroup) || emptyMsg;
     // Let each card size to its own content instead of stretching to the tallest
     // card in its row. Equal-height rows looked fine until a card with a big
@@ -8758,6 +8835,36 @@ function buildFoodCard(p, specials, dayName, previewIso) {   // previewIso: /foo
             <div style="flex:1;">${actionBtn}</div>
         </div>
     </div>`;
+}
+
+// /map compact row (2026-10-15): glyph · name + status line · hint chips,
+// expanding to the untouched full card. data-place sits on the <details>
+// so scrollToPlaceCard / focusPlaceOnMap / openPlaceFromSearch keep working
+// (querySelector returns the row first; the inner card carries the same
+// slug, so a tap anywhere resolves to one pin). Inline styles only (Hard
+// Rule 2); the only shared rule is `.place-list` in index.html's
+// places-list-css block. `opts` lets the synthesized Cupboard card pass its
+// own glyph/status (it has no sheet row to read hours from).
+function placeRowHtml(p, cardHtml, opts){
+    opts = opts || {};
+    const slug = p.slug || placeSlug(p);
+    const glyph = opts.glyph || PLACE_PIN_OVERRIDES[slug] || MAP_PIN_ICONS[p.category] || (p.placeType === 'food' ? '🍴' : '🏢');
+    const hasSp = (p.placeType !== 'cupboard') && placeHasSpecialsToday(slug);
+    const evT = (p.placeType !== 'cupboard') ? placeEventsToday(p) : [];
+    const sub = opts.status || placeHoursText(p)
+        || `<span style="color:var(--text-muted);">${escHtml(p.cuisine || p.category || '')}</span>`;
+    const hints = [];
+    if (hasSp) hints.push('🏷️ Specials');
+    if (evT.length) hints.push(`📅 ${evT.length} today`);
+    if (p.services && p.services.length) hints.push(`🏢 ${p.services.length} services`);
+    const hintHtml = hints.length ? `<span style="font-size:0.72rem;color:var(--text-muted);white-space:nowrap;">${hints.join(' · ')}</span>` : '';
+    const border = hasSp ? 'var(--gold)' : 'var(--border)';
+    return `<details class="place-row" data-place="${slug}" style="border:1px solid ${border};border-radius:var(--radius-sm);background:var(--surface);margin:6px 0;scroll-margin-top:calc(var(--header-h,60px) + var(--places-map-h,0px) + 90px);">`
+        + `<summary style="cursor:pointer;padding:10px 12px;list-style:none;display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:10px;align-items:center;">`
+        + `<span style="font-size:1.15rem;line-height:1;text-align:center;">${glyph}</span>`
+        + `<span style="min-width:0;"><span style="display:block;font-weight:700;font-size:0.92rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escHtml(p.name)}</span><span style="display:block;font-size:0.78rem;margin-top:2px;">${sub}</span></span>`
+        + `${hintHtml}</summary>`
+        + `<div style="padding:0 8px 10px;">${cardHtml}</div></details>`;
 }
 
 function buildServiceCard(p) {

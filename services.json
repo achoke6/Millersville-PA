@@ -29,7 +29,13 @@
     "description": "Administration building",
     "lat": 39.999298,
     "lng": -76.355238,
-    "slug": "biemesderfer-executive-center"
+    "slug": "biemesderfer-executive-center",
+    "services": [
+      "H. Edgar Sherts Board Room",
+      "President's Office",
+      "Senior Vice President for Academic Affairs and Provost Office",
+      "Vice President for Finance and Administration Office"
+    ]
   },
   {
     "name": "Biemesderfer Stadium",
@@ -86,11 +92,22 @@
     "category": "Campus",
     "address": "37 West Frederick St. Millersville, PA 17551",
     "phone": "",
-    "description": "Police, Parking, Shipping, ID Services, & IT",
+    "description": "",
     "audience": "marauders",
     "lat": 39.997761,
     "lng": -76.356568,
-    "slug": "boyer-building"
+    "slug": "boyer-building",
+    "services": [
+      "Chief Technology Officer",
+      "Enterprise Applications & Digital Solutions",
+      "ID Services",
+      "IT Help Desk",
+      "Mail Room",
+      "Network & Systems Services",
+      "Technical Support Services",
+      "University Police",
+      "Web Services"
+    ]
   },
   {
     "name": "Breidenstine Hall",
@@ -100,7 +117,12 @@
     "description": "Art and design building",
     "lat": 39.999391,
     "lng": -76.351199,
-    "slug": "breidenstine-hall"
+    "slug": "breidenstine-hall",
+    "services": [
+      "Art & Design Department",
+      "Swift Gallery",
+      "Sykes Gallery"
+    ]
   },
   {
     "name": "Brooks Field",
@@ -122,7 +144,17 @@
     "audience": "marauders",
     "lat": 39.999269,
     "lng": -76.350256,
-    "slug": "caputo-hall"
+    "slug": "caputo-hall",
+    "services": [
+      "Biology Department",
+      "Chemistry Department",
+      "College of Science and Technology Dean's Office",
+      "Computer Science Department",
+      "Earth Science Department",
+      "Physics Department",
+      "Weather Information Center",
+      "Wehrheim School of Nursing"
+    ]
   },
   {
     "name": "Comet Field",
@@ -137,7 +169,7 @@
   {
     "name": "Cooper Park",
     "category": "Campus",
-    "address": "",
+    "address": "219 N. Prince St., Millersville, PA 17551",
     "phone": "",
     "description": "Baseball Field",
     "audience": "marauders",
@@ -210,10 +242,18 @@
     "category": "Campus",
     "address": "",
     "phone": "",
-    "description": "Alumni house and lawn -  Summer Fun Series, Homecoming events",
+    "description": "",
     "lat": 40.001118,
     "lng": -76.355859,
-    "slug": "duncan-alumni-house"
+    "slug": "duncan-alumni-house",
+    "services": [
+      "Advancement Information Services",
+      "Alumni Engagement Office",
+      "Development Office",
+      "University Communications and Marketing Office",
+      "University Events Office",
+      "Vice President for Advancement Office"
+    ]
   },
   {
     "name": "Dutcher Hall",
@@ -223,7 +263,11 @@
     "description": "Academic hall",
     "lat": 39.998982,
     "lng": -76.355898,
-    "slug": "dutcher-hall"
+    "slug": "dutcher-hall",
+    "services": [
+      "Rafters Theatre",
+      "University Theatre"
+    ]
   },
   {
     "name": "East Village",
@@ -302,7 +346,13 @@
     "description": "Dining and conference hall",
     "lat": 39.996515,
     "lng": -76.35299,
-    "slug": "gordinier-hall"
+    "slug": "gordinier-hall",
+    "services": [
+      "Bolger Conference Center",
+      "The Anchor",
+      "The Upper Deck",
+      "University Dining and Catering Services"
+    ]
   },
   {
     "name": "Jefferson Hall",
@@ -363,7 +413,13 @@
     "description": "Gymnasium and wellness programs",
     "lat": 39.998135,
     "lng": -76.357909,
-    "slug": "lombardo-hall"
+    "slug": "lombardo-hall",
+    "services": [
+      "Accounting and Finance Department",
+      "Economics Department",
+      "Lombardo College of Business Dean's Office",
+      "Management, Marketing, and Information Technology Department"
+    ]
   },
   {
     "name": "Lombardo Welcome Center",
@@ -373,7 +429,13 @@
     "description": "Net-zero welcome center",
     "lat": 39.996874,
     "lng": -76.351952,
-    "slug": "lombardo-welcome-center"
+    "slug": "lombardo-welcome-center",
+    "services": [
+      "Graduate Admissions",
+      "Online Programs",
+      "Undergraduate Admissions",
+      "University Housing & Conference Services"
+    ]
   },
   {
     "name": "Lyle Hall",
@@ -383,7 +445,23 @@
     "description": "Admissions and student services",
     "lat": 40.000194,
     "lng": -76.357059,
-    "slug": "lyle-hall"
+    "slug": "lyle-hall",
+    "services": [
+      "Center for Counseling & Human Development, 3rd Floor",
+      "Costume Shop",
+      "Financial Aid Office, 2nd Floor",
+      "Graduate Studies & Adult Learning, 1st Floor",
+      "Grants, Sponsored Programs & Research, 3rd Floor",
+      "Health Services, 2nd Floor",
+      "Institutional Research, 3rd Floor",
+      "International Programs & Services (IPS) Office, 1st Floor",
+      "Learning Services, 3rd Floor",
+      "Planning, Assessment & Analysis, 3rd Floor",
+      "Registrar's Office, 1st Floor",
+      "Student Accounts, 2nd Floor",
+      "The Cove",
+      "Tutoring Center, 3rd Floor"
+    ]
   },
   {
     "name": "McComsey Hall",
@@ -393,7 +471,23 @@
     "description": "Academic hall — humanities and education",
     "lat": 39.998263,
     "lng": -76.350512,
-    "slug": "mccomsey-hall"
+    "slug": "mccomsey-hall",
+    "services": [
+      "Career Center",
+      "Center for Civic Engagement",
+      "Center for Disaster Research & Education",
+      "Center for Economic Education",
+      "Center for Pennsylvania German Studies",
+      "Center for Public Research (CPR)",
+      "College of Arts, Humanities & Social Sciences Dean's Office",
+      "Criminology, Sociology, and Anthropology Department",
+      "English and World Languages Department",
+      "Geography Department",
+      "Government, Law, and International Relations Department",
+      "History Department",
+      "Philosophy Department",
+      "Success Coaching"
+    ]
   },
   {
     "name": "McComsey Tennis Courts",
@@ -410,12 +504,24 @@
     "category": "Campus",
     "address": "9 N George St, Millersville, PA 17551",
     "phone": "(717) 871-7111",
-    "description": "McNairy Library — study spaces, research, and technology",
+    "description": "",
     "link": "https://www.millersville.edu/library/",
     "lat": 39.998365,
     "lng": -76.355217,
     "slug": "mcnairy-library",
-    "breakClosed": true
+    "breakClosed": true,
+    "services": [
+      "Associate Provost for Student Success and Dean of University College Office",
+      "Digital Learning Studio",
+      "Exploratory Studies & Student Development",
+      "Integrated Studies",
+      "Starbucks",
+      "Starfish",
+      "Success Coaching",
+      "University Archives & Special Collections",
+      "University Library",
+      "Writing Center"
+    ]
   },
   {
     "name": "Members 1st Federal Credit Union",
@@ -462,7 +568,7 @@
     "category": "Campus",
     "address": "",
     "phone": "",
-    "description": "Catholic campus ministry,  weekly student events",
+    "description": "",
     "audience": "marauders",
     "lat": 40.002041,
     "lng": -76.356163,
@@ -529,76 +635,6 @@
     }
   },
   {
-    "name": "MU Counseling & Human Development Center",
-    "category": "Health",
-    "address": "40 Dilworth Rd., 3rd Floor, Millersville, PA 17551",
-    "phone": "(717) 871-7821",
-    "description": "Free confidential counseling for MU students",
-    "link": "https://www.millersville.edu/counsel/counseling-center-overview.php",
-    "onCampus": true,
-    "audience": "marauders",
-    "lat": 40.000316,
-    "lng": -76.357393,
-    "slug": "mu-counseling-human-development-center"
-  },
-  {
-    "name": "MU Recreation Center",
-    "category": "Recreation",
-    "address": "21 S George St, Millersville, PA 17551",
-    "phone": "(717) 871-7555",
-    "description": "Fitness center for MU students and local community.",
-    "link": "https://www.millersville.edu/campusrec/smc-rec-center.php",
-    "onCampus": true,
-    "lat": 39.996161,
-    "lng": -76.353888,
-    "slug": "mu-recreation-center",
-    "hours": {
-      "mon": "08:00-24:00",
-      "tue": "08:00-24:00",
-      "wed": "08:00-24:00",
-      "thu": "08:00-24:00",
-      "fri": "08:00-19:00",
-      "sat": "10:00-19:00",
-      "sun": "10:00-24:00"
-    },
-    "breakClosed": true
-  },
-  {
-    "name": "MU Student Health Services",
-    "category": "Health",
-    "address": "40 Dilworth Rd, 2nd Floor Millersville, PA 17551",
-    "phone": "(717) 871-4141",
-    "description": "On-campus health clinic for MU students",
-    "link": "https://www.millersville.edu/healthservices/",
-    "onCampus": true,
-    "audience": "marauders",
-    "lat": 40.000316,
-    "lng": -76.357393,
-    "slug": "mu-student-health-services",
-    "hours": {
-      "mon": "08:00-16:00",
-      "tue": "08:00-16:00",
-      "wed": "08:00-16:00",
-      "thu": "08:00-16:00",
-      "fri": "08:00-16:00",
-      "sat": "closed",
-      "sun": "closed"
-    }
-  },
-  {
-    "name": "MU Tutoring Center",
-    "category": "Education",
-    "address": "40 Dilworth Rd, Rm. 355, Millersville, PA 17551",
-    "phone": "(717) 871-7222",
-    "description": "Free academic tutoring for MU students",
-    "link": "https://www.millersville.edu/learningcenter/",
-    "onCampus": true,
-    "audience": "marauders",
-    "lat": 40.000308,
-    "lng": -76.357051,
-    "slug": "mu-tutoring-center"
-  },
-  {
     "name": "Osburn Hall",
     "category": "Campus",
     "address": "",
@@ -606,7 +642,10 @@
     "description": "Applied engineering and technology",
     "lat": 39.999298,
     "lng": -76.35184,
-    "slug": "osburn-hall"
+    "slug": "osburn-hall",
+    "services": [
+      "Applied Engineering, Safety & Technology Department"
+    ]
   },
   {
     "name": "Owl Central Games",
@@ -677,10 +716,13 @@
     "category": "Campus",
     "address": "",
     "phone": "",
-    "description": "Home court volleyball, basketball, wrestling",
+    "description": "",
     "lat": 39.999505,
     "lng": -76.347912,
-    "slug": "pucillo-gymnasium"
+    "slug": "pucillo-gymnasium",
+    "services": [
+      "Wellness & Sport Sciences Department"
+    ]
   },
   {
     "name": "Q Nails",
@@ -710,7 +752,11 @@
     "description": "Science center — labs and lecture halls",
     "lat": 39.999602,
     "lng": -76.349898,
-    "slug": "roddy-science-center"
+    "slug": "roddy-science-center",
+    "services": [
+      "Biology Department",
+      "Computer Science Department"
+    ]
   },
   {
     "name": "Ropes Course",
@@ -786,7 +832,19 @@
     "audience": "marauders",
     "lat": 40.000956,
     "lng": -76.357808,
-    "slug": "stayer-hall"
+    "slug": "stayer-hall",
+    "services": [
+      "Assistive Tech Lending Lab",
+      "Certification Office",
+      "Children's Literature Center",
+      "College Assistance Migrant Program",
+      "College of Education and Human Services Dean’s Office",
+      "Early, Middle, and Exceptional Education Department",
+      "Educational Foundations Department",
+      "Field Services Department",
+      "School of Social Work",
+      "Stayer Multipurpose Room"
+    ]
   },
   {
     "name": "Student Lodging, Inc.",
@@ -814,11 +872,31 @@
     "category": "Campus",
     "address": "",
     "phone": "",
-    "description": "Student union, event rooms, Ville Courts, dining, SNAP station",
+    "description": "",
     "audience": "marauders",
     "lat": 39.996165,
     "lng": -76.353864,
-    "slug": "student-memorial-center"
+    "slug": "student-memorial-center",
+    "services": [
+      "'Ville Courts",
+      "Banking Center",
+      "Campus Life",
+      "Campus Recreation",
+      "Center for Health Education and Promotion (CHEP)",
+      "Chick-Fil-A",
+      "Computer Lab",
+      "Information Desk (SMC)",
+      "Office for Inclusive Excellence",
+      "PSECU",
+      "SMC Rec Center",
+      "Student Affairs Vice President's Office",
+      "Student Conduct & Community Standards",
+      "Student Organization Offices",
+      "Student Services, Inc",
+      "Technical Operations (SMC)",
+      "Ticket Office",
+      "University Store"
+    ]
   },
   {
     "name": "Susan P. Luek Hall",
@@ -828,7 +906,11 @@
     "description": "Academic hall",
     "lat": 39.999175,
     "lng": -76.353036,
-    "slug": "susan-p-luek-hall"
+    "slug": "susan-p-luek-hall",
+    "services": [
+      "Psychology Department",
+      "Wellness and Sport Sciences"
+    ]
   },
   {
     "name": "The Backyard",
@@ -923,7 +1005,16 @@
     "description": "MU's downtown Lancaster arts venue",
     "lat": 40.038661,
     "lng": -76.3083,
-    "slug": "ware-center"
+    "slug": "ware-center",
+    "services": [
+      "Binns Room",
+      "Grand Salon",
+      "Lyet Lobby",
+      "Regitz Gallery",
+      "Steinman Hall",
+      "The Atrium",
+      "Visual and Performing Arts Office"
+    ]
   },
   {
     "name": "Turkey Hill Minit Market",
@@ -964,7 +1055,10 @@
     "description": "Academic hall",
     "lat": 39.999738,
     "lng": -76.356488,
-    "slug": "wickersham-hall"
+    "slug": "wickersham-hall",
+    "services": [
+      "Mathematics Department"
+    ]
   },
   {
     "name": "Winter Visual & Performing Arts Center",
@@ -974,7 +1068,16 @@
     "description": "Concert hall and galleries on campus",
     "lat": 40.000694,
     "lng": -76.358591,
-    "slug": "winter-visual-performing-arts-center"
+    "slug": "winter-visual-performing-arts-center",
+    "services": [
+      "Steinman Foundation Recording Studio",
+      "Biemesderfer Concert Hall",
+      "Clair Performance Hall",
+      "Eckert Art Gallery",
+      "Isaacson Dance Studio",
+      "Tell School of Music",
+      "Yamaha Clavinova piano lab"
+    ]
   },
   {
     "name": "Your Image Barbershop",
@@ -986,5 +1089,266 @@
     "lat": 39.999962,
     "lng": -76.354425,
     "slug": "your-image-barbershop"
+  },
+  {
+    "name": "Adams House",
+    "category": "Campus",
+    "address": "2 North George St., Millersville, PA 17551",
+    "phone": "",
+    "description": "",
+    "lat": 39.997991,
+    "lng": -76.354026,
+    "slug": "adams-house",
+    "services": [
+      "Dr. Rita Smith-Wade-El Center for Intercultural Student Engagement"
+    ]
+  },
+  {
+    "name": "Brossman Hall",
+    "category": "Campus",
+    "address": "110 Pucillo Dr., Millersville, PA 17551",
+    "phone": "",
+    "description": "",
+    "lat": 39.998739,
+    "lng": -76.348693,
+    "slug": "brossman-hall",
+    "services": [
+      "Earth Science Department"
+    ]
+  },
+  {
+    "name": "Columbia House",
+    "category": "Campus",
+    "address": "215 North George St., Millersville, PA 17551",
+    "phone": "",
+    "description": "",
+    "lat": 40.001419,
+    "lng": -76.355925,
+    "slug": "columbia-house",
+    "services": [
+      "Military Science Department (ROTC)"
+    ]
+  },
+  {
+    "name": "Franklin House",
+    "category": "Campus",
+    "address": "6 North George St., Millersville, PA 17551",
+    "phone": "",
+    "description": "",
+    "lat": 39.998115,
+    "lng": -76.354144,
+    "slug": "franklin-house",
+    "services": [
+      "Honors College"
+    ]
+  },
+  {
+    "name": "Gerhart Hall",
+    "category": "Campus",
+    "address": "22 East Frederick St., Millersville, PA 17551",
+    "phone": "",
+    "description": "",
+    "lat": 39.998369,
+    "lng": -76.352652,
+    "slug": "gerhart-hall",
+    "services": [
+      "Criminology, Sociology, and Anthropology Faculty Offices"
+    ]
+  },
+  {
+    "name": "Hash Building/Bassler Hall",
+    "category": "Campus",
+    "address": "10 North George St., Millersville, PA 17551",
+    "phone": "",
+    "description": "",
+    "lat": 39.998402,
+    "lng": -76.354015,
+    "slug": "hash-building-bassler-hall",
+    "services": [
+      "Communication & Theatre Department",
+      "Veterans and Military Resource Center"
+    ]
+  },
+  {
+    "name": "Newman House",
+    "category": "Campus",
+    "address": "227 North George St., Millersville, PA 17551",
+    "phone": "",
+    "description": "",
+    "lat": 40.002045,
+    "lng": -76.356196,
+    "slug": "newman-house",
+    "services": [
+      "Catholic Campus Ministries"
+    ]
+  },
+  {
+    "name": "Nichols House",
+    "category": "Campus",
+    "address": "18 Creek Dr., Millersville, PA 17551",
+    "phone": "",
+    "description": "",
+    "lat": 39.998789,
+    "lng": -76.349627,
+    "slug": "nichols-house",
+    "services": [
+      "Earth Sciences Department"
+    ]
+  },
+  {
+    "name": "Potter House",
+    "category": "Campus",
+    "address": "218 North Prince St., Millersville, PA 17551",
+    "phone": "",
+    "description": "",
+    "lat": 40.000539,
+    "lng": -76.359937,
+    "slug": "potter-house",
+    "services": [
+      "United Campus Ministry",
+      "University Christian Fellowship"
+    ]
+  },
+  {
+    "name": "Schuylkill House",
+    "category": "Campus",
+    "address": "22 West Cottage Ave., Millersville, PA 17551",
+    "phone": "",
+    "description": "",
+    "lat": 40.002224,
+    "lng": -76.357534,
+    "slug": "schuylkill-house",
+    "services": [
+      "APSCUF (Faculty Union)"
+    ]
+  },
+  {
+    "name": "Somerset House",
+    "category": "Campus",
+    "address": "225 North George St., Millersville, PA 17551",
+    "phone": "",
+    "description": "",
+    "lat": 40.001882,
+    "lng": -76.356105,
+    "slug": "somerset-house",
+    "services": [
+      "Latino/a Studies"
+    ]
+  },
+  {
+    "name": "York House",
+    "category": "Campus",
+    "address": "68 West Cottage Ave., Millersville, PA 17551",
+    "phone": "",
+    "description": "",
+    "lat": 40.001682,
+    "lng": -76.359497,
+    "slug": "york-house",
+    "services": [
+      "Migrant Education Program",
+      "Music faculty offices"
+    ]
+  },
+  {
+    "name": "Bishop Service Building",
+    "category": "Campus",
+    "address": "157 Creek Dr., Millersville, PA 17551",
+    "phone": "",
+    "description": "",
+    "lat": 39.996454,
+    "lng": -76.348114,
+    "slug": "bishop-service-building",
+    "services": [
+      "Maintenance Operations"
+    ]
+  },
+  {
+    "name": "Dilworth Building",
+    "category": "Campus",
+    "address": "20 Dilworth Rd., Millersville, PA 17551",
+    "phone": "",
+    "description": "",
+    "lat": 39.999882,
+    "lng": -76.356032,
+    "slug": "dilworth-building",
+    "services": [
+      "Accounting and Budget Office",
+      "Human Resources",
+      "Payroll Services",
+      "Purchasing"
+    ]
+  },
+  {
+    "name": "Lebanon House",
+    "category": "Campus",
+    "address": "237 North George St., Millersville, PA 17551",
+    "phone": "",
+    "description": "",
+    "lat": 40.002265,
+    "lng": -76.356418,
+    "slug": "lebanon-house",
+    "services": [
+      "LEMSA"
+    ]
+  },
+  {
+    "name": "Lehigh Hall",
+    "category": "Campus",
+    "address": "80 Brooks Dr., Millersville, PA 17551",
+    "phone": "",
+    "description": "",
+    "lat": 39.999923,
+    "lng": -76.359218,
+    "slug": "lehigh-hall",
+    "services": [
+      "Intercollegiate Athletics",
+      "Sports Information"
+    ]
+  },
+  {
+    "name": "Tanger House - Presidential Residence",
+    "category": "Campus",
+    "address": "10 Hemlock Lane, Millersville, PA 17551",
+    "phone": "",
+    "description": "",
+    "lat": 39.99922,
+    "lng": -76.357927,
+    "slug": "tanger-house-presidential-residence",
+    "services": [
+      "President's Residence"
+    ]
+  },
+  {
+    "name": "Washington House",
+    "category": "Campus",
+    "address": "18 South George St., Millersville, PA 17551",
+    "phone": "",
+    "description": "",
+    "lat": 39.996931,
+    "lng": -76.353639,
+    "slug": "washington-house",
+    "services": [
+      "Diversity & Social Justice Office"
+    ]
+  },
+  {
+    "name": "Carpenter-Trout Athletic Training Facility",
+    "category": "Campus",
+    "address": "45 Pucillo Drive, Millersville, PA 17551",
+    "phone": "",
+    "description": "",
+    "lat": 40.000194,
+    "lng": -76.351641,
+    "slug": "carpenter-trout-athletic-training-facility"
+  },
+  {
+    "name": "Bard Hall",
+    "category": "Campus",
+    "address": "60 Brooks Dr., Millersville, PA 17551",
+    "phone": "",
+    "description": "",
+    "lat": 39.999191,
+    "lng": -76.358864,
+    "slug": "bard-hall"
   }
 ]

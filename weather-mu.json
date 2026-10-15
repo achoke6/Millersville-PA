@@ -1,27 +1,27 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Wednesday, October 14, 2026 at 07:58 AM (Reynolds, Shertzer, Whitehurst, Student Meteorologists)",
+    "issued": "Wednesday, October 14, 2026 at 05:30 PM (Curtorillo, Gray, Negherbon , Student Meteorologists)",
     "periods": [
-      {
-        "period": "Today",
-        "text": "Increasing clouds, very warm and humid with an isolated shower or two. High: 80-84"
-      },
       {
         "period": "Tonight",
         "text": "Partly cloudy and mild. Low: 56-60"
       },
       {
-        "period": "Thursday",
-        "text": "Cooler and less humid with times of clouds and sunshine. High: 64-68"
+        "period": "Tomorrow",
+        "text": "Cooler and less humid with times of clouds and sunshine High: 64-68"
       },
       {
-        "period": "Thursday Night",
+        "period": "Tomorrow Night",
         "text": "Mostly cloudy and mild with scattered showers. Low: 56-60"
       },
       {
         "period": "Friday",
         "text": "Partly sunny, breezy, very warm and more humid with scattered showers. High: 78-82"
+      },
+      {
+        "period": "Saturday",
+        "text": "Mostly sunny, blustery, and cool. High: 54-58"
       }
     ]
   },
@@ -128,69 +128,69 @@
   },
   "observations": [
     {
-      "time": "09:00",
-      "temp": "69",
-      "dewpoint": "62",
+      "time": "07:00",
+      "temp": "56",
+      "dewpoint": "50",
       "rh": "80",
-      "windDir": "NNW",
-      "windSpeed": "1",
+      "windDir": "NE",
+      "windSpeed": "3",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
     },
     {
-      "time": "08:00",
-      "temp": "60",
-      "dewpoint": "60",
-      "rh": "98",
-      "windDir": "ENE",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "8.4",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "59",
-      "dewpoint": "59",
-      "rh": "99",
-      "windDir": "NNW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "5.9",
-      "condition": "None"
-    },
-    {
       "time": "06:00",
-      "temp": "59",
-      "dewpoint": "59",
-      "rh": "98",
-      "windDir": "SSW",
-      "windSpeed": "1",
+      "temp": "58",
+      "dewpoint": "51",
+      "rh": "79",
+      "windDir": "ENE",
+      "windSpeed": "2",
       "precip": "0.00",
-      "visibility": "8.9",
+      "visibility": "12 +",
       "condition": "None"
     },
     {
       "time": "05:00",
       "temp": "60",
-      "dewpoint": "59",
-      "rh": "98",
-      "windDir": "S",
-      "windSpeed": "0",
+      "dewpoint": "53",
+      "rh": "77",
+      "windDir": "NE",
+      "windSpeed": "6",
       "precip": "0.00",
-      "visibility": "7.3",
+      "visibility": "12 +",
       "condition": "None"
     },
     {
       "time": "04:00",
-      "temp": "61",
-      "dewpoint": "60",
-      "rh": "97",
-      "windDir": "WSW",
-      "windSpeed": "1",
+      "temp": "62",
+      "dewpoint": "55",
+      "rh": "76",
+      "windDir": "NNE",
+      "windSpeed": "4",
       "precip": "0.00",
-      "visibility": "10.4",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "03:00",
+      "temp": "65",
+      "dewpoint": "56",
+      "rh": "74",
+      "windDir": "NNE",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "02:00",
+      "temp": "67",
+      "dewpoint": "59",
+      "rh": "74",
+      "windDir": "NNE",
+      "windSpeed": "6",
+      "precip": "0.00",
+      "visibility": "12 +",
       "condition": "None"
     }
   ],
@@ -339,19 +339,30 @@
         "windSpeed": "17",
         "windTime": "15:40",
         "rain": "0.00"
+      },
+      {
+        "date": "10/14",
+        "max": "82",
+        "maxTime": "15:03",
+        "min": "58",
+        "minTime": "06:45",
+        "windDir": "241",
+        "windSpeed": "14",
+        "windTime": "15:07",
+        "rain": "0.01"
       }
     ],
-    "totalRain": "2.65",
-    "ytdRain": "32.27",
+    "totalRain": "2.66",
+    "ytdRain": "32.28",
     "yearMax": "102",
     "yearMaxDate": "July 03",
     "yearMin": "1",
     "yearMinDate": "January 21"
   },
   "discussion": {
-    "headline": "remnants of isaias to bring soaking rain, wind on sunday",
-    "dateLine": "11:30 a.m. Friday, October 9, 2026, Update",
-    "excerpt": "This week's weather has been nothing short of spectacular across northern MD, southeastern PA and the Lower Susquehanna Valley. High pressure has promoted lots of sunshine, dry conditions, seasonably cool nights and pleasantly warm afternoons. A weak cold front moved through the Commonwealth from Thursday into Thursday night, but the air mass behind it is similar to the one ahead of it. Moreover, a high pressure system is still situated over eastern Ohio and western PA. …",
+    "headline": "unseasonably warm through friday with a big cooldown to follow",
+    "dateLine": "11:30 a.m. Wednesday, October 14, 2026",
+    "excerpt": "Following the 2-4\" soaking from Hurricane Isaias's remnants on Sunday, the second full week of October kicked off on a mostly cloudy, dry and milder note with high temperatures in the low 70s on Monday. Skies then cleared Monday night, and south-southwesterly winds on the backside of a high pressure system ushered unseasonably warm and humid air into the Lower Susquehanna Valley on Tuesday. …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -359,6 +370,13 @@
     "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
   },
   "videos": [
+    {
+      "title": "Short Term Forecast 10/14/2026",
+      "videoId": "7jbNqAeLmg0",
+      "url": "https://www.youtube.com/watch?v=7jbNqAeLmg0",
+      "published": "2026-10-14T16:47:16+00:00",
+      "thumbnail": "https://i4.ytimg.com/vi/7jbNqAeLmg0/hqdefault.jpg"
+    },
     {
       "title": "Short Term Forecast 10/13/2026",
       "videoId": "fPG2YlYEgZg",
@@ -379,15 +397,8 @@
       "url": "https://www.youtube.com/watch?v=54KqVh_bhQs",
       "published": "2026-10-09T17:25:33+00:00",
       "thumbnail": "https://i2.ytimg.com/vi/54KqVh_bhQs/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 10/09/2026",
-      "videoId": "DbDBVKb6eZU",
-      "url": "https://www.youtube.com/watch?v=DbDBVKb6eZU",
-      "published": "2026-10-09T13:26:16+00:00",
-      "thumbnail": "https://i1.ytimg.com/vi/DbDBVKb6eZU/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-14T13:41:43.270Z"
+  "updated": "2026-10-15T11:24:35.230Z"
 }

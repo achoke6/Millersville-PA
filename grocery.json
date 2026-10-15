@@ -2,88 +2,84 @@
     "_comment": "Hand-maintained John Herr's Village Market weekly deals. Maintained weekly via Claude Cowork — circular runs Thursday-Wednesday. Transcribe ~15 top deals from the weekly circular. Update validThrough to one day past the last valid day so deals auto-disappear when the new week starts (Thursday morning).",
     "_format": "dateRange: human-readable string shown in UI (e.g. 'Thursday, May 7 through Wednesday, May 13'). validThrough: ISO date (YYYY-MM-DD), exclusive end. deals: array of { item, salePrice, regularPrice (optional), savings (optional) }. salePrice can be flexible — '$2.99/lb', '2 for $5', 'BOGO Free', etc.",
     "_source": "Circular page typically at https://www.familyownedmarkets.com/print-weekly-specials/?circularstoreidentifier=54348 or via the store's main page.",
-    "dateRange": "Thursday, October 8 through Wednesday, October 14",
-    "validThrough": "2026-10-15",
+    "dateRange": "Thursday, October 15 through Wednesday, October 21",
+    "validThrough": "2026-10-22",
     "deals": [
         {
-            "item": "Fresh 80% Lean Ground Beef (Value Pack, Our Own Store Made) — Beef Roundup 4-Day Sale, Thu 10/8 - Sun 10/11 only",
-            "salePrice": "$4.99/lb",
-            "regularPrice": "$5.99/lb (less amount)",
-            "savings": "$1.00/lb"
-        },
-        {
-            "item": "Choice Beef Whole-in-Bag Eye of Round (cut into steaks or roast at no extra cost) — Beef Roundup 4-Day Sale, Thu 10/8 - Sun 10/11 only",
-            "salePrice": "$4.99/lb"
-        },
-        {
-            "item": "New Crop Gala Apples (3-lb bag) — Digital Coupon",
-            "salePrice": "$1.48",
-            "regularPrice": "$2.48",
-            "savings": "$1.00"
-        },
-        {
-            "item": "Fresh Boneless Pork Sirloin Roast",
-            "salePrice": "$2.29/lb"
-        },
-        {
-            "item": "Martin's Tortilla Chips, Popcorn or Cheese Curls (7.5-11 oz, Selected)",
-            "salePrice": "Buy 1 Get 1 FREE"
-        },
-        {
-            "item": "Herr's Original Potato Chips (9.5-10 oz, Selected)",
-            "salePrice": "Buy 1 Get 1 FREE"
-        },
-        {
-            "item": "Thomas' English Muffins (6-pack, Selected)",
-            "salePrice": "Buy 1 Get 1 FREE"
-        },
-        {
-            "item": "Progresso Soups (18-19 oz, Selected) — Throwback Thursday Digital Coupon (Thu 10/8 - Sun 10/11 only, limit 1 offer)",
-            "salePrice": "$0.98",
-            "regularPrice": "$2.48",
-            "savings": "$1.50"
-        },
-        {
-            "item": "Land O' Lakes Butter (16-oz Half Sticks or Quarters) — Weekly Door Buster (limit 8 per Rewards card)",
-            "salePrice": "$3.48"
-        },
-        {
-            "item": "Crav'n Flavor Microwave Popcorn (3-pack, Selected) — Weekly Door Buster (limit 4 per Rewards card)",
-            "salePrice": "$0.99"
-        },
-        {
-            "item": "San Giorgio Pasta (12-16 oz, Selected) — Weekly Door Buster (limit 10 per Rewards card)",
-            "salePrice": "5 for $4"
-        },
-        {
-            "item": "Green Cabbage",
-            "salePrice": "$0.59/lb"
-        },
-        {
-            "item": "Fresh Green Beans",
-            "salePrice": "$0.99/lb"
-        },
-        {
-            "item": "Fresh Boneless & Skinless Chicken Thighs (Value Pack)",
-            "salePrice": "$2.99/lb",
-            "regularPrice": "$3.49/lb (less amount)",
+            "item": "Fresh All Natural Bone-In Chicken Thighs (Value Pack, Grade A)",
+            "salePrice": "$1.99/lb",
+            "regularPrice": "$2.49/lb (less amount)",
             "savings": "$0.50/lb"
         },
         {
-            "item": "Boneless New York Strip Steaks (Value Pack, Select Beef) — Beef Roundup 4-Day Sale, Thu 10/8 - Sun 10/11 only",
-            "salePrice": "$10.99/lb",
-            "regularPrice": "$11.99/lb (less amount)",
-            "savings": "$1.00/lb"
+            "item": "Fresh Whole Bone-In Pork Butt",
+            "salePrice": "$1.99/lb"
         },
         {
-            "item": "Coke Products (6-pack, 16.9-oz bottles, Selected)",
-            "salePrice": "3 for $10"
+            "item": "Martin's Original Potato Chips (8.5 oz, Selected)",
+            "salePrice": "Buy 1 Get 1 FREE"
         },
         {
-            "item": "Tony's Classic Pizza (18.56-20.6 oz, Selected) — Throwback Thursday Digital Coupon (Thu 10/8 - Sun 10/11 only, limit 1 offer)",
+            "item": "Coke Products (12-pack, 12-oz cans, Selected)",
+            "salePrice": "Buy 2 Get 1 FREE"
+        },
+        {
+            "item": "Tide Simply Liquid Detergent (31-32 oz, Selected) — Throwback Thursday Digital Coupon (Thu 10/15 - Sun 10/18 only, limit 1 offer)",
             "salePrice": "$1.98",
-            "regularPrice": "$2.98",
+            "regularPrice": "$3.48",
+            "savings": "$1.50"
+        },
+        {
+            "item": "Gibble's Cheese Puffys (8 oz)",
+            "salePrice": "Buy 1 Get 1 FREE"
+        },
+        {
+            "item": "Heinz Squeeze Ketchup (38 oz) — Throwback Thursday Digital Coupon (Thu 10/15 - Sun 10/18 only, limit 1 offer)",
+            "salePrice": "$3.48",
+            "regularPrice": "$4.98",
+            "savings": "$1.50"
+        },
+        {
+            "item": "Food Club Butter Quarters (16 oz, Salted or Unsalted)",
+            "salePrice": "$3.00"
+        },
+        {
+            "item": "Hanover Canned Beans (15.5 oz, Selected) — Weekly Door Buster (limit 8 per Rewards card)",
+            "salePrice": "4 for $3"
+        },
+        {
+            "item": "Birds Eye Steamfresh Vegetables (10-10.8 oz, Selected) — Weekly Door Buster (limit 10 per Rewards card)",
+            "salePrice": "5 for $4"
+        },
+        {
+            "item": "Kunzler Bacon (1-lb, Selected) — Weekly Door Buster (limit 4 per Rewards card)",
+            "salePrice": "$3.99"
+        },
+        {
+            "item": "Fresh Ground Sirloin (Value Pack, Our Own Store Made, Certified Angus Beef)",
+            "salePrice": "$6.99/lb",
+            "regularPrice": "$7.49/lb (less amount)",
+            "savings": "$0.50/lb"
+        },
+        {
+            "item": "Turkey Hill Ice Cream (46 oz, Selected) — Digital Coupon",
+            "salePrice": "$2.98",
+            "regularPrice": "$3.98",
             "savings": "$1.00"
+        },
+        {
+            "item": "Family Size Nabisco Oreo Cookies (11.78-19.1 oz, Selected) — Digital Coupon",
+            "salePrice": "$3.48",
+            "regularPrice": "$4.48",
+            "savings": "$1.00"
+        },
+        {
+            "item": "Red Ripe Strawberries (16 oz)",
+            "salePrice": "$3.99"
+        },
+        {
+            "item": "Acorn, Butternut or Spaghetti Squash",
+            "salePrice": "$0.88/lb"
         }
     ]
 }

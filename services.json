@@ -45,7 +45,8 @@
     "description": "Chryst Field at Biemesderfer Stadium football and track",
     "lat": 39.999776,
     "lng": -76.352349,
-    "slug": "biemesderfer-stadium"
+    "slug": "biemesderfer-stadium",
+    "mapTier": "A"
   },
   {
     "name": "Billie Jean's Hair & Nail Studio",
@@ -75,7 +76,8 @@
     "description": "Volunteer fire and rescue company serving Millersville Borough and Manor Township",
     "lat": 40.004888,
     "lng": -76.356878,
-    "slug": "blue-rock-fire-and-rescue"
+    "slug": "blue-rock-fire-and-rescue",
+    "mapTier": "L"
   },
   {
     "name": "Bolger Conference Center",
@@ -107,7 +109,8 @@
       "Technical Support Services",
       "University Police",
       "Web Services"
-    ]
+    ],
+    "mapTier": "M"
   },
   {
     "name": "Breidenstine Hall",
@@ -164,7 +167,8 @@
     "description": "",
     "lat": 40.006777,
     "lng": -76.341709,
-    "slug": "comet-field"
+    "slug": "comet-field",
+    "mapTier": "L"
   },
   {
     "name": "Cooper Park",
@@ -195,7 +199,8 @@
       "fri": "07:00-18:00",
       "sat": "07:00-18:00",
       "sun": "07:00-18:00"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "CVS Pharmacy",
@@ -215,7 +220,8 @@
       "fri": "08:00-13:30,14:00-21:00",
       "sat": "09:00-13:30,14:00-18:00",
       "sun": "10:00-13:30,14:00-17:00"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "Dominic's Barbershop",
@@ -298,7 +304,8 @@
       "fri": "07:00-20:00",
       "sat": "07:00-20:00",
       "sun": "07:00-20:00"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "Fulton Bank",
@@ -318,7 +325,8 @@
       "fri": "09:00-18:00",
       "sat": "09:00-12:00",
       "sun": "closed"
-    }
+    },
+    "mapTier": "L"
   },
   {
     "name": "Gamber Physical Therapy & Fitness",
@@ -336,7 +344,8 @@
       "fri": "08:00-18:00",
       "sat": "closed",
       "sun": "closed"
-    }
+    },
+    "mapTier": "L"
   },
   {
     "name": "Gordinier Hall",
@@ -383,7 +392,8 @@
       "fri": "closed",
       "sat": "closed",
       "sun": "closed"
-    }
+    },
+    "mapTier": "L"
   },
   {
     "name": "Loft Pantry",
@@ -403,7 +413,8 @@
       "fri": "09:00-13:00",
       "sat": "09:00-13:00",
       "sun": "closed"
-    }
+    },
+    "mapTier": "L"
   },
   {
     "name": "Lombardo Hall",
@@ -419,7 +430,8 @@
       "Economics Department",
       "Lombardo College of Business Dean's Office",
       "Management, Marketing, and Information Technology Department"
-    ]
+    ],
+    "mapTier": "M"
   },
   {
     "name": "Lombardo Welcome Center",
@@ -461,7 +473,8 @@
       "Student Accounts, 2nd Floor",
       "The Cove",
       "Tutoring Center, 3rd Floor"
-    ]
+    ],
+    "mapTier": "M"
   },
   {
     "name": "McComsey Hall",
@@ -521,7 +534,8 @@
       "University Archives & Special Collections",
       "University Library",
       "Writing Center"
-    ]
+    ],
+    "mapTier": "M"
   },
   {
     "name": "Members 1st Federal Credit Union",
@@ -541,7 +555,8 @@
       "fri": "09:00-18:00",
       "sat": "09:00-12:00",
       "sun": "closed"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "Millersville Borough Hall",
@@ -561,7 +576,8 @@
       "fri": "08:00-17:00",
       "sat": "closed",
       "sun": "closed"
-    }
+    },
+    "mapTier": "L"
   },
   {
     "name": "Millersville Mart",
@@ -581,7 +597,8 @@
       "fri": "06:00-00:00",
       "sat": "07:00-00:00",
       "sun": "07:00-00:00"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "Millersville Police Department",
@@ -601,7 +618,8 @@
       "fri": "08:00-17:00",
       "sat": "closed",
       "sun": "closed"
-    }
+    },
+    "mapTier": "L"
   },
   {
     "name": "Millersville Post Office",
@@ -621,7 +639,8 @@
       "fri": "08:00-16:30",
       "sat": "09:00-11:30",
       "sun": "closed"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "Osburn Hall",
@@ -654,7 +673,8 @@
       "fri": "14:00-22:00",
       "sat": "10:00-22:00",
       "sun": "10:00-18:00"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "Penn Manor School District Office",
@@ -674,7 +694,8 @@
       "fri": "08:00-16:00",
       "sat": "closed",
       "sun": "closed"
-    }
+    },
+    "mapTier": "L"
   },
   {
     "name": "Phantom Power",
@@ -688,7 +709,8 @@
     "slug": "phantom-power",
     "hours": {
       "mon": "19:00-24:00"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "Pucillo Field",
@@ -698,7 +720,8 @@
     "description": "Field hockey home field",
     "lat": 39.9998,
     "lng": -76.346879,
-    "slug": "pucillo-field"
+    "slug": "pucillo-field",
+    "mapTier": "A"
   },
   {
     "name": "Pucillo Gymnasium",
@@ -711,7 +734,8 @@
     "slug": "pucillo-gymnasium",
     "services": [
       "Wellness & Sport Sciences Department"
-    ]
+    ],
+    "mapTier": "A"
   },
   {
     "name": "Q Nails",
@@ -757,7 +781,8 @@
     "onCampus": true,
     "lat": 39.999695,
     "lng": -76.345738,
-    "slug": "ropes-course"
+    "slug": "ropes-course",
+    "mapTier": "M"
   },
   {
     "name": "Seaber Softball Stadium",
@@ -854,7 +879,8 @@
       "fri": "09:00-17:00",
       "sat": "closed",
       "sun": "closed"
-    }
+    },
+    "mapTier": "M"
   },
   {
     "name": "Student Memorial Center",
@@ -885,7 +911,8 @@
       "Technical Operations (SMC)",
       "Ticket Office",
       "University Store"
-    ]
+    ],
+    "mapTier": "M"
   },
   {
     "name": "Susan P. Luek Hall",
@@ -911,7 +938,8 @@
     "audience": "marauders",
     "lat": 39.997402,
     "lng": -76.353637,
-    "slug": "the-backyard"
+    "slug": "the-backyard",
+    "mapTier": "M"
   },
   {
     "name": "The Mill at Manor Falls",
@@ -921,7 +949,8 @@
     "description": "Event and wedding venue along the Conestoga in the Millersville area",
     "lat": 40.008496,
     "lng": -76.375411,
-    "slug": "mill-at-manor-falls"
+    "slug": "mill-at-manor-falls",
+    "mapTier": "L"
   },
   {
     "name": "The Pond",
@@ -984,7 +1013,8 @@
       "fri": "08:30-16:00",
       "sat": "closed",
       "sun": "closed"
-    }
+    },
+    "mapTier": "M"
   },
   {
     "name": "The Ware Center",
@@ -1023,7 +1053,8 @@
       "fri": "05:00-00:00",
       "sat": "05:00-00:00",
       "sun": "05:00-00:00"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "West Village",
@@ -1066,7 +1097,8 @@
       "Isaacson Dance Studio",
       "Tell School of Music",
       "Yamaha Clavinova piano lab"
-    ]
+    ],
+    "mapTier": "A"
   },
   {
     "name": "Your Image Barbershop",

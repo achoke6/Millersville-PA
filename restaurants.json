@@ -12,7 +12,8 @@
       "thu": "17:00-19:30",
       "fri": "17:00-19:30",
       "sat": "14:00-19:30"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "Cactus Café",
@@ -56,7 +57,8 @@
       "sat": "11:00-20:00",
       "sun": "closed"
     },
-    "breakClosed": true
+    "breakClosed": true,
+    "mapTier": "M"
   },
   {
     "name": "China Wok Chinese Restaurant",
@@ -76,7 +78,8 @@
       "fri": "11:00-22:00",
       "sat": "11:00-22:00",
       "sun": "11:00-21:00"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "Evergreen Cafe",
@@ -100,7 +103,8 @@
       "sat": "09:00-13:00,18:30-23:00",
       "sun": "09:00-13:00,18:30-23:00"
     },
-    "breakClosed": true
+    "breakClosed": true,
+    "mapTier": "M"
   },
   {
     "name": "House of Pizza",
@@ -120,7 +124,8 @@
       "fri": "10:30-22:00",
       "sat": "10:30-22:00",
       "sun": "12:00-19:00"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "Jack's Family Tavern & Restaurant",
@@ -140,7 +145,8 @@
       "fri": "11:00-02:00",
       "sat": "11:00-02:00",
       "sun": "11:00-02:00"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "Jesus Dogs",
@@ -151,7 +157,8 @@
     "audience": "marauders",
     "lat": 39.994422,
     "lng": -76.357486,
-    "slug": "jesus-dogs"
+    "slug": "jesus-dogs",
+    "mapTier": "M"
   },
   {
     "name": "John Herr's Village Market",
@@ -172,7 +179,8 @@
       "fri": "08:00-21:00",
       "sat": "08:00-18:00",
       "sun": "08:00-17:00"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "Koshary Station",
@@ -192,7 +200,8 @@
       "fri": "11:00-19:00",
       "sat": "11:00-19:00",
       "sun": "closed"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "Nino's New York Style Pizza",
@@ -212,7 +221,8 @@
       "fri": "10:30-22:00",
       "sat": "10:30-22:00",
       "sun": "11:00-21:00"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "Poke Bowl Station",
@@ -232,7 +242,8 @@
       "fri": "11:00-21:00",
       "sat": "11:00-21:00",
       "sun": "11:00-21:00"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "Raney Cellars",
@@ -252,7 +263,8 @@
       "fri": "16:00-21:00",
       "sat": "14:00-21:00",
       "sun": "13:00-19:00"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "Sheetz #544",
@@ -273,7 +285,8 @@
       "fri": "00:00-24:00",
       "sat": "00:00-24:00",
       "sun": "00:00-24:00"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "Sobol",
@@ -293,7 +306,8 @@
       "fri": "09:00-20:00",
       "sat": "09:00-20:00",
       "sun": "09:00-20:00"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "Starbucks (McNairy Library)",
@@ -317,7 +331,8 @@
       "sat": "closed",
       "sun": "closed"
     },
-    "breakClosed": true
+    "breakClosed": true,
+    "mapTier": "M"
   },
   {
     "name": "Subway",
@@ -337,7 +352,8 @@
       "fri": "09:00-22:30",
       "sat": "09:00-22:30",
       "sun": "09:00-22:30"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "Sugar Bowl Millersville",
@@ -358,7 +374,8 @@
       "fri": "11:00-22:00",
       "sat": "11:00-22:00",
       "sun": "11:00-22:00"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "The Anchor",
@@ -383,7 +400,8 @@
       "sat": "10:00-21:00",
       "sun": "10:00-21:00"
     },
-    "breakClosed": true
+    "breakClosed": true,
+    "mapTier": "M"
   },
   {
     "name": "The Bunker at Crossgates",
@@ -403,7 +421,8 @@
       "fri": "11:00-23:00",
       "sat": "09:00-23:00",
       "sun": "09:00-20:00"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "The Corn Wagon",
@@ -422,7 +441,8 @@
       "fri": "08:00-17:00",
       "sat": "08:00-17:00",
       "sun": "closed"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "The Cove",
@@ -444,7 +464,8 @@
       "sat": "closed",
       "sun": "closed"
     },
-    "breakClosed": true
+    "breakClosed": true,
+    "mapTier": "M"
   },
   {
     "name": "The HUB",
@@ -455,7 +476,8 @@
     "audience": "marauders",
     "lat": 39.99978,
     "lng": -76.35548,
-    "slug": "the-hub"
+    "slug": "the-hub",
+    "mapTier": "M"
   },
   {
     "name": "Tropical Smoothie Cafe",
@@ -475,7 +497,8 @@
       "fri": "07:00-21:00",
       "sat": "08:00-21:00",
       "sun": "08:00-21:00"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "Two Cousins Pizza Millersville",
@@ -495,7 +518,8 @@
       "fri": "11:00-22:00",
       "sat": "11:00-22:00",
       "sun": "11:00-21:00"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "Upper Deck",
@@ -517,7 +541,8 @@
       "sat": "10:30-18:30",
       "sun": "10:30-18:30"
     },
-    "breakClosed": true
+    "breakClosed": true,
+    "mapTier": "M"
   },
   {
     "name": "VFW Post 7294",
@@ -537,7 +562,8 @@
       "fri": "14:00-23:00",
       "sat": "12:00-23:00",
       "sun": "12:00-20:00"
-    }
+    },
+    "mapTier": "A"
   },
   {
     "name": "Wayback Burgers",
@@ -558,6 +584,7 @@
       "fri": "11:00-21:00",
       "sat": "11:00-21:00",
       "sun": "11:00-20:00"
-    }
+    },
+    "mapTier": "A"
   }
 ]

@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-10-15T14:18:00.275Z",
+  "generatedAt": "2026-10-15T15:00:19.757Z",
   "totalEvents": 1927,
-  "withDescription": 822,
+  "withDescription": 821,
   "withImage": 224,
   "familyFriendly": 65,
-  "eventsToday": 39,
+  "eventsToday": 38,
   "sources": {
     "muAthletics": 323,
     "muCalendar": 169,
     "artsmu": 10,
     "campsAlumni": 15,
     "muGetInvolved": 525,
-    "pennManor": 613,
+    "pennManor": 614,
     "borough": 57,
     "vfw": 6,
     "phantomPower": 13,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 834,
+    "total": 835,
     "scored": 159,
     "wins": 79,
     "losses": 68,
@@ -150,13 +150,13 @@
       "Campus Life": 5
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-15T14:14:26.366Z"
+    "lastSyncAt": "2026-10-15T14:56:56.762Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-15T14:17:47.168Z"
+    "checkedAt": "2026-10-15T15:00:11.189Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -193,7 +193,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 511,
+        "value": 512,
         "min": 150,
         "skipped": false
       },
@@ -234,6 +234,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Boys Varsity Basketball vs Eastern Lebanon County High School|2026-12-01T22:00:00.000Z",
+      "firstSeenAt": "2026-10-15T15:00:19.753Z",
+      "title": "Boys Varsity Basketball vs Eastern Lebanon County High School",
+      "source": "PM",
+      "date": "2026-12-01T22:00:00.000Z"
+    },
     {
       "key": "BASS DRUM OF DEATH w. Wealth Gap|2026-11-08T00:00:00.000Z",
       "firstSeenAt": "2026-10-15T11:27:54.489Z",
@@ -296,14 +303,7 @@
       "title": "Club Tennis Practice",
       "source": "MU",
       "date": "2026-10-29T23:00:00.000Z"
-    },
-    {
-      "key": "Moose Ultimate Practice|2026-10-29T23:00:00.000Z",
-      "firstSeenAt": "2026-10-15T00:10:42.465Z",
-      "title": "Moose Ultimate Practice",
-      "source": "MU",
-      "date": "2026-10-29T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

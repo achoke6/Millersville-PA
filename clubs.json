@@ -13,10 +13,8 @@
     "category": "Service",
     "categories": [
       "Service",
-      "Competition",
-      "Fundraiser",
-      "Social",
-      "Tabling"
+      "Meeting",
+      "Social"
     ],
     "shortName": "",
     "id": ""
@@ -151,11 +149,9 @@
   },
   {
     "name": "Asian Student Inclusivity Association",
-    "category": "Performance",
+    "category": "Meeting",
     "categories": [
-      "Performance",
-      "Social",
-      "Tabling"
+      "Meeting"
     ],
     "shortName": "ASIA",
     "id": ""
@@ -272,15 +268,21 @@
   },
   {
     "name": "Campus Life",
-    "category": "",
-    "categories": [],
+    "category": "Homecoming ",
+    "categories": [
+      "Homecoming "
+    ],
     "shortName": "",
     "id": ""
   },
   {
     "name": "Campus Recreation",
-    "category": "",
-    "categories": [],
+    "category": "Competition",
+    "categories": [
+      "Competition",
+      "Social",
+      "Sporting"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -302,8 +304,10 @@
   },
   {
     "name": "Center for Health Education and Promotion",
-    "category": "Tabling",
+    "category": "Educational Program",
     "categories": [
+      "Educational Program",
+      "Homecoming ",
       "Tabling"
     ],
     "shortName": "CHEP",
@@ -1434,8 +1438,11 @@
   },
   {
     "name": "Reformed University Fellowship",
-    "category": "",
-    "categories": [],
+    "category": "Meeting",
+    "categories": [
+      "Meeting",
+      "Social"
+    ],
     "shortName": "RUF",
     "id": ""
   },
@@ -1619,10 +1626,8 @@
   },
   {
     "name": "Students for Life",
-    "category": "Tabling",
-    "categories": [
-      "Tabling"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1776,9 +1781,9 @@
   },
   {
     "name": "University Activities Board",
-    "category": "Social",
+    "category": "Meeting",
     "categories": [
-      "Social"
+      "Meeting"
     ],
     "shortName": "UAB",
     "id": ""
@@ -1792,12 +1797,12 @@
   },
   {
     "name": "University Theatre",
-    "category": "University Departments ",
+    "category": "Performance",
     "categories": [
-      "University Departments "
+      "Performance"
     ],
     "shortName": "",
-    "id": "universitytheatre"
+    "id": ""
   },
   {
     "name": "Veterans and Military Resource Center",

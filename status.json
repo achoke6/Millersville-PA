@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-10-14T22:21:48.451Z",
-  "totalEvents": 1932,
-  "withDescription": 825,
-  "withImage": 222,
-  "familyFriendly": 66,
-  "eventsToday": 33,
+  "generatedAt": "2026-10-15T00:10:42.469Z",
+  "totalEvents": 1928,
+  "withDescription": 823,
+  "withImage": 224,
+  "familyFriendly": 65,
+  "eventsToday": 32,
   "sources": {
     "muAthletics": 323,
-    "muCalendar": 170,
-    "artsmu": 11,
-    "campsAlumni": 16,
+    "muCalendar": 169,
+    "artsmu": 10,
+    "campsAlumni": 15,
     "muGetInvolved": 526,
     "pennManor": 613,
     "borough": 57,
     "vfw": 6,
-    "phantomPower": 13,
+    "phantomPower": 12,
     "community": 15,
     "manor": 40,
     "raneyCellars": 5,
@@ -35,7 +35,7 @@
       "latest": "2027-03-06T19:30:00.000Z"
     },
     "campsAlumni": {
-      "earliest": "2026-07-16T22:00:00.000Z",
+      "earliest": "2026-07-20T13:00:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
@@ -55,7 +55,7 @@
       "latest": "2026-11-22T21:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-10-14T23:00:00.000Z",
+      "earliest": "2026-10-15T23:00:00.000Z",
       "latest": "2026-12-09T01:00:00.000Z"
     },
     "community": {
@@ -150,13 +150,13 @@
       "Campus Life": 4
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-14T22:18:20.327Z"
+    "lastSyncAt": "2026-10-15T00:07:22.331Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-14T22:21:44.046Z"
+    "checkedAt": "2026-10-15T00:10:33.341Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -186,7 +186,7 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 72,
+        "value": 71,
         "min": 21,
         "skipped": false
       },
@@ -235,75 +235,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Eshleman School Board Breakfast|2026-10-15T12:15:00.000Z",
-      "firstSeenAt": "2026-10-14T22:21:48.447Z",
-      "title": "Eshleman School Board Breakfast",
-      "source": "PM",
-      "date": "2026-10-15T12:15:00.000Z"
+      "key": "Game Day - The Walking Dead|2026-10-29T21:00:00.000Z",
+      "firstSeenAt": "2026-10-15T00:10:42.465Z",
+      "title": "Game Day - The Walking Dead",
+      "source": "MU",
+      "date": "2026-10-29T21:00:00.000Z"
     },
     {
-      "key": "HIGH ON FIRE w. Virgos|2026-10-30T00:00:00.000Z",
-      "firstSeenAt": "2026-10-14T22:21:48.447Z",
-      "title": "HIGH ON FIRE w. Virgos",
-      "source": "Other",
+      "key": "Students for Life October Meeting|2026-10-29T21:15:00.000Z",
+      "firstSeenAt": "2026-10-15T00:10:42.465Z",
+      "title": "Students for Life October Meeting",
+      "source": "MU",
+      "date": "2026-10-29T21:15:00.000Z"
+    },
+    {
+      "key": "ADAPT general meeting- Halloween Party Edition!|2026-10-29T21:30:00.000Z",
+      "firstSeenAt": "2026-10-15T00:10:42.465Z",
+      "title": "ADAPT general meeting- Halloween Party Edition!",
+      "source": "MU",
+      "date": "2026-10-29T21:30:00.000Z"
+    },
+    {
+      "key": "Club Softball Practice|2026-10-29T22:00:00.000Z",
+      "firstSeenAt": "2026-10-15T00:10:42.465Z",
+      "title": "Club Softball Practice",
+      "source": "MU",
+      "date": "2026-10-29T22:00:00.000Z"
+    },
+    {
+      "key": "SGA Weekly Meeting|2026-10-29T23:00:00.000Z",
+      "firstSeenAt": "2026-10-15T00:10:42.465Z",
+      "title": "SGA Weekly Meeting",
+      "source": "MU",
+      "date": "2026-10-29T23:00:00.000Z"
+    },
+    {
+      "key": "Men's Volleyball Club Practice|2026-10-29T23:00:00.000Z",
+      "firstSeenAt": "2026-10-15T00:10:42.465Z",
+      "title": "Men's Volleyball Club Practice",
+      "source": "MU",
+      "date": "2026-10-29T23:00:00.000Z"
+    },
+    {
+      "key": "Club Tennis Practice|2026-10-29T23:00:00.000Z",
+      "firstSeenAt": "2026-10-15T00:10:42.465Z",
+      "title": "Club Tennis Practice",
+      "source": "MU",
+      "date": "2026-10-29T23:00:00.000Z"
+    },
+    {
+      "key": "Moose Ultimate Practice|2026-10-29T23:00:00.000Z",
+      "firstSeenAt": "2026-10-15T00:10:42.465Z",
+      "title": "Moose Ultimate Practice",
+      "source": "MU",
+      "date": "2026-10-29T23:00:00.000Z"
+    },
+    {
+      "key": "Fellowship Night|2026-10-30T00:00:00.000Z",
+      "firstSeenAt": "2026-10-15T00:10:42.465Z",
+      "title": "Fellowship Night",
+      "source": "MU",
       "date": "2026-10-30T00:00:00.000Z"
     },
     {
-      "key": "MMA Club, Open Mat 10/15|2026-10-14T23:00:00.000Z",
-      "firstSeenAt": "2026-10-14T20:28:40.794Z",
-      "title": "MMA Club, Open Mat 10/15",
+      "key": "Men's Club Soccer Practice|2026-10-30T00:00:00.000Z",
+      "firstSeenAt": "2026-10-15T00:10:42.465Z",
+      "title": "Men's Club Soccer Practice",
       "source": "MU",
-      "date": "2026-10-14T23:00:00.000Z"
-    },
-    {
-      "key": "MMA 101 Class, 10/14|2026-10-14T23:00:00.000Z",
-      "firstSeenAt": "2026-10-14T20:28:40.794Z",
-      "title": "MMA 101 Class, 10/14",
-      "source": "MU",
-      "date": "2026-10-14T23:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Field Hockey|2026-10-17T15:00:00.000Z",
-      "firstSeenAt": "2026-10-14T20:28:40.794Z",
-      "title": "Girls Varsity Field Hockey",
-      "source": "PM",
-      "date": "2026-10-17T15:00:00.000Z"
-    },
-    {
-      "key": "Men's Lacrosse Club Alumni Game|2026-10-17T17:00:00.000Z",
-      "firstSeenAt": "2026-10-14T20:28:40.794Z",
-      "title": "Men's Lacrosse Club Alumni Game",
-      "source": "MU",
-      "date": "2026-10-17T17:00:00.000Z"
-    },
-    {
-      "key": "Homecoming Game vs Gettysburg|2026-10-18T20:15:00.000Z",
-      "firstSeenAt": "2026-10-14T20:28:40.794Z",
-      "title": "Homecoming Game vs Gettysburg",
-      "source": "MU",
-      "date": "2026-10-18T20:15:00.000Z"
-    },
-    {
-      "key": "Student Government Association (SGA) Weekly Meeting|2026-10-29T17:00:00",
-      "firstSeenAt": "2026-10-14T20:28:40.794Z",
-      "title": "Student Government Association (SGA) Weekly Meeting",
-      "source": "MU",
-      "date": "2026-10-29T17:00:00"
-    },
-    {
-      "key": "Pilates with Gia|2026-10-14T19:00:00.000Z",
-      "firstSeenAt": "2026-10-14T18:16:36.359Z",
-      "title": "Pilates with Gia",
-      "source": "MU",
-      "date": "2026-10-14T19:00:00.000Z"
-    },
-    {
-      "key": "Game Day - The Walking Dead|2026-10-29T17:00:00",
-      "firstSeenAt": "2026-10-14T18:16:36.359Z",
-      "title": "Game Day - The Walking Dead",
-      "source": "MU",
-      "date": "2026-10-29T17:00:00"
+      "date": "2026-10-30T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 18
 }

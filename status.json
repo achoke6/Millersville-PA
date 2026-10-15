@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-10-15T15:00:19.757Z",
-  "totalEvents": 1927,
-  "withDescription": 821,
+  "generatedAt": "2026-10-15T16:49:14.288Z",
+  "totalEvents": 1928,
+  "withDescription": 820,
   "withImage": 224,
   "familyFriendly": 65,
-  "eventsToday": 38,
+  "eventsToday": 37,
   "sources": {
     "muAthletics": 323,
     "muCalendar": 169,
     "artsmu": 10,
     "campsAlumni": 15,
     "muGetInvolved": 525,
-    "pennManor": 614,
+    "pennManor": 616,
     "borough": 57,
     "vfw": 6,
     "phantomPower": 13,
@@ -130,15 +130,15 @@
     }
   },
   "sports": {
-    "total": 835,
+    "total": 836,
     "scored": 159,
     "wins": 79,
     "losses": 68,
     "ties": 12
   },
   "registrations": {
-    "open": 8,
-    "next2Weeks": 5,
+    "open": 7,
+    "next2Weeks": 4,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
@@ -150,13 +150,13 @@
       "Campus Life": 5
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-15T14:56:56.762Z"
+    "lastSyncAt": "2026-10-15T16:45:45.374Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-15T15:00:11.189Z"
+    "checkedAt": "2026-10-15T16:49:04.172Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -193,7 +193,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 512,
+        "value": 513,
         "min": 150,
         "skipped": false
       },
@@ -207,7 +207,7 @@
       {
         "key": "pennManorGeneral.count",
         "ok": true,
-        "value": 102,
+        "value": 103,
         "min": 10,
         "skipped": false
       },
@@ -234,6 +234,20 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Eshleman Doherty Petri School of Irish Dance assembly|2026-10-22T18:15:00.000Z",
+      "firstSeenAt": "2026-10-15T16:49:14.284Z",
+      "title": "Eshleman Doherty Petri School of Irish Dance assembly",
+      "source": "PM",
+      "date": "2026-10-22T18:15:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Basketball @ Chambersburg Area High School|2026-12-05T00:00:00.000Z",
+      "firstSeenAt": "2026-10-15T16:49:14.284Z",
+      "title": "Boys Varsity Basketball @ Chambersburg Area High School",
+      "source": "PM",
+      "date": "2026-12-05T00:00:00.000Z"
+    },
     {
       "key": "Boys Varsity Basketball vs Eastern Lebanon County High School|2026-12-01T22:00:00.000Z",
       "firstSeenAt": "2026-10-15T15:00:19.753Z",
@@ -289,21 +303,7 @@
       "title": "SGA Weekly Meeting",
       "source": "MU",
       "date": "2026-10-29T23:00:00.000Z"
-    },
-    {
-      "key": "Men's Volleyball Club Practice|2026-10-29T23:00:00.000Z",
-      "firstSeenAt": "2026-10-15T00:10:42.465Z",
-      "title": "Men's Volleyball Club Practice",
-      "source": "MU",
-      "date": "2026-10-29T23:00:00.000Z"
-    },
-    {
-      "key": "Club Tennis Practice|2026-10-29T23:00:00.000Z",
-      "firstSeenAt": "2026-10-15T00:10:42.465Z",
-      "title": "Club Tennis Practice",
-      "source": "MU",
-      "date": "2026-10-29T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 2
 }

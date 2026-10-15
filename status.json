@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-15T16:49:14.288Z",
-  "totalEvents": 1928,
+  "generatedAt": "2026-10-15T17:01:48.147Z",
+  "totalEvents": 1930,
   "withDescription": 820,
   "withImage": 224,
   "familyFriendly": 65,
@@ -11,7 +11,7 @@
     "artsmu": 10,
     "campsAlumni": 15,
     "muGetInvolved": 525,
-    "pennManor": 616,
+    "pennManor": 618,
     "borough": 57,
     "vfw": 6,
     "phantomPower": 13,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 836,
+    "total": 838,
     "scored": 159,
     "wins": 79,
     "losses": 68,
@@ -150,13 +150,13 @@
       "Campus Life": 5
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-15T16:45:45.374Z"
+    "lastSyncAt": "2026-10-15T16:58:02.284Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-15T16:49:04.172Z"
+    "checkedAt": "2026-10-15T17:01:40.771Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -193,7 +193,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 513,
+        "value": 515,
         "min": 150,
         "skipped": false
       },
@@ -235,6 +235,27 @@
   },
   "recentlyAdded": [
     {
+      "key": "WIXQ HALLOWEEN SHOW w. Super Vehicle, Hole Milk, and Turn Evil|2026-10-31T00:00:00.000Z",
+      "firstSeenAt": "2026-10-15T17:01:48.144Z",
+      "title": "WIXQ HALLOWEEN SHOW w. Super Vehicle, Hole Milk, and Turn Evil",
+      "source": "Other",
+      "date": "2026-10-31T00:00:00.000Z"
+    },
+    {
+      "key": "Boys JV Basketball @ Chambersburg Area High School|2026-12-04T21:30:00.000Z",
+      "firstSeenAt": "2026-10-15T17:01:48.144Z",
+      "title": "Boys JV Basketball @ Chambersburg Area High School",
+      "source": "PM",
+      "date": "2026-12-04T21:30:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Basketball @ Chambersburg Area High School|2026-12-04T23:00:00.000Z",
+      "firstSeenAt": "2026-10-15T17:01:48.144Z",
+      "title": "Boys Varsity Basketball @ Chambersburg Area High School",
+      "source": "PM",
+      "date": "2026-12-04T23:00:00.000Z"
+    },
+    {
       "key": "Eshleman Doherty Petri School of Irish Dance assembly|2026-10-22T18:15:00.000Z",
       "firstSeenAt": "2026-10-15T16:49:14.284Z",
       "title": "Eshleman Doherty Petri School of Irish Dance assembly",
@@ -254,13 +275,6 @@
       "title": "Boys Varsity Basketball vs Eastern Lebanon County High School",
       "source": "PM",
       "date": "2026-12-01T22:00:00.000Z"
-    },
-    {
-      "key": "BASS DRUM OF DEATH w. Wealth Gap|2026-11-08T00:00:00.000Z",
-      "firstSeenAt": "2026-10-15T11:27:54.489Z",
-      "title": "BASS DRUM OF DEATH w. Wealth Gap",
-      "source": "Other",
-      "date": "2026-11-08T00:00:00.000Z"
     },
     {
       "key": "Karaoke Night|2026-11-05T03:00:00.000Z",
@@ -289,21 +303,7 @@
       "title": "ADAPT general meeting- Halloween Party Edition!",
       "source": "MU",
       "date": "2026-10-29T21:30:00.000Z"
-    },
-    {
-      "key": "Club Softball Practice|2026-10-29T22:00:00.000Z",
-      "firstSeenAt": "2026-10-15T00:10:42.465Z",
-      "title": "Club Softball Practice",
-      "source": "MU",
-      "date": "2026-10-29T22:00:00.000Z"
-    },
-    {
-      "key": "SGA Weekly Meeting|2026-10-29T23:00:00.000Z",
-      "firstSeenAt": "2026-10-15T00:10:42.465Z",
-      "title": "SGA Weekly Meeting",
-      "source": "MU",
-      "date": "2026-10-29T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 3
 }

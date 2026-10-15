@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-15T20:23:50.070Z",
-  "totalEvents": 1938,
+  "generatedAt": "2026-10-15T22:13:02.556Z",
+  "totalEvents": 1939,
   "withDescription": 833,
   "withImage": 225,
   "familyFriendly": 65,
@@ -11,7 +11,7 @@
     "artsmu": 5,
     "campsAlumni": 15,
     "muGetInvolved": 530,
-    "pennManor": 618,
+    "pennManor": 619,
     "borough": 57,
     "vfw": 6,
     "phantomPower": 13,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 838,
+    "total": 839,
     "scored": 159,
     "wins": 79,
     "losses": 68,
@@ -150,14 +150,14 @@
       "Campus Life": 5,
       "PM Community": 1
     },
-    "stalePast": 9,
-    "lastSyncAt": "2026-10-15T20:20:16.037Z"
+    "stalePast": 10,
+    "lastSyncAt": "2026-10-15T22:09:16.460Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-15T20:23:42.118Z"
+    "checkedAt": "2026-10-15T22:12:52.220Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -194,7 +194,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 515,
+        "value": 516,
         "min": 150,
         "skipped": false
       },
@@ -236,18 +236,25 @@
   },
   "recentlyAdded": [
     {
+      "key": "Boys JV Football vs Wilson High School (West Lawn)|2026-10-19T20:00:00.000Z",
+      "firstSeenAt": "2026-10-15T22:13:02.553Z",
+      "title": "Boys JV Football vs Wilson High School (West Lawn)",
+      "source": "PM",
+      "date": "2026-10-19T20:00:00.000Z"
+    },
+    {
+      "key": "BASS DRUM OF DEATH w. Wealth Gap|2026-11-08T00:00:00.000Z",
+      "firstSeenAt": "2026-10-15T22:13:02.553Z",
+      "title": "BASS DRUM OF DEATH w. Wealth Gap",
+      "source": "Other",
+      "date": "2026-11-08T00:00:00.000Z"
+    },
+    {
       "key": "Bead Art Tapestries|2026-10-21T21:00:00.000Z",
       "firstSeenAt": "2026-10-15T19:50:17.125Z",
       "title": "Bead Art Tapestries",
       "source": "MU",
       "date": "2026-10-21T21:00:00.000Z"
-    },
-    {
-      "key": "WIXQ HALLOWEEN SHOW w. Super Vehicle, Hole Milk, and Turn Evil|2026-10-31T00:00:00.000Z",
-      "firstSeenAt": "2026-10-15T19:50:17.125Z",
-      "title": "WIXQ HALLOWEEN SHOW w. Super Vehicle, Hole Milk, and Turn Evil",
-      "source": "Other",
-      "date": "2026-10-31T00:00:00.000Z"
     },
     {
       "key": "Muhlenburg Tournament|2026-10-18T14:00:00.000Z",
@@ -297,14 +304,7 @@
       "title": "Get Out the Vote Election Eve Rally with the Center of Civic Engagement",
       "source": "MU",
       "date": "2026-11-02T17:00:00"
-    },
-    {
-      "key": "FSL: All Greek Council Fundraiser|2026-11-04T16:30:00",
-      "firstSeenAt": "2026-10-15T18:50:56.820Z",
-      "title": "FSL: All Greek Council Fundraiser",
-      "source": "MU",
-      "date": "2026-11-04T16:30:00"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

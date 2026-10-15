@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-15T00:37:06.643Z",
-  "totalEvents": 1928,
+  "generatedAt": "2026-10-15T02:26:00.298Z",
+  "totalEvents": 1927,
   "withDescription": 823,
   "withImage": 224,
   "familyFriendly": 65,
-  "eventsToday": 32,
+  "eventsToday": 30,
   "sources": {
     "muAthletics": 323,
     "muCalendar": 169,
@@ -16,7 +16,7 @@
     "vfw": 6,
     "phantomPower": 12,
     "community": 15,
-    "manor": 40,
+    "manor": 39,
     "raneyCellars": 5,
     "theBackyard": 25,
     "muHudlBroadcasts": 57
@@ -63,7 +63,7 @@
       "latest": "2027-04-16T13:15:00.000Z"
     },
     "manor": {
-      "earliest": "2026-10-14T23:00:00.000Z",
+      "earliest": "2026-10-23T22:30:00.000Z",
       "latest": "2027-10-06T23:00:00.000Z"
     },
     "raneyCellars": {
@@ -131,9 +131,9 @@
   },
   "sports": {
     "total": 834,
-    "scored": 158,
+    "scored": 159,
     "wins": 79,
-    "losses": 67,
+    "losses": 68,
     "ties": 12
   },
   "registrations": {
@@ -150,13 +150,13 @@
       "Campus Life": 4
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-15T00:33:34.718Z"
+    "lastSyncAt": "2026-10-15T02:22:29.382Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-15T00:36:58.199Z"
+    "checkedAt": "2026-10-15T02:25:46.158Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -214,7 +214,7 @@
       {
         "key": "manor.count",
         "ok": true,
-        "value": 40,
+        "value": 39,
         "min": 10
       },
       {
@@ -234,6 +234,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Karaoke Night|2026-11-05T03:00:00.000Z",
+      "firstSeenAt": "2026-10-15T02:26:00.294Z",
+      "title": "Karaoke Night",
+      "source": "Jack's Tavern",
+      "date": "2026-11-05T03:00:00.000Z"
+    },
     {
       "key": "Game Day - The Walking Dead|2026-10-29T21:00:00.000Z",
       "firstSeenAt": "2026-10-15T00:10:42.465Z",
@@ -296,14 +303,7 @@
       "title": "Fellowship Night",
       "source": "MU",
       "date": "2026-10-30T00:00:00.000Z"
-    },
-    {
-      "key": "Men's Club Soccer Practice|2026-10-30T00:00:00.000Z",
-      "firstSeenAt": "2026-10-15T00:10:42.465Z",
-      "title": "Men's Club Soccer Practice",
-      "source": "MU",
-      "date": "2026-10-30T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

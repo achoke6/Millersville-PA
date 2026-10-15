@@ -3646,7 +3646,7 @@ async function initApp(){
     // Deep link: /map?today=1 lands with the Today lens already on (shareable;
     // the home rail's "View all →" moved to /food 2026-08-27 — the Food page
     // presents specials better, while this link keeps map+Today reachable).
-    if(view==='places' && params.get('today')==='1'){ history.replaceState(null,'','/map'); if(!placesTodayMode) window.togglePlacesToday(); }
+    if(view==='places' && params.get('today')==='1'){ history.replaceState(null,'','/map'); }   // Today lens retired 2026-10-16 — old links just land on /map
     if(p==='/housing'){ setTimeout(()=>{ const btn=document.querySelector('#svc-filter-group .src-btn:nth-child(2)'); if(btn) btn.click(); },500); }
 }
 
@@ -7362,51 +7362,31 @@ let allHousing=[];   // housing.json rows (rendered audience-filtered — see re
 let placesMap=null, placesMapMarkers=null, placesMapLibReady=false, placesMapLibLoading=null, placesMapFailed=false;   // Directory map (see DIRECTORY MAP block)
 let placesMapMarkerBySlug = new Map();   // slug → Leaflet marker (card-tap → pin focus)
 let placesMapUserDot = null, placesMapUserAcc = null;   // "My location" dot + accuracy circle (session-only, never stored)
-let placesTodayMode=false;   // "Today" lens: places with a specials box today (see placesSpecialsItems)
-// /map DEFAULT-PIN TIERS (2026-10-15). The sheet's `mapTier` column marks
-// which listings belong on the map BEFORE the viewer asks for anything:
-// A = both audiences, M = Marauder default, L = local default, blank = only
-// via search, a category chip, a lens, or the "Show all" toggle. The tier
-// gate applies ONLY to the untouched default view (All, no lens): the moment
-// a chip or lens is active the viewer has asked for a set and gets all of it.
-// "Show all" is a per-device display setting (SHOW21_KEY / strip-chip
-// precedent — survives Clear Favs, never a favorites key).
-const PLACES_SHOW_ALL_KEY = 'mapp_places_show_all';
-let placesShowAll = false;
-try { placesShowAll = localStorage.getItem(PLACES_SHOW_ALL_KEY) === '1'; } catch (e) {}
-function placesTiersActive(){
-    return !placesShowAll && !placesTodayMode && !placesMBAMode && !placesMGMode && placesFilter === 'All';
-}
-function placeTierVisible(p){
-    if (!placesTiersActive()) return true;
-    const tier = (p && p.mapTier) || '';
-    if (tier === 'A') return true;
-    if (tier === 'M') return viewerIsMarauder();
-    if (tier === 'L') return !viewerIsMarauder();
-    return false;
-}
-// Initial map view per identity: Marauders open on campus one zoom step in;
-// locals on the George St / Manor Ave core. "Show all" (or no tiers in the
-// data yet) falls back to the town default so nothing is ever hidden by
-// framing alone.
+// /map MODES (2026-10-16). Two explicit views replace the retired 🔥 Today
+// lens, the Show-all toggle and the per-identity tier gate (the sheet's
+// `mapTier` column + sync canary remain as dormant data; app.js no longer
+// reads p.mapTier). LOCAL (default for EVERY identity — the campus map is
+// what millersville.edu already offers; this site leads with the town) =
+// listings that are neither category Campus nor onCampus. CAMPUS = those
+// two sets only, framed on campus. Audience gating is unchanged and runs
+// first in both modes; the category Filter ANDs within the mode; MG and
+// MBA lenses AND within the mode too.
+let placesCampusMode = false;
+function placeIsCampus(p){ return !!p && (p.category === 'Campus' || p.onCampus === true); }
+function placeInMode(p){ return placeIsCampus(p) === placesCampusMode; }
 function placesMapDefaultView(){
-    const tiered = (allPlaces || []).some(p => p && p.mapTier);
-    if (placesShowAll || !tiered) return { center: PLACES_MAP_CFG.center, zoom: PLACES_MAP_CFG.zoom };
-    return viewerIsMarauder()
-        ? { center: PLACES_MAP_CFG.centerMarauder, zoom: PLACES_MAP_CFG.zoomMarauder }
-        : { center: PLACES_MAP_CFG.centerTownie,   zoom: PLACES_MAP_CFG.zoomTownie };
+    return placesCampusMode
+        ? { center: PLACES_MAP_CFG.centerCampus, zoom: PLACES_MAP_CFG.zoomCampus }
+        : { center: PLACES_MAP_CFG.center,       zoom: PLACES_MAP_CFG.zoom };
 }
-window.togglePlacesShowAll = function(){
-    placesShowAll = !placesShowAll;
-    try { localStorage.setItem(PLACES_SHOW_ALL_KEY, placesShowAll ? '1' : '0'); } catch (e) {}
-    const btn = document.getElementById('places-all-toggle');
-    if (btn){
-        btn.classList.toggle('active', placesShowAll);
-        btn.textContent = placesShowAll ? '✓ All shown' : 'Show all';
-        btn.title = placesShowAll ? 'Showing every listing — tap for the essentials' : 'Show every listing on the map and list';
-    }
+window.togglePlacesCampus = function(){
+    placesCampusMode = !placesCampusMode;
+    const btn = document.getElementById('places-campus-toggle');
+    if (btn){ btn.classList.toggle('active', placesCampusMode); btn.setAttribute('aria-pressed', placesCampusMode ? 'true' : 'false'); }
+    updatePlacesFilterNote();
     renderPlaces();
     if (placesMap){ const v = placesMapDefaultView(); placesMap.setView(v.center, v.zoom); }
+    window.scrollTo(0, 0);   // the list shrinks/grows wholesale on a mode flip — don't strand the viewport
 };
 
 // --- MBA (Millersville Business Association) membership integration ----------
@@ -7679,10 +7659,9 @@ async function loadPlaces(){try{
 // call in renderPlaces(), so map and list can never disagree.
 const PLACES_MAP_CFG = {
     pmtiles: '/millersville.pmtiles',
-    center: [40.0015, -76.3545],                 // between the square and campus (Show-all / untiered fallback)
+    center: [40.0015, -76.3545],                 // Local mode (default): between the square and campus
     zoom: 15, minZoom: 13, maxZoom: 18,          // basemap data is z15, overzoomed
-    centerMarauder: [39.9982, -76.3540], zoomMarauder: 16,   // tiered default (2026-10-15): campus core, one step in
-    centerTownie:   [40.0030, -76.3578], zoomTownie: 15,     // tiered default: George St / Manor Ave
+    centerCampus: [39.9982, -76.3540], zoomCampus: 16,   // Campus mode (2026-10-16): campus core, one step in
     bounds: [[39.95, -76.44], [40.07, -76.27]]   // = the pmtiles extract bbox
 };
 // Pin glyphs per category. NOTE: separate from the card-side catIcons map
@@ -7730,7 +7709,7 @@ function initPlacesMap(){
     placesMapAssetsLoad().then(() => {
         if (placesMap) return;
         el.classList.add('map-ready');
-        const _v0 = placesMapDefaultView();   // per-identity tiered default (2026-10-15)
+        const _v0 = placesMapDefaultView();   // per-mode default (2026-10-16): Local on first open
         placesMap = L.map(el, {
             center: _v0.center, zoom: _v0.zoom,
             minZoom: PLACES_MAP_CFG.minZoom, maxZoom: PLACES_MAP_CFG.maxZoom,
@@ -7794,19 +7773,17 @@ function placesMapPinList(){
     if (placesMBAMode) list = list.filter(p => getMembership(p.name));
     if (placesMGMode)  list = list.filter(p => p.marauderGold === true);
     if (placesFilter !== 'All') list = list.filter(placeMatchesCategory);
-    if (placesTodayMode) list = list.filter(p => placeTodayContent(p));
-    list = list.filter(placeTierVisible);   // default-pin tiers (2026-10-15) — no-op once any chip/lens/Show-all is on
+    list = list.filter(placeInMode);   // Local / Campus mode (2026-10-16) — the same predicate the list uses
     list.filter(placesMapHasCoords).forEach(p => pins.push({ place: p, group: (p.placeType==='food') ? 'food' : 'service' }));
-    if (!placesMGMode && !placesMBAMode && !placesTodayMode && (placesFilter==='All' || placesFilter==='Housing')){
+    if (!placesMGMode && !placesMBAMode && !placesCampusMode && (placesFilter==='All' || placesFilter==='Housing')){
         (allHousing||[]).filter(placeAudienceVisible).filter(placesMapHasCoords)
             .forEach(p => pins.push({ place: {...p, category:'Housing'}, group: 'housing' }));
     }
     const cb = window._cupboard;
-    // Cupboard pin: All/Campus (the Food & Drink FILTER value retired
-    // 2026-08-27 — its dropdown item now navigates to /food; 'Food & Drink'
-    // lives on as a data CATEGORY on places).
+    // Cupboard pin: BOTH modes (2026-10-16) — a Marauder essential that sits
+    // in town (inside the HUB) — under the All filter only.
     if (cb && placesMapHasCoords(cb) && !placesMBAMode && !placesMGMode && cupboardTodayVisible() &&
-        (placesFilter==='All' || placesFilter==='Campus')){
+        placesFilter==='All'){
         pins.push({ place: {...cb, category:'Cupboard'}, group: 'cupboard' });
     }
     return pins;
@@ -8116,9 +8093,8 @@ function updatePlacesFilterNote(){
     const note = document.getElementById('places-filter-note');
     if (!note) return;
     if (placesMBAMode) note.textContent = 'Showing only verified businesses.';
-    else if (placesTiersActive() && (allPlaces || []).some(p => p && p.mapTier)) note.textContent = 'Showing the essentials — tap Show all, a category, or search for everything else.';
-    else if (placesMGMode) note.textContent = 'Showing only businesses that accept Marauder Gold.';
-    else if (placesTodayMode) note.textContent = 'Showing places with specials or events today.';
+    else if (placesMGMode) note.textContent = placesCampusMode ? 'Showing on-campus places that accept Marauder Gold.' : 'Showing only businesses that accept Marauder Gold.';
+    else if (placesCampusMode) note.textContent = 'Campus map — buildings, dining & services on campus. Tap 🏛 Campus again for the town.';
     else note.textContent = '';
 }
 
@@ -8441,19 +8417,9 @@ function vfwSpecialsEntryFromJson(vfw){
     };
 }
 
-// "Today" lens — occupies the retired ✓ Verified slot, same exclusivity
-// pattern as the old MBA toggle (Today and Marauder Gold are mutually
-// exclusive; the category chip still ANDs with it).
-window.togglePlacesToday=function(){
-    placesTodayMode=!placesTodayMode;
-    if(placesTodayMode){ placesMGMode=false; const g=document.getElementById('places-mg-toggle'); if(g) g.classList.remove('active'); }
-    const btn=document.getElementById('places-today-toggle');
-    if(btn) btn.classList.toggle('active', placesTodayMode);
-    updatePlacesFilterNote();
-    renderPlaces();
-    placesMapFitVisible();   // ON: frame today's places; OFF: pins just rebuilt to every listed place — frame those
-    window.scrollTo(0, 0);   // lens re-render can shrink the list; don't strand the viewport below it
-};
+// (togglePlacesToday / the 🔥 Today lens retired 2026-10-16 — today's
+// specials and events live on /food and /events; its toolbar slot is the
+// 🏛 Campus mode toggle. /map?today=1 now just lands on /map.)
 
 // (openPlacesToday retired 2026-08-27 — the home rail's "View all →" now
 // switches straight to /food, leaving it caller-less. The /map?today=1 deep
@@ -8474,7 +8440,7 @@ window.openFoodFromMap=function(){
 
 window.togglePlacesMarauderGold=function(){
     placesMGMode=!placesMGMode;
-    if(placesMGMode){ placesMBAMode=false; placesTodayMode=false; const m=document.getElementById('places-mba-toggle'); if(m) m.classList.remove('active'); const t=document.getElementById('places-today-toggle'); if(t) t.classList.remove('active'); }
+    if(placesMGMode){ placesMBAMode=false; const m=document.getElementById('places-mba-toggle'); if(m) m.classList.remove('active'); }   // MG ANDs with the Local/Campus mode (2026-10-16)
     const btn=document.getElementById('places-mg-toggle');
     if(btn) btn.classList.toggle('active', placesMGMode);
     updatePlacesFilterNote();
@@ -8525,13 +8491,8 @@ function renderPlaces(){
     // (2026-08-24): the toggle shows for undecided viewers too — only
     // confirmed townies hide it; if a townie somehow had MG mode active,
     // drop it so they're not stuck in a filtered view with no toggle.
-    const allBtn = document.getElementById('places-all-toggle');
-    if (allBtn){
-        const tiered = (allPlaces || []).some(p => p && p.mapTier);
-        allBtn.style.display = tiered ? '' : 'none';   // no tiers in the data yet → nothing to toggle
-        allBtn.classList.toggle('active', placesShowAll);
-        allBtn.textContent = placesShowAll ? '✓ All shown' : 'Show all';
-    }
+    const campusBtn = document.getElementById('places-campus-toggle');
+    if (campusBtn){ campusBtn.classList.toggle('active', placesCampusMode); campusBtn.setAttribute('aria-pressed', placesCampusMode ? 'true' : 'false'); }
     const mgBtn = document.getElementById('places-mg-toggle');
     const showMG = viewerIsMarauder();
     if (mgBtn) mgBtn.style.display = showMG ? '' : 'none';
@@ -8554,14 +8515,14 @@ function renderPlaces(){
     if(placesMGMode){
         hc.style.display='none';
         pc.style.display='';
-        pc.classList.remove('place-list'); pc.classList.add('card-grid');   // MG mode keeps the card grid (2026-10-15)
-        let mgFiltered = allPlaces.filter(p => p.marauderGold === true);
+        pc.classList.remove('card-grid'); pc.classList.add('place-list');   // MG mode: compact rows too (2026-10-16)
+        let mgFiltered = allPlaces.filter(p => p.marauderGold === true).filter(placeInMode);   // ANDs with Local/Campus
         if(placesFilter !== 'All'){
             mgFiltered = mgFiltered.filter(placeMatchesCategory);
         }
         // Respect audience targeting here too (listing's own, else MBA member).
         mgFiltered = mgFiltered.filter(p => placeAudienceVisible(p));
-        const buildCard = p => (p.placeType==='food') ? buildFoodCard(p, specials, dayName) : buildServiceCard(p);
+        const buildCard = p => placeRowHtml(p, (p.placeType==='food') ? buildFoodCard(p, specials, dayName) : buildServiceCard(p));
         const onCampus  = mgFiltered.filter(p => p.onCampus === true);
         const offCampus = mgFiltered.filter(p => p.onCampus !== true);
         let html = '';
@@ -8578,7 +8539,7 @@ function renderPlaces(){
     }
 
     // Housing visibility
-    if((placesFilter==='All' || placesFilter==='Housing') && !placesMBAMode && !placesTodayMode){
+    if((placesFilter==='All' || placesFilter==='Housing') && !placesMBAMode && !placesCampusMode){   // housing is a Local-mode section (2026-10-16)
         hc.style.display='';
     } else {
         hc.style.display='none';
@@ -8598,17 +8559,14 @@ function renderPlaces(){
         filtered = filtered.filter(p => getMembership(p.name));
     }
 
-    // "Today" lens: only places whose card shows a specials box today.
-    if(placesTodayMode){
-        filtered = filtered.filter(p => placeTodayContent(p));
-    }
+    // Local / Campus mode (2026-10-16): same predicate as the pins.
+    filtered = filtered.filter(placeInMode);
 
     // Audience targeting: drop listings whose audience excludes the current
     // viewer. A listing's own `audience` wins; otherwise its MBA member audience
     // applies; non-targeted listings always pass. Unset affiliation is treated as
     // townie here (Directory-specific convention — see placeAudienceVisible).
     filtered = filtered.filter(p => placeAudienceVisible(p));
-    filtered = filtered.filter(placeTierVisible);   // same tier gate as the pins (2026-10-15): map and list never disagree
 
     // Directory order: food before services (outermost, unchanged), then
     // open → closed → unknown within each section (hoursSortRank — open
@@ -8628,30 +8586,13 @@ function renderPlaces(){
     // arm was retired 2026-08-27 with the filter value itself — that dropdown
     // item now navigates to /food (see openFoodFromMap).
     let cupboardCard = '';
-    if (!placesMBAMode && cupboardTodayVisible() && (placesFilter === 'All' || placesFilter === 'Campus')) {
+    if (!placesMBAMode && cupboardTodayVisible() && placesFilter === 'All') {   // both modes (2026-10-16)
         cupboardCard = buildCampusCupboardCard(dayName);
     }
 
-    // Campus venues (2026-08-07): in the default All view they'd scatter
-    // through the services section's unknown-hours band — collapse them into
-    // ONE native <details> group at the end instead (food-page closed-group
-    // precedent; native element, resets closed on every render, inline styles
-    // only per Hard Rule 2). The Campus category chip shows them expanded via
-    // the normal flow; the 🔥 Today lens keeps event-day campus places
-    // INLINE (decision: they earned the spot); MBA mode never includes them.
-    // With tiers active (2026-10-15) the campus rows that survive are the
-    // essentials (SMC, McNairy, Store…) and render INLINE; the collapsed
-    // group only returns under Show all, where the full campus directory
-    // would otherwise swamp the list.
-    let campusGroup = '';
-    if (placesFilter === 'All' && !placesTodayMode && !placesTiersActive()) {
-        const campusList = filtered.filter(p => p.category === 'Campus');
-        if (campusList.length) {
-            filtered = filtered.filter(p => p.category !== 'Campus');
-            campusGroup = `<details class="place-group" style="grid-column:1/-1;"><summary style="cursor:pointer;font-weight:700;padding:8px 0;">🏛 Campus<span class="day-count" style="font-size:0.7rem;font-weight:500;color:var(--text-muted);margin-left:8px;">${campusList.length} place${campusList.length===1?'':'s'}</span></summary><div class="place-list" style="margin-top:4px;">`
-                + campusList.map(p => placeRowHtml(p, buildServiceCard(p))).join('') + '</div></details>';   // inner place-list (2026-10-15: rows, not cards); day-count style inline — the CSS rule is scoped to .day-group-header
-        }
-    }
+    // (The collapsed 🏛 Campus accordion, 2026-08-07 → 2026-10-16, is retired:
+    // Campus mode IS the campus list now.)
+    const campusGroup = '';
     // Compact expandable ROWS (2026-10-15) — the /food <details> pattern.
     // The full card is unchanged and lives inside the row; the row is the
     // browse surface, the card the detail surface.
@@ -8662,8 +8603,8 @@ function renderPlaces(){
     pc.classList.remove('card-grid'); pc.classList.add('place-list');
     const emptyMsg = placesMBAMode
         ? '<p class="empty-state">No verified businesses match this filter.</p>'
-        : placesTodayMode
-        ? '<p class="empty-state">No specials listed for today — check back tomorrow.</p>'
+        : placesCampusMode
+        ? '<p class="empty-state">No campus places match this filter.</p>'
         : '<p class="empty-state">No listings found in this category. Know a local business? <a href="#" onclick="event.preventDefault();openSubmitBusiness();">Add it here →</a></p>';
     if (cupboardCard) cupboardCard = placeRowHtml({ name: 'Campus Cupboard', slug: 'campus-cupboard', category: 'Cupboard', placeType: 'cupboard' }, cupboardCard, { glyph: '🧺', status: '<span style="color:#15803d;font-weight:700;">Open today</span> · free groceries' });
     pc.innerHTML = (cupboardCard + cards.join('') + campusGroup) || emptyMsg;
@@ -9290,7 +9231,7 @@ window.openPlaceFromSearch = function(slug){
     if (!p || !placeAudienceVisible(p)) return;
     if (placesMGMode && p.marauderGold !== true) window.togglePlacesMarauderGold();
     if (placesMBAMode && !getMembership(p.name)) window.togglePlacesMBA();
-    if (placesTodayMode && !placeTodayContent(p)) window.togglePlacesToday();
+    if (placeIsCampus(p) !== placesCampusMode) window.togglePlacesCampus();   // land in the mode the place lives in (2026-10-16)
     if (placesFilter !== 'All' && !placeMatchesCategory(p)) window.setPlacesFilter('All', null);
     setTimeout(() => window.scrollToPlaceCard(p), 350);
     let tries = 0;

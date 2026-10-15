@@ -419,12 +419,13 @@
                          Filter menu's Food & Drink ↗ item by design: two
                          entry points, one destination. -->
                     <button class="family-toggle" id="places-food-link" onclick="switchView('food')" title="Open the Food page — menus &amp; ordering" style="width:auto;padding:0 10px;gap:4px;font-size:0.78rem;font-weight:700;color:var(--navy);border-color:var(--navy);white-space:nowrap;">🍽 Menus</button>
-                    <button class="family-toggle today-toggle" id="places-today-toggle" onclick="togglePlacesToday()" title="Places with specials or events today"><span class="today-toggle-label">🔥 Today</span></button>
-                    <!-- Show all (2026-10-15): default pins/rows are the sheet's
-                         mapTier essentials per identity; this flips to every
-                         listing. Per-device display setting (mapp_places_show_all).
-                         Hidden by app.js until the data carries tiers. -->
-                    <button class="family-toggle" id="places-all-toggle" onclick="togglePlacesShowAll()" title="Show every listing on the map and list" style="width:auto;padding:0 10px;gap:4px;font-size:0.78rem;font-weight:700;color:var(--navy);border-color:var(--navy);white-space:nowrap;display:none;">Show all</button>
+                    <!-- 🏛 Campus MODE (2026-10-16) in the retired 🔥 Today slot:
+                         Local (default, every identity) shows town listings;
+                         Campus shows only campus buildings/dining/services and
+                         re-frames the map on campus. Replaces the Filter menu's
+                         Campus item and the collapsed Campus accordion. Reuses
+                         .today-toggle for the labeled-pill shape + .active fill. -->
+                    <button class="family-toggle today-toggle" id="places-campus-toggle" onclick="togglePlacesCampus()" title="Campus map — buildings, dining &amp; services on campus" aria-pressed="false"><span class="today-toggle-label">🏛 Campus</span></button>
                     <button class="family-toggle mg-toggle" id="places-mg-toggle" onclick="togglePlacesMarauderGold()" title="Businesses that accept Marauder Gold"><img src="/img/mu-coin.png" alt="Marauder Gold" class="mg-coin-img"></button>
                     <button id="places-filter-toggle" class="filter-toggle" onclick="togglePlacesFilters()">Filter <span id="places-filter-arrow">▾</span></button>
                 </div>
@@ -439,7 +440,6 @@
                  pins stay reachable via All or the 🔥 Today lens. -->
             <div id="places-filter-menu" class="filter-menu" style="display:none;">
                 <button class="filter-menu-item" data-cat="All" onclick="setPlacesFilter('All', this)">All Categories</button>
-                <button class="filter-menu-item" data-cat="Campus" onclick="setPlacesFilter('Campus', this)">🏛 Campus</button>
                 <button class="filter-menu-item" onclick="openFoodFromMap()">🍴 Food &amp; Drink ↗</button>
                 <button class="filter-menu-item" data-cat="Housing" onclick="setPlacesFilter('Housing', this)">🏠 Housing</button>
                 <button class="filter-menu-item" data-cat="Student Housing" onclick="setPlacesFilter('Student Housing', this)">🎓 Student Housing</button>

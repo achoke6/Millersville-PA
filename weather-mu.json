@@ -26,31 +26,15 @@
     ]
   },
   "sevenDay": {
-    "issued": "Wednesday, October 14, 2026 at 08:32 AM (Shertzer, Reynolds, Whitehurst)",
+    "issued": "Thursday, October 15, 2026 at 08:26 AM (Kint, Smith, Zocco)",
     "days": [
       {
-        "period": "Wednesday",
-        "sky": "Increasing Clouds",
-        "weather": "Warm & Muggy",
-        "pop": "30%",
-        "temp": "82",
-        "conf": "5"
-      },
-      {
-        "period": "Wednesday night",
-        "sky": "Partly Cloudy",
-        "weather": "Mild",
-        "pop": "20%",
-        "temp": "58",
-        "conf": "5"
-      },
-      {
         "period": "Thursday",
-        "sky": "Clouds & Sun",
+        "sky": "Increasing Clouds",
         "weather": "Cooler",
-        "pop": "20%",
+        "pop": "<10%",
         "temp": "66",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Thursday night",
@@ -58,31 +42,31 @@
         "weather": "Scattered Showers",
         "pop": "60%",
         "temp": "58",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Friday",
         "sky": "Clouds & Sun",
-        "weather": "Scattered Showers",
-        "pop": "60%",
+        "weather": "Afternoon Showers",
+        "pop": "80%",
         "temp": "80",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Friday night",
-        "sky": "Partly Cloudy",
-        "weather": "Windy",
-        "pop": "20%",
+        "sky": "Mostly Cloudy",
+        "weather": "Breezy",
+        "pop": "30%",
         "temp": "50",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Saturday",
-        "sky": "Mostly Sunny",
+        "sky": "Decreasing Clouds",
         "weather": "Blustery",
         "pop": "<10%",
         "temp": "56",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Saturday night",
@@ -90,15 +74,15 @@
         "weather": "Cold",
         "pop": "<10%",
         "temp": "36",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Sunday",
         "sky": "Sunny",
-        "weather": "Cooler",
+        "weather": "Cool",
         "pop": "<10%",
         "temp": "58",
-        "conf": "3"
+        "conf": "5"
       },
       {
         "period": "Sunday night",
@@ -106,15 +90,23 @@
         "weather": "Cold",
         "pop": "<10%",
         "temp": "36",
-        "conf": "3"
+        "conf": "5"
       },
       {
         "period": "Monday",
         "sky": "Mostly Sunny",
         "weather": "Milder",
         "pop": "<10%",
-        "temp": "mid 60s",
-        "conf": "3"
+        "temp": "64",
+        "conf": "4"
+      },
+      {
+        "period": "Monday night",
+        "sky": "Clear Skies",
+        "weather": "Fair",
+        "pop": "<10%",
+        "temp": "40",
+        "conf": "4"
       },
       {
         "period": "Tuesday",
@@ -123,10 +115,40 @@
         "pop": "<10%",
         "temp": "mid 60s",
         "conf": "3"
+      },
+      {
+        "period": "Wednesday",
+        "sky": "Mostly Sunny",
+        "weather": "Seasonable",
+        "pop": "<10%",
+        "temp": "mid 60s",
+        "conf": "3"
       }
     ]
   },
   "observations": [
+    {
+      "time": "10:00",
+      "temp": "60",
+      "dewpoint": "47",
+      "rh": "63",
+      "windDir": "NE",
+      "windSpeed": "8",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "09:00",
+      "temp": "58",
+      "dewpoint": "47",
+      "rh": "66",
+      "windDir": "ENE",
+      "windSpeed": "8",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
     {
       "time": "08:00",
       "temp": "57",
@@ -167,28 +189,6 @@
       "rh": "77",
       "windDir": "NE",
       "windSpeed": "6",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "04:00",
-      "temp": "62",
-      "dewpoint": "55",
-      "rh": "76",
-      "windDir": "NNE",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "03:00",
-      "temp": "65",
-      "dewpoint": "56",
-      "rh": "74",
-      "windDir": "NNE",
-      "windSpeed": "4",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
@@ -371,6 +371,13 @@
   },
   "videos": [
     {
+      "title": "Medium Range Forecast 10/15/2026",
+      "videoId": "DRpWr5wELac",
+      "url": "https://www.youtube.com/watch?v=DRpWr5wELac",
+      "published": "2026-10-15T13:02:44+00:00",
+      "thumbnail": "https://i1.ytimg.com/vi/DRpWr5wELac/hqdefault.jpg"
+    },
+    {
       "title": "Short Term Forecast 10/14/2026",
       "videoId": "7jbNqAeLmg0",
       "url": "https://www.youtube.com/watch?v=7jbNqAeLmg0",
@@ -390,15 +397,8 @@
       "url": "https://www.youtube.com/watch?v=gESTDTRHEqI",
       "published": "2026-10-12T15:01:08+00:00",
       "thumbnail": "https://i4.ytimg.com/vi/gESTDTRHEqI/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 10/09/2026",
-      "videoId": "54KqVh_bhQs",
-      "url": "https://www.youtube.com/watch?v=54KqVh_bhQs",
-      "published": "2026-10-09T17:25:33+00:00",
-      "thumbnail": "https://i2.ytimg.com/vi/54KqVh_bhQs/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-15T12:25:08.459Z"
+  "updated": "2026-10-15T14:14:27.688Z"
 }

@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-10-15T11:27:54.492Z",
-  "totalEvents": 1928,
-  "withDescription": 823,
-  "withImage": 225,
+  "generatedAt": "2026-10-15T14:18:00.275Z",
+  "totalEvents": 1927,
+  "withDescription": 822,
+  "withImage": 224,
   "familyFriendly": 65,
-  "eventsToday": 40,
+  "eventsToday": 39,
   "sources": {
     "muAthletics": 323,
     "muCalendar": 169,
     "artsmu": 10,
     "campsAlumni": 15,
-    "muGetInvolved": 526,
+    "muGetInvolved": 525,
     "pennManor": 613,
     "borough": 57,
     "vfw": 6,
@@ -143,20 +143,20 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 5,
+    "pendingFuture": 6,
     "pendingPast": 6,
     "pendingBySource": {
       "Youth Sports": 1,
-      "Campus Life": 4
+      "Campus Life": 5
     },
     "stalePast": 9,
-    "lastSyncAt": "2026-10-15T11:24:33.648Z"
+    "lastSyncAt": "2026-10-15T14:14:26.366Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-15T11:27:50.904Z"
+    "checkedAt": "2026-10-15T14:17:47.168Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -172,7 +172,7 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 224,
+        "value": 223,
         "min": 60,
         "skipped": false
       },
@@ -305,5 +305,5 @@
       "date": "2026-10-29T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 0
 }

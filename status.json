@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-16T22:09:46.290Z",
+  "generatedAt": "2026-10-16T23:59:29.481Z",
   "totalEvents": 1933,
   "withDescription": 825,
   "withImage": 223,
@@ -7,10 +7,10 @@
   "eventsToday": 24,
   "sources": {
     "muAthletics": 323,
-    "muCalendar": 175,
+    "muCalendar": 176,
     "artsmu": 5,
     "campsAlumni": 15,
-    "muGetInvolved": 526,
+    "muGetInvolved": 525,
     "pennManor": 621,
     "borough": 57,
     "vfw": 6,
@@ -150,13 +150,13 @@
       "Campus Life": 5
     },
     "stalePast": 14,
-    "lastSyncAt": "2026-10-16T22:04:53.978Z"
+    "lastSyncAt": "2026-10-16T23:55:08.422Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-16T22:09:35.185Z"
+    "checkedAt": "2026-10-16T23:59:19.763Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -235,6 +235,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "PRIDEFEST: Monster Ball Drag Show|2026-10-15T19:00:00",
+      "firstSeenAt": "2026-10-16T23:59:29.479Z",
+      "title": "PRIDEFEST: Monster Ball Drag Show",
+      "source": "MU",
+      "date": "2026-10-15T19:00:00"
+    },
+    {
       "key": "PRIDEFEST|2026-10-15T16:30:00",
       "firstSeenAt": "2026-10-16T21:05:11.304Z",
       "title": "PRIDEFEST",
@@ -296,14 +303,7 @@
       "title": "Trunk or Treat at John Herr's Village Market",
       "source": "Other",
       "date": "2026-10-24T22:30:00.000Z"
-    },
-    {
-      "key": "Millersville University Field Hockey vs Frostburg State|2026-10-16T18:30:00.000Z",
-      "firstSeenAt": "2026-10-16T13:27:49.144Z",
-      "title": "Millersville University Field Hockey vs Frostburg State",
-      "source": "MU",
-      "date": "2026-10-16T18:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

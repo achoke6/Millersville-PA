@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-10-15T19:25:37.424Z",
-  "totalEvents": 1938,
-  "withDescription": 833,
-  "withImage": 225,
+  "generatedAt": "2026-10-16T16:43:23.347Z",
+  "totalEvents": 1932,
+  "withDescription": 825,
+  "withImage": 223,
   "familyFriendly": 65,
-  "eventsToday": 37,
+  "eventsToday": 23,
   "sources": {
     "muAthletics": 323,
-    "muCalendar": 177,
+    "muCalendar": 174,
     "artsmu": 5,
     "campsAlumni": 15,
-    "muGetInvolved": 530,
-    "pennManor": 618,
+    "muGetInvolved": 527,
+    "pennManor": 620,
     "borough": 57,
     "vfw": 6,
     "phantomPower": 13,
@@ -27,7 +27,7 @@
       "latest": "2027-05-27T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-07-17T09:00:00.000Z",
+      "earliest": "2026-07-23T09:00:00.000Z",
       "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
@@ -55,7 +55,7 @@
       "latest": "2026-11-22T21:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-10-15T23:00:00.000Z",
+      "earliest": "2026-10-16T23:30:00.000Z",
       "latest": "2026-12-09T01:00:00.000Z"
     },
     "community": {
@@ -78,124 +78,122 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 44
+      "daysSinceMoved": 45
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 55
+      "daysSinceMoved": 56
     },
     "artsmu": {
       "newest": "2027-03-06",
-      "daysSinceMoved": 47
+      "daysSinceMoved": 48
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 69
+      "daysSinceMoved": 70
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 42
+      "daysSinceMoved": 43
     },
     "pennManor": {
       "newest": "2027-10-11",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 79
+      "daysSinceMoved": 80
     },
     "vfw": {
       "newest": "2026-11-22",
-      "daysSinceMoved": 9
+      "daysSinceMoved": 10
     },
     "phantomPower": {
       "newest": "2026-12-09",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 80
+      "daysSinceMoved": 81
     },
     "manor": {
       "newest": "2027-10-06",
-      "daysSinceMoved": 9
+      "daysSinceMoved": 10
     },
     "raneyCellars": {
       "newest": "2026-10-09",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 11
     },
     "theBackyard": {
       "newest": "2027-04-28",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     }
   },
   "sports": {
-    "total": 838,
-    "scored": 145,
-    "wins": 70,
-    "losses": 63,
+    "total": 840,
+    "scored": 160,
+    "wins": 80,
+    "losses": 68,
     "ties": 12
   },
   "registrations": {
-    "open": 7,
-    "next2Weeks": 4,
+    "open": 5,
+    "next2Weeks": 2,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 6,
+    "pendingFuture": 7,
     "pendingPast": 6,
     "pendingBySource": {
       "Youth Sports": 1,
-      "Campus Life": 5
+      "Campus Life": 6
     },
-    "stalePast": 9,
-    "lastSyncAt": "2026-10-15T19:22:34.163Z"
+    "stalePast": 13,
+    "lastSyncAt": "2026-10-16T16:39:04.884Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-15T19:25:27.018Z"
+    "checkedAt": "2026-10-16T16:43:11.679Z"
   },
   "sourceHealth": {
-    "ok": false,
-    "failing": [
-      "manor.count"
-    ],
+    "ok": true,
+    "failing": [],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 361,
+        "value": 360,
         "min": 45,
         "skipped": false
       },
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 223,
+        "value": 222,
         "min": 60,
         "skipped": false
       },
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 232,
+        "value": 231,
         "min": 30,
         "skipped": false
       },
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 71,
+        "value": 70,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 515,
+        "value": 517,
         "min": 150,
         "skipped": false
       },
@@ -215,10 +213,9 @@
       },
       {
         "key": "manor.count",
-        "ok": false,
+        "ok": true,
         "value": 39,
-        "min": 10,
-        "carriedForward": 39
+        "min": 10
       },
       {
         "key": "muHudl.pairRatio",
@@ -238,74 +235,74 @@
   },
   "recentlyAdded": [
     {
-      "key": "Muhlenburg Tournament|2026-10-18T14:00:00.000Z",
-      "firstSeenAt": "2026-10-15T19:25:37.421Z",
-      "title": "Muhlenburg Tournament",
+      "key": "Campus Life cheers on MU Field Hockey!|2026-10-16T18:30:00.000Z",
+      "firstSeenAt": "2026-10-16T16:43:23.344Z",
+      "title": "Campus Life cheers on MU Field Hockey!",
       "source": "MU",
-      "date": "2026-10-18T14:00:00.000Z"
+      "date": "2026-10-16T18:30:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Tennis vs Donegal High School|2027-04-02T20:00:00.000Z",
+      "firstSeenAt": "2026-10-16T16:43:23.344Z",
+      "title": "Boys Varsity Tennis vs Donegal High School",
+      "source": "PM",
+      "date": "2027-04-02T20:00:00.000Z"
+    },
+    {
+      "key": "Trunk or Treat at John Herr's Village Market|2026-10-24T22:30:00.000Z",
+      "firstSeenAt": "2026-10-16T14:53:36.478Z",
+      "title": "Trunk or Treat at John Herr's Village Market",
+      "source": "Other",
+      "date": "2026-10-24T22:30:00.000Z"
+    },
+    {
+      "key": "Men's Rugby Practice|2026-11-03T21:00:00.000Z",
+      "firstSeenAt": "2026-10-16T14:53:36.478Z",
+      "title": "Men's Rugby Practice",
+      "source": "MU",
+      "date": "2026-11-03T21:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Field Hockey vs Frostburg State|2026-10-16T18:30:00.000Z",
+      "firstSeenAt": "2026-10-16T13:27:49.144Z",
+      "title": "Millersville University Field Hockey vs Frostburg State",
+      "source": "MU",
+      "date": "2026-10-16T18:30:00.000Z"
     },
     {
       "key": "BASS DRUM OF DEATH w. Wealth Gap|2026-11-08T00:00:00.000Z",
-      "firstSeenAt": "2026-10-15T19:25:37.421Z",
+      "firstSeenAt": "2026-10-16T08:09:07.626Z",
       "title": "BASS DRUM OF DEATH w. Wealth Gap",
       "source": "Other",
       "date": "2026-11-08T00:00:00.000Z"
     },
     {
-      "key": "Blind Date With a Book|2026-10-21T19:00:00",
-      "firstSeenAt": "2026-10-15T18:50:56.820Z",
-      "title": "Blind Date With a Book",
+      "key": "Boo Gram Fundraiser|2026-10-08T16:00:00.000Z",
+      "firstSeenAt": "2026-10-16T01:34:15.348Z",
+      "title": "Boo Gram Fundraiser",
       "source": "MU",
-      "date": "2026-10-21T19:00:00"
+      "date": "2026-10-08T16:00:00.000Z"
     },
     {
-      "key": "Domestic Violence Awareness Month: Documentary Showing and Panel Discussion|2026-10-22T17:30:00",
-      "firstSeenAt": "2026-10-15T18:50:56.820Z",
-      "title": "Domestic Violence Awareness Month: Documentary Showing and Panel Discussion",
-      "source": "MU",
-      "date": "2026-10-22T17:30:00"
+      "key": "Girls Varsity Field Hockey vs Manheim Central High School|2026-10-17T15:00:00.000Z",
+      "firstSeenAt": "2026-10-16T01:34:15.348Z",
+      "title": "Girls Varsity Field Hockey vs Manheim Central High School",
+      "source": "PM",
+      "date": "2026-10-17T15:00:00.000Z"
     },
     {
-      "key": "Walk-A-Thon: Domestic Violence Awareness Walk|2026-10-27T20:30:00.000Z",
-      "firstSeenAt": "2026-10-15T18:50:56.820Z",
-      "title": "Walk-A-Thon: Domestic Violence Awareness Walk",
+      "key": "AniMU Weekly Meeting|2026-10-30T22:00:00.000Z",
+      "firstSeenAt": "2026-10-16T01:34:15.348Z",
+      "title": "AniMU Weekly Meeting",
       "source": "MU",
-      "date": "2026-10-27T20:30:00.000Z"
+      "date": "2026-10-30T22:00:00.000Z"
     },
     {
-      "key": "Rock of Ages: Millersville University Theatre|2026-10-31T19:00:00",
-      "firstSeenAt": "2026-10-15T18:50:56.820Z",
+      "key": "Rock of Ages: Millersville University Theatre|2026-10-31T23:00:00.000Z",
+      "firstSeenAt": "2026-10-16T01:34:15.348Z",
       "title": "Rock of Ages: Millersville University Theatre",
       "source": "MU",
-      "date": "2026-10-31T19:00:00"
-    },
-    {
-      "key": "Rock of Ages: Millersville University Theatre|2026-11-01T14:00:00",
-      "firstSeenAt": "2026-10-15T18:50:56.820Z",
-      "title": "Rock of Ages: Millersville University Theatre",
-      "source": "MU",
-      "date": "2026-11-01T14:00:00"
-    },
-    {
-      "key": "Get Out the Vote Election Eve Rally with the Center of Civic Engagement|2026-11-02T17:00:00",
-      "firstSeenAt": "2026-10-15T18:50:56.820Z",
-      "title": "Get Out the Vote Election Eve Rally with the Center of Civic Engagement",
-      "source": "MU",
-      "date": "2026-11-02T17:00:00"
-    },
-    {
-      "key": "FSL: All Greek Council Fundraiser|2026-11-04T16:30:00",
-      "firstSeenAt": "2026-10-15T18:50:56.820Z",
-      "title": "FSL: All Greek Council Fundraiser",
-      "source": "MU",
-      "date": "2026-11-04T16:30:00"
-    },
-    {
-      "key": "Rock of Ages: Millersville University Theatre|2026-11-05T19:00:00",
-      "firstSeenAt": "2026-10-15T18:50:56.820Z",
-      "title": "Rock of Ages: Millersville University Theatre",
-      "source": "MU",
-      "date": "2026-11-05T19:00:00"
+      "date": "2026-10-31T23:00:00.000Z"
     }
   ],
   "addedLastRun": 2

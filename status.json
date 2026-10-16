@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-16T13:27:49.146Z",
-  "totalEvents": 1930,
-  "withDescription": 824,
+  "generatedAt": "2026-10-16T14:53:36.481Z",
+  "totalEvents": 1931,
+  "withDescription": 825,
   "withImage": 223,
-  "familyFriendly": 64,
-  "eventsToday": 24,
+  "familyFriendly": 65,
+  "eventsToday": 23,
   "sources": {
     "muAthletics": 323,
     "muCalendar": 174,
@@ -147,17 +147,16 @@
     "pendingPast": 6,
     "pendingBySource": {
       "Youth Sports": 1,
-      "Campus Life": 5,
-      "PM Community": 1
+      "Campus Life": 6
     },
     "stalePast": 13,
-    "lastSyncAt": "2026-10-16T13:23:56.346Z"
+    "lastSyncAt": "2026-10-16T14:49:49.600Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-16T13:27:40.438Z"
+    "checkedAt": "2026-10-16T14:53:28.236Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -236,6 +235,20 @@
   },
   "recentlyAdded": [
     {
+      "key": "Trunk or Treat at John Herr's Village Market|2026-10-24T22:30:00.000Z",
+      "firstSeenAt": "2026-10-16T14:53:36.478Z",
+      "title": "Trunk or Treat at John Herr's Village Market",
+      "source": "Other",
+      "date": "2026-10-24T22:30:00.000Z"
+    },
+    {
+      "key": "Men's Rugby Practice|2026-11-03T21:00:00.000Z",
+      "firstSeenAt": "2026-10-16T14:53:36.478Z",
+      "title": "Men's Rugby Practice",
+      "source": "MU",
+      "date": "2026-11-03T21:00:00.000Z"
+    },
+    {
       "key": "Millersville University Field Hockey vs Frostburg State|2026-10-16T18:30:00.000Z",
       "firstSeenAt": "2026-10-16T13:27:49.144Z",
       "title": "Millersville University Field Hockey vs Frostburg State",
@@ -290,21 +303,7 @@
       "title": "Sunday Catholic Mass",
       "source": "MU",
       "date": "2026-11-01T20:00:00.000Z"
-    },
-    {
-      "key": "Weekly Practice|2026-11-02T21:00:00.000Z",
-      "firstSeenAt": "2026-10-16T01:34:15.348Z",
-      "title": "Weekly Practice",
-      "source": "MU",
-      "date": "2026-11-02T21:00:00.000Z"
-    },
-    {
-      "key": "Men's Rugby Practice|2026-11-02T21:30:00.000Z",
-      "firstSeenAt": "2026-10-16T01:34:15.348Z",
-      "title": "Men's Rugby Practice",
-      "source": "MU",
-      "date": "2026-11-02T21:30:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 2
 }

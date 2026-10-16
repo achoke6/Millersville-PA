@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-16T14:53:36.481Z",
-  "totalEvents": 1931,
+  "generatedAt": "2026-10-16T16:43:23.347Z",
+  "totalEvents": 1932,
   "withDescription": 825,
   "withImage": 223,
   "familyFriendly": 65,
@@ -11,7 +11,7 @@
     "artsmu": 5,
     "campsAlumni": 15,
     "muGetInvolved": 527,
-    "pennManor": 619,
+    "pennManor": 620,
     "borough": 57,
     "vfw": 6,
     "phantomPower": 13,
@@ -130,9 +130,9 @@
     }
   },
   "sports": {
-    "total": 839,
-    "scored": 159,
-    "wins": 79,
+    "total": 840,
+    "scored": 160,
+    "wins": 80,
     "losses": 68,
     "ties": 12
   },
@@ -150,13 +150,13 @@
       "Campus Life": 6
     },
     "stalePast": 13,
-    "lastSyncAt": "2026-10-16T14:49:49.600Z"
+    "lastSyncAt": "2026-10-16T16:39:04.884Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-16T14:53:28.236Z"
+    "checkedAt": "2026-10-16T16:43:11.679Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -193,7 +193,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 516,
+        "value": 517,
         "min": 150,
         "skipped": false
       },
@@ -234,6 +234,20 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Campus Life cheers on MU Field Hockey!|2026-10-16T18:30:00.000Z",
+      "firstSeenAt": "2026-10-16T16:43:23.344Z",
+      "title": "Campus Life cheers on MU Field Hockey!",
+      "source": "MU",
+      "date": "2026-10-16T18:30:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Tennis vs Donegal High School|2027-04-02T20:00:00.000Z",
+      "firstSeenAt": "2026-10-16T16:43:23.344Z",
+      "title": "Boys Varsity Tennis vs Donegal High School",
+      "source": "PM",
+      "date": "2027-04-02T20:00:00.000Z"
+    },
     {
       "key": "Trunk or Treat at John Herr's Village Market|2026-10-24T22:30:00.000Z",
       "firstSeenAt": "2026-10-16T14:53:36.478Z",
@@ -289,20 +303,6 @@
       "title": "Rock of Ages: Millersville University Theatre",
       "source": "MU",
       "date": "2026-10-31T23:00:00.000Z"
-    },
-    {
-      "key": "Rock of Ages: Millersville University Theatre|2026-11-01T19:00:00.000Z",
-      "firstSeenAt": "2026-10-16T01:34:15.348Z",
-      "title": "Rock of Ages: Millersville University Theatre",
-      "source": "MU",
-      "date": "2026-11-01T19:00:00.000Z"
-    },
-    {
-      "key": "Sunday Catholic Mass|2026-11-01T20:00:00.000Z",
-      "firstSeenAt": "2026-10-16T01:34:15.348Z",
-      "title": "Sunday Catholic Mass",
-      "source": "MU",
-      "date": "2026-11-01T20:00:00.000Z"
     }
   ],
   "addedLastRun": 2

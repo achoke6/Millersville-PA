@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-16T16:43:23.347Z",
-  "totalEvents": 1932,
+  "generatedAt": "2026-10-16T17:02:17.883Z",
+  "totalEvents": 1933,
   "withDescription": 825,
   "withImage": 223,
   "familyFriendly": 65,
@@ -11,7 +11,7 @@
     "artsmu": 5,
     "campsAlumni": 15,
     "muGetInvolved": 527,
-    "pennManor": 620,
+    "pennManor": 621,
     "borough": 57,
     "vfw": 6,
     "phantomPower": 13,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 840,
+    "total": 841,
     "scored": 160,
     "wins": 80,
     "losses": 68,
@@ -150,13 +150,13 @@
       "Campus Life": 6
     },
     "stalePast": 13,
-    "lastSyncAt": "2026-10-16T16:39:04.884Z"
+    "lastSyncAt": "2026-10-16T16:58:34.658Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-16T16:43:11.679Z"
+    "checkedAt": "2026-10-16T17:02:09.128Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -193,7 +193,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 517,
+        "value": 518,
         "min": 150,
         "skipped": false
       },
@@ -234,6 +234,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Boys Varsity Tennis @ Lancaster Country Day School|2027-04-02T20:00:00.000Z",
+      "firstSeenAt": "2026-10-16T17:02:17.879Z",
+      "title": "Boys Varsity Tennis @ Lancaster Country Day School",
+      "source": "PM",
+      "date": "2027-04-02T20:00:00.000Z"
+    },
     {
       "key": "Campus Life cheers on MU Field Hockey!|2026-10-16T18:30:00.000Z",
       "firstSeenAt": "2026-10-16T16:43:23.344Z",
@@ -296,14 +303,7 @@
       "title": "AniMU Weekly Meeting",
       "source": "MU",
       "date": "2026-10-30T22:00:00.000Z"
-    },
-    {
-      "key": "Rock of Ages: Millersville University Theatre|2026-10-31T23:00:00.000Z",
-      "firstSeenAt": "2026-10-16T01:34:15.348Z",
-      "title": "Rock of Ages: Millersville University Theatre",
-      "source": "MU",
-      "date": "2026-10-31T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 1
 }

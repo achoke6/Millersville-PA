@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-17T19:25:27.819Z",
+  "generatedAt": "2026-10-17T21:14:05.897Z",
   "totalEvents": 1931,
   "withDescription": 825,
   "withImage": 221,
@@ -131,9 +131,9 @@
   },
   "sports": {
     "total": 841,
-    "scored": 163,
+    "scored": 164,
     "wins": 80,
-    "losses": 71,
+    "losses": 72,
     "ties": 12
   },
   "registrations": {
@@ -150,13 +150,13 @@
       "Campus Life": 3
     },
     "stalePast": 16,
-    "lastSyncAt": "2026-10-17T19:22:17.038Z"
+    "lastSyncAt": "2026-10-17T21:10:45.367Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-10-17T19:25:17.381Z"
+    "checkedAt": "2026-10-17T21:13:56.270Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -235,6 +235,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Millersville University Field Hockey at #5 West Chester|2026-09-17T20:00:00.000Z",
+      "firstSeenAt": "2026-10-17T21:14:05.895Z",
+      "title": "Millersville University Field Hockey at #5 West Chester",
+      "source": "MU",
+      "date": "2026-09-17T20:00:00.000Z"
+    },
+    {
       "key": "12 Stones|2026-11-09T00:00:00.000Z",
       "firstSeenAt": "2026-10-17T12:31:08.433Z",
       "title": "12 Stones",
@@ -296,14 +303,7 @@
       "title": "Weekly Practice",
       "source": "MU",
       "date": "2026-11-03T22:00:00.000Z"
-    },
-    {
-      "key": "SGA Advocacy Tabling|2026-11-03T22:00:00.000Z",
-      "firstSeenAt": "2026-10-17T00:31:05.266Z",
-      "title": "SGA Advocacy Tabling",
-      "source": "MU",
-      "date": "2026-11-03T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

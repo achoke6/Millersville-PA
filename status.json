@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-10-17T09:14:50.586Z",
-  "totalEvents": 1931,
+  "generatedAt": "2026-10-17T10:42:40.086Z",
+  "totalEvents": 1930,
   "withDescription": 825,
-  "withImage": 221,
+  "withImage": 220,
   "familyFriendly": 64,
   "eventsToday": 27,
   "sources": {
@@ -14,7 +14,7 @@
     "pennManor": 621,
     "borough": 57,
     "vfw": 6,
-    "phantomPower": 13,
+    "phantomPower": 12,
     "community": 14,
     "manor": 39,
     "raneyCellars": 5,
@@ -150,13 +150,13 @@
       "Campus Life": 5
     },
     "stalePast": 14,
-    "lastSyncAt": "2026-10-17T09:11:56.724Z"
+    "lastSyncAt": "2026-10-17T10:39:42.015Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-10-17T09:14:43.244Z"
+    "checkedAt": "2026-10-17T10:42:30.561Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -165,7 +165,7 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 360,
+        "value": 359,
         "min": 45,
         "skipped": false
       },
@@ -235,13 +235,6 @@
   },
   "recentlyAdded": [
     {
-      "key": "12 Stones|2026-11-09T00:00:00.000Z",
-      "firstSeenAt": "2026-10-17T07:26:28.363Z",
-      "title": "12 Stones",
-      "source": "Other",
-      "date": "2026-11-09T00:00:00.000Z"
-    },
-    {
       "key": "Creative Writers Guild general meeting|2026-10-06T18:00:00",
       "firstSeenAt": "2026-10-17T00:31:05.266Z",
       "title": "Creative Writers Guild general meeting",
@@ -303,6 +296,13 @@
       "title": "SGA Advocacy Tabling",
       "source": "MU",
       "date": "2026-11-03T22:00:00.000Z"
+    },
+    {
+      "key": "Weekly Run|2026-11-03T23:00:00.000Z",
+      "firstSeenAt": "2026-10-17T00:31:05.266Z",
+      "title": "Weekly Run",
+      "source": "MU",
+      "date": "2026-11-03T23:00:00.000Z"
     }
   ],
   "addedLastRun": 0

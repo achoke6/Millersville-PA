@@ -1,23 +1,23 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Friday, October 16, 2026 at 05:30 PM (Cokain, Iraca, McCarthy, Student Meteorologists)",
+    "issued": "Saturday, October 17, 2026 at 08:15 AM (Corman, King, Student Meteorologists)",
     "periods": [
       {
-        "period": "Tonight",
-        "text": "Mostly cloudy and breezy. Low: 48-52"
-      },
-      {
-        "period": "Tomorrow",
+        "period": "Today",
         "text": "Windy, less humid, and much cooler with decreasing clouds. High: 52-56"
       },
       {
-        "period": "Tomorrow Night",
+        "period": "Tonight",
         "text": "Clear and cold with a widespread frost. Low: 32-36"
       },
       {
         "period": "Sunday",
         "text": "Sunny and cool. High: 56-60"
+      },
+      {
+        "period": "Sunday Night",
+        "text": "Clear and cold with patchy frost Low: 34-38"
       },
       {
         "period": "Monday",
@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "08:00",
+      "temp": "51",
+      "dewpoint": "37",
+      "rh": "59",
+      "windDir": "N",
+      "windSpeed": "8",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "07:00",
+      "temp": "52",
+      "dewpoint": "39",
+      "rh": "62",
+      "windDir": "N",
+      "windSpeed": "9",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "06:00",
       "temp": "53",
       "dewpoint": "41",
@@ -170,28 +192,6 @@
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
-    },
-    {
-      "time": "02:00",
-      "temp": "60",
-      "dewpoint": "47",
-      "rh": "62",
-      "windDir": "N",
-      "windSpeed": "6",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "01:00",
-      "temp": "62",
-      "dewpoint": "51",
-      "rh": "68",
-      "windDir": "NNW",
-      "windSpeed": "5",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "Light Rain"
     }
   ],
   "dailySummary": {
@@ -422,5 +422,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-17T10:39:45.522Z"
+  "updated": "2026-10-17T12:28:08.148Z"
 }

@@ -1,17 +1,5 @@
 {
   "_comment": "Local youth sports registration windows (Penn Manor Youth Baseball/Softball, Penn Manor Soccer Club, etc.). Maintained by hand / via Cowork (or regenerated from the Event Candidates sheet by scripts/sync-candidates.js — if that sync is live for Youth Sports, edit the SHEET, not this file). Two consumers: (1) scrape.js creates an event dated on each deadline that auto-hides once the deadline passes; (2) the homepage 'Upcoming Signups' section surfaces each entry to TOWNIES starting about a month before its deadline. Marauders/students don't see the signups section (it's local family content).",
   "_format": "Each entry: org (required, e.g. 'Penn Manor Youth Baseball' — used as the event location and the Upcoming Signups sub-line), sport (optional, e.g. 'Baseball & Softball'), deadline (required UNLESS closesTBA is set, ISO 8601 with Eastern offset — the registration CLOSE date/time), closesTBA (optional bool — set true for an OPEN-ENDED registration that is live but has no announced close date; such an entry has NO deadline, creates NO calendar event, and is shown reminder-only in Upcoming Signups as 'Open now / closes TBA' until its row is removed), registerLink (required, URL to sign up), title (optional — the human display title for the event card/timeline, e.g. 'Junior Comets Football & Cheerleading'; if omitted scrape.js falls back to org + sport), opens (optional ISO), season (optional, e.g. 'Spring 2026'), ageRange (optional, e.g. 'Ages 5-14'), note (optional, short extra detail — do NOT repeat 'Registration closes <date>'; scrape.js appends that line automatically), status ('active' | 'draft' — only 'active' is used). Entries auto-skip once their deadline passes.",
-  "registrations": [
-    {
-      "status": "active",
-      "title": "Penn Manor Rec Basketball - Winter 2026-27 Registration",
-      "org": "Penn Manor Rec Basketball",
-      "sport": "Basketball — prior-year page, verify current season",
-      "deadline": "2026-10-16T03:59:00.000Z",
-      "opens": "2026-09-09T04:00:00.000Z",
-      "audience": "townie-only",
-      "registerLink": "https://www.pennmanorrecbasketball.com/",
-      "note": "Recreational basketball league for 1st through 9th grade boys and girls, with optional elementary travel teams for 5th and 6th graders. Season runs December through February."
-    }
-  ]
+  "registrations": []
 }

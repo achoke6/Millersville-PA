@@ -26,24 +26,8 @@
     ]
   },
   "sevenDay": {
-    "issued": "Friday, October 16, 2026 at 08:20 AM (Cokain)",
+    "issued": "Saturday, October 17, 2026 at 02:15 PM (Corman, King)",
     "days": [
-      {
-        "period": "Friday",
-        "sky": "Clouds & Sun",
-        "weather": "Afternoon Showers",
-        "pop": "90%",
-        "temp": "80",
-        "conf": "5"
-      },
-      {
-        "period": "Friday night",
-        "sky": "Mostly Cloudy",
-        "weather": "Breezy",
-        "pop": "20%",
-        "temp": "50",
-        "conf": "5"
-      },
       {
         "period": "Saturday",
         "sky": "Decreasing Clouds",
@@ -82,7 +66,7 @@
         "weather": "Milder",
         "pop": "<10%",
         "temp": "64",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Monday night",
@@ -90,7 +74,7 @@
         "weather": "Fair",
         "pop": "<10%",
         "temp": "42",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Tuesday",
@@ -98,7 +82,7 @@
         "weather": "Pleasant",
         "pop": "<10%",
         "temp": "68",
-        "conf": "3"
+        "conf": "4"
       },
       {
         "period": "Tuesday night",
@@ -106,10 +90,26 @@
         "weather": "Fair",
         "pop": "<10%",
         "temp": "44",
-        "conf": "3"
+        "conf": "4"
       },
       {
         "period": "Wednesday",
+        "sky": "Mostly Sunny",
+        "weather": "Seasonable",
+        "pop": "<10%",
+        "temp": "64",
+        "conf": "4"
+      },
+      {
+        "period": "Wednesday night",
+        "sky": "Mainly Clear",
+        "weather": "Fair",
+        "pop": "<10%",
+        "temp": "42",
+        "conf": "4"
+      },
+      {
+        "period": "Thursday",
         "sky": "Mostly Sunny",
         "weather": "Seasonable",
         "pop": "<10%",
@@ -117,16 +117,27 @@
         "conf": "3"
       },
       {
-        "period": "Thursday",
-        "sky": "Partly Sunny",
-        "weather": "Cool",
+        "period": "Friday",
+        "sky": "Mostly Sunny",
+        "weather": "Pleasant",
         "pop": "<10%",
-        "temp": "low 60s",
+        "temp": "mid 60s",
         "conf": "3"
       }
     ]
   },
   "observations": [
+    {
+      "time": "14:00",
+      "temp": "52",
+      "dewpoint": "34",
+      "rh": "50",
+      "windDir": "NNE",
+      "windSpeed": "7",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
     {
       "time": "13:00",
       "temp": "50",
@@ -178,17 +189,6 @@
       "rh": "58",
       "windDir": "N",
       "windSpeed": "9",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "08:00",
-      "temp": "51",
-      "dewpoint": "37",
-      "rh": "59",
-      "windDir": "N",
-      "windSpeed": "8",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
@@ -422,5 +422,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-17T17:08:26.846Z"
+  "updated": "2026-10-17T18:56:41.267Z"
 }

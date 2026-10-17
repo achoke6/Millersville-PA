@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-10-16T23:59:29.481Z",
-  "totalEvents": 1933,
-  "withDescription": 825,
-  "withImage": 223,
-  "familyFriendly": 65,
-  "eventsToday": 24,
+  "generatedAt": "2026-10-17T00:31:05.270Z",
+  "totalEvents": 1932,
+  "withDescription": 826,
+  "withImage": 220,
+  "familyFriendly": 64,
+  "eventsToday": 22,
   "sources": {
     "muAthletics": 323,
     "muCalendar": 176,
     "artsmu": 5,
     "campsAlumni": 15,
-    "muGetInvolved": 525,
+    "muGetInvolved": 526,
     "pennManor": 621,
     "borough": 57,
     "vfw": 6,
-    "phantomPower": 13,
-    "community": 15,
+    "phantomPower": 12,
+    "community": 14,
     "manor": 39,
     "raneyCellars": 5,
     "theBackyard": 25,
@@ -55,11 +55,11 @@
       "latest": "2026-11-22T21:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-10-16T23:30:00.000Z",
+      "earliest": "2026-10-17T23:00:00.000Z",
       "latest": "2026-12-09T01:00:00.000Z"
     },
     "community": {
-      "earliest": "2026-07-18T16:00:00.000Z",
+      "earliest": "2026-07-24T16:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
     "manor": {
@@ -150,13 +150,13 @@
       "Campus Life": 5
     },
     "stalePast": 14,
-    "lastSyncAt": "2026-10-16T23:55:08.422Z"
+    "lastSyncAt": "2026-10-17T00:27:12.563Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
-    "approved": 5,
-    "checkedAt": "2026-10-16T23:59:19.763Z"
+    "approved": 4,
+    "checkedAt": "2026-10-17T00:30:56.660Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -186,7 +186,7 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 70,
+        "value": 69,
         "min": 21,
         "skipped": false
       },
@@ -235,75 +235,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "PRIDEFEST: Monster Ball Drag Show|2026-10-15T19:00:00",
-      "firstSeenAt": "2026-10-16T23:59:29.479Z",
-      "title": "PRIDEFEST: Monster Ball Drag Show",
+      "key": "Creative Writers Guild general meeting|2026-10-06T18:00:00",
+      "firstSeenAt": "2026-10-17T00:31:05.266Z",
+      "title": "Creative Writers Guild general meeting",
       "source": "MU",
-      "date": "2026-10-15T19:00:00"
+      "date": "2026-10-06T18:00:00"
     },
     {
-      "key": "PRIDEFEST|2026-10-15T16:30:00",
-      "firstSeenAt": "2026-10-16T21:05:11.304Z",
-      "title": "PRIDEFEST",
+      "key": "YDSA General Meeting|2026-10-06T18:30:00",
+      "firstSeenAt": "2026-10-17T00:31:05.266Z",
+      "title": "YDSA General Meeting",
       "source": "MU",
-      "date": "2026-10-15T16:30:00"
+      "date": "2026-10-06T18:30:00"
     },
     {
-      "key": "Millersville University Women's Soccer at #3 West Chester|2026-09-16T18:00:00.000Z",
-      "firstSeenAt": "2026-10-16T18:51:28.076Z",
-      "title": "Millersville University Women's Soccer at #3 West Chester",
+      "key": "RUF Bible Study|2026-10-06T19:00:00",
+      "firstSeenAt": "2026-10-17T00:31:05.266Z",
+      "title": "RUF Bible Study",
       "source": "MU",
-      "date": "2026-09-16T18:00:00.000Z"
+      "date": "2026-10-06T19:00:00"
     },
     {
-      "key": "Men's Ice Hockey vs. West Chester: Homecoming Pink-Out|2026-10-16T23:30:00.000Z",
-      "firstSeenAt": "2026-10-16T18:51:28.076Z",
-      "title": "Men's Ice Hockey vs. West Chester: Homecoming Pink-Out",
+      "key": "Letters of Love|2026-10-06T19:00:00",
+      "firstSeenAt": "2026-10-17T00:31:05.266Z",
+      "title": "Letters of Love",
       "source": "MU",
-      "date": "2026-10-16T23:30:00.000Z"
+      "date": "2026-10-06T19:00:00"
     },
     {
-      "key": "Muhlenberg Tournament|2026-10-18T14:00:00.000Z",
-      "firstSeenAt": "2026-10-16T18:51:28.076Z",
-      "title": "Muhlenberg Tournament",
+      "key": "JDogs Community Service|2026-10-16T01:30:00.000Z",
+      "firstSeenAt": "2026-10-17T00:31:05.266Z",
+      "title": "JDogs Community Service",
       "source": "MU",
-      "date": "2026-10-18T14:00:00.000Z"
+      "date": "2026-10-16T01:30:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board - Cancelled|2026-10-22T22:30:00.000Z",
-      "firstSeenAt": "2026-10-16T18:51:28.076Z",
-      "title": "Zoning Hearing Board - Cancelled",
-      "source": "Borough",
-      "date": "2026-10-22T22:30:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Tennis @ Lancaster Country Day School|2027-04-02T20:00:00.000Z",
-      "firstSeenAt": "2026-10-16T17:02:17.879Z",
-      "title": "Boys Varsity Tennis @ Lancaster Country Day School",
-      "source": "PM",
-      "date": "2027-04-02T20:00:00.000Z"
-    },
-    {
-      "key": "Campus Life cheers on MU Field Hockey!|2026-10-16T18:30:00.000Z",
-      "firstSeenAt": "2026-10-16T16:43:23.344Z",
-      "title": "Campus Life cheers on MU Field Hockey!",
+      "key": "Men's Ice Hockey Practice (D2)|2026-11-03T11:00:00.000Z",
+      "firstSeenAt": "2026-10-17T00:31:05.266Z",
+      "title": "Men's Ice Hockey Practice (D2)",
       "source": "MU",
-      "date": "2026-10-16T18:30:00.000Z"
+      "date": "2026-11-03T11:00:00.000Z"
     },
     {
-      "key": "Boys Varsity Tennis vs Donegal High School|2027-04-02T20:00:00.000Z",
-      "firstSeenAt": "2026-10-16T16:43:23.344Z",
-      "title": "Boys Varsity Tennis vs Donegal High School",
-      "source": "PM",
-      "date": "2027-04-02T20:00:00.000Z"
+      "key": "Men's Rugby Practice|2026-11-03T21:00:00.000Z",
+      "firstSeenAt": "2026-10-17T00:31:05.266Z",
+      "title": "Men's Rugby Practice",
+      "source": "MU",
+      "date": "2026-11-03T21:00:00.000Z"
     },
     {
-      "key": "Trunk or Treat at John Herr's Village Market|2026-10-24T22:30:00.000Z",
-      "firstSeenAt": "2026-10-16T14:53:36.478Z",
-      "title": "Trunk or Treat at John Herr's Village Market",
-      "source": "Other",
-      "date": "2026-10-24T22:30:00.000Z"
+      "key": "Weekly Practice|2026-11-03T22:00:00.000Z",
+      "firstSeenAt": "2026-10-17T00:31:05.266Z",
+      "title": "Weekly Practice",
+      "source": "MU",
+      "date": "2026-11-03T22:00:00.000Z"
+    },
+    {
+      "key": "SGA Advocacy Tabling|2026-11-03T22:00:00.000Z",
+      "firstSeenAt": "2026-10-17T00:31:05.266Z",
+      "title": "SGA Advocacy Tabling",
+      "source": "MU",
+      "date": "2026-11-03T22:00:00.000Z"
+    },
+    {
+      "key": "Weekly Run|2026-11-03T23:00:00.000Z",
+      "firstSeenAt": "2026-10-17T00:31:05.266Z",
+      "title": "Weekly Run",
+      "source": "MU",
+      "date": "2026-11-03T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 17
 }

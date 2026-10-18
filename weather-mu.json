@@ -1,27 +1,27 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Sunday, October 18, 2026 at 08:07 AM (Corman, Funk, Stamper, Student Meteorologists)",
+    "issued": "Sunday, October 18, 2026 at 03:31 PM (Bellenoit, Zwolinski, Student Meteorologists)",
     "periods": [
-      {
-        "period": "Today",
-        "text": "Sunny and cool. High: 58-62"
-      },
       {
         "period": "Tonight",
         "text": "Clear and cold with a widespread frost. Low: 32-36"
       },
       {
-        "period": "Monday",
+        "period": "Tomorrow",
         "text": "Mostly sunny and milder. High: 62-66"
       },
       {
-        "period": "Monday Night",
+        "period": "Tomorrow Night",
         "text": "Mainly clear and comfortably cool. Low: 40-44"
       },
       {
         "period": "Tuesday",
         "text": "Sunny and pleasant. High: 66-70"
+      },
+      {
+        "period": "Wednesday",
+        "text": "Sunny and seasonable. High: 62-66"
       }
     ]
   },
@@ -128,6 +128,17 @@
   },
   "observations": [
     {
+      "time": "16:00",
+      "temp": "61",
+      "dewpoint": "23",
+      "rh": "23",
+      "windDir": "ENE",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "15:00",
       "temp": "61",
       "dewpoint": "27",
@@ -178,17 +189,6 @@
       "rh": "42",
       "windDir": "E",
       "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "10:00",
-      "temp": "49",
-      "dewpoint": "33",
-      "rh": "54",
-      "windDir": "SSW",
-      "windSpeed": "3",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
@@ -433,5 +433,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-18T19:10:33.835Z"
+  "updated": "2026-10-18T20:38:45.474Z"
 }

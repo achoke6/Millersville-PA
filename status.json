@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-18T22:32:16.854Z",
+  "generatedAt": "2026-10-18T23:12:54.406Z",
   "totalEvents": 1931,
   "withDescription": 825,
   "withImage": 222,
@@ -150,13 +150,13 @@
       "Campus Life": 3
     },
     "stalePast": 16,
-    "lastSyncAt": "2026-10-18T22:28:01.926Z"
+    "lastSyncAt": "2026-10-18T23:09:03.289Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-10-18T22:32:07.346Z"
+    "checkedAt": "2026-10-18T23:12:46.554Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -235,6 +235,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Wednesday Night Dinner|2026-11-04T23:00:00.000Z",
+      "firstSeenAt": "2026-10-18T23:12:54.402Z",
+      "title": "Wednesday Night Dinner",
+      "source": "MU",
+      "date": "2026-11-04T23:00:00.000Z"
+    },
+    {
       "key": "FLAW|2026-11-13T00:00:00.000Z",
       "firstSeenAt": "2026-10-18T08:28:26.248Z",
       "title": "FLAW",
@@ -296,14 +303,7 @@
       "title": "Men's Rugby Practice",
       "source": "MU",
       "date": "2026-11-04T21:30:00.000Z"
-    },
-    {
-      "key": "General Meetings|2026-11-04T22:00:00.000Z",
-      "firstSeenAt": "2026-10-18T00:11:02.012Z",
-      "title": "General Meetings",
-      "source": "MU",
-      "date": "2026-11-04T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

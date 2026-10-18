@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-10-17T22:19:38.447Z",
-  "totalEvents": 1931,
+  "generatedAt": "2026-10-18T00:07:49.654Z",
+  "totalEvents": 1930,
   "withDescription": 825,
   "withImage": 221,
   "familyFriendly": 64,
-  "eventsToday": 27,
+  "eventsToday": 26,
   "sources": {
     "muAthletics": 323,
-    "muCalendar": 176,
+    "muCalendar": 177,
     "artsmu": 5,
     "campsAlumni": 15,
-    "muGetInvolved": 525,
+    "muGetInvolved": 524,
     "pennManor": 621,
     "borough": 57,
     "vfw": 6,
-    "phantomPower": 13,
+    "phantomPower": 12,
     "community": 14,
     "manor": 39,
     "raneyCellars": 5,
@@ -55,7 +55,7 @@
       "latest": "2026-11-22T21:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-10-17T23:00:00.000Z",
+      "earliest": "2026-10-19T00:00:00.000Z",
       "latest": "2026-12-09T01:00:00.000Z"
     },
     "community": {
@@ -150,13 +150,13 @@
       "Campus Life": 3
     },
     "stalePast": 16,
-    "lastSyncAt": "2026-10-17T22:16:38.888Z"
+    "lastSyncAt": "2026-10-18T00:04:38.660Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-10-17T22:19:29.209Z"
+    "checkedAt": "2026-10-18T00:07:38.012Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -186,7 +186,7 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 69,
+        "value": 68,
         "min": 21,
         "skipped": false
       },
@@ -235,75 +235,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Millersville University Field Hockey at #5 West Chester|2026-09-17T20:00:00.000Z",
-      "firstSeenAt": "2026-10-17T21:14:05.895Z",
-      "title": "Millersville University Field Hockey at #5 West Chester",
+      "key": "Breast-a-Ville|2026-10-07T10:30:00",
+      "firstSeenAt": "2026-10-18T00:07:49.650Z",
+      "title": "Breast-a-Ville",
       "source": "MU",
-      "date": "2026-09-17T20:00:00.000Z"
+      "date": "2026-10-07T10:30:00"
     },
     {
-      "key": "12 Stones|2026-11-09T00:00:00.000Z",
-      "firstSeenAt": "2026-10-17T12:31:08.433Z",
-      "title": "12 Stones",
-      "source": "Other",
-      "date": "2026-11-09T00:00:00.000Z"
-    },
-    {
-      "key": "Creative Writers Guild general meeting|2026-10-06T18:00:00",
-      "firstSeenAt": "2026-10-17T00:31:05.266Z",
+      "key": "Creative Writers Guild general meeting|2026-11-03T23:00:00.000Z",
+      "firstSeenAt": "2026-10-18T00:07:49.650Z",
       "title": "Creative Writers Guild general meeting",
       "source": "MU",
-      "date": "2026-10-06T18:00:00"
+      "date": "2026-11-03T23:00:00.000Z"
     },
     {
-      "key": "YDSA General Meeting|2026-10-06T18:30:00",
-      "firstSeenAt": "2026-10-17T00:31:05.266Z",
-      "title": "YDSA General Meeting",
+      "key": "Men's Volleyball Club Practice|2026-11-04T00:00:00.000Z",
+      "firstSeenAt": "2026-10-18T00:07:49.650Z",
+      "title": "Men's Volleyball Club Practice",
       "source": "MU",
-      "date": "2026-10-06T18:30:00"
+      "date": "2026-11-04T00:00:00.000Z"
     },
     {
-      "key": "RUF Bible Study|2026-10-06T19:00:00",
-      "firstSeenAt": "2026-10-17T00:31:05.266Z",
-      "title": "RUF Bible Study",
+      "key": "Ice Hockey Club (D3) Practice|2026-11-04T02:00:00.000Z",
+      "firstSeenAt": "2026-10-18T00:07:49.650Z",
+      "title": "Ice Hockey Club (D3) Practice",
       "source": "MU",
-      "date": "2026-10-06T19:00:00"
+      "date": "2026-11-04T02:00:00.000Z"
     },
     {
-      "key": "Letters of Love|2026-10-06T19:00:00",
-      "firstSeenAt": "2026-10-17T00:31:05.266Z",
-      "title": "Letters of Love",
-      "source": "MU",
-      "date": "2026-10-06T19:00:00"
-    },
-    {
-      "key": "JDogs Community Service|2026-10-16T01:30:00.000Z",
-      "firstSeenAt": "2026-10-17T00:31:05.266Z",
-      "title": "JDogs Community Service",
-      "source": "MU",
-      "date": "2026-10-16T01:30:00.000Z"
-    },
-    {
-      "key": "Men's Ice Hockey Practice (D2)|2026-11-03T11:00:00.000Z",
-      "firstSeenAt": "2026-10-17T00:31:05.266Z",
+      "key": "Men's Ice Hockey Practice (D2)|2026-11-04T11:00:00.000Z",
+      "firstSeenAt": "2026-10-18T00:07:49.650Z",
       "title": "Men's Ice Hockey Practice (D2)",
       "source": "MU",
-      "date": "2026-11-03T11:00:00.000Z"
+      "date": "2026-11-04T11:00:00.000Z"
     },
     {
-      "key": "Men's Rugby Practice|2026-11-03T21:00:00.000Z",
-      "firstSeenAt": "2026-10-17T00:31:05.266Z",
+      "key": "Osburn Bible Study|2026-11-04T17:00:00.000Z",
+      "firstSeenAt": "2026-10-18T00:07:49.650Z",
+      "title": "Osburn Bible Study",
+      "source": "MU",
+      "date": "2026-11-04T17:00:00.000Z"
+    },
+    {
+      "key": "Tell School of Music Recital Hour|2026-11-04T20:00:00.000Z",
+      "firstSeenAt": "2026-10-18T00:07:49.650Z",
+      "title": "Tell School of Music Recital Hour",
+      "source": "MU",
+      "date": "2026-11-04T20:00:00.000Z"
+    },
+    {
+      "key": "Men's Rugby Practice|2026-11-04T21:30:00.000Z",
+      "firstSeenAt": "2026-10-18T00:07:49.650Z",
       "title": "Men's Rugby Practice",
       "source": "MU",
-      "date": "2026-11-03T21:00:00.000Z"
+      "date": "2026-11-04T21:30:00.000Z"
     },
     {
-      "key": "Weekly Practice|2026-11-03T22:00:00.000Z",
-      "firstSeenAt": "2026-10-17T00:31:05.266Z",
-      "title": "Weekly Practice",
+      "key": "General Meetings|2026-11-04T22:00:00.000Z",
+      "firstSeenAt": "2026-10-18T00:07:49.650Z",
+      "title": "General Meetings",
       "source": "MU",
-      "date": "2026-11-03T22:00:00.000Z"
+      "date": "2026-11-04T22:00:00.000Z"
+    },
+    {
+      "key": "Fencing Guild Practice|2026-11-04T22:00:00.000Z",
+      "firstSeenAt": "2026-10-18T00:07:49.650Z",
+      "title": "Fencing Guild Practice",
+      "source": "MU",
+      "date": "2026-11-04T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 11
 }

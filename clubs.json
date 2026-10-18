@@ -308,7 +308,6 @@
     "categories": [
       "Educational Program",
       "Social",
-      "Homecoming ",
       "Tabling"
     ],
     "shortName": "CHEP",
@@ -425,9 +424,9 @@
   },
   {
     "name": "Club Tennis",
-    "category": "Fundraiser",
+    "category": "Competition",
     "categories": [
-      "Fundraiser"
+      "Competition"
     ],
     "shortName": "",
     "id": ""
@@ -1598,10 +1597,9 @@
   },
   {
     "name": "Student Government Association",
-    "category": "Social",
+    "category": "Tabling",
     "categories": [
-      "Social",
-      "Homecoming "
+      "Tabling"
     ],
     "shortName": "SGA",
     "id": ""
@@ -1797,8 +1795,10 @@
   },
   {
     "name": "University College",
-    "category": "",
-    "categories": [],
+    "category": "Lecture or Speaker",
+    "categories": [
+      "Lecture or Speaker"
+    ],
     "shortName": "",
     "id": ""
   },

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-19T18:44:25.015Z",
+  "generatedAt": "2026-10-19T18:56:16.571Z",
   "totalEvents": 1929,
   "withDescription": 823,
   "withImage": 224,
@@ -150,13 +150,13 @@
       "Campus Life": 4
     },
     "stalePast": 16,
-    "lastSyncAt": "2026-10-19T18:40:12.644Z"
+    "lastSyncAt": "2026-10-19T18:52:40.395Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-10-19T18:44:16.305Z"
+    "checkedAt": "2026-10-19T18:56:09.857Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -236,24 +236,17 @@
   "recentlyAdded": [
     {
       "key": "ECHO Fall Into Reading|2026-10-24T14:00:00.000Z",
-      "firstSeenAt": "2026-10-19T18:44:24.987Z",
+      "firstSeenAt": "2026-10-19T18:56:16.567Z",
       "title": "ECHO Fall Into Reading",
       "source": "MU",
       "date": "2026-10-24T14:00:00.000Z"
     },
     {
       "key": "Penn Manor Mini-THON Trunk or Treat|2026-10-29T22:00:00.000Z",
-      "firstSeenAt": "2026-10-19T18:44:24.987Z",
+      "firstSeenAt": "2026-10-19T18:56:16.567Z",
       "title": "Penn Manor Mini-THON Trunk or Treat",
       "source": "Other",
       "date": "2026-10-29T22:00:00.000Z"
-    },
-    {
-      "key": "Nu-Metal Values - OZZFEST REHASH|2026-11-15T01:00:00.000Z",
-      "firstSeenAt": "2026-10-19T18:44:24.987Z",
-      "title": "Nu-Metal Values - OZZFEST REHASH",
-      "source": "Other",
-      "date": "2026-11-15T01:00:00.000Z"
     },
     {
       "key": "Millersville University Football vs #11 Slippery Rock|2026-09-19T16:00:00.000Z",
@@ -303,7 +296,14 @@
       "title": "Millersville University Field Hockey at Shippensburg",
       "source": "MU",
       "date": "2026-09-30T20:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Field Hockey at Kutztown|2026-10-07T23:00:00.000Z",
+      "firstSeenAt": "2026-10-19T15:50:20.491Z",
+      "title": "Millersville University Field Hockey at Kutztown",
+      "source": "MU",
+      "date": "2026-10-07T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 3
+  "addedLastRun": 2
 }

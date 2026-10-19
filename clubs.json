@@ -424,9 +424,9 @@
   },
   {
     "name": "Club Tennis",
-    "category": "Competition",
+    "category": "Sporting",
     "categories": [
-      "Competition"
+      "Sporting"
     ],
     "shortName": "",
     "id": ""
@@ -888,9 +888,9 @@
   },
   {
     "name": "Ice Hockey Club (D3)",
-    "category": "Homecoming ",
+    "category": "Sporting",
     "categories": [
-      "Homecoming "
+      "Sporting"
     ],
     "shortName": "",
     "id": ""
@@ -1608,12 +1608,12 @@
   },
   {
     "name": "Student PSEA at Millersville University",
-    "category": "Lecture or Speaker",
+    "category": "Academic",
     "categories": [
-      "Lecture or Speaker"
+      "Academic"
     ],
     "shortName": "Student PSEA",
-    "id": ""
+    "id": "spsea"
   },
   {
     "name": "Student Services Business Office",
@@ -1900,10 +1900,12 @@
   },
   {
     "name": "Women's Rugby Club",
-    "category": "",
-    "categories": [],
+    "category": "Sports and Leisure",
+    "categories": [
+      "Sports and Leisure"
+    ],
     "shortName": "",
-    "id": ""
+    "id": "wrugby"
   },
   {
     "name": "Women's Soccer",

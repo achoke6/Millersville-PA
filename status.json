@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-10-18T23:12:54.406Z",
-  "totalEvents": 1931,
-  "withDescription": 825,
-  "withImage": 222,
-  "familyFriendly": 64,
+  "generatedAt": "2026-10-19T01:01:47.792Z",
+  "totalEvents": 1926,
+  "withDescription": 822,
+  "withImage": 221,
+  "familyFriendly": 63,
   "eventsToday": 14,
   "sources": {
     "muAthletics": 323,
-    "muCalendar": 177,
+    "muCalendar": 175,
     "artsmu": 5,
-    "campsAlumni": 15,
+    "campsAlumni": 14,
     "muGetInvolved": 524,
-    "pennManor": 621,
-    "borough": 57,
+    "pennManor": 620,
+    "borough": 56,
     "vfw": 6,
     "phantomPower": 13,
     "community": 14,
@@ -35,7 +35,7 @@
       "latest": "2027-03-06T19:30:00.000Z"
     },
     "campsAlumni": {
-      "earliest": "2026-07-20T13:00:00.000Z",
+      "earliest": "2026-07-23T22:00:00.000Z",
       "latest": "2027-04-03T14:00:00.000Z"
     },
     "muGetInvolved": {
@@ -43,11 +43,11 @@
       "latest": "2027-04-29T11:30:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-07-20T23:00:00.000Z",
+      "earliest": "2026-08-03T23:00:00.000Z",
       "latest": "2027-10-11T22:30:00.000Z"
     },
     "borough": {
-      "earliest": "2026-07-20T23:00:00.000Z",
+      "earliest": "2026-07-23T22:30:00.000Z",
       "latest": "2026-12-25T12:00:00.000Z"
     },
     "vfw": {
@@ -150,13 +150,13 @@
       "Campus Life": 3
     },
     "stalePast": 16,
-    "lastSyncAt": "2026-10-18T23:09:03.289Z"
+    "lastSyncAt": "2026-10-19T00:58:17.885Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-10-18T23:12:46.554Z"
+    "checkedAt": "2026-10-19T01:01:30.581Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -186,7 +186,7 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 68,
+        "value": 67,
         "min": 21,
         "skipped": false
       },
@@ -207,7 +207,7 @@
       {
         "key": "pennManorGeneral.count",
         "ok": true,
-        "value": 103,
+        "value": 102,
         "min": 10,
         "skipped": false
       },
@@ -235,75 +235,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Wednesday Night Dinner|2026-11-04T23:00:00.000Z",
-      "firstSeenAt": "2026-10-18T23:12:54.402Z",
-      "title": "Wednesday Night Dinner",
+      "key": "Real Talk, Real Skills: Owning Your Time|2026-10-08T12:00:00",
+      "firstSeenAt": "2026-10-19T01:01:47.789Z",
+      "title": "Real Talk, Real Skills: Owning Your Time",
       "source": "MU",
-      "date": "2026-11-04T23:00:00.000Z"
+      "date": "2026-10-08T12:00:00"
     },
     {
-      "key": "FLAW|2026-11-13T00:00:00.000Z",
-      "firstSeenAt": "2026-10-18T08:28:26.248Z",
-      "title": "FLAW",
-      "source": "Other",
-      "date": "2026-11-13T00:00:00.000Z"
-    },
-    {
-      "key": "Breast-a-Ville|2026-10-07T10:30:00",
-      "firstSeenAt": "2026-10-18T00:11:02.012Z",
-      "title": "Breast-a-Ville",
+      "key": "Mock Trial Club Meeting|2026-11-04T22:00:00.000Z",
+      "firstSeenAt": "2026-10-19T01:01:47.789Z",
+      "title": "Mock Trial Club Meeting",
       "source": "MU",
-      "date": "2026-10-07T10:30:00"
+      "date": "2026-11-04T22:00:00.000Z"
     },
     {
-      "key": "Creative Writers Guild general meeting|2026-11-03T23:00:00.000Z",
-      "firstSeenAt": "2026-10-18T00:11:02.012Z",
-      "title": "Creative Writers Guild general meeting",
+      "key": "Moose Ultimate Practice|2026-11-05T00:00:00.000Z",
+      "firstSeenAt": "2026-10-19T01:01:47.789Z",
+      "title": "Moose Ultimate Practice",
       "source": "MU",
-      "date": "2026-11-03T23:00:00.000Z"
+      "date": "2026-11-05T00:00:00.000Z"
     },
     {
-      "key": "Men's Volleyball Club Practice|2026-11-04T00:00:00.000Z",
-      "firstSeenAt": "2026-10-18T00:11:02.012Z",
-      "title": "Men's Volleyball Club Practice",
+      "key": "Real Talk, Real Skills|2026-11-05T17:00:00.000Z",
+      "firstSeenAt": "2026-10-19T01:01:47.789Z",
+      "title": "Real Talk, Real Skills",
       "source": "MU",
-      "date": "2026-11-04T00:00:00.000Z"
+      "date": "2026-11-05T17:00:00.000Z"
     },
     {
-      "key": "Ice Hockey Club (D3) Practice|2026-11-04T02:00:00.000Z",
-      "firstSeenAt": "2026-10-18T00:11:02.012Z",
-      "title": "Ice Hockey Club (D3) Practice",
-      "source": "MU",
-      "date": "2026-11-04T02:00:00.000Z"
-    },
-    {
-      "key": "Men's Ice Hockey Practice (D2)|2026-11-04T11:00:00.000Z",
-      "firstSeenAt": "2026-10-18T00:11:02.012Z",
-      "title": "Men's Ice Hockey Practice (D2)",
-      "source": "MU",
-      "date": "2026-11-04T11:00:00.000Z"
-    },
-    {
-      "key": "Osburn Bible Study|2026-11-04T17:00:00.000Z",
-      "firstSeenAt": "2026-10-18T00:11:02.012Z",
-      "title": "Osburn Bible Study",
-      "source": "MU",
-      "date": "2026-11-04T17:00:00.000Z"
-    },
-    {
-      "key": "Tell School of Music Recital Hour|2026-11-04T20:00:00.000Z",
-      "firstSeenAt": "2026-10-18T00:11:02.012Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2026-11-04T20:00:00.000Z"
-    },
-    {
-      "key": "Men's Rugby Practice|2026-11-04T21:30:00.000Z",
-      "firstSeenAt": "2026-10-18T00:11:02.012Z",
+      "key": "Men's Rugby Practice|2026-11-05T21:00:00.000Z",
+      "firstSeenAt": "2026-10-19T01:01:47.789Z",
       "title": "Men's Rugby Practice",
       "source": "MU",
-      "date": "2026-11-04T21:30:00.000Z"
+      "date": "2026-11-05T21:00:00.000Z"
+    },
+    {
+      "key": "Slip n' Score Meeting|2026-11-05T22:00:00.000Z",
+      "firstSeenAt": "2026-10-19T01:01:47.789Z",
+      "title": "Slip n' Score Meeting",
+      "source": "MU",
+      "date": "2026-11-05T22:00:00.000Z"
+    },
+    {
+      "key": "SGA Weekly Meeting|2026-11-06T00:00:00.000Z",
+      "firstSeenAt": "2026-10-19T01:01:47.789Z",
+      "title": "SGA Weekly Meeting",
+      "source": "MU",
+      "date": "2026-11-06T00:00:00.000Z"
+    },
+    {
+      "key": "Men's Volleyball Club Practice|2026-11-06T00:00:00.000Z",
+      "firstSeenAt": "2026-10-19T01:01:47.789Z",
+      "title": "Men's Volleyball Club Practice",
+      "source": "MU",
+      "date": "2026-11-06T00:00:00.000Z"
+    },
+    {
+      "key": "Moose Ultimate Practice|2026-11-06T00:00:00.000Z",
+      "firstSeenAt": "2026-10-19T01:01:47.789Z",
+      "title": "Moose Ultimate Practice",
+      "source": "MU",
+      "date": "2026-11-06T00:00:00.000Z"
+    },
+    {
+      "key": "Club Tennis Practice|2026-11-06T00:00:00.000Z",
+      "firstSeenAt": "2026-10-19T01:01:47.789Z",
+      "title": "Club Tennis Practice",
+      "source": "MU",
+      "date": "2026-11-06T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 12
 }

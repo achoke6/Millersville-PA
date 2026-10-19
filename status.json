@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-19T19:05:16.728Z",
+  "generatedAt": "2026-10-19T19:23:13.843Z",
   "totalEvents": 1929,
   "withDescription": 823,
   "withImage": 224,
@@ -150,13 +150,13 @@
       "Campus Life": 4
     },
     "stalePast": 16,
-    "lastSyncAt": "2026-10-19T19:01:05.499Z"
+    "lastSyncAt": "2026-10-19T19:19:32.077Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-10-19T19:05:11.223Z"
+    "checkedAt": "2026-10-19T19:23:04.816Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -221,8 +221,8 @@
         "key": "muHudl.pairRatio",
         "ok": true,
         "matched": 57,
-        "inWindow": 60,
-        "value": 0.95,
+        "inWindow": 61,
+        "value": 0.93,
         "min": 0.5
       },
       {
@@ -305,5 +305,5 @@
       "date": "2026-09-30T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 0
 }

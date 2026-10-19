@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-10-19T18:02:34.356Z",
-  "totalEvents": 1927,
-  "withDescription": 821,
+  "generatedAt": "2026-10-19T18:44:25.015Z",
+  "totalEvents": 1929,
+  "withDescription": 823,
   "withImage": 224,
-  "familyFriendly": 60,
+  "familyFriendly": 61,
   "eventsToday": 25,
   "sources": {
     "muAthletics": 323,
     "muCalendar": 177,
     "artsmu": 5,
     "campsAlumni": 12,
-    "muGetInvolved": 525,
+    "muGetInvolved": 526,
     "pennManor": 620,
     "borough": 56,
     "vfw": 5,
@@ -131,9 +131,9 @@
   },
   "sports": {
     "total": 841,
-    "scored": 166,
+    "scored": 167,
     "wins": 80,
-    "losses": 74,
+    "losses": 75,
     "ties": 12
   },
   "registrations": {
@@ -150,13 +150,13 @@
       "Campus Life": 4
     },
     "stalePast": 16,
-    "lastSyncAt": "2026-10-19T17:58:44.672Z"
+    "lastSyncAt": "2026-10-19T18:40:12.644Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-10-19T18:02:28.246Z"
+    "checkedAt": "2026-10-19T18:44:16.305Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -235,6 +235,27 @@
   },
   "recentlyAdded": [
     {
+      "key": "ECHO Fall Into Reading|2026-10-24T14:00:00.000Z",
+      "firstSeenAt": "2026-10-19T18:44:24.987Z",
+      "title": "ECHO Fall Into Reading",
+      "source": "MU",
+      "date": "2026-10-24T14:00:00.000Z"
+    },
+    {
+      "key": "Penn Manor Mini-THON Trunk or Treat|2026-10-29T22:00:00.000Z",
+      "firstSeenAt": "2026-10-19T18:44:24.987Z",
+      "title": "Penn Manor Mini-THON Trunk or Treat",
+      "source": "Other",
+      "date": "2026-10-29T22:00:00.000Z"
+    },
+    {
+      "key": "Nu-Metal Values - OZZFEST REHASH|2026-11-15T01:00:00.000Z",
+      "firstSeenAt": "2026-10-19T18:44:24.987Z",
+      "title": "Nu-Metal Values - OZZFEST REHASH",
+      "source": "Other",
+      "date": "2026-11-15T01:00:00.000Z"
+    },
+    {
       "key": "Millersville University Football vs #11 Slippery Rock|2026-09-19T16:00:00.000Z",
       "firstSeenAt": "2026-10-19T17:39:46.455Z",
       "title": "Millersville University Football vs #11 Slippery Rock",
@@ -282,28 +303,7 @@
       "title": "Millersville University Field Hockey at Shippensburg",
       "source": "MU",
       "date": "2026-09-30T20:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Field Hockey at Kutztown|2026-10-07T23:00:00.000Z",
-      "firstSeenAt": "2026-10-19T15:50:20.491Z",
-      "title": "Millersville University Field Hockey at Kutztown",
-      "source": "MU",
-      "date": "2026-10-07T23:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Field Hockey at Indiana (PA)|2026-10-11T16:00:00.000Z",
-      "firstSeenAt": "2026-10-19T15:50:20.491Z",
-      "title": "Millersville University Field Hockey at Indiana (PA)",
-      "source": "MU",
-      "date": "2026-10-11T16:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Field Hockey vs Shippensburg|2026-10-21T22:00:00.000Z",
-      "firstSeenAt": "2026-10-19T15:50:20.491Z",
-      "title": "Millersville University Field Hockey vs Shippensburg",
-      "source": "MU",
-      "date": "2026-10-21T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 3
 }

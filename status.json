@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-10-19T14:47:14.225Z",
-  "totalEvents": 1929,
-  "withDescription": 823,
+  "generatedAt": "2026-10-19T15:50:20.493Z",
+  "totalEvents": 1927,
+  "withDescription": 821,
   "withImage": 223,
-  "familyFriendly": 63,
+  "familyFriendly": 60,
   "eventsToday": 24,
   "sources": {
     "muAthletics": 323,
     "muCalendar": 177,
     "artsmu": 5,
-    "campsAlumni": 14,
+    "campsAlumni": 12,
     "muGetInvolved": 525,
     "pennManor": 620,
     "borough": 56,
@@ -36,7 +36,7 @@
     },
     "campsAlumni": {
       "earliest": "2026-07-23T22:00:00.000Z",
-      "latest": "2027-04-03T14:00:00.000Z"
+      "latest": "2027-08-20T23:30:00.000Z"
     },
     "muGetInvolved": {
       "earliest": "2026-08-16T00:00:00.000Z",
@@ -89,8 +89,8 @@
       "daysSinceMoved": 51
     },
     "campsAlumni": {
-      "newest": "2027-04-03",
-      "daysSinceMoved": 73
+      "newest": "2027-08-20",
+      "daysSinceMoved": 0
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
@@ -131,8 +131,8 @@
   },
   "sports": {
     "total": 841,
-    "scored": 165,
-    "wins": 79,
+    "scored": 166,
+    "wins": 80,
     "losses": 74,
     "ties": 12
   },
@@ -150,13 +150,13 @@
       "Campus Life": 4
     },
     "stalePast": 16,
-    "lastSyncAt": "2026-10-19T14:43:35.342Z"
+    "lastSyncAt": "2026-10-19T15:45:48.284Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-10-19T14:47:10.013Z"
+    "checkedAt": "2026-10-19T15:50:11.782Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -235,75 +235,75 @@
   },
   "recentlyAdded": [
     {
+      "key": "Millersville University Field Hockey vs Indiana (PA)|2026-09-19T22:00:00.000Z",
+      "firstSeenAt": "2026-10-19T15:50:20.491Z",
+      "title": "Millersville University Field Hockey vs Indiana (PA)",
+      "source": "MU",
+      "date": "2026-09-19T22:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Field Hockey vs Kutztown|2026-09-23T22:00:00.000Z",
+      "firstSeenAt": "2026-10-19T15:50:20.491Z",
+      "title": "Millersville University Field Hockey vs Kutztown",
+      "source": "MU",
+      "date": "2026-09-23T22:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Field Hockey at Shippensburg|2026-09-30T20:00:00.000Z",
+      "firstSeenAt": "2026-10-19T15:50:20.491Z",
+      "title": "Millersville University Field Hockey at Shippensburg",
+      "source": "MU",
+      "date": "2026-09-30T20:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Field Hockey at Kutztown|2026-10-07T23:00:00.000Z",
+      "firstSeenAt": "2026-10-19T15:50:20.491Z",
+      "title": "Millersville University Field Hockey at Kutztown",
+      "source": "MU",
+      "date": "2026-10-07T23:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Field Hockey at Indiana (PA)|2026-10-11T16:00:00.000Z",
+      "firstSeenAt": "2026-10-19T15:50:20.491Z",
+      "title": "Millersville University Field Hockey at Indiana (PA)",
+      "source": "MU",
+      "date": "2026-10-11T16:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Field Hockey vs Shippensburg|2026-10-21T22:00:00.000Z",
+      "firstSeenAt": "2026-10-19T15:50:20.491Z",
+      "title": "Millersville University Field Hockey vs Shippensburg",
+      "source": "MU",
+      "date": "2026-10-21T22:00:00.000Z"
+    },
+    {
+      "key": "Veteran's Day Event: Salute to Service|2026-11-12T17:00:00.000Z",
+      "firstSeenAt": "2026-10-19T15:50:20.491Z",
+      "title": "Veteran's Day Event: Salute to Service",
+      "source": "MU",
+      "date": "2026-11-12T17:00:00.000Z"
+    },
+    {
+      "key": "Marauder Mixers|2026-11-12T22:30:00.000Z",
+      "firstSeenAt": "2026-10-19T15:50:20.491Z",
+      "title": "Marauder Mixers",
+      "source": "MU",
+      "date": "2026-11-12T22:30:00.000Z"
+    },
+    {
+      "key": "Annual Candle Lighting Ceremony|2027-08-20T23:30:00.000Z",
+      "firstSeenAt": "2026-10-19T15:50:20.491Z",
+      "title": "Annual Candle Lighting Ceremony",
+      "source": "MU",
+      "date": "2027-08-20T23:30:00.000Z"
+    },
+    {
       "key": "MMA 101 Classes|2026-10-19T23:00:00.000Z",
       "firstSeenAt": "2026-10-19T14:47:14.222Z",
       "title": "MMA 101 Classes",
       "source": "MU",
       "date": "2026-10-19T23:00:00.000Z"
-    },
-    {
-      "key": "MMA Club, Open Mats|2026-10-20T23:00:00.000Z",
-      "firstSeenAt": "2026-10-19T14:47:14.222Z",
-      "title": "MMA Club, Open Mats",
-      "source": "MU",
-      "date": "2026-10-20T23:00:00.000Z"
-    },
-    {
-      "key": "MMA 101 Classes|2026-10-21T23:00:00.000Z",
-      "firstSeenAt": "2026-10-19T14:47:14.222Z",
-      "title": "MMA 101 Classes",
-      "source": "MU",
-      "date": "2026-10-21T23:00:00.000Z"
-    },
-    {
-      "key": "MMA Club, Open Mats|2026-10-22T23:00:00.000Z",
-      "firstSeenAt": "2026-10-19T14:47:14.222Z",
-      "title": "MMA Club, Open Mats",
-      "source": "MU",
-      "date": "2026-10-22T23:00:00.000Z"
-    },
-    {
-      "key": "West Chester Tournament|2026-10-24T13:00:00.000Z",
-      "firstSeenAt": "2026-10-19T14:47:14.222Z",
-      "title": "West Chester Tournament",
-      "source": "MU",
-      "date": "2026-10-24T13:00:00.000Z"
-    },
-    {
-      "key": "MMA 101 Classes|2026-10-26T23:00:00.000Z",
-      "firstSeenAt": "2026-10-19T14:47:14.222Z",
-      "title": "MMA 101 Classes",
-      "source": "MU",
-      "date": "2026-10-26T23:00:00.000Z"
-    },
-    {
-      "key": "MMA Club, Open Mats|2026-10-27T23:00:00.000Z",
-      "firstSeenAt": "2026-10-19T14:47:14.222Z",
-      "title": "MMA Club, Open Mats",
-      "source": "MU",
-      "date": "2026-10-27T23:00:00.000Z"
-    },
-    {
-      "key": "MMA 101 Classes|2026-10-28T23:00:00.000Z",
-      "firstSeenAt": "2026-10-19T14:47:14.222Z",
-      "title": "MMA 101 Classes",
-      "source": "MU",
-      "date": "2026-10-28T23:00:00.000Z"
-    },
-    {
-      "key": "MMA Club, Open Mats|2026-10-29T23:00:00.000Z",
-      "firstSeenAt": "2026-10-19T14:47:14.222Z",
-      "title": "MMA Club, Open Mats",
-      "source": "MU",
-      "date": "2026-10-29T23:00:00.000Z"
-    },
-    {
-      "key": "Real Talk, Real Skills: Filter Your Feed|2026-11-05T12:00:00",
-      "firstSeenAt": "2026-10-19T14:47:14.222Z",
-      "title": "Real Talk, Real Skills: Filter Your Feed",
-      "source": "MU",
-      "date": "2026-11-05T12:00:00"
     }
   ],
-  "addedLastRun": 12
+  "addedLastRun": 9
 }

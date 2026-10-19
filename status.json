@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-10-19T04:54:59.691Z",
-  "totalEvents": 1926,
+  "generatedAt": "2026-10-19T06:17:16.180Z",
+  "totalEvents": 1927,
   "withDescription": 821,
-  "withImage": 221,
+  "withImage": 222,
   "familyFriendly": 63,
   "eventsToday": 23,
   "sources": {
@@ -14,7 +14,7 @@
     "pennManor": 620,
     "borough": 56,
     "vfw": 6,
-    "phantomPower": 13,
+    "phantomPower": 14,
     "community": 14,
     "manor": 39,
     "raneyCellars": 5,
@@ -131,8 +131,8 @@
   },
   "sports": {
     "total": 841,
-    "scored": 166,
-    "wins": 80,
+    "scored": 165,
+    "wins": 79,
     "losses": 74,
     "ties": 12
   },
@@ -150,13 +150,13 @@
       "Campus Life": 3
     },
     "stalePast": 16,
-    "lastSyncAt": "2026-10-19T04:51:40.967Z"
+    "lastSyncAt": "2026-10-19T06:12:48.456Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-10-19T04:54:50.194Z"
+    "checkedAt": "2026-10-19T06:17:08.654Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -235,6 +235,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "DIVORCED DAD ROCK - The Soundtrack of Separation|2026-11-14T01:00:00.000Z",
+      "firstSeenAt": "2026-10-19T06:17:16.177Z",
+      "title": "DIVORCED DAD ROCK - The Soundtrack of Separation",
+      "source": "Other",
+      "date": "2026-11-14T01:00:00.000Z"
+    },
+    {
       "key": "Millersville University Men's Golf at Vulcan Invitational|2026-09-03T04:00:00.000Z",
       "firstSeenAt": "2026-10-19T04:54:59.688Z",
       "title": "Millersville University Men's Golf at Vulcan Invitational",
@@ -296,14 +303,7 @@
       "title": "Men's Rugby Practice",
       "source": "MU",
       "date": "2026-11-05T21:00:00.000Z"
-    },
-    {
-      "key": "Slip n' Score Meeting|2026-11-05T22:00:00.000Z",
-      "firstSeenAt": "2026-10-19T01:01:47.789Z",
-      "title": "Slip n' Score Meeting",
-      "source": "MU",
-      "date": "2026-11-05T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 4
+  "addedLastRun": 1
 }

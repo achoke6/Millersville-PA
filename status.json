@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-19T19:23:13.843Z",
-  "totalEvents": 1929,
+  "generatedAt": "2026-10-19T21:12:37.518Z",
+  "totalEvents": 1931,
   "withDescription": 823,
   "withImage": 224,
   "familyFriendly": 62,
@@ -11,7 +11,7 @@
     "artsmu": 5,
     "campsAlumni": 12,
     "muGetInvolved": 526,
-    "pennManor": 620,
+    "pennManor": 622,
     "borough": 56,
     "vfw": 5,
     "phantomPower": 14,
@@ -150,13 +150,13 @@
       "Campus Life": 4
     },
     "stalePast": 16,
-    "lastSyncAt": "2026-10-19T19:19:32.077Z"
+    "lastSyncAt": "2026-10-19T21:08:34.889Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-10-19T19:23:04.816Z"
+    "checkedAt": "2026-10-19T21:12:30.904Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -207,7 +207,7 @@
       {
         "key": "pennManorGeneral.count",
         "ok": true,
-        "value": 102,
+        "value": 104,
         "min": 10,
         "skipped": false
       },
@@ -234,6 +234,27 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Breast cancer awareness Discussion|2026-10-22T22:00:00.000Z",
+      "firstSeenAt": "2026-10-19T21:12:37.515Z",
+      "title": "Breast cancer awareness Discussion",
+      "source": "MU",
+      "date": "2026-10-22T22:00:00.000Z"
+    },
+    {
+      "key": "HB Red Ribbon: Wear Red. Wear red to show you are “RED-Y” to stand up for healthy choices.|2026-10-26T04:00:00.000Z",
+      "firstSeenAt": "2026-10-19T21:12:37.515Z",
+      "title": "HB Red Ribbon: Wear Red. Wear red to show you are “RED-Y” to stand up for healthy choices.",
+      "source": "PM",
+      "date": "2026-10-26T04:00:00.000Z"
+    },
+    {
+      "key": "HB Red Ribbon: Staying Healthy is no sweat. Wear sweatpants and/or sweatshirts.|2026-10-27T04:00:00.000Z",
+      "firstSeenAt": "2026-10-19T21:12:37.515Z",
+      "title": "HB Red Ribbon: Staying Healthy is no sweat. Wear sweatpants and/or sweatshirts.",
+      "source": "PM",
+      "date": "2026-10-27T04:00:00.000Z"
+    },
     {
       "key": "Nu-Metal Values - OZZFEST REHASH|2026-11-15T01:00:00.000Z",
       "firstSeenAt": "2026-10-19T19:05:16.723Z",
@@ -282,28 +303,7 @@
       "title": "Men's Rugby Vs George Mason",
       "source": "MU",
       "date": "2026-10-24T20:30:00.000Z"
-    },
-    {
-      "key": "Millersville University Field Hockey vs Indiana (PA)|2026-09-19T22:00:00.000Z",
-      "firstSeenAt": "2026-10-19T15:50:20.491Z",
-      "title": "Millersville University Field Hockey vs Indiana (PA)",
-      "source": "MU",
-      "date": "2026-09-19T22:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Field Hockey vs Kutztown|2026-09-23T22:00:00.000Z",
-      "firstSeenAt": "2026-10-19T15:50:20.491Z",
-      "title": "Millersville University Field Hockey vs Kutztown",
-      "source": "MU",
-      "date": "2026-09-23T22:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Field Hockey at Shippensburg|2026-09-30T20:00:00.000Z",
-      "firstSeenAt": "2026-10-19T15:50:20.491Z",
-      "title": "Millersville University Field Hockey at Shippensburg",
-      "source": "MU",
-      "date": "2026-09-30T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 3
 }

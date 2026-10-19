@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-19T15:50:20.493Z",
+  "generatedAt": "2026-10-19T17:39:46.459Z",
   "totalEvents": 1927,
   "withDescription": 821,
-  "withImage": 223,
+  "withImage": 224,
   "familyFriendly": 60,
-  "eventsToday": 24,
+  "eventsToday": 25,
   "sources": {
     "muAthletics": 323,
     "muCalendar": 177,
@@ -150,13 +150,13 @@
       "Campus Life": 4
     },
     "stalePast": 16,
-    "lastSyncAt": "2026-10-19T15:45:48.284Z"
+    "lastSyncAt": "2026-10-19T17:35:45.972Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-10-19T15:50:11.782Z"
+    "checkedAt": "2026-10-19T17:39:34.160Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -235,6 +235,34 @@
   },
   "recentlyAdded": [
     {
+      "key": "Millersville University Football vs #11 Slippery Rock|2026-09-19T16:00:00.000Z",
+      "firstSeenAt": "2026-10-19T17:39:46.455Z",
+      "title": "Millersville University Football vs #11 Slippery Rock",
+      "source": "MU",
+      "date": "2026-09-19T16:00:00.000Z"
+    },
+    {
+      "key": "Home Show (Regional Effort)|2026-10-19T16:00:00.000Z",
+      "firstSeenAt": "2026-10-19T17:39:46.455Z",
+      "title": "Home Show (Regional Effort)",
+      "source": "MU",
+      "date": "2026-10-19T16:00:00.000Z"
+    },
+    {
+      "key": "Home Show (Regional Effort)|2026-10-23T20:00:00.000Z",
+      "firstSeenAt": "2026-10-19T17:39:46.455Z",
+      "title": "Home Show (Regional Effort)",
+      "source": "MU",
+      "date": "2026-10-23T20:00:00.000Z"
+    },
+    {
+      "key": "Men's Rugby Vs George Mason|2026-10-24T20:30:00.000Z",
+      "firstSeenAt": "2026-10-19T17:39:46.455Z",
+      "title": "Men's Rugby Vs George Mason",
+      "source": "MU",
+      "date": "2026-10-24T20:30:00.000Z"
+    },
+    {
       "key": "Millersville University Field Hockey vs Indiana (PA)|2026-09-19T22:00:00.000Z",
       "firstSeenAt": "2026-10-19T15:50:20.491Z",
       "title": "Millersville University Field Hockey vs Indiana (PA)",
@@ -275,35 +303,7 @@
       "title": "Millersville University Field Hockey vs Shippensburg",
       "source": "MU",
       "date": "2026-10-21T22:00:00.000Z"
-    },
-    {
-      "key": "Veteran's Day Event: Salute to Service|2026-11-12T17:00:00.000Z",
-      "firstSeenAt": "2026-10-19T15:50:20.491Z",
-      "title": "Veteran's Day Event: Salute to Service",
-      "source": "MU",
-      "date": "2026-11-12T17:00:00.000Z"
-    },
-    {
-      "key": "Marauder Mixers|2026-11-12T22:30:00.000Z",
-      "firstSeenAt": "2026-10-19T15:50:20.491Z",
-      "title": "Marauder Mixers",
-      "source": "MU",
-      "date": "2026-11-12T22:30:00.000Z"
-    },
-    {
-      "key": "Annual Candle Lighting Ceremony|2027-08-20T23:30:00.000Z",
-      "firstSeenAt": "2026-10-19T15:50:20.491Z",
-      "title": "Annual Candle Lighting Ceremony",
-      "source": "MU",
-      "date": "2027-08-20T23:30:00.000Z"
-    },
-    {
-      "key": "MMA 101 Classes|2026-10-19T23:00:00.000Z",
-      "firstSeenAt": "2026-10-19T14:47:14.222Z",
-      "title": "MMA 101 Classes",
-      "source": "MU",
-      "date": "2026-10-19T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 9
+  "addedLastRun": 4
 }

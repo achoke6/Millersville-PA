@@ -1,10 +1,10 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Monday, October 19, 2026 at 07:59 AM (Harris, Leopold, Muller, Student Meteorologists)",
+    "issued": "Monday, October 19, 2026 at 12:01 PM (Nornhold, Neidlinger, Student Meteorologists)",
     "periods": [
       {
-        "period": "Today",
+        "period": "This afternoon",
         "text": "Sunny and milder. High: 65-69"
       },
       {
@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "13:00",
+      "temp": "64",
+      "dewpoint": "37",
+      "rh": "37",
+      "windDir": "NNW",
+      "windSpeed": "8",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "62",
+      "dewpoint": "37",
+      "rh": "41",
+      "windDir": "N",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "11:00",
       "temp": "54",
       "dewpoint": "41",
@@ -169,28 +191,6 @@
       "windSpeed": "1",
       "precip": "0.00",
       "visibility": "8.6",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "35",
-      "dewpoint": "35",
-      "rh": "97",
-      "windDir": "NE",
-      "windSpeed": "0",
-      "precip": "0.00",
-      "visibility": "10.1",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "35",
-      "dewpoint": "35",
-      "rh": "96",
-      "windDir": "NNW",
-      "windSpeed": "0",
-      "precip": "0.00",
-      "visibility": "10.8",
       "condition": "None"
     }
   ],
@@ -444,5 +444,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-19T15:45:50.880Z"
+  "updated": "2026-10-19T17:35:47.789Z"
 }

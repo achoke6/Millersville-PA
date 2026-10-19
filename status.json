@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-19T03:06:13.012Z",
-  "totalEvents": 1923,
-  "withDescription": 822,
+  "generatedAt": "2026-10-19T04:54:59.691Z",
+  "totalEvents": 1926,
+  "withDescription": 821,
   "withImage": 221,
   "familyFriendly": 63,
-  "eventsToday": 14,
+  "eventsToday": 23,
   "sources": {
-    "muAthletics": 320,
+    "muAthletics": 323,
     "muCalendar": 175,
     "artsmu": 5,
     "campsAlumni": 14,
@@ -78,59 +78,59 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 47
+      "daysSinceMoved": 48
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 58
+      "daysSinceMoved": 59
     },
     "artsmu": {
       "newest": "2027-03-06",
-      "daysSinceMoved": 50
+      "daysSinceMoved": 51
     },
     "campsAlumni": {
       "newest": "2027-04-03",
-      "daysSinceMoved": 72
+      "daysSinceMoved": 73
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 45
+      "daysSinceMoved": 46
     },
     "pennManor": {
       "newest": "2027-10-11",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 82
+      "daysSinceMoved": 83
     },
     "vfw": {
       "newest": "2026-11-22",
-      "daysSinceMoved": 12
+      "daysSinceMoved": 13
     },
     "phantomPower": {
       "newest": "2026-12-09",
-      "daysSinceMoved": 9
+      "daysSinceMoved": 10
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 83
+      "daysSinceMoved": 84
     },
     "manor": {
       "newest": "2027-10-06",
-      "daysSinceMoved": 12
+      "daysSinceMoved": 13
     },
     "raneyCellars": {
       "newest": "2026-10-09",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 14
     },
     "theBackyard": {
       "newest": "2027-04-28",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 11
     }
   },
   "sports": {
-    "total": 838,
+    "total": 841,
     "scored": 166,
     "wins": 80,
     "losses": 74,
@@ -150,13 +150,13 @@
       "Campus Life": 3
     },
     "stalePast": 16,
-    "lastSyncAt": "2026-10-19T03:02:30.316Z"
+    "lastSyncAt": "2026-10-19T04:51:40.967Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-10-19T03:06:04.046Z"
+    "checkedAt": "2026-10-19T04:54:50.194Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -200,7 +200,7 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 320,
+        "value": 323,
         "min": 100,
         "skipped": false
       },
@@ -234,6 +234,34 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Millersville University Men's Golf at Vulcan Invitational|2026-09-03T04:00:00.000Z",
+      "firstSeenAt": "2026-10-19T04:54:59.688Z",
+      "title": "Millersville University Men's Golf at Vulcan Invitational",
+      "source": "MU",
+      "date": "2026-09-03T04:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Men's Golf at Dickinson Invitational|2026-09-06T04:00:00.000Z",
+      "firstSeenAt": "2026-10-19T04:54:59.688Z",
+      "title": "Millersville University Men's Golf at Dickinson Invitational",
+      "source": "MU",
+      "date": "2026-09-06T04:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Men's Golf at Husky Fall Invitational|2026-09-12T04:00:00.000Z",
+      "firstSeenAt": "2026-10-19T04:54:59.688Z",
+      "title": "Millersville University Men's Golf at Husky Fall Invitational",
+      "source": "MU",
+      "date": "2026-09-12T04:00:00.000Z"
+    },
+    {
+      "key": "Domestic Violence Awareness Month: Docu and Panel Discussion|2026-10-22T17:30:00",
+      "firstSeenAt": "2026-10-19T04:54:59.688Z",
+      "title": "Domestic Violence Awareness Month: Docu and Panel Discussion",
+      "source": "MU",
+      "date": "2026-10-22T17:30:00"
+    },
     {
       "key": "Real Talk, Real Skills: Owning Your Time|2026-10-08T12:00:00",
       "firstSeenAt": "2026-10-19T01:01:47.789Z",
@@ -275,35 +303,7 @@
       "title": "Slip n' Score Meeting",
       "source": "MU",
       "date": "2026-11-05T22:00:00.000Z"
-    },
-    {
-      "key": "SGA Weekly Meeting|2026-11-06T00:00:00.000Z",
-      "firstSeenAt": "2026-10-19T01:01:47.789Z",
-      "title": "SGA Weekly Meeting",
-      "source": "MU",
-      "date": "2026-11-06T00:00:00.000Z"
-    },
-    {
-      "key": "Men's Volleyball Club Practice|2026-11-06T00:00:00.000Z",
-      "firstSeenAt": "2026-10-19T01:01:47.789Z",
-      "title": "Men's Volleyball Club Practice",
-      "source": "MU",
-      "date": "2026-11-06T00:00:00.000Z"
-    },
-    {
-      "key": "Moose Ultimate Practice|2026-11-06T00:00:00.000Z",
-      "firstSeenAt": "2026-10-19T01:01:47.789Z",
-      "title": "Moose Ultimate Practice",
-      "source": "MU",
-      "date": "2026-11-06T00:00:00.000Z"
-    },
-    {
-      "key": "Club Tennis Practice|2026-11-06T00:00:00.000Z",
-      "firstSeenAt": "2026-10-19T01:01:47.789Z",
-      "title": "Club Tennis Practice",
-      "source": "MU",
-      "date": "2026-11-06T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 4
 }

@@ -4717,6 +4717,17 @@ async function runScraper() {
     // Game precedent in §2): app.js Clubs chip/filters, lib/eventMatch.js and
     // events.ics.php both key on Clubs/Orgs. Audience is ALWAYS explicit
     // (sheet default mu-only) so the fail-open default never touches these.
+    // (2026-10-19) EXCEPT audience 'townie-only' (sheet Audience = Townies):
+    // app.js isEventFromHiddenSource() hides Clubs/Orgs-tagged rows from
+    // townies (GetInvolved is townie-hidden by affiliation) and its audience
+    // bypass covers 'public' only -- so a townie-only row with the GetInvolved
+    // tag set was hidden from Marauders by audience AND from townies by source:
+    // visible to NOBODY (ECHO Fall Into Reading, sheet row 29). Those rows now
+    // emit ['MU','Campus Life','Public Event'] -- the same shape as an MU
+    // Calendar Public Event row, which townies see by default and which feeds
+    // mu-public in app.js / eventMatch.js / events.ics.php already (tag parity,
+    // zero matcher edits). 'Both' (public) rows keep the GetInvolved set: the
+    // townie public bypass already shows them, and Marauders want the Clubs chip.
     // _overrideCreated lets the override-collision pass absorb the feed copy if
     // GetInvolved/MU Calendar later publishes the same event (same ET day +
     // exact/prefix title) — the curated row wins, as for Borough creates.
@@ -4763,6 +4774,14 @@ async function runScraper() {
                 const clTicketed = /etix\.com\/ticket\/p\/|eventbrite\.com\/e\//i.test(clLink);
                 const clPid = (clLink.match(/etix\.com\/ticket\/p\/(\d+)/i) || [])[1] || '';
                 const clPrice = ev.price || (clTicketed ? (CAMPUS_LIFE_TICKET_PRICES[clPid] || 'Tickets Available') : 'Free');
+                // Tag set by audience (2026-10-19, see header): townie-only rows take
+                // the MU Calendar Public Event shape so the townie Clubs/Orgs source
+                // gate never sees them; everything else keeps the GetInvolved set.
+                const clAudience = ev.audience || 'mu-only';
+                const clTownieLane = clAudience === 'townie-only';
+                const clTags = clTownieLane
+                    ? ['MU', 'Campus Life', 'Public Event']
+                    : ['MU', 'Campus Life', 'GetInvolved', 'Clubs/Orgs'];
 
                 events.push({
                     _overrideCreated: true,
@@ -4770,12 +4789,12 @@ async function runScraper() {
                     date: evDate.toISOString(),
                     endTime: ev.endTime ? new Date(ev.endTime).toISOString() : '',
                     location: ev.location || 'Student Memorial Center',
-                    tags: ['MU', 'Campus Life', 'GetInvolved', 'Clubs/Orgs'],
+                    tags: clTags,
                     price: clPrice,
                     ticketLink: clTicketed ? clLink : '',
                     sourceLink: clTicketed ? '' : (clLink || 'https://getinvolved.millersville.edu/events'),
                     gameResult: '', gameScore: '', streamLink: '', isLive: false,
-                    audience: ev.audience || 'mu-only',
+                    audience: clAudience,
                     ...(ev.description ? { description: ev.description } : {}),
                     ...(ev.kidFriendly === true ? { kidFriendly: true } : {}),
                     // Registration pass-through (2026-09-28). A dated workshop whose
@@ -4788,7 +4807,7 @@ async function runScraper() {
                     ...eventPerkFields(ev)   // Benefits column (2026-10-13): 🍕 / 🎁 / 📚 badges + free-food lens
                 });
                 added++;
-                console.log(`  ➕ Campus Life (IG) CREATED: "${ev.title}" (${ev.date})${ev.registrationDeadline ? (regOpen ? ' [signup, closes ' + ev.registrationDeadline + ']' : ' [registration closed — event kept]') : ''}`);
+                console.log(`  ➕ Campus Life (IG) CREATED: "${ev.title}" (${ev.date})${clTownieLane ? ' [townie-only → Public Event tag set]' : ''}${ev.registrationDeadline ? (regOpen ? ' [signup, closes ' + ev.registrationDeadline + ']' : ' [registration closed — event kept]') : ''}`);
             }
 
             if (added > 0 || stale > 0 || skipped > 0) {
@@ -5763,9 +5782,13 @@ async function runScraper() {
         // via sync-candidates + the override consumers, and this allowlist was the
         // SECOND layer that silently discarded it (the first — the consumers dropping
         // it — was fixed the same day). Curated true always wins over keyword guessing.
+        // 2026-10-19: Campus Life added — the §6b-2 lane (09-24) post-dated the 09-03
+        // widening, so its Family X only survived when the description happened to
+        // carry family keywords (ECHO Fall Into Reading did; the next row may not).
         if ((tags.includes('Summer Camp') || tags.includes('Athletic Camp') ||
              tags.includes('Summer Fun Series') || tags.includes('Alumni Event') ||
-             tags.includes('Community') || tags.includes('Borough') || tags.includes('Other')) && e.kidFriendly === true) {
+             tags.includes('Community') || tags.includes('Borough') || tags.includes('Other') ||
+             tags.includes('Campus Life')) && e.kidFriendly === true) {
             famCount++;
             return;
         }

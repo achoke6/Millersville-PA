@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-10-19T18:56:16.571Z",
+  "generatedAt": "2026-10-20T13:43:31.606Z",
   "totalEvents": 1929,
-  "withDescription": 823,
-  "withImage": 224,
-  "familyFriendly": 61,
-  "eventsToday": 25,
+  "withDescription": 822,
+  "withImage": 222,
+  "familyFriendly": 62,
+  "eventsToday": 26,
   "sources": {
     "muAthletics": 323,
     "muCalendar": 177,
     "artsmu": 5,
     "campsAlumni": 12,
-    "muGetInvolved": 526,
-    "pennManor": 620,
+    "muGetInvolved": 525,
+    "pennManor": 623,
     "borough": 56,
     "vfw": 5,
-    "phantomPower": 14,
-    "community": 14,
+    "phantomPower": 13,
+    "community": 15,
     "manor": 39,
     "raneyCellars": 5,
     "theBackyard": 25,
@@ -55,7 +55,7 @@
       "latest": "2026-11-22T21:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-10-19T00:00:00.000Z",
+      "earliest": "2026-10-23T00:00:00.000Z",
       "latest": "2026-12-09T01:00:00.000Z"
     },
     "community": {
@@ -78,67 +78,67 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 48
+      "daysSinceMoved": 49
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 59
+      "daysSinceMoved": 60
     },
     "artsmu": {
       "newest": "2027-03-06",
-      "daysSinceMoved": 51
+      "daysSinceMoved": 52
     },
     "campsAlumni": {
       "newest": "2027-08-20",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "muGetInvolved": {
       "newest": "2027-04-29",
-      "daysSinceMoved": 46
+      "daysSinceMoved": 47
     },
     "pennManor": {
       "newest": "2027-10-11",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 9
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 83
+      "daysSinceMoved": 84
     },
     "vfw": {
       "newest": "2026-11-22",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 14
     },
     "phantomPower": {
       "newest": "2026-12-09",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 11
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 84
+      "daysSinceMoved": 85
     },
     "manor": {
       "newest": "2027-10-06",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 14
     },
     "raneyCellars": {
       "newest": "2026-10-09",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 15
     },
     "theBackyard": {
       "newest": "2027-04-28",
-      "daysSinceMoved": 11
+      "daysSinceMoved": 12
     }
   },
   "sports": {
-    "total": 841,
+    "total": 842,
     "scored": 167,
     "wins": 80,
     "losses": 75,
     "ties": 12
   },
   "registrations": {
-    "open": 5,
-    "next2Weeks": 2,
+    "open": 3,
+    "next2Weeks": 0,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
@@ -150,13 +150,13 @@
       "Campus Life": 4
     },
     "stalePast": 16,
-    "lastSyncAt": "2026-10-19T18:52:40.395Z"
+    "lastSyncAt": "2026-10-20T13:39:45.497Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
-    "approved": 4,
-    "checkedAt": "2026-10-19T18:56:09.857Z"
+    "approved": 5,
+    "checkedAt": "2026-10-20T13:43:22.533Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -165,35 +165,35 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 357,
+        "value": 356,
         "min": 45,
         "skipped": false
       },
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 219,
+        "value": 218,
         "min": 60,
         "skipped": false
       },
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 228,
+        "value": 227,
         "min": 30,
         "skipped": false
       },
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 67,
+        "value": 66,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 518,
+        "value": 519,
         "min": 150,
         "skipped": false
       },
@@ -207,7 +207,7 @@
       {
         "key": "pennManorGeneral.count",
         "ok": true,
-        "value": 102,
+        "value": 104,
         "min": 10,
         "skipped": false
       },
@@ -221,8 +221,8 @@
         "key": "muHudl.pairRatio",
         "ok": true,
         "matched": 57,
-        "inWindow": 60,
-        "value": 0.95,
+        "inWindow": 61,
+        "value": 0.93,
         "min": 0.5
       },
       {
@@ -235,75 +235,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "ECHO Fall Into Reading|2026-10-24T14:00:00.000Z",
-      "firstSeenAt": "2026-10-19T18:56:16.567Z",
-      "title": "ECHO Fall Into Reading",
-      "source": "MU",
-      "date": "2026-10-24T14:00:00.000Z"
+      "key": "St. Philip the Apostle Christmas Craft Show|2026-12-05T13:00:00.000Z",
+      "firstSeenAt": "2026-10-20T13:43:31.604Z",
+      "title": "St. Philip the Apostle Christmas Craft Show",
+      "source": "Community",
+      "date": "2026-12-05T13:00:00.000Z"
     },
     {
-      "key": "Penn Manor Mini-THON Trunk or Treat|2026-10-29T22:00:00.000Z",
-      "firstSeenAt": "2026-10-19T18:56:16.567Z",
-      "title": "Penn Manor Mini-THON Trunk or Treat",
-      "source": "Other",
-      "date": "2026-10-29T22:00:00.000Z"
+      "key": "Domestic Violence Awareness Month: Documentary Showing and Panel Discussion|2026-10-22T17:30:00",
+      "firstSeenAt": "2026-10-20T04:49:55.073Z",
+      "title": "Domestic Violence Awareness Month: Documentary Showing and Panel Discussion",
+      "source": "MU",
+      "date": "2026-10-22T17:30:00"
     },
     {
-      "key": "Millersville University Football vs #11 Slippery Rock|2026-09-19T16:00:00.000Z",
-      "firstSeenAt": "2026-10-19T17:39:46.455Z",
-      "title": "Millersville University Football vs #11 Slippery Rock",
+      "key": "Student Government Association (SGA) Weekly Meeting|2026-10-08T17:00:00",
+      "firstSeenAt": "2026-10-20T01:30:26.549Z",
+      "title": "Student Government Association (SGA) Weekly Meeting",
       "source": "MU",
-      "date": "2026-09-19T16:00:00.000Z"
+      "date": "2026-10-08T17:00:00"
     },
     {
-      "key": "Home Show (Regional Effort)|2026-10-19T16:00:00.000Z",
-      "firstSeenAt": "2026-10-19T17:39:46.455Z",
-      "title": "Home Show (Regional Effort)",
+      "key": "Big Chef THC \"No Sleep\" Release Show|2026-10-08T17:00:00",
+      "firstSeenAt": "2026-10-20T01:30:26.549Z",
+      "title": "Big Chef THC \"No Sleep\" Release Show",
       "source": "MU",
-      "date": "2026-10-19T16:00:00.000Z"
+      "date": "2026-10-08T17:00:00"
     },
     {
-      "key": "Home Show (Regional Effort)|2026-10-23T20:00:00.000Z",
-      "firstSeenAt": "2026-10-19T17:39:46.455Z",
-      "title": "Home Show (Regional Effort)",
+      "key": "Mock Trial Club Meeting|2026-11-04T22:00:00.000Z",
+      "firstSeenAt": "2026-10-20T01:30:26.549Z",
+      "title": "Mock Trial Club Meeting",
       "source": "MU",
-      "date": "2026-10-23T20:00:00.000Z"
+      "date": "2026-11-04T22:00:00.000Z"
     },
     {
-      "key": "Men's Rugby Vs George Mason|2026-10-24T20:30:00.000Z",
-      "firstSeenAt": "2026-10-19T17:39:46.455Z",
-      "title": "Men's Rugby Vs George Mason",
+      "key": "Board Game Club Weekly Meeting|2026-11-04T23:00:00.000Z",
+      "firstSeenAt": "2026-10-20T01:30:26.549Z",
+      "title": "Board Game Club Weekly Meeting",
       "source": "MU",
-      "date": "2026-10-24T20:30:00.000Z"
+      "date": "2026-11-04T23:00:00.000Z"
     },
     {
-      "key": "Millersville University Field Hockey vs Indiana (PA)|2026-09-19T22:00:00.000Z",
-      "firstSeenAt": "2026-10-19T15:50:20.491Z",
-      "title": "Millersville University Field Hockey vs Indiana (PA)",
+      "key": "Wednesday Night Dinner|2026-11-04T23:00:00.000Z",
+      "firstSeenAt": "2026-10-20T01:30:26.549Z",
+      "title": "Wednesday Night Dinner",
       "source": "MU",
-      "date": "2026-09-19T22:00:00.000Z"
+      "date": "2026-11-04T23:00:00.000Z"
     },
     {
-      "key": "Millersville University Field Hockey vs Kutztown|2026-09-23T22:00:00.000Z",
-      "firstSeenAt": "2026-10-19T15:50:20.491Z",
-      "title": "Millersville University Field Hockey vs Kutztown",
+      "key": "Moose Ultimate Practice|2026-11-05T00:00:00.000Z",
+      "firstSeenAt": "2026-10-20T01:30:26.549Z",
+      "title": "Moose Ultimate Practice",
       "source": "MU",
-      "date": "2026-09-23T22:00:00.000Z"
+      "date": "2026-11-05T00:00:00.000Z"
     },
     {
-      "key": "Millersville University Field Hockey at Shippensburg|2026-09-30T20:00:00.000Z",
-      "firstSeenAt": "2026-10-19T15:50:20.491Z",
-      "title": "Millersville University Field Hockey at Shippensburg",
+      "key": "Real Talk, Real Skills|2026-11-05T17:00:00.000Z",
+      "firstSeenAt": "2026-10-20T01:30:26.549Z",
+      "title": "Real Talk, Real Skills",
       "source": "MU",
-      "date": "2026-09-30T20:00:00.000Z"
+      "date": "2026-11-05T17:00:00.000Z"
     },
     {
-      "key": "Millersville University Field Hockey at Kutztown|2026-10-07T23:00:00.000Z",
-      "firstSeenAt": "2026-10-19T15:50:20.491Z",
-      "title": "Millersville University Field Hockey at Kutztown",
+      "key": "Men's Rugby Practice|2026-11-05T21:00:00.000Z",
+      "firstSeenAt": "2026-10-20T01:30:26.549Z",
+      "title": "Men's Rugby Practice",
       "source": "MU",
-      "date": "2026-10-07T23:00:00.000Z"
+      "date": "2026-11-05T21:00:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 1
 }

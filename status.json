@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-20T13:43:31.606Z",
+  "generatedAt": "2026-10-20T14:25:57.415Z",
   "totalEvents": 1929,
   "withDescription": 822,
   "withImage": 222,
@@ -143,20 +143,21 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 5,
+    "pendingFuture": 6,
     "pendingPast": 9,
     "pendingBySource": {
       "Youth Sports": 1,
-      "Campus Life": 4
+      "Campus Life": 4,
+      "Manor": 1
     },
     "stalePast": 16,
-    "lastSyncAt": "2026-10-20T13:39:45.497Z"
+    "lastSyncAt": "2026-10-20T14:22:14.108Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-20T13:43:22.533Z"
+    "checkedAt": "2026-10-20T14:25:48.161Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -305,5 +306,5 @@
       "date": "2026-11-05T21:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 0
 }

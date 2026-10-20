@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-10-20T16:58:01.481Z",
-  "totalEvents": 1934,
-  "withDescription": 828,
+  "generatedAt": "2026-10-20T18:47:48.907Z",
+  "totalEvents": 1937,
+  "withDescription": 830,
   "withImage": 222,
   "familyFriendly": 63,
-  "eventsToday": 26,
+  "eventsToday": 27,
   "sources": {
     "muAthletics": 323,
     "muCalendar": 178,
     "artsmu": 4,
     "campsAlumni": 12,
     "muGetInvolved": 530,
-    "pennManor": 624,
+    "pennManor": 625,
     "borough": 56,
     "vfw": 5,
     "phantomPower": 13,
@@ -130,15 +130,15 @@
     }
   },
   "sports": {
-    "total": 842,
+    "total": 843,
     "scored": 167,
     "wins": 80,
     "losses": 75,
     "ties": 12
   },
   "registrations": {
-    "open": 3,
-    "next2Weeks": 0,
+    "open": 5,
+    "next2Weeks": 2,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
@@ -150,13 +150,13 @@
       "Campus Life": 3
     },
     "stalePast": 17,
-    "lastSyncAt": "2026-10-20T16:53:40.225Z"
+    "lastSyncAt": "2026-10-20T18:43:30.963Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-20T16:57:51.870Z"
+    "checkedAt": "2026-10-20T18:47:38.505Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -193,7 +193,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 519,
+        "value": 520,
         "min": 150,
         "skipped": false
       },
@@ -235,6 +235,48 @@
   },
   "recentlyAdded": [
     {
+      "key": "Pickleball Club Practice|2026-10-20T22:00:00.000Z",
+      "firstSeenAt": "2026-10-20T18:47:48.903Z",
+      "title": "Pickleball Club Practice",
+      "source": "MU",
+      "date": "2026-10-20T22:00:00.000Z"
+    },
+    {
+      "key": "Intramural Basketball|2026-10-22T21:00:00.000Z",
+      "firstSeenAt": "2026-10-20T18:47:48.903Z",
+      "title": "Intramural Basketball",
+      "source": "Other",
+      "date": "2026-10-22T21:00:00.000Z"
+    },
+    {
+      "key": "Intramural Volleyball|2026-10-22T21:00:00.000Z",
+      "firstSeenAt": "2026-10-20T18:47:48.903Z",
+      "title": "Intramural Volleyball",
+      "source": "Other",
+      "date": "2026-10-22T21:00:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Soccer @ Trinity High School|2026-10-22T22:00:00.000Z",
+      "firstSeenAt": "2026-10-20T18:47:48.903Z",
+      "title": "Boys Varsity Soccer @ Trinity High School",
+      "source": "PM",
+      "date": "2026-10-22T22:00:00.000Z"
+    },
+    {
+      "key": "Boys JV Football vs Cedar Crest High School|2026-10-24T14:00:00.000Z",
+      "firstSeenAt": "2026-10-20T18:47:48.903Z",
+      "title": "Boys JV Football vs Cedar Crest High School",
+      "source": "PM",
+      "date": "2026-10-24T14:00:00.000Z"
+    },
+    {
+      "key": "The Annual Lori E. Souder Memorial Pride Field Hockey Game|2026-10-28T22:00:00.000Z",
+      "firstSeenAt": "2026-10-20T18:47:48.903Z",
+      "title": "The Annual Lori E. Souder Memorial Pride Field Hockey Game",
+      "source": "MU",
+      "date": "2026-10-28T22:00:00.000Z"
+    },
+    {
       "key": "FSL: Sigma Alpha Iota Karakke Night|2026-11-04T19:00:00",
       "firstSeenAt": "2026-10-20T16:58:01.477Z",
       "title": "FSL: Sigma Alpha Iota Karakke Night",
@@ -261,49 +303,7 @@
       "title": "Sharing Perspectives & Insights: Career Panel Discussion",
       "source": "MU",
       "date": "2027-04-08T16:30:00"
-    },
-    {
-      "key": "Fall 2027 Job & Internship Fair|2027-10-05T11:00:00",
-      "firstSeenAt": "2026-10-20T16:58:01.477Z",
-      "title": "Fall 2027 Job & Internship Fair",
-      "source": "MU",
-      "date": "2027-10-05T11:00:00"
-    },
-    {
-      "key": "Taco Tuesday and Social|2026-10-20T16:00:00.000Z",
-      "firstSeenAt": "2026-10-20T14:51:26.939Z",
-      "title": "Taco Tuesday and Social",
-      "source": "MU",
-      "date": "2026-10-20T16:00:00.000Z"
-    },
-    {
-      "key": "Letort Chorus Winter Performance @ EM Herr|2026-12-05T15:00:00.000Z",
-      "firstSeenAt": "2026-10-20T14:51:26.939Z",
-      "title": "Letort Chorus Winter Performance @ EM Herr",
-      "source": "PM",
-      "date": "2026-12-05T15:00:00.000Z"
-    },
-    {
-      "key": "St. Philip the Apostle Christmas Craft Show|2026-12-05T13:00:00.000Z",
-      "firstSeenAt": "2026-10-20T13:43:31.604Z",
-      "title": "St. Philip the Apostle Christmas Craft Show",
-      "source": "Community",
-      "date": "2026-12-05T13:00:00.000Z"
-    },
-    {
-      "key": "Domestic Violence Awareness Month: Documentary Showing and Panel Discussion|2026-10-22T17:30:00",
-      "firstSeenAt": "2026-10-20T04:49:55.073Z",
-      "title": "Domestic Violence Awareness Month: Documentary Showing and Panel Discussion",
-      "source": "MU",
-      "date": "2026-10-22T17:30:00"
-    },
-    {
-      "key": "Student Government Association (SGA) Weekly Meeting|2026-10-08T17:00:00",
-      "firstSeenAt": "2026-10-20T01:30:26.549Z",
-      "title": "Student Government Association (SGA) Weekly Meeting",
-      "source": "MU",
-      "date": "2026-10-08T17:00:00"
     }
   ],
-  "addedLastRun": 5
+  "addedLastRun": 6
 }

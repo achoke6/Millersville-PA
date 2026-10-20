@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-10-20T13:43:31.606Z",
-  "totalEvents": 1929,
-  "withDescription": 822,
+  "generatedAt": "2026-10-20T19:18:10.926Z",
+  "totalEvents": 1954,
+  "withDescription": 830,
   "withImage": 222,
-  "familyFriendly": 62,
-  "eventsToday": 26,
+  "familyFriendly": 63,
+  "eventsToday": 27,
   "sources": {
-    "muAthletics": 323,
-    "muCalendar": 177,
-    "artsmu": 5,
+    "muAthletics": 340,
+    "muCalendar": 178,
+    "artsmu": 4,
     "campsAlumni": 12,
-    "muGetInvolved": 525,
-    "pennManor": 623,
+    "muGetInvolved": 530,
+    "pennManor": 625,
     "borough": 56,
     "vfw": 5,
     "phantomPower": 13,
@@ -32,7 +32,7 @@
     },
     "artsmu": {
       "earliest": "2026-10-23T23:00:00.000Z",
-      "latest": "2027-03-06T19:30:00.000Z"
+      "latest": "2027-02-27T20:00:00.000Z"
     },
     "campsAlumni": {
       "earliest": "2026-07-23T22:00:00.000Z",
@@ -40,7 +40,7 @@
     },
     "muGetInvolved": {
       "earliest": "2026-08-16T00:00:00.000Z",
-      "latest": "2027-04-29T11:30:00.000Z"
+      "latest": "2027-10-05T11:00:00.000Z"
     },
     "pennManor": {
       "earliest": "2026-08-03T23:00:00.000Z",
@@ -85,16 +85,16 @@
       "daysSinceMoved": 60
     },
     "artsmu": {
-      "newest": "2027-03-06",
-      "daysSinceMoved": 52
+      "newest": "2027-02-27",
+      "daysSinceMoved": 0
     },
     "campsAlumni": {
       "newest": "2027-08-20",
       "daysSinceMoved": 1
     },
     "muGetInvolved": {
-      "newest": "2027-04-29",
-      "daysSinceMoved": 47
+      "newest": "2027-10-05",
+      "daysSinceMoved": 0
     },
     "pennManor": {
       "newest": "2027-10-11",
@@ -130,33 +130,33 @@
     }
   },
   "sports": {
-    "total": 842,
+    "total": 860,
     "scored": 167,
     "wins": 80,
     "losses": 75,
     "ties": 12
   },
   "registrations": {
-    "open": 3,
-    "next2Weeks": 0,
+    "open": 5,
+    "next2Weeks": 2,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 5,
+    "pendingFuture": 4,
     "pendingPast": 9,
     "pendingBySource": {
       "Youth Sports": 1,
-      "Campus Life": 4
+      "Campus Life": 3
     },
-    "stalePast": 16,
-    "lastSyncAt": "2026-10-20T13:39:45.497Z"
+    "stalePast": 17,
+    "lastSyncAt": "2026-10-20T19:13:55.013Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-20T13:43:22.533Z"
+    "checkedAt": "2026-10-20T19:18:00.460Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -193,21 +193,21 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 519,
+        "value": 520,
         "min": 150,
         "skipped": false
       },
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 323,
+        "value": 340,
         "min": 100,
         "skipped": false
       },
       {
         "key": "pennManorGeneral.count",
         "ok": true,
-        "value": 104,
+        "value": 105,
         "min": 10,
         "skipped": false
       },
@@ -235,75 +235,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "St. Philip the Apostle Christmas Craft Show|2026-12-05T13:00:00.000Z",
-      "firstSeenAt": "2026-10-20T13:43:31.604Z",
-      "title": "St. Philip the Apostle Christmas Craft Show",
-      "source": "Community",
-      "date": "2026-12-05T13:00:00.000Z"
+      "key": "Millersville University Women's Lacrosse vs Wilmington|2027-02-13T18:00:00.000Z",
+      "firstSeenAt": "2026-10-20T19:18:10.922Z",
+      "title": "Millersville University Women's Lacrosse vs Wilmington",
+      "source": "MU",
+      "date": "2027-02-13T18:00:00.000Z"
     },
     {
-      "key": "Domestic Violence Awareness Month: Documentary Showing and Panel Discussion|2026-10-22T17:30:00",
-      "firstSeenAt": "2026-10-20T04:49:55.073Z",
-      "title": "Domestic Violence Awareness Month: Documentary Showing and Panel Discussion",
+      "key": "Millersville University Women's Lacrosse vs Jefferson|2027-02-20T18:00:00.000Z",
+      "firstSeenAt": "2026-10-20T19:18:10.922Z",
+      "title": "Millersville University Women's Lacrosse vs Jefferson",
       "source": "MU",
-      "date": "2026-10-22T17:30:00"
+      "date": "2027-02-20T18:00:00.000Z"
     },
     {
-      "key": "Student Government Association (SGA) Weekly Meeting|2026-10-08T17:00:00",
-      "firstSeenAt": "2026-10-20T01:30:26.549Z",
-      "title": "Student Government Association (SGA) Weekly Meeting",
+      "key": "Millersville University Women's Lacrosse at Frostburg State|2027-02-24T18:00:00.000Z",
+      "firstSeenAt": "2026-10-20T19:18:10.922Z",
+      "title": "Millersville University Women's Lacrosse at Frostburg State",
       "source": "MU",
-      "date": "2026-10-08T17:00:00"
+      "date": "2027-02-24T18:00:00.000Z"
     },
     {
-      "key": "Big Chef THC \"No Sleep\" Release Show|2026-10-08T17:00:00",
-      "firstSeenAt": "2026-10-20T01:30:26.549Z",
-      "title": "Big Chef THC \"No Sleep\" Release Show",
+      "key": "Millersville University Women's Lacrosse at Lander|2027-03-06T00:00:00.000Z",
+      "firstSeenAt": "2026-10-20T19:18:10.922Z",
+      "title": "Millersville University Women's Lacrosse at Lander",
       "source": "MU",
-      "date": "2026-10-08T17:00:00"
+      "date": "2027-03-06T00:00:00.000Z"
     },
     {
-      "key": "Mock Trial Club Meeting|2026-11-04T22:00:00.000Z",
-      "firstSeenAt": "2026-10-20T01:30:26.549Z",
-      "title": "Mock Trial Club Meeting",
+      "key": "Millersville University Women's Lacrosse at Mount Olive|2027-03-09T00:00:00.000Z",
+      "firstSeenAt": "2026-10-20T19:18:10.922Z",
+      "title": "Millersville University Women's Lacrosse at Mount Olive",
       "source": "MU",
-      "date": "2026-11-04T22:00:00.000Z"
+      "date": "2027-03-09T00:00:00.000Z"
     },
     {
-      "key": "Board Game Club Weekly Meeting|2026-11-04T23:00:00.000Z",
-      "firstSeenAt": "2026-10-20T01:30:26.549Z",
-      "title": "Board Game Club Weekly Meeting",
+      "key": "Millersville University Women's Lacrosse vs Kutztown|2027-03-13T18:00:00.000Z",
+      "firstSeenAt": "2026-10-20T19:18:10.922Z",
+      "title": "Millersville University Women's Lacrosse vs Kutztown",
       "source": "MU",
-      "date": "2026-11-04T23:00:00.000Z"
+      "date": "2027-03-13T18:00:00.000Z"
     },
     {
-      "key": "Wednesday Night Dinner|2026-11-04T23:00:00.000Z",
-      "firstSeenAt": "2026-10-20T01:30:26.549Z",
-      "title": "Wednesday Night Dinner",
+      "key": "Millersville University Women's Lacrosse at Shepherd|2027-03-20T17:00:00.000Z",
+      "firstSeenAt": "2026-10-20T19:18:10.922Z",
+      "title": "Millersville University Women's Lacrosse at Shepherd",
       "source": "MU",
-      "date": "2026-11-04T23:00:00.000Z"
+      "date": "2027-03-20T17:00:00.000Z"
     },
     {
-      "key": "Moose Ultimate Practice|2026-11-05T00:00:00.000Z",
-      "firstSeenAt": "2026-10-20T01:30:26.549Z",
-      "title": "Moose Ultimate Practice",
+      "key": "Millersville University Women's Lacrosse at East Stroudsburg|2027-03-24T20:00:00.000Z",
+      "firstSeenAt": "2026-10-20T19:18:10.922Z",
+      "title": "Millersville University Women's Lacrosse at East Stroudsburg",
       "source": "MU",
-      "date": "2026-11-05T00:00:00.000Z"
+      "date": "2027-03-24T20:00:00.000Z"
     },
     {
-      "key": "Real Talk, Real Skills|2026-11-05T17:00:00.000Z",
-      "firstSeenAt": "2026-10-20T01:30:26.549Z",
-      "title": "Real Talk, Real Skills",
+      "key": "Millersville University Women's Lacrosse vs Bloomsburg|2027-03-27T17:00:00.000Z",
+      "firstSeenAt": "2026-10-20T19:18:10.922Z",
+      "title": "Millersville University Women's Lacrosse vs Bloomsburg",
       "source": "MU",
-      "date": "2026-11-05T17:00:00.000Z"
+      "date": "2027-03-27T17:00:00.000Z"
     },
     {
-      "key": "Men's Rugby Practice|2026-11-05T21:00:00.000Z",
-      "firstSeenAt": "2026-10-20T01:30:26.549Z",
-      "title": "Men's Rugby Practice",
+      "key": "Millersville University Women's Lacrosse vs West Chester|2027-03-31T20:00:00.000Z",
+      "firstSeenAt": "2026-10-20T19:18:10.922Z",
+      "title": "Millersville University Women's Lacrosse vs West Chester",
       "source": "MU",
-      "date": "2026-11-05T21:00:00.000Z"
+      "date": "2027-03-31T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 17
 }

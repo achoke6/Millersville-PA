@@ -1,11 +1,11 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Tuesday, October 20, 2026 at 08:03 AM (Guillaume, Johnson, Lowell, Student Meteorologists)",
+    "issued": "Tuesday, October 20, 2026 at 12:02 PM (Daugherty, Longo, Rooney, and Werley, Student Meteorologists)",
     "periods": [
       {
-        "period": "Today",
-        "text": "Sunny and pleasant. High: 68-72"
+        "period": "This afternoon",
+        "text": "Sunny and pleasant with a gentle breeze. High: 68-72"
       },
       {
         "period": "Tonight",
@@ -26,7 +26,7 @@
     ]
   },
   "sevenDay": {
-    "issued": "Tuesday, October 20, 2026 at 08:30 AM (Guillaume, Johnson, Lowell)",
+    "issued": "Tuesday, October 20, 2026 at 12:27 PM (Guillaume, Johnson, Lowell)",
     "days": [
       {
         "period": "Tuesday",
@@ -128,67 +128,67 @@
   },
   "observations": [
     {
-      "time": "09:00",
-      "temp": "54",
+      "time": "15:00",
+      "temp": "70",
+      "dewpoint": "40",
+      "rh": "34",
+      "windDir": "N",
+      "windSpeed": "8",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "14:00",
+      "temp": "69",
       "dewpoint": "41",
-      "rh": "62",
-      "windDir": "NW",
-      "windSpeed": "4",
+      "rh": "36",
+      "windDir": "N",
+      "windSpeed": "8",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
     },
     {
-      "time": "08:00",
-      "temp": "41",
-      "dewpoint": "39",
-      "rh": "91",
-      "windDir": "WNW",
-      "windSpeed": "1",
+      "time": "13:00",
+      "temp": "68",
+      "dewpoint": "40",
+      "rh": "37",
+      "windDir": "ENE",
+      "windSpeed": "5",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
     },
     {
-      "time": "07:00",
-      "temp": "44",
-      "dewpoint": "37",
-      "rh": "78",
-      "windDir": "NNW",
-      "windSpeed": "0",
+      "time": "12:00",
+      "temp": "66",
+      "dewpoint": "40",
+      "rh": "38",
+      "windDir": "ENE",
+      "windSpeed": "7",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
     },
     {
-      "time": "06:00",
-      "temp": "42",
-      "dewpoint": "38",
-      "rh": "88",
-      "windDir": "NW",
-      "windSpeed": "2",
+      "time": "11:00",
+      "temp": "64",
+      "dewpoint": "42",
+      "rh": "44",
+      "windDir": "ENE",
+      "windSpeed": "5",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
     },
     {
-      "time": "05:00",
-      "temp": "43",
-      "dewpoint": "38",
-      "rh": "85",
-      "windDir": "WSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "04:00",
-      "temp": "40",
-      "dewpoint": "38",
-      "rh": "96",
-      "windDir": "NW",
-      "windSpeed": "1",
+      "time": "10:00",
+      "temp": "60",
+      "dewpoint": "42",
+      "rh": "52",
+      "windDir": "N",
+      "windSpeed": "5",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
@@ -415,9 +415,9 @@
     "yearMinDate": "January 21"
   },
   "discussion": {
-    "headline": "big cooldown this weekend with first widespread frosts of season",
-    "dateLine": "11:30 a.m. Friday, October 16, 2026, Update",
-    "excerpt": "Following a partly sunny and pleasant Thursday with high temperatures in the mid-to-upper 60s, south-southwesterly winds of 10-20 mph will usher unseasonably warm and humid air back into the Lower Susquehanna Valley this afternoon. There should at least be a few hours of sunshine prior to the arrival of a line of heavy, gusty showers, and high temperatures should reach the mid 70s to low 80s from east-to-west across the region with dewpoints in the mid-to-upper 60s (see below …",
+    "headline": "dry, tranquil and beautiful autumn weather to last into next week",
+    "dateLine": "12:30 p.m. Tuesday, October 20, 2026",
+    "excerpt": "The first widespread frosts of the season occurred on Sunday and Monday mornings in Lancaster County. Sub-freezing temperatures were recorded in many outlying parts of northern MD and south-central PA each morning, and the growing season has officially ended. However, residents of the Lower Susquehanna Valley will be graced with an extended stretch of dry, tranquil and gorgeous autumn weather over the next 7-10 days. …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -425,6 +425,13 @@
     "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
   },
   "videos": [
+    {
+      "title": "Short Term Forecast 10/20/2026",
+      "videoId": "5d7awVSiWZM",
+      "url": "https://www.youtube.com/watch?v=5d7awVSiWZM",
+      "published": "2026-10-20T16:37:18+00:00",
+      "thumbnail": "https://i2.ytimg.com/vi/5d7awVSiWZM/hqdefault.jpg"
+    },
     {
       "title": "Short Term Forecast 10/19/2026",
       "videoId": "6NvBWv_vHd4",
@@ -445,15 +452,8 @@
       "url": "https://www.youtube.com/watch?v=l4QFlTY4tSQ",
       "published": "2026-10-16T13:11:39+00:00",
       "thumbnail": "https://i1.ytimg.com/vi/l4QFlTY4tSQ/hqdefault.jpg"
-    },
-    {
-      "title": "Medium Range Forecast 10/15/2026",
-      "videoId": "DRpWr5wELac",
-      "url": "https://www.youtube.com/watch?v=DRpWr5wELac",
-      "published": "2026-10-15T13:02:44+00:00",
-      "thumbnail": "https://i1.ytimg.com/vi/DRpWr5wELac/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-20T13:39:47.243Z"
+  "updated": "2026-10-20T19:13:57.060Z"
 }

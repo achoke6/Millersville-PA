@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-20T21:58:30.011Z",
-  "totalEvents": 1902,
-  "withDescription": 829,
+  "generatedAt": "2026-10-20T22:23:16.071Z",
+  "totalEvents": 1958,
+  "withDescription": 830,
   "withImage": 223,
-  "familyFriendly": 62,
+  "familyFriendly": 63,
   "eventsToday": 27,
   "sources": {
     "muAthletics": 343,
@@ -12,7 +12,7 @@
     "campsAlumni": 12,
     "muGetInvolved": 530,
     "pennManor": 626,
-    "borough": 0,
+    "borough": 56,
     "vfw": 5,
     "phantomPower": 13,
     "community": 15,
@@ -46,7 +46,10 @@
       "earliest": "2026-08-03T23:00:00.000Z",
       "latest": "2027-10-11T22:30:00.000Z"
     },
-    "borough": null,
+    "borough": {
+      "earliest": "2026-07-23T22:30:00.000Z",
+      "latest": "2026-12-25T12:00:00.000Z"
+    },
     "vfw": {
       "earliest": "2026-10-09T22:00:00.000Z",
       "latest": "2026-11-22T21:00:00.000Z"
@@ -97,7 +100,10 @@
       "newest": "2027-10-11",
       "daysSinceMoved": 9
     },
-    "borough": null,
+    "borough": {
+      "newest": "2026-12-25",
+      "daysSinceMoved": 84
+    },
     "vfw": {
       "newest": "2026-11-22",
       "daysSinceMoved": 14
@@ -144,18 +150,18 @@
       "Campus Life": 3
     },
     "stalePast": 17,
-    "lastSyncAt": "2026-10-20T21:54:34.915Z"
+    "lastSyncAt": "2026-10-20T22:17:39.507Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-20T21:58:20.857Z"
+    "checkedAt": "2026-10-20T22:22:57.520Z"
   },
   "sourceHealth": {
     "ok": false,
     "failing": [
-      "borough.horizonDays"
+      "manor.count"
     ],
     "checks": [
       {
@@ -181,8 +187,8 @@
       },
       {
         "key": "borough.horizonDays",
-        "ok": false,
-        "value": null,
+        "ok": true,
+        "value": 66,
         "min": 21,
         "skipped": false
       },
@@ -209,9 +215,10 @@
       },
       {
         "key": "manor.count",
-        "ok": true,
+        "ok": false,
         "value": 39,
-        "min": 10
+        "min": 10,
+        "carriedForward": 39
       },
       {
         "key": "muHudl.pairRatio",
@@ -231,75 +238,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Girls Varsity Soccer vs Eastern Lebanon County High School|2026-10-22T20:00:00.000Z",
-      "firstSeenAt": "2026-10-20T21:58:30.007Z",
-      "title": "Girls Varsity Soccer vs Eastern Lebanon County High School",
-      "source": "PM",
-      "date": "2026-10-22T20:00:00.000Z"
+      "key": "Zoning Hearing Board - Cancelled|2026-07-23T22:30:00.000Z",
+      "firstSeenAt": "2026-10-20T22:23:16.067Z",
+      "title": "Zoning Hearing Board - Cancelled",
+      "source": "Borough",
+      "date": "2026-07-23T22:30:00.000Z"
     },
     {
-      "key": "Condom Dash|2026-11-03T17:30:00.000Z",
-      "firstSeenAt": "2026-10-20T21:58:30.007Z",
-      "title": "Condom Dash",
-      "source": "MU",
-      "date": "2026-11-03T17:30:00.000Z"
+      "key": "Borough Council Meeting - Cancelled|2026-07-28T22:00:00.000Z",
+      "firstSeenAt": "2026-10-20T22:23:16.067Z",
+      "title": "Borough Council Meeting - Cancelled",
+      "source": "Borough",
+      "date": "2026-07-28T22:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Lacrosse vs First Round|2027-05-02T00:00:00.000Z",
-      "firstSeenAt": "2026-10-20T21:58:30.007Z",
-      "title": "Millersville University Women's Lacrosse vs First Round",
-      "source": "MU",
-      "date": "2027-05-02T00:00:00.000Z"
+      "key": "Park Commission - Cancelled|2026-08-03T22:00:00.000Z",
+      "firstSeenAt": "2026-10-20T22:23:16.067Z",
+      "title": "Park Commission - Cancelled",
+      "source": "Borough",
+      "date": "2026-08-03T22:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Lacrosse vs Semifinals|2027-05-07T00:00:00.000Z",
-      "firstSeenAt": "2026-10-20T21:58:30.007Z",
-      "title": "Millersville University Women's Lacrosse vs Semifinals",
-      "source": "MU",
-      "date": "2027-05-07T00:00:00.000Z"
+      "key": "National Night Out 6-8pm|2026-08-04T12:00:00.000Z",
+      "firstSeenAt": "2026-10-20T22:23:16.067Z",
+      "title": "National Night Out 6-8pm",
+      "source": "Borough",
+      "date": "2026-08-04T12:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Lacrosse vs Championship|2027-05-09T00:00:00.000Z",
-      "firstSeenAt": "2026-10-20T21:58:30.007Z",
-      "title": "Millersville University Women's Lacrosse vs Championship",
-      "source": "MU",
-      "date": "2027-05-09T00:00:00.000Z"
+      "key": "National Night Out 6-8pm (Rain Date)|2026-08-05T12:00:00.000Z",
+      "firstSeenAt": "2026-10-20T22:23:16.067Z",
+      "title": "National Night Out 6-8pm (Rain Date)",
+      "source": "Borough",
+      "date": "2026-08-05T12:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Lacrosse vs Wilmington|2027-02-13T18:00:00.000Z",
-      "firstSeenAt": "2026-10-20T19:18:10.922Z",
-      "title": "Millersville University Women's Lacrosse vs Wilmington",
-      "source": "MU",
-      "date": "2027-02-13T18:00:00.000Z"
+      "key": "Planning Commission - Cancelled|2026-08-05T22:30:00.000Z",
+      "firstSeenAt": "2026-10-20T22:23:16.067Z",
+      "title": "Planning Commission - Cancelled",
+      "source": "Borough",
+      "date": "2026-08-05T22:30:00.000Z"
     },
     {
-      "key": "Millersville University Women's Lacrosse vs Jefferson|2027-02-20T18:00:00.000Z",
-      "firstSeenAt": "2026-10-20T19:18:10.922Z",
-      "title": "Millersville University Women's Lacrosse vs Jefferson",
-      "source": "MU",
-      "date": "2027-02-20T18:00:00.000Z"
+      "key": "Historic Commission|2026-08-10T12:00:00.000Z",
+      "firstSeenAt": "2026-10-20T22:23:16.067Z",
+      "title": "Historic Commission",
+      "source": "Borough",
+      "date": "2026-08-10T12:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Lacrosse at Frostburg State|2027-02-24T18:00:00.000Z",
-      "firstSeenAt": "2026-10-20T19:18:10.922Z",
-      "title": "Millersville University Women's Lacrosse at Frostburg State",
-      "source": "MU",
-      "date": "2027-02-24T18:00:00.000Z"
+      "key": "Borough Council Meeting|2026-08-11T23:00:00.000Z",
+      "firstSeenAt": "2026-10-20T22:23:16.067Z",
+      "title": "Borough Council Meeting",
+      "source": "Borough",
+      "date": "2026-08-11T23:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Lacrosse at Lander|2027-03-06T00:00:00.000Z",
-      "firstSeenAt": "2026-10-20T19:18:10.922Z",
-      "title": "Millersville University Women's Lacrosse at Lander",
-      "source": "MU",
-      "date": "2027-03-06T00:00:00.000Z"
+      "key": "Civil Service Commission - Cancelled|2026-08-17T22:00:00.000Z",
+      "firstSeenAt": "2026-10-20T22:23:16.067Z",
+      "title": "Civil Service Commission - Cancelled",
+      "source": "Borough",
+      "date": "2026-08-17T22:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Lacrosse at Mount Olive|2027-03-09T00:00:00.000Z",
-      "firstSeenAt": "2026-10-20T19:18:10.922Z",
-      "title": "Millersville University Women's Lacrosse at Mount Olive",
-      "source": "MU",
-      "date": "2027-03-09T00:00:00.000Z"
+      "key": "Borough Council Meeting|2026-08-25T23:00:00.000Z",
+      "firstSeenAt": "2026-10-20T22:23:16.067Z",
+      "title": "Borough Council Meeting",
+      "source": "Borough",
+      "date": "2026-08-25T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 5
+  "addedLastRun": 56
 }

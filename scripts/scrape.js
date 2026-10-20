@@ -4350,6 +4350,15 @@ async function runScraper() {
     // the "Manor Twp." source pill). NOTE: if recurring meetings only show their next
     // instance, the feed is exporting an RRULE instead of expanded VEVENTs — add
     // recurrence expansion here (mirrors the Borough expansion block above).
+    // (2026-10-20) CURATED LANE: manor-overrides.json (sheet Source = Manor via
+    // sync-candidates.js) is consumed right after this harvest — see the block
+    // following the catch. Community events on this feed arrive bare (empty iCal
+    // DESCRIPTION, so no family badge, no benefits, bare title — the Moonlight
+    // Ride was the first); the override ENRICHES the same-ET-day title-matched
+    // row in place (feed keeps date/url authority) or CREATES the event when the
+    // feed lacks it. Tags stay ['Manor'] in both modes: the Manor Twp. pill,
+    // the townie-side gate and manor-all in eventMatch.js / events.ics.php all
+    // keep working with zero matcher edits (Hard Rule 7 by tag parity).
     try {
         console.log("📡 Fetching Manor Township iCal...");
         let allManorEvents = {};
@@ -4403,6 +4412,84 @@ async function runScraper() {
         console.log(`✅ Manor Township: ${manorCount} events`);
         pmCarry.ok.manor = true;
     } catch (e) { console.error("❌ Manor Township error:", e.message); pmCarryApply('manor', 'Manor Township'); }
+
+    // ----- 6d-1. MANOR TOWNSHIP curated overrides (2026-10-20) -----
+    // Runs AFTER the try/catch so it sees harvested rows AND carry-forward rows.
+    // Match = same ET day + title equal after normalization, or one title is a
+    // whole-word prefix of the other ("Moonlight Ride" ~ "Manor Township
+    // Moonlight Ride" is NOT a prefix match on purpose — the sheet Title should
+    // start with the feed's words, or equal them; the curated title then wins).
+    // Enrich: curated title/description/location/endTime/sourceLink/kidFriendly/
+    // audience/registration/benefits overlay the feed row; date stays the feed's.
+    // Create: when nothing matches, push a standalone Manor event carrying
+    // _overrideCreated so the override-collision pass absorbs an iCal copy the
+    // township adds LATER (same day + exact/prefix title) — Borough precedent.
+    try {
+        const manorOvPath = path.join(__dirname, '../manor-overrides.json');
+        let manorOv = null;
+        try { manorOv = JSON.parse(fs.readFileSync(manorOvPath, 'utf8')); } catch (_) { /* no file yet — fine */ }
+        if (manorOv && Array.isArray(manorOv.events)) {
+            const norm = s => String(s || '').toLowerCase().replace(/&/g, ' and ').replace(/[^\w\s]/g, ' ').replace(/\s+/g, ' ').trim();
+            const titlesMatch = (a, b) => {
+                const x = norm(a), y = norm(b);
+                if (!x || !y) return false;
+                if (x === y) return true;
+                return x.startsWith(y + ' ') || y.startsWith(x + ' ');
+            };
+            const dayOf = iso => { const ms = parseEventInstant(iso); return !isNaN(ms) ? deriveDayET(ms) : String(iso || '').slice(0, 10); };
+            const now = new Date();
+            const cutoff = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+            let enriched = 0, created = 0, stale = 0, skipped = 0;
+            for (const ov of manorOv.events) {
+                if (!ov || !ov.title || !ov.date) { skipped++; continue; }
+                if (ov.status !== 'approved') { skipped++; continue; }
+                const ovDate = new Date(ov.date);
+                if (isNaN(ovDate.getTime())) { skipped++; continue; }
+                if (ovDate < cutoff) { stale++; continue; }
+                if (ov.registrationDeadline) {
+                    const rdl = new Date(ov.registrationDeadline);
+                    if (!isNaN(rdl.getTime()) && rdl < now) { console.log(`  ⏰ Manor override skipped — registration closed: "${ov.title}"`); skipped++; continue; }
+                }
+                const ovDay = dayOf(ov.date);
+                const hit = events.find(e => e && Array.isArray(e.tags) && e.tags.includes('Manor') && !e._overrideCreated
+                    && dayOf(e.date) === ovDay && titlesMatch(e.title, ov.title));
+                const curated = {
+                    title: ov.title,
+                    ...(ov.description ? { description: ov.description } : {}),
+                    ...(ov.location ? { location: ov.location } : {}),
+                    ...(ov.endTime ? { endTime: new Date(ov.endTime).toISOString() } : {}),
+                    ...(ov.sourceLink ? { sourceLink: ov.sourceLink } : {}),
+                    ...(ov.kidFriendly === true ? { kidFriendly: true } : {}),
+                    ...(ov.audience ? { audience: ov.audience } : {}),
+                    ...(ov.registrationRequired ? { registrationRequired: true } : {}),
+                    ...(ov.registrationDeadline ? { registrationDeadline: new Date(ov.registrationDeadline).toISOString() } : {}),
+                    ...(ov.registrationOpens ? { registrationOpens: new Date(ov.registrationOpens).toISOString() } : {}),
+                    ...eventPerkFields(ov)
+                };
+                if (hit) {
+                    Object.assign(hit, curated);
+                    enriched++;
+                    console.log(`  ✏️ Manor override ENRICHED: "${ov.title}" (${ovDay})`);
+                } else {
+                    events.push({
+                        _overrideCreated: true,
+                        date: ovDate.toISOString(),
+                        endTime: '',
+                        location: 'Manor Township',
+                        tags: ['Manor'], price: 'Free', ticketLink: '',
+                        sourceLink: 'https://manortownship.net/calendar/',
+                        gameResult: '', gameScore: '', streamLink: '', isLive: false,
+                        ...curated
+                    });
+                    created++;
+                    console.log(`  ➕ Manor override CREATED: "${ov.title}" (${ov.date})`);
+                }
+            }
+            if (enriched || created || stale || skipped) {
+                console.log(`  ✅ Manor overrides: ${enriched} enriched, ${created} created, ${stale} stale, ${skipped} skipped`);
+            }
+        }
+    } catch (e) { console.log(`  ⚠️ Manor overrides error: ${e.message}`); }
 
 
     // ===== 6e. RANEY CELLARS BREWING (The Events Calendar iCal) =====
@@ -5788,7 +5875,7 @@ async function runScraper() {
         if ((tags.includes('Summer Camp') || tags.includes('Athletic Camp') ||
              tags.includes('Summer Fun Series') || tags.includes('Alumni Event') ||
              tags.includes('Community') || tags.includes('Borough') || tags.includes('Other') ||
-             tags.includes('Campus Life')) && e.kidFriendly === true) {
+             tags.includes('Campus Life') || tags.includes('Manor')) && e.kidFriendly === true) {
             famCount++;
             return;
         }

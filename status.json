@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-20T04:49:55.076Z",
+  "generatedAt": "2026-10-20T06:38:55.819Z",
   "totalEvents": 1928,
   "withDescription": 821,
   "withImage": 222,
@@ -150,13 +150,13 @@
       "Campus Life": 4
     },
     "stalePast": 16,
-    "lastSyncAt": "2026-10-20T04:45:51.969Z"
+    "lastSyncAt": "2026-10-20T06:35:28.581Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-10-20T04:49:47.287Z"
+    "checkedAt": "2026-10-20T06:38:46.165Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -179,7 +179,7 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 228,
+        "value": 227,
         "min": 30,
         "skipped": false
       },
@@ -305,5 +305,5 @@
       "date": "2026-11-05T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 0
 }

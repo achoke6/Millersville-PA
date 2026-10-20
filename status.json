@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-10-20T20:09:09.324Z",
-  "totalEvents": 1954,
-  "withDescription": 830,
-  "withImage": 222,
-  "familyFriendly": 63,
+  "generatedAt": "2026-10-20T21:58:30.011Z",
+  "totalEvents": 1902,
+  "withDescription": 829,
+  "withImage": 223,
+  "familyFriendly": 62,
   "eventsToday": 27,
   "sources": {
-    "muAthletics": 340,
+    "muAthletics": 343,
     "muCalendar": 178,
     "artsmu": 4,
     "campsAlumni": 12,
     "muGetInvolved": 530,
-    "pennManor": 625,
-    "borough": 56,
+    "pennManor": 626,
+    "borough": 0,
     "vfw": 5,
     "phantomPower": 13,
     "community": 15,
@@ -46,10 +46,7 @@
       "earliest": "2026-08-03T23:00:00.000Z",
       "latest": "2027-10-11T22:30:00.000Z"
     },
-    "borough": {
-      "earliest": "2026-07-23T22:30:00.000Z",
-      "latest": "2026-12-25T12:00:00.000Z"
-    },
+    "borough": null,
     "vfw": {
       "earliest": "2026-10-09T22:00:00.000Z",
       "latest": "2026-11-22T21:00:00.000Z"
@@ -100,10 +97,7 @@
       "newest": "2027-10-11",
       "daysSinceMoved": 9
     },
-    "borough": {
-      "newest": "2026-12-25",
-      "daysSinceMoved": 84
-    },
+    "borough": null,
     "vfw": {
       "newest": "2026-11-22",
       "daysSinceMoved": 14
@@ -130,7 +124,7 @@
     }
   },
   "sports": {
-    "total": 860,
+    "total": 864,
     "scored": 167,
     "wins": 80,
     "losses": 75,
@@ -150,17 +144,19 @@
       "Campus Life": 3
     },
     "stalePast": 17,
-    "lastSyncAt": "2026-10-20T20:04:23.233Z"
+    "lastSyncAt": "2026-10-20T21:54:34.915Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-20T20:08:58.679Z"
+    "checkedAt": "2026-10-20T21:58:20.857Z"
   },
   "sourceHealth": {
-    "ok": true,
-    "failing": [],
+    "ok": false,
+    "failing": [
+      "borough.horizonDays"
+    ],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -185,22 +181,22 @@
       },
       {
         "key": "borough.horizonDays",
-        "ok": true,
-        "value": 66,
+        "ok": false,
+        "value": null,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 520,
+        "value": 521,
         "min": 150,
         "skipped": false
       },
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 340,
+        "value": 343,
         "min": 100,
         "skipped": false
       },
@@ -235,6 +231,41 @@
   },
   "recentlyAdded": [
     {
+      "key": "Girls Varsity Soccer vs Eastern Lebanon County High School|2026-10-22T20:00:00.000Z",
+      "firstSeenAt": "2026-10-20T21:58:30.007Z",
+      "title": "Girls Varsity Soccer vs Eastern Lebanon County High School",
+      "source": "PM",
+      "date": "2026-10-22T20:00:00.000Z"
+    },
+    {
+      "key": "Condom Dash|2026-11-03T17:30:00.000Z",
+      "firstSeenAt": "2026-10-20T21:58:30.007Z",
+      "title": "Condom Dash",
+      "source": "MU",
+      "date": "2026-11-03T17:30:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Lacrosse vs First Round|2027-05-02T00:00:00.000Z",
+      "firstSeenAt": "2026-10-20T21:58:30.007Z",
+      "title": "Millersville University Women's Lacrosse vs First Round",
+      "source": "MU",
+      "date": "2027-05-02T00:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Lacrosse vs Semifinals|2027-05-07T00:00:00.000Z",
+      "firstSeenAt": "2026-10-20T21:58:30.007Z",
+      "title": "Millersville University Women's Lacrosse vs Semifinals",
+      "source": "MU",
+      "date": "2027-05-07T00:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Lacrosse vs Championship|2027-05-09T00:00:00.000Z",
+      "firstSeenAt": "2026-10-20T21:58:30.007Z",
+      "title": "Millersville University Women's Lacrosse vs Championship",
+      "source": "MU",
+      "date": "2027-05-09T00:00:00.000Z"
+    },
+    {
       "key": "Millersville University Women's Lacrosse vs Wilmington|2027-02-13T18:00:00.000Z",
       "firstSeenAt": "2026-10-20T19:18:10.922Z",
       "title": "Millersville University Women's Lacrosse vs Wilmington",
@@ -268,42 +299,7 @@
       "title": "Millersville University Women's Lacrosse at Mount Olive",
       "source": "MU",
       "date": "2027-03-09T00:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Lacrosse vs Kutztown|2027-03-13T18:00:00.000Z",
-      "firstSeenAt": "2026-10-20T19:18:10.922Z",
-      "title": "Millersville University Women's Lacrosse vs Kutztown",
-      "source": "MU",
-      "date": "2027-03-13T18:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Lacrosse at Shepherd|2027-03-20T17:00:00.000Z",
-      "firstSeenAt": "2026-10-20T19:18:10.922Z",
-      "title": "Millersville University Women's Lacrosse at Shepherd",
-      "source": "MU",
-      "date": "2027-03-20T17:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Lacrosse at East Stroudsburg|2027-03-24T20:00:00.000Z",
-      "firstSeenAt": "2026-10-20T19:18:10.922Z",
-      "title": "Millersville University Women's Lacrosse at East Stroudsburg",
-      "source": "MU",
-      "date": "2027-03-24T20:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Lacrosse vs Bloomsburg|2027-03-27T17:00:00.000Z",
-      "firstSeenAt": "2026-10-20T19:18:10.922Z",
-      "title": "Millersville University Women's Lacrosse vs Bloomsburg",
-      "source": "MU",
-      "date": "2027-03-27T17:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Lacrosse vs West Chester|2027-03-31T20:00:00.000Z",
-      "firstSeenAt": "2026-10-20T19:18:10.922Z",
-      "title": "Millersville University Women's Lacrosse vs West Chester",
-      "source": "MU",
-      "date": "2027-03-31T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 5
 }

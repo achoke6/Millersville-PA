@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-20T11:54:23.111Z",
-  "totalEvents": 1928,
-  "withDescription": 821,
+  "generatedAt": "2026-10-20T13:43:31.606Z",
+  "totalEvents": 1929,
+  "withDescription": 822,
   "withImage": 222,
   "familyFriendly": 62,
   "eventsToday": 26,
@@ -15,7 +15,7 @@
     "borough": 56,
     "vfw": 5,
     "phantomPower": 13,
-    "community": 14,
+    "community": 15,
     "manor": 39,
     "raneyCellars": 5,
     "theBackyard": 25,
@@ -150,13 +150,13 @@
       "Campus Life": 4
     },
     "stalePast": 16,
-    "lastSyncAt": "2026-10-20T11:50:37.033Z"
+    "lastSyncAt": "2026-10-20T13:39:45.497Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
-    "approved": 4,
-    "checkedAt": "2026-10-20T11:54:15.138Z"
+    "approved": 5,
+    "checkedAt": "2026-10-20T13:43:22.533Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -172,7 +172,7 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 219,
+        "value": 218,
         "min": 60,
         "skipped": false
       },
@@ -235,6 +235,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "St. Philip the Apostle Christmas Craft Show|2026-12-05T13:00:00.000Z",
+      "firstSeenAt": "2026-10-20T13:43:31.604Z",
+      "title": "St. Philip the Apostle Christmas Craft Show",
+      "source": "Community",
+      "date": "2026-12-05T13:00:00.000Z"
+    },
+    {
       "key": "Domestic Violence Awareness Month: Documentary Showing and Panel Discussion|2026-10-22T17:30:00",
       "firstSeenAt": "2026-10-20T04:49:55.073Z",
       "title": "Domestic Violence Awareness Month: Documentary Showing and Panel Discussion",
@@ -296,14 +303,7 @@
       "title": "Men's Rugby Practice",
       "source": "MU",
       "date": "2026-11-05T21:00:00.000Z"
-    },
-    {
-      "key": "Slip n' Score Meeting|2026-11-05T22:00:00.000Z",
-      "firstSeenAt": "2026-10-20T01:30:26.549Z",
-      "title": "Slip n' Score Meeting",
-      "source": "MU",
-      "date": "2026-11-05T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

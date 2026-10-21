@@ -1,27 +1,27 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Wednesday, October 21, 2026 at 12:05 PM (Doernberg, Morris, Zipko, Student Meteorologists)",
+    "issued": "Wednesday, October 21, 2026 at 05:30 PM (Gray, Negherbon, Student Meteorologists)",
     "periods": [
-      {
-        "period": "This afternoon",
-        "text": "Sunny and pleasant with a gentle breeze. High: 64-68"
-      },
       {
         "period": "Tonight",
         "text": "Clear skies. Low: 38-42"
       },
       {
-        "period": "Thursday",
+        "period": "Tomorrow",
         "text": "Sunny, breezy, and seasonable. High: 66-70"
       },
       {
-        "period": "Thursday Night",
+        "period": "Tomorrow Night",
         "text": "Clear skies. Low: 38-42"
       },
       {
         "period": "Friday",
         "text": "Sunny and cooler. High: 60-64"
+      },
+      {
+        "period": "Saturday",
+        "text": "Sunny and pleasant. High: 60-64"
       }
     ]
   },
@@ -128,6 +128,17 @@
   },
   "observations": [
     {
+      "time": "18:00",
+      "temp": "63",
+      "dewpoint": "36",
+      "rh": "37",
+      "windDir": "N",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "17:00",
       "temp": "66",
       "dewpoint": "37",
@@ -177,17 +188,6 @@
       "dewpoint": "37",
       "rh": "39",
       "windDir": "NNE",
-      "windSpeed": "8",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "12:00",
-      "temp": "60",
-      "dewpoint": "36",
-      "rh": "40",
-      "windDir": "N",
       "windSpeed": "8",
       "precip": "0.00",
       "visibility": "12 +",
@@ -466,5 +466,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-21T21:22:08.627Z"
+  "updated": "2026-10-21T22:18:51.152Z"
 }

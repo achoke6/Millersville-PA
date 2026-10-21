@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-10-21T15:40:16.053Z",
-  "totalEvents": 1957,
-  "withDescription": 830,
+  "generatedAt": "2026-10-21T17:29:31.608Z",
+  "totalEvents": 1956,
+  "withDescription": 829,
   "withImage": 218,
   "familyFriendly": 63,
-  "eventsToday": 27,
+  "eventsToday": 28,
   "sources": {
     "muAthletics": 343,
     "muCalendar": 179,
     "artsmu": 4,
     "campsAlumni": 12,
-    "muGetInvolved": 530,
+    "muGetInvolved": 529,
     "pennManor": 626,
     "borough": 55,
     "vfw": 5,
@@ -150,13 +150,13 @@
       "Campus Life": 3
     },
     "stalePast": 17,
-    "lastSyncAt": "2026-10-21T15:36:46.646Z"
+    "lastSyncAt": "2026-10-21T17:25:43.122Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-21T15:40:07.935Z"
+    "checkedAt": "2026-10-21T17:29:22.543Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -235,6 +235,20 @@
   },
   "recentlyAdded": [
     {
+      "key": "Intramural Basketball|2026-10-21T21:00:00.000Z",
+      "firstSeenAt": "2026-10-21T17:29:31.604Z",
+      "title": "Intramural Basketball",
+      "source": "Other",
+      "date": "2026-10-21T21:00:00.000Z"
+    },
+    {
+      "key": "Boys JV Wrestling vs Central Bucks South High School|2026-12-11T13:00:00.000Z",
+      "firstSeenAt": "2026-10-21T17:29:31.604Z",
+      "title": "Boys JV Wrestling vs Central Bucks South High School",
+      "source": "PM",
+      "date": "2026-12-11T13:00:00.000Z"
+    },
+    {
       "key": "Halloween Slime Night|2026-10-23T23:30:00.000Z",
       "firstSeenAt": "2026-10-21T15:40:16.049Z",
       "title": "Halloween Slime Night",
@@ -289,21 +303,7 @@
       "title": "Millersville University Women's Golf at WCU Battlefield Classic",
       "source": "MU",
       "date": "2026-09-21T04:00:00.000Z"
-    },
-    {
-      "key": "Creative Writers Guild general meeting|2026-10-13T18:00:00",
-      "firstSeenAt": "2026-10-21T00:13:34.274Z",
-      "title": "Creative Writers Guild general meeting",
-      "source": "MU",
-      "date": "2026-10-13T18:00:00"
-    },
-    {
-      "key": "YDSA General Meeting|2026-10-13T18:30:00",
-      "firstSeenAt": "2026-10-21T00:13:34.274Z",
-      "title": "YDSA General Meeting",
-      "source": "MU",
-      "date": "2026-10-13T18:30:00"
     }
   ],
-  "addedLastRun": 3
+  "addedLastRun": 2
 }

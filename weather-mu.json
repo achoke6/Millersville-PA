@@ -1,11 +1,11 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Wednesday, October 21, 2026 at 08:08 AM (Jones, Shertzer, Whitehurst, Student Meteorologists)",
+    "issued": "Wednesday, October 21, 2026 at 12:05 PM (Doernberg, Morris, Zipko, Student Meteorologists)",
     "periods": [
       {
-        "period": "Today",
-        "text": "Sunny and pleasant with a gentle, afternoon breeze. High: 64-68"
+        "period": "This afternoon",
+        "text": "Sunny and pleasant with a gentle breeze. High: 64-68"
       },
       {
         "period": "Tonight",
@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "13:00",
+      "temp": "62",
+      "dewpoint": "37",
+      "rh": "39",
+      "windDir": "NNE",
+      "windSpeed": "8",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "60",
+      "dewpoint": "36",
+      "rh": "40",
+      "windDir": "N",
+      "windSpeed": "8",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "11:00",
       "temp": "57",
       "dewpoint": "36",
@@ -166,28 +188,6 @@
       "dewpoint": "37",
       "rh": "97",
       "windDir": "SW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "38",
-      "dewpoint": "37",
-      "rh": "97",
-      "windDir": "SSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "38",
-      "dewpoint": "37",
-      "rh": "96",
-      "windDir": "W",
       "windSpeed": "1",
       "precip": "0.00",
       "visibility": "12 +",
@@ -437,6 +437,13 @@
   },
   "videos": [
     {
+      "title": "Short Term Forecast 10/21/2026",
+      "videoId": "NRawMZV90v4",
+      "url": "https://www.youtube.com/watch?v=NRawMZV90v4",
+      "published": "2026-10-21T16:29:41+00:00",
+      "thumbnail": "https://i3.ytimg.com/vi/NRawMZV90v4/hqdefault.jpg"
+    },
+    {
       "title": "Short Term Forecast 10/20/2026",
       "videoId": "5d7awVSiWZM",
       "url": "https://www.youtube.com/watch?v=5d7awVSiWZM",
@@ -456,15 +463,8 @@
       "url": "https://www.youtube.com/watch?v=cp52c6k-G8o",
       "published": "2026-10-16T17:07:29+00:00",
       "thumbnail": "https://i4.ytimg.com/vi/cp52c6k-G8o/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 10/16/2026",
-      "videoId": "l4QFlTY4tSQ",
-      "url": "https://www.youtube.com/watch?v=l4QFlTY4tSQ",
-      "published": "2026-10-16T13:11:39+00:00",
-      "thumbnail": "https://i1.ytimg.com/vi/l4QFlTY4tSQ/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-21T15:36:49.569Z"
+  "updated": "2026-10-21T17:25:45.039Z"
 }

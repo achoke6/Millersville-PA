@@ -4193,7 +4193,7 @@ function groupEventsByDay(events) {
 // label directly above it already names that day, so repeating the date read as
 // a double listing. Later headers keep their date because it differs from the
 // toolbar's until they scroll under it.
-function buildDayGroupHTML(group, buildCard, isFirst, countText) {   // countText: optional override of "N events" (Sports rows pass per-school counts, 2026-09-18)
+function buildDayGroupHTML(group, buildCard, isFirst, countText, wrapClass) {   // countText: optional override of "N events" (Sports rows pass per-school counts, 2026-09-18); wrapClass: optional wrapper around the day's items (Events-page row sheet, 2026-10-21)
     const todayStr = toDateStr(todayMidnight());
     const isToday = group.dateKey === todayStr;
     const label = formatDayHeader(group.dateObj);
@@ -4203,8 +4203,9 @@ function buildDayGroupHTML(group, buildCard, isFirst, countText) {   // countTex
     const inner = isFirst
         ? cnt
         : `${label}<span class="day-count">${cnt}</span>`;
+    const items = group.events.map(e => buildCard(e)).join('');
     return `<div class="day-group-header${isToday ? ' today' : ''}" data-label="${label}">${inner}</div>`
-        + group.events.map(e => buildCard(e)).join('');
+        + (wrapClass ? `<div class="${wrapClass}">${items}</div>` : items);
 }
 
 // Render N skeleton cards as a loading placeholder. Layout mimics the real
@@ -4223,6 +4224,15 @@ function renderSkeletonCards(n) {
     return card.repeat(n);
 }
 
+// Row skeletons for the Events page (2026-10-21) — the compact-row cousin of
+// renderSkeletonCards, same markup as the home timeline's HTML skeletons, on
+// the same white sheet the real rows render on.
+function renderSkeletonRows(n) {
+    const widths = [[60,80],[75,65],[50,70],[68,55],[55,72],[70,60]];
+    const row = (i) => `<div class="tl-item tl-event tl-skeleton" aria-hidden="true"><span class="tl-time skel-bar" style="width:54px;height:14px;"></span><div class="tl-content"><span class="skel-bar" style="width:${widths[i % widths.length][0]}%;height:14px;display:block;margin-bottom:6px;"></span><span class="skel-bar" style="width:${widths[i % widths.length][1]}%;height:12px;display:block;"></span></div></div>`;
+    return `<div class="ev-day-sheet">${Array.from({ length: n }, (_, i) => row(i)).join('')}</div>`;
+}
+
 function renderEvents(){
     updateEventsUI();
     const container = document.getElementById('ev-events-container');
@@ -4233,7 +4243,7 @@ function renderEvents(){
     // all) — we can't distinguish here, but realistically allEvents.length
     // is always >0 in production, so skeletons only show during fetch.
     if (!allEvents || allEvents.length === 0) {
-        container.innerHTML = renderSkeletonCards(4);
+        container.innerHTML = renderSkeletonRows(6);
         return;
     }
     if (evActiveSources.size === 0) {
@@ -4371,8 +4381,15 @@ function renderEvents(){
     }
 
     // Day-grouped render
+    // Compact rows (2026-10-21): the Events page renders the homepage timeline
+    // row (buildTimelineItem) with a venue line instead of the full .app-card,
+    // so a week fits on one screen. Details live in the openEventDetails popup,
+    // which every row opens. Favorites: gold .tl-fav tint only — the inline
+    // star left with the card; starring is in ⚙️ Feed settings. buildEventCard
+    // stays — the Sports page still renders it.
     const groups = groupEventsByDay(dayItems);
-    html += groups.map((g, i) => buildDayGroupHTML(g, e => buildEventCard(e, false), i === 0)).join('');
+    const rowNow = new Date();
+    html += groups.map((g, i) => buildDayGroupHTML(g, e => buildTimelineItem(e, rowNow, { showLocation: true }), i === 0, null, 'ev-day-sheet')).join('');
 
     // Load more / footer note
     if (beyondCount > 0) {
@@ -6219,7 +6236,10 @@ function renderHomeUI(){
     if (feedCta) feedCta.style.display = hasFeed ? 'none' : 'block';
 }
 
-function buildTimelineItem(e, now) {
+// opts (2026-10-21): { showLocation: true } — Events-page rows. Moves the venue
+// out of the title suffix onto its own .tl-loc line (wrapped in .tl-stack).
+// With opts absent the output is byte-identical to before (home timeline).
+function buildTimelineItem(e, now, opts = {}) {
     const d = new Date(e.date);
     const tags = e.tags || [];
     const isSport = isSportEvent(e) || isPMSportByTitle(e);
@@ -6300,9 +6320,13 @@ function buildTimelineItem(e, now) {
     const rawLoc = cleanLocation(e.location || '').trim();
     const genericLoc = /^(millersville university|millersville borough|phantom power|raney cellars brewing|jack'?s family tavern|campus|tba|tbd|online|virtual|zoom|n\/a|pa)$/i;
     const orgEqualsLoc = e.orgShortName && rawLoc.toLowerCase() === e.orgShortName.toLowerCase();
-    if (rawLoc && rawLoc.length <= 35 && !genericLoc.test(rawLoc) && !orgEqualsLoc && !title.toLowerCase().includes(rawLoc.toLowerCase())) {
+    if (!opts.showLocation && rawLoc && rawLoc.length <= 35 && !genericLoc.test(rawLoc) && !orgEqualsLoc && !title.toLowerCase().includes(rawLoc.toLowerCase())) {
         title = `${title} — ${rawLoc}`;
     }
+    // Events-page rows carry the venue on a second line instead (no 35-char
+    // cap — CSS ellipsizes); generic and org-duplicate venues still drop.
+    const locLine = (opts.showLocation && rawLoc && !genericLoc.test(rawLoc) && !orgEqualsLoc)
+        ? `<span class="tl-loc">📍 ${escHtml(rawLoc)}</span>` : '';
 
     // Time — uses the scraper's allDay flag. Real noon meetings now show
     // their actual time instead of being heuristic-guessed as "All Day".
@@ -6388,16 +6412,20 @@ function buildTimelineItem(e, now) {
     // toggle this class without rebuilding the timeline.
     const tlFavClass = (typeof isEventFavorited === 'function' && isEventFavorited(e)) ? ' tl-fav' : '';
 
+    // The row body; hoisted so the Events-page variant can stack a venue line
+    // under it. Indentation kept so the no-opts output stays byte-identical.
+    const content = `<div class="tl-content">
+            <span class="tl-src${isSport?'':' tl-src-event'}">${src}</span>
+            <span class="tl-title">${title}</span>
+            <span class="tl-badges">${badges}${freeBadge}${streamBtn}${ticketBtn}</span>
+        </div>`;
+
     // Wrap badges + stream icon in a single flex cluster so they stay
     // right-anchored and never wrap to a new line below the title.
     // Empty cluster is hidden via `.tl-badges:empty { display: none; }` in CSS.
     return `<div class="tl-item${typeClass}${tlFavClass}" data-event-key="${eventKey.replace(/"/g, '&quot;')}" onclick="window.openEventDetails(${JSON.stringify(eventKey).replace(/"/g, '&quot;')})">
         <span class="tl-time">${timeStr}</span>
-        <div class="tl-content">
-            <span class="tl-src${isSport?'':' tl-src-event'}">${src}</span>
-            <span class="tl-title">${title}</span>
-            <span class="tl-badges">${badges}${freeBadge}${streamBtn}${ticketBtn}</span>
-        </div>
+        ${locLine ? `<div class="tl-stack">${content}${locLine}</div>` : content}
     </div>`;
 }
 
@@ -7292,7 +7320,12 @@ function buildNewsCard(n) {
     if(n.subCategory && !tags.includes(n.subCategory)) tags.push(n.subCategory);
     if(n.tags) n.tags.forEach(t=>{if(!tags.includes(t)) tags.push(t);});
     const tagHtml=tags.length?`<div class="card-tags">${tags.map(t=>`<span class="card-tag">${t}</span>`).join('')}</div>`:'';
-    return `<div class="app-card">${tagHtml}<p class="card-meta">${escHtml(n.date)}</p><h3 class="card-title">${escHtml(decodeEntities(n.title))}</h3><a href="${escHtml(n.link)}" target="_blank" class="btn btn-sm btn-outline" style="margin-top:12px;">Read ➔</a></div>`;
+    // Teaser (2026-10-21): scrape-time `summary` from the feed's <description>,
+    // clamped to 3 lines (inline — style.css is mixed-EOL, Hard Rule 2). Items
+    // without one (Snapper, pre-patch news.json) render exactly as before.
+    const summary = (n.summary || '').trim();
+    const summaryHtml = summary ? `<p class="card-desc-text" style="margin-top:6px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;">${escHtml(summary)}</p>` : '';
+    return `<div class="app-card">${tagHtml}<p class="card-meta">${escHtml(n.date)}</p><h3 class="card-title">${escHtml(decodeEntities(n.title))}</h3>${summaryHtml}<a href="${escHtml(n.link)}" target="_blank" class="btn btn-sm btn-outline" style="margin-top:12px;">Read ➔</a></div>`;
 }
 
 // Hide PM/Borough news source pills for marauders who haven't favorited them.

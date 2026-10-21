@@ -942,6 +942,14 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .tl-stream { font-size: 0.85rem; text-decoration: none; flex-shrink: 0; }
 .tl-ticket { font-size: 0.85rem; text-decoration: none; flex-shrink: 0; cursor: pointer; transition: transform 0.1s; }
 .tl-ticket:hover { transform: scale(1.15); }
+/* Events-page compact rows (2026-10-21): the homepage timeline row reused on
+   /events — each day's rows on a white sheet (.ev-day-sheet), venue on a second
+   line (.tl-loc). buildTimelineItem emits .tl-stack/.tl-loc only when called with
+   { showLocation: true }; the home timeline markup is untouched. */
+#ev-events-container.ev-list { display: block; }
+.ev-day-sheet { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); box-shadow: var(--shadow); overflow: hidden; margin-top: 6px; }
+.tl-stack { display: flex; flex-direction: column; flex: 1; min-width: 0; gap: 2px; }
+.tl-loc { font-size: 0.74rem; color: var(--text-muted); line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 /* Mobile: tighten home timeline density.
    Base styles are tuned for desktop width; on narrow viewports the 10px vertical

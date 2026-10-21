@@ -5847,7 +5847,10 @@ async function runScraper() {
     const familyKeywords = /\bfamily\b|families|\bkids?\b|\bchild(ren)?\b|\byouth\b|\ball ages\b|\bopen house\b|\bparade\b|\bfestival\b|\bfun run\b|\begg hunt\b|\btrick.or.treat\b|\bstory ?time\b|\bfun fest\b|\bdoodle\b|\bpuppet\b|\bmagic show\b|\barts smarts\b|\bsalsa\b.*\b5\+/i;
     const familyDescKeywords = /\bfamily[- ]friendly\b|\bfor (kids|children|families)\b|\ball ages\b|\bages?\s*\d+\s*(\+|and up|and older)\b|\byoung audiences?\b|\bkids?\s*(welcome|invited|event)\b|\bnon[- ]verbal show\b|\binteractive\b.*\b(kids|children|animation)\b|\bfamily fun\b/i;
     const notFamilyKeywords = /\brehersal\b|\brehearsal\b|\bpractice\b|\btraining\b|\bsap meeting\b|\bstaff\b|\bfaculty\b|\bin-service\b|\bboard\b|\bpto\b/i;
-    const notFamilyMUKeywords = /\bjob\b|\binternship\b|\bcareer fair\b|\bemployment\b|\brecruitment\b|\bhiring\b|\bresume\b|\bworkshop\b.*\bprofessional\b|\bgraduate\b|\bthesis\b/i;
+    // 2026-10-21: admissions (prospective-student open houses were matching the
+    // `open house` title keyword) + film festival (a screening/panel was matching
+    // `festival`) — the badge means events FOR kids, not events families may attend.
+    const notFamilyMUKeywords = /\bjob\b|\binternship\b|\bcareer fair\b|\bemployment\b|\brecruitment\b|\bhiring\b|\bresume\b|\bworkshop\b.*\bprofessional\b|\bgraduate\b|\bthesis\b|\badmissions?\b|\bfilm festival\b/i;
     const familyPMKeywords = /\bconcert\b|\bensemble\b|\bshowcase\b|\bspring show\b|\bmusical\b|\bplay\b|\btalent show\b|\bassembly\b|\bbook fair\b|\bfood fair\b|\bpicture\b/i;
     // MU event types that are almost always family-friendly
     const familyMUTypes = /family fun fest|arts smarts|kids.?\s*salsa/i;
@@ -7998,6 +8001,27 @@ async function runScraper() {
     try {
         let news = [];
 
+        // Plain-text teaser from an RSS <description> (2026-10-21): CDATA wrapper
+        // off, tags off, entities decoded via the shared decodeEntities (amp last),
+        // then tags off + decode AGAIN (feeds that escape their HTML — Sidearm —
+        // only expose tags, and double-escaped entities, after the first decode), the WordPress "[…]" excerpt tail dropped,
+        // whitespace collapsed, cut at a word boundary near 220 chars + ellipsis.
+        // Pure function; '' when the feed has no description.
+        function newsSummary(raw) {
+            let s = String(raw || '').replace(/<!\[CDATA\[/g, '').replace(/\]\]>/g, '');
+            s = s.replace(/<[^>]+>/g, ' ');
+            s = decodeEntities(s);
+            s = s.replace(/<[^>]+>/g, ' ');
+            s = decodeEntities(s);   // entities inside escaped HTML arrive double-escaped (&amp;ndash;)
+            s = s.replace(/\s*\[\s*(?:\u2026|\.\.\.)\s*\]\s*$/, '').replace(/\s+/g, ' ').trim();
+            if (s.length > 220) {
+                let cut = s.lastIndexOf(' ', 220);
+                if (cut < 160) cut = 220;
+                s = s.slice(0, cut).replace(/[\s,;:\u2013\u2014-]+$/, '') + '\u2026';
+            }
+            return s;
+        }
+
         // Helper to parse RSS items WITH optional category extraction
         function parseRSSItems(xml, sourceCategory, source, maxItems, options = {}) {
             const items = xml.match(/<item>([\s\S]*?)<\/item>/g) || [];
@@ -8007,6 +8031,7 @@ async function runScraper() {
                 const t = items[i].match(/<title>([\s\S]*?)<\/title>/i);
                 const l = items[i].match(/<link>([\s\S]*?)<\/link>/i);
                 const d = items[i].match(/<pubDate>([\s\S]*?)<\/pubDate>/i);
+                const ds = items[i].match(/<description>([\s\S]*?)<\/description>/i);   // teaser (2026-10-21)
                 // Extract RSS <category> tags for sub-categories
                 let cats = [];
                 if (!skipCats) {
@@ -8026,7 +8051,8 @@ async function runScraper() {
                         title: t[1].replace(/<!\[CDATA\[/g, "").replace(/\]\]>/g, "").trim(),
                         link: l[1].replace(/<!\[CDATA\[/g, "").replace(/\]\]>/g, "").trim(),
                         date: pubDate ? pubDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : "",
-                        sortDate: pubDate ? pubDate.toISOString() : "1970-01-01T00:00:00.000Z"
+                        sortDate: pubDate ? pubDate.toISOString() : "1970-01-01T00:00:00.000Z",
+                        summary: ds ? newsSummary(ds[1]) : ''
                     });
                 }
             }
@@ -8077,7 +8103,8 @@ async function runScraper() {
                             title: articles[i].title,
                             link: articles[i].url,
                             date: dateStr,
-                            sortDate: parsed && !isNaN(parsed.getTime()) ? parsed.toISOString() : "1970-01-01T00:00:00.000Z"
+                            sortDate: parsed && !isNaN(parsed.getTime()) ? parsed.toISOString() : "1970-01-01T00:00:00.000Z",
+                            summary: ''   // listing-page scrape, no teaser yet (2026-10-21)
                         });
                         snapperTotal++;
                     }

@@ -55,8 +55,10 @@
   },
   {
     "name": "Alpha Sigma Alpha",
-    "category": "",
-    "categories": [],
+    "category": "Fundraiser",
+    "categories": [
+      "Fundraiser"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -277,10 +279,8 @@
   },
   {
     "name": "Campus Recreation",
-    "category": "Competition",
+    "category": "Sporting",
     "categories": [
-      "Competition",
-      "Social",
       "Sporting"
     ],
     "shortName": "",
@@ -488,16 +488,6 @@
     "id": ""
   },
   {
-    "name": "Color of Teaching Mentoring Program",
-    "category": "Educational Program",
-    "categories": [
-      "Educational Program",
-      "Meeting"
-    ],
-    "shortName": "",
-    "id": ""
-  },
-  {
     "name": "Commuter Services",
     "category": "Social",
     "categories": [
@@ -602,8 +592,10 @@
   },
   {
     "name": "Dance Team",
-    "category": "",
-    "categories": [],
+    "category": "Fundraiser",
+    "categories": [
+      "Fundraiser"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1600,9 +1592,9 @@
   },
   {
     "name": "Student Government Association",
-    "category": "Tabling",
+    "category": "Meeting",
     "categories": [
-      "Tabling"
+      "Meeting"
     ],
     "shortName": "SGA",
     "id": ""

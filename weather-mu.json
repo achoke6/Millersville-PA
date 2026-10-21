@@ -1,49 +1,33 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Tuesday, October 20, 2026 at 12:02 PM (Daugherty, Longo, Rooney, and Werley, Student Meteorologists)",
+    "issued": "Wednesday, October 21, 2026 at 12:05 PM (Doernberg, Morris, Zipko, Student Meteorologists)",
     "periods": [
       {
         "period": "This afternoon",
-        "text": "Sunny and pleasant with a gentle breeze. High: 68-72"
+        "text": "Sunny and pleasant with a gentle breeze. High: 64-68"
       },
       {
         "period": "Tonight",
         "text": "Clear skies. Low: 38-42"
       },
       {
-        "period": "Wednesday",
-        "text": "Sunny and seasonable. High: 64-68"
+        "period": "Thursday",
+        "text": "Sunny, breezy, and seasonable. High: 66-70"
       },
       {
-        "period": "Wednesday Night",
+        "period": "Thursday Night",
         "text": "Clear skies. Low: 38-42"
       },
       {
-        "period": "Thursday",
-        "text": "Mostly sunny, breezy and seasonable. High: 66-70"
+        "period": "Friday",
+        "text": "Sunny and cooler. High: 60-64"
       }
     ]
   },
   "sevenDay": {
-    "issued": "Tuesday, October 20, 2026 at 12:27 PM (Guillaume, Johnson, Lowell)",
+    "issued": "Wednesday, October 21, 2026 at 08:15 AM (Jones, Shertzer, Whitehurst)",
     "days": [
-      {
-        "period": "Tuesday",
-        "sky": "Sunny",
-        "weather": "Pleasant",
-        "pop": "<10%",
-        "temp": "70",
-        "conf": "5"
-      },
-      {
-        "period": "Tuesday night",
-        "sky": "Clear Skies",
-        "weather": "Fair",
-        "pop": "<10%",
-        "temp": "40",
-        "conf": "5"
-      },
       {
         "period": "Wednesday",
         "sky": "Sunny",
@@ -62,7 +46,7 @@
       },
       {
         "period": "Thursday",
-        "sky": "Mostly Sunny",
+        "sky": "Sunny",
         "weather": "Breezy",
         "pop": "<10%",
         "temp": "68",
@@ -105,7 +89,7 @@
         "sky": "Clear Skies",
         "weather": "Cold",
         "pop": "<10%",
-        "temp": "36",
+        "temp": "34",
         "conf": "5"
       },
       {
@@ -113,12 +97,28 @@
         "sky": "Sunny",
         "weather": "Pleasant",
         "pop": "<10%",
-        "temp": "mid 60s",
-        "conf": "4"
+        "temp": "64",
+        "conf": "5"
+      },
+      {
+        "period": "Sunday night",
+        "sky": "Clear Skies",
+        "weather": "Fair",
+        "pop": "<10%",
+        "temp": "38",
+        "conf": "5"
       },
       {
         "period": "Monday",
         "sky": "Mostly Sunny",
+        "weather": "Pleasant",
+        "pop": "<10%",
+        "temp": "upper 60s",
+        "conf": "4"
+      },
+      {
+        "period": "Tuesday",
+        "sky": "Partly Sunny",
         "weather": "Pleasant",
         "pop": "<10%",
         "temp": "upper 60s",
@@ -128,67 +128,67 @@
   },
   "observations": [
     {
-      "time": "15:00",
-      "temp": "70",
-      "dewpoint": "40",
-      "rh": "34",
-      "windDir": "N",
-      "windSpeed": "8",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
       "time": "14:00",
-      "temp": "69",
-      "dewpoint": "41",
-      "rh": "36",
-      "windDir": "N",
-      "windSpeed": "8",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "13:00",
-      "temp": "68",
-      "dewpoint": "40",
-      "rh": "37",
-      "windDir": "ENE",
-      "windSpeed": "5",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "12:00",
-      "temp": "66",
-      "dewpoint": "40",
-      "rh": "38",
-      "windDir": "ENE",
+      "temp": "63",
+      "dewpoint": "35",
+      "rh": "34",
+      "windDir": "NE",
       "windSpeed": "7",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
     },
     {
+      "time": "13:00",
+      "temp": "62",
+      "dewpoint": "37",
+      "rh": "39",
+      "windDir": "NNE",
+      "windSpeed": "8",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "60",
+      "dewpoint": "36",
+      "rh": "40",
+      "windDir": "N",
+      "windSpeed": "8",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "11:00",
-      "temp": "64",
-      "dewpoint": "42",
-      "rh": "44",
+      "temp": "57",
+      "dewpoint": "36",
+      "rh": "46",
       "windDir": "ENE",
-      "windSpeed": "5",
+      "windSpeed": "6",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
     },
     {
       "time": "10:00",
-      "temp": "60",
-      "dewpoint": "42",
-      "rh": "52",
-      "windDir": "N",
-      "windSpeed": "5",
+      "temp": "55",
+      "dewpoint": "36",
+      "rh": "48",
+      "windDir": "NE",
+      "windSpeed": "6",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "09:00",
+      "temp": "48",
+      "dewpoint": "40",
+      "rh": "75",
+      "windDir": "NNW",
+      "windSpeed": "4",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
@@ -405,6 +405,17 @@
         "windSpeed": "14",
         "windTime": "15:03",
         "rain": "0.00"
+      },
+      {
+        "date": "10/20",
+        "max": "71",
+        "maxTime": "15:22",
+        "min": "40",
+        "minTime": "03:54",
+        "windDir": "33",
+        "windSpeed": "20",
+        "windTime": "11:46",
+        "rain": "0.00"
       }
     ],
     "totalRain": "2.81",
@@ -426,6 +437,13 @@
   },
   "videos": [
     {
+      "title": "Short Term Forecast 10/21/2026",
+      "videoId": "NRawMZV90v4",
+      "url": "https://www.youtube.com/watch?v=NRawMZV90v4",
+      "published": "2026-10-21T16:29:41+00:00",
+      "thumbnail": "https://i3.ytimg.com/vi/NRawMZV90v4/hqdefault.jpg"
+    },
+    {
       "title": "Short Term Forecast 10/20/2026",
       "videoId": "5d7awVSiWZM",
       "url": "https://www.youtube.com/watch?v=5d7awVSiWZM",
@@ -445,15 +463,8 @@
       "url": "https://www.youtube.com/watch?v=cp52c6k-G8o",
       "published": "2026-10-16T17:07:29+00:00",
       "thumbnail": "https://i4.ytimg.com/vi/cp52c6k-G8o/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 10/16/2026",
-      "videoId": "l4QFlTY4tSQ",
-      "url": "https://www.youtube.com/watch?v=l4QFlTY4tSQ",
-      "published": "2026-10-16T13:11:39+00:00",
-      "thumbnail": "https://i1.ytimg.com/vi/l4QFlTY4tSQ/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-20T19:13:57.060Z"
+  "updated": "2026-10-21T18:36:16.416Z"
 }

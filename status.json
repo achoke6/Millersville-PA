@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-10-21T11:15:50.517Z",
-  "totalEvents": 1954,
-  "withDescription": 826,
+  "generatedAt": "2026-10-21T13:08:28.236Z",
+  "totalEvents": 1955,
+  "withDescription": 827,
   "withImage": 218,
   "familyFriendly": 63,
   "eventsToday": 27,
   "sources": {
     "muAthletics": 343,
-    "muCalendar": 176,
+    "muCalendar": 177,
     "artsmu": 4,
     "campsAlumni": 12,
     "muGetInvolved": 529,
@@ -150,13 +150,13 @@
       "Campus Life": 3
     },
     "stalePast": 17,
-    "lastSyncAt": "2026-10-21T11:12:42.384Z"
+    "lastSyncAt": "2026-10-21T13:01:18.941Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-21T11:15:41.232Z"
+    "checkedAt": "2026-10-21T13:08:19.236Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -172,7 +172,7 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 218,
+        "value": 217,
         "min": 60,
         "skipped": false
       },
@@ -235,6 +235,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Millersville University’s 42nd Conference on the Holocaust & Genocide - Through the Camera Lens: Films about the Holocaust and Genocide, \"Night and Fog\"|2026-10-27T19:00:00",
+      "firstSeenAt": "2026-10-21T13:08:28.233Z",
+      "title": "Millersville University’s 42nd Conference on the Holocaust & Genocide - Through the Camera Lens: Films about the Holocaust and Genocide, \"Night and Fog\"",
+      "source": "MU",
+      "date": "2026-10-27T19:00:00"
+    },
+    {
       "key": "Millersville University Men's Golf at WCU Battlefield Classic|2026-09-21T04:00:00.000Z",
       "firstSeenAt": "2026-10-21T05:19:28.819Z",
       "title": "Millersville University Men's Golf at WCU Battlefield Classic",
@@ -296,14 +303,7 @@
       "title": "AniMU Weekly Meeting",
       "source": "MU",
       "date": "2026-11-06T23:00:00.000Z"
-    },
-    {
-      "key": "Rock of Ages: Millersville University Theatre|2026-11-07T00:00:00.000Z",
-      "firstSeenAt": "2026-10-21T00:13:34.274Z",
-      "title": "Rock of Ages: Millersville University Theatre",
-      "source": "MU",
-      "date": "2026-11-07T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

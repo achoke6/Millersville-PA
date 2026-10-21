@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-21T18:41:44.961Z",
+  "generatedAt": "2026-10-21T19:36:43.652Z",
   "totalEvents": 1956,
   "withDescription": 829,
   "withImage": 218,
-  "familyFriendly": 63,
+  "familyFriendly": 56,
   "eventsToday": 28,
   "sources": {
     "muAthletics": 343,
@@ -150,13 +150,13 @@
       "Campus Life": 3
     },
     "stalePast": 17,
-    "lastSyncAt": "2026-10-21T18:36:13.763Z"
+    "lastSyncAt": "2026-10-21T19:31:32.620Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-21T18:41:37.124Z"
+    "checkedAt": "2026-10-21T19:36:34.078Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -235,6 +235,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "MU Tell School of Music Commercial Band Halloween Bash|2026-10-25T20:00:00.000Z",
+      "firstSeenAt": "2026-10-21T19:36:43.649Z",
+      "title": "MU Tell School of Music Commercial Band Halloween Bash",
+      "source": "Other",
+      "date": "2026-10-25T20:00:00.000Z"
+    },
+    {
       "key": "Intramural Basketball|2026-10-21T21:00:00.000Z",
       "firstSeenAt": "2026-10-21T17:29:31.604Z",
       "title": "Intramural Basketball",
@@ -261,13 +268,6 @@
       "title": "YDSA General Meeting",
       "source": "MU",
       "date": "2026-11-10T18:30:00"
-    },
-    {
-      "key": "Nu-Metal Values - OZZFEST REHASH|2026-11-15T01:00:00.000Z",
-      "firstSeenAt": "2026-10-21T15:40:16.049Z",
-      "title": "Nu-Metal Values - OZZFEST REHASH",
-      "source": "Other",
-      "date": "2026-11-15T01:00:00.000Z"
     },
     {
       "key": "Election Day (*normal operating schedule)|2026-11-03T00:00:00",
@@ -305,5 +305,5 @@
       "date": "2026-09-21T04:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

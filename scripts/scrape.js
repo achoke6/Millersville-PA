@@ -5962,8 +5962,9 @@ async function runScraper() {
         // VFW events — check for open-to-public family events
         else if (tags.includes('VFW')) {
             // 2026-10-22: description signals too — Trunk or Treat's copy opens
-            // "Family-friendly" and the title-only test missed it.
-            if (familyKeywords.test(title) || /open to the public/i.test(title) || familyDescKeywords.test(desc)) {
+            // "Family-friendly" and the title-only test missed it. The old
+            // `open to the public` title test is gone: public ≠ kid-focused (fish fry).
+            if (familyKeywords.test(title) || familyDescKeywords.test(desc)) {
                 isFamilyFriendly = true;
             }
         }

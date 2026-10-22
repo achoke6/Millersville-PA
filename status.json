@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-22T01:38:35.206Z",
+  "generatedAt": "2026-10-22T03:27:32.485Z",
   "totalEvents": 1953,
   "withDescription": 827,
   "withImage": 218,
   "familyFriendly": 55,
-  "eventsToday": 27,
+  "eventsToday": 26,
   "sources": {
     "muAthletics": 343,
     "muCalendar": 180,
@@ -150,13 +150,13 @@
       "Campus Life": 3
     },
     "stalePast": 17,
-    "lastSyncAt": "2026-10-22T01:29:12.613Z"
+    "lastSyncAt": "2026-10-22T03:23:58.775Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-22T01:38:23.424Z"
+    "checkedAt": "2026-10-22T03:27:23.426Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -235,6 +235,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Karaoke Night|2026-11-12T03:00:00.000Z",
+      "firstSeenAt": "2026-10-22T03:27:32.482Z",
+      "title": "Karaoke Night",
+      "source": "Jack's Tavern",
+      "date": "2026-11-12T03:00:00.000Z"
+    },
+    {
       "key": "Night Market|2026-10-14T18:00:00",
       "firstSeenAt": "2026-10-22T00:13:43.061Z",
       "title": "Night Market",
@@ -296,14 +303,7 @@
       "title": "Equestrian Club Weekly Meeting",
       "source": "MU",
       "date": "2026-11-11T00:30:00.000Z"
-    },
-    {
-      "key": "IFC Meeting|2026-11-11T01:30:00.000Z",
-      "firstSeenAt": "2026-10-22T00:13:43.061Z",
-      "title": "IFC Meeting",
-      "source": "MU",
-      "date": "2026-11-11T01:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

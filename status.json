@@ -1,23 +1,23 @@
 {
-  "generatedAt": "2026-10-22T18:39:30.544Z",
-  "totalEvents": 1952,
+  "generatedAt": "2026-10-22T19:01:24.481Z",
+  "totalEvents": 1950,
   "withDescription": 824,
   "withImage": 218,
   "familyFriendly": 53,
   "eventsToday": 36,
   "sources": {
-    "muAthletics": 345,
-    "muCalendar": 212,
-    "artsmu": 3,
+    "muAthletics": 343,
+    "muCalendar": 179,
+    "artsmu": 4,
     "campsAlumni": 11,
-    "muGetInvolved": 494,
+    "muGetInvolved": 526,
     "pennManor": 627,
     "borough": 55,
     "vfw": 5,
     "phantomPower": 13,
     "community": 15,
     "manor": 39,
-    "raneyCellars": 5,
+    "raneyCellars": 3,
     "theBackyard": 25,
     "muHudlBroadcasts": 57
   },
@@ -27,7 +27,7 @@
       "latest": "2027-05-27T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-07-25T19:30:00.000Z",
+      "earliest": "2026-07-24T09:00:00.000Z",
       "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
@@ -39,7 +39,7 @@
       "latest": "2027-08-20T23:30:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-07-24T09:00:00.000Z",
+      "earliest": "2026-08-16T00:00:00.000Z",
       "latest": "2027-10-05T11:00:00.000Z"
     },
     "pennManor": {
@@ -67,8 +67,8 @@
       "latest": "2027-10-06T23:00:00.000Z"
     },
     "raneyCellars": {
-      "earliest": "2026-10-07T20:30:00.000Z",
-      "latest": "2026-10-22T22:00:00.000Z"
+      "earliest": "2026-10-22T20:00:00.000Z",
+      "latest": "2026-10-29T20:00:00.000Z"
     },
     "theBackyard": {
       "earliest": "2026-08-24T12:30:00.000Z",
@@ -121,7 +121,7 @@
       "daysSinceMoved": 16
     },
     "raneyCellars": {
-      "newest": "2026-10-22",
+      "newest": "2026-10-29",
       "daysSinceMoved": 0
     },
     "theBackyard": {
@@ -131,9 +131,9 @@
   },
   "sports": {
     "total": 865,
-    "scored": 157,
-    "wins": 72,
-    "losses": 72,
+    "scored": 171,
+    "wins": 81,
+    "losses": 77,
     "ties": 13
   },
   "registrations": {
@@ -150,19 +150,17 @@
       "Campus Life": 3
     },
     "stalePast": 17,
-    "lastSyncAt": "2026-10-22T18:36:43.684Z"
+    "lastSyncAt": "2026-10-22T18:57:28.921Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-22T18:39:26.357Z"
+    "checkedAt": "2026-10-22T19:01:15.430Z"
   },
   "sourceHealth": {
-    "ok": false,
-    "failing": [
-      "manor.count"
-    ],
+    "ok": true,
+    "failing": [],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -202,7 +200,7 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 345,
+        "value": 343,
         "min": 100,
         "skipped": false
       },
@@ -215,10 +213,9 @@
       },
       {
         "key": "manor.count",
-        "ok": false,
+        "ok": true,
         "value": 39,
-        "min": 10,
-        "carriedForward": 39
+        "min": 10
       },
       {
         "key": "muHudl.pairRatio",
@@ -238,25 +235,11 @@
   },
   "recentlyAdded": [
     {
-      "key": "Millersville Athletics Hall of Fame Dinner and Ceremony|2026-10-16T17:30:00",
-      "firstSeenAt": "2026-10-22T18:35:15.278Z",
-      "title": "Millersville Athletics Hall of Fame Dinner and Ceremony",
-      "source": "MU",
-      "date": "2026-10-16T17:30:00"
-    },
-    {
-      "key": "Jazz at the 'Ville|2027-02-26T19:30:00",
-      "firstSeenAt": "2026-10-22T18:35:15.278Z",
-      "title": "Jazz at the 'Ville",
-      "source": "MU",
-      "date": "2027-02-26T19:30:00"
-    },
-    {
-      "key": "MWR Super Regional I|2027-02-27T06:00:00",
-      "firstSeenAt": "2026-10-22T18:35:15.278Z",
-      "title": "MWR Super Regional I",
-      "source": "MU",
-      "date": "2027-02-27T06:00:00"
+      "key": "Extra Rice 4PM|2026-10-29T20:00:00.000Z",
+      "firstSeenAt": "2026-10-22T19:01:24.479Z",
+      "title": "Extra Rice 4PM",
+      "source": "Raney Cellars",
+      "date": "2026-10-29T20:00:00.000Z"
     },
     {
       "key": "Early Childhood Organization Decoration Night|2026-10-21T23:00:00.000Z",
@@ -306,7 +289,21 @@
       "title": "Halloween Pickleball Tournament",
       "source": "MU",
       "date": "2026-10-30T00:00:00.000Z"
+    },
+    {
+      "key": "BigChefthc Halloween Show|2026-10-30T22:00:00.000Z",
+      "firstSeenAt": "2026-10-22T18:17:35.278Z",
+      "title": "BigChefthc Halloween Show",
+      "source": "MU",
+      "date": "2026-10-30T22:00:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Field Hockey vs Central Dauphin High School|2026-10-28T23:00:00.000Z",
+      "firstSeenAt": "2026-10-22T16:28:24.028Z",
+      "title": "Girls Varsity Field Hockey vs Central Dauphin High School",
+      "source": "PM",
+      "date": "2026-10-28T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

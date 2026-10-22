@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-22T19:01:24.481Z",
-  "totalEvents": 1950,
+  "generatedAt": "2026-10-22T20:50:49.446Z",
+  "totalEvents": 1951,
   "withDescription": 824,
   "withImage": 218,
   "familyFriendly": 53,
@@ -11,7 +11,7 @@
     "artsmu": 4,
     "campsAlumni": 11,
     "muGetInvolved": 526,
-    "pennManor": 627,
+    "pennManor": 628,
     "borough": 55,
     "vfw": 5,
     "phantomPower": 13,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 865,
+    "total": 866,
     "scored": 171,
     "wins": 81,
     "losses": 77,
@@ -143,20 +143,21 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 4,
+    "pendingFuture": 5,
     "pendingPast": 9,
     "pendingBySource": {
       "Youth Sports": 1,
-      "Campus Life": 3
+      "Campus Life": 3,
+      "PM Community": 1
     },
     "stalePast": 17,
-    "lastSyncAt": "2026-10-22T18:57:28.921Z"
+    "lastSyncAt": "2026-10-22T20:46:51.397Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-22T19:01:15.430Z"
+    "checkedAt": "2026-10-22T20:50:42.289Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -193,7 +194,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 522,
+        "value": 523,
         "min": 150,
         "skipped": false
       },
@@ -234,6 +235,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Girls Varsity Field Hockey @ Conestoga Valley High School|2026-10-26T20:00:00.000Z",
+      "firstSeenAt": "2026-10-22T20:50:49.443Z",
+      "title": "Girls Varsity Field Hockey @ Conestoga Valley High School",
+      "source": "PM",
+      "date": "2026-10-26T20:00:00.000Z"
+    },
     {
       "key": "Extra Rice 4PM|2026-10-29T20:00:00.000Z",
       "firstSeenAt": "2026-10-22T19:01:24.479Z",
@@ -296,13 +304,6 @@
       "title": "BigChefthc Halloween Show",
       "source": "MU",
       "date": "2026-10-30T22:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Field Hockey vs Central Dauphin High School|2026-10-28T23:00:00.000Z",
-      "firstSeenAt": "2026-10-22T16:28:24.028Z",
-      "title": "Girls Varsity Field Hockey vs Central Dauphin High School",
-      "source": "PM",
-      "date": "2026-10-28T23:00:00.000Z"
     }
   ],
   "addedLastRun": 1

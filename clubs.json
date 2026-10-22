@@ -10,11 +10,9 @@
   },
   {
     "name": "ADAPT",
-    "category": "Service",
+    "category": "Movie or Film",
     "categories": [
-      "Service",
-      "Meeting",
-      "Social"
+      "Movie or Film"
     ],
     "shortName": "",
     "id": ""
@@ -151,9 +149,9 @@
   },
   {
     "name": "Asian Student Inclusivity Association",
-    "category": "Meeting",
+    "category": "Performance",
     "categories": [
-      "Meeting"
+      "Performance"
     ],
     "shortName": "ASIA",
     "id": ""
@@ -203,9 +201,8 @@
   },
   {
     "name": "Best Buddies",
-    "category": "Service",
+    "category": "Social",
     "categories": [
-      "Service",
       "Social"
     ],
     "shortName": "",
@@ -270,9 +267,9 @@
   },
   {
     "name": "Campus Life",
-    "category": "Homecoming ",
+    "category": "Social",
     "categories": [
-      "Homecoming "
+      "Social"
     ],
     "shortName": "",
     "id": ""
@@ -653,12 +650,8 @@
   },
   {
     "name": "Early Childhood Organization",
-    "category": "Service",
-    "categories": [
-      "Service",
-      "Meeting",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "ECO",
     "id": ""
   },
@@ -1409,8 +1402,11 @@
   },
   {
     "name": "Pickleball Club",
-    "category": "",
-    "categories": [],
+    "category": "Competition",
+    "categories": [
+      "Competition",
+      "Social"
+    ],
     "shortName": "",
     "id": ""
   },

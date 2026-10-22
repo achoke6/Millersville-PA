@@ -138,7 +138,7 @@
       "Acorn Squash – $1.50 each",
       "Delicata Squash – $1.00 each"
     ],
-    "weeklyFetchedAt": "2026-10-22T13:48:40.191Z"
+    "weeklyFetchedAt": "2026-10-22T18:17:25.291Z"
   },
   "jesus-dogs": {
     "name": "Jesus Dogs",
@@ -182,9 +182,128 @@
   },
   "john-herr-s-village-market": {
     "name": "John Herr's Village Market",
-    "note": "Weekly deals · Thu–Wed",
-    "weekly": [],
-    "weeklyDateRange": "",
-    "rawDeals": []
+    "note": "Weekly deals: Thursday, October 22 through Wednesday, October 28",
+    "weekly": [
+      "Fresh Grade A Chicken Drumsticks — 4-Day Chicken Sale (Thu 10/22 - Sun 10/25 only; sold in 5-lb bag @ $4.45) – $0.89/lb",
+      "Whole Frying Chicken — 4-Day Chicken Sale (Thu 10/22 - Sun 10/25 only) – $1.49/lb",
+      "Fresh Boneless & Skinless Chicken Breasts — 4-Day Chicken Sale (Thu 10/22 - Sun 10/25 only; sold in 10-lb bag @ $17.90) – $1.79/lb",
+      "Lay's Classic Potato Chips, Dips or Poppables (Selected) – Buy 1 Get 1 FREE",
+      "Whole Boneless Pork Loin (cut into chops or roasts at no extra charge) – $2.49/lb"
+    ],
+    "weeklyDateRange": "Thursday, October 22 through Wednesday, October 28",
+    "rawDeals": [
+      {
+        "item": "Fresh Grade A Chicken Drumsticks — 4-Day Chicken Sale (Thu 10/22 - Sun 10/25 only; sold in 5-lb bag @ $4.45)",
+        "salePrice": "$0.89/lb",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, October 22 through Wednesday, October 28"
+      },
+      {
+        "item": "Whole Frying Chicken — 4-Day Chicken Sale (Thu 10/22 - Sun 10/25 only)",
+        "salePrice": "$1.49/lb",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, October 22 through Wednesday, October 28"
+      },
+      {
+        "item": "Fresh Boneless & Skinless Chicken Breasts — 4-Day Chicken Sale (Thu 10/22 - Sun 10/25 only; sold in 10-lb bag @ $17.90)",
+        "salePrice": "$1.79/lb",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, October 22 through Wednesday, October 28"
+      },
+      {
+        "item": "Lay's Classic Potato Chips, Dips or Poppables (Selected)",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, October 22 through Wednesday, October 28"
+      },
+      {
+        "item": "Whole Boneless Pork Loin (cut into chops or roasts at no extra charge)",
+        "salePrice": "$2.49/lb",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, October 22 through Wednesday, October 28"
+      },
+      {
+        "item": "Fresh Grade A Bone-In Chicken Thighs (Jumbo Pack) — 4-Day Chicken Sale (Thu 10/22 - Sun 10/25 only)",
+        "salePrice": "$1.49/lb",
+        "regularPrice": "$1.79/lb (small pack)",
+        "savings": "",
+        "dateRange": "Thursday, October 22 through Wednesday, October 28"
+      },
+      {
+        "item": "Martin's Sweet Party Potato Rolls (12-pack)",
+        "salePrice": "$1.29",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, October 22 through Wednesday, October 28"
+      },
+      {
+        "item": "Boneless Center Cut Pork Loin Chops (Value Pack)",
+        "salePrice": "$2.99/lb",
+        "regularPrice": "$3.49/lb (less amount)",
+        "savings": "$0.50/lb",
+        "dateRange": "Thursday, October 22 through Wednesday, October 28"
+      },
+      {
+        "item": "Fresh 85% Lean Ground Beef (Value Pack, Our Own Store Made)",
+        "salePrice": "$6.99/lb",
+        "regularPrice": "$7.49/lb (less amount)",
+        "savings": "$0.50/lb",
+        "dateRange": "Thursday, October 22 through Wednesday, October 28"
+      },
+      {
+        "item": "Southern Seas EZ-Peel Raw Shrimp (16/20 ct, 1-lb bag)",
+        "salePrice": "$8.99",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, October 22 through Wednesday, October 28"
+      },
+      {
+        "item": "Food Club Granulated Sugar (4 lb) — Weekly Door Buster (limit 2 per Rewards card)",
+        "salePrice": "$1.98",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, October 22 through Wednesday, October 28"
+      },
+      {
+        "item": "Pillsbury Flour (5 lb, Selected) — Weekly Door Buster (limit 2 per Rewards card)",
+        "salePrice": "$2.48",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, October 22 through Wednesday, October 28"
+      },
+      {
+        "item": "Food Club Sour Cream (16 oz, Selected) — Throwback Thursday Digital Coupon (Thu 10/22 - Sun 10/25 only, limit 1 offer)",
+        "salePrice": "$0.98",
+        "regularPrice": "$1.48",
+        "savings": "$0.50",
+        "dateRange": "Thursday, October 22 through Wednesday, October 28"
+      },
+      {
+        "item": "Betty Crocker Super Moist Cake Mix (Selected) — Throwback Thursday Digital Coupon (Thu 10/22 - Sun 10/25 only, limit 1 offer)",
+        "salePrice": "$0.98",
+        "regularPrice": "$1.48",
+        "savings": "$0.50",
+        "dateRange": "Thursday, October 22 through Wednesday, October 28"
+      },
+      {
+        "item": "Local Honeycrisp Apples",
+        "salePrice": "$1.69/lb",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, October 22 through Wednesday, October 28"
+      },
+      {
+        "item": "Green Cabbage",
+        "salePrice": "$0.59/lb",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, October 22 through Wednesday, October 28"
+      }
+    ]
   }
 }

@@ -5170,6 +5170,10 @@ async function runScraper() {
                     ticketLink: '',
                     sourceLink: 'https://www.vfwpost7294.org/',
                     description: ev.description || '',
+                    // Curated badge (2026-10-22): a vfw.json entry may carry
+                    // kidFriendly: true; 'Other' is on the family pass's
+                    // respect-pre-set allowlist, so it survives re-classification.
+                    ...(ev.kidFriendly === true ? { kidFriendly: true } : {}),
                     gameResult: '', gameScore: '', streamLink: '', isLive: false
                 });
                 vfwEventCount++;
@@ -5844,7 +5848,7 @@ async function runScraper() {
     } catch (e) { console.log(`  ⚠️ Community submissions error: ${e.message}`); }
 
     // ===== FAMILY-FRIENDLY TAGGING =====
-    const familyKeywords = /\bfamily\b|families|\bkids?\b|\bchild(ren)?\b|\byouth\b|\ball ages\b|\bopen house\b|\bparade\b|\bfestival\b|\bfun run\b|\begg hunt\b|\btrick.or.treat\b|\bstory ?time\b|\bfun fest\b|\bdoodle\b|\bpuppet\b|\bmagic show\b|\barts smarts\b|\bsalsa\b.*\b5\+/i;
+    const familyKeywords = /\bfamily\b|families|\bkids?\b|\bchild(ren)?\b|\byouth\b|\ball ages\b|\bopen house\b|\bparade\b|\bfestival\b|\bfun run\b|\begg hunt\b|\btrick.or.treat\b|\btrunk.or.treat\b|\bstory ?time\b|\bfun fest\b|\bdoodle\b|\bpuppet\b|\bmagic show\b|\barts smarts\b|\bsalsa\b.*\b5\+/i;
     const familyDescKeywords = /\bfamily[- ]friendly\b|\bfor (kids|children|families)\b|\ball ages\b|\bages?\s*\d+\s*(\+|and up|and older)\b|\byoung audiences?\b|\bkids?\s*(welcome|invited|event)\b|\bnon[- ]verbal show\b|\binteractive\b.*\b(kids|children|animation)\b|\bfamily fun\b/i;
     const notFamilyKeywords = /\brehersal\b|\brehearsal\b|\bpractice\b|\btraining\b|\bsap meeting\b|\bstaff\b|\bfaculty\b|\bin-service\b|\bboard\b|\bpto\b/i;
     // 2026-10-21: admissions (prospective-student open houses were matching the
@@ -5854,6 +5858,11 @@ async function runScraper() {
     const familyPMKeywords = /\bconcert\b|\bensemble\b|\bshowcase\b|\bspring show\b|\bmusical\b|\bplay\b|\btalent show\b|\bassembly\b|\bbook fair\b|\bfood fair\b|\bpicture\b/i;
     // MU event types that are almost always family-friendly
     const familyMUTypes = /family fun fest|arts smarts|kids.?\s*salsa/i;
+    // 2026-10-22: on MU a bare `festival` is an academic/arts series (Marimba
+    // Festival, a film festival), not a kids' event — those carry `fun fest` /
+    // `family` anyway. Derived from familyKeywords so the two lists can't drift;
+    // Borough/VFW/Other sources keep honoring `festival`.
+    const familyKeywordsMU = new RegExp(familyKeywords.source.replace('|\\bfestival\\b', ''), 'i');
     let famCount = 0;
     events.forEach(e => {
         const tags = e.tags || [];
@@ -5893,6 +5902,9 @@ async function runScraper() {
         // Only tag as family-friendly if description EXPLICITLY invites families with children
         if (src === 'Clubs/Orgs' || tags.includes('Clubs/Orgs')) {
             if (tags.includes('Club Sports')) { e.kidFriendly = false; return; }
+            // 2026-10-22: a club MEETING is for members — "cards for children"
+            // in the description (Letters of Love) is the cause, not the audience.
+            if (/\bmeeting\b/i.test(titleLower)) { e.kidFriendly = false; return; }
             const clubFamilySignals = /\bfamilies with (children|kids)\b|\binvites?\s+(all\s+)?families\b|\bfor (kids|children)\b|\bbring your (kids|children)\b|\bchildren\s+ages?\s*[2-9]\s*[-–]\s*\d|\bkids?\s*(camp|day|workshop|class|event|welcome|invited|from the area)\b|\bhosting\s+kids\b|\byouth\s+(camp|workshop|event|day)\b/i;
             if (clubFamilySignals.test(desc)) {
                 e.kidFriendly = true; famCount++;
@@ -5934,8 +5946,8 @@ async function runScraper() {
             else if (familyMUTypes.test(title)) {
                 isFamilyFriendly = true;
             }
-            // Check title keywords
-            else if (familyKeywords.test(title)) {
+            // Check title keywords (MU list — no bare `festival`, 2026-10-22)
+            else if (familyKeywordsMU.test(title)) {
                 isFamilyFriendly = true;
             }
             // Check description for family-friendly signals
@@ -5949,7 +5961,9 @@ async function runScraper() {
         }
         // VFW events — check for open-to-public family events
         else if (tags.includes('VFW')) {
-            if (familyKeywords.test(title) || /open to the public/i.test(title)) {
+            // 2026-10-22: description signals too — Trunk or Treat's copy opens
+            // "Family-friendly" and the title-only test missed it.
+            if (familyKeywords.test(title) || /open to the public/i.test(title) || familyDescKeywords.test(desc)) {
                 isFamilyFriendly = true;
             }
         }

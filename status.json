@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-10-21T18:41:44.961Z",
-  "totalEvents": 1956,
-  "withDescription": 829,
+  "generatedAt": "2026-10-22T13:48:49.887Z",
+  "totalEvents": 1953,
+  "withDescription": 827,
   "withImage": 218,
-  "familyFriendly": 63,
-  "eventsToday": 28,
+  "familyFriendly": 55,
+  "eventsToday": 36,
   "sources": {
     "muAthletics": 343,
-    "muCalendar": 179,
+    "muCalendar": 180,
     "artsmu": 4,
-    "campsAlumni": 12,
-    "muGetInvolved": 529,
+    "campsAlumni": 11,
+    "muGetInvolved": 527,
     "pennManor": 626,
-    "borough": 55,
+    "borough": 54,
     "vfw": 5,
     "phantomPower": 13,
     "community": 15,
@@ -27,7 +27,7 @@
       "latest": "2027-05-27T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-07-23T09:00:00.000Z",
+      "earliest": "2026-07-24T09:00:00.000Z",
       "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
@@ -35,7 +35,7 @@
       "latest": "2027-02-27T20:00:00.000Z"
     },
     "campsAlumni": {
-      "earliest": "2026-07-23T22:00:00.000Z",
+      "earliest": "2026-07-30T22:00:00.000Z",
       "latest": "2027-08-20T23:30:00.000Z"
     },
     "muGetInvolved": {
@@ -47,7 +47,7 @@
       "latest": "2027-10-11T22:30:00.000Z"
     },
     "borough": {
-      "earliest": "2026-07-23T22:30:00.000Z",
+      "earliest": "2026-07-28T22:00:00.000Z",
       "latest": "2026-12-25T12:00:00.000Z"
     },
     "vfw": {
@@ -67,8 +67,8 @@
       "latest": "2027-10-06T23:00:00.000Z"
     },
     "raneyCellars": {
-      "earliest": "2026-10-01T20:00:00.000Z",
-      "latest": "2026-10-09T20:00:00.000Z"
+      "earliest": "2026-10-07T20:30:00.000Z",
+      "latest": "2026-10-22T22:00:00.000Z"
     },
     "theBackyard": {
       "earliest": "2026-08-24T12:30:00.000Z",
@@ -78,63 +78,63 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 50
+      "daysSinceMoved": 51
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 61
+      "daysSinceMoved": 62
     },
     "artsmu": {
       "newest": "2027-02-27",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "campsAlumni": {
       "newest": "2027-08-20",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "muGetInvolved": {
       "newest": "2027-10-05",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "pennManor": {
       "newest": "2027-10-11",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 11
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 85
+      "daysSinceMoved": 86
     },
     "vfw": {
       "newest": "2026-11-22",
-      "daysSinceMoved": 15
+      "daysSinceMoved": 16
     },
     "phantomPower": {
       "newest": "2026-12-09",
-      "daysSinceMoved": 12
+      "daysSinceMoved": 13
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 86
+      "daysSinceMoved": 87
     },
     "manor": {
       "newest": "2027-10-06",
-      "daysSinceMoved": 15
+      "daysSinceMoved": 16
     },
     "raneyCellars": {
-      "newest": "2026-10-09",
-      "daysSinceMoved": 16
+      "newest": "2026-10-22",
+      "daysSinceMoved": 0
     },
     "theBackyard": {
       "newest": "2027-04-28",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 14
     }
   },
   "sports": {
     "total": 864,
-    "scored": 168,
+    "scored": 171,
     "wins": 81,
-    "losses": 75,
-    "ties": 12
+    "losses": 77,
+    "ties": 13
   },
   "registrations": {
     "open": 5,
@@ -150,13 +150,13 @@
       "Campus Life": 3
     },
     "stalePast": 17,
-    "lastSyncAt": "2026-10-21T18:36:13.763Z"
+    "lastSyncAt": "2026-10-22T13:45:38.310Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-21T18:41:37.124Z"
+    "checkedAt": "2026-10-22T13:48:40.705Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -165,28 +165,28 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 355,
+        "value": 354,
         "min": 45,
         "skipped": false
       },
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 217,
+        "value": 216,
         "min": 60,
         "skipped": false
       },
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 226,
+        "value": 225,
         "min": 30,
         "skipped": false
       },
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 65,
+        "value": 64,
         "min": 21,
         "skipped": false
       },
@@ -235,75 +235,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Intramural Basketball|2026-10-21T21:00:00.000Z",
-      "firstSeenAt": "2026-10-21T17:29:31.604Z",
-      "title": "Intramural Basketball",
-      "source": "Other",
-      "date": "2026-10-21T21:00:00.000Z"
+      "key": "Walk O Taco|2026-10-22T20:00:00.000Z",
+      "firstSeenAt": "2026-10-22T13:48:49.883Z",
+      "title": "Walk O Taco",
+      "source": "Raney Cellars",
+      "date": "2026-10-22T20:00:00.000Z"
     },
     {
-      "key": "Boys JV Wrestling vs Central Bucks South High School|2026-12-11T13:00:00.000Z",
-      "firstSeenAt": "2026-10-21T17:29:31.604Z",
-      "title": "Boys JV Wrestling vs Central Bucks South High School",
-      "source": "PM",
-      "date": "2026-12-11T13:00:00.000Z"
+      "key": "Thurday Trivia 6PM|2026-10-22T22:00:00.000Z",
+      "firstSeenAt": "2026-10-22T13:48:49.883Z",
+      "title": "Thurday Trivia 6PM",
+      "source": "Raney Cellars",
+      "date": "2026-10-22T22:00:00.000Z"
     },
     {
-      "key": "Halloween Slime Night|2026-10-23T23:30:00.000Z",
-      "firstSeenAt": "2026-10-21T15:40:16.049Z",
-      "title": "Halloween Slime Night",
+      "key": "Karaoke Night|2026-11-12T03:00:00.000Z",
+      "firstSeenAt": "2026-10-22T03:27:32.482Z",
+      "title": "Karaoke Night",
+      "source": "Jack's Tavern",
+      "date": "2026-11-12T03:00:00.000Z"
+    },
+    {
+      "key": "Night Market|2026-10-14T18:00:00",
+      "firstSeenAt": "2026-10-22T00:13:43.061Z",
+      "title": "Night Market",
       "source": "MU",
-      "date": "2026-10-23T23:30:00.000Z"
+      "date": "2026-10-14T18:00:00"
     },
     {
-      "key": "YDSA General Meeting|2026-11-10T18:30:00",
-      "firstSeenAt": "2026-10-21T15:40:16.049Z",
-      "title": "YDSA General Meeting",
+      "key": "Domestic Violence Awareness Month: Resources and Education|2026-10-15T11:00:00",
+      "firstSeenAt": "2026-10-22T00:13:43.061Z",
+      "title": "Domestic Violence Awareness Month: Resources and Education",
       "source": "MU",
-      "date": "2026-11-10T18:30:00"
+      "date": "2026-10-15T11:00:00"
     },
     {
-      "key": "Nu-Metal Values - OZZFEST REHASH|2026-11-15T01:00:00.000Z",
-      "firstSeenAt": "2026-10-21T15:40:16.049Z",
-      "title": "Nu-Metal Values - OZZFEST REHASH",
-      "source": "Other",
-      "date": "2026-11-15T01:00:00.000Z"
-    },
-    {
-      "key": "Election Day (*normal operating schedule)|2026-11-03T00:00:00",
-      "firstSeenAt": "2026-10-21T13:51:21.558Z",
-      "title": "Election Day (*normal operating schedule)",
+      "key": "SGA Weekly Meeting|2026-10-15T18:00:00",
+      "firstSeenAt": "2026-10-22T00:13:43.061Z",
+      "title": "SGA Weekly Meeting",
       "source": "MU",
-      "date": "2026-11-03T00:00:00"
+      "date": "2026-10-15T18:00:00"
     },
     {
-      "key": "AI Symposium 2027|2027-04-22T00:00:00",
-      "firstSeenAt": "2026-10-21T13:51:21.558Z",
-      "title": "AI Symposium 2027",
+      "key": "Guest Speaker - Mr. Milton|2026-11-09T22:00:00.000Z",
+      "firstSeenAt": "2026-10-22T00:13:43.061Z",
+      "title": "Guest Speaker - Mr. Milton",
       "source": "MU",
-      "date": "2027-04-22T00:00:00"
+      "date": "2026-11-09T22:00:00.000Z"
     },
     {
-      "key": "Millersville University’s 42nd Conference on the Holocaust & Genocide - Through the Camera Lens: Films about the Holocaust and Genocide, \"Night and Fog\"|2026-10-27T19:00:00",
-      "firstSeenAt": "2026-10-21T13:08:28.233Z",
-      "title": "Millersville University’s 42nd Conference on the Holocaust & Genocide - Through the Camera Lens: Films about the Holocaust and Genocide, \"Night and Fog\"",
+      "key": "Creative Writers Guild general meeting|2026-11-10T23:00:00.000Z",
+      "firstSeenAt": "2026-10-22T00:13:43.061Z",
+      "title": "Creative Writers Guild general meeting",
       "source": "MU",
-      "date": "2026-10-27T19:00:00"
+      "date": "2026-11-10T23:00:00.000Z"
     },
     {
-      "key": "Millersville University Men's Golf at WCU Battlefield Classic|2026-09-21T04:00:00.000Z",
-      "firstSeenAt": "2026-10-21T05:19:28.819Z",
-      "title": "Millersville University Men's Golf at WCU Battlefield Classic",
+      "key": "YDSA Meeting|2026-11-10T23:30:00.000Z",
+      "firstSeenAt": "2026-10-22T00:13:43.061Z",
+      "title": "YDSA Meeting",
       "source": "MU",
-      "date": "2026-09-21T04:00:00.000Z"
+      "date": "2026-11-10T23:30:00.000Z"
     },
     {
-      "key": "Millersville University Women's Golf at WCU Battlefield Classic|2026-09-21T04:00:00.000Z",
-      "firstSeenAt": "2026-10-21T05:19:28.819Z",
-      "title": "Millersville University Women's Golf at WCU Battlefield Classic",
+      "key": "RUF Bible Study|2026-11-11T00:00:00.000Z",
+      "firstSeenAt": "2026-10-22T00:13:43.061Z",
+      "title": "RUF Bible Study",
       "source": "MU",
-      "date": "2026-09-21T04:00:00.000Z"
+      "date": "2026-11-11T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

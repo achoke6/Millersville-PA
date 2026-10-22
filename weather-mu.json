@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "03:00",
+      "temp": "39",
+      "dewpoint": "38",
+      "rh": "96",
+      "windDir": "SSW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "02:00",
+      "temp": "40",
+      "dewpoint": "39",
+      "rh": "96",
+      "windDir": "SSW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "01:00",
       "temp": "42",
       "dewpoint": "40",
@@ -167,28 +189,6 @@
       "rh": "84",
       "windDir": "SSE",
       "windSpeed": "0",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "21:00",
-      "temp": "54",
-      "dewpoint": "39",
-      "rh": "56",
-      "windDir": "NNW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "20:00",
-      "temp": "55",
-      "dewpoint": "39",
-      "rh": "53",
-      "windDir": "NNW",
-      "windSpeed": "2",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
@@ -446,7 +446,36 @@
     "radar": "https://sirocco.accuweather.com/nx_mosaic_640x480c/RE/inmaREPA_.gif",
     "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
   },
-  "videos": [],
+  "videos": [
+    {
+      "title": "Short Term Forecast 10/21/2026",
+      "videoId": "NRawMZV90v4",
+      "url": "https://www.youtube.com/watch?v=NRawMZV90v4",
+      "published": "2026-10-21T16:29:41+00:00",
+      "thumbnail": "https://i3.ytimg.com/vi/NRawMZV90v4/hqdefault.jpg"
+    },
+    {
+      "title": "Short Term Forecast 10/20/2026",
+      "videoId": "5d7awVSiWZM",
+      "url": "https://www.youtube.com/watch?v=5d7awVSiWZM",
+      "published": "2026-10-20T16:37:18+00:00",
+      "thumbnail": "https://i2.ytimg.com/vi/5d7awVSiWZM/hqdefault.jpg"
+    },
+    {
+      "title": "Short Term Forecast 10/19/2026",
+      "videoId": "6NvBWv_vHd4",
+      "url": "https://www.youtube.com/watch?v=6NvBWv_vHd4",
+      "published": "2026-10-19T13:58:49+00:00",
+      "thumbnail": "https://i3.ytimg.com/vi/6NvBWv_vHd4/hqdefault.jpg"
+    },
+    {
+      "title": "Short Term Forecast 10/16/2026",
+      "videoId": "cp52c6k-G8o",
+      "url": "https://www.youtube.com/watch?v=cp52c6k-G8o",
+      "published": "2026-10-16T17:07:29+00:00",
+      "thumbnail": "https://i4.ytimg.com/vi/cp52c6k-G8o/hqdefault.jpg"
+    }
+  ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-22T05:12:58.221Z"
+  "updated": "2026-10-22T07:03:15.826Z"
 }

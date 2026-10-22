@@ -2,84 +2,81 @@
     "_comment": "Hand-maintained John Herr's Village Market weekly deals. Maintained weekly via Claude Cowork — circular runs Thursday-Wednesday. Transcribe ~15 top deals from the weekly circular. Update validThrough to one day past the last valid day so deals auto-disappear when the new week starts (Thursday morning).",
     "_format": "dateRange: human-readable string shown in UI (e.g. 'Thursday, May 7 through Wednesday, May 13'). validThrough: ISO date (YYYY-MM-DD), exclusive end. deals: array of { item, salePrice, regularPrice (optional), savings (optional) }. salePrice can be flexible — '$2.99/lb', '2 for $5', 'BOGO Free', etc.",
     "_source": "Circular page typically at https://www.familyownedmarkets.com/print-weekly-specials/?circularstoreidentifier=54348 or via the store's main page.",
-    "dateRange": "Thursday, October 15 through Wednesday, October 21",
-    "validThrough": "2026-10-22",
+    "dateRange": "Thursday, October 22 through Wednesday, October 28",
+    "validThrough": "2026-10-29",
     "deals": [
         {
-            "item": "Fresh All Natural Bone-In Chicken Thighs (Value Pack, Grade A)",
-            "salePrice": "$1.99/lb",
-            "regularPrice": "$2.49/lb (less amount)",
+            "item": "Fresh Grade A Chicken Drumsticks — 4-Day Chicken Sale (Thu 10/22 - Sun 10/25 only; sold in 5-lb bag @ $4.45)",
+            "salePrice": "$0.89/lb"
+        },
+        {
+            "item": "Whole Frying Chicken — 4-Day Chicken Sale (Thu 10/22 - Sun 10/25 only)",
+            "salePrice": "$1.49/lb"
+        },
+        {
+            "item": "Fresh Boneless & Skinless Chicken Breasts — 4-Day Chicken Sale (Thu 10/22 - Sun 10/25 only; sold in 10-lb bag @ $17.90)",
+            "salePrice": "$1.79/lb"
+        },
+        {
+            "item": "Lay's Classic Potato Chips, Dips or Poppables (Selected)",
+            "salePrice": "Buy 1 Get 1 FREE"
+        },
+        {
+            "item": "Whole Boneless Pork Loin (cut into chops or roasts at no extra charge)",
+            "salePrice": "$2.49/lb"
+        },
+        {
+            "item": "Fresh Grade A Bone-In Chicken Thighs (Jumbo Pack) — 4-Day Chicken Sale (Thu 10/22 - Sun 10/25 only)",
+            "salePrice": "$1.49/lb",
+            "regularPrice": "$1.79/lb (small pack)"
+        },
+        {
+            "item": "Martin's Sweet Party Potato Rolls (12-pack)",
+            "salePrice": "$1.29"
+        },
+        {
+            "item": "Boneless Center Cut Pork Loin Chops (Value Pack)",
+            "salePrice": "$2.99/lb",
+            "regularPrice": "$3.49/lb (less amount)",
             "savings": "$0.50/lb"
         },
         {
-            "item": "Fresh Whole Bone-In Pork Butt",
-            "salePrice": "$1.99/lb"
-        },
-        {
-            "item": "Martin's Original Potato Chips (8.5 oz, Selected)",
-            "salePrice": "Buy 1 Get 1 FREE"
-        },
-        {
-            "item": "Coke Products (12-pack, 12-oz cans, Selected)",
-            "salePrice": "Buy 2 Get 1 FREE"
-        },
-        {
-            "item": "Tide Simply Liquid Detergent (31-32 oz, Selected) — Throwback Thursday Digital Coupon (Thu 10/15 - Sun 10/18 only, limit 1 offer)",
-            "salePrice": "$1.98",
-            "regularPrice": "$3.48",
-            "savings": "$1.50"
-        },
-        {
-            "item": "Gibble's Cheese Puffys (8 oz)",
-            "salePrice": "Buy 1 Get 1 FREE"
-        },
-        {
-            "item": "Heinz Squeeze Ketchup (38 oz) — Throwback Thursday Digital Coupon (Thu 10/15 - Sun 10/18 only, limit 1 offer)",
-            "salePrice": "$3.48",
-            "regularPrice": "$4.98",
-            "savings": "$1.50"
-        },
-        {
-            "item": "Food Club Butter Quarters (16 oz, Salted or Unsalted)",
-            "salePrice": "$3.00"
-        },
-        {
-            "item": "Hanover Canned Beans (15.5 oz, Selected) — Weekly Door Buster (limit 8 per Rewards card)",
-            "salePrice": "4 for $3"
-        },
-        {
-            "item": "Birds Eye Steamfresh Vegetables (10-10.8 oz, Selected) — Weekly Door Buster (limit 10 per Rewards card)",
-            "salePrice": "5 for $4"
-        },
-        {
-            "item": "Kunzler Bacon (1-lb, Selected) — Weekly Door Buster (limit 4 per Rewards card)",
-            "salePrice": "$3.99"
-        },
-        {
-            "item": "Fresh Ground Sirloin (Value Pack, Our Own Store Made, Certified Angus Beef)",
+            "item": "Fresh 85% Lean Ground Beef (Value Pack, Our Own Store Made)",
             "salePrice": "$6.99/lb",
             "regularPrice": "$7.49/lb (less amount)",
             "savings": "$0.50/lb"
         },
         {
-            "item": "Turkey Hill Ice Cream (46 oz, Selected) — Digital Coupon",
-            "salePrice": "$2.98",
-            "regularPrice": "$3.98",
-            "savings": "$1.00"
+            "item": "Southern Seas EZ-Peel Raw Shrimp (16/20 ct, 1-lb bag)",
+            "salePrice": "$8.99"
         },
         {
-            "item": "Family Size Nabisco Oreo Cookies (11.78-19.1 oz, Selected) — Digital Coupon",
-            "salePrice": "$3.48",
-            "regularPrice": "$4.48",
-            "savings": "$1.00"
+            "item": "Food Club Granulated Sugar (4 lb) — Weekly Door Buster (limit 2 per Rewards card)",
+            "salePrice": "$1.98"
         },
         {
-            "item": "Red Ripe Strawberries (16 oz)",
-            "salePrice": "$3.99"
+            "item": "Pillsbury Flour (5 lb, Selected) — Weekly Door Buster (limit 2 per Rewards card)",
+            "salePrice": "$2.48"
         },
         {
-            "item": "Acorn, Butternut or Spaghetti Squash",
-            "salePrice": "$0.88/lb"
+            "item": "Food Club Sour Cream (16 oz, Selected) — Throwback Thursday Digital Coupon (Thu 10/22 - Sun 10/25 only, limit 1 offer)",
+            "salePrice": "$0.98",
+            "regularPrice": "$1.48",
+            "savings": "$0.50"
+        },
+        {
+            "item": "Betty Crocker Super Moist Cake Mix (Selected) — Throwback Thursday Digital Coupon (Thu 10/22 - Sun 10/25 only, limit 1 offer)",
+            "salePrice": "$0.98",
+            "regularPrice": "$1.48",
+            "savings": "$0.50"
+        },
+        {
+            "item": "Local Honeycrisp Apples",
+            "salePrice": "$1.69/lb"
+        },
+        {
+            "item": "Green Cabbage",
+            "salePrice": "$0.59/lb"
         }
     ]
 }

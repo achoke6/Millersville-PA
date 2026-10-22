@@ -8028,12 +8028,18 @@ async function runScraper() {
             s = decodeEntities(s);
             s = s.replace(/<[^>]+>/g, ' ');
             s = decodeEntities(s);   // entities inside escaped HTML arrive double-escaped (&amp;ndash;)
-            s = s.replace(/\s*\[\s*(?:\u2026|\.\.\.)\s*\]\s*$/, '').replace(/\s+/g, ' ').trim();
+            // WordPress footer ("The post X appeared first on Y.") rides AFTER the
+            // excerpt marker, so strip it first (2026-10-22 — 18/80 live teasers had it).
+            s = s.replace(/\s*The post\b[\s\S]*?\bappeared first on\b[\s\S]*$/, '');
+            // The excerpt marker becomes a real ellipsis instead of vanishing.
+            s = s.replace(/\s*\[\s*(?:\u2026|\.\.\.)\s*\]\s*$/, '\u2026').replace(/\s+/g, ' ').trim();
             if (s.length > 220) {
                 let cut = s.lastIndexOf(' ', 220);
                 if (cut < 160) cut = 220;
                 s = s.slice(0, cut).replace(/[\s,;:\u2013\u2014-]+$/, '') + '\u2026';
             }
+            // Feeds that pre-truncate with no marker (Penn Manor) end mid-sentence.
+            if (s && !/[.!?\u2026"\u201D)\]]$/.test(s)) s += '\u2026';
             return s;
         }
 

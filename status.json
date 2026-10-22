@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-10-22T18:17:35.281Z",
-  "totalEvents": 1952,
-  "withDescription": 824,
+  "generatedAt": "2026-10-22T18:35:15.283Z",
+  "totalEvents": 1954,
+  "withDescription": 827,
   "withImage": 218,
   "familyFriendly": 55,
   "eventsToday": 36,
   "sources": {
-    "muAthletics": 343,
-    "muCalendar": 179,
-    "artsmu": 4,
+    "muAthletics": 345,
+    "muCalendar": 212,
+    "artsmu": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 526,
+    "muGetInvolved": 494,
     "pennManor": 627,
     "borough": 55,
     "vfw": 5,
@@ -27,7 +27,7 @@
       "latest": "2027-05-27T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-07-24T09:00:00.000Z",
+      "earliest": "2026-07-25T19:30:00.000Z",
       "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
@@ -39,7 +39,7 @@
       "latest": "2027-08-20T23:30:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-08-16T00:00:00.000Z",
+      "earliest": "2026-07-24T09:00:00.000Z",
       "latest": "2027-10-05T11:00:00.000Z"
     },
     "pennManor": {
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 865,
+    "total": 867,
     "scored": 171,
     "wins": 81,
     "losses": 77,
@@ -150,13 +150,13 @@
       "Campus Life": 3
     },
     "stalePast": 17,
-    "lastSyncAt": "2026-10-22T18:14:01.764Z"
+    "lastSyncAt": "2026-10-22T18:30:58.197Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-22T18:17:25.807Z"
+    "checkedAt": "2026-10-22T18:35:08.330Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -200,7 +200,7 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 343,
+        "value": 345,
         "min": 100,
         "skipped": false
       },
@@ -234,6 +234,27 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Millersville Athletics Hall of Fame Dinner and Ceremony|2026-10-16T17:30:00",
+      "firstSeenAt": "2026-10-22T18:35:15.278Z",
+      "title": "Millersville Athletics Hall of Fame Dinner and Ceremony",
+      "source": "MU",
+      "date": "2026-10-16T17:30:00"
+    },
+    {
+      "key": "Jazz at the 'Ville|2027-02-26T19:30:00",
+      "firstSeenAt": "2026-10-22T18:35:15.278Z",
+      "title": "Jazz at the 'Ville",
+      "source": "MU",
+      "date": "2027-02-26T19:30:00"
+    },
+    {
+      "key": "MWR Super Regional I|2027-02-27T06:00:00",
+      "firstSeenAt": "2026-10-22T18:35:15.278Z",
+      "title": "MWR Super Regional I",
+      "source": "MU",
+      "date": "2027-02-27T06:00:00"
+    },
     {
       "key": "Early Childhood Organization Decoration Night|2026-10-21T23:00:00.000Z",
       "firstSeenAt": "2026-10-22T18:17:35.278Z",
@@ -282,28 +303,7 @@
       "title": "Halloween Pickleball Tournament",
       "source": "MU",
       "date": "2026-10-30T00:00:00.000Z"
-    },
-    {
-      "key": "BigChefthc Halloween Show|2026-10-30T22:00:00.000Z",
-      "firstSeenAt": "2026-10-22T18:17:35.278Z",
-      "title": "BigChefthc Halloween Show",
-      "source": "MU",
-      "date": "2026-10-30T22:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Field Hockey vs Central Dauphin High School|2026-10-28T23:00:00.000Z",
-      "firstSeenAt": "2026-10-22T16:28:24.028Z",
-      "title": "Girls Varsity Field Hockey vs Central Dauphin High School",
-      "source": "PM",
-      "date": "2026-10-28T23:00:00.000Z"
-    },
-    {
-      "key": "The Healthy Relationships Challenge|2026-11-02T19:30:00.000Z",
-      "firstSeenAt": "2026-10-22T16:28:24.028Z",
-      "title": "The Healthy Relationships Challenge",
-      "source": "MU",
-      "date": "2026-11-02T19:30:00.000Z"
     }
   ],
-  "addedLastRun": 8
+  "addedLastRun": 3
 }

@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-22T03:27:32.485Z",
+  "generatedAt": "2026-10-22T05:17:49.871Z",
   "totalEvents": 1953,
   "withDescription": 827,
   "withImage": 218,
   "familyFriendly": 55,
-  "eventsToday": 26,
+  "eventsToday": 34,
   "sources": {
     "muAthletics": 343,
     "muCalendar": 180,
@@ -78,55 +78,55 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 50
+      "daysSinceMoved": 51
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 61
+      "daysSinceMoved": 62
     },
     "artsmu": {
       "newest": "2027-02-27",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "campsAlumni": {
       "newest": "2027-08-20",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "muGetInvolved": {
       "newest": "2027-10-05",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "pennManor": {
       "newest": "2027-10-11",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 11
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 85
+      "daysSinceMoved": 86
     },
     "vfw": {
       "newest": "2026-11-22",
-      "daysSinceMoved": 15
+      "daysSinceMoved": 16
     },
     "phantomPower": {
       "newest": "2026-12-09",
-      "daysSinceMoved": 12
+      "daysSinceMoved": 13
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 86
+      "daysSinceMoved": 87
     },
     "manor": {
       "newest": "2027-10-06",
-      "daysSinceMoved": 15
+      "daysSinceMoved": 16
     },
     "raneyCellars": {
       "newest": "2026-10-09",
-      "daysSinceMoved": 16
+      "daysSinceMoved": 17
     },
     "theBackyard": {
       "newest": "2027-04-28",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 14
     }
   },
   "sports": {
@@ -150,13 +150,13 @@
       "Campus Life": 3
     },
     "stalePast": 17,
-    "lastSyncAt": "2026-10-22T03:23:58.775Z"
+    "lastSyncAt": "2026-10-22T05:12:56.153Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-10-22T03:27:23.426Z"
+    "checkedAt": "2026-10-22T05:17:41.290Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -305,5 +305,5 @@
       "date": "2026-11-11T00:30:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 0
 }

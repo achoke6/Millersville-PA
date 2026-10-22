@@ -349,12 +349,12 @@
   },
   {
     "name": "Citamard Players",
-    "category": "Performance",
+    "category": "Arts & Culture",
     "categories": [
-      "Performance"
+      "Arts & Culture"
     ],
-    "shortName": "",
-    "id": ""
+    "shortName": "Citamard",
+    "id": "citamardplayers"
   },
   {
     "name": "Civic & Community Engagement",
@@ -856,8 +856,10 @@
   },
   {
     "name": "Honors College Student Association",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "HCSA",
     "id": ""
   },
@@ -1414,10 +1416,12 @@
   },
   {
     "name": "Pre-Health Club",
-    "category": "",
-    "categories": [],
-    "shortName": "",
-    "id": ""
+    "category": "Academic",
+    "categories": [
+      "Academic"
+    ],
+    "shortName": "PHC",
+    "id": "pre-healthclub"
   },
   {
     "name": "President's Commission on Gender and Sexual Diversity",
@@ -1441,8 +1445,11 @@
   },
   {
     "name": "Reformed University Fellowship",
-    "category": "",
-    "categories": [],
+    "category": "Meeting",
+    "categories": [
+      "Meeting",
+      "Social"
+    ],
     "shortName": "RUF",
     "id": ""
   },
@@ -1779,10 +1786,8 @@
   },
   {
     "name": "University Activities Board",
-    "category": "Meeting",
-    "categories": [
-      "Meeting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "UAB",
     "id": ""
   },

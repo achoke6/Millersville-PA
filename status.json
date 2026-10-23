@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-23T00:10:12.345Z",
-  "totalEvents": 1947,
+  "generatedAt": "2026-10-23T01:32:57.751Z",
+  "totalEvents": 1956,
   "withDescription": 822,
   "withImage": 219,
   "familyFriendly": 52,
@@ -16,7 +16,7 @@
     "vfw": 5,
     "phantomPower": 13,
     "community": 14,
-    "manor": 30,
+    "manor": 39,
     "raneyCellars": 3,
     "theBackyard": 25,
     "muHudlBroadcasts": 57
@@ -64,7 +64,7 @@
     },
     "manor": {
       "earliest": "2026-10-23T22:30:00.000Z",
-      "latest": "2027-07-07T23:00:00.000Z"
+      "latest": "2027-10-06T23:00:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-10-22T20:00:00.000Z",
@@ -117,8 +117,8 @@
       "daysSinceMoved": 87
     },
     "manor": {
-      "newest": "2027-07-07",
-      "daysSinceMoved": 89
+      "newest": "2027-10-06",
+      "daysSinceMoved": 16
     },
     "raneyCellars": {
       "newest": "2026-10-29",
@@ -151,13 +151,13 @@
       "PM Community": 1
     },
     "stalePast": 17,
-    "lastSyncAt": "2026-10-23T00:06:14.983Z"
+    "lastSyncAt": "2026-10-23T01:28:50.820Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-10-23T00:09:59.823Z"
+    "checkedAt": "2026-10-23T01:32:48.733Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -215,7 +215,7 @@
       {
         "key": "manor.count",
         "ok": true,
-        "value": 30,
+        "value": 39,
         "min": 10
       },
       {
@@ -236,75 +236,75 @@
   },
   "recentlyAdded": [
     {
+      "key": "Traffic Commission Meeting|2027-07-28T12:30:00.000Z",
+      "firstSeenAt": "2026-10-23T01:32:57.747Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2027-07-28T12:30:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2027-08-02T23:00:00.000Z",
+      "firstSeenAt": "2026-10-23T01:32:57.747Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2027-08-02T23:00:00.000Z"
+    },
+    {
+      "key": "Zoning Hearing Board|2027-08-04T23:00:00.000Z",
+      "firstSeenAt": "2026-10-23T01:32:57.747Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2027-08-04T23:00:00.000Z"
+    },
+    {
+      "key": "Traffic Commission Meeting|2027-08-25T12:30:00.000Z",
+      "firstSeenAt": "2026-10-23T01:32:57.747Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2027-08-25T12:30:00.000Z"
+    },
+    {
+      "key": "Zoning Hearing Board|2027-09-01T23:00:00.000Z",
+      "firstSeenAt": "2026-10-23T01:32:57.747Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2027-09-01T23:00:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
+      "firstSeenAt": "2026-10-23T01:32:57.747Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2027-09-06T23:00:00.000Z"
+    },
+    {
+      "key": "Traffic Commission Meeting|2027-09-29T12:30:00.000Z",
+      "firstSeenAt": "2026-10-23T01:32:57.747Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2027-09-29T12:30:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2027-10-04T23:00:00.000Z",
+      "firstSeenAt": "2026-10-23T01:32:57.747Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2027-10-04T23:00:00.000Z"
+    },
+    {
+      "key": "Zoning Hearing Board|2027-10-06T23:00:00.000Z",
+      "firstSeenAt": "2026-10-23T01:32:57.747Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2027-10-06T23:00:00.000Z"
+    },
+    {
       "key": "HOMECOMING|2026-10-16T00:00:00",
       "firstSeenAt": "2026-10-23T00:10:12.342Z",
       "title": "HOMECOMING",
       "source": "MU",
       "date": "2026-10-16T00:00:00"
-    },
-    {
-      "key": "Coffee and Crafts|2026-10-16T17:00:00",
-      "firstSeenAt": "2026-10-23T00:10:12.342Z",
-      "title": "Coffee and Crafts",
-      "source": "MU",
-      "date": "2026-10-16T17:00:00"
-    },
-    {
-      "key": "Millersville University Women's Soccer at Bloomsburg|2026-10-24T20:30:00.000Z",
-      "firstSeenAt": "2026-10-23T00:10:12.342Z",
-      "title": "Millersville University Women's Soccer at Bloomsburg",
-      "source": "MU",
-      "date": "2026-10-24T20:30:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Field Hockey @ Conestoga Valley High School|2026-10-26T21:00:00.000Z",
-      "firstSeenAt": "2026-10-23T00:10:12.342Z",
-      "title": "Girls Varsity Field Hockey @ Conestoga Valley High School",
-      "source": "PM",
-      "date": "2026-10-26T21:00:00.000Z"
-    },
-    {
-      "key": "Guest Speaker - Mr. Milton|2026-11-09T22:00:00.000Z",
-      "firstSeenAt": "2026-10-23T00:10:12.342Z",
-      "title": "Guest Speaker - Mr. Milton",
-      "source": "MU",
-      "date": "2026-11-09T22:00:00.000Z"
-    },
-    {
-      "key": "Ice Hockey Club (D3) Practice|2026-11-11T02:00:00.000Z",
-      "firstSeenAt": "2026-10-23T00:10:12.342Z",
-      "title": "Ice Hockey Club (D3) Practice",
-      "source": "MU",
-      "date": "2026-11-11T02:00:00.000Z"
-    },
-    {
-      "key": "Men's Ice Hockey Practice (D2)|2026-11-11T11:00:00.000Z",
-      "firstSeenAt": "2026-10-23T00:10:12.342Z",
-      "title": "Men's Ice Hockey Practice (D2)",
-      "source": "MU",
-      "date": "2026-11-11T11:00:00.000Z"
-    },
-    {
-      "key": "Tell School of Music Recital Hour|2026-11-11T20:00:00.000Z",
-      "firstSeenAt": "2026-10-23T00:10:12.342Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2026-11-11T20:00:00.000Z"
-    },
-    {
-      "key": "Practices (after Nov 4th)|2026-11-11T22:00:00.000Z",
-      "firstSeenAt": "2026-10-23T00:10:12.342Z",
-      "title": "Practices (after Nov 4th)",
-      "source": "MU",
-      "date": "2026-11-11T22:00:00.000Z"
-    },
-    {
-      "key": "Mock Trial Club Meeting|2026-11-11T22:00:00.000Z",
-      "firstSeenAt": "2026-10-23T00:10:12.342Z",
-      "title": "Mock Trial Club Meeting",
-      "source": "MU",
-      "date": "2026-11-11T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 32
+  "addedLastRun": 9
 }

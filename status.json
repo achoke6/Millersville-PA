@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-10-22T22:20:52.870Z",
-  "totalEvents": 1949,
+  "generatedAt": "2026-10-23T00:10:12.345Z",
+  "totalEvents": 1947,
   "withDescription": 822,
-  "withImage": 218,
-  "familyFriendly": 53,
+  "withImage": 219,
+  "familyFriendly": 52,
   "eventsToday": 34,
   "sources": {
     "muAthletics": 343,
     "muCalendar": 179,
     "artsmu": 4,
     "campsAlumni": 11,
-    "muGetInvolved": 526,
-    "pennManor": 628,
+    "muGetInvolved": 529,
+    "pennManor": 633,
     "borough": 55,
     "vfw": 5,
     "phantomPower": 13,
-    "community": 15,
-    "manor": 39,
+    "community": 14,
+    "manor": 30,
     "raneyCellars": 3,
     "theBackyard": 25,
     "muHudlBroadcasts": 57
@@ -27,7 +27,7 @@
       "latest": "2027-05-27T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-07-24T09:00:00.000Z",
+      "earliest": "2026-07-25T19:30:00.000Z",
       "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
@@ -44,7 +44,7 @@
     },
     "pennManor": {
       "earliest": "2026-08-03T23:00:00.000Z",
-      "latest": "2027-10-11T22:30:00.000Z"
+      "latest": "2027-10-22T23:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-07-28T22:00:00.000Z",
@@ -59,12 +59,12 @@
       "latest": "2026-12-09T01:00:00.000Z"
     },
     "community": {
-      "earliest": "2026-07-24T16:00:00.000Z",
+      "earliest": "2026-07-25T16:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
     "manor": {
       "earliest": "2026-10-23T22:30:00.000Z",
-      "latest": "2027-10-06T23:00:00.000Z"
+      "latest": "2027-07-07T23:00:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-10-22T20:00:00.000Z",
@@ -97,8 +97,8 @@
       "daysSinceMoved": 2
     },
     "pennManor": {
-      "newest": "2027-10-11",
-      "daysSinceMoved": 11
+      "newest": "2027-10-22",
+      "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2026-12-25",
@@ -117,8 +117,8 @@
       "daysSinceMoved": 87
     },
     "manor": {
-      "newest": "2027-10-06",
-      "daysSinceMoved": 16
+      "newest": "2027-07-07",
+      "daysSinceMoved": 89
     },
     "raneyCellars": {
       "newest": "2026-10-29",
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 866,
+    "total": 871,
     "scored": 171,
     "wins": 81,
     "losses": 77,
@@ -151,13 +151,13 @@
       "PM Community": 1
     },
     "stalePast": 17,
-    "lastSyncAt": "2026-10-22T22:17:44.868Z"
+    "lastSyncAt": "2026-10-23T00:06:14.983Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
-    "approved": 5,
-    "checkedAt": "2026-10-22T22:20:42.499Z"
+    "approved": 4,
+    "checkedAt": "2026-10-23T00:09:59.823Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -166,7 +166,7 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 354,
+        "value": 365,
         "min": 45,
         "skipped": false
       },
@@ -187,14 +187,14 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 64,
+        "value": 63,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 523,
+        "value": 528,
         "min": 150,
         "skipped": false
       },
@@ -215,7 +215,7 @@
       {
         "key": "manor.count",
         "ok": true,
-        "value": 39,
+        "value": 30,
         "min": 10
       },
       {
@@ -236,75 +236,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Girls Varsity Field Hockey @ Conestoga Valley High School|2026-10-26T20:00:00.000Z",
-      "firstSeenAt": "2026-10-22T20:50:49.443Z",
+      "key": "HOMECOMING|2026-10-16T00:00:00",
+      "firstSeenAt": "2026-10-23T00:10:12.342Z",
+      "title": "HOMECOMING",
+      "source": "MU",
+      "date": "2026-10-16T00:00:00"
+    },
+    {
+      "key": "Coffee and Crafts|2026-10-16T17:00:00",
+      "firstSeenAt": "2026-10-23T00:10:12.342Z",
+      "title": "Coffee and Crafts",
+      "source": "MU",
+      "date": "2026-10-16T17:00:00"
+    },
+    {
+      "key": "Millersville University Women's Soccer at Bloomsburg|2026-10-24T20:30:00.000Z",
+      "firstSeenAt": "2026-10-23T00:10:12.342Z",
+      "title": "Millersville University Women's Soccer at Bloomsburg",
+      "source": "MU",
+      "date": "2026-10-24T20:30:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Field Hockey @ Conestoga Valley High School|2026-10-26T21:00:00.000Z",
+      "firstSeenAt": "2026-10-23T00:10:12.342Z",
       "title": "Girls Varsity Field Hockey @ Conestoga Valley High School",
       "source": "PM",
-      "date": "2026-10-26T20:00:00.000Z"
+      "date": "2026-10-26T21:00:00.000Z"
     },
     {
-      "key": "Extra Rice 4PM|2026-10-29T20:00:00.000Z",
-      "firstSeenAt": "2026-10-22T19:01:24.479Z",
-      "title": "Extra Rice 4PM",
-      "source": "Raney Cellars",
-      "date": "2026-10-29T20:00:00.000Z"
-    },
-    {
-      "key": "Early Childhood Organization Decoration Night|2026-10-21T23:00:00.000Z",
-      "firstSeenAt": "2026-10-22T18:17:35.278Z",
-      "title": "Early Childhood Organization Decoration Night",
+      "key": "Guest Speaker - Mr. Milton|2026-11-09T22:00:00.000Z",
+      "firstSeenAt": "2026-10-23T00:10:12.342Z",
+      "title": "Guest Speaker - Mr. Milton",
       "source": "MU",
-      "date": "2026-10-21T23:00:00.000Z"
+      "date": "2026-11-09T22:00:00.000Z"
     },
     {
-      "key": "Halloween Carnival|2026-10-22T23:00:00.000Z",
-      "firstSeenAt": "2026-10-22T18:17:35.278Z",
-      "title": "Halloween Carnival",
+      "key": "Ice Hockey Club (D3) Practice|2026-11-11T02:00:00.000Z",
+      "firstSeenAt": "2026-10-23T00:10:12.342Z",
+      "title": "Ice Hockey Club (D3) Practice",
       "source": "MU",
-      "date": "2026-10-22T23:00:00.000Z"
+      "date": "2026-11-11T02:00:00.000Z"
     },
     {
-      "key": "Early Childhood Organization Decoration Night|2026-10-22T23:00:00.000Z",
-      "firstSeenAt": "2026-10-22T18:17:35.278Z",
-      "title": "Early Childhood Organization Decoration Night",
+      "key": "Men's Ice Hockey Practice (D2)|2026-11-11T11:00:00.000Z",
+      "firstSeenAt": "2026-10-23T00:10:12.342Z",
+      "title": "Men's Ice Hockey Practice (D2)",
       "source": "MU",
-      "date": "2026-10-22T23:00:00.000Z"
+      "date": "2026-11-11T11:00:00.000Z"
     },
     {
-      "key": "Game vs Lafayette|2026-10-25T20:15:00.000Z",
-      "firstSeenAt": "2026-10-22T18:17:35.278Z",
-      "title": "Game vs Lafayette",
+      "key": "Tell School of Music Recital Hour|2026-11-11T20:00:00.000Z",
+      "firstSeenAt": "2026-10-23T00:10:12.342Z",
+      "title": "Tell School of Music Recital Hour",
       "source": "MU",
-      "date": "2026-10-25T20:15:00.000Z"
+      "date": "2026-11-11T20:00:00.000Z"
     },
     {
-      "key": "SGA Dining - Poppi Tabling|2026-10-26T15:30:00.000Z",
-      "firstSeenAt": "2026-10-22T18:17:35.278Z",
-      "title": "SGA Dining - Poppi Tabling",
+      "key": "Practices (after Nov 4th)|2026-11-11T22:00:00.000Z",
+      "firstSeenAt": "2026-10-23T00:10:12.342Z",
+      "title": "Practices (after Nov 4th)",
       "source": "MU",
-      "date": "2026-10-26T15:30:00.000Z"
+      "date": "2026-11-11T22:00:00.000Z"
     },
     {
-      "key": "Disability Film Festival- \"Being Heumann\"|2026-10-27T23:00:00.000Z",
-      "firstSeenAt": "2026-10-22T18:17:35.278Z",
-      "title": "Disability Film Festival- \"Being Heumann\"",
+      "key": "Mock Trial Club Meeting|2026-11-11T22:00:00.000Z",
+      "firstSeenAt": "2026-10-23T00:10:12.342Z",
+      "title": "Mock Trial Club Meeting",
       "source": "MU",
-      "date": "2026-10-27T23:00:00.000Z"
-    },
-    {
-      "key": "Halloween Pickleball Tournament|2026-10-30T00:00:00.000Z",
-      "firstSeenAt": "2026-10-22T18:17:35.278Z",
-      "title": "Halloween Pickleball Tournament",
-      "source": "MU",
-      "date": "2026-10-30T00:00:00.000Z"
-    },
-    {
-      "key": "BigChefthc Halloween Show|2026-10-30T22:00:00.000Z",
-      "firstSeenAt": "2026-10-22T18:17:35.278Z",
-      "title": "BigChefthc Halloween Show",
-      "source": "MU",
-      "date": "2026-10-30T22:00:00.000Z"
+      "date": "2026-11-11T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 32
 }

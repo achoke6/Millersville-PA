@@ -76,13 +76,12 @@
   },
   {
     "name": "Alumni",
-    "category": "Homecoming ",
+    "category": "University Departments ",
     "categories": [
-      "Homecoming ",
-      "Tabling"
+      "University Departments "
     ],
     "shortName": "",
-    "id": ""
+    "id": "alumni"
   },
   {
     "name": "American Chemical Society",
@@ -304,6 +303,8 @@
     "category": "Educational Program",
     "categories": [
       "Educational Program",
+      "Fundraiser",
+      "Lecture or Speaker",
       "Social",
       "Tabling"
     ],
@@ -395,7 +396,8 @@
     "name": "Club Cheerleading",
     "category": "Sports and Leisure",
     "categories": [
-      "Sports and Leisure"
+      "Sports and Leisure",
+      "Meeting"
     ],
     "shortName": "Club Cheerleading",
     "id": "na"
@@ -875,10 +877,8 @@
   },
   {
     "name": "Ice Hockey Club (D3)",
-    "category": "Sporting",
-    "categories": [
-      "Sporting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1441,11 +1441,8 @@
   },
   {
     "name": "Reformed University Fellowship",
-    "category": "Meeting",
-    "categories": [
-      "Meeting",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "RUF",
     "id": ""
   },
@@ -1593,9 +1590,9 @@
   },
   {
     "name": "Student Government Association",
-    "category": "Meeting",
+    "category": "Service",
     "categories": [
-      "Meeting"
+      "Service"
     ],
     "shortName": "SGA",
     "id": ""

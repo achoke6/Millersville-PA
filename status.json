@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-23T13:27:07.597Z",
-  "totalEvents": 1961,
-  "withDescription": 827,
+  "generatedAt": "2026-10-23T15:16:14.055Z",
+  "totalEvents": 1963,
+  "withDescription": 828,
   "withImage": 219,
   "familyFriendly": 53,
   "eventsToday": 18,
@@ -10,13 +10,13 @@
     "muCalendar": 184,
     "artsmu": 4,
     "campsAlumni": 11,
-    "muGetInvolved": 529,
+    "muGetInvolved": 530,
     "pennManor": 633,
     "borough": 55,
     "vfw": 5,
     "phantomPower": 13,
     "community": 14,
-    "manor": 39,
+    "manor": 40,
     "raneyCellars": 3,
     "theBackyard": 25,
     "muHudlBroadcasts": 57
@@ -149,14 +149,14 @@
       "Youth Sports": 1,
       "Campus Life": 3
     },
-    "stalePast": 17,
-    "lastSyncAt": "2026-10-23T13:23:17.817Z"
+    "stalePast": 18,
+    "lastSyncAt": "2026-10-23T15:12:29.152Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-10-23T13:26:58.571Z"
+    "checkedAt": "2026-10-23T15:16:02.906Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -214,7 +214,7 @@
       {
         "key": "manor.count",
         "ok": true,
-        "value": 39,
+        "value": 40,
         "min": 10
       },
       {
@@ -234,6 +234,20 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "UAB Field Trip: Jason's Woods|2026-10-24T22:30:00.000Z",
+      "firstSeenAt": "2026-10-23T15:16:14.051Z",
+      "title": "UAB Field Trip: Jason's Woods",
+      "source": "MU",
+      "date": "2026-10-24T22:30:00.000Z"
+    },
+    {
+      "key": "Park & Recreation-CANCELED|2026-10-26T23:00:00.000Z",
+      "firstSeenAt": "2026-10-23T15:16:14.051Z",
+      "title": "Park & Recreation-CANCELED",
+      "source": "Manor",
+      "date": "2026-10-26T23:00:00.000Z"
+    },
     {
       "key": "Cider Making at the Loft|2026-10-23T14:00:00.000Z",
       "firstSeenAt": "2026-10-23T13:27:07.594Z",
@@ -289,21 +303,7 @@
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2027-07-28T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-08-02T23:00:00.000Z",
-      "firstSeenAt": "2026-10-23T01:32:57.747Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-08-02T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-08-04T23:00:00.000Z",
-      "firstSeenAt": "2026-10-23T01:32:57.747Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-08-04T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 2
 }

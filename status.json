@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-23T18:22:01.893Z",
-  "totalEvents": 1963,
+  "generatedAt": "2026-10-23T20:11:37.646Z",
+  "totalEvents": 1964,
   "withDescription": 828,
   "withImage": 219,
   "familyFriendly": 53,
@@ -11,7 +11,7 @@
     "artsmu": 4,
     "campsAlumni": 11,
     "muGetInvolved": 530,
-    "pennManor": 633,
+    "pennManor": 634,
     "borough": 55,
     "vfw": 5,
     "phantomPower": 13,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 871,
+    "total": 872,
     "scored": 171,
     "wins": 81,
     "losses": 77,
@@ -150,13 +150,13 @@
       "Campus Life": 3
     },
     "stalePast": 18,
-    "lastSyncAt": "2026-10-23T18:18:28.067Z"
+    "lastSyncAt": "2026-10-23T20:07:33.591Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-10-23T18:21:53.289Z"
+    "checkedAt": "2026-10-23T20:11:28.409Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -193,7 +193,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 528,
+        "value": 529,
         "min": 150,
         "skipped": false
       },
@@ -234,6 +234,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Girls Varsity Wrestling @ J P McCaskey High School|2026-12-16T23:00:00.000Z",
+      "firstSeenAt": "2026-10-23T20:11:37.642Z",
+      "title": "Girls Varsity Wrestling @ J P McCaskey High School",
+      "source": "PM",
+      "date": "2026-12-16T23:00:00.000Z"
+    },
     {
       "key": "UAB Field Trip: Jason's Woods|2026-10-24T22:30:00.000Z",
       "firstSeenAt": "2026-10-23T15:16:14.051Z",
@@ -296,14 +303,7 @@
       "title": "Nu-Metal Values - OZZFEST REHASH",
       "source": "Other",
       "date": "2026-11-15T01:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2027-07-28T12:30:00.000Z",
-      "firstSeenAt": "2026-10-23T01:32:57.747Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-07-28T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

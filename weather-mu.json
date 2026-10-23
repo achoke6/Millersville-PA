@@ -1,10 +1,10 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Friday, October 23, 2026 at 08:07 AM (Cokain, McCarthy, Student Meteorologists)",
+    "issued": "Friday, October 23, 2026 at 12:11 PM (Banaszak, Nornhold, Reitz, Student Meteorologists)",
     "periods": [
       {
-        "period": "Today",
+        "period": "This afternoon",
         "text": "Sunny and cooler. High: 60-64"
       },
       {
@@ -128,67 +128,67 @@
   },
   "observations": [
     {
-      "time": "09:00",
-      "temp": "52",
-      "dewpoint": "42",
-      "rh": "68",
-      "windDir": "NNE",
+      "time": "16:00",
+      "temp": "61",
+      "dewpoint": "37",
+      "rh": "40",
+      "windDir": "ESE",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "15:00",
+      "temp": "63",
+      "dewpoint": "38",
+      "rh": "39",
+      "windDir": "ENE",
       "windSpeed": "3",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
     },
     {
-      "time": "08:00",
-      "temp": "42",
-      "dewpoint": "40",
-      "rh": "96",
-      "windDir": "WNW",
-      "windSpeed": "1",
+      "time": "14:00",
+      "temp": "62",
+      "dewpoint": "37",
+      "rh": "40",
+      "windDir": "NNE",
+      "windSpeed": "5",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
     },
     {
-      "time": "07:00",
-      "temp": "42",
-      "dewpoint": "40",
-      "rh": "94",
-      "windDir": "NNW",
-      "windSpeed": "0",
+      "time": "13:00",
+      "temp": "60",
+      "dewpoint": "38",
+      "rh": "44",
+      "windDir": "E",
+      "windSpeed": "5",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
     },
     {
-      "time": "06:00",
-      "temp": "44",
-      "dewpoint": "42",
-      "rh": "93",
-      "windDir": "N",
-      "windSpeed": "1",
+      "time": "12:00",
+      "temp": "59",
+      "dewpoint": "37",
+      "rh": "44",
+      "windDir": "ESE",
+      "windSpeed": "5",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
     },
     {
-      "time": "05:00",
-      "temp": "46",
-      "dewpoint": "42",
-      "rh": "88",
-      "windDir": "NNW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "04:00",
-      "temp": "47",
-      "dewpoint": "43",
-      "rh": "87",
-      "windDir": "N",
-      "windSpeed": "0",
+      "time": "11:00",
+      "temp": "57",
+      "dewpoint": "38",
+      "rh": "49",
+      "windDir": "ESE",
+      "windSpeed": "6",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
@@ -488,5 +488,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-23T18:18:30.327Z"
+  "updated": "2026-10-23T20:07:36.222Z"
 }

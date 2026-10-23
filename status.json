@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-23T12:59:42.339Z",
-  "totalEvents": 1960,
-  "withDescription": 826,
+  "generatedAt": "2026-10-23T13:27:07.597Z",
+  "totalEvents": 1961,
+  "withDescription": 827,
   "withImage": 219,
-  "familyFriendly": 52,
-  "eventsToday": 17,
+  "familyFriendly": 53,
+  "eventsToday": 18,
   "sources": {
     "muAthletics": 343,
     "muCalendar": 184,
@@ -143,21 +143,20 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 5,
+    "pendingFuture": 4,
     "pendingPast": 9,
     "pendingBySource": {
       "Youth Sports": 1,
-      "Campus Life": 3,
-      "PM Community": 1
+      "Campus Life": 3
     },
     "stalePast": 17,
-    "lastSyncAt": "2026-10-23T12:55:56.333Z"
+    "lastSyncAt": "2026-10-23T13:23:17.817Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-10-23T12:59:34.655Z"
+    "checkedAt": "2026-10-23T13:26:58.571Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -236,6 +235,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Cider Making at the Loft|2026-10-23T14:00:00.000Z",
+      "firstSeenAt": "2026-10-23T13:27:07.594Z",
+      "title": "Cider Making at the Loft",
+      "source": "Other",
+      "date": "2026-10-23T14:00:00.000Z"
+    },
+    {
       "key": "Fall 2026 Scholastic Book Fair|2026-10-26T09:00:00",
       "firstSeenAt": "2026-10-23T12:59:42.337Z",
       "title": "Fall 2026 Scholastic Book Fair",
@@ -297,14 +303,7 @@
       "title": "Zoning Hearing Board",
       "source": "Manor",
       "date": "2027-08-04T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2027-08-25T12:30:00.000Z",
-      "firstSeenAt": "2026-10-23T01:32:57.747Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-08-25T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 5
+  "addedLastRun": 1
 }

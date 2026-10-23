@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-10-23T11:10:35.530Z",
-  "totalEvents": 1955,
-  "withDescription": 821,
+  "generatedAt": "2026-10-23T12:59:42.339Z",
+  "totalEvents": 1960,
+  "withDescription": 826,
   "withImage": 219,
   "familyFriendly": 52,
   "eventsToday": 17,
   "sources": {
     "muAthletics": 343,
-    "muCalendar": 179,
+    "muCalendar": 184,
     "artsmu": 4,
     "campsAlumni": 11,
     "muGetInvolved": 529,
@@ -151,13 +151,13 @@
       "PM Community": 1
     },
     "stalePast": 17,
-    "lastSyncAt": "2026-10-23T11:06:26.127Z"
+    "lastSyncAt": "2026-10-23T12:55:56.333Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-10-23T11:10:26.095Z"
+    "checkedAt": "2026-10-23T12:59:34.655Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -173,7 +173,7 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 216,
+        "value": 215,
         "min": 60,
         "skipped": false
       },
@@ -236,6 +236,41 @@
   },
   "recentlyAdded": [
     {
+      "key": "Fall 2026 Scholastic Book Fair|2026-10-26T09:00:00",
+      "firstSeenAt": "2026-10-23T12:59:42.337Z",
+      "title": "Fall 2026 Scholastic Book Fair",
+      "source": "MU",
+      "date": "2026-10-26T09:00:00"
+    },
+    {
+      "key": "Fall 2026 Scholastic Book Fair|2026-10-27T09:00:00",
+      "firstSeenAt": "2026-10-23T12:59:42.337Z",
+      "title": "Fall 2026 Scholastic Book Fair",
+      "source": "MU",
+      "date": "2026-10-27T09:00:00"
+    },
+    {
+      "key": "Fall 2026 Scholastic Book Fair|2026-10-28T09:00:00",
+      "firstSeenAt": "2026-10-23T12:59:42.337Z",
+      "title": "Fall 2026 Scholastic Book Fair",
+      "source": "MU",
+      "date": "2026-10-28T09:00:00"
+    },
+    {
+      "key": "Fall 2026 Scholastic Book Fair|2026-10-29T09:00:00",
+      "firstSeenAt": "2026-10-23T12:59:42.337Z",
+      "title": "Fall 2026 Scholastic Book Fair",
+      "source": "MU",
+      "date": "2026-10-29T09:00:00"
+    },
+    {
+      "key": "Fall 2026 Scholastic Book Fair|2026-10-30T09:00:00",
+      "firstSeenAt": "2026-10-23T12:59:42.337Z",
+      "title": "Fall 2026 Scholastic Book Fair",
+      "source": "MU",
+      "date": "2026-10-30T09:00:00"
+    },
+    {
       "key": "Nu-Metal Values - OZZFEST REHASH|2026-11-15T01:00:00.000Z",
       "firstSeenAt": "2026-10-23T11:10:35.527Z",
       "title": "Nu-Metal Values - OZZFEST REHASH",
@@ -269,42 +304,7 @@
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2027-08-25T12:30:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-09-01T23:00:00.000Z",
-      "firstSeenAt": "2026-10-23T01:32:57.747Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-09-01T23:00:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
-      "firstSeenAt": "2026-10-23T01:32:57.747Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-09-06T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2027-09-29T12:30:00.000Z",
-      "firstSeenAt": "2026-10-23T01:32:57.747Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-09-29T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-10-04T23:00:00.000Z",
-      "firstSeenAt": "2026-10-23T01:32:57.747Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-10-04T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-10-06T23:00:00.000Z",
-      "firstSeenAt": "2026-10-23T01:32:57.747Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-10-06T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 5
 }

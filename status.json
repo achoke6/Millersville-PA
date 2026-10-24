@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-24T22:36:50.211Z",
-  "totalEvents": 1961,
+  "generatedAt": "2026-10-24T23:13:26.499Z",
+  "totalEvents": 1962,
   "withDescription": 822,
   "withImage": 217,
   "familyFriendly": 50,
@@ -11,7 +11,7 @@
     "artsmu": 3,
     "campsAlumni": 11,
     "muGetInvolved": 529,
-    "pennManor": 634,
+    "pennManor": 635,
     "borough": 55,
     "vfw": 5,
     "phantomPower": 13,
@@ -130,9 +130,9 @@
     }
   },
   "sports": {
-    "total": 875,
-    "scored": 180,
-    "wins": 85,
+    "total": 876,
+    "scored": 181,
+    "wins": 86,
     "losses": 82,
     "ties": 13
   },
@@ -150,13 +150,13 @@
       "Campus Life": 3
     },
     "stalePast": 22,
-    "lastSyncAt": "2026-10-24T22:33:44.781Z"
+    "lastSyncAt": "2026-10-24T23:10:25.007Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 3,
-    "checkedAt": "2026-10-24T22:36:39.822Z"
+    "checkedAt": "2026-10-24T23:13:16.949Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -193,7 +193,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 529,
+        "value": 530,
         "min": 150,
         "skipped": false
       },
@@ -234,6 +234,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Girls Varsity Soccer @ Cumberland Valley High School|2026-10-27T23:00:00.000Z",
+      "firstSeenAt": "2026-10-24T23:13:26.495Z",
+      "title": "Girls Varsity Soccer @ Cumberland Valley High School",
+      "source": "PM",
+      "date": "2026-10-27T23:00:00.000Z"
+    },
     {
       "key": "Millersville University Baseball at Wingate University|2027-02-12T17:00:00.000Z",
       "firstSeenAt": "2026-10-24T14:37:08.189Z",
@@ -296,14 +303,7 @@
       "title": "Mock Trial Club Meeting",
       "source": "MU",
       "date": "2026-11-16T22:00:00.000Z"
-    },
-    {
-      "key": "Weekly Practice|2026-11-16T23:00:00.000Z",
-      "firstSeenAt": "2026-10-24T00:42:19.521Z",
-      "title": "Weekly Practice",
-      "source": "MU",
-      "date": "2026-11-16T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

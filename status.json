@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-10-24T02:31:26.413Z",
-  "totalEvents": 1962,
+  "generatedAt": "2026-10-24T04:20:26.248Z",
+  "totalEvents": 1961,
   "withDescription": 824,
   "withImage": 217,
   "familyFriendly": 52,
-  "eventsToday": 18,
+  "eventsToday": 19,
   "sources": {
     "muAthletics": 344,
     "muCalendar": 184,
-    "artsmu": 4,
+    "artsmu": 3,
     "campsAlumni": 11,
     "muGetInvolved": 529,
     "pennManor": 634,
@@ -31,7 +31,7 @@
       "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
-      "earliest": "2026-10-23T23:00:00.000Z",
+      "earliest": "2026-10-28T23:30:00.000Z",
       "latest": "2027-02-27T20:00:00.000Z"
     },
     "campsAlumni": {
@@ -78,55 +78,55 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 52
+      "daysSinceMoved": 53
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 63
+      "daysSinceMoved": 64
     },
     "artsmu": {
       "newest": "2027-02-27",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "campsAlumni": {
       "newest": "2027-08-20",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "muGetInvolved": {
       "newest": "2027-10-05",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "pennManor": {
       "newest": "2027-10-22",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "borough": {
       "newest": "2026-12-25",
-      "daysSinceMoved": 87
+      "daysSinceMoved": 88
     },
     "vfw": {
       "newest": "2026-11-22",
-      "daysSinceMoved": 17
+      "daysSinceMoved": 18
     },
     "phantomPower": {
       "newest": "2026-12-09",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 15
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 88
+      "daysSinceMoved": 89
     },
     "manor": {
       "newest": "2027-10-06",
-      "daysSinceMoved": 17
+      "daysSinceMoved": 18
     },
     "raneyCellars": {
       "newest": "2026-10-29",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "theBackyard": {
       "newest": "2027-04-28",
-      "daysSinceMoved": 15
+      "daysSinceMoved": 16
     }
   },
   "sports": {
@@ -150,13 +150,13 @@
       "Campus Life": 3
     },
     "stalePast": 19,
-    "lastSyncAt": "2026-10-24T02:27:58.889Z"
+    "lastSyncAt": "2026-10-24T04:17:04.608Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 3,
-    "checkedAt": "2026-10-24T02:31:18.911Z"
+    "checkedAt": "2026-10-24T04:20:10.271Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -235,6 +235,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "FLAW w/ New Damage & Alex Warner Band|2026-11-13T00:00:00.000Z",
+      "firstSeenAt": "2026-10-24T04:20:26.245Z",
+      "title": "FLAW w/ New Damage & Alex Warner Band",
+      "source": "Other",
+      "date": "2026-11-13T00:00:00.000Z"
+    },
+    {
       "key": "HOMECOMING|2026-10-17T00:00:00",
       "firstSeenAt": "2026-10-24T00:42:19.521Z",
       "title": "HOMECOMING",
@@ -296,14 +303,7 @@
       "title": "Millersville University Field Hockey vs #1 Kutztown",
       "source": "MU",
       "date": "2026-09-23T22:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Wrestling @ J P McCaskey High School|2026-12-16T23:00:00.000Z",
-      "firstSeenAt": "2026-10-23T20:11:37.642Z",
-      "title": "Girls Varsity Wrestling @ J P McCaskey High School",
-      "source": "PM",
-      "date": "2026-12-16T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

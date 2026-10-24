@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-24T12:46:35.336Z",
-  "totalEvents": 1961,
-  "withDescription": 824,
+  "generatedAt": "2026-10-24T14:33:21.975Z",
+  "totalEvents": 1962,
+  "withDescription": 823,
   "withImage": 217,
-  "familyFriendly": 52,
+  "familyFriendly": 51,
   "eventsToday": 19,
   "sources": {
-    "muAthletics": 344,
+    "muAthletics": 346,
     "muCalendar": 184,
     "artsmu": 3,
     "campsAlumni": 11,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 873,
+    "total": 875,
     "scored": 175,
     "wins": 84,
     "losses": 78,
@@ -149,14 +149,14 @@
       "Youth Sports": 1,
       "Campus Life": 3
     },
-    "stalePast": 19,
-    "lastSyncAt": "2026-10-24T12:43:18.957Z"
+    "stalePast": 20,
+    "lastSyncAt": "2026-10-24T14:30:01.620Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 3,
-    "checkedAt": "2026-10-24T12:46:26.300Z"
+    "checkedAt": "2026-10-24T14:33:12.116Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -200,7 +200,7 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 344,
+        "value": 346,
         "min": 100,
         "skipped": false
       },
@@ -234,6 +234,20 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Millersville University Baseball at Wingate University|2027-02-12T17:00:00.000Z",
+      "firstSeenAt": "2026-10-24T14:33:21.970Z",
+      "title": "Millersville University Baseball at Wingate University",
+      "source": "MU",
+      "date": "2027-02-12T17:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Baseball vs Jefferson|2027-02-23T20:00:00.000Z",
+      "firstSeenAt": "2026-10-24T14:33:21.970Z",
+      "title": "Millersville University Baseball vs Jefferson",
+      "source": "MU",
+      "date": "2027-02-23T20:00:00.000Z"
+    },
     {
       "key": "FLAW w/ New Damage & Alex Warner Band|2026-11-13T00:00:00.000Z",
       "firstSeenAt": "2026-10-24T04:20:26.245Z",
@@ -289,21 +303,7 @@
       "title": "Weekly Practice",
       "source": "MU",
       "date": "2026-11-16T23:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Men's Tennis at Ursinus|2026-10-23T19:00:00.000Z",
-      "firstSeenAt": "2026-10-24T00:00:43.002Z",
-      "title": "Millersville University Men's Tennis at Ursinus",
-      "source": "MU",
-      "date": "2026-10-23T19:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Field Hockey vs #1 Kutztown|2026-09-23T22:00:00.000Z",
-      "firstSeenAt": "2026-10-23T22:11:29.544Z",
-      "title": "Millersville University Field Hockey vs #1 Kutztown",
-      "source": "MU",
-      "date": "2026-09-23T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

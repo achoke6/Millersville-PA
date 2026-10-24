@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-23T22:11:29.547Z",
-  "totalEvents": 1964,
+  "generatedAt": "2026-10-24T00:00:43.005Z",
+  "totalEvents": 1965,
   "withDescription": 828,
   "withImage": 219,
   "familyFriendly": 53,
-  "eventsToday": 18,
+  "eventsToday": 19,
   "sources": {
-    "muAthletics": 343,
+    "muAthletics": 344,
     "muCalendar": 184,
     "artsmu": 4,
     "campsAlumni": 11,
@@ -130,9 +130,9 @@
     }
   },
   "sports": {
-    "total": 872,
-    "scored": 171,
-    "wins": 81,
+    "total": 873,
+    "scored": 172,
+    "wins": 82,
     "losses": 77,
     "ties": 13
   },
@@ -149,14 +149,14 @@
       "Youth Sports": 1,
       "Campus Life": 3
     },
-    "stalePast": 18,
-    "lastSyncAt": "2026-10-23T22:07:22.866Z"
+    "stalePast": 19,
+    "lastSyncAt": "2026-10-23T23:56:52.844Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-10-23T22:11:20.660Z"
+    "checkedAt": "2026-10-24T00:00:34.245Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -186,7 +186,7 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 63,
+        "value": 62,
         "min": 21,
         "skipped": false
       },
@@ -200,7 +200,7 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 343,
+        "value": 344,
         "min": 100,
         "skipped": false
       },
@@ -234,6 +234,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Millersville University Men's Tennis at Ursinus|2026-10-23T19:00:00.000Z",
+      "firstSeenAt": "2026-10-24T00:00:43.002Z",
+      "title": "Millersville University Men's Tennis at Ursinus",
+      "source": "MU",
+      "date": "2026-10-23T19:00:00.000Z"
+    },
     {
       "key": "Millersville University Field Hockey vs #1 Kutztown|2026-09-23T22:00:00.000Z",
       "firstSeenAt": "2026-10-23T22:11:29.544Z",
@@ -296,13 +303,6 @@
       "title": "Fall 2026 Scholastic Book Fair",
       "source": "MU",
       "date": "2026-10-29T09:00:00"
-    },
-    {
-      "key": "Fall 2026 Scholastic Book Fair|2026-10-30T09:00:00",
-      "firstSeenAt": "2026-10-23T12:59:42.337Z",
-      "title": "Fall 2026 Scholastic Book Fair",
-      "source": "MU",
-      "date": "2026-10-30T09:00:00"
     }
   ],
   "addedLastRun": 1

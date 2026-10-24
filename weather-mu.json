@@ -128,6 +128,17 @@
   },
   "observations": [
     {
+      "time": "20:00",
+      "temp": "48",
+      "dewpoint": "38",
+      "rh": "68",
+      "windDir": "SSW",
+      "windSpeed": "0",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "19:00",
       "temp": "52",
       "dewpoint": "36",
@@ -178,17 +189,6 @@
       "rh": "39",
       "windDir": "ENE",
       "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "14:00",
-      "temp": "62",
-      "dewpoint": "37",
-      "rh": "40",
-      "windDir": "NNE",
-      "windSpeed": "5",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
@@ -457,36 +457,7 @@
     "radar": "https://sirocco.accuweather.com/nx_mosaic_640x480c/RE/inmaREPA_.gif",
     "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
   },
-  "videos": [
-    {
-      "title": "Short Term Forecast 10/23/26",
-      "videoId": "cbJ7fR8Ophs",
-      "url": "https://www.youtube.com/watch?v=cbJ7fR8Ophs",
-      "published": "2026-10-23T17:15:41+00:00",
-      "thumbnail": "https://i4.ytimg.com/vi/cbJ7fR8Ophs/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 10/23/2026",
-      "videoId": "gEZEk9ncCNs",
-      "url": "https://www.youtube.com/watch?v=gEZEk9ncCNs",
-      "published": "2026-10-23T13:21:17+00:00",
-      "thumbnail": "https://i4.ytimg.com/vi/gEZEk9ncCNs/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 10/22/2026",
-      "videoId": "UrmBJd7Ojv8",
-      "url": "https://www.youtube.com/watch?v=UrmBJd7Ojv8",
-      "published": "2026-10-22T15:38:11+00:00",
-      "thumbnail": "https://i2.ytimg.com/vi/UrmBJd7Ojv8/hqdefault.jpg"
-    },
-    {
-      "title": "Medium Range Forecast 10/22/2026",
-      "videoId": "m2bC-FKGQlc",
-      "url": "https://www.youtube.com/watch?v=m2bC-FKGQlc",
-      "published": "2026-10-22T12:50:38+00:00",
-      "thumbnail": "https://i2.ytimg.com/vi/m2bC-FKGQlc/hqdefault.jpg"
-    }
-  ],
+  "videos": [],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-23T23:56:55.429Z"
+  "updated": "2026-10-24T00:39:25.650Z"
 }

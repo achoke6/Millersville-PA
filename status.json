@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-10-24T00:00:43.005Z",
-  "totalEvents": 1965,
-  "withDescription": 828,
-  "withImage": 219,
-  "familyFriendly": 53,
+  "generatedAt": "2026-10-24T00:42:19.524Z",
+  "totalEvents": 1963,
+  "withDescription": 825,
+  "withImage": 217,
+  "familyFriendly": 52,
   "eventsToday": 19,
   "sources": {
     "muAthletics": 344,
     "muCalendar": 184,
     "artsmu": 4,
     "campsAlumni": 11,
-    "muGetInvolved": 530,
+    "muGetInvolved": 529,
     "pennManor": 634,
     "borough": 55,
     "vfw": 5,
     "phantomPower": 13,
-    "community": 14,
+    "community": 13,
     "manor": 40,
     "raneyCellars": 3,
     "theBackyard": 25,
@@ -27,7 +27,7 @@
       "latest": "2027-05-27T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-07-25T19:30:00.000Z",
+      "earliest": "2026-08-07T18:30:00.000Z",
       "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
@@ -59,7 +59,7 @@
       "latest": "2026-12-09T01:00:00.000Z"
     },
     "community": {
-      "earliest": "2026-07-25T16:00:00.000Z",
+      "earliest": "2026-07-26T21:00:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
     "manor": {
@@ -131,9 +131,9 @@
   },
   "sports": {
     "total": 873,
-    "scored": 172,
-    "wins": 82,
-    "losses": 77,
+    "scored": 159,
+    "wins": 73,
+    "losses": 73,
     "ties": 13
   },
   "registrations": {
@@ -150,17 +150,19 @@
       "Campus Life": 3
     },
     "stalePast": 19,
-    "lastSyncAt": "2026-10-23T23:56:52.844Z"
+    "lastSyncAt": "2026-10-24T00:39:23.362Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
-    "approved": 4,
-    "checkedAt": "2026-10-24T00:00:34.245Z"
+    "approved": 3,
+    "checkedAt": "2026-10-24T00:42:10.537Z"
   },
   "sourceHealth": {
-    "ok": true,
-    "failing": [],
+    "ok": false,
+    "failing": [
+      "manor.count"
+    ],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -213,9 +215,10 @@
       },
       {
         "key": "manor.count",
-        "ok": true,
+        "ok": false,
         "value": 40,
-        "min": 10
+        "min": 10,
+        "carriedForward": 40
       },
       {
         "key": "muHudl.pairRatio",
@@ -234,6 +237,55 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "HOMECOMING|2026-10-17T00:00:00",
+      "firstSeenAt": "2026-10-24T00:42:19.521Z",
+      "title": "HOMECOMING",
+      "source": "MU",
+      "date": "2026-10-17T00:00:00"
+    },
+    {
+      "key": "North v Central Tournament|2026-11-15T14:00:00.000Z",
+      "firstSeenAt": "2026-10-24T00:42:19.521Z",
+      "title": "North v Central Tournament",
+      "source": "MU",
+      "date": "2026-11-15T14:00:00.000Z"
+    },
+    {
+      "key": "WIXQ's General Meeting|2026-11-15T23:00:00.000Z",
+      "firstSeenAt": "2026-10-24T00:42:19.521Z",
+      "title": "WIXQ's General Meeting",
+      "source": "MU",
+      "date": "2026-11-15T23:00:00.000Z"
+    },
+    {
+      "key": "Weekly Practice|2026-11-16T21:00:00.000Z",
+      "firstSeenAt": "2026-10-24T00:42:19.521Z",
+      "title": "Weekly Practice",
+      "source": "MU",
+      "date": "2026-11-16T21:00:00.000Z"
+    },
+    {
+      "key": "Phi Alpha Theta Meeting|2026-11-16T21:30:00.000Z",
+      "firstSeenAt": "2026-10-24T00:42:19.521Z",
+      "title": "Phi Alpha Theta Meeting",
+      "source": "MU",
+      "date": "2026-11-16T21:30:00.000Z"
+    },
+    {
+      "key": "Mock Trial Club Meeting|2026-11-16T22:00:00.000Z",
+      "firstSeenAt": "2026-10-24T00:42:19.521Z",
+      "title": "Mock Trial Club Meeting",
+      "source": "MU",
+      "date": "2026-11-16T22:00:00.000Z"
+    },
+    {
+      "key": "Weekly Practice|2026-11-16T23:00:00.000Z",
+      "firstSeenAt": "2026-10-24T00:42:19.521Z",
+      "title": "Weekly Practice",
+      "source": "MU",
+      "date": "2026-11-16T23:00:00.000Z"
+    },
     {
       "key": "Millersville University Men's Tennis at Ursinus|2026-10-23T19:00:00.000Z",
       "firstSeenAt": "2026-10-24T00:00:43.002Z",
@@ -254,56 +306,7 @@
       "title": "Girls Varsity Wrestling @ J P McCaskey High School",
       "source": "PM",
       "date": "2026-12-16T23:00:00.000Z"
-    },
-    {
-      "key": "UAB Field Trip: Jason's Woods|2026-10-24T22:30:00.000Z",
-      "firstSeenAt": "2026-10-23T15:16:14.051Z",
-      "title": "UAB Field Trip: Jason's Woods",
-      "source": "MU",
-      "date": "2026-10-24T22:30:00.000Z"
-    },
-    {
-      "key": "Park & Recreation-CANCELED|2026-10-26T23:00:00.000Z",
-      "firstSeenAt": "2026-10-23T15:16:14.051Z",
-      "title": "Park & Recreation-CANCELED",
-      "source": "Manor",
-      "date": "2026-10-26T23:00:00.000Z"
-    },
-    {
-      "key": "Cider Making at the Loft|2026-10-23T14:00:00.000Z",
-      "firstSeenAt": "2026-10-23T13:27:07.594Z",
-      "title": "Cider Making at the Loft",
-      "source": "Other",
-      "date": "2026-10-23T14:00:00.000Z"
-    },
-    {
-      "key": "Fall 2026 Scholastic Book Fair|2026-10-26T09:00:00",
-      "firstSeenAt": "2026-10-23T12:59:42.337Z",
-      "title": "Fall 2026 Scholastic Book Fair",
-      "source": "MU",
-      "date": "2026-10-26T09:00:00"
-    },
-    {
-      "key": "Fall 2026 Scholastic Book Fair|2026-10-27T09:00:00",
-      "firstSeenAt": "2026-10-23T12:59:42.337Z",
-      "title": "Fall 2026 Scholastic Book Fair",
-      "source": "MU",
-      "date": "2026-10-27T09:00:00"
-    },
-    {
-      "key": "Fall 2026 Scholastic Book Fair|2026-10-28T09:00:00",
-      "firstSeenAt": "2026-10-23T12:59:42.337Z",
-      "title": "Fall 2026 Scholastic Book Fair",
-      "source": "MU",
-      "date": "2026-10-28T09:00:00"
-    },
-    {
-      "key": "Fall 2026 Scholastic Book Fair|2026-10-29T09:00:00",
-      "firstSeenAt": "2026-10-23T12:59:42.337Z",
-      "title": "Fall 2026 Scholastic Book Fair",
-      "source": "MU",
-      "date": "2026-10-29T09:00:00"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 7
 }

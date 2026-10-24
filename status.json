@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-24T00:42:19.524Z",
-  "totalEvents": 1963,
-  "withDescription": 825,
+  "generatedAt": "2026-10-24T02:31:26.413Z",
+  "totalEvents": 1962,
+  "withDescription": 824,
   "withImage": 217,
   "familyFriendly": 52,
-  "eventsToday": 19,
+  "eventsToday": 18,
   "sources": {
     "muAthletics": 344,
     "muCalendar": 184,
@@ -131,9 +131,9 @@
   },
   "sports": {
     "total": 873,
-    "scored": 159,
-    "wins": 73,
-    "losses": 73,
+    "scored": 175,
+    "wins": 84,
+    "losses": 78,
     "ties": 13
   },
   "registrations": {
@@ -150,19 +150,17 @@
       "Campus Life": 3
     },
     "stalePast": 19,
-    "lastSyncAt": "2026-10-24T00:39:23.362Z"
+    "lastSyncAt": "2026-10-24T02:27:58.889Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 3,
-    "checkedAt": "2026-10-24T00:42:10.537Z"
+    "checkedAt": "2026-10-24T02:31:18.911Z"
   },
   "sourceHealth": {
-    "ok": false,
-    "failing": [
-      "manor.count"
-    ],
+    "ok": true,
+    "failing": [],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -215,10 +213,9 @@
       },
       {
         "key": "manor.count",
-        "ok": false,
+        "ok": true,
         "value": 40,
-        "min": 10,
-        "carriedForward": 40
+        "min": 10
       },
       {
         "key": "muHudl.pairRatio",
@@ -308,5 +305,5 @@
       "date": "2026-12-16T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 7
+  "addedLastRun": 0
 }

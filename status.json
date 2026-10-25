@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-25T18:18:17.601Z",
-  "totalEvents": 1962,
+  "generatedAt": "2026-10-25T18:24:13.216Z",
+  "totalEvents": 1963,
   "withDescription": 821,
   "withImage": 216,
   "familyFriendly": 48,
@@ -11,7 +11,7 @@
     "artsmu": 3,
     "campsAlumni": 11,
     "muGetInvolved": 529,
-    "pennManor": 635,
+    "pennManor": 636,
     "borough": 55,
     "vfw": 5,
     "phantomPower": 13,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 877,
+    "total": 878,
     "scored": 181,
     "wins": 86,
     "losses": 82,
@@ -150,13 +150,13 @@
       "Campus Life": 3
     },
     "stalePast": 22,
-    "lastSyncAt": "2026-10-25T18:15:23.181Z"
+    "lastSyncAt": "2026-10-25T18:21:16.296Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-10-25T18:18:10.490Z"
+    "checkedAt": "2026-10-25T18:24:09.700Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -193,7 +193,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 530,
+        "value": 531,
         "min": 150,
         "skipped": false
       },
@@ -234,6 +234,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Boys Varsity Soccer @ Conestoga Valley High School|2026-10-27T23:00:00.000Z",
+      "firstSeenAt": "2026-10-25T18:24:13.212Z",
+      "title": "Boys Varsity Soccer @ Conestoga Valley High School",
+      "source": "PM",
+      "date": "2026-10-27T23:00:00.000Z"
+    },
     {
       "key": "Radiator Hospital w. Noun|2026-11-16T00:00:00.000Z",
       "firstSeenAt": "2026-10-25T10:09:04.618Z",
@@ -296,14 +303,7 @@
       "title": "Men's Ice Hockey Practice (D2)",
       "source": "MU",
       "date": "2026-11-17T11:00:00.000Z"
-    },
-    {
-      "key": "Weekly Practice|2026-11-17T22:00:00.000Z",
-      "firstSeenAt": "2026-10-25T01:01:52.156Z",
-      "title": "Weekly Practice",
-      "source": "MU",
-      "date": "2026-11-17T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

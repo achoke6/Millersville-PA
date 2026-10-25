@@ -1,27 +1,27 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Saturday, October 24, 2026 at 03:34 PM (Fossa, Koefoot, Langenbach, Student Meteorologists)",
+    "issued": "Sunday, October 25, 2026 at 08:35 AM (Corman, Stamper, Student Meteorologists)",
     "periods": [
       {
+        "period": "Today",
+        "text": "Sunny and seasonable. High: 64-68"
+      },
+      {
         "period": "Tonight",
-        "text": "Clear and cold with a widespread frost. Low: 30-34"
-      },
-      {
-        "period": "Tomorrow",
-        "text": "Sunny and seasonable. High: 62-66"
-      },
-      {
-        "period": "Tomorrow Night",
         "text": "Clear and cold. Low: 32-36"
       },
       {
         "period": "Monday",
-        "text": "Mostly sunny and pleasant. High: 68-72"
+        "text": "Sunny and beautiful. High: 68-72"
+      },
+      {
+        "period": "Monday Night",
+        "text": "Mainly clear. Low: 44-48"
       },
       {
         "period": "Tuesday",
-        "text": "Mostly sunny and pleasant. High: 64-68"
+        "text": "Sunny and pleasant. High: 64-68"
       }
     ]
   },
@@ -510,5 +510,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-25T12:41:55.487Z"
+  "updated": "2026-10-25T12:48:29.372Z"
 }

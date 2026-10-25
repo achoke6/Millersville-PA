@@ -126,7 +126,74 @@
       }
     ]
   },
-  "observations": [],
+  "observations": [
+    {
+      "time": "13:00",
+      "temp": "60",
+      "dewpoint": "39",
+      "rh": "45",
+      "windDir": "N",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "59",
+      "dewpoint": "43",
+      "rh": "56",
+      "windDir": "NNW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "11:00",
+      "temp": "54",
+      "dewpoint": "43",
+      "rh": "66",
+      "windDir": "WSW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "11.8",
+      "condition": "None"
+    },
+    {
+      "time": "10:00",
+      "temp": "46",
+      "dewpoint": "40",
+      "rh": "81",
+      "windDir": "SSW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "9.3",
+      "condition": "None"
+    },
+    {
+      "time": "09:00",
+      "temp": "39",
+      "dewpoint": "38",
+      "rh": "97",
+      "windDir": "SSW",
+      "windSpeed": "0",
+      "precip": "0.00",
+      "visibility": "5.6",
+      "condition": "None"
+    },
+    {
+      "time": "08:00",
+      "temp": "33",
+      "dewpoint": "33",
+      "rh": "99",
+      "windDir": "S",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "0.29",
+      "condition": "Fog"
+    }
+  ],
   "dailySummary": {
     "monthLabel": "October 2026",
     "days": [
@@ -443,5 +510,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-25T17:00:46.644Z"
+  "updated": "2026-10-25T17:06:53.182Z"
 }

@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-10-25T07:19:16.172Z",
-  "totalEvents": 1962,
+  "generatedAt": "2026-10-25T07:26:19.242Z",
+  "totalEvents": 1963,
   "withDescription": 822,
-  "withImage": 215,
+  "withImage": 216,
   "familyFriendly": 49,
   "eventsToday": 9,
   "sources": {
@@ -14,7 +14,7 @@
     "pennManor": 635,
     "borough": 55,
     "vfw": 5,
-    "phantomPower": 12,
+    "phantomPower": 13,
     "community": 12,
     "manor": 39,
     "raneyCellars": 3,
@@ -150,13 +150,13 @@
       "Campus Life": 3
     },
     "stalePast": 22,
-    "lastSyncAt": "2026-10-25T07:15:33.061Z"
+    "lastSyncAt": "2026-10-25T07:22:08.093Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-10-25T07:19:07.274Z"
+    "checkedAt": "2026-10-25T07:26:16.900Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -235,6 +235,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Radiator Hospital w. Noun|2026-11-16T00:00:00.000Z",
+      "firstSeenAt": "2026-10-25T07:26:19.239Z",
+      "title": "Radiator Hospital w. Noun",
+      "source": "Other",
+      "date": "2026-11-16T00:00:00.000Z"
+    },
+    {
       "key": "Girls Varsity Soccer @ Cumberland Valley High School|2026-10-27T22:00:00.000Z",
       "firstSeenAt": "2026-10-25T01:01:52.156Z",
       "title": "Girls Varsity Soccer @ Cumberland Valley High School",
@@ -296,14 +303,7 @@
       "title": "Weekly Practice",
       "source": "MU",
       "date": "2026-11-17T22:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Baseball at Wingate University|2027-02-12T17:00:00.000Z",
-      "firstSeenAt": "2026-10-24T14:37:08.189Z",
-      "title": "Millersville University Baseball at Wingate University",
-      "source": "MU",
-      "date": "2027-02-12T17:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

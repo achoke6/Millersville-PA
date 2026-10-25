@@ -1,21 +1,21 @@
 {
-  "generatedAt": "2026-10-24T23:13:26.499Z",
+  "generatedAt": "2026-10-25T01:01:52.159Z",
   "totalEvents": 1962,
   "withDescription": 822,
-  "withImage": 217,
-  "familyFriendly": 50,
-  "eventsToday": 19,
+  "withImage": 215,
+  "familyFriendly": 49,
+  "eventsToday": 18,
   "sources": {
-    "muAthletics": 346,
+    "muAthletics": 347,
     "muCalendar": 184,
     "artsmu": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 529,
+    "muGetInvolved": 530,
     "pennManor": 635,
     "borough": 55,
     "vfw": 5,
-    "phantomPower": 13,
-    "community": 13,
+    "phantomPower": 12,
+    "community": 12,
     "manor": 39,
     "raneyCellars": 3,
     "theBackyard": 25,
@@ -55,11 +55,11 @@
       "latest": "2026-11-22T21:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-10-24T23:00:00.000Z",
+      "earliest": "2026-10-25T20:00:00.000Z",
       "latest": "2026-12-09T01:00:00.000Z"
     },
     "community": {
-      "earliest": "2026-07-26T21:00:00.000Z",
+      "earliest": "2026-09-13T03:59:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
     "manor": {
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 876,
+    "total": 877,
     "scored": 181,
     "wins": 86,
     "losses": 82,
@@ -150,13 +150,13 @@
       "Campus Life": 3
     },
     "stalePast": 22,
-    "lastSyncAt": "2026-10-24T23:10:25.007Z"
+    "lastSyncAt": "2026-10-25T00:58:45.200Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
-    "approved": 3,
-    "checkedAt": "2026-10-24T23:13:16.949Z"
+    "approved": 2,
+    "checkedAt": "2026-10-25T01:01:44.357Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -186,7 +186,7 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 62,
+        "value": 61,
         "min": 21,
         "skipped": false
       },
@@ -200,7 +200,7 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 346,
+        "value": 347,
         "min": 100,
         "skipped": false
       },
@@ -235,11 +235,67 @@
   },
   "recentlyAdded": [
     {
-      "key": "Girls Varsity Soccer @ Cumberland Valley High School|2026-10-27T23:00:00.000Z",
-      "firstSeenAt": "2026-10-24T23:13:26.495Z",
+      "key": "Girls Varsity Soccer @ Cumberland Valley High School|2026-10-27T22:00:00.000Z",
+      "firstSeenAt": "2026-10-25T01:01:52.156Z",
       "title": "Girls Varsity Soccer @ Cumberland Valley High School",
       "source": "PM",
-      "date": "2026-10-27T23:00:00.000Z"
+      "date": "2026-10-27T22:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Soccer vs #4 vs #5|2026-10-31T00:00:00.000Z",
+      "firstSeenAt": "2026-10-25T01:01:52.156Z",
+      "title": "Millersville University Women's Soccer vs #4 vs #5",
+      "source": "MU",
+      "date": "2026-10-31T00:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Soccer vs PSAC Quarterfinals|2026-11-03T00:00:00.000Z",
+      "firstSeenAt": "2026-10-25T01:01:52.156Z",
+      "title": "Millersville University Women's Soccer vs PSAC Quarterfinals",
+      "source": "MU",
+      "date": "2026-11-03T00:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Soccer vs PSAC Semifinals|2026-11-06T00:00:00.000Z",
+      "firstSeenAt": "2026-10-25T01:01:52.156Z",
+      "title": "Millersville University Women's Soccer vs PSAC Semifinals",
+      "source": "MU",
+      "date": "2026-11-06T00:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Soccer at PSAC Championship|2026-11-08T00:00:00.000Z",
+      "firstSeenAt": "2026-10-25T01:01:52.156Z",
+      "title": "Millersville University Women's Soccer at PSAC Championship",
+      "source": "MU",
+      "date": "2026-11-08T00:00:00.000Z"
+    },
+    {
+      "key": "Moose Ultimate Practice|2026-11-17T00:00:00.000Z",
+      "firstSeenAt": "2026-10-25T01:01:52.156Z",
+      "title": "Moose Ultimate Practice",
+      "source": "MU",
+      "date": "2026-11-17T00:00:00.000Z"
+    },
+    {
+      "key": "Club Tennis Practice|2026-11-17T00:00:00.000Z",
+      "firstSeenAt": "2026-10-25T01:01:52.156Z",
+      "title": "Club Tennis Practice",
+      "source": "MU",
+      "date": "2026-11-17T00:00:00.000Z"
+    },
+    {
+      "key": "Men's Ice Hockey Practice (D2)|2026-11-17T11:00:00.000Z",
+      "firstSeenAt": "2026-10-25T01:01:52.156Z",
+      "title": "Men's Ice Hockey Practice (D2)",
+      "source": "MU",
+      "date": "2026-11-17T11:00:00.000Z"
+    },
+    {
+      "key": "Weekly Practice|2026-11-17T22:00:00.000Z",
+      "firstSeenAt": "2026-10-25T01:01:52.156Z",
+      "title": "Weekly Practice",
+      "source": "MU",
+      "date": "2026-11-17T22:00:00.000Z"
     },
     {
       "key": "Millersville University Baseball at Wingate University|2027-02-12T17:00:00.000Z",
@@ -247,63 +303,7 @@
       "title": "Millersville University Baseball at Wingate University",
       "source": "MU",
       "date": "2027-02-12T17:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Baseball vs Jefferson|2027-02-23T20:00:00.000Z",
-      "firstSeenAt": "2026-10-24T14:37:08.189Z",
-      "title": "Millersville University Baseball vs Jefferson",
-      "source": "MU",
-      "date": "2027-02-23T20:00:00.000Z"
-    },
-    {
-      "key": "FLAW w/ New Damage & Alex Warner Band|2026-11-13T00:00:00.000Z",
-      "firstSeenAt": "2026-10-24T04:20:26.245Z",
-      "title": "FLAW w/ New Damage & Alex Warner Band",
-      "source": "Other",
-      "date": "2026-11-13T00:00:00.000Z"
-    },
-    {
-      "key": "HOMECOMING|2026-10-17T00:00:00",
-      "firstSeenAt": "2026-10-24T00:42:19.521Z",
-      "title": "HOMECOMING",
-      "source": "MU",
-      "date": "2026-10-17T00:00:00"
-    },
-    {
-      "key": "North v Central Tournament|2026-11-15T14:00:00.000Z",
-      "firstSeenAt": "2026-10-24T00:42:19.521Z",
-      "title": "North v Central Tournament",
-      "source": "MU",
-      "date": "2026-11-15T14:00:00.000Z"
-    },
-    {
-      "key": "WIXQ's General Meeting|2026-11-15T23:00:00.000Z",
-      "firstSeenAt": "2026-10-24T00:42:19.521Z",
-      "title": "WIXQ's General Meeting",
-      "source": "MU",
-      "date": "2026-11-15T23:00:00.000Z"
-    },
-    {
-      "key": "Weekly Practice|2026-11-16T21:00:00.000Z",
-      "firstSeenAt": "2026-10-24T00:42:19.521Z",
-      "title": "Weekly Practice",
-      "source": "MU",
-      "date": "2026-11-16T21:00:00.000Z"
-    },
-    {
-      "key": "Phi Alpha Theta Meeting|2026-11-16T21:30:00.000Z",
-      "firstSeenAt": "2026-10-24T00:42:19.521Z",
-      "title": "Phi Alpha Theta Meeting",
-      "source": "MU",
-      "date": "2026-11-16T21:30:00.000Z"
-    },
-    {
-      "key": "Mock Trial Club Meeting|2026-11-16T22:00:00.000Z",
-      "firstSeenAt": "2026-10-24T00:42:19.521Z",
-      "title": "Mock Trial Club Meeting",
-      "source": "MU",
-      "date": "2026-11-16T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 9
 }

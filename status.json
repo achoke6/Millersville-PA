@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-10-26T12:59:13.151Z",
+  "generatedAt": "2026-10-26T13:50:51.180Z",
   "totalEvents": 1959,
   "withDescription": 816,
-  "withImage": 216,
+  "withImage": 215,
   "familyFriendly": 47,
   "eventsToday": 19,
   "sources": {
@@ -10,10 +10,10 @@
     "muCalendar": 184,
     "artsmu": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 525,
+    "muGetInvolved": 526,
     "pennManor": 637,
     "borough": 55,
-    "vfw": 5,
+    "vfw": 4,
     "phantomPower": 13,
     "community": 12,
     "manor": 39,
@@ -51,7 +51,7 @@
       "latest": "2026-12-25T12:00:00.000Z"
     },
     "vfw": {
-      "earliest": "2026-10-09T22:00:00.000Z",
+      "earliest": "2026-10-15T20:30:00.000Z",
       "latest": "2026-11-22T21:00:00.000Z"
     },
     "phantomPower": {
@@ -143,20 +143,20 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 4,
+    "pendingFuture": 5,
     "pendingPast": 9,
     "pendingBySource": {
       "Youth Sports": 1,
-      "Campus Life": 3
+      "Campus Life": 4
     },
     "stalePast": 22,
-    "lastSyncAt": "2026-10-26T12:55:59.208Z"
+    "lastSyncAt": "2026-10-26T13:47:24.185Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-10-26T12:59:10.145Z"
+    "checkedAt": "2026-10-26T13:50:40.671Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -235,6 +235,27 @@
   },
   "recentlyAdded": [
     {
+      "key": "Granny!|2026-10-30T20:00:00.000Z",
+      "firstSeenAt": "2026-10-26T13:50:51.177Z",
+      "title": "Granny!",
+      "source": "MU",
+      "date": "2026-10-30T20:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Field Hockey vs Bloomsburg|2026-10-31T17:00:00.000Z",
+      "firstSeenAt": "2026-10-26T13:50:51.177Z",
+      "title": "Millersville University Field Hockey vs Bloomsburg",
+      "source": "MU",
+      "date": "2026-10-31T17:00:00.000Z"
+    },
+    {
+      "key": "RUF Bible Study|2026-11-17T19:00:00",
+      "firstSeenAt": "2026-10-26T13:50:51.177Z",
+      "title": "RUF Bible Study",
+      "source": "MU",
+      "date": "2026-11-17T19:00:00"
+    },
+    {
       "key": "MU Football Season Tickets (2026)|2026-09-13T03:59:00.000Z",
       "firstSeenAt": "2026-10-26T11:46:26.542Z",
       "title": "MU Football Season Tickets (2026)",
@@ -282,28 +303,7 @@
       "title": "SGA - Student Appreciation Event",
       "source": "MU",
       "date": "2026-11-17T22:30:00.000Z"
-    },
-    {
-      "key": "Weekly Run|2026-11-17T23:00:00.000Z",
-      "firstSeenAt": "2026-10-26T00:05:47.619Z",
-      "title": "Weekly Run",
-      "source": "MU",
-      "date": "2026-11-17T23:00:00.000Z"
-    },
-    {
-      "key": "Biology Club Meeting|2026-11-17T23:00:00.000Z",
-      "firstSeenAt": "2026-10-26T00:05:47.619Z",
-      "title": "Biology Club Meeting",
-      "source": "MU",
-      "date": "2026-11-17T23:00:00.000Z"
-    },
-    {
-      "key": "Crochet Club, Math Club, & MEMU: Hyperbolic Planes|2026-11-17T23:00:00.000Z",
-      "firstSeenAt": "2026-10-26T00:05:47.619Z",
-      "title": "Crochet Club, Math Club, & MEMU: Hyperbolic Planes",
-      "source": "MU",
-      "date": "2026-11-17T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 3
 }

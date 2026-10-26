@@ -126,7 +126,74 @@
       }
     ]
   },
-  "observations": [],
+  "observations": [
+    {
+      "time": "00:00",
+      "temp": "41",
+      "dewpoint": "40",
+      "rh": "97",
+      "windDir": "NNW",
+      "windSpeed": "0",
+      "precip": "0.00",
+      "visibility": "0.98",
+      "condition": "Mist"
+    },
+    {
+      "time": "23:00",
+      "temp": "42",
+      "dewpoint": "42",
+      "rh": "97",
+      "windDir": "SW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "6.2",
+      "condition": "None"
+    },
+    {
+      "time": "22:00",
+      "temp": "44",
+      "dewpoint": "43",
+      "rh": "95",
+      "windDir": "ESE",
+      "windSpeed": "0",
+      "precip": "0.00",
+      "visibility": "0.85",
+      "condition": "Mist"
+    },
+    {
+      "time": "21:00",
+      "temp": "47",
+      "dewpoint": "44",
+      "rh": "91",
+      "windDir": "WNW",
+      "windSpeed": "0",
+      "precip": "0.00",
+      "visibility": "6.2",
+      "condition": "None"
+    },
+    {
+      "time": "20:00",
+      "temp": "49",
+      "dewpoint": "44",
+      "rh": "84",
+      "windDir": "SSE",
+      "windSpeed": "0",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "19:00",
+      "temp": "53",
+      "dewpoint": "43",
+      "rh": "70",
+      "windDir": "NNW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    }
+  ],
   "dailySummary": {
     "monthLabel": "October 2026",
     "days": [
@@ -393,6 +460,17 @@
         "windSpeed": "9",
         "windTime": "13:53",
         "rain": "0.00"
+      },
+      {
+        "date": "10/25",
+        "max": "65",
+        "maxTime": "17:12",
+        "min": "33",
+        "minTime": "07:01",
+        "windDir": "336",
+        "windSpeed": "9",
+        "windTime": "14:13",
+        "rain": "0.00"
       }
     ],
     "totalRain": "2.81",
@@ -414,5 +492,5 @@
   },
   "videos": [],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-26T04:00:31.877Z"
+  "updated": "2026-10-26T04:06:02.480Z"
 }

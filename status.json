@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-26T11:29:43.787Z",
-  "totalEvents": 1959,
-  "withDescription": 816,
+  "generatedAt": "2026-10-26T11:39:48.421Z",
+  "totalEvents": 1957,
+  "withDescription": 814,
   "withImage": 216,
-  "familyFriendly": 47,
+  "familyFriendly": 46,
   "eventsToday": 19,
   "sources": {
     "muAthletics": 347,
@@ -15,7 +15,7 @@
     "borough": 55,
     "vfw": 5,
     "phantomPower": 13,
-    "community": 12,
+    "community": 10,
     "manor": 39,
     "raneyCellars": 3,
     "theBackyard": 25,
@@ -59,7 +59,7 @@
       "latest": "2026-12-09T01:00:00.000Z"
     },
     "community": {
-      "earliest": "2026-09-13T03:59:00.000Z",
+      "earliest": "2026-10-02T13:15:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
     "manor": {
@@ -137,9 +137,9 @@
     "ties": 13
   },
   "registrations": {
-    "open": 3,
+    "open": 2,
     "next2Weeks": 0,
-    "nextClose": "2026-09-13",
+    "nextClose": "2026-11-18",
     "openNoDeadline": 0
   },
   "reviewQueue": {
@@ -150,14 +150,9 @@
       "Campus Life": 3
     },
     "stalePast": 22,
-    "lastSyncAt": "2026-10-26T11:26:52.438Z"
+    "lastSyncAt": "2026-10-26T11:32:43.856Z"
   },
-  "submissionsQueue": {
-    "pendingFuture": 1,
-    "pendingPast": 1,
-    "approved": 2,
-    "checkedAt": "2026-10-26T11:29:39.767Z"
-  },
+  "submissionsQueue": null,
   "sourceHealth": {
     "ok": true,
     "failing": [],
@@ -305,5 +300,5 @@
       "date": "2026-11-18T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 0
 }

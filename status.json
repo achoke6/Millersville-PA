@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-10-26T11:39:48.421Z",
-  "totalEvents": 1957,
-  "withDescription": 814,
+  "generatedAt": "2026-10-26T11:46:26.544Z",
+  "totalEvents": 1959,
+  "withDescription": 816,
   "withImage": 216,
-  "familyFriendly": 46,
+  "familyFriendly": 47,
   "eventsToday": 19,
   "sources": {
     "muAthletics": 347,
@@ -15,7 +15,7 @@
     "borough": 55,
     "vfw": 5,
     "phantomPower": 13,
-    "community": 10,
+    "community": 12,
     "manor": 39,
     "raneyCellars": 3,
     "theBackyard": 25,
@@ -59,7 +59,7 @@
       "latest": "2026-12-09T01:00:00.000Z"
     },
     "community": {
-      "earliest": "2026-10-02T13:15:00.000Z",
+      "earliest": "2026-09-13T03:59:00.000Z",
       "latest": "2027-04-16T13:15:00.000Z"
     },
     "manor": {
@@ -137,9 +137,9 @@
     "ties": 13
   },
   "registrations": {
-    "open": 2,
+    "open": 3,
     "next2Weeks": 0,
-    "nextClose": "2026-11-18",
+    "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
   "reviewQueue": {
@@ -150,9 +150,14 @@
       "Campus Life": 3
     },
     "stalePast": 22,
-    "lastSyncAt": "2026-10-26T11:32:43.856Z"
+    "lastSyncAt": "2026-10-26T11:42:53.713Z"
   },
-  "submissionsQueue": null,
+  "submissionsQueue": {
+    "pendingFuture": 1,
+    "pendingPast": 1,
+    "approved": 2,
+    "checkedAt": "2026-10-26T11:46:24.626Z"
+  },
   "sourceHealth": {
     "ok": true,
     "failing": [],
@@ -230,6 +235,20 @@
   },
   "recentlyAdded": [
     {
+      "key": "MU Football Season Tickets (2026)|2026-09-13T03:59:00.000Z",
+      "firstSeenAt": "2026-10-26T11:46:26.542Z",
+      "title": "MU Football Season Tickets (2026)",
+      "source": "Community",
+      "date": "2026-09-13T03:59:00.000Z"
+    },
+    {
+      "key": "St. Philip the Apostle Christmas Craft Show|2026-12-05T13:00:00.000Z",
+      "firstSeenAt": "2026-10-26T11:46:26.542Z",
+      "title": "St. Philip the Apostle Christmas Craft Show",
+      "source": "Community",
+      "date": "2026-12-05T13:00:00.000Z"
+    },
+    {
       "key": "Thin The Herd w. 157 frq, Making A Mockery & junk.|2026-11-17T00:00:00.000Z",
       "firstSeenAt": "2026-10-26T11:29:43.784Z",
       "title": "Thin The Herd w. 157 frq, Making A Mockery & junk.",
@@ -284,21 +303,7 @@
       "title": "Crochet Club, Math Club, & MEMU: Hyperbolic Planes",
       "source": "MU",
       "date": "2026-11-17T23:00:00.000Z"
-    },
-    {
-      "key": "YDSA Meeting|2026-11-17T23:30:00.000Z",
-      "firstSeenAt": "2026-10-26T00:05:47.619Z",
-      "title": "YDSA Meeting",
-      "source": "MU",
-      "date": "2026-11-17T23:30:00.000Z"
-    },
-    {
-      "key": "RUF Bible Study|2026-11-18T00:00:00.000Z",
-      "firstSeenAt": "2026-10-26T00:05:47.619Z",
-      "title": "RUF Bible Study",
-      "source": "MU",
-      "date": "2026-11-18T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

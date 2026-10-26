@@ -229,9 +229,10 @@
   },
   {
     "name": "Black Student Union",
-    "category": "Fundraiser",
+    "category": "Lecture or Speaker",
     "categories": [
-      "Fundraiser"
+      "Lecture or Speaker",
+      "Meeting"
     ],
     "shortName": "",
     "id": ""
@@ -851,9 +852,9 @@
   },
   {
     "name": "Honors College Student Association",
-    "category": "Social",
+    "category": "Trip",
     "categories": [
-      "Social"
+      "Trip"
     ],
     "shortName": "HCSA",
     "id": ""
@@ -877,8 +878,10 @@
   },
   {
     "name": "Ice Hockey Club (D3)",
-    "category": "",
-    "categories": [],
+    "category": "Sporting",
+    "categories": [
+      "Sporting"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1813,12 +1816,13 @@
   },
   {
     "name": "Ville Sports Officials Association Club",
-    "category": "Sports and Leisure",
+    "category": "Fundraiser",
     "categories": [
-      "Sports and Leisure"
+      "Fundraiser",
+      "Sporting"
     ],
     "shortName": "VSOAC",
-    "id": "vsoa"
+    "id": ""
   },
   {
     "name": "VilleHarmonics",

@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-10-25T23:58:59.823Z",
-  "totalEvents": 1961,
-  "withDescription": 819,
-  "withImage": 216,
+  "generatedAt": "2026-10-26T00:05:47.624Z",
+  "totalEvents": 1958,
+  "withDescription": 816,
+  "withImage": 215,
   "familyFriendly": 47,
-  "eventsToday": 9,
+  "eventsToday": 8,
   "sources": {
     "muAthletics": 347,
     "muCalendar": 184,
     "artsmu": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 528,
-    "pennManor": 636,
+    "muGetInvolved": 525,
+    "pennManor": 637,
     "borough": 55,
     "vfw": 5,
-    "phantomPower": 13,
+    "phantomPower": 12,
     "community": 12,
     "manor": 39,
     "raneyCellars": 3,
@@ -44,7 +44,7 @@
     },
     "pennManor": {
       "earliest": "2026-08-03T23:00:00.000Z",
-      "latest": "2027-10-22T23:00:00.000Z"
+      "latest": "2027-10-25T20:00:00.000Z"
     },
     "borough": {
       "earliest": "2026-07-28T22:00:00.000Z",
@@ -55,7 +55,7 @@
       "latest": "2026-11-22T21:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-10-25T20:00:00.000Z",
+      "earliest": "2026-10-30T00:00:00.000Z",
       "latest": "2026-12-09T01:00:00.000Z"
     },
     "community": {
@@ -97,8 +97,8 @@
       "daysSinceMoved": 5
     },
     "pennManor": {
-      "newest": "2027-10-22",
-      "daysSinceMoved": 3
+      "newest": "2027-10-25",
+      "daysSinceMoved": 0
     },
     "borough": {
       "newest": "2026-12-25",
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 878,
+    "total": 879,
     "scored": 181,
     "wins": 86,
     "losses": 82,
@@ -150,13 +150,13 @@
       "Campus Life": 3
     },
     "stalePast": 22,
-    "lastSyncAt": "2026-10-25T23:55:55.000Z"
+    "lastSyncAt": "2026-10-26T00:02:07.793Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-10-25T23:58:39.925Z"
+    "checkedAt": "2026-10-26T00:05:44.095Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -165,7 +165,7 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 362,
+        "value": 365,
         "min": 45,
         "skipped": false
       },
@@ -186,14 +186,14 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 61,
+        "value": 60,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 531,
+        "value": 532,
         "min": 150,
         "skipped": false
       },
@@ -235,75 +235,75 @@
   },
   "recentlyAdded": [
     {
+      "key": "Victoria's Secret Fashion Show Watch Party 💕|2026-10-18T18:00:00",
+      "firstSeenAt": "2026-10-26T00:05:47.619Z",
+      "title": "Victoria's Secret Fashion Show Watch Party 💕",
+      "source": "MU",
+      "date": "2026-10-18T18:00:00"
+    },
+    {
+      "key": "SGA Advocacy Tabling|2026-11-17T22:00:00.000Z",
+      "firstSeenAt": "2026-10-26T00:05:47.619Z",
+      "title": "SGA Advocacy Tabling",
+      "source": "MU",
+      "date": "2026-11-17T22:00:00.000Z"
+    },
+    {
+      "key": "SGA - Student Appreciation Event|2026-11-17T22:30:00.000Z",
+      "firstSeenAt": "2026-10-26T00:05:47.619Z",
+      "title": "SGA - Student Appreciation Event",
+      "source": "MU",
+      "date": "2026-11-17T22:30:00.000Z"
+    },
+    {
+      "key": "Weekly Run|2026-11-17T23:00:00.000Z",
+      "firstSeenAt": "2026-10-26T00:05:47.619Z",
+      "title": "Weekly Run",
+      "source": "MU",
+      "date": "2026-11-17T23:00:00.000Z"
+    },
+    {
+      "key": "Biology Club Meeting|2026-11-17T23:00:00.000Z",
+      "firstSeenAt": "2026-10-26T00:05:47.619Z",
+      "title": "Biology Club Meeting",
+      "source": "MU",
+      "date": "2026-11-17T23:00:00.000Z"
+    },
+    {
+      "key": "Crochet Club, Math Club, & MEMU: Hyperbolic Planes|2026-11-17T23:00:00.000Z",
+      "firstSeenAt": "2026-10-26T00:05:47.619Z",
+      "title": "Crochet Club, Math Club, & MEMU: Hyperbolic Planes",
+      "source": "MU",
+      "date": "2026-11-17T23:00:00.000Z"
+    },
+    {
+      "key": "YDSA Meeting|2026-11-17T23:30:00.000Z",
+      "firstSeenAt": "2026-10-26T00:05:47.619Z",
+      "title": "YDSA Meeting",
+      "source": "MU",
+      "date": "2026-11-17T23:30:00.000Z"
+    },
+    {
+      "key": "RUF Bible Study|2026-11-18T00:00:00.000Z",
+      "firstSeenAt": "2026-10-26T00:05:47.619Z",
+      "title": "RUF Bible Study",
+      "source": "MU",
+      "date": "2026-11-18T00:00:00.000Z"
+    },
+    {
+      "key": "Boys JV Football @ Cedar Crest High School|2027-10-25T20:00:00.000Z",
+      "firstSeenAt": "2026-10-26T00:05:47.619Z",
+      "title": "Boys JV Football @ Cedar Crest High School",
+      "source": "PM",
+      "date": "2027-10-25T20:00:00.000Z"
+    },
+    {
       "key": "Boys Varsity Soccer @ Conestoga Valley High School|2026-10-27T23:00:00.000Z",
       "firstSeenAt": "2026-10-25T18:24:13.212Z",
       "title": "Boys Varsity Soccer @ Conestoga Valley High School",
       "source": "PM",
       "date": "2026-10-27T23:00:00.000Z"
-    },
-    {
-      "key": "Radiator Hospital w. Noun|2026-11-16T00:00:00.000Z",
-      "firstSeenAt": "2026-10-25T10:09:04.618Z",
-      "title": "Radiator Hospital w. Noun",
-      "source": "Other",
-      "date": "2026-11-16T00:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Soccer @ Cumberland Valley High School|2026-10-27T22:00:00.000Z",
-      "firstSeenAt": "2026-10-25T01:01:52.156Z",
-      "title": "Girls Varsity Soccer @ Cumberland Valley High School",
-      "source": "PM",
-      "date": "2026-10-27T22:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Soccer vs #4 vs #5|2026-10-31T00:00:00.000Z",
-      "firstSeenAt": "2026-10-25T01:01:52.156Z",
-      "title": "Millersville University Women's Soccer vs #4 vs #5",
-      "source": "MU",
-      "date": "2026-10-31T00:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Soccer vs PSAC Quarterfinals|2026-11-03T00:00:00.000Z",
-      "firstSeenAt": "2026-10-25T01:01:52.156Z",
-      "title": "Millersville University Women's Soccer vs PSAC Quarterfinals",
-      "source": "MU",
-      "date": "2026-11-03T00:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Soccer vs PSAC Semifinals|2026-11-06T00:00:00.000Z",
-      "firstSeenAt": "2026-10-25T01:01:52.156Z",
-      "title": "Millersville University Women's Soccer vs PSAC Semifinals",
-      "source": "MU",
-      "date": "2026-11-06T00:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Soccer at PSAC Championship|2026-11-08T00:00:00.000Z",
-      "firstSeenAt": "2026-10-25T01:01:52.156Z",
-      "title": "Millersville University Women's Soccer at PSAC Championship",
-      "source": "MU",
-      "date": "2026-11-08T00:00:00.000Z"
-    },
-    {
-      "key": "Moose Ultimate Practice|2026-11-17T00:00:00.000Z",
-      "firstSeenAt": "2026-10-25T01:01:52.156Z",
-      "title": "Moose Ultimate Practice",
-      "source": "MU",
-      "date": "2026-11-17T00:00:00.000Z"
-    },
-    {
-      "key": "Club Tennis Practice|2026-11-17T00:00:00.000Z",
-      "firstSeenAt": "2026-10-25T01:01:52.156Z",
-      "title": "Club Tennis Practice",
-      "source": "MU",
-      "date": "2026-11-17T00:00:00.000Z"
-    },
-    {
-      "key": "Men's Ice Hockey Practice (D2)|2026-11-17T11:00:00.000Z",
-      "firstSeenAt": "2026-10-25T01:01:52.156Z",
-      "title": "Men's Ice Hockey Practice (D2)",
-      "source": "MU",
-      "date": "2026-11-17T11:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 9
 }

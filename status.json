@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-10-26T15:45:15.372Z",
-  "totalEvents": 1960,
-  "withDescription": 817,
-  "withImage": 215,
-  "familyFriendly": 48,
+  "generatedAt": "2026-10-26T17:34:10.624Z",
+  "totalEvents": 1962,
+  "withDescription": 819,
+  "withImage": 217,
+  "familyFriendly": 49,
   "eventsToday": 19,
   "sources": {
-    "muAthletics": 347,
+    "muAthletics": 346,
     "muCalendar": 184,
     "artsmu": 3,
     "campsAlumni": 12,
-    "muGetInvolved": 526,
-    "pennManor": 637,
+    "muGetInvolved": 528,
+    "pennManor": 638,
     "borough": 55,
     "vfw": 4,
     "phantomPower": 13,
@@ -55,7 +55,7 @@
       "latest": "2026-11-22T21:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-10-30T00:00:00.000Z",
+      "earliest": "2026-10-29T00:00:00.000Z",
       "latest": "2026-12-09T01:00:00.000Z"
     },
     "community": {
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 879,
+    "total": 878,
     "scored": 181,
     "wins": 86,
     "losses": 82,
@@ -150,13 +150,13 @@
       "Campus Life": 4
     },
     "stalePast": 22,
-    "lastSyncAt": "2026-10-26T15:42:26.029Z"
+    "lastSyncAt": "2026-10-26T17:30:40.591Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-10-26T15:45:11.090Z"
+    "checkedAt": "2026-10-26T17:33:58.226Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -200,14 +200,14 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 347,
+        "value": 346,
         "min": 100,
         "skipped": false
       },
       {
         "key": "pennManorGeneral.count",
         "ok": true,
-        "value": 105,
+        "value": 106,
         "min": 10,
         "skipped": false
       },
@@ -235,75 +235,75 @@
   },
   "recentlyAdded": [
     {
+      "key": "Millersville University Men's Soccer vs Bloomsburg|2026-09-26T17:00:00.000Z",
+      "firstSeenAt": "2026-10-26T17:34:10.620Z",
+      "title": "Millersville University Men's Soccer vs Bloomsburg",
+      "source": "MU",
+      "date": "2026-09-26T17:00:00.000Z"
+    },
+    {
+      "key": "Men's Ice Hockey @ Stockton University|2026-10-23T23:30:00.000Z",
+      "firstSeenAt": "2026-10-26T17:34:10.620Z",
+      "title": "Men's Ice Hockey @ Stockton University",
+      "source": "MU",
+      "date": "2026-10-23T23:30:00.000Z"
+    },
+    {
+      "key": "DIE LAUGHING - A Comedy Showcase of Horrors|2026-10-29T00:00:00.000Z",
+      "firstSeenAt": "2026-10-26T17:34:10.620Z",
+      "title": "DIE LAUGHING - A Comedy Showcase of Horrors",
+      "source": "Other",
+      "date": "2026-10-29T00:00:00.000Z"
+    },
+    {
+      "key": "Millersville Mens Club Soccer vs Coal Region Soccer Club|2026-11-01T20:00:00.000Z",
+      "firstSeenAt": "2026-10-26T17:34:10.620Z",
+      "title": "Millersville Mens Club Soccer vs Coal Region Soccer Club",
+      "source": "MU",
+      "date": "2026-11-01T20:00:00.000Z"
+    },
+    {
+      "key": "Shippensburg Scrimmage|2026-11-06T00:00:00.000Z",
+      "firstSeenAt": "2026-10-26T17:34:10.620Z",
+      "title": "Shippensburg Scrimmage",
+      "source": "MU",
+      "date": "2026-11-06T00:00:00.000Z"
+    },
+    {
+      "key": "Home Game Against Dickinson|2026-11-08T21:00:00.000Z",
+      "firstSeenAt": "2026-10-26T17:34:10.620Z",
+      "title": "Home Game Against Dickinson",
+      "source": "MU",
+      "date": "2026-11-08T21:00:00.000Z"
+    },
+    {
+      "key": "Global Student Engagement Conference|2026-11-09T13:00:00.000Z",
+      "firstSeenAt": "2026-10-26T17:34:10.620Z",
+      "title": "Global Student Engagement Conference",
+      "source": "MU",
+      "date": "2026-11-09T13:00:00.000Z"
+    },
+    {
+      "key": "YDSA General Meeting|2026-11-17T18:30:00",
+      "firstSeenAt": "2026-10-26T17:34:10.620Z",
+      "title": "YDSA General Meeting",
+      "source": "MU",
+      "date": "2026-11-17T18:30:00"
+    },
+    {
+      "key": "Eshleman Spring Concert Day|2027-04-09T13:30:00.000Z",
+      "firstSeenAt": "2026-10-26T17:34:10.620Z",
+      "title": "Eshleman Spring Concert Day",
+      "source": "PM",
+      "date": "2027-04-09T13:30:00.000Z"
+    },
+    {
       "key": "Glorious Holidays at the 'Ville: Maker's Market & Photos with Santa|2026-12-05T20:00:00.000Z",
       "firstSeenAt": "2026-10-26T15:45:15.368Z",
       "title": "Glorious Holidays at the 'Ville: Maker's Market & Photos with Santa",
       "source": "MU",
       "date": "2026-12-05T20:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Cross Country at Lock Haven Invitational|2026-09-26T14:45:00.000Z",
-      "firstSeenAt": "2026-10-26T15:39:42.414Z",
-      "title": "Millersville University Women's Cross Country at Lock Haven Invitational",
-      "source": "MU",
-      "date": "2026-09-26T14:45:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Field Hockey @ Conestoga Valley High School|2026-10-26T20:15:00.000Z",
-      "firstSeenAt": "2026-10-26T15:39:42.414Z",
-      "title": "Girls Varsity Field Hockey @ Conestoga Valley High School",
-      "source": "PM",
-      "date": "2026-10-26T20:15:00.000Z"
-    },
-    {
-      "key": "Granny!|2026-10-30T20:00:00.000Z",
-      "firstSeenAt": "2026-10-26T13:50:51.177Z",
-      "title": "Granny!",
-      "source": "MU",
-      "date": "2026-10-30T20:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Field Hockey vs Bloomsburg|2026-10-31T17:00:00.000Z",
-      "firstSeenAt": "2026-10-26T13:50:51.177Z",
-      "title": "Millersville University Field Hockey vs Bloomsburg",
-      "source": "MU",
-      "date": "2026-10-31T17:00:00.000Z"
-    },
-    {
-      "key": "RUF Bible Study|2026-11-17T19:00:00",
-      "firstSeenAt": "2026-10-26T13:50:51.177Z",
-      "title": "RUF Bible Study",
-      "source": "MU",
-      "date": "2026-11-17T19:00:00"
-    },
-    {
-      "key": "MU Football Season Tickets (2026)|2026-09-13T03:59:00.000Z",
-      "firstSeenAt": "2026-10-26T11:46:26.542Z",
-      "title": "MU Football Season Tickets (2026)",
-      "source": "Community",
-      "date": "2026-09-13T03:59:00.000Z"
-    },
-    {
-      "key": "St. Philip the Apostle Christmas Craft Show|2026-12-05T13:00:00.000Z",
-      "firstSeenAt": "2026-10-26T11:46:26.542Z",
-      "title": "St. Philip the Apostle Christmas Craft Show",
-      "source": "Community",
-      "date": "2026-12-05T13:00:00.000Z"
-    },
-    {
-      "key": "Thin The Herd w. 157 frq, Making A Mockery & junk.|2026-11-17T00:00:00.000Z",
-      "firstSeenAt": "2026-10-26T11:29:43.784Z",
-      "title": "Thin The Herd w. 157 frq, Making A Mockery & junk.",
-      "source": "Other",
-      "date": "2026-11-17T00:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Golf at PennWest Clarion Invitational|2026-09-26T04:00:00.000Z",
-      "firstSeenAt": "2026-10-26T04:14:05.395Z",
-      "title": "Millersville University Women's Golf at PennWest Clarion Invitational",
-      "source": "MU",
-      "date": "2026-09-26T04:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 9
 }

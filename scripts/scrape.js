@@ -5857,7 +5857,9 @@ async function runScraper() {
     const notFamilyMUKeywords = /\bjob\b|\binternship\b|\bcareer fair\b|\bemployment\b|\brecruitment\b|\bhiring\b|\bresume\b|\bworkshop\b.*\bprofessional\b|\bgraduate\b|\bthesis\b|\badmissions?\b|\bfilm festival\b/i;
     const familyPMKeywords = /\bconcert\b|\bensemble\b|\bshowcase\b|\bspring show\b|\bmusical\b|\bplay\b|\btalent show\b|\bassembly\b|\bbook fair\b|\bfood fair\b|\bpicture\b/i;
     // MU event types that are almost always family-friendly
-    const familyMUTypes = /family fun fest|arts smarts|kids.?\s*salsa/i;
+    // 2026-10-27: `book fair` — the Scholastic Book Fair (Stayer Hall, Public
+    // Event) is a kids' book fair; the keyword only lived in the PM list.
+    const familyMUTypes = /family fun fest|arts smarts|kids.?\s*salsa|\bbook fair\b/i;
     // 2026-10-22: on MU a bare `festival` is an academic/arts series (Marimba
     // Festival, a film festival), not a kids' event — those carry `fun fest` /
     // `family` anyway. Derived from familyKeywords so the two lists can't drift;

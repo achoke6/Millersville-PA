@@ -5935,7 +5935,7 @@ function buildEventCard(e,isSportsPage){
     if (e.registrationRequired === true && !isTicketPackage(e)) perkBadges += '<span class="perk-badge perk-registration">📝 Registration required</span>';
 
     // Clean title
-    const displayTitle = cleanSportTitle((e.title || '').replace(/^Millersville University\s*/i, '').replace(/ - (Girls|Boys)\s+(vs |@ )/i, ' $2'), e.tags || []);
+    const displayTitle = cleanSportTitle((e.title || '').replace(/^Millersville University\s+/i, '').replace(/ - (Girls|Boys)\s+(vs |@ )/i, ' $2'), e.tags || []);
 
     // Visual highlight for favorited cards. Replaces the old "pinned at top" behavior —
     // favorites now sit in their chronological day group with a gold accent so users can
@@ -6288,7 +6288,7 @@ function buildTimelineItem(e, now, opts = {}) {
 
     // Clean title — strip "Millersville University" prefix and redundant gender
     let title = e.title || '';
-    title = cleanSportTitle(title.replace(/^Millersville University\s*/i, '').replace(/ - (Girls|Boys)\s+(vs |@ )/i, ' $2'), e.tags || []);
+    title = cleanSportTitle(title.replace(/^Millersville University\s+/i, '').replace(/ - (Girls|Boys)\s+(vs |@ )/i, ' $2'), e.tags || []);
 
     // For marauders: when the org pill already shows the org name, strip the
     // org name out of the title to avoid redundant display. The scraper's
@@ -6704,7 +6704,7 @@ window.openEventDetails = function(key) {
     // Modal title: sport games use the row's short form ("Volleyball vs Felician") —
     // the team bar carries the school, so the long feed title is redundant.
     const modalTitle = teamBar
-        ? cleanSportTitle((e.title || '').replace(/^Millersville University\s*/i, '').replace(/ - (Girls|Boys)\s+(vs |@ )/i, ' $2'), tags)
+        ? cleanSportTitle((e.title || '').replace(/^Millersville University\s+/i, '').replace(/ - (Girls|Boys)\s+(vs |@ )/i, ' $2'), tags)
         : (e.title || 'Event');
     // Add to Calendar / Share / Directions RETIRED from the event modal
     // 2026-08-07 (declutter, Adam); the owed mini locator map SHIPPED in the

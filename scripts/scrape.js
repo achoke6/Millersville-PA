@@ -8089,6 +8089,38 @@ async function runScraper() {
 
         // The Snapper — scrape each section page for proper categorization
         try {
+            // Teasers (2026-10-27): the listing cards carry no excerpt, the site has no
+            // RSS, and the WP REST API returns empty excerpt/content (ACF body), so each
+            // article is fetched once and its lede is the first <p> inside
+            // <section class="article-content"> (the photo caption sits OUTSIDE it).
+            // Teasers already saved in news.json are reused by link — steady-state
+            // cost is ~0 extra fetches per run; a fresh checkout refetches all 25.
+            let prevSnapper = {};
+            try {
+                for (const n of JSON.parse(fs.readFileSync(path.join(__dirname, '../news.json'), 'utf8'))) {
+                    if (n && n.source === 'The Snapper' && n.link && n.summary) prevSnapper[n.link] = n.summary;
+                }
+            } catch (_) { prevSnapper = {}; }
+            let snapperFetched = 0, snapperCached = 0, snapperMissed = 0;
+            async function snapperLede(url) {
+                if (prevSnapper[url]) { snapperCached++; return prevSnapper[url]; }
+                try {
+                    const html = await (await fetch(url, { headers: baseHeaders, signal: AbortSignal.timeout(10000) })).text();
+                    const start = html.indexOf('<section class="article-content"');
+                    if (start >= 0) {
+                        const end = html.indexOf('</section>', start);
+                        const body = html.slice(start, end > start ? end : undefined);
+                        const pRe = /<p(?:\s[^>]*)?>([\s\S]*?)<\/p>/g;
+                        let m;
+                        while ((m = pRe.exec(body)) !== null) {
+                            const t = newsSummary(m[1]);
+                            if (t.length >= 40 && !/\|\s*photo/i.test(t)) { snapperFetched++; return t; }
+                        }
+                    }
+                } catch (_) { /* no teaser for this one */ }
+                snapperMissed++;
+                return '';
+            }
             const snapperSections = [
                 { url: 'https://thesnapper.com/news/', sub: 'News' },
                 { url: 'https://thesnapper.com/opinion/', sub: 'Opinion' },
@@ -8114,6 +8146,7 @@ async function runScraper() {
                     while ((match = dateRegex.exec(html)) !== null) dates.push(match[1].trim());
 
                     const max = Math.min(5, articles.length);
+                    const ledes = await Promise.all(articles.slice(0, max).map(a => snapperLede(a.url)));
                     for (let i = 0; i < max; i++) {
                         const dateStr = dates[i] || '';
                         const parsed = dateStr ? new Date(dateStr) : null;
@@ -8125,13 +8158,14 @@ async function runScraper() {
                             link: articles[i].url,
                             date: dateStr,
                             sortDate: parsed && !isNaN(parsed.getTime()) ? parsed.toISOString() : "1970-01-01T00:00:00.000Z",
-                            summary: ''   // listing-page scrape, no teaser yet (2026-10-21)
+                            summary: ledes[i] || ''
                         });
                         snapperTotal++;
                     }
                 } catch (e) { /* section failed, continue */ }
             }
             console.log(`  ✅ The Snapper: ${snapperTotal} articles across ${snapperSections.length} sections`);
+            console.log(`     Snapper teasers: ${snapperFetched} fetched, ${snapperCached} reused, ${snapperMissed} missing`);
         } catch (e) { console.error("❌ Snapper scrape error:", e.message); }
 
         // Millersville Borough News & Alerts

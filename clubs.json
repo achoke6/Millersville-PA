@@ -498,9 +498,9 @@
   },
   {
     "name": "Conestoga Outdoors Club",
-    "category": "Meeting",
+    "category": "Social",
     "categories": [
-      "Meeting"
+      "Social"
     ],
     "shortName": "Conestoga Outdoors",
     "id": ""
@@ -1055,9 +1055,10 @@
   },
   {
     "name": "Mathematics Educators",
-    "category": "Meeting",
+    "category": "Service",
     "categories": [
-      "Meeting"
+      "Service",
+      "Social"
     ],
     "shortName": "",
     "id": ""
@@ -1602,9 +1603,9 @@
   },
   {
     "name": "Student Government Association",
-    "category": "Service",
+    "category": "Meeting",
     "categories": [
-      "Service"
+      "Meeting"
     ],
     "shortName": "SGA",
     "id": ""
@@ -1825,11 +1826,8 @@
   },
   {
     "name": "Ville Sports Officials Association Club",
-    "category": "Fundraiser",
-    "categories": [
-      "Fundraiser",
-      "Sporting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "VSOAC",
     "id": ""
   },

@@ -1,10 +1,10 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Tuesday, October 27, 2026 at 08:07 AM (Guillaume, Johnson, Lowell, Student Meteorologists)",
+    "issued": "Tuesday, October 27, 2026 at 12:03 PM (Daugherty, Rooney, Student Meteorologists)",
     "periods": [
       {
-        "period": "Today",
+        "period": "This afternoon",
         "text": "Sunny and pleasant. High: 64-68"
       },
       {
@@ -26,7 +26,7 @@
     ]
   },
   "sevenDay": {
-    "issued": "Tuesday, October 27, 2026 at 08:28 AM (Guillaume, Johnson, Lowell )",
+    "issued": "Tuesday, October 27, 2026 at 12:09 PM (Guillaume, Johnson, Lowell)",
     "days": [
       {
         "period": "Tuesday",
@@ -128,6 +128,61 @@
   },
   "observations": [
     {
+      "time": "14:00",
+      "temp": "66",
+      "dewpoint": "43",
+      "rh": "44",
+      "windDir": "ESE",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "13:00",
+      "temp": "64",
+      "dewpoint": "44",
+      "rh": "49",
+      "windDir": "NW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "63",
+      "dewpoint": "46",
+      "rh": "53",
+      "windDir": "WNW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "11:00",
+      "temp": "61",
+      "dewpoint": "46",
+      "rh": "57",
+      "windDir": "NE",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "10:00",
+      "temp": "58",
+      "dewpoint": "49",
+      "rh": "73",
+      "windDir": "ESE",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "10.6",
+      "condition": "None"
+    },
+    {
       "time": "09:00",
       "temp": "50",
       "dewpoint": "45",
@@ -136,61 +191,6 @@
       "windSpeed": "1",
       "precip": "0.00",
       "visibility": "9.2",
-      "condition": "None"
-    },
-    {
-      "time": "08:00",
-      "temp": "44",
-      "dewpoint": "43",
-      "rh": "98",
-      "windDir": "SW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "6.5",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "44",
-      "dewpoint": "43",
-      "rh": "96",
-      "windDir": "S",
-      "windSpeed": "0",
-      "precip": "0.00",
-      "visibility": "6.1",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "44",
-      "dewpoint": "44",
-      "rh": "97",
-      "windDir": "W",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "5.8",
-      "condition": "None"
-    },
-    {
-      "time": "05:00",
-      "temp": "45",
-      "dewpoint": "44",
-      "rh": "97",
-      "windDir": "S",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "5.5",
-      "condition": "None"
-    },
-    {
-      "time": "04:00",
-      "temp": "46",
-      "dewpoint": "45",
-      "rh": "96",
-      "windDir": "N",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "8.2",
       "condition": "None"
     }
   ],
@@ -492,9 +492,9 @@
     "yearMinDate": "January 21"
   },
   "discussion": {
-    "headline": "dry, tranquil and beautiful autumn weather to last into next week",
-    "dateLine": "Brief 11:30 a.m. Friday, October 23, 2026, Update",
-    "excerpt": "This week's weather has been nothing short of spectacular across the mid-Atlantic States, and the gorgeous conditions will be here for an \"extended stay\" through most if not all of next week. Behind Thursday night's weak cold frontal passage, light, northeasterly winds of 6-12 mph will usher slightly cooler and even drier air into the Commonwealth today. However, high temperatures will still reach the low 60s.. or just 2-3°F below average.. …",
+    "headline": "dry, tranquil and gorgeous fall weather to last through halloween",
+    "dateLine": "11:30 a.m. Tuesday, October 27, 2026",
+    "excerpt": "The weather over the last 7-10 days has been nothing short of spectacular across the mid-Atlantic States, and the gorgeous conditions will stick around through Halloween and perhaps even the first 2-3 days of November. Behind Monday night's weak cold frontal passage, light, northeasterly winds of 5-10 mph will usher slightly cooler air into the Commonwealth today. …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -532,5 +532,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-27T13:44:43.159Z"
+  "updated": "2026-10-27T18:06:07.787Z"
 }

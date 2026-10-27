@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-27T11:32:31.294Z",
-  "totalEvents": 1954,
+  "generatedAt": "2026-10-27T13:21:16.109Z",
+  "totalEvents": 1955,
   "withDescription": 813,
   "withImage": 219,
   "familyFriendly": 49,
@@ -18,7 +18,7 @@
     "community": 12,
     "manor": 38,
     "raneyCellars": 3,
-    "theBackyard": 25,
+    "theBackyard": 26,
     "muHudlBroadcasts": 57
   },
   "sourceDateRanges": {
@@ -150,13 +150,13 @@
       "Campus Life": 4
     },
     "stalePast": 22,
-    "lastSyncAt": "2026-10-27T11:29:10.925Z"
+    "lastSyncAt": "2026-10-27T13:17:56.625Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-10-27T11:32:22.216Z"
+    "checkedAt": "2026-10-27T13:21:07.706Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -172,7 +172,7 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 212,
+        "value": 211,
         "min": 60,
         "skipped": false
       },
@@ -235,6 +235,27 @@
   },
   "recentlyAdded": [
     {
+      "key": "Traffic Commission Meeting-CANCELED|2026-10-28T12:30:00.000Z",
+      "firstSeenAt": "2026-10-27T13:21:16.106Z",
+      "title": "Traffic Commission Meeting-CANCELED",
+      "source": "Manor",
+      "date": "2026-10-28T12:30:00.000Z"
+    },
+    {
+      "key": "Chuckwagon Grill|2026-11-04T16:00:00.000Z",
+      "firstSeenAt": "2026-10-27T13:21:16.106Z",
+      "title": "Chuckwagon Grill",
+      "source": "The Backyard",
+      "date": "2026-11-04T16:00:00.000Z"
+    },
+    {
+      "key": "Robino's Breakfast Sandwiches|2026-11-18T16:00:00.000Z",
+      "firstSeenAt": "2026-10-27T13:21:16.106Z",
+      "title": "Robino's Breakfast Sandwiches",
+      "source": "The Backyard",
+      "date": "2026-11-18T16:00:00.000Z"
+    },
+    {
       "key": "Domestic Violence Awareness Month: Docu and Panel Discussion|2026-10-22T17:30:00",
       "firstSeenAt": "2026-10-27T04:14:52.926Z",
       "title": "Domestic Violence Awareness Month: Docu and Panel Discussion",
@@ -282,28 +303,7 @@
       "title": "Crochet Club, Math Club, & MEMU: Hyperbolic Planes",
       "source": "MU",
       "date": "2026-11-17T23:00:00.000Z"
-    },
-    {
-      "key": "Creative Writers Guild general meeting|2026-11-17T23:00:00.000Z",
-      "firstSeenAt": "2026-10-27T01:00:49.893Z",
-      "title": "Creative Writers Guild general meeting",
-      "source": "MU",
-      "date": "2026-11-17T23:00:00.000Z"
-    },
-    {
-      "key": "YDSA Meeting|2026-11-17T23:30:00.000Z",
-      "firstSeenAt": "2026-10-27T01:00:49.893Z",
-      "title": "YDSA Meeting",
-      "source": "MU",
-      "date": "2026-11-17T23:30:00.000Z"
-    },
-    {
-      "key": "RUF Bible Study|2026-11-18T00:00:00.000Z",
-      "firstSeenAt": "2026-10-27T01:00:49.893Z",
-      "title": "RUF Bible Study",
-      "source": "MU",
-      "date": "2026-11-18T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 3
 }

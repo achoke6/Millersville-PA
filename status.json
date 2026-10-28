@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-28T03:26:51.436Z",
+  "generatedAt": "2026-10-28T05:15:36.271Z",
   "totalEvents": 1975,
   "withDescription": 825,
   "withImage": 222,
   "familyFriendly": 54,
-  "eventsToday": 29,
+  "eventsToday": 26,
   "sources": {
     "muAthletics": 353,
     "muCalendar": 185,
@@ -78,27 +78,27 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 56
+      "daysSinceMoved": 57
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 67
+      "daysSinceMoved": 68
     },
     "artsmu": {
       "newest": "2027-02-27",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "campsAlumni": {
       "newest": "2027-08-20",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 9
     },
     "muGetInvolved": {
       "newest": "2027-10-05",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "pennManor": {
       "newest": "2027-10-25",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "borough": {
       "newest": "2026-12-25",
@@ -106,11 +106,11 @@
     },
     "vfw": {
       "newest": "2026-11-22",
-      "daysSinceMoved": 21
+      "daysSinceMoved": 22
     },
     "phantomPower": {
       "newest": "2026-12-09",
-      "daysSinceMoved": 18
+      "daysSinceMoved": 19
     },
     "community": {
       "newest": "2027-04-16",
@@ -118,22 +118,22 @@
     },
     "manor": {
       "newest": "2027-10-27",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "raneyCellars": {
       "newest": "2026-11-12",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "theBackyard": {
       "newest": "2027-04-28",
-      "daysSinceMoved": 19
+      "daysSinceMoved": 20
     }
   },
   "sports": {
     "total": 886,
-    "scored": 180,
-    "wins": 85,
-    "losses": 82,
+    "scored": 184,
+    "wins": 86,
+    "losses": 85,
     "ties": 13
   },
   "registrations": {
@@ -150,13 +150,13 @@
       "Campus Life": 3
     },
     "stalePast": 23,
-    "lastSyncAt": "2026-10-28T03:23:16.601Z"
+    "lastSyncAt": "2026-10-28T05:12:24.547Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-10-28T03:26:46.990Z"
+    "checkedAt": "2026-10-28T05:15:27.446Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -235,6 +235,20 @@
   },
   "recentlyAdded": [
     {
+      "key": "Millersville University Men's Golf at Sunnehanna Collegiate|2026-09-28T04:00:00.000Z",
+      "firstSeenAt": "2026-10-28T05:15:36.268Z",
+      "title": "Millersville University Men's Golf at Sunnehanna Collegiate",
+      "source": "MU",
+      "date": "2026-09-28T04:00:00.000Z"
+    },
+    {
+      "key": "Domestic Violence Awareness Month: Documentary Showing and Panel Discussion|2026-10-22T17:30:00",
+      "firstSeenAt": "2026-10-28T05:15:36.268Z",
+      "title": "Domestic Violence Awareness Month: Documentary Showing and Panel Discussion",
+      "source": "MU",
+      "date": "2026-10-22T17:30:00"
+    },
+    {
       "key": "Men's Club Soccer Practice|2026-09-25T00:00:00.000Z",
       "firstSeenAt": "2026-10-28T01:37:48.386Z",
       "title": "Men's Club Soccer Practice",
@@ -289,21 +303,7 @@
       "title": "Osburn Bible Study",
       "source": "MU",
       "date": "2026-11-18T17:00:00.000Z"
-    },
-    {
-      "key": "Tell School of Music Recital Hour|2026-11-18T20:00:00.000Z",
-      "firstSeenAt": "2026-10-28T01:37:48.386Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2026-11-18T20:00:00.000Z"
-    },
-    {
-      "key": "Practices (after Nov 4th)|2026-11-18T22:00:00.000Z",
-      "firstSeenAt": "2026-10-28T01:37:48.386Z",
-      "title": "Practices (after Nov 4th)",
-      "source": "MU",
-      "date": "2026-11-18T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

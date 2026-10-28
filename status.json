@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-28T11:08:55.963Z",
+  "generatedAt": "2026-10-28T12:52:06.973Z",
   "totalEvents": 1975,
   "withDescription": 825,
   "withImage": 222,
@@ -150,13 +150,13 @@
       "Campus Life": 3
     },
     "stalePast": 23,
-    "lastSyncAt": "2026-10-28T11:04:40.024Z"
+    "lastSyncAt": "2026-10-28T12:48:39.693Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-10-28T11:08:42.891Z"
+    "checkedAt": "2026-10-28T12:51:58.590Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -172,7 +172,7 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 211,
+        "value": 210,
         "min": 60,
         "skipped": false
       },
@@ -235,6 +235,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "HIGH ON FIRE w. Virgos & Jeremy Graeff|2026-10-29T23:30:00.000Z",
+      "firstSeenAt": "2026-10-28T12:52:06.970Z",
+      "title": "HIGH ON FIRE w. Virgos & Jeremy Graeff",
+      "source": "Other",
+      "date": "2026-10-29T23:30:00.000Z"
+    },
+    {
       "key": "Millersville University Men's Golf at Sunnehanna Collegiate|2026-09-28T04:00:00.000Z",
       "firstSeenAt": "2026-10-28T05:15:36.268Z",
       "title": "Millersville University Men's Golf at Sunnehanna Collegiate",
@@ -296,14 +303,7 @@
       "title": "Men's Ice Hockey Practice (D2)",
       "source": "MU",
       "date": "2026-11-18T11:00:00.000Z"
-    },
-    {
-      "key": "Osburn Bible Study|2026-11-18T17:00:00.000Z",
-      "firstSeenAt": "2026-10-28T01:37:48.386Z",
-      "title": "Osburn Bible Study",
-      "source": "MU",
-      "date": "2026-11-18T17:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

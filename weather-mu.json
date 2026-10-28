@@ -1,27 +1,27 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Wednesday, October 28, 2026 at 12:03 PM (Morris, Zipko, Student Meteorologists)",
+    "issued": "Wednesday, October 28, 2026 at 05:32 PM (Curtorillo, Gray, Negherbon , Student Meteorologists)",
     "periods": [
-      {
-        "period": "This afternoon",
-        "text": "Seasonable with sun filtered through high clouds. High: 64-68"
-      },
       {
         "period": "Tonight",
         "text": "Increasing clouds. Low: 42-46"
       },
       {
-        "period": "Thursday",
+        "period": "Tomorrow",
         "text": "Warmer with clouds giving way to sunshine. High: 68-72"
       },
       {
-        "period": "Thursday Night",
+        "period": "Tomorrow Night",
         "text": "Clear and comfortably cool. Low: 46-50"
       },
       {
         "period": "Friday",
-        "text": "Mostly sunny, breezy, and warm. High: 72-76"
+        "text": "Mostly sunny, breezy, and warm High: 72-76"
+      },
+      {
+        "period": "Saturday",
+        "text": "Cooler with clouds and sun. High: 62-66"
       }
     ]
   },
@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "18:00",
+      "temp": "60",
+      "dewpoint": "42",
+      "rh": "51",
+      "windDir": "SSW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "17:00",
+      "temp": "63",
+      "dewpoint": "43",
+      "rh": "49",
+      "windDir": "S",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "16:00",
       "temp": "65",
       "dewpoint": "43",
@@ -169,28 +191,6 @@
       "windSpeed": "5",
       "precip": "0.00",
       "visibility": "10.5",
-      "condition": "None"
-    },
-    {
-      "time": "12:00",
-      "temp": "61",
-      "dewpoint": "46",
-      "rh": "58",
-      "windDir": "S",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "11:00",
-      "temp": "57",
-      "dewpoint": "48",
-      "rh": "71",
-      "windDir": "NE",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "11.4",
       "condition": "None"
     }
   ],
@@ -543,5 +543,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-28T20:39:10.295Z"
+  "updated": "2026-10-28T22:27:28.233Z"
 }

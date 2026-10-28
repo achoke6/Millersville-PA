@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-28T12:52:06.973Z",
-  "totalEvents": 1975,
+  "generatedAt": "2026-10-28T14:42:45.925Z",
+  "totalEvents": 1974,
   "withDescription": 825,
   "withImage": 222,
   "familyFriendly": 54,
-  "eventsToday": 26,
+  "eventsToday": 25,
   "sources": {
     "muAthletics": 353,
     "muCalendar": 185,
@@ -16,7 +16,7 @@
     "vfw": 4,
     "phantomPower": 13,
     "community": 12,
-    "manor": 39,
+    "manor": 38,
     "raneyCellars": 4,
     "theBackyard": 26,
     "muHudlBroadcasts": 56
@@ -63,7 +63,7 @@
       "latest": "2027-04-16T13:15:00.000Z"
     },
     "manor": {
-      "earliest": "2026-10-28T12:30:00.000Z",
+      "earliest": "2026-11-05T00:00:00.000Z",
       "latest": "2027-10-27T12:30:00.000Z"
     },
     "raneyCellars": {
@@ -150,13 +150,13 @@
       "Campus Life": 3
     },
     "stalePast": 23,
-    "lastSyncAt": "2026-10-28T12:48:39.693Z"
+    "lastSyncAt": "2026-10-28T14:37:31.671Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-10-28T12:51:58.590Z"
+    "checkedAt": "2026-10-28T14:42:34.179Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -214,7 +214,7 @@
       {
         "key": "manor.count",
         "ok": true,
-        "value": 39,
+        "value": 38,
         "min": 10
       },
       {
@@ -305,5 +305,5 @@
       "date": "2026-11-18T11:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 0
 }

@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-10-29T15:26:55.666Z",
-  "totalEvents": 1971,
+  "generatedAt": "2026-10-29T16:59:00.676Z",
+  "totalEvents": 1972,
   "withDescription": 822,
-  "withImage": 222,
+  "withImage": 223,
   "familyFriendly": 53,
   "eventsToday": 29,
   "sources": {
@@ -14,7 +14,7 @@
     "pennManor": 640,
     "borough": 54,
     "vfw": 4,
-    "phantomPower": 13,
+    "phantomPower": 14,
     "community": 12,
     "manor": 38,
     "raneyCellars": 4,
@@ -56,7 +56,7 @@
     },
     "phantomPower": {
       "earliest": "2026-10-29T23:00:00.000Z",
-      "latest": "2026-12-09T01:00:00.000Z"
+      "latest": "2026-12-19T01:00:00.000Z"
     },
     "community": {
       "earliest": "2026-09-13T03:59:00.000Z",
@@ -109,8 +109,8 @@
       "daysSinceMoved": 23
     },
     "phantomPower": {
-      "newest": "2026-12-09",
-      "daysSinceMoved": 20
+      "newest": "2026-12-19",
+      "daysSinceMoved": 0
     },
     "community": {
       "newest": "2027-04-16",
@@ -150,13 +150,13 @@
       "Campus Life": 3
     },
     "stalePast": 24,
-    "lastSyncAt": "2026-10-29T15:23:44.039Z"
+    "lastSyncAt": "2026-10-29T16:54:53.663Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-10-29T15:26:46.845Z"
+    "checkedAt": "2026-10-29T16:58:51.626Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -235,6 +235,20 @@
   },
   "recentlyAdded": [
     {
+      "key": "STINKING LIZAVETA w. Deathbird Earth, Oven|2026-11-19T01:00:00.000Z",
+      "firstSeenAt": "2026-10-29T16:59:00.672Z",
+      "title": "STINKING LIZAVETA w. Deathbird Earth, Oven",
+      "source": "Other",
+      "date": "2026-11-19T01:00:00.000Z"
+    },
+    {
+      "key": "JIMMIE&#x27;S CHICKEN SHACK|2026-12-19T01:00:00.000Z",
+      "firstSeenAt": "2026-10-29T16:59:00.672Z",
+      "title": "JIMMIE&#x27;S CHICKEN SHACK",
+      "source": "Other",
+      "date": "2026-12-19T01:00:00.000Z"
+    },
+    {
       "key": "Kick it With Campus Life @ MU Men's Soccer|2026-10-29T17:00:00.000Z",
       "firstSeenAt": "2026-10-29T15:26:55.664Z",
       "title": "Kick it With Campus Life @ MU Men's Soccer",
@@ -289,21 +303,7 @@
       "title": "Palestine Bakesale",
       "source": "MU",
       "date": "2026-10-21T11:00:00"
-    },
-    {
-      "key": "Create and Educate - Cup Decorating Workshop!|2026-11-19T17:00:00.000Z",
-      "firstSeenAt": "2026-10-29T01:03:38.409Z",
-      "title": "Create and Educate - Cup Decorating Workshop!",
-      "source": "MU",
-      "date": "2026-11-19T17:00:00.000Z"
-    },
-    {
-      "key": "Winter Grab and Go|2026-11-19T21:00:00.000Z",
-      "firstSeenAt": "2026-10-29T01:03:38.409Z",
-      "title": "Winter Grab and Go",
-      "source": "MU",
-      "date": "2026-11-19T21:00:00.000Z"
     }
   ],
-  "addedLastRun": 3
+  "addedLastRun": 2
 }

@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-10-29T01:03:38.412Z",
-  "totalEvents": 1971,
+  "generatedAt": "2026-10-29T02:27:59.815Z",
+  "totalEvents": 1972,
   "withDescription": 822,
   "withImage": 223,
   "familyFriendly": 53,
-  "eventsToday": 25,
+  "eventsToday": 24,
   "sources": {
     "muAthletics": 353,
     "muCalendar": 184,
     "artsmu": 3,
     "campsAlumni": 11,
     "muGetInvolved": 531,
-    "pennManor": 639,
+    "pennManor": 640,
     "borough": 54,
     "vfw": 4,
     "phantomPower": 13,
@@ -130,9 +130,9 @@
     }
   },
   "sports": {
-    "total": 886,
-    "scored": 186,
-    "wins": 87,
+    "total": 887,
+    "scored": 187,
+    "wins": 88,
     "losses": 86,
     "ties": 13
   },
@@ -150,13 +150,13 @@
       "Campus Life": 2
     },
     "stalePast": 24,
-    "lastSyncAt": "2026-10-29T01:00:39.770Z"
+    "lastSyncAt": "2026-10-29T02:25:28.186Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-10-29T01:03:27.509Z"
+    "checkedAt": "2026-10-29T02:27:51.485Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -193,7 +193,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 533,
+        "value": 534,
         "min": 150,
         "skipped": false
       },
@@ -234,6 +234,27 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Girls Varsity Field Hockey @ Hempfield High School|2026-10-31T17:00:00.000Z",
+      "firstSeenAt": "2026-10-29T02:27:59.812Z",
+      "title": "Girls Varsity Field Hockey @ Hempfield High School",
+      "source": "PM",
+      "date": "2026-10-31T17:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Soccer vs Bloomsburg|2026-10-31T18:00:00.000Z",
+      "firstSeenAt": "2026-10-29T02:27:59.812Z",
+      "title": "Millersville University Women's Soccer vs Bloomsburg",
+      "source": "MU",
+      "date": "2026-10-31T18:00:00.000Z"
+    },
+    {
+      "key": "Karaoke Night|2026-11-19T03:00:00.000Z",
+      "firstSeenAt": "2026-10-29T02:27:59.812Z",
+      "title": "Karaoke Night",
+      "source": "Jack's Tavern",
+      "date": "2026-11-19T03:00:00.000Z"
+    },
     {
       "key": "Palestine Bakesale|2026-10-21T11:00:00",
       "firstSeenAt": "2026-10-29T01:03:38.409Z",
@@ -282,28 +303,7 @@
       "title": "Moose Ultimate Practice",
       "source": "MU",
       "date": "2026-11-20T00:00:00.000Z"
-    },
-    {
-      "key": "Men's Volleyball Club Practice|2026-11-20T00:00:00.000Z",
-      "firstSeenAt": "2026-10-29T01:03:38.409Z",
-      "title": "Men's Volleyball Club Practice",
-      "source": "MU",
-      "date": "2026-11-20T00:00:00.000Z"
-    },
-    {
-      "key": "Fellowship Night|2026-11-20T01:00:00.000Z",
-      "firstSeenAt": "2026-10-29T01:03:38.409Z",
-      "title": "Fellowship Night",
-      "source": "MU",
-      "date": "2026-11-20T01:00:00.000Z"
-    },
-    {
-      "key": "Men's Ice Hockey Practice (D2)|2026-11-20T02:30:00.000Z",
-      "firstSeenAt": "2026-10-29T01:03:38.409Z",
-      "title": "Men's Ice Hockey Practice (D2)",
-      "source": "MU",
-      "date": "2026-11-20T02:30:00.000Z"
     }
   ],
-  "addedLastRun": 15
+  "addedLastRun": 3
 }

@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-10-28T23:15:14.882Z",
-  "totalEvents": 1975,
-  "withDescription": 826,
-  "withImage": 225,
-  "familyFriendly": 54,
+  "generatedAt": "2026-10-29T01:03:38.412Z",
+  "totalEvents": 1971,
+  "withDescription": 822,
+  "withImage": 223,
+  "familyFriendly": 53,
   "eventsToday": 25,
   "sources": {
     "muAthletics": 353,
     "muCalendar": 184,
     "artsmu": 3,
-    "campsAlumni": 12,
-    "muGetInvolved": 534,
+    "campsAlumni": 11,
+    "muGetInvolved": 531,
     "pennManor": 639,
     "borough": 54,
     "vfw": 4,
@@ -35,7 +35,7 @@
       "latest": "2027-02-27T20:00:00.000Z"
     },
     "campsAlumni": {
-      "earliest": "2026-07-30T22:00:00.000Z",
+      "earliest": "2026-10-17T12:30:00.000Z",
       "latest": "2027-08-20T23:30:00.000Z"
     },
     "muGetInvolved": {
@@ -131,9 +131,9 @@
   },
   "sports": {
     "total": 886,
-    "scored": 184,
-    "wins": 86,
-    "losses": 85,
+    "scored": 186,
+    "wins": 87,
+    "losses": 86,
     "ties": 13
   },
   "registrations": {
@@ -150,13 +150,13 @@
       "Campus Life": 2
     },
     "stalePast": 24,
-    "lastSyncAt": "2026-10-28T23:12:23.696Z"
+    "lastSyncAt": "2026-10-29T01:00:39.770Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-10-28T23:15:05.883Z"
+    "checkedAt": "2026-10-29T01:03:27.509Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -186,7 +186,7 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 58,
+        "value": 57,
         "min": 21,
         "skipped": false
       },
@@ -235,75 +235,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "HIGH ON FIRE w. Virgos & Jeremy Graeff|2026-10-29T23:00:00.000Z",
-      "firstSeenAt": "2026-10-28T23:15:14.874Z",
-      "title": "HIGH ON FIRE w. Virgos & Jeremy Graeff",
-      "source": "Other",
-      "date": "2026-10-29T23:00:00.000Z"
-    },
-    {
-      "key": "Park Commission - Cancelled|2026-11-02T23:00:00.000Z",
-      "firstSeenAt": "2026-10-28T22:29:51.865Z",
-      "title": "Park Commission - Cancelled",
-      "source": "Borough",
-      "date": "2026-11-02T23:00:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Swimming @ Hempfield High School|2027-01-13T00:30:00.000Z",
-      "firstSeenAt": "2026-10-28T20:41:58.965Z",
-      "title": "Boys Varsity Swimming @ Hempfield High School",
-      "source": "PM",
-      "date": "2027-01-13T00:30:00.000Z"
-    },
-    {
-      "key": "Millersville University Softball vs Lock Haven University|2027-02-27T18:00:00.000Z",
-      "firstSeenAt": "2026-10-28T20:41:58.965Z",
-      "title": "Millersville University Softball vs Lock Haven University",
+      "key": "Palestine Bakesale|2026-10-21T11:00:00",
+      "firstSeenAt": "2026-10-29T01:03:38.409Z",
+      "title": "Palestine Bakesale",
       "source": "MU",
-      "date": "2027-02-27T18:00:00.000Z"
+      "date": "2026-10-21T11:00:00"
     },
     {
-      "key": "Millersville University Softball vs Lock Haven University|2027-02-27T20:00:00.000Z",
-      "firstSeenAt": "2026-10-28T20:41:58.965Z",
-      "title": "Millersville University Softball vs Lock Haven University",
+      "key": "Create and Educate - Cup Decorating Workshop!|2026-11-19T17:00:00.000Z",
+      "firstSeenAt": "2026-10-29T01:03:38.409Z",
+      "title": "Create and Educate - Cup Decorating Workshop!",
       "source": "MU",
-      "date": "2027-02-27T20:00:00.000Z"
+      "date": "2026-11-19T17:00:00.000Z"
     },
     {
-      "key": "Women's Rugby Club Practice|2026-10-28T21:00:00.000Z",
-      "firstSeenAt": "2026-10-28T18:20:24.400Z",
-      "title": "Women's Rugby Club Practice",
+      "key": "Winter Grab and Go|2026-11-19T21:00:00.000Z",
+      "firstSeenAt": "2026-10-29T01:03:38.409Z",
+      "title": "Winter Grab and Go",
       "source": "MU",
-      "date": "2026-10-28T21:00:00.000Z"
+      "date": "2026-11-19T21:00:00.000Z"
     },
     {
-      "key": "Women's Rugby Club Practice|2026-10-29T21:00:00.000Z",
-      "firstSeenAt": "2026-10-28T18:20:24.400Z",
-      "title": "Women's Rugby Club Practice",
+      "key": "Slip n' Score Meeting|2026-11-19T22:00:00.000Z",
+      "firstSeenAt": "2026-10-29T01:03:38.409Z",
+      "title": "Slip n' Score Meeting",
       "source": "MU",
-      "date": "2026-10-29T21:00:00.000Z"
+      "date": "2026-11-19T22:00:00.000Z"
     },
     {
-      "key": "Home Tournament|2026-10-31T13:00:00.000Z",
-      "firstSeenAt": "2026-10-28T18:20:24.400Z",
-      "title": "Home Tournament",
+      "key": "Letters of Love General Meeting|2026-11-20T00:00:00.000Z",
+      "firstSeenAt": "2026-10-29T01:03:38.409Z",
+      "title": "Letters of Love General Meeting",
       "source": "MU",
-      "date": "2026-10-31T13:00:00.000Z"
+      "date": "2026-11-20T00:00:00.000Z"
     },
     {
-      "key": "Women's Rugby Club Practice|2026-11-03T22:00:00.000Z",
-      "firstSeenAt": "2026-10-28T18:20:24.400Z",
-      "title": "Women's Rugby Club Practice",
+      "key": "Club Tennis Practice|2026-11-20T00:00:00.000Z",
+      "firstSeenAt": "2026-10-29T01:03:38.409Z",
+      "title": "Club Tennis Practice",
       "source": "MU",
-      "date": "2026-11-03T22:00:00.000Z"
+      "date": "2026-11-20T00:00:00.000Z"
     },
     {
-      "key": "Women's Rugby Club Practice|2026-11-04T22:00:00.000Z",
-      "firstSeenAt": "2026-10-28T18:20:24.400Z",
-      "title": "Women's Rugby Club Practice",
+      "key": "Moose Ultimate Practice|2026-11-20T00:00:00.000Z",
+      "firstSeenAt": "2026-10-29T01:03:38.409Z",
+      "title": "Moose Ultimate Practice",
       "source": "MU",
-      "date": "2026-11-04T22:00:00.000Z"
+      "date": "2026-11-20T00:00:00.000Z"
+    },
+    {
+      "key": "Men's Volleyball Club Practice|2026-11-20T00:00:00.000Z",
+      "firstSeenAt": "2026-10-29T01:03:38.409Z",
+      "title": "Men's Volleyball Club Practice",
+      "source": "MU",
+      "date": "2026-11-20T00:00:00.000Z"
+    },
+    {
+      "key": "Fellowship Night|2026-11-20T01:00:00.000Z",
+      "firstSeenAt": "2026-10-29T01:03:38.409Z",
+      "title": "Fellowship Night",
+      "source": "MU",
+      "date": "2026-11-20T01:00:00.000Z"
+    },
+    {
+      "key": "Men's Ice Hockey Practice (D2)|2026-11-20T02:30:00.000Z",
+      "firstSeenAt": "2026-10-29T01:03:38.409Z",
+      "title": "Men's Ice Hockey Practice (D2)",
+      "source": "MU",
+      "date": "2026-11-20T02:30:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 15
 }

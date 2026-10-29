@@ -469,10 +469,12 @@
   },
   {
     "name": "College of Graduate Studies and Adult Learning",
-    "category": "",
-    "categories": [],
+    "category": "Educational Program",
+    "categories": [
+      "Educational Program"
+    ],
     "shortName": "Graduate Studies",
-    "id": "cgsal"
+    "id": ""
   },
   {
     "name": "Collegiate Middle Level Association",
@@ -615,8 +617,12 @@
   },
   {
     "name": "Delta Zeta",
-    "category": "",
-    "categories": [],
+    "category": "Service",
+    "categories": [
+      "Service",
+      "Social",
+      "Tabling"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1447,8 +1453,11 @@
   },
   {
     "name": "Reformed University Fellowship",
-    "category": "",
-    "categories": [],
+    "category": "Meeting",
+    "categories": [
+      "Meeting",
+      "Social"
+    ],
     "shortName": "RUF",
     "id": ""
   },
@@ -1650,14 +1659,12 @@
   },
   {
     "name": "Tau Kappa Epsilon",
-    "category": "Service",
+    "category": "Fraternity & Sorority Life",
     "categories": [
-      "Service",
-      "Fundraiser",
-      "Tabling"
+      "Fraternity & Sorority Life"
     ],
-    "shortName": "",
-    "id": ""
+    "shortName": "TKE",
+    "id": "taukappaepsilon"
   },
   {
     "name": "TCG Players of Millersville",

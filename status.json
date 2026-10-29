@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-29T06:07:03.784Z",
+  "generatedAt": "2026-10-29T07:55:38.604Z",
   "totalEvents": 1971,
   "withDescription": 822,
   "withImage": 223,
@@ -55,7 +55,7 @@
       "latest": "2026-11-22T21:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-10-29T00:00:00.000Z",
+      "earliest": "2026-10-29T23:00:00.000Z",
       "latest": "2026-12-09T01:00:00.000Z"
     },
     "community": {
@@ -150,13 +150,13 @@
       "Campus Life": 2
     },
     "stalePast": 24,
-    "lastSyncAt": "2026-10-29T06:02:24.620Z"
+    "lastSyncAt": "2026-10-29T07:52:28.871Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-10-29T06:06:53.087Z"
+    "checkedAt": "2026-10-29T07:55:28.735Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -179,7 +179,7 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 219,
+        "value": 218,
         "min": 30,
         "skipped": false
       },
@@ -234,6 +234,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Thin The Herd w. 157 frq, Making A Mockery & junk.|2026-11-17T00:00:00.000Z",
+      "firstSeenAt": "2026-10-29T07:55:38.601Z",
+      "title": "Thin The Herd w. 157 frq, Making A Mockery & junk.",
+      "source": "Other",
+      "date": "2026-11-17T00:00:00.000Z"
+    },
     {
       "key": "Girls Varsity Field Hockey @ Hempfield High School|2026-10-31T17:00:00.000Z",
       "firstSeenAt": "2026-10-29T02:27:59.812Z",
@@ -296,14 +303,7 @@
       "title": "Club Tennis Practice",
       "source": "MU",
       "date": "2026-11-20T00:00:00.000Z"
-    },
-    {
-      "key": "Moose Ultimate Practice|2026-11-20T00:00:00.000Z",
-      "firstSeenAt": "2026-10-29T01:03:38.409Z",
-      "title": "Moose Ultimate Practice",
-      "source": "MU",
-      "date": "2026-11-20T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

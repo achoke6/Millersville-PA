@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-10-29T13:38:22.568Z",
+  "generatedAt": "2026-10-29T15:26:55.666Z",
   "totalEvents": 1971,
   "withDescription": 822,
-  "withImage": 223,
+  "withImage": 222,
   "familyFriendly": 53,
   "eventsToday": 29,
   "sources": {
     "muAthletics": 353,
-    "muCalendar": 184,
+    "muCalendar": 185,
     "artsmu": 2,
     "campsAlumni": 11,
     "muGetInvolved": 531,
@@ -143,20 +143,20 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 3,
+    "pendingFuture": 4,
     "pendingPast": 11,
     "pendingBySource": {
       "Youth Sports": 1,
-      "Campus Life": 2
+      "Campus Life": 3
     },
     "stalePast": 24,
-    "lastSyncAt": "2026-10-29T13:35:57.445Z"
+    "lastSyncAt": "2026-10-29T15:23:44.039Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-10-29T13:38:19.459Z"
+    "checkedAt": "2026-10-29T15:26:46.845Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -235,6 +235,27 @@
   },
   "recentlyAdded": [
     {
+      "key": "Kick it With Campus Life @ MU Men's Soccer|2026-10-29T17:00:00.000Z",
+      "firstSeenAt": "2026-10-29T15:26:55.664Z",
+      "title": "Kick it With Campus Life @ MU Men's Soccer",
+      "source": "MU",
+      "date": "2026-10-29T17:00:00.000Z"
+    },
+    {
+      "key": "Trans Day of Remembrance|2026-11-20T16:00:00",
+      "firstSeenAt": "2026-10-29T15:26:55.664Z",
+      "title": "Trans Day of Remembrance",
+      "source": "MU",
+      "date": "2026-11-20T16:00:00"
+    },
+    {
+      "key": "Transgender Day of Remembrance|2026-11-23T12:00:00",
+      "firstSeenAt": "2026-10-29T15:26:55.664Z",
+      "title": "Transgender Day of Remembrance",
+      "source": "MU",
+      "date": "2026-11-23T12:00:00"
+    },
+    {
       "key": "Thin The Herd w. 157 frq, Making A Mockery & junk.|2026-11-17T00:00:00.000Z",
       "firstSeenAt": "2026-10-29T07:55:38.601Z",
       "title": "Thin The Herd w. 157 frq, Making A Mockery & junk.",
@@ -282,28 +303,7 @@
       "title": "Winter Grab and Go",
       "source": "MU",
       "date": "2026-11-19T21:00:00.000Z"
-    },
-    {
-      "key": "Slip n' Score Meeting|2026-11-19T22:00:00.000Z",
-      "firstSeenAt": "2026-10-29T01:03:38.409Z",
-      "title": "Slip n' Score Meeting",
-      "source": "MU",
-      "date": "2026-11-19T22:00:00.000Z"
-    },
-    {
-      "key": "Letters of Love General Meeting|2026-11-20T00:00:00.000Z",
-      "firstSeenAt": "2026-10-29T01:03:38.409Z",
-      "title": "Letters of Love General Meeting",
-      "source": "MU",
-      "date": "2026-11-20T00:00:00.000Z"
-    },
-    {
-      "key": "Club Tennis Practice|2026-11-20T00:00:00.000Z",
-      "firstSeenAt": "2026-10-29T01:03:38.409Z",
-      "title": "Club Tennis Practice",
-      "source": "MU",
-      "date": "2026-11-20T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 3
 }

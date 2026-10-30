@@ -1,10 +1,10 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Friday, October 30, 2026 at 09:27 AM (Cokain, McCarthy, Student Meteorologists)",
+    "issued": "Friday, October 30, 2026 at 11:54 AM (Banaszak, Nornhold, Reitz, Shive, Student Meteorologists)",
     "periods": [
       {
-        "period": "Today",
+        "period": "This afternoon",
         "text": "Sunny, breezy, and warm. High: 72-76"
       },
       {
@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "13:00",
+      "temp": "71",
+      "dewpoint": "43",
+      "rh": "36",
+      "windDir": "NW",
+      "windSpeed": "7",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "70",
+      "dewpoint": "49",
+      "rh": "47",
+      "windDir": "WNW",
+      "windSpeed": "7",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "11:00",
       "temp": "69",
       "dewpoint": "51",
@@ -169,28 +191,6 @@
       "windSpeed": "1",
       "precip": "0.00",
       "visibility": "4.2",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "47",
-      "dewpoint": "47",
-      "rh": "99",
-      "windDir": "SSE",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "2.3",
-      "condition": "Mist"
-    },
-    {
-      "time": "06:00",
-      "temp": "48",
-      "dewpoint": "48",
-      "rh": "98",
-      "windDir": "SSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "3.9",
       "condition": "None"
     }
   ],
@@ -565,5 +565,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-10-30T15:55:21.555Z"
+  "updated": "2026-10-30T17:43:13.256Z"
 }

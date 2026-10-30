@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-10-30T07:25:40.088Z",
-  "totalEvents": 1974,
+  "generatedAt": "2026-10-30T08:39:45.445Z",
+  "totalEvents": 1973,
   "withDescription": 823,
-  "withImage": 222,
+  "withImage": 221,
   "familyFriendly": 53,
   "eventsToday": 15,
   "sources": {
@@ -14,7 +14,7 @@
     "pennManor": 640,
     "borough": 54,
     "vfw": 4,
-    "phantomPower": 14,
+    "phantomPower": 13,
     "community": 12,
     "manor": 38,
     "raneyCellars": 4,
@@ -150,13 +150,13 @@
       "Campus Life": 2
     },
     "stalePast": 25,
-    "lastSyncAt": "2026-10-30T07:22:45.520Z"
+    "lastSyncAt": "2026-10-30T08:36:23.128Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-10-30T07:25:30.973Z"
+    "checkedAt": "2026-10-30T08:39:32.030Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -165,7 +165,7 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 361,
+        "value": 360,
         "min": 45,
         "skipped": false
       },
@@ -235,13 +235,6 @@
   },
   "recentlyAdded": [
     {
-      "key": "MAKARI w. KURT TRAVIS, MELLA, RESILIA|2026-11-21T00:00:00.000Z",
-      "firstSeenAt": "2026-10-30T05:37:24.468Z",
-      "title": "MAKARI w. KURT TRAVIS, MELLA, RESILIA",
-      "source": "Other",
-      "date": "2026-11-21T00:00:00.000Z"
-    },
-    {
       "key": "Regal Cinemas Fundraiser|2026-09-21T16:00:00.000Z",
       "firstSeenAt": "2026-10-30T01:28:48.213Z",
       "title": "Regal Cinemas Fundraiser",
@@ -303,6 +296,13 @@
       "title": "New Member Presentation",
       "source": "MU",
       "date": "2026-11-22T00:00:00.000Z"
+    },
+    {
+      "key": "North v. South Tournament|2026-11-22T14:00:00.000Z",
+      "firstSeenAt": "2026-10-30T01:28:48.213Z",
+      "title": "North v. South Tournament",
+      "source": "MU",
+      "date": "2026-11-22T14:00:00.000Z"
     }
   ],
   "addedLastRun": 0

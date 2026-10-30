@@ -10,19 +10,19 @@
   },
   {
     "name": "ADAPT",
-    "category": "Service",
+    "category": "Meeting",
     "categories": [
-      "Service",
-      "Meeting",
-      "Social"
+      "Meeting"
     ],
     "shortName": "",
     "id": ""
   },
   {
     "name": "African Caribbean Student Association",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "ACSA",
     "id": ""
   },
@@ -276,8 +276,10 @@
   },
   {
     "name": "Campus Recreation",
-    "category": "Sporting",
+    "category": "Competition",
     "categories": [
+      "Competition",
+      "Social",
       "Sporting"
     ],
     "shortName": "",
@@ -374,11 +376,8 @@
   },
   {
     "name": "Clinical Psychology Student Association",
-    "category": "Educational Program",
-    "categories": [
-      "Educational Program",
-      "Lecture or Speaker"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "CPSA",
     "id": ""
   },
@@ -655,8 +654,12 @@
   },
   {
     "name": "Early Childhood Organization",
-    "category": "",
-    "categories": [],
+    "category": "Service",
+    "categories": [
+      "Service",
+      "Meeting",
+      "Social"
+    ],
     "shortName": "ECO",
     "id": ""
   },
@@ -886,10 +889,8 @@
   },
   {
     "name": "Ice Hockey Club (D3)",
-    "category": "Sporting",
-    "categories": [
-      "Sporting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1220,8 +1221,10 @@
   },
   {
     "name": "Moose Ultimate",
-    "category": "",
-    "categories": [],
+    "category": "Fundraiser",
+    "categories": [
+      "Fundraiser"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1453,11 +1456,8 @@
   },
   {
     "name": "Reformed University Fellowship",
-    "category": "Meeting",
-    "categories": [
-      "Meeting",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "RUF",
     "id": ""
   },
@@ -1608,9 +1608,9 @@
   },
   {
     "name": "Student Government Association",
-    "category": "Meeting",
+    "category": "Tabling",
     "categories": [
-      "Meeting"
+      "Tabling"
     ],
     "shortName": "SGA",
     "id": ""
@@ -1703,9 +1703,10 @@
   },
   {
     "name": "Technology Career Network at Millersville University",
-    "category": "Lecture or Speaker",
+    "category": "Educational Program",
     "categories": [
-      "Lecture or Speaker"
+      "Educational Program",
+      "Social"
     ],
     "shortName": "",
     "id": ""
@@ -1839,10 +1840,8 @@
   },
   {
     "name": "VilleHarmonics",
-    "category": "Performance",
-    "categories": [
-      "Performance"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },

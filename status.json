@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-30T17:45:54.478Z",
-  "totalEvents": 1974,
-  "withDescription": 823,
+  "generatedAt": "2026-10-30T18:56:35.830Z",
+  "totalEvents": 1973,
+  "withDescription": 822,
   "withImage": 222,
   "familyFriendly": 53,
   "eventsToday": 15,
@@ -13,7 +13,7 @@
     "muGetInvolved": 532,
     "pennManor": 640,
     "borough": 54,
-    "vfw": 4,
+    "vfw": 3,
     "phantomPower": 14,
     "community": 12,
     "manor": 38,
@@ -51,7 +51,7 @@
       "latest": "2026-12-25T12:00:00.000Z"
     },
     "vfw": {
-      "earliest": "2026-10-15T20:30:00.000Z",
+      "earliest": "2026-10-18T17:00:00.000Z",
       "latest": "2026-11-22T21:00:00.000Z"
     },
     "phantomPower": {
@@ -131,9 +131,9 @@
   },
   "sports": {
     "total": 887,
-    "scored": 190,
-    "wins": 90,
-    "losses": 87,
+    "scored": 176,
+    "wins": 81,
+    "losses": 82,
     "ties": 13
   },
   "registrations": {
@@ -150,17 +150,19 @@
       "Campus Life": 2
     },
     "stalePast": 27,
-    "lastSyncAt": "2026-10-30T17:43:11.400Z"
+    "lastSyncAt": "2026-10-30T18:54:12.937Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-10-30T17:45:45.880Z"
+    "checkedAt": "2026-10-30T18:56:28.015Z"
   },
   "sourceHealth": {
-    "ok": true,
-    "failing": [],
+    "ok": false,
+    "failing": [
+      "manor.count"
+    ],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -213,9 +215,10 @@
       },
       {
         "key": "manor.count",
-        "ok": true,
+        "ok": false,
         "value": 38,
-        "min": 10
+        "min": 10,
+        "carriedForward": 38
       },
       {
         "key": "muHudl.pairRatio",

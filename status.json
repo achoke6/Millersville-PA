@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-10-31T02:38:53.037Z",
+  "generatedAt": "2026-10-31T04:26:58.134Z",
   "totalEvents": 1973,
   "withDescription": 822,
   "withImage": 220,
   "familyFriendly": 52,
-  "eventsToday": 14,
+  "eventsToday": 11,
   "sources": {
     "muAthletics": 353,
     "muCalendar": 188,
@@ -78,27 +78,27 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 59
+      "daysSinceMoved": 60
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 70
+      "daysSinceMoved": 71
     },
     "artsmu": {
       "newest": "2027-02-27",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 11
     },
     "campsAlumni": {
       "newest": "2027-08-20",
-      "daysSinceMoved": 11
+      "daysSinceMoved": 12
     },
     "muGetInvolved": {
       "newest": "2027-10-05",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 11
     },
     "pennManor": {
       "newest": "2027-10-25",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     },
     "borough": {
       "newest": "2026-12-25",
@@ -106,11 +106,11 @@
     },
     "vfw": {
       "newest": "2026-11-22",
-      "daysSinceMoved": 24
+      "daysSinceMoved": 25
     },
     "phantomPower": {
       "newest": "2026-12-19",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "community": {
       "newest": "2027-04-16",
@@ -118,15 +118,15 @@
     },
     "manor": {
       "newest": "2027-10-27",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "raneyCellars": {
       "newest": "2026-11-12",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "theBackyard": {
       "newest": "2027-04-28",
-      "daysSinceMoved": 22
+      "daysSinceMoved": 23
     }
   },
   "sports": {
@@ -150,19 +150,17 @@
       "Campus Life": 2
     },
     "stalePast": 27,
-    "lastSyncAt": "2026-10-31T02:34:11.176Z"
+    "lastSyncAt": "2026-10-31T04:24:20.220Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-10-31T02:38:33.760Z"
+    "checkedAt": "2026-10-31T04:26:51.322Z"
   },
   "sourceHealth": {
-    "ok": false,
-    "failing": [
-      "manor.count"
-    ],
+    "ok": true,
+    "failing": [],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -215,10 +213,9 @@
       },
       {
         "key": "manor.count",
-        "ok": false,
+        "ok": true,
         "value": 38,
-        "min": 10,
-        "carriedForward": 38
+        "min": 10
       },
       {
         "key": "muHudl.pairRatio",
@@ -238,18 +235,25 @@
   },
   "recentlyAdded": [
     {
+      "key": "Millersville University Field Hockey at Shippensburg|2026-09-30T20:00:00.000Z",
+      "firstSeenAt": "2026-10-31T04:26:58.131Z",
+      "title": "Millersville University Field Hockey at Shippensburg",
+      "source": "MU",
+      "date": "2026-09-30T20:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Soccer at Kutztown|2026-09-30T23:00:00.000Z",
+      "firstSeenAt": "2026-10-31T04:26:58.131Z",
+      "title": "Millersville University Women's Soccer at Kutztown",
+      "source": "MU",
+      "date": "2026-09-30T23:00:00.000Z"
+    },
+    {
       "key": "Regal Cinemas Fundraiser|2026-09-21T16:00:00.000Z",
       "firstSeenAt": "2026-10-31T00:25:20.635Z",
       "title": "Regal Cinemas Fundraiser",
       "source": "MU",
       "date": "2026-09-21T16:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Soccer at #9 Kutztown|2026-09-30T23:00:00.000Z",
-      "firstSeenAt": "2026-10-31T00:25:20.635Z",
-      "title": "Millersville University Women's Soccer at #9 Kutztown",
-      "source": "MU",
-      "date": "2026-09-30T23:00:00.000Z"
     },
     {
       "key": "Student Government Association (SGA) Weekly Meeting|2026-10-22T17:00:00",
@@ -299,14 +303,7 @@
       "title": "Reformed University Fellowship Prayer Meeting",
       "source": "MU",
       "date": "2026-11-30T22:00:00.000Z"
-    },
-    {
-      "key": "Mock Trial Club Meeting|2026-11-30T22:00:00.000Z",
-      "firstSeenAt": "2026-10-31T00:25:20.635Z",
-      "title": "Mock Trial Club Meeting",
-      "source": "MU",
-      "date": "2026-11-30T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 2
 }

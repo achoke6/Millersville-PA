@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-31T17:16:41.025Z",
+  "generatedAt": "2026-10-31T18:34:23.340Z",
   "totalEvents": 1973,
   "withDescription": 822,
   "withImage": 222,
@@ -19,7 +19,7 @@
     "manor": 38,
     "raneyCellars": 4,
     "theBackyard": 26,
-    "muHudlBroadcasts": 56
+    "muHudlBroadcasts": 55
   },
   "sourceDateRanges": {
     "muAthletics": {
@@ -131,8 +131,8 @@
   },
   "sports": {
     "total": 887,
-    "scored": 191,
-    "wins": 90,
+    "scored": 192,
+    "wins": 91,
     "losses": 88,
     "ties": 13
   },
@@ -150,13 +150,13 @@
       "Campus Life": 2
     },
     "stalePast": 27,
-    "lastSyncAt": "2026-10-31T17:13:57.413Z"
+    "lastSyncAt": "2026-10-31T18:31:57.157Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-10-31T17:16:31.235Z"
+    "checkedAt": "2026-10-31T18:34:13.979Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -220,8 +220,8 @@
       {
         "key": "muHudl.pairRatio",
         "ok": true,
-        "matched": 56,
-        "inWindow": 62,
+        "matched": 55,
+        "inWindow": 61,
         "value": 0.9,
         "min": 0.5
       },
@@ -305,5 +305,5 @@
       "date": "2026-11-27T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 2
+  "addedLastRun": 0
 }

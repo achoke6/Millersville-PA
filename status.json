@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-31T07:01:19.212Z",
+  "generatedAt": "2026-10-31T08:49:39.961Z",
   "totalEvents": 1973,
   "withDescription": 822,
   "withImage": 220,
@@ -55,7 +55,7 @@
       "latest": "2026-11-22T21:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-11-01T00:00:00.000Z",
+      "earliest": "2026-10-31T00:00:00.000Z",
       "latest": "2026-12-19T01:00:00.000Z"
     },
     "community": {
@@ -150,13 +150,13 @@
       "Campus Life": 2
     },
     "stalePast": 27,
-    "lastSyncAt": "2026-10-31T06:58:13.931Z"
+    "lastSyncAt": "2026-10-31T08:46:37.303Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-10-31T07:01:10.883Z"
+    "checkedAt": "2026-10-31T08:49:24.348Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -165,7 +165,7 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 360,
+        "value": 359,
         "min": 45,
         "skipped": false
       },
@@ -221,8 +221,8 @@
         "key": "muHudl.pairRatio",
         "ok": true,
         "matched": 56,
-        "inWindow": 63,
-        "value": 0.89,
+        "inWindow": 62,
+        "value": 0.9,
         "min": 0.5
       },
       {
@@ -235,11 +235,11 @@
   },
   "recentlyAdded": [
     {
-      "key": "Primer 55 w. 40 Below Summer|2026-11-22T00:00:00.000Z",
-      "firstSeenAt": "2026-10-31T06:15:31.193Z",
-      "title": "Primer 55 w. 40 Below Summer",
+      "key": "WIXQ HALLOWEEN SHOW w. Super Vehicle, Hole Milk, and Turn Evil|2026-10-31T00:00:00.000Z",
+      "firstSeenAt": "2026-10-31T08:49:39.958Z",
+      "title": "WIXQ HALLOWEEN SHOW w. Super Vehicle, Hole Milk, and Turn Evil",
       "source": "Other",
-      "date": "2026-11-22T00:00:00.000Z"
+      "date": "2026-10-31T00:00:00.000Z"
     },
     {
       "key": "Millersville University Field Hockey at Shippensburg|2026-09-30T20:00:00.000Z",
@@ -305,5 +305,5 @@
       "date": "2026-11-30T21:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

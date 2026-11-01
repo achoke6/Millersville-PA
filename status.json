@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-31T22:30:17.821Z",
-  "totalEvents": 1974,
+  "generatedAt": "2026-11-01T00:18:16.882Z",
+  "totalEvents": 1975,
   "withDescription": 822,
   "withImage": 222,
   "familyFriendly": 52,
@@ -12,7 +12,7 @@
     "campsAlumni": 11,
     "muGetInvolved": 533,
     "pennManor": 641,
-    "borough": 54,
+    "borough": 55,
     "vfw": 3,
     "phantomPower": 14,
     "community": 12,
@@ -48,7 +48,7 @@
     },
     "borough": {
       "earliest": "2026-08-03T22:00:00.000Z",
-      "latest": "2026-12-25T12:00:00.000Z"
+      "latest": "2027-10-31T22:00:00.000Z"
     },
     "vfw": {
       "earliest": "2026-10-18T17:00:00.000Z",
@@ -101,8 +101,8 @@
       "daysSinceMoved": 6
     },
     "borough": {
-      "newest": "2026-12-25",
-      "daysSinceMoved": 89
+      "newest": "2027-10-31",
+      "daysSinceMoved": 0
     },
     "vfw": {
       "newest": "2026-11-22",
@@ -150,13 +150,13 @@
       "Campus Life": 2
     },
     "stalePast": 27,
-    "lastSyncAt": "2026-10-31T22:27:35.492Z"
+    "lastSyncAt": "2026-11-01T00:15:42.091Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-10-31T22:30:10.911Z"
+    "checkedAt": "2026-11-01T00:18:08.330Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -186,7 +186,7 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 55,
+        "value": 365,
         "min": 21,
         "skipped": false
       },
@@ -235,6 +235,34 @@
   },
   "recentlyAdded": [
     {
+      "key": "Millersville University Women's Soccer at #9 Kutztown|2026-09-30T23:00:00.000Z",
+      "firstSeenAt": "2026-11-01T00:18:16.879Z",
+      "title": "Millersville University Women's Soccer at #9 Kutztown",
+      "source": "MU",
+      "date": "2026-09-30T23:00:00.000Z"
+    },
+    {
+      "key": "Men's Ice Hockey Practice (D2)|2026-12-01T11:00:00.000Z",
+      "firstSeenAt": "2026-11-01T00:18:16.879Z",
+      "title": "Men's Ice Hockey Practice (D2)",
+      "source": "MU",
+      "date": "2026-12-01T11:00:00.000Z"
+    },
+    {
+      "key": "Weekly Practice|2026-12-01T22:00:00.000Z",
+      "firstSeenAt": "2026-11-01T00:18:16.879Z",
+      "title": "Weekly Practice",
+      "source": "MU",
+      "date": "2026-12-01T22:00:00.000Z"
+    },
+    {
+      "key": "Trick or Treat|2027-10-31T22:00:00.000Z",
+      "firstSeenAt": "2026-11-01T00:18:16.879Z",
+      "title": "Trick or Treat",
+      "source": "Borough",
+      "date": "2027-10-31T22:00:00.000Z"
+    },
+    {
       "key": "Millersville University Field Hockey at #2 Shippensburg|2026-09-30T20:00:00.000Z",
       "firstSeenAt": "2026-10-31T20:22:52.492Z",
       "title": "Millersville University Field Hockey at #2 Shippensburg",
@@ -275,35 +303,7 @@
       "title": "Primer 55 w. 40 Below Summer",
       "source": "Other",
       "date": "2026-11-22T00:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Soccer at Kutztown|2026-09-30T23:00:00.000Z",
-      "firstSeenAt": "2026-10-31T04:26:58.131Z",
-      "title": "Millersville University Women's Soccer at Kutztown",
-      "source": "MU",
-      "date": "2026-09-30T23:00:00.000Z"
-    },
-    {
-      "key": "Regal Cinemas Fundraiser|2026-09-21T16:00:00.000Z",
-      "firstSeenAt": "2026-10-31T00:25:20.635Z",
-      "title": "Regal Cinemas Fundraiser",
-      "source": "MU",
-      "date": "2026-09-21T16:00:00.000Z"
-    },
-    {
-      "key": "Student Government Association (SGA) Weekly Meeting|2026-10-22T17:00:00",
-      "firstSeenAt": "2026-10-31T00:25:20.635Z",
-      "title": "Student Government Association (SGA) Weekly Meeting",
-      "source": "MU",
-      "date": "2026-10-22T17:00:00"
-    },
-    {
-      "key": "Letters of Love|2026-10-22T19:00:00",
-      "firstSeenAt": "2026-10-31T00:25:20.635Z",
-      "title": "Letters of Love",
-      "source": "MU",
-      "date": "2026-10-22T19:00:00"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 4
 }

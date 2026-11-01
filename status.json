@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-01T07:38:50.860Z",
+  "generatedAt": "2026-11-01T09:15:35.647Z",
   "totalEvents": 1975,
   "withDescription": 822,
   "withImage": 222,
@@ -55,7 +55,7 @@
       "latest": "2026-11-22T21:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-11-01T00:00:00.000Z",
+      "earliest": "2026-11-06T00:00:00.000Z",
       "latest": "2026-12-19T01:00:00.000Z"
     },
     "community": {
@@ -150,13 +150,13 @@
       "Campus Life": 2
     },
     "stalePast": 27,
-    "lastSyncAt": "2026-11-01T07:36:13.305Z"
+    "lastSyncAt": "2026-11-01T09:13:10.362Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-11-01T07:38:43.922Z"
+    "checkedAt": "2026-11-01T09:15:24.769Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -165,7 +165,7 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 359,
+        "value": 358,
         "min": 45,
         "skipped": false
       },
@@ -235,6 +235,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "ATLAS AT HOLD w. Major Moment, Who They Fear, Elsewhere|2026-11-23T00:00:00.000Z",
+      "firstSeenAt": "2026-11-01T09:15:35.642Z",
+      "title": "ATLAS AT HOLD w. Major Moment, Who They Fear, Elsewhere",
+      "source": "Other",
+      "date": "2026-11-23T00:00:00.000Z"
+    },
+    {
       "key": "Millersville University Women's Soccer at #9 Kutztown|2026-09-30T23:00:00.000Z",
       "firstSeenAt": "2026-11-01T00:18:16.879Z",
       "title": "Millersville University Women's Soccer at #9 Kutztown",
@@ -296,14 +303,7 @@
       "title": "Trick-Or-Treat Trail",
       "source": "MU",
       "date": "2026-10-30T15:30:00.000Z"
-    },
-    {
-      "key": "Primer 55 w. 40 Below Summer|2026-11-22T00:00:00.000Z",
-      "firstSeenAt": "2026-10-31T10:37:56.320Z",
-      "title": "Primer 55 w. 40 Below Summer",
-      "source": "Other",
-      "date": "2026-11-22T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

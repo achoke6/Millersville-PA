@@ -126,7 +126,74 @@
       }
     ]
   },
-  "observations": [],
+  "observations": [
+    {
+      "time": "01:00",
+      "temp": "40",
+      "dewpoint": "39",
+      "rh": "94",
+      "windDir": "SW",
+      "windSpeed": "0",
+      "precip": "0.00",
+      "visibility": "11.7",
+      "condition": "None"
+    },
+    {
+      "time": "00:00",
+      "temp": "41",
+      "dewpoint": "40",
+      "rh": "93",
+      "windDir": "ENE",
+      "windSpeed": "0",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "23:00",
+      "temp": "43",
+      "dewpoint": "40",
+      "rh": "89",
+      "windDir": "S",
+      "windSpeed": "0",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "22:00",
+      "temp": "44",
+      "dewpoint": "40",
+      "rh": "87",
+      "windDir": "SW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "21:00",
+      "temp": "46",
+      "dewpoint": "40",
+      "rh": "79",
+      "windDir": "WNW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "20:00",
+      "temp": "49",
+      "dewpoint": "38",
+      "rh": "68",
+      "windDir": "W",
+      "windSpeed": "0",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    }
+  ],
   "dailySummary": {
     "monthLabel": "October 2026",
     "days": [
@@ -459,6 +526,17 @@
         "windSpeed": "25",
         "windTime": "16:30",
         "rain": "0.00"
+      },
+      {
+        "date": "10/31",
+        "max": "60",
+        "maxTime": "15:03",
+        "min": "39",
+        "minTime": "05:44",
+        "windDir": "347",
+        "windSpeed": "16",
+        "windTime": "11:18",
+        "rain": "0.00"
       }
     ],
     "totalRain": "2.81",
@@ -480,5 +558,5 @@
   },
   "videos": [],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-01T04:00:29.721Z"
+  "updated": "2026-11-01T05:48:27.075Z"
 }

@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-11-02T20:09:30.508Z",
+  "generatedAt": "2026-11-02T22:01:02.139Z",
   "totalEvents": 1983,
   "withDescription": 826,
-  "withImage": 227,
+  "withImage": 228,
   "familyFriendly": 54,
   "eventsToday": 20,
   "sources": {
@@ -150,13 +150,13 @@
       "Campus Life": 2
     },
     "stalePast": 27,
-    "lastSyncAt": "2026-11-02T20:07:22.508Z"
+    "lastSyncAt": "2026-11-02T21:54:55.676Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-11-02T20:09:20.614Z"
+    "checkedAt": "2026-11-02T22:00:53.624Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -235,6 +235,27 @@
   },
   "recentlyAdded": [
     {
+      "key": "Pie-A-Greek|2026-11-04T21:30:00.000Z",
+      "firstSeenAt": "2026-11-02T22:01:02.136Z",
+      "title": "Pie-A-Greek",
+      "source": "MU",
+      "date": "2026-11-04T21:30:00.000Z"
+    },
+    {
+      "key": "Collaboration Night|2026-11-09T22:00:00.000Z",
+      "firstSeenAt": "2026-11-02T22:01:02.136Z",
+      "title": "Collaboration Night",
+      "source": "MU",
+      "date": "2026-11-09T22:00:00.000Z"
+    },
+    {
+      "key": "MEMU Meeting|2026-11-09T23:00:00.000Z",
+      "firstSeenAt": "2026-11-02T22:01:02.136Z",
+      "title": "MEMU Meeting",
+      "source": "MU",
+      "date": "2026-11-09T23:00:00.000Z"
+    },
+    {
       "key": "Club Cheer Blanket Fundraiser|2026-11-03T15:00:00.000Z",
       "firstSeenAt": "2026-11-02T20:09:30.504Z",
       "title": "Club Cheer Blanket Fundraiser",
@@ -282,28 +303,7 @@
       "title": "Villanova IHSA Show!!",
       "source": "MU",
       "date": "2026-11-08T12:00:00.000Z"
-    },
-    {
-      "key": "Club Cheer Blanket Fundraiser|2026-11-08T15:00:00.000Z",
-      "firstSeenAt": "2026-11-02T20:09:30.504Z",
-      "title": "Club Cheer Blanket Fundraiser",
-      "source": "MU",
-      "date": "2026-11-08T15:00:00.000Z"
-    },
-    {
-      "key": "Home Game Against Rowan University|2026-11-22T22:00:00.000Z",
-      "firstSeenAt": "2026-11-02T20:09:30.504Z",
-      "title": "Home Game Against Rowan University",
-      "source": "MU",
-      "date": "2026-11-22T22:00:00.000Z"
-    },
-    {
-      "key": "BCM Men's Bible Study|2026-11-03T00:00:00.000Z",
-      "firstSeenAt": "2026-11-02T18:21:48.778Z",
-      "title": "BCM Men's Bible Study",
-      "source": "MU",
-      "date": "2026-11-03T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 9
+  "addedLastRun": 3
 }

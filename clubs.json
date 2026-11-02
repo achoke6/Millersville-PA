@@ -150,9 +150,9 @@
   },
   {
     "name": "Asian Student Inclusivity Association",
-    "category": "Performance",
+    "category": "Meeting",
     "categories": [
-      "Performance"
+      "Meeting"
     ],
     "shortName": "ASIA",
     "id": ""
@@ -665,8 +665,9 @@
   },
   {
     "name": "East Village Residence Hall",
-    "category": "Social",
+    "category": "Competition",
     "categories": [
+      "Competition",
       "Social"
     ],
     "shortName": "East Village",
@@ -889,8 +890,10 @@
   },
   {
     "name": "Ice Hockey Club (D3)",
-    "category": "",
-    "categories": [],
+    "category": "Sporting",
+    "categories": [
+      "Sporting"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1048,7 +1051,8 @@
     "name": "Math Club",
     "category": "Social",
     "categories": [
-      "Social"
+      "Social",
+      "Fundraiser"
     ],
     "shortName": "",
     "id": ""
@@ -1221,10 +1225,8 @@
   },
   {
     "name": "Moose Ultimate",
-    "category": "Fundraiser",
-    "categories": [
-      "Fundraiser"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1294,8 +1296,10 @@
   },
   {
     "name": "Ocean Science Club",
-    "category": "",
-    "categories": [],
+    "category": "Service",
+    "categories": [
+      "Service"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1495,8 +1499,10 @@
   },
   {
     "name": "Shenks Residence Hall",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "",
     "id": ""
   },

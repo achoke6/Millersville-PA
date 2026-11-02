@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-11-01T22:18:45.742Z",
+  "generatedAt": "2026-11-02T00:06:33.365Z",
   "totalEvents": 1975,
-  "withDescription": 822,
-  "withImage": 222,
+  "withDescription": 823,
+  "withImage": 223,
   "familyFriendly": 52,
   "eventsToday": 7,
   "sources": {
@@ -10,13 +10,13 @@
     "muCalendar": 188,
     "artsmu": 2,
     "campsAlumni": 11,
-    "muGetInvolved": 533,
-    "pennManor": 641,
-    "borough": 55,
+    "muGetInvolved": 534,
+    "pennManor": 640,
+    "borough": 54,
     "vfw": 3,
     "phantomPower": 14,
     "community": 12,
-    "manor": 38,
+    "manor": 39,
     "raneyCellars": 4,
     "theBackyard": 26,
     "muHudlBroadcasts": 55
@@ -43,11 +43,11 @@
       "latest": "2027-10-05T11:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-08-03T23:00:00.000Z",
+      "earliest": "2026-08-17T12:00:00.000Z",
       "latest": "2027-10-25T20:00:00.000Z"
     },
     "borough": {
-      "earliest": "2026-08-03T22:00:00.000Z",
+      "earliest": "2026-08-04T12:00:00.000Z",
       "latest": "2027-10-31T22:00:00.000Z"
     },
     "vfw": {
@@ -64,7 +64,7 @@
     },
     "manor": {
       "earliest": "2026-11-05T00:00:00.000Z",
-      "latest": "2027-10-27T12:30:00.000Z"
+      "latest": "2027-11-01T23:00:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-10-29T20:00:00.000Z",
@@ -117,8 +117,8 @@
       "daysSinceMoved": 89
     },
     "manor": {
-      "newest": "2027-10-27",
-      "daysSinceMoved": 5
+      "newest": "2027-11-01",
+      "daysSinceMoved": 0
     },
     "raneyCellars": {
       "newest": "2026-11-12",
@@ -150,13 +150,13 @@
       "Campus Life": 2
     },
     "stalePast": 27,
-    "lastSyncAt": "2026-11-01T22:16:37.001Z"
+    "lastSyncAt": "2026-11-02T00:04:11.414Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-11-01T22:18:37.938Z"
+    "checkedAt": "2026-11-02T00:06:24.438Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -207,14 +207,14 @@
       {
         "key": "pennManorGeneral.count",
         "ok": true,
-        "value": 106,
+        "value": 105,
         "min": 10,
         "skipped": false
       },
       {
         "key": "manor.count",
         "ok": true,
-        "value": 38,
+        "value": 39,
         "min": 10
       },
       {
@@ -235,6 +235,62 @@
   },
   "recentlyAdded": [
     {
+      "key": "Benefit Show|2026-10-23T16:00:00",
+      "firstSeenAt": "2026-11-02T00:06:33.361Z",
+      "title": "Benefit Show",
+      "source": "MU",
+      "date": "2026-10-23T16:00:00"
+    },
+    {
+      "key": "Millersville University Women's Soccer at Slippery Rock|2026-11-03T18:00:00.000Z",
+      "firstSeenAt": "2026-11-02T00:06:33.361Z",
+      "title": "Millersville University Women's Soccer at Slippery Rock",
+      "source": "MU",
+      "date": "2026-11-03T18:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Men's Soccer vs East Stroudsburg|2026-11-04T18:00:00.000Z",
+      "firstSeenAt": "2026-11-02T00:06:33.361Z",
+      "title": "Millersville University Men's Soccer vs East Stroudsburg",
+      "source": "MU",
+      "date": "2026-11-04T18:00:00.000Z"
+    },
+    {
+      "key": "SGA Advocacy Tabling|2026-12-01T22:00:00.000Z",
+      "firstSeenAt": "2026-11-02T00:06:33.361Z",
+      "title": "SGA Advocacy Tabling",
+      "source": "MU",
+      "date": "2026-12-01T22:00:00.000Z"
+    },
+    {
+      "key": "BYOP / End of Year Party!|2026-12-01T23:00:00.000Z",
+      "firstSeenAt": "2026-11-02T00:06:33.361Z",
+      "title": "BYOP / End of Year Party!",
+      "source": "MU",
+      "date": "2026-12-01T23:00:00.000Z"
+    },
+    {
+      "key": "YDSA Meeting|2026-12-01T23:30:00.000Z",
+      "firstSeenAt": "2026-11-02T00:06:33.361Z",
+      "title": "YDSA Meeting",
+      "source": "MU",
+      "date": "2026-12-01T23:30:00.000Z"
+    },
+    {
+      "key": "RUF Bible Study|2026-12-02T00:00:00.000Z",
+      "firstSeenAt": "2026-11-02T00:06:33.361Z",
+      "title": "RUF Bible Study",
+      "source": "MU",
+      "date": "2026-12-02T00:00:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2027-11-01T23:00:00.000Z",
+      "firstSeenAt": "2026-11-02T00:06:33.361Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2027-11-01T23:00:00.000Z"
+    },
+    {
       "key": "ATLAS AT HOLD w. Major Moment, Who They Fear, Elsewhere|2026-11-23T00:00:00.000Z",
       "firstSeenAt": "2026-11-01T12:51:04.985Z",
       "title": "ATLAS AT HOLD w. Major Moment, Who They Fear, Elsewhere",
@@ -247,63 +303,7 @@
       "title": "Millersville University Women's Soccer at #9 Kutztown",
       "source": "MU",
       "date": "2026-09-30T23:00:00.000Z"
-    },
-    {
-      "key": "Men's Ice Hockey Practice (D2)|2026-12-01T11:00:00.000Z",
-      "firstSeenAt": "2026-11-01T00:18:16.879Z",
-      "title": "Men's Ice Hockey Practice (D2)",
-      "source": "MU",
-      "date": "2026-12-01T11:00:00.000Z"
-    },
-    {
-      "key": "Weekly Practice|2026-12-01T22:00:00.000Z",
-      "firstSeenAt": "2026-11-01T00:18:16.879Z",
-      "title": "Weekly Practice",
-      "source": "MU",
-      "date": "2026-12-01T22:00:00.000Z"
-    },
-    {
-      "key": "Trick or Treat|2027-10-31T22:00:00.000Z",
-      "firstSeenAt": "2026-11-01T00:18:16.879Z",
-      "title": "Trick or Treat",
-      "source": "Borough",
-      "date": "2027-10-31T22:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Field Hockey at #2 Shippensburg|2026-09-30T20:00:00.000Z",
-      "firstSeenAt": "2026-10-31T20:22:52.492Z",
-      "title": "Millersville University Field Hockey at #2 Shippensburg",
-      "source": "MU",
-      "date": "2026-09-30T20:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Soccer at Slippery Rock|2026-11-03T00:00:00.000Z",
-      "firstSeenAt": "2026-10-31T20:22:52.492Z",
-      "title": "Millersville University Women's Soccer at Slippery Rock",
-      "source": "MU",
-      "date": "2026-11-03T00:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Field Hockey @ Lower Dauphin High School|2026-11-04T23:30:00.000Z",
-      "firstSeenAt": "2026-10-31T20:22:52.492Z",
-      "title": "Girls Varsity Field Hockey @ Lower Dauphin High School",
-      "source": "PM",
-      "date": "2026-11-04T23:30:00.000Z"
-    },
-    {
-      "key": "Trick-or-Treat Trail: Bag Pickup and Pumpkin Voting|2026-10-30T12:30:00.000Z",
-      "firstSeenAt": "2026-10-31T17:16:41.021Z",
-      "title": "Trick-or-Treat Trail: Bag Pickup and Pumpkin Voting",
-      "source": "MU",
-      "date": "2026-10-30T12:30:00.000Z"
-    },
-    {
-      "key": "Trick-Or-Treat Trail|2026-10-30T15:30:00.000Z",
-      "firstSeenAt": "2026-10-31T17:16:41.021Z",
-      "title": "Trick-Or-Treat Trail",
-      "source": "MU",
-      "date": "2026-10-30T15:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 8
 }

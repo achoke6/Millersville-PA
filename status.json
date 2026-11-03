@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-03T19:43:17.069Z",
-  "totalEvents": 1982,
+  "generatedAt": "2026-11-03T21:33:31.471Z",
+  "totalEvents": 1981,
   "withDescription": 825,
   "withImage": 224,
   "familyFriendly": 54,
   "eventsToday": 28,
   "sources": {
-    "muAthletics": 353,
+    "muAthletics": 352,
     "muCalendar": 189,
     "artsmu": 2,
     "campsAlumni": 11,
@@ -130,10 +130,10 @@
     }
   },
   "sports": {
-    "total": 890,
-    "scored": 197,
+    "total": 889,
+    "scored": 198,
     "wins": 96,
-    "losses": 88,
+    "losses": 89,
     "ties": 13
   },
   "registrations": {
@@ -150,13 +150,13 @@
       "Campus Life": 2
     },
     "stalePast": 27,
-    "lastSyncAt": "2026-11-03T19:39:30.766Z"
+    "lastSyncAt": "2026-11-03T21:29:04.521Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-11-03T19:43:08.144Z"
+    "checkedAt": "2026-11-03T21:33:22.327Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -200,7 +200,7 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 353,
+        "value": 352,
         "min": 100,
         "skipped": false
       },
@@ -234,6 +234,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Millersville University Women's Soccer at NCAA Atlantic Regional|2026-11-14T00:00:00.000Z",
+      "firstSeenAt": "2026-11-03T21:33:31.467Z",
+      "title": "Millersville University Women's Soccer at NCAA Atlantic Regional",
+      "source": "MU",
+      "date": "2026-11-14T00:00:00.000Z"
+    },
     {
       "key": "Midterm Debrief Town-hall|2026-11-06T01:00:00.000Z",
       "firstSeenAt": "2026-11-03T17:53:42.019Z",
@@ -296,14 +303,7 @@
       "title": "AniMU Weekly Meeting",
       "source": "MU",
       "date": "2026-11-27T23:00:00.000Z"
-    },
-    {
-      "key": "Weekly Practice|2026-11-30T21:00:00.000Z",
-      "firstSeenAt": "2026-11-03T01:39:05.762Z",
-      "title": "Weekly Practice",
-      "source": "MU",
-      "date": "2026-11-30T21:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-03T01:39:05.766Z",
+  "generatedAt": "2026-11-03T03:26:36.967Z",
   "totalEvents": 1982,
   "withDescription": 826,
   "withImage": 223,
@@ -150,13 +150,13 @@
       "Campus Life": 2
     },
     "stalePast": 27,
-    "lastSyncAt": "2026-11-03T01:36:53.507Z"
+    "lastSyncAt": "2026-11-03T03:24:27.156Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-11-03T01:39:03.427Z"
+    "checkedAt": "2026-11-03T03:26:29.362Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -235,6 +235,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "ATLAS AT HOLD w. Major Moment, Who They Fear, Elsewhere|2026-11-23T00:00:00.000Z",
+      "firstSeenAt": "2026-11-03T03:26:36.963Z",
+      "title": "ATLAS AT HOLD w. Major Moment, Who They Fear, Elsewhere",
+      "source": "Other",
+      "date": "2026-11-23T00:00:00.000Z"
+    },
+    {
       "key": "Regal Cinemas Fundraiser|2026-09-21T16:00:00.000Z",
       "firstSeenAt": "2026-11-03T01:39:05.762Z",
       "title": "Regal Cinemas Fundraiser",
@@ -247,13 +254,6 @@
       "title": "Mothering Justice",
       "source": "MU",
       "date": "2026-10-25T11:00:00"
-    },
-    {
-      "key": "DRAG PAGEANT 2026|2026-11-20T00:00:00.000Z",
-      "firstSeenAt": "2026-11-03T01:39:05.762Z",
-      "title": "DRAG PAGEANT 2026",
-      "source": "Other",
-      "date": "2026-11-20T00:00:00.000Z"
     },
     {
       "key": "Moose Ultimate Practice|2026-11-27T00:00:00.000Z",
@@ -305,5 +305,5 @@
       "date": "2026-11-30T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 13
+  "addedLastRun": 1
 }

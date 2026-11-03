@@ -1,27 +1,27 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Tuesday, November 03, 2026 at 11:59 AM (Longo, Rooney, and Werley, Student Meteorologists)",
+    "issued": "Tuesday, November 03, 2026 at 05:47 PM (Beetham, Cerri, Dougherty, Student Meteorologists)",
     "periods": [
-      {
-        "period": "This afternoon",
-        "text": "Mostly sunny and warm. High: 70-74"
-      },
       {
         "period": "Tonight",
         "text": "Mainly clear. Low: 46-50"
       },
       {
-        "period": "Wednesday",
-        "text": "Partly sunny and unseasonable warm. High: 72-76"
+        "period": "Tomorrow",
+        "text": "Partly sunny and unseasonably warm. High: 72-76"
       },
       {
-        "period": "Wednesday Night",
+        "period": "Tomorrow Night",
         "text": "Mild with increasing clouds and a few showers late. Low: 56-60"
       },
       {
         "period": "Thursday",
         "text": "Mostly cloudy and warm with periods of rain, mainly in the morning. High: 68-72"
+      },
+      {
+        "period": "Friday",
+        "text": "Warm and remaining humid, with periods of clouds and sun. High: 66-70"
       }
     ]
   },
@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "18:00",
+      "temp": "63",
+      "dewpoint": "53",
+      "rh": "70",
+      "windDir": "SSW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "17:00",
+      "temp": "66",
+      "dewpoint": "53",
+      "rh": "62",
+      "windDir": "S",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "16:00",
       "temp": "71",
       "dewpoint": "52",
@@ -167,28 +189,6 @@
       "rh": "46",
       "windDir": "SSW",
       "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "12:00",
-      "temp": "68",
-      "dewpoint": "48",
-      "rh": "50",
-      "windDir": "WSW",
-      "windSpeed": "6",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "11:00",
-      "temp": "65",
-      "dewpoint": "48",
-      "rh": "54",
-      "windDir": "SW",
-      "windSpeed": "3",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
@@ -237,36 +237,7 @@
     "radar": "https://sirocco.accuweather.com/nx_mosaic_640x480c/RE/inmaREPA_.gif",
     "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
   },
-  "videos": [
-    {
-      "title": "Short Term Forecast 11/03/2026",
-      "videoId": "nYRImGJgFow",
-      "url": "https://www.youtube.com/watch?v=nYRImGJgFow",
-      "published": "2026-11-03T16:38:07+00:00",
-      "thumbnail": "https://i3.ytimg.com/vi/nYRImGJgFow/hqdefault.jpg"
-    },
-    {
-      "title": "2026-2027 Winter Outlook",
-      "videoId": "tGYQauS0Izw",
-      "url": "https://www.youtube.com/watch?v=tGYQauS0Izw",
-      "published": "2026-11-03T15:16:06+00:00",
-      "thumbnail": "https://i1.ytimg.com/vi/tGYQauS0Izw/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 11/02/2026",
-      "videoId": "jCga7X59I9s",
-      "url": "https://www.youtube.com/watch?v=jCga7X59I9s",
-      "published": "2026-11-02T14:52:55+00:00",
-      "thumbnail": "https://i3.ytimg.com/vi/jCga7X59I9s/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 10/29/2026",
-      "videoId": "5-aVWoOesLk",
-      "url": "https://www.youtube.com/watch?v=5-aVWoOesLk",
-      "published": "2026-10-29T15:41:28+00:00",
-      "thumbnail": "https://i2.ytimg.com/vi/5-aVWoOesLk/hqdefault.jpg"
-    }
-  ],
+  "videos": [],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-03T21:29:06.912Z"
+  "updated": "2026-11-03T23:18:52.638Z"
 }

@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-11-03T23:24:50.462Z",
-  "totalEvents": 1981,
-  "withDescription": 825,
-  "withImage": 224,
+  "generatedAt": "2026-11-04T01:13:00.082Z",
+  "totalEvents": 1976,
+  "withDescription": 821,
+  "withImage": 226,
   "familyFriendly": 54,
-  "eventsToday": 28,
+  "eventsToday": 26,
   "sources": {
     "muAthletics": 352,
-    "muCalendar": 189,
+    "muCalendar": 188,
     "artsmu": 2,
     "campsAlumni": 11,
-    "muGetInvolved": 535,
+    "muGetInvolved": 532,
     "pennManor": 643,
-    "borough": 53,
+    "borough": 51,
     "vfw": 2,
     "phantomPower": 14,
     "community": 12,
-    "manor": 39,
+    "manor": 40,
     "raneyCellars": 4,
     "theBackyard": 29,
     "muHudlBroadcasts": 55
@@ -47,7 +47,7 @@
       "latest": "2027-10-25T20:00:00.000Z"
     },
     "borough": {
-      "earliest": "2026-08-05T12:00:00.000Z",
+      "earliest": "2026-08-10T12:00:00.000Z",
       "latest": "2027-10-31T22:00:00.000Z"
     },
     "vfw": {
@@ -64,7 +64,7 @@
     },
     "manor": {
       "earliest": "2026-11-05T00:00:00.000Z",
-      "latest": "2027-11-01T23:00:00.000Z"
+      "latest": "2027-11-03T23:00:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-10-29T20:00:00.000Z",
@@ -117,8 +117,8 @@
       "daysSinceMoved": 89
     },
     "manor": {
-      "newest": "2027-11-01",
-      "daysSinceMoved": 2
+      "newest": "2027-11-03",
+      "daysSinceMoved": 0
     },
     "raneyCellars": {
       "newest": "2026-11-12",
@@ -150,13 +150,13 @@
       "Campus Life": 2
     },
     "stalePast": 27,
-    "lastSyncAt": "2026-11-03T23:22:28.918Z"
+    "lastSyncAt": "2026-11-04T01:10:16.929Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-11-03T23:24:47.042Z"
+    "checkedAt": "2026-11-04T01:12:52.885Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -214,7 +214,7 @@
       {
         "key": "manor.count",
         "ok": true,
-        "value": 39,
+        "value": 40,
         "min": 10
       },
       {
@@ -235,75 +235,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Millersville University Women's Soccer at NCAA Atlantic Regional|2026-11-14T00:00:00.000Z",
-      "firstSeenAt": "2026-11-03T21:33:31.467Z",
-      "title": "Millersville University Women's Soccer at NCAA Atlantic Regional",
-      "source": "MU",
-      "date": "2026-11-14T00:00:00.000Z"
+      "key": "Trivia Night|2026-11-25T01:00:00.000Z",
+      "firstSeenAt": "2026-11-04T01:13:00.079Z",
+      "title": "Trivia Night",
+      "source": "Jack's Tavern",
+      "date": "2026-11-25T01:00:00.000Z"
     },
     {
-      "key": "Midterm Debrief Town-hall|2026-11-06T01:00:00.000Z",
-      "firstSeenAt": "2026-11-03T17:53:42.019Z",
-      "title": "Midterm Debrief Town-hall",
-      "source": "MU",
-      "date": "2026-11-06T01:00:00.000Z"
-    },
-    {
-      "key": "Sweet Scents of Autumn|2026-11-20T18:00:00.000Z",
-      "firstSeenAt": "2026-11-03T17:53:42.019Z",
-      "title": "Sweet Scents of Autumn",
-      "source": "MU",
-      "date": "2026-11-20T18:00:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Wrestling vs J P McCaskey High School|2026-12-17T00:00:00.000Z",
-      "firstSeenAt": "2026-11-03T17:53:42.019Z",
-      "title": "Boys Varsity Wrestling vs J P McCaskey High School",
-      "source": "PM",
-      "date": "2026-12-17T00:00:00.000Z"
-    },
-    {
-      "key": "General Members Meeting|2026-11-16T23:00:00.000Z",
-      "firstSeenAt": "2026-11-03T14:57:40.067Z",
-      "title": "General Members Meeting",
-      "source": "MU",
-      "date": "2026-11-16T23:00:00.000Z"
-    },
-    {
-      "key": "DRAG PAGEANT 2026|2026-11-20T00:00:00.000Z",
-      "firstSeenAt": "2026-11-03T05:14:47.147Z",
-      "title": "DRAG PAGEANT 2026",
-      "source": "Other",
-      "date": "2026-11-20T00:00:00.000Z"
-    },
-    {
-      "key": "Regal Cinemas Fundraiser|2026-09-21T16:00:00.000Z",
-      "firstSeenAt": "2026-11-03T01:39:05.762Z",
-      "title": "Regal Cinemas Fundraiser",
-      "source": "MU",
-      "date": "2026-09-21T16:00:00.000Z"
-    },
-    {
-      "key": "Mothering Justice|2026-10-25T11:00:00",
-      "firstSeenAt": "2026-11-03T01:39:05.762Z",
-      "title": "Mothering Justice",
-      "source": "MU",
-      "date": "2026-10-25T11:00:00"
-    },
-    {
-      "key": "Moose Ultimate Practice|2026-11-27T00:00:00.000Z",
-      "firstSeenAt": "2026-11-03T01:39:05.762Z",
+      "key": "Moose Ultimate Practice|2026-12-01T00:00:00.000Z",
+      "firstSeenAt": "2026-11-04T01:13:00.079Z",
       "title": "Moose Ultimate Practice",
       "source": "MU",
-      "date": "2026-11-27T00:00:00.000Z"
+      "date": "2026-12-01T00:00:00.000Z"
     },
     {
-      "key": "AniMU Weekly Meeting|2026-11-27T23:00:00.000Z",
-      "firstSeenAt": "2026-11-03T01:39:05.762Z",
-      "title": "AniMU Weekly Meeting",
+      "key": "Women's Bible Study|2026-12-01T00:00:00.000Z",
+      "firstSeenAt": "2026-11-04T01:13:00.079Z",
+      "title": "Women's Bible Study",
       "source": "MU",
-      "date": "2026-11-27T23:00:00.000Z"
+      "date": "2026-12-01T00:00:00.000Z"
+    },
+    {
+      "key": "BCM Men's Bible Study|2026-12-01T00:00:00.000Z",
+      "firstSeenAt": "2026-11-04T01:13:00.079Z",
+      "title": "BCM Men's Bible Study",
+      "source": "MU",
+      "date": "2026-12-01T00:00:00.000Z"
+    },
+    {
+      "key": "Men's Ice Hockey Practice (D2)|2026-12-01T11:00:00.000Z",
+      "firstSeenAt": "2026-11-04T01:13:00.079Z",
+      "title": "Men's Ice Hockey Practice (D2)",
+      "source": "MU",
+      "date": "2026-12-01T11:00:00.000Z"
+    },
+    {
+      "key": "Clothing Sale Fundraiser|2026-12-01T19:00:00.000Z",
+      "firstSeenAt": "2026-11-04T01:13:00.079Z",
+      "title": "Clothing Sale Fundraiser",
+      "source": "MU",
+      "date": "2026-12-01T19:00:00.000Z"
+    },
+    {
+      "key": "Weekly Practice|2026-12-01T22:00:00.000Z",
+      "firstSeenAt": "2026-11-04T01:13:00.079Z",
+      "title": "Weekly Practice",
+      "source": "MU",
+      "date": "2026-12-01T22:00:00.000Z"
+    },
+    {
+      "key": "SGA Advocacy Tabling|2026-12-01T22:00:00.000Z",
+      "firstSeenAt": "2026-11-04T01:13:00.079Z",
+      "title": "SGA Advocacy Tabling",
+      "source": "MU",
+      "date": "2026-12-01T22:00:00.000Z"
+    },
+    {
+      "key": "Lavender Legacy Walk Fall 2026|2026-12-01T22:30:00.000Z",
+      "firstSeenAt": "2026-11-04T01:13:00.079Z",
+      "title": "Lavender Legacy Walk Fall 2026",
+      "source": "MU",
+      "date": "2026-12-01T22:30:00.000Z"
+    },
+    {
+      "key": "BYOP / End of Year Party!|2026-12-01T23:00:00.000Z",
+      "firstSeenAt": "2026-11-04T01:13:00.079Z",
+      "title": "BYOP / End of Year Party!",
+      "source": "MU",
+      "date": "2026-12-01T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 21
 }

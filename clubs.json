@@ -1,6 +1,6 @@
 [
   {
-    "name": "Acacia Fraternity",
+    "name": "Acacia",
     "category": "Service",
     "categories": [
       "Service"
@@ -294,10 +294,8 @@
   },
   {
     "name": "Center for Health Education and Promotion",
-    "category": "Educational Program",
+    "category": "Tabling",
     "categories": [
-      "Educational Program",
-      "Social",
       "Tabling"
     ],
     "shortName": "CHEP",
@@ -305,10 +303,8 @@
   },
   {
     "name": "CHAARG",
-    "category": "Fundraiser",
-    "categories": [
-      "Fundraiser"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -410,9 +406,9 @@
   },
   {
     "name": "Club Tennis",
-    "category": "Service",
+    "category": "Sporting",
     "categories": [
-      "Service"
+      "Sporting"
     ],
     "shortName": "",
     "id": ""
@@ -486,9 +482,9 @@
   },
   {
     "name": "Conestoga Outdoors Club",
-    "category": "Social",
+    "category": "Meeting",
     "categories": [
-      "Social"
+      "Meeting"
     ],
     "shortName": "Conestoga Outdoors",
     "id": ""
@@ -545,9 +541,10 @@
   },
   {
     "name": "Crochet Club",
-    "category": "Meeting",
+    "category": "Fundraiser",
     "categories": [
-      "Meeting"
+      "Fundraiser",
+      "Tabling"
     ],
     "shortName": "",
     "id": ""
@@ -1597,9 +1594,9 @@
   },
   {
     "name": "Student Government Association",
-    "category": "Tabling",
+    "category": "Meeting",
     "categories": [
-      "Tabling"
+      "Meeting"
     ],
     "shortName": "SGA",
     "id": ""

@@ -26,82 +26,82 @@
     ]
   },
   "sevenDay": {
-    "issued": "Tuesday, November 03, 2026 at 12:14 PM (Guillaume, Johnson, Kerby, Lowell)",
+    "issued": "Wednesday, November 04, 2026 at 08:31 AM (Jones, Shertzer, Reynolds, Whitehurst)",
     "days": [
       {
-        "period": "Tuesday",
-        "sky": "Mostly Sunny",
-        "weather": "Warm",
-        "pop": "<10%",
-        "temp": "72",
-        "conf": "5"
-      },
-      {
-        "period": "Tuesday night",
-        "sky": "Mainly Clear",
-        "weather": "Fair",
-        "pop": "<10%",
-        "temp": "48",
-        "conf": "5"
-      },
-      {
         "period": "Wednesday",
-        "sky": "Partly Sunny",
+        "sky": "Mostly Sunny",
         "weather": "Unseasonably Warm",
         "pop": "<10%",
-        "temp": "74",
+        "temp": "76",
         "conf": "5"
       },
       {
         "period": "Wednesday night",
-        "sky": "Partly Cloudy",
+        "sky": "Increasing Clouds",
         "weather": "Late-Night Showers",
         "pop": "40%",
-        "temp": "58",
-        "conf": "4"
+        "temp": "60",
+        "conf": "5"
       },
       {
         "period": "Thursday",
         "sky": "Mostly Cloudy",
         "weather": "Rain Ending",
-        "pop": "70%",
-        "temp": "70",
-        "conf": "4"
+        "pop": "80%",
+        "temp": "72",
+        "conf": "5"
       },
       {
         "period": "Thursday night",
         "sky": "Mostly Cloudy",
-        "weather": "Chance of Rain",
-        "pop": "40%",
+        "weather": "Mild",
+        "pop": "20%",
         "temp": "58",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Friday",
         "sky": "Clouds & Sun",
         "weather": "Warm",
         "pop": "20%",
-        "temp": "68",
-        "conf": "3"
+        "temp": "70",
+        "conf": "4"
       },
       {
         "period": "Friday night",
         "sky": "Partly Cloudy",
         "weather": "Mild",
-        "pop": "20%",
+        "pop": "<10%",
         "temp": "50",
-        "conf": "3"
+        "conf": "4"
       },
       {
         "period": "Saturday",
         "sky": "Clouds & Sun",
         "weather": "Cooler",
         "pop": "<10%",
-        "temp": "64",
-        "conf": "3"
+        "temp": "60",
+        "conf": "4"
       },
       {
         "period": "Saturday night",
+        "sky": "Partly Cloudy",
+        "weather": "Fair",
+        "pop": "20%",
+        "temp": "44",
+        "conf": "4"
+      },
+      {
+        "period": "Sunday",
+        "sky": "Mostly Sunny",
+        "weather": "Breezy",
+        "pop": "<10%",
+        "temp": "60",
+        "conf": "3"
+      },
+      {
+        "period": "Sunday night",
         "sky": "Partly Cloudy",
         "weather": "Fair",
         "pop": "<10%",
@@ -109,24 +109,35 @@
         "conf": "3"
       },
       {
-        "period": "Sunday",
+        "period": "Monday",
         "sky": "Partly Sunny",
-        "weather": "Seasonable",
+        "weather": "Breezy",
         "pop": "<10%",
         "temp": "upper 50s",
         "conf": "3"
       },
       {
-        "period": "Monday",
+        "period": "Tuesday",
         "sky": "Mostly Sunny",
-        "weather": "Seasonable",
+        "weather": "Pleasant",
         "pop": "<10%",
-        "temp": "upper 50s",
+        "temp": "mid 60s",
         "conf": "3"
       }
     ]
   },
   "observations": [
+    {
+      "time": "09:00",
+      "temp": "61",
+      "dewpoint": "54",
+      "rh": "78",
+      "windDir": "SW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
     {
       "time": "08:00",
       "temp": "55",
@@ -177,17 +188,6 @@
       "dewpoint": "53",
       "rh": "94",
       "windDir": "SSE",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "03:00",
-      "temp": "55",
-      "dewpoint": "53",
-      "rh": "94",
-      "windDir": "WNW",
       "windSpeed": "1",
       "precip": "0.00",
       "visibility": "12 +",
@@ -279,5 +279,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-04T13:25:26.745Z"
+  "updated": "2026-11-04T14:29:14.250Z"
 }

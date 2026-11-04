@@ -1,6 +1,6 @@
 [
   {
-    "name": "Acacia Fraternity",
+    "name": "Acacia",
     "category": "Service",
     "categories": [
       "Service"
@@ -46,19 +46,15 @@
   },
   {
     "name": "Alliance for Social Change",
-    "category": "Academic",
-    "categories": [
-      "Academic"
-    ],
-    "shortName": "ASC",
-    "id": "allianceforsocialchange"
+    "category": "",
+    "categories": [],
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Alpha Sigma Alpha",
-    "category": "Fundraiser",
-    "categories": [
-      "Fundraiser"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -202,20 +198,15 @@
   },
   {
     "name": "Best Buddies",
-    "category": "Social",
-    "categories": [
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
   {
     "name": "Bible Campus Ministries",
-    "category": "Educational Program",
-    "categories": [
-      "Educational Program",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "BCM",
     "id": ""
   },
@@ -303,10 +294,8 @@
   },
   {
     "name": "Center for Health Education and Promotion",
-    "category": "Educational Program",
+    "category": "Tabling",
     "categories": [
-      "Educational Program",
-      "Social",
       "Tabling"
     ],
     "shortName": "CHEP",
@@ -314,10 +303,8 @@
   },
   {
     "name": "CHAARG",
-    "category": "Fundraiser",
-    "categories": [
-      "Fundraiser"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -389,14 +376,14 @@
     "id": ""
   },
   {
-    "name": "Club Cheerleading",
-    "category": "Sports and Leisure",
+    "name": "Club cheerleading",
+    "category": "Meeting",
     "categories": [
-      "Sports and Leisure",
-      "Meeting"
+      "Meeting",
+      "Fundraiser"
     ],
     "shortName": "Club Cheerleading",
-    "id": "na"
+    "id": ""
   },
   {
     "name": "Club Softball of Millersville University",
@@ -554,9 +541,10 @@
   },
   {
     "name": "Crochet Club",
-    "category": "Meeting",
+    "category": "Fundraiser",
     "categories": [
-      "Meeting"
+      "Fundraiser",
+      "Tabling"
     ],
     "shortName": "",
     "id": ""
@@ -576,15 +564,6 @@
       "Social"
     ],
     "shortName": "CGC",
-    "id": ""
-  },
-  {
-    "name": "Cyber Defense Organization",
-    "category": "Educational Program",
-    "categories": [
-      "Educational Program"
-    ],
-    "shortName": "",
     "id": ""
   },
   {
@@ -1049,8 +1028,9 @@
   },
   {
     "name": "Math Club",
-    "category": "Social",
+    "category": "Movie or Film",
     "categories": [
+      "Movie or Film",
       "Social",
       "Fundraiser"
     ],
@@ -1059,9 +1039,8 @@
   },
   {
     "name": "Mathematics Educators",
-    "category": "Service",
+    "category": "Social",
     "categories": [
-      "Service",
       "Social"
     ],
     "shortName": "",
@@ -1096,7 +1075,8 @@
     "name": "Men's Club Lacrosse",
     "category": "Competition",
     "categories": [
-      "Competition"
+      "Competition",
+      "Sporting"
     ],
     "shortName": "",
     "id": ""
@@ -1614,9 +1594,9 @@
   },
   {
     "name": "Student Government Association",
-    "category": "Tabling",
+    "category": "Meeting",
     "categories": [
-      "Tabling"
+      "Meeting"
     ],
     "shortName": "SGA",
     "id": ""
@@ -1655,13 +1635,14 @@
   },
   {
     "name": "Super Smash Club",
-    "category": "Sports and Leisure",
+    "category": "Competition",
     "categories": [
-      "Sports and Leisure",
-      "Competition"
+      "Competition",
+      "Meeting",
+      "Social"
     ],
     "shortName": "",
-    "id": "supersmashclubmu"
+    "id": ""
   },
   {
     "name": "Tau Kappa Epsilon",
@@ -1894,12 +1875,12 @@
   },
   {
     "name": "Women's Club Soccer",
-    "category": "Competition",
+    "category": "Sports and Leisure",
     "categories": [
-      "Competition"
+      "Sports and Leisure"
     ],
     "shortName": "Women's Club Soccer",
-    "id": ""
+    "id": "womenclubsoccer"
   },
   {
     "name": "Women's Club Volleyball",

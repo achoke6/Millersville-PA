@@ -124,12 +124,11 @@
       "Cabbage – 1-9 $1.50/head · 10-49 $1.25/head · 50+ $1.00/head",
       "Broccoli – $1.50/head or 4/$5.00",
       "Cauliflower – $2.00/head",
+      "Romanesco – $2.00/head",
       "Brussels Sprouts – $1.50 each or 4/$5.00",
       "Round Tomatoes – priced by size, $3/quart",
-      "Green Beans – $2.50/quart, $12/peck, $30/basket (5/8 bushel)",
       "Bell Peppers – 3/$1.00",
       "Eggplant – $1.00 each or 4/$3.00",
-      "Cucumbers – 4/$3.00",
       "Jalapeno Peppers – $1.00/pint or $2.00/quart",
       "Banana Peppers (sweet) – 4/$1.00",
       "Cayenne Peppers – 4/$1.00",
@@ -139,7 +138,7 @@
       "Acorn Squash – $1.50 each",
       "Delicata Squash – $1.00 each"
     ],
-    "weeklyFetchedAt": "2026-11-02T15:11:26.949Z"
+    "weeklyFetchedAt": "2026-11-04T16:19:52.753Z"
   },
   "jesus-dogs": {
     "name": "Jesus Dogs",
@@ -167,8 +166,13 @@
       "Monday"
     ],
     "note": "Members & Guests · Weekly specials change each week",
-    "weekly": [],
-    "weeklyDateRange": "",
+    "weekly": [
+      "The Mac Daddy – $13.95",
+      "Sausage and Pierogies – $13.95",
+      "Prime Rib, 12 oz. Queen Cut – $17.95 (Friday only)",
+      "Prime Rib, 16 oz. King Cut – $21.95 (Friday only)"
+    ],
+    "weeklyDateRange": "Tuesday, November 3 through Saturday, November 7",
     "recurring": {
       "Tuesday": "Shrimp Night",
       "Wednesday": "Wing Night",

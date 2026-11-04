@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-04T16:20:05.664Z",
-  "totalEvents": 1985,
+  "generatedAt": "2026-11-04T16:33:14.279Z",
+  "totalEvents": 1986,
   "withDescription": 828,
   "withImage": 225,
   "familyFriendly": 54,
@@ -11,7 +11,7 @@
     "artsmu": 2,
     "campsAlumni": 11,
     "muGetInvolved": 538,
-    "pennManor": 645,
+    "pennManor": 646,
     "borough": 51,
     "vfw": 2,
     "phantomPower": 14,
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 891,
+    "total": 892,
     "scored": 198,
     "wins": 96,
     "losses": 89,
@@ -150,13 +150,13 @@
       "Campus Life": 2
     },
     "stalePast": 27,
-    "lastSyncAt": "2026-11-04T16:17:07.206Z"
+    "lastSyncAt": "2026-11-04T16:29:45.573Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-11-04T16:19:53.261Z"
+    "checkedAt": "2026-11-04T16:33:07.312Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -193,7 +193,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 539,
+        "value": 540,
         "min": 150,
         "skipped": false
       },
@@ -234,6 +234,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Boys Varsity Football vs Cumberland Valley High School|2026-11-07T00:30:00.000Z",
+      "firstSeenAt": "2026-11-04T16:33:14.276Z",
+      "title": "Boys Varsity Football vs Cumberland Valley High School",
+      "source": "PM",
+      "date": "2026-11-07T00:30:00.000Z"
+    },
     {
       "key": "Fall into Wellness Fair - Rain location|2026-11-12T11:00:00",
       "firstSeenAt": "2026-11-04T16:20:05.660Z",
@@ -296,14 +303,7 @@
       "title": "Men's Club Basketball Game vs. Dickinson College - Home Opener",
       "source": "MU",
       "date": "2026-11-08T16:00:00"
-    },
-    {
-      "key": "Diwali Celebration|2026-11-09T17:00:00",
-      "firstSeenAt": "2026-11-04T03:00:57.880Z",
-      "title": "Diwali Celebration",
-      "source": "MU",
-      "date": "2026-11-09T17:00:00"
     }
   ],
-  "addedLastRun": 5
+  "addedLastRun": 1
 }

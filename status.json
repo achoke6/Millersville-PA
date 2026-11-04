@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-04T01:13:00.082Z",
-  "totalEvents": 1976,
-  "withDescription": 821,
+  "generatedAt": "2026-11-04T03:00:57.883Z",
+  "totalEvents": 1981,
+  "withDescription": 826,
   "withImage": 226,
   "familyFriendly": 54,
   "eventsToday": 26,
@@ -10,7 +10,7 @@
     "muCalendar": 188,
     "artsmu": 2,
     "campsAlumni": 11,
-    "muGetInvolved": 532,
+    "muGetInvolved": 537,
     "pennManor": 643,
     "borough": 51,
     "vfw": 2,
@@ -40,7 +40,7 @@
     },
     "muGetInvolved": {
       "earliest": "2026-08-16T00:00:00.000Z",
-      "latest": "2027-10-05T11:00:00.000Z"
+      "latest": "2027-10-27T11:00:00.000Z"
     },
     "pennManor": {
       "earliest": "2026-08-17T12:00:00.000Z",
@@ -93,8 +93,8 @@
       "daysSinceMoved": 15
     },
     "muGetInvolved": {
-      "newest": "2027-10-05",
-      "daysSinceMoved": 14
+      "newest": "2027-10-27",
+      "daysSinceMoved": 0
     },
     "pennManor": {
       "newest": "2027-10-25",
@@ -150,13 +150,13 @@
       "Campus Life": 2
     },
     "stalePast": 27,
-    "lastSyncAt": "2026-11-04T01:10:16.929Z"
+    "lastSyncAt": "2026-11-04T02:58:25.724Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-11-04T01:12:52.885Z"
+    "checkedAt": "2026-11-04T03:00:51.097Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -235,6 +235,41 @@
   },
   "recentlyAdded": [
     {
+      "key": "Midterm Townhall|2026-11-05T20:00:00",
+      "firstSeenAt": "2026-11-04T03:00:57.880Z",
+      "title": "Midterm Townhall",
+      "source": "MU",
+      "date": "2026-11-05T20:00:00"
+    },
+    {
+      "key": "Paint N Sip|2026-11-06T18:00:00",
+      "firstSeenAt": "2026-11-04T03:00:57.880Z",
+      "title": "Paint N Sip",
+      "source": "MU",
+      "date": "2026-11-06T18:00:00"
+    },
+    {
+      "key": "Men's Club Basketball Game vs. Dickinson College - Home Opener|2026-11-08T16:00:00",
+      "firstSeenAt": "2026-11-04T03:00:57.880Z",
+      "title": "Men's Club Basketball Game vs. Dickinson College - Home Opener",
+      "source": "MU",
+      "date": "2026-11-08T16:00:00"
+    },
+    {
+      "key": "Diwali Celebration|2026-11-09T17:00:00",
+      "firstSeenAt": "2026-11-04T03:00:57.880Z",
+      "title": "Diwali Celebration",
+      "source": "MU",
+      "date": "2026-11-09T17:00:00"
+    },
+    {
+      "key": "Graduate School Fair|2027-10-27T11:00:00",
+      "firstSeenAt": "2026-11-04T03:00:57.880Z",
+      "title": "Graduate School Fair",
+      "source": "MU",
+      "date": "2027-10-27T11:00:00"
+    },
+    {
       "key": "Trivia Night|2026-11-25T01:00:00.000Z",
       "firstSeenAt": "2026-11-04T01:13:00.079Z",
       "title": "Trivia Night",
@@ -268,42 +303,7 @@
       "title": "Men's Ice Hockey Practice (D2)",
       "source": "MU",
       "date": "2026-12-01T11:00:00.000Z"
-    },
-    {
-      "key": "Clothing Sale Fundraiser|2026-12-01T19:00:00.000Z",
-      "firstSeenAt": "2026-11-04T01:13:00.079Z",
-      "title": "Clothing Sale Fundraiser",
-      "source": "MU",
-      "date": "2026-12-01T19:00:00.000Z"
-    },
-    {
-      "key": "Weekly Practice|2026-12-01T22:00:00.000Z",
-      "firstSeenAt": "2026-11-04T01:13:00.079Z",
-      "title": "Weekly Practice",
-      "source": "MU",
-      "date": "2026-12-01T22:00:00.000Z"
-    },
-    {
-      "key": "SGA Advocacy Tabling|2026-12-01T22:00:00.000Z",
-      "firstSeenAt": "2026-11-04T01:13:00.079Z",
-      "title": "SGA Advocacy Tabling",
-      "source": "MU",
-      "date": "2026-12-01T22:00:00.000Z"
-    },
-    {
-      "key": "Lavender Legacy Walk Fall 2026|2026-12-01T22:30:00.000Z",
-      "firstSeenAt": "2026-11-04T01:13:00.079Z",
-      "title": "Lavender Legacy Walk Fall 2026",
-      "source": "MU",
-      "date": "2026-12-01T22:30:00.000Z"
-    },
-    {
-      "key": "BYOP / End of Year Party!|2026-12-01T23:00:00.000Z",
-      "firstSeenAt": "2026-11-04T01:13:00.079Z",
-      "title": "BYOP / End of Year Party!",
-      "source": "MU",
-      "date": "2026-12-01T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 21
+  "addedLastRun": 5
 }

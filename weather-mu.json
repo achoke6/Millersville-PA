@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "11:00",
+      "temp": "70",
+      "dewpoint": "58",
+      "rh": "66",
+      "windDir": "SSW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "10:00",
+      "temp": "65",
+      "dewpoint": "56",
+      "rh": "72",
+      "windDir": "SSW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "09:00",
       "temp": "61",
       "dewpoint": "54",
@@ -170,28 +192,6 @@
       "precip": "0.00",
       "visibility": "2.5",
       "condition": "Mist"
-    },
-    {
-      "time": "05:00",
-      "temp": "52",
-      "dewpoint": "51",
-      "rh": "97",
-      "windDir": "NW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "8.9",
-      "condition": "None"
-    },
-    {
-      "time": "04:00",
-      "temp": "55",
-      "dewpoint": "53",
-      "rh": "94",
-      "windDir": "SSE",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
     }
   ],
   "dailySummary": {
@@ -241,7 +241,7 @@
   "discussion": {
     "headline": "dry, tranquil and gorgeous fall weather to last through halloween",
     "dateLine": "11:30 a.m. Tuesday, October 27, 2026",
-    "excerpt": "The weather over the last 7-10 days has been nothing short of spectacular across the mid-Atlantic States, and the gorgeous conditions will stick around through Halloween and perhaps even the first 2-3 days of November. Behind Monday night's weak cold frontal passage, light, northeasterly winds of 5-10 mph will usher slightly cooler air into the Commonwealth today. …",
+    "excerpt": "The weather over the last two weeks has been nothing short of spectacular across the mid-Atlantic States, and November has kicked off on a mostly sunny, dry and unseasonably warm start with high temperatures in the upper 60s on Monday and low-to-mid 70s Tuesday. …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -279,5 +279,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-04T14:29:14.250Z"
+  "updated": "2026-11-04T16:17:09.533Z"
 }

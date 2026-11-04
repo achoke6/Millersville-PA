@@ -9535,8 +9535,17 @@ function runSearch(q) {
             const src = (e.tags||[])[0] || '';
             const eventKey = getEventKey(e).replace(/"/g, '&quot;').replace(/'/g, "\\'");
             const clickAction = `document.getElementById('search-overlay').remove();window.openEventDetails('${eventKey}');`;
+            // Same "not in your feed" badge the Events bucket renders (2026-11-04):
+            // mu-only club games reached townie search unlabeled.
+            const hiddenForMe = isHiddenForViewer(e);
+            const townieView = muAffiliation === 'townie';
+            const muOnlyBadge = hiddenForMe
+                ? (townieView
+                    ? '<span style="display:inline-block;background:var(--gold-soft);color:var(--navy);border:1px solid var(--gold);font-size:0.68rem;font-weight:600;padding:1px 6px;border-radius:10px;margin-left:6px;vertical-align:1px;">🎓 MU students only</span>'
+                    : '<span style="display:inline-block;background:var(--gold-soft);color:var(--navy);border:1px solid var(--gold);font-size:0.68rem;font-weight:600;padding:1px 6px;border-radius:10px;margin-left:6px;vertical-align:1px;">🏘️ Townies only</span>')
+                : '';
             html += `<div class="search-result" onclick="${clickAction}">
-                <span style="font-size:0.7rem;color:var(--text-muted);">${src}</span>
+                <span style="font-size:0.7rem;color:var(--text-muted);">${src}</span>${muOnlyBadge}
                 <p style="font-weight:600;margin:2px 0;">${e.title}</p>
                 <span style="font-size:0.8rem;color:var(--text-muted);">${formatDate(d)} · ${cleanLocation(e.location)}</span>
             </div>`;

@@ -2696,11 +2696,25 @@ async function runScraper() {
             // any leading "Women's"/"Men's" that belongs to the sport, not the school.
             const cleanOpponent = (s) => (s || '')
                 .replace(/\([^)]*\)/g, ' ')
+                // Tournament seeds (2026-11-04): "#4 East Stroudsburg", "No. 4 ...".
+                // Sidearm's own titles carry them too, but opponentInTitle needs
+                // the bare school name on the broadcast side.
+                .replace(/(?:^|\s)(?:#|no\.?\s*)\d+\s+/gi, ' ')
                 .replace(new RegExp("\\b(?:women'?s|men'?s)?\\s*" + SPORT_WORD_RE.source + "\\s*$", 'i'), ' ')
                 .replace(/\s+/g, ' ').trim() || null;
             const MU_SELF_RE = /^millersville(?:\s+(?:university|marauders))?$/i;
+            // Playoff prefix (2026-11-04): "PSAC Tournament Quarterfinal: Millersville
+            // vs. East Stroudsburg" / "2026 PSAC Men's Soccer Championship - Millersville
+            // vs ...". The lead regex below rejects digits/colons, and the fallback
+            // reads "championship" as a track meet, so these parsed to null/track
+            // and were DROPPED before pairing (never in the unpaired count). Strip
+            // anything up to the last ":" / " - " / " – " as long as a "vs"/"at"
+            // survives on the right of it.
+            let core = t;
+            const pre = core.match(/^(.*?)(?::|\s[-\u2013\u2014]\s)\s*(.+)$/);
+            if (pre && /\b(?:vs\.?|at)\s/i.test(pre[2])) core = pre[2].trim();
             // "A vs. B" / "A at B" / "A vs B"
-            const m = t.match(/^([A-Za-z][A-Za-z .'&()-]*?)\s+(?:vs\.?|at)\s+(.+)$/i);
+            const m = core.match(/^([A-Za-z][A-Za-z .'&()-]*?)\s+(?:vs\.?|at)\s+(.+)$/i);
             if (m) {
                 const lead = m[1].trim(), rest = m[2].trim();
                 // 2026-09 shape: "Millersville vs. Slippery Rock" - no sport word at
@@ -2762,7 +2776,12 @@ async function runScraper() {
                 const parsedTitle = parseBroadcastTitle(node.title);
                 const sport = parsedTitle && parsedTitle.sport;
                 const opponent = parsedTitle ? parsedTitle.opponent : null;
-                if (!sport || !node.internalId) continue;
+                if (!sport || !node.internalId) {
+                    // 2026-11-04: a title the parser can't read vanishes from BOTH
+                    // the matched and unpaired counts -- say so, with the title.
+                    if (node.internalId) console.log(`  ⚠️  MU Hudl: unparseable ${status} broadcast title "${node.title}" (?B=${node.internalId}) — dropped`);
+                    continue;
+                }
                 // durationSeconds may be null/0 for UPCOMING broadcasts (length
                 // unknown until the broadcast actually airs). endMs is null in
                 // that case; step 7's interval-overlap pairing will fall back
@@ -3012,16 +3031,18 @@ async function runScraper() {
         // word that no event ever uses) or genuine away-game broadcasts that
         // we don't have an event record for.
         let unpairedSportBroadcasts = 0;
+        const unpairedTitles = [];  // 2026-11-04: the count alone can't tell an away game from a title shape parseBroadcastTitle mis-bucketed (PSAC Tournament men's soccer, 11-04)
         for (const [sport, broadcastList] of broadcastsBySport) {
             const eventList = (sport === '*' ? allSportEvents : eventsBySport.get(sport)) || [];
             for (const b of broadcastList) {
                 const matched = eventList.some(er => er.ev.streamLink &&
                     er.ev.streamLink.includes(`?B=${b.internalId}`));
-                if (!matched) unpairedSportBroadcasts++;
+                if (!matched) { unpairedSportBroadcasts++; if (unpairedTitles.length < 12) unpairedTitles.push(`${(b.dateUtc || '').slice(0, 10)} [${sport}${b.opponent ? ' / ' + b.opponent : ''}] "${b.title}" ?B=${b.internalId}`); }
             }
         }
         if (unpairedSportBroadcasts > 0) {
             console.log(`  ⚠️  MU Hudl: ${unpairedSportBroadcasts} broadcasts had no overlapping event (away games or schema drift)`);
+            unpairedTitles.forEach(t => console.log(`     • ${t}`));
         }
         console.log(`  📺 MU matched ${muHudlMatchCount} broadcasts to events (${muHudlOpponentMatches} via opponent+time, title had no sport word)`);
     } catch (e) { console.log(`  ⚠️ MU Hudl broadcast check error: ${e.message}`); }
@@ -3353,6 +3374,14 @@ async function runScraper() {
                     benefits: []
                 });
             }
+
+            // Club sports are MU-only on every surface (Adam's call, 2026-10-01 --
+            // gate #3 retired). The calendar branch above only TAGS; a row whose
+            // category is `Public Event` never enters the relabel path, so those
+            // games shipped with no audience at all (2026-11-04 health run: 10
+            // rows, surfacing unlabeled in townie search). Field, not a tag --
+            // no Hard Rule 7 exposure.
+            if (tags.includes('Club Sports')) audience = 'mu-only';
 
             // Alumni-audience rows: category 'Alumni Event', or hosted by
             // Alumni Engagement (the customerName tag). Townie-side — see the
@@ -6102,6 +6131,17 @@ async function runScraper() {
                     const games = [...text.matchAll(/(\d{4}-\d{2}-\d{2})\s+([HAN])\s+(?:vs|at)\s+(.+?)\s+([WLT])\s+(\d+)\s*-\s*(\d+)\b/g)]
                         .map(m => ({ date: m[1], ha: m[2], opp: m[3].trim(), result: m[4], score: `${m[5]}-${m[6]}` }));
                     if (!games.length) { console.log(`  ⚠️ D3 ${d.d3}: 0 played games parsed — first 200 chars: ${text.slice(0, 200)}`); continue; }
+                    // Stale-season guard (2026-11-04): the D3 site keeps LAST season's
+                    // schedule file + ranking row until this season's first result
+                    // posts (Boys Basketball: 22 games, all 2025-12..2026-03, "rows
+                    // 0-0-0 vs District 5-17-0" a month before the Dec 1 opener).
+                    // Row matching below is ±30d-gated anyway, so nothing was ever
+                    // stamped — this only silences the orphan + mismatch canaries.
+                    const d3Newest = games.reduce((a, g) => (g.date > a ? g.date : a), '');
+                    if (nowMs - Date.parse(d3Newest + 'T12:00:00Z') > 120 * 864e5) {
+                        console.log(`  ℹ️ D3 ${d.d3}: schedule file still shows last season (newest game ${d3Newest}) — skipped until this season's first result posts`);
+                        continue;
+                    }
                     let sportFilled = 0;
                     for (const g of games) {
                         const rows = events.filter(ev => isVarsityRow(ev) && rowSport(ev) === d.sport && (!d.gender || rowGender(ev) === d.gender) && deriveDayET(new Date(ev.date).getTime()) === g.date);
@@ -7065,11 +7105,11 @@ async function runScraper() {
     // covers MU Calendar winners AND standalone artsmu rows. Verify the etix
     // page before adding; remove when the show ages out. 2026-09-17.
     const ETIX_KNOWN_FREE_PIDS = new Set([
-        '71525831', // Xun Pan & Gabriel Chamber Ensemble -- 2026-10-03 (77977956 was the Apr-11 show; sales ended)
-        '96368608', // 2026 Harriet Kenderdine Lecture -- 2026-10-15
-        '42890890', // Faculty Recital: Ryan Kauffman -- 2026-09-27
-        '85146896', // Octubaween! -- 2026-10-28
-        '95826673', // Faculty Recital: Strings Faculty -- 2026-10-24
+        // 2026-11-04: five fall pids pruned (Xun Pan 10-03, Kenderdine 10-15,
+        // Kauffman 09-27, Strings Faculty 10-24, Octubaween 10-28 -- all past).
+        // Brossman/Frisbie 11-05 (p/39204951) deliberately NOT added: the etix
+        // page reads "Not On Sale" (registration closed 11-04) -- the veto's
+        // `Ticket Required` is the honest floor. Empty set is a valid state.
     ]);
     try {
         const etixCachePath = path.join(__dirname, '../etix-cache.json');

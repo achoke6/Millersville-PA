@@ -2311,6 +2311,70 @@ async function runScraper() {
         }
     } catch (e) { console.error("❌ Penn Manor Athletics error:", e.message); pmCarryApply('athletics', 'Penn Manor Athletics'); }
 
+    // ===== 2a-post. PENN MANOR POSTSEASON — pm-postseason.json (hand-curated, 2026-11-04) =====
+    // The district's TEC feed carries NO playoff marker (tonight's D3 semifinal looked like any
+    // game, priced "Free") and sometimes no playoff row at all (the D3 6A football game vs
+    // Cumberland Valley at Chryst Field, 2026-11-06, was absent). District 3 and PIAA sell every
+    // playoff ticket through HomeTown Ticketing, which sits behind a Cloudflare managed challenge
+    // (curl → "Just a moment…"), so this is curated, not harvested: one entry per playoff game.
+    // Match-first by ET day + sport + gender against any PM varsity row already in `events`
+    // (TEC-fed OR carried forward — so a created row never duplicates on a carry-forward run):
+    // stamp round / price / ticketLink / streamLink. No match → CREATE the row in §2a's exact
+    // shape; the tags are what lib/eventMatch.js and events.ics.php key on, so Hard Rule 7 holds
+    // with NO change in either. price/ticketLink only while the game hasn't ended (the modal's
+    // Buy Tickets CTA has no past guard); round always. Must stay BEFORE §2b (Hudl) and the
+    // D3/MaxPreps score blocks so streams and scores attach to created rows.
+    // Log contract: `🏆 PM postseason: N stamped, M created, K past (T entries)` every run the
+    // file exists; `⚠️ PM postseason: … skipped` names a malformed entry.
+    try {
+        const postPath = path.join(__dirname, '../pm-postseason.json');
+        if (fs.existsSync(postPath)) {
+            const postRaw = JSON.parse(fs.readFileSync(postPath, 'utf8'));
+            const postList = Array.isArray(postRaw) ? postRaw : (Array.isArray(postRaw.games) ? postRaw.games : []);
+            const postNowMs = Date.now();
+            let postStamped = 0, postCreated = 0, postPast = 0; const postBad = [];
+            const postIsPmVarsity = ev => { const t = ev.tags || []; return t.includes('PM') && t.includes('Athletics') && !t.includes('JV') && !t.includes('Jr High'); };
+            for (const g of postList) {
+                const ms = new Date(g.date).getTime();
+                const sport = sportsList.find(s => s.toLowerCase() === String(g.sport || '').trim().toLowerCase());
+                const gender = /^girls$/i.test(String(g.gender || '').trim()) ? 'Girls' : /^boys$/i.test(String(g.gender || '').trim()) ? 'Boys' : '';
+                if (isNaN(ms) || !sport || !gender || !g.round) { postBad.push(JSON.stringify(g).slice(0, 140)); continue; }
+                const day = deriveDayET(ms);
+                let row = events.find(ev => { const t = ev.tags || []; return postIsPmVarsity(ev) && t.includes(sport) && t.includes(gender) && deriveDayET(new Date(ev.date).getTime()) === day; });
+                if (!row) {
+                    const site = String(g.site || 'A').trim().toUpperCase();
+                    const opp = String(g.opponent || 'TBA').trim();
+                    const tags = ['PM', 'Athletics', 'Varsity', gender, sport];
+                    if (site === 'H') tags.push('Home Game Mode');
+                    const hours = sport === 'Football' ? 3 : 2;
+                    row = {
+                        title: `${gender} Varsity ${sport} ${site === 'A' ? '@' : 'vs'} ${opp}`,
+                        date: new Date(ms).toISOString(),
+                        endTime: new Date(ms + hours * 3600e3).toISOString(),
+                        location: g.location || (site === 'H' ? (sport === 'Football' ? 'Millersville University - Chryst Field' : 'Penn Manor High School') : opp),
+                        tags, price: 'Free', ticketLink: '',
+                        sourceLink: g.ticketLink || 'https://www.pennmanor.net/events/category/athletics/',
+                        gameResult: '', gameScore: '',
+                        streamLink: '',
+                        isLive: false
+                    };
+                    if (site === 'N') row.neutralSite = true;
+                    events.push(row); postCreated++;
+                } else postStamped++;
+                row.round = String(g.round).trim();
+                row.postseason = true;
+                const ended = ms + 4 * 3600e3 < postNowMs;
+                if (!ended && g.price) row.price = String(g.price).trim();
+                if (!ended && g.ticketLink) row.ticketLink = String(g.ticketLink).trim();
+                if (g.streamLink) row.streamLink = String(g.streamLink).trim();
+                if (g.gameResult && g.gameScore && !row.gameResult) { row.gameResult = String(g.gameResult); row.gameScore = String(g.gameScore); row.scoreSource = 'postseason'; }
+                if (ms < postNowMs) postPast++;
+            }
+            console.log(`🏆 PM postseason: ${postStamped} stamped, ${postCreated} created, ${postPast} past (${postList.length} entries in pm-postseason.json)`);
+            if (postBad.length) { console.log(`  ⚠️ PM postseason: ${postBad.length} entry(ies) skipped — need date, sport (a sportsList name), gender (Boys|Girls), round:`); postBad.forEach(b => console.log(`     • ${b}`)); }
+        }
+    } catch (e) { console.log(`  ⚠️ PM postseason error: ${e.message}`); }
+
     // ===== 2b. HUDL BROADCAST CHECK (Penn Manor) =====
     // Hoisted for the sourceHealth invariants in status.json (see the status block).
     let pmHudlMatched = 0, pmHudlWithBroadcasts = 0;

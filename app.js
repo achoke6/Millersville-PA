@@ -3127,6 +3127,7 @@ let spStripOpen={};        // team strip: per-row "Off season" line expanded (le
 let spTeamLevel=null;      // team view: 'pm' | 'mu' — the school the chosen spSportTag belongs to (2026-09-18)
 let spTeamShowJV=false;    // team view: PM sub-varsity rows expanded (session-only)
 let spTeamAllResults=false; // team view: earlier results expanded — default shows only the latest (2026-09-18 Patch C)
+let spTeamShowNext=false;   // team view: next season's rows expanded past the season gap (2026-11-04)
 const SP_STRIP_OTHER_KEY='mapp_sports_strip_other'; // '1' = team strip also shows the OTHER school's row (display setting; survives Clear Favs)
 // Sports view state: 'upcoming' (infinite-scroll forward) or 'past' (infinite-scroll backward)
 let spTimeView = 'upcoming';
@@ -4541,7 +4542,7 @@ window.toggleHomeGameMode=function(){
 };
 window.clearSportsFilters=function(){
     spSportTag=null; spHomeOnly=false; spAllMode=true; spStripOpen={};
-    spTeamLevel=null; spTeamShowJV=false; spTeamAllResults=false;
+    spTeamLevel=null; spTeamShowJV=false; spTeamAllResults=false; spTeamShowNext=false;
     spActiveSources=new Set(['PM','MU','Clubs']);
     spTimeView='upcoming';
     spDaysVisible = INITIAL_DAYS;
@@ -4857,6 +4858,7 @@ function spTimeCell(e) {
 // Availability hints under the title — tells the reader a tap is worth it.
 function spRowHints(e) {
     const h = [];
+    if (e.round) h.push('🏆 ' + e.round);   // postseason round from pm-postseason.json (2026-11-04)
     if (spIsLiveNow(e)) { h.push('🔴 Live'); if (e.liveStatsLink) h.push('📊 Stats'); }
     else if (e.streamLink && (spIsScored(e) || spGameEnded(e))) h.push('📺 Replay');
     else if (e.streamLink) h.push('📺 Stream');
@@ -5145,6 +5147,24 @@ function spTeamRecord(games) {
     return rec;
 }
 function spFmtRec(w, l, t) { return w + '-' + l + (t ? '-' + t : ''); }
+// Season gap (2026-11-04): Penn Manor posts next fall's schedule a year out, so a
+// finished team's NEXT GAME read "Aug 27, 2027" and the modal bar said
+// "Next: Aug 27 @ Red Lion". A hole of more than 45 days after the last completed
+// game, or between two upcoming games, is the season boundary: rows past it are
+// next season — collapsed behind a toggle on the team page, dropped from the
+// modal's Next: line. A team with NO completed games keeps its "Season opener"
+// path untouched (nothing to measure a gap from). MU teams get the same rule.
+const SP_SEASON_GAP_MS = 45 * 864e5;
+function spSplitSeasonGap(past, upcoming) {
+    let prev = past.length ? Math.max(...past.map(e => new Date(e.date).getTime())) : null;
+    for (let i = 0; i < upcoming.length; i++) {
+        const t = new Date(upcoming[i].date).getTime();
+        if (prev !== null && t - prev > SP_SEASON_GAP_MS) return { current: upcoming.slice(0, i), next: upcoming.slice(i) };
+        prev = t;
+    }
+    return { current: upcoming, next: [] };
+}
+window.spToggleTeamNext = function() { spTeamShowNext = !spTeamShowNext; renderSports(); };
 function spNextGameLabel(d) {
     const today = todayMidnight();
     const target = new Date(d.getFullYear(), d.getMonth(), d.getDate());
@@ -5229,7 +5249,8 @@ function renderTeamView() {
         body = `<div class="empty-state"><p>No ${escHtml(label.toLowerCase())} games on the schedule yet.</p><p style="font-size:0.82rem;color:var(--text-muted);margin-top:4px;">Schedules arrive as ${level === 'pm' ? 'Penn Manor' : isClub ? 'the club posts them on GetInvolved' : 'MU Athletics'} publishes them.</p></div>`;
     } else {
         const past = games.filter(e => new Date(e.date).getTime() < nowMs && (spIsScored(e) || spGameEnded(e)));
-        const upcoming = games.filter(e => past.indexOf(e) === -1);
+        const split = spSplitSeasonGap(past, games.filter(e => past.indexOf(e) === -1));   // 2026-11-04
+        const upcoming = split.current, nextSeason = split.next;
         // Results collapsed to the LATEST one (Patch C): a season's worth of scores
         // pushed the next game off-screen while flipping between teams. Earlier
         // results sit behind a toggle; the record strip already summarizes them.
@@ -5244,6 +5265,11 @@ function renderTeamView() {
             body += upcoming.map(e => spGameRow(e, 'team')).join('');
         } else {
             body += `<div class="sp-next-divider"><span></span><span class="sp-next-label">SEASON COMPLETE</span><span></span></div>`;
+        }
+        if (nextSeason.length) {   // next season's posted schedule, collapsed (2026-11-04)
+            const yr = new Date(nextSeason[0].date).getFullYear();
+            body += `<button type="button" class="sp-results-toggle" onclick="spToggleTeamNext()" aria-expanded="${spTeamShowNext ? 'true' : 'false'}">${spTeamShowNext ? '▾ Hide' : '▸ Show'} ${yr} schedule (${nextSeason.length} game${nextSeason.length === 1 ? '' : 's'})</button>`;
+            if (spTeamShowNext) body += nextSeason.map(e => spGameRow(e, 'team')).join('');
         }
         body += '</div>';
         if (level === 'pm' && hasRecord) body += `<div class="load-more-note">Scores from MaxPreps &amp; Hudl${pool.some(e => e.gameScore === '0-0') ? ' · scrimmages not counted' : ''}</div>`;
@@ -5476,6 +5502,7 @@ window.spGoTeam=function(sport, level){
     spTeamLevel = level || null;
     spTeamShowJV = false;
     spTeamAllResults = false;
+    spTeamShowNext = false;
     switchView('sports');
     renderSports();
     writeURLStateForView('sports');
@@ -5487,6 +5514,7 @@ window.setSportType=function(sport, level){
     spTeamLevel = spSportTag ? (level || null) : null;
     spTeamShowJV = false;
     spTeamAllResults = false;
+    spTeamShowNext = false;
     renderSports();
     writeURLStateForView('sports');
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -6540,6 +6568,9 @@ window.openEventDetails = function(key) {
     // modal renders at open time, so no applyAffiliation()/setMuAffiliation()/
     // toggle21Plus switch-path wiring is needed.
     const realPrice = /^\$\d/.test((e.price || '').trim()) ? (e.price || '').trim() : '';
+    // Postseason round (pm-postseason.json, 2026-11-04) — under the date line; District 3 /
+    // PIAA tickets are online-only, so say so when a ticket link is present.
+    const roundBlock = e.round ? `<div style="margin-top:6px;font-size:0.88rem;font-weight:700;color:var(--navy);">🏆 ${escHtml(e.round)}${e.ticketLink && !spIsScored(e) ? ' <span style="font-weight:500;color:var(--text-muted);">· online tickets only</span>' : ''}</div>` : '';
     let ticketInfoBlock = '';
     if (e.ticketStatus) ticketInfoBlock += `<div style="margin-top:10px;font-size:0.88rem;font-weight:700;color:#b91c1c;">🎟 ${escHtml(e.ticketStatus)}${realPrice ? ` <span style="color:var(--text-muted);font-weight:500;text-decoration:line-through;">${escHtml(realPrice)}</span>` : ''}</div>`;   // sold out (2026-09-21)
     else if (realPrice) ticketInfoBlock += `<div style="margin-top:10px;font-size:0.88rem;font-weight:600;color:var(--text);">💵 ${escHtml(realPrice)}</div>`;
@@ -6687,7 +6718,11 @@ window.openEventDetails = function(key) {
         const rec = spTeamRecord(pool);
         const hasRecord = teamInfo.sportTag && SP_NO_RECORD_SPORTS.indexOf(teamInfo.sportTag) === -1 && rec.played > 0;
         const thisKey = getEventKey(e), nowMs = Date.now();
-        const next = pool.find(g => new Date(g.date).getTime() >= nowMs && !spIsScored(g) && getEventKey(g) !== thisKey);
+        let next = pool.find(g => new Date(g.date).getTime() >= nowMs && !spIsScored(g) && getEventKey(g) !== thisKey);
+        if (next) {   // season gap (2026-11-04): same 45-day rule as spSplitSeasonGap
+            const played = pool.filter(g => new Date(g.date).getTime() < nowMs && (spIsScored(g) || spGameEnded(g))).map(g => new Date(g.date).getTime());
+            if (played.length && new Date(next.date).getTime() - Math.max(...played) > SP_SEASON_GAP_MS) next = null;
+        }
         const recTxt = hasRecord ? `${spFmtRec(rec.w, rec.l, rec.t)}${rec.streak ? ' · ' + rec.streak : ''} · Home ${spFmtRec(rec.hw, rec.hl)} · Away ${spFmtRec(rec.aw, rec.al)}` : '';
         let nextTxt = '';
         if (next) {
@@ -6791,6 +6826,7 @@ window.openEventDetails = function(key) {
         ${closeBtn}
         <h2 style="margin:0 0 8px;font-size:1.25rem;color:var(--navy);line-height:1.3;padding-right:24px;">${escHtml(modalTitle)}</h2>
         <div style="font-size:0.92rem;color:var(--text);font-weight:600;">📅 ${dateStr}${timeStr ? ' · ' + timeStr : ''}</div>
+        ${roundBlock}
         ${locBlock}
         ${teamBar}
         ${ticketInfoBlock}

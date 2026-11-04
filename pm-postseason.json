@@ -1,0 +1,35 @@
+{
+  "_comment": "HAND-CURATED (like vfw.json). One entry per Penn Manor playoff game — District 3 or PIAA. Required: date (ISO with offset), sport (sportsList name), gender (Boys|Girls), round. Optional: opponent, site (H|A|N), location, price, ticketLink, streamLink, gameResult+gameScore. scrape.js stamps a matching TEC varsity row (same ET day + sport + gender) or CREATES the row when Penn Manor hasn't posted the game. Tickets: District 3 & PIAA sell only via HomeTown Ticketing (events.hometownticketing.com/boxoffice/piaad3 — per-game links are the GET TICKETS buttons there).",
+  "games": [
+    {
+      "date": "2026-10-31T13:00:00-04:00",
+      "sport": "Field Hockey",
+      "gender": "Girls",
+      "opponent": "Hempfield",
+      "site": "A",
+      "round": "District 3 Class 3A Quarterfinal",
+      "price": "$6"
+    },
+    {
+      "date": "2026-11-04T18:30:00-05:00",
+      "sport": "Field Hockey",
+      "gender": "Girls",
+      "opponent": "Lower Dauphin",
+      "site": "A",
+      "round": "District 3 Class 3A Semifinal",
+      "price": "$6",
+      "ticketLink": "https://events.hometownticketing.com/boxoffice/piaad3/L2VtYmVkL2V2ZW50LzIxODY%3D"
+    },
+    {
+      "date": "2026-11-06T19:30:00-05:00",
+      "sport": "Football",
+      "gender": "Boys",
+      "opponent": "Cumberland Valley High School",
+      "site": "H",
+      "location": "Millersville University - Chryst Field",
+      "round": "District 3 Class 6A First Round",
+      "price": "$6",
+      "ticketLink": "https://events.hometownticketing.com/boxoffice/piaad3/L2VtYmVkL2V2ZW50LzE5Nzk%3D"
+    }
+  ]
+}

@@ -265,7 +265,10 @@ function buildVevent($e) {
     $lines[] = 'DTSTAMP:' . $dtstamp;
     $lines[] = 'DTSTART:' . $dtstart;
     $lines[] = 'DTEND:'   . $dtend;
-    $lines[] = 'SUMMARY:' . icsEscape($title);
+    // Postseason round (pm-postseason.json, 2026-11-04) leads the SUMMARY so a
+    // subscriber's calendar reads "District 3 Class 6A First Round — Boys Varsity Football vs …".
+    $round   = isset($e['round']) && $e['round'] ? (string)$e['round'] : '';
+    $lines[] = 'SUMMARY:' . icsEscape($round ? $round . ' — ' . $title : $title);
     if ($location)   $lines[] = 'LOCATION:'    . icsEscape($location);
     if ($descFinal)  $lines[] = 'DESCRIPTION:' . icsEscape($descFinal);
     if ($sourceLink) $lines[] = 'URL:'         . $sourceLink; // URLs aren't text-escaped per RFC

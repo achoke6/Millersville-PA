@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "04:00",
+      "temp": "63",
+      "dewpoint": "62",
+      "rh": "97",
+      "windDir": "S",
+      "windSpeed": "3",
+      "precip": "0.02",
+      "visibility": "8.9",
+      "condition": "Light Showers Rain"
+    },
+    {
+      "time": "03:00",
+      "temp": "63",
+      "dewpoint": "62",
+      "rh": "97",
+      "windDir": "S",
+      "windSpeed": "3",
+      "precip": "0.03",
+      "visibility": "10.4",
+      "condition": "Light Showers Rain"
+    },
+    {
       "time": "02:00",
       "temp": "63",
       "dewpoint": "61",
@@ -167,28 +189,6 @@
       "rh": "85",
       "windDir": "SSW",
       "windSpeed": "6",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "22:00",
-      "temp": "63",
-      "dewpoint": "56",
-      "rh": "79",
-      "windDir": "SSW",
-      "windSpeed": "5",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "21:00",
-      "temp": "64",
-      "dewpoint": "54",
-      "rh": "72",
-      "windDir": "SSW",
-      "windSpeed": "3",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
@@ -259,7 +259,36 @@
     "radar": "https://sirocco.accuweather.com/nx_mosaic_640x480c/RE/inmaREPA_.gif",
     "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
   },
-  "videos": [],
+  "videos": [
+    {
+      "title": "Short Term Forecast 11/04/2026",
+      "videoId": "UFmVIl4Mf14",
+      "url": "https://www.youtube.com/watch?v=UFmVIl4Mf14",
+      "published": "2026-11-04T17:33:54+00:00",
+      "thumbnail": "https://i2.ytimg.com/vi/UFmVIl4Mf14/hqdefault.jpg"
+    },
+    {
+      "title": "Short Term Forecast 11/03/2026",
+      "videoId": "nYRImGJgFow",
+      "url": "https://www.youtube.com/watch?v=nYRImGJgFow",
+      "published": "2026-11-03T16:38:07+00:00",
+      "thumbnail": "https://i3.ytimg.com/vi/nYRImGJgFow/hqdefault.jpg"
+    },
+    {
+      "title": "2026-2027 Winter Outlook",
+      "videoId": "tGYQauS0Izw",
+      "url": "https://www.youtube.com/watch?v=tGYQauS0Izw",
+      "published": "2026-11-03T15:16:06+00:00",
+      "thumbnail": "https://i1.ytimg.com/vi/tGYQauS0Izw/hqdefault.jpg"
+    },
+    {
+      "title": "Short Term Forecast 11/02/2026",
+      "videoId": "jCga7X59I9s",
+      "url": "https://www.youtube.com/watch?v=jCga7X59I9s",
+      "published": "2026-11-02T14:52:55+00:00",
+      "thumbnail": "https://i3.ytimg.com/vi/jCga7X59I9s/hqdefault.jpg"
+    }
+  ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-05T07:47:36.700Z"
+  "updated": "2026-11-05T09:35:43.008Z"
 }

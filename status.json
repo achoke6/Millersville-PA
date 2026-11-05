@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-11-05T17:38:06.554Z",
-  "totalEvents": 1983,
-  "withDescription": 826,
+  "generatedAt": "2026-11-05T18:45:49.058Z",
+  "totalEvents": 1989,
+  "withDescription": 832,
   "withImage": 225,
   "familyFriendly": 53,
   "eventsToday": 28,
   "sources": {
     "muAthletics": 351,
-    "muCalendar": 188,
+    "muCalendar": 189,
     "artsmu": 56,
     "campsAlumni": 11,
-    "muGetInvolved": 538,
+    "muGetInvolved": 543,
     "pennManor": 647,
     "borough": 51,
     "vfw": 1,
@@ -150,13 +150,13 @@
       "Campus Life": 1
     },
     "stalePast": 28,
-    "lastSyncAt": "2026-11-05T17:34:50.811Z"
+    "lastSyncAt": "2026-11-05T18:42:52.641Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-11-05T17:37:54.139Z"
+    "checkedAt": "2026-11-05T18:45:39.359Z"
   },
   "artsmuMerge": {
     "fetched": 56,
@@ -240,6 +240,55 @@
   },
   "recentlyAdded": [
     {
+      "key": "'Ville Men's Rugby Club vs The College of New Jersey|2026-10-17T13:00:00",
+      "firstSeenAt": "2026-11-05T18:45:49.055Z",
+      "title": "'Ville Men's Rugby Club vs The College of New Jersey",
+      "source": "MU",
+      "date": "2026-10-17T13:00:00"
+    },
+    {
+      "key": "Men's Club Lacrosse Alumni Game|2026-10-17T13:00:00",
+      "firstSeenAt": "2026-11-05T18:45:49.055Z",
+      "title": "Men's Club Lacrosse Alumni Game",
+      "source": "MU",
+      "date": "2026-10-17T13:00:00"
+    },
+    {
+      "key": "SGA Dining - Pepsi Tabling|2026-10-21T11:00:00",
+      "firstSeenAt": "2026-11-05T18:45:49.055Z",
+      "title": "SGA Dining - Pepsi Tabling",
+      "source": "MU",
+      "date": "2026-10-21T11:00:00"
+    },
+    {
+      "key": "Men's Club Soccer Game vs. Keystone Elite|2026-10-25T16:00:00",
+      "firstSeenAt": "2026-11-05T18:45:49.055Z",
+      "title": "Men's Club Soccer Game vs. Keystone Elite",
+      "source": "MU",
+      "date": "2026-10-25T16:00:00"
+    },
+    {
+      "key": "NSTA Meeting|2026-10-28T18:00:00",
+      "firstSeenAt": "2026-11-05T18:45:49.055Z",
+      "title": "NSTA Meeting",
+      "source": "MU",
+      "date": "2026-10-28T18:00:00"
+    },
+    {
+      "key": "Historic Commission - Cancelled|2026-11-10T00:00:00.000Z",
+      "firstSeenAt": "2026-11-05T18:45:49.055Z",
+      "title": "Historic Commission - Cancelled",
+      "source": "Borough",
+      "date": "2026-11-10T00:00:00.000Z"
+    },
+    {
+      "key": "FSL: Omega Psi Phi- Navigating Success|2026-11-18T18:30:00",
+      "firstSeenAt": "2026-11-05T18:45:49.055Z",
+      "title": "FSL: Omega Psi Phi- Navigating Success",
+      "source": "MU",
+      "date": "2026-11-18T18:30:00"
+    },
+    {
       "key": "Girls JV Basketball @ Spring Grove Area High School|2027-01-04T23:00:00.000Z",
       "firstSeenAt": "2026-11-05T17:38:06.550Z",
       "title": "Girls JV Basketball @ Spring Grove Area High School",
@@ -259,56 +308,7 @@
       "title": "Les Misérables In Concert",
       "source": "MU",
       "date": "2026-11-21T19:00:00.000Z"
-    },
-    {
-      "key": "Family Fun Fest: \"Layer The Walls: Turn of the Century\"|2026-11-21T20:00:00.000Z",
-      "firstSeenAt": "2026-11-05T15:49:28.706Z",
-      "title": "Family Fun Fest: \"Layer The Walls: Turn of the Century\"",
-      "source": "MU",
-      "date": "2026-11-21T20:00:00.000Z"
-    },
-    {
-      "key": "Family Fun Fest: Milo the Magnificient|2027-02-27T20:00:00.000Z",
-      "firstSeenAt": "2026-11-05T15:49:28.706Z",
-      "title": "Family Fun Fest: Milo the Magnificient",
-      "source": "MU",
-      "date": "2027-02-27T20:00:00.000Z"
-    },
-    {
-      "key": "Family Fun Fest: TAIKOPROJECT|2027-04-18T19:00:00.000Z",
-      "firstSeenAt": "2026-11-05T15:49:28.706Z",
-      "title": "Family Fun Fest: TAIKOPROJECT",
-      "source": "MU",
-      "date": "2027-04-18T19:00:00.000Z"
-    },
-    {
-      "key": "Karaoke Night|2026-11-26T03:00:00.000Z",
-      "firstSeenAt": "2026-11-05T04:14:10.708Z",
-      "title": "Karaoke Night",
-      "source": "Jack's Tavern",
-      "date": "2026-11-26T03:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Field Hockey vs Cumberland Valley High School|2026-11-05T23:30:00.000Z",
-      "firstSeenAt": "2026-11-05T02:26:16.441Z",
-      "title": "Girls Varsity Field Hockey vs Cumberland Valley High School",
-      "source": "PM",
-      "date": "2026-11-05T23:30:00.000Z"
-    },
-    {
-      "key": "RUF Bible Study|2026-10-27T19:00:00",
-      "firstSeenAt": "2026-11-05T00:56:38.114Z",
-      "title": "RUF Bible Study",
-      "source": "MU",
-      "date": "2026-10-27T19:00:00"
-    },
-    {
-      "key": "Election Night Watch Party|2026-11-04T00:00:00.000Z",
-      "firstSeenAt": "2026-11-05T00:56:38.114Z",
-      "title": "Election Night Watch Party",
-      "source": "MU",
-      "date": "2026-11-04T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 1
+  "addedLastRun": 7
 }

@@ -242,8 +242,10 @@
   },
   {
     "name": "Books & Banter",
-    "category": "",
-    "categories": [],
+    "category": "Social",
+    "categories": [
+      "Social"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1205,8 +1207,10 @@
   },
   {
     "name": "Moose Ultimate",
-    "category": "",
-    "categories": [],
+    "category": "Sporting",
+    "categories": [
+      "Sporting"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1440,8 +1444,11 @@
   },
   {
     "name": "Reformed University Fellowship",
-    "category": "",
-    "categories": [],
+    "category": "Meeting",
+    "categories": [
+      "Meeting",
+      "Social"
+    ],
     "shortName": "RUF",
     "id": ""
   },
@@ -1735,10 +1742,8 @@
   },
   {
     "name": "The Snapper",
-    "category": "Meeting",
-    "categories": [
-      "Meeting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },

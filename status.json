@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-11-04T18:25:34.234Z",
+  "generatedAt": "2026-11-05T14:33:34.085Z",
   "totalEvents": 1985,
-  "withDescription": 827,
+  "withDescription": 828,
   "withImage": 225,
   "familyFriendly": 54,
-  "eventsToday": 20,
+  "eventsToday": 29,
   "sources": {
-    "muAthletics": 352,
-    "muCalendar": 189,
+    "muAthletics": 351,
+    "muCalendar": 188,
     "artsmu": 2,
     "campsAlumni": 11,
-    "muGetInvolved": 537,
-    "pennManor": 646,
+    "muGetInvolved": 538,
+    "pennManor": 647,
     "borough": 51,
     "vfw": 2,
     "phantomPower": 14,
     "community": 12,
-    "manor": 40,
+    "manor": 39,
     "raneyCellars": 4,
     "theBackyard": 29,
-    "muHudlBroadcasts": 55
+    "muHudlBroadcasts": 58
   },
   "sourceDateRanges": {
     "muAthletics": {
@@ -63,7 +63,7 @@
       "latest": "2027-04-16T13:15:00.000Z"
     },
     "manor": {
-      "earliest": "2026-11-05T00:00:00.000Z",
+      "earliest": "2026-11-06T00:00:00.000Z",
       "latest": "2027-11-03T23:00:00.000Z"
     },
     "raneyCellars": {
@@ -78,39 +78,39 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 64
+      "daysSinceMoved": 65
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 75
+      "daysSinceMoved": 76
     },
     "artsmu": {
       "newest": "2027-02-27",
-      "daysSinceMoved": 15
+      "daysSinceMoved": 16
     },
     "campsAlumni": {
       "newest": "2027-08-20",
-      "daysSinceMoved": 16
+      "daysSinceMoved": 17
     },
     "muGetInvolved": {
       "newest": "2027-10-27",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "pennManor": {
       "newest": "2027-10-25",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 11
     },
     "borough": {
       "newest": "2027-10-31",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "vfw": {
       "newest": "2026-11-22",
-      "daysSinceMoved": 29
+      "daysSinceMoved": 30
     },
     "phantomPower": {
       "newest": "2026-12-19",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     },
     "community": {
       "newest": "2027-04-16",
@@ -118,45 +118,45 @@
     },
     "manor": {
       "newest": "2027-11-03",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "raneyCellars": {
       "newest": "2026-11-12",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 9
     },
     "theBackyard": {
       "newest": "2027-04-28",
-      "daysSinceMoved": 27
+      "daysSinceMoved": 28
     }
   },
   "sports": {
     "total": 892,
-    "scored": 198,
+    "scored": 200,
     "wins": 96,
-    "losses": 89,
+    "losses": 91,
     "ties": 13
   },
   "registrations": {
-    "open": 3,
-    "next2Weeks": 1,
+    "open": 4,
+    "next2Weeks": 2,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 3,
-    "pendingPast": 11,
+    "pendingFuture": 2,
+    "pendingPast": 12,
     "pendingBySource": {
       "Youth Sports": 1,
-      "Campus Life": 2
+      "Campus Life": 1
     },
-    "stalePast": 27,
-    "lastSyncAt": "2026-11-04T18:22:50.055Z"
+    "stalePast": 28,
+    "lastSyncAt": "2026-11-05T14:28:09.032Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-11-04T18:25:31.380Z"
+    "checkedAt": "2026-11-05T14:33:26.428Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -165,42 +165,42 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 355,
+        "value": 354,
         "min": 45,
         "skipped": false
       },
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 203,
+        "value": 202,
         "min": 60,
         "skipped": false
       },
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 212,
+        "value": 211,
         "min": 30,
         "skipped": false
       },
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 361,
+        "value": 360,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 540,
+        "value": 541,
         "min": 150,
         "skipped": false
       },
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 352,
+        "value": 351,
         "min": 100,
         "skipped": false
       },
@@ -214,15 +214,15 @@
       {
         "key": "manor.count",
         "ok": true,
-        "value": 40,
+        "value": 39,
         "min": 10
       },
       {
         "key": "muHudl.pairRatio",
         "ok": true,
-        "matched": 55,
-        "inWindow": 61,
-        "value": 0.9,
+        "matched": 58,
+        "inWindow": 64,
+        "value": 0.91,
         "min": 0.5
       },
       {
@@ -235,74 +235,74 @@
   },
   "recentlyAdded": [
     {
-      "key": "Safe and Stuffed|2026-11-20T15:00:00.000Z",
-      "firstSeenAt": "2026-11-04T18:25:34.231Z",
-      "title": "Safe and Stuffed",
-      "source": "MU",
-      "date": "2026-11-20T15:00:00.000Z"
+      "key": "Karaoke Night|2026-11-26T03:00:00.000Z",
+      "firstSeenAt": "2026-11-05T04:14:10.708Z",
+      "title": "Karaoke Night",
+      "source": "Jack's Tavern",
+      "date": "2026-11-26T03:00:00.000Z"
     },
     {
-      "key": "Boys Varsity Football vs Cumberland Valley High School|2026-11-07T00:30:00.000Z",
-      "firstSeenAt": "2026-11-04T16:33:14.276Z",
-      "title": "Boys Varsity Football vs Cumberland Valley High School",
+      "key": "Girls Varsity Field Hockey vs Cumberland Valley High School|2026-11-05T23:30:00.000Z",
+      "firstSeenAt": "2026-11-05T02:26:16.441Z",
+      "title": "Girls Varsity Field Hockey vs Cumberland Valley High School",
       "source": "PM",
-      "date": "2026-11-07T00:30:00.000Z"
+      "date": "2026-11-05T23:30:00.000Z"
     },
     {
-      "key": "Fall into Wellness Fair - Rain location|2026-11-12T11:00:00",
-      "firstSeenAt": "2026-11-04T16:20:05.660Z",
-      "title": "Fall into Wellness Fair - Rain location",
+      "key": "RUF Bible Study|2026-10-27T19:00:00",
+      "firstSeenAt": "2026-11-05T00:56:38.114Z",
+      "title": "RUF Bible Study",
       "source": "MU",
-      "date": "2026-11-12T11:00:00"
+      "date": "2026-10-27T19:00:00"
     },
     {
-      "key": "Fall into Wellness Fair|2026-11-12T11:00:00",
-      "firstSeenAt": "2026-11-04T16:20:05.660Z",
-      "title": "Fall into Wellness Fair",
+      "key": "Election Night Watch Party|2026-11-04T00:00:00.000Z",
+      "firstSeenAt": "2026-11-05T00:56:38.114Z",
+      "title": "Election Night Watch Party",
       "source": "MU",
-      "date": "2026-11-12T11:00:00"
+      "date": "2026-11-04T00:00:00.000Z"
     },
     {
-      "key": "Boys JV Basketball @ Kennard Dale High School|2027-01-26T23:00:00.000Z",
-      "firstSeenAt": "2026-11-04T16:20:05.660Z",
-      "title": "Boys JV Basketball @ Kennard Dale High School",
-      "source": "PM",
-      "date": "2027-01-26T23:00:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Basketball @ Kennard Dale High School|2027-01-27T00:30:00.000Z",
-      "firstSeenAt": "2026-11-04T16:20:05.660Z",
-      "title": "Boys Varsity Basketball @ Kennard Dale High School",
-      "source": "PM",
-      "date": "2027-01-27T00:30:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Golf at Kutztown Invitational|2026-10-04T04:00:00.000Z",
-      "firstSeenAt": "2026-11-04T06:15:22.237Z",
-      "title": "Millersville University Women's Golf at Kutztown Invitational",
+      "key": "Mock Trial Club Meeting|2026-12-02T22:00:00.000Z",
+      "firstSeenAt": "2026-11-05T00:56:38.114Z",
+      "title": "Mock Trial Club Meeting",
       "source": "MU",
-      "date": "2026-10-04T04:00:00.000Z"
+      "date": "2026-12-02T22:00:00.000Z"
     },
     {
-      "key": "Midterm Townhall|2026-11-05T20:00:00",
-      "firstSeenAt": "2026-11-04T03:00:57.880Z",
-      "title": "Midterm Townhall",
+      "key": "Moose Ultimate Practice|2026-12-03T00:00:00.000Z",
+      "firstSeenAt": "2026-11-05T00:56:38.114Z",
+      "title": "Moose Ultimate Practice",
       "source": "MU",
-      "date": "2026-11-05T20:00:00"
+      "date": "2026-12-03T00:00:00.000Z"
     },
     {
-      "key": "Paint N Sip|2026-11-06T18:00:00",
-      "firstSeenAt": "2026-11-04T03:00:57.880Z",
-      "title": "Paint N Sip",
+      "key": "Slip n' Score Meeting|2026-12-03T22:00:00.000Z",
+      "firstSeenAt": "2026-11-05T00:56:38.114Z",
+      "title": "Slip n' Score Meeting",
       "source": "MU",
-      "date": "2026-11-06T18:00:00"
+      "date": "2026-12-03T22:00:00.000Z"
     },
     {
-      "key": "Men's Club Basketball Game vs. Dickinson College - Home Opener|2026-11-08T16:00:00",
-      "firstSeenAt": "2026-11-04T03:00:57.880Z",
-      "title": "Men's Club Basketball Game vs. Dickinson College - Home Opener",
+      "key": "SGA Weekly Meeting|2026-12-04T00:00:00.000Z",
+      "firstSeenAt": "2026-11-05T00:56:38.114Z",
+      "title": "SGA Weekly Meeting",
       "source": "MU",
-      "date": "2026-11-08T16:00:00"
+      "date": "2026-12-04T00:00:00.000Z"
+    },
+    {
+      "key": "Moose Ultimate Practice|2026-12-04T00:00:00.000Z",
+      "firstSeenAt": "2026-11-05T00:56:38.114Z",
+      "title": "Moose Ultimate Practice",
+      "source": "MU",
+      "date": "2026-12-04T00:00:00.000Z"
+    },
+    {
+      "key": "Fellowship Night|2026-12-04T01:00:00.000Z",
+      "firstSeenAt": "2026-11-05T00:56:38.114Z",
+      "title": "Fellowship Night",
+      "source": "MU",
+      "date": "2026-12-04T01:00:00.000Z"
     }
   ],
   "addedLastRun": 0

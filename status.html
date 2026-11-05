@@ -20,8 +20,11 @@
     .status-card h2 { font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text-muted); margin: 0 0 10px; font-weight: 700; }
     .status-metric { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 0; border-bottom: 1px solid var(--border); font-size: 0.92rem; }
     .status-metric:last-child { border-bottom: none; }
-    .status-metric-label { color: var(--text); }
-    .status-metric-value { font-weight: 700; color: var(--navy); font-variant-numeric: tabular-nums; }
+    /* Label takes the slack; the value column (number + hint block) is a
+       right-aligned fixed share so numbers line up down the card instead of
+       drifting left with each hint's width (2026-11-05). */
+    .status-metric-label { color: var(--text); flex: 1 1 auto; min-width: 0; padding-right: 10px; }
+    .status-metric-value { font-weight: 700; color: var(--navy); font-variant-numeric: tabular-nums; flex: 0 0 auto; max-width: 58%; text-align: right; }
     .status-metric-value.zero { color: var(--text-muted); font-weight: 400; }
     .status-hero { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
     .status-hero-big { font-size: 2rem; font-weight: 800; color: var(--navy); line-height: 1; }
@@ -173,7 +176,11 @@ const SEASONAL_LOW = {
 function compareSource(currentValue, history, sourceKey, todayDate) {
     if (currentValue == null || !history || !Array.isArray(history.days)) return null;
     // Exclude today's entry (history may already include it from this run).
-    const priorDays = history.days.filter(d => d.date !== todayDate);
+    // Last 7 PRIOR days only (2026-11-05). The file keeps 90 days, so the
+    // median was really a 90-day median: artsmu read "typical 21" a month
+    // after it had settled at 2, and the "self-corrects within a week"
+    // promise above was never true.
+    const priorDays = history.days.filter(d => d.date !== todayDate).slice(-7);
     if (priorDays.length < 2) return null;  // not enough baseline yet
     const priorCounts = priorDays.map(d => (d.sources && d.sources[sourceKey]) || 0);
     const med = median(priorCounts);
@@ -352,6 +359,12 @@ async function render() {
         const opts = cmp ? { ...cmp } : {};
         if (rangeStr) {
             opts.hint = opts.hint ? `${opts.hint} · ${rangeStr}` : rangeStr;
+        }
+        // artsmu counts rows FETCHED (2026-11-05); say how many merged into
+        // MU Calendar so "58 fetched, 2 standalone" reads as healthy, not odd.
+        if (key === 'artsmu' && status.artsmuMerge && status.artsmuMerge.merged > 0) {
+            const mergedStr = `${status.artsmuMerge.merged} merged w/ MU Calendar`;
+            opts.hint = opts.hint ? `${opts.hint} · ${mergedStr}` : mergedStr;
         }
         return metric(label, s[key], opts);
     }).join('');

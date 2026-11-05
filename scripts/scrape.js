@@ -3441,6 +3441,12 @@ async function runScraper() {
     } catch (e) { console.error("❌ MU Calendar error:", e.message); }
 
     // ===== 3b. ARTSMU.COM (WARE CENTER / WINTER CENTER — supplements MU Calendar) =====
+    // Rows the feed DELIVERED this run (2026-11-05). The status dashboard used
+    // to count post-merge survivors, and once MU Calendar started carrying the
+    // Ware Center's whole season nearly every artsmu row merged away -- the
+    // tile slid 20 -> 2 over a month and read "failing" while every show was
+    // on the site. This array is what "is the feed alive" actually asks.
+    const artsmuFetched = [];
     try {
         console.log("📡 Fetching artsmu.com events...");
         // Fetch multiple list pages to cover regular events + summer camps
@@ -3455,7 +3461,11 @@ async function runScraper() {
                 if (!listRes.ok) { console.log(`  ⚠️ ${listUrl} returned ${listRes.status}`); continue; }
                 const listHtml = await listRes.text();
                 // Extract event URLs matching the pattern
-                const urlRegex = /https:\/\/artsmu\.com\/event\/[a-z0-9-]+\/(?:the-ware-center|winter-visual-performing-arts-center)\/?/gi;
+                // `%` admitted 2026-11-05: accented slugs are percent-encoded on the
+                // list page ("les-mis%c3%a9rables-in-concert", "se%c3%a1n-heelys-…")
+                // and were silently never harvested -- Les Mis (ACMO rental, not on
+                // MU Calendar) was missing from the site outright.
+                const urlRegex = /https:\/\/artsmu\.com\/event\/[a-z0-9%-]+\/(?:the-ware-center|winter-visual-performing-arts-center)\/?/gi;
                 let pageTotal = 0, pageNew = 0;
                 for (const m of listHtml.matchAll(urlRegex)) {
                     const cleanUrl = m[0].replace(/\/$/, '') + '/';
@@ -3545,7 +3555,9 @@ async function runScraper() {
 
                 // Price: "$10" or "$8 to $10" — grab text between key markers
                 const priceMatch = evHtml.match(/\$\d+(?:\s*to\s*\$\d+)?/);
-                const price = priceMatch ? priceMatch[0] : '';
+                // "$12 to $15" -> "$12 - $15": the etix sweep writes ranges with a
+                // dash, so a standalone artsmu row and an enriched one read alike.
+                const price = priceMatch ? priceMatch[0].replace(/\s+to\s+/i, ' - ') : '';
 
                 // Ticket link: Etix URL
                 const etixMatch = evHtml.match(/https:\/\/www\.etix\.com\/ticket\/p\/\d+\/[^"\s?&<]+/);
@@ -3584,6 +3596,7 @@ async function runScraper() {
                     ...(freeTicket ? { freeTicket: true } : {})
                 });
                 existingKeys.add(key);
+                artsmuFetched.push(events[events.length - 1]);
                 artsCount++;
             } catch (e) {
                 artsFailed++;
@@ -6574,7 +6587,11 @@ async function runScraper() {
             // offender appears (none besides FREE in the data at fix time).
             // Designated escalation if a future pair defeats ALL title tiers:
             // same-ET-day + same etix /ticket/p/ pid is conclusive sameness.
-            norm: normalizeTitle(e.title).replace(/\s+free$/, ''),
+            // Dedupe-side typo aliases (2026-11-05): Coursedog's "Milo the
+            // Magnificient" defeated every title tier against artsmu's correct
+            // spelling (same day, 1h apart, 2 live cards). Display titles keep
+            // the source spelling; only the match key is corrected.
+            norm: normalizeTitle(e.title).replace(/\s+free$/, '').replace(/\bmagnificient\b/g, 'magnificent'),
             day,
             time,
             bucket: sourceBucket(e)
@@ -6878,8 +6895,12 @@ async function runScraper() {
             // verified Apr 3 (artsmu 2:30 PM right; Coursedog's 7:30 PM room
             // booking stale). MU Calendar outranks artsmu on sourceRank, so
             // without this the wrong time survives the merge.
+            // Family Fun Fest (2026-11-05, Adam): MU Calendar lists the series at
+            // the crafts hour (2 PM); artsmu's "Begins" is the show (3 PM). One
+            // listing at showtime, crafts stay in the MU description.
+            const familyFunFest = /^family fun fest\b/i.test(winner.title || '');
             let timeMerged = false;
-            if (candidates[0].ensembleAlias && isArtsmuEvent(loser.event) && !isArtsmuEvent(winner)
+            if ((candidates[0].ensembleAlias || familyFunFest) && isArtsmuEvent(loser.event) && !isArtsmuEvent(winner)
                 && loser.event.date && parseEventInstant(loser.event.date) !== parseEventInstant(winner.date)) {
                 winner.date = loser.event.date;
                 if (loser.event.endTime) winner.endTime = loser.event.endTime; else if (winner.endTime) delete winner.endTime;
@@ -6894,9 +6915,21 @@ async function runScraper() {
                 && !winner.freeTicket) {
                 winner.price = loser.event.price.trim(); priceMerged = true;
             }
+            // artsmu's "$A - $B" range replaces a winner's single "$N" when N sits
+            // inside it (2026-11-05): MU Calendar prints the kids'/student tier
+            // alone ("$10" for Milo, "$25" for Seán Heely); the box-office range
+            // is the honest price. A later etix all-in price still overwrites.
+            if (!priceMerged && isArtsmuEvent(loser.event)) {
+                const rng = /^\$(\d+(?:\.\d+)?)\s*-\s*\$(\d+(?:\.\d+)?)$/.exec((loser.event.price || '').trim());
+                const single = /^\$(\d+(?:\.\d+)?)$/.exec((winner.price || '').trim());
+                if (rng && single && +single[1] >= +rng[1] && +single[1] <= +rng[2]) {
+                    winner.price = loser.event.price.trim(); priceMerged = true;
+                }
+            }
 
             kept.delete(loser.idx);
             crossDupes.push({
+                artsmuLoser: isArtsmuEvent(loser.event) && !isArtsmuEvent(winner),   // status: "merged w/ MU Calendar" (2026-11-05)
                 title: loser.event.title,
                 date: (loser.event.date || '').substring(0, 10),
                 source: (loser.event.tags || [])[0] || 'Unknown',
@@ -7463,8 +7496,11 @@ async function runScraper() {
         // Predicate-only variant of dateRangeFor, for feeds identified by
         // sourceLink / tag-set rather than a single tag (artsmu, camps.json).
         // Same return shape and null-on-empty behavior.
-        const dateRangeForPred = (pred) => {
-            const matched = deduped.filter(pred);
+        // Same range, over an explicit row list instead of a deduped predicate
+        // (artsmu reports the rows it fetched, 2026-11-05).
+        const dateRangeForRows = (rows) => dateRangeForPred(e => rows.includes(e), rows);
+        const dateRangeForPred = (pred, rows = deduped) => {
+            const matched = rows.filter(pred);
             if (matched.length === 0) return null;
             let minMs = Infinity, maxMs = -Infinity;
             for (const e of matched) {
@@ -7509,7 +7545,10 @@ async function runScraper() {
                 // Un-folded from muCalendar 2026-08-07 (D1/D2b): both feeds
                 // previously hid inside the calendar count, so either dying
                 // was invisible to the per-source degradation detector.
-                artsmu: deduped.filter(isArtsmuEvent).length,
+                // Rows the feed delivered, NOT post-merge survivors (2026-11-05):
+                // MU Calendar now lists the Ware season, so survivors fell 20 -> 2
+                // with nothing wrong. Merge breakdown lives in `artsmuMerge` below.
+                artsmu: artsmuFetched.length,
                 campsAlumni: deduped.filter(isCampsAlumniEvent).length,
                 muGetInvolved: bySourceCount('Clubs/Orgs'),
                 pennManor: bySourceCount('PM'),
@@ -7543,7 +7582,7 @@ async function runScraper() {
             sourceDateRanges: {
                 muAthletics: dateRangeFor('MU', e => (e.tags || []).includes('Athletics') || (e.tags || []).includes('Athletic Competitions')),
                 muCalendar: dateRangeFor('MU', e => !(e.tags || []).includes('Athletics') && !(e.tags || []).includes('Clubs/Orgs') && !isArtsmuEvent(e) && !isCampsAlumniEvent(e)),
-                artsmu: dateRangeForPred(isArtsmuEvent),
+                artsmu: dateRangeForRows(artsmuFetched),   // fetched rows, to match the count (2026-11-05)
                 campsAlumni: dateRangeForPred(isCampsAlumniEvent),
                 muGetInvolved: dateRangeFor('Clubs/Orgs'),
                 pennManor: dateRangeFor('PM'),
@@ -7590,7 +7629,7 @@ async function runScraper() {
                 const newestPerSource = {
                     muAthletics: dateRangeFor('MU', e => (e.tags || []).includes('Athletics') || (e.tags || []).includes('Athletic Competitions'))?.latest,
                     muCalendar: dateRangeFor('MU', e => !(e.tags || []).includes('Athletics') && !(e.tags || []).includes('Clubs/Orgs') && !isArtsmuEvent(e) && !isCampsAlumniEvent(e))?.latest,
-                    artsmu: dateRangeForPred(isArtsmuEvent)?.latest,
+                    artsmu: dateRangeForRows(artsmuFetched)?.latest,
                     campsAlumni: dateRangeForPred(isCampsAlumniEvent)?.latest,
                     muGetInvolved: dateRangeFor('Clubs/Orgs')?.latest,
                     pennManor: dateRangeFor('PM')?.latest,
@@ -7675,6 +7714,14 @@ async function runScraper() {
             // Form-submissions backlog (2026-09-03) — the submissions sheet's twin of
             // reviewQueue; null when §8 didn't run (fetch failed) so the card omits it.
             submissionsQueue,
+            // artsmu merge breakdown (2026-11-05): the dashboard shows "merged w/ MU
+            // Calendar" beside the fetched count so a feed that is alive but fully
+            // absorbed no longer looks dead. standalone = artsmu rows shipped as-is.
+            artsmuMerge: {
+                fetched: artsmuFetched.length,
+                merged: crossDupes.filter(d => d.artsmuLoser).length,
+                standalone: deduped.filter(isArtsmuEvent).length
+            },
             // SOURCE HEALTH INVARIANTS (2026-09-05). Absolute floors, NOT median-relative.
             // Why: the dashboard's per-source degradation detector compares against a
             // rolling 7-day median, so a metric that has been wrong long enough becomes

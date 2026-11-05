@@ -138,7 +138,7 @@
       "Acorn Squash – $1.50 each",
       "Delicata Squash – $1.00 each"
     ],
-    "weeklyFetchedAt": "2026-11-05T14:33:25.815Z"
+    "weeklyFetchedAt": "2026-11-05T14:42:59.204Z"
   },
   "jesus-dogs": {
     "name": "Jesus Dogs",
@@ -183,9 +183,128 @@
   },
   "john-herr-s-village-market": {
     "name": "John Herr's Village Market",
-    "note": "Weekly deals · Thu–Wed",
-    "weekly": [],
-    "weeklyDateRange": "",
-    "rawDeals": []
+    "note": "Weekly deals: Thursday, November 5 through Wednesday, November 11",
+    "weekly": [
+      "Boneless Pork Sirloin Chops (Value Pack, Fresh) – $2.49/lb ($0.50/lb)",
+      "Boneless & Skinless Chicken Thighs (Value Pack, Fresh) – $2.99/lb ($0.50/lb)",
+      "Gold Medal Flour (5-lb) — Throwback Thursday Digital Coupon (Thu 11/5 - Sun 11/8 only, limit 1 offer) – $1.98 ($2.50)",
+      "Martin's Original Potato Chips (8.5-oz, Selected) – Buy 1 Get 1 FREE",
+      "Mid's Pasta Sauce (26-oz, Selected) — Buy 1, Get 1 Food Club Pasta (16-oz) FREE (thru Nov 13, limit 1 per transaction) – $5.48 + free pasta"
+    ],
+    "weeklyDateRange": "Thursday, November 5 through Wednesday, November 11",
+    "rawDeals": [
+      {
+        "item": "Boneless Pork Sirloin Chops (Value Pack, Fresh)",
+        "salePrice": "$2.49/lb",
+        "regularPrice": "$2.99/lb (less amount)",
+        "savings": "$0.50/lb",
+        "dateRange": "Thursday, November 5 through Wednesday, November 11"
+      },
+      {
+        "item": "Boneless & Skinless Chicken Thighs (Value Pack, Fresh)",
+        "salePrice": "$2.99/lb",
+        "regularPrice": "$3.49/lb (less amount)",
+        "savings": "$0.50/lb",
+        "dateRange": "Thursday, November 5 through Wednesday, November 11"
+      },
+      {
+        "item": "Gold Medal Flour (5-lb) — Throwback Thursday Digital Coupon (Thu 11/5 - Sun 11/8 only, limit 1 offer)",
+        "salePrice": "$1.98",
+        "regularPrice": "$4.48 (sale price before coupon)",
+        "savings": "$2.50",
+        "dateRange": "Thursday, November 5 through Wednesday, November 11"
+      },
+      {
+        "item": "Martin's Original Potato Chips (8.5-oz, Selected)",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, November 5 through Wednesday, November 11"
+      },
+      {
+        "item": "Mid's Pasta Sauce (26-oz, Selected) — Buy 1, Get 1 Food Club Pasta (16-oz) FREE (thru Nov 13, limit 1 per transaction)",
+        "salePrice": "$5.48 + free pasta",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, November 5 through Wednesday, November 11"
+      },
+      {
+        "item": "Cabot Chunk or Cracker Cut Cheese (7 to 8-oz, Selected) — Throwback Thursday Digital Coupon (Thu 11/5 - Sun 11/8 only, limit 1 offer)",
+        "salePrice": "$1.48",
+        "regularPrice": "$2.98 (sale price before coupon)",
+        "savings": "$1.50",
+        "dateRange": "Thursday, November 5 through Wednesday, November 11"
+      },
+      {
+        "item": "John F. Martin Smoked Turkey Breast — Weekly Door Buster (limit 6 lbs per Rewards card)",
+        "salePrice": "$7.49/lb",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, November 5 through Wednesday, November 11"
+      },
+      {
+        "item": "Pillsbury Pie Crusts (2-ct, 14.1-oz)",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, November 5 through Wednesday, November 11"
+      },
+      {
+        "item": "Del Monte Canned Vegetables (14.5 to 15.25-oz, Selected)",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, November 5 through Wednesday, November 11"
+      },
+      {
+        "item": "Stove Top Stuffing Mix (6-oz, Selected)",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, November 5 through Wednesday, November 11"
+      },
+      {
+        "item": "Campbell's Homestyle Soup (15.1 to 16.3-oz, Selected) — Weekly Door Buster (limit 8 per Rewards card)",
+        "salePrice": "4 for $5",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, November 5 through Wednesday, November 11"
+      },
+      {
+        "item": "Mueller's Spaghetti, Elbow Macaroni, Thin or Cut Spaghetti — Weekly Door Buster (limit 10 per Rewards card)",
+        "salePrice": "5 for $4",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, November 5 through Wednesday, November 11"
+      },
+      {
+        "item": "Fresh 85% Lean Ground Beef (Value Pack, Our Own Store Made)",
+        "salePrice": "$6.99/lb",
+        "regularPrice": "$7.49/lb (less amount)",
+        "savings": "$0.50/lb",
+        "dateRange": "Thursday, November 5 through Wednesday, November 11"
+      },
+      {
+        "item": "Boneless Ribeye Steaks / Delmonico (Value Pack, Select Beef)",
+        "salePrice": "$14.99/lb",
+        "regularPrice": "$15.99/lb (less amount)",
+        "savings": "$1.00/lb",
+        "dateRange": "Thursday, November 5 through Wednesday, November 11"
+      },
+      {
+        "item": "Peter Pan Peanut Butter (16.3-oz) — Throwback Thursday Digital Coupon (Thu 11/5 - Sun 11/8 only, limit 1 offer)",
+        "salePrice": "$1.28",
+        "regularPrice": "$2.28 (sale price before coupon)",
+        "savings": "$1.00",
+        "dateRange": "Thursday, November 5 through Wednesday, November 11"
+      },
+      {
+        "item": "Pink Lady Apples",
+        "salePrice": "$1.69/lb",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, November 5 through Wednesday, November 11"
+      }
+    ]
   }
 }

@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-11-05T02:26:16.445Z",
+  "generatedAt": "2026-11-05T04:14:10.712Z",
   "totalEvents": 1985,
   "withDescription": 828,
   "withImage": 225,
   "familyFriendly": 54,
-  "eventsToday": 19,
+  "eventsToday": 18,
   "sources": {
     "muAthletics": 351,
     "muCalendar": 188,
@@ -150,13 +150,13 @@
       "Campus Life": 1
     },
     "stalePast": 28,
-    "lastSyncAt": "2026-11-05T02:23:37.890Z"
+    "lastSyncAt": "2026-11-05T04:11:42.303Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-11-05T02:26:08.598Z"
+    "checkedAt": "2026-11-05T04:14:00.089Z"
   },
   "sourceHealth": {
     "ok": true,
@@ -235,6 +235,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Karaoke Night|2026-11-26T03:00:00.000Z",
+      "firstSeenAt": "2026-11-05T04:14:10.708Z",
+      "title": "Karaoke Night",
+      "source": "Jack's Tavern",
+      "date": "2026-11-26T03:00:00.000Z"
+    },
+    {
       "key": "Girls Varsity Field Hockey vs Cumberland Valley High School|2026-11-05T23:30:00.000Z",
       "firstSeenAt": "2026-11-05T02:26:16.441Z",
       "title": "Girls Varsity Field Hockey vs Cumberland Valley High School",
@@ -296,13 +303,6 @@
       "title": "Fellowship Night",
       "source": "MU",
       "date": "2026-12-04T01:00:00.000Z"
-    },
-    {
-      "key": "Men's Ice Hockey Practice (D2)|2026-12-04T02:30:00.000Z",
-      "firstSeenAt": "2026-11-05T00:56:38.114Z",
-      "title": "Men's Ice Hockey Practice (D2)",
-      "source": "MU",
-      "date": "2026-12-04T02:30:00.000Z"
     }
   ],
   "addedLastRun": 1

@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-11-05T20:34:17.862Z",
-  "totalEvents": 1988,
-  "withDescription": 831,
+  "generatedAt": "2026-11-05T22:22:35.439Z",
+  "totalEvents": 1989,
+  "withDescription": 832,
   "withImage": 228,
-  "familyFriendly": 54,
+  "familyFriendly": 55,
   "eventsToday": 28,
   "sources": {
     "muAthletics": 351,
@@ -137,26 +137,27 @@
     "ties": 13
   },
   "registrations": {
-    "open": 4,
+    "open": 5,
     "next2Weeks": 2,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 2,
+    "pendingFuture": 3,
     "pendingPast": 12,
     "pendingBySource": {
       "Youth Sports": 1,
-      "Campus Life": 1
+      "Campus Life": 1,
+      "PM Community": 1
     },
     "stalePast": 28,
-    "lastSyncAt": "2026-11-05T20:31:19.950Z"
+    "lastSyncAt": "2026-11-05T22:19:38.678Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-11-05T20:34:09.047Z"
+    "checkedAt": "2026-11-05T22:22:27.031Z"
   },
   "artsmuMerge": {
     "fetched": 56,
@@ -240,6 +241,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Penn Manor Youth Baseball & Softball - Spring 2027 Registration|2026-12-01T04:59:00.000Z",
+      "firstSeenAt": "2026-11-05T22:22:35.437Z",
+      "title": "Penn Manor Youth Baseball & Softball - Spring 2027 Registration",
+      "source": "Other",
+      "date": "2026-12-01T04:59:00.000Z"
+    },
+    {
       "key": "Men's Ice Hockey vs Neumann University|2026-11-07T01:00:00.000Z",
       "firstSeenAt": "2026-11-05T20:34:17.858Z",
       "title": "Men's Ice Hockey vs Neumann University",
@@ -301,14 +309,7 @@
       "title": "Messiah Scrimmage",
       "source": "MU",
       "date": "2026-11-19T00:00:00.000Z"
-    },
-    {
-      "key": "Fall 2026 Sale|2026-11-19T15:00:00.000Z",
-      "firstSeenAt": "2026-11-05T20:34:17.858Z",
-      "title": "Fall 2026 Sale",
-      "source": "MU",
-      "date": "2026-11-19T15:00:00.000Z"
     }
   ],
-  "addedLastRun": 13
+  "addedLastRun": 1
 }

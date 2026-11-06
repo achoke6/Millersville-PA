@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "11:00",
+      "temp": "66",
+      "dewpoint": "55",
+      "rh": "67",
+      "windDir": "NW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "10:00",
+      "temp": "66",
+      "dewpoint": "58",
+      "rh": "75",
+      "windDir": "N",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "09:00",
       "temp": "65",
       "dewpoint": "63",
@@ -170,28 +192,6 @@
       "precip": "0.00",
       "visibility": "1.0",
       "condition": "Mist"
-    },
-    {
-      "time": "05:00",
-      "temp": "63",
-      "dewpoint": "63",
-      "rh": "100",
-      "windDir": "NW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "3.7",
-      "condition": "None"
-    },
-    {
-      "time": "04:00",
-      "temp": "63",
-      "dewpoint": "63",
-      "rh": "100",
-      "windDir": "N",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "0.22",
-      "condition": "Fog"
     }
   ],
   "dailySummary": {
@@ -261,9 +261,9 @@
     "yearMinDate": "January 21"
   },
   "discussion": {
-    "headline": "Warm through friday, then more seasonable over the weekend",
-    "dateLine": "11:45 a.m. Wednesday, October 4, 2026",
-    "excerpt": "The weather over the last two weeks has been nothing short of spectacular across the mid-Atlantic States, and November has kicked off on a mostly sunny, dry and unseasonably warm note with high temperatures in the upper 60s on Monday and low-to-mid 70s Tuesday. …",
+    "headline": "cooler, less humid and more seasonable this weekend",
+    "dateLine": "11:30 a.m. Friday, October 6, 2026, Update",
+    "excerpt": "Once again, the Lower Susquehanna Valley essentially got missed on all flanks by substantial rainfall since Wednesday night. A measly 0.10-0.25\" of rain fell across most of south-central PA, while as much as 1-2\" was recorded in the I-95 corridor near Baltimore and Philadelphia (see below). Following our early-morning showers, clouds will continue to decrease from southwest-to-northeast through the early-afternoon hours. …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -301,5 +301,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-06T14:59:35.544Z"
+  "updated": "2026-11-06T16:48:19.348Z"
 }

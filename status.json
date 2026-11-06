@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-06T08:28:55.569Z",
-  "totalEvents": 1970,
+  "generatedAt": "2026-11-06T10:19:17.875Z",
+  "totalEvents": 1986,
   "withDescription": 830,
   "withImage": 227,
   "familyFriendly": 54,
   "eventsToday": 18,
   "sources": {
-    "muAthletics": 335,
+    "muAthletics": 351,
     "muCalendar": 187,
     "artsmu": 55,
     "campsAlumni": 11,
@@ -19,7 +19,7 @@
     "manor": 38,
     "raneyCellars": 4,
     "theBackyard": 29,
-    "muHudlBroadcasts": 51
+    "muHudlBroadcasts": 58
   },
   "sourceDateRanges": {
     "muAthletics": {
@@ -55,7 +55,7 @@
       "latest": "2026-11-22T21:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-11-06T00:00:00.000Z",
+      "earliest": "2026-11-07T00:00:00.000Z",
       "latest": "2026-12-19T01:00:00.000Z"
     },
     "community": {
@@ -130,10 +130,10 @@
     }
   },
   "sports": {
-    "total": 876,
-    "scored": 184,
-    "wins": 92,
-    "losses": 79,
+    "total": 892,
+    "scored": 200,
+    "wins": 96,
+    "losses": 91,
     "ties": 13
   },
   "registrations": {
@@ -151,13 +151,13 @@
       "PM Community": 1
     },
     "stalePast": 28,
-    "lastSyncAt": "2026-11-06T08:25:55.231Z"
+    "lastSyncAt": "2026-11-06T10:14:20.255Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-11-06T08:28:44.824Z"
+    "checkedAt": "2026-11-06T10:18:57.794Z"
   },
   "artsmuMerge": {
     "fetched": 55,
@@ -165,8 +165,10 @@
     "standalone": 2
   },
   "sourceHealth": {
-    "ok": true,
-    "failing": [],
+    "ok": false,
+    "failing": [
+      "manor.count"
+    ],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -192,7 +194,7 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 360,
+        "value": 359,
         "min": 21,
         "skipped": false
       },
@@ -206,7 +208,7 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 335,
+        "value": 351,
         "min": 100,
         "skipped": false
       },
@@ -219,16 +221,17 @@
       },
       {
         "key": "manor.count",
-        "ok": true,
+        "ok": false,
         "value": 38,
-        "min": 10
+        "min": 10,
+        "carriedForward": 38
       },
       {
         "key": "muHudl.pairRatio",
         "ok": true,
-        "matched": 51,
+        "matched": 58,
         "inWindow": 64,
-        "value": 0.8,
+        "value": 0.91,
         "min": 0.5
       },
       {
@@ -241,75 +244,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Traffic Commission Meeting|2027-08-25T12:30:00.000Z",
-      "firstSeenAt": "2026-11-06T02:09:26.875Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-08-25T12:30:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-09-01T23:00:00.000Z",
-      "firstSeenAt": "2026-11-06T02:09:26.875Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-09-01T23:00:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-06T02:09:26.875Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-09-06T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2027-09-29T12:30:00.000Z",
-      "firstSeenAt": "2026-11-06T02:09:26.875Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-09-29T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-10-04T23:00:00.000Z",
-      "firstSeenAt": "2026-11-06T02:09:26.875Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-10-04T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-10-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-06T02:09:26.875Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-10-06T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2027-10-27T12:30:00.000Z",
-      "firstSeenAt": "2026-11-06T02:09:26.875Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-10-27T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-11-01T23:00:00.000Z",
-      "firstSeenAt": "2026-11-06T02:09:26.875Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-11-01T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-11-03T23:00:00.000Z",
-      "firstSeenAt": "2026-11-06T02:09:26.875Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-11-03T23:00:00.000Z"
-    },
-    {
-      "key": "Disability Film Festival: \"Being Heumann\" at Regal Manor 16|2026-10-27T18:00:00",
-      "firstSeenAt": "2026-11-06T00:21:10.047Z",
-      "title": "Disability Film Festival: \"Being Heumann\" at Regal Manor 16",
+      "key": "Millersville University Women's Volleyball at Goldey-Beacom|2026-08-27T22:00:00.000Z",
+      "firstSeenAt": "2026-11-06T10:19:17.871Z",
+      "title": "Millersville University Women's Volleyball at Goldey-Beacom",
       "source": "MU",
-      "date": "2026-10-27T18:00:00"
+      "date": "2026-08-27T22:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Volleyball vs Jefferson|2026-08-28T17:00:00.000Z",
+      "firstSeenAt": "2026-11-06T10:19:17.871Z",
+      "title": "Millersville University Women's Volleyball vs Jefferson",
+      "source": "MU",
+      "date": "2026-08-28T17:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Volleyball vs Caldwell|2026-08-29T17:00:00.000Z",
+      "firstSeenAt": "2026-11-06T10:19:17.871Z",
+      "title": "Millersville University Women's Volleyball vs Caldwell",
+      "source": "MU",
+      "date": "2026-08-29T17:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Volleyball vs West Virginia State|2026-08-29T19:00:00.000Z",
+      "firstSeenAt": "2026-11-06T10:19:17.871Z",
+      "title": "Millersville University Women's Volleyball vs West Virginia State",
+      "source": "MU",
+      "date": "2026-08-29T19:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Volleyball vs Pitt-Johnstown|2026-09-11T15:00:00.000Z",
+      "firstSeenAt": "2026-11-06T10:19:17.871Z",
+      "title": "Millersville University Women's Volleyball vs Pitt-Johnstown",
+      "source": "MU",
+      "date": "2026-09-11T15:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Volleyball vs Indiana (PA)|2026-09-11T19:00:00.000Z",
+      "firstSeenAt": "2026-11-06T10:19:17.871Z",
+      "title": "Millersville University Women's Volleyball vs Indiana (PA)",
+      "source": "MU",
+      "date": "2026-09-11T19:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Volleyball vs Lincoln|2026-09-15T23:00:00.000Z",
+      "firstSeenAt": "2026-11-06T10:19:17.871Z",
+      "title": "Millersville University Women's Volleyball vs Lincoln",
+      "source": "MU",
+      "date": "2026-09-15T23:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Volleyball vs Shepherd|2026-09-18T23:00:00.000Z",
+      "firstSeenAt": "2026-11-06T10:19:17.871Z",
+      "title": "Millersville University Women's Volleyball vs Shepherd",
+      "source": "MU",
+      "date": "2026-09-18T23:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Volleyball at West Chester|2026-09-19T17:00:00.000Z",
+      "firstSeenAt": "2026-11-06T10:19:17.871Z",
+      "title": "Millersville University Women's Volleyball at West Chester",
+      "source": "MU",
+      "date": "2026-09-19T17:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Volleyball vs Felician|2026-09-21T22:00:00.000Z",
+      "firstSeenAt": "2026-11-06T10:19:17.871Z",
+      "title": "Millersville University Women's Volleyball vs Felician",
+      "source": "MU",
+      "date": "2026-09-21T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 17
 }

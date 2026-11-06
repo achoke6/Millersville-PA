@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-06T10:19:17.875Z",
-  "totalEvents": 1986,
+  "generatedAt": "2026-11-06T12:10:16.724Z",
+  "totalEvents": 1975,
   "withDescription": 830,
   "withImage": 227,
   "familyFriendly": 54,
   "eventsToday": 18,
   "sources": {
-    "muAthletics": 351,
+    "muAthletics": 340,
     "muCalendar": 187,
     "artsmu": 55,
     "campsAlumni": 11,
@@ -19,7 +19,7 @@
     "manor": 38,
     "raneyCellars": 4,
     "theBackyard": 29,
-    "muHudlBroadcasts": 58
+    "muHudlBroadcasts": 52
   },
   "sourceDateRanges": {
     "muAthletics": {
@@ -130,11 +130,11 @@
     }
   },
   "sports": {
-    "total": 892,
-    "scored": 200,
-    "wins": 96,
-    "losses": 91,
-    "ties": 13
+    "total": 881,
+    "scored": 188,
+    "wins": 88,
+    "losses": 89,
+    "ties": 11
   },
   "registrations": {
     "open": 5,
@@ -151,13 +151,13 @@
       "PM Community": 1
     },
     "stalePast": 28,
-    "lastSyncAt": "2026-11-06T10:14:20.255Z"
+    "lastSyncAt": "2026-11-06T12:04:40.771Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-11-06T10:18:57.794Z"
+    "checkedAt": "2026-11-06T12:10:00.824Z"
   },
   "artsmuMerge": {
     "fetched": 55,
@@ -165,10 +165,8 @@
     "standalone": 2
   },
   "sourceHealth": {
-    "ok": false,
-    "failing": [
-      "manor.count"
-    ],
+    "ok": true,
+    "failing": [],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -180,7 +178,7 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 202,
+        "value": 201,
         "min": 60,
         "skipped": false
       },
@@ -208,7 +206,7 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 351,
+        "value": 340,
         "min": 100,
         "skipped": false
       },
@@ -221,17 +219,16 @@
       },
       {
         "key": "manor.count",
-        "ok": false,
+        "ok": true,
         "value": 38,
-        "min": 10,
-        "carriedForward": 38
+        "min": 10
       },
       {
         "key": "muHudl.pairRatio",
         "ok": true,
-        "matched": 58,
+        "matched": 52,
         "inWindow": 64,
-        "value": 0.91,
+        "value": 0.81,
         "min": 0.5
       },
       {
@@ -314,5 +311,5 @@
       "date": "2026-09-21T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 17
+  "addedLastRun": 0
 }

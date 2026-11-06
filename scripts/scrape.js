@@ -2685,7 +2685,12 @@ async function runScraper() {
             const t = title.trim();
             const SPORT_WORD_RE = /\b(field hockey|cross country|track(?: (?:&|and) field)?|baseball|softball|lacrosse|volleyball|football|basketball|soccer|tennis|golf|swimming|wrestling)\b/i;
             const canonSport = (s) => {
-                const sport = s.trim().toLowerCase();
+                // Gender belongs to the row's title, not the bucket key (2026-11-06):
+                // "Women's Swimming vs East Stroudsburg" bucketed as `women's
+                // swimming` while every event row buckets as `swimming`, so the
+                // broadcast could never pair. The gender gate in the pairing loop
+                // keeps men's/women's meets apart once they share a bucket.
+                const sport = s.trim().toLowerCase().replace(/^(?:women'?s|men'?s)\s+/, '');
                 if (sport.includes('field hockey'))  return 'field hockey';
                 if (sport.includes('cross country')) return 'cross country';
                 if (sport.includes('track'))         return 'track';
@@ -2748,10 +2753,37 @@ async function runScraper() {
         // (lowercase, punctuation -> space) and require the cleaned opponent to appear
         // in the MU event title. "California" matches "...vs California (Pa.)".
         const normOppText = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').replace(/\s+/g, ' ').trim();
-        const opponentInTitle = (opp, evTitle) => {
-            const o = normOppText(opp); if (!o) return false;
-            return (' ' + normOppText(evTitle) + ' ').includes(' ' + o + ' ');
+        // School-name canon (2026-11-06): PSAC titles and Sidearm titles spell the
+        // same school differently -- "IUP" / "#8 Indiana (PA)", "Bowie St" / "Bowie
+        // State University", "York College of Pennsylvania" / "York", "East
+        // Stroudsburg University" / "East Stroudsburg". Applied to BOTH sides so
+        // the containment test compares like with like. Only a trailing "St"
+        // expands (St. Francis stays put). Extend OPP_ALIASES when the unpaired
+        // diagnostic names a new acronym.
+        const OPP_ALIASES = { 'iup': 'indiana pa', 'esu': 'east stroudsburg', 'wcu': 'west chester' };
+        const canonSchool = (s) => {
+            let t = normOppText(s);
+            t = t.replace(/^(?:\d+\s+)+/, '');                        // seeds: "8 indiana pa"
+            t = t.replace(/^university of\s+/, '');                     // "university of charleston"
+            t = t.replace(/\s+(?:university|college of pennsylvania|college)$/, '');
+            t = t.replace(/\s+st$/, ' state');                         // "bowie st" (trailing only)
+            return OPP_ALIASES[t] || t;
         };
+        const opponentInTitle = (opp, evTitle) => {
+            const o = canonSchool(opp); if (!o) return false;
+            // Canon the text after " vs "/" at " (the opponent tail) and compare
+            // against the canon'd broadcast opponent, anchored at the tail start.
+            const t = normOppText(evTitle);
+            const m = t.match(/\b(?:vs|at)\s+(.+)$/);
+            if (!m) return (' ' + t + ' ').includes(' ' + o + ' ');   // no vs/at: legacy containment
+            const tail = canonSchool(m[1]);
+            // Anchored to the START of the opponent tail: "york" must not match
+            // "new york tech" the way bare containment used to.
+            return tail === o || tail.startsWith(o + ' ');
+        };
+        // Gender word in a title (Women's / Men's), or null. "Women's" is tested
+        // first because it contains "men's".
+        const genderOf = (s) => /\bwomen'?s\b/i.test(s || '') ? 'w' : (/\bmen'?s\b/i.test(s || '') ? 'm' : null);
 
         // Pull broadcasts in two passes: current (LIVE/UPCOMING — we always want
         // ALL of these, the count should be small) and ARCHIVED (we cap to our
@@ -2973,6 +3005,9 @@ async function runScraper() {
                 for (const er of eventList) {
                     // Wildcard bucket: the event must name this broadcast's opponent.
                     if (sport === '*' && !opponentInTitle(b.opponent, er.ev.title)) continue;
+                    // Gender gate (2026-11-06): "Women's Swimming vs ESU" must not land
+                    // on the men's meet an hour apart just because both are `swimming`.
+                    { const bg = genderOf(b.title), eg = genderOf(er.ev.title); if (bg && eg && bg !== eg) continue; }
                     if (pairedEvents.has(er.ev)) {
                         // Check if this paired event overlaps the broadcast
                         if (er.ms < bEndMs && b.ms < er.endMs) {

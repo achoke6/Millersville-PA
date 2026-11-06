@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-11-06T03:57:25.517Z",
+  "generatedAt": "2026-11-06T05:45:40.917Z",
   "totalEvents": 1986,
   "withDescription": 830,
   "withImage": 227,
   "familyFriendly": 54,
-  "eventsToday": 26,
+  "eventsToday": 18,
   "sources": {
     "muAthletics": 351,
     "muCalendar": 187,
-    "artsmu": 56,
+    "artsmu": 55,
     "campsAlumni": 11,
     "muGetInvolved": 543,
     "pennManor": 647,
@@ -31,7 +31,7 @@
       "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
-      "earliest": "2026-11-05T23:00:00.000Z",
+      "earliest": "2026-11-06T21:00:00.000Z",
       "latest": "2027-06-04T22:30:00.000Z"
     },
     "campsAlumni": {
@@ -78,39 +78,39 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 65
+      "daysSinceMoved": 66
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 76
+      "daysSinceMoved": 77
     },
     "artsmu": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 78
+      "daysSinceMoved": 79
     },
     "campsAlumni": {
       "newest": "2027-08-20",
-      "daysSinceMoved": 17
+      "daysSinceMoved": 18
     },
     "muGetInvolved": {
       "newest": "2027-10-27",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "pennManor": {
       "newest": "2027-10-25",
-      "daysSinceMoved": 11
+      "daysSinceMoved": 12
     },
     "borough": {
       "newest": "2027-10-31",
-      "daysSinceMoved": 5
+      "daysSinceMoved": 6
     },
     "vfw": {
       "newest": "2026-11-22",
-      "daysSinceMoved": 30
+      "daysSinceMoved": 31
     },
     "phantomPower": {
       "newest": "2026-12-19",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "community": {
       "newest": "2027-04-16",
@@ -118,15 +118,15 @@
     },
     "manor": {
       "newest": "2027-11-03",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "raneyCellars": {
       "newest": "2026-11-12",
-      "daysSinceMoved": 9
+      "daysSinceMoved": 10
     },
     "theBackyard": {
       "newest": "2027-04-28",
-      "daysSinceMoved": 28
+      "daysSinceMoved": 29
     }
   },
   "sports": {
@@ -151,17 +151,17 @@
       "PM Community": 1
     },
     "stalePast": 28,
-    "lastSyncAt": "2026-11-06T03:54:48.107Z"
+    "lastSyncAt": "2026-11-06T05:42:49.566Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-11-06T03:57:16.409Z"
+    "checkedAt": "2026-11-06T05:45:32.657Z"
   },
   "artsmuMerge": {
-    "fetched": 56,
-    "merged": 54,
+    "fetched": 55,
+    "merged": 53,
     "standalone": 2
   },
   "sourceHealth": {

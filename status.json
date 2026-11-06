@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-11-06T20:34:47.216Z",
+  "generatedAt": "2026-11-06T20:54:41.649Z",
   "totalEvents": 2035,
   "withDescription": 832,
   "withImage": 227,
-  "familyFriendly": 55,
+  "familyFriendly": 56,
   "eventsToday": 18,
   "sources": {
     "muAthletics": 397,
@@ -151,13 +151,13 @@
       "PM Community": 1
     },
     "stalePast": 28,
-    "lastSyncAt": "2026-11-06T20:31:56.411Z"
+    "lastSyncAt": "2026-11-06T20:52:02.680Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-11-06T20:34:39.294Z"
+    "checkedAt": "2026-11-06T20:54:31.649Z"
   },
   "artsmuMerge": {
     "fetched": 55,
@@ -241,6 +241,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Kids Camp Event|2026-11-07T13:00:00.000Z",
+      "firstSeenAt": "2026-11-06T20:54:41.645Z",
+      "title": "Kids Camp Event",
+      "source": "MU",
+      "date": "2026-11-07T13:00:00.000Z"
+    },
+    {
       "key": "Fireside Reading|2026-12-02T17:00:00",
       "firstSeenAt": "2026-11-06T20:34:47.186Z",
       "title": "Fireside Reading",
@@ -302,13 +309,6 @@
       "title": "Millersville University Baseball vs Shepherd",
       "source": "MU",
       "date": "2027-03-26T17:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Baseball vs Shepherd|2027-03-26T19:00:00.000Z",
-      "firstSeenAt": "2026-11-06T18:41:21.689Z",
-      "title": "Millersville University Baseball vs Shepherd",
-      "source": "MU",
-      "date": "2027-03-26T19:00:00.000Z"
     }
   ],
   "addedLastRun": 1

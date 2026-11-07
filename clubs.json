@@ -328,9 +328,9 @@
   },
   {
     "name": "Citamard",
-    "category": "Performance",
+    "category": "Meeting",
     "categories": [
-      "Performance"
+      "Meeting"
     ],
     "shortName": "",
     "id": ""
@@ -688,9 +688,9 @@
   },
   {
     "name": "Equestrian Club",
-    "category": "Sporting",
+    "category": "Social",
     "categories": [
-      "Sporting"
+      "Social"
     ],
     "shortName": "",
     "id": ""
@@ -738,12 +738,12 @@
   },
   {
     "name": "First Gems of The Ville",
-    "category": "Social",
+    "category": "Identity-Based",
     "categories": [
-      "Social"
+      "Identity-Based"
     ],
     "shortName": "First Gems",
-    "id": ""
+    "id": "firstgems"
   },
   {
     "name": "Flute Association",
@@ -1106,9 +1106,10 @@
     "id": ""
   },
   {
-    "name": "Men's Rugby Club of Millersville University",
-    "category": "Fundraiser",
+    "name": "Men's Rugby Club",
+    "category": "Meeting",
     "categories": [
+      "Meeting",
       "Fundraiser"
     ],
     "shortName": "Men's Rugby Club",
@@ -1631,8 +1632,10 @@
   },
   {
     "name": "Students for Life",
-    "category": "",
-    "categories": [],
+    "category": "Tabling",
+    "categories": [
+      "Tabling"
+    ],
     "shortName": "",
     "id": ""
   },

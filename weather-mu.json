@@ -128,6 +128,17 @@
   },
   "observations": [
     {
+      "time": "11:00",
+      "temp": "55",
+      "dewpoint": "38",
+      "rh": "53",
+      "windDir": "WSW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "10:00",
       "temp": "53",
       "dewpoint": "37",
@@ -178,17 +189,6 @@
       "rh": "66",
       "windDir": "WNW",
       "windSpeed": "6",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "05:00",
-      "temp": "50",
-      "dewpoint": "39",
-      "rh": "66",
-      "windDir": "NW",
-      "windSpeed": "8",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
@@ -323,5 +323,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-08T15:38:51.272Z"
+  "updated": "2026-11-08T16:40:44.258Z"
 }

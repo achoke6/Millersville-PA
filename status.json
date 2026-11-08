@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-11-08T04:16:58.609Z",
+  "generatedAt": "2026-11-08T06:04:47.809Z",
   "totalEvents": 2025,
   "withDescription": 828,
   "withImage": 229,
   "familyFriendly": 56,
-  "eventsToday": 17,
+  "eventsToday": 10,
   "sources": {
     "muAthletics": 391,
     "muCalendar": 184,
-    "artsmu": 53,
+    "artsmu": 50,
     "campsAlumni": 11,
     "muGetInvolved": 546,
     "pennManor": 647,
@@ -78,55 +78,55 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 67
+      "daysSinceMoved": 68
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 78
+      "daysSinceMoved": 79
     },
     "artsmu": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 80
+      "daysSinceMoved": 81
     },
     "campsAlumni": {
       "newest": "2027-08-20",
-      "daysSinceMoved": 19
+      "daysSinceMoved": 20
     },
     "muGetInvolved": {
       "newest": "2027-10-27",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "pennManor": {
       "newest": "2027-10-25",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 14
     },
     "borough": {
       "newest": "2027-10-31",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "vfw": {
       "newest": "2026-11-22",
-      "daysSinceMoved": 32
+      "daysSinceMoved": 33
     },
     "phantomPower": {
       "newest": "2026-12-19",
-      "daysSinceMoved": 9
+      "daysSinceMoved": 10
     },
     "community": {
       "newest": "2027-04-16",
-      "daysSinceMoved": 89
+      "daysSinceMoved": 88
     },
     "manor": {
       "newest": "2027-11-03",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "raneyCellars": {
       "newest": "2026-11-19",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "theBackyard": {
       "newest": "2027-04-28",
-      "daysSinceMoved": 30
+      "daysSinceMoved": 31
     }
   },
   "sports": {
@@ -151,17 +151,17 @@
       "PM Community": 1
     },
     "stalePast": 29,
-    "lastSyncAt": "2026-11-08T04:14:24.355Z"
+    "lastSyncAt": "2026-11-08T06:02:22.720Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-11-08T04:16:51.352Z"
+    "checkedAt": "2026-11-08T06:04:36.630Z"
   },
   "artsmuMerge": {
-    "fetched": 53,
-    "merged": 51,
+    "fetched": 50,
+    "merged": 48,
     "standalone": 2
   },
   "sourceHealth": {
@@ -241,6 +241,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Tell School of Music Choral Concert|2026-11-07T19:30:00",
+      "firstSeenAt": "2026-11-08T06:04:47.806Z",
+      "title": "Tell School of Music Choral Concert",
+      "source": "MU",
+      "date": "2026-11-07T19:30:00"
+    },
+    {
       "key": "Millersville University Field Hockey at #1 Kutztown|2026-10-07T23:00:00.000Z",
       "firstSeenAt": "2026-11-08T00:33:16.000Z",
       "title": "Millersville University Field Hockey at #1 Kutztown",
@@ -302,14 +309,7 @@
       "title": "Men's Ice Hockey Practice (D2)",
       "source": "MU",
       "date": "2027-01-26T11:00:00.000Z"
-    },
-    {
-      "key": "Men's Ice Hockey Practice (D2)|2027-01-27T11:00:00.000Z",
-      "firstSeenAt": "2026-11-08T00:33:16.000Z",
-      "title": "Men's Ice Hockey Practice (D2)",
-      "source": "MU",
-      "date": "2027-01-27T11:00:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 1
 }

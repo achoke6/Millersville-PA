@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-11-09T14:38:25.741Z",
-  "totalEvents": 2025,
-  "withDescription": 836,
+  "generatedAt": "2026-11-09T16:26:36.172Z",
+  "totalEvents": 2047,
+  "withDescription": 850,
   "withImage": 231,
   "familyFriendly": 56,
   "eventsToday": 20,
   "sources": {
     "muAthletics": 391,
-    "muCalendar": 184,
+    "muCalendar": 185,
     "artsmu": 50,
     "campsAlumni": 11,
-    "muGetInvolved": 549,
+    "muGetInvolved": 562,
     "pennManor": 648,
     "borough": 50,
     "vfw": 6,
     "phantomPower": 14,
     "community": 12,
-    "manor": 30,
+    "manor": 38,
     "raneyCellars": 4,
     "theBackyard": 29,
     "muHudlBroadcasts": 62
@@ -64,7 +64,7 @@
     },
     "manor": {
       "earliest": "2026-11-10T00:00:00.000Z",
-      "latest": "2027-08-25T12:30:00.000Z"
+      "latest": "2027-11-03T23:00:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-11-07T00:00:00.000Z",
@@ -117,8 +117,8 @@
       "daysSinceMoved": 89
     },
     "manor": {
-      "newest": "2027-08-25",
-      "daysSinceMoved": 76
+      "newest": "2027-11-03",
+      "daysSinceMoved": 6
     },
     "raneyCellars": {
       "newest": "2026-11-19",
@@ -151,13 +151,13 @@
       "PM Community": 1
     },
     "stalePast": 30,
-    "lastSyncAt": "2026-11-09T14:35:29.208Z"
+    "lastSyncAt": "2026-11-09T16:23:45.214Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-11-09T14:38:17.735Z"
+    "checkedAt": "2026-11-09T16:26:24.122Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -220,7 +220,7 @@
       {
         "key": "manor.count",
         "ok": true,
-        "value": 30,
+        "value": 38,
         "min": 10
       },
       {
@@ -241,75 +241,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Girls Varsity Field Hockey @ Pine-Richland|2026-11-10T23:00:00.000Z",
-      "firstSeenAt": "2026-11-09T14:38:25.738Z",
-      "title": "Girls Varsity Field Hockey @ Pine-Richland",
-      "source": "PM",
-      "date": "2026-11-10T23:00:00.000Z"
-    },
-    {
-      "key": "Veterans Day Dinner|2026-11-11T20:30:00.000Z",
-      "firstSeenAt": "2026-11-09T14:38:25.738Z",
-      "title": "Veterans Day Dinner",
-      "source": "Other",
-      "date": "2026-11-11T20:30:00.000Z"
-    },
-    {
-      "key": "Trivia Night|2026-11-18T23:00:00.000Z",
-      "firstSeenAt": "2026-11-09T14:38:25.738Z",
-      "title": "Trivia Night",
-      "source": "Other",
-      "date": "2026-11-18T23:00:00.000Z"
-    },
-    {
-      "key": "Annual Friendsgiving|2026-11-25T22:00:00.000Z",
-      "firstSeenAt": "2026-11-09T14:38:25.738Z",
-      "title": "Annual Friendsgiving",
-      "source": "Other",
-      "date": "2026-11-25T22:00:00.000Z"
-    },
-    {
-      "key": "Music Bingo|2026-11-27T23:00:00.000Z",
-      "firstSeenAt": "2026-11-09T14:38:25.738Z",
-      "title": "Music Bingo",
-      "source": "Other",
-      "date": "2026-11-27T23:00:00.000Z"
-    },
-    {
-      "key": "Meat Tray Bingo|2026-11-29T18:00:00.000Z",
-      "firstSeenAt": "2026-11-09T14:38:25.738Z",
-      "title": "Meat Tray Bingo",
-      "source": "Other",
-      "date": "2026-11-29T18:00:00.000Z"
-    },
-    {
-      "key": "Spring Term - Classes Begin|2027-01-19T00:00:00",
-      "firstSeenAt": "2026-11-09T14:38:25.738Z",
-      "title": "Spring Term - Classes Begin",
+      "key": "UAB Connect: Gingerbread House Competition|2026-09-30T19:00:00",
+      "firstSeenAt": "2026-11-09T16:26:36.168Z",
+      "title": "UAB Connect: Gingerbread House Competition",
       "source": "MU",
-      "date": "2027-01-19T00:00:00"
+      "date": "2026-09-30T19:00:00"
     },
     {
-      "key": "Millersville University Men's Soccer vs First Round|2026-11-13T00:00:00.000Z",
-      "firstSeenAt": "2026-11-09T02:41:30.803Z",
-      "title": "Millersville University Men's Soccer vs First Round",
+      "key": "UAB Connect: Gingerbread House Competition|2026-10-14T19:00:00",
+      "firstSeenAt": "2026-11-09T16:26:36.168Z",
+      "title": "UAB Connect: Gingerbread House Competition",
       "source": "MU",
-      "date": "2026-11-13T00:00:00.000Z"
+      "date": "2026-10-14T19:00:00"
     },
     {
-      "key": "Millersville University Men's Soccer vs Second Round|2026-11-15T00:00:00.000Z",
-      "firstSeenAt": "2026-11-09T02:41:30.803Z",
-      "title": "Millersville University Men's Soccer vs Second Round",
+      "key": "Salute to Service: Veterans Appreciation Lunch|2026-11-12T12:00:00",
+      "firstSeenAt": "2026-11-09T16:26:36.168Z",
+      "title": "Salute to Service: Veterans Appreciation Lunch",
       "source": "MU",
-      "date": "2026-11-15T00:00:00.000Z"
+      "date": "2026-11-12T12:00:00"
     },
     {
-      "key": "Millersville University's Trick-or-Treat Trail|2026-10-30T11:30:00",
-      "firstSeenAt": "2026-11-09T00:45:52.303Z",
-      "title": "Millersville University's Trick-or-Treat Trail",
+      "key": "UDEL IHSA SHOW|2026-11-15T12:00:00.000Z",
+      "firstSeenAt": "2026-11-09T16:26:36.168Z",
+      "title": "UDEL IHSA SHOW",
       "source": "MU",
-      "date": "2026-10-30T11:30:00"
+      "date": "2026-11-15T12:00:00.000Z"
+    },
+    {
+      "key": "Spring Recess - Begins at 7:00am|2027-03-08T00:00:00",
+      "firstSeenAt": "2026-11-09T16:26:36.168Z",
+      "title": "Spring Recess - Begins at 7:00am",
+      "source": "MU",
+      "date": "2027-03-08T00:00:00"
+    },
+    {
+      "key": "Spring Recess|2027-03-09T00:00:00",
+      "firstSeenAt": "2026-11-09T16:26:36.168Z",
+      "title": "Spring Recess",
+      "source": "MU",
+      "date": "2027-03-09T00:00:00"
+    },
+    {
+      "key": "Spring Recess|2027-03-10T00:00:00",
+      "firstSeenAt": "2026-11-09T16:26:36.168Z",
+      "title": "Spring Recess",
+      "source": "MU",
+      "date": "2027-03-10T00:00:00"
+    },
+    {
+      "key": "Spring Recess|2027-03-11T00:00:00",
+      "firstSeenAt": "2026-11-09T16:26:36.168Z",
+      "title": "Spring Recess",
+      "source": "MU",
+      "date": "2027-03-11T00:00:00"
+    },
+    {
+      "key": "Spring Recess|2027-03-12T00:00:00",
+      "firstSeenAt": "2026-11-09T16:26:36.168Z",
+      "title": "Spring Recess",
+      "source": "MU",
+      "date": "2027-03-12T00:00:00"
+    },
+    {
+      "key": "Spring Recess|2027-03-13T00:00:00",
+      "firstSeenAt": "2026-11-09T16:26:36.168Z",
+      "title": "Spring Recess",
+      "source": "MU",
+      "date": "2027-03-13T00:00:00"
     }
   ],
-  "addedLastRun": 7
+  "addedLastRun": 23
 }

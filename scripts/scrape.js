@@ -3588,8 +3588,16 @@ async function runScraper() {
                 // Venue
                 const venue = eventUrl.includes('winter-visual') ? 'Winter Visual & Performing Arts Center' : 'The Ware Center';
 
-                // Price: "$10" or "$8 to $10" — grab text between key markers
-                const priceMatch = evHtml.match(/\$\d+(?:\s*to\s*\$\d+)?/);
+                // Price (2026-11-05b): BODY only, range first. The first "$" on these
+                // pages is the <head> meta description, which leads with the adult
+                // price ("Adults $35 • Students: $25") or the MU-discount sentence
+                // ("one discounted ticket for $5.00") -- Seán Heely read $35, Milo
+                // $15, Les Misérables $5. The "$12 to $15" box lives in the body.
+                // Drop the MU-discount sentence before the single-"$" fallback.
+                const evBody = evHtml.replace(/^[\s\S]*?<body\b[^>]*>/i, '')
+                    .replace(/[^.<>]*\bMU\s+(?:ID|Students?)\b[^.<>]*\.?/gi, ' ');
+                const priceMatch = evBody.match(/\$\d+(?:\.\d+)?\s*to\s*\$\d+(?:\.\d+)?/i)
+                    || evBody.match(/\$\d+(?:\.\d+)?/);
                 // "$12 to $15" -> "$12 - $15": the etix sweep writes ranges with a
                 // dash, so a standalone artsmu row and an enriched one read alike.
                 const price = priceMatch ? priceMatch[0].replace(/\s+to\s+/i, ' - ') : '';

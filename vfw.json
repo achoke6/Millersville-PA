@@ -10,20 +10,48 @@
         "Saturday": "Burger Night"
     },
     "weeklySpecials": {
-        "dateRange": "Tuesday, November 3 through Saturday, November 7",
-        "validThrough": "2026-11-08",
+        "dateRange": "Tuesday, November 10 through Saturday, November 14",
+        "validThrough": "2026-11-15",
         "items": [
-            "The Mac Daddy – $13.95",
-            "Sausage and Pierogies – $13.95",
-            "Prime Rib, 12 oz. Queen Cut – $17.95 (Fri only)",
-            "Prime Rib, 16 oz. King Cut – $21.95 (Fri only)"
+            "Shaved Prime Rib Sandwich – $14.95",
+            "Half Rack BBQ Ribs – $15.95",
+            "Veal Parmesan – $14.95 (Fri only)"
         ]
     },
     "events": [
         {
+            "title": "Veterans Day Dinner",
+            "date": "2026-11-11T15:30:00-05:00",
+            "endTime": "2026-11-11T19:00:00-05:00",
+            "description": "All veterans are invited to enjoy a free steak dinner with baked potato and salad in honor of Veterans Day. Ask your server for details.",
+            "price": "Free for veterans"
+        },
+        {
+            "title": "Trivia Night",
+            "date": "2026-11-18T18:00:00-05:00",
+            "endTime": "2026-11-18T20:00:00-05:00",
+            "description": "Trivia Night is back — presented by DJs McSuperstar & Hannibal Rhymes, with fun prizes. Members and guests."
+        },
+        {
             "title": "Steelers vs Eagles Chili & Soup Cookoff",
             "date": "2026-11-22T16:00:00-05:00",
             "description": "Chili & soup cookoff during the Steelers vs Eagles game, with winners announced at halftime. Pre-register in the canteen; see the bartender for details."
+        },
+        {
+            "title": "Annual Friendsgiving",
+            "date": "2026-11-25T17:00:00-05:00",
+            "description": "All members and their guests welcome. Bring a dish to share if you like — encouraged but not required to attend."
+        },
+        {
+            "title": "Music Bingo",
+            "date": "2026-11-27T18:00:00-05:00",
+            "endTime": "2026-11-27T20:00:00-05:00",
+            "description": "Music Bingo with DJ Scotty Sharpe in the VFW Banquet Hall. Open to all VFW members and their guests."
+        },
+        {
+            "title": "Meat Tray Bingo",
+            "date": "2026-11-29T13:00:00-05:00",
+            "description": "Meat Tray Bingo in the canteen — doors open at 12:00 PM, bingo begins at 1:00 PM. Prizes include meat trays and more. Members and guests only."
         }
     ]
 }

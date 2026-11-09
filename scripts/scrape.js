@@ -3847,7 +3847,7 @@ async function runScraper() {
             const talk = rc.talkTime ? (() => { const [h, mi] = rc.talkTime.split(':').map(Number); const h12 = h % 12 || 12; return `${h12}${mi ? ':' + String(mi).padStart(2, '0') : ''} ${h >= 12 ? 'p.m.' : 'a.m.'}`; })() : null;
             const description = [
                 `${rc.kind} for the exhibition \u201c${rc.show}\u201d${rc.datesText ? ` (on view ${rc.datesText})` : ''}.`,
-                talk ? `Gallery Talk${rc.talkWith ? ` with ${rc.talkWith}` : ''} at ${talk}.` : '',
+                talk ? `Gallery Talk${rc.talkWith ? ` with ${rc.talkWith}` : ''} at ${talk}${talk.endsWith('.') ? '' : '.'}` : '',   // "6 p.m." already ends the sentence (double period seen 11-09)
                 'Eckert Art Gallery, Winter Visual & Performing Arts Center, 60 W. Cottage Ave. Free and open to the public.',
                 rc.blurb
             ].filter(Boolean).join(' ');

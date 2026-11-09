@@ -477,7 +477,23 @@ function extractPricing(desc, title = "", location = "", apiLink = "", startET =
         // Ware Center. Title guesses now only apply when the location names
         // no known Ware-family venue (the Ware branch below handles those).
         if (/winter|lyte/.test(ll) || (!/ware|steinman/.test(ll) && /concert|recital|theatre/.test(lt))) link = "https://www.etix.com/ticket/v/23659/";
-        else if ((/pucillo|biemesderfer/.test(ll) || /game|match|tournament/.test(lt)) && !/club sport/.test(lt)) link = "https://www.etix.com/ticket/v/23684/"; // club sports are never ticketed via the varsity etix venue page
+        // MU etix venue pages by LOCATION (2026-11-09, ids verified by Adam on
+        // etix.com). The old branch sent pucillo|biemesderfer -- and any title with
+        // game/match/tournament -- to /v/23684/, which is COOPER PARK (baseball),
+        // not a gym/stadium page; zero live holders at fix time. The title-only
+        // guess is dropped: a venue link needs a venue. Club sports are never
+        // ticketed via the varsity venue pages (2026-09-01). Known MU venues not
+        // mapped: Pucillo Pool 23676 (passes, no events), Lancaster Ice Rink 26749
+        // (club hockey -- MU-only, unpriced). Full table in the manifest's etix section.
+        else if (!/club sport/.test(lt)) {
+            if (/cooper park/.test(ll)) link = "https://www.etix.com/ticket/v/23684/";
+            else if (/biemesderfer|chryst/.test(ll)) link = "https://www.etix.com/ticket/v/23683/";
+            else if (/pucillo/.test(ll)) link = "https://www.etix.com/ticket/v/23673/";
+            else if (/\bsmc\b|student memorial/.test(ll)) link = "https://www.etix.com/ticket/v/23671/";
+            else if (/mccomsey|myers/.test(ll)) link = "https://www.etix.com/ticket/v/26394/";
+            else if (/gordinier|lehr/.test(ll)) link = "https://www.etix.com/ticket/v/26343/";
+            else if (/dutcher|rafters/.test(ll)) link = "https://www.etix.com/ticket/v/26344/";
+        }
     }
     // Ware Center / Steinman Hall events with admission → etix
     if (!link) {

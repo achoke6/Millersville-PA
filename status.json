@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-11-09T20:54:12.740Z",
-  "totalEvents": 2050,
-  "withDescription": 853,
+  "generatedAt": "2026-11-09T22:43:59.584Z",
+  "totalEvents": 2047,
+  "withDescription": 852,
   "withImage": 229,
-  "familyFriendly": 57,
+  "familyFriendly": 56,
   "eventsToday": 21,
   "sources": {
-    "muAthletics": 391,
+    "muAthletics": 390,
     "muCalendar": 185,
     "artsmu": 50,
     "eckert": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 562,
+    "muGetInvolved": 560,
     "pennManor": 648,
     "borough": 50,
     "vfw": 6,
@@ -139,9 +139,9 @@
     }
   },
   "sports": {
-    "total": 933,
-    "scored": 208,
-    "wins": 102,
+    "total": 932,
+    "scored": 207,
+    "wins": 101,
     "losses": 93,
     "ties": 13
   },
@@ -160,13 +160,13 @@
       "PM Community": 1
     },
     "stalePast": 30,
-    "lastSyncAt": "2026-11-09T20:51:35.726Z"
+    "lastSyncAt": "2026-11-09T22:39:36.498Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 3,
-    "checkedAt": "2026-11-09T20:54:04.247Z"
+    "checkedAt": "2026-11-09T22:43:47.727Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -215,7 +215,7 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 391,
+        "value": 390,
         "min": 100,
         "skipped": false
       },
@@ -320,7 +320,7 @@
       "date": "2026-08-24T14:00:00.000Z"
     }
   ],
-  "addedLastRun": 1,
+  "addedLastRun": 0,
   "skippedByRule": {
     "total": 422,
     "reasons": {

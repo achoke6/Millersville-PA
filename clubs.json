@@ -486,9 +486,9 @@
   },
   {
     "name": "Conestoga Outdoors Club",
-    "category": "Meeting",
+    "category": "Social",
     "categories": [
-      "Meeting"
+      "Social"
     ],
     "shortName": "Conestoga Outdoors",
     "id": ""
@@ -688,9 +688,9 @@
   },
   {
     "name": "Equestrian Club",
-    "category": "Social",
+    "category": "Sporting",
     "categories": [
-      "Social"
+      "Sporting"
     ],
     "shortName": "",
     "id": ""
@@ -873,8 +873,10 @@
   },
   {
     "name": "Ice Hockey Club (D3)",
-    "category": "",
-    "categories": [],
+    "category": "Sporting",
+    "categories": [
+      "Sporting"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1400,13 +1402,12 @@
   },
   {
     "name": "Pickleball Club",
-    "category": "Competition",
+    "category": "Sports and Leisure",
     "categories": [
-      "Competition",
-      "Social"
+      "Sports and Leisure"
     ],
     "shortName": "",
-    "id": ""
+    "id": "pickleball"
   },
   {
     "name": "Pre-Health Club",

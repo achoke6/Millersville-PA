@@ -1,25 +1,25 @@
 {
-  "generatedAt": "2026-11-06T18:41:21.693Z",
-  "totalEvents": 2034,
-  "withDescription": 831,
-  "withImage": 227,
-  "familyFriendly": 55,
-  "eventsToday": 18,
+  "generatedAt": "2026-11-09T13:22:41.997Z",
+  "totalEvents": 2026,
+  "withDescription": 830,
+  "withImage": 231,
+  "familyFriendly": 56,
+  "eventsToday": 20,
   "sources": {
-    "muAthletics": 397,
-    "muCalendar": 187,
-    "artsmu": 55,
+    "muAthletics": 391,
+    "muCalendar": 184,
+    "artsmu": 50,
     "campsAlumni": 11,
-    "muGetInvolved": 545,
+    "muGetInvolved": 548,
     "pennManor": 647,
-    "borough": 51,
+    "borough": 50,
     "vfw": 1,
     "phantomPower": 14,
     "community": 12,
     "manor": 38,
     "raneyCellars": 4,
     "theBackyard": 29,
-    "muHudlBroadcasts": 58
+    "muHudlBroadcasts": 62
   },
   "sourceDateRanges": {
     "muAthletics": {
@@ -27,7 +27,7 @@
       "latest": "2027-05-27T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-08-08T14:00:00.000Z",
+      "earliest": "2026-08-14T07:00:00.000Z",
       "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
@@ -47,7 +47,7 @@
       "latest": "2027-10-25T20:00:00.000Z"
     },
     "borough": {
-      "earliest": "2026-08-10T12:00:00.000Z",
+      "earliest": "2026-08-11T23:00:00.000Z",
       "latest": "2027-10-31T22:00:00.000Z"
     },
     "vfw": {
@@ -55,7 +55,7 @@
       "latest": "2026-11-22T21:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-11-07T00:00:00.000Z",
+      "earliest": "2026-11-13T00:00:00.000Z",
       "latest": "2026-12-19T01:00:00.000Z"
     },
     "community": {
@@ -67,8 +67,8 @@
       "latest": "2027-11-03T23:00:00.000Z"
     },
     "raneyCellars": {
-      "earliest": "2026-10-29T20:00:00.000Z",
-      "latest": "2026-11-12T21:00:00.000Z"
+      "earliest": "2026-11-07T00:00:00.000Z",
+      "latest": "2026-11-19T21:00:00.000Z"
     },
     "theBackyard": {
       "earliest": "2026-08-24T12:30:00.000Z",
@@ -78,39 +78,39 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 66
+      "daysSinceMoved": 69
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 77
+      "daysSinceMoved": 80
     },
     "artsmu": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 79
+      "daysSinceMoved": 82
     },
     "campsAlumni": {
       "newest": "2027-08-20",
-      "daysSinceMoved": 18
+      "daysSinceMoved": 21
     },
     "muGetInvolved": {
       "newest": "2027-10-27",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 6
     },
     "pennManor": {
       "newest": "2027-10-25",
-      "daysSinceMoved": 12
+      "daysSinceMoved": 15
     },
     "borough": {
       "newest": "2027-10-31",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 9
     },
     "vfw": {
       "newest": "2026-11-22",
-      "daysSinceMoved": 31
+      "daysSinceMoved": 34
     },
     "phantomPower": {
       "newest": "2026-12-19",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 11
     },
     "community": {
       "newest": "2027-04-16",
@@ -118,27 +118,27 @@
     },
     "manor": {
       "newest": "2027-11-03",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 6
     },
     "raneyCellars": {
-      "newest": "2026-11-12",
-      "daysSinceMoved": 10
+      "newest": "2026-11-19",
+      "daysSinceMoved": 3
     },
     "theBackyard": {
       "newest": "2027-04-28",
-      "daysSinceMoved": 29
+      "daysSinceMoved": 32
     }
   },
   "sports": {
-    "total": 938,
-    "scored": 201,
-    "wins": 97,
-    "losses": 91,
+    "total": 932,
+    "scored": 208,
+    "wins": 102,
+    "losses": 93,
     "ties": 13
   },
   "registrations": {
     "open": 5,
-    "next2Weeks": 2,
+    "next2Weeks": 3,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
@@ -150,18 +150,18 @@
       "Campus Life": 1,
       "PM Community": 1
     },
-    "stalePast": 28,
-    "lastSyncAt": "2026-11-06T18:36:57.990Z"
+    "stalePast": 30,
+    "lastSyncAt": "2026-11-09T13:19:57.617Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-11-06T18:41:11.496Z"
+    "checkedAt": "2026-11-09T13:22:31.700Z"
   },
   "artsmuMerge": {
-    "fetched": 55,
-    "merged": 53,
+    "fetched": 50,
+    "merged": 48,
     "standalone": 2
   },
   "sourceHealth": {
@@ -171,28 +171,28 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 353,
+        "value": 350,
         "min": 45,
         "skipped": false
       },
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 201,
+        "value": 198,
         "min": 60,
         "skipped": false
       },
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 210,
+        "value": 207,
         "min": 30,
         "skipped": false
       },
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 359,
+        "value": 356,
         "min": 21,
         "skipped": false
       },
@@ -206,7 +206,7 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 397,
+        "value": 391,
         "min": 100,
         "skipped": false
       },
@@ -226,9 +226,9 @@
       {
         "key": "muHudl.pairRatio",
         "ok": true,
-        "matched": 58,
+        "matched": 62,
         "inWindow": 64,
-        "value": 0.91,
+        "value": 0.97,
         "min": 0.5
       },
       {
@@ -241,75 +241,75 @@
   },
   "recentlyAdded": [
     {
-      "key": "Millersville University Women's Cross Country at Dutchmen Invitational|2026-09-05T14:15:00.000Z",
-      "firstSeenAt": "2026-11-06T18:41:21.689Z",
-      "title": "Millersville University Women's Cross Country at Dutchmen Invitational",
+      "key": "Millersville University Men's Soccer vs First Round|2026-11-13T00:00:00.000Z",
+      "firstSeenAt": "2026-11-09T02:41:30.803Z",
+      "title": "Millersville University Men's Soccer vs First Round",
       "source": "MU",
-      "date": "2026-09-05T14:15:00.000Z"
+      "date": "2026-11-13T00:00:00.000Z"
     },
     {
-      "key": "Millersville University Women's Cross Country at Lock Haven Invitational|2026-09-26T14:45:00.000Z",
-      "firstSeenAt": "2026-11-06T18:41:21.689Z",
-      "title": "Millersville University Women's Cross Country at Lock Haven Invitational",
+      "key": "Millersville University Men's Soccer vs Second Round|2026-11-15T00:00:00.000Z",
+      "firstSeenAt": "2026-11-09T02:41:30.803Z",
+      "title": "Millersville University Men's Soccer vs Second Round",
       "source": "MU",
-      "date": "2026-09-26T14:45:00.000Z"
+      "date": "2026-11-15T00:00:00.000Z"
     },
     {
-      "key": "Cozy Craft Day|2026-11-11T16:00:00.000Z",
-      "firstSeenAt": "2026-11-06T18:41:21.689Z",
-      "title": "Cozy Craft Day",
+      "key": "Millersville University's Trick-or-Treat Trail|2026-10-30T11:30:00",
+      "firstSeenAt": "2026-11-09T00:45:52.303Z",
+      "title": "Millersville University's Trick-or-Treat Trail",
       "source": "MU",
-      "date": "2026-11-11T16:00:00.000Z"
+      "date": "2026-10-30T11:30:00"
     },
     {
-      "key": "Millersville University Baseball at Pitt-Johnstown|2027-02-28T18:00:00.000Z",
-      "firstSeenAt": "2026-11-06T18:41:21.689Z",
-      "title": "Millersville University Baseball at Pitt-Johnstown",
+      "key": "Men's Ice Hockey Practice (D2)|2027-02-02T11:00:00.000Z",
+      "firstSeenAt": "2026-11-09T00:45:52.303Z",
+      "title": "Men's Ice Hockey Practice (D2)",
       "source": "MU",
-      "date": "2027-02-28T18:00:00.000Z"
+      "date": "2027-02-02T11:00:00.000Z"
     },
     {
-      "key": "Millersville University Baseball at Pitt-Johnstown|2027-02-28T20:00:00.000Z",
-      "firstSeenAt": "2026-11-06T18:41:21.689Z",
-      "title": "Millersville University Baseball at Pitt-Johnstown",
+      "key": "Men's Ice Hockey Practice (D2)|2027-02-03T11:00:00.000Z",
+      "firstSeenAt": "2026-11-09T00:45:52.303Z",
+      "title": "Men's Ice Hockey Practice (D2)",
       "source": "MU",
-      "date": "2027-02-28T20:00:00.000Z"
+      "date": "2027-02-03T11:00:00.000Z"
     },
     {
-      "key": "Millersville University Baseball at Frostburg State|2027-03-17T19:00:00.000Z",
-      "firstSeenAt": "2026-11-06T18:41:21.689Z",
-      "title": "Millersville University Baseball at Frostburg State",
+      "key": "Tell School of Music Recital Hour|2027-02-03T20:00:00.000Z",
+      "firstSeenAt": "2026-11-09T00:45:52.303Z",
+      "title": "Tell School of Music Recital Hour",
       "source": "MU",
-      "date": "2027-03-17T19:00:00.000Z"
+      "date": "2027-02-03T20:00:00.000Z"
     },
     {
-      "key": "Millersville University Baseball at Wilmington University (Del.)|2027-03-24T19:00:00.000Z",
-      "firstSeenAt": "2026-11-06T18:41:21.689Z",
-      "title": "Millersville University Baseball at Wilmington University (Del.)",
+      "key": "Wednesday Night Dinner|2027-02-03T23:00:00.000Z",
+      "firstSeenAt": "2026-11-09T00:45:52.303Z",
+      "title": "Wednesday Night Dinner",
       "source": "MU",
-      "date": "2027-03-24T19:00:00.000Z"
+      "date": "2027-02-03T23:00:00.000Z"
     },
     {
-      "key": "Millersville University Baseball vs Shepherd|2027-03-26T17:00:00.000Z",
-      "firstSeenAt": "2026-11-06T18:41:21.689Z",
-      "title": "Millersville University Baseball vs Shepherd",
+      "key": "Real Talk, Real Skills|2027-02-04T17:00:00.000Z",
+      "firstSeenAt": "2026-11-09T00:45:52.303Z",
+      "title": "Real Talk, Real Skills",
       "source": "MU",
-      "date": "2027-03-26T17:00:00.000Z"
+      "date": "2027-02-04T17:00:00.000Z"
     },
     {
-      "key": "Millersville University Baseball vs Shepherd|2027-03-26T19:00:00.000Z",
-      "firstSeenAt": "2026-11-06T18:41:21.689Z",
-      "title": "Millersville University Baseball vs Shepherd",
+      "key": "Men's Ice Hockey Practice (D2)|2027-02-05T02:30:00.000Z",
+      "firstSeenAt": "2026-11-09T00:45:52.303Z",
+      "title": "Men's Ice Hockey Practice (D2)",
       "source": "MU",
-      "date": "2027-03-26T19:00:00.000Z"
+      "date": "2027-02-05T02:30:00.000Z"
     },
     {
-      "key": "Millersville University Baseball at Shepherd|2027-03-27T17:00:00.000Z",
-      "firstSeenAt": "2026-11-06T18:41:21.689Z",
-      "title": "Millersville University Baseball at Shepherd",
+      "key": "Millersville University Women's Cross Country at Franklin and Marshall|2026-10-08T21:30:00.000Z",
+      "firstSeenAt": "2026-11-08T22:57:48.136Z",
+      "title": "Millersville University Women's Cross Country at Franklin and Marshall",
       "source": "MU",
-      "date": "2027-03-27T17:00:00.000Z"
+      "date": "2026-10-08T21:30:00.000Z"
     }
   ],
-  "addedLastRun": 35
+  "addedLastRun": 0
 }

@@ -328,9 +328,9 @@
   },
   {
     "name": "Citamard",
-    "category": "Performance",
+    "category": "Fundraiser",
     "categories": [
-      "Performance"
+      "Fundraiser"
     ],
     "shortName": "",
     "id": ""
@@ -486,9 +486,9 @@
   },
   {
     "name": "Conestoga Outdoors Club",
-    "category": "Meeting",
+    "category": "Social",
     "categories": [
-      "Meeting"
+      "Social"
     ],
     "shortName": "Conestoga Outdoors",
     "id": ""
@@ -738,12 +738,12 @@
   },
   {
     "name": "First Gems of The Ville",
-    "category": "Social",
+    "category": "Identity-Based",
     "categories": [
-      "Social"
+      "Identity-Based"
     ],
     "shortName": "First Gems",
-    "id": ""
+    "id": "firstgems"
   },
   {
     "name": "Flute Association",
@@ -873,8 +873,10 @@
   },
   {
     "name": "Ice Hockey Club (D3)",
-    "category": "",
-    "categories": [],
+    "category": "Sporting",
+    "categories": [
+      "Sporting"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1065,20 +1067,17 @@
   },
   {
     "name": "Men's Club Basketball",
-    "category": "Sporting",
+    "category": "Competition",
     "categories": [
-      "Sporting"
+      "Competition"
     ],
     "shortName": "Men's Club Basketball",
     "id": ""
   },
   {
     "name": "Men's Club Lacrosse",
-    "category": "Competition",
-    "categories": [
-      "Competition",
-      "Sporting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1106,9 +1105,10 @@
     "id": ""
   },
   {
-    "name": "Men's Rugby Club of Millersville University",
-    "category": "Fundraiser",
+    "name": "Men's Rugby Club",
+    "category": "Meeting",
     "categories": [
+      "Meeting",
       "Fundraiser"
     ],
     "shortName": "Men's Rugby Club",
@@ -1402,13 +1402,12 @@
   },
   {
     "name": "Pickleball Club",
-    "category": "Competition",
+    "category": "Sports and Leisure",
     "categories": [
-      "Competition",
-      "Social"
+      "Sports and Leisure"
     ],
     "shortName": "",
-    "id": ""
+    "id": "pickleball"
   },
   {
     "name": "Pre-Health Club",
@@ -1631,8 +1630,10 @@
   },
   {
     "name": "Students for Life",
-    "category": "",
-    "categories": [],
+    "category": "Tabling",
+    "categories": [
+      "Tabling"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1885,10 +1886,8 @@
   },
   {
     "name": "Women's Club Volleyball",
-    "category": "Competition",
-    "categories": [
-      "Competition"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": "womensvolleyball"
   },

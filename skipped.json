@@ -1,0 +1,193 @@
+{
+ "generatedAt": "2026-11-09T20:39:01.368Z",
+ "scope": "content-rule skips only — no date-window drops, no duplicates; gated (mu-only/townie-only) rows are emitted, not listed here",
+ "itemCap": 40,
+ "labels": {
+  "borough-reservation": "Borough: unenriched \"Reserve Public Meeting Room\" bookings",
+  "borough-spam": "Borough: vendor/transaction spam filtered",
+  "borough-collection": "Borough: trash / yard-waste / appliance collection days",
+  "mu-calendar-athletics": "MU Calendar: Athletic Competitions (varsity games come from Sidearm)",
+  "mu-calendar-phantom": "MU Calendar: bare \"Summer Fun Series\" phantom",
+  "mu-calendar-club-lobby": "MU Calendar: Club Sports lobby double-entry",
+  "intramural-dup": "Intramural registration (dup of DSE Rec)",
+  "artsmu-cancelled": "artsmu: CANCELLED show",
+  "pm-sub-varsity": "Penn Manor Athletics: sub-varsity level",
+  "camps-skipped": "camps.json: malformed / out of window / already on the calendar",
+  "override-registration-closed": "Curated override: registration deadline passed",
+  "curated-row-skipped": "Curated lane: row malformed or not approved",
+  "submission-not-approved": "Community submission: not approved (review queue)",
+  "submission-bad-date": "Community submission: unparseable date",
+  "submission-out-of-range": "Community submission: outside the 90d/365d window",
+  "submission-no-deadline": "Community submission: Signup row with no deadline"
+ },
+ "counts": {
+  "pm-sub-varsity": 282,
+  "mu-calendar-athletics": 72,
+  "camps-skipped": 28,
+  "intramural-dup": 1,
+  "borough-collection": 13,
+  "borough-reservation": 16,
+  "submission-not-approved": 2,
+  "submission-out-of-range": 9
+ },
+ "items": {
+  "intramural-dup": [
+   {
+    "source": "GetInvolved",
+    "title": "Pickleball Tournament Registration Deadline",
+    "date": "2026-11-18T17:00:00+00:00",
+    "location": "",
+    "link": "",
+    "note": "DSE Rec carries the registration"
+   }
+  ],
+  "borough-reservation": [
+   {
+    "source": "Borough",
+    "title": "Reserve, Public Meeting Room",
+    "date": "2026-09-16T22:00:00.000Z",
+    "location": "Millersville Borough",
+    "link": "https://millersvilleborough.org/resident-info/calendar/",
+    "note": "enrich via borough-overrides.json if this is a real event"
+   },
+   {
+    "source": "Borough",
+    "title": "Reserve Public Meeting Room",
+    "date": "2026-11-09T23:00:00.000Z",
+    "location": "Millersville Borough",
+    "link": "https://millersvilleborough.org/resident-info/calendar/",
+    "note": "enrich via borough-overrides.json if this is a real event"
+   },
+   {
+    "source": "Borough",
+    "title": "Reserve Public Meeting Room",
+    "date": "2027-10-09T14:00:00.000Z",
+    "location": "Millersville Area Historical Society",
+    "link": "https://millersvilleborough.org/resident-info/calendar/",
+    "note": "enrich via borough-overrides.json if this is a real event"
+   },
+   {
+    "source": "Borough",
+    "title": "Reserve Public Meeting Room",
+    "date": "2027-09-11T14:00:00.000Z",
+    "location": "Millersville Area Historical Society",
+    "link": "https://millersvilleborough.org/resident-info/calendar/",
+    "note": "enrich via borough-overrides.json if this is a real event"
+   },
+   {
+    "source": "Borough",
+    "title": "Reserve Public Meeting Room",
+    "date": "2027-08-14T14:00:00.000Z",
+    "location": "Millersville Area Historical Society",
+    "link": "https://millersvilleborough.org/resident-info/calendar/",
+    "note": "enrich via borough-overrides.json if this is a real event"
+   },
+   {
+    "source": "Borough",
+    "title": "Reserve Public Meeting Room",
+    "date": "2027-07-10T14:00:00.000Z",
+    "location": "Millersville Area Historical Society",
+    "link": "https://millersvilleborough.org/resident-info/calendar/",
+    "note": "enrich via borough-overrides.json if this is a real event"
+   },
+   {
+    "source": "Borough",
+    "title": "Reserve Public Meeting Room",
+    "date": "2027-06-12T14:00:00.000Z",
+    "location": "Millersville Area Historical Society",
+    "link": "https://millersvilleborough.org/resident-info/calendar/",
+    "note": "enrich via borough-overrides.json if this is a real event"
+   },
+   {
+    "source": "Borough",
+    "title": "Reserve Public Meeting Room",
+    "date": "2027-05-08T14:00:00.000Z",
+    "location": "Millersville Area Historical Society",
+    "link": "https://millersvilleborough.org/resident-info/calendar/",
+    "note": "enrich via borough-overrides.json if this is a real event"
+   },
+   {
+    "source": "Borough",
+    "title": "Reserve Public Meeting Room",
+    "date": "2027-04-10T14:00:00.000Z",
+    "location": "Millersville Area Historical Society",
+    "link": "https://millersvilleborough.org/resident-info/calendar/",
+    "note": "enrich via borough-overrides.json if this is a real event"
+   },
+   {
+    "source": "Borough",
+    "title": "Reserve Public Meeting Room",
+    "date": "2027-03-13T14:00:00.000Z",
+    "location": "Millersville Area Historical Society",
+    "link": "https://millersvilleborough.org/resident-info/calendar/",
+    "note": "enrich via borough-overrides.json if this is a real event"
+   },
+   {
+    "source": "Borough",
+    "title": "Reserve Public Meeting Room",
+    "date": "2027-02-13T14:00:00.000Z",
+    "location": "Millersville Area Historical Society",
+    "link": "https://millersvilleborough.org/resident-info/calendar/",
+    "note": "enrich via borough-overrides.json if this is a real event"
+   },
+   {
+    "source": "Borough",
+    "title": "Reserve Public Meeting Room",
+    "date": "2027-01-09T14:00:00.000Z",
+    "location": "Millersville Area Historical Society",
+    "link": "https://millersvilleborough.org/resident-info/calendar/",
+    "note": "enrich via borough-overrides.json if this is a real event"
+   },
+   {
+    "source": "Borough",
+    "title": "Reserve Public Meeting Room",
+    "date": "2026-12-12T14:00:00.000Z",
+    "location": "Millersville Area Historical Society",
+    "link": "https://millersvilleborough.org/resident-info/calendar/",
+    "note": "enrich via borough-overrides.json if this is a real event"
+   },
+   {
+    "source": "Borough",
+    "title": "Reserve Public Meeting Room",
+    "date": "2026-11-14T14:00:00.000Z",
+    "location": "Millersville Area Historical Society",
+    "link": "https://millersvilleborough.org/resident-info/calendar/",
+    "note": "enrich via borough-overrides.json if this is a real event"
+   },
+   {
+    "source": "Borough",
+    "title": "Reserve Public Meeting Room",
+    "date": "2026-10-10T14:00:00.000Z",
+    "location": "Millersville Area Historical Society",
+    "link": "https://millersvilleborough.org/resident-info/calendar/",
+    "note": "enrich via borough-overrides.json if this is a real event"
+   },
+   {
+    "source": "Borough",
+    "title": "Reserve Public Meeting Room",
+    "date": "2026-09-12T14:00:00.000Z",
+    "location": "Millersville Area Historical Society",
+    "link": "https://millersvilleborough.org/resident-info/calendar/",
+    "note": "enrich via borough-overrides.json if this is a real event"
+   }
+  ],
+  "submission-not-approved": [
+   {
+    "source": "Community",
+    "title": "Millersville Turkey Trot",
+    "date": "11/26/2026",
+    "location": "Biemesderfer Stadium",
+    "link": "https://www.millersvilleturkeytrot.com/",
+    "note": "Status blank"
+   },
+   {
+    "source": "Community",
+    "title": "SLI Waiting List Signups (Brookwood / Healthy Living)",
+    "date": "8/11/2026",
+    "location": "508 Hillview Ave",
+    "link": "https://form.jotform.com/222703787907061",
+    "note": "Status blank"
+   }
+  ]
+ }
+}

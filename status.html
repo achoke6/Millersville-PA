@@ -324,6 +324,9 @@ async function render() {
         { label: 'Manor Township',         key: 'manor' },
         { label: 'Raney Cellars',          key: 'raneyCellars' },
 		{ label: 'The Backyard',           key: 'theBackyard' },
+        // Eckert Art Gallery (2026-11-09): counts rows the season page delivered,
+        // like artsmu; 0–2 is normal and sits under NOISE_FLOOR.
+        { label: 'Eckert Art Gallery',     key: 'eckert' },
         // Enrichment row, not a source — counts MU athletic events that got
         // a Hudl/PSAC streamLink this run. Same compareSource() degradation
         // logic flags it if the count drops well below the 7-day median, so
@@ -578,7 +581,14 @@ async function render() {
                     ? item.title.substring(0, 47) + '…'
                     : (item.title || '(untitled)');
                 const when = item.firstSeenAt ? formatRelative(item.firstSeenAt) : '';
-                return metric(title, item.source || 'Other', { hint: when });
+                // Link to the event's popup on the site (2026-11-09): /?e=<key>, where
+                // key is the scraper's `title|date` -- identical to app.js getEventKey().
+                // Titles are HTML-escaped here; metric() inserts the label raw.
+                const esc = str => String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                const label = item.key
+                    ? '<a href="https://millersville.app/?e=' + encodeURIComponent(item.key) + '" target="_blank" rel="noopener" title="Open on millersville.app">' + esc(title) + '</a>'
+                    : esc(title);
+                return metric(label, item.source || 'Other', { hint: when });
             }).join('');
 
         // The "Added in this run" count is the top-line metric. 0 is normal

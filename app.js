@@ -2954,6 +2954,12 @@ function showWelcomeGate() {
             const v = btn.getAttribute('data-aff');
             scrim.remove();
             if (typeof window.pickAffiliation === 'function') window.pickAffiliation(v);
+            // Parked event deep link (2026-11-09, see initApp): a first-run visitor
+            // who arrived via /?e=… gets the popup once the gate is out of the way.
+            if (window.__pendingEventKey) {
+                const k = window.__pendingEventKey; window.__pendingEventKey = null;
+                setTimeout(() => { try { window.openEventDetails(k); } catch (_) {} }, 0);
+            }
         });
     });
     document.body.appendChild(scrim);
@@ -3644,6 +3650,23 @@ async function initApp(){
     // routable; this keeps the visible URL canonical.
     if(view==='places' && p!=='/map'){ history.replaceState(null,'','/map'); }
     switchView(view,true);
+    // Event deep link (2026-11-09): /?e=<title|date> opens the event's details
+    // popup on top of whatever view the path routed to. The key is getEventKey()
+    // -- the same `title|date` string the scraper writes to status.json's
+    // recentlyAdded, which is where these links come from (status page →
+    // popup). The param is stripped from the address bar first so refresh,
+    // back/forward and copy-link don't reopen it. Unknown key (event aged out,
+    // retitled upstream, or collapsed by dedupeEvents) = no popup, no error --
+    // the visitor just lands on the page. If the first-run identity gate is up,
+    // the key is parked and fired by the gate's pick handler (showWelcomeGate).
+    const eDeepKey = params.get('e');
+    if (eDeepKey) {
+        params.delete('e');
+        const eQs = params.toString();
+        history.replaceState(null, '', window.location.pathname + (eQs ? '?' + eQs : '') + window.location.hash);
+        if (document.getElementById('mapp-welcome-gate')) window.__pendingEventKey = eDeepKey;
+        else setTimeout(() => { try { window.openEventDetails(eDeepKey); } catch (_) {} }, 0);
+    }
     // Deep link: /map?today=1 lands with the Today lens already on (shareable;
     // the home rail's "View all →" moved to /food 2026-08-27 — the Food page
     // presents specials better, while this link keeps map+Today reachable).

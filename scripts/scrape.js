@@ -263,6 +263,14 @@ const hGameClubSports = [
 function isArtsmuEvent(e) {
     return ((e && e.sourceLink) || '').toLowerCase().includes('artsmu.com');
 }
+// Eckert Art Gallery rows (2026-11-09, block 3c). orgName is the origin marker:
+// a merge WINNER from MU Calendar / GetInvolved adopts the gallery page as its
+// sourceLink (Adam's rule -- the calendar entry only points there anyway), so a
+// link-only test would count calendar rows as gallery rows.
+function isEckertEvent(e) {
+    return !!e && e.orgName === 'Eckert Art Gallery'
+        && ((e.sourceLink) || '').toLowerCase().includes('millersville.edu/eckertartgallery');
+}
 // camps.json (the weekly alumni/camps Cowork sync) is tag-keyed because its
 // sourceLinks are non-distinctive external pages. Two guards keep this
 // strictly per-feed: (1) the calendar-link guard leaves the MU Calendar's
@@ -1137,20 +1145,151 @@ function extractPhantomPowerEventFromHTML(html, url, eventsArray, now, futureLim
 // 'general' | 'athletics'; the split mirrors the sourceHealth isAth predicate.
 // Returns { rows, lastGood, reason } -- rows is [] whenever reason is set.
 const PM_CARRY_MAX_MS = 24 * 60 * 60 * 1000;
-function pmCarryForward(prevEvents, lastGoodIso, kind, nowMs) {
+function pmCarryForward(prevEvents, lastGoodIso, kind, nowMs, maxMs = PM_CARRY_MAX_MS) {
     const isAth = e => (e.tags || []).includes('Athletics') || (e.tags || []).includes('Athletic Competitions');
     if (!lastGoodIso) return { rows: [], lastGood: null, reason: 'no last-good timestamp for this feed' };
     const ageMs = nowMs - new Date(lastGoodIso).getTime();
-    if (!(ageMs >= 0) || ageMs > PM_CARRY_MAX_MS) return { rows: [], lastGood: lastGoodIso, reason: `last good ${lastGoodIso} is >24h old` };
+    if (!(ageMs >= 0) || ageMs > maxMs) return { rows: [], lastGood: lastGoodIso, reason: `last good ${lastGoodIso} is >${Math.round(maxMs / 3600000)}h old` };
     // kind 'manor' (Manor carry-forward (2026-10-07)): Manor Township rows carry a
     // single 'Manor' tag; the PM kinds split 'PM' rows by the athletics predicate.
+    // kind 'eckert' (2026-11-09): gallery rows are keyed by isEckertEvent (orgName +
+    // sourceLink); a gallery row that merged INTO a calendar twin is not in the
+    // previous events.json, and needs no carry -- the calendar copy survives.
+    // maxMs is 7 days for this feed: the page changes a few times a year, and the
+    // risk being covered is a fetch failure the week of a reception.
     const rows = kind === 'manor'
         ? (Array.isArray(prevEvents) ? prevEvents : []).filter(e => (e.tags || []).includes('Manor'))
+        : kind === 'eckert'
+        ? (Array.isArray(prevEvents) ? prevEvents : []).filter(isEckertEvent)
         : (() => { const want = kind === 'athletics' ? isAth : (e => !isAth(e));
                    return (Array.isArray(prevEvents) ? prevEvents : []).filter(e => (e.tags || []).includes('PM') && want(e)); })();
     if (!rows.length) return { rows: [], lastGood: lastGoodIso, reason: 'previous events.json had no rows for this feed' };
     return { rows, lastGood: lastGoodIso, reason: null };
 }
+
+// ---- Eckert Art Gallery season-page parser (2026-11-09) ----------------------
+// Pure and harness-testable. millersville.edu/eckertartgallery/current-season/ is a
+// hand-edited page: one block per exhibition -- a heading, "Exhibition Dates: <Month D>
+// - <Month D, YYYY>", zero or more reception lines, "Exhibition Description: ...".
+// Reception phrasings seen across seasons (all handled; keep this list honest):
+//   "Opening Reception: Wednesday, September 9 from 5 – 6:30 p.m."   (no year, en dash)
+//   "Reception: Thursday November 12 from 5:30 - 7 p.m., Gallery Talk at 6 p.m."
+//   "Reception: Thursday September 11, 2025 from 5:30 - 7 p.m. Gallery Talk at 6 p.m."
+//   "Opening Reception - Thursday, February 29, 5–7 PM"                (2024 press copy)
+// A missing year is taken from the exhibition's date range (the year that puts the
+// reception inside the range; the range's end year otherwise). The gallery talk is
+// read from the reception line or the line after it. Output is wall-clock ET
+// ('YYYY-MM-DD' + 'HH:MM'); the caller builds instants via parseEventInstant.
+const ECKERT_URL = 'https://www.millersville.edu/eckertartgallery/current-season/';
+const ECKERT_MONTHS = { january: 0, february: 1, march: 2, april: 3, may: 4, june: 5, july: 6,
+    august: 7, september: 8, october: 9, november: 10, december: 11 };
+function eckertTo24(clock, ampm) {
+    // "5:30" + "p.m." -> [17, 30]; ampm null -> hour as written (caller resolves)
+    const m = /^(\d{1,2})(?::(\d{2}))?$/.exec(clock || '');
+    if (!m) return null;
+    let h = +m[1]; const min = +(m[2] || 0);
+    const ap = (ampm || '').toLowerCase().replace(/\./g, '');
+    if (ap === 'pm' && h < 12) h += 12;
+    if (ap === 'am' && h === 12) h = 0;
+    return [h, min];
+}
+function eckertHHMM(hm) { return String(hm[0]).padStart(2, '0') + ':' + String(hm[1]).padStart(2, '0'); }
+function eckertTitleCase(t) {
+    // Headings are sometimes typeset ALL CAPS ("UNFOLDING"); the calendar twin and
+    // the catalog use title case. Mixed-case headings pass through untouched.
+    if (!/[a-z]/.test(t) && /[A-Z]/.test(t)) {
+        return t.toLowerCase().replace(/(^|[\s:(\-])([a-z])/g, (m, pre, c) => pre + c.toUpperCase());
+    }
+    return t;
+}
+function parseEckertSeason(html, refDate = new Date()) {
+    const text = String(html || '')
+        .replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, ' ')
+        .replace(/<\/(?:p|div|h[1-6]|li|tr|section|article|header|figcaption)\s*>|<br\s*\/?>/gi, '\n')
+        .replace(/<[^>]+>/g, ' ')
+        .replace(/&nbsp;|&#160;/g, ' ').replace(/&amp;/g, '&')
+        .replace(/&#8211;|&ndash;/g, '\u2013').replace(/&#8212;|&mdash;/g, '\u2014')
+        .replace(/&#821[67];|&lsquo;|&rsquo;/g, "'").replace(/&#822[01];|&ldquo;|&rdquo;/g, '"')
+        .replace(/&#(\d+);/g, (m, n) => String.fromCharCode(+n));
+    const lines = text.split('\n').map(l => l.replace(/\s+/g, ' ').trim()).filter(Boolean);
+    const dateIdx = lines.map((l, i) => /^Exhibition Dates:/i.test(l) ? i : -1).filter(i => i >= 0);
+    const exhibitions = [], receptions = [];
+    const RANGE_RE = /([A-Za-z]+)\s+(\d{1,2}),?\s*(\d{4})?\s*(?:[\u2013\u2014-]|to|through)\s*([A-Za-z]+)\s+(\d{1,2}),?\s*(\d{4})?/;
+    const RECEP_RE = /^(Opening Reception|Closing Reception|Reception)\s*[:\u2013\u2014-]?\s*(?:(?:Mon|Tues?|Wednes|Thurs?|Fri|Satur|Sun)day,?\s*)?([A-Za-z]+)\s+(\d{1,2}),?\s*(\d{4})?,?\s*(?:from\s+)?(\d{1,2}(?::\d{2})?)\s*(a\.?m\.?|p\.?m\.?)?\s*(?:[\u2013\u2014-]|to)\s*(\d{1,2}(?::\d{2})?)\s*(a\.?m\.?|p\.?m\.?)/i;
+    const TALK_RE = /Gallery Talk(?:\s+with\s+([^,.]+?))?\s+at\s+(\d{1,2}(?::\d{2})?)\s*(a\.?m\.?|p\.?m\.?)/i;
+    for (let k = 0; k < dateIdx.length; k++) {
+        const i = dateIdx[k];
+        const next = k + 1 < dateIdx.length ? dateIdx[k + 1] : lines.length;
+        // Heading: nearest preceding short line that isn't an image/logo/artists caption.
+        let show = '';
+        for (let j = i - 1; j >= Math.max(0, i - 4); j--) {
+            const l = lines[j];
+            if (/^(image|logo|artists?|exhibition description):/i.test(l)) continue;
+            if (l.length <= 80) { show = eckertTitleCase(l); break; }
+        }
+        const datesText = lines[i].replace(/^Exhibition Dates:\s*/i, '').trim();
+        const r = RANGE_RE.exec(datesText);
+        let rangeStart = null, rangeEnd = null;
+        if (r && ECKERT_MONTHS[r[1].toLowerCase()] != null && ECKERT_MONTHS[r[4].toLowerCase()] != null) {
+            const m1 = ECKERT_MONTHS[r[1].toLowerCase()], m2 = ECKERT_MONTHS[r[4].toLowerCase()];
+            const yEnd = r[6] ? +r[6] : (r[3] ? +r[3] : null);
+            let yStart = r[3] ? +r[3] : (yEnd != null ? (m1 > m2 ? yEnd - 1 : yEnd) : null);
+            if (yStart != null && yEnd != null) {
+                rangeStart = new Date(Date.UTC(yStart, m1, +r[2]));
+                rangeEnd = new Date(Date.UTC(yEnd, m2, +r[5], 23, 59));
+            }
+        }
+        // Blurb: first sentence of the description, for the description field.
+        let blurb = '';
+        for (let j = i + 1; j < next; j++) {
+            const dm = /^Exhibition Description:\s*(.+)$/i.exec(lines[j]);
+            if (dm) {
+                const sent = /^(.+?[.!?])(\s|$)/.exec(dm[1]);
+                blurb = (sent ? sent[1] : dm[1]).slice(0, 220).trim();
+                break;
+            }
+        }
+        exhibitions.push({ show, datesText, rangeStart, rangeEnd, blurb });
+        for (let j = i + 1; j < next; j++) {
+            const m = RECEP_RE.exec(lines[j]);
+            if (!m) continue;
+            const kind = m[1].replace(/\s+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+            const mon = ECKERT_MONTHS[m[2].toLowerCase()];
+            if (mon == null) continue;
+            const day = +m[3];
+            // Year: stated > inside the exhibition range > range end year > nearest to refDate.
+            let year = m[4] ? +m[4] : null;
+            if (year == null && rangeStart && rangeEnd) {
+                const cands = [...new Set([rangeStart.getUTCFullYear(), rangeEnd.getUTCFullYear()])];
+                year = cands.find(y => { const d = Date.UTC(y, mon, day); return d >= rangeStart.getTime() && d <= rangeEnd.getTime(); });
+                if (year == null) year = rangeEnd.getUTCFullYear();
+            }
+            if (year == null) {
+                const ry = refDate.getUTCFullYear();
+                const pick = [ry - 1, ry, ry + 1].map(y => ({ y, d: Math.abs(Date.UTC(y, mon, day) - refDate.getTime()) })).sort((a, b) => a.d - b.d)[0];
+                year = pick.y;
+            }
+            let endHM = eckertTo24(m[7], m[8]);
+            let startHM = eckertTo24(m[5], m[6] || m[8]);   // start inherits the end's meridiem
+            if (!startHM || !endHM) continue;
+            // "11 - 1 PM" style: inherited meridiem put the start after the end -- flip it.
+            if (startHM[0] * 60 + startHM[1] >= endHM[0] * 60 + endHM[1] && !m[6]) startHM = [startHM[0] >= 12 ? startHM[0] - 12 : startHM[0] + 12, startHM[1]];
+            const talkSrc = lines[j] + ' ' + (lines[j + 1] || '');
+            const t = TALK_RE.exec(talkSrc);
+            const talkHM = t ? eckertTo24(t[2], t[3]) : null;
+            receptions.push({
+                show, kind, datesText, blurb,
+                date: `${year}-${String(mon + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`,
+                start: eckertHHMM(startHM), end: eckertHHMM(endHM),
+                talkTime: talkHM ? eckertHHMM(talkHM) : null,
+                talkWith: t && t[1] ? t[1].trim() : null,
+                raw: lines[j]
+            });
+        }
+    }
+    return { exhibitions, receptions };
+}
+// ---- /eckert parser -----------------------------------------------------------
 
 async function runScraper() {
     const PAST_DAYS = 90;
@@ -1940,7 +2079,7 @@ async function runScraper() {
     // bootstraps from status.json generatedAt on the first run after the patch when
     // the snapshot key does not exist yet. Carried runs keep their count invariants
     // RED (see the sourceHealth block) -- the feed failed even if the display didn't.
-    const pmCarry = { general: 0, athletics: 0, manor: 0, ok: { general: false, athletics: false, manor: false } };   // manor added 2026-10-07
+    const pmCarry = { general: 0, athletics: 0, manor: 0, eckert: 0, ok: { general: false, athletics: false, manor: false, eckert: false } };   // manor added 2026-10-07; eckert 2026-11-09
     const pmPrevLoad = (() => {
         let cache = null;
         return () => {
@@ -1967,13 +2106,20 @@ async function runScraper() {
                     if (st && st.generatedAt && st.sources && st.sources.manor > 0) lastGood.manor = st.generatedAt;
                 } catch (_) { /* no status.json -- no bootstrap */ }
             }
+            if (!lastGood.eckert) {
+                // Eckert bootstrap (2026-11-09): same one-time trust of the previous status.json.
+                try {
+                    const st = JSON.parse(fs.readFileSync(path.join(__dirname, '../status.json'), 'utf8'));
+                    if (st && st.generatedAt && st.sources && st.sources.eckert > 0) lastGood.eckert = st.generatedAt;
+                } catch (_) { /* no status.json -- no bootstrap */ }
+            }
             cache = { prevEvents, lastGood };
             return cache;
         };
     })();
-    const pmCarryApply = (kind, label) => {
+    const pmCarryApply = (kind, label, maxMs) => {
         const { prevEvents, lastGood } = pmPrevLoad();
-        const r = pmCarryForward(prevEvents, lastGood[kind], kind, Date.now());
+        const r = pmCarryForward(prevEvents, lastGood[kind], kind, Date.now(), maxMs);
         if (r.rows.length) {
             for (const row of r.rows) events.push(row);
             pmCarry[kind] = r.rows.length;
@@ -3647,6 +3793,61 @@ async function runScraper() {
         }
         console.log(`✅ artsmu.com: ${artsCount} new events (${artsSkipped} skipped, ${artsFailed} failed)`);
     } catch (e) { console.error("❌ artsmu.com error:", e.message); }
+    // ===== 3c. ECKERT ART GALLERY (current-season page — receptions + gallery talks) =====
+    // The gallery in the Winter Center runs 3–4 exhibitions a year, each with a
+    // reception (and usually a gallery talk) announced on its season page, often
+    // weeks before Art & Design posts the MU Calendar entry (Field Notes 2026-09 came
+    // through the calendar; "Unfolding" 2026-11-12 was on the page first). Rows ride the
+    // calendar's own tag triple so filters/subscriptions/iCal treat them as MU arts
+    // rows (no Hard Rule 7 exposure) and Pass 2 merges them with the calendar /
+    // GetInvolved twin via the Eckert alias tier -- the gallery row always LOSES the
+    // merge but hands the winner its sourceLink (Adam's rule, 2026-11-09: the calendar
+    // entry only points to this page anyway) and its endTime.
+    // Price: receptions are unticketed and every past copy reads "Free and open to the
+    // public, no tickets required" -- 'Free' is set as a constant, not read from the page.
+    // Failure modes: fetch error or ZERO exhibition blocks parsed (= page layout
+    // changed) -> 7-day carry-forward of last good gallery rows; blocks parsed but no
+    // receptions = legitimately nothing announced, not a failure.
+    const eckertFetched = [];
+    try {
+        console.log("📡 Fetching Eckert Art Gallery season page...");
+        const eckRes = await fetch(ECKERT_URL, { headers: baseHeaders, signal: AbortSignal.timeout(30000) });
+        if (!eckRes.ok) throw new Error(`HTTP ${eckRes.status}`);
+        const parsed = parseEckertSeason(await eckRes.text(), now);
+        if (parsed.exhibitions.length === 0) throw new Error('0 exhibition blocks parsed -- page layout changed?');
+        let eckCount = 0, eckSkipped = 0;
+        for (const rc of parsed.receptions) {
+            const startIso = new Date(parseEventInstant(`${rc.date}T${rc.start}:00`));
+            const endIso = new Date(parseEventInstant(`${rc.date}T${rc.end}:00`));
+            if (isNaN(startIso.getTime()) || startIso < pastDate || startIso >= futureDate) { eckSkipped++; continue; }
+            const talk = rc.talkTime ? (() => { const [h, mi] = rc.talkTime.split(':').map(Number); const h12 = h % 12 || 12; return `${h12}${mi ? ':' + String(mi).padStart(2, '0') : ''} ${h >= 12 ? 'p.m.' : 'a.m.'}`; })() : null;
+            const description = [
+                `${rc.kind} for the exhibition \u201c${rc.show}\u201d${rc.datesText ? ` (on view ${rc.datesText})` : ''}.`,
+                talk ? `Gallery Talk${rc.talkWith ? ` with ${rc.talkWith}` : ''} at ${talk}.` : '',
+                'Eckert Art Gallery, Winter Visual & Performing Arts Center, 60 W. Cottage Ave. Free and open to the public.',
+                rc.blurb
+            ].filter(Boolean).join(' ');
+            events.push({
+                title: `Eckert Art Gallery ${rc.kind}: \u201c${rc.show}\u201d`,
+                date: startIso.toISOString(),
+                endTime: endIso > startIso ? endIso.toISOString() : undefined,
+                location: 'Eckert Art Gallery, Winter Visual & Performing Arts Center',
+                tags: ['MU', 'Arts Concert / Performance', 'Art & Design'],
+                price: 'Free', ticketLink: '',
+                sourceLink: ECKERT_URL,
+                description,
+                orgName: 'Eckert Art Gallery', orgShortName: 'Eckert Art Gallery'
+            });
+            eckertFetched.push(events[events.length - 1]);
+            eckCount++;
+        }
+        pmCarry.ok.eckert = true;
+        console.log(`✅ Eckert Art Gallery: ${eckCount} reception(s) from ${parsed.exhibitions.length} exhibition block(s)${eckSkipped ? ` (${eckSkipped} outside window)` : ''}`);
+        for (const rc of parsed.receptions) console.log(`  🖼 ${rc.date} ${rc.start}-${rc.end} ${rc.kind}: "${rc.show}"${rc.talkTime ? ` · talk ${rc.talkTime}` : ''}`);
+    } catch (e) {
+        console.error("❌ Eckert Art Gallery error:", e.message);
+        pmCarryApply('eckert', 'Eckert Art Gallery', 7 * 24 * 60 * 60 * 1000);
+    }
     // ===== 3d. HAND-MAINTAINED CAMPS (camps.json) =====
     // For camps where automated scraping fails (e.g., TotalCamps API blocks GHA IPs).
     // Edit /camps.json in the repo root to add/update camps. They'll appear on the site within the hour.
@@ -6578,6 +6779,7 @@ async function runScraper() {
         const link = (e.sourceLink || '').toLowerCase();
         const tags = e.tags || [];
         if (link.includes('artsmu.com')) return 'artsmu';
+        if (link.includes('millersville.edu/eckertartgallery')) return 'eckert';   // 2026-11-09, before the tag fallback (rows carry 'MU')
         if (link.includes('getinvolved.millersville.edu')) return 'clubs';
         if (link.includes('millersville.edu/calendar')) return 'mu';
         // Fall back to tag-based detection for sources without distinctive URLs
@@ -6606,6 +6808,27 @@ async function runScraper() {
         if (/\bwind\b/.test(t)) return 'wind';
         if (/\borchestra\b/.test(t)) return 'orchestra';
         if (/\b(choral|choir)\b/.test(t)) return 'choral';
+        return null;
+    };
+
+    // ECKERT RECEPTION ALIAS tier (2026-11-09). Three sources can carry one reception
+    // with three title shapes -- Coursedog `Opening Reception @ Eckert Art Gallery
+    // "Field Notes"`, GetInvolved `"Field Notes" Exhibition Opening Reception`, the
+    // gallery page `Eckert Art Gallery Reception: “Unfolding”` -- and no title tier
+    // fires (that pair needed CALENDAR_CLUBS_SPLIT_RE). Key = the QUOTED show name
+    // (straight or curly quotes) when the title also reads like a gallery event;
+    // falls back to the generic 'eckert' when the title names the gallery and a
+    // reception/talk but quotes nothing. Same ET day + different buckets = one
+    // reception; merges regardless of time gap (talk vs. reception start).
+    const eckertShowKey = (e) => {
+        const title = e.title || '';
+        if (!/reception|gallery talk|exhibition|eckert/i.test(title)) return null;
+        const q = /["\u201c\u201d]([^"\u201c\u201d]{3,80})["\u201c\u201d]|(?:^|\s)['\u2018]([^'\u2019]{3,80})['\u2019](?:\s|$|[:,.])/.exec(title);
+        // Subtitles are dropped: the page says "Field Notes: Learning to See", the
+        // calendar quoted "Field Notes". The tier below also accepts a prefix match.
+        const name = q ? (q[1] || q[2]).split(':')[0] : null;
+        if (name && normalizeTitle(name).length >= 4) return normalizeTitle(name);
+        if (/eckert/i.test(title) && /reception|gallery talk/i.test(title)) return 'eckert';
         return null;
     };
 
@@ -6742,6 +6965,15 @@ async function runScraper() {
                 const kA = winterEnsembleKey(seed.event), kB = winterEnsembleKey(ne.event);
                 if (kA && kA === kB) { titleMatch = true; ensembleAlias = true; }
             }
+            // Eckert reception alias tier (2026-11-09): see eckertShowKey above. A
+            // generic 'eckert' key on either side pairs with any show-name key, and
+            // a show-name key may be a prefix of the other ("field notes" vs the
+            // page's "field notes learning to see" if a source keeps the subtitle).
+            let eckertAlias = false;
+            if (!titleMatch) {
+                const kA = eckertShowKey(seed.event), kB = eckertShowKey(ne.event);
+                if (kA && kB && (kA === kB || kA === 'eckert' || kB === 'eckert' || kA.startsWith(kB) || kB.startsWith(kA))) { titleMatch = true; eckertAlias = true; }
+            }
 
             // Same-org-same-time-same-room rule: when two events share
             // orgName + location signature + nearly-identical time, they're
@@ -6797,7 +7029,7 @@ async function runScraper() {
             // letter-identical or word-set-identical, strong enough to
             // cross-source merge regardless of time gap (different sources
             // legitimately publish the same event with different start times).
-            if (!exactMatch && !noWsMatch && !sortedMatch && !ensembleAlias) {   // alias pairs merge regardless of time gap -- Coursedog's room booking can be hours off (Apr 3)
+            if (!exactMatch && !noWsMatch && !sortedMatch && !ensembleAlias && !eckertAlias) {   // alias pairs merge regardless of time gap -- Coursedog's room booking can be hours off (Apr 3)
                 const timeDiff = Math.abs(ne.time - seed.time);
                 // digitShort rides here too: a digit-bearing short title is
                 // distinctive enough to trust same-day sameness even when the
@@ -6835,6 +7067,12 @@ async function runScraper() {
             // the description adoption in the merge loop below).
             if (a.bucket === 'clubs' && b.bucket === 'mu') return -1;
             if (b.bucket === 'clubs' && a.bucket === 'mu') return 1;
+            // The Eckert gallery row LOSES to any other bucket (2026-11-09): the
+            // calendar/GetInvolved copy has the room, org and RSVP context; the
+            // gallery row's job is to exist when nobody else has posted yet, and to
+            // hand over its sourceLink + endTime in the merge below.
+            if (a.bucket === 'eckert' && b.bucket !== 'eckert') return 1;
+            if (b.bucket === 'eckert' && a.bucket !== 'eckert') return -1;
 
             // Prefer the version with a meaningfully richer description.
             // When two sources have the same event but very different description
@@ -6868,6 +7106,18 @@ async function runScraper() {
         const winner = candidates[0].event;
         for (let i = 1; i < candidates.length; i++) {
             const loser = candidates[i];
+
+            // Eckert gallery loser (2026-11-09, Adam's rule): the winner adopts the
+            // gallery page as its sourceLink -- the MU Calendar entry only points
+            // there, and GetInvolved's RSVP page adds nothing for a drop-in reception.
+            // endTime rides along when the winner has none; 'Free' replaces a
+            // placeholder price (the page's receptions are unticketed).
+            let eckertMerged = false;
+            if (loser.bucket === 'eckert' && candidates[0].bucket !== 'eckert') {
+                if (loser.event.sourceLink && winner.sourceLink !== loser.event.sourceLink) { winner.sourceLink = loser.event.sourceLink; eckertMerged = true; }
+                if (loser.event.endTime && !winner.endTime) { winner.endTime = loser.event.endTime; eckertMerged = true; }
+                if (['', 'Open To Public', 'Ticket Required', 'Tickets Available'].includes((winner.price || '').trim()) && !winner.ticketLink) { winner.price = 'Free'; eckertMerged = true; }
+            }
 
             // Merge benefits (union, no dupes) — preserves 🍕 Free Food / 🎁 Free Stuff / 📚 Credit badges
             if (loser.event.benefits && loser.event.benefits.length > 0) {
@@ -6985,6 +7235,7 @@ async function runScraper() {
                     freeTicketMerged ? 'freeTicket' : '',
                     timeMerged ? 'time:artsmu' : '',     // ensemble-alias merges only (2026-10-07)
                     priceMerged ? 'price' : '',          // real $ onto a placeholder (2026-10-07)
+                    eckertMerged ? 'sourceLink:eckert' : '',   // gallery page link / endTime / Free onto the calendar twin (2026-11-09)
                     loser.event.audience === 'public' && winner.audience === 'public' && candidates[0].event.audience !== 'public' ? 'audience:public' : ''
                 ].filter(Boolean).join('+')
             });
@@ -7489,7 +7740,8 @@ async function runScraper() {
             sourceLastGood: {
                 general: pmCarry.ok.general ? nowIsoForLastGood : (prevLastGood.general || null),
                 athletics: pmCarry.ok.athletics ? nowIsoForLastGood : (prevLastGood.athletics || null),
-                manor: pmCarry.ok.manor ? nowIsoForLastGood : (prevLastGood.manor || null)   // 2026-10-07
+                manor: pmCarry.ok.manor ? nowIsoForLastGood : (prevLastGood.manor || null),   // 2026-10-07
+                eckert: pmCarry.ok.eckert ? nowIsoForLastGood : (prevLastGood.eckert || null)   // 2026-11-09
             }
         };
         fs.writeFileSync(snapshotPath, JSON.stringify(snapshot));
@@ -7584,7 +7836,7 @@ async function runScraper() {
             // Per-source counts (after dedupe)
             sources: {
                 muAthletics: bySourceCount('MU', e => (e.tags || []).includes('Athletics') || (e.tags || []).includes('Athletic Competitions')),
-                muCalendar: bySourceCount('MU', e => !(e.tags || []).includes('Athletics') && !(e.tags || []).includes('Clubs/Orgs') && !isArtsmuEvent(e) && !isCampsAlumniEvent(e)),
+                muCalendar: bySourceCount('MU', e => !(e.tags || []).includes('Athletics') && !(e.tags || []).includes('Clubs/Orgs') && !isArtsmuEvent(e) && !isCampsAlumniEvent(e) && !isEckertEvent(e)),
                 // Un-folded from muCalendar 2026-08-07 (D1/D2b): both feeds
                 // previously hid inside the calendar count, so either dying
                 // was invisible to the per-source degradation detector.
@@ -7592,6 +7844,11 @@ async function runScraper() {
                 // MU Calendar now lists the Ware season, so survivors fell 20 -> 2
                 // with nothing wrong. Merge breakdown lives in `artsmuMerge` below.
                 artsmu: artsmuFetched.length,
+                // Eckert Art Gallery (2026-11-09): rows the page DELIVERED, like artsmu --
+                // a gallery row that merged into its calendar twin still counts as alive.
+                // 0–2 is the normal range (receptions, not a calendar); NOISE_FLOOR keeps
+                // the dashboard quiet at these counts.
+                eckert: eckertFetched.length,
                 campsAlumni: deduped.filter(isCampsAlumniEvent).length,
                 muGetInvolved: bySourceCount('Clubs/Orgs'),
                 pennManor: bySourceCount('PM'),
@@ -7624,8 +7881,9 @@ async function runScraper() {
             // enrichment count, not a set of events with their own dates.
             sourceDateRanges: {
                 muAthletics: dateRangeFor('MU', e => (e.tags || []).includes('Athletics') || (e.tags || []).includes('Athletic Competitions')),
-                muCalendar: dateRangeFor('MU', e => !(e.tags || []).includes('Athletics') && !(e.tags || []).includes('Clubs/Orgs') && !isArtsmuEvent(e) && !isCampsAlumniEvent(e)),
+                muCalendar: dateRangeFor('MU', e => !(e.tags || []).includes('Athletics') && !(e.tags || []).includes('Clubs/Orgs') && !isArtsmuEvent(e) && !isCampsAlumniEvent(e) && !isEckertEvent(e)),
                 artsmu: dateRangeForRows(artsmuFetched),   // fetched rows, to match the count (2026-11-05)
+                eckert: dateRangeForRows(eckertFetched),   // 2026-11-09
                 campsAlumni: dateRangeForPred(isCampsAlumniEvent),
                 muGetInvolved: dateRangeFor('Clubs/Orgs'),
                 pennManor: dateRangeFor('PM'),
@@ -7671,8 +7929,9 @@ async function runScraper() {
                 const out = {};
                 const newestPerSource = {
                     muAthletics: dateRangeFor('MU', e => (e.tags || []).includes('Athletics') || (e.tags || []).includes('Athletic Competitions'))?.latest,
-                    muCalendar: dateRangeFor('MU', e => !(e.tags || []).includes('Athletics') && !(e.tags || []).includes('Clubs/Orgs') && !isArtsmuEvent(e) && !isCampsAlumniEvent(e))?.latest,
+                    muCalendar: dateRangeFor('MU', e => !(e.tags || []).includes('Athletics') && !(e.tags || []).includes('Clubs/Orgs') && !isArtsmuEvent(e) && !isCampsAlumniEvent(e) && !isEckertEvent(e))?.latest,
                     artsmu: dateRangeForRows(artsmuFetched)?.latest,
+                    eckert: dateRangeForRows(eckertFetched)?.latest,   // 2026-11-09
                     campsAlumni: dateRangeForPred(isCampsAlumniEvent)?.latest,
                     muGetInvolved: dateRangeFor('Clubs/Orgs')?.latest,
                     pennManor: dateRangeFor('PM')?.latest,
@@ -7795,7 +8054,7 @@ async function runScraper() {
                 };
                 horizonCheck('pennManorAthletics', dateRangeFor('PM', isAth), 45, athleticsHorizonSeason);
                 horizonCheck('muAthletics', dateRangeFor('MU', isAth), 60, athleticsHorizonSeason);
-                horizonCheck('muCalendar', dateRangeFor('MU', e => !isAth(e) && !(e.tags || []).includes('Clubs/Orgs') && !isArtsmuEvent(e) && !isCampsAlumniEvent(e)), 30);
+                horizonCheck('muCalendar', dateRangeFor('MU', e => !isAth(e) && !(e.tags || []).includes('Clubs/Orgs') && !isArtsmuEvent(e) && !isCampsAlumniEvent(e) && !isEckertEvent(e)), 30);
                 horizonCheck('borough', dateRangeFor('Borough'), 21);
                 const pmAthCount = bySourceCount('PM', isAth);
                 // Carried-forward rows populate the display, but the FEED failed -- stay red.

@@ -19,14 +19,31 @@ name: Daily Push Notifications
 #     past the old 6-8am gate, dropping the day) a run still lands in window.
 #   - Widen the DST guard to accept any ET hour in 06-10 (handles ~3hrs of
 #     cron delay without dropping a day).
+#   - 2026-11-09: since the Nov 1 DST change GitHub has delivered the 9:30 /
+#     10:30 / 11:30 UTC crons FIVE TO SEVEN hours late every day (Nov 4-8 runs
+#     landed 11 AM - 2 PM EST, outside the gate; only Nov 7's 10:49 AM run
+#     sent; Nov 8 skipped; Nov 9 never fired at all). Three EARLIER slots
+#     (5:30 / 6:30 / 7:30 UTC) were added so a six-hour delay still lands
+#     inside 6-10 AM ET; if the delay shrinks they arrive at 0-2 AM ET, bail
+#     at the gate, and the original three catch it. The idempotency check is
+#     what keeps six slots from sending twice. A green run in the Actions list
+#     is NOT a send — read "Local ET" / "proceeding" in the dst_check step, or
+#     notifications-status.json's lastRunAt. The durable fix is a hosted
+#     scheduler calling workflow_dispatch at ~7:05 AM ET (not built yet).
 #   - Add idempotency check via notifications-status.json on DreamHost: if
 #     we already ran today (in ET date), skip. This prevents multiple crons
 #     from firing on the same day.
 #
-# Net result: as long as ONE of the three cron firings lands within a 6am-10am
+# Net result: as long as ONE of the six cron firings lands within a 6am-10am
 # ET window on any given day, users get exactly one notification.
 on:
   schedule:
+    # Early slots (2026-11-09) — bail at the gate when on time, land in-window
+    # when GitHub is ~6h late (see the header note).
+    - cron: '30 5 * * *'   # 5:30 UTC  = 1:30am EDT / 12:30am EST
+    - cron: '30 6 * * *'   # 6:30 UTC  = 2:30am EDT / 1:30am EST
+    - cron: '30 7 * * *'   # 7:30 UTC  = 3:30am EDT / 2:30am EST
+    # Original slots — correct when GitHub runs them within ~3h.
     - cron: '30 9 * * *'   # 9:30 UTC  = 5:30am EDT / 4:30am EST
     - cron: '30 10 * * *'  # 10:30 UTC = 6:30am EDT / 5:30am EST
     - cron: '30 11 * * *'  # 11:30 UTC = 7:30am EDT / 6:30am EST
@@ -52,9 +69,10 @@ jobs:
           fi
 
           # Wide ET-hour gate: 6am-10am inclusive. GitHub's cron can be 2-3 hrs
-          # late on the free tier (observed May 25 2026). With crons set at :30
-          # starting 5:30am ET and a 5-hour acceptance window we tolerate big
-          # delays without dropping the day.
+          # late on the free tier (observed May 25 2026) and was 5-7 hrs late
+          # daily after the Nov 2026 DST change (hence the 5:30-7:30 UTC slots
+          # above). An early slot arriving on time reads ET hour 00-02 and bails
+          # here by design — that is the expected log for most of them.
           ET_HOUR=$(TZ=America/New_York date +%H)
           ET_DATE=$(TZ=America/New_York date +%Y-%m-%d)
           echo "Local ET: $ET_DATE $ET_HOUR:00"

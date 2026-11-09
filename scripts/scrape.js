@@ -489,6 +489,7 @@ function extractPricing(desc, title = "", location = "", apiLink = "", startET =
             if (/cooper park/.test(ll)) link = "https://www.etix.com/ticket/v/23684/";
             else if (/biemesderfer|chryst/.test(ll)) link = "https://www.etix.com/ticket/v/23683/";
             else if (/pucillo/.test(ll)) link = "https://www.etix.com/ticket/v/23673/";
+            else if (/ville courts/.test(ll)) link = "https://www.etix.com/ticket/v/23672/";   // inside the SMC -- before the generic SMC rule
             else if (/\bsmc\b|student memorial/.test(ll)) link = "https://www.etix.com/ticket/v/23671/";
             else if (/mccomsey|myers/.test(ll)) link = "https://www.etix.com/ticket/v/26394/";
             else if (/gordinier|lehr/.test(ll)) link = "https://www.etix.com/ticket/v/26343/";

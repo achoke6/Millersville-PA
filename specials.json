@@ -137,7 +137,7 @@
       "Spaghetti Squash – $2.00 each",
       "Acorn Squash – $1.50 each"
     ],
-    "weeklyFetchedAt": "2026-11-09T14:03:25.342Z"
+    "weeklyFetchedAt": "2026-11-09T14:38:17.239Z"
   },
   "jesus-dogs": {
     "name": "Jesus Dogs",
@@ -165,8 +165,12 @@
       "Monday"
     ],
     "note": "Members & Guests · Weekly specials change each week",
-    "weekly": [],
-    "weeklyDateRange": "",
+    "weekly": [
+      "Shaved Prime Rib Sandwich – $14.95",
+      "Half Rack BBQ Ribs – $15.95",
+      "Veal Parmesan – $14.95 (Friday only)"
+    ],
+    "weeklyDateRange": "Tuesday, November 10 through Saturday, November 14",
     "recurring": {
       "Tuesday": "Shrimp Night",
       "Wednesday": "Wing Night",

@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-09T14:03:35.440Z",
-  "totalEvents": 2026,
-  "withDescription": 830,
+  "generatedAt": "2026-11-09T14:38:25.741Z",
+  "totalEvents": 2025,
+  "withDescription": 836,
   "withImage": 231,
   "familyFriendly": 56,
   "eventsToday": 20,
@@ -10,13 +10,13 @@
     "muCalendar": 184,
     "artsmu": 50,
     "campsAlumni": 11,
-    "muGetInvolved": 548,
-    "pennManor": 647,
+    "muGetInvolved": 549,
+    "pennManor": 648,
     "borough": 50,
-    "vfw": 1,
+    "vfw": 6,
     "phantomPower": 14,
     "community": 12,
-    "manor": 38,
+    "manor": 30,
     "raneyCellars": 4,
     "theBackyard": 29,
     "muHudlBroadcasts": 62
@@ -51,8 +51,8 @@
       "latest": "2027-10-31T22:00:00.000Z"
     },
     "vfw": {
-      "earliest": "2026-11-22T21:00:00.000Z",
-      "latest": "2026-11-22T21:00:00.000Z"
+      "earliest": "2026-11-11T20:30:00.000Z",
+      "latest": "2026-11-29T18:00:00.000Z"
     },
     "phantomPower": {
       "earliest": "2026-11-13T00:00:00.000Z",
@@ -64,7 +64,7 @@
     },
     "manor": {
       "earliest": "2026-11-10T00:00:00.000Z",
-      "latest": "2027-11-03T23:00:00.000Z"
+      "latest": "2027-08-25T12:30:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-11-07T00:00:00.000Z",
@@ -105,8 +105,8 @@
       "daysSinceMoved": 9
     },
     "vfw": {
-      "newest": "2026-11-22",
-      "daysSinceMoved": 34
+      "newest": "2026-11-29",
+      "daysSinceMoved": 0
     },
     "phantomPower": {
       "newest": "2026-12-19",
@@ -117,8 +117,8 @@
       "daysSinceMoved": 89
     },
     "manor": {
-      "newest": "2027-11-03",
-      "daysSinceMoved": 6
+      "newest": "2027-08-25",
+      "daysSinceMoved": 76
     },
     "raneyCellars": {
       "newest": "2026-11-19",
@@ -130,7 +130,7 @@
     }
   },
   "sports": {
-    "total": 932,
+    "total": 933,
     "scored": 208,
     "wins": 102,
     "losses": 93,
@@ -151,13 +151,13 @@
       "PM Community": 1
     },
     "stalePast": 30,
-    "lastSyncAt": "2026-11-09T14:00:40.898Z"
+    "lastSyncAt": "2026-11-09T14:35:29.208Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-11-09T14:03:25.791Z"
+    "checkedAt": "2026-11-09T14:38:17.735Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -199,7 +199,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 541,
+        "value": 542,
         "min": 150,
         "skipped": false
       },
@@ -220,7 +220,7 @@
       {
         "key": "manor.count",
         "ok": true,
-        "value": 38,
+        "value": 30,
         "min": 10
       },
       {
@@ -241,6 +241,55 @@
   },
   "recentlyAdded": [
     {
+      "key": "Girls Varsity Field Hockey @ Pine-Richland|2026-11-10T23:00:00.000Z",
+      "firstSeenAt": "2026-11-09T14:38:25.738Z",
+      "title": "Girls Varsity Field Hockey @ Pine-Richland",
+      "source": "PM",
+      "date": "2026-11-10T23:00:00.000Z"
+    },
+    {
+      "key": "Veterans Day Dinner|2026-11-11T20:30:00.000Z",
+      "firstSeenAt": "2026-11-09T14:38:25.738Z",
+      "title": "Veterans Day Dinner",
+      "source": "Other",
+      "date": "2026-11-11T20:30:00.000Z"
+    },
+    {
+      "key": "Trivia Night|2026-11-18T23:00:00.000Z",
+      "firstSeenAt": "2026-11-09T14:38:25.738Z",
+      "title": "Trivia Night",
+      "source": "Other",
+      "date": "2026-11-18T23:00:00.000Z"
+    },
+    {
+      "key": "Annual Friendsgiving|2026-11-25T22:00:00.000Z",
+      "firstSeenAt": "2026-11-09T14:38:25.738Z",
+      "title": "Annual Friendsgiving",
+      "source": "Other",
+      "date": "2026-11-25T22:00:00.000Z"
+    },
+    {
+      "key": "Music Bingo|2026-11-27T23:00:00.000Z",
+      "firstSeenAt": "2026-11-09T14:38:25.738Z",
+      "title": "Music Bingo",
+      "source": "Other",
+      "date": "2026-11-27T23:00:00.000Z"
+    },
+    {
+      "key": "Meat Tray Bingo|2026-11-29T18:00:00.000Z",
+      "firstSeenAt": "2026-11-09T14:38:25.738Z",
+      "title": "Meat Tray Bingo",
+      "source": "Other",
+      "date": "2026-11-29T18:00:00.000Z"
+    },
+    {
+      "key": "Spring Term - Classes Begin|2027-01-19T00:00:00",
+      "firstSeenAt": "2026-11-09T14:38:25.738Z",
+      "title": "Spring Term - Classes Begin",
+      "source": "MU",
+      "date": "2027-01-19T00:00:00"
+    },
+    {
       "key": "Millersville University Men's Soccer vs First Round|2026-11-13T00:00:00.000Z",
       "firstSeenAt": "2026-11-09T02:41:30.803Z",
       "title": "Millersville University Men's Soccer vs First Round",
@@ -260,56 +309,7 @@
       "title": "Millersville University's Trick-or-Treat Trail",
       "source": "MU",
       "date": "2026-10-30T11:30:00"
-    },
-    {
-      "key": "Men's Ice Hockey Practice (D2)|2027-02-02T11:00:00.000Z",
-      "firstSeenAt": "2026-11-09T00:45:52.303Z",
-      "title": "Men's Ice Hockey Practice (D2)",
-      "source": "MU",
-      "date": "2027-02-02T11:00:00.000Z"
-    },
-    {
-      "key": "Men's Ice Hockey Practice (D2)|2027-02-03T11:00:00.000Z",
-      "firstSeenAt": "2026-11-09T00:45:52.303Z",
-      "title": "Men's Ice Hockey Practice (D2)",
-      "source": "MU",
-      "date": "2027-02-03T11:00:00.000Z"
-    },
-    {
-      "key": "Tell School of Music Recital Hour|2027-02-03T20:00:00.000Z",
-      "firstSeenAt": "2026-11-09T00:45:52.303Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2027-02-03T20:00:00.000Z"
-    },
-    {
-      "key": "Wednesday Night Dinner|2027-02-03T23:00:00.000Z",
-      "firstSeenAt": "2026-11-09T00:45:52.303Z",
-      "title": "Wednesday Night Dinner",
-      "source": "MU",
-      "date": "2027-02-03T23:00:00.000Z"
-    },
-    {
-      "key": "Real Talk, Real Skills|2027-02-04T17:00:00.000Z",
-      "firstSeenAt": "2026-11-09T00:45:52.303Z",
-      "title": "Real Talk, Real Skills",
-      "source": "MU",
-      "date": "2027-02-04T17:00:00.000Z"
-    },
-    {
-      "key": "Men's Ice Hockey Practice (D2)|2027-02-05T02:30:00.000Z",
-      "firstSeenAt": "2026-11-09T00:45:52.303Z",
-      "title": "Men's Ice Hockey Practice (D2)",
-      "source": "MU",
-      "date": "2027-02-05T02:30:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Cross Country at Franklin and Marshall|2026-10-08T21:30:00.000Z",
-      "firstSeenAt": "2026-11-08T22:57:48.136Z",
-      "title": "Millersville University Women's Cross Country at Franklin and Marshall",
-      "source": "MU",
-      "date": "2026-10-08T21:30:00.000Z"
     }
   ],
-  "addedLastRun": 0
+  "addedLastRun": 7
 }

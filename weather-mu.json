@@ -126,7 +126,74 @@
       }
     ]
   },
-  "observations": [],
+  "observations": [
+    {
+      "time": "09:00",
+      "temp": "56",
+      "dewpoint": "38",
+      "rh": "51",
+      "windDir": "WSW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "08:00",
+      "temp": "53",
+      "dewpoint": "39",
+      "rh": "60",
+      "windDir": "WSW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "07:00",
+      "temp": "44",
+      "dewpoint": "37",
+      "rh": "77",
+      "windDir": "WNW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "06:00",
+      "temp": "42",
+      "dewpoint": "36",
+      "rh": "79",
+      "windDir": "WSW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "05:00",
+      "temp": "43",
+      "dewpoint": "35",
+      "rh": "74",
+      "windDir": "WSW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "04:00",
+      "temp": "48",
+      "dewpoint": "34",
+      "rh": "59",
+      "windDir": "NNW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    }
+  ],
   "dailySummary": {
     "monthLabel": "November 2026",
     "days": [
@@ -238,6 +305,13 @@
   },
   "videos": [
     {
+      "title": "Short Term Forecast 11/09/2026",
+      "videoId": "V2wW2dcCyO8",
+      "url": "https://www.youtube.com/watch?v=V2wW2dcCyO8",
+      "published": "2026-11-09T14:29:15+00:00",
+      "thumbnail": "https://i3.ytimg.com/vi/V2wW2dcCyO8/hqdefault.jpg"
+    },
+    {
       "title": "Short Term Forecast 11/06/26",
       "videoId": "OSojho2m2X0",
       "url": "https://www.youtube.com/watch?v=OSojho2m2X0",
@@ -257,15 +331,8 @@
       "url": "https://www.youtube.com/watch?v=JY06PEcaG6I",
       "published": "2026-11-05T16:26:05+00:00",
       "thumbnail": "https://i3.ytimg.com/vi/JY06PEcaG6I/hqdefault.jpg"
-    },
-    {
-      "title": "Medium Range Forecast 11/05/2026",
-      "videoId": "rRz4cg9Yx9E",
-      "url": "https://www.youtube.com/watch?v=rRz4cg9Yx9E",
-      "published": "2026-11-05T14:18:32+00:00",
-      "thumbnail": "https://i3.ytimg.com/vi/rRz4cg9Yx9E/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-09T14:00:43.652Z"
+  "updated": "2026-11-09T14:35:31.212Z"
 }

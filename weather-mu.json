@@ -26,30 +26,14 @@
     ]
   },
   "sevenDay": {
-    "issued": "Sunday, November 08, 2026 at 08:48 AM (Corman, Stamper)",
+    "issued": "Monday, November 09, 2026 at 08:26 AM (Leopold, Muller)",
     "days": [
       {
-        "period": "Sunday",
-        "sky": "Mostly Sunny",
-        "weather": "Breezy",
-        "pop": "<10%",
-        "temp": "64",
-        "conf": "5"
-      },
-      {
-        "period": "Sunday night",
-        "sky": "Mainly Clear",
-        "weather": "Breezy",
-        "pop": "<10%",
-        "temp": "46",
-        "conf": "5"
-      },
-      {
         "period": "Monday",
-        "sky": "Partly Sunny",
-        "weather": "Breezy",
+        "sky": "Clouds & Sun",
+        "weather": "Windy",
         "pop": "<10%",
-        "temp": "60",
+        "temp": "58",
         "conf": "5"
       },
       {
@@ -57,7 +41,7 @@
         "sky": "Mainly Clear",
         "weather": "Fair",
         "pop": "<10%",
-        "temp": "40",
+        "temp": "37",
         "conf": "5"
       },
       {
@@ -73,7 +57,7 @@
         "sky": "Mainly Clear",
         "weather": "Fair",
         "pop": "<10%",
-        "temp": "40",
+        "temp": "38",
         "conf": "5"
       },
       {
@@ -88,7 +72,7 @@
         "period": "Wednesday night",
         "sky": "Increasing Clouds",
         "weather": "Fair",
-        "pop": "<10%",
+        "pop": "20%",
         "temp": "42",
         "conf": "4"
       },
@@ -96,104 +80,53 @@
         "period": "Thursday",
         "sky": "Mostly Cloudy",
         "weather": "Chance of Rain",
-        "pop": "40%",
+        "pop": "60%",
         "temp": "56",
-        "conf": "3"
+        "conf": "4"
       },
       {
         "period": "Thursday night",
         "sky": "Mostly Cloudy",
         "weather": "Chance of Rain",
-        "pop": "40%",
-        "temp": "40",
-        "conf": "3"
+        "pop": "60%",
+        "temp": "42",
+        "conf": "4"
       },
       {
         "period": "Friday",
         "sky": "Mostly Cloudy",
         "weather": "Chance of Rain",
         "pop": "40%",
-        "temp": "upper 40s",
+        "temp": "48",
+        "conf": "3"
+      },
+      {
+        "period": "Friday night",
+        "sky": "Mostly Cloudy",
+        "weather": "Chance of Rain",
+        "pop": "30%",
+        "temp": "36",
         "conf": "3"
       },
       {
         "period": "Saturday",
         "sky": "Mostly Cloudy",
         "weather": "Breezy",
-        "pop": "20%",
+        "pop": "<10%",
         "temp": "mid 40s",
+        "conf": "3"
+      },
+      {
+        "period": "Sunday",
+        "sky": "Mostly Cloudy",
+        "weather": "Breezy",
+        "pop": "<10%",
+        "temp": "upper 40s",
         "conf": "3"
       }
     ]
   },
-  "observations": [
-    {
-      "time": "08:00",
-      "temp": "53",
-      "dewpoint": "39",
-      "rh": "60",
-      "windDir": "WSW",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "44",
-      "dewpoint": "37",
-      "rh": "77",
-      "windDir": "WNW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "42",
-      "dewpoint": "36",
-      "rh": "79",
-      "windDir": "WSW",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "05:00",
-      "temp": "43",
-      "dewpoint": "35",
-      "rh": "74",
-      "windDir": "WSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "04:00",
-      "temp": "48",
-      "dewpoint": "34",
-      "rh": "59",
-      "windDir": "NNW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "03:00",
-      "temp": "45",
-      "dewpoint": "35",
-      "rh": "67",
-      "windDir": "WSW",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    }
-  ],
+  "observations": [],
   "dailySummary": {
     "monthLabel": "November 2026",
     "days": [
@@ -334,5 +267,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-09T13:19:59.631Z"
+  "updated": "2026-11-09T14:00:43.652Z"
 }

@@ -227,8 +227,10 @@ function card(title, rows) {
     return '<div class="status-card"><h2>' + title + '</h2>' + rows + '</div>';
 }
 
+function escH(str) { return String(str == null ? '' : str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+
 async function render() {
-    let status, history = null, notificationsStatus = null, autoEventsStatus = null;
+    let status, history = null, notificationsStatus = null, autoEventsStatus = null, skippedData = null;
     try {
         // Bust the cache explicitly — we want fresh numbers, not hourly CDN-
         // cached snapshots. The scraper writes these files as the last step
@@ -242,12 +244,21 @@ async function render() {
         // Both are optional — 404 just means that cron hasn't successfully
         // run yet (e.g., first deploy, or auto-scraper still dormant), and
         // the corresponding card is omitted instead of showing an error.
-        const [statusRes, historyRes, notifRes, autoRes] = await Promise.all([
+        // skipped.json: the skipped-by-rule register (2026-11-09). Optional — 404 or
+        // an old scrape.js just omits the card.
+        const [statusRes, historyRes, notifRes, autoRes, skippedRes] = await Promise.all([
             fetch('status.json?' + Date.now(), { cache: 'no-store' }),
             fetch('status-history.json?' + Date.now(), { cache: 'no-store' }).catch(() => null),
             fetch('notifications-status.json?' + Date.now(), { cache: 'no-store' }).catch(() => null),
-            fetch('auto-events-status.json?' + Date.now(), { cache: 'no-store' }).catch(() => null)
+            fetch('auto-events-status.json?' + Date.now(), { cache: 'no-store' }).catch(() => null),
+            fetch('skipped.json?' + Date.now(), { cache: 'no-store' }).catch(() => null)
         ]);
+        if (skippedRes && skippedRes.ok) {
+            try {
+                const text = await skippedRes.text();
+                if (text.trimStart().startsWith('{')) skippedData = JSON.parse(text);
+            } catch { /* malformed — ignore */ }
+        }
         if (!statusRes.ok) throw new Error('status.json HTTP ' + statusRes.status);
         status = await statusRes.json();
         if (historyRes && historyRes.ok) {
@@ -606,7 +617,35 @@ async function render() {
         );
     }
 
-    document.getElementById('grid').innerHTML = sourcesCard + sportsCard + contentCard + registrationsCard + reviewQueueCard + notificationsCard + autoScraperCard + recentAddedCard;
+    // Skipped by rule (2026-11-09): rows a CONTENT RULE kept off the site this run —
+    // not date-window drops, not duplicates (Adam's scope), not gated rows. One
+    // metric row per reason; item-level reasons expand to the rows with the title
+    // linking upstream. The point is "should that have been on the site?" — a real
+    // event hiding in a Borough room booking, a submission waiting on approval.
+    let skippedCard = '';
+    if (skippedData && skippedData.counts) {
+        const labels = skippedData.labels || {};
+        const reasons = Object.keys(skippedData.counts).sort((a, b) => skippedData.counts[b] - skippedData.counts[a]);
+        const total = reasons.reduce((n, r) => n + skippedData.counts[r], 0);
+        const rows = reasons.map(r => {
+            const items = (skippedData.items && skippedData.items[r]) || [];
+            const label = labels[r] || r;
+            if (!items.length) return metric(escH(label), skippedData.counts[r], { hint: 'count only' });
+            const lis = items.map(it => {
+                const when = it.date ? escH(it.date).slice(0, 10) : '';
+                const t = it.link ? '<a href="' + escH(it.link) + '" target="_blank" rel="noopener">' + escH(it.title || '(untitled)') + '</a>' : escH(it.title || '(untitled)');
+                const tail = [when, it.location ? escH(it.location) : '', it.source ? escH(it.source) : '', it.note ? escH(it.note) : ''].filter(Boolean).join(' · ');
+                return '<li>' + t + (tail ? ' <span class="status-metric-hint">' + tail + '</span>' : '') + '</li>';
+            }).join('');
+            const capNote = items.length >= (skippedData.itemCap || 40) && skippedData.counts[r] > items.length ? ' (first ' + items.length + ' of ' + skippedData.counts[r] + ')' : '';
+            return '<details class="status-metric" style="display:block"><summary style="cursor:pointer;display:flex;justify-content:space-between"><span class="status-metric-label">' + escH(label) + '</span><span class="status-metric-value">' + skippedData.counts[r] + '</span></summary><ul style="margin:6px 0 4px 18px;padding:0;font-size:0.85em;line-height:1.5">' + lis + '</ul>' + (capNote ? '<div class="status-metric-hint">' + capNote + '</div>' : '') + '</details>';
+        }).join('');
+        skippedCard = card('Skipped by Rule (this run)',
+            metric('Rows kept off the site by a content rule', total, { hint: 'no date-window drops · no duplicates · gated rows not included' }) +
+            (rows || '<div class="status-metric muted"><span class="status-metric-label">Nothing skipped by rule this run</span></div>')
+        );
+    }
+    document.getElementById('grid').innerHTML = sourcesCard + sportsCard + contentCard + registrationsCard + reviewQueueCard + notificationsCard + autoScraperCard + recentAddedCard + skippedCard;
 }
 
 render();

@@ -1235,6 +1235,50 @@ function extractPhantomPowerEventFromHTML(html, url, eventsArray, now, futureLim
 
 // ===== MAIN SCRAPER =====
 
+// ---- Skipped-by-rule register (2026-11-09, Adam: "a way to see the events the scraper
+// decided not to include, in case something being skipped should be on the site").
+// Rows a CONTENT RULE excluded are recorded here and written to skipped.json (an
+// operator-only sidecar the status page reads; the site never loads it). Scope is
+// deliberate: date-window drops and duplicates are NOT recorded (the dedupe log already
+// lists the twins; Adam ruled duplicates out), and gated rows (mu-only / townie-only)
+// are emitted, not skipped -- they get their own review card later. Reasons marked
+// countOnly carry no rows (hundreds of Sidearm-covered calendar games, sub-varsity PM
+// games, trash days): the number is the signal. Item-level reasons cap at 40 rows each,
+// first-come, so a feed incident can't balloon the file.
+const SKIP_ITEM_CAP = 40;
+const skipRegister = { counts: {}, items: {} };
+function recordSkip(reason, row = {}, opts = {}) {
+    skipRegister.counts[reason] = (skipRegister.counts[reason] || 0) + 1;
+    if (opts.countOnly) return;
+    const list = (skipRegister.items[reason] = skipRegister.items[reason] || []);
+    if (list.length >= SKIP_ITEM_CAP) return;
+    const clean = v => (v == null ? '' : String(v)).replace(/\s+/g, ' ').trim();
+    list.push({
+        source: clean(row.source), title: clean(row.title).slice(0, 160),
+        date: clean(row.date).slice(0, 25), location: clean(row.location).slice(0, 120),
+        link: clean(row.link).slice(0, 300), note: clean(row.note).slice(0, 160)
+    });
+}
+// Human labels for the status card; a reason missing here still renders (raw key).
+const SKIP_REASON_LABELS = {
+    'borough-reservation':       'Borough: unenriched "Reserve Public Meeting Room" bookings',
+    'borough-spam':              'Borough: vendor/transaction spam filtered',
+    'borough-collection':        'Borough: trash / yard-waste / appliance collection days',
+    'mu-calendar-athletics':     'MU Calendar: Athletic Competitions (varsity games come from Sidearm)',
+    'mu-calendar-phantom':       'MU Calendar: bare "Summer Fun Series" phantom',
+    'mu-calendar-club-lobby':    'MU Calendar: Club Sports lobby double-entry',
+    'intramural-dup':            'Intramural registration (dup of DSE Rec)',
+    'artsmu-cancelled':          'artsmu: CANCELLED show',
+    'pm-sub-varsity':            'Penn Manor Athletics: sub-varsity level',
+    'camps-skipped':             'camps.json: malformed / out of window / already on the calendar',
+    'override-registration-closed': 'Curated override: registration deadline passed',
+    'curated-row-skipped':       'Curated lane: row malformed or not approved',
+    'submission-not-approved':   'Community submission: not approved (review queue)',
+    'submission-bad-date':       'Community submission: unparseable date',
+    'submission-out-of-range':   'Community submission: outside the 90d/365d window',
+    'submission-no-deadline':    'Community submission: Signup row with no deadline'
+};
+
 // ---- Penn Manor fetch-failure carry-forward (2026-09-17) -------------------------
 // Pure and harness-testable. On a PM feed failure the run reuses that feed's rows
 // from the previous committed events.json, capped at 24h since the last GOOD
@@ -2487,6 +2531,7 @@ async function runScraper() {
             const isUnified = /\bunified\b/i.test(levelRaw);
             if (!(isVarsity || isJV || isUnified)) {
                 pmAthDropLevel++;
+                recordSkip('pm-sub-varsity', {}, { countOnly: true });
                 if (!levelRaw || !PM_SUBVARSITY_RE.test(levelRaw)) {
                     pmAthSuspectDrops.push(`${title} [Level: ${levelRaw || '(empty)'}]`);
                 }
@@ -3490,11 +3535,11 @@ async function runScraper() {
             if (!custName) muCalNoCustomer++;
 
             // SKIP Athletic Competitions — we get those from Sidearm now
-            if (eventType === 'Athletic Competitions') return;
+            if (eventType === 'Athletic Competitions') { recordSkip('mu-calendar-athletics', {}, { countOnly: true }); return; }
             // Category-outage twin (2026-09-25): the Athletics department's own
             // bookings of a game ("Football vs. Slippery Rock", "WBB vs. Virginia
             // State"). Requires the `vs.` so the Hall of Fame Dinner still publishes.
-            if (!eventType && custName === 'Athletics' && /\bvs\.?\s/i.test(eventTitle)) { muCalAthSkipHeur++; return; }
+            if (!eventType && custName === 'Athletics' && /\bvs\.?\s/i.test(eventTitle)) { muCalAthSkipHeur++; recordSkip('mu-calendar-athletics', {}, { countOnly: true }); return; }
 
             // --- TEMP SKIP: bare "Summer Fun Series" calendar phantoms (added 2026-06-24) ---
             // After MU's calendar migration (Ad Astra -> Coursedog, June 2026), the
@@ -3516,12 +3561,14 @@ async function runScraper() {
             // pair on its own (richer copy wins) — so this skip becomes redundant.
             if (/^\s*summer fun series\s*:?\s*$/i.test(eventTitle)) {
                 console.log(`⏭️  Skipped bare 'Summer Fun Series' calendar phantom (${obj.startDate || 'no date'})`);
+                recordSkip('mu-calendar-phantom', { source: 'MU Calendar', title: eventTitle, date: obj.startDate, link: (obj.eventId || obj.activityId) ? `https://www.millersville.edu/calendar/events/${obj.eventId || obj.activityId}` : '' });
                 return;
             }
 
             // Club Sports lobby double-entry (see the sweep above the loop).
             if (clubDropRows.has(obj)) {
                 console.log(`⏭️  Skipped Club Sports lobby double-entry: "${eventTitle}" (${obj.startDate || 'no date'})`);
+                recordSkip('mu-calendar-club-lobby', { source: 'MU Calendar', title: eventTitle, date: obj.startDate, link: (obj.eventId || obj.activityId) ? `https://www.millersville.edu/calendar/events/${obj.eventId || obj.activityId}` : '' });
                 return;
             }
 
@@ -3638,6 +3685,7 @@ async function runScraper() {
                 // predicate's definitive marker is a URL that may live there.
                 if (isIntramuralRegistration(eventTitle, descHtml, customerName)) {
                     console.log(`\u23ed\ufe0f  Skipped intramural registration (MU Calendar republish, dup of DSE Rec): "${(eventTitle || '').trim()}"`);
+                    recordSkip('intramural-dup', { source: 'MU Calendar', title: eventTitle, date: obj.startDate, note: 'DSE Rec carries the registration' });
                     return;
                 }
 
@@ -3802,7 +3850,7 @@ async function runScraper() {
                 // live dupe pairs, Oct 30 + Feb 26). The post-dedupe decode at
                 // write time masked it in events.json.
                 let title = decodeEntities(titleMatch[1]).trim();
-                if (/^CANCELLED\b/i.test(title)) { artsSkipped++; continue; }  // \b not ':' — "CANCELLED – Stars at the Break of Day" slipped the colon-only form (2026-08-23)
+                if (/^CANCELLED\b/i.test(title)) { artsSkipped++; recordSkip('artsmu-cancelled', { source: 'artsmu', title, link: eventUrl }); continue; }  // \b not ':' — "CANCELLED – Stars at the Break of Day" slipped the colon-only form (2026-08-23)
 
                 // Date: "Friday, May 01, 2026" pattern near the top of the event page
                 const dateMatch = evHtml.match(/(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday),?\s+(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),?\s+(\d{4})/);
@@ -3979,12 +4027,12 @@ async function runScraper() {
                 // Calendar arrive as naive ET strings and the new Date()
                 // we build below resolves to a UTC instant.
                 for (const camp of campsData) {
-                    if (!camp.title || !camp.date) { campSkipped++; continue; }
+                    if (!camp.title || !camp.date) { campSkipped++; recordSkip('camps-skipped', {}, { countOnly: true }); continue; }
                     const campDate = new Date(camp.date);
-                    if (isNaN(campDate.getTime())) { campSkipped++; continue; }
-                    if (campDate < pastDate || campDate >= futureDate) { campSkipped++; continue; }
+                    if (isNaN(campDate.getTime())) { campSkipped++; recordSkip('camps-skipped', {}, { countOnly: true }); continue; }
+                    if (campDate < pastDate || campDate >= futureDate) { campSkipped++; recordSkip('camps-skipped', {}, { countOnly: true }); continue; }
                     const key = buildCampDedupKey(camp.title, campDate);
-                    if (existingKeys4.has(key)) { campSkipped++; continue; }
+                    if (existingKeys4.has(key)) { campSkipped++; recordSkip('camps-skipped', {}, { countOnly: true }); continue; }
                     // Pass through endTime if specified — needed for non-camp events
                     // (like the Summer Fun Series, which are 6-7pm slots, not full-day
                     // camps that fallback durations would handle correctly). Field is
@@ -4103,6 +4151,7 @@ async function runScraper() {
             // "Student Event" relabel path; change there, not here).
             if (isIntramuralRegistration(item.name, item.description, item.organizationName)) {
                 console.log(`\u23ed\ufe0f  Skipped intramural registration (GetInvolved dup of DSE Rec): "${(item.name || '').trim()}"`);
+                recordSkip('intramural-dup', { source: 'GetInvolved', title: item.name, date: item.startsOn, note: 'DSE Rec carries the registration' });
                 return;
             }
 
@@ -4503,7 +4552,7 @@ async function runScraper() {
 
             // Skip the recurring collection days (see note above). One check
             // here covers BOTH the RRULE-expansion and single-event paths below.
-            if (BOROUGH_COLLECTION_RE.test(title)) { boroughCollectionSkipped++; continue; }
+            if (BOROUGH_COLLECTION_RE.test(title)) { boroughCollectionSkipped++; recordSkip('borough-collection', {}, { countOnly: true }); continue; }
 
             // Drop vendor/transaction spam the borough's email→calendar bridge
             // republishes as public events (see BOROUGH_SPAM_RE). One check here
@@ -4513,6 +4562,7 @@ async function runScraper() {
             if (BOROUGH_SPAM_RE.test(title)) {
                 boroughSpamSkipped++;
                 console.log(`  🚫 Borough spam filtered: "${title}"`);
+                recordSkip('borough-spam', { source: 'Borough', title, date: ev.start, location: loc });
                 continue;
             }
 
@@ -4708,6 +4758,7 @@ async function runScraper() {
                                 const rdl = new Date(ov.registrationDeadline);
                                 if (!isNaN(rdl.getTime()) && rdl < new Date()) {
                                     console.log(`  ⏰ Borough create skipped — registration closed: "${ov.newTitle}"`);
+                                    recordSkip('override-registration-closed', { source: 'Borough', title: ov.newTitle, date: ov.date, note: `deadline ${ov.registrationDeadline}` });
                                     continue;
                                 }
                             }
@@ -4797,6 +4848,7 @@ async function runScraper() {
             if (!e.tags || !e.tags.includes('Borough')) continue;
             if (!BOROUGH_NOISE_TITLE_RE.test(e.title || '')) continue;
             if (e.description) continue;  // enriched → real event, keep
+            recordSkip('borough-reservation', { source: 'Borough', title: e.title, date: e.date, location: e.location, link: e.sourceLink, note: 'enrich via borough-overrides.json if this is a real event' });
             events.splice(i, 1);
             boroughNoiseSkipped++;
         }
@@ -4911,7 +4963,7 @@ async function runScraper() {
                 if (ovDate < cutoff) { stale++; continue; }
                 if (ov.registrationDeadline) {
                     const rdl = new Date(ov.registrationDeadline);
-                    if (!isNaN(rdl.getTime()) && rdl < now) { console.log(`  ⏰ Manor override skipped — registration closed: "${ov.title}"`); skipped++; continue; }
+                    if (!isNaN(rdl.getTime()) && rdl < now) { console.log(`  ⏰ Manor override skipped — registration closed: "${ov.title}"`); recordSkip('override-registration-closed', { source: 'Manor', title: ov.title, date: ov.date, note: `deadline ${ov.registrationDeadline}` }); skipped++; continue; }
                 }
                 const ovDay = dayOf(ov.date);
                 const hit = events.find(e => e && Array.isArray(e.tags) && e.tags.includes('Manor') && !e._overrideCreated
@@ -6062,6 +6114,7 @@ async function runScraper() {
                 if (!statusApproved) {
                     if (eventName && dateStr) {
                         skippedNoStatus++;
+                        recordSkip('submission-not-approved', { source: 'Community', title: eventName, date: dateStr, location, link, note: status ? `Status: ${status}` : 'Status blank' });
                         // Review-backlog split (2026-09-03): quick M/D/YYYY-or-ISO parse of
                         // the anchor date — an unapproved row still ahead of its date is
                         // the real to-do; a past one is sheet clutter.
@@ -6090,12 +6143,12 @@ async function runScraper() {
                     // Fallback for non-MDY (e.g. "2026-04-27"). Take the local
                     // calendar interpretation and pull components.
                     const fallbackD = new Date(dateStr);
-                    if (isNaN(fallbackD.getTime())) { skippedBadDate++; continue; }
+                    if (isNaN(fallbackD.getTime())) { skippedBadDate++; recordSkip('submission-bad-date', { source: 'Community', title: eventName, date: dateStr, location, link }); continue; }
                     yyyy = fallbackD.getFullYear();
                     mm = fallbackD.getMonth() + 1;
                     dd = fallbackD.getDate();
                 }
-                if (!yyyy || !mm || !dd) { skippedBadDate++; continue; }
+                if (!yyyy || !mm || !dd) { skippedBadDate++; recordSkip('submission-bad-date', { source: 'Community', title: eventName, date: dateStr, location, link }); continue; }
 
                 // Eastern Time DST rule: starts 2nd Sunday in March, ends 1st
                 // Sunday in November. Compute the boundary dates for this
@@ -6175,13 +6228,13 @@ async function runScraper() {
                 const offset = dst ? '-04:00' : '-05:00';
                 const isoStr = `${yyyy}-${String(mm).padStart(2,'0')}-${String(dd).padStart(2,'0')}T${String(timeH).padStart(2,'0')}:${String(timeM).padStart(2,'0')}:00${offset}`;
                 const eventDate = new Date(isoStr);
-                if (isNaN(eventDate.getTime())) { skippedBadDate++; continue; }
+                if (isNaN(eventDate.getTime())) { skippedBadDate++; recordSkip('submission-bad-date', { source: 'Community', title: eventName, date: dateStr, location, link }); continue; }
 
                 // Skip events outside our date range. Signup rows (Type =
                 // "Signup or Registration") defer to the DEADLINE range check
                 // below — their calendar date becomes the deadline day, so the
                 // Start Date only anchors the row, it never gates it.
-                if (!isSignupType && (eventDate < pastDate || eventDate >= futureDate)) { skippedOutOfRange++; continue; }
+                if (!isSignupType && (eventDate < pastDate || eventDate >= futureDate)) { skippedOutOfRange++; recordSkip('submission-out-of-range', {}, { countOnly: true }); continue; }
 
                 // ── Audience: map the Form answer to the site's event model.
                 //   'mu-only'     → students only, hidden from townies.
@@ -6252,10 +6305,11 @@ async function runScraper() {
                 if (isSignupType) {
                     if (!regDeadlineIso) {
                         console.log(`  ⚠️ Signup row "${eventName}" has no parseable Registration Deadline — skipped`);
+                        recordSkip('submission-no-deadline', { source: 'Community', title: eventName, date: dateStr, location, link });
                         continue;
                     }
                     signupDate = new Date(regDeadlineIso);
-                    if (signupDate < pastDate || signupDate >= futureDate) { skippedOutOfRange++; continue; }
+                    if (signupDate < pastDate || signupDate >= futureDate) { skippedOutOfRange++; recordSkip('submission-out-of-range', {}, { countOnly: true }); continue; }
                 }
 
                 events.push({
@@ -7716,6 +7770,23 @@ async function runScraper() {
     if (beforeBytes > 0) {
         const reductionPct = Math.round((1 - afterBytes / beforeBytes) * 100);
         console.log(`💾 events.json: ${(afterBytes/1024).toFixed(1)}KB (${reductionPct}% smaller than pretty-printed)`);
+        // skipped.json (2026-11-09): the skipped-by-rule register, for the status page's
+        // "Skipped by rule" card. Operator-only; the site never fetches it. Written every
+        // run (an empty register still writes, so a missing file means an old scrape.js).
+        try {
+            const skipTotal = Object.values(skipRegister.counts).reduce((a, b) => a + b, 0);
+            const skipListed = Object.values(skipRegister.items).reduce((a, l) => a + l.length, 0);
+            const skippedOut = {
+                generatedAt: new Date().toISOString(),
+                scope: 'content-rule skips only — no date-window drops, no duplicates; gated (mu-only/townie-only) rows are emitted, not listed here',
+                itemCap: SKIP_ITEM_CAP,
+                labels: SKIP_REASON_LABELS,
+                counts: skipRegister.counts,
+                items: skipRegister.items
+            };
+            fs.writeFileSync(path.join(__dirname, '../skipped.json'), JSON.stringify(skippedOut, null, 1));
+            console.log(`🗂 Skipped by rule: ${skipTotal} row(s) across ${Object.keys(skipRegister.counts).length} reason(s), ${skipListed} listed in skipped.json`);
+        } catch (e) { console.log(`  ⚠️ skipped.json write error: ${e.message}`); }
     }
 
     // --- schema.org Event JSON-LD for Google rich results -----------------
@@ -8204,7 +8275,13 @@ async function runScraper() {
             // run, useful for spotting a stuck scraper (consistently 0 across
             // many runs = something probably broken upstream).
             recentlyAdded: recentlyAddedForStatus,
-            addedLastRun: addedThisRun
+            addedLastRun: addedThisRun,
+            // Skipped-by-rule summary (2026-11-09): counts per reason; rows live in
+            // skipped.json. Lets the health monitor see the register without a second file.
+            skippedByRule: {
+                total: Object.values(skipRegister.counts).reduce((a, b) => a + b, 0),
+                reasons: skipRegister.counts
+            }
         };
         fs.writeFileSync(path.join(__dirname, '../status.json'), JSON.stringify(status, null, 2));
         if (status.sourceHealth.ok) {

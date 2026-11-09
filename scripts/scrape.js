@@ -555,10 +555,76 @@ function decorateGenericTitle(title, orgName) {
     const o = (orgName || '').trim();
     if (!t || !o) return t;
     if (!GENERIC_CLUB_EVENT_TITLES.test(t)) return t;
+    // Title-case the generic part (2026-11-09, Adam): orgs post "general meeting" /
+    // "e-board" in lowercase and the timeline strips the org prefix back off for
+    // display, so the row read "general meeting" beside the ADAPT / CWG badge. The
+    // vocabulary above is closed, so word-capitalizing it is safe ("e-board" -> "E-Board").
+    const tc = genericTitleCase(t);
     // Avoid redundancy: if the org name is already somewhere in the title, skip.
     // Prevents "Rugby Club Practice" from becoming "Men's Rugby Club Rugby Club Practice".
-    if (t.toLowerCase().includes(o.toLowerCase())) return t;
-    return `${o} ${t}`;
+    if (t.toLowerCase().includes(o.toLowerCase())) return tc;
+    return `${o} ${tc}`;
+}
+
+// Post-dedupe title capitalization (2026-11-09, Adam: titles should read consistently).
+// Two cases, both display-only: (a) a title that begins with a lowercase letter -- unless
+// the first word is a brand/handle spelled that way (iPhone, eSports, mRNA: a lowercase
+// letter followed by an uppercase inside the same word) -- gets its first letter raised;
+// (b) a title that begins with the event's own orgName followed by a GENERIC club title
+// in lowercase ("Creative Writers Guild general meeting", written whole by the org) gets
+// that generic part title-cased, because the timeline strips the org prefix and showed
+// the lowercase remainder. Nothing else in the title is touched.
+// Word-capitalize a GENERIC club title ("general meeting" -> "General Meeting", "e-board"
+// -> "E-Board", "gbm" -> "GBM"). Only ever applied to strings that matched
+// GENERIC_CLUB_EVENT_TITLES -- never to free-text titles.
+function genericTitleCase(t) {
+    return t.replace(/(^|[\s-])([a-z])/g, (m, pre, c) => pre + c.toUpperCase()).replace(/\bGbm\b/g, 'GBM');
+}
+function tidyTitleCase(title, orgName) {
+    let t = String(title || '');
+    if (!t) return t;
+    if (/^[a-z]/.test(t) && !/^[a-z]+[A-Z]/.test(t)) {
+        t = GENERIC_CLUB_EVENT_TITLES.test(t) ? genericTitleCase(t) : t[0].toUpperCase() + t.slice(1);
+    }
+    const o = String(orgName || '').trim();
+    if (o && t.startsWith(o + ' ')) {
+        // The remainder is raised ONLY when it is a generic title -- a lowercase "at" /
+        // "of" after the org is the org's own longer name ("Students for Life at
+        // Millersville University General Meeting"), not a casing slip.
+        const rest = t.slice(o.length + 1);
+        if (GENERIC_CLUB_EVENT_TITLES.test(rest)) t = o + ' ' + genericTitleCase(rest);
+    }
+    return t;
+}
+
+// Penn Manor school names spelled out (2026-11-09, Adam: "HB = Hambright, ESH = Eshleman,
+// Marticville MS = Marticville Middle School, Mtg = Meeting, there may be others").
+// Applied to the GENERAL-calendar rows' title and location only -- athletics rows keep
+// Penn Manor's own "JV" / opponent "HS" spellings. Leading-token abbreviations are the
+// district's (they open the title: "HB PTO Mtg", "ESH Chorus", "PEQ – Popsicles…");
+// "Mtg", "PMHS"/"PM HS", "MVMS"/"MTV" and "<School> MS" expand anywhere. A school name
+// repeated back to back collapses ("Marticville MS MVMS School Play"). Extend the two
+// tables when a new abbreviation shows up in the harvest.
+const PM_ABBR_LEADING = [
+    [/^HB\b/, 'Hambright Elementary'], [/^ESH\b/, 'Eshleman Elementary'], [/^PEQ\b/, 'Pequea Elementary'],
+    [/^CM\b/, 'Central Manor Elementary'], [/^CON\b/, 'Conestoga Elementary'], [/^LET\b/, 'Letort Elementary'],
+    [/^MAR\b/, 'Martic Elementary'], [/^MMS\b/, 'Manor Middle School'], [/^MTV\b/, 'Marticville Middle School'],
+    [/^PMHS\b/, 'Penn Manor High School'], [/^PM HS\b/, 'Penn Manor High School'],
+];
+const PM_ABBR_ANYWHERE = [
+    [/\bMtg\b/g, 'Meeting'], [/\bMVMS\b/g, 'Marticville Middle School'], [/\bPMHS\b/g, 'Penn Manor High School'],
+    [/\bPM HS\b/g, 'Penn Manor High School'],
+    [/\b(Marticville|Manor|Combined) MS\b/g, '$1 Middle School'],
+    [/\b(Hambright|Eshleman|Pequea|Central Manor|Conestoga|Letort|Martic) Elem\b\.?/g, '$1 Elementary'],
+];
+function expandPmSchoolAbbr(text) {
+    let t = String(text || '');
+    if (!t) return t;
+    for (const [re, rep] of PM_ABBR_LEADING) t = t.replace(re, rep);
+    for (const [re, rep] of PM_ABBR_ANYWHERE) t = t.replace(re, rep);
+    // "Marticville Middle School Marticville Middle School School Play" -> one school name
+    t = t.replace(/\b((?:[A-Z][\w']+ ){1,3}(?:Elementary|Middle School|High School)) \1\b/g, '$1');
+    return t.replace(/\s{2,}/g, ' ').trim();
 }
 
 // Intramural-registration skip (2026-08-21, Adam's call): Campus Rec began
@@ -2201,12 +2267,23 @@ async function runScraper() {
             const level = m[2].toLowerCase();
             return level === 'elementary' ? m[1] : `${m[1]} ${level === 'middle' ? 'MS' : 'HS'}`;
         };
+        // Spelled-out form for the PREFIX (2026-11-09, Adam): "Hambright Elementary PTO
+        // Meeting", "Marticville Middle School Laptop Distribution", "Penn Manor High School …".
+        // pmSchoolShort stays for DETECTION so a district title that already says
+        // "Marticville MS" is still recognized as naming its school (no double prefix).
+        const pmSchoolLong = (full) => {
+            const m = full.match(PM_SCHOOL_RE);
+            if (!m) return full;
+            const level = m[2].toLowerCase();
+            return level === 'elementary' ? `${m[1]} Elementary` : `${m[1]} ${level === 'middle' ? 'Middle' : 'High'} School`;
+        };
         // Title already names a school: the district's own abbreviations (ESH, HB, PEQ,
         // CM, CON, LET, MAR, MMS, MTV, PMHS) as a leading token, or the school's short
         // name anywhere in the title.
         const PM_SCHOOL_ABBR_RE = /^(esh|hb|peq|cm|con|let|mar|mms|mtv|pmhs|pm ?hs)\b/i;
-        const pmTitleNamesSchool = (title, shorts) =>
-            PM_SCHOOL_ABBR_RE.test(title) || shorts.some(s => title.toLowerCase().includes(s.toLowerCase()));
+        const pmTitleNamesSchool = (title, shorts, longs = []) =>
+            PM_SCHOOL_ABBR_RE.test(title) || shorts.some(s => title.toLowerCase().includes(s.toLowerCase()))
+            || longs.some(s => title.toLowerCase().includes(s.toLowerCase()));
         const pmGenPending = []; // {key, title, eventDate, endTime, schools:Set, venue, tags, streamLink, sourceLink}
 
         for (const ev of Object.values(pmData)) {
@@ -2300,14 +2377,19 @@ async function runScraper() {
         for (const p of pmGenPending) {
             const schoolList = [...p.schools];
             const shorts = schoolList.map(pmSchoolShort);
+            const longs = schoolList.map(pmSchoolLong);
             let title = p.title;
-            if (schoolList.length && !pmTitleNamesSchool(title, shorts)) {
-                const joined = shorts.length > 1 ? shorts.slice(0, -1).join(', ') + ' & ' + shorts[shorts.length - 1] : shorts[0];
+            if (schoolList.length && !pmTitleNamesSchool(title, shorts, longs)) {
+                const joined = longs.length > 1 ? longs.slice(0, -1).join(', ') + ' & ' + longs[longs.length - 1] : longs[0];
                 title = `${joined} ${title}`;
                 pmGenPrefixed++;
             }
             if (schoolList.length > 1) pmGenMerged++;
-            const location = p.venue || (schoolList.length ? schoolList.join(' · ') : 'Penn Manor School District');
+            // District abbreviations spelled out on the general rows (2026-11-09): title and
+            // location both ("HB PTO Mtg" @ "HB Library" -> "Hambright Elementary PTO Meeting"
+            // @ "Hambright Elementary Library"). Athletics rows never pass through here.
+            title = expandPmSchoolAbbr(title);
+            const location = expandPmSchoolAbbr(p.venue || (schoolList.length ? schoolList.join(' · ') : 'Penn Manor School District'));
             events.push({
                 title, date: p.eventDate.toISOString(),
                 endTime: p.endTime,
@@ -7373,6 +7455,12 @@ async function runScraper() {
     }
     // Strip the internal marker so it never lands in events.json.
     deduped.forEach(e => { if (e._overrideCreated) delete e._overrideCreated; });
+    // Title capitalization pass (2026-11-09): see tidyTitleCase. Runs after dedupe so the
+    // match keys are unaffected; the snapshot key (title|date) changes for the retitled
+    // rows, so they read as "new" in Recent Additions ONCE on the landing build.
+    { let tidied = 0;
+      deduped.forEach(e => { const t2 = tidyTitleCase(e.title, e.orgName); if (t2 !== e.title) { e.title = t2; tidied++; } });
+      if (tidied) console.log(`🔤 Title capitalization: ${tidied} title(s) tidied`); }
 
     // ── Calendar/GetInvolved twin split (2026-09-09) — see
     // CALENDAR_CLUBS_SPLIT_RE. Explicit audience on both copies, so the camps

@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-09T16:26:36.172Z",
-  "totalEvents": 2047,
-  "withDescription": 850,
+  "generatedAt": "2026-11-09T16:32:06.933Z",
+  "totalEvents": 2049,
+  "withDescription": 852,
   "withImage": 231,
   "familyFriendly": 56,
   "eventsToday": 20,
@@ -9,6 +9,7 @@
     "muAthletics": 391,
     "muCalendar": 185,
     "artsmu": 50,
+    "eckert": 3,
     "campsAlumni": 11,
     "muGetInvolved": 562,
     "pennManor": 648,
@@ -33,6 +34,10 @@
     "artsmu": {
       "earliest": "2026-11-06T21:00:00.000Z",
       "latest": "2027-06-04T22:30:00.000Z"
+    },
+    "eckert": {
+      "earliest": "2026-09-09T21:00:00.000Z",
+      "latest": "2026-11-12T22:30:00.000Z"
     },
     "campsAlumni": {
       "earliest": "2026-10-17T12:30:00.000Z",
@@ -87,6 +92,10 @@
     "artsmu": {
       "newest": "2027-06-04",
       "daysSinceMoved": 82
+    },
+    "eckert": {
+      "newest": "2026-11-12",
+      "daysSinceMoved": 0
     },
     "campsAlumni": {
       "newest": "2027-08-20",
@@ -151,13 +160,13 @@
       "PM Community": 1
     },
     "stalePast": 30,
-    "lastSyncAt": "2026-11-09T16:23:45.214Z"
+    "lastSyncAt": "2026-11-09T16:29:37.527Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 2,
-    "checkedAt": "2026-11-09T16:26:24.122Z"
+    "checkedAt": "2026-11-09T16:32:02.738Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -241,6 +250,20 @@
   },
   "recentlyAdded": [
     {
+      "key": "Eckert Art Gallery Closing Reception: “Field Notes: Learning to See”|2026-10-15T21:30:00.000Z",
+      "firstSeenAt": "2026-11-09T16:32:06.929Z",
+      "title": "Eckert Art Gallery Closing Reception: “Field Notes: Learning to See”",
+      "source": "MU",
+      "date": "2026-10-15T21:30:00.000Z"
+    },
+    {
+      "key": "Eckert Art Gallery Reception: “Unfolding”|2026-11-12T22:30:00.000Z",
+      "firstSeenAt": "2026-11-09T16:32:06.929Z",
+      "title": "Eckert Art Gallery Reception: “Unfolding”",
+      "source": "MU",
+      "date": "2026-11-12T22:30:00.000Z"
+    },
+    {
       "key": "UAB Connect: Gingerbread House Competition|2026-09-30T19:00:00",
       "firstSeenAt": "2026-11-09T16:26:36.168Z",
       "title": "UAB Connect: Gingerbread House Competition",
@@ -295,21 +318,7 @@
       "title": "Spring Recess",
       "source": "MU",
       "date": "2027-03-11T00:00:00"
-    },
-    {
-      "key": "Spring Recess|2027-03-12T00:00:00",
-      "firstSeenAt": "2026-11-09T16:26:36.168Z",
-      "title": "Spring Recess",
-      "source": "MU",
-      "date": "2027-03-12T00:00:00"
-    },
-    {
-      "key": "Spring Recess|2027-03-13T00:00:00",
-      "firstSeenAt": "2026-11-09T16:26:36.168Z",
-      "title": "Spring Recess",
-      "source": "MU",
-      "date": "2027-03-13T00:00:00"
     }
   ],
-  "addedLastRun": 23
+  "addedLastRun": 2
 }

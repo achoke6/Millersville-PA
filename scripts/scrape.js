@@ -485,7 +485,15 @@ function extractPricing(desc, title = "", location = "", apiLink = "", startET =
         // ticketed via the varsity venue pages (2026-09-01). Known MU venues not
         // mapped: Pucillo Pool 23676 (passes, no events), Lancaster Ice Rink 26749
         // (club hockey -- MU-only, unpriced). Full table in the manifest's etix section.
-        else if (!/club sport/.test(lt)) {
+        // Rafters/Dutcher is a box-office venue like Winter/Ware: MU Theatre's only
+        // ticketing is etix, so a priced row there is on etix. Ungated.
+        else if (/dutcher|rafters/.test(ll)) link = "https://www.etix.com/ticket/v/26344/";
+        // The rest are GENERAL-USE buildings. The 2026-11-09 landing build linked a
+        // sorority bingo (Xingo, Ville Courts -- raffle $) and an alumni RSVP lunch
+        // (Salute to Service, Ford Atrium) to etix venue pages etix has never sold
+        // for. A link to these venues needs the description to name the seller:
+        // etix itself, the (SMC) ticket office, or a box office.
+        else if (!/club sport/.test(lt) && /etix|ticket(?:ing)?\s+office|box\s+office/i.test(desc || '')) {
             if (/cooper park/.test(ll)) link = "https://www.etix.com/ticket/v/23684/";
             else if (/biemesderfer|chryst/.test(ll)) link = "https://www.etix.com/ticket/v/23683/";
             else if (/pucillo/.test(ll)) link = "https://www.etix.com/ticket/v/23673/";
@@ -493,7 +501,6 @@ function extractPricing(desc, title = "", location = "", apiLink = "", startET =
             else if (/\bsmc\b|student memorial/.test(ll)) link = "https://www.etix.com/ticket/v/23671/";
             else if (/mccomsey|myers/.test(ll)) link = "https://www.etix.com/ticket/v/26394/";
             else if (/gordinier|lehr/.test(ll)) link = "https://www.etix.com/ticket/v/26343/";
-            else if (/dutcher|rafters/.test(ll)) link = "https://www.etix.com/ticket/v/26344/";
         }
     }
     // Ware Center / Steinman Hall events with admission → etix

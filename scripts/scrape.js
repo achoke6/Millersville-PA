@@ -586,13 +586,20 @@ function tidyTitleCase(title, orgName) {
     if (/^[a-z]/.test(t) && !/^[a-z]+[A-Z]/.test(t)) {
         t = GENERIC_CLUB_EVENT_TITLES.test(t) ? genericTitleCase(t) : t[0].toUpperCase() + t.slice(1);
     }
-    const o = String(orgName || '').trim();
-    if (o && t.startsWith(o + ' ')) {
-        // The remainder is raised ONLY when it is a generic title -- a lowercase "at" /
-        // "of" after the org is the org's own longer name ("Students for Life at
-        // Millersville University General Meeting"), not a casing slip.
-        const rest = t.slice(o.length + 1);
-        if (GENERIC_CLUB_EVENT_TITLES.test(rest)) t = o + ' ' + genericTitleCase(rest);
+    // A generic club phrase ENDING the title is title-cased whoever wrote the prefix --
+    // the org (GetInvolved rows carry orgName) or Coursedog's customerName (MU Calendar
+    // rows carry none: "ADAPT General meeting", 2026-11-09). Longest generic tail wins;
+    // a lowercase "at" / "of" inside an org's own longer name never matches the closed
+    // vocabulary, so "Students for Life at Millersville University General Meeting" is
+    // left alone. The orgName argument is kept for callers; it no longer gates anything.
+    const words = t.split(' ');
+    for (let i = 1; i < words.length; i++) {
+        const tail = words.slice(i).join(' ');
+        if (GENERIC_CLUB_EVENT_TITLES.test(tail)) {
+            const tc = genericTitleCase(tail);
+            if (tc !== tail) t = words.slice(0, i).join(' ') + ' ' + tc;
+            break;
+        }
     }
     return t;
 }

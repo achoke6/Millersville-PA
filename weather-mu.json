@@ -1,11 +1,11 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Tuesday, November 10, 2026 at 08:10 AM (Guillaume, Johnson, Kerby, Lowell, Student Meteorologists)",
+    "issued": "Tuesday, November 10, 2026 at 11:59 AM (Daugherty, Longo, Rooney, and Werley, Student Meteorologists)",
     "periods": [
       {
-        "period": "Today",
-        "text": "Mostly sunny, breezy, and pleasant. High: 66-70"
+        "period": "This afternoon",
+        "text": "Sunny, breezy, and pleasant. High: 66-70"
       },
       {
         "period": "Tonight",
@@ -26,7 +26,7 @@
     ]
   },
   "sevenDay": {
-    "issued": "Tuesday, November 10, 2026 at 08:36 AM (Guillaume, Johnson, Kerby, Lowell, )",
+    "issued": "Tuesday, November 10, 2026 at 12:06 PM (Guillaume, Johnson, Kerby, Lowell)",
     "days": [
       {
         "period": "Tuesday",
@@ -128,6 +128,39 @@
   },
   "observations": [
     {
+      "time": "12:00",
+      "temp": "64",
+      "dewpoint": "40",
+      "rh": "41",
+      "windDir": "WSW",
+      "windSpeed": "7",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "11:00",
+      "temp": "62",
+      "dewpoint": "40",
+      "rh": "46",
+      "windDir": "SW",
+      "windSpeed": "7",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "10:00",
+      "temp": "59",
+      "dewpoint": "40",
+      "rh": "49",
+      "windDir": "SW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "09:00",
       "temp": "53",
       "dewpoint": "39",
@@ -155,39 +188,6 @@
       "dewpoint": "36",
       "rh": "89",
       "windDir": "SSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "42",
-      "dewpoint": "36",
-      "rh": "80",
-      "windDir": "W",
-      "windSpeed": "0",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "05:00",
-      "temp": "41",
-      "dewpoint": "36",
-      "rh": "82",
-      "windDir": "W",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "04:00",
-      "temp": "43",
-      "dewpoint": "36",
-      "rh": "76",
-      "windDir": "WSW",
       "windSpeed": "1",
       "precip": "0.00",
       "visibility": "12 +",
@@ -316,6 +316,13 @@
   },
   "videos": [
     {
+      "title": "Short Term Forecast 11/10/2026",
+      "videoId": "xy9YYQpTWbs",
+      "url": "https://www.youtube.com/watch?v=xy9YYQpTWbs",
+      "published": "2026-11-10T16:31:16+00:00",
+      "thumbnail": "https://i1.ytimg.com/vi/xy9YYQpTWbs/hqdefault.jpg"
+    },
+    {
       "title": "Short Term Forecast 11/09/2026",
       "videoId": "V2wW2dcCyO8",
       "url": "https://www.youtube.com/watch?v=V2wW2dcCyO8",
@@ -335,15 +342,8 @@
       "url": "https://www.youtube.com/watch?v=HyaSzzrWalw",
       "published": "2026-11-06T14:21:54+00:00",
       "thumbnail": "https://i1.ytimg.com/vi/HyaSzzrWalw/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 11/05/2026",
-      "videoId": "JY06PEcaG6I",
-      "url": "https://www.youtube.com/watch?v=JY06PEcaG6I",
-      "published": "2026-11-05T16:26:05+00:00",
-      "thumbnail": "https://i3.ytimg.com/vi/JY06PEcaG6I/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-10T14:10:55.174Z"
+  "updated": "2026-11-10T17:47:13.941Z"
 }

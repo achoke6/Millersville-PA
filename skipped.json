@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-10T14:13:34.115Z",
+ "generatedAt": "2026-11-10T17:49:53.635Z",
  "scope": "content-rule skips only — no date-window drops, no duplicates; gated (mu-only/townie-only) rows are emitted, not listed here",
  "itemCap": 40,
  "labels": {
@@ -21,13 +21,13 @@
   "submission-no-deadline": "Community submission: Signup row with no deadline"
  },
  "counts": {
-  "pm-sub-varsity": 282,
+  "pm-sub-varsity": 283,
   "mu-calendar-athletics": 72,
   "camps-skipped": 28,
   "intramural-dup": 1,
   "borough-collection": 13,
   "borough-reservation": 16,
-  "submission-not-approved": 2,
+  "submission-not-approved": 1,
   "submission-out-of-range": 9
  },
  "items": {
@@ -178,14 +178,6 @@
     "date": "11/10/2026",
     "location": "Here",
     "link": "",
-    "note": "Status blank"
-   },
-   {
-    "source": "Community",
-    "title": "SLI Waiting List Signups (Brookwood / Healthy Living)",
-    "date": "8/11/2026",
-    "location": "508 Hillview Ave",
-    "link": "https://form.jotform.com/222703787907061",
     "note": "Status blank"
    }
   ]

@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-10T02:09:07.140Z",
-  "totalEvents": 2053,
+  "generatedAt": "2026-11-10T03:57:12.624Z",
+  "totalEvents": 2052,
   "withDescription": 855,
   "withImage": 232,
   "familyFriendly": 56,
   "eventsToday": 20,
   "sources": {
-    "muAthletics": 390,
+    "muAthletics": 389,
     "muCalendar": 188,
     "artsmu": 50,
     "eckert": 3,
@@ -139,7 +139,7 @@
     }
   },
   "sports": {
-    "total": 937,
+    "total": 936,
     "scored": 209,
     "wins": 101,
     "losses": 95,
@@ -160,13 +160,13 @@
       "PM Community": 1
     },
     "stalePast": 30,
-    "lastSyncAt": "2026-11-10T02:03:55.523Z"
+    "lastSyncAt": "2026-11-10T03:54:33.037Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 3,
-    "checkedAt": "2026-11-10T02:08:54.355Z"
+    "checkedAt": "2026-11-10T03:57:04.684Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -215,7 +215,7 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 390,
+        "value": 389,
         "min": 100,
         "skipped": false
       },
@@ -250,6 +250,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "COMEDIAN RAJ BELANI|2026-12-04T00:00:00.000Z",
+      "firstSeenAt": "2026-11-10T03:57:12.621Z",
+      "title": "COMEDIAN RAJ BELANI",
+      "source": "Other",
+      "date": "2026-12-04T00:00:00.000Z"
+    },
+    {
       "key": "Millersville University Men's Soccer vs Georgian Court University|2026-11-13T20:00:00.000Z",
       "firstSeenAt": "2026-11-10T02:09:07.136Z",
       "title": "Millersville University Men's Soccer vs Georgian Court University",
@@ -262,13 +269,6 @@
       "title": "Millersville University Men's Soccer vs Second Round",
       "source": "MU",
       "date": "2026-11-15T20:00:00.000Z"
-    },
-    {
-      "key": "Hexbelt & New World Otters|2026-11-28T01:00:00.000Z",
-      "firstSeenAt": "2026-11-10T02:09:07.136Z",
-      "title": "Hexbelt & New World Otters",
-      "source": "Other",
-      "date": "2026-11-28T01:00:00.000Z"
     },
     {
       "key": "Boys JV Basketball @ Exeter Township High School|2026-12-08T22:30:00.000Z",
@@ -320,7 +320,7 @@
       "date": "2026-10-30T19:00:00"
     }
   ],
-  "addedLastRun": 9,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 423,
     "reasons": {

@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-10T00:31:53.951Z",
+ "generatedAt": "2026-11-10T02:09:06.999Z",
  "scope": "content-rule skips only — no date-window drops, no duplicates; gated (mu-only/townie-only) rows are emitted, not listed here",
  "itemCap": 40,
  "labels": {
@@ -27,8 +27,8 @@
   "intramural-dup": 1,
   "borough-collection": 13,
   "borough-reservation": 16,
-  "submission-out-of-range": 9,
-  "submission-not-approved": 1
+  "submission-not-approved": 2,
+  "submission-out-of-range": 9
  },
  "items": {
   "intramural-dup": [
@@ -172,6 +172,14 @@
    }
   ],
   "submission-not-approved": [
+   {
+    "source": "Community",
+    "title": "Test",
+    "date": "11/10/2026",
+    "location": "Here",
+    "link": "",
+    "note": "Status blank"
+   },
    {
     "source": "Community",
     "title": "SLI Waiting List Signups (Brookwood / Healthy Living)",

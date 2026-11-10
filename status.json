@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-11-10T13:59:21.151Z",
-  "totalEvents": 2051,
+  "generatedAt": "2026-11-10T14:13:34.205Z",
+  "totalEvents": 2053,
   "withDescription": 856,
   "withImage": 232,
   "familyFriendly": 56,
-  "eventsToday": 20,
+  "eventsToday": 21,
   "sources": {
     "muAthletics": 389,
     "muCalendar": 188,
@@ -12,7 +12,7 @@
     "eckert": 3,
     "campsAlumni": 11,
     "muGetInvolved": 560,
-    "pennManor": 651,
+    "pennManor": 653,
     "borough": 49,
     "vfw": 6,
     "phantomPower": 14,
@@ -139,10 +139,10 @@
     }
   },
   "sports": {
-    "total": 934,
-    "scored": 208,
+    "total": 936,
+    "scored": 209,
     "wins": 101,
-    "losses": 94,
+    "losses": 95,
     "ties": 13
   },
   "registrations": {
@@ -160,13 +160,13 @@
       "PM Community": 1
     },
     "stalePast": 30,
-    "lastSyncAt": "2026-11-10T13:56:39.434Z"
+    "lastSyncAt": "2026-11-10T14:10:52.797Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 3,
-    "checkedAt": "2026-11-10T13:59:08.970Z"
+    "checkedAt": "2026-11-10T14:13:23.970Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -208,7 +208,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 545,
+        "value": 547,
         "min": 150,
         "skipped": false
       },
@@ -249,6 +249,20 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Boys Varsity Football vs Cumberland Valley High School|2026-11-07T00:30:00.000Z",
+      "firstSeenAt": "2026-11-10T14:13:34.202Z",
+      "title": "Boys Varsity Football vs Cumberland Valley High School",
+      "source": "PM",
+      "date": "2026-11-07T00:30:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Field Hockey @ Pine-Richland|2026-11-10T23:00:00.000Z",
+      "firstSeenAt": "2026-11-10T14:13:34.202Z",
+      "title": "Girls Varsity Field Hockey @ Pine-Richland",
+      "source": "PM",
+      "date": "2026-11-10T23:00:00.000Z"
+    },
     {
       "key": "Veterans Day – 50% Off for Veterans|2026-11-11T16:00:00.000Z",
       "firstSeenAt": "2026-11-10T13:59:21.147Z",
@@ -304,23 +318,9 @@
       "title": "Girls JV Basketball @ Exeter Township High School",
       "source": "PM",
       "date": "2026-12-08T23:45:00.000Z"
-    },
-    {
-      "key": "Boys Varsity Basketball @ Exeter Township High School|2026-12-08T23:45:00.000Z",
-      "firstSeenAt": "2026-11-10T02:09:07.136Z",
-      "title": "Boys Varsity Basketball @ Exeter Township High School",
-      "source": "PM",
-      "date": "2026-12-08T23:45:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Basketball @ Governor Mifflin High School|2027-01-02T17:15:00.000Z",
-      "firstSeenAt": "2026-11-10T02:09:07.136Z",
-      "title": "Girls Varsity Basketball @ Governor Mifflin High School",
-      "source": "PM",
-      "date": "2027-01-02T17:15:00.000Z"
     }
   ],
-  "addedLastRun": 1,
+  "addedLastRun": 2,
   "skippedByRule": {
     "total": 423,
     "reasons": {

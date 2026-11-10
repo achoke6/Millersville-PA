@@ -123,7 +123,15 @@
         { "title": "Trivia Night", "day": "Tuesday", "time": "20:00", "description": "Weekly trivia at Jack's Family Tavern — Tuesdays at 8 PM." },
         { "title": "Karaoke Night", "day": "Wednesday", "time": "22:00", "description": "Every Wednesday from 10 PM–1 AM." }
       ],
-      "events": []
+      "events": [
+        {
+          "title": "Veterans Day – 50% Off for Veterans",
+          "date": "2026-11-11T11:00:00-05:00",
+          "description": "Veterans Day at Jack's Family Tavern: to honor all military veterans, veterans receive a 50% discount on their meals on Wednesday, November 11.",
+          "price": "50% off meals for veterans",
+          "link": "https://www.facebook.com/JacksFamilyTavern/posts/pfbid035dDJjUtptAipQnH4J5yKsmBDK5s1em4xQY1KfCnRB5ZYXebcJJAGNyJXCeHSo8PPl"
+        }
+      ]
     },
     "corn-wagon": {
       "name": "The Corn Wagon",

@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-10T14:31:54.165Z",
+ "generatedAt": "2026-11-10T16:20:28.954Z",
  "scope": "content-rule skips only — no date-window drops, no duplicates; gated (mu-only/townie-only) rows are emitted, not listed here",
  "itemCap": 40,
  "labels": {
@@ -27,7 +27,7 @@
   "intramural-dup": 1,
   "borough-collection": 13,
   "borough-reservation": 16,
-  "submission-not-approved": 2,
+  "submission-not-approved": 1,
   "submission-out-of-range": 9
  },
  "items": {
@@ -44,16 +44,16 @@
   "borough-reservation": [
    {
     "source": "Borough",
-    "title": "Reserve Public Meeting Room",
-    "date": "2026-11-09T23:00:00.000Z",
+    "title": "Reserve, Public Meeting Room",
+    "date": "2026-09-16T22:00:00.000Z",
     "location": "Millersville Borough",
     "link": "https://millersvilleborough.org/resident-info/calendar/",
     "note": "enrich via borough-overrides.json if this is a real event"
    },
    {
     "source": "Borough",
-    "title": "Reserve, Public Meeting Room",
-    "date": "2026-09-16T22:00:00.000Z",
+    "title": "Reserve Public Meeting Room",
+    "date": "2026-11-09T23:00:00.000Z",
     "location": "Millersville Borough",
     "link": "https://millersvilleborough.org/resident-info/calendar/",
     "note": "enrich via borough-overrides.json if this is a real event"
@@ -178,14 +178,6 @@
     "date": "11/10/2026",
     "location": "Here",
     "link": "",
-    "note": "Status blank"
-   },
-   {
-    "source": "Community",
-    "title": "SLI Waiting List Signups (Brookwood / Healthy Living)",
-    "date": "8/11/2026",
-    "location": "508 Hillview Ave",
-    "link": "https://form.jotform.com/222703787907061",
     "note": "Status blank"
    }
   ]

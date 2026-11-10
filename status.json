@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-10T14:13:34.205Z",
-  "totalEvents": 2053,
-  "withDescription": 856,
+  "generatedAt": "2026-11-10T14:31:54.397Z",
+  "totalEvents": 2054,
+  "withDescription": 857,
   "withImage": 232,
   "familyFriendly": 56,
   "eventsToday": 21,
@@ -160,13 +160,13 @@
       "PM Community": 1
     },
     "stalePast": 30,
-    "lastSyncAt": "2026-11-10T14:10:52.797Z"
+    "lastSyncAt": "2026-11-10T14:29:24.502Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 3,
-    "checkedAt": "2026-11-10T14:13:23.970Z"
+    "checkedAt": "2026-11-10T14:31:46.235Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -250,6 +250,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Thanksgiving Day Dinner|2026-11-26T16:00:00.000Z",
+      "firstSeenAt": "2026-11-10T14:31:54.393Z",
+      "title": "Thanksgiving Day Dinner",
+      "source": "Jack's Tavern",
+      "date": "2026-11-26T16:00:00.000Z"
+    },
+    {
       "key": "Boys Varsity Football vs Cumberland Valley High School|2026-11-07T00:30:00.000Z",
       "firstSeenAt": "2026-11-10T14:13:34.202Z",
       "title": "Boys Varsity Football vs Cumberland Valley High School",
@@ -311,16 +318,9 @@
       "title": "Girls Varsity Basketball @ Exeter Township High School – .",
       "source": "PM",
       "date": "2026-12-08T22:30:00.000Z"
-    },
-    {
-      "key": "Girls JV Basketball @ Exeter Township High School|2026-12-08T23:45:00.000Z",
-      "firstSeenAt": "2026-11-10T02:09:07.136Z",
-      "title": "Girls JV Basketball @ Exeter Township High School",
-      "source": "PM",
-      "date": "2026-12-08T23:45:00.000Z"
     }
   ],
-  "addedLastRun": 2,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 423,
     "reasons": {

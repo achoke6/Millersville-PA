@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-11-10T03:57:12.624Z",
+  "generatedAt": "2026-11-10T05:45:19.024Z",
   "totalEvents": 2052,
   "withDescription": 855,
   "withImage": 232,
   "familyFriendly": 56,
-  "eventsToday": 20,
+  "eventsToday": 21,
   "sources": {
     "muAthletics": 389,
     "muCalendar": 188,
@@ -83,43 +83,43 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 69
+      "daysSinceMoved": 70
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 80
+      "daysSinceMoved": 81
     },
     "artsmu": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 82
+      "daysSinceMoved": 83
     },
     "eckert": {
       "newest": "2026-11-12",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "campsAlumni": {
       "newest": "2027-08-20",
-      "daysSinceMoved": 21
+      "daysSinceMoved": 22
     },
     "muGetInvolved": {
       "newest": "2027-10-27",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     },
     "pennManor": {
       "newest": "2027-10-25",
-      "daysSinceMoved": 15
+      "daysSinceMoved": 16
     },
     "borough": {
       "newest": "2027-10-31",
-      "daysSinceMoved": 9
+      "daysSinceMoved": 10
     },
     "vfw": {
       "newest": "2026-11-29",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "phantomPower": {
       "newest": "2026-12-19",
-      "daysSinceMoved": 11
+      "daysSinceMoved": 12
     },
     "community": {
       "newest": "2027-04-16",
@@ -127,15 +127,15 @@
     },
     "manor": {
       "newest": "2027-11-03",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     },
     "raneyCellars": {
       "newest": "2026-11-19",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "theBackyard": {
       "newest": "2027-04-28",
-      "daysSinceMoved": 32
+      "daysSinceMoved": 33
     }
   },
   "sports": {
@@ -160,13 +160,13 @@
       "PM Community": 1
     },
     "stalePast": 30,
-    "lastSyncAt": "2026-11-10T03:54:33.037Z"
+    "lastSyncAt": "2026-11-10T05:42:41.238Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 3,
-    "checkedAt": "2026-11-10T03:57:04.684Z"
+    "checkedAt": "2026-11-10T05:45:08.819Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -250,6 +250,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Millersville University Women's Golf at Husky Fall Invitational|2026-10-10T04:00:00.000Z",
+      "firstSeenAt": "2026-11-10T05:45:19.001Z",
+      "title": "Millersville University Women's Golf at Husky Fall Invitational",
+      "source": "MU",
+      "date": "2026-10-10T04:00:00.000Z"
+    },
+    {
       "key": "COMEDIAN RAJ BELANI|2026-12-04T00:00:00.000Z",
       "firstSeenAt": "2026-11-10T03:57:12.621Z",
       "title": "COMEDIAN RAJ BELANI",
@@ -311,13 +318,6 @@
       "title": "Girls Varsity Basketball @ Spring Grove Area High School",
       "source": "PM",
       "date": "2027-01-05T00:15:00.000Z"
-    },
-    {
-      "key": "Rock of Ages: Millersville University Theatre|2026-10-30T19:00:00",
-      "firstSeenAt": "2026-11-10T00:31:54.179Z",
-      "title": "Rock of Ages: Millersville University Theatre",
-      "source": "MU",
-      "date": "2026-10-30T19:00:00"
     }
   ],
   "addedLastRun": 1,

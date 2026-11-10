@@ -38,7 +38,7 @@ jobs:
       - name: Validate hand-maintained JSON
         run: |
           set -e
-          for f in camps.json org-overrides.json shortnames-overlay.json imleagues.json venue-aliases.json place-specials.json dining-menus.json; do
+          for f in camps.json org-overrides.json shortnames-overlay.json imleagues.json venue-aliases.json place-specials.json dining-menus.json pm-postseason.json vfw.json; do
             if [ -f "$f" ]; then
               echo "Checking $f..."
               jq empty "$f" || { echo "❌ $f has invalid JSON syntax"; exit 1; }
@@ -91,6 +91,19 @@ jobs:
               || { echo "❌ dining-menus.json keys must be directory place slugs (lowercase letters/digits/hyphens)"; exit 1; }
             jq -e '[.places[]] | all(has("validThrough") and has("days") and (.validThrough | test("^[0-9]{4}-[0-9]{2}-[0-9]{2}$")) and (.days | type == "object") and (.days | keys | all(test("^[0-9]{4}-[0-9]{2}-[0-9]{2}$"))))' dining-menus.json > /dev/null \
               || { echo "❌ dining-menus.json: every place needs validThrough (YYYY-MM-DD) + a .days object keyed by YYYY-MM-DD"; exit 1; }
+          fi
+          # pm-postseason.json + vfw.json (added 2026-11-10): both are hand-edited.
+          # scrape.js swallows a parse failure in either as a non-fatal warning, so a
+          # missing comma silently drops EVERY playoff label / every VFW row for the
+          # build — observed 2026-11-10 (a hand-added PIAA entry; no stamps applied,
+          # the game never showed). Fail the build loudly instead.
+          if [ -f pm-postseason.json ]; then
+            jq -e '.games | type == "array" and (length == 0 or all(.date and .sport and .gender and .round))' pm-postseason.json > /dev/null \
+              || { echo "❌ pm-postseason.json: .games must be an array; every entry needs date + sport + gender + round"; exit 1; }
+          fi
+          if [ -f vfw.json ]; then
+            jq -e '(.events | type == "array") and (.weeklySpecials | type == "object")' vfw.json > /dev/null \
+              || { echo "❌ vfw.json must have an .events array and a .weeklySpecials object"; exit 1; }
           fi
           echo "✓ All JSON files valid"
 

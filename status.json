@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-11-10T16:20:29.127Z",
-  "totalEvents": 2056,
-  "withDescription": 859,
-  "withImage": 233,
+  "generatedAt": "2026-11-10T17:49:53.788Z",
+  "totalEvents": 2057,
+  "withDescription": 860,
+  "withImage": 234,
   "familyFriendly": 56,
   "eventsToday": 21,
   "sources": {
@@ -11,7 +11,7 @@
     "artsmu": 50,
     "eckert": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 561,
+    "muGetInvolved": 562,
     "pennManor": 653,
     "borough": 49,
     "vfw": 6,
@@ -160,13 +160,13 @@
       "PM Community": 1
     },
     "stalePast": 30,
-    "lastSyncAt": "2026-11-10T16:17:15.735Z"
+    "lastSyncAt": "2026-11-10T17:47:11.710Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 0,
     "approved": 4,
-    "checkedAt": "2026-11-10T16:20:18.439Z"
+    "checkedAt": "2026-11-10T17:49:47.242Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -250,6 +250,41 @@
   },
   "recentlyAdded": [
     {
+      "key": "ACC Showcase vs Shippensburg|2026-11-13T22:30:00.000Z",
+      "firstSeenAt": "2026-11-10T17:49:53.784Z",
+      "title": "ACC Showcase vs Shippensburg",
+      "source": "MU",
+      "date": "2026-11-13T22:30:00.000Z"
+    },
+    {
+      "key": "ACC Showcase vs Salisbury|2026-11-14T18:00:00.000Z",
+      "firstSeenAt": "2026-11-10T17:49:53.784Z",
+      "title": "ACC Showcase vs Salisbury",
+      "source": "MU",
+      "date": "2026-11-14T18:00:00.000Z"
+    },
+    {
+      "key": "Ice Hockey Club (D3) Practice|2026-11-20T02:00:00.000Z",
+      "firstSeenAt": "2026-11-10T17:49:53.784Z",
+      "title": "Ice Hockey Club (D3) Practice",
+      "source": "MU",
+      "date": "2026-11-20T02:00:00.000Z"
+    },
+    {
+      "key": "Game vs Lafayette|2026-11-22T00:00:00.000Z",
+      "firstSeenAt": "2026-11-10T17:49:53.784Z",
+      "title": "Game vs Lafayette",
+      "source": "MU",
+      "date": "2026-11-22T00:00:00.000Z"
+    },
+    {
+      "key": "Game vs York College of PA|2026-11-22T21:15:00.000Z",
+      "firstSeenAt": "2026-11-10T17:49:53.784Z",
+      "title": "Game vs York College of PA",
+      "source": "MU",
+      "date": "2026-11-22T21:15:00.000Z"
+    },
+    {
       "key": "Rock of Ages: Millersville University Theatre|2026-11-01T14:00:00",
       "firstSeenAt": "2026-11-10T16:20:29.123Z",
       "title": "Rock of Ages: Millersville University Theatre",
@@ -283,48 +318,13 @@
       "title": "MMA Club, Open Mat",
       "source": "MU",
       "date": "2026-11-06T00:00:00.000Z"
-    },
-    {
-      "key": "MMA 101 Classes|2026-11-10T00:00:00.000Z",
-      "firstSeenAt": "2026-11-10T16:20:29.123Z",
-      "title": "MMA 101 Classes",
-      "source": "MU",
-      "date": "2026-11-10T00:00:00.000Z"
-    },
-    {
-      "key": "MMA Club, Open Mat|2026-11-11T00:00:00.000Z",
-      "firstSeenAt": "2026-11-10T16:20:29.123Z",
-      "title": "MMA Club, Open Mat",
-      "source": "MU",
-      "date": "2026-11-11T00:00:00.000Z"
-    },
-    {
-      "key": "MMA 101 Classes|2026-11-12T00:00:00.000Z",
-      "firstSeenAt": "2026-11-10T16:20:29.123Z",
-      "title": "MMA 101 Classes",
-      "source": "MU",
-      "date": "2026-11-12T00:00:00.000Z"
-    },
-    {
-      "key": "MMA Club, Open Mat|2026-11-13T00:00:00.000Z",
-      "firstSeenAt": "2026-11-10T16:20:29.123Z",
-      "title": "MMA Club, Open Mat",
-      "source": "MU",
-      "date": "2026-11-13T00:00:00.000Z"
-    },
-    {
-      "key": "FLAW w/ New Damage|2026-11-13T00:00:00.000Z",
-      "firstSeenAt": "2026-11-10T16:20:29.123Z",
-      "title": "FLAW w/ New Damage",
-      "source": "Other",
-      "date": "2026-11-13T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 18,
+  "addedLastRun": 5,
   "skippedByRule": {
-    "total": 422,
+    "total": 423,
     "reasons": {
-      "pm-sub-varsity": 282,
+      "pm-sub-varsity": 283,
       "mu-calendar-athletics": 72,
       "camps-skipped": 28,
       "intramural-dup": 1,

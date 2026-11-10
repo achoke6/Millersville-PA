@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-10T17:49:53.788Z",
-  "totalEvents": 2057,
+  "generatedAt": "2026-11-10T18:32:23.343Z",
+  "totalEvents": 2061,
   "withDescription": 860,
   "withImage": 234,
   "familyFriendly": 56,
@@ -12,7 +12,7 @@
     "eckert": 3,
     "campsAlumni": 11,
     "muGetInvolved": 562,
-    "pennManor": 653,
+    "pennManor": 657,
     "borough": 49,
     "vfw": 6,
     "phantomPower": 14,
@@ -139,7 +139,7 @@
     }
   },
   "sports": {
-    "total": 936,
+    "total": 940,
     "scored": 209,
     "wins": 101,
     "losses": 95,
@@ -160,13 +160,13 @@
       "PM Community": 1
     },
     "stalePast": 30,
-    "lastSyncAt": "2026-11-10T17:47:11.710Z"
+    "lastSyncAt": "2026-11-10T18:29:43.971Z"
   },
   "submissionsQueue": {
     "pendingFuture": 1,
     "pendingPast": 0,
     "approved": 4,
-    "checkedAt": "2026-11-10T17:49:47.242Z"
+    "checkedAt": "2026-11-10T18:32:14.800Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -208,7 +208,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 547,
+        "value": 551,
         "min": 150,
         "skipped": false
       },
@@ -250,6 +250,34 @@
   },
   "recentlyAdded": [
     {
+      "key": "Boys Varsity Track & Field – Outdoor vs J P McCaskey High School|2027-03-22T20:00:00.000Z",
+      "firstSeenAt": "2026-11-10T18:32:23.340Z",
+      "title": "Boys Varsity Track & Field – Outdoor vs J P McCaskey High School",
+      "source": "PM",
+      "date": "2027-03-22T20:00:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Track & Field – Outdoor vs J P McCaskey High School|2027-03-22T20:00:00.000Z",
+      "firstSeenAt": "2026-11-10T18:32:23.340Z",
+      "title": "Girls Varsity Track & Field – Outdoor vs J P McCaskey High School",
+      "source": "PM",
+      "date": "2027-03-22T20:00:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Track & Field – Outdoor vs Lebanon High School|2027-04-26T20:00:00.000Z",
+      "firstSeenAt": "2026-11-10T18:32:23.340Z",
+      "title": "Boys Varsity Track & Field – Outdoor vs Lebanon High School",
+      "source": "PM",
+      "date": "2027-04-26T20:00:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Track & Field – Outdoor vs Lebanon High School|2027-04-26T20:00:00.000Z",
+      "firstSeenAt": "2026-11-10T18:32:23.340Z",
+      "title": "Girls Varsity Track & Field – Outdoor vs Lebanon High School",
+      "source": "PM",
+      "date": "2027-04-26T20:00:00.000Z"
+    },
+    {
       "key": "ACC Showcase vs Shippensburg|2026-11-13T22:30:00.000Z",
       "firstSeenAt": "2026-11-10T17:49:53.784Z",
       "title": "ACC Showcase vs Shippensburg",
@@ -290,41 +318,13 @@
       "title": "Rock of Ages: Millersville University Theatre",
       "source": "MU",
       "date": "2026-11-01T14:00:00"
-    },
-    {
-      "key": "MMA 101 Classes|2026-11-03T00:00:00.000Z",
-      "firstSeenAt": "2026-11-10T16:20:29.123Z",
-      "title": "MMA 101 Classes",
-      "source": "MU",
-      "date": "2026-11-03T00:00:00.000Z"
-    },
-    {
-      "key": "MMA Club, Open Mat|2026-11-04T00:00:00.000Z",
-      "firstSeenAt": "2026-11-10T16:20:29.123Z",
-      "title": "MMA Club, Open Mat",
-      "source": "MU",
-      "date": "2026-11-04T00:00:00.000Z"
-    },
-    {
-      "key": "MMA 101 Classes|2026-11-05T00:00:00.000Z",
-      "firstSeenAt": "2026-11-10T16:20:29.123Z",
-      "title": "MMA 101 Classes",
-      "source": "MU",
-      "date": "2026-11-05T00:00:00.000Z"
-    },
-    {
-      "key": "MMA Club, Open Mat|2026-11-06T00:00:00.000Z",
-      "firstSeenAt": "2026-11-10T16:20:29.123Z",
-      "title": "MMA Club, Open Mat",
-      "source": "MU",
-      "date": "2026-11-06T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 5,
+  "addedLastRun": 4,
   "skippedByRule": {
-    "total": 423,
+    "total": 433,
     "reasons": {
-      "pm-sub-varsity": 283,
+      "pm-sub-varsity": 293,
       "mu-calendar-athletics": 72,
       "camps-skipped": 28,
       "intramural-dup": 1,

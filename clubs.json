@@ -299,8 +299,9 @@
   },
   {
     "name": "Center for Health Education and Promotion",
-    "category": "Tabling",
+    "category": "Educational Program",
     "categories": [
+      "Educational Program",
       "Tabling"
     ],
     "shortName": "CHEP",
@@ -489,9 +490,9 @@
   },
   {
     "name": "Conestoga Outdoors Club",
-    "category": "Social",
+    "category": "Meeting",
     "categories": [
-      "Social"
+      "Meeting"
     ],
     "shortName": "Conestoga Outdoors",
     "id": ""
@@ -548,10 +549,9 @@
   },
   {
     "name": "Crochet Club",
-    "category": "Fundraiser",
+    "category": "Meeting",
     "categories": [
-      "Fundraiser",
-      "Tabling"
+      "Meeting"
     ],
     "shortName": "",
     "id": ""
@@ -1443,8 +1443,11 @@
   },
   {
     "name": "Reformed University Fellowship",
-    "category": "",
-    "categories": [],
+    "category": "Meeting",
+    "categories": [
+      "Meeting",
+      "Social"
+    ],
     "shortName": "RUF",
     "id": ""
   },

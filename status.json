@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-11-10T17:49:53.788Z",
-  "totalEvents": 2057,
-  "withDescription": 860,
-  "withImage": 234,
+  "generatedAt": "2026-11-11T12:45:35.149Z",
+  "totalEvents": 2060,
+  "withDescription": 859,
+  "withImage": 238,
   "familyFriendly": 56,
   "eventsToday": 21,
   "sources": {
@@ -11,8 +11,8 @@
     "artsmu": 50,
     "eckert": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 562,
-    "pennManor": 653,
+    "muGetInvolved": 561,
+    "pennManor": 657,
     "borough": 49,
     "vfw": 6,
     "phantomPower": 14,
@@ -83,63 +83,63 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 70
+      "daysSinceMoved": 71
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 81
+      "daysSinceMoved": 82
     },
     "artsmu": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 83
+      "daysSinceMoved": 84
     },
     "eckert": {
       "newest": "2026-11-12",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "campsAlumni": {
       "newest": "2027-08-20",
-      "daysSinceMoved": 22
+      "daysSinceMoved": 23
     },
     "muGetInvolved": {
       "newest": "2027-10-27",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "pennManor": {
       "newest": "2027-10-25",
-      "daysSinceMoved": 16
+      "daysSinceMoved": 17
     },
     "borough": {
       "newest": "2027-10-31",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 11
     },
     "vfw": {
       "newest": "2026-11-29",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "phantomPower": {
       "newest": "2026-12-19",
-      "daysSinceMoved": 12
+      "daysSinceMoved": 13
     },
     "community": {
       "newest": "2027-05-16",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "manor": {
       "newest": "2027-11-03",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "raneyCellars": {
       "newest": "2026-11-19",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 5
     },
     "theBackyard": {
       "newest": "2027-04-28",
-      "daysSinceMoved": 33
+      "daysSinceMoved": 34
     }
   },
   "sports": {
-    "total": 936,
+    "total": 940,
     "scored": 209,
     "wins": 101,
     "losses": 95,
@@ -160,13 +160,13 @@
       "PM Community": 1
     },
     "stalePast": 30,
-    "lastSyncAt": "2026-11-10T17:47:11.710Z"
+    "lastSyncAt": "2026-11-11T12:39:40.165Z"
   },
   "submissionsQueue": {
-    "pendingFuture": 1,
-    "pendingPast": 0,
+    "pendingFuture": 0,
+    "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-10T17:49:47.242Z"
+    "checkedAt": "2026-11-11T12:45:26.846Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -180,35 +180,35 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 349,
+        "value": 348,
         "min": 45,
         "skipped": false
       },
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 197,
+        "value": 196,
         "min": 60,
         "skipped": false
       },
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 206,
+        "value": 205,
         "min": 30,
         "skipped": false
       },
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 355,
+        "value": 354,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 547,
+        "value": 551,
         "min": 150,
         "skipped": false
       },
@@ -236,8 +236,8 @@
         "key": "muHudl.pairRatio",
         "ok": true,
         "matched": 62,
-        "inWindow": 64,
-        "value": 0.97,
+        "inWindow": 65,
+        "value": 0.95,
         "min": 0.5
       },
       {
@@ -250,81 +250,81 @@
   },
   "recentlyAdded": [
     {
-      "key": "ACC Showcase vs Shippensburg|2026-11-13T22:30:00.000Z",
-      "firstSeenAt": "2026-11-10T17:49:53.784Z",
-      "title": "ACC Showcase vs Shippensburg",
-      "source": "MU",
-      "date": "2026-11-13T22:30:00.000Z"
+      "key": "Trivia Night|2026-12-02T01:00:00.000Z",
+      "firstSeenAt": "2026-11-11T01:07:24.574Z",
+      "title": "Trivia Night",
+      "source": "Jack's Tavern",
+      "date": "2026-12-02T01:00:00.000Z"
     },
     {
-      "key": "ACC Showcase vs Salisbury|2026-11-14T18:00:00.000Z",
-      "firstSeenAt": "2026-11-10T17:49:53.784Z",
-      "title": "ACC Showcase vs Salisbury",
+      "key": "Tell School of Music Recital Hour|2027-01-27T20:00:00.000Z",
+      "firstSeenAt": "2026-11-11T01:07:24.574Z",
+      "title": "Tell School of Music Recital Hour",
       "source": "MU",
-      "date": "2026-11-14T18:00:00.000Z"
+      "date": "2027-01-27T20:00:00.000Z"
     },
     {
-      "key": "Ice Hockey Club (D3) Practice|2026-11-20T02:00:00.000Z",
-      "firstSeenAt": "2026-11-10T17:49:53.784Z",
-      "title": "Ice Hockey Club (D3) Practice",
+      "key": "Wednesday Night Dinner|2027-01-27T23:00:00.000Z",
+      "firstSeenAt": "2026-11-11T01:07:24.574Z",
+      "title": "Wednesday Night Dinner",
       "source": "MU",
-      "date": "2026-11-20T02:00:00.000Z"
+      "date": "2027-01-27T23:00:00.000Z"
     },
     {
-      "key": "Game vs Lafayette|2026-11-22T00:00:00.000Z",
-      "firstSeenAt": "2026-11-10T17:49:53.784Z",
-      "title": "Game vs Lafayette",
+      "key": "Men's Ice Hockey Practice (D2)|2027-01-29T02:30:00.000Z",
+      "firstSeenAt": "2026-11-11T01:07:24.574Z",
+      "title": "Men's Ice Hockey Practice (D2)",
       "source": "MU",
-      "date": "2026-11-22T00:00:00.000Z"
+      "date": "2027-01-29T02:30:00.000Z"
     },
     {
-      "key": "Game vs York College of PA|2026-11-22T21:15:00.000Z",
-      "firstSeenAt": "2026-11-10T17:49:53.784Z",
-      "title": "Game vs York College of PA",
+      "key": "Men's Ice Hockey Practice (D2)|2027-02-02T11:00:00.000Z",
+      "firstSeenAt": "2026-11-11T01:07:24.574Z",
+      "title": "Men's Ice Hockey Practice (D2)",
       "source": "MU",
-      "date": "2026-11-22T21:15:00.000Z"
+      "date": "2027-02-02T11:00:00.000Z"
     },
     {
-      "key": "Rock of Ages: Millersville University Theatre|2026-11-01T14:00:00",
-      "firstSeenAt": "2026-11-10T16:20:29.123Z",
-      "title": "Rock of Ages: Millersville University Theatre",
+      "key": "Men's Ice Hockey Practice (D2)|2027-02-03T11:00:00.000Z",
+      "firstSeenAt": "2026-11-11T01:07:24.574Z",
+      "title": "Men's Ice Hockey Practice (D2)",
       "source": "MU",
-      "date": "2026-11-01T14:00:00"
+      "date": "2027-02-03T11:00:00.000Z"
     },
     {
-      "key": "MMA 101 Classes|2026-11-03T00:00:00.000Z",
-      "firstSeenAt": "2026-11-10T16:20:29.123Z",
-      "title": "MMA 101 Classes",
+      "key": "Tell School of Music Recital Hour|2027-02-03T20:00:00.000Z",
+      "firstSeenAt": "2026-11-11T01:07:24.574Z",
+      "title": "Tell School of Music Recital Hour",
       "source": "MU",
-      "date": "2026-11-03T00:00:00.000Z"
+      "date": "2027-02-03T20:00:00.000Z"
     },
     {
-      "key": "MMA Club, Open Mat|2026-11-04T00:00:00.000Z",
-      "firstSeenAt": "2026-11-10T16:20:29.123Z",
-      "title": "MMA Club, Open Mat",
+      "key": "Wednesday Night Dinner|2027-02-03T23:00:00.000Z",
+      "firstSeenAt": "2026-11-11T01:07:24.574Z",
+      "title": "Wednesday Night Dinner",
       "source": "MU",
-      "date": "2026-11-04T00:00:00.000Z"
+      "date": "2027-02-03T23:00:00.000Z"
     },
     {
-      "key": "MMA 101 Classes|2026-11-05T00:00:00.000Z",
-      "firstSeenAt": "2026-11-10T16:20:29.123Z",
-      "title": "MMA 101 Classes",
+      "key": "Real Talk, Real Skills|2027-02-04T17:00:00.000Z",
+      "firstSeenAt": "2026-11-11T01:07:24.574Z",
+      "title": "Real Talk, Real Skills",
       "source": "MU",
-      "date": "2026-11-05T00:00:00.000Z"
+      "date": "2027-02-04T17:00:00.000Z"
     },
     {
-      "key": "MMA Club, Open Mat|2026-11-06T00:00:00.000Z",
-      "firstSeenAt": "2026-11-10T16:20:29.123Z",
-      "title": "MMA Club, Open Mat",
+      "key": "Men's Ice Hockey Practice (D2)|2027-02-05T02:30:00.000Z",
+      "firstSeenAt": "2026-11-11T01:07:24.574Z",
+      "title": "Men's Ice Hockey Practice (D2)",
       "source": "MU",
-      "date": "2026-11-06T00:00:00.000Z"
+      "date": "2027-02-05T02:30:00.000Z"
     }
   ],
-  "addedLastRun": 5,
+  "addedLastRun": 0,
   "skippedByRule": {
-    "total": 423,
+    "total": 435,
     "reasons": {
-      "pm-sub-varsity": 283,
+      "pm-sub-varsity": 295,
       "mu-calendar-athletics": 72,
       "camps-skipped": 28,
       "intramural-dup": 1,

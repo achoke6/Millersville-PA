@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T15:07:40.516Z",
+  "generatedAt": "2026-11-11T15:35:28.516Z",
   "totalEvents": 2070,
   "withDescription": 869,
   "withImage": 238,
@@ -160,13 +160,13 @@
       "PM Community": 1
     },
     "stalePast": 30,
-    "lastSyncAt": "2026-11-11T15:03:54.394Z"
+    "lastSyncAt": "2026-11-11T15:32:22.156Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-11T15:07:29.065Z"
+    "checkedAt": "2026-11-11T15:35:24.364Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -250,6 +250,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Millersville University Wrestling vs York|2026-11-13T21:00:00.000Z",
+      "firstSeenAt": "2026-11-11T15:35:28.512Z",
+      "title": "Millersville University Wrestling vs York",
+      "source": "MU",
+      "date": "2026-11-13T21:00:00.000Z"
+    },
+    {
       "key": "Best Buddies Tabling|2026-11-11T09:00:00",
       "firstSeenAt": "2026-11-11T15:07:40.512Z",
       "title": "Best Buddies Tabling",
@@ -311,16 +318,9 @@
       "title": "FSL: AGC Carnival",
       "source": "MU",
       "date": "2027-01-28T17:00:00"
-    },
-    {
-      "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-11T14:33:26.030Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-09-06T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 9,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 435,
     "reasons": {

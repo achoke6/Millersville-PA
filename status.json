@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-11-11T12:45:35.149Z",
-  "totalEvents": 2060,
-  "withDescription": 859,
+  "generatedAt": "2026-11-11T14:15:19.451Z",
+  "totalEvents": 2061,
+  "withDescription": 860,
   "withImage": 238,
   "familyFriendly": 56,
   "eventsToday": 21,
   "sources": {
     "muAthletics": 389,
-    "muCalendar": 189,
+    "muCalendar": 191,
     "artsmu": 50,
     "eckert": 3,
     "campsAlumni": 11,
@@ -140,8 +140,8 @@
   },
   "sports": {
     "total": 940,
-    "scored": 209,
-    "wins": 101,
+    "scored": 210,
+    "wins": 102,
     "losses": 95,
     "ties": 13
   },
@@ -152,21 +152,21 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 3,
+    "pendingFuture": 4,
     "pendingPast": 12,
     "pendingBySource": {
       "Youth Sports": 1,
-      "Campus Life": 1,
+      "Campus Life": 2,
       "PM Community": 1
     },
     "stalePast": 30,
-    "lastSyncAt": "2026-11-11T12:39:40.165Z"
+    "lastSyncAt": "2026-11-11T14:12:45.995Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-11T12:45:26.846Z"
+    "checkedAt": "2026-11-11T14:15:08.118Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -174,8 +174,10 @@
     "standalone": 2
   },
   "sourceHealth": {
-    "ok": true,
-    "failing": [],
+    "ok": false,
+    "failing": [
+      "manor.count"
+    ],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -228,9 +230,10 @@
       },
       {
         "key": "manor.count",
-        "ok": true,
+        "ok": false,
         "value": 37,
-        "min": 10
+        "min": 10,
+        "carriedForward": 37
       },
       {
         "key": "muHudl.pairRatio",
@@ -249,6 +252,20 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Art Gallery Reception: \"Unfolding\" created by Heidi Leitzke|2026-11-12T17:30:00",
+      "firstSeenAt": "2026-11-11T14:15:19.446Z",
+      "title": "Art Gallery Reception: \"Unfolding\" created by Heidi Leitzke",
+      "source": "MU",
+      "date": "2026-11-12T17:30:00"
+    },
+    {
+      "key": "ROAD CLOSURES: Girls on the Run 5K Race|2026-11-15T13:00:00",
+      "firstSeenAt": "2026-11-11T14:15:19.446Z",
+      "title": "ROAD CLOSURES: Girls on the Run 5K Race",
+      "source": "MU",
+      "date": "2026-11-15T13:00:00"
+    },
     {
       "key": "Trivia Night|2026-12-02T01:00:00.000Z",
       "firstSeenAt": "2026-11-11T01:07:24.574Z",
@@ -304,23 +321,9 @@
       "title": "Wednesday Night Dinner",
       "source": "MU",
       "date": "2027-02-03T23:00:00.000Z"
-    },
-    {
-      "key": "Real Talk, Real Skills|2027-02-04T17:00:00.000Z",
-      "firstSeenAt": "2026-11-11T01:07:24.574Z",
-      "title": "Real Talk, Real Skills",
-      "source": "MU",
-      "date": "2027-02-04T17:00:00.000Z"
-    },
-    {
-      "key": "Men's Ice Hockey Practice (D2)|2027-02-05T02:30:00.000Z",
-      "firstSeenAt": "2026-11-11T01:07:24.574Z",
-      "title": "Men's Ice Hockey Practice (D2)",
-      "source": "MU",
-      "date": "2027-02-05T02:30:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 2,
   "skippedByRule": {
     "total": 435,
     "reasons": {

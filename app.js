@@ -4760,7 +4760,10 @@ function spParseMatchup(e) {
 }
 function spIsHome(e) { const t = e.tags || []; return t.includes('Home Game Mode') || t.includes('H Games'); }
 function spLevelWord(e) { const t = e.tags || []; return t.includes('JV') ? 'JV' : t.includes('Jr High') ? 'Jr High' : ''; }
-function spIsScored(e) { return !!(e.gameResult && e.gameScore && e.gameScore !== '0-0'); }
+// A 0-0 is a REAL tie when D3 (the qualifying record) or MU Athletics posted it — only a
+// MaxPreps-sourced PM 0-0 is the scrimmage artifact (Football vs Octorara, Aug 22). 2026-11-11.
+function spIsScrimmageZero(e) { return e.gameScore === '0-0' && e.scoreSource !== 'D3' && !(e.tags || []).includes('MU'); }
+function spIsScored(e) { return !!(e.gameResult && e.gameScore && !spIsScrimmageZero(e)); }
 function spGameEnded(e) {
     const start = new Date(e.date).getTime();
     if (isNaN(start)) return false;
@@ -5274,14 +5277,17 @@ function renderTeamView() {
         const past = games.filter(e => new Date(e.date).getTime() < nowMs && (spIsScored(e) || spGameEnded(e)));
         const split = spSplitSeasonGap(past, games.filter(e => past.indexOf(e) === -1));   // 2026-11-04
         const upcoming = split.current, nextSeason = split.next;
-        // Results collapsed to the LATEST one (Patch C): a season's worth of scores
-        // pushed the next game off-screen while flipping between teams. Earlier
-        // results sit behind a toggle; the record strip already summarizes them.
-        const hidden = spTeamAllResults ? [] : past.slice(0, Math.max(0, past.length - 1));
-        const shownPast = spTeamAllResults ? past : past.slice(-1);
+        // Recent results (2026-11-11, replaces Patch C's latest-only): the last 3 results while a
+        // game is still upcoming (keeps the NEXT GAME divider on the first phone screen), the last
+        // 5 once the season is complete (nothing left to push down), PLUS every postseason row so
+        // a playoff run is never collapsed. Older results stay behind the toggle.
+        const keepN = upcoming.length ? 3 : 5;
+        const recentPast = past.filter((e, i) => i >= past.length - keepN || e.postseason);
+        const hiddenN = past.length - recentPast.length;
+        const shownPast = spTeamAllResults ? past : recentPast;
         body = '<div class="sp-team-list">';
-        if (hidden.length) body += `<button type="button" class="sp-results-toggle" onclick="spToggleTeamResults()" aria-expanded="false">▸ Show ${hidden.length} earlier result${hidden.length === 1 ? '' : 's'}</button>`;
-        else if (spTeamAllResults && past.length > 1) body += `<button type="button" class="sp-results-toggle" onclick="spToggleTeamResults()" aria-expanded="true">▾ Hide earlier results</button>`;
+        if (hiddenN && !spTeamAllResults) body += `<button type="button" class="sp-results-toggle" onclick="spToggleTeamResults()" aria-expanded="false">▸ Show ${hiddenN} earlier result${hiddenN === 1 ? '' : 's'}</button>`;
+        else if (hiddenN && spTeamAllResults) body += `<button type="button" class="sp-results-toggle" onclick="spToggleTeamResults()" aria-expanded="true">▾ Hide earlier results</button>`;
         body += shownPast.map(e => spGameRow(e, 'team')).join('');
         if (upcoming.length) {
             body += `<div class="sp-next-divider" id="sp-next-divider"><span></span><span class="sp-next-label">NEXT GAME · ${escHtml(spNextGameLabel(new Date(upcoming[0].date)))}</span><span></span></div>`;
@@ -5295,7 +5301,7 @@ function renderTeamView() {
             if (spTeamShowNext) body += nextSeason.map(e => spGameRow(e, 'team')).join('');
         }
         body += '</div>';
-        if (level === 'pm' && hasRecord) body += `<div class="load-more-note">Scores from MaxPreps &amp; Hudl${pool.some(e => e.gameScore === '0-0') ? ' · scrimmages not counted' : ''}</div>`;
+        if (level === 'pm' && hasRecord) body += `<div class="load-more-note">Scores from MaxPreps &amp; Hudl${pool.some(spIsScrimmageZero) ? ' · scrimmages not counted' : ''}</div>`;
         // (Patch B's divider auto-scroll retired in Patch C — the collapsed results keep the divider in the first screen.)
     }
     container.innerHTML = head + body;

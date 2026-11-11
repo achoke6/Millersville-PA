@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T15:35:28.516Z",
+  "generatedAt": "2026-11-11T16:24:49.684Z",
   "totalEvents": 2070,
   "withDescription": 869,
   "withImage": 238,
@@ -160,13 +160,13 @@
       "PM Community": 1
     },
     "stalePast": 30,
-    "lastSyncAt": "2026-11-11T15:32:22.156Z"
+    "lastSyncAt": "2026-11-11T16:22:36.479Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-11T15:35:24.364Z"
+    "checkedAt": "2026-11-11T16:24:41.519Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -174,8 +174,10 @@
     "standalone": 2
   },
   "sourceHealth": {
-    "ok": true,
-    "failing": [],
+    "ok": false,
+    "failing": [
+      "manor.count"
+    ],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -228,16 +230,17 @@
       },
       {
         "key": "manor.count",
-        "ok": true,
+        "ok": false,
         "value": 37,
-        "min": 10
+        "min": 10,
+        "carriedForward": 37
       },
       {
         "key": "muHudl.pairRatio",
         "ok": true,
         "matched": 62,
-        "inWindow": 65,
-        "value": 0.95,
+        "inWindow": 67,
+        "value": 0.93,
         "min": 0.5
       },
       {
@@ -249,6 +252,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Holiday Maker's Market|2026-12-05T20:00:00.000Z",
+      "firstSeenAt": "2026-11-11T16:24:49.680Z",
+      "title": "Holiday Maker's Market",
+      "source": "MU",
+      "date": "2026-12-05T20:00:00.000Z"
+    },
     {
       "key": "Millersville University Wrestling vs York|2026-11-13T21:00:00.000Z",
       "firstSeenAt": "2026-11-11T15:35:28.512Z",
@@ -311,13 +321,6 @@
       "title": "Navidades con SOLA",
       "source": "MU",
       "date": "2026-12-04T17:00:00"
-    },
-    {
-      "key": "FSL: AGC Carnival|2027-01-28T17:00:00",
-      "firstSeenAt": "2026-11-11T15:07:40.512Z",
-      "title": "FSL: AGC Carnival",
-      "source": "MU",
-      "date": "2027-01-28T17:00:00"
     }
   ],
   "addedLastRun": 1,

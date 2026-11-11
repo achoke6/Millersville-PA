@@ -1,18 +1,18 @@
 {
-  "generatedAt": "2026-11-11T18:55:03.533Z",
-  "totalEvents": 2070,
-  "withDescription": 869,
+  "generatedAt": "2026-11-11T21:03:10.188Z",
+  "totalEvents": 2071,
+  "withDescription": 868,
   "withImage": 238,
   "familyFriendly": 56,
-  "eventsToday": 24,
+  "eventsToday": 23,
   "sources": {
     "muAthletics": 389,
     "muCalendar": 192,
     "artsmu": 50,
     "eckert": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 569,
-    "pennManor": 657,
+    "muGetInvolved": 568,
+    "pennManor": 659,
     "borough": 49,
     "vfw": 6,
     "phantomPower": 14,
@@ -139,7 +139,7 @@
     }
   },
   "sports": {
-    "total": 940,
+    "total": 942,
     "scored": 210,
     "wins": 102,
     "losses": 95,
@@ -152,21 +152,21 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 4,
-    "pendingPast": 12,
+    "pendingFuture": 3,
+    "pendingPast": 13,
     "pendingBySource": {
       "Youth Sports": 1,
-      "Campus Life": 2,
-      "PM Community": 1
+      "PM Community": 1,
+      "Campus Life": 1
     },
-    "stalePast": 30,
-    "lastSyncAt": "2026-11-11T18:49:24.162Z"
+    "stalePast": 31,
+    "lastSyncAt": "2026-11-11T21:00:21.345Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-11T18:54:59.008Z"
+    "checkedAt": "2026-11-11T21:03:02.052Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -208,7 +208,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 551,
+        "value": 553,
         "min": 150,
         "skipped": false
       },
@@ -249,6 +249,27 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Boys JV Wrestling vs State College Area High School|2026-12-12T13:30:00.000Z",
+      "firstSeenAt": "2026-11-11T21:03:10.185Z",
+      "title": "Boys JV Wrestling vs State College Area High School",
+      "source": "PM",
+      "date": "2026-12-12T13:30:00.000Z"
+    },
+    {
+      "key": "Wednesday Night Dinner|2027-02-17T23:00:00.000Z",
+      "firstSeenAt": "2026-11-11T21:03:10.185Z",
+      "title": "Wednesday Night Dinner",
+      "source": "MU",
+      "date": "2027-02-17T23:00:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Field Hockey vs Boyertown|2026-11-14T17:00:00.000Z",
+      "firstSeenAt": "2026-11-11T19:14:44.887Z",
+      "title": "Girls Varsity Field Hockey vs Boyertown",
+      "source": "PM",
+      "date": "2026-11-14T17:00:00.000Z"
+    },
     {
       "key": "Millersville University Field Hockey at #6 Indiana (PA)|2026-10-11T16:00:00.000Z",
       "firstSeenAt": "2026-11-11T18:14:16.875Z",
@@ -297,30 +318,9 @@
       "title": "Socialism 101 Teach-In",
       "source": "MU",
       "date": "2026-11-11T19:00:00"
-    },
-    {
-      "key": "Coat Drive|2026-11-17T19:00:00",
-      "firstSeenAt": "2026-11-11T15:07:40.512Z",
-      "title": "Coat Drive",
-      "source": "MU",
-      "date": "2026-11-17T19:00:00"
-    },
-    {
-      "key": "Music Production Club Waffle Sale|2026-11-18T07:00:00",
-      "firstSeenAt": "2026-11-11T15:07:40.512Z",
-      "title": "Music Production Club Waffle Sale",
-      "source": "MU",
-      "date": "2026-11-18T07:00:00"
-    },
-    {
-      "key": "Letters of Thanks|2026-11-19T09:00:00",
-      "firstSeenAt": "2026-11-11T15:07:40.512Z",
-      "title": "Letters of Thanks",
-      "source": "MU",
-      "date": "2026-11-19T09:00:00"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 2,
   "skippedByRule": {
     "total": 435,
     "reasons": {

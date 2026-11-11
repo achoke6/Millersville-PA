@@ -56,7 +56,9 @@ env:
 
 jobs:
   send:
-    runs-on: ubuntu-latest
+    # Pinned 2026-11-11: ubuntu-latest moved to 26.04, whose apt could not resolve the
+    # Ubuntu mirrors (8 straight lftp-install failures). Revisit once 26.04 settles.
+    runs-on: ubuntu-24.04
     steps:
       - name: Check ET hour and idempotency
         id: dst_check
@@ -137,7 +139,14 @@ jobs:
 
       - name: Install lftp (for subscription FTP)
         if: steps.dst_check.outputs.proceed == 'true'
-        run: sudo apt-get install -y lftp
+        run: |
+          # lftp install with retries (2026-11-11): one failed apt lookup used to kill the run.
+          for i in 1 2 3; do
+            sudo apt-get update -qq || true
+            sudo apt-get install -y lftp && break
+            echo "lftp install attempt $i failed - retrying in 30s"; sleep 30
+          done
+          command -v lftp >/dev/null || { echo "❌ lftp unavailable after 3 attempts"; exit 1; }
 
       - name: Send daily push notifications
         if: steps.dst_check.outputs.proceed == 'true'

@@ -16,7 +16,9 @@ concurrency:
   cancel-in-progress: false
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest
+    # Pinned 2026-11-11: ubuntu-latest moved to 26.04, whose apt could not resolve the
+    # Ubuntu mirrors (8 straight lftp-install failures). Revisit once 26.04 settles.
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
     steps:
@@ -256,7 +258,13 @@ jobs:
 
       - name: Deploy to DreamHost via SFTP
         run: |
-          sudo apt-get install -y lftp
+          # lftp install with retries (2026-11-11): one failed apt lookup used to kill the run.
+          for i in 1 2 3; do
+            sudo apt-get update -qq || true
+            sudo apt-get install -y lftp && break
+            echo "lftp install attempt $i failed - retrying in 30s"; sleep 30
+          done
+          command -v lftp >/dev/null || { echo "❌ lftp unavailable after 3 attempts"; exit 1; }
           for attempt in 1 2 3; do
             echo "Deploy attempt $attempt..."
             lftp -c "

@@ -140,13 +140,18 @@ jobs:
       - name: Install lftp (for subscription FTP)
         if: steps.dst_check.outputs.proceed == 'true'
         run: |
-          # lftp install with retries (2026-11-11): one failed apt lookup used to kill the run.
-          for i in 1 2 3; do
-            sudo apt-get update -qq || true
-            sudo apt-get install -y lftp && break
-            echo "lftp install attempt $i failed - retrying in 30s"; sleep 30
-          done
-          command -v lftp >/dev/null || { echo "❌ lftp unavailable after 3 attempts"; exit 1; }
+          # lftp from the vendored .deb (2026-11-11): Ubuntu's mirrors were unresolvable from
+          # GitHub's runners for hours (24.04 and 26.04 alike), so apt is only the fallback.
+          # The .deb is noble's lftp 4.9.2; its deps are all on the stock ubuntu-24.04 image.
+          command -v lftp >/dev/null || sudo dpkg -i .github/tools/lftp_4.9.2-2ubuntu1.1_amd64.deb || true
+          if ! command -v lftp >/dev/null; then
+            for i in 1 2 3; do
+              sudo apt-get update -qq || true
+              sudo apt-get install -y lftp && break
+              echo "lftp install attempt $i failed - retrying in 30s"; sleep 30
+            done
+          fi
+          command -v lftp >/dev/null || { echo "❌ lftp unavailable (vendored .deb and apt both failed)"; exit 1; }
 
       - name: Send daily push notifications
         if: steps.dst_check.outputs.proceed == 'true'

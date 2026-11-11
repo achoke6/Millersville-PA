@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-11T14:33:25.883Z",
+ "generatedAt": "2026-11-11T14:37:52.553Z",
  "scope": "content-rule skips only — no date-window drops, no duplicates; gated (mu-only/townie-only) rows are emitted, not listed here",
  "itemCap": 40,
  "labels": {
@@ -44,16 +44,16 @@
   "borough-reservation": [
    {
     "source": "Borough",
-    "title": "Reserve, Public Meeting Room",
-    "date": "2026-09-16T22:00:00.000Z",
+    "title": "Reserve Public Meeting Room",
+    "date": "2026-11-09T23:00:00.000Z",
     "location": "Millersville Borough",
     "link": "https://millersvilleborough.org/resident-info/calendar/",
     "note": "enrich via borough-overrides.json if this is a real event"
    },
    {
     "source": "Borough",
-    "title": "Reserve Public Meeting Room",
-    "date": "2026-11-09T23:00:00.000Z",
+    "title": "Reserve, Public Meeting Room",
+    "date": "2026-09-16T22:00:00.000Z",
     "location": "Millersville Borough",
     "link": "https://millersvilleborough.org/resident-info/calendar/",
     "note": "enrich via borough-overrides.json if this is a real event"

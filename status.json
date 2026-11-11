@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T16:24:49.684Z",
+  "generatedAt": "2026-11-11T18:14:16.878Z",
   "totalEvents": 2070,
   "withDescription": 869,
   "withImage": 238,
@@ -160,13 +160,13 @@
       "PM Community": 1
     },
     "stalePast": 30,
-    "lastSyncAt": "2026-11-11T16:22:36.479Z"
+    "lastSyncAt": "2026-11-11T18:10:11.325Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-11T16:24:41.519Z"
+    "checkedAt": "2026-11-11T18:14:08.991Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -174,10 +174,8 @@
     "standalone": 2
   },
   "sourceHealth": {
-    "ok": false,
-    "failing": [
-      "manor.count"
-    ],
+    "ok": true,
+    "failing": [],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -230,10 +228,9 @@
       },
       {
         "key": "manor.count",
-        "ok": false,
+        "ok": true,
         "value": 37,
-        "min": 10,
-        "carriedForward": 37
+        "min": 10
       },
       {
         "key": "muHudl.pairRatio",
@@ -252,6 +249,20 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Millersville University Field Hockey at #6 Indiana (PA)|2026-10-11T16:00:00.000Z",
+      "firstSeenAt": "2026-11-11T18:14:16.875Z",
+      "title": "Millersville University Field Hockey at #6 Indiana (PA)",
+      "source": "MU",
+      "date": "2026-10-11T16:00:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Swimming @ Hempfield High School|2027-01-13T00:30:00.000Z",
+      "firstSeenAt": "2026-11-11T18:14:16.875Z",
+      "title": "Girls Varsity Swimming @ Hempfield High School",
+      "source": "PM",
+      "date": "2027-01-13T00:30:00.000Z"
+    },
     {
       "key": "Holiday Maker's Market|2026-12-05T20:00:00.000Z",
       "firstSeenAt": "2026-11-11T16:24:49.680Z",
@@ -307,23 +318,9 @@
       "title": "Letters of Thanks",
       "source": "MU",
       "date": "2026-11-19T09:00:00"
-    },
-    {
-      "key": "Best Buddies Vision Board Making|2026-12-03T19:00:00",
-      "firstSeenAt": "2026-11-11T15:07:40.512Z",
-      "title": "Best Buddies Vision Board Making",
-      "source": "MU",
-      "date": "2026-12-03T19:00:00"
-    },
-    {
-      "key": "Navidades con SOLA|2026-12-04T17:00:00",
-      "firstSeenAt": "2026-11-11T15:07:40.512Z",
-      "title": "Navidades con SOLA",
-      "source": "MU",
-      "date": "2026-12-04T17:00:00"
     }
   ],
-  "addedLastRun": 1,
+  "addedLastRun": 2,
   "skippedByRule": {
     "total": 435,
     "reasons": {

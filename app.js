@@ -6201,17 +6201,20 @@ function buildEventCard(e,isSportsPage){
 }
 
 /* ==================== HOME ==================== */
-// ===== FEATURED EVENTS SLIDER (2026-11-11) =====
+// ===== FEATURED EVENTS SLIDER (2026-11-11; next-button + marquee 2026-11-11 pm) =====
 // featured.json (hand-curated, vfw.json lineage) names shoutouts: {match, date, blurb?, from?}.
 // Each is matched to a LIVE event on that ET day whose title contains `match` (several match →
 // the SHORTEST title wins, so a sheet row "Girls on the Run 5K" beats MU's "ROAD CLOSURES:
 // Girls on the Run 5K Race"); the viewer's audience/source gates apply exactly as on the
 // timeline; the shoutout shows from `from` (default: 14 days before the event) until the
-// event ends. The slider is a one-line scroll-snap track above the weather tile, auto-
-// advancing every 7 s (paused 20 s after any touch/wheel, off under prefers-reduced-motion,
-// only with >1 item), hidden entirely when nothing applies. Tapping a line opens the popup.
+// event ends. Items keep the FILE's order (Adam decides what leads). One line shows at a time
+// above the weather tile; with more than one item a small › button advances (no swipe, no
+// dots), and the line also advances by itself every 7 s (longer while a marquee is running;
+// paused 20 s after a tap; off under prefers-reduced-motion). Text wider than the line
+// scrolls back and forth (marquee) to draw the eye instead of being cut off. Hidden entirely
+// when nothing applies. Tapping the line opens the event popup.
 let featuredItems = [];
-let featuredTimer = null, featuredPausedUntil = 0;
+let featuredList = [], featuredIdx = 0, featuredTimer = null, featuredPausedUntil = 0;
 async function loadFeatured() {
     try {
         const r = await fetch('featured.json', { cache: 'no-store' });
@@ -6229,7 +6232,7 @@ function featuredVisible(e) {
 function featuredEvents() {
     const now = Date.now(), today = toDateStr(todayMidnight());
     const isDay = s => /^\d{4}-\d{2}-\d{2}$/.test(String(s || ''));
-    const out = [];
+    const out = [], seen = new Set();
     for (const it of featuredItems) {
         if (!it || !it.match || !isDay(it.date)) continue;
         let from = it.from;
@@ -6239,13 +6242,14 @@ function featuredEvents() {
         const cands = allEvents.filter(e => localDateStr(e.date) === it.date && (e.title || '').toLowerCase().includes(m) && featuredVisible(e));
         if (!cands.length) continue;
         cands.sort((a, b) => (a.title || '').length - (b.title || '').length);
-        const e = cands[0];
+        const e = cands[0], key = getEventKey(e);
+        if (seen.has(key)) continue;
         const end = getEventEndTime(e), endMs = end ? end.getTime() : e._dateMs + 3 * 3600e3;
         if (now > endMs) continue;
+        seen.add(key);
         out.push({ e, blurb: it.blurb ? String(it.blurb) : '' });
     }
-    out.sort((a, b) => a.e._dateMs - b.e._dateMs);
-    return out;
+    return out;   // file order, not date order
 }
 function featuredDayLabel(e) {
     const d = new Date(e.date), today = todayMidnight();
@@ -6257,29 +6261,46 @@ function featuredDayLabel(e) {
 function renderHomeFeatured() {
     const box = document.getElementById('home-featured');
     if (!box) return;
-    if (featuredTimer) { clearInterval(featuredTimer); featuredTimer = null; }
-    const list = featuredEvents();
-    if (!list.length) { box.style.display = 'none'; box.innerHTML = ''; return; }
-    const keyAttr = k => JSON.stringify(k).replace(/"/g, '&quot;');
-    box.innerHTML = `<div class="home-featured-track" id="home-featured-track">${list.map(({ e, blurb }) =>
-        `<a href="#" class="home-featured-item" onclick="event.preventDefault();window.openEventDetails(${keyAttr(getEventKey(e))})"><span class="home-featured-star">⭐</span><span class="home-featured-text"><b>${escHtml(featuredDayLabel(e))}</b> · ${escHtml(e.title)}${blurb ? ' — ' + escHtml(blurb) : ''}</span><span class="home-featured-arrow">→</span></a>`).join('')}</div>`
-        + (list.length > 1 ? `<div class="home-featured-dots" id="home-featured-dots">${list.map((_, i) => `<span class="home-featured-dot${i === 0 ? ' active' : ''}"></span>`).join('')}</div>` : '');
+    if (featuredTimer) { clearTimeout(featuredTimer); featuredTimer = null; }
+    featuredList = featuredEvents();
+    if (!featuredList.length) { box.style.display = 'none'; box.innerHTML = ''; return; }
+    if (featuredIdx >= featuredList.length) featuredIdx = 0;
+    box.innerHTML = `<div class="home-featured-line"><a href="#" class="home-featured-item" id="home-featured-item"><span class="home-featured-star">⭐</span><span class="home-featured-text" id="home-featured-text"><span class="home-featured-run" id="home-featured-run"></span></span></a>`
+        + (featuredList.length > 1 ? `<button type="button" class="home-featured-next" id="home-featured-next" aria-label="Next featured event" title="Next featured event">›</button>` : '') + `</div>`;
     box.style.display = '';
-    const track = document.getElementById('home-featured-track');
-    const dots = box.querySelectorAll('.home-featured-dot');
-    const idx = () => Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
-    track.addEventListener('scroll', () => { const i = idx(); dots.forEach((d, j) => d.classList.toggle('active', j === i)); }, { passive: true });
-    const pause = () => { featuredPausedUntil = Date.now() + 20000; };
-    track.addEventListener('pointerdown', pause, { passive: true });
-    track.addEventListener('touchstart', pause, { passive: true });
-    track.addEventListener('wheel', pause, { passive: true });
+    const next = document.getElementById('home-featured-next');
+    if (next) next.addEventListener('click', ev => { ev.preventDefault(); featuredPausedUntil = Date.now() + 20000; featuredShow((featuredIdx + 1) % featuredList.length); });
+    featuredShow(featuredIdx);
+}
+function featuredShow(i) {
+    const item = document.getElementById('home-featured-item'), text = document.getElementById('home-featured-text'), run = document.getElementById('home-featured-run');
+    if (!item || !text || !run || !featuredList.length) return;
+    featuredIdx = i;
+    const { e, blurb } = featuredList[i];
+    const key = getEventKey(e);
+    item.onclick = ev => { ev.preventDefault(); window.openEventDetails(key); };
+    item.classList.remove('is-in'); void item.offsetWidth;   // restart the fade
+    run.innerHTML = `<b>${escHtml(featuredDayLabel(e))}</b> · ${escHtml(e.title)}${blurb ? ' — ' + escHtml(blurb) : ''}`;
+    item.classList.add('is-in');
+    // Marquee when the line overflows: scroll the overflow back and forth, ~30 px/s, min 6 s.
     const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (list.length > 1 && !reduceMotion) {
-        featuredTimer = setInterval(() => {
-            if (document.hidden || Date.now() < featuredPausedUntil || !document.body.contains(track)) return;
-            const next = (idx() + 1) % list.length;
-            track.scrollTo({ left: next * track.clientWidth, behavior: 'smooth' });
-        }, 7000);
+    text.classList.remove('is-marquee'); run.style.removeProperty('--mq'); run.style.removeProperty('--mq-dur');
+    let holdMs = 7000;
+    const overflow = run.scrollWidth - text.clientWidth;
+    if (overflow > 4 && !reduceMotion) {
+        const dur = Math.max(6, Math.round(overflow / 30));
+        run.style.setProperty('--mq', `-${overflow + 8}px`); run.style.setProperty('--mq-dur', `${dur}s`);
+        text.classList.add('is-marquee');
+        holdMs = Math.max(7000, dur * 2 * 1000 + 500);   // let it scroll out and back once
+    }
+    if (featuredTimer) clearTimeout(featuredTimer);
+    if (featuredList.length > 1 && !reduceMotion) {
+        const tick = () => {
+            if (!document.body.contains(item)) return;
+            if (document.hidden || Date.now() < featuredPausedUntil) { featuredTimer = setTimeout(tick, 1000); return; }
+            featuredShow((featuredIdx + 1) % featuredList.length);
+        };
+        featuredTimer = setTimeout(tick, holdMs);
     }
 }
 

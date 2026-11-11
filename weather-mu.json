@@ -1,27 +1,27 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Wednesday, November 11, 2026 at 11:59 AM (Doernberg, Morris, Zipko, Student Meteorologists)",
+    "issued": "Wednesday, November 11, 2026 at 05:44 PM (Gray, Student Meteorologist)",
     "periods": [
-      {
-        "period": "This afternoon",
-        "text": "Mostly sunny and beautiful. High: 64-68"
-      },
       {
         "period": "Tonight",
         "text": "Mild with increasing clouds. Low: 44-48"
       },
       {
-        "period": "Thursday",
+        "period": "Tomorrow",
         "text": "Mostly cloudy and cooler with scattered showers. High: 56-60"
       },
       {
-        "period": "Thursday Night",
+        "period": "Tomorrow Night",
         "text": "Mostly cloudy. Low: 40-44"
       },
       {
         "period": "Friday",
         "text": "Mostly cloudy, breezy and cool. High: 46-50"
+      },
+      {
+        "period": "Saturday",
+        "text": "Mostly cloudy, breezy and slightly cooler. High: 44-48"
       }
     ]
   },
@@ -128,6 +128,17 @@
   },
   "observations": [
     {
+      "time": "17:00",
+      "temp": "60",
+      "dewpoint": "37",
+      "rh": "42",
+      "windDir": "SSW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "16:00",
       "temp": "64",
       "dewpoint": "38",
@@ -178,17 +189,6 @@
       "rh": "29",
       "windDir": "SSW",
       "windSpeed": "6",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "11:00",
-      "temp": "64",
-      "dewpoint": "31",
-      "rh": "29",
-      "windDir": "S",
-      "windSpeed": "4",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
@@ -356,5 +356,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-11T21:04:32.666Z"
+  "updated": "2026-11-11T22:52:27.052Z"
 }

@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-11-11T14:56:14.941Z",
-  "totalEvents": 2061,
-  "withDescription": 860,
+  "generatedAt": "2026-11-11T15:07:40.516Z",
+  "totalEvents": 2070,
+  "withDescription": 869,
   "withImage": 238,
   "familyFriendly": 56,
-  "eventsToday": 21,
+  "eventsToday": 24,
   "sources": {
     "muAthletics": 389,
-    "muCalendar": 191,
+    "muCalendar": 192,
     "artsmu": 50,
     "eckert": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 561,
+    "muGetInvolved": 569,
     "pennManor": 657,
     "borough": 49,
     "vfw": 6,
@@ -160,13 +160,13 @@
       "PM Community": 1
     },
     "stalePast": 30,
-    "lastSyncAt": "2026-11-11T14:54:04.076Z"
+    "lastSyncAt": "2026-11-11T15:03:54.394Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-11T14:56:03.360Z"
+    "checkedAt": "2026-11-11T15:07:29.065Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -174,10 +174,8 @@
     "standalone": 2
   },
   "sourceHealth": {
-    "ok": false,
-    "failing": [
-      "manor.count"
-    ],
+    "ok": true,
+    "failing": [],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -230,10 +228,9 @@
       },
       {
         "key": "manor.count",
-        "ok": false,
+        "ok": true,
         "value": 37,
-        "min": 10,
-        "carriedForward": 37
+        "min": 10
       },
       {
         "key": "muHudl.pairRatio",
@@ -253,77 +250,77 @@
   },
   "recentlyAdded": [
     {
+      "key": "Best Buddies Tabling|2026-11-11T09:00:00",
+      "firstSeenAt": "2026-11-11T15:07:40.512Z",
+      "title": "Best Buddies Tabling",
+      "source": "MU",
+      "date": "2026-11-11T09:00:00"
+    },
+    {
+      "key": "Best Buddies Tabling|2026-11-11T14:00:00",
+      "firstSeenAt": "2026-11-11T15:07:40.512Z",
+      "title": "Best Buddies Tabling",
+      "source": "MU",
+      "date": "2026-11-11T14:00:00"
+    },
+    {
+      "key": "Socialism 101 Teach-In|2026-11-11T19:00:00",
+      "firstSeenAt": "2026-11-11T15:07:40.512Z",
+      "title": "Socialism 101 Teach-In",
+      "source": "MU",
+      "date": "2026-11-11T19:00:00"
+    },
+    {
+      "key": "Coat Drive|2026-11-17T19:00:00",
+      "firstSeenAt": "2026-11-11T15:07:40.512Z",
+      "title": "Coat Drive",
+      "source": "MU",
+      "date": "2026-11-17T19:00:00"
+    },
+    {
+      "key": "Music Production Club Waffle Sale|2026-11-18T07:00:00",
+      "firstSeenAt": "2026-11-11T15:07:40.512Z",
+      "title": "Music Production Club Waffle Sale",
+      "source": "MU",
+      "date": "2026-11-18T07:00:00"
+    },
+    {
+      "key": "Letters of Thanks|2026-11-19T09:00:00",
+      "firstSeenAt": "2026-11-11T15:07:40.512Z",
+      "title": "Letters of Thanks",
+      "source": "MU",
+      "date": "2026-11-19T09:00:00"
+    },
+    {
+      "key": "Best Buddies Vision Board Making|2026-12-03T19:00:00",
+      "firstSeenAt": "2026-11-11T15:07:40.512Z",
+      "title": "Best Buddies Vision Board Making",
+      "source": "MU",
+      "date": "2026-12-03T19:00:00"
+    },
+    {
+      "key": "Navidades con SOLA|2026-12-04T17:00:00",
+      "firstSeenAt": "2026-11-11T15:07:40.512Z",
+      "title": "Navidades con SOLA",
+      "source": "MU",
+      "date": "2026-12-04T17:00:00"
+    },
+    {
+      "key": "FSL: AGC Carnival|2027-01-28T17:00:00",
+      "firstSeenAt": "2026-11-11T15:07:40.512Z",
+      "title": "FSL: AGC Carnival",
+      "source": "MU",
+      "date": "2027-01-28T17:00:00"
+    },
+    {
       "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
       "firstSeenAt": "2026-11-11T14:33:26.030Z",
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2027-09-06T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2027-09-29T12:30:00.000Z",
-      "firstSeenAt": "2026-11-11T14:33:26.030Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-09-29T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-10-04T23:00:00.000Z",
-      "firstSeenAt": "2026-11-11T14:33:26.030Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-10-04T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-10-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-11T14:33:26.030Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-10-06T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2027-10-27T12:30:00.000Z",
-      "firstSeenAt": "2026-11-11T14:33:26.030Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-10-27T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-11-01T23:00:00.000Z",
-      "firstSeenAt": "2026-11-11T14:33:26.030Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-11-01T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-11-03T23:00:00.000Z",
-      "firstSeenAt": "2026-11-11T14:33:26.030Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-11-03T23:00:00.000Z"
-    },
-    {
-      "key": "Art Gallery Reception: \"Unfolding\" created by Heidi Leitzke|2026-11-12T17:30:00",
-      "firstSeenAt": "2026-11-11T14:15:19.446Z",
-      "title": "Art Gallery Reception: \"Unfolding\" created by Heidi Leitzke",
-      "source": "MU",
-      "date": "2026-11-12T17:30:00"
-    },
-    {
-      "key": "ROAD CLOSURES: Girls on the Run 5K Race|2026-11-15T13:00:00",
-      "firstSeenAt": "2026-11-11T14:15:19.446Z",
-      "title": "ROAD CLOSURES: Girls on the Run 5K Race",
-      "source": "MU",
-      "date": "2026-11-15T13:00:00"
-    },
-    {
-      "key": "Trivia Night|2026-12-02T01:00:00.000Z",
-      "firstSeenAt": "2026-11-11T01:07:24.574Z",
-      "title": "Trivia Night",
-      "source": "Jack's Tavern",
-      "date": "2026-12-02T01:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 9,
   "skippedByRule": {
     "total": 435,
     "reasons": {

@@ -77,6 +77,10 @@ self.addEventListener('fetch', event => {
     // still works offline via the JSON data cache.)
     if (url.pathname.endsWith('.pmtiles')) return;
 
+    // Fan score reports (2026-11-11): the endpoint is never cached — PHP GETs would
+    // otherwise be served cache-first, freezing an admin Confirm/Reject link's reply.
+    if (url.pathname === '/report-score.php') return;
+
     // Network-first for JSON data: tries network, falls back to cache.
     // On success, also updates the cache so the offline copy stays current.
     if (url.pathname.endsWith('.json')) {

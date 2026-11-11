@@ -10,3 +10,5 @@ subscriptions.json
 # Notifications run-status snapshot — written by send-notifications.js cron,
 # read by status.html. Lives only on DreamHost.
 notifications-status.json
+# Fan-reported scores — written by report-score.php on DreamHost, excluded from the deploy mirror.
+fan-scores.json

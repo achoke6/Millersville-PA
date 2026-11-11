@@ -263,12 +263,22 @@ function buildVevent($e) {
     $lines[] = 'BEGIN:VEVENT';
     $lines[] = 'UID:' . $uid;
     $lines[] = 'DTSTAMP:' . $dtstamp;
-    $lines[] = 'DTSTART:' . $dtstart;
-    $lines[] = 'DTEND:'   . $dtend;
+    // Time-TBA playoff rows (pm-postseason.json date-only entries, 2026-11-11) go out as
+    // ALL-DAY events so subscribers never see the build's noon placeholder as a real time.
+    $timeTBA = !empty($e['timeTBA']);
+    if ($timeTBA) {
+        $etDay = clone $dt; $etDay->setTimezone(new DateTimeZone('America/New_York'));
+        $etNext = clone $etDay; $etNext->modify('+1 day');
+        $lines[] = 'DTSTART;VALUE=DATE:' . $etDay->format('Ymd');
+        $lines[] = 'DTEND;VALUE=DATE:'   . $etNext->format('Ymd');
+    } else {
+        $lines[] = 'DTSTART:' . $dtstart;
+        $lines[] = 'DTEND:'   . $dtend;
+    }
     // Postseason round (pm-postseason.json, 2026-11-04) leads the SUMMARY so a
     // subscriber's calendar reads "District 3 Class 6A First Round — Boys Varsity Football vs …".
     $round   = isset($e['round']) && $e['round'] ? (string)$e['round'] : '';
-    $lines[] = 'SUMMARY:' . icsEscape($round ? $round . ' — ' . $title : $title);
+    $lines[] = 'SUMMARY:' . icsEscape(($round ? $round . ' — ' . $title : $title) . ($timeTBA ? ' (time TBA)' : ''));
     if ($location)   $lines[] = 'LOCATION:'    . icsEscape($location);
     if ($descFinal)  $lines[] = 'DESCRIPTION:' . icsEscape($descFinal);
     if ($sourceLink) $lines[] = 'URL:'         . $sourceLink; // URLs aren't text-escaped per RFC

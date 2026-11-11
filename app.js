@@ -3879,6 +3879,8 @@ async function loadEvents(){
         applyURLStateToView(_initialView);
     }
     renderEvents(); renderSports();
+    // Fan-reported scores (2026-11-11): overlay after first paint; re-render only if any applied.
+    loadFanScores().then(n => { if (n) renderSports(); });
     if (currentNews.length > 0) renderNewsUI();
     // Load sibling meta for the "last updated" indicator. Failing quietly is fine —
     // the file may not exist on first deploy before the scraper has run.
@@ -4875,11 +4877,12 @@ setTimeout(spLiveTick, 4000);     // first poll shortly after load so a live sco
 function spScoreCell(e) {
     const r = e.gameResult;
     const cls = r === 'W' ? 'sp-res-w' : r === 'L' ? 'sp-res-l' : 'sp-res-t';
-    return `<span class="sp-row-score"><span class="sp-res ${cls}">${escHtml(r)}</span><span class="sp-score">${escHtml(e.gameScore)}</span></span>`;
+    const fan = e.scoreSource === 'fan' ? `<span class="sp-fan" title="${e.fanStatus === 'verified' ? 'Verified by the site admin' : 'Fan-reported score'}">${e.fanStatus === 'verified' ? '✓' : '👥'}</span>` : '';
+    return `<span class="sp-row-score"><span class="sp-res ${cls}">${escHtml(r)}</span><span class="sp-score">${escHtml(e.gameScore)}</span>${fan}</span>`;
 }
 function spTimeCell(e) {
     const d = new Date(e.date);
-    return e.allDay || isNaN(d.getTime()) ? 'All day' : formatTime(d);
+    return e.timeTBA ? 'Time TBA' : e.allDay || isNaN(d.getTime()) ? 'All day' : formatTime(d);
 }
 // Availability hints under the title — tells the reader a tap is worth it.
 function spRowHints(e) {
@@ -4896,6 +4899,131 @@ function spRowHints(e) {
 // ---- Row builders ----------------------------------------------------------
 // mode 'mixed': left = time + school + glyph, title carries the team name.
 // mode 'team' : left = date, title is just the matchup; home rows tinted.
+// ===== FAN SCORE REPORTS (2026-11-11) =====
+// Finished, unscored Penn Manor varsity and MU club-sport games get a "Report score"
+// control (team-view row, mixed-list row, event popup). report-score.php tallies reports
+// per game and publishes a score to fan-scores.json once SP_FAN_THRESHOLD different
+// people (hashed IPs) agree; those scores overlay the feed here as scoreSource 'fan'
+// (fanStatus 'fan' | 'verified') ONLY where no official score exists — D3/MaxPreps/Hudl
+// always win at build. Eligibility mirrors ineligible_reason() in report-score.php.
+const SP_FAN_THRESHOLD = 5;
+const SP_FAN_CAPS = { 'Football': 90, 'Basketball': 150, 'Soccer': 15, 'Field Hockey': 15, 'Lacrosse': 30, 'Baseball': 30, 'Softball': 30, 'Ice Hockey': 20, 'Hockey': 20, 'Rugby': 120, 'Ultimate': 20, 'Volleyball': 3, 'Wrestling': 84, 'Tennis': 9, 'Water Polo': 30 };
+let spFanScores = null;   // fan-scores.json payload once loaded
+function spFanSport(e) { const t = e.tags || []; return Object.keys(SP_FAN_CAPS).find(s => t.includes(s)) || null; }
+function spCanReport(e) {
+    if (!e || spIsScored(e) || !spGameEnded(e)) return false;
+    const t = e.tags || [];
+    const pmVarsity = t.includes('PM') && t.includes('Athletics') && !t.includes('JV') && !t.includes('Jr High');
+    const club = t.includes('Club Sports');
+    if (!pmVarsity && !club) return false;
+    if (!spFanSport(e)) return false;
+    const title = e.title || '';
+    if (club && (!/\b(vs\.?|@|at|game|match)\b/i.test(title) || /\b(practice|tryout|clinic|meeting|alumni)\b/i.test(title))) return false;
+    const start = new Date(e.date).getTime();
+    const end = e.endTime ? new Date(e.endTime).getTime() : start + 3 * 3600e3;
+    return Date.now() - (isNaN(end) ? start + 3 * 3600e3 : end) < 72 * 3600e3;
+}
+function spReporterId() {
+    let id = '';
+    try { id = localStorage.getItem('mapp_reporter') || ''; } catch (_) {}
+    if (!/^[a-z0-9]{8,40}$/i.test(id)) {
+        id = (Math.random().toString(36).slice(2) + Date.now().toString(36)).replace(/[^a-z0-9]/gi, '').slice(0, 32);
+        try { localStorage.setItem('mapp_reporter', id); } catch (_) {}
+    }
+    return id;
+}
+function spReportedScore(key) { try { return (JSON.parse(localStorage.getItem('mapp_reported') || '{}'))[key] || null; } catch (_) { return null; } }
+function spRememberReport(key, score) { try { const m = JSON.parse(localStorage.getItem('mapp_reported') || '{}'); m[key] = score; localStorage.setItem('mapp_reported', JSON.stringify(m)); } catch (_) {} }
+function spKeyAttr(key) { return JSON.stringify(key).replace(/"/g, '&quot;'); }
+// The row's right-hand cell for an ended, unscored game: "Final", or the Report control
+// when the game can take reports (stopPropagation keeps the row's own popup closed).
+function spFinalCell(e) {
+    if (!spCanReport(e)) return '<span class="sp-pill">Final</span>';
+    const key = getEventKey(e), mine = spReportedScore(key);
+    return `<button type="button" class="sp-pill sp-report-btn" onclick="event.preventDefault();event.stopPropagation();spOpenScoreReport(${spKeyAttr(key)})" title="Know the final score? Report it">${mine ? '✓ ' + escHtml(mine) + ' · ' : ''}Report score</button>`;
+}
+window.spOpenScoreReport = function(key) {
+    const e = allEvents.find(ev => getEventKey(ev) === key);
+    if (!e || !spCanReport(e)) { showToast('This game can’t take score reports right now'); return; }
+    const sport = spFanSport(e), cap = SP_FAN_CAPS[sport], sets = sport === 'Volleyball';
+    const t = e.tags || [];
+    const us = t.includes('PM') ? 'Comets' : (spClubLabel(e) || 'Marauders');
+    const m = /\s(?:vs\.?|@|at)\s+(.+?)(?:\s+(?:-|·|–).*)?$/i.exec(e.title || '');
+    const them = m ? m[1].trim().replace(/\s+(high school|hs)$/i, '') : 'Opponent';
+    const prev = spReportedScore(key);
+    const pv = prev ? prev.split('-').map(Number) : [0, 0];
+    const old = document.getElementById('sp-report-overlay'); if (old) old.remove();
+    const ov = document.createElement('div'); ov.id = 'sp-report-overlay';
+    ov.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:10000;display:flex;align-items:flex-end;justify-content:center;padding:16px;';
+    ov.addEventListener('click', ev => { if (ev.target === ov) ov.remove(); });
+    const when = new Date(e.date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+    const stepper = (id, label, val) => `<div style="flex:1;text-align:center;min-width:0;"><div style="font-size:0.78rem;font-weight:700;color:var(--text-muted);margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escHtml(label)}</div><div style="display:flex;align-items:center;justify-content:center;gap:8px;"><button type="button" class="btn btn-sm btn-outline" onclick="spStepScore('${id}',-1,${cap})" aria-label="minus">−</button><input id="${id}" type="number" inputmode="numeric" min="0" max="${cap}" value="${val}" style="width:64px;height:40px;text-align:center;font-size:1.3rem;font-weight:800;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);"><button type="button" class="btn btn-sm btn-outline" onclick="spStepScore('${id}',1,${cap})" aria-label="plus">+</button></div></div>`;
+    ov.innerHTML = `<div style="background:var(--surface);border-radius:16px;max-width:420px;width:100%;padding:20px;box-shadow:0 10px 40px rgba(0,0,0,0.3);">
+        <div style="font-size:1.05rem;font-weight:800;color:var(--navy);">Report the final score</div>
+        <div style="font-size:0.85rem;color:var(--text-muted);margin:4px 0 14px;">${escHtml(e.title)} · ${escHtml(when)}${sets ? ' · enter SETS won' : ''}</div>
+        <div id="sp-report-form"><div style="display:flex;gap:12px;">${stepper('sp-rep-us', us, pv[0])}${stepper('sp-rep-them', them, pv[1])}</div>
+        <div id="sp-report-err" style="color:#b91c1c;font-size:0.82rem;min-height:1.2em;margin-top:8px;"></div>
+        <div style="display:flex;gap:8px;margin-top:10px;"><button type="button" class="btn btn-sm btn-outline" style="flex:1;" onclick="document.getElementById('sp-report-overlay').remove()">Cancel</button><button type="button" id="sp-report-submit" class="btn btn-sm" style="flex:2;background:var(--navy);color:#fff;" onclick="spSubmitScoreReport(${spKeyAttr(key)})">${prev ? 'Update my report' : 'Submit score'}</button></div>
+        <div style="font-size:0.72rem;color:var(--text-muted);margin-top:10px;">A score goes live once ${SP_FAN_THRESHOLD} different people report the same final. Official scores replace it when posted.</div></div>
+        <div id="sp-report-done" style="display:none;"></div>
+    </div>`;
+    document.body.appendChild(ov);
+};
+window.spStepScore = function(id, d, cap) { const el = document.getElementById(id); if (!el) return; el.value = Math.max(0, Math.min(cap, (parseInt(el.value, 10) || 0) + d)); };
+window.spSubmitScoreReport = async function(key) {
+    const e = allEvents.find(ev => getEventKey(ev) === key); if (!e) return;
+    const sport = spFanSport(e), cap = SP_FAN_CAPS[sport];
+    const us = parseInt((document.getElementById('sp-rep-us') || {}).value, 10), them = parseInt((document.getElementById('sp-rep-them') || {}).value, 10);
+    const err = document.getElementById('sp-report-err'), btn = document.getElementById('sp-report-submit');
+    if (!err) return;
+    if (isNaN(us) || isNaN(them) || us < 0 || them < 0 || us > cap || them > cap) { err.textContent = `Scores run 0–${cap} for ${sport.toLowerCase()}.`; return; }
+    if (sport === 'Volleyball' && (Math.max(us, them) < 2 || us === them)) { err.textContent = 'Enter sets won — the winner has 2 or 3.'; return; }
+    err.textContent = ''; if (btn) btn.disabled = true;
+    try {
+        const r = await fetch('report-score.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ key, us, them, dev: spReporterId() }) });
+        const data = await r.json().catch(() => ({}));
+        if (!r.ok || !data.ok) { err.textContent = data.error || 'Couldn’t send that — try again in a minute.'; if (btn) btn.disabled = false; return; }
+        spRememberReport(key, `${us}-${them}`);
+        spRenderReportDone(key, data);
+        loadFanScores().then(n => { if (n || data.published) renderSports(); });
+    } catch (_) { err.textContent = 'Couldn’t reach the site — check your connection.'; if (btn) btn.disabled = false; }
+};
+function spRenderReportDone(key, data) {
+    const form = document.getElementById('sp-report-form'), done = document.getElementById('sp-report-done');
+    if (!form || !done) return;
+    form.style.display = 'none'; done.style.display = 'block';
+    const n = data.count || 1, need = data.needed || SP_FAN_THRESHOLD, left = Math.max(0, need - n);
+    const line = data.published ? 'That score is live — thanks for reporting it.' : `${n} of ${need} fans have reported this game. ${left} more and it goes live.`;
+    done.innerHTML = `<div style="font-size:1rem;font-weight:800;color:#15803d;">Thanks!</div><div style="font-size:0.9rem;margin:6px 0 14px;">${line}</div>
+      <button type="button" class="btn btn-sm" style="width:100%;background:var(--navy);color:#fff;" onclick="spShareTeam(${spKeyAttr(key)})">📣 Tell your team about Millersville.APP</button>
+      <button type="button" class="btn btn-sm btn-outline" style="width:100%;margin-top:8px;" onclick="document.getElementById('sp-report-overlay').remove()">Done</button>`;
+}
+window.spShareTeam = async function(key) {
+    const e = allEvents.find(ev => getEventKey(ev) === key);
+    const info = e && typeof spTeamInfo === 'function' ? spTeamInfo(e) : null;
+    const url = location.origin + '/sports' + (info && info.level !== 'clubs' && info.label ? `?sport=${encodeURIComponent(info.label)}&lvl=${encodeURIComponent(info.level)}` : '');
+    const text = 'Scores, schedules and more for our team — report tonight’s final here:';
+    if (navigator.share) { try { await navigator.share({ title: 'Millersville.APP', text, url }); } catch (_) {} return; }
+    try { await navigator.clipboard.writeText(url); showToast('Link copied — paste it to your team'); } catch (_) { showToast(url); }
+};
+async function loadFanScores() {
+    try {
+        const r = await fetch('fan-scores.json', { cache: 'no-store' });
+        if (!r.ok) return 0;   // 404 until the first score ever publishes — normal
+        spFanScores = await r.json();
+    } catch (_) { return 0; }
+    return applyFanScores();
+}
+function applyFanScores() {
+    if (!spFanScores || !spFanScores.scores) return 0;
+    let n = 0;
+    for (const ev of allEvents) {
+        const fs = spFanScores.scores[getEventKey(ev)];
+        if (fs && !ev.gameResult && fs.score && fs.result) { ev.gameResult = fs.result; ev.gameScore = fs.score; ev.scoreSource = 'fan'; ev.fanStatus = fs.status || 'fan'; n++; }
+    }
+    return n;
+}
+
 function spGameRow(e, mode) {
     const info = spTeamInfo(e);
     const school = spSchoolOf(e);
@@ -4934,7 +5062,7 @@ function spGameRow(e, mode) {
         right = spIsScored(e) ? spScoreCell(e)
             : ltT && ltT.live ? `<span class="sp-pill sp-pill-live">🔴 ${escHtml(ltT.score)}${ltT.status ? ' · ' + escHtml(ltT.status) : ''}</span>`
             : ltT ? `<span class="sp-row-score">${ltT.letter ? `<span class="sp-res ${ltT.letter === 'W' ? 'sp-res-w' : ltT.letter === 'L' ? 'sp-res-l' : 'sp-res-t'}">${ltT.letter}</span>` : ''}<span class="sp-score">${escHtml(ltT.score)}</span></span>`
-            : spGameEnded(e) ? '<span class="sp-pill">Final</span>' : `<span class="sp-row-time">${escHtml(spTimeCell(e))}</span>`;
+            : spGameEnded(e) ? spFinalCell(e) : `<span class="sp-row-time">${escHtml(spTimeCell(e))}</span>`;
     } else {
         const schoolCls = school === 'PM' ? 'sp-school-pm' : school === 'MU' ? 'sp-school-mu' : 'sp-school-clubs';
         const schoolTxt = school === 'Clubs' ? 'Club' : school;
@@ -4946,7 +5074,7 @@ function spGameRow(e, mode) {
         if (spIsScored(e)) right = spScoreCell(e);
         else if (lt && lt.live) right = `<span class="sp-pill sp-pill-live">🔴 ${escHtml(lt.score)}${lt.status ? ' · ' + escHtml(lt.status) : ''}</span>`;
         else if (lt) right = `<span class="sp-row-score">${lt.letter ? `<span class="sp-res ${lt.letter === 'W' ? 'sp-res-w' : lt.letter === 'L' ? 'sp-res-l' : 'sp-res-t'}">${lt.letter}</span>` : ''}<span class="sp-score">${escHtml(lt.score)}</span></span>`;
-        else if (spGameEnded(e)) right = '<span class="sp-pill">Final</span>';
+        else if (spGameEnded(e)) right = spFinalCell(e);
         else if (spIsLiveNow(e)) right = '<span class="sp-pill sp-pill-live">🔴 Live</span>';
         else right = home ? '<span class="sp-pill sp-pill-home">🏡 Home</span>' : '<span class="sp-pill">Away</span>';
     }
@@ -6388,7 +6516,7 @@ function buildTimelineItem(e, now, opts = {}) {
     // Time — uses the scraper's allDay flag. Real noon meetings now show
     // their actual time instead of being heuristic-guessed as "All Day".
     const isAllDay = e.allDay === true;
-    const timeStr = isAllDay ? 'All Day' : formatTime(d);
+    const timeStr = e.timeTBA ? 'Time TBA' : isAllDay ? 'All Day' : formatTime(d);
 
     // Badges
     let badges = '';
@@ -6531,7 +6659,7 @@ window.openEventDetails = function(key) {
     } else {
         dateStr = d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
         if (isAllDay) {
-            timeStr = 'All Day';
+            timeStr = e.timeTBA ? 'Time TBA' : 'All Day';
         } else if (endD && endD.getTime() > d.getTime()) {
             timeStr = `${formatTime(d)} – ${formatTime(endD)}`;
         } else {
@@ -6628,7 +6756,8 @@ window.openEventDetails = function(key) {
         } else {
             ourScore = n1; theirScore = n2;
         }
-        const resultLabel = e.gameResult === 'W' ? 'Final (W)' : e.gameResult === 'L' ? 'Final (L)' : 'Final';
+        const resultLabel = (e.gameResult === 'W' ? 'Final (W)' : e.gameResult === 'L' ? 'Final (L)' : 'Final')
+            + (e.scoreSource === 'fan' ? (e.fanStatus === 'verified' ? ' · verified' : ' · fan-reported') : '');   // fan scores (2026-11-11)
         const resultColor = e.gameResult === 'W' ? '#15803d' : e.gameResult === 'L' ? '#b91c1c' : '#6b7280';
         scoreSummary = `<div style="margin-top:12px;padding:10px 12px;background:var(--bg);border-left:4px solid ${resultColor};border-radius:var(--radius-sm);">
             <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:${resultColor};font-weight:700;">${resultLabel}</div>
@@ -6733,6 +6862,11 @@ window.openEventDetails = function(key) {
     // stamped by scrape.js on unscored MU games; shown ONLY while the game is live.
     if (isLiveNow && e.liveStatsLink) {
         actions += `<a href="${escHtml(e.liveStatsLink)}" target="_blank" rel="noopener" class="btn btn-sm btn-outline" style="text-decoration:none;">📊 Live Stats</a>`;
+    }
+    // Fan score reports (2026-11-11): a finished, unscored PM-varsity / MU-club game offers the
+    // picker sheet (sports block). Same key fan-scores.json is written under.
+    if (typeof spCanReport === 'function' && spCanReport(e)) {
+        actions += `<button type="button" class="btn btn-sm btn-outline" onclick="spOpenScoreReport(${spKeyAttr(getEventKey(e))})">📝 Report the score</button>`;
     }
     // TEAM BAR (2026-09-21; replaces the 2026-09-20 team BUTTON): any PM/MU varsity
     // game gets a tappable bar under the location line — glyph, "Marauders <Team>",

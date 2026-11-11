@@ -2639,7 +2639,10 @@ async function runScraper() {
             let postStamped = 0, postCreated = 0, postPast = 0; const postBad = [];
             const postIsPmVarsity = ev => { const t = ev.tags || []; return t.includes('PM') && t.includes('Athletics') && !t.includes('JV') && !t.includes('Jr High'); };
             for (const g of postList) {
-                const ms = new Date(g.date).getTime();
+                // Date-only entry = time TBA (2026-11-11): the bracket names the day before PIAA posts
+                // the time/site. Anchor at 17:00Z (noon EST / 1 PM EDT — the same ET day either way).
+                const dateOnly = /^\d{4}-\d{2}-\d{2}$/.test(String(g.date || '').trim());
+                const ms = dateOnly ? Date.parse(String(g.date).trim() + 'T17:00:00Z') : new Date(g.date).getTime();
                 const sport = sportsList.find(s => s.toLowerCase() === String(g.sport || '').trim().toLowerCase());
                 const gender = /^girls$/i.test(String(g.gender || '').trim()) ? 'Girls' : /^boys$/i.test(String(g.gender || '').trim()) ? 'Boys' : '';
                 if (isNaN(ms) || !sport || !gender || !g.round) { postBad.push(JSON.stringify(g).slice(0, 140)); continue; }
@@ -2654,7 +2657,8 @@ async function runScraper() {
                     row = {
                         title: `${gender} Varsity ${sport} ${site === 'A' ? '@' : 'vs'} ${opp}`,
                         date: new Date(ms).toISOString(),
-                        endTime: new Date(ms + hours * 3600e3).toISOString(),
+                        endTime: new Date(ms + (dateOnly ? 11 : hours) * 3600e3).toISOString(),   // TBA: through end of the ET day
+                        ...(dateOnly ? { allDay: true, timeTBA: true } : {}),
                         location: g.location || (site === 'H' ? (sport === 'Football' ? 'Millersville University - Chryst Field' : 'Penn Manor High School') : opp),
                         tags, price: 'Free', ticketLink: '',
                         sourceLink: g.ticketLink || 'https://www.pennmanor.net/events/category/athletics/',
@@ -2664,10 +2668,18 @@ async function runScraper() {
                     };
                     if (site === 'N') row.neutralSite = true;
                     events.push(row); postCreated++;
-                } else postStamped++;
+                } else {
+                    postStamped++;
+                    // A carried-forward TBA row meets the entry's real time: take it (2026-11-11).
+                    if (row.timeTBA && !dateOnly) {
+                        row.date = new Date(ms).toISOString();
+                        row.endTime = new Date(ms + (sport === 'Football' ? 3 : 2) * 3600e3).toISOString();
+                        delete row.allDay; delete row.timeTBA;
+                    }
+                }
                 row.round = String(g.round).trim();
                 row.postseason = true;
-                const ended = ms + 4 * 3600e3 < postNowMs;
+                const ended = ms + (dateOnly ? 11 : 4) * 3600e3 < postNowMs;
                 if (!ended && g.price) row.price = String(g.price).trim();
                 if (!ended && g.ticketLink) row.ticketLink = String(g.ticketLink).trim();
                 if (g.streamLink) row.streamLink = String(g.streamLink).trim();
@@ -6773,6 +6785,23 @@ async function runScraper() {
             console.log(`📺 Hudl scores filled: ${hudlScoreMatches} games (supplementing MaxPreps)`);
         }
     } catch (e) { console.log(`  ⚠️ Hudl scores error: ${e.message}`); }
+
+    // Score order (2026-11-11): Penn Manor rows read Comets-FIRST everywhere. D3 posts some
+    // losses winner-first ("L 7-0" at Lower Dauphin, "L 4-1" vs Manheim Central) while MaxPreps
+    // posts team-first; the four render sites print gameScore raw and only the modal
+    // normalized. W = high-low, L = low-high, ties untouched; a trailing note like " (OT)" rides.
+    try {
+        let flipped = 0;
+        for (const ev of events) {
+            const t = ev.tags || [];
+            if (!t.includes('PM') || !t.includes('Athletics') || !ev.gameScore) continue;
+            const m = /^(\d+)\s*-\s*(\d+)(.*)$/.exec(String(ev.gameScore));
+            if (!m || (ev.gameResult !== 'W' && ev.gameResult !== 'L')) continue;
+            const a = +m[1], b = +m[2];
+            if ((ev.gameResult === 'W' && a < b) || (ev.gameResult === 'L' && a > b)) { ev.gameScore = `${b}-${a}${m[3] || ''}`; flipped++; }
+        }
+        if (flipped) console.log(`🔁 Score order: ${flipped} PM score(s) flipped to Comets-first`);
+    } catch (e) { console.log(`  ⚠️ Score order error: ${e.message}`); }
 
     // ===== BOX SCORES (retired) =====
     // Sidearm changed recap-page markup so the inline linescore tables we

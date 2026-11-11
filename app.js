@@ -3879,6 +3879,7 @@ async function loadEvents(){
         applyURLStateToView(_initialView);
     }
     renderEvents(); renderSports();
+    loadFeatured();   // featured slider (2026-11-11) — gated + rendered once events are in
     // Fan-reported scores (2026-11-11): overlay after first paint; re-render only if any applied.
     loadFanScores().then(n => { if (n) renderSports(); });
     if (currentNews.length > 0) renderNewsUI();
@@ -6200,6 +6201,88 @@ function buildEventCard(e,isSportsPage){
 }
 
 /* ==================== HOME ==================== */
+// ===== FEATURED EVENTS SLIDER (2026-11-11) =====
+// featured.json (hand-curated, vfw.json lineage) names shoutouts: {match, date, blurb?, from?}.
+// Each is matched to a LIVE event on that ET day whose title contains `match` (several match →
+// the SHORTEST title wins, so a sheet row "Girls on the Run 5K" beats MU's "ROAD CLOSURES:
+// Girls on the Run 5K Race"); the viewer's audience/source gates apply exactly as on the
+// timeline; the shoutout shows from `from` (default: 14 days before the event) until the
+// event ends. The slider is a one-line scroll-snap track above the weather tile, auto-
+// advancing every 7 s (paused 20 s after any touch/wheel, off under prefers-reduced-motion,
+// only with >1 item), hidden entirely when nothing applies. Tapping a line opens the popup.
+let featuredItems = [];
+let featuredTimer = null, featuredPausedUntil = 0;
+async function loadFeatured() {
+    try {
+        const r = await fetch('featured.json', { cache: 'no-store' });
+        if (!r.ok) return;
+        const j = await r.json();
+        featuredItems = Array.isArray(j) ? j : (Array.isArray(j.items) ? j.items : []);
+    } catch (_) { featuredItems = []; }
+    renderHomeFeatured();
+}
+function featuredVisible(e) {
+    if (isHiddenForViewer(e) || isEventFromHiddenSource(e) || isSportsEventFromHiddenSource(e)) return false;
+    if ((e.tags || []).includes('Clubs/Orgs') && e.audience !== 'public' && muAffiliation === 'townie') return false;
+    return true;
+}
+function featuredEvents() {
+    const now = Date.now(), today = toDateStr(todayMidnight());
+    const isDay = s => /^\d{4}-\d{2}-\d{2}$/.test(String(s || ''));
+    const out = [];
+    for (const it of featuredItems) {
+        if (!it || !it.match || !isDay(it.date)) continue;
+        let from = it.from;
+        if (!isDay(from)) { const d = new Date(it.date + 'T12:00:00'); d.setDate(d.getDate() - 14); from = toDateStr(d); }
+        if (today < from) continue;
+        const m = String(it.match).toLowerCase();
+        const cands = allEvents.filter(e => localDateStr(e.date) === it.date && (e.title || '').toLowerCase().includes(m) && featuredVisible(e));
+        if (!cands.length) continue;
+        cands.sort((a, b) => (a.title || '').length - (b.title || '').length);
+        const e = cands[0];
+        const end = getEventEndTime(e), endMs = end ? end.getTime() : e._dateMs + 3 * 3600e3;
+        if (now > endMs) continue;
+        out.push({ e, blurb: it.blurb ? String(it.blurb) : '' });
+    }
+    out.sort((a, b) => a.e._dateMs - b.e._dateMs);
+    return out;
+}
+function featuredDayLabel(e) {
+    const d = new Date(e.date), today = todayMidnight();
+    const diff = Math.round((new Date(d.getFullYear(), d.getMonth(), d.getDate()) - today) / 864e5);
+    if (diff === 0) return 'Today';
+    if (diff === 1) return 'Tomorrow';
+    return d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+}
+function renderHomeFeatured() {
+    const box = document.getElementById('home-featured');
+    if (!box) return;
+    if (featuredTimer) { clearInterval(featuredTimer); featuredTimer = null; }
+    const list = featuredEvents();
+    if (!list.length) { box.style.display = 'none'; box.innerHTML = ''; return; }
+    const keyAttr = k => JSON.stringify(k).replace(/"/g, '&quot;');
+    box.innerHTML = `<div class="home-featured-track" id="home-featured-track">${list.map(({ e, blurb }) =>
+        `<a href="#" class="home-featured-item" onclick="event.preventDefault();window.openEventDetails(${keyAttr(getEventKey(e))})"><span class="home-featured-star">⭐</span><span class="home-featured-text"><b>${escHtml(featuredDayLabel(e))}</b> · ${escHtml(e.title)}${blurb ? ' — ' + escHtml(blurb) : ''}</span><span class="home-featured-arrow">→</span></a>`).join('')}</div>`
+        + (list.length > 1 ? `<div class="home-featured-dots" id="home-featured-dots">${list.map((_, i) => `<span class="home-featured-dot${i === 0 ? ' active' : ''}"></span>`).join('')}</div>` : '');
+    box.style.display = '';
+    const track = document.getElementById('home-featured-track');
+    const dots = box.querySelectorAll('.home-featured-dot');
+    const idx = () => Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
+    track.addEventListener('scroll', () => { const i = idx(); dots.forEach((d, j) => d.classList.toggle('active', j === i)); }, { passive: true });
+    const pause = () => { featuredPausedUntil = Date.now() + 20000; };
+    track.addEventListener('pointerdown', pause, { passive: true });
+    track.addEventListener('touchstart', pause, { passive: true });
+    track.addEventListener('wheel', pause, { passive: true });
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (list.length > 1 && !reduceMotion) {
+        featuredTimer = setInterval(() => {
+            if (document.hidden || Date.now() < featuredPausedUntil || !document.body.contains(track)) return;
+            const next = (idx() + 1) % list.length;
+            track.scrollTo({ left: next * track.clientWidth, behavior: 'smooth' });
+        }, 7000);
+    }
+}
+
 function renderHomeUI(){
     const now = new Date();
     if (!homeViewDate) homeViewDate = todayMidnight();
@@ -6207,6 +6290,7 @@ function renderHomeUI(){
     const isToday = toDateStr(homeViewDate) === toDateStr(todayD);
     const viewDateStr = toDateStr(homeViewDate);
     const hasFeed = feedPrefs && feedPrefs.length > 0;
+    renderHomeFeatured();   // featured slider (2026-11-11): re-gate on identity / source changes
 
     // Update the day-navigator label and Today-snap-back visibility. The
     // label uses fmtDateLabel for consistent formatting ("Today, Apr 28" vs

@@ -1,0 +1,11 @@
+{
+  "_comment": "HAND-CURATED (vfw.json lineage) — the homepage FEATURED EVENTS slider. One entry per shoutout. match = a case-insensitive fragment of the live event's title; date = the event's day (YYYY-MM-DD, ET); blurb (optional, short — shown after an em dash); from (optional, YYYY-MM-DD — first day the shoutout shows; default 14 days before). The shoutout ends when the event ends. Several live rows matching → the shortest title wins. No matching live row → nothing shows (never fabricated). The build validates this file: a bad comma fails the build.",
+  "items": [
+    {
+      "match": "Girls on the Run",
+      "date": "2026-11-15",
+      "blurb": "Sunday at Biemesderfer Stadium — campus roads close 1–4 PM",
+      "from": "2026-11-11"
+    }
+  ]
+}

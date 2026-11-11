@@ -203,6 +203,28 @@
     .sp-report-btn { cursor: pointer; font-family: inherit; font-weight: 700; color: var(--navy); background: var(--surface); border: 1px dashed var(--navy); }   /* fan score reports (2026-11-11) */
     .sp-fan { font-size: 0.7rem; margin-left: 4px; opacity: 0.85; }
     .sp-team-list .sp-row:last-child { border-radius: 0 0 12px 12px; }
+    /* Featured events slider + the split food/add-event strip (2026-11-11) */
+    .home-featured-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
+    .home-featured-track::-webkit-scrollbar { display: none; }
+    .home-featured-item { flex: 0 0 100%; scroll-snap-align: start; display: flex; align-items: center; gap: 8px; padding: 10px 12px; min-height: 44px; box-sizing: border-box; text-decoration: none; color: var(--text); font-size: 0.88rem; font-weight: 600; }
+    .home-featured-text { flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .home-featured-text b { color: var(--navy); }
+    .home-featured-arrow { color: var(--navy); }
+    .home-featured-dots { display: flex; justify-content: center; gap: 5px; margin-top: 5px; }
+    .home-featured-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); }
+    .home-featured-dot.active { background: var(--navy); }
+    .home-strip-pair { display: flex; gap: 10px; }
+    .home-strip-tile { flex: 1; min-width: 0; display: flex; align-items: center; gap: 10px; padding: 12px; min-height: 62px; box-sizing: border-box; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; color: var(--text); transition: var(--transition); }
+    .home-strip-tile:active { transform: scale(0.98); }
+    .home-strip-icon { font-size: 1.4rem; line-height: 1; flex: 0 0 auto; }
+    .home-strip-label { display: flex; flex-direction: column; min-width: 0; line-height: 1.25; }
+    .home-strip-label b { font-size: 0.92rem; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .home-strip-label small { font-size: 0.74rem; font-weight: 500; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .home-strip-food { background: var(--gold-soft); }
+    .home-strip-add { background: #ecfdf5; border-color: #86efac; }
+    .home-strip-add .home-strip-label b { color: #14532d; }
+    .home-strip-add .home-strip-label small { color: #15803d; }
+    @media (max-width: 380px) { .home-strip-tile { padding: 10px; gap: 8px; min-height: 56px; } .home-strip-icon { font-size: 1.2rem; } .home-strip-label b { font-size: 0.86rem; } .home-strip-label small { font-size: 0.7rem; } }
     .sp-team-list .sp-row-title { white-space: normal; }
     .sp-next-divider { display: flex; align-items: center; gap: 10px; padding: 8px 14px; background: #fffbeb; border: 1px solid #fde68a; border-left: 1px solid var(--border); border-right: 1px solid var(--border); }
     .sp-next-divider > span:first-child, .sp-next-divider > span:last-child { flex: 1; height: 1px; background: #f59e0b; }
@@ -267,6 +289,9 @@
 
     <!-- HOME -->
     <section id="view-home" class="app-view active">
+        <!-- Featured events slider (2026-11-11): one swipeable line, filled by app.js
+             renderHomeFeatured() from featured.json; hidden when nothing is featured. -->
+        <div id="home-featured" class="home-section" style="display:none;" aria-label="Featured events"></div>
         <!-- Compact Weather Bar -->
         <div id="home-weather-bar" class="home-weather-bar">
             <p>Loading weather...</p>
@@ -310,7 +335,10 @@
              listings with menus & online ordering. Static v1 by design — no data
              or audience dependency, so no re-render wiring (2026-08-25). -->
         <div class="home-section" id="home-food-strip">
-            <a href="#" onclick="event.preventDefault();switchView('food');" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--gold-soft);text-decoration:none;color:var(--text);font-size:0.9rem;font-weight:600;"><span>🍴 Hungry? See who's open — menus &amp; ordering</span><span style="color:var(--navy);white-space:nowrap;">→</span></a>
+            <div class="home-strip-pair">
+                <a href="#" onclick="event.preventDefault();switchView('food');" class="home-strip-tile home-strip-food"><span class="home-strip-icon">🍴</span><span class="home-strip-label"><b>Hungry?</b><small>See who's open now</small></span></a>
+                <a href="#" onclick="event.preventDefault();openSubmitEvent();" class="home-strip-tile home-strip-add"><span class="home-strip-icon">📅</span><span class="home-strip-label"><b>Add your event</b><small>Free, for everyone</small></span></a>
+            </div>
         </div>
 
         <!-- Upcoming Signups — registration deadlines within 2 weeks (townies).

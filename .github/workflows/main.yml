@@ -40,7 +40,7 @@ jobs:
       - name: Validate hand-maintained JSON
         run: |
           set -e
-          for f in camps.json org-overrides.json shortnames-overlay.json imleagues.json venue-aliases.json place-specials.json dining-menus.json pm-postseason.json vfw.json; do
+          for f in camps.json org-overrides.json shortnames-overlay.json imleagues.json venue-aliases.json place-specials.json dining-menus.json pm-postseason.json vfw.json featured.json; do
             if [ -f "$f" ]; then
               echo "Checking $f..."
               jq empty "$f" || { echo "❌ $f has invalid JSON syntax"; exit 1; }
@@ -110,6 +110,11 @@ jobs:
           if [ -f vfw.json ]; then
             jq -e '(.events | type == "array") and (.weeklySpecials | type == "object")' vfw.json > /dev/null \
               || { echo "❌ vfw.json must have an .events array and a .weeklySpecials object"; exit 1; }
+          fi
+          # featured.json (2026-11-11): hand-curated homepage slider; a bad entry would blank it.
+          if [ -f featured.json ]; then
+            jq -e '.items | type == "array" and all(.match and (.date | type == "string" and test("^[0-9]{4}-[0-9]{2}-[0-9]{2}$")) and ((.from // "2000-01-01") | test("^[0-9]{4}-[0-9]{2}-[0-9]{2}$")))' featured.json > /dev/null \
+              || { echo "❌ featured.json: .items must be an array; every entry needs match + date (YYYY-MM-DD); from, when present, YYYY-MM-DD"; exit 1; }
           fi
           echo "✓ All JSON files valid"
 

@@ -2,86 +2,82 @@
     "_comment": "Hand-maintained John Herr's Village Market weekly deals. Maintained weekly via Claude Cowork — circular runs Thursday-Wednesday. Transcribe ~15 top deals from the weekly circular. Update validThrough to one day past the last valid day so deals auto-disappear when the new week starts (Thursday morning).",
     "_format": "dateRange: human-readable string shown in UI (e.g. 'Thursday, May 7 through Wednesday, May 13'). validThrough: ISO date (YYYY-MM-DD), exclusive end. deals: array of { item, salePrice, regularPrice (optional), savings (optional) }. salePrice can be flexible — '$2.99/lb', '2 for $5', 'BOGO Free', etc.",
     "_source": "Circular page typically at https://www.familyownedmarkets.com/print-weekly-specials/?circularstoreidentifier=54348 or via the store's main page.",
-    "dateRange": "Thursday, November 5 through Wednesday, November 11",
-    "validThrough": "2026-11-12",
+    "dateRange": "Thursday, November 12 through Wednesday, November 18",
+    "validThrough": "2026-11-19",
     "deals": [
         {
-            "item": "Boneless Pork Sirloin Chops (Value Pack, Fresh)",
-            "salePrice": "$2.49/lb",
+            "item": "Boneless & Skinless Chicken Breasts (Fresh Grade A, All Natural — sold in 10-lb bag only, $19.90/bag)",
+            "salePrice": "$1.99/lb",
             "regularPrice": "$2.99/lb (less amount)",
-            "savings": "$0.50/lb"
-        },
-        {
-            "item": "Boneless & Skinless Chicken Thighs (Value Pack, Fresh)",
-            "salePrice": "$2.99/lb",
-            "regularPrice": "$3.49/lb (less amount)",
-            "savings": "$0.50/lb"
-        },
-        {
-            "item": "Gold Medal Flour (5-lb) — Throwback Thursday Digital Coupon (Thu 11/5 - Sun 11/8 only, limit 1 offer)",
-            "salePrice": "$1.98",
-            "regularPrice": "$4.48 (sale price before coupon)",
-            "savings": "$2.50"
-        },
-        {
-            "item": "Martin's Original Potato Chips (8.5-oz, Selected)",
-            "salePrice": "Buy 1 Get 1 FREE"
-        },
-        {
-            "item": "Mid's Pasta Sauce (26-oz, Selected) — Buy 1, Get 1 Food Club Pasta (16-oz) FREE (thru Nov 13, limit 1 per transaction)",
-            "salePrice": "$5.48 + free pasta"
-        },
-        {
-            "item": "Cabot Chunk or Cracker Cut Cheese (7 to 8-oz, Selected) — Throwback Thursday Digital Coupon (Thu 11/5 - Sun 11/8 only, limit 1 offer)",
-            "salePrice": "$1.48",
-            "regularPrice": "$2.98 (sale price before coupon)",
-            "savings": "$1.50"
-        },
-        {
-            "item": "John F. Martin Smoked Turkey Breast — Weekly Door Buster (limit 6 lbs per Rewards card)",
-            "salePrice": "$7.49/lb"
-        },
-        {
-            "item": "Pillsbury Pie Crusts (2-ct, 14.1-oz)",
-            "salePrice": "Buy 1 Get 1 FREE"
-        },
-        {
-            "item": "Del Monte Canned Vegetables (14.5 to 15.25-oz, Selected)",
-            "salePrice": "Buy 1 Get 1 FREE"
-        },
-        {
-            "item": "Stove Top Stuffing Mix (6-oz, Selected)",
-            "salePrice": "Buy 1 Get 1 FREE"
-        },
-        {
-            "item": "Campbell's Homestyle Soup (15.1 to 16.3-oz, Selected) — Weekly Door Buster (limit 8 per Rewards card)",
-            "salePrice": "4 for $5"
-        },
-        {
-            "item": "Mueller's Spaghetti, Elbow Macaroni, Thin or Cut Spaghetti — Weekly Door Buster (limit 10 per Rewards card)",
-            "salePrice": "5 for $4"
-        },
-        {
-            "item": "Fresh 85% Lean Ground Beef (Value Pack, Our Own Store Made)",
-            "salePrice": "$6.99/lb",
-            "regularPrice": "$7.49/lb (less amount)",
-            "savings": "$0.50/lb"
-        },
-        {
-            "item": "Boneless Ribeye Steaks / Delmonico (Value Pack, Select Beef)",
-            "salePrice": "$14.99/lb",
-            "regularPrice": "$15.99/lb (less amount)",
             "savings": "$1.00/lb"
         },
         {
-            "item": "Peter Pan Peanut Butter (16.3-oz) — Throwback Thursday Digital Coupon (Thu 11/5 - Sun 11/8 only, limit 1 offer)",
-            "salePrice": "$1.28",
-            "regularPrice": "$2.28 (sale price before coupon)",
-            "savings": "$1.00"
+            "item": "Whole Boneless Pork Loin — cut into chops or roast at no extra cost",
+            "salePrice": "$1.99/lb"
         },
         {
-            "item": "Pink Lady Apples",
-            "salePrice": "$1.69/lb"
+            "item": "Store Brand Frozen Self-Basting Whole Turkey (up to 20 lbs) or Grade A Whole Bone-In Turkey Breast — FREE with your Thanksgiving Reward (earned with $500 spend Oct 8 - Nov 19)",
+            "salePrice": "FREE with reward"
+        },
+        {
+            "item": "Boneless New York Strip Steaks (Value Pack, Select Beef)",
+            "salePrice": "$11.99/lb",
+            "regularPrice": "$12.99/lb (less amount)",
+            "savings": "$1.00/lb"
+        },
+        {
+            "item": "Gibble's Homestyle Potato Chips (8-oz, Selected)",
+            "salePrice": "Buy 1 Get 1 FREE"
+        },
+        {
+            "item": "Fresh Ground Sirloin (Value Pack, Our Own Store Made, Certified Angus Beef)",
+            "salePrice": "$6.99/lb",
+            "regularPrice": "$7.99/lb (less amount)",
+            "savings": "$1.00/lb"
+        },
+        {
+            "item": "Martin's Popcorn (7 to 10.5-oz, Selected) — Weekly Door Buster (limit 4 per Rewards card)",
+            "salePrice": "Buy 1 Get 1 FREE"
+        },
+        {
+            "item": "John F. Martin Original Sliced Bacon (16-oz) — Weekly Door Buster (limit 4 per Rewards card)",
+            "salePrice": "$3.69"
+        },
+        {
+            "item": "John F. Martin Deli Tavern Ham — Weekly Door Buster (limit 6 lbs per Rewards card)",
+            "salePrice": "$4.49/lb"
+        },
+        {
+            "item": "Food Club Frozen Vegetables (10 to 12-oz, Selected) — Weekly Door Buster (limit 10 per Rewards card)",
+            "salePrice": "5 for $5"
+        },
+        {
+            "item": "Canada Dry, 7UP, A&W Root Beer or Sunkist Orange (2-Liter, Selected)",
+            "salePrice": "Buy 1 Get 1 FREE"
+        },
+        {
+            "item": "Betty Crocker Super Moist Cake Mix (13.25 to 15.25-oz, Selected) — Throwback Thursday Digital Coupon (Thu 11/12 - Sun 11/15 only, limit 1 offer)",
+            "salePrice": "$0.98",
+            "regularPrice": "$1.48 (sale price before coupon)",
+            "savings": "$0.50"
+        },
+        {
+            "item": "Kellogg's Large Size Cereals (12 to 17.5-oz, Selected) — Throwback Thursday Digital Coupon (Thu 11/12 - Sun 11/15 only, limit 1 offer)",
+            "salePrice": "$2.48",
+            "regularPrice": "$3.98 (sale price before coupon)",
+            "savings": "$1.50"
+        },
+        {
+            "item": "Campbell's Cream of Mushroom or Cream of Chicken Soup (10.5-oz)",
+            "salePrice": "4 for $5"
+        },
+        {
+            "item": "Southern Seas 16/20 Ct. EZ Peel Raw Shrimp (1-lb bag)",
+            "salePrice": "$8.99"
+        },
+        {
+            "item": "Green Cabbage (Fresh)",
+            "salePrice": "$0.69/lb"
         }
     ]
 }

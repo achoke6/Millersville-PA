@@ -6290,11 +6290,9 @@ function renderHomeUI(){
             html += '<div class="feed-pinned-header"><span>⚡ My Favorites</span></div>';
             html += favs.map(e => buildTimelineItem(e, now)).join('');
             if (others.length > 0) html += '<div class="feed-divider"><span>' + allLabel + '</span></div>';
-        } else {
-            const noFavCopy = isToday ? 'No favorites scheduled today' : 'No favorites scheduled';
-            html += '<p class="home-empty">' + noFavCopy + '</p>';
-            html += '<div class="feed-divider"><span>' + allLabel + '</span></div>';
         }
+        // 2026-11-12: no favorites on this day → no "No favorites scheduled" line and no
+        // All-day divider; the list just starts (same look as a viewer with no favorites).
         html += others.map(e => buildTimelineItem(e, now)).join('');
         timeline.innerHTML = html;
     } else {

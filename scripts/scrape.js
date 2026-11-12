@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const dns = require('dns');
 const ical = require('node-ical');
+const { tagInterests } = require('./interests');   // 2026-11-12: scrape-time interest tagging (events.interests[])
 
 dns.setDefaultResultOrder('ipv4first');
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -6519,6 +6520,27 @@ async function runScraper() {
     });
     console.log(`👨‍👩‍👧 Family-friendly tagged: ${famCount} of ${events.length} events`);
 
+    // ===== INTEREST TAGGING (2026-11-12) =====
+    // Cross-source interest keys for the /events chip row (step 3 of the
+    // interests build): music, arts, crafts, food, causes, active, learn, civic,
+    // greek, reshall. Taxonomy + signal tables live in scripts/interests.js.
+    // Runs AFTER the family pass (Kids & Family stays on kidFriendly, not an
+    // interest key) and BEFORE dedupe, which unions the arrays like benefits.
+    // A curated non-empty `interests` on a row (camps.json / vfw.json / a future
+    // sheet column) wins outright; athletics are never tagged. The keyword-only
+    // samples below are the review surface — a wrong sample is a negative-list
+    // fix in interests.js, not a scrape.js change.
+    try {
+        const ir = tagInterests(events);
+        const parts = ir.keys.map(k => `${k} ${ir.counts[k]}`).join(' · ');
+        console.log(`🏷️ Interests tagged: ${ir.tagged} of ${events.length} events (${ir.curated} curated) — ${parts}`);
+        for (const k of ir.keys) {
+            if (ir.samples[k].length) console.log(`   ${k} keyword-only sample: ${ir.samples[k].map(t => `"${t}"`).join(' · ')}`);
+        }
+    } catch (err) {
+        console.log(`⚠️ Interest tagging error (non-fatal): ${err.message}`);
+    }
+
     // ===== THE HUB — RECURRING FREE MEALS — RETIRED 2026-07-28 =====
     // Replaced outright by the place-specials pipeline (replacement
     // precedent, like cupboardHoursObject): the `the-hub` entry in
@@ -7335,6 +7357,11 @@ async function runScraper() {
             if (loser.event.kidFriendly === true && winner.kidFriendly !== true) {
                 winner.kidFriendly = true;
             }
+            // Merge interests (union, max 3, winner's order first) — 2026-11-12
+            if (loser.event.interests && loser.event.interests.length > 0) {
+                const merged = Array.from(new Set([...(winner.interests || []), ...loser.event.interests])).slice(0, 3);
+                if (merged.length) winner.interests = merged;
+            }
             // Inherit ticket link if winner lacks one — and UPGRADE a generic
             // etix /ticket/v/ venue link to the loser's specific /ticket/p/
             // purchase page (2026-08-24: MU Calendar outranks artsmu, so the
@@ -7773,7 +7800,7 @@ async function runScraper() {
     //
     // Don't touch: title, date, tags, audience, _dateMs (added at runtime
     // anyway, but harmless if scraper accidentally emits it).
-    const SLIM_FIELDS = ['image', 'location', 'ticketLink', 'streamLink', 'sourceLink', 'price', 'benefits', 'org', 'orgName', 'orgShortName', 'category', 'categories', 'kidFriendly', 'isLive', 'periodScores'];
+    const SLIM_FIELDS = ['image', 'location', 'ticketLink', 'streamLink', 'sourceLink', 'price', 'benefits', 'interests', 'org', 'orgName', 'orgShortName', 'category', 'categories', 'kidFriendly', 'isLive', 'periodScores'];
     let beforeBytes = 0, afterBytes = 0;
     try { beforeBytes = JSON.stringify(deduped, null, 2).length; } catch(_) {}
     for (const ev of deduped) {
@@ -8048,6 +8075,15 @@ async function runScraper() {
             withDescription: deduped.filter(e => e.description).length,
             withImage: deduped.filter(e => e.image).length,
             familyFriendly: deduped.filter(e => e.kidFriendly).length,
+            // 2026-11-12: scrape-time interest counts (scripts/interests.js) — the
+            // review surface for the /events chip row. A key that collapses to 0
+            // means a source's tags moved; a key that balloons means a keyword
+            // needs a negative.
+            interests: (() => {
+                const c = {};
+                for (const e of deduped) for (const k of (e.interests || [])) c[k] = (c[k] || 0) + 1;
+                return c;
+            })(),
             // Events happening TODAY in Eastern Time. Surfaces what users see
             // when they open the app right now — useful sanity check after a
             // scrape ("did Friday's slate land?") and a more operationally

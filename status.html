@@ -449,6 +449,16 @@ async function render() {
         metric('Family-friendly tagged', status.familyFriendly)
     );
 
+    // Interests card (2026-11-12): scrape-time interest counts from scripts/interests.js.
+    // Older status.json without the field just omits the card.
+    let interestsCard = '';
+    if (status.interests && Object.keys(status.interests).length) {
+        const labels = { music: '🎵 Music', arts: '🎭 Arts & Theatre', crafts: '🧶 Crafts & Making', food: '🍴 Food & Drink', causes: '🤝 Volunteer & Causes', active: '🏃 Outdoors & Fitness', learn: '📚 Talks & Learning', civic: '🏛️ Meetings & Civic', greek: '🏺 Greek Life', reshall: '🏠 Res Halls' };
+        interestsCard = card('Interests (scrape-time)',
+            Object.keys(labels).map(k => metric(labels[k], status.interests[k] || 0)).join('')
+        );
+    }
+
     // Open Registrations card — youth sports signups + PM community events with
     // a registration deadline (computed in status.json from the live event set).
     // Optional: a 404 / older status.json without the field just omits the card.
@@ -645,7 +655,7 @@ async function render() {
             (rows || '<div class="status-metric muted"><span class="status-metric-label">Nothing skipped by rule this run</span></div>')
         );
     }
-    document.getElementById('grid').innerHTML = sourcesCard + sportsCard + contentCard + registrationsCard + reviewQueueCard + notificationsCard + autoScraperCard + recentAddedCard + skippedCard;
+    document.getElementById('grid').innerHTML = sourcesCard + sportsCard + contentCard + interestsCard + registrationsCard + reviewQueueCard + notificationsCard + autoScraperCard + recentAddedCard + skippedCard;
 }
 
 render();

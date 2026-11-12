@@ -1,11 +1,11 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Thursday, November 12, 2026 at 07:58 AM (Kint, Smith, Zocco, Student Meteorologists)",
+    "issued": "Thursday, November 12, 2026 at 12:10 PM (Biondo and Cressley, Student Meteorologists)",
     "periods": [
       {
-        "period": "Today",
-        "text": "Mostly cloudy and cooler with scattered showers, mainly in the morning. High: 56-60"
+        "period": "This afternoon",
+        "text": "Cooler with a mix of clouds and sun. High: 56-60"
       },
       {
         "period": "Tonight",
@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "13:00",
+      "temp": "58",
+      "dewpoint": "54",
+      "rh": "88",
+      "windDir": "WSW",
+      "windSpeed": "3",
+      "precip": "0.02",
+      "visibility": "11.1",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "54",
+      "dewpoint": "52",
+      "rh": "95",
+      "windDir": "WSW",
+      "windSpeed": "4",
+      "precip": "0.01",
+      "visibility": "4.4",
+      "condition": "Showers Rain"
+    },
+    {
       "time": "11:00",
       "temp": "58",
       "dewpoint": "54",
@@ -167,28 +189,6 @@
       "rh": "83",
       "windDir": "E",
       "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "51",
-      "dewpoint": "46",
-      "rh": "82",
-      "windDir": "ENE",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "51",
-      "dewpoint": "45",
-      "rh": "80",
-      "windDir": "E",
-      "windSpeed": "6",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
@@ -338,6 +338,13 @@
   },
   "videos": [
     {
+      "title": "Short Term Forecast 11/12/2026",
+      "videoId": "MTjBs86XUz0",
+      "url": "https://www.youtube.com/watch?v=MTjBs86XUz0",
+      "published": "2026-11-12T16:52:15+00:00",
+      "thumbnail": "https://i2.ytimg.com/vi/MTjBs86XUz0/hqdefault.jpg"
+    },
+    {
       "title": "Medium Range Forecast 11/12/2026",
       "videoId": "fYMH02cOz1Y",
       "url": "https://www.youtube.com/watch?v=fYMH02cOz1Y",
@@ -357,15 +364,8 @@
       "url": "https://www.youtube.com/watch?v=xy9YYQpTWbs",
       "published": "2026-11-10T16:31:16+00:00",
       "thumbnail": "https://i1.ytimg.com/vi/xy9YYQpTWbs/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 11/09/2026",
-      "videoId": "V2wW2dcCyO8",
-      "url": "https://www.youtube.com/watch?v=V2wW2dcCyO8",
-      "published": "2026-11-09T14:29:15+00:00",
-      "thumbnail": "https://i3.ytimg.com/vi/V2wW2dcCyO8/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-12T16:14:21.588Z"
+  "updated": "2026-11-12T18:02:32.824Z"
 }

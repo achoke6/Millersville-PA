@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-12T16:16:57.593Z",
-  "totalEvents": 2074,
-  "withDescription": 871,
+  "generatedAt": "2026-11-12T18:06:32.048Z",
+  "totalEvents": 2075,
+  "withDescription": 872,
   "withImage": 246,
   "familyFriendly": 56,
   "eventsToday": 26,
@@ -11,7 +11,7 @@
     "artsmu": 50,
     "eckert": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 572,
+    "muGetInvolved": 573,
     "pennManor": 659,
     "borough": 49,
     "vfw": 6,
@@ -160,13 +160,13 @@
       "Campus Life": 1
     },
     "stalePast": 31,
-    "lastSyncAt": "2026-11-12T16:14:16.598Z"
+    "lastSyncAt": "2026-11-12T18:02:30.709Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-12T16:16:47.786Z"
+    "checkedAt": "2026-11-12T18:06:19.046Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -174,10 +174,8 @@
     "standalone": 2
   },
   "sourceHealth": {
-    "ok": false,
-    "failing": [
-      "manor.count"
-    ],
+    "ok": true,
+    "failing": [],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -230,10 +228,9 @@
       },
       {
         "key": "manor.count",
-        "ok": false,
+        "ok": true,
         "value": 37,
-        "min": 10,
-        "carriedForward": 37
+        "min": 10
       },
       {
         "key": "muHudl.pairRatio",
@@ -252,6 +249,20 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "LAST DAY to... Courses|2027-01-26T00:00:00",
+      "firstSeenAt": "2026-11-12T18:06:32.045Z",
+      "title": "LAST DAY to... Courses",
+      "source": "MU",
+      "date": "2027-01-26T00:00:00"
+    },
+    {
+      "key": "Spring Commencement|2027-05-08T00:00:00",
+      "firstSeenAt": "2026-11-12T18:06:32.045Z",
+      "title": "Spring Commencement",
+      "source": "MU",
+      "date": "2027-05-08T00:00:00"
+    },
     {
       "key": "Civil Service Commission - Cancelled|2026-08-17T22:00:00.000Z",
       "firstSeenAt": "2026-11-12T16:16:57.590Z",
@@ -307,23 +318,9 @@
       "title": "Saturday in the Park",
       "source": "Borough",
       "date": "2026-09-12T12:00:00.000Z"
-    },
-    {
-      "key": "Park Commission|2026-09-14T22:00:00.000Z",
-      "firstSeenAt": "2026-11-12T16:16:57.590Z",
-      "title": "Park Commission",
-      "source": "Borough",
-      "date": "2026-09-14T22:00:00.000Z"
-    },
-    {
-      "key": "Historic Commission - Cancelled|2026-09-14T23:00:00.000Z",
-      "firstSeenAt": "2026-11-12T16:16:57.590Z",
-      "title": "Historic Commission - Cancelled",
-      "source": "Borough",
-      "date": "2026-09-14T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 50,
+  "addedLastRun": 2,
   "skippedByRule": {
     "total": 437,
     "reasons": {

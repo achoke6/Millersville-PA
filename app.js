@@ -30,12 +30,7 @@ let allEvents=[], currentNews=[], allRestaurants=[];
 // expectation for a home page. The Specials & Deals card stays anchored to
 // today regardless of this value.
 let homeViewDate = null;
-const allEvSources = ['MU','PM','Borough','Manor','Other'];
-let evActiveSources = new Set(allEvSources), evTags=new Set();
-let evAllMode = true;
-let evKidMode=false;
-// Marauder-only perk filters — hidden for Townies, shown for Marauders in place of family toggle
-let evFreeFoodMode=false, evFreeStuffMode=false;
+let evOn = new Set();   // 2026-11-12: active Events-page chips — see EVENTS PAGE — ONE-ROW FILTER (replaces evActiveSources/evAllMode/evTags/evKidMode/evFreeFoodMode/evFreeStuffMode/evFavOnlyMode)
 
 // ==================== MY FEED SYSTEM ====================
 const FEED_KEY = 'mapp_feed_prefs';
@@ -60,6 +55,7 @@ function loadFeedPrefs() {
     try { muAffiliation = localStorage.getItem(AFFILIATION_KEY); } catch(e) { muAffiliation = null; }
     try { show21Plus = localStorage.getItem(SHOW21_KEY) === '1'; } catch(e) { show21Plus = false; }
     try { shownSources = new Set(JSON.parse(localStorage.getItem(SHOWN_SOURCES_KEY)) || []); } catch(e) { shownSources = new Set(); }
+    if (typeof evLoadOn === 'function') evLoadOn();   // 2026-11-12: active Events-page chips (mapp_interests)
     if (muAffiliation !== 'student' && muAffiliation !== 'townie') muAffiliation = null;
     // Shareable affiliation link: ?aud=townie (aliases: local/locals) or ?aud=mu
     // (aliases: student/marauder). ONLY sets affiliation when none is set yet, so a
@@ -3047,30 +3043,13 @@ window.toggle21Plus = function(on) {
 
 // Called after affiliation changes. Cleans up state that may be invalid under the new
 // affiliation. Specifically:
-//   - evTags: drop any sub-filter tag not present in the new affiliation's evSubMap
-//     (e.g. a Marauder with "Greek Life" selected becomes a Townie → "Greek Life" no
-//     longer appears as a sub-chip, but the tag would silently keep filtering the list).
+//   - Events-page chips (2026-11-12): drop any active chip the new identity can't see.
 //   - feedPrefs: drop any pref tied to a sub-chip that the new affiliation can't see
 //     in the modal (e.g. clubs-greek when switching to Townie). Protects against the
 //     user not being able to uncheck favorites they no longer see.
-//   - evKidMode / perk toggles: cleared here too, since the buttons themselves are
-//     shown/hidden per affiliation and an invisible active filter is confusing.
 function pruneStaleStateForAffiliation() {
-    // Rebuild valid sub-tag set from the current affiliation's evSubMap
-    if (typeof getEvSubMap === 'function' && typeof evTags !== 'undefined') {
-        const validSubTags = new Set();
-        const subMap = getEvSubMap();
-        for (const subs of Object.values(subMap || {})) {
-            for (const sub of subs) {
-                const tag = typeof sub === 'string' ? sub : sub.tag;
-                validSubTags.add(tag);
-            }
-        }
-        // Prune any active tag that doesn't exist under the new affiliation
-        for (const tag of Array.from(evTags)) {
-            if (!validSubTags.has(tag)) evTags.delete(tag);
-        }
-    }
+    // 2026-11-12: drop Events-page chips the new identity can't see (replaces the evTags prune)
+    if (typeof evPruneForAffiliation === 'function') evPruneForAffiliation();
     // Prune feedPrefs: drop IDs tied to subs the user can't see anymore
     if (feedPrefs && feedPrefs.length > 0 && typeof feedSections !== 'undefined') {
         const effectiveAff = viewerIsMarauder() ? 'student' : 'townie';   // shared no-drift predicate (default-marauder, 2026-08-24)
@@ -3101,11 +3080,6 @@ function pruneStaleStateForAffiliation() {
             }
         }
     }
-    // Clear toolbar mode state that no longer applies. updateEventsUI/updateSportsUI
-    // will be called by the renderEvents/renderSports that follow pickAffiliation.
-    evKidMode = false;
-    evFreeFoodMode = false;
-    evFreeStuffMode = false;
     // Marauder Gold is a student-only directory filter — drop it on any change
     // (renderPlaces re-syncs the button visibility for the new affiliation).
     placesMGMode = false;
@@ -3126,7 +3100,7 @@ let evDaysVisible = INITIAL_DAYS;
 // Favorites-only filter mode — when on, only favorited events show (still day-grouped).
 // Replaces the old "pin at top" behavior since pinning all future favorites under the
 // Today header was confusing when the first pinned card was weeks away.
-let evFavOnlyMode = false;
+// evFavOnlyMode RETIRED 2026-11-12 — ⭐ is a chip in the Events row (evOn has 'fav').
 // spFavOnlyMode + the ⭐ Favs toolbar button RETIRED 2026-09-18 (Patch E): favorites are marked inline on rows (spGameRow) instead.
 // Events page retains mode/anchor only for back-compat with older functions that
 // reference them; actively ignored by the new render pipeline.
@@ -3150,30 +3124,8 @@ const sportsList=['Baseball','Softball','Track','Soccer','Lacrosse','Tennis','Vo
 const topSources=['MU','PM','Borough','Manor','Other'];
 const sportMetaTags=['Athletic Competitions','Athletics','Club Sports','Home Game Mode','H Games'];
 
-// Sub-filter chips vary by affiliation:
-//   - Marauders see MU-internal vocabulary (GetInvolved, Residence Halls, Greek Life)
-//   - Townies see community-friendly vocabulary (Community). Residence Halls and Greek Life
-//     are omitted because they're MU-internal living arrangements townies don't filter by.
-// Each sub-chip entry is either a string (label = tagName = filter-tag) or
-// { label, tag } when the display label differs from the underlying tag to match on.
-function getEvSubMap() {
-    // Default (unset) → show Marauder sub-filters. Townies explicitly opt in via the
-    // affiliation picker, at which point they see the community-friendly vocabulary.
-    const isTownie = muAffiliation === 'townie';
-    return {
-        'MU': isTownie
-            ? [
-                'Public Event',
-                'Arts Concert / Performance',
-                { label: 'Community', tag: 'Clubs/Orgs' },  // townie-friendly label for student-org public events
-                'Fundraising'
-            ]
-            : ['Public Event', 'Arts Concert / Performance', 'GetInvolved', 'Residence Halls', 'Greek Life', 'Fundraising'],
-        'PM': ['Music/Arts', 'School Events', 'Board/PTO', 'Health/Wellness', 'Field Trips', 'Meetings']
-    };
-}
-// Keep evSubMap as a getter for any legacy readers that expect an object shape
-const evSubMap = new Proxy({}, { get: (_, key) => getEvSubMap()[key] });
+// Per-source sub-filter chips (getEvSubMap / evSubMap) RETIRED 2026-11-12: the cross-source
+// interest chips in the Events row (EV_CHIPS) replace them.
 
 // Date helpers
 function toDateStr(d){const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');return `${y}-${m}-${day}`;}
@@ -3342,14 +3294,10 @@ const pathToView=Object.fromEntries(Object.entries(viewPaths).map(([k,v])=>[v,k]
 // Param contract — keep stable for backward compat with any shared links:
 //
 // Events (/events?...):
-//   src=Borough,MU      Comma-separated subset of MU/PM/Borough/Other.
-//                       Absent or all-listed → "All sources" (evAllMode = true).
-//   tag=Music%2FArts    Comma-separated sub-tags (URL-encoded; tags can have /).
-//                       Absent → no sub-tag filter.
-//   kid=1               Kid-friendly toggle. Absent or 0 → off.
-//   food=1              Free Food perk. Marauder-only filter; honored even for
-//                       townies on shared links to keep URLs deterministic.
-//   stuff=1             Free Stuff perk. Same.
+//   i=PM,music          Comma-separated chip keys (EV_CHIPS) — the one-row filter,
+//                       2026-11-12. Absent → the persisted set stands.
+//   src= tag= kid= food= stuff=   Legacy (pre-11-12) params, read as aliases into
+//                       chip keys so old shared links still land; never written.
 //
 // Sports (/sports?...):
 //   src=MU              Comma-separated subset of MU/PM/Clubs.
@@ -3379,24 +3327,24 @@ function applyURLStateToView(view) {
     const params = new URLSearchParams(window.location.search);
 
     if (view === 'events') {
+        // 2026-11-12: ?i=a,b is the chip set. Legacy ?kid / ?food / ?stuff / ?src / ?tag from
+        // older shared links are read as aliases (never written back). No params at all
+        // leaves the persisted set alone — the page remembers what the visitor turned on.
+        const keys = [];
+        const iParam = params.get('i');
+        if (iParam) iParam.split(',').map(s => s.trim()).filter(Boolean).forEach(k => keys.push(k));
+        if (params.get('kid') === '1') keys.push('family');
+        if (params.get('food') === '1') keys.push('freefood');
+        if (params.get('stuff') === '1') keys.push('freestuff');
         const srcParam = params.get('src');
-        const requested = srcParam ? srcParam.split(',').map(s => s.trim()).filter(Boolean) : [];
-        const valid = requested.filter(s => allEvSources.includes(s));
-        if (valid.length > 0 && valid.length < allEvSources.length) {
-            evActiveSources = new Set(valid);
-            evAllMode = false;
-        } else {
-            evActiveSources = new Set(allEvSources);
-            evAllMode = true;
-        }
-        evTags.clear();
+        if (srcParam) srcParam.split(',').map(s => s.trim()).forEach(s => { if (s === 'MU') keys.push(viewerIsMarauder() ? 'campus' : 'MU'); else if (s === 'PM' || s === 'Borough' || s === 'Manor') keys.push(s); });
         const tagParam = params.get('tag');
-        if (tagParam) {
-            tagParam.split(',').map(t => t.trim()).filter(Boolean).forEach(t => evTags.add(t));
+        if (tagParam) tagParam.split(',').map(t => t.trim()).forEach(t => { if (EV_LEGACY_TAG_KEYS[t]) keys.push(EV_LEGACY_TAG_KEYS[t]); });
+        const hasAny = ['i', 'kid', 'food', 'stuff', 'src', 'tag'].some(p => params.has(p));
+        if (hasAny) {
+            evOn = new Set(keys.filter(k => EV_CHIP_BY[k] && EV_CHIP_BY[k].kind !== 'link' && evChipVisible(EV_CHIP_BY[k])));
+            evSaveOn();
         }
-        evKidMode      = params.get('kid')   === '1';
-        evFreeFoodMode = params.get('food')  === '1';
-        evFreeStuffMode= params.get('stuff') === '1';
     } else if (view === 'sports') {
         const validSpSrc = ['PM', 'MU', 'Clubs'];
         const srcParam = params.get('src');
@@ -3430,19 +3378,8 @@ function writeURLStateForView(view) {
     const params = new URLSearchParams();
 
     if (view === 'events') {
-        if (!evAllMode && evActiveSources.size > 0 && evActiveSources.size < allEvSources.length) {
-            // Emit in canonical allEvSources order so URLs are stable across
-            // Set-iteration order (sharing the same filter combo always yields
-            // the same URL string — better for caching and indexing).
-            const ordered = allEvSources.filter(s => evActiveSources.has(s));
-            params.set('src', ordered.join(','));
-        }
-        if (evTags.size > 0) {
-            params.set('tag', Array.from(evTags).sort().join(','));
-        }
-        if (evKidMode)       params.set('kid', '1');
-        if (evFreeFoodMode)  params.set('food', '1');
-        if (evFreeStuffMode) params.set('stuff', '1');
+        // Emit in EV_CHIPS order so the same chip combo always yields the same URL.
+        if (evOn.size) params.set('i', EV_CHIPS.filter(d => evOn.has(d.k)).map(d => d.k).join(','));
     } else if (view === 'sports') {
         const canonicalSpSrc = ['PM', 'MU', 'Clubs'];
         if (!spAllMode && spActiveSources.size > 0 && spActiveSources.size < canonicalSpSrc.length) {
@@ -3473,15 +3410,7 @@ function updatePageTitleForView(view) {
     let prefix = '';
 
     if (view === 'events') {
-        const parts = [];
-        if (evKidMode)       parts.push('Kid-Friendly');
-        if (evFreeFoodMode)  parts.push('Free Food');
-        if (evFreeStuffMode) parts.push('Free Stuff');
-        if (!evAllMode && evActiveSources.size > 0 && evActiveSources.size < allEvSources.length) {
-            const ordered = allEvSources.filter(s => evActiveSources.has(s));
-            parts.push(ordered.join('/'));
-        }
-        if (evTags.size > 0) parts.push(Array.from(evTags).sort().join(', '));
+        const parts = EV_CHIPS.filter(d => evOn.has(d.k)).map(d => d.l);
         parts.push('Events');
         prefix = parts.join(' ');
     } else if (view === 'sports') {
@@ -3691,8 +3620,6 @@ window.addEventListener('popstate',function(){
     if (view === 'events' || view === 'sports') {
         applyURLStateToView(view);
         if (view === 'events') {
-            if (typeof updateEventsUI === 'function') updateEventsUI();
-            if (typeof renderEvSubFilters === 'function') renderEvSubFilters();
             if (typeof renderEvents === 'function') renderEvents();
         } else {
             if (typeof updateSportsUI === 'function') updateSportsUI();
@@ -3928,156 +3855,246 @@ function renderLastUpdated(iso) {
     }
 }
 
-/* ==================== EVENTS PAGE ==================== */
-window.setEventSourceAll=function(){
-    evAllMode = true;
-    evActiveSources = new Set(allEvSources);
-    evTags.clear();
-    updateEventsUI();
+/* ==================== EVENTS PAGE — ONE-ROW FILTER (2026-11-12) ====================
+   One icon row under the Events toolbar replaces the source pills, the per-source
+   sub-category chips, the 👨‍👩‍👧 / 🍕 / 🎁 toolbar toggles, the ⭐ Favs toolbar button and
+   the Filter ▾ panel. Every chip is a lens with OR semantics ("show me any of these");
+   nothing is filtered until a chip is on. The row is identity-aware (defaults differ
+   for Locals and Marauders), empty chips hide themselves (counted against ALL future
+   rows, not the loaded window), and the ＋ chip opens the full list grouped
+   Where / What — tapping an item there turns it on right away.
+
+   State: evOn (Set of chip keys) — persisted in mapp_interests, a display setting
+   that survives Clear Favs (like mapp_shown_sources). For a Marauder, a Where chip
+   for a hidden-by-affiliation source (PM, Borough, Manor, the Other family) is the
+   relocated Uncommon-picker 👁 Show bit: turning it on writes the shownSources key
+   (visible site-wide, lens here), turning it off removes it. Locals never have hidden
+   places, so for them Where chips are pure lenses.
+
+   Kids & Family reads kidFriendly; Free Food / Free Stuff read benefits; the rest
+   read events.interests[] (scripts/interests.js). ⭐ reads isEventFavorited.
+   URL state: ?i=a,b (legacy ?kid=1 / ?food=1 / ?stuff=1 / ?src= / ?tag= are read as
+   aliases, never written). No Hard Rule 7 exposure: this is display only.
+   ================================================================================= */
+const INT_KEY = 'mapp_interests';     // JSON array of active chip keys — display setting, survives Clear Favs
+const INT_HINT_KEY = 'mapp_int_hint'; // '1' once a chip has been tapped — retires the first-visit hint line
+const INT_BADGE_PM = '<span class="int-badge int-badge-pm">PM</span>';
+const INT_BADGE_MU = '<span class="int-badge int-badge-mu">MU</span>';
+const INT_LINK_HTML = '<span class="int-arr">›</span>';
+
+// kind: fav | where | link | what.  aud: both | townie | student (who can see the chip at all).
+// def: both | townie | student | none (on the bar by default).  hidden: the shownSources key when the
+// source is hidden by affiliation (student view) — the chip doubles as the Show bit.
+const EV_CHIPS = [
+    { k: 'fav',       kind: 'fav',   ic: '⭐', l: 'My favorites',       hint: 'Teams, clubs and places you follow',          aud: 'both',    def: 'both',    test: e => isEventFavorited(e) },
+    { k: 'PM',        kind: 'where', ic: INT_BADGE_PM, l: 'Penn Manor', hint: 'School district events',                       aud: 'both',    def: 'townie',  hidden: 'PM',        test: e => (e.tags || []).includes('PM') },
+    { k: 'Borough',   kind: 'where', ic: '🌳', l: 'Borough',            hint: 'Millersville Borough',                         aud: 'both',    def: 'townie',  hidden: 'Borough',   test: e => (e.tags || []).includes('Borough') },
+    { k: 'Manor',     kind: 'where', ic: '🪶', l: 'Manor Twp.',         hint: 'Manor Township',                               aud: 'both',    def: 'townie',  hidden: 'Manor',     test: e => (e.tags || []).includes('Manor') },
+    { k: 'MU',        kind: 'where', ic: INT_BADGE_MU, l: 'MU',         hint: 'Millersville University public events',       aud: 'townie',  def: 'townie',  test: e => (e.tags || []).includes('MU') },
+    { k: 'campus',    kind: 'where', ic: '🎓', l: 'Campus Life',        hint: 'Everything happening on campus',               aud: 'student', def: 'student', test: e => (e.tags || []).includes('MU') },
+    { k: 'Raney',     kind: 'where', ic: '🍷', l: 'Raney Cellars',      hint: 'Food trucks, trivia, live music',             aud: 'both',    def: 'none',    hidden: 'Raney',     test: e => (e.tags || []).includes('Raney Cellars') },
+    { k: 'Phantom',   kind: 'where', ic: '🎸', l: 'Phantom Power',      hint: 'Shows at Phantom Power',                      aud: 'both',    def: 'none',    hidden: 'Phantom',   test: e => { const t = e.tags || []; return t.includes('Phantom Power') || (t.includes('Other') && t.includes('Live Music')); } },
+    { k: 'VFW',       kind: 'where', ic: '🎖️', l: 'VFW',               hint: 'Fish fries and events at the VFW',            aud: 'both',    def: 'none',    hidden: 'VFW',       test: e => (e.tags || []).includes('VFW') },
+    { k: 'Jacks',     kind: 'where', ic: '🍻', l: 'Jack’s Tavern',      hint: 'Events at Jack’s',                            aud: 'both',    def: 'none',    hidden: 'Jacks',     test: e => (e.tags || []).includes("Jack's Tavern") },
+    { k: 'Community', kind: 'where', ic: '🎉', l: 'Community',          hint: 'Community-submitted events',                  aud: 'both',    def: 'none',    hidden: 'Community', test: e => { const t = e.tags || []; return t.includes('Community') || (t.includes('Other') && !t.includes('Live Music')); } },
+    { k: 'sports',    kind: 'link',  ic: '🏆', l: 'Sports',             hint: 'MU athletics, club sports and Penn Manor games', aud: 'both',  def: 'both' },
+    { k: 'family',    kind: 'what',  ic: '👨‍👩‍👧', l: 'Kids & Family',   hint: 'Events that are for kids',                    aud: 'townie',  def: 'townie',  test: e => !!e.kidFriendly },
+    { k: 'music',     kind: 'what',  ic: '🎵', l: 'Music',              hint: 'Concerts, live music, school ensembles',      aud: 'both',    def: 'both' },
+    { k: 'arts',      kind: 'what',  ic: '🎭', l: 'Arts & Theatre',     hint: 'Plays, dance, galleries, film',               aud: 'both',    def: 'both' },
+    { k: 'food',      kind: 'what',  ic: '🍴', l: 'Food & Drink',       hint: 'Food trucks, fish fries, trivia, tastings',   aud: 'both',    def: 'townie' },
+    { k: 'civic',     kind: 'what',  ic: '🏛️', l: 'Meetings & Civic',  hint: 'Council, supervisors, school board, PTO',     aud: 'townie',  def: 'none' },
+    { k: 'crafts',    kind: 'what',  ic: '🧶', l: 'Crafts & Making',    hint: 'Workshops and craft nights',                  aud: 'both',    def: 'none' },
+    { k: 'causes',    kind: 'what',  ic: '🤝', l: 'Volunteer & Causes', hint: 'Drives, fundraisers, cleanups',               aud: 'both',    def: 'none' },
+    { k: 'active',    kind: 'what',  ic: '🏃', l: 'Outdoors & Fitness', hint: '5Ks, hikes, rides, wellness',                 aud: 'both',    def: 'none' },
+    { k: 'learn',     kind: 'what',  ic: '📚', l: 'Talks & Learning',   hint: 'Lectures, author talks, info sessions',       aud: 'both',    def: 'none' },
+    { k: 'freefood',  kind: 'what',  ic: '🍕', l: 'Free Food',          hint: 'Campus events with free food',                aud: 'student', def: 'student', test: e => (e.benefits || []).includes('Free Food') },
+    { k: 'freestuff', kind: 'what',  ic: '🎁', l: 'Free Stuff',         hint: 'Giveaways and swag',                          aud: 'student', def: 'student', test: e => (e.benefits || []).includes('Free Stuff') },
+    { k: 'greek',     kind: 'what',  ic: '🏺', l: 'Greek Life',         hint: 'Fraternity and sorority events',              aud: 'student', def: 'none' },
+    { k: 'reshall',   kind: 'what',  ic: '🏠', l: 'Res Halls',          hint: 'Residence hall events',                       aud: 'student', def: 'none' }
+];
+EV_CHIPS.forEach(d => { if (!d.test && d.kind === 'what') d.test = e => Array.isArray(e.interests) && e.interests.includes(d.k); });
+const EV_CHIP_BY = Object.fromEntries(EV_CHIPS.map(d => [d.k, d]));
+// Legacy ?tag= values (the retired per-source sub-chips) → chip keys, for old shared links.
+const EV_LEGACY_TAG_KEYS = { 'Music/Arts': 'music', 'Board/PTO': 'civic', 'Greek Life': 'greek', 'Residence Halls': 'reshall', 'Fundraising': 'causes', 'Health/Wellness': 'active', 'Arts Concert / Performance': 'arts', 'Meetings': 'civic' };
+
+function evIdentity() { return viewerIsMarauder() ? 'student' : 'townie'; }
+function evChipVisible(d) { return d.aud === 'both' || d.aud === evIdentity(); }
+function evChipDefault(d) { return d.def === 'both' || d.def === evIdentity(); }
+// A Where chip whose source the viewer's affiliation hides (Marauder view). For Locals this is never true.
+function evChipIsHiddenPlace(d) { return !!(d.hidden && typeof isSourceHiddenByAffiliation === 'function' && isSourceHiddenByAffiliation(d.hidden)); }
+function evChipShown(d) { return evChipIsHiddenPlace(d) && typeof isSourceHidden === 'function' && !isSourceHidden(d.hidden); }
+function evSaveOn() { try { localStorage.setItem(INT_KEY, JSON.stringify([...evOn])); } catch (e) {} }
+function evLoadOn() {
+    try { const arr = JSON.parse(localStorage.getItem(INT_KEY)); evOn = new Set(Array.isArray(arr) ? arr.filter(k => EV_CHIP_BY[k]) : []); }
+    catch (e) { evOn = new Set(); }
+}
+// Drop chips the new identity can't see (called from pruneStaleStateForAffiliation).
+function evPruneForAffiliation() {
+    let changed = false;
+    for (const k of Array.from(evOn)) { const d = EV_CHIP_BY[k]; if (!d || !evChipVisible(d) || d.kind === 'link') { evOn.delete(k); changed = true; } }
+    if (changed) evSaveOn();
+}
+// Rows a chip is counted against: every FUTURE non-sport, non-signup event the viewer may see,
+// ignoring the hidden-source gate (so a hidden place still earns its chip in the picker).
+let _evBaseCache = { at: 0, len: 0, rows: [] };
+function evBaseRows() {
+    if (!allEvents || !allEvents.length) return [];
+    const today = toDateStr(todayMidnight());
+    if (_evBaseCache.len === allEvents.length && _evBaseCache.day === today && _evBaseCache.aff === muAffiliation) return _evBaseCache.rows;
+    const rows = allEvents.filter(e => !isSportEvent(e) && !isPMSportByTitle(e) && !isSignupOnly(e) && !isHiddenForViewer(e) && localDateStr(e.date) >= today);
+    _evBaseCache = { len: allEvents.length, day: today, aff: muAffiliation, rows };
+    return rows;
+}
+function evChipCounts() {
+    const rows = evBaseRows(); const c = {};
+    for (const d of EV_CHIPS) { if (!d.test) continue; let n = 0; for (const e of rows) if (d.test(e)) n++; c[d.k] = n; }
+    return c;
+}
+function evHasEventPrefs() { return !!(feedPrefs && feedPrefs.length && feedPrefs.some(p => eventFeedIds.has(p) || (typeof p === 'string' && p.startsWith('club:')))); }
+function evChipHTML(d, on) {
+    if (d.kind === 'link') return `<button type="button" class="int-chip int-link" onclick="evToggleChip('${d.k}')" title="${escHtml(d.l)}" aria-label="${escHtml(d.l)}">${d.ic}${INT_LINK_HTML}</button>`;
+    return `<button type="button" class="int-chip${on ? ' active' : ''}" data-k="${d.k}" onclick="evToggleChip('${d.k}')" aria-pressed="${on ? 'true' : 'false'}" title="${escHtml(d.l)}" aria-label="${escHtml(d.l)}">${d.ic}</button>`;
+}
+// The bar: defaults for this identity ∪ anything on ∪ hidden places currently Shown — minus empties
+// (an active chip is never hidden). ⭐ only once the viewer follows something that has events.
+function renderEvRow() {
+    const row = document.getElementById('ev-int-row');
+    if (!row) return;
+    const counts = evChipCounts();
+    const hasPrefs = evHasEventPrefs();
+    let html = '', lastKind = null;
+    for (const d of EV_CHIPS) {
+        if (!evChipVisible(d)) continue;
+        const on = evOn.has(d.k);
+        let show;
+        if (d.kind === 'link') show = true;
+        else if (d.kind === 'fav') show = on || (hasPrefs && (counts.fav || 0) > 0);
+        else show = on || ((evChipDefault(d) || evChipShown(d)) && (counts[d.k] || 0) > 0);
+        if (!show) continue;
+        if (lastKind && d.kind !== lastKind && !(lastKind === 'where' && d.kind === 'link')) html += '<span class="int-sep" aria-hidden="true"></span>';
+        lastKind = d.kind;
+        html += evChipHTML(d, on);
+    }
+    html += '<button type="button" class="int-chip int-more" onclick="openInterestPicker()" title="More" aria-label="More filters">＋</button>';
+    row.innerHTML = html;
+    // ✕ clear: visible whenever a chip is on or the window grew
+    const clearBtn = document.getElementById('ev-clear-btn');
+    if (clearBtn) clearBtn.style.visibility = (evOn.size || evDaysVisible !== INITIAL_DAYS) ? 'visible' : 'hidden';
+    renderEvNote();
+}
+// The line under the row: "Showing … · Show everything" (+ the "You follow" strip when ⭐ is on),
+// or the one-time first-visit hint.
+function renderEvNote() {
+    const note = document.getElementById('ev-int-note');
+    if (!note) return;
+    if (!evOn.size) {
+        let hintSeen = false; try { hintSeen = localStorage.getItem(INT_HINT_KEY) === '1'; } catch (e) {}
+        note.innerHTML = hintSeen ? '' : '<p class="int-hint">Tap an icon to see just those events. Pick more than one to mix them.</p>';
+        return;
+    }
+    const labels = Array.from(evOn).map(k => EV_CHIP_BY[k]).filter(Boolean).map(d => `${d.ic} ${escHtml(d.l)}`).join(' + ');
+    let html = `<div class="int-blurb"><span>Showing ${labels}</span><a href="#" onclick="event.preventDefault();clearEventFilters();">Show everything</a></div>`;
+    if (evOn.has('fav')) {
+        const prefs = (feedPrefs || []).filter(p => typeof p === 'string' && (eventFeedIds.has(p) || p.startsWith('club:')));
+        html += '<div class="int-fav-strip"><span class="int-fav-lbl">You follow</span>'
+            + prefs.map(p => `<span class="int-fav-chip">★ ${escHtml(resolvePrefLabel(p))}<button type="button" onclick="evUnfollow(${JSON.stringify(p).replace(/"/g, '&quot;')})" aria-label="Unfollow ${escHtml(resolvePrefLabel(p))}">✕</button></span>`).join('')
+            + '<button type="button" class="int-fav-add" onclick="openFeedSettings()">＋ Add</button></div>';
+    }
+    note.innerHTML = html;
+}
+window.evToggleChip = function(k) {
+    const d = EV_CHIP_BY[k];
+    if (!d || !evChipVisible(d)) return;
+    if (d.kind === 'link') { if (typeof switchView === 'function') switchView('sports'); return; }
+    const turningOn = !evOn.has(k);
+    if (turningOn) evOn.add(k); else evOn.delete(k);
+    // Hidden place (Marauder view): the chip IS the Show bit.
+    if (evChipIsHiddenPlace(d)) {
+        if (turningOn) shownSources.add(d.hidden);
+        else { shownSources.delete(d.hidden); if (d.hidden === 'PM') { shownSources.delete('pm-music'); shownSources.delete('pm-board'); } }
+        saveShownSources();
+        if (typeof renderHomeFeed === 'function') renderHomeFeed();   // the home timeline runs the same gate
+    }
+    evSaveOn();
+    try { localStorage.setItem(INT_HINT_KEY, '1'); } catch (e) {}
+    try { if (typeof gtag === 'function') gtag('event', 'interest_chip', { chip: k, state: turningOn ? 'on' : 'off', audience: evIdentity() === 'townie' ? 'townies' : 'marauders' }); } catch (e) {}
     renderEvents();
     writeURLStateForView('events');
 };
-window.toggleEventSource=function(src){
-    evAllMode = false;
-    const visibleEvSources = allEvSources.filter(s =>
-        !(s === 'PM' && isSourceHidden('PM')) &&
-        !(s === 'Borough' && isSourceHidden('Borough')) &&
-        !(s === 'Manor' && isSourceHidden('Manor'))
-    );
-    if (visibleEvSources.length <= 2) {
-        // Two-pill mode (typical Marauder view: MU + Other): multi-select is
-        // meaningless — selecting the 2nd pill used to equal "all visible" and
-        // snap straight to All (the 2026-07-27 reported bug). Pills act as
-        // radio buttons instead: a tap selects just that source; tapping the
-        // ACTIVE pill returns to All. Locals' >2-pill multi-select below is
-        // untouched.
-        if (evActiveSources.size === 1 && evActiveSources.has(src)) {
-            evAllMode = true;
-            evActiveSources = new Set(allEvSources);
-        } else {
-            evActiveSources = new Set([src]);
-        }
-    } else {
-        if (evActiveSources.size === allEvSources.length && allEvSources.every(s => evActiveSources.has(s))) {
-            evActiveSources = new Set([src]);
-        } else {
-            if(evActiveSources.has(src)) evActiveSources.delete(src);
-            else evActiveSources.add(src);
-        }
-        // All mode activates when all VISIBLE sources are selected (affiliation can hide pills)
-        if (visibleEvSources.length > 0 && visibleEvSources.every(s => evActiveSources.has(s))) {
-            evAllMode = true;
-            // Ensure hidden sources are also in the set so filter logic stays consistent
-            evActiveSources = new Set(allEvSources);
-        }
-    }
-    evTags.clear();
-    updateEventsUI();
+window.evUnfollow = function(prefId) {
+    if (!feedPrefs || !prefId) return;
+    const idx = feedPrefs.indexOf(prefId);
+    if (idx < 0) return;
+    feedPrefs.splice(idx, 1);
+    if (feedPrefs.length === 0) { localStorage.removeItem(FEED_KEY); feedPrefs = null; evOn.delete('fav'); evSaveOn(); }
+    else localStorage.setItem(FEED_KEY, JSON.stringify(feedPrefs));
+    if (typeof setFeedDotVisible === 'function') setFeedDotVisible(!!(feedPrefs && feedPrefs.length > 0));
+    if (typeof resendNotificationPrefs === 'function') resendNotificationPrefs();
+    showToast(`Removed: ${resolvePrefLabel(prefId)}`);
     renderEvents();
     writeURLStateForView('events');
 };
-function updateEventsUI(){
-    const allBtn = document.getElementById('ev-src-all');
-    if (allBtn) allBtn.classList.toggle('active', evAllMode);
-    const srcMap = {'MU':'mu','PM':'pm','Borough':'borough','Manor':'manor','Other':'other'};
-    // Hide pills for sources the user's affiliation doesn't care about (unless
-    // shown/favorited). The Other pill is ALWAYS visible again (2026-07-27
-    // same-day revision): Jesus Dogs became a first-class source living under
-    // Other, and its dated events are marauder-native — so every marauder has
-    // Other-pill content year-round. The rest of the Other family stays
-    // event-gated via isEventFromHiddenSource; only the pill un-hides.
-    const evPillHidden = (src) =>
-        src === 'PM' ? isSourceHidden('PM')
-        : src === 'Borough' ? isSourceHidden('Borough')
-        : src === 'Manor' ? isSourceHidden('Manor')
-        : false;
-    // Degenerate row: with fewer than 2 visible source pills the row is a
-    // meaningless single choice (All === the lone source) — hide All + the
-    // survivor and force All mode. Reappears the moment a source is shown or
-    // favorited (this fn re-runs on save / affiliation switch / pill taps).
-    const visiblePillCount = allEvSources.filter(s => !evPillHidden(s)).length;
-    if (visiblePillCount < 2 && !evAllMode) {
-        evAllMode = true;
-        evActiveSources = new Set(allEvSources);
-        if (allBtn) allBtn.classList.toggle('active', true);
-    }
-    if (allBtn) allBtn.style.display = visiblePillCount < 2 ? 'none' : '';
-    allEvSources.forEach(src => {
-        const btn = document.getElementById('ev-src-' + srcMap[src]);
-        if (!btn) return;
-        btn.classList.toggle('active', !evAllMode && evActiveSources.has(src));
-        btn.style.display = (evPillHidden(src) || visiblePillCount < 2) ? 'none' : '';
-    });
-
-    // Toolbar toggle swap based on affiliation:
-    //   Marauder ('student')  → show 🍕 Free Food + 🎁 Free Stuff perks; hide 👨‍👩‍👧 family
-    //   Townie ('townie')     → show 👨‍👩‍👧 family toggle; hide perks
-    //   Unset (no choice yet) → Marauder toggles (default-marauder policy,
-    //                           2026-08-24 — the explicit-only exception is
-    //                           retired; undecided viewers get the full
-    //                           Marauder toolbar, townies still never do).
-    const kidBtn = document.getElementById('ev-kid-toggle');
-    const foodBtn = document.getElementById('ev-freefood-toggle');
-    const stuffBtn = document.getElementById('ev-freestuff-toggle');
-    const isTownie = muAffiliation === 'townie';
-    const isMarauder = viewerIsMarauder(); // default-marauder (2026-08-24): unset gets the gold perk toggles too
-    if (kidBtn) kidBtn.style.display = isTownie ? '' : 'none';
-    if (foodBtn) foodBtn.style.display = isMarauder ? '' : 'none';
-    if (stuffBtn) stuffBtn.style.display = isMarauder ? '' : 'none';
-    // If affiliation changed to Townie, clear any stale perk-toggle state
-    if (isTownie && (evFreeFoodMode || evFreeStuffMode)) {
-        evFreeFoodMode = false; evFreeStuffMode = false;
-        if (foodBtn) foodBtn.classList.remove('active');
-        if (stuffBtn) stuffBtn.classList.remove('active');
-    }
-    // And similarly: non-townie shouldn't have an active kid-mode filter
-    if (!isTownie && evKidMode) {
-        evKidMode = false;
-        if (kidBtn) kidBtn.classList.remove('active');
-    }
-
-    // "Clean state" for the clear-filters button: all sources on, no tag/kid/perk filters,
-    // default scroll window (60 days). Week/anchor concept is retired.
-    const isClean = evAllMode && evTags.size === 0 && !evKidMode && !evFreeFoodMode && !evFreeStuffMode && !evFavOnlyMode && evDaysVisible === INITIAL_DAYS;
-    document.getElementById('ev-clear-btn').style.visibility = isClean ? 'hidden' : 'visible';
-
-    // Refresh sub-category chip row so it matches the currently-active source
-    renderEvSubFilters();
+// ☆ Follow on the event sheet. Reuses suggestFeedIdForEvent (best pref id for this event — a club,
+// a team, a place) and toggleCardFavorite (persist + surgical ★ refresh); re-syncs push prefs.
+function evFollowButtonHTML(e) {
+    if (typeof suggestFeedIdForEvent !== 'function') return '';
+    const prefId = suggestFeedIdForEvent(e, isSportEvent(e) || isPMSportByTitle(e));
+    if (!prefId) return '';
+    const on = !!(feedPrefs && feedPrefs.indexOf(prefId) !== -1);
+    const label = resolvePrefLabel(prefId).replace(/^\S+\s+/, m => /^[A-Za-z0-9]/.test(m) ? m : '');
+    return `<button type="button" class="btn btn-sm int-follow${on ? ' on' : ''}" data-pref="${escHtml(prefId)}" onclick="event.stopPropagation();evFollowFromSheet(this)">${on ? '★ Following' : '☆ Follow'} ${escHtml(label)}</button>`;
 }
-// Render sub-category filter chips under the source row. Shows subs for whichever
-// top-level source is currently active (MU, PM, etc.). Clicking a sub chip toggles it
-// in `evTags`, which the event filter uses to narrow down by sub-type (e.g. "Greek Life",
-// "Music/Arts"). No-ops when multiple sources are active or when the active source has
-// no sub-map entry (Borough and Other don't have sub-filters).
-function renderEvSubFilters(){
-    const c = document.getElementById('ev-sub-container');
-    if (!c) return;
-    c.innerHTML = '';
-    c.classList.remove('active');
-
-    // Only show sub-filters when exactly one source is active and it has a sub-map entry.
-    if (evAllMode || evActiveSources.size !== 1) return;
-    const src = Array.from(evActiveSources)[0];
-    const subs = getEvSubMap()[src];
-    if (!subs || subs.length === 0) return;
-
-    c.classList.add('active');
-    c.innerHTML = subs.map(sub => {
-        // Entries can be strings (label === tag) or { label, tag } objects for the townie-
-        // friendly "Community" relabel where display differs from the underlying filter tag.
-        const label = typeof sub === 'string' ? sub : sub.label;
-        const tag = typeof sub === 'string' ? sub : sub.tag;
-        const active = evTags.has(tag);
-        return `<button class="sub-tag-btn${active ? ' active' : ''}" onclick="toggleEventSub('${tag.replace(/'/g, "\\'")}')">${label}</button>`;
-    }).join('');
+window.evFollowFromSheet = function(btn) {
+    const prefId = btn && btn.getAttribute('data-pref');
+    if (!prefId) return;
+    toggleCardFavorite(prefId, null);
+    const on = !!(feedPrefs && feedPrefs.indexOf(prefId) !== -1);
+    btn.classList.toggle('on', on);
+    btn.textContent = (on ? '★ Following ' : '☆ Follow ') + resolvePrefLabel(prefId).replace(/^\S+\s+/, m => /^[A-Za-z0-9]/.test(m) ? m : '');
+    if (typeof resendNotificationPrefs === 'function') resendNotificationPrefs();
+    if (!on && (!feedPrefs || !feedPrefs.length)) { evOn.delete('fav'); evSaveOn(); }
+    renderEvRow();
+};
+// Row glyphs (Events page only): up to two interest icons the viewer's row can act on.
+function evRowGlyphs(e) {
+    if (!Array.isArray(e.interests) || !e.interests.length) return '';
+    const out = [];
+    for (const k of e.interests) {
+        const d = EV_CHIP_BY[k];
+        if (!d || d.kind !== 'what' || !evChipVisible(d)) continue;
+        out.push(`<span class="tl-int" title="${escHtml(d.l)}">${d.ic}</span>`);
+        if (out.length === 2) break;
+    }
+    return out.join('');
 }
-// Toggle a sub-category tag on/off
-window.toggleEventSub = function(tag){
-    if (evTags.has(tag)) evTags.delete(tag);
-    else evTags.add(tag);
-    renderEvSubFilters();
-    renderEvents();
-    writeURLStateForView('events');
+// ＋ sheet: every chip the viewer can see, grouped Where / What. Tapping turns it on immediately
+// (the list updates behind the sheet) and the chip joins the bar.
+window.openInterestPicker = function() {
+    const counts = evChipCounts();
+    const overlay = document.createElement('div');
+    overlay.id = 'interest-picker-overlay';
+    overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.55);z-index:9999;display:flex;align-items:flex-end;justify-content:center;';
+    overlay.onclick = function(ev) { if (ev.target === overlay) overlay.remove(); };
+    const sheet = document.createElement('div');
+    sheet.className = 'int-sheet';
+    const item = d => {
+        const on = evOn.has(d.k);
+        return `<button type="button" class="int-pick${on ? ' on' : ''}" data-k="${d.k}" onclick="evPickerToggle('${d.k}', this)"><span class="int-pick-ic">${d.ic}</span><span class="int-pick-lbl"><b>${escHtml(d.l)}</b><small>${escHtml(d.hint)} · ${counts[d.k] || 0} coming up</small></span><span class="int-pick-chk" aria-hidden="true">${on ? '✓' : ''}</span></button>`;
+    };
+    const where = EV_CHIPS.filter(d => d.kind === 'where' && evChipVisible(d));
+    const what = EV_CHIPS.filter(d => d.kind === 'what' && evChipVisible(d));
+    sheet.innerHTML = `<h3 style="margin:0 0 4px;font-size:1.05rem;">What do you want to see?</h3>`
+        + `<p class="int-pick-sub">Tap to turn something on — it shows on your bar and the list updates behind this.</p>`
+        + (where.length ? '<h4 class="int-pick-h">Where</h4>' + where.map(item).join('') : '')
+        + '<h4 class="int-pick-h">What</h4>' + what.map(item).join('')
+        + `<div class="int-pick-foot"><a href="#" onclick="event.preventDefault();document.getElementById('interest-picker-overlay').remove();openFeedSettings();">⭐ Teams, clubs and places you follow live in Favorites →</a><button type="button" class="btn btn-sm" style="background:var(--navy);color:#fff;" onclick="document.getElementById('interest-picker-overlay').remove()">Done</button></div>`;
+    overlay.appendChild(sheet);
+    document.body.appendChild(overlay);
+};
+window.evPickerToggle = function(k, btn) {
+    evToggleChip(k);
+    const on = evOn.has(k);
+    if (btn) { btn.classList.toggle('on', on); const chk = btn.querySelector('.int-pick-chk'); if (chk) chk.textContent = on ? '✓' : ''; }
 };
 window.setEvMode = function(){};
 // Legacy no-op stubs — the Events/Sports toolbars no longer have prev/next nav
@@ -4085,51 +4102,19 @@ window.setEvMode = function(){};
 // onclick handlers or external callers don't throw.
 window.evNavPrev = function(){};
 window.evNavNext = function(){};
-window.toggleKidFriendly=function(){
-    evKidMode=!evKidMode;
-    document.getElementById('ev-kid-toggle').classList.toggle('active',evKidMode);
-    updateEventsUI();
-    renderEvents();
-    writeURLStateForView('events');
-};
-window.toggleFreeFood=function(){
-    evFreeFoodMode=!evFreeFoodMode;
-    document.getElementById('ev-freefood-toggle').classList.toggle('active',evFreeFoodMode);
-    updateEventsUI();
-    renderEvents();
-    writeURLStateForView('events');
-};
-window.toggleFreeStuff=function(){
-    evFreeStuffMode=!evFreeStuffMode;
-    document.getElementById('ev-freestuff-toggle').classList.toggle('active',evFreeStuffMode);
-    updateEventsUI();
-    renderEvents();
-    writeURLStateForView('events');
-};
-window.clearEventFilters=function(){
-    evTags.clear(); evAllMode=true; evActiveSources=new Set(allEvSources);
-    evKidMode=false; evFreeFoodMode=false; evFreeStuffMode=false;
-    evFavOnlyMode=false;
+window.clearEventFilters = function() {
+    // Hidden places that were on go back to hidden (Marauder view).
+    for (const k of Array.from(evOn)) {
+        const d = EV_CHIP_BY[k];
+        if (d && evChipIsHiddenPlace(d)) { shownSources.delete(d.hidden); if (d.hidden === 'PM') { shownSources.delete('pm-music'); shownSources.delete('pm-board'); } }
+    }
+    saveShownSources();
+    evOn.clear(); evSaveOn();
     evDaysVisible = INITIAL_DAYS;
-    document.getElementById('ev-kid-toggle').classList.remove('active');
-    const ff=document.getElementById('ev-freefood-toggle');
-    const fs=document.getElementById('ev-freestuff-toggle');
-    if(ff) ff.classList.remove('active');
-    if(fs) fs.classList.remove('active');
-    updateEventsUI();
+    if (typeof renderHomeFeed === 'function') renderHomeFeed();
     renderEvents();
     writeURLStateForView('events');
-    // Scroll to top so the user sees the reset fresh state
     window.scrollTo({ top: 0, behavior: 'smooth' });
-};
-
-// Collapsible filter toggles
-window.toggleEvFilters=function(){
-    const wrap = document.getElementById('ev-filters-wrap');
-    const arrow = document.getElementById('ev-filter-arrow');
-    const isVisible = getComputedStyle(wrap).display !== 'none';
-    wrap.style.display = isVisible ? 'none' : 'block';
-    arrow.textContent = isVisible ? '▸' : '▾';
 };
 window.togglePlacesFilters=function(){
     const menu = document.getElementById('places-filter-menu');
@@ -4265,6 +4250,7 @@ function renderSkeletonRows(n) {
     return `<div class="ev-day-sheet">${Array.from({ length: n }, (_, i) => row(i)).join('')}</div>`;
 }
 
+function updateEventsUI(){ renderEvRow(); }   // kept as the name older callers use; the row is the whole toolbar state now
 function renderEvents(){
     updateEventsUI();
     const container = document.getElementById('ev-events-container');
@@ -4278,40 +4264,22 @@ function renderEvents(){
         container.innerHTML = renderSkeletonRows(6);
         return;
     }
-    if (evActiveSources.size === 0) {
-        container.innerHTML = '<p class="empty-state">Select a source to view events.</p>';
-        return;
-    }
 
     // Infinite-scroll window: today through today+evDaysVisible
     const today = todayMidnight();
     const rangeStart = toDateStr(today);
     const rangeEnd = toDateStr(addDays(today, evDaysVisible));
 
-    // Build the filter predicate once so we can reuse it when counting "beyond" events
+    // Active chips (2026-11-12): OR semantics — an event shows when ANY active chip
+    // claims it. With nothing on, everything the viewer may see shows.
+    const activeDefs = Array.from(evOn).map(k => EV_CHIP_BY[k]).filter(d => d && d.test && evChipVisible(d));
     const filterEvent = (e) => {
         if (isSportEvent(e)) return false;
         if (isPMSportByTitle(e)) return false;
         if (isSignupOnly(e)) return false;   // signups live in the Upcoming Signups boxes (2026-09-21)
         if (isHiddenForViewer(e)) return false;
         if (isEventFromHiddenSource(e)) return false;
-        const tags = e.tags || [];
-        if (!Array.from(evActiveSources).some(src => matchesSource(tags, src))) return false;
-        // Sub-tag filter uses OR semantics: an event matches if it has ANY of the
-        // selected sub-tags. Previously this was AND (every tag must match) which felt
-        // like the filter was "narrowing" beyond what users expected — they think of
-        // sub-chips as additive ("show me Greek Life AND Fundraising events") and expect
-        // the list to grow, not shrink.
-        if (evTags.size > 0 && !Array.from(evTags).some(t => tags.includes(t))) return false;
-        if (evKidMode && !e.kidFriendly) return false;
-        if (evFreeFoodMode || evFreeStuffMode) {
-            const benefits = e.benefits || [];
-            const hasFood = benefits.includes('Free Food');
-            const hasStuff = benefits.includes('Free Stuff');
-            if (evFreeFoodMode && evFreeStuffMode) { if (!hasFood && !hasStuff) return false; }
-            else if (evFreeFoodMode && !hasFood) return false;
-            else if (evFreeStuffMode && !hasStuff) return false;
-        }
+        if (activeDefs.length && !activeDefs.some(d => d.test(e))) return false;
         return true;
     };
 
@@ -4325,43 +4293,19 @@ function renderEvents(){
     const beyondCount = allMatching.filter(e => localDateStr(e.date) > rangeEnd).length;
 
     if (filtered.length === 0) {
-        // Build a contextual empty-state message based on what's actively filtering.
-        // We lead with the MOST restrictive-seeming filter so users understand why nothing shows.
-        const activeTags = Array.from(evTags);
-        const activeSources = Array.from(evActiveSources);
-        const sourceLabel = activeSources.length <= 2 ? activeSources.join(', ') : activeSources.length + ' sources';
         const windowText = 'next ' + evDaysVisible + ' days';
         let msg, hint = '';
-        if (evKidMode) {
-            msg = '👨‍👩‍👧 No family-friendly events coming up in the ' + windowText + '.';
-            hint = 'Try turning off the family filter, or loading more days.';
-        } else if (evFreeFoodMode && evFreeStuffMode) {
-            msg = '🍕🎁 No free food or free stuff events coming up.';
-            hint = 'Try turning off one or both perk filters.';
-        } else if (evFreeFoodMode) {
-            msg = '🍕 No free food events coming up in the ' + windowText + '.';
-            hint = 'Try turning off the free food filter.';
-        } else if (evFreeStuffMode) {
-            msg = '🎁 No free stuff events coming up in the ' + windowText + '.';
-            hint = 'Try turning off the free stuff filter.';
-        } else if (activeTags.length > 0 && !evAllMode) {
-            msg = 'No events matching "' + activeTags.join(', ') + '" from ' + sourceLabel + ' in the ' + windowText + '.';
-            hint = 'Try clearing your filters or adding more sources.';
-        } else if (activeTags.length > 0) {
-            msg = 'No events matching "' + activeTags.join(', ') + '" in the ' + windowText + '.';
-            hint = 'Try clearing the filter tags.';
-        } else if (!evAllMode) {
-            msg = 'No events from ' + sourceLabel + ' in the ' + windowText + '.';
-            hint = 'Try adding more sources or loading more days.';
+        if (activeDefs.length) {
+            const what = activeDefs.map(d => d.ic + ' ' + escHtml(d.l)).join(' or ');
+            msg = 'Nothing coming up for ' + what + ' in the ' + windowText + '.';
+            hint = beyondCount > 0 ? 'There are more further out — load more days.' : 'Try another chip, or show everything.';
         } else {
             msg = 'Nothing scheduled in the ' + windowText + '.';
             hint = beyondCount > 0 ? 'There are more events further out.' : 'Check back later — new events come in hourly.';
         }
         let html = '<div class="empty-state"><p>' + msg + '</p><p style="font-size:0.82rem;color:var(--text-muted);margin-top:4px;">' + hint + '</p>';
-        // Offer a one-click clear button when any filter is active (other than just the default window)
-        const anyFilterActive = evKidMode || evFreeFoodMode || evFreeStuffMode || activeTags.length > 0 || !evAllMode || evFavOnlyMode;
-        if (anyFilterActive) {
-            html += '<button class="btn btn-sm btn-outline" onclick="clearEventFilters()" style="margin-top:10px;">Clear all filters</button>';
+        if (activeDefs.length) {
+            html += '<button class="btn btn-sm btn-outline" onclick="clearEventFilters()" style="margin-top:10px;">Show everything</button>';
         }
         html += '</div>';
         if (beyondCount > 0) html += '<button class="load-more-btn" onclick="evLoadMore()">Load more events (' + beyondCount + ' more available)</button>';
@@ -4369,53 +4313,15 @@ function renderEvents(){
         return;
     }
 
-    // Favorites UX: toolbar ⭐ Favs button is shown when user has event favorites.
-    // Favorited rows carry a ★ before the title (buildTimelineItem) in their natural
-    // day group. When fav-only mode is active, the list narrows to favorites.
-    const hasAnyPrefs = feedPrefs && feedPrefs.length > 0;
-    const hasEventPrefs = hasAnyPrefs && feedPrefs.some(p => eventFeedIds.has(p) || p.startsWith('club:'));
-    const favCount = hasEventPrefs ? allMatching.filter(e => eventMatchesFeed(e)).length : 0;
-
-    // Show/hide toolbar fav button based on whether user has any event favorites
-    const favBtn = document.getElementById('ev-fav-toggle');
-    if (favBtn) {
-        favBtn.style.display = (hasEventPrefs && favCount > 0) ? '' : 'none';
-        favBtn.classList.toggle('active', evFavOnlyMode);
-        favBtn.title = evFavOnlyMode ? 'Showing favorites only — tap to show all' : 'Jump to your favorites (' + favCount + ')';
-    }
-
     let html = '';
-    // Family-friendly mode note — mirrors the Directory's Marauder Gold blurb so
-    // the active filter is explained inline. Shown on the has-results path; the
-    // no-results path above carries its own family-mode empty message.
-    if (evKidMode) {
-        html += '<div class="ev-filter-blurb" style="background:var(--gold-soft);border:1px solid var(--gold);border-radius:var(--radius-sm);padding:8px 12px;margin-bottom:12px;font-size:0.82rem;color:var(--navy);">👨‍👩‍👧 Family-friendly mode is on — showing only events suitable for kids and families. Tap the 👨‍👩‍👧 button again to see everything.</div>';
-    }
-    let dayItems = filtered;
-
-    // 2026-11-12: the "Set up your favorites" box is gone from /events (the home-page
-    // CTA box stays). Favorites are reached from ⚙️ and, next, from the event sheet.
-
-    // If favorites-only mode is on, narrow the list to favorites
-    if (evFavOnlyMode && hasEventPrefs) {
-        dayItems = filtered.filter(e => eventMatchesFeed(e));
-        if (dayItems.length === 0) {
-            html += '<p class="empty-state">No upcoming favorites in the next ' + evDaysVisible + ' days. <a href="#" onclick="event.preventDefault();evToggleFavOnly();">Show all events</a></p>';
-            if (beyondCount > 0) html += '<button class="load-more-btn" onclick="evLoadMore()">Load more (' + beyondCount + ' more events)</button>';
-            container.innerHTML = html;
-            if (typeof refreshDayLabels === 'function') refreshDayLabels();
-            return;
-        }
-    }
-
     // Day-grouped render
     // Compact rows (2026-10-21): the Events page renders the homepage timeline
     // row (buildTimelineItem) with a venue line instead of the full .app-card,
     // so a week fits on one screen. Details live in the openEventDetails popup,
-    // which every row opens. Favorites: a ★ before the title (.tl-fav-star) —
-    // the inline star button left with the card; starring is in ⚙️ Feed
-    // settings. buildEventCard stays — the Sports page still renders it.
-    const groups = groupEventsByDay(dayItems);
+    // which every row opens. Favorites: a ★ before the title (.tl-fav-star);
+    // Follow lives on the event sheet (2026-11-12). buildEventCard stays — the
+    // Sports page still renders it.
+    const groups = groupEventsByDay(filtered);
     const rowNow = new Date();
     html += groups.map((g, i) => buildDayGroupHTML(g, e => buildTimelineItem(e, rowNow, { showLocation: true }), i === 0, null, 'ev-day-sheet')).join('');
 
@@ -4436,13 +4342,7 @@ window.evLoadMore = function() {
     renderEvents();
 };
 
-// Toggle favorites-only filter on Events
-window.evToggleFavOnly = function() {
-    evFavOnlyMode = !evFavOnlyMode;
-    renderEvents();
-    // Scroll to top so the user sees the filtered view from the beginning
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-};
+// evToggleFavOnly RETIRED 2026-11-12 — ⭐ is a chip in the Events row (evToggleChip('fav')).
 
 // Scroll-to-today helper (clicking the toolbar date label jumps back to Today)
 window.evScrollToToday = function() {
@@ -6703,13 +6603,15 @@ function buildTimelineItem(e, now, opts = {}) {
     // not favorited, so the no-favorites output stays byte-identical.
     const tlFavClass = '';
     const tlFavStar = (typeof isEventFavorited === 'function' && isEventFavorited(e)) ? '<span class="tl-fav-star" title="Favorite">★</span>' : '';
+    // Interest glyphs (2026-11-12): Events-page rows only — up to two, beside 🎟️. Empty on the home timeline.
+    const tlInt = (opts.showLocation && typeof evRowGlyphs === 'function') ? evRowGlyphs(e) : '';
 
     // The row body; hoisted so the Events-page variant can stack a venue line
     // under it. Indentation kept so the no-opts output stays byte-identical.
     const content = `<div class="tl-content">
             <span class="tl-src${isSport?'':' tl-src-event'}">${src}</span>
             <span class="tl-title">${tlFavStar}${title}</span>
-            <span class="tl-badges">${badges}${freeBadge}${streamBtn}${ticketBtn}</span>
+            <span class="tl-badges">${badges}${freeBadge}${tlInt}${streamBtn}${ticketBtn}</span>
         </div>`;
 
     // Wrap badges + stream icon in a single flex cluster so they stay
@@ -6914,6 +6816,8 @@ window.openEventDetails = function(key) {
         </div>`;
     }
 
+    // ☆ Follow (2026-11-12): the best pref id for this event — a club, a team, a place.
+    const followBtn = (typeof evFollowButtonHTML === 'function') ? evFollowButtonHTML(e) : '';
     // Action buttons
     let actions = '';
     if ((isRegistrationEvent(e) || isProgramSignup(e)) && getRegisterUrl(e)) {
@@ -7107,6 +7011,7 @@ window.openEventDetails = function(key) {
         ${(teamBar ? displayTags.filter(t => t !== relabelForTownie(teamInfo.sportTag)) : displayTags).length ? `<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:4px;">${(teamBar ? displayTags.filter(t => t !== relabelForTownie(teamInfo.sportTag)) : displayTags).map(t => `<span class="card-tag">${t}</span>`).join('')}</div>` : ''}
         ${descBlock}
         ${actions ? `<div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:8px;">${actions}</div>` : ''}
+        ${followBtn ? `<div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;">${followBtn}</div>` : ''}
     `;
     overlay.appendChild(modal);
     document.body.appendChild(overlay);

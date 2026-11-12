@@ -111,6 +111,46 @@
     .sp-row-home { background: #f0fdf4; }
     .sp-row-star { color: #d97706; margin-right: 4px; font-size: 0.9em; }
     .tl-fav-star { color: #d97706; margin-right: 4px; font-size: 0.9em; }
+    /* Events one-row filter (2026-11-12) */
+    .int-row { display: flex; gap: 6px; overflow-x: auto; padding: 8px 0 2px; align-items: center; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+    .int-row::-webkit-scrollbar { display: none; }
+    .int-chip { flex: 0 0 auto; height: 36px; min-width: 40px; padding: 0 10px; border: 1.5px solid var(--border); background: var(--surface); border-radius: 999px; font: inherit; font-size: 1rem; font-weight: 700; line-height: 1; color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; white-space: nowrap; transition: background .15s, border-color .15s; }
+    .int-chip:hover { border-color: var(--gold); }
+    .int-chip.active { background: var(--navy); border-color: var(--navy); color: #fff; }
+    .int-chip.int-link { color: var(--navy); background: var(--navy-soft); border-color: transparent; }
+    .int-chip.int-link .int-arr { font-size: 1rem; font-weight: 800; margin-left: -2px; }
+    .int-chip.int-more { border-style: dashed; color: var(--text-muted); font-size: 1.05rem; }
+    .int-sep { flex: 0 0 1px; height: 22px; background: var(--border); margin: 0 2px; }
+    .int-badge { display: inline-block; font-size: .82rem; font-weight: 900; line-height: 1; letter-spacing: .04em; paint-order: stroke fill; -webkit-text-stroke: .7px #eaab00; text-shadow: 0 0 2px rgba(234,171,0,.95), 0 0 5px rgba(234,171,0,.75), 0 0 9px rgba(234,171,0,.45); }
+    .int-badge-pm { color: #1e3a8a; }
+    .int-badge-mu { color: #111; }
+    .int-chip.active .int-badge { text-shadow: 0 0 2px #ffd54f, 0 0 6px rgba(255,213,79,.9), 0 0 10px rgba(255,213,79,.6); }
+    .int-hint { font-size: .76rem; color: var(--text-muted); margin: 2px 0 6px; }
+    .int-blurb { display: flex; justify-content: space-between; gap: 10px; align-items: center; background: var(--gold-soft); border: 1px solid var(--gold); border-radius: var(--radius-sm); padding: 7px 12px; margin: 4px 0 8px; font-size: .8rem; color: var(--navy); }
+    .int-blurb a { color: inherit; font-weight: 700; white-space: nowrap; text-decoration: underline; }
+    .int-blurb .int-badge { font-size: .74rem; vertical-align: middle; }
+    .int-fav-strip { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin: -2px 0 8px; font-size: .76rem; }
+    .int-fav-lbl { color: var(--text-muted); font-weight: 700; margin-right: 2px; }
+    .int-fav-chip { display: inline-flex; align-items: center; gap: 4px; background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 3px 6px 3px 9px; font-weight: 600; }
+    .int-fav-chip button { border: 0; background: transparent; color: var(--text-muted); font: inherit; font-size: .7rem; padding: 0 2px; cursor: pointer; }
+    .int-fav-add { border: 1px dashed var(--border); background: transparent; border-radius: 999px; padding: 3px 9px; font: inherit; font-size: .76rem; font-weight: 700; color: var(--navy); cursor: pointer; }
+    .tl-int { font-size: .78rem; opacity: .85; }
+    .btn.int-follow { color: var(--gold-text); border: 1.5px solid var(--gold); background: var(--surface); }
+    .btn.int-follow.on { background: var(--gold); color: #111; }
+    .int-sheet { background: var(--surface); color: var(--text); width: 100%; max-width: 640px; border-radius: 16px 16px 0 0; padding: 14px 16px calc(20px + env(safe-area-inset-bottom, 0px)); max-height: 85vh; overflow-y: auto; }
+    .int-pick-sub { font-size: .8rem; color: var(--text-muted); margin: 0 0 6px; }
+    .int-pick-h { margin: 14px 0 2px; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); }
+    .int-pick { display: flex; align-items: center; gap: 12px; padding: 9px 0; border: 0; border-bottom: 1px solid var(--border); cursor: pointer; width: 100%; background: transparent; font: inherit; color: inherit; text-align: left; }
+    .int-pick.on { background: var(--navy-soft); }
+    .int-pick-ic { font-size: 1.25rem; width: 30px; text-align: center; flex-shrink: 0; }
+    .int-pick-ic .int-badge { font-size: .74rem; }
+    .int-pick-lbl { flex: 1; min-width: 0; }
+    .int-pick-lbl b { display: block; font-size: .92rem; }
+    .int-pick-lbl small { color: var(--text-muted); font-size: .74rem; }
+    .int-pick-chk { width: 22px; height: 22px; border: 2px solid var(--border); border-radius: 6px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: .8rem; color: #fff; }
+    .int-pick.on .int-pick-chk { background: var(--navy); border-color: var(--navy); }
+    .int-pick-foot { margin-top: 14px; display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .int-pick-foot a { font-size: .8rem; color: var(--navy); font-weight: 700; text-decoration: underline; }
     .sp-row:hover { background: #f8fafc; }
     .sp-row-home:hover { background: #ecfdf5; }
     .sp-row-left { display: flex; flex-direction: column; gap: 2px; font-size: 0.74rem; color: var(--text-muted); line-height: 1.25; }
@@ -388,27 +428,13 @@
                     <span id="ev-current-day-label" class="current-day-label">Today</span>
                 </div>
                 <div class="toolbar-right">
-                    <button id="ev-clear-btn" class="clear-btn" onclick="clearEventFilters()" title="Clear filters" aria-label="Clear filters">✕</button>
-                    <button class="family-toggle fav-toggle" id="ev-fav-toggle" onclick="evToggleFavOnly()" title="Jump to your favorites" style="display:none;">⭐ <span class="fav-toggle-label">Favs</span></button>
-                    <button class="family-toggle has-label" id="ev-kid-toggle" data-feed="family-events" onclick="toggleKidFriendly()" title="Family Friendly Events" aria-label="Family-friendly events">👨‍👩‍👧 <span class="family-toggle-label">Family</span></button>
-                    <button class="family-toggle has-label" id="ev-freefood-toggle" onclick="toggleFreeFood()" title="Free Food Events" aria-label="Free food events" style="display:none;">🍕 <span class="family-toggle-label">Free Food</span></button>
-                    <button class="family-toggle has-label" id="ev-freestuff-toggle" onclick="toggleFreeStuff()" title="Free Stuff Events" aria-label="Free stuff events" style="display:none;">🎁 <span class="family-toggle-label">Free Stuff</span></button>
-                    <button id="ev-filter-toggle" class="filter-toggle" onclick="toggleEvFilters()">Filter <span id="ev-filter-arrow">▾</span></button>
+                    <button id="ev-clear-btn" class="clear-btn" onclick="clearEventFilters()" title="Show everything" aria-label="Show everything">✕</button>
                 </div>
             </div>
-            <div id="ev-filters-wrap" class="filters-collapsible" style="margin-top:10px;">
-                <div class="filter-bar ev-source-row" style="justify-content:flex-start;">
-                    <div class="filter-group" id="ev-source-group">
-                        <button class="src-btn active" id="ev-src-all" onclick="setEventSourceAll()">All</button>
-                        <button class="src-btn" id="ev-src-mu" data-feed="mu-" onclick="toggleEventSource('MU')">🏴‍☠️ MU</button>
-                        <button class="src-btn" id="ev-src-pm" data-feed="pm-" onclick="toggleEventSource('PM')"><svg class="btn-icon" width="14" height="14"><use href="#icon-comet"/></svg> PM</button>
-                        <button class="src-btn" id="ev-src-borough" data-feed="borough-" onclick="toggleEventSource('Borough')">🌳 Borough</button>
-                        <button class="src-btn" id="ev-src-manor" data-feed="manor-" onclick="toggleEventSource('Manor')">🪶 Manor Twp.</button>
-                        <button class="src-btn" id="ev-src-other" data-feed="other-" onclick="toggleEventSource('Other')">🎯 Other</button>
-                    </div>
-                </div>
-                <div id="ev-sub-container" class="sub-filter-bar"></div>
-            </div>
+            <!-- 2026-11-12: one icon row replaces the source pills, sub-chips, family/perk toggles,
+                 ⭐ Favs button and Filter panel (see EVENTS PAGE — ONE-ROW FILTER in app.js). -->
+            <div id="ev-int-row" class="int-row" aria-label="Filter events"></div>
+            <div id="ev-int-note"></div>
         </div>
         <div id="ev-events-container" class="ev-list"></div>
         <button class="fab-submit" onclick="openSubmitEvent()" title="Submit an Event">📝</button>

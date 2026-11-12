@@ -751,7 +751,21 @@ const feedSections = {
                 {id:'raney-cellars-all',label:'Raney Cellars Events',icon:'🍺'},
                 {id:'jacks-tavern-all',label:"Jack's Tavern Events",icon:'🍻'}
             ]},
-            family: { label: 'Family Friendly', icon: '👨‍👩‍👧', headingStyle: true, audience: 'townie', subs: [{id:'family-events',label:'Family Friendly Events',icon:'👨‍👩‍👧'}] }
+            // Interests (2026-11-12): followable cross-source interests — `interest:<key>`
+            // matches events.interests[] (scripts/interests.js) in all three matchers. The
+            // Local picker (townieGroups.interests) carries Kids & Family + civic instead
+            // of Greek Life / Res Halls.
+            interests: { label: 'Interests', icon: '🎯', headingStyle: true, audience: 'both', subs: [
+                {id:'interest:music',   label:'Music',              icon:'🎵'},
+                {id:'interest:arts',    label:'Arts & Theatre',     icon:'🎭'},
+                {id:'interest:crafts',  label:'Crafts & Making',    icon:'🧶'},
+                {id:'interest:food',    label:'Food & Drink',       icon:'🍴'},
+                {id:'interest:causes',  label:'Volunteer & Causes', icon:'🤝'},
+                {id:'interest:active',  label:'Outdoors & Fitness', icon:'🏃'},
+                {id:'interest:learn',   label:'Talks & Learning',   icon:'📚'},
+                {id:'interest:greek',   label:'Greek Life',         icon:'🏺'},
+                {id:'interest:reshall', label:'Res Halls',          icon:'🏠'}
+            ]}
         },
         // Townie picker shape — heading-style throughout, same uniform look.
         // Borough and Family Friendly are now heading-style groups (matching
@@ -795,9 +809,19 @@ const feedSections = {
                     {id:'jacks-tavern-all',label:"Jack's Tavern Events",icon:'🍻'}
                 ]
             },
-            family: {
-                label: 'Family Friendly', icon: '👨‍👩‍👧', headingStyle: true,
-                subs: [{id:'family-events',label:'Family Friendly Events',icon:'👨‍👩‍👧'}]
+            interests: {
+                label: 'Interests', icon: '🎯', headingStyle: true,
+                subs: [
+                    {id:'family-events',    label:'Kids & Family',      icon:'👨‍👩‍👧'},
+                    {id:'interest:music',   label:'Music',              icon:'🎵'},
+                    {id:'interest:arts',    label:'Arts & Theatre',     icon:'🎭'},
+                    {id:'interest:food',    label:'Food & Drink',       icon:'🍴'},
+                    {id:'interest:civic',   label:'Meetings & Civic',   icon:'🏛️'},
+                    {id:'interest:crafts',  label:'Crafts & Making',    icon:'🧶'},
+                    {id:'interest:causes',  label:'Volunteer & Causes', icon:'🤝'},
+                    {id:'interest:active',  label:'Outdoors & Fitness', icon:'🏃'},
+                    {id:'interest:learn',   label:'Talks & Learning',   icon:'📚'}
+                ]
             }
         }
     },
@@ -836,6 +860,10 @@ for (const g of Object.values(feedSections.events.groups)) g.subs.forEach(s => e
 // Marauder chip — the events are townie-only), so the groups walk above never
 // sees it. Register it by hand or hasEventPrefs misses alumni-only favorites.
 eventFeedIds.add('mu-alumni');
+// family-events + interest:civic live only in the Local picker (townieGroups.interests)
+// — register by hand like mu-alumni (2026-11-12).
+eventFeedIds.add('family-events');
+eventFeedIds.add('interest:civic');
 
 // ========== Affiliation-based source hiding ==========
 // When a user picks Marauder (or is unset), ALL community-side sources are
@@ -4110,7 +4138,12 @@ window.openInterestPicker = function() {
     sheet.className = 'int-sheet';
     const item = d => {
         const on = evOn.has(d.k);
-        return `<button type="button" class="int-pick${on ? ' on' : ''}" data-k="${d.k}" onclick="evPickerToggle('${d.k}', this)"><span class="int-pick-ic">${d.ic}</span><span class="int-pick-lbl"><b>${escHtml(d.l)}</b><small>${escHtml(d.hint)} · ${counts[d.k] || 0} coming up</small></span><span class="int-pick-chk" aria-hidden="true">${on ? '✓' : ''}</span></button>`;
+        // ☆ Follow (2026-11-12, step 5): interests are feed prefs now — `interest:<key>`,
+        // or `family-events` for Kids & Family. Perks (Free Food / Free Stuff) have none.
+        const prefId = evInterestPrefId(d.k);
+        const fol = prefId && feedPrefs && feedPrefs.indexOf(prefId) !== -1;
+        const star = prefId ? `<span role="button" tabindex="0" class="int-pick-star${fol ? ' on' : ''}" data-k="${d.k}" title="${fol ? 'Following — in your ★, push and calendar' : 'Follow: ★ on rows, daily push, calendar'}" onclick="event.stopPropagation();evPickerFollow('${d.k}', this)">${fol ? '★' : '☆'}</span>` : '';
+        return `<button type="button" class="int-pick${on ? ' on' : ''}" data-k="${d.k}" onclick="evPickerToggle('${d.k}', this)"><span class="int-pick-ic">${d.ic}</span><span class="int-pick-lbl"><b>${escHtml(d.l)}</b><small>${escHtml(d.hint)} · ${counts[d.k] || 0} coming up</small></span>${star}<span class="int-pick-chk" aria-hidden="true">${on ? '✓' : ''}</span></button>`;
     };
     const where = EV_CHIPS.filter(d => d.kind === 'where' && evChipVisible(d));
     const what = EV_CHIPS.filter(d => d.kind === 'what' && evChipVisible(d));
@@ -4121,6 +4154,24 @@ window.openInterestPicker = function() {
         + `<div class="int-pick-foot"><a href="#" onclick="event.preventDefault();document.getElementById('interest-picker-overlay').remove();openFeedSettings();">⭐ Teams, clubs and places you follow live in Favorites →</a><button type="button" class="btn btn-sm" style="background:var(--navy);color:#fff;" onclick="document.getElementById('interest-picker-overlay').remove()">Done</button></div>`;
     overlay.appendChild(sheet);
     document.body.appendChild(overlay);
+};
+// Pref id behind an interest chip (2026-11-12, step 5): family → the existing family-events
+// pref; the classifier keys → interest:<key>; perks and Where chips → none.
+function evInterestPrefId(k) {
+    if (k === 'family') return 'family-events';
+    const d = EV_CHIP_BY[k];
+    if (!d || d.kind !== 'what' || k === 'freefood' || k === 'freestuff') return null;
+    return 'interest:' + k;
+}
+window.evPickerFollow = function(k, el) {
+    const prefId = evInterestPrefId(k);
+    if (!prefId) return;
+    toggleCardFavorite(prefId, null);   // persists + surgical ★ refresh on visible rows
+    const on = !!(feedPrefs && feedPrefs.indexOf(prefId) !== -1);
+    if (el) { el.classList.toggle('on', on); el.textContent = on ? '★' : '☆'; }
+    if (typeof resendNotificationPrefs === 'function') resendNotificationPrefs();
+    if (!on && (!feedPrefs || !feedPrefs.length)) { evOn.delete('fav'); evSaveOn(); }
+    renderEvRow();
 };
 window.evPickerToggle = function(k, btn) {
     evToggleChip(k);

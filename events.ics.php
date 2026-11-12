@@ -5,7 +5,7 @@
 // every few hours and refresh their local copy. The user's favorites are
 // encoded in the URL as comma-separated feed-pref IDs:
 //
-//   /events.ics?p=mu-football,clubs-arts,club:RUF,family-events
+//   /events.ics?p=mu-football,clubs-arts,club:RUF,family-events,interest:music
 //
 // On each request we load the same events.json the static site uses, run
 // each event through a PHP port of app.js's eventMatchesFeed(), and emit
@@ -343,6 +343,14 @@ function eventMatchesFeed($e) {
 
     // Family Friendly — matches any event with the kidFriendly flag.
     if (in_array('family-events', $prefs, true) && !empty($e['kidFriendly'])) return true;
+
+    // Interests (2026-11-12) — `interest:<key>` prefs match events.interests[] (scrape-time,
+    // scripts/interests.js). HARD RULE 7 twin of the same check in lib/eventMatch.js.
+    if (!empty($e['interests']) && is_array($e['interests'])) {
+        foreach ($prefs as $fp) {
+            if (is_string($fp) && strpos($fp, 'interest:') === 0 && in_array(substr($fp, 9), $e['interests'], true)) return true;
+        }
+    }
 
     $tagsLower = array_map('strtolower', $tags);
 

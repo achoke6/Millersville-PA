@@ -896,6 +896,11 @@ const UNCOMMON_GROUP_SOURCES = {
     pm:      ['SP_PM'],
     newsCommunity: ['PM_NEWS','BOROUGH_NEWS']
 };
+// 2026-11-12: the Events page row (EV_CHIPS, Where group) is the one place a Marauder
+// turns these sources on — its chips write the same shownSources keys. The ⚙️ modal
+// renders these groups as plain follow groups (no 👁, no Hidden/Show/★ segment), and
+// Save leaves their keys alone. PM sports (`pm`) and community news keep their 👁.
+const EV_ROW_OWNED_SHOW = new Set(['pmev', 'borough', 'manor', 'other']);
 
 // --- Per-item Show plumbing (2026-08-03) ------------------------------------
 // Each Uncommon picker chip carries its own 👁 Show bit. The bit writes ONE
@@ -1736,7 +1741,7 @@ window.openFeedSettings = function() {
             const subgroups = group.subgroups || [];
             // Marauder-only Uncommon groups get the three-state selector and
             // per-chip 👁 Show toggles (2026-08-03).
-            const segGroup = isMarauder && !!UNCOMMON_GROUP_SOURCES[key];
+            const segGroup = isMarauder && !!UNCOMMON_GROUP_SOURCES[key] && !EV_ROW_OWNED_SHOW.has(key);   // 2026-11-12: row-owned groups are follow-only here
             // Collect ALL underlying IDs (subs + every composite's linkedIds
             // + subgroup masters + subgroup children) to determine master
             // state. Master is checked when every underlying ID is in current.
@@ -1940,7 +1945,7 @@ window.openFeedSettings = function() {
                         <div class="feed-subgroup-header" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:${ocOn?'var(--gold-soft)':'var(--bg)'};cursor:pointer;" onclick="toggleSubgroupCollapse(event, 'events__offcampus')">
                             <span style="flex:1;min-width:0;">
                                 <span style="display:block;font-size:0.85rem;font-weight:700;">🛣️ Off Campus Favorites</span>
-                                <span style="display:block;font-size:0.7rem;font-weight:400;color:var(--text-muted);">Hidden by default — Show to see events, ★ to follow</span>
+                                <span style="display:block;font-size:0.7rem;font-weight:400;color:var(--text-muted);">★ to follow. To see their events, turn the place on from the Events page bar (＋).</span>
                             </span>
                             <span class="feed-subgroup-chevron" style="font-size:0.85rem;color:var(--text-muted);transition:transform 0.15s;${ocOn?'transform:rotate(90deg);':''}">▸</span>
                         </div>
@@ -1976,10 +1981,10 @@ window.openFeedSettings = function() {
         const uncommonHtml = uncommonGroups.map(([k, g]) => renderGroupBlock(k, g)).filter(Boolean).join('');
         const defaultOpen = anyFavsIn(uncommonGroups);
         sectionsHtml += renderAccordion(
-            '🏘️ Uncommon for Marauders',
+            '🏘️ Penn Manor, Borough & Manor Twp.',
             uncommonHtml,
             defaultOpen,
-            'Penn Manor, Borough, and Manor Twp. — hidden by default; Show to see events, ★ to follow',   // Other family moved to Off Campus Favorites under Other Events (2026-08-10)
+            '★ to follow a team or source. To see their events, turn them on from the Events page bar (＋); Penn Manor sports: 👁 shows a sport’s games without following.',   // 2026-11-12: the Events row owns Show for PM events / Borough / Manor
             '#9ca3af'  // muted gray accent to de-emphasize vs. the themed sections
         );
     }
@@ -2000,8 +2005,8 @@ window.openFeedSettings = function() {
     modal.innerHTML = `
         <button onclick="window.closeFeedModal()" style="position:absolute;top:12px;right:12px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text-muted);z-index:2;">✕</button>
         <div style="margin-bottom:14px;">
-            <h3 style="margin-bottom:4px;">⭐ My Favorites</h3>
-            <p style="font-size:0.8rem;color:var(--text-muted);">Pick your favorites to personalize your experience.</p>
+            <h3 style="margin-bottom:4px;">⭐ Favorites</h3>
+            <p style="font-size:0.8rem;color:var(--text-muted);">Follow teams, clubs and places. They get a ★, come first on the home page, and feed your calendar and daily push. To pick what the Events page shows, use the icon bar there.</p>
         </div>
         <!-- Mode selector band: plain Local / MU Student labels (with flavor) showing
              the current mode and letting users switch. Doubles as the first-run prompt
@@ -2015,18 +2020,14 @@ window.openFeedSettings = function() {
             </div>
             <div style="font-size:0.76rem;color:var(--text-muted);margin-top:8px;">${muAffiliation ? 'Local shows community events & deals; MU Student adds campus life.' : 'Pick one to tailor your events, sports, and local listings — change it anytime.'}</div>
         </div>
-        <!-- 21+ drink-specials opt-in. A display setting: applies immediately
-             (not tied to Save) and is deliberately NOT wiped by Clear Favs.
-             Default OFF for every viewer — 🍺-flagged items are hidden from
-             the home rail, card specials boxes, and Today lens until checked. -->
-        <div style="margin-bottom:16px;padding:14px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);">
-            <label style="display:flex;gap:10px;align-items:flex-start;cursor:pointer;">
-                <input type="checkbox" ${show21Plus ? 'checked' : ''} onchange="window.toggle21Plus(this.checked)" style="margin-top:3px;flex-shrink:0;">
-                <span>
-                    <span style="font-weight:700;font-size:0.9rem;">🍺 Show 21+ drink specials</span>
-                    <span style="display:block;font-size:0.76rem;color:var(--text-muted);margin-top:2px;">Bar &amp; drink specials are hidden by default. Check this to include them — for visitors 21 and older.</span>
-                </span>
-            </label>
+        <!-- 2026-11-12: the 21+ drink-specials toggle moved to the Food page (renderFoodPage). -->
+        <!-- You follow (2026-11-12): every current follow as a chip; ✕ is STAGED — it unchecks
+             the matching box below and Save persists, exactly like unticking it by hand. -->
+        <div id="feed-following" style="margin-bottom:16px;padding:12px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);">
+            <div style="font-weight:700;font-size:0.9rem;margin-bottom:6px;">You follow</div>
+            ${current.length
+                ? `<div style="display:flex;flex-wrap:wrap;gap:6px;">${current.map(id => `<span class="feed-following-chip" data-pref="${id.replace(/"/g,'&quot;')}" style="display:inline-flex;align-items:center;gap:4px;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:3px 6px 3px 9px;font-size:0.78rem;font-weight:600;">★ ${resolvePrefLabel(id).replace(/^\S+\s+/, m => /^[A-Za-z0-9]/.test(m) ? m : '')}<button type="button" onclick="window.feedUnstage(this)" aria-label="Unfollow" style="border:0;background:transparent;color:var(--text-muted);font:inherit;font-size:0.7rem;padding:0 2px;cursor:pointer;">✕</button></span>`).join('')}</div>`
+                : `<div style="font-size:0.78rem;color:var(--text-muted);">Nothing yet — tap ☆ Follow on any event, or browse below.</div>`}
         </div>
         <div id="feed-options">${sectionsHtml}</div>
         <!-- Calendar subscription card. Lets the user grab a personalized iCal
@@ -2590,6 +2591,36 @@ window.updateFeedSubgroup = function(sgKey) {
     if (groupKey && typeof updateFeedGroup === 'function') updateFeedGroup(groupKey);
 };
 
+// You-follow ✕ (2026-11-12): staged removal — uncheck the box that carries this pref id
+// (a sub, a composite that links it, or a club), refresh its group master, drop the chip.
+// Save then persists the modal as it stands; Cancel/✕ leaves everything untouched.
+window.feedUnstage = function(btn) {
+    const chip = btn && btn.closest('.feed-following-chip');
+    const id = chip && chip.getAttribute('data-pref');
+    if (!id) return;
+    const esc = (typeof CSS !== 'undefined' && CSS.escape) ? CSS.escape(id) : id.replace(/["\\]/g, '\\$&');
+    let hit = false;
+    document.querySelectorAll(`.feed-sub[value="${esc}"]:checked, .feed-club[value="${esc}"]:checked`).forEach(cb => {
+        cb.checked = false; hit = true;
+        const lbl = cb.closest('label'); if (lbl) lbl.classList.remove('is-checked');
+        if (cb.dataset.group && typeof updateFeedGroup === 'function') updateFeedGroup(cb.dataset.group);
+    });
+    if (!hit) {
+        document.querySelectorAll('.feed-sub[data-linked-ids]:checked').forEach(cb => {
+            if ((cb.dataset.linkedIds || '').split(',').map(s => s.trim()).includes(id)) {
+                cb.checked = false; hit = true;
+                const lbl = cb.closest('label'); if (lbl) lbl.classList.remove('is-checked');
+                if (cb.dataset.group && typeof updateFeedGroup === 'function') updateFeedGroup(cb.dataset.group);
+            }
+        });
+    }
+    chip.remove();
+    const wrap = document.getElementById('feed-following');
+    if (wrap && !wrap.querySelector('.feed-following-chip')) {
+        const list = wrap.querySelector('div[style*="flex-wrap"]');
+        if (list) list.outerHTML = '<div style="font-size:0.78rem;color:var(--text-muted);">Nothing left — tap 💾 Save to confirm, or ✕ to keep them.</div>';
+    }
+};
 window.saveFeedFromModal = function() {
     // Persist the Uncommon "Show events" selections first (their own key, not
     // part of feedPrefs — survives Clear Favs). Per-item since 2026-08-03:
@@ -8620,8 +8651,8 @@ function placesSpecialsItemsFor(sp, dayName, previewIso){
     if (sp.weekly && sp.weekly.length > 0 && !(previewIso && sp.weeklyValidThrough && String(previewIso) >= String(sp.weeklyValidThrough))) items = [...items, ...sp.weekly];
     // 21+ gate: any item containing 🍺 is alcohol-flagged (data convention,
     // documented in place-specials.json _format) and hidden for EVERY viewer
-    // until they opt in via the My Favorites "Show 21+ drink specials"
-    // checkbox. This one filter point covers the home rail, both card
+    // until they opt in via the Food page's "Show 21+ drink specials"
+    // toggle (moved there from ⚙️ 2026-11-12). This one filter point covers the home rail, both card
     // specials boxes, the Today lens, and the map pins — they all flow
     // through this function. Also catches recurring items ("🔁 🍺 ...").
     if (!show21Plus) items = items.filter(i => !i.includes('🍺'));
@@ -9307,6 +9338,9 @@ function renderFoodPage(){
     const isStudent = viewerIsMarauder();   // default-marauder (2026-08-24): unset sees the Free Groceries block
     const secHdr = (label, count) => `<div class="day-group-header">${label}${count !== undefined ? `<span class="day-count">${count}</span>` : ''}</div>`;
     let html = '';
+    // 21+ drink specials (moved here from ⚙️ 2026-11-12): a display setting, applies
+    // immediately via toggle21Plus (which re-renders this page), survives Clear Favs.
+    html += `<label style="grid-column:1/-1;display:flex;align-items:center;justify-content:flex-end;gap:8px;margin:-4px 0 8px;font-size:0.78rem;color:var(--text-muted);cursor:pointer;"><input type="checkbox" ${show21Plus ? 'checked' : ''} onchange="window.toggle21Plus(this.checked)" style="accent-color:var(--navy);"> 🍺 Show 21+ drink specials</label>`;
 
     // --- 1. Free food TODAY (line items + popup); else ONE next-up line ---
     const todayStr = now.toDateString();   // same today-convention as placeEventsToday

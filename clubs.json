@@ -53,8 +53,12 @@
   },
   {
     "name": "Alpha Sigma Alpha",
-    "category": "",
-    "categories": [],
+    "category": "Competition",
+    "categories": [
+      "Competition",
+      "Fundraiser",
+      "Sporting"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -784,9 +788,9 @@
   },
   {
     "name": "Fraternity & Sorority Life",
-    "category": "Social",
+    "category": "Educational Program",
     "categories": [
-      "Social"
+      "Educational Program"
     ],
     "shortName": "FSL",
     "id": ""
@@ -960,6 +964,16 @@
     "id": ""
   },
   {
+    "name": "Korea Defense Veterans Association Campus Club - Millersville University",
+    "category": "Competition",
+    "categories": [
+      "Competition",
+      "Social"
+    ],
+    "shortName": "",
+    "id": ""
+  },
+  {
     "name": "Lacrosse",
     "category": "",
     "categories": [],
@@ -1112,7 +1126,7 @@
     "category": "Meeting",
     "categories": [
       "Meeting",
-      "Fundraiser"
+      "Competition"
     ],
     "shortName": "Men's Rugby Club",
     "id": ""
@@ -1209,8 +1223,10 @@
   },
   {
     "name": "Moose Ultimate",
-    "category": "",
-    "categories": [],
+    "category": "Sporting",
+    "categories": [
+      "Sporting"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1227,7 +1243,8 @@
     "name": "Muslim Student Association",
     "category": "Social",
     "categories": [
-      "Social"
+      "Social",
+      "Tabling"
     ],
     "shortName": "",
     "id": ""
@@ -1795,10 +1812,9 @@
   },
   {
     "name": "University Activities Board",
-    "category": "Competition",
+    "category": "Trip",
     "categories": [
-      "Competition",
-      "Social"
+      "Trip"
     ],
     "shortName": "UAB",
     "id": ""

@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-11-11T22:55:00.661Z",
-  "totalEvents": 2071,
-  "withDescription": 868,
-  "withImage": 238,
+  "generatedAt": "2026-11-12T00:46:05.362Z",
+  "totalEvents": 2074,
+  "withDescription": 871,
+  "withImage": 245,
   "familyFriendly": 56,
   "eventsToday": 23,
   "sources": {
@@ -11,7 +11,7 @@
     "artsmu": 50,
     "eckert": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 568,
+    "muGetInvolved": 571,
     "pennManor": 659,
     "borough": 49,
     "vfw": 6,
@@ -140,9 +140,9 @@
   },
   "sports": {
     "total": 942,
-    "scored": 210,
-    "wins": 102,
-    "losses": 95,
+    "scored": 196,
+    "wins": 93,
+    "losses": 90,
     "ties": 13
   },
   "registrations": {
@@ -160,13 +160,13 @@
       "Campus Life": 1
     },
     "stalePast": 31,
-    "lastSyncAt": "2026-11-11T22:52:24.497Z"
+    "lastSyncAt": "2026-11-12T00:40:26.245Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-11T22:54:51.594Z"
+    "checkedAt": "2026-11-12T00:45:53.728Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -174,8 +174,10 @@
     "standalone": 2
   },
   "sourceHealth": {
-    "ok": true,
-    "failing": [],
+    "ok": false,
+    "failing": [
+      "manor.count"
+    ],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -228,9 +230,10 @@
       },
       {
         "key": "manor.count",
-        "ok": true,
+        "ok": false,
         "value": 37,
-        "min": 10
+        "min": 10,
+        "carriedForward": 37
       },
       {
         "key": "muHudl.pairRatio",
@@ -250,77 +253,77 @@
   },
   "recentlyAdded": [
     {
-      "key": "Boys JV Wrestling vs State College Area High School|2026-12-12T13:30:00.000Z",
-      "firstSeenAt": "2026-11-11T21:03:10.185Z",
-      "title": "Boys JV Wrestling vs State College Area High School",
-      "source": "PM",
-      "date": "2026-12-12T13:30:00.000Z"
+      "key": "RUF Bible Study|2026-11-03T19:00:00",
+      "firstSeenAt": "2026-11-12T00:46:05.359Z",
+      "title": "RUF Bible Study",
+      "source": "MU",
+      "date": "2026-11-03T19:00:00"
     },
     {
-      "key": "Wednesday Night Dinner|2027-02-17T23:00:00.000Z",
-      "firstSeenAt": "2026-11-11T21:03:10.185Z",
+      "key": "Real Talk, Real Skills|2027-02-18T17:00:00.000Z",
+      "firstSeenAt": "2026-11-12T00:46:05.359Z",
+      "title": "Real Talk, Real Skills",
+      "source": "MU",
+      "date": "2027-02-18T17:00:00.000Z"
+    },
+    {
+      "key": "Tell School of Music Recital Hour|2027-02-24T20:00:00.000Z",
+      "firstSeenAt": "2026-11-12T00:46:05.359Z",
+      "title": "Tell School of Music Recital Hour",
+      "source": "MU",
+      "date": "2027-02-24T20:00:00.000Z"
+    },
+    {
+      "key": "Wednesday Night Dinner|2027-02-24T23:00:00.000Z",
+      "firstSeenAt": "2026-11-12T00:46:05.359Z",
       "title": "Wednesday Night Dinner",
       "source": "MU",
-      "date": "2027-02-17T23:00:00.000Z"
+      "date": "2027-02-24T23:00:00.000Z"
     },
     {
-      "key": "Girls Varsity Field Hockey vs Boyertown|2026-11-14T17:00:00.000Z",
-      "firstSeenAt": "2026-11-11T19:14:44.887Z",
-      "title": "Girls Varsity Field Hockey vs Boyertown",
-      "source": "PM",
-      "date": "2026-11-14T17:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Field Hockey at #6 Indiana (PA)|2026-10-11T16:00:00.000Z",
-      "firstSeenAt": "2026-11-11T18:14:16.875Z",
-      "title": "Millersville University Field Hockey at #6 Indiana (PA)",
+      "key": "Tell School of Music Recital Hour|2027-03-03T20:00:00.000Z",
+      "firstSeenAt": "2026-11-12T00:46:05.359Z",
+      "title": "Tell School of Music Recital Hour",
       "source": "MU",
-      "date": "2026-10-11T16:00:00.000Z"
+      "date": "2027-03-03T20:00:00.000Z"
     },
     {
-      "key": "Girls Varsity Swimming @ Hempfield High School|2027-01-13T00:30:00.000Z",
-      "firstSeenAt": "2026-11-11T18:14:16.875Z",
-      "title": "Girls Varsity Swimming @ Hempfield High School",
-      "source": "PM",
-      "date": "2027-01-13T00:30:00.000Z"
-    },
-    {
-      "key": "Holiday Maker's Market|2026-12-05T20:00:00.000Z",
-      "firstSeenAt": "2026-11-11T16:24:49.680Z",
-      "title": "Holiday Maker's Market",
+      "key": "Wednesday Night Dinner|2027-03-03T23:00:00.000Z",
+      "firstSeenAt": "2026-11-12T00:46:05.359Z",
+      "title": "Wednesday Night Dinner",
       "source": "MU",
-      "date": "2026-12-05T20:00:00.000Z"
+      "date": "2027-03-03T23:00:00.000Z"
     },
     {
-      "key": "Millersville University Wrestling vs York|2026-11-13T21:00:00.000Z",
-      "firstSeenAt": "2026-11-11T15:35:28.512Z",
-      "title": "Millersville University Wrestling vs York",
+      "key": "Real Talk, Real Skills|2027-03-04T17:00:00.000Z",
+      "firstSeenAt": "2026-11-12T00:46:05.359Z",
+      "title": "Real Talk, Real Skills",
       "source": "MU",
-      "date": "2026-11-13T21:00:00.000Z"
+      "date": "2027-03-04T17:00:00.000Z"
     },
     {
-      "key": "Best Buddies Tabling|2026-11-11T09:00:00",
-      "firstSeenAt": "2026-11-11T15:07:40.512Z",
-      "title": "Best Buddies Tabling",
+      "key": "Wednesday Night Dinner|2027-03-10T23:00:00.000Z",
+      "firstSeenAt": "2026-11-12T00:46:05.359Z",
+      "title": "Wednesday Night Dinner",
       "source": "MU",
-      "date": "2026-11-11T09:00:00"
+      "date": "2027-03-10T23:00:00.000Z"
     },
     {
-      "key": "Best Buddies Tabling|2026-11-11T14:00:00",
-      "firstSeenAt": "2026-11-11T15:07:40.512Z",
-      "title": "Best Buddies Tabling",
+      "key": "Tell School of Music Recital Hour|2027-03-17T19:00:00.000Z",
+      "firstSeenAt": "2026-11-12T00:46:05.359Z",
+      "title": "Tell School of Music Recital Hour",
       "source": "MU",
-      "date": "2026-11-11T14:00:00"
+      "date": "2027-03-17T19:00:00.000Z"
     },
     {
-      "key": "Socialism 101 Teach-In|2026-11-11T19:00:00",
-      "firstSeenAt": "2026-11-11T15:07:40.512Z",
-      "title": "Socialism 101 Teach-In",
+      "key": "Tell School of Music Recital Hour|2027-03-24T19:00:00.000Z",
+      "firstSeenAt": "2026-11-12T00:46:05.359Z",
+      "title": "Tell School of Music Recital Hour",
       "source": "MU",
-      "date": "2026-11-11T19:00:00"
+      "date": "2027-03-24T19:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 13,
   "skippedByRule": {
     "total": 435,
     "reasons": {

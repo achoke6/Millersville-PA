@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-11-12T14:28:49.979Z",
-  "totalEvents": 2025,
-  "withDescription": 870,
-  "withImage": 245,
-  "familyFriendly": 55,
-  "eventsToday": 27,
+  "generatedAt": "2026-11-12T16:16:57.593Z",
+  "totalEvents": 2074,
+  "withDescription": 871,
+  "withImage": 246,
+  "familyFriendly": 56,
+  "eventsToday": 26,
   "sources": {
     "muAthletics": 389,
     "muCalendar": 193,
     "artsmu": 50,
     "eckert": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 571,
+    "muGetInvolved": 572,
     "pennManor": 659,
-    "borough": 0,
+    "borough": 49,
     "vfw": 6,
     "phantomPower": 14,
     "community": 14,
@@ -51,7 +51,10 @@
       "earliest": "2026-08-17T12:00:00.000Z",
       "latest": "2027-10-25T20:00:00.000Z"
     },
-    "borough": null,
+    "borough": {
+      "earliest": "2026-08-17T22:00:00.000Z",
+      "latest": "2027-10-31T22:00:00.000Z"
+    },
     "vfw": {
       "earliest": "2026-11-11T20:30:00.000Z",
       "latest": "2026-11-29T18:00:00.000Z"
@@ -106,7 +109,10 @@
       "newest": "2027-10-25",
       "daysSinceMoved": 18
     },
-    "borough": null,
+    "borough": {
+      "newest": "2027-10-31",
+      "daysSinceMoved": 12
+    },
     "vfw": {
       "newest": "2026-11-29",
       "daysSinceMoved": 3
@@ -154,13 +160,13 @@
       "Campus Life": 1
     },
     "stalePast": 31,
-    "lastSyncAt": "2026-11-12T14:26:10.787Z"
+    "lastSyncAt": "2026-11-12T16:14:16.598Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-12T14:28:40.533Z"
+    "checkedAt": "2026-11-12T16:16:47.786Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -170,7 +176,7 @@
   "sourceHealth": {
     "ok": false,
     "failing": [
-      "borough.horizonDays"
+      "manor.count"
     ],
     "checks": [
       {
@@ -196,8 +202,8 @@
       },
       {
         "key": "borough.horizonDays",
-        "ok": false,
-        "value": null,
+        "ok": true,
+        "value": 353,
         "min": 21,
         "skipped": false
       },
@@ -224,9 +230,10 @@
       },
       {
         "key": "manor.count",
-        "ok": true,
+        "ok": false,
         "value": 37,
-        "min": 10
+        "min": 10,
+        "carriedForward": 37
       },
       {
         "key": "muHudl.pairRatio",
@@ -246,84 +253,86 @@
   },
   "recentlyAdded": [
     {
-      "key": "Fall into Wellness Fair|2026-11-12T10:00:00",
-      "firstSeenAt": "2026-11-12T14:28:49.976Z",
-      "title": "Fall into Wellness Fair",
-      "source": "MU",
-      "date": "2026-11-12T10:00:00"
+      "key": "Civil Service Commission - Cancelled|2026-08-17T22:00:00.000Z",
+      "firstSeenAt": "2026-11-12T16:16:57.590Z",
+      "title": "Civil Service Commission - Cancelled",
+      "source": "Borough",
+      "date": "2026-08-17T22:00:00.000Z"
     },
     {
-      "key": "Girls Varsity Field Hockey vs Boyertown|2026-11-14T19:00:00.000Z",
-      "firstSeenAt": "2026-11-12T14:28:49.976Z",
-      "title": "Girls Varsity Field Hockey vs Boyertown",
-      "source": "PM",
-      "date": "2026-11-14T19:00:00.000Z"
+      "key": "Borough Council Meeting|2026-08-25T23:00:00.000Z",
+      "firstSeenAt": "2026-11-12T16:16:57.590Z",
+      "title": "Borough Council Meeting",
+      "source": "Borough",
+      "date": "2026-08-25T23:00:00.000Z"
     },
     {
-      "key": "Steelers vs Eagles Chili & Soup Cookoff|2026-11-22T18:00:00.000Z",
-      "firstSeenAt": "2026-11-12T14:28:49.976Z",
-      "title": "Steelers vs Eagles Chili & Soup Cookoff",
-      "source": "Other",
-      "date": "2026-11-22T18:00:00.000Z"
+      "key": "Zoning Hearing Board - Regarding 11 Millersville University Properties (see description for more details)|2026-08-27T22:30:00.000Z",
+      "firstSeenAt": "2026-11-12T16:16:57.590Z",
+      "title": "Zoning Hearing Board - Regarding 11 Millersville University Properties (see description for more details)",
+      "source": "Borough",
+      "date": "2026-08-27T22:30:00.000Z"
     },
     {
-      "key": "Wellness Fair|2026-12-11T16:30:00.000Z",
-      "firstSeenAt": "2026-11-12T14:28:49.976Z",
-      "title": "Wellness Fair",
-      "source": "MU",
-      "date": "2026-12-11T16:30:00.000Z"
+      "key": "UCC Board of Appeals Meeting|2026-08-31T21:00:00.000Z",
+      "firstSeenAt": "2026-11-12T16:16:57.590Z",
+      "title": "UCC Board of Appeals Meeting",
+      "source": "Borough",
+      "date": "2026-08-31T21:00:00.000Z"
     },
     {
-      "key": "Karaoke Night|2026-12-03T03:00:00.000Z",
-      "firstSeenAt": "2026-11-12T03:28:12.323Z",
-      "title": "Karaoke Night",
-      "source": "Jack's Tavern",
-      "date": "2026-12-03T03:00:00.000Z"
+      "key": "Planning Commission - Cancelled|2026-09-02T22:30:00.000Z",
+      "firstSeenAt": "2026-11-12T16:16:57.590Z",
+      "title": "Planning Commission - Cancelled",
+      "source": "Borough",
+      "date": "2026-09-02T22:30:00.000Z"
     },
     {
-      "key": "RUF Bible Study|2026-11-03T19:00:00",
-      "firstSeenAt": "2026-11-12T00:46:05.359Z",
-      "title": "RUF Bible Study",
-      "source": "MU",
-      "date": "2026-11-03T19:00:00"
+      "key": "Office Closed|2026-09-07T12:00:00.000Z",
+      "firstSeenAt": "2026-11-12T16:16:57.590Z",
+      "title": "Office Closed",
+      "source": "Borough",
+      "date": "2026-09-07T12:00:00.000Z"
     },
     {
-      "key": "Real Talk, Real Skills|2027-02-18T17:00:00.000Z",
-      "firstSeenAt": "2026-11-12T00:46:05.359Z",
-      "title": "Real Talk, Real Skills",
-      "source": "MU",
-      "date": "2027-02-18T17:00:00.000Z"
+      "key": "Borough Council Meeting|2026-09-08T23:00:00.000Z",
+      "firstSeenAt": "2026-11-12T16:16:57.590Z",
+      "title": "Borough Council Meeting",
+      "source": "Borough",
+      "date": "2026-09-08T23:00:00.000Z"
     },
     {
-      "key": "Tell School of Music Recital Hour|2027-02-24T20:00:00.000Z",
-      "firstSeenAt": "2026-11-12T00:46:05.359Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2027-02-24T20:00:00.000Z"
+      "key": "Saturday in the Park|2026-09-12T12:00:00.000Z",
+      "firstSeenAt": "2026-11-12T16:16:57.590Z",
+      "title": "Saturday in the Park",
+      "source": "Borough",
+      "date": "2026-09-12T12:00:00.000Z"
     },
     {
-      "key": "Wednesday Night Dinner|2027-02-24T23:00:00.000Z",
-      "firstSeenAt": "2026-11-12T00:46:05.359Z",
-      "title": "Wednesday Night Dinner",
-      "source": "MU",
-      "date": "2027-02-24T23:00:00.000Z"
+      "key": "Park Commission|2026-09-14T22:00:00.000Z",
+      "firstSeenAt": "2026-11-12T16:16:57.590Z",
+      "title": "Park Commission",
+      "source": "Borough",
+      "date": "2026-09-14T22:00:00.000Z"
     },
     {
-      "key": "Tell School of Music Recital Hour|2027-03-03T20:00:00.000Z",
-      "firstSeenAt": "2026-11-12T00:46:05.359Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2027-03-03T20:00:00.000Z"
+      "key": "Historic Commission - Cancelled|2026-09-14T23:00:00.000Z",
+      "firstSeenAt": "2026-11-12T16:16:57.590Z",
+      "title": "Historic Commission - Cancelled",
+      "source": "Borough",
+      "date": "2026-09-14T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 4,
+  "addedLastRun": 50,
   "skippedByRule": {
-    "total": 406,
+    "total": 437,
     "reasons": {
-      "pm-sub-varsity": 295,
+      "pm-sub-varsity": 297,
       "mu-calendar-athletics": 72,
       "camps-skipped": 28,
       "intramural-dup": 1,
+      "borough-collection": 13,
+      "borough-reservation": 16,
       "submission-not-approved": 1,
       "submission-out-of-range": 9
     }

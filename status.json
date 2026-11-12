@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-11-12T01:34:16.150Z",
-  "totalEvents": 2074,
-  "withDescription": 871,
+  "generatedAt": "2026-11-12T03:28:12.326Z",
+  "totalEvents": 2073,
+  "withDescription": 870,
   "withImage": 245,
   "familyFriendly": 56,
-  "eventsToday": 23,
+  "eventsToday": 21,
   "sources": {
     "muAthletics": 389,
     "muCalendar": 192,
@@ -146,8 +146,8 @@
     "ties": 13
   },
   "registrations": {
-    "open": 6,
-    "next2Weeks": 3,
+    "open": 5,
+    "next2Weeks": 2,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
@@ -160,13 +160,13 @@
       "Campus Life": 1
     },
     "stalePast": 31,
-    "lastSyncAt": "2026-11-12T01:31:33.057Z"
+    "lastSyncAt": "2026-11-12T03:19:40.277Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-12T01:34:08.540Z"
+    "checkedAt": "2026-11-12T03:28:03.821Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -250,6 +250,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Karaoke Night|2026-12-03T03:00:00.000Z",
+      "firstSeenAt": "2026-11-12T03:28:12.323Z",
+      "title": "Karaoke Night",
+      "source": "Jack's Tavern",
+      "date": "2026-12-03T03:00:00.000Z"
+    },
+    {
       "key": "RUF Bible Study|2026-11-03T19:00:00",
       "firstSeenAt": "2026-11-12T00:46:05.359Z",
       "title": "RUF Bible Study",
@@ -311,16 +318,9 @@
       "title": "Tell School of Music Recital Hour",
       "source": "MU",
       "date": "2027-03-17T19:00:00.000Z"
-    },
-    {
-      "key": "Tell School of Music Recital Hour|2027-03-24T19:00:00.000Z",
-      "firstSeenAt": "2026-11-12T00:46:05.359Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2027-03-24T19:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 435,
     "reasons": {

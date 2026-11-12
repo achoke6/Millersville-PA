@@ -1121,7 +1121,7 @@ function isNewsFromHiddenSource(n) {
 
 // Returns true ONLY when the user has favorites set AND this event matches them.
 // Unlike eventMatchesFeed, this returns FALSE when no favorites exist — which is what
-// the card-favorite-highlight needs (no prefs = no gold border, no star). eventMatchesFeed
+// the favorite ★ marks need (no prefs = no star). eventMatchesFeed
 // returns true in the no-prefs case to mean "show everything", which is correct for its
 // filter/pinning callers but wrong for the highlight check.
 function isEventFavorited(e) {
@@ -1320,9 +1320,9 @@ window.toggleCardFavorite = function(prefId, btnEl) {
         const ev = eventByKey.get(key);
         if (!ev) return;
         const isFav = isEventFavorited(ev);
-        // Card surfaces (.app-card) get a .card-fav class for the gold border.
+        // Card surfaces (.app-card): the inline ★ button is the only favorite mark
+        // (2026-11-12 — the gold .card-fav border/tint was retired).
         if (el.classList.contains('app-card')) {
-            el.classList.toggle('card-fav', isFav);
             // Update the inline star button if present (skip the one we already
             // updated explicitly above — it's already correct).
             const star = el.querySelector('.card-fav-inline');
@@ -1333,10 +1333,15 @@ window.toggleCardFavorite = function(prefId, btnEl) {
                 star.setAttribute('aria-label', isFav ? 'Remove from favorites' : 'Add to favorites');
             }
         }
-        // Timeline items (tl-item on home page) show the favorited state via
-        // the tl-fav class — defined for the gold left-border accent.
+        // Timeline items (tl-item on home + /events) show the favorited state as
+        // a ★ before the title (2026-11-12 — replaces the gold .tl-fav tint).
         if (el.classList.contains('tl-item')) {
-            el.classList.toggle('tl-fav', isFav);
+            const ttl = el.querySelector('.tl-title');
+            if (ttl) {
+                const s = ttl.querySelector('.tl-fav-star');
+                if (isFav && !s) ttl.insertAdjacentHTML('afterbegin', '<span class="tl-fav-star" title="Favorite">★</span>');
+                else if (!isFav && s) s.remove();
+            }
         }
     });
 };
@@ -4365,8 +4370,8 @@ function renderEvents(){
     }
 
     // Favorites UX: toolbar ⭐ Favs button is shown when user has event favorites.
-    // Favorited cards get a gold border (.card-fav via buildEventCard) so they stand out
-    // in their natural day group. When fav-only mode is active, the list narrows to favorites.
+    // Favorited rows carry a ★ before the title (buildTimelineItem) in their natural
+    // day group. When fav-only mode is active, the list narrows to favorites.
     const hasAnyPrefs = feedPrefs && feedPrefs.length > 0;
     const hasEventPrefs = hasAnyPrefs && feedPrefs.some(p => eventFeedIds.has(p) || p.startsWith('club:'));
     const favCount = hasEventPrefs ? allMatching.filter(e => eventMatchesFeed(e)).length : 0;
@@ -4388,12 +4393,8 @@ function renderEvents(){
     }
     let dayItems = filtered;
 
-    // Setup hint (shown only when user has no prefs at all — not a filter chip, just guidance)
-    if (!hasAnyPrefs) {
-        html += '<div class="feed-setup-hint">⚙️ <a href="#" onclick="event.preventDefault();openFeedSettings();">Set up your favorites</a> to highlight your preferred events</div>';
-    } else if (hasAnyPrefs && !hasEventPrefs) {
-        html += '<div class="feed-setup-hint">No event favorites set — <a href="#" onclick="event.preventDefault();openFeedSettings();">add some</a> to highlight them here</div>';
-    }
+    // 2026-11-12: the "Set up your favorites" box is gone from /events (the home-page
+    // CTA box stays). Favorites are reached from ⚙️ and, next, from the event sheet.
 
     // If favorites-only mode is on, narrow the list to favorites
     if (evFavOnlyMode && hasEventPrefs) {
@@ -4411,9 +4412,9 @@ function renderEvents(){
     // Compact rows (2026-10-21): the Events page renders the homepage timeline
     // row (buildTimelineItem) with a venue line instead of the full .app-card,
     // so a week fits on one screen. Details live in the openEventDetails popup,
-    // which every row opens. Favorites: gold .tl-fav tint only — the inline
-    // star left with the card; starring is in ⚙️ Feed settings. buildEventCard
-    // stays — the Sports page still renders it.
+    // which every row opens. Favorites: a ★ before the title (.tl-fav-star) —
+    // the inline star button left with the card; starring is in ⚙️ Feed
+    // settings. buildEventCard stays — the Sports page still renders it.
     const groups = groupEventsByDay(dayItems);
     const rowNow = new Date();
     html += groups.map((g, i) => buildDayGroupHTML(g, e => buildTimelineItem(e, rowNow, { showLocation: true }), i === 0, null, 'ev-day-sheet')).join('');
@@ -5080,7 +5081,7 @@ function spGameRow(e, mode) {
         else right = home ? '<span class="sp-pill sp-pill-home">🏡 Home</span>' : '<span class="sp-pill">Away</span>';
     }
     const isFavRow = mode !== 'team' && typeof isEventFavorited === 'function' && isEventFavorited(e);   // mixed list only — a team view's rows are all that team (Patch F)
-    const favCls = isFavRow ? ' sp-row-fav' : '';
+    const favCls = '';   // 2026-11-12: .sp-row-fav tint retired — the ★ below is the only favorite mark
     const favStar = isFavRow ? '<span class="sp-row-star" title="Favorite team">★</span>' : '';   // Patch E: inline favorite marker
     return `<a href="#" class="sp-row${home ? ' sp-row-home' : ''}${favCls}" data-event-key="${key}" onclick="event.preventDefault();window.openEventDetails(${key})">`
         + `<span class="sp-row-left">${left}</span>`
@@ -5578,9 +5579,9 @@ function renderSports(){
     // mode where a fresh user wouldn't be configuring favorites.
     if (!isPast) {
         if (!hasAnyPrefs) {
-            html += '<div class="feed-setup-hint">⚙️ <a href="#" onclick="event.preventDefault();openFeedSettings();">Set up your favorites</a> to highlight your preferred games</div>';
+            html += '<div class="feed-setup-hint">⚙️ <a href="#" onclick="event.preventDefault();openFeedSettings();">Set up your favorites</a> to star your preferred games</div>';
         } else if (hasAnyPrefs && !hasSportPrefs) {
-            html += '<div class="feed-setup-hint">No sport favorites set — <a href="#" onclick="event.preventDefault();openFeedSettings();">add some</a> to highlight them here</div>';
+            html += '<div class="feed-setup-hint">No sport favorites set — <a href="#" onclick="event.preventDefault();openFeedSettings();">add some</a> to star them here</div>';
         }
     }
 
@@ -6123,12 +6124,11 @@ function buildEventCard(e,isSportsPage){
     // Clean title
     const displayTitle = cleanSportTitle((e.title || '').replace(/^Millersville University\s+/i, '').replace(/ - (Girls|Boys)\s+(vs |@ )/i, ' $2'), e.tags || []);
 
-    // Visual highlight for favorited cards. Replaces the old "pinned at top" behavior —
-    // favorites now sit in their chronological day group with a gold accent so users can
-    // spot them at a glance while scrolling. Uses isEventFavorited (not eventMatchesFeed)
+    // Favorited cards: the inline ★ button is the mark (2026-11-12 — the gold
+    // .card-fav border/tint was retired). Uses isEventFavorited (not eventMatchesFeed)
     // because the latter returns true for all events when user has no prefs set.
     const isFav = (typeof isEventFavorited === 'function') && isEventFavorited(e);
-    const favClass = isFav ? ' card-fav' : '';
+    const favClass = '';
     // One-tap favorite button — inline with title. Toggles the best-matching pref ID for
     // this event so the user doesn't have to open the settings modal for a simple pick.
     // For club events the ID is `club:<orgName>`; for MU sports it's the sport-specific ID;
@@ -6697,16 +6697,18 @@ function buildTimelineItem(e, now, opts = {}) {
     // Falls back to title+date composite for events without sourceLink.
     const eventKey = getEventKey(e);
     const typeClass = isSport ? ' tl-sport' : ' tl-event';
-    // Add fav class so favorited events get the gold accent on the timeline
-    // immediately at render time. Surgical updates in toggleCardFavorite
-    // toggle this class without rebuilding the timeline.
-    const tlFavClass = (typeof isEventFavorited === 'function' && isEventFavorited(e)) ? ' tl-fav' : '';
+    // Favorited events get a ★ before the title at render time (2026-11-12 —
+    // replaces the gold .tl-fav tint). The surgical updater in toggleCardFavorite
+    // inserts/removes the same span without rebuilding the timeline. Empty when
+    // not favorited, so the no-favorites output stays byte-identical.
+    const tlFavClass = '';
+    const tlFavStar = (typeof isEventFavorited === 'function' && isEventFavorited(e)) ? '<span class="tl-fav-star" title="Favorite">★</span>' : '';
 
     // The row body; hoisted so the Events-page variant can stack a venue line
     // under it. Indentation kept so the no-opts output stays byte-identical.
     const content = `<div class="tl-content">
             <span class="tl-src${isSport?'':' tl-src-event'}">${src}</span>
-            <span class="tl-title">${title}</span>
+            <span class="tl-title">${tlFavStar}${title}</span>
             <span class="tl-badges">${badges}${freeBadge}${streamBtn}${ticketBtn}</span>
         </div>`;
 

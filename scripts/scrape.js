@@ -6384,7 +6384,14 @@ async function runScraper() {
     // `open house` title keyword) + film festival (a screening/panel was matching
     // `festival`) — the badge means events FOR kids, not events families may attend.
     const notFamilyMUKeywords = /\bjob\b|\binternship\b|\bcareer fair\b|\bemployment\b|\brecruitment\b|\bhiring\b|\bresume\b|\bworkshop\b.*\bprofessional\b|\bgraduate\b|\bthesis\b|\badmissions?\b|\bfilm festival\b/i;
-    const familyPMKeywords = /\bconcert\b|\bensemble\b|\bshowcase\b|\bspring show\b|\bmusical\b|\bplay\b|\btalent show\b|\bassembly\b|\bbook fair\b|\bfood fair\b|\bpicture\b/i;
+    // 2026-11-12: `performance` + `recital` — "Letort Elementary Chorus Winter
+    // Performance" was unbadged. A bare recurring "… Elementary Chorus" row with
+    // no time is a rehearsal day, not a concert, and correctly stays unbadged.
+    const familyPMKeywords = /\bconcert\b|\bensemble\b|\bshowcase\b|\bspring show\b|\bmusical\b|\bplay\b|\btalent show\b|\bassembly\b|\bbook fair\b|\bfood fair\b|\bpicture\b|\bperformance\b|\brecital\b/i;
+    // 2026-11-12: PTO *events* are for families even though they carry Board/PTO —
+    // movie/craft/family/game night, bingo, popsicles on the playground, trunk-or-
+    // treat, carnival, a dance. PTO and School Board *meetings* still never badge.
+    const familyPTOEvents = /\b(movie|craft|family|fun|game)\s+night\b|\bbingo\b|\bpopsicles\b|\btrunk.or.treat\b|\bcarnival\b|\bdance\b/i;
     // MU event types that are almost always family-friendly
     // 2026-10-27: `book fair` — the Scholastic Book Fair (Stayer Hall, Public
     // Event) is a kids' book fair; the keyword only lived in the PM list.
@@ -6451,7 +6458,10 @@ async function runScraper() {
         }
         // PM events — selective
         else if (src === 'PM') {
-            if (tags.includes('Board/PTO') || tags.includes('Meetings') || tags.includes('School Events') || tags.includes('Field Trips')) {
+            if (tags.includes('Board/PTO') && !/\bmeeting\b/i.test(titleLower) && familyPTOEvents.test(titleLower)) {
+                isFamilyFriendly = true;   // 2026-11-12: PTO Craft Night, PTO Movie Night, Popsicles with the PTO
+            }
+            else if (tags.includes('Board/PTO') || tags.includes('Meetings') || tags.includes('School Events') || tags.includes('Field Trips')) {
                 isFamilyFriendly = false;
             }
             else if (notFamilyKeywords.test(titleLower)) {

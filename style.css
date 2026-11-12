@@ -199,16 +199,9 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
     user-select: none;
 }
 
-/* Favorited event/game card — gold accent. Favorites are no longer pinned at the top of
-   Events/Sports pages; they live in their chronological day group with this visual badge
-   so users can spot them at a glance while scrolling. A soft gold-tinted background makes
-   the favorite easier to pick out in a long list — the border alone was too subtle against
-   the off-white surface. */
-.app-card.card-fav {
-    border: 2px solid var(--gold);
-    background: linear-gradient(0deg, rgba(216, 163, 46, 0.06), rgba(216, 163, 46, 0.06)), var(--surface);
-    box-shadow: 0 2px 12px rgba(216, 163, 46, 0.18);
-}
+/* Favorited event/game card — 2026-11-12: the gold border/tint is gone (it read as a
+   win on Sports and made an unreported game look decided). The inline ★ beside the
+   title (.card-fav-inline.active) is the only favorite mark on cards now. */
 
 /* Card-level favorite toggle — NEW inline layout. Sits left of the title on the
    same baseline so the star is visually attached to the event name rather than
@@ -912,11 +905,8 @@ header { background: var(--surface); position: sticky; top: 0; z-index: 100; bor
 .tl-item:last-child { border-bottom: none; }
 .tl-sport { border-left: 3px solid var(--navy); }
 .tl-event { border-left: 3px solid #b45309; }
-/* Favorited timeline items get a subtle gold tint background so they're
-   visible at a scroll. Border-left stays the source-color (navy/amber) so
-   provenance isn't lost. */
-.tl-fav { background: rgba(216, 163, 46, 0.08); }
-.tl-fav:hover { background: var(--gold-soft); }
+/* Favorited timeline items — 2026-11-12: no tint any more; a ★ before the title
+   (.tl-fav-star, styled in index.html beside .sp-row-star) is the only mark. */
 .tl-time { font-size: 0.78rem; font-weight: 700; color: var(--gold-text); min-width: 60px; flex-shrink: 0; padding-top: 1px; }
 /* 3-column flex row: [MU pill] [title (grows/wraps)] [badges (right-anchored)].
    Critical: flex-wrap: nowrap prevents badges from dropping to a new line

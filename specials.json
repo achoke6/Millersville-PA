@@ -137,7 +137,7 @@
       "Spaghetti Squash – $2.00 each",
       "Acorn Squash – $1.50 each"
     ],
-    "weeklyFetchedAt": "2026-11-12T13:27:33.472Z"
+    "weeklyFetchedAt": "2026-11-12T14:28:40.047Z"
   },
   "jesus-dogs": {
     "name": "Jesus Dogs",
@@ -181,9 +181,128 @@
   },
   "john-herr-s-village-market": {
     "name": "John Herr's Village Market",
-    "note": "Weekly deals · Thu–Wed",
-    "weekly": [],
-    "weeklyDateRange": "",
-    "rawDeals": []
+    "note": "Weekly deals: Thursday, November 12 through Wednesday, November 18",
+    "weekly": [
+      "Boneless & Skinless Chicken Breasts (Fresh Grade A, All Natural — sold in 10-lb bag only, $19.90/bag) – $1.99/lb ($1.00/lb)",
+      "Whole Boneless Pork Loin — cut into chops or roast at no extra cost – $1.99/lb",
+      "Store Brand Frozen Self-Basting Whole Turkey (up to 20 lbs) or Grade A Whole Bone-In Turkey Breast — FREE with your Thanksgiving Reward (earned with $500 spend Oct 8 - Nov 19) – FREE with reward",
+      "Boneless New York Strip Steaks (Value Pack, Select Beef) – $11.99/lb ($1.00/lb)",
+      "Gibble's Homestyle Potato Chips (8-oz, Selected) – Buy 1 Get 1 FREE"
+    ],
+    "weeklyDateRange": "Thursday, November 12 through Wednesday, November 18",
+    "rawDeals": [
+      {
+        "item": "Boneless & Skinless Chicken Breasts (Fresh Grade A, All Natural — sold in 10-lb bag only, $19.90/bag)",
+        "salePrice": "$1.99/lb",
+        "regularPrice": "$2.99/lb (less amount)",
+        "savings": "$1.00/lb",
+        "dateRange": "Thursday, November 12 through Wednesday, November 18"
+      },
+      {
+        "item": "Whole Boneless Pork Loin — cut into chops or roast at no extra cost",
+        "salePrice": "$1.99/lb",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, November 12 through Wednesday, November 18"
+      },
+      {
+        "item": "Store Brand Frozen Self-Basting Whole Turkey (up to 20 lbs) or Grade A Whole Bone-In Turkey Breast — FREE with your Thanksgiving Reward (earned with $500 spend Oct 8 - Nov 19)",
+        "salePrice": "FREE with reward",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, November 12 through Wednesday, November 18"
+      },
+      {
+        "item": "Boneless New York Strip Steaks (Value Pack, Select Beef)",
+        "salePrice": "$11.99/lb",
+        "regularPrice": "$12.99/lb (less amount)",
+        "savings": "$1.00/lb",
+        "dateRange": "Thursday, November 12 through Wednesday, November 18"
+      },
+      {
+        "item": "Gibble's Homestyle Potato Chips (8-oz, Selected)",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, November 12 through Wednesday, November 18"
+      },
+      {
+        "item": "Fresh Ground Sirloin (Value Pack, Our Own Store Made, Certified Angus Beef)",
+        "salePrice": "$6.99/lb",
+        "regularPrice": "$7.99/lb (less amount)",
+        "savings": "$1.00/lb",
+        "dateRange": "Thursday, November 12 through Wednesday, November 18"
+      },
+      {
+        "item": "Martin's Popcorn (7 to 10.5-oz, Selected) — Weekly Door Buster (limit 4 per Rewards card)",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, November 12 through Wednesday, November 18"
+      },
+      {
+        "item": "John F. Martin Original Sliced Bacon (16-oz) — Weekly Door Buster (limit 4 per Rewards card)",
+        "salePrice": "$3.69",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, November 12 through Wednesday, November 18"
+      },
+      {
+        "item": "John F. Martin Deli Tavern Ham — Weekly Door Buster (limit 6 lbs per Rewards card)",
+        "salePrice": "$4.49/lb",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, November 12 through Wednesday, November 18"
+      },
+      {
+        "item": "Food Club Frozen Vegetables (10 to 12-oz, Selected) — Weekly Door Buster (limit 10 per Rewards card)",
+        "salePrice": "5 for $5",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, November 12 through Wednesday, November 18"
+      },
+      {
+        "item": "Canada Dry, 7UP, A&W Root Beer or Sunkist Orange (2-Liter, Selected)",
+        "salePrice": "Buy 1 Get 1 FREE",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, November 12 through Wednesday, November 18"
+      },
+      {
+        "item": "Betty Crocker Super Moist Cake Mix (13.25 to 15.25-oz, Selected) — Throwback Thursday Digital Coupon (Thu 11/12 - Sun 11/15 only, limit 1 offer)",
+        "salePrice": "$0.98",
+        "regularPrice": "$1.48 (sale price before coupon)",
+        "savings": "$0.50",
+        "dateRange": "Thursday, November 12 through Wednesday, November 18"
+      },
+      {
+        "item": "Kellogg's Large Size Cereals (12 to 17.5-oz, Selected) — Throwback Thursday Digital Coupon (Thu 11/12 - Sun 11/15 only, limit 1 offer)",
+        "salePrice": "$2.48",
+        "regularPrice": "$3.98 (sale price before coupon)",
+        "savings": "$1.50",
+        "dateRange": "Thursday, November 12 through Wednesday, November 18"
+      },
+      {
+        "item": "Campbell's Cream of Mushroom or Cream of Chicken Soup (10.5-oz)",
+        "salePrice": "4 for $5",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, November 12 through Wednesday, November 18"
+      },
+      {
+        "item": "Southern Seas 16/20 Ct. EZ Peel Raw Shrimp (1-lb bag)",
+        "salePrice": "$8.99",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, November 12 through Wednesday, November 18"
+      },
+      {
+        "item": "Green Cabbage (Fresh)",
+        "salePrice": "$0.69/lb",
+        "regularPrice": "",
+        "savings": "",
+        "dateRange": "Thursday, November 12 through Wednesday, November 18"
+      }
+    ]
   }
 }

@@ -1,19 +1,19 @@
 {
-  "generatedAt": "2026-11-12T13:27:41.397Z",
-  "totalEvents": 2073,
+  "generatedAt": "2026-11-12T14:28:49.979Z",
+  "totalEvents": 2025,
   "withDescription": 870,
   "withImage": 245,
-  "familyFriendly": 56,
+  "familyFriendly": 55,
   "eventsToday": 27,
   "sources": {
     "muAthletics": 389,
-    "muCalendar": 192,
+    "muCalendar": 193,
     "artsmu": 50,
     "eckert": 3,
     "campsAlumni": 11,
     "muGetInvolved": 571,
     "pennManor": 659,
-    "borough": 49,
+    "borough": 0,
     "vfw": 6,
     "phantomPower": 14,
     "community": 14,
@@ -51,10 +51,7 @@
       "earliest": "2026-08-17T12:00:00.000Z",
       "latest": "2027-10-25T20:00:00.000Z"
     },
-    "borough": {
-      "earliest": "2026-08-17T22:00:00.000Z",
-      "latest": "2027-10-31T22:00:00.000Z"
-    },
+    "borough": null,
     "vfw": {
       "earliest": "2026-11-11T20:30:00.000Z",
       "latest": "2026-11-29T18:00:00.000Z"
@@ -109,10 +106,7 @@
       "newest": "2027-10-25",
       "daysSinceMoved": 18
     },
-    "borough": {
-      "newest": "2027-10-31",
-      "daysSinceMoved": 12
-    },
+    "borough": null,
     "vfw": {
       "newest": "2026-11-29",
       "daysSinceMoved": 3
@@ -160,13 +154,13 @@
       "Campus Life": 1
     },
     "stalePast": 31,
-    "lastSyncAt": "2026-11-12T13:24:39.984Z"
+    "lastSyncAt": "2026-11-12T14:26:10.787Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-12T13:27:33.969Z"
+    "checkedAt": "2026-11-12T14:28:40.533Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -174,8 +168,10 @@
     "standalone": 2
   },
   "sourceHealth": {
-    "ok": true,
-    "failing": [],
+    "ok": false,
+    "failing": [
+      "borough.horizonDays"
+    ],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -200,8 +196,8 @@
       },
       {
         "key": "borough.horizonDays",
-        "ok": true,
-        "value": 353,
+        "ok": false,
+        "value": null,
         "min": 21,
         "skipped": false
       },
@@ -250,6 +246,34 @@
   },
   "recentlyAdded": [
     {
+      "key": "Fall into Wellness Fair|2026-11-12T10:00:00",
+      "firstSeenAt": "2026-11-12T14:28:49.976Z",
+      "title": "Fall into Wellness Fair",
+      "source": "MU",
+      "date": "2026-11-12T10:00:00"
+    },
+    {
+      "key": "Girls Varsity Field Hockey vs Boyertown|2026-11-14T19:00:00.000Z",
+      "firstSeenAt": "2026-11-12T14:28:49.976Z",
+      "title": "Girls Varsity Field Hockey vs Boyertown",
+      "source": "PM",
+      "date": "2026-11-14T19:00:00.000Z"
+    },
+    {
+      "key": "Steelers vs Eagles Chili & Soup Cookoff|2026-11-22T18:00:00.000Z",
+      "firstSeenAt": "2026-11-12T14:28:49.976Z",
+      "title": "Steelers vs Eagles Chili & Soup Cookoff",
+      "source": "Other",
+      "date": "2026-11-22T18:00:00.000Z"
+    },
+    {
+      "key": "Wellness Fair|2026-12-11T16:30:00.000Z",
+      "firstSeenAt": "2026-11-12T14:28:49.976Z",
+      "title": "Wellness Fair",
+      "source": "MU",
+      "date": "2026-12-11T16:30:00.000Z"
+    },
+    {
       "key": "Karaoke Night|2026-12-03T03:00:00.000Z",
       "firstSeenAt": "2026-11-12T03:28:12.323Z",
       "title": "Karaoke Night",
@@ -290,46 +314,16 @@
       "title": "Tell School of Music Recital Hour",
       "source": "MU",
       "date": "2027-03-03T20:00:00.000Z"
-    },
-    {
-      "key": "Wednesday Night Dinner|2027-03-03T23:00:00.000Z",
-      "firstSeenAt": "2026-11-12T00:46:05.359Z",
-      "title": "Wednesday Night Dinner",
-      "source": "MU",
-      "date": "2027-03-03T23:00:00.000Z"
-    },
-    {
-      "key": "Real Talk, Real Skills|2027-03-04T17:00:00.000Z",
-      "firstSeenAt": "2026-11-12T00:46:05.359Z",
-      "title": "Real Talk, Real Skills",
-      "source": "MU",
-      "date": "2027-03-04T17:00:00.000Z"
-    },
-    {
-      "key": "Wednesday Night Dinner|2027-03-10T23:00:00.000Z",
-      "firstSeenAt": "2026-11-12T00:46:05.359Z",
-      "title": "Wednesday Night Dinner",
-      "source": "MU",
-      "date": "2027-03-10T23:00:00.000Z"
-    },
-    {
-      "key": "Tell School of Music Recital Hour|2027-03-17T19:00:00.000Z",
-      "firstSeenAt": "2026-11-12T00:46:05.359Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2027-03-17T19:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 4,
   "skippedByRule": {
-    "total": 435,
+    "total": 406,
     "reasons": {
       "pm-sub-varsity": 295,
       "mu-calendar-athletics": 72,
       "camps-skipped": 28,
       "intramural-dup": 1,
-      "borough-collection": 13,
-      "borough-reservation": 16,
       "submission-not-approved": 1,
       "submission-out-of-range": 9
     }

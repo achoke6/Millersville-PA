@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-12T18:19:06.286Z",
+  "generatedAt": "2026-11-12T20:09:12.610Z",
   "totalEvents": 2075,
   "withDescription": 872,
   "withImage": 246,
@@ -160,13 +160,13 @@
       "Campus Life": 1
     },
     "stalePast": 31,
-    "lastSyncAt": "2026-11-12T18:16:26.600Z"
+    "lastSyncAt": "2026-11-12T20:04:34.286Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-12T18:18:59.109Z"
+    "checkedAt": "2026-11-12T20:09:02.074Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -250,6 +250,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Crossfaded: Know the Mix|2026-11-18T16:30:00.000Z",
+      "firstSeenAt": "2026-11-12T20:09:12.606Z",
+      "title": "Crossfaded: Know the Mix",
+      "source": "MU",
+      "date": "2026-11-18T16:30:00.000Z"
+    },
+    {
       "key": "LAST DAY to... Courses|2027-01-26T00:00:00",
       "firstSeenAt": "2026-11-12T18:06:32.045Z",
       "title": "LAST DAY to... Courses",
@@ -311,16 +318,9 @@
       "title": "Borough Council Meeting",
       "source": "Borough",
       "date": "2026-09-08T23:00:00.000Z"
-    },
-    {
-      "key": "Saturday in the Park|2026-09-12T12:00:00.000Z",
-      "firstSeenAt": "2026-11-12T16:16:57.590Z",
-      "title": "Saturday in the Park",
-      "source": "Borough",
-      "date": "2026-09-12T12:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 437,
     "reasons": {

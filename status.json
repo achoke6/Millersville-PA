@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-12T05:16:10.872Z",
+  "generatedAt": "2026-11-12T07:05:31.154Z",
   "totalEvents": 2073,
   "withDescription": 870,
   "withImage": 245,
@@ -160,13 +160,13 @@
       "Campus Life": 1
     },
     "stalePast": 31,
-    "lastSyncAt": "2026-11-12T05:13:41.547Z"
+    "lastSyncAt": "2026-11-12T07:01:37.078Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-12T05:16:02.294Z"
+    "checkedAt": "2026-11-12T07:05:21.808Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -174,10 +174,8 @@
     "standalone": 2
   },
   "sourceHealth": {
-    "ok": false,
-    "failing": [
-      "manor.count"
-    ],
+    "ok": true,
+    "failing": [],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -196,7 +194,7 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 205,
+        "value": 204,
         "min": 30,
         "skipped": false
       },
@@ -230,10 +228,9 @@
       },
       {
         "key": "manor.count",
-        "ok": false,
+        "ok": true,
         "value": 37,
-        "min": 10,
-        "carriedForward": 37
+        "min": 10
       },
       {
         "key": "muHudl.pairRatio",

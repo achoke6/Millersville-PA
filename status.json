@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-13T13:57:09.365Z",
+  "generatedAt": "2026-11-13T15:25:09.590Z",
   "totalEvents": 2075,
   "withDescription": 873,
   "withImage": 246,
   "familyFriendly": 60,
   "interests": {
     "civic": 98,
-    "arts": 101,
+    "arts": 100,
     "greek": 24,
     "causes": 36,
     "learn": 65,
@@ -72,7 +72,7 @@
       "latest": "2026-11-29T18:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-11-14T01:00:00.000Z",
+      "earliest": "2026-11-13T00:00:00.000Z",
       "latest": "2026-12-19T01:00:00.000Z"
     },
     "community": {
@@ -164,21 +164,21 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 3,
+    "pendingFuture": 5,
     "pendingPast": 13,
     "pendingBySource": {
       "Youth Sports": 1,
       "PM Community": 1,
-      "Campus Life": 1
+      "Campus Life": 3
     },
     "stalePast": 31,
-    "lastSyncAt": "2026-11-13T13:53:48.567Z"
+    "lastSyncAt": "2026-11-13T15:22:00.581Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-13T13:56:59.599Z"
+    "checkedAt": "2026-11-13T15:24:49.836Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -262,11 +262,11 @@
   },
   "recentlyAdded": [
     {
-      "key": "COMEDIAN RAJ BELANI|2026-12-04T00:00:00.000Z",
-      "firstSeenAt": "2026-11-13T08:32:00.471Z",
-      "title": "COMEDIAN RAJ BELANI",
+      "key": "FLAW w/ New Damage|2026-11-13T00:00:00.000Z",
+      "firstSeenAt": "2026-11-13T15:25:09.585Z",
+      "title": "FLAW w/ New Damage",
       "source": "Other",
-      "date": "2026-12-04T00:00:00.000Z"
+      "date": "2026-11-13T00:00:00.000Z"
     },
     {
       "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
@@ -332,7 +332,7 @@
       "date": "2026-11-03T19:00:00"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 437,
     "reasons": {

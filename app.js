@@ -2053,9 +2053,7 @@ window.openFeedSettings = function() {
              the matching box below and Save persists, exactly like unticking it by hand. -->
         <div id="feed-following" style="margin-bottom:16px;padding:12px 14px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg);">
             <div style="font-weight:700;font-size:0.9rem;margin-bottom:6px;">You follow</div>
-            ${current.length
-                ? `<div style="display:flex;flex-wrap:wrap;gap:6px;">${current.map(id => `<span class="feed-following-chip" data-pref="${id.replace(/"/g,'&quot;')}" style="display:inline-flex;align-items:center;gap:4px;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:3px 6px 3px 9px;font-size:0.78rem;font-weight:600;">★ ${resolvePrefLabel(id).replace(/^\S+\s+/, m => /^[A-Za-z0-9]/.test(m) ? m : '')}<button type="button" onclick="window.feedUnstage(this)" aria-label="Unfollow" style="border:0;background:transparent;color:var(--text-muted);font:inherit;font-size:0.7rem;padding:0 2px;cursor:pointer;">✕</button></span>`).join('')}</div>`
-                : `<div style="font-size:0.78rem;color:var(--text-muted);">Nothing yet — tap ☆ Follow on any event, or browse below.</div>`}
+            <div id="feed-following-list"></div>
         </div>
         <div id="feed-options">${sectionsHtml}</div>
         <!-- Calendar subscription card. Lets the user grab a personalized iCal
@@ -2089,6 +2087,13 @@ window.openFeedSettings = function() {
         </div>`;
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
+    // Live "You follow" strip (2026-11-13): built from the modal's own checkboxes and
+    // rebuilt on every change inside the pickers, so it always shows what Save would write.
+    if (typeof window.feedRefreshFollowing === 'function') {
+        window.feedRefreshFollowing();
+        const opts = document.getElementById('feed-options');
+        if (opts) opts.addEventListener('change', () => window.feedRefreshFollowing());
+    }
     // Render the notifications button with the right initial label/state.
     // Done after appendChild so the element is in the DOM and queryable.
     if (typeof window.refreshNotifButton === 'function') window.refreshNotifButton();
@@ -2622,6 +2627,23 @@ window.updateFeedSubgroup = function(sgKey) {
 // You-follow ✕ (2026-11-12): staged removal — uncheck the box that carries this pref id
 // (a sub, a composite that links it, or a club), refresh its group master, drop the chip.
 // Save then persists the modal as it stands; Cancel/✕ leaves everything untouched.
+// Rebuild the "You follow" strip from the modal's checkboxes (staged state, not feedPrefs):
+// checked .feed-sub values, each checked composite's data-linked-ids, checked .feed-club
+// values — the same reading saveFeedFromModal does — deduped in DOM order (2026-11-13).
+window.feedRefreshFollowing = function() {
+    const list = document.getElementById('feed-following-list');
+    if (!list) return;
+    const ids = [];
+    const push = id => { if (id && ids.indexOf(id) === -1) ids.push(id); };
+    document.querySelectorAll('#feed-options .feed-sub:checked, #feed-options .feed-club:checked').forEach(cb => {
+        if (cb.dataset && cb.dataset.linkedIds) cb.dataset.linkedIds.split(',').map(s => s.trim()).filter(Boolean).forEach(push);
+        else if (cb.value) push(cb.value);
+    });
+    const label = id => resolvePrefLabel(id).replace(/^\S+\s+/, m => /^[A-Za-z0-9]/.test(m) ? m : '');
+    list.innerHTML = ids.length
+        ? `<div style="display:flex;flex-wrap:wrap;gap:6px;">${ids.map(id => `<span class="feed-following-chip" data-pref="${id.replace(/"/g, '&quot;')}" style="display:inline-flex;align-items:center;gap:4px;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:3px 6px 3px 9px;font-size:0.78rem;font-weight:600;">★ ${label(id)}<button type="button" onclick="window.feedUnstage(this)" aria-label="Unfollow" style="border:0;background:transparent;color:var(--text-muted);font:inherit;font-size:0.7rem;padding:0 2px;cursor:pointer;">✕</button></span>`).join('')}</div>`
+        : `<div style="font-size:0.78rem;color:var(--text-muted);">Nothing yet — tap ☆ Follow on any event, or tick something below. 💾 Save keeps it.</div>`;
+};
 window.feedUnstage = function(btn) {
     const chip = btn && btn.closest('.feed-following-chip');
     const id = chip && chip.getAttribute('data-pref');
@@ -2642,12 +2664,7 @@ window.feedUnstage = function(btn) {
             }
         });
     }
-    chip.remove();
-    const wrap = document.getElementById('feed-following');
-    if (wrap && !wrap.querySelector('.feed-following-chip')) {
-        const list = wrap.querySelector('div[style*="flex-wrap"]');
-        if (list) list.outerHTML = '<div style="font-size:0.78rem;color:var(--text-muted);">Nothing left — tap 💾 Save to confirm, or ✕ to keep them.</div>';
-    }
+    window.feedRefreshFollowing();   // the strip re-reads the checkboxes (2026-11-13)
 };
 window.saveFeedFromModal = function() {
     // Persist the Uncommon "Show events" selections first (their own key, not

@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-12T21:26:08.427Z",
+  "generatedAt": "2026-11-13T15:25:09.590Z",
   "totalEvents": 2075,
-  "withDescription": 872,
+  "withDescription": 873,
   "withImage": 246,
   "familyFriendly": 60,
   "interests": {
@@ -9,21 +9,21 @@
     "arts": 100,
     "greek": 24,
     "causes": 36,
-    "learn": 63,
-    "food": 123,
-    "music": 99,
+    "learn": 65,
+    "food": 126,
+    "music": 103,
     "crafts": 12,
     "reshall": 3,
     "active": 5
   },
-  "eventsToday": 26,
+  "eventsToday": 17,
   "sources": {
     "muAthletics": 389,
-    "muCalendar": 193,
+    "muCalendar": 192,
     "artsmu": 50,
     "eckert": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 573,
+    "muGetInvolved": 575,
     "pennManor": 659,
     "borough": 49,
     "vfw": 6,
@@ -40,7 +40,7 @@
       "latest": "2027-05-27T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-08-14T07:00:00.000Z",
+      "earliest": "2026-08-21T08:30:00.000Z",
       "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
@@ -95,59 +95,59 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 72
+      "daysSinceMoved": 73
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 83
+      "daysSinceMoved": 84
     },
     "artsmu": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 85
+      "daysSinceMoved": 86
     },
     "eckert": {
       "newest": "2026-11-12",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "campsAlumni": {
       "newest": "2027-08-20",
-      "daysSinceMoved": 24
+      "daysSinceMoved": 25
     },
     "muGetInvolved": {
       "newest": "2027-10-27",
-      "daysSinceMoved": 9
+      "daysSinceMoved": 10
     },
     "pennManor": {
       "newest": "2027-10-25",
-      "daysSinceMoved": 18
+      "daysSinceMoved": 19
     },
     "borough": {
       "newest": "2027-10-31",
-      "daysSinceMoved": 12
+      "daysSinceMoved": 13
     },
     "vfw": {
       "newest": "2026-11-29",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 4
     },
     "phantomPower": {
       "newest": "2026-12-19",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 15
     },
     "community": {
       "newest": "2027-05-16",
-      "daysSinceMoved": 2
+      "daysSinceMoved": 3
     },
     "manor": {
       "newest": "2027-11-03",
-      "daysSinceMoved": 9
+      "daysSinceMoved": 10
     },
     "raneyCellars": {
       "newest": "2026-11-19",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     },
     "theBackyard": {
       "newest": "2027-04-28",
-      "daysSinceMoved": 35
+      "daysSinceMoved": 36
     }
   },
   "sports": {
@@ -164,21 +164,21 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 3,
+    "pendingFuture": 5,
     "pendingPast": 13,
     "pendingBySource": {
       "Youth Sports": 1,
       "PM Community": 1,
-      "Campus Life": 1
+      "Campus Life": 3
     },
     "stalePast": 31,
-    "lastSyncAt": "2026-11-12T21:23:21.546Z"
+    "lastSyncAt": "2026-11-13T15:22:00.581Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-12T21:26:04.701Z"
+    "checkedAt": "2026-11-13T15:24:49.836Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -192,28 +192,28 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 347,
+        "value": 346,
         "min": 45,
         "skipped": false
       },
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 195,
+        "value": 194,
         "min": 60,
         "skipped": false
       },
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 204,
+        "value": 203,
         "min": 30,
         "skipped": false
       },
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 353,
+        "value": 352,
         "min": 21,
         "skipped": false
       },
@@ -262,77 +262,77 @@
   },
   "recentlyAdded": [
     {
-      "key": "Crossfaded: Know the Mix|2026-11-18T16:30:00.000Z",
-      "firstSeenAt": "2026-11-12T20:09:12.606Z",
-      "title": "Crossfaded: Know the Mix",
+      "key": "FLAW w/ New Damage|2026-11-13T00:00:00.000Z",
+      "firstSeenAt": "2026-11-13T15:25:09.585Z",
+      "title": "FLAW w/ New Damage",
+      "source": "Other",
+      "date": "2026-11-13T00:00:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
+      "firstSeenAt": "2026-11-13T08:32:00.471Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2027-09-06T23:00:00.000Z"
+    },
+    {
+      "key": "Traffic Commission Meeting|2027-09-29T12:30:00.000Z",
+      "firstSeenAt": "2026-11-13T08:32:00.471Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2027-09-29T12:30:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2027-10-04T23:00:00.000Z",
+      "firstSeenAt": "2026-11-13T08:32:00.471Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2027-10-04T23:00:00.000Z"
+    },
+    {
+      "key": "Zoning Hearing Board|2027-10-06T23:00:00.000Z",
+      "firstSeenAt": "2026-11-13T08:32:00.471Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2027-10-06T23:00:00.000Z"
+    },
+    {
+      "key": "Traffic Commission Meeting|2027-10-27T12:30:00.000Z",
+      "firstSeenAt": "2026-11-13T08:32:00.471Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2027-10-27T12:30:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2027-11-01T23:00:00.000Z",
+      "firstSeenAt": "2026-11-13T08:32:00.471Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2027-11-01T23:00:00.000Z"
+    },
+    {
+      "key": "Zoning Hearing Board|2027-11-03T23:00:00.000Z",
+      "firstSeenAt": "2026-11-13T08:32:00.471Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2027-11-03T23:00:00.000Z"
+    },
+    {
+      "key": "Creative Writers Guild General Meeting|2026-11-03T18:00:00",
+      "firstSeenAt": "2026-11-13T01:31:08.782Z",
+      "title": "Creative Writers Guild General Meeting",
       "source": "MU",
-      "date": "2026-11-18T16:30:00.000Z"
+      "date": "2026-11-03T18:00:00"
     },
     {
-      "key": "LAST DAY to... Courses|2027-01-26T00:00:00",
-      "firstSeenAt": "2026-11-12T18:06:32.045Z",
-      "title": "LAST DAY to... Courses",
+      "key": "Letters of Love|2026-11-03T19:00:00",
+      "firstSeenAt": "2026-11-13T01:31:08.782Z",
+      "title": "Letters of Love",
       "source": "MU",
-      "date": "2027-01-26T00:00:00"
-    },
-    {
-      "key": "Spring Commencement|2027-05-08T00:00:00",
-      "firstSeenAt": "2026-11-12T18:06:32.045Z",
-      "title": "Spring Commencement",
-      "source": "MU",
-      "date": "2027-05-08T00:00:00"
-    },
-    {
-      "key": "Civil Service Commission - Cancelled|2026-08-17T22:00:00.000Z",
-      "firstSeenAt": "2026-11-12T16:16:57.590Z",
-      "title": "Civil Service Commission - Cancelled",
-      "source": "Borough",
-      "date": "2026-08-17T22:00:00.000Z"
-    },
-    {
-      "key": "Borough Council Meeting|2026-08-25T23:00:00.000Z",
-      "firstSeenAt": "2026-11-12T16:16:57.590Z",
-      "title": "Borough Council Meeting",
-      "source": "Borough",
-      "date": "2026-08-25T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board - Regarding 11 Millersville University Properties (see description for more details)|2026-08-27T22:30:00.000Z",
-      "firstSeenAt": "2026-11-12T16:16:57.590Z",
-      "title": "Zoning Hearing Board - Regarding 11 Millersville University Properties (see description for more details)",
-      "source": "Borough",
-      "date": "2026-08-27T22:30:00.000Z"
-    },
-    {
-      "key": "UCC Board of Appeals Meeting|2026-08-31T21:00:00.000Z",
-      "firstSeenAt": "2026-11-12T16:16:57.590Z",
-      "title": "UCC Board of Appeals Meeting",
-      "source": "Borough",
-      "date": "2026-08-31T21:00:00.000Z"
-    },
-    {
-      "key": "Planning Commission - Cancelled|2026-09-02T22:30:00.000Z",
-      "firstSeenAt": "2026-11-12T16:16:57.590Z",
-      "title": "Planning Commission - Cancelled",
-      "source": "Borough",
-      "date": "2026-09-02T22:30:00.000Z"
-    },
-    {
-      "key": "Office Closed|2026-09-07T12:00:00.000Z",
-      "firstSeenAt": "2026-11-12T16:16:57.590Z",
-      "title": "Office Closed",
-      "source": "Borough",
-      "date": "2026-09-07T12:00:00.000Z"
-    },
-    {
-      "key": "Borough Council Meeting|2026-09-08T23:00:00.000Z",
-      "firstSeenAt": "2026-11-12T16:16:57.590Z",
-      "title": "Borough Council Meeting",
-      "source": "Borough",
-      "date": "2026-09-08T23:00:00.000Z"
+      "date": "2026-11-03T19:00:00"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 437,
     "reasons": {

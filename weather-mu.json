@@ -1,55 +1,39 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Thursday, November 12, 2026 at 01:16 PM (Biondo and Cressley, Student Meteorologists)",
+    "issued": "Friday, November 13, 2026 at 08:06 AM (Cokain and McCarthy, Student Meteorologists)",
     "periods": [
       {
-        "period": "This afternoon",
-        "text": "Cooler with a mix of clouds and sun. High: 58-62"
+        "period": "Today",
+        "text": "Mostly cloudy, brisk and colder. High: 42-46"
       },
       {
         "period": "Tonight",
-        "text": "Mainly cloudy. Low: 40-44"
-      },
-      {
-        "period": "Friday",
-        "text": "Mostly cloudy, breezy and cool. High: 44-48"
-      },
-      {
-        "period": "Friday Night",
-        "text": "Partly cloudy. Low: 34-38"
+        "text": "Partly cloudy. Low: 32-36"
       },
       {
         "period": "Saturday",
         "text": "Mostly cloudy, breezy and chilly. High: 46-50"
+      },
+      {
+        "period": "Saturday Night",
+        "text": "Partly cloudy. Low: 34-38"
+      },
+      {
+        "period": "Sunday",
+        "text": "Breezy and cool with a mix of clouds and sun. High: 48-52"
       }
     ]
   },
   "sevenDay": {
-    "issued": "Thursday, November 12, 2026 at 08:18 AM (Kint, Smith, Zocco)",
+    "issued": "Friday, November 13, 2026 at 08:22 AM (Cokain, McCarthy)",
     "days": [
-      {
-        "period": "Thursday",
-        "sky": "Mostly Cloudy",
-        "weather": "Morning Showers",
-        "pop": "80%",
-        "temp": "58",
-        "conf": "5"
-      },
-      {
-        "period": "Thursday night",
-        "sky": "Mostly Cloudy",
-        "weather": "Fair",
-        "pop": "20%",
-        "temp": "42",
-        "conf": "5"
-      },
       {
         "period": "Friday",
         "sky": "Mostly Cloudy",
-        "weather": "Cooler",
+        "weather": "Colder",
         "pop": "20%",
-        "temp": "46",
+        "temp": "44",
         "conf": "5"
       },
       {
@@ -57,7 +41,7 @@
         "sky": "Partly Cloudy",
         "weather": "Fair",
         "pop": "<10%",
-        "temp": "36",
+        "temp": "34",
         "conf": "5"
       },
       {
@@ -89,16 +73,16 @@
         "sky": "Partly Cloudy",
         "weather": "Fair",
         "pop": "<10%",
-        "temp": "36",
+        "temp": "34",
         "conf": "5"
       },
       {
         "period": "Monday",
-        "sky": "Clouds & Sun",
+        "sky": "Partly Sunny",
         "weather": "Cool",
         "pop": "<10%",
         "temp": "52",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Monday night",
@@ -106,14 +90,22 @@
         "weather": "Cold",
         "pop": "<10%",
         "temp": "28",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Tuesday",
         "sky": "Mostly Sunny",
         "weather": "Seasonable",
         "pop": "<10%",
-        "temp": "mid 50s",
+        "temp": "55",
+        "conf": "4"
+      },
+      {
+        "period": "Tuesday night",
+        "sky": "Mainly Clear",
+        "weather": "Cold",
+        "pop": "<10%",
+        "temp": "30",
         "conf": "4"
       },
       {
@@ -123,75 +115,83 @@
         "pop": "<10%",
         "temp": "upper 50s",
         "conf": "4"
+      },
+      {
+        "period": "Thursday",
+        "sky": "Sunny",
+        "weather": "Pleasant",
+        "pop": "<10%",
+        "temp": "low 60s",
+        "conf": "4"
       }
     ]
   },
   "observations": [
     {
-      "time": "16:00",
-      "temp": "56",
-      "dewpoint": "51",
-      "rh": "81",
-      "windDir": "W",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "15:00",
-      "temp": "57",
-      "dewpoint": "52",
-      "rh": "82",
-      "windDir": "NW",
-      "windSpeed": "6",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "14:00",
-      "temp": "58",
-      "dewpoint": "53",
-      "rh": "84",
+      "time": "10:00",
+      "temp": "41",
+      "dewpoint": "33",
+      "rh": "74",
       "windDir": "N",
-      "windSpeed": "10",
-      "precip": "0.06",
-      "visibility": "10.6",
+      "windSpeed": "11",
+      "precip": "0.00",
+      "visibility": "12 +",
       "condition": "None"
     },
     {
-      "time": "13:00",
-      "temp": "58",
-      "dewpoint": "54",
-      "rh": "88",
-      "windDir": "WSW",
-      "windSpeed": "3",
-      "precip": "0.02",
-      "visibility": "11.1",
+      "time": "09:00",
+      "temp": "40",
+      "dewpoint": "35",
+      "rh": "82",
+      "windDir": "NNW",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "12 +",
       "condition": "None"
     },
     {
-      "time": "12:00",
-      "temp": "54",
-      "dewpoint": "52",
-      "rh": "95",
-      "windDir": "WSW",
-      "windSpeed": "4",
-      "precip": "0.01",
-      "visibility": "4.4",
-      "condition": "Showers Rain"
+      "time": "08:00",
+      "temp": "40",
+      "dewpoint": "34",
+      "rh": "78",
+      "windDir": "N",
+      "windSpeed": "11",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
     },
     {
-      "time": "11:00",
-      "temp": "58",
-      "dewpoint": "54",
-      "rh": "85",
-      "windDir": "SSW",
-      "windSpeed": "6",
+      "time": "07:00",
+      "temp": "40",
+      "dewpoint": "35",
+      "rh": "84",
+      "windDir": "NNW",
+      "windSpeed": "8",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "Light Showers Rain"
+    },
+    {
+      "time": "06:00",
+      "temp": "40",
+      "dewpoint": "37",
+      "rh": "88",
+      "windDir": "NNW",
+      "windSpeed": "11",
+      "precip": "0.01",
+      "visibility": "12 +",
+      "condition": "Light Drizzle"
+    },
+    {
+      "time": "05:00",
+      "temp": "40",
+      "dewpoint": "37",
+      "rh": "90",
+      "windDir": "N",
+      "windSpeed": "9",
+      "precip": "0.01",
+      "visibility": "8.2",
+      "condition": "Light Rain"
     }
   ],
   "dailySummary": {
@@ -317,10 +317,21 @@
         "windSpeed": "13",
         "windTime": "11:52",
         "rain": "0.00"
+      },
+      {
+        "date": "11/12",
+        "max": "61",
+        "maxTime": "13:40",
+        "min": "44",
+        "minTime": "23:51",
+        "windDir": "338",
+        "windSpeed": "21",
+        "windTime": "21:17",
+        "rain": "0.31"
       }
     ],
-    "totalRain": "0.10",
-    "ytdRain": "32.53",
+    "totalRain": "0.41",
+    "ytdRain": "32.84",
     "yearMax": "102",
     "yearMaxDate": "July 03",
     "yearMin": "1",
@@ -337,6 +348,13 @@
     "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
   },
   "videos": [
+    {
+      "title": "Short Term Forecast 11/13/2026",
+      "videoId": "FE6k4WUSQEo",
+      "url": "https://www.youtube.com/watch?v=FE6k4WUSQEo",
+      "published": "2026-11-13T14:25:37+00:00",
+      "thumbnail": "https://i3.ytimg.com/vi/FE6k4WUSQEo/hqdefault.jpg"
+    },
     {
       "title": "Short Term Forecast 11/12/2026",
       "videoId": "MTjBs86XUz0",
@@ -357,15 +375,8 @@
       "url": "https://www.youtube.com/watch?v=G4Dqg8zEftI",
       "published": "2026-11-11T18:00:43+00:00",
       "thumbnail": "https://i4.ytimg.com/vi/G4Dqg8zEftI/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 11/10/2026",
-      "videoId": "xy9YYQpTWbs",
-      "url": "https://www.youtube.com/watch?v=xy9YYQpTWbs",
-      "published": "2026-11-10T16:31:16+00:00",
-      "thumbnail": "https://i1.ytimg.com/vi/xy9YYQpTWbs/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-12T21:23:23.557Z"
+  "updated": "2026-11-13T15:22:12.114Z"
 }

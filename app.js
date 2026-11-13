@@ -4606,92 +4606,11 @@ window.clearSportsFilters=function(){
     window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
-// ── Sports-page camps block (townie-only) ───────────────────────
-// Sports page signups block — "⚾ Sports Signups & Tickets" (townie-only).
-// Rewritten 2026-09-16 from a full-card grid (which read as a wall of MU camp
-// ads before locals ever reached the schedule) to a COMPACT LIST: the same
-// .home-signup-item rows as the homepage Upcoming Signups box, collapsed to
-// SPORTS_SIGNUPS_COLLAPSED_COUNT with a "▾ Show N more" toggle. Pool (all
-// townie-facing; the section self-hides for Marauder/unset viewers):
-//   (1) youth-league registrations — deadline-dated events stamped
-//       youthSports:true by scrape.js §6c (candidates sheet Source=Youth
-//       Sports; NEW to this block), plus hand-entered ticket packages
-//       (isTicketPackage). Same visibility/sort model as the home box
-//       (signupTiming / signupVisibleNow / signupSortKey).
-//   (2) athletic camps — the Athletic-Camp subset of program signups
-//       (isProgramSignup), dated by START. Deliberately UN-windowed (all
-//       upcoming; the home box caps at PROGRAM_LEAD_MS) — this is the fuller list.
-//   (3) open-ended youth registrations (allSignups rows flagged closesTBA) —
-//       youth-sports-registration.json holds only Youth Sports rows, so no stamp needed.
-// Rows interleave by their next relevant moment (opens → deadline for regs,
-// start for camps; open-now TBA rows sort last). Tech camps and Arts Smarts
-// stay on the home box only. Lives in its own container (#sp-camps-section,
-// created once and inserted before the sticky date/filter bar), does NOT
-// participate in the All/PM/MU + sport-type filters, the favorites filter, or
-// the "Load more games (N)" count, and self-hides when the pool is empty.
-function renderSportsCamps() {
-    const anchor = document.querySelector('#view-sports .sticky-nav-bar');
-    if (!anchor || !anchor.parentNode) return;
-    // Create the section container once, parked at the very top of the Sports view (above the date/filter bar).
-    let section = document.getElementById('sp-camps-section');
-    if (!section) {
-        section = document.createElement('div');
-        section.id = 'sp-camps-section';
-        anchor.parentNode.insertBefore(section, anchor);
-    }
-    const hide = () => { section.style.display = 'none'; section.innerHTML = ''; };
-
-    // Locals only — the default (Marauder/unset) viewer never sees youth signups.
-    const isTownie = muAffiliation === 'townie';
-    if (!isTownie || !allEvents || allEvents.length === 0) return hide();
-
-    const nowMs = Date.now();
-    // Rows shown before "▾ Show N more". 4 at launch (2026-09-16); scaled back to
-    // 2 on 2026-09-18 to match the home box — the block was crowding the schedule
-    // and the two youth-lane rows are what locals need without a tap.
-    const SPORTS_SIGNUPS_COLLAPSED_COUNT = 2;
-
-    // (1) Deadline-dated: youth-league regs + ticket packages. Mirrors the home
-    // box's townie audience terms (non-intramural, not mu-only).
-    const regs = allEvents
-        .filter(e => e && e.registrationDeadline && !isIntramural(e) && e.audience !== 'mu-only'
-            && (e.youthSports === true || isTicketPackage(e)))
-        .map(signupTiming)
-        .filter(e => signupVisibleNow(e, nowMs))
-        .map(e => ({ lane: e.youthSports === true ? 0 : 1, key: signupSortKey(e, nowMs), row: signupDeadlineRow(e, nowMs) }));
-    // (2) Athletic camps — all upcoming, dated by start.
-    const camps = allEvents
-        .filter(c => isProgramSignup(c) && (c.tags || []).includes('Athletic Camp'))
-        .map(c => ({ ...c, _start: new Date(c.date).getTime() }))
-        .filter(c => !isNaN(c._start) && c._start >= nowMs)
-        .map(c => ({ lane: 1, key: c._start, row: signupProgramRow(c, nowMs) }));
-    // (3) Open-ended youth regs (closesTBA) — a not-yet-open row sorts by its
-    // Opens date; an open-now row has no date and sorts last.
-    const tba = (allSignups || [])
-        .filter(r => r && r.status === 'active' && r.closesTBA === true && r.registerLink)
-        .map(r => {
-            const op = r.opens ? new Date(r.opens).getTime() : NaN;
-            return { lane: 0, key: (!isNaN(op) && op > nowMs) ? op : Infinity, row: signupTbaRow(r, nowMs) };
-        });
-
-    // Lane-first sort (2026-09-18): youth-league rows (Youth Sports regs +
-    // open-ended youth regs) always sit above MU camps + ticket packages —
-    // locals come here for the leagues; camps are the long tail. Within a
-    // lane the original next-moment ordering holds.
-    const rows = [...regs, ...camps, ...tba]
-        .sort((a, b) => a.lane !== b.lane ? a.lane - b.lane : (a.key === b.key ? 0 : (a.key < b.key ? -1 : 1)))
-        .map(x => x.row);
-    if (rows.length === 0) return hide();
-
-    section.style.display = '';
-    section.innerHTML =
-        '<div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin:4px 0 4px;">'
-            + '<span style="font-size:1.05rem;font-weight:700;color:var(--text);">⚾ Sports Signups & Tickets</span>'
-            + '<span style="font-size:0.8rem;color:var(--text-muted);">youth leagues, camps & tickets for locals</span>'
-        + '</div>'
-        + '<div id="sp-signups-list" style="margin-bottom:20px;"></div>';
-    renderSignupRows(document.getElementById('sp-signups-list'), rows, SPORTS_SIGNUPS_COLLAPSED_COUNT, 'sp-signups-more');
-}
+// ── Sports-page camps block — RETIRED 2026-11-13 ──────────────────
+// The townie-only "⚾ Sports Signups & Tickets" block (renderSportsCamps) is gone: the
+// home page's Upcoming Signups box carries the same youth-league regs, ticket packages
+// and camps (Adam: "it's on the homepage"). The shared signup row builders stay — the
+// home box uses them.
 
 /* ==================== SPORTS: TEAM STRIP + COMPACT LIST + TEAM VIEW (2026-09-18) ==================== */
 // The Sports page renders GAMES AS ROWS (one line per game, grouped by day) instead
@@ -4764,10 +4683,11 @@ function spResolveTeamLevel(label) {
 function spTeamModeActive() { return !!(spSportTag && spTeamLevel); }
 // Hide/show the mixed-view chrome (sticky toolbar + filter drawer, signups block).
 function spSetTeamChrome(on) {
+    // 2026-11-13: hide only the toolbar row — the team strip lives INSIDE the sticky bar
+    // now and must stay pinned in a team view (switch teams without scrolling up).
     const sticky = document.querySelector('#view-sports .sticky-nav-bar');
-    if (sticky) sticky.style.display = on ? 'none' : '';
-    const camps = document.getElementById('sp-camps-section');
-    if (camps && on) camps.style.display = 'none';
+    const tb = sticky && sticky.querySelector('.toolbar-compact');
+    if (tb) tb.style.display = on ? 'none' : '';
     const noSrc = document.getElementById('sp-no-source');
     if (noSrc && on) noSrc.style.display = 'none';
 }
@@ -5255,7 +5175,7 @@ function spStripRow(level, heading, chipHtml) {
     const offTile = off.length
         ? `<button type="button" class="sp-tile sp-tile-more" onclick="spStripToggle('${level}')" aria-expanded="${open ? 'true' : 'false'}" title="${open ? 'Hide' : 'Show'} off-season teams"><span class="sp-tile-icon">${off.length}</span><span class="sp-tile-label">off season ${open ? '▾' : '▸'}</span></button>`
         : '';
-    html += `<div class="sp-strip-row">${tiles}${offTile}</div>`;
+    html += `<div class="sp-strip-row" data-lv="${level === 'pm' ? 'PM' : level === 'mu' ? 'MU' : 'Clubs'}">${tiles}${offTile}</div>`;   // data-lv: compact-view lead-in (2026-11-13)
     if (open && off.length) html += `<div class="sp-strip-row sp-strip-off">${off.map(t => spTile(t, level)).join('')}</div>`;
     return html;
 }
@@ -5266,10 +5186,10 @@ function renderTeamStrip() {
     if (!strip) {
         strip = document.createElement('div');
         strip.id = 'sp-team-strip';
-        // Above the Signups block when it exists, else above the toolbar.
-        const camps = document.getElementById('sp-camps-section');
-        sticky.parentNode.insertBefore(strip, camps || sticky);
     }
+    // 2026-11-13: the strip lives INSIDE the sticky bar, first — so it pins under the
+    // header while a schedule scrolls (spUpdatePin compacts it once scrolled).
+    if (strip.parentNode !== sticky || sticky.firstElementChild !== strip) sticky.insertBefore(strip, sticky.firstChild);
     if (!allEvents || allEvents.length === 0) { strip.innerHTML = ''; return; }
     const primary = spPrimaryLevel(), other = primary === 'pm' ? 'mu' : 'clubs';
     const name = l => l === 'pm' ? 'Penn Manor Comets' : l === 'mu' ? '🏴‍☠️ Marauders' : '🎓 MU Clubs';
@@ -5286,6 +5206,21 @@ function renderTeamStrip() {
     strip.innerHTML = html;
     strip.style.display = html ? '' : 'none';
 }
+// Pinned compact strip (2026-11-13). The strip sits in the Sports sticky bar; once the page
+// has scrolled, .sp-pinned shrinks it to icon chips (CSS in index.html). Hysteresis: pin
+// past 40 px, un-pin only back under 4 px — the strip's own height change can't make it
+// flicker. Off the Sports view the class is dropped on the next scroll.
+let spPinned = false, spPinRaf = 0;
+function spUpdatePin() {
+    spPinRaf = 0;
+    const view = document.getElementById('view-sports');
+    const sticky = view && view.querySelector('.sticky-nav-bar');
+    if (!sticky) return;
+    const y = window.scrollY || document.documentElement.scrollTop || 0;
+    const want = view.classList.contains('active') && (spPinned ? y > 4 : y > 40);
+    if (want !== spPinned) { spPinned = want; sticky.classList.toggle('sp-pinned', want); }
+}
+window.addEventListener('scroll', () => { if (!spPinRaf) spPinRaf = requestAnimationFrame(spUpdatePin); }, { passive: true });
 window.spStripToggle = function(level) {
     spStripOpen[level] = !spStripOpen[level];
     renderTeamStrip();
@@ -5478,7 +5413,6 @@ function spCanonicalSportLabel(raw) {
 
 function renderSports(){
     renderTeamStrip();
-    renderSportsCamps();
     // Loading state: events.json hasn't returned yet. Show skeletons in the
     // sports container so the page doesn't flash empty.
     if (!allEvents || allEvents.length === 0) {

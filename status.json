@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-13T19:59:14.963Z",
+  "generatedAt": "2026-11-13T21:47:18.365Z",
   "totalEvents": 2073,
   "withDescription": 871,
   "withImage": 246,
@@ -164,21 +164,21 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 5,
-    "pendingPast": 13,
+    "pendingFuture": 4,
+    "pendingPast": 14,
     "pendingBySource": {
       "Youth Sports": 1,
       "PM Community": 1,
-      "Campus Life": 3
+      "Campus Life": 2
     },
-    "stalePast": 31,
-    "lastSyncAt": "2026-11-13T19:56:56.366Z"
+    "stalePast": 32,
+    "lastSyncAt": "2026-11-13T21:44:41.831Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-13T19:59:05.667Z"
+    "checkedAt": "2026-11-13T21:47:08.417Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -186,10 +186,8 @@
     "standalone": 2
   },
   "sourceHealth": {
-    "ok": false,
-    "failing": [
-      "manor.count"
-    ],
+    "ok": true,
+    "failing": [],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -242,10 +240,9 @@
       },
       {
         "key": "manor.count",
-        "ok": false,
+        "ok": true,
         "value": 37,
-        "min": 10,
-        "carriedForward": 37
+        "min": 10
       },
       {
         "key": "muHudl.pairRatio",
@@ -264,6 +261,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Civil Service Commission - Cancelled|2026-11-16T23:00:00.000Z",
+      "firstSeenAt": "2026-11-13T21:47:18.361Z",
+      "title": "Civil Service Commission - Cancelled",
+      "source": "Borough",
+      "date": "2026-11-16T23:00:00.000Z"
+    },
     {
       "key": "Wellness Fair|2026-11-12T16:30:00.000Z",
       "firstSeenAt": "2026-11-13T18:03:02.260Z",
@@ -326,16 +330,9 @@
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2027-10-27T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-11-01T23:00:00.000Z",
-      "firstSeenAt": "2026-11-13T08:32:00.471Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-11-01T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 437,
     "reasons": {

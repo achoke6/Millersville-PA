@@ -1769,7 +1769,10 @@ window.openFeedSettings = function() {
             const subgroups = group.subgroups || [];
             // Marauder-only Uncommon groups get the three-state selector and
             // per-chip 👁 Show toggles (2026-08-03).
-            const segGroup = isMarauder && !!UNCOMMON_GROUP_SOURCES[key] && !EV_ROW_OWNED_SHOW.has(key);   // 2026-11-12: row-owned groups are follow-only here
+            // 2026-11-13 (Follow vs See): ⚙️ is follow-only — no 👁, no Hidden/Show/★ selector.
+            // Seeing without following lives on each page (Events bar ＋, Sports "+ Comets",
+            // News "＋ Local news"); Save writes no Show bits, so stored choices stand.
+            const segGroup = false;
             // Collect ALL underlying IDs (subs + every composite's linkedIds
             // + subgroup masters + subgroup children) to determine master
             // state. Master is checked when every underlying ID is in current.
@@ -1943,6 +1946,15 @@ window.openFeedSettings = function() {
     // approach, since now sections show ONLY marauder-relevant picks.
     let sectionsHtml = '';
     const uncommonGroups = []; // [[key, group]] gathered for marauders
+    let offCampusBlock = '';   // 2026-11-13: Off-campus places → the Around Millersville accordion
+    // Club sports (2026-11-13): for Marauders the GetInvolved "Club Sports" subgroup renders as
+    // its own group under 🏆 Sports Favorites (same pref ids: clubs-sports + cs-*).
+    const clubsDef = feedSections.events.groups.clubs || {};
+    const clubSportsSg = (clubsDef.subgroups || []).find(sg => sg.key === 'clubsports');
+    const clubSportsGroup = clubSportsSg ? {
+        label: 'MU Club Sports', icon: '⚽', headingStyle: true, audience: 'student',
+        subs: [{ id: clubSportsSg.masterId, label: 'All club sports', icon: '⚽' }].concat(clubSportsSg.children || [])
+    } : null;
 
     for (const [secKey, section] of orderedSections) {
         // Townies use townieGroups when defined — a restructured shape with
@@ -1952,7 +1964,7 @@ window.openFeedSettings = function() {
         const rawEntries = Object.entries(sourceGroups);
 
         let commonEntries;
-        let offCampusBlock = '';   // 2026-08-10: Other family renders nested under Other Events (marauder/unset)
+        // (offCampusBlock is declared above the loop since 2026-11-13 — it renders in Around Millersville.)
         if (isMarauder) {
             commonEntries = [];
             for (const [gk, g] of rawEntries) {
@@ -1967,18 +1979,12 @@ window.openFeedSettings = function() {
                     // and the event gate are all byte-identical — placement +
                     // label only. Auto-expands when any pref/👁 is already set.
                     // Townie picker untouched (townieGroups has its own 'other').
-                    const ocOn = (g.subs || []).some(s => current.includes(s.id) || uncommonItemShown('other', s.id));
-                    const ocInner = renderGroupBlock('other', Object.assign({}, g, { label: '', icon: '' }));
-                    offCampusBlock = `<div class="feed-subgroup" data-subgroup-key="events__offcampus" style="margin:2px 0 12px;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;">
-                        <div class="feed-subgroup-header" style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:${ocOn?'var(--gold-soft)':'var(--bg)'};cursor:pointer;" onclick="toggleSubgroupCollapse(event, 'events__offcampus')">
-                            <span style="flex:1;min-width:0;">
-                                <span style="display:block;font-size:0.85rem;font-weight:700;">🛣️ Off Campus Favorites</span>
-                                <span style="display:block;font-size:0.7rem;font-weight:400;color:var(--text-muted);">★ to follow. To see their events, turn the place on from the Events page bar (＋).</span>
-                            </span>
-                            <span class="feed-subgroup-chevron" style="font-size:0.85rem;color:var(--text-muted);transition:transform 0.15s;${ocOn?'transform:rotate(90deg);':''}">▸</span>
-                        </div>
-                        <div class="feed-subgroup-children" style="display:${ocOn?'flex':'none'};padding:10px 12px 0;background:var(--surface);border-top:1px solid var(--border);"><div style="flex:1 1 100%;">${ocInner}</div></div>
-                    </div>`;
+                    offCampusBlock = renderGroupBlock('other', Object.assign({}, g, { label: 'Off-campus places', icon: '🛣️' }));
+                    continue;
+                }
+                if (secKey === 'events' && gk === 'otherevents') { commonEntries.push([gk, Object.assign({}, g, { label: 'Campus Spots', icon: '📍' })]); continue; }
+                if (secKey === 'events' && gk === 'clubs' && clubSportsGroup) {
+                    commonEntries.push([gk, Object.assign({}, g, { subgroups: (g.subgroups || []).filter(sg => sg.key !== 'clubsports') })]);
                     continue;
                 }
                 if (isGroupDimmed(g)) uncommonGroups.push([gk, g]);
@@ -1989,7 +1995,15 @@ window.openFeedSettings = function() {
         }
 
         if (commonEntries.length === 0) continue;
-        const groupHtml = commonEntries.map(([k, g]) => renderGroupBlock(k, g) + (k === 'otherevents' ? offCampusBlock : '')).filter(Boolean).join('');   // Off Campus Favorites rides directly below the Other Events heading (2026-08-10)
+        let groupHtml = commonEntries.map(([k, g]) => renderGroupBlock(k, g)
+            + (isMarauder && k === 'clubs' && clubSportsGroup ? '<p style="margin:2px 0 12px 14px;font-size:0.74rem;color:var(--text-muted);">Looking for a club team — Club Volleyball, Ice Hockey, Rugby? Club sports live under 🏆 Sports Favorites.</p>' : '')
+        ).filter(Boolean).join('');
+        // 2026-11-13: MU club sports ride in Sports Favorites for Marauders.
+        if (isMarauder && secKey === 'sports' && clubSportsGroup) {
+            groupHtml += '<div id="feed-clubsports-anchor"></div>' + renderGroupBlock('clubsports', clubSportsGroup)
+                + '<p style="margin:2px 0 6px 14px;font-size:0.74rem;color:var(--text-muted);">Every MU club team is here — Club Volleyball, Ice Hockey, Rugby and the rest. Following one also puts its games on the Sports page under 🎓 Clubs.</p>';
+            commonEntries.push(['clubsports', clubSportsGroup]);   // so the accordion opens when a club team is followed
+        }
         if (!groupHtml.trim()) continue;
 
         const defaultOpen = anyFavsIn(commonEntries);
@@ -2005,14 +2019,18 @@ window.openFeedSettings = function() {
     // opt into community content. The "enable if interested" nag that used
     // to sit next to each dimmed group label now lives in the bucket's
     // subtitle, so we drop the per-group repetition.
-    if (isMarauder && uncommonGroups.length > 0) {
-        const uncommonHtml = uncommonGroups.map(([k, g]) => renderGroupBlock(k, g)).filter(Boolean).join('');
-        const defaultOpen = anyFavsIn(uncommonGroups);
+    // 🗺️ AROUND MILLERSVILLE (2026-11-13, Follow vs See): the Marauder's neighbors, folded at
+    // the bottom — Off-campus places, Penn Manor events + sports, Borough, Manor, community
+    // news. Follow-only; seeing without following lives on each page.
+    if (isMarauder && (uncommonGroups.length > 0 || offCampusBlock)) {
+        const uncommonHtml = offCampusBlock + uncommonGroups.map(([k, g]) => renderGroupBlock(k, g)).filter(Boolean).join('');
+        const ocGroup = feedSections.events.groups.other;
+        const defaultOpen = anyFavsIn(uncommonGroups) || (!!ocGroup && groupHasFavs(ocGroup));
         sectionsHtml += renderAccordion(
-            '🏘️ Penn Manor, Borough & Manor Twp.',
+            '🗺️ Around Millersville',
             uncommonHtml,
             defaultOpen,
-            '★ to follow a team or source. To see their events, turn them on from the Events page bar (＋); Penn Manor sports: 👁 shows a sport’s games without following.',   // 2026-11-12: the Events row owns Show for PM events / Borough / Manor
+            'Off-campus places · Penn Manor · Borough · Manor Twp. Following puts them on your home page — to just look, use the Events bar ＋ or “+ Comets” on Sports.',
             '#9ca3af'  // muted gray accent to de-emphasize vs. the themed sections
         );
     }
@@ -2415,6 +2433,17 @@ window.toggleFeedAccordion = function(btn) {
     }
 };
 
+// Open 🏆 Sports Favorites and scroll to the MU Club Sports group (club-browser pointer, 2026-11-13).
+window.feedJumpToClubSports = function() {
+    const anchor = document.getElementById('feed-clubsports-anchor');
+    if (!anchor) return;
+    const acc = anchor.closest('.feed-accordion');
+    if (acc && acc.getAttribute('data-open') !== 'true') {
+        const btn = acc.querySelector('button');
+        if (btn && typeof window.toggleFeedAccordion === 'function') window.toggleFeedAccordion(btn);
+    }
+    anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
 window.toggleClubBrowser = function() {
     const list = document.getElementById('clubs-individual-list');
     if (!list) return;
@@ -2484,6 +2513,11 @@ window.toggleClubBrowser = function() {
         const totalInDir = directory.length;
         // Status row at top of results — communicates filter state to user.
         let showingInfo = '';
+        // 2026-11-13: club SPORTS live in Sports Favorites — point a sports search there.
+        const sportWord = q && (q.match(/volleyball|soccer|basketball|rugby|lacrosse|hockey|baseball|softball|ultimate|frisbee|tennis|wrestling|swim|track|cheer|club sport/) || [])[0];
+        const sportHint = sportWord && document.getElementById('feed-clubsports-anchor')
+            ? `<div style="font-size:0.78rem;background:var(--gold-soft);border:1px solid var(--gold);border-radius:var(--radius-sm);padding:7px 10px;margin-bottom:8px;">Club ${escHtml(sportWord.charAt(0).toUpperCase() + sportWord.slice(1))} is a club team — <a href="#" onclick="event.preventDefault();feedJumpToClubSports()" style="color:var(--navy);font-weight:700;">find it under 🏆 Sports Favorites →</a></div>`
+            : '';
         if (selectedMajor && q) {
             showingInfo = `<div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:6px;">${orgs.length} clubs for ${selectedMajor.displayName || selectedMajor.name} matching "${q}"</div>`;
         } else if (selectedMajor) {
@@ -2493,6 +2527,7 @@ window.toggleClubBrowser = function() {
         } else if (totalInDir > 60) {
             showingInfo = `<div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:6px;">Showing 60 of ${totalInDir} — type to search or pick your major above</div>`;
         }
+        showingInfo = sportHint + showingInfo;
         if (orgs.length === 0) {
             // Different empty-state message depending on what filters are active.
             const reason = selectedMajor
@@ -4628,6 +4663,24 @@ window.clearSportsFilters=function(){
 const SP_NO_RECORD_SPORTS = ['Cross Country', 'Golf', 'Track', 'Swimming', 'Bowling', 'Unified Track & Field', 'Unified Bocce'];
 
 function spStripOtherOn() { try { return localStorage.getItem(SP_STRIP_OTHER_KEY) === '1'; } catch (e) { return false; } }
+// Comets Show bit for Marauders (2026-11-13). ON = SP_PM or any per-sport PM bit left by the old
+// ⚙️ 👁; OFF clears them all. Display-only (shownSources never subscribes).
+function spCometsShown() {
+    if (typeof shownSources === 'undefined') return false;
+    if (shownSources.has('SP_PM')) return true;
+    const ids = new Set(typeof allSportFeedIds === 'function' ? allSportFeedIds('pm') : []);
+    return [...shownSources].some(k => ids.has(k));
+}
+window.spToggleComets = function() {
+    if (spCometsShown()) {
+        shownSources.delete('SP_PM');
+        (typeof allSportFeedIds === 'function' ? allSportFeedIds('pm') : []).forEach(k => shownSources.delete(k));
+    } else {
+        shownSources.add('SP_PM');
+    }
+    saveShownSources();
+    renderSports();
+};
 window.spToggleStripOther = function() {
     try { localStorage.setItem(SP_STRIP_OTHER_KEY, spStripOtherOn() ? '0' : '1'); } catch (e) {}
     // 2026-09-30: for townies the chip also governs the LIST (muSportsEventHidden),
@@ -5201,8 +5254,15 @@ function renderTeamStrip() {
     } else {
         chip = `<button type="button" class="sp-strip-chip${on ? ' active' : ''}" onclick="spToggleStripOther()" aria-pressed="${on ? 'true' : 'false'}">${on ? '✓ ' : '+ '}${otherShort}${on ? ' shown' : ''}</button>`;
     }
+    // "+ ☄️ Comets" (2026-11-13, Follow vs See): Marauders SEE Penn Manor games from here —
+    // the SP_PM Show bit, replacing the PM-sports 👁 that used to live in ⚙️.
+    const cometsOn = primary === 'mu' && spCometsShown();
+    if (primary === 'mu' && !spTeamModeActive()) {
+        chip = `<span style="display:inline-flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;">${chip}<button type="button" class="sp-strip-chip${cometsOn ? ' active' : ''}" onclick="spToggleComets()" aria-pressed="${cometsOn ? 'true' : 'false'}">${cometsOn ? '✓ ' : '+ '}☄️ Comets</button></span>`;
+    }
     let html = spStripRow(primary, name(primary), chip);
     if (on) html += spStripRow(other, name(other), '');
+    if (cometsOn) html += spStripRow('pm', '☄️ Penn Manor Comets', '');
     strip.innerHTML = html;
     strip.style.display = html ? '' : 'none';
 }
@@ -7603,6 +7663,13 @@ function buildNewsCard(n) {
 // Mirrors updateEventsUI / updateSportsUI pill-visibility pattern. Also resets
 // newsSource back to 'All' if the currently-selected source just got hidden
 // (e.g. user switched affiliation while on the Penn Manor pill).
+window.toggleLocalNews = function() {
+    const on = shownSources.has('PM_NEWS') || shownSources.has('BOROUGH_NEWS');
+    if (on) { shownSources.delete('PM_NEWS'); shownSources.delete('BOROUGH_NEWS'); }
+    else { shownSources.add('PM_NEWS'); shownSources.add('BOROUGH_NEWS'); }
+    saveShownSources();
+    renderNewsUI();
+};
 function updateNewsSourcePills() {
     const pmBtn = document.querySelector('#news-source-group .src-btn[data-feed="news-pm"]');
     const boBtn = document.querySelector('#news-source-group .src-btn[data-feed="news-borough"]');
@@ -7610,6 +7677,26 @@ function updateNewsSourcePills() {
     const boHidden = isSourceHidden('BOROUGH_NEWS');
     if (pmBtn) pmBtn.style.display = pmHidden ? 'none' : '';
     if (boBtn) boBtn.style.display = boHidden ? 'none' : '';
+    // "＋ Local news" (2026-11-13, Follow vs See): Marauders SEE Penn Manor + Borough news from
+    // here — the PM_NEWS / BOROUGH_NEWS Show bits, replacing the community-news 👁 in ⚙️.
+    const grp = document.getElementById('news-source-group');
+    let loc = document.getElementById('news-local-toggle');
+    if (grp && !loc) {
+        loc = document.createElement('button');
+        loc.id = 'news-local-toggle';
+        loc.type = 'button';
+        loc.className = 'src-btn';
+        loc.onclick = () => window.toggleLocalNews();
+        grp.appendChild(loc);
+    }
+    if (loc) {
+        const show = viewerIsMarauder();
+        const on = shownSources.has('PM_NEWS') || shownSources.has('BOROUGH_NEWS');
+        loc.style.display = show ? '' : 'none';
+        loc.style.borderStyle = on ? 'solid' : 'dashed';
+        loc.setAttribute('aria-pressed', on ? 'true' : 'false');
+        loc.textContent = on ? '✓ Local news' : '＋ Local news';
+    }
     // If the active pill just got hidden, fall back to "All".
     if ((pmHidden && newsSource === 'Penn Manor News') ||
         (boHidden && newsSource === 'Millersville Borough')) {

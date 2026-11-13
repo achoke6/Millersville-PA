@@ -3982,6 +3982,32 @@ function evChipDefault(d) { return d.def === 'both' || d.def === evIdentity(); }
 // A Where chip whose source the viewer's affiliation hides (Marauder view). For Locals this is never true.
 function evChipIsHiddenPlace(d) { return !!(d.hidden && typeof isSourceHiddenByAffiliation === 'function' && isSourceHiddenByAffiliation(d.hidden)); }
 function evChipShown(d) { return evChipIsHiddenPlace(d) && typeof isSourceHidden === 'function' && !isSourceHidden(d.hidden); }
+// A chip the viewer follows, by ANY feed pref that maps to it (2026-11-13): interest:* and
+// family-events for the What chips, the source / place prefs for the Where chips, and the
+// MU category prefs folded onto the matching What chip (mu-arts → arts, pm-music → music …).
+const EV_CHIP_FOLLOW_PREFS = {
+    PM: p => p.indexOf('pm-') === 0,
+    Borough: p => p === 'borough-all',
+    Manor: p => p === 'manor-all',
+    MU: p => p.indexOf('mu-') === 0 || p.indexOf('clubs-') === 0,
+    campus: p => p.indexOf('mu-') === 0 || p.indexOf('clubs-') === 0,
+    Raney: p => p === 'raney-cellars-all',
+    Phantom: p => p === 'other-phantom',
+    VFW: p => p === 'other-vfw',
+    Jacks: p => p === 'jacks-tavern-all',
+    Community: p => p === 'other-community',
+    family: p => p === 'family-events',
+    music: p => p === 'interest:music' || p === 'pm-music',
+    arts: p => p === 'interest:arts' || p === 'mu-arts' || p === 'clubs-arts',
+    causes: p => p === 'interest:causes' || p === 'clubs-service',
+    freefood: p => p === 'hub-all' || p === 'jesus-dogs-all' || p === 'backyard-all'
+};
+function evChipFollowed(d) {
+    if (!feedPrefs || !feedPrefs.length) return false;
+    const test = EV_CHIP_FOLLOW_PREFS[d.k] || (p => p === 'interest:' + d.k);
+    for (let i = 0; i < feedPrefs.length; i++) { const p = feedPrefs[i]; if (typeof p === 'string' && test(p)) return true; }
+    return false;
+}
 function evSaveOn() { try { localStorage.setItem(INT_KEY, JSON.stringify([...evOn])); } catch (e) {} }
 function evLoadOn() {
     try { const arr = JSON.parse(localStorage.getItem(INT_KEY)); evOn = new Set(Array.isArray(arr) ? arr.filter(k => EV_CHIP_BY[k]) : []); }
@@ -4028,11 +4054,11 @@ function renderEvRow() {
         let show;
         if (d.kind === 'link') show = true;
         else if (d.kind === 'fav') show = on || (hasPrefs && (counts.fav || 0) > 0);
-        else show = on || ((evChipDefault(d) || evChipShown(d)) && (counts[d.k] || 0) > 0);
+        else show = on || ((evChipDefault(d) || evChipShown(d) || evChipFollowed(d)) && (counts[d.k] || 0) > 0);   // 2026-11-13: followed interests ride the bar
         if (!show) continue;
         if (lastKind && d.kind !== lastKind && !(lastKind === 'where' && d.kind === 'link')) html += '<span class="int-sep" aria-hidden="true"></span>';
         lastKind = d.kind;
-        html += evChipHTML(d, on);
+        html += evChipFollowed(d) ? evChipHTML(d, on).replace('class="int-chip', 'class="int-chip int-followed') : evChipHTML(d, on);
     }
     html += '<button type="button" class="int-chip int-more" onclick="openInterestPicker()" title="More" aria-label="More filters">＋</button>';
     row.innerHTML = html;
@@ -5065,7 +5091,7 @@ function spGameRow(e, mode) {
     const isFavRow = mode !== 'team' && typeof isEventFavorited === 'function' && isEventFavorited(e);   // mixed list only — a team view's rows are all that team (Patch F)
     const favCls = '';   // 2026-11-12: .sp-row-fav tint retired — the ★ below is the only favorite mark
     const favStar = isFavRow ? '<span class="sp-row-star" title="Favorite team">★</span>' : '';   // Patch E: inline favorite marker
-    return `<a href="#" class="sp-row${home ? ' sp-row-home' : ''}${favCls}" data-event-key="${key}" onclick="event.preventDefault();window.openEventDetails(${key})">`
+    return `<a href="#" class="sp-row${favCls}" data-event-key="${key}" onclick="event.preventDefault();window.openEventDetails(${key})">`
         + `<span class="sp-row-left">${left}</span>`
         + `<span class="sp-row-main"><span class="sp-row-title">${favStar}${escHtml(title)}</span>${sub ? `<span class="sp-row-sub">${escHtml(sub)}</span>` : ''}</span>`
         + `<span class="sp-row-right">${right}</span>`
@@ -8693,7 +8719,7 @@ const SPECIALS_DAY_IDX = {Monday:0,Tuesday:1,Wednesday:2,Thursday:3,Friday:4,Sat
 // preview never shows an expired week), the `until` clock gate is skipped,
 // and "(Fri only)" items match their day EXACTLY instead of "show through".
 // Omitted/null = today, identical to the pre-strip behavior.
-function placesSpecialsItemsFor(sp, dayName, previewIso){
+function placesSpecialsItemsFor(sp, dayName, previewIso, ignore21){   // ignore21 (2026-11-13): raw list incl. 🍺, for the in-card toggle
     if (!sp) return [];
     if (Array.isArray(sp.closedDays) && sp.closedDays.includes(dayName)) return [];
     let items = [];
@@ -8706,7 +8732,7 @@ function placesSpecialsItemsFor(sp, dayName, previewIso){
     // toggle (moved there from ⚙️ 2026-11-12). This one filter point covers the home rail, both card
     // specials boxes, the Today lens, and the map pins — they all flow
     // through this function. Also catches recurring items ("🔁 🍺 ...").
-    if (!show21Plus) items = items.filter(i => !i.includes('🍺'));
+    if (!show21Plus && !ignore21) items = items.filter(i => !i.includes('🍺'));
     // Time-of-day gate (2026-09-08): optional entry-level `until` ("HH:MM",
     // 24h ET). Once that clock time has passed TODAY, the entry's standing
     // items drop — a lunch board shouldn't greet a dinner browser. Items whose
@@ -8736,8 +8762,8 @@ function placesSpecialsItemsFor(sp, dayName, previewIso){
 }
 // Slug-keyed wrapper over the global map (specials.json is keyed by directory
 // place slug — Hard Rule 11's derivation; callers pass placeSlug(p)).
-function placesSpecialsItems(slug, dayName, previewIso){
-    return placesSpecialsItemsFor((window._placesSpecials || {})[slug], dayName, previewIso);
+function placesSpecialsItems(slug, dayName, previewIso, ignore21){
+    return placesSpecialsItemsFor((window._placesSpecials || {})[slug], dayName, previewIso, ignore21);
 }
 function placeHasSpecialsToday(slug){
     return placesSpecialsItems(slug, new Date().toLocaleDateString('en-US',{weekday:'long'})).length > 0;
@@ -9004,7 +9030,15 @@ function placeSpecialsSectionHtml(pslug, dayName, previewIso){
     const itemsIso = isWeekList ? null : previewIso;
     const itemsDay = isWeekList ? new Date().toLocaleDateString('en-US',{weekday:'long'}) : dayName;
     const items = placesSpecialsItems(pslug, itemsDay, itemsIso);   // single source of truth (also drives the Today lens + home rail)
-    if(items.length === 0) return '';
+    // 21+ (2026-11-13): if this place has 🍺-flagged items today, the toggle lives right here —
+    // "hidden · Show" until opted in, "shown · Hide" after. Places without alcohol specials get
+    // no control at all, which keeps it off Marauders' screens and one tap away for Locals.
+    const has21 = placesSpecialsItems(pslug, itemsDay, itemsIso, true).some(i => String(i).includes('🍺'));
+    const line21 = has21
+        ? `<p style="font-size:0.72rem;color:var(--text-muted);margin:4px 0 0;">🍺 21+ drink specials ${show21Plus ? 'shown' : 'hidden'} · <a href="#" onclick="event.preventDefault();event.stopPropagation();window.toggle21Plus(${show21Plus ? 'false' : 'true'})" style="color:var(--navy);font-weight:700;">${show21Plus ? 'Hide' : 'Show'}</a></p>`
+        : '';
+    if(items.length === 0 && !has21) return '';
+    if(items.length === 0) return `<div class="specials-section">${line21}</div>`;
     const note = sp.note ? `<p style="font-size:0.7rem;color:var(--text-muted);margin-bottom:4px;font-style:italic;">${sp.note}</p>` : '';
     const dateRange = (!isGrocery && sp.weeklyDateRange) ? `<p style="font-size:0.7rem;color:var(--gold);font-weight:600;margin-bottom:4px;">${sp.weeklyDateRange}</p>` : '';
     const isVFW = pslug === 'vfw-post-7294';
@@ -9025,7 +9059,7 @@ function placeSpecialsSectionHtml(pslug, dayName, previewIso){
         moreHtml = `<div id="${moreId}" style="display:none;">${moreItems.map(itemP).join('')}</div>`
             + `<button type="button" class="btn btn-sm btn-outline" aria-expanded="false" aria-controls="${moreId}" data-more-label="${moreLabel}" style="margin-top:6px;font-size:0.75rem;width:100%;text-align:center;" onclick="window.toggleSignupsMore(this)">${moreLabel}</button>`;
     }
-    return `<div class="specials-section">${dateRange}<p style="font-size:0.8rem;font-weight:700;margin-bottom:4px;">${heading}</p>${note}${topItems.map(itemP).join('')}${moreHtml}${weekNote}</div>`;
+    return `<div class="specials-section">${dateRange}<p style="font-size:0.8rem;font-weight:700;margin-bottom:4px;">${heading}</p>${note}${topItems.map(itemP).join('')}${moreHtml}${weekNote}${line21}</div>`;
 }
 
 // Weekly dining-hall menus (dining-menus.json, 2026-10-05). Hand/task-maintained
@@ -9389,9 +9423,8 @@ function renderFoodPage(){
     const isStudent = viewerIsMarauder();   // default-marauder (2026-08-24): unset sees the Free Groceries block
     const secHdr = (label, count) => `<div class="day-group-header">${label}${count !== undefined ? `<span class="day-count">${count}</span>` : ''}</div>`;
     let html = '';
-    // 21+ drink specials (moved here from ⚙️ 2026-11-12): a display setting, applies
-    // immediately via toggle21Plus (which re-renders this page), survives Clear Favs.
-    html += `<label style="grid-column:1/-1;display:flex;align-items:center;justify-content:flex-end;gap:8px;margin:-4px 0 8px;font-size:0.78rem;color:var(--text-muted);cursor:pointer;"><input type="checkbox" ${show21Plus ? 'checked' : ''} onchange="window.toggle21Plus(this.checked)" style="accent-color:var(--navy);"> 🍺 Show 21+ drink specials</label>`;
+    // 21+ drink specials: the toggle lives INSIDE the specials box of any place that has
+    // 🍺 items that day (placeSpecialsSectionHtml, 2026-11-13) — no page-level control.
 
     // --- 1. Free food TODAY (line items + popup); else ONE next-up line ---
     const todayStr = now.toDateString();   // same today-convention as placeEventsToday

@@ -6232,8 +6232,11 @@ async function loadFeatured() {
     } catch (_) { featuredItems = []; }
     renderHomeFeatured();
 }
-function featuredVisible(e) {
-    if (isHiddenForViewer(e) || isEventFromHiddenSource(e) || isSportsEventFromHiddenSource(e)) return false;
+function featuredVisible(e, everyone) {
+    // everyone (2026-11-13): the item's `"everyone": true` skips the SOURCE gates (a
+    // Community-source Turkey Trot reaches Marauders too); the audience gate always applies.
+    if (isHiddenForViewer(e)) return false;
+    if (!everyone && (isEventFromHiddenSource(e) || isSportsEventFromHiddenSource(e))) return false;
     if ((e.tags || []).includes('Clubs/Orgs') && e.audience !== 'public' && muAffiliation === 'townie') return false;
     return true;
 }
@@ -6247,7 +6250,7 @@ function featuredEvents() {
         if (!isDay(from)) { const d = new Date(it.date + 'T12:00:00'); d.setDate(d.getDate() - 14); from = toDateStr(d); }
         if (today < from) continue;
         const m = String(it.match).toLowerCase();
-        const cands = allEvents.filter(e => localDateStr(e.date) === it.date && (e.title || '').toLowerCase().includes(m) && featuredVisible(e));
+        const cands = allEvents.filter(e => localDateStr(e.date) === it.date && (e.title || '').toLowerCase().includes(m) && featuredVisible(e, it.everyone === true));
         if (!cands.length) continue;
         cands.sort((a, b) => (a.title || '').length - (b.title || '').length);
         const e = cands[0], key = getEventKey(e);

@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-13T16:13:40.986Z",
-  "totalEvents": 2075,
-  "withDescription": 873,
+  "generatedAt": "2026-11-13T18:03:02.264Z",
+  "totalEvents": 2073,
+  "withDescription": 871,
   "withImage": 246,
   "familyFriendly": 60,
   "interests": {
@@ -13,17 +13,17 @@
     "food": 126,
     "music": 103,
     "crafts": 12,
-    "reshall": 3,
-    "active": 5
+    "reshall": 2,
+    "active": 4
   },
   "eventsToday": 17,
   "sources": {
     "muAthletics": 389,
-    "muCalendar": 192,
+    "muCalendar": 191,
     "artsmu": 50,
     "eckert": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 575,
+    "muGetInvolved": 574,
     "pennManor": 659,
     "borough": 49,
     "vfw": 6,
@@ -172,13 +172,13 @@
       "Campus Life": 3
     },
     "stalePast": 31,
-    "lastSyncAt": "2026-11-13T16:10:05.021Z"
+    "lastSyncAt": "2026-11-13T17:59:05.741Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-13T16:13:34.060Z"
+    "checkedAt": "2026-11-13T18:02:49.329Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -262,6 +262,27 @@
   },
   "recentlyAdded": [
     {
+      "key": "Wellness Fair|2026-11-12T16:30:00.000Z",
+      "firstSeenAt": "2026-11-13T18:03:02.260Z",
+      "title": "Wellness Fair",
+      "source": "MU",
+      "date": "2026-11-12T16:30:00.000Z"
+    },
+    {
+      "key": "Zoning Hearing Board - Cancelled|2026-11-19T23:30:00.000Z",
+      "firstSeenAt": "2026-11-13T18:03:02.260Z",
+      "title": "Zoning Hearing Board - Cancelled",
+      "source": "Borough",
+      "date": "2026-11-19T23:30:00.000Z"
+    },
+    {
+      "key": "Navidades con SOLA|2026-12-04T22:00:00.000Z",
+      "firstSeenAt": "2026-11-13T18:03:02.260Z",
+      "title": "Navidades con SOLA",
+      "source": "MU",
+      "date": "2026-12-04T22:00:00.000Z"
+    },
+    {
       "key": "COMEDIAN RAJ BELANI|2026-12-04T00:00:00.000Z",
       "firstSeenAt": "2026-11-13T15:57:30.043Z",
       "title": "COMEDIAN RAJ BELANI",
@@ -309,30 +330,9 @@
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2027-11-01T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-11-03T23:00:00.000Z",
-      "firstSeenAt": "2026-11-13T08:32:00.471Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-11-03T23:00:00.000Z"
-    },
-    {
-      "key": "Creative Writers Guild General Meeting|2026-11-03T18:00:00",
-      "firstSeenAt": "2026-11-13T01:31:08.782Z",
-      "title": "Creative Writers Guild General Meeting",
-      "source": "MU",
-      "date": "2026-11-03T18:00:00"
-    },
-    {
-      "key": "Letters of Love|2026-11-03T19:00:00",
-      "firstSeenAt": "2026-11-13T01:31:08.782Z",
-      "title": "Letters of Love",
-      "source": "MU",
-      "date": "2026-11-03T19:00:00"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 3,
   "skippedByRule": {
     "total": 437,
     "reasons": {

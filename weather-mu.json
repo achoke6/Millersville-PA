@@ -1,18 +1,14 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Friday, November 13, 2026 at 05:48 PM (Cokain, Iraca, McCarthy, Student Meteorologists)",
+    "issued": "Saturday, November 14, 2026 at 08:16 AM (Corman, Smith, Student Meteorologists)",
     "periods": [
       {
-        "period": "Tonight",
-        "text": "Partly cloudy. Low: 32-36"
-      },
-      {
-        "period": "Tomorrow",
+        "period": "Today",
         "text": "Mostly cloudy, breezy and chilly. High: 46-50"
       },
       {
-        "period": "Tomorrow Night",
+        "period": "Tonight",
         "text": "Partly cloudy. Low: 34-38"
       },
       {
@@ -20,30 +16,18 @@
         "text": "Breezy and cool with a mix of clouds and sun. High: 48-52"
       },
       {
+        "period": "Sunday Night",
+        "text": "Partly cloudy. Low: 32-36"
+      },
+      {
         "period": "Monday",
-        "text": "Partly sunny and seasonable. High: 50-54"
+        "text": "Partly sunny and seasonable. High: 52-56"
       }
     ]
   },
   "sevenDay": {
-    "issued": "Friday, November 13, 2026 at 08:22 AM (Cokain, McCarthy)",
+    "issued": "Saturday, November 14, 2026 at 08:51 AM (Corman, Smith)",
     "days": [
-      {
-        "period": "Friday",
-        "sky": "Mostly Cloudy",
-        "weather": "Colder",
-        "pop": "20%",
-        "temp": "44",
-        "conf": "5"
-      },
-      {
-        "period": "Friday night",
-        "sky": "Partly Cloudy",
-        "weather": "Fair",
-        "pop": "<10%",
-        "temp": "34",
-        "conf": "5"
-      },
       {
         "period": "Saturday",
         "sky": "Mostly Cloudy",
@@ -79,9 +63,9 @@
       {
         "period": "Monday",
         "sky": "Partly Sunny",
-        "weather": "Cool",
+        "weather": "Seasonable",
         "pop": "<10%",
-        "temp": "52",
+        "temp": "54",
         "conf": "5"
       },
       {
@@ -94,27 +78,35 @@
       },
       {
         "period": "Tuesday",
-        "sky": "Mostly Sunny",
+        "sky": "Sunny",
         "weather": "Seasonable",
         "pop": "<10%",
-        "temp": "55",
-        "conf": "4"
+        "temp": "57",
+        "conf": "5"
       },
       {
         "period": "Tuesday night",
-        "sky": "Mainly Clear",
+        "sky": "Clear Skies",
         "weather": "Cold",
         "pop": "<10%",
         "temp": "30",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Wednesday",
         "sky": "Sunny",
         "weather": "Pleasant",
         "pop": "<10%",
-        "temp": "upper 50s",
-        "conf": "4"
+        "temp": "60",
+        "conf": "5"
+      },
+      {
+        "period": "Wednesday night",
+        "sky": "Mainly Clear",
+        "weather": "Cold",
+        "pop": "<10%",
+        "temp": "28",
+        "conf": "5"
       },
       {
         "period": "Thursday",
@@ -123,10 +115,29 @@
         "pop": "<10%",
         "temp": "low 60s",
         "conf": "4"
+      },
+      {
+        "period": "Friday",
+        "sky": "Mostly Sunny",
+        "weather": "Mild",
+        "pop": "<10%",
+        "temp": "mid 60s",
+        "conf": "4"
       }
     ]
   },
   "observations": [
+    {
+      "time": "08:00",
+      "temp": "40",
+      "dewpoint": "28",
+      "rh": "62",
+      "windDir": "NW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
     {
       "time": "07:00",
       "temp": "40",
@@ -176,17 +187,6 @@
       "temp": "40",
       "dewpoint": "28",
       "rh": "62",
-      "windDir": "N",
-      "windSpeed": "6",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "02:00",
-      "temp": "40",
-      "dewpoint": "27",
-      "rh": "60",
       "windDir": "N",
       "windSpeed": "6",
       "precip": "0.00",
@@ -389,5 +389,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-14T12:07:20.146Z"
+  "updated": "2026-11-14T13:55:14.393Z"
 }

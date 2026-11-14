@@ -1,30 +1,30 @@
 {
-  "generatedAt": "2026-11-13T23:49:12.253Z",
-  "totalEvents": 2073,
-  "withDescription": 871,
-  "withImage": 246,
+  "generatedAt": "2026-11-14T01:38:21.855Z",
+  "totalEvents": 2069,
+  "withDescription": 867,
+  "withImage": 242,
   "familyFriendly": 60,
   "interests": {
     "civic": 98,
     "arts": 101,
-    "greek": 24,
-    "causes": 36,
+    "greek": 23,
+    "causes": 35,
     "learn": 65,
-    "food": 126,
+    "food": 127,
     "music": 103,
     "crafts": 12,
     "reshall": 2,
     "active": 4
   },
-  "eventsToday": 17,
+  "eventsToday": 16,
   "sources": {
-    "muAthletics": 389,
+    "muAthletics": 388,
     "muCalendar": 191,
     "artsmu": 50,
     "eckert": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 574,
-    "pennManor": 659,
+    "muGetInvolved": 570,
+    "pennManor": 660,
     "borough": 49,
     "vfw": 6,
     "phantomPower": 14,
@@ -152,9 +152,9 @@
   },
   "sports": {
     "total": 942,
-    "scored": 210,
-    "wins": 102,
-    "losses": 95,
+    "scored": 214,
+    "wins": 104,
+    "losses": 97,
     "ties": 13
   },
   "registrations": {
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-13T23:45:52.350Z"
+    "lastSyncAt": "2026-11-14T01:34:42.327Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-13T23:49:02.725Z"
+    "checkedAt": "2026-11-14T01:38:11.302Z"
   },
   "artsmuMerge": {
     "fetched": 50,
@@ -220,14 +220,14 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 553,
+        "value": 554,
         "min": 150,
         "skipped": false
       },
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 389,
+        "value": 388,
         "min": 100,
         "skipped": false
       },
@@ -261,6 +261,34 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Wednesday Night Dinner|2027-04-28T22:00:00.000Z",
+      "firstSeenAt": "2026-11-14T01:38:21.848Z",
+      "title": "Wednesday Night Dinner",
+      "source": "MU",
+      "date": "2027-04-28T22:00:00.000Z"
+    },
+    {
+      "key": "Tell School of Music Recital Hour|2027-05-05T19:00:00.000Z",
+      "firstSeenAt": "2026-11-14T01:38:21.848Z",
+      "title": "Tell School of Music Recital Hour",
+      "source": "MU",
+      "date": "2027-05-05T19:00:00.000Z"
+    },
+    {
+      "key": "Wednesday Night Dinner|2027-05-05T22:00:00.000Z",
+      "firstSeenAt": "2026-11-14T01:38:21.848Z",
+      "title": "Wednesday Night Dinner",
+      "source": "MU",
+      "date": "2027-05-05T22:00:00.000Z"
+    },
+    {
+      "key": "Coed Varsity Sideline Cheerleading @ Upper Dublin High School|2027-09-03T23:00:00.000Z",
+      "firstSeenAt": "2026-11-14T01:38:21.848Z",
+      "title": "Coed Varsity Sideline Cheerleading @ Upper Dublin High School",
+      "source": "PM",
+      "date": "2027-09-03T23:00:00.000Z"
+    },
     {
       "key": "Civil Service Commission - Cancelled|2026-11-16T23:00:00.000Z",
       "firstSeenAt": "2026-11-13T21:47:18.361Z",
@@ -302,46 +330,18 @@
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2027-09-06T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2027-09-29T12:30:00.000Z",
-      "firstSeenAt": "2026-11-13T08:32:00.471Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-09-29T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-10-04T23:00:00.000Z",
-      "firstSeenAt": "2026-11-13T08:32:00.471Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-10-04T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-10-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-13T08:32:00.471Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-10-06T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2027-10-27T12:30:00.000Z",
-      "firstSeenAt": "2026-11-13T08:32:00.471Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-10-27T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 4,
   "skippedByRule": {
-    "total": 437,
+    "total": 438,
     "reasons": {
       "pm-sub-varsity": 297,
       "mu-calendar-athletics": 72,
       "camps-skipped": 28,
       "intramural-dup": 1,
       "borough-collection": 13,
-      "borough-reservation": 16,
+      "borough-reservation": 17,
       "submission-not-approved": 1,
       "submission-out-of-range": 9
     }

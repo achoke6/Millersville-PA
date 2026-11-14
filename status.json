@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-14T07:58:35.665Z",
+  "generatedAt": "2026-11-14T09:46:47.281Z",
   "totalEvents": 2068,
   "withDescription": 866,
   "withImage": 242,
@@ -72,7 +72,7 @@
       "latest": "2026-11-29T18:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-11-14T01:00:00.000Z",
+      "earliest": "2026-11-15T01:00:00.000Z",
       "latest": "2026-12-19T01:00:00.000Z"
     },
     "community": {
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-14T07:56:10.711Z"
+    "lastSyncAt": "2026-11-14T09:44:07.174Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-14T07:58:27.629Z"
+    "checkedAt": "2026-11-14T09:46:40.311Z"
   },
   "artsmuMerge": {
     "fetched": 49,
@@ -186,15 +186,13 @@
     "standalone": 2
   },
   "sourceHealth": {
-    "ok": false,
-    "failing": [
-      "manor.count"
-    ],
+    "ok": true,
+    "failing": [],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 346,
+        "value": 345,
         "min": 45,
         "skipped": false
       },
@@ -242,10 +240,9 @@
       },
       {
         "key": "manor.count",
-        "ok": false,
+        "ok": true,
         "value": 37,
-        "min": 10,
-        "carriedForward": 37
+        "min": 10
       },
       {
         "key": "muHudl.pairRatio",
@@ -264,6 +261,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "RYAN CABRERA w/ Brenden Starr, Michael Wavves & Aly & Andrew|2026-12-05T00:00:00.000Z",
+      "firstSeenAt": "2026-11-14T09:46:47.278Z",
+      "title": "RYAN CABRERA w/ Brenden Starr, Michael Wavves & Aly & Andrew",
+      "source": "Other",
+      "date": "2026-12-05T00:00:00.000Z"
+    },
     {
       "key": "Wednesday Night Dinner|2027-04-28T22:00:00.000Z",
       "firstSeenAt": "2026-11-14T01:38:21.848Z",
@@ -326,16 +330,9 @@
       "title": "COMEDIAN RAJ BELANI",
       "source": "Other",
       "date": "2026-12-04T00:00:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-13T08:32:00.471Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-09-06T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 438,
     "reasons": {

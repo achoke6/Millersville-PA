@@ -1,8 +1,29 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "",
-    "periods": []
+    "issued": "Sunday, November 15, 2026 at 08:09 AM (Corman, Funk, Student Meteorologists)",
+    "periods": [
+      {
+        "period": "Today",
+        "text": "Turning out mostly cloudy, breezy and cool. High: 48-52"
+      },
+      {
+        "period": "Tonight",
+        "text": "Partly cloudy. Low: 32-36"
+      },
+      {
+        "period": "Monday",
+        "text": "Partly sunny and seasonable. High: 52-56"
+      },
+      {
+        "period": "Monday Night",
+        "text": "Clear and cold. Low: 26-30"
+      },
+      {
+        "period": "Tuesday",
+        "text": "Sunny and seasonable. High: 55-59"
+      }
+    ]
   },
   "sevenDay": {
     "issued": "Sunday, November 15, 2026 at 08:52 AM (Corman, Funk)",
@@ -107,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "14:00",
+      "temp": "49",
+      "dewpoint": "32",
+      "rh": "51",
+      "windDir": "NNW",
+      "windSpeed": "7",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "13:00",
+      "temp": "49",
+      "dewpoint": "33",
+      "rh": "54",
+      "windDir": "NNW",
+      "windSpeed": "9",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "12:00",
       "temp": "48",
       "dewpoint": "31",
@@ -146,28 +189,6 @@
       "rh": "68",
       "windDir": "NW",
       "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "08:00",
-      "temp": "43",
-      "dewpoint": "35",
-      "rh": "74",
-      "windDir": "SW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "40",
-      "dewpoint": "34",
-      "rh": "79",
-      "windDir": "WNW",
-      "windSpeed": "1",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
@@ -379,5 +400,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-15T17:42:03.872Z"
+  "updated": "2026-11-15T19:31:19.644Z"
 }

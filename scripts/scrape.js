@@ -2673,6 +2673,16 @@ async function runScraper() {
                     events.push(row); postCreated++;
                 } else {
                     postStamped++;
+                    // The entry's SITE applies to a stamped feed row too (2026-11-15): Penn Manor
+                    // posted the 11-17 PIAA semifinal at Exeter Township as "@ Parkland High School".
+                    // N → "vs" + neutralSite; H → "vs"; A / blank → untouched. Location: the row's
+                    // own venue text wins; the entry's fills it only when the row has none.
+                    const stampSite = String(g.site || '').trim().toUpperCase();
+                    if (stampSite === 'N' || stampSite === 'H') {
+                        row.title = String(row.title || '').replace(/\s@\s/, ' vs ');
+                        if (stampSite === 'N') row.neutralSite = true;
+                        if (!row.location && g.location && !/site tba/i.test(g.location)) row.location = String(g.location).trim();
+                    }
                     // A carried-forward TBA row meets the entry's real time: take it (2026-11-11).
                     if (row.timeTBA && !dateOnly) {
                         row.date = new Date(ms).toISOString();

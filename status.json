@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-11-14T23:17:47.872Z",
-  "totalEvents": 2068,
-  "withDescription": 866,
-  "withImage": 242,
+  "generatedAt": "2026-11-15T01:09:27.222Z",
+  "totalEvents": 2065,
+  "withDescription": 863,
+  "withImage": 239,
   "familyFriendly": 60,
   "interests": {
     "civic": 98,
@@ -23,7 +23,7 @@
     "artsmu": 49,
     "eckert": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 570,
+    "muGetInvolved": 567,
     "pennManor": 660,
     "borough": 49,
     "vfw": 6,
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-14T23:15:21.693Z"
+    "lastSyncAt": "2026-11-15T01:03:11.120Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-14T23:17:38.175Z"
+    "checkedAt": "2026-11-15T01:09:16.363Z"
   },
   "artsmuMerge": {
     "fetched": 49,
@@ -262,6 +262,20 @@
   },
   "recentlyAdded": [
     {
+      "key": "Real Talk, Real Skills: Filter Your Feed|2026-11-05T12:00:00",
+      "firstSeenAt": "2026-11-15T01:09:27.218Z",
+      "title": "Real Talk, Real Skills: Filter Your Feed",
+      "source": "MU",
+      "date": "2026-11-05T12:00:00"
+    },
+    {
+      "key": "Men's Ice Hockey vs Scranton University|2026-11-14T00:00:00.000Z",
+      "firstSeenAt": "2026-11-15T01:09:27.218Z",
+      "title": "Men's Ice Hockey vs Scranton University",
+      "source": "MU",
+      "date": "2026-11-14T00:00:00.000Z"
+    },
+    {
       "key": "RYAN CABRERA w/ Brenden Starr, Michael Wavves & Aly & Andrew|2026-12-05T00:00:00.000Z",
       "firstSeenAt": "2026-11-14T13:57:44.394Z",
       "title": "RYAN CABRERA w/ Brenden Starr, Michael Wavves & Aly & Andrew",
@@ -316,23 +330,9 @@
       "title": "Zoning Hearing Board - Cancelled",
       "source": "Borough",
       "date": "2026-11-19T23:30:00.000Z"
-    },
-    {
-      "key": "Navidades con SOLA|2026-12-04T22:00:00.000Z",
-      "firstSeenAt": "2026-11-13T18:03:02.260Z",
-      "title": "Navidades con SOLA",
-      "source": "MU",
-      "date": "2026-12-04T22:00:00.000Z"
-    },
-    {
-      "key": "COMEDIAN RAJ BELANI|2026-12-04T00:00:00.000Z",
-      "firstSeenAt": "2026-11-13T15:57:30.043Z",
-      "title": "COMEDIAN RAJ BELANI",
-      "source": "Other",
-      "date": "2026-12-04T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 2,
   "skippedByRule": {
     "total": 438,
     "reasons": {

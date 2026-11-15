@@ -1,18 +1,14 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Saturday, November 14, 2026 at 03:37 PM (Fossa, Koefoot, Langenbach, Student Meteorologists)",
+    "issued": "Sunday, November 15, 2026 at 08:09 AM (Corman, Funk, Student Meteorologists)",
     "periods": [
       {
+        "period": "Today",
+        "text": "Turning out mostly cloudy, breezy and cool. High: 48-52"
+      },
+      {
         "period": "Tonight",
-        "text": "Partly cloudy. Low: 34-38"
-      },
-      {
-        "period": "Tomorrow",
-        "text": ".Breezy and cool with a mix of clouds and sun. High: 48-52"
-      },
-      {
-        "period": "Tomorrow Night",
         "text": "Partly cloudy. Low: 32-36"
       },
       {
@@ -20,33 +16,21 @@
         "text": "Partly sunny and seasonable. High: 52-56"
       },
       {
+        "period": "Monday Night",
+        "text": "Clear and cold. Low: 26-30"
+      },
+      {
         "period": "Tuesday",
-        "text": "Mostly sunny and seasonable. High: 55-59"
+        "text": "Sunny and seasonable. High: 55-59"
       }
     ]
   },
   "sevenDay": {
-    "issued": "Saturday, November 14, 2026 at 08:51 AM (Corman, Smith)",
+    "issued": "Sunday, November 15, 2026 at 08:52 AM (Corman, Funk)",
     "days": [
       {
-        "period": "Saturday",
-        "sky": "Mostly Cloudy",
-        "weather": "Breezy",
-        "pop": "<10%",
-        "temp": "48",
-        "conf": "5"
-      },
-      {
-        "period": "Saturday night",
-        "sky": "Partly Cloudy",
-        "weather": "Fair",
-        "pop": "<10%",
-        "temp": "36",
-        "conf": "5"
-      },
-      {
         "period": "Sunday",
-        "sky": "Clouds & Sun",
+        "sky": "Mostly Cloudy",
         "weather": "Breezy",
         "pop": "<10%",
         "temp": "50",
@@ -70,7 +54,7 @@
       },
       {
         "period": "Monday night",
-        "sky": "Mainly Clear",
+        "sky": "Clear Skies",
         "weather": "Cold",
         "pop": "<10%",
         "temp": "28",
@@ -110,14 +94,30 @@
       },
       {
         "period": "Thursday",
-        "sky": "Sunny",
+        "sky": "Mostly Sunny",
         "weather": "Pleasant",
         "pop": "<10%",
-        "temp": "low 60s",
-        "conf": "4"
+        "temp": "64",
+        "conf": "5"
+      },
+      {
+        "period": "Thursday night",
+        "sky": "Mainly Clear",
+        "weather": "Fair",
+        "pop": "<10%",
+        "temp": "32",
+        "conf": "5"
       },
       {
         "period": "Friday",
+        "sky": "Mostly Sunny",
+        "weather": "Mild",
+        "pop": "<10%",
+        "temp": "mid 60s",
+        "conf": "4"
+      },
+      {
+        "period": "Saturday",
         "sky": "Mostly Sunny",
         "weather": "Mild",
         "pop": "<10%",
@@ -127,6 +127,28 @@
     ]
   },
   "observations": [
+    {
+      "time": "09:00",
+      "temp": "46",
+      "dewpoint": "36",
+      "rh": "68",
+      "windDir": "NW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "08:00",
+      "temp": "43",
+      "dewpoint": "35",
+      "rh": "74",
+      "windDir": "SW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
     {
       "time": "07:00",
       "temp": "40",
@@ -167,28 +189,6 @@
       "rh": "71",
       "windDir": "NW",
       "windSpeed": "7",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "03:00",
-      "temp": "44",
-      "dewpoint": "35",
-      "rh": "71",
-      "windDir": "WSW",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "02:00",
-      "temp": "44",
-      "dewpoint": "36",
-      "rh": "72",
-      "windDir": "NW",
-      "windSpeed": "6",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
@@ -400,5 +400,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-15T12:55:47.468Z"
+  "updated": "2026-11-15T14:43:32.141Z"
 }

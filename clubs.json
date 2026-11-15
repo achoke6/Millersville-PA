@@ -28,9 +28,9 @@
   },
   {
     "name": "All Greek Council",
-    "category": "Fundraiser",
+    "category": "Social",
     "categories": [
-      "Fundraiser"
+      "Social"
     ],
     "shortName": "",
     "id": ""
@@ -695,9 +695,9 @@
   },
   {
     "name": "Equestrian Club",
-    "category": "Sporting",
+    "category": "Social",
     "categories": [
-      "Sporting"
+      "Social"
     ],
     "shortName": "",
     "id": ""
@@ -718,10 +718,8 @@
   },
   {
     "name": "Fencing Guild",
-    "category": "Social",
+    "category": "Fundraiser",
     "categories": [
-      "Social",
-      "Sporting",
       "Fundraiser"
     ],
     "shortName": "",
@@ -804,12 +802,12 @@
   },
   {
     "name": "Geology Club",
-    "category": "Trip",
+    "category": "Academic",
     "categories": [
-      "Trip"
+      "Academic"
     ],
-    "shortName": "",
-    "id": ""
+    "shortName": "GeoClub",
+    "id": "geologyclub"
   },
   {
     "name": "Get Involved Help",
@@ -880,8 +878,10 @@
   },
   {
     "name": "Ice Hockey Club (D3)",
-    "category": "",
-    "categories": [],
+    "category": "Sporting",
+    "categories": [
+      "Sporting"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1801,9 +1801,9 @@
   },
   {
     "name": "University Activities Board",
-    "category": "Trip",
+    "category": "Meeting",
     "categories": [
-      "Trip"
+      "Meeting"
     ],
     "shortName": "UAB",
     "id": ""

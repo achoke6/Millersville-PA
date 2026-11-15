@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-11-13T19:17:54.307Z",
-  "totalEvents": 2073,
-  "withDescription": 871,
-  "withImage": 246,
+  "generatedAt": "2026-11-15T17:07:33.880Z",
+  "totalEvents": 2066,
+  "withDescription": 863,
+  "withImage": 239,
   "familyFriendly": 60,
   "interests": {
     "civic": 98,
-    "arts": 101,
-    "greek": 24,
-    "causes": 36,
+    "arts": 100,
+    "greek": 23,
+    "causes": 35,
     "learn": 65,
     "food": 126,
     "music": 103,
@@ -16,15 +16,15 @@
     "reshall": 2,
     "active": 4
   },
-  "eventsToday": 17,
+  "eventsToday": 7,
   "sources": {
-    "muAthletics": 389,
+    "muAthletics": 388,
     "muCalendar": 191,
-    "artsmu": 50,
+    "artsmu": 49,
     "eckert": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 574,
-    "pennManor": 659,
+    "muGetInvolved": 567,
+    "pennManor": 661,
     "borough": 49,
     "vfw": 6,
     "phantomPower": 14,
@@ -72,7 +72,7 @@
       "latest": "2026-11-29T18:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-11-14T01:00:00.000Z",
+      "earliest": "2026-11-16T00:00:00.000Z",
       "latest": "2026-12-19T01:00:00.000Z"
     },
     "community": {
@@ -95,66 +95,66 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 73
+      "daysSinceMoved": 75
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 84
+      "daysSinceMoved": 86
     },
     "artsmu": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 86
+      "daysSinceMoved": 88
     },
     "eckert": {
       "newest": "2026-11-12",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 6
     },
     "campsAlumni": {
       "newest": "2027-08-20",
-      "daysSinceMoved": 25
+      "daysSinceMoved": 27
     },
     "muGetInvolved": {
       "newest": "2027-10-27",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 12
     },
     "pennManor": {
       "newest": "2027-10-25",
-      "daysSinceMoved": 19
+      "daysSinceMoved": 21
     },
     "borough": {
       "newest": "2027-10-31",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 15
     },
     "vfw": {
       "newest": "2026-11-29",
-      "daysSinceMoved": 4
+      "daysSinceMoved": 6
     },
     "phantomPower": {
       "newest": "2026-12-19",
-      "daysSinceMoved": 15
+      "daysSinceMoved": 17
     },
     "community": {
       "newest": "2027-05-16",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 5
     },
     "manor": {
       "newest": "2027-11-03",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 12
     },
     "raneyCellars": {
       "newest": "2026-11-19",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 9
     },
     "theBackyard": {
       "newest": "2027-04-28",
-      "daysSinceMoved": 36
+      "daysSinceMoved": 38
     }
   },
   "sports": {
-    "total": 942,
-    "scored": 210,
-    "wins": 102,
-    "losses": 95,
+    "total": 943,
+    "scored": 203,
+    "wins": 97,
+    "losses": 93,
     "ties": 13
   },
   "registrations": {
@@ -164,25 +164,25 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 5,
-    "pendingPast": 13,
+    "pendingFuture": 3,
+    "pendingPast": 15,
     "pendingBySource": {
       "Youth Sports": 1,
       "PM Community": 1,
-      "Campus Life": 3
+      "Campus Life": 1
     },
-    "stalePast": 31,
-    "lastSyncAt": "2026-11-13T19:13:33.011Z"
+    "stalePast": 33,
+    "lastSyncAt": "2026-11-15T17:05:09.827Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-13T19:17:47.704Z"
+    "checkedAt": "2026-11-15T17:07:23.357Z"
   },
   "artsmuMerge": {
-    "fetched": 50,
-    "merged": 48,
+    "fetched": 49,
+    "merged": 47,
     "standalone": 2
   },
   "sourceHealth": {
@@ -192,42 +192,42 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 346,
+        "value": 344,
         "min": 45,
         "skipped": false
       },
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 194,
+        "value": 192,
         "min": 60,
         "skipped": false
       },
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 203,
+        "value": 201,
         "min": 30,
         "skipped": false
       },
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 352,
+        "value": 350,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 553,
+        "value": 555,
         "min": 150,
         "skipped": false
       },
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 389,
+        "value": 388,
         "min": 100,
         "skipped": false
       },
@@ -262,86 +262,86 @@
   },
   "recentlyAdded": [
     {
-      "key": "Wellness Fair|2026-11-12T16:30:00.000Z",
-      "firstSeenAt": "2026-11-13T18:03:02.260Z",
-      "title": "Wellness Fair",
-      "source": "MU",
-      "date": "2026-11-12T16:30:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board - Cancelled|2026-11-19T23:30:00.000Z",
-      "firstSeenAt": "2026-11-13T18:03:02.260Z",
-      "title": "Zoning Hearing Board - Cancelled",
-      "source": "Borough",
-      "date": "2026-11-19T23:30:00.000Z"
-    },
-    {
-      "key": "Navidades con SOLA|2026-12-04T22:00:00.000Z",
-      "firstSeenAt": "2026-11-13T18:03:02.260Z",
-      "title": "Navidades con SOLA",
-      "source": "MU",
-      "date": "2026-12-04T22:00:00.000Z"
-    },
-    {
-      "key": "COMEDIAN RAJ BELANI|2026-12-04T00:00:00.000Z",
-      "firstSeenAt": "2026-11-13T15:57:30.043Z",
-      "title": "COMEDIAN RAJ BELANI",
+      "key": "CREED FISHER w. Swim The Current & Cody Tyler|2026-12-06T01:00:00.000Z",
+      "firstSeenAt": "2026-11-15T11:10:11.952Z",
+      "title": "CREED FISHER w. Swim The Current & Cody Tyler",
       "source": "Other",
-      "date": "2026-12-04T00:00:00.000Z"
+      "date": "2026-12-06T01:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-13T08:32:00.471Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-09-06T23:00:00.000Z"
+      "key": "Girls Varsity Field Hockey @ Parkland High School|2026-11-18T01:00:00.000Z",
+      "firstSeenAt": "2026-11-15T03:42:35.159Z",
+      "title": "Girls Varsity Field Hockey @ Parkland High School",
+      "source": "PM",
+      "date": "2026-11-18T01:00:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2027-09-29T12:30:00.000Z",
-      "firstSeenAt": "2026-11-13T08:32:00.471Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-09-29T12:30:00.000Z"
+      "key": "Real Talk, Real Skills: Filter Your Feed|2026-11-05T12:00:00",
+      "firstSeenAt": "2026-11-15T01:09:27.218Z",
+      "title": "Real Talk, Real Skills: Filter Your Feed",
+      "source": "MU",
+      "date": "2026-11-05T12:00:00"
     },
     {
-      "key": "Supervisors Meeting|2027-10-04T23:00:00.000Z",
-      "firstSeenAt": "2026-11-13T08:32:00.471Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-10-04T23:00:00.000Z"
+      "key": "Men's Ice Hockey vs Scranton University|2026-11-14T00:00:00.000Z",
+      "firstSeenAt": "2026-11-15T01:09:27.218Z",
+      "title": "Men's Ice Hockey vs Scranton University",
+      "source": "MU",
+      "date": "2026-11-14T00:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2027-10-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-13T08:32:00.471Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-10-06T23:00:00.000Z"
+      "key": "RYAN CABRERA w/ Brenden Starr, Michael Wavves & Aly & Andrew|2026-12-05T00:00:00.000Z",
+      "firstSeenAt": "2026-11-14T13:57:44.394Z",
+      "title": "RYAN CABRERA w/ Brenden Starr, Michael Wavves & Aly & Andrew",
+      "source": "Other",
+      "date": "2026-12-05T00:00:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2027-10-27T12:30:00.000Z",
-      "firstSeenAt": "2026-11-13T08:32:00.471Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-10-27T12:30:00.000Z"
+      "key": "Wednesday Night Dinner|2027-04-28T22:00:00.000Z",
+      "firstSeenAt": "2026-11-14T01:38:21.848Z",
+      "title": "Wednesday Night Dinner",
+      "source": "MU",
+      "date": "2027-04-28T22:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2027-11-01T23:00:00.000Z",
-      "firstSeenAt": "2026-11-13T08:32:00.471Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-11-01T23:00:00.000Z"
+      "key": "Tell School of Music Recital Hour|2027-05-05T19:00:00.000Z",
+      "firstSeenAt": "2026-11-14T01:38:21.848Z",
+      "title": "Tell School of Music Recital Hour",
+      "source": "MU",
+      "date": "2027-05-05T19:00:00.000Z"
+    },
+    {
+      "key": "Wednesday Night Dinner|2027-05-05T22:00:00.000Z",
+      "firstSeenAt": "2026-11-14T01:38:21.848Z",
+      "title": "Wednesday Night Dinner",
+      "source": "MU",
+      "date": "2027-05-05T22:00:00.000Z"
+    },
+    {
+      "key": "Coed Varsity Sideline Cheerleading @ Upper Dublin High School|2027-09-03T23:00:00.000Z",
+      "firstSeenAt": "2026-11-14T01:38:21.848Z",
+      "title": "Coed Varsity Sideline Cheerleading @ Upper Dublin High School",
+      "source": "PM",
+      "date": "2027-09-03T23:00:00.000Z"
+    },
+    {
+      "key": "Civil Service Commission - Cancelled|2026-11-16T23:00:00.000Z",
+      "firstSeenAt": "2026-11-13T21:47:18.361Z",
+      "title": "Civil Service Commission - Cancelled",
+      "source": "Borough",
+      "date": "2026-11-16T23:00:00.000Z"
     }
   ],
   "addedLastRun": 0,
   "skippedByRule": {
-    "total": 437,
+    "total": 438,
     "reasons": {
       "pm-sub-varsity": 297,
       "mu-calendar-athletics": 72,
       "camps-skipped": 28,
       "intramural-dup": 1,
       "borough-collection": 13,
-      "borough-reservation": 16,
+      "borough-reservation": 17,
       "submission-not-approved": 1,
       "submission-out-of-range": 9
     }

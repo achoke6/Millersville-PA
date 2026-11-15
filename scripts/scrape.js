@@ -2263,7 +2263,9 @@ async function runScraper() {
         const { prevEvents, lastGood } = pmPrevLoad();
         const r = pmCarryForward(prevEvents, lastGood[kind], kind, Date.now(), maxMs);
         if (r.rows.length) {
-            for (const row of r.rows) events.push(row);
+            // 2026-11-13: drop the reused rows' stale `interests` so the interests pass re-classifies
+            // them — otherwise they count as "curated" (25 Manor rows did during the 11-13 outage).
+            for (const row of r.rows) { delete row.interests; events.push(row); }
             pmCarry[kind] = r.rows.length;
             console.log(`♻️ ${label}: carried forward ${r.rows.length} row(s) from last good run (${r.lastGood})`);
         } else {

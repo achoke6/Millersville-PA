@@ -41,7 +41,11 @@ const CIVIC_SOURCES = new Set(['Borough', 'Manor', 'PM', 'Community']);
 
 // A performance whose medium is music — used to split the arts/music tag families.
 const MUSIC_PERF = /\b(concert|recital|live music|open mic|karaoke|jazz|orchestra|choir|chorale|chorus|a cappella|acappella|band|ensemble|symphony|marimba|quartet|quintet|brass|strings|songwriter|singer|vocal|bluegrass|celtic music|zydeco|choral)\b/;
-const MUSIC_NEG = /\b(rehearsals?|auditions?|tryouts?|lessons?|band camp|marching band practice)\b/;
+const MUSIC_NEG = /\b(rehearsals?|auditions?|tryouts?|lessons?|band camp|marching band practice|comedian|comedy night|pageant|drag (?:show|night|brunch|bingo)|waffles?|bake sale)\b/;   // 2026-11-13: Phantom's comedy/drag nights + a club waffle sale read as music
+// A bare "<School> Elementary / Middle School Chorus" row is a Penn Manor untimed rehearsal day
+// (the family pass skips the same rows) — no interests at all. Real concerts carry concert /
+// performance words and are untouched (2026-11-13).
+const PM_REHEARSAL_TITLE = /\b(?:elementary|middle school|intermediate)\s+chorus$/;
 // titles whose medium is plainly not music, used when the music split falls back to the description
 const NOT_MUSIC_TITLE = /\b(film|screening|movie|documentary|exhibit|exhibition|gallery|play|plays|theatre|theater|dance|workshop|magic|comedy|improv)\b/;
 
@@ -99,6 +103,7 @@ function classifyEvent(e) {
     const org = lc(e.orgName) + ' ' + lc(tags[1]);
     const out = [];
     const add = k => { if (KEYS.includes(k) && !out.includes(k) && out.length < MAX_PER_EVENT) out.push(k); };
+    if (src === 'PM' && PM_REHEARSAL_TITLE.test(title)) return out;   // rehearsal day, not an event (2026-11-13)
 
     // ---- 3. tag / venue / org signals ------------------------------------
     if (tags.includes('Greek Life')) add('greek');

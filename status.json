@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-15T01:54:40.661Z",
-  "totalEvents": 2065,
+  "generatedAt": "2026-11-15T03:42:35.162Z",
+  "totalEvents": 2066,
   "withDescription": 863,
   "withImage": 239,
   "familyFriendly": 60,
@@ -24,7 +24,7 @@
     "eckert": 3,
     "campsAlumni": 11,
     "muGetInvolved": 567,
-    "pennManor": 660,
+    "pennManor": 661,
     "borough": 49,
     "vfw": 6,
     "phantomPower": 14,
@@ -151,7 +151,7 @@
     }
   },
   "sports": {
-    "total": 942,
+    "total": 943,
     "scored": 203,
     "wins": 97,
     "losses": 93,
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-15T01:52:21.695Z"
+    "lastSyncAt": "2026-11-15T03:40:04.412Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-15T01:54:31.846Z"
+    "checkedAt": "2026-11-15T03:42:25.730Z"
   },
   "artsmuMerge": {
     "fetched": 49,
@@ -220,7 +220,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 554,
+        "value": 555,
         "min": 150,
         "skipped": false
       },
@@ -261,6 +261,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Girls Varsity Field Hockey @ Parkland High School|2026-11-18T01:00:00.000Z",
+      "firstSeenAt": "2026-11-15T03:42:35.159Z",
+      "title": "Girls Varsity Field Hockey @ Parkland High School",
+      "source": "PM",
+      "date": "2026-11-18T01:00:00.000Z"
+    },
     {
       "key": "Real Talk, Real Skills: Filter Your Feed|2026-11-05T12:00:00",
       "firstSeenAt": "2026-11-15T01:09:27.218Z",
@@ -323,16 +330,9 @@
       "title": "Wellness Fair",
       "source": "MU",
       "date": "2026-11-12T16:30:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board - Cancelled|2026-11-19T23:30:00.000Z",
-      "firstSeenAt": "2026-11-13T18:03:02.260Z",
-      "title": "Zoning Hearing Board - Cancelled",
-      "source": "Borough",
-      "date": "2026-11-19T23:30:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 438,
     "reasons": {

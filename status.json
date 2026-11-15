@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-15T09:22:17.655Z",
+  "generatedAt": "2026-11-15T11:10:11.956Z",
   "totalEvents": 2066,
   "withDescription": 863,
   "withImage": 239,
@@ -72,7 +72,7 @@
       "latest": "2026-11-29T18:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-11-15T01:00:00.000Z",
+      "earliest": "2026-11-16T00:00:00.000Z",
       "latest": "2026-12-19T01:00:00.000Z"
     },
     "community": {
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-15T09:19:50.797Z"
+    "lastSyncAt": "2026-11-15T11:07:41.365Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-15T09:22:06.780Z"
+    "checkedAt": "2026-11-15T11:10:01.268Z"
   },
   "artsmuMerge": {
     "fetched": 49,
@@ -213,7 +213,7 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 351,
+        "value": 350,
         "min": 21,
         "skipped": false
       },
@@ -261,6 +261,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "CREED FISHER w. Swim The Current & Cody Tyler|2026-12-06T01:00:00.000Z",
+      "firstSeenAt": "2026-11-15T11:10:11.952Z",
+      "title": "CREED FISHER w. Swim The Current & Cody Tyler",
+      "source": "Other",
+      "date": "2026-12-06T01:00:00.000Z"
+    },
     {
       "key": "Girls Varsity Field Hockey @ Parkland High School|2026-11-18T01:00:00.000Z",
       "firstSeenAt": "2026-11-15T03:42:35.159Z",
@@ -323,16 +330,9 @@
       "title": "Civil Service Commission - Cancelled",
       "source": "Borough",
       "date": "2026-11-16T23:00:00.000Z"
-    },
-    {
-      "key": "Wellness Fair|2026-11-12T16:30:00.000Z",
-      "firstSeenAt": "2026-11-13T18:03:02.260Z",
-      "title": "Wellness Fair",
-      "source": "MU",
-      "date": "2026-11-12T16:30:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 438,
     "reasons": {

@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-11-16T09:41:42.276Z",
+  "generatedAt": "2026-11-16T11:29:45.719Z",
   "totalEvents": 2056,
-  "withDescription": 858,
-  "withImage": 235,
+  "withDescription": 859,
+  "withImage": 234,
   "familyFriendly": 60,
   "interests": {
     "arts": 100,
@@ -11,7 +11,7 @@
     "causes": 35,
     "learn": 65,
     "food": 126,
-    "music": 89,
+    "music": 88,
     "crafts": 12,
     "reshall": 2,
     "active": 4
@@ -27,7 +27,7 @@
     "pennManor": 658,
     "borough": 48,
     "vfw": 6,
-    "phantomPower": 14,
+    "phantomPower": 13,
     "community": 14,
     "manor": 37,
     "raneyCellars": 4,
@@ -72,7 +72,7 @@
       "latest": "2026-11-29T18:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-11-16T00:00:00.000Z",
+      "earliest": "2026-11-17T00:00:00.000Z",
       "latest": "2026-12-19T01:00:00.000Z"
     },
     "community": {
@@ -158,8 +158,8 @@
     "ties": 13
   },
   "registrations": {
-    "open": 4,
-    "next2Weeks": 1,
+    "open": 5,
+    "next2Weeks": 2,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-16T09:39:43.841Z"
+    "lastSyncAt": "2026-11-16T11:27:15.126Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-16T09:41:38.887Z"
+    "checkedAt": "2026-11-16T11:29:36.824Z"
   },
   "artsmuMerge": {
     "fetched": 49,
@@ -186,10 +186,8 @@
     "standalone": 2
   },
   "sourceHealth": {
-    "ok": false,
-    "failing": [
-      "manor.count"
-    ],
+    "ok": true,
+    "failing": [],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -215,7 +213,7 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 350,
+        "value": 349,
         "min": 21,
         "skipped": false
       },
@@ -242,10 +240,9 @@
       },
       {
         "key": "manor.count",
-        "ok": false,
+        "ok": true,
         "value": 37,
-        "min": 10,
-        "carriedForward": 37
+        "min": 10
       },
       {
         "key": "muHudl.pairRatio",
@@ -265,11 +262,11 @@
   },
   "recentlyAdded": [
     {
-      "key": "Radiator Hospital w. Noun|2026-11-16T00:00:00.000Z",
-      "firstSeenAt": "2026-11-16T09:41:42.272Z",
-      "title": "Radiator Hospital w. Noun",
+      "key": "Intramural Pickleball|2026-11-18T17:00:00.000Z",
+      "firstSeenAt": "2026-11-16T11:29:45.716Z",
+      "title": "Intramural Pickleball",
       "source": "Other",
-      "date": "2026-11-16T00:00:00.000Z"
+      "date": "2026-11-18T17:00:00.000Z"
     },
     {
       "key": "Girls Varsity Field Hockey vs Parkland High School|2026-11-18T01:00:00.000Z",

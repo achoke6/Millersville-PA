@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-11-16T09:38:39.513Z",
-  "totalEvents": 2055,
+  "generatedAt": "2026-11-16T09:41:42.276Z",
+  "totalEvents": 2056,
   "withDescription": 858,
-  "withImage": 234,
+  "withImage": 235,
   "familyFriendly": 60,
   "interests": {
     "arts": 100,
@@ -11,7 +11,7 @@
     "causes": 35,
     "learn": 65,
     "food": 126,
-    "music": 88,
+    "music": 89,
     "crafts": 12,
     "reshall": 2,
     "active": 4
@@ -27,7 +27,7 @@
     "pennManor": 658,
     "borough": 48,
     "vfw": 6,
-    "phantomPower": 13,
+    "phantomPower": 14,
     "community": 14,
     "manor": 37,
     "raneyCellars": 4,
@@ -72,7 +72,7 @@
       "latest": "2026-11-29T18:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-11-17T00:00:00.000Z",
+      "earliest": "2026-11-16T00:00:00.000Z",
       "latest": "2026-12-19T01:00:00.000Z"
     },
     "community": {
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-16T09:33:00.427Z"
+    "lastSyncAt": "2026-11-16T09:39:43.841Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-16T09:38:28.851Z"
+    "checkedAt": "2026-11-16T09:41:38.887Z"
   },
   "artsmuMerge": {
     "fetched": 49,
@@ -186,8 +186,10 @@
     "standalone": 2
   },
   "sourceHealth": {
-    "ok": true,
-    "failing": [],
+    "ok": false,
+    "failing": [
+      "manor.count"
+    ],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -240,9 +242,10 @@
       },
       {
         "key": "manor.count",
-        "ok": true,
+        "ok": false,
         "value": 37,
-        "min": 10
+        "min": 10,
+        "carriedForward": 37
       },
       {
         "key": "muHudl.pairRatio",
@@ -261,6 +264,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Radiator Hospital w. Noun|2026-11-16T00:00:00.000Z",
+      "firstSeenAt": "2026-11-16T09:41:42.272Z",
+      "title": "Radiator Hospital w. Noun",
+      "source": "Other",
+      "date": "2026-11-16T00:00:00.000Z"
+    },
     {
       "key": "Girls Varsity Field Hockey vs Parkland High School|2026-11-18T01:00:00.000Z",
       "firstSeenAt": "2026-11-15T17:45:39.899Z",
@@ -323,16 +333,9 @@
       "title": "Coed Varsity Sideline Cheerleading @ Upper Dublin High School",
       "source": "PM",
       "date": "2027-09-03T23:00:00.000Z"
-    },
-    {
-      "key": "Civil Service Commission - Cancelled|2026-11-16T23:00:00.000Z",
-      "firstSeenAt": "2026-11-13T21:47:18.361Z",
-      "title": "Civil Service Commission - Cancelled",
-      "source": "Borough",
-      "date": "2026-11-16T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 438,
     "reasons": {

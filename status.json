@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-11-16T13:19:17.076Z",
-  "totalEvents": 2056,
-  "withDescription": 859,
-  "withImage": 234,
+  "generatedAt": "2026-11-16T15:07:36.722Z",
+  "totalEvents": 2060,
+  "withDescription": 865,
+  "withImage": 235,
   "familyFriendly": 60,
   "interests": {
     "arts": 100,
@@ -12,18 +12,18 @@
     "learn": 65,
     "food": 126,
     "music": 88,
-    "crafts": 12,
+    "crafts": 16,
     "reshall": 2,
     "active": 4
   },
-  "eventsToday": 17,
+  "eventsToday": 18,
   "sources": {
-    "muAthletics": 387,
-    "muCalendar": 191,
+    "muAthletics": 385,
+    "muCalendar": 196,
     "artsmu": 49,
     "eckert": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 563,
+    "muGetInvolved": 564,
     "pennManor": 658,
     "borough": 48,
     "vfw": 6,
@@ -151,7 +151,7 @@
     }
   },
   "sports": {
-    "total": 941,
+    "total": 939,
     "scored": 204,
     "wins": 98,
     "losses": 93,
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-16T13:15:13.807Z"
+    "lastSyncAt": "2026-11-16T15:04:44.265Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-16T13:19:07.099Z"
+    "checkedAt": "2026-11-16T15:07:28.171Z"
   },
   "artsmuMerge": {
     "fetched": 49,
@@ -227,7 +227,7 @@
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 387,
+        "value": 385,
         "min": 100,
         "skipped": false
       },
@@ -262,6 +262,48 @@
   },
   "recentlyAdded": [
     {
+      "key": "FALL ART SALES!|2026-11-16T10:00:00",
+      "firstSeenAt": "2026-11-16T15:07:36.719Z",
+      "title": "FALL ART SALES!",
+      "source": "MU",
+      "date": "2026-11-16T10:00:00"
+    },
+    {
+      "key": "FALL ART SALES!|2026-11-17T10:00:00",
+      "firstSeenAt": "2026-11-16T15:07:36.719Z",
+      "title": "FALL ART SALES!",
+      "source": "MU",
+      "date": "2026-11-17T10:00:00"
+    },
+    {
+      "key": "FALL ART SALES!|2026-11-18T10:00:00",
+      "firstSeenAt": "2026-11-16T15:07:36.719Z",
+      "title": "FALL ART SALES!",
+      "source": "MU",
+      "date": "2026-11-18T10:00:00"
+    },
+    {
+      "key": "FALL ART SALES!|2026-11-19T10:00:00",
+      "firstSeenAt": "2026-11-16T15:07:36.719Z",
+      "title": "FALL ART SALES!",
+      "source": "MU",
+      "date": "2026-11-19T10:00:00"
+    },
+    {
+      "key": "Butter Ask First!|2026-11-23T16:30:00.000Z",
+      "firstSeenAt": "2026-11-16T15:07:36.719Z",
+      "title": "Butter Ask First!",
+      "source": "MU",
+      "date": "2026-11-23T16:30:00.000Z"
+    },
+    {
+      "key": "Millersville Area Historical Society presents \"Urban & the Chocolate King”|2026-12-05T09:00:00",
+      "firstSeenAt": "2026-11-16T15:07:36.719Z",
+      "title": "Millersville Area Historical Society presents \"Urban & the Chocolate King”",
+      "source": "MU",
+      "date": "2026-12-05T09:00:00"
+    },
+    {
       "key": "Intramural Pickleball|2026-11-18T17:00:00.000Z",
       "firstSeenAt": "2026-11-16T11:29:45.716Z",
       "title": "Intramural Pickleball",
@@ -288,51 +330,9 @@
       "title": "Real Talk, Real Skills: Filter Your Feed",
       "source": "MU",
       "date": "2026-11-05T12:00:00"
-    },
-    {
-      "key": "Men's Ice Hockey vs Scranton University|2026-11-14T00:00:00.000Z",
-      "firstSeenAt": "2026-11-15T01:09:27.218Z",
-      "title": "Men's Ice Hockey vs Scranton University",
-      "source": "MU",
-      "date": "2026-11-14T00:00:00.000Z"
-    },
-    {
-      "key": "RYAN CABRERA w/ Brenden Starr, Michael Wavves & Aly & Andrew|2026-12-05T00:00:00.000Z",
-      "firstSeenAt": "2026-11-14T13:57:44.394Z",
-      "title": "RYAN CABRERA w/ Brenden Starr, Michael Wavves & Aly & Andrew",
-      "source": "Other",
-      "date": "2026-12-05T00:00:00.000Z"
-    },
-    {
-      "key": "Wednesday Night Dinner|2027-04-28T22:00:00.000Z",
-      "firstSeenAt": "2026-11-14T01:38:21.848Z",
-      "title": "Wednesday Night Dinner",
-      "source": "MU",
-      "date": "2027-04-28T22:00:00.000Z"
-    },
-    {
-      "key": "Tell School of Music Recital Hour|2027-05-05T19:00:00.000Z",
-      "firstSeenAt": "2026-11-14T01:38:21.848Z",
-      "title": "Tell School of Music Recital Hour",
-      "source": "MU",
-      "date": "2027-05-05T19:00:00.000Z"
-    },
-    {
-      "key": "Wednesday Night Dinner|2027-05-05T22:00:00.000Z",
-      "firstSeenAt": "2026-11-14T01:38:21.848Z",
-      "title": "Wednesday Night Dinner",
-      "source": "MU",
-      "date": "2027-05-05T22:00:00.000Z"
-    },
-    {
-      "key": "Coed Varsity Sideline Cheerleading @ Upper Dublin High School|2027-09-03T23:00:00.000Z",
-      "firstSeenAt": "2026-11-14T01:38:21.848Z",
-      "title": "Coed Varsity Sideline Cheerleading @ Upper Dublin High School",
-      "source": "PM",
-      "date": "2027-09-03T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 6,
   "skippedByRule": {
     "total": 438,
     "reasons": {

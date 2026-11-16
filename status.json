@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-11-16T20:35:28.661Z",
-  "totalEvents": 1628,
-  "withDescription": 410,
-  "withImage": 235,
+  "generatedAt": "2026-11-16T22:23:33.623Z",
+  "totalEvents": 1630,
+  "withDescription": 412,
+  "withImage": 236,
   "familyFriendly": 44,
   "interests": {
     "arts": 52,
@@ -23,7 +23,7 @@
     "artsmu": 49,
     "eckert": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 277,
+    "muGetInvolved": 279,
     "pennManor": 658,
     "borough": 49,
     "vfw": 6,
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-16T20:26:05.761Z"
+    "lastSyncAt": "2026-11-16T22:20:54.689Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-16T20:35:20.884Z"
+    "checkedAt": "2026-11-16T22:23:26.458Z"
   },
   "artsmuMerge": {
     "fetched": 49,
@@ -264,6 +264,20 @@
   },
   "recentlyAdded": [
     {
+      "key": "UPENN IHSA SHOW|2026-11-29T12:00:00.000Z",
+      "firstSeenAt": "2026-11-16T22:23:33.621Z",
+      "title": "UPENN IHSA SHOW",
+      "source": "MU",
+      "date": "2026-11-29T12:00:00.000Z"
+    },
+    {
+      "key": "Weekly Practice|2026-12-03T22:00:00.000Z",
+      "firstSeenAt": "2026-11-16T22:23:33.621Z",
+      "title": "Weekly Practice",
+      "source": "MU",
+      "date": "2026-12-03T22:00:00.000Z"
+    },
+    {
       "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
       "firstSeenAt": "2026-11-16T19:38:49.508Z",
       "title": "Supervisors Meeting",
@@ -318,23 +332,9 @@
       "title": "FSL: Mu Sigma Upsilon- Pages of Power",
       "source": "MU",
       "date": "2026-11-16T17:00:00.000Z"
-    },
-    {
-      "key": "Eckert Art Gallery Opening Reception: “Field Notes: Learning to See”|2026-09-09T21:00:00.000Z",
-      "firstSeenAt": "2026-11-16T16:01:59.951Z",
-      "title": "Eckert Art Gallery Opening Reception: “Field Notes: Learning to See”",
-      "source": "MU",
-      "date": "2026-09-09T21:00:00.000Z"
-    },
-    {
-      "key": "Election Day|2026-11-03T12:00:00.000Z",
-      "firstSeenAt": "2026-11-16T16:01:59.951Z",
-      "title": "Election Day",
-      "source": "Borough",
-      "date": "2026-11-03T12:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 2,
   "skippedByRule": {
     "total": 366,
     "reasons": {

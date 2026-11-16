@@ -695,9 +695,9 @@
   },
   {
     "name": "Equestrian Club",
-    "category": "Social",
+    "category": "Sporting",
     "categories": [
-      "Social"
+      "Sporting"
     ],
     "shortName": "",
     "id": ""
@@ -718,9 +718,10 @@
   },
   {
     "name": "Fencing Guild",
-    "category": "Fundraiser",
+    "category": "Social",
     "categories": [
-      "Fundraiser"
+      "Social",
+      "Sporting"
     ],
     "shortName": "",
     "id": ""
@@ -1124,7 +1125,7 @@
     "category": "Meeting",
     "categories": [
       "Meeting",
-      "Competition"
+      "Fundraiser"
     ],
     "shortName": "Men's Rugby Club",
     "id": ""
@@ -1913,10 +1914,12 @@
   },
   {
     "name": "Women's Rugby Club",
-    "category": "",
-    "categories": [],
+    "category": "Sports and Leisure",
+    "categories": [
+      "Sports and Leisure"
+    ],
     "shortName": "",
-    "id": ""
+    "id": "wrugby"
   },
   {
     "name": "Women's Soccer",

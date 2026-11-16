@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-16T16:01:59.953Z",
-  "totalEvents": 1620,
-  "withDescription": 409,
+  "generatedAt": "2026-11-16T17:50:30.591Z",
+  "totalEvents": 1621,
+  "withDescription": 410,
   "withImage": 235,
   "familyFriendly": 44,
   "interests": {
@@ -11,19 +11,19 @@
     "causes": 15,
     "learn": 16,
     "crafts": 10,
-    "greek": 8,
+    "greek": 9,
     "music": 59,
     "reshall": 2,
     "active": 3
   },
-  "eventsToday": 16,
+  "eventsToday": 17,
   "sources": {
     "muAthletics": 385,
     "muCalendar": 1,
     "artsmu": 49,
     "eckert": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 276,
+    "muGetInvolved": 277,
     "pennManor": 658,
     "borough": 49,
     "vfw": 6,
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-16T15:59:06.417Z"
+    "lastSyncAt": "2026-11-16T17:47:49.065Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-16T16:01:52.366Z"
+    "checkedAt": "2026-11-16T17:50:21.716Z"
   },
   "artsmuMerge": {
     "fetched": 49,
@@ -188,7 +188,8 @@
   "sourceHealth": {
     "ok": false,
     "failing": [
-      "muCalendar.horizonDays"
+      "muCalendar.horizonDays",
+      "manor.count"
     ],
     "checks": [
       {
@@ -242,9 +243,10 @@
       },
       {
         "key": "manor.count",
-        "ok": true,
+        "ok": false,
         "value": 30,
-        "min": 10
+        "min": 10,
+        "carriedForward": 30
       },
       {
         "key": "muHudl.pairRatio",
@@ -263,6 +265,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "FSL: Mu Sigma Upsilon- Pages of Power|2026-11-16T17:00:00.000Z",
+      "firstSeenAt": "2026-11-16T17:50:30.588Z",
+      "title": "FSL: Mu Sigma Upsilon- Pages of Power",
+      "source": "MU",
+      "date": "2026-11-16T17:00:00.000Z"
+    },
     {
       "key": "Eckert Art Gallery Opening Reception: “Field Notes: Learning to See”|2026-09-09T21:00:00.000Z",
       "firstSeenAt": "2026-11-16T16:01:59.951Z",
@@ -325,16 +334,9 @@
       "title": "Concert Band & Wind Ensemble",
       "source": "MU",
       "date": "2026-11-22T19:30:00.000Z"
-    },
-    {
-      "key": "The Places We Go II by Ross Junior Owusu|2026-12-04T22:00:00.000Z",
-      "firstSeenAt": "2026-11-16T16:01:59.951Z",
-      "title": "The Places We Go II by Ross Junior Owusu",
-      "source": "MU",
-      "date": "2026-12-04T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 50,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 366,
     "reasons": {

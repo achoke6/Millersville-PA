@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-11-15T23:36:19.061Z",
-  "totalEvents": 2066,
-  "withDescription": 863,
-  "withImage": 239,
+  "generatedAt": "2026-11-16T01:23:59.649Z",
+  "totalEvents": 2058,
+  "withDescription": 859,
+  "withImage": 235,
   "familyFriendly": 60,
   "interests": {
-    "civic": 98,
     "arts": 100,
     "greek": 23,
+    "civic": 95,
     "causes": 35,
     "learn": 65,
     "food": 126,
@@ -23,9 +23,9 @@
     "artsmu": 49,
     "eckert": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 567,
-    "pennManor": 661,
-    "borough": 49,
+    "muGetInvolved": 563,
+    "pennManor": 658,
+    "borough": 48,
     "vfw": 6,
     "phantomPower": 14,
     "community": 14,
@@ -60,11 +60,11 @@
       "latest": "2027-10-27T11:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-08-17T12:00:00.000Z",
+      "earliest": "2026-08-19T19:00:00.000Z",
       "latest": "2027-10-25T20:00:00.000Z"
     },
     "borough": {
-      "earliest": "2026-08-17T22:00:00.000Z",
+      "earliest": "2026-08-25T23:00:00.000Z",
       "latest": "2027-10-31T22:00:00.000Z"
     },
     "vfw": {
@@ -151,7 +151,7 @@
     }
   },
   "sports": {
-    "total": 943,
+    "total": 942,
     "scored": 204,
     "wins": 98,
     "losses": 93,
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-15T23:33:56.607Z"
+    "lastSyncAt": "2026-11-16T01:21:49.008Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-15T23:36:10.573Z"
+    "checkedAt": "2026-11-16T01:23:48.035Z"
   },
   "artsmuMerge": {
     "fetched": 49,
@@ -186,8 +186,10 @@
     "standalone": 2
   },
   "sourceHealth": {
-    "ok": true,
-    "failing": [],
+    "ok": false,
+    "failing": [
+      "manor.count"
+    ],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -220,7 +222,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 555,
+        "value": 554,
         "min": 150,
         "skipped": false
       },
@@ -234,15 +236,16 @@
       {
         "key": "pennManorGeneral.count",
         "ok": true,
-        "value": 106,
+        "value": 104,
         "min": 10,
         "skipped": false
       },
       {
         "key": "manor.count",
-        "ok": true,
+        "ok": false,
         "value": 37,
-        "min": 10
+        "min": 10,
+        "carriedForward": 37
       },
       {
         "key": "muHudl.pairRatio",

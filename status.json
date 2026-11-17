@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-17T05:39:51.425Z",
+  "generatedAt": "2026-11-17T07:27:17.206Z",
   "totalEvents": 1618,
   "withDescription": 400,
   "withImage": 228,
@@ -72,7 +72,7 @@
       "latest": "2026-11-29T18:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-11-17T00:00:00.000Z",
+      "earliest": "2026-11-19T01:00:00.000Z",
       "latest": "2026-12-19T01:00:00.000Z"
     },
     "community": {
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-17T05:37:52.379Z"
+    "lastSyncAt": "2026-11-17T07:25:25.116Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-17T05:39:42.497Z"
+    "checkedAt": "2026-11-17T07:27:09.762Z"
   },
   "artsmuMerge": {
     "fetched": 49,
@@ -188,7 +188,8 @@
   "sourceHealth": {
     "ok": false,
     "failing": [
-      "muCalendar.horizonDays"
+      "muCalendar.horizonDays",
+      "manor.count"
     ],
     "checks": [
       {
@@ -242,9 +243,10 @@
       },
       {
         "key": "manor.count",
-        "ok": true,
+        "ok": false,
         "value": 37,
-        "min": 10
+        "min": 10,
+        "carriedForward": 37
       },
       {
         "key": "muHudl.pairRatio",
@@ -264,11 +266,11 @@
   },
   "recentlyAdded": [
     {
-      "key": "Thin The Herd w. 157 frq, Making A Mockery & junk.|2026-11-17T00:00:00.000Z",
-      "firstSeenAt": "2026-11-17T05:39:51.411Z",
-      "title": "Thin The Herd w. 157 frq, Making A Mockery & junk.",
+      "key": "KOFFIN KATS w. VOODOO GLOW SKULLS|2026-12-10T01:00:00.000Z",
+      "firstSeenAt": "2026-11-17T07:27:17.204Z",
+      "title": "KOFFIN KATS w. VOODOO GLOW SKULLS",
       "source": "Other",
-      "date": "2026-11-17T00:00:00.000Z"
+      "date": "2026-12-10T01:00:00.000Z"
     },
     {
       "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",

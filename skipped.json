@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-17T15:08:28.838Z",
+ "generatedAt": "2026-11-17T16:56:15.365Z",
  "scope": "content-rule skips only — no date-window drops, no duplicates; gated (mu-only/townie-only) rows are emitted, not listed here",
  "itemCap": 40,
  "labels": {
@@ -21,7 +21,8 @@
   "submission-no-deadline": "Community submission: Signup row with no deadline"
  },
  "counts": {
-  "pm-sub-varsity": 297,
+  "pm-sub-varsity": 308,
+  "mu-calendar-athletics": 72,
   "camps-skipped": 28,
   "intramural-dup": 1,
   "borough-collection": 13,

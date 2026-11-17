@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-16T22:23:33.623Z",
-  "totalEvents": 1630,
-  "withDescription": 412,
-  "withImage": 236,
+  "generatedAt": "2026-11-17T00:12:12.609Z",
+  "totalEvents": 1611,
+  "withDescription": 400,
+  "withImage": 228,
   "familyFriendly": 44,
   "interests": {
     "arts": 52,
-    "civic": 95,
+    "civic": 90,
     "food": 124,
     "causes": 15,
     "learn": 16,
@@ -23,13 +23,13 @@
     "artsmu": 49,
     "eckert": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 279,
+    "muGetInvolved": 267,
     "pennManor": 658,
     "borough": 49,
     "vfw": 6,
     "phantomPower": 13,
     "community": 14,
-    "manor": 37,
+    "manor": 30,
     "raneyCellars": 4,
     "theBackyard": 29,
     "muHudlBroadcasts": 62
@@ -81,7 +81,7 @@
     },
     "manor": {
       "earliest": "2026-11-25T13:30:00.000Z",
-      "latest": "2027-11-03T23:00:00.000Z"
+      "latest": "2027-09-01T23:00:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-11-07T00:00:00.000Z",
@@ -138,8 +138,8 @@
       "daysSinceMoved": 6
     },
     "manor": {
-      "newest": "2027-11-03",
-      "daysSinceMoved": 13
+      "newest": "2027-09-01",
+      "daysSinceMoved": 76
     },
     "raneyCellars": {
       "newest": "2026-11-19",
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-16T22:20:54.689Z"
+    "lastSyncAt": "2026-11-17T00:09:13.709Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-16T22:23:26.458Z"
+    "checkedAt": "2026-11-17T00:12:04.985Z"
   },
   "artsmuMerge": {
     "fetched": 49,
@@ -243,7 +243,7 @@
       {
         "key": "manor.count",
         "ok": true,
-        "value": 37,
+        "value": 30,
         "min": 10
       },
       {
@@ -278,63 +278,63 @@
       "date": "2026-12-03T22:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-16T19:38:49.508Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-09-06T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2027-09-29T12:30:00.000Z",
-      "firstSeenAt": "2026-11-16T19:38:49.508Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-09-29T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-10-04T23:00:00.000Z",
-      "firstSeenAt": "2026-11-16T19:38:49.508Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-10-04T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-10-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-16T19:38:49.508Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-10-06T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2027-10-27T12:30:00.000Z",
-      "firstSeenAt": "2026-11-16T19:38:49.508Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-10-27T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-11-01T23:00:00.000Z",
-      "firstSeenAt": "2026-11-16T19:38:49.508Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-11-01T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-11-03T23:00:00.000Z",
-      "firstSeenAt": "2026-11-16T19:38:49.508Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-11-03T23:00:00.000Z"
-    },
-    {
       "key": "FSL: Mu Sigma Upsilon- Pages of Power|2026-11-16T17:00:00.000Z",
       "firstSeenAt": "2026-11-16T17:50:30.588Z",
       "title": "FSL: Mu Sigma Upsilon- Pages of Power",
       "source": "MU",
       "date": "2026-11-16T17:00:00.000Z"
+    },
+    {
+      "key": "Eckert Art Gallery Opening Reception: “Field Notes: Learning to See”|2026-09-09T21:00:00.000Z",
+      "firstSeenAt": "2026-11-16T16:01:59.951Z",
+      "title": "Eckert Art Gallery Opening Reception: “Field Notes: Learning to See”",
+      "source": "MU",
+      "date": "2026-09-09T21:00:00.000Z"
+    },
+    {
+      "key": "Election Day|2026-11-03T12:00:00.000Z",
+      "firstSeenAt": "2026-11-16T16:01:59.951Z",
+      "title": "Election Day",
+      "source": "Borough",
+      "date": "2026-11-03T12:00:00.000Z"
+    },
+    {
+      "key": "Overshare: I Did This for Me by Shauna L Yorty|2026-11-06T21:00:00.000Z",
+      "firstSeenAt": "2026-11-16T16:01:59.951Z",
+      "title": "Overshare: I Did This for Me by Shauna L Yorty",
+      "source": "MU",
+      "date": "2026-11-06T21:00:00.000Z"
+    },
+    {
+      "key": "Eckert Art Gallery Reception: “Unfolding”|2026-11-12T22:30:00.000Z",
+      "firstSeenAt": "2026-11-16T16:01:59.951Z",
+      "title": "Eckert Art Gallery Reception: “Unfolding”",
+      "source": "MU",
+      "date": "2026-11-12T22:30:00.000Z"
+    },
+    {
+      "key": "Disposable Humanity – FREE|2026-11-17T23:15:00.000Z",
+      "firstSeenAt": "2026-11-16T16:01:59.951Z",
+      "title": "Disposable Humanity – FREE",
+      "source": "MU",
+      "date": "2026-11-17T23:15:00.000Z"
+    },
+    {
+      "key": "ExtraGive Junior|2026-11-20T22:00:00.000Z",
+      "firstSeenAt": "2026-11-16T16:01:59.951Z",
+      "title": "ExtraGive Junior",
+      "source": "MU",
+      "date": "2026-11-20T22:00:00.000Z"
+    },
+    {
+      "key": "Layer The Walls: Turn of the Century|2026-11-21T20:00:00.000Z",
+      "firstSeenAt": "2026-11-16T16:01:59.951Z",
+      "title": "Layer The Walls: Turn of the Century",
+      "source": "MU",
+      "date": "2026-11-21T20:00:00.000Z"
     }
   ],
-  "addedLastRun": 2,
+  "addedLastRun": 0,
   "skippedByRule": {
     "total": 366,
     "reasons": {

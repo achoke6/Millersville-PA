@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-11-17T13:21:12.377Z",
-  "totalEvents": 1618,
-  "withDescription": 400,
-  "withImage": 228,
+  "generatedAt": "2026-11-17T15:08:28.849Z",
+  "totalEvents": 1621,
+  "withDescription": 403,
+  "withImage": 230,
   "familyFriendly": 44,
   "interests": {
     "arts": 52,
     "civic": 95,
     "food": 124,
     "causes": 15,
-    "learn": 16,
+    "learn": 17,
     "crafts": 10,
-    "greek": 9,
+    "greek": 10,
     "music": 59,
     "reshall": 2,
     "active": 3
@@ -23,7 +23,7 @@
     "artsmu": 49,
     "eckert": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 267,
+    "muGetInvolved": 270,
     "pennManor": 658,
     "borough": 49,
     "vfw": 6,
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-17T13:19:01.435Z"
+    "lastSyncAt": "2026-11-17T15:06:38.362Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-17T13:21:05.226Z"
+    "checkedAt": "2026-11-17T15:08:17.771Z"
   },
   "artsmuMerge": {
     "fetched": 49,
@@ -266,6 +266,27 @@
   },
   "recentlyAdded": [
     {
+      "key": "Board Game Club Weekly Meeting|2026-11-19T01:00:00.000Z",
+      "firstSeenAt": "2026-11-17T15:08:28.847Z",
+      "title": "Board Game Club Weekly Meeting",
+      "source": "MU",
+      "date": "2026-11-19T01:00:00.000Z"
+    },
+    {
+      "key": "New Member Presentation after discussion|2026-11-22T02:00:00.000Z",
+      "firstSeenAt": "2026-11-17T15:08:28.847Z",
+      "title": "New Member Presentation after discussion",
+      "source": "MU",
+      "date": "2026-11-22T02:00:00.000Z"
+    },
+    {
+      "key": "Board Game Club Weekly Meeting|2026-12-02T23:00:00.000Z",
+      "firstSeenAt": "2026-11-17T15:08:28.847Z",
+      "title": "Board Game Club Weekly Meeting",
+      "source": "MU",
+      "date": "2026-12-02T23:00:00.000Z"
+    },
+    {
       "key": "KOFFIN KATS w. VOODOO GLOW SKULLS|2026-12-10T01:00:00.000Z",
       "firstSeenAt": "2026-11-17T07:27:17.204Z",
       "title": "KOFFIN KATS w. VOODOO GLOW SKULLS",
@@ -313,30 +334,9 @@
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2027-11-01T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-11-03T23:00:00.000Z",
-      "firstSeenAt": "2026-11-17T02:00:34.227Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-11-03T23:00:00.000Z"
-    },
-    {
-      "key": "UPENN IHSA SHOW|2026-11-29T12:00:00.000Z",
-      "firstSeenAt": "2026-11-16T22:23:33.621Z",
-      "title": "UPENN IHSA SHOW",
-      "source": "MU",
-      "date": "2026-11-29T12:00:00.000Z"
-    },
-    {
-      "key": "Weekly Practice|2026-12-03T22:00:00.000Z",
-      "firstSeenAt": "2026-11-16T22:23:33.621Z",
-      "title": "Weekly Practice",
-      "source": "MU",
-      "date": "2026-12-03T22:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 3,
   "skippedByRule": {
     "total": 366,
     "reasons": {

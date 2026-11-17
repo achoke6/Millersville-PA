@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-11-17T16:56:15.498Z",
-  "totalEvents": 2055,
-  "withDescription": 860,
-  "withImage": 230,
+  "generatedAt": "2026-11-17T18:44:05.549Z",
+  "totalEvents": 2056,
+  "withDescription": 861,
+  "withImage": 232,
   "familyFriendly": 60,
   "interests": {
     "arts": 100,
     "greek": 25,
     "civic": 95,
     "causes": 35,
-    "learn": 66,
+    "learn": 65,
     "food": 125,
     "music": 89,
     "crafts": 16,
     "reshall": 2,
     "active": 4
   },
-  "eventsToday": 24,
+  "eventsToday": 25,
   "sources": {
     "muAthletics": 385,
     "muCalendar": 197,
     "artsmu": 49,
     "eckert": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 559,
+    "muGetInvolved": 560,
     "pennManor": 658,
     "borough": 48,
     "vfw": 6,
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-17T16:54:00.938Z"
+    "lastSyncAt": "2026-11-17T18:41:53.864Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-17T16:56:03.409Z"
+    "checkedAt": "2026-11-17T18:43:54.564Z"
   },
   "artsmuMerge": {
     "fetched": 49,
@@ -265,6 +265,27 @@
   },
   "recentlyAdded": [
     {
+      "key": "Pickleball Practice|2026-11-10T23:00:00.000Z",
+      "firstSeenAt": "2026-11-17T18:44:05.546Z",
+      "title": "Pickleball Practice",
+      "source": "MU",
+      "date": "2026-11-10T23:00:00.000Z"
+    },
+    {
+      "key": "Pickleball Practice|2026-11-17T23:00:00.000Z",
+      "firstSeenAt": "2026-11-17T18:44:05.546Z",
+      "title": "Pickleball Practice",
+      "source": "MU",
+      "date": "2026-11-17T23:00:00.000Z"
+    },
+    {
+      "key": "Pickleball Practice|2026-12-01T23:00:00.000Z",
+      "firstSeenAt": "2026-11-17T18:44:05.546Z",
+      "title": "Pickleball Practice",
+      "source": "MU",
+      "date": "2026-12-01T23:00:00.000Z"
+    },
+    {
       "key": "Extended Orientation for Gateway Scholars Program|2026-08-16T00:00:00",
       "firstSeenAt": "2026-11-17T16:56:15.495Z",
       "title": "Extended Orientation for Gateway Scholars Program",
@@ -312,30 +333,9 @@
       "title": "Navigation Stations",
       "source": "MU",
       "date": "2026-08-24T07:30:00"
-    },
-    {
-      "key": "Pop By & Meet Delta Zeta|2026-08-24T12:30:00",
-      "firstSeenAt": "2026-11-17T16:56:15.495Z",
-      "title": "Pop By & Meet Delta Zeta",
-      "source": "MU",
-      "date": "2026-08-24T12:30:00"
-    },
-    {
-      "key": "2026 MU Wind Band Auditions|2026-08-24T16:00:00",
-      "firstSeenAt": "2026-11-17T16:56:15.495Z",
-      "title": "2026 MU Wind Band Auditions",
-      "source": "MU",
-      "date": "2026-08-24T16:00:00"
-    },
-    {
-      "key": "Worship in the Quad|2026-08-24T17:30:00",
-      "firstSeenAt": "2026-11-17T16:56:15.495Z",
-      "title": "Worship in the Quad",
-      "source": "MU",
-      "date": "2026-08-24T17:30:00"
     }
   ],
-  "addedLastRun": 489,
+  "addedLastRun": 3,
   "skippedByRule": {
     "total": 449,
     "reasons": {

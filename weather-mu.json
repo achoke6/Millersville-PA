@@ -1,10 +1,10 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Tuesday, November 17, 2026 at 08:06 AM (Guillaume, Johnson, Lowell, Student Meteorologists)",
+    "issued": "Tuesday, November 17, 2026 at 12:06 PM (Rooney, Student Meteorologist)",
     "periods": [
       {
-        "period": "Today",
+        "period": "This afternoon",
         "text": "Sunny and seasonable. High: 55-59"
       },
       {
@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "13:00",
+      "temp": "54",
+      "dewpoint": "38",
+      "rh": "55",
+      "windDir": "WSW",
+      "windSpeed": "5",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "52",
+      "dewpoint": "38",
+      "rh": "60",
+      "windDir": "W",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "11:00",
       "temp": "50",
       "dewpoint": "37",
@@ -169,28 +191,6 @@
       "windSpeed": "0",
       "precip": "0.00",
       "visibility": "9.1",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "30",
-      "dewpoint": "29",
-      "rh": "97",
-      "windDir": "W",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "7.2",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "31",
-      "dewpoint": "30",
-      "rh": "95",
-      "windDir": "SW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "8.9",
       "condition": "None"
     }
   ],
@@ -382,9 +382,9 @@
     "yearMinDate": "January 21"
   },
   "discussion": {
-    "headline": "Brisk, chilly and unpleasant weekend",
-    "dateLine": "Brief 12:30 p.m. Friday, November 13, 2026, Update",
-    "excerpt": "As expected, rainfall amounts increased dramatically from southwest-to-northeast across the Lower Susquehanna Valley since Thursday morning. Less than 0.10\" of rain fell in most of Franklin County, while eastern Lancaster County and areas near Philadelphia received a general 0.75-1.25\" (see below). Some strong-to-severe thunderstorms even erupted early Thursday afternoon and produced large hail in parts of southeastern PA. …",
+    "headline": "nother week of sunny, dry and beautiful weather!",
+    "dateLine": "12:30 p.m. Tuesday, November 17, 2026",
+    "excerpt": "Last Friday, the high temperature failed to reach 60°F at Millersville University for the first time this fall. Previously, the latest date for the first sub-60°F high temperature since 1914 was November 1st. Ironically, the high temperature also failed to reach 50°F last Friday, and the feat was then repeated on Saturday. A deep trough, or dip in the Jet Stream, over the eastern U.S. …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -422,5 +422,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-17T16:54:03.117Z"
+  "updated": "2026-11-17T18:41:57.212Z"
 }

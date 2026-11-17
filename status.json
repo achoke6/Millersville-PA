@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-11-17T18:44:05.549Z",
-  "totalEvents": 2056,
-  "withDescription": 861,
-  "withImage": 232,
+  "generatedAt": "2026-11-17T20:32:38.579Z",
+  "totalEvents": 2060,
+  "withDescription": 865,
+  "withImage": 241,
   "familyFriendly": 60,
   "interests": {
     "arts": 100,
     "greek": 25,
     "civic": 95,
-    "causes": 35,
+    "causes": 36,
     "learn": 65,
     "food": 125,
-    "music": 89,
-    "crafts": 16,
+    "music": 90,
+    "crafts": 17,
     "reshall": 2,
     "active": 4
   },
-  "eventsToday": 25,
+  "eventsToday": 27,
   "sources": {
     "muAthletics": 385,
-    "muCalendar": 197,
+    "muCalendar": 198,
     "artsmu": 49,
     "eckert": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 560,
+    "muGetInvolved": 563,
     "pennManor": 658,
     "borough": 48,
     "vfw": 6,
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-17T18:41:53.864Z"
+    "lastSyncAt": "2026-11-17T20:29:32.939Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-17T18:43:54.564Z"
+    "checkedAt": "2026-11-17T20:32:27.611Z"
   },
   "artsmuMerge": {
     "fetched": 49,
@@ -186,10 +186,8 @@
     "standalone": 2
   },
   "sourceHealth": {
-    "ok": false,
-    "failing": [
-      "manor.count"
-    ],
+    "ok": true,
+    "failing": [],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -242,10 +240,9 @@
       },
       {
         "key": "manor.count",
-        "ok": false,
+        "ok": true,
         "value": 37,
-        "min": 10,
-        "carriedForward": 37
+        "min": 10
       },
       {
         "key": "muHudl.pairRatio",
@@ -265,77 +262,77 @@
   },
   "recentlyAdded": [
     {
-      "key": "Pickleball Practice|2026-11-10T23:00:00.000Z",
-      "firstSeenAt": "2026-11-17T18:44:05.546Z",
-      "title": "Pickleball Practice",
+      "key": "Millersville University Football vs #3 Kutztown|2026-10-17T18:00:00.000Z",
+      "firstSeenAt": "2026-11-17T20:32:38.575Z",
+      "title": "Millersville University Football vs #3 Kutztown",
       "source": "MU",
-      "date": "2026-11-10T23:00:00.000Z"
+      "date": "2026-10-17T18:00:00.000Z"
     },
     {
-      "key": "Pickleball Practice|2026-11-17T23:00:00.000Z",
-      "firstSeenAt": "2026-11-17T18:44:05.546Z",
-      "title": "Pickleball Practice",
+      "key": "Midterm Debrief Town-hall|2026-11-06T01:00:00.000Z",
+      "firstSeenAt": "2026-11-17T20:32:38.575Z",
+      "title": "Midterm Debrief Town-hall",
       "source": "MU",
-      "date": "2026-11-17T23:00:00.000Z"
+      "date": "2026-11-06T01:00:00.000Z"
     },
     {
-      "key": "Pickleball Practice|2026-12-01T23:00:00.000Z",
-      "firstSeenAt": "2026-11-17T18:44:05.546Z",
-      "title": "Pickleball Practice",
+      "key": "Fellowship Night|2026-11-06T01:00:00.000Z",
+      "firstSeenAt": "2026-11-17T20:32:38.575Z",
+      "title": "Fellowship Night",
       "source": "MU",
-      "date": "2026-12-01T23:00:00.000Z"
+      "date": "2026-11-06T01:00:00.000Z"
     },
     {
-      "key": "Extended Orientation for Gateway Scholars Program|2026-08-16T00:00:00",
-      "firstSeenAt": "2026-11-17T16:56:15.495Z",
-      "title": "Extended Orientation for Gateway Scholars Program",
+      "key": "Ice Hockey Club (D3) Practice|2026-11-06T01:15:00.000Z",
+      "firstSeenAt": "2026-11-17T20:32:38.575Z",
+      "title": "Ice Hockey Club (D3) Practice",
       "source": "MU",
-      "date": "2026-08-16T00:00:00"
+      "date": "2026-11-06T01:15:00.000Z"
     },
     {
-      "key": "Academic Convocation|2026-08-21T08:30:00",
-      "firstSeenAt": "2026-11-17T16:56:15.495Z",
-      "title": "Academic Convocation",
+      "key": "Kae Wagner Book Signing: Sponsored by Freshly Greek and WIXQ|2026-11-17T14:00:00.000Z",
+      "firstSeenAt": "2026-11-17T20:32:38.575Z",
+      "title": "Kae Wagner Book Signing: Sponsored by Freshly Greek and WIXQ",
       "source": "MU",
-      "date": "2026-08-21T08:30:00"
+      "date": "2026-11-17T14:00:00.000Z"
     },
     {
-      "key": "Candlelighting Ceremony|2026-08-21T19:30:00",
-      "firstSeenAt": "2026-11-17T16:56:15.495Z",
-      "title": "Candlelighting Ceremony",
+      "key": "Women's Rugby Club Practice|2026-11-17T22:00:00.000Z",
+      "firstSeenAt": "2026-11-17T20:32:38.575Z",
+      "title": "Women's Rugby Club Practice",
       "source": "MU",
-      "date": "2026-08-21T19:30:00"
+      "date": "2026-11-17T22:00:00.000Z"
     },
     {
-      "key": "Fall 2026 Involvement Fair|2026-08-23T11:30:00",
-      "firstSeenAt": "2026-11-17T16:56:15.495Z",
-      "title": "Fall 2026 Involvement Fair",
+      "key": "Music Productiom Club Waffle Sale|2026-11-18T13:00:00.000Z",
+      "firstSeenAt": "2026-11-17T20:32:38.575Z",
+      "title": "Music Productiom Club Waffle Sale",
       "source": "MU",
-      "date": "2026-08-23T11:30:00"
+      "date": "2026-11-18T13:00:00.000Z"
     },
     {
-      "key": "Ware Center 2026-27 Season Tickets On Sale!|2026-08-24T00:00:00",
-      "firstSeenAt": "2026-11-17T16:56:15.495Z",
-      "title": "Ware Center 2026-27 Season Tickets On Sale!",
+      "key": "HCSA Craft Night|2026-11-19T23:00:00.000Z",
+      "firstSeenAt": "2026-11-17T20:32:38.575Z",
+      "title": "HCSA Craft Night",
       "source": "MU",
-      "date": "2026-08-24T00:00:00"
+      "date": "2026-11-19T23:00:00.000Z"
     },
     {
-      "key": "Fall Classes BEGIN|2026-08-24T07:00:00",
-      "firstSeenAt": "2026-11-17T16:56:15.495Z",
-      "title": "Fall Classes BEGIN",
+      "key": "Best Buddies Friendsgiving|2026-11-20T00:00:00.000Z",
+      "firstSeenAt": "2026-11-17T20:32:38.575Z",
+      "title": "Best Buddies Friendsgiving",
       "source": "MU",
-      "date": "2026-08-24T07:00:00"
+      "date": "2026-11-20T00:00:00.000Z"
     },
     {
-      "key": "Navigation Stations|2026-08-24T07:30:00",
-      "firstSeenAt": "2026-11-17T16:56:15.495Z",
-      "title": "Navigation Stations",
+      "key": "Men's Ice Hockey vs University of Pennsylvania|2026-12-05T00:15:00.000Z",
+      "firstSeenAt": "2026-11-17T20:32:38.575Z",
+      "title": "Men's Ice Hockey vs University of Pennsylvania",
       "source": "MU",
-      "date": "2026-08-24T07:30:00"
+      "date": "2026-12-05T00:15:00.000Z"
     }
   ],
-  "addedLastRun": 3,
+  "addedLastRun": 14,
   "skippedByRule": {
     "total": 449,
     "reasons": {

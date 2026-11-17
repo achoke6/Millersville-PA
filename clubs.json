@@ -418,9 +418,9 @@
   },
   {
     "name": "Club Tennis",
-    "category": "Sporting",
+    "category": "Fundraiser",
     "categories": [
-      "Sporting"
+      "Fundraiser"
     ],
     "shortName": "",
     "id": ""
@@ -851,10 +851,8 @@
   },
   {
     "name": "Honors College Student Association",
-    "category": "Trip",
-    "categories": [
-      "Trip"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "HCSA",
     "id": ""
   },
@@ -1227,9 +1225,9 @@
   },
   {
     "name": "Music Production Club",
-    "category": "Meeting",
+    "category": "Fundraiser",
     "categories": [
-      "Meeting"
+      "Fundraiser"
     ],
     "shortName": "",
     "id": ""
@@ -1585,6 +1583,15 @@
     "id": "studentaffairs"
   },
   {
+    "name": "Student Affiliates in School Psychology",
+    "category": "Academic",
+    "categories": [
+      "Academic"
+    ],
+    "shortName": "SASP MU",
+    "id": "sasp-mu"
+  },
+  {
     "name": "Student Business Association",
     "category": "",
     "categories": [],
@@ -1864,9 +1871,9 @@
   },
   {
     "name": "WIXQ 91.7 FM",
-    "category": "Meeting",
+    "category": "Tabling",
     "categories": [
-      "Meeting"
+      "Tabling"
     ],
     "shortName": "",
     "id": ""
@@ -1912,12 +1919,10 @@
   },
   {
     "name": "Women's Rugby Club",
-    "category": "Sports and Leisure",
-    "categories": [
-      "Sports and Leisure"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
-    "id": "wrugby"
+    "id": ""
   },
   {
     "name": "Women's Soccer",

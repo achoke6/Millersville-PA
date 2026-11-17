@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-17T03:48:45.379Z",
+  "generatedAt": "2026-11-17T03:52:31.420Z",
   "totalEvents": 1618,
   "withDescription": 400,
   "withImage": 228,
@@ -16,7 +16,7 @@
     "reshall": 2,
     "active": 3
   },
-  "eventsToday": 17,
+  "eventsToday": 16,
   "sources": {
     "muAthletics": 385,
     "muCalendar": 1,
@@ -72,7 +72,7 @@
       "latest": "2026-11-29T18:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-11-17T00:00:00.000Z",
+      "earliest": "2026-11-19T01:00:00.000Z",
       "latest": "2026-12-19T01:00:00.000Z"
     },
     "community": {
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-17T03:46:06.448Z"
+    "lastSyncAt": "2026-11-17T03:50:01.398Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-17T03:48:36.542Z"
+    "checkedAt": "2026-11-17T03:52:29.993Z"
   },
   "artsmuMerge": {
     "fetched": 49,
@@ -264,6 +264,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "KOFFIN KATS w. VOODOO GLOW SKULLS|2026-12-10T01:00:00.000Z",
+      "firstSeenAt": "2026-11-17T03:52:31.417Z",
+      "title": "KOFFIN KATS w. VOODOO GLOW SKULLS",
+      "source": "Other",
+      "date": "2026-12-10T01:00:00.000Z"
+    },
+    {
       "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
       "firstSeenAt": "2026-11-17T02:00:34.227Z",
       "title": "Supervisors Meeting",
@@ -325,16 +332,9 @@
       "title": "Weekly Practice",
       "source": "MU",
       "date": "2026-12-03T22:00:00.000Z"
-    },
-    {
-      "key": "FSL: Mu Sigma Upsilon- Pages of Power|2026-11-16T17:00:00.000Z",
-      "firstSeenAt": "2026-11-16T17:50:30.588Z",
-      "title": "FSL: Mu Sigma Upsilon- Pages of Power",
-      "source": "MU",
-      "date": "2026-11-16T17:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 366,
     "reasons": {

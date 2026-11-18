@@ -99,7 +99,7 @@ function resolveOrgFromTitle(title) {
 // piece can't be extracted. Empty signatures intentionally don't match each
 // other, so generic locations like "Quad" or "Brooks Field" won't get
 // accidentally merged with each other or with empty-location events.
-function roomSignature(location) {
+function buildingToken(location) {
     if (!location) return '';
     let s = String(location);
     // Expand long-form building names to their short codes so both forms
@@ -125,14 +125,20 @@ function roomSignature(location) {
         const upperMatch = s.match(/\b([A-Z]{2,6})\b/);
         if (upperMatch) bldg = upperMatch[1];
     }
+    return bldg.toUpperCase();
+}
+// Split out of roomSignature 2026-11-18 so the same-org rule can compare the
+// BUILDING alone when one side names no room (Pass 2, one-side-roomless branch).
+function roomSignature(location) {
+    const bldg = buildingToken(location);
     if (!bldg) return '';
     // Find room number: digit sequence, optionally with a trailing letter
     // ("100A", "202B"). Pick the LAST one in the string since building codes
     // sometimes have leading numbers we want to skip.
-    const roomMatches = s.match(/\b(\d{1,4}[A-Za-z]?)\b/g);
+    const roomMatches = String(location).match(/\b(\d{1,4}[A-Za-z]?)\b/g);
     const room = roomMatches ? roomMatches[roomMatches.length - 1] : '';
     if (!room) return '';
-    return `${bldg.toUpperCase()}|${room.toUpperCase()}`;
+    return `${bldg}|${room.toUpperCase()}`;
 }
 
 // Parse an event date string into an absolute UTC instant (ms since epoch),
@@ -7008,6 +7014,33 @@ async function runScraper() {
     const CALENDAR_ARTIFACT_PATTERNS = /^(setup window|teardown|breakdown|prep for|rehearsal for)\b/i;
     const ONE_HALF_HOUR_MS = 30 * 60 * 1000;
 
+    // One-word typo tier (2026-11-18, the waffle-sale pair): GetInvolved "Music
+    // Productiom Club Waffle Sale" vs its MU Calendar relabel "Music Production
+    // Club Waffle Sale" (same day, 1 h apart) defeated every title tier. Fires
+    // only when the two norms have the same word count (>= 4), differ in EXACTLY
+    // one word, both versions of that word are >= 5 letters with no digits
+    // ("Session 1"/"Session 2", "2025"/"2026" stay split), and the two spellings
+    // are one edit apart. Generalizes the per-word typo alias (magnificient).
+    const oneWordTypo = (a, b) => {
+        const A = a.split(' '), B = b.split(' ');
+        if (A.length !== B.length || A.length < 4) return false;
+        let at = -1;
+        for (let i = 0; i < A.length; i++) {
+            if (A[i] === B[i]) continue;
+            if (at !== -1) return false;
+            at = i;
+        }
+        if (at === -1) return false;
+        const x = A[at], y = B[at];
+        if (x.length < 5 || y.length < 5 || /\d/.test(x + y)) return false;
+        if (Math.abs(x.length - y.length) > 1) return false;
+        let i = 0;
+        while (i < x.length && i < y.length && x[i] === y[i]) i++;
+        let j = 0;
+        while (j < x.length - i && j < y.length - i && x[x.length - 1 - j] === y[y.length - 1 - j]) j++;
+        return (x.length - i - j) <= 1 && (y.length - i - j) <= 1;   // one substitution / insertion / deletion
+    };
+
     // Get a "source bucket" for same-source detection. Within a bucket, don't merge.
     // URL is checked BEFORE tags because the Clubs/Orgs tag is attached to BOTH
     // GetInvolved API events AND MU Calendar "Student Event" relabels (for
@@ -7197,7 +7230,7 @@ async function runScraper() {
             let titleMatch;
             if (exactMatch || noWsMatch || sortedMatch) titleMatch = true;
             else if (isGeneric) titleMatch = false;
-            else titleMatch = (substringMatch && (shorter.length >= 8 || digitShort)) || fuzzyMatch;
+            else titleMatch = (substringMatch && (shorter.length >= 8 || digitShort)) || fuzzyMatch || oneWordTypo(seed.norm, ne.norm);
 
             // Ensemble alias tier (2026-10-07): see winterEnsembleKey above.
             let ensembleAlias = false;
@@ -7252,6 +7285,19 @@ async function runScraper() {
                 if (sameOrg && aSig && aSig === bSig &&
                     Math.abs(seed.time - ne.time) <= FIFTEEN_MIN_MS) {
                     titleMatch = true;
+                }
+                // One-side-roomless branch (2026-11-18, the Jewelry & Metal Arts
+                // sale): MU Calendar "FALL ART SALES!" @ "Breidenstine Hall 205" vs
+                // GetInvolved "Fall 2026 Sale" @ "Breidenstine Hall (Lobby)" -- same
+                // orgName, same instant, but the GetInvolved side names no room, so
+                // no signature. When EXACTLY one side has a room, a REAL shared
+                // orgName (never the lead-token proxy) + same building + the same
+                // 15-min window stands in. Both-roomless (fields, Quad, Brooks
+                // Field) stays split -- keeps the declined SGA Kickball tier closed.
+                else if (aOrg && aOrg === bOrg && !aSig !== !bSig &&
+                         Math.abs(seed.time - ne.time) <= FIFTEEN_MIN_MS) {
+                    const aB = buildingToken(seed.event.location);
+                    if (aB && aB === buildingToken(ne.event.location)) titleMatch = true;
                 }
             }
 

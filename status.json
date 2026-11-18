@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-18T21:31:14.827Z",
-  "totalEvents": 2042,
+  "generatedAt": "2026-11-18T23:19:06.668Z",
+  "totalEvents": 2044,
   "withDescription": 848,
   "withImage": 227,
   "familyFriendly": 56,
@@ -24,7 +24,7 @@
     "eckert": 3,
     "campsAlumni": 9,
     "muGetInvolved": 548,
-    "pennManor": 657,
+    "pennManor": 659,
     "borough": 48,
     "vfw": 6,
     "phantomPower": 13,
@@ -151,7 +151,7 @@
     }
   },
   "sports": {
-    "total": 939,
+    "total": 941,
     "scored": 205,
     "wins": 98,
     "losses": 94,
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-18T21:27:57.147Z"
+    "lastSyncAt": "2026-11-18T23:16:43.050Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-18T21:31:12.076Z"
+    "checkedAt": "2026-11-18T23:18:54.368Z"
   },
   "artsmuMerge": {
     "fetched": 48,
@@ -220,7 +220,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 554,
+        "value": 556,
         "min": 150,
         "skipped": false
       },
@@ -261,6 +261,27 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Millersville University Women's Basketball at Bowie State|2026-11-24T16:30:00.000Z",
+      "firstSeenAt": "2026-11-18T23:19:06.664Z",
+      "title": "Millersville University Women's Basketball at Bowie State",
+      "source": "MU",
+      "date": "2026-11-24T16:30:00.000Z"
+    },
+    {
+      "key": "Boys JV Volleyball @ Central Dauphin High School|2027-03-19T21:30:00.000Z",
+      "firstSeenAt": "2026-11-18T23:19:06.664Z",
+      "title": "Boys JV Volleyball @ Central Dauphin High School",
+      "source": "PM",
+      "date": "2027-03-19T21:30:00.000Z"
+    },
+    {
+      "key": "Boys Varsity Volleyball @ Central Dauphin High School|2027-03-19T22:30:00.000Z",
+      "firstSeenAt": "2026-11-18T23:19:06.664Z",
+      "title": "Boys Varsity Volleyball @ Central Dauphin High School",
+      "source": "PM",
+      "date": "2027-03-19T22:30:00.000Z"
+    },
     {
       "key": "Weekly Practice|2026-11-23T21:00:00.000Z",
       "firstSeenAt": "2026-11-18T21:26:34.164Z",
@@ -309,30 +330,9 @@
       "title": "The Millersville Smash Arcadian",
       "source": "MU",
       "date": "2026-11-20T21:00:00.000Z"
-    },
-    {
-      "key": "New Member Presentation discussion|2026-11-21T23:00:00.000Z",
-      "firstSeenAt": "2026-11-18T16:36:07.003Z",
-      "title": "New Member Presentation discussion",
-      "source": "MU",
-      "date": "2026-11-21T23:00:00.000Z"
-    },
-    {
-      "key": "CHAARG Just Dance|2026-11-24T01:00:00.000Z",
-      "firstSeenAt": "2026-11-18T16:36:07.003Z",
-      "title": "CHAARG Just Dance",
-      "source": "MU",
-      "date": "2026-11-24T01:00:00.000Z"
-    },
-    {
-      "key": "Kutztown Versus Millersville -The Ville Vendetta|2026-12-05T17:00:00.000Z",
-      "firstSeenAt": "2026-11-18T16:36:07.003Z",
-      "title": "Kutztown Versus Millersville -The Ville Vendetta",
-      "source": "MU",
-      "date": "2026-12-05T17:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 3,
   "skippedByRule": {
     "total": 454,
     "reasons": {

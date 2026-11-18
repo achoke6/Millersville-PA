@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-11-18T16:36:07.006Z",
-  "totalEvents": 2044,
-  "withDescription": 850,
+  "generatedAt": "2026-11-18T17:08:05.762Z",
+  "totalEvents": 2039,
+  "withDescription": 845,
   "withImage": 226,
   "familyFriendly": 55,
   "interests": {
     "arts": 97,
     "greek": 26,
     "civic": 95,
-    "causes": 33,
+    "causes": 32,
     "learn": 66,
     "food": 126,
     "music": 90,
-    "crafts": 17,
+    "crafts": 14,
     "reshall": 2,
     "active": 4
   },
-  "eventsToday": 27,
+  "eventsToday": 24,
   "sources": {
     "muAthletics": 385,
-    "muCalendar": 201,
+    "muCalendar": 198,
     "artsmu": 48,
     "eckert": 3,
     "campsAlumni": 9,
-    "muGetInvolved": 547,
+    "muGetInvolved": 546,
     "pennManor": 657,
     "borough": 48,
     "vfw": 6,
@@ -158,8 +158,8 @@
     "ties": 13
   },
   "registrations": {
-    "open": 5,
-    "next2Weeks": 3,
+    "open": 4,
+    "next2Weeks": 2,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-18T16:33:39.663Z"
+    "lastSyncAt": "2026-11-18T16:59:11.781Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-18T16:35:57.221Z"
+    "checkedAt": "2026-11-18T17:07:53.558Z"
   },
   "artsmuMerge": {
     "fetched": 48,
@@ -262,6 +262,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Marauder Mixers|2026-12-08T22:30:00.000Z",
+      "firstSeenAt": "2026-11-18T17:08:05.758Z",
+      "title": "Marauder Mixers",
+      "source": "MU",
+      "date": "2026-12-08T22:30:00.000Z"
+    },
+    {
       "key": "The Millersville Smash Arcadian Fall 2026|2026-11-20T21:00:00.000Z",
       "firstSeenAt": "2026-11-18T16:36:07.003Z",
       "title": "The Millersville Smash Arcadian Fall 2026",
@@ -323,16 +330,9 @@
       "title": "Rock of Ages: Millersville University Theatre",
       "source": "MU",
       "date": "2026-11-06T19:00:00"
-    },
-    {
-      "key": "Rock of Ages: Millersville University Theatre|2026-11-07T14:00:00",
-      "firstSeenAt": "2026-11-18T00:16:08.196Z",
-      "title": "Rock of Ages: Millersville University Theatre",
-      "source": "MU",
-      "date": "2026-11-07T14:00:00"
     }
   ],
-  "addedLastRun": 5,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 451,
     "reasons": {

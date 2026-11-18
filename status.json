@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-18T11:50:45.635Z",
+  "generatedAt": "2026-11-18T13:11:42.457Z",
   "totalEvents": 2040,
   "withDescription": 846,
   "withImage": 222,
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-18T11:47:28.481Z"
+    "lastSyncAt": "2026-11-18T13:05:24.223Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-18T11:50:41.869Z"
+    "checkedAt": "2026-11-18T13:11:34.439Z"
   },
   "artsmuMerge": {
     "fetched": 48,
@@ -199,7 +199,7 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 190,
+        "value": 189,
         "min": 60,
         "skipped": false
       },
@@ -334,9 +334,9 @@
   ],
   "addedLastRun": 0,
   "skippedByRule": {
-    "total": 449,
+    "total": 450,
     "reasons": {
-      "pm-sub-varsity": 308,
+      "pm-sub-varsity": 309,
       "mu-calendar-athletics": 72,
       "camps-skipped": 28,
       "intramural-dup": 1,

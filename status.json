@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-18T17:08:05.762Z",
+  "generatedAt": "2026-11-18T18:58:32.566Z",
   "totalEvents": 2039,
   "withDescription": 845,
   "withImage": 226,
   "familyFriendly": 55,
   "interests": {
     "arts": 97,
-    "greek": 26,
+    "greek": 27,
     "civic": 95,
     "causes": 32,
     "learn": 66,
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-18T16:59:11.781Z"
+    "lastSyncAt": "2026-11-18T18:53:37.612Z"
   },
   "submissionsQueue": {
-    "pendingFuture": 0,
+    "pendingFuture": 1,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-18T17:07:53.558Z"
+    "checkedAt": "2026-11-18T18:57:22.928Z"
   },
   "artsmuMerge": {
     "fetched": 48,
@@ -186,8 +186,10 @@
     "standalone": 2
   },
   "sourceHealth": {
-    "ok": true,
-    "failing": [],
+    "ok": false,
+    "failing": [
+      "manor.count"
+    ],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -240,9 +242,10 @@
       },
       {
         "key": "manor.count",
-        "ok": true,
+        "ok": false,
         "value": 37,
-        "min": 10
+        "min": 10,
+        "carriedForward": 37
       },
       {
         "key": "muHudl.pairRatio",
@@ -261,6 +264,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "FSL: New Member Meeting|2026-12-01T22:00:00.000Z",
+      "firstSeenAt": "2026-11-18T18:58:32.563Z",
+      "title": "FSL: New Member Meeting",
+      "source": "MU",
+      "date": "2026-12-01T22:00:00.000Z"
+    },
     {
       "key": "Marauder Mixers|2026-12-08T22:30:00.000Z",
       "firstSeenAt": "2026-11-18T17:08:05.758Z",
@@ -323,18 +333,11 @@
       "title": "Rock of Ages: Millersville University Theatre",
       "source": "MU",
       "date": "2026-11-05T19:00:00"
-    },
-    {
-      "key": "Rock of Ages: Millersville University Theatre|2026-11-06T19:00:00",
-      "firstSeenAt": "2026-11-18T00:16:08.196Z",
-      "title": "Rock of Ages: Millersville University Theatre",
-      "source": "MU",
-      "date": "2026-11-06T19:00:00"
     }
   ],
   "addedLastRun": 1,
   "skippedByRule": {
-    "total": 451,
+    "total": 452,
     "reasons": {
       "pm-sub-varsity": 310,
       "mu-calendar-athletics": 72,
@@ -342,7 +345,7 @@
       "intramural-dup": 1,
       "borough-collection": 13,
       "borough-reservation": 17,
-      "submission-not-approved": 1,
+      "submission-not-approved": 2,
       "submission-out-of-range": 9
     }
   }

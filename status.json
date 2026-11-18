@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-18T00:16:08.199Z",
+  "generatedAt": "2026-11-18T02:04:01.999Z",
   "totalEvents": 2040,
   "withDescription": 846,
   "withImage": 222,
@@ -16,7 +16,7 @@
     "reshall": 2,
     "active": 4
   },
-  "eventsToday": 27,
+  "eventsToday": 26,
   "sources": {
     "muAthletics": 385,
     "muCalendar": 201,
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-18T00:09:08.934Z"
+    "lastSyncAt": "2026-11-18T02:01:39.182Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-18T00:15:59.707Z"
+    "checkedAt": "2026-11-18T02:03:52.132Z"
   },
   "artsmuMerge": {
     "fetched": 49,
@@ -262,6 +262,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Trivia Night|2026-12-09T01:00:00.000Z",
+      "firstSeenAt": "2026-11-18T02:04:01.996Z",
+      "title": "Trivia Night",
+      "source": "Jack's Tavern",
+      "date": "2026-12-09T01:00:00.000Z"
+    },
+    {
       "key": "Rock of Ages: Millersville University Theatre|2026-11-05T19:00:00",
       "firstSeenAt": "2026-11-18T00:16:08.196Z",
       "title": "Rock of Ages: Millersville University Theatre",
@@ -323,16 +330,9 @@
       "title": "Best Buddies Friendsgiving",
       "source": "MU",
       "date": "2026-11-20T00:00:00.000Z"
-    },
-    {
-      "key": "Men's Ice Hockey vs University of Pennsylvania|2026-12-05T00:15:00.000Z",
-      "firstSeenAt": "2026-11-17T20:32:38.575Z",
-      "title": "Men's Ice Hockey vs University of Pennsylvania",
-      "source": "MU",
-      "date": "2026-12-05T00:15:00.000Z"
     }
   ],
-  "addedLastRun": 3,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 449,
     "reasons": {

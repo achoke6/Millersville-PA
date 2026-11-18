@@ -136,7 +136,7 @@
       "Spaghetti Squash – $2.00 each",
       "Acorn Squash – $1.50 each"
     ],
-    "weeklyFetchedAt": "2026-11-18T13:11:34.026Z"
+    "weeklyFetchedAt": "2026-11-18T16:35:56.744Z"
   },
   "jesus-dogs": {
     "name": "Jesus Dogs",
@@ -164,8 +164,12 @@
       "Monday"
     ],
     "note": "Members & Guests · Weekly specials change each week",
-    "weekly": [],
-    "weeklyDateRange": "",
+    "weekly": [
+      "The Baconator – $12.95",
+      "Country Fried Steak – $14.95",
+      "Crab Legs – $9.25 per ½ lb / $17.50 per lb (Friday only)"
+    ],
+    "weeklyDateRange": "Tuesday, November 17 through Saturday, November 21",
     "recurring": {
       "Tuesday": "Shrimp Night",
       "Wednesday": "Wing Night",

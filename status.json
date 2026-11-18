@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-11-18T13:11:42.457Z",
-  "totalEvents": 2040,
-  "withDescription": 846,
-  "withImage": 222,
-  "familyFriendly": 57,
+  "generatedAt": "2026-11-18T16:36:07.006Z",
+  "totalEvents": 2044,
+  "withDescription": 850,
+  "withImage": 226,
+  "familyFriendly": 55,
   "interests": {
-    "arts": 96,
-    "greek": 25,
+    "arts": 97,
+    "greek": 26,
     "civic": 95,
     "causes": 33,
-    "learn": 65,
-    "food": 125,
+    "learn": 66,
+    "food": 126,
     "music": 90,
     "crafts": 17,
     "reshall": 2,
     "active": 4
   },
-  "eventsToday": 26,
+  "eventsToday": 27,
   "sources": {
     "muAthletics": 385,
     "muCalendar": 201,
     "artsmu": 48,
     "eckert": 3,
-    "campsAlumni": 11,
-    "muGetInvolved": 541,
+    "campsAlumni": 9,
+    "muGetInvolved": 547,
     "pennManor": 657,
     "borough": 48,
     "vfw": 6,
@@ -152,9 +152,9 @@
   },
   "sports": {
     "total": 939,
-    "scored": 204,
+    "scored": 205,
     "wins": 98,
-    "losses": 93,
+    "losses": 94,
     "ties": 13
   },
   "registrations": {
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-18T13:05:24.223Z"
+    "lastSyncAt": "2026-11-18T16:33:39.663Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-18T13:11:34.439Z"
+    "checkedAt": "2026-11-18T16:35:57.221Z"
   },
   "artsmuMerge": {
     "fetched": 48,
@@ -262,6 +262,48 @@
   },
   "recentlyAdded": [
     {
+      "key": "The Millersville Smash Arcadian Fall 2026|2026-11-20T21:00:00.000Z",
+      "firstSeenAt": "2026-11-18T16:36:07.003Z",
+      "title": "The Millersville Smash Arcadian Fall 2026",
+      "source": "MU",
+      "date": "2026-11-20T21:00:00.000Z"
+    },
+    {
+      "key": "The Millersville Smash Arcadian|2026-11-20T21:00:00.000Z",
+      "firstSeenAt": "2026-11-18T16:36:07.003Z",
+      "title": "The Millersville Smash Arcadian",
+      "source": "MU",
+      "date": "2026-11-20T21:00:00.000Z"
+    },
+    {
+      "key": "New Member Presentation discussion|2026-11-21T23:00:00.000Z",
+      "firstSeenAt": "2026-11-18T16:36:07.003Z",
+      "title": "New Member Presentation discussion",
+      "source": "MU",
+      "date": "2026-11-21T23:00:00.000Z"
+    },
+    {
+      "key": "CHAARG Just Dance|2026-11-24T01:00:00.000Z",
+      "firstSeenAt": "2026-11-18T16:36:07.003Z",
+      "title": "CHAARG Just Dance",
+      "source": "MU",
+      "date": "2026-11-24T01:00:00.000Z"
+    },
+    {
+      "key": "Kutztown Versus Millersville -The Ville Vendetta|2026-12-05T17:00:00.000Z",
+      "firstSeenAt": "2026-11-18T16:36:07.003Z",
+      "title": "Kutztown Versus Millersville -The Ville Vendetta",
+      "source": "MU",
+      "date": "2026-12-05T17:00:00.000Z"
+    },
+    {
+      "key": "Snacks & Facts Commuter Luncheon|2026-11-18T17:00:00.000Z",
+      "firstSeenAt": "2026-11-18T14:47:55.330Z",
+      "title": "Snacks & Facts Commuter Luncheon",
+      "source": "MU",
+      "date": "2026-11-18T17:00:00.000Z"
+    },
+    {
       "key": "Trivia Night|2026-12-09T01:00:00.000Z",
       "firstSeenAt": "2026-11-18T02:04:01.996Z",
       "title": "Trivia Night",
@@ -288,55 +330,13 @@
       "title": "Rock of Ages: Millersville University Theatre",
       "source": "MU",
       "date": "2026-11-07T14:00:00"
-    },
-    {
-      "key": "Millersville University Football vs #3 Kutztown|2026-10-17T18:00:00.000Z",
-      "firstSeenAt": "2026-11-17T20:32:38.575Z",
-      "title": "Millersville University Football vs #3 Kutztown",
-      "source": "MU",
-      "date": "2026-10-17T18:00:00.000Z"
-    },
-    {
-      "key": "Kae Wagner Book Signing: Sponsored by Freshly Greek and WIXQ|2026-11-17T14:00:00.000Z",
-      "firstSeenAt": "2026-11-17T20:32:38.575Z",
-      "title": "Kae Wagner Book Signing: Sponsored by Freshly Greek and WIXQ",
-      "source": "MU",
-      "date": "2026-11-17T14:00:00.000Z"
-    },
-    {
-      "key": "Women's Rugby Club Practice|2026-11-17T22:00:00.000Z",
-      "firstSeenAt": "2026-11-17T20:32:38.575Z",
-      "title": "Women's Rugby Club Practice",
-      "source": "MU",
-      "date": "2026-11-17T22:00:00.000Z"
-    },
-    {
-      "key": "Music Productiom Club Waffle Sale|2026-11-18T13:00:00.000Z",
-      "firstSeenAt": "2026-11-17T20:32:38.575Z",
-      "title": "Music Productiom Club Waffle Sale",
-      "source": "MU",
-      "date": "2026-11-18T13:00:00.000Z"
-    },
-    {
-      "key": "HCSA Craft Night|2026-11-19T23:00:00.000Z",
-      "firstSeenAt": "2026-11-17T20:32:38.575Z",
-      "title": "HCSA Craft Night",
-      "source": "MU",
-      "date": "2026-11-19T23:00:00.000Z"
-    },
-    {
-      "key": "Best Buddies Friendsgiving|2026-11-20T00:00:00.000Z",
-      "firstSeenAt": "2026-11-17T20:32:38.575Z",
-      "title": "Best Buddies Friendsgiving",
-      "source": "MU",
-      "date": "2026-11-20T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 5,
   "skippedByRule": {
-    "total": 450,
+    "total": 451,
     "reasons": {
-      "pm-sub-varsity": 309,
+      "pm-sub-varsity": 310,
       "mu-calendar-athletics": 72,
       "camps-skipped": 28,
       "intramural-dup": 1,

@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-18T19:06:18.415Z",
+ "generatedAt": "2026-11-18T20:53:37.040Z",
  "scope": "content-rule skips only — no date-window drops, no duplicates; gated (mu-only/townie-only) rows are emitted, not listed here",
  "itemCap": 40,
  "labels": {
@@ -21,13 +21,13 @@
   "submission-no-deadline": "Community submission: Signup row with no deadline"
  },
  "counts": {
-  "pm-sub-varsity": 310,
+  "pm-sub-varsity": 311,
   "mu-calendar-athletics": 72,
   "camps-skipped": 28,
   "intramural-dup": 1,
   "borough-collection": 13,
   "borough-reservation": 17,
-  "submission-not-approved": 2,
+  "submission-not-approved": 1,
   "submission-out-of-range": 9
  },
  "items": {
@@ -44,16 +44,16 @@
   "borough-reservation": [
    {
     "source": "Borough",
-    "title": "Reserve Public Meeting Room",
-    "date": "2026-11-09T23:00:00.000Z",
+    "title": "Reserve, Public Meeting Room",
+    "date": "2026-09-16T22:00:00.000Z",
     "location": "Millersville Borough",
     "link": "https://millersvilleborough.org/resident-info/calendar/",
     "note": "enrich via borough-overrides.json if this is a real event"
    },
    {
     "source": "Borough",
-    "title": "Reserve, Public Meeting Room",
-    "date": "2026-09-16T22:00:00.000Z",
+    "title": "Reserve Public Meeting Room",
+    "date": "2026-11-09T23:00:00.000Z",
     "location": "Millersville Borough",
     "link": "https://millersvilleborough.org/resident-info/calendar/",
     "note": "enrich via borough-overrides.json if this is a real event"
@@ -185,14 +185,6 @@
     "title": "Test",
     "date": "11/10/2026",
     "location": "Here",
-    "link": "",
-    "note": "Status blank"
-   },
-   {
-    "source": "Community",
-    "title": "Beat the Board",
-    "date": "11/20/2026",
-    "location": "Stayer Hall MPR 100",
     "link": "",
     "note": "Status blank"
    }

@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-11-18T19:06:18.517Z",
-  "totalEvents": 2039,
-  "withDescription": 845,
-  "withImage": 226,
-  "familyFriendly": 55,
+  "generatedAt": "2026-11-18T20:53:37.175Z",
+  "totalEvents": 2041,
+  "withDescription": 847,
+  "withImage": 227,
+  "familyFriendly": 56,
   "interests": {
     "arts": 97,
     "greek": 27,
@@ -23,12 +23,12 @@
     "artsmu": 48,
     "eckert": 3,
     "campsAlumni": 9,
-    "muGetInvolved": 546,
+    "muGetInvolved": 547,
     "pennManor": 657,
     "borough": 48,
     "vfw": 6,
     "phantomPower": 13,
-    "community": 14,
+    "community": 15,
     "manor": 37,
     "raneyCellars": 4,
     "theBackyard": 29,
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-18T19:02:11.531Z"
+    "lastSyncAt": "2026-11-18T20:51:53.352Z"
   },
   "submissionsQueue": {
-    "pendingFuture": 1,
+    "pendingFuture": 0,
     "pendingPast": 1,
-    "approved": 4,
-    "checkedAt": "2026-11-18T19:06:05.976Z"
+    "approved": 5,
+    "checkedAt": "2026-11-18T20:53:26.649Z"
   },
   "artsmuMerge": {
     "fetched": 48,
@@ -265,6 +265,20 @@
   },
   "recentlyAdded": [
     {
+      "key": "Beat the Board|2026-11-20T23:00:00.000Z",
+      "firstSeenAt": "2026-11-18T20:53:37.172Z",
+      "title": "Beat the Board",
+      "source": "Community",
+      "date": "2026-11-20T23:00:00.000Z"
+    },
+    {
+      "key": "SGA Last Stretch Event|2026-12-03T01:00:00.000Z",
+      "firstSeenAt": "2026-11-18T20:53:37.172Z",
+      "title": "SGA Last Stretch Event",
+      "source": "MU",
+      "date": "2026-12-03T01:00:00.000Z"
+    },
+    {
       "key": "FSL: New Member Meeting|2026-12-01T22:00:00.000Z",
       "firstSeenAt": "2026-11-18T18:58:32.563Z",
       "title": "FSL: New Member Meeting",
@@ -319,33 +333,19 @@
       "title": "Snacks & Facts Commuter Luncheon",
       "source": "MU",
       "date": "2026-11-18T17:00:00.000Z"
-    },
-    {
-      "key": "Trivia Night|2026-12-09T01:00:00.000Z",
-      "firstSeenAt": "2026-11-18T02:04:01.996Z",
-      "title": "Trivia Night",
-      "source": "Jack's Tavern",
-      "date": "2026-12-09T01:00:00.000Z"
-    },
-    {
-      "key": "Rock of Ages: Millersville University Theatre|2026-11-05T19:00:00",
-      "firstSeenAt": "2026-11-18T00:16:08.196Z",
-      "title": "Rock of Ages: Millersville University Theatre",
-      "source": "MU",
-      "date": "2026-11-05T19:00:00"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 2,
   "skippedByRule": {
     "total": 452,
     "reasons": {
-      "pm-sub-varsity": 310,
+      "pm-sub-varsity": 311,
       "mu-calendar-athletics": 72,
       "camps-skipped": 28,
       "intramural-dup": 1,
       "borough-collection": 13,
       "borough-reservation": 17,
-      "submission-not-approved": 2,
+      "submission-not-approved": 1,
       "submission-out-of-range": 9
     }
   }

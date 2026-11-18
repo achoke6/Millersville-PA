@@ -1,27 +1,27 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Tuesday, November 17, 2026 at 12:06 PM (Rooney, Student Meteorologist)",
+    "issued": "Tuesday, November 17, 2026 at 05:32 PM (Beetham and Cerri, Student Meteorologists)",
     "periods": [
-      {
-        "period": "This afternoon",
-        "text": "Sunny and seasonable. High: 55-59"
-      },
       {
         "period": "Tonight",
         "text": "Clear and cold. Low: 28-32"
       },
       {
-        "period": "Wednesday",
-        "text": "Sunny, milder and pleasant. High: 60-64"
+        "period": "Tomorrow",
+        "text": "Sunny and milder. High: 60-64"
       },
       {
-        "period": "Wednesday Night",
+        "period": "Tomorrow Night",
         "text": "Clear and cold. Low: 28-32"
       },
       {
         "period": "Thursday",
-        "text": "Sunny and beautiful. High: 62-66"
+        "text": "Sunny and pleasant. High: 62-66"
+      },
+      {
+        "period": "Friday",
+        "text": "Sunny and warmer. High: 64-68"
       }
     ]
   },
@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "19:00",
+      "temp": "43",
+      "dewpoint": "37",
+      "rh": "77",
+      "windDir": "SW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "18:00",
+      "temp": "47",
+      "dewpoint": "37",
+      "rh": "66",
+      "windDir": "WSW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "17:00",
       "temp": "53",
       "dewpoint": "36",
@@ -167,28 +189,6 @@
       "rh": "47",
       "windDir": "W",
       "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "13:00",
-      "temp": "54",
-      "dewpoint": "38",
-      "rh": "55",
-      "windDir": "WSW",
-      "windSpeed": "5",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "12:00",
-      "temp": "52",
-      "dewpoint": "38",
-      "rh": "60",
-      "windDir": "W",
-      "windSpeed": "4",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
@@ -422,5 +422,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-17T22:21:42.474Z"
+  "updated": "2026-11-18T00:09:20.566Z"
 }

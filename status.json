@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-11-17T22:23:42.069Z",
-  "totalEvents": 2060,
-  "withDescription": 865,
-  "withImage": 241,
-  "familyFriendly": 60,
+  "generatedAt": "2026-11-18T00:16:08.199Z",
+  "totalEvents": 2040,
+  "withDescription": 846,
+  "withImage": 222,
+  "familyFriendly": 57,
   "interests": {
-    "arts": 100,
+    "arts": 96,
     "greek": 25,
     "civic": 95,
-    "causes": 36,
+    "causes": 33,
     "learn": 65,
     "food": 125,
     "music": 90,
@@ -19,12 +19,12 @@
   "eventsToday": 27,
   "sources": {
     "muAthletics": 385,
-    "muCalendar": 198,
+    "muCalendar": 201,
     "artsmu": 49,
     "eckert": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 563,
-    "pennManor": 658,
+    "muGetInvolved": 541,
+    "pennManor": 657,
     "borough": 48,
     "vfw": 6,
     "phantomPower": 13,
@@ -60,7 +60,7 @@
       "latest": "2027-10-27T11:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-08-19T19:00:00.000Z",
+      "earliest": "2026-08-20T16:00:00.000Z",
       "latest": "2027-10-25T20:00:00.000Z"
     },
     "borough": {
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-17T22:21:40.546Z"
+    "lastSyncAt": "2026-11-18T00:09:08.934Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-17T22:23:39.490Z"
+    "checkedAt": "2026-11-18T00:15:59.707Z"
   },
   "artsmuMerge": {
     "fetched": 49,
@@ -186,10 +186,8 @@
     "standalone": 2
   },
   "sourceHealth": {
-    "ok": false,
-    "failing": [
-      "manor.count"
-    ],
+    "ok": true,
+    "failing": [],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -236,16 +234,15 @@
       {
         "key": "pennManorGeneral.count",
         "ok": true,
-        "value": 104,
+        "value": 103,
         "min": 10,
         "skipped": false
       },
       {
         "key": "manor.count",
-        "ok": false,
+        "ok": true,
         "value": 37,
-        "min": 10,
-        "carriedForward": 37
+        "min": 10
       },
       {
         "key": "muHudl.pairRatio",
@@ -265,32 +262,32 @@
   },
   "recentlyAdded": [
     {
+      "key": "Rock of Ages: Millersville University Theatre|2026-11-05T19:00:00",
+      "firstSeenAt": "2026-11-18T00:16:08.196Z",
+      "title": "Rock of Ages: Millersville University Theatre",
+      "source": "MU",
+      "date": "2026-11-05T19:00:00"
+    },
+    {
+      "key": "Rock of Ages: Millersville University Theatre|2026-11-06T19:00:00",
+      "firstSeenAt": "2026-11-18T00:16:08.196Z",
+      "title": "Rock of Ages: Millersville University Theatre",
+      "source": "MU",
+      "date": "2026-11-06T19:00:00"
+    },
+    {
+      "key": "Rock of Ages: Millersville University Theatre|2026-11-07T14:00:00",
+      "firstSeenAt": "2026-11-18T00:16:08.196Z",
+      "title": "Rock of Ages: Millersville University Theatre",
+      "source": "MU",
+      "date": "2026-11-07T14:00:00"
+    },
+    {
       "key": "Millersville University Football vs #3 Kutztown|2026-10-17T18:00:00.000Z",
       "firstSeenAt": "2026-11-17T20:32:38.575Z",
       "title": "Millersville University Football vs #3 Kutztown",
       "source": "MU",
       "date": "2026-10-17T18:00:00.000Z"
-    },
-    {
-      "key": "Midterm Debrief Town-hall|2026-11-06T01:00:00.000Z",
-      "firstSeenAt": "2026-11-17T20:32:38.575Z",
-      "title": "Midterm Debrief Town-hall",
-      "source": "MU",
-      "date": "2026-11-06T01:00:00.000Z"
-    },
-    {
-      "key": "Fellowship Night|2026-11-06T01:00:00.000Z",
-      "firstSeenAt": "2026-11-17T20:32:38.575Z",
-      "title": "Fellowship Night",
-      "source": "MU",
-      "date": "2026-11-06T01:00:00.000Z"
-    },
-    {
-      "key": "Ice Hockey Club (D3) Practice|2026-11-06T01:15:00.000Z",
-      "firstSeenAt": "2026-11-17T20:32:38.575Z",
-      "title": "Ice Hockey Club (D3) Practice",
-      "source": "MU",
-      "date": "2026-11-06T01:15:00.000Z"
     },
     {
       "key": "Kae Wagner Book Signing: Sponsored by Freshly Greek and WIXQ|2026-11-17T14:00:00.000Z",
@@ -335,7 +332,7 @@
       "date": "2026-12-05T00:15:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 3,
   "skippedByRule": {
     "total": 449,
     "reasons": {

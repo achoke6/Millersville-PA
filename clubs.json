@@ -388,14 +388,14 @@
     "id": "millersvilleclubbaseball"
   },
   {
-    "name": "Club cheerleading",
-    "category": "Meeting",
+    "name": "Club Cheerleading",
+    "category": "Sports and Leisure",
     "categories": [
-      "Meeting",
-      "Fundraiser"
+      "Sports and Leisure",
+      "Meeting"
     ],
     "shortName": "Club Cheerleading",
-    "id": ""
+    "id": "na"
   },
   {
     "name": "Club Softball of Millersville University",
@@ -418,12 +418,13 @@
   },
   {
     "name": "Club Tennis",
-    "category": "Fundraiser",
+    "category": "Academic",
     "categories": [
-      "Fundraiser"
+      "Academic",
+      "Sports and Leisure"
     ],
-    "shortName": "",
-    "id": ""
+    "shortName": "MUCT",
+    "id": "muct"
   },
   {
     "name": "Coding Club",
@@ -653,9 +654,8 @@
   },
   {
     "name": "East Village Residence Hall",
-    "category": "Competition",
+    "category": "Social",
     "categories": [
-      "Competition",
       "Social"
     ],
     "shortName": "East Village",
@@ -875,10 +875,8 @@
   },
   {
     "name": "Ice Hockey Club (D3)",
-    "category": "Sporting",
-    "categories": [
-      "Sporting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -943,10 +941,10 @@
   },
   {
     "name": "Kappa Alpha Psi Fraternity Incorporated",
-    "category": "Social",
+    "category": "Educational Program",
     "categories": [
-      "Social",
-      "Tabling"
+      "Educational Program",
+      "Lecture or Speaker"
     ],
     "shortName": "Kappa Alpha Psi",
     "id": ""
@@ -1616,9 +1614,9 @@
   },
   {
     "name": "Student Government Association",
-    "category": "Social",
+    "category": "Tabling",
     "categories": [
-      "Social"
+      "Tabling"
     ],
     "shortName": "SGA",
     "id": ""
@@ -1825,12 +1823,12 @@
   },
   {
     "name": "University Theatre",
-    "category": "Performance",
+    "category": "University Departments ",
     "categories": [
-      "Performance"
+      "University Departments "
     ],
     "shortName": "",
-    "id": ""
+    "id": "universitytheatre"
   },
   {
     "name": "Veterans and Military Resource Center",

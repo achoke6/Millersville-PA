@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-18T20:56:13.785Z",
-  "totalEvents": 2041,
-  "withDescription": 847,
+  "generatedAt": "2026-11-18T21:26:34.167Z",
+  "totalEvents": 2042,
+  "withDescription": 848,
   "withImage": 227,
   "familyFriendly": 56,
   "interests": {
@@ -23,7 +23,7 @@
     "artsmu": 48,
     "eckert": 3,
     "campsAlumni": 9,
-    "muGetInvolved": 547,
+    "muGetInvolved": 548,
     "pennManor": 657,
     "borough": 48,
     "vfw": 6,
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-18T20:54:43.455Z"
+    "lastSyncAt": "2026-11-18T21:24:48.978Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-18T20:56:10.418Z"
+    "checkedAt": "2026-11-18T21:26:26.094Z"
   },
   "artsmuMerge": {
     "fetched": 48,
@@ -265,6 +265,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Weekly Practice|2026-11-23T21:00:00.000Z",
+      "firstSeenAt": "2026-11-18T21:26:34.164Z",
+      "title": "Weekly Practice",
+      "source": "MU",
+      "date": "2026-11-23T21:00:00.000Z"
+    },
+    {
       "key": "Beat the Board|2026-11-20T23:00:00.000Z",
       "firstSeenAt": "2026-11-18T20:53:37.172Z",
       "title": "Beat the Board",
@@ -326,20 +333,13 @@
       "title": "Kutztown Versus Millersville -The Ville Vendetta",
       "source": "MU",
       "date": "2026-12-05T17:00:00.000Z"
-    },
-    {
-      "key": "Snacks & Facts Commuter Luncheon|2026-11-18T17:00:00.000Z",
-      "firstSeenAt": "2026-11-18T14:47:55.330Z",
-      "title": "Snacks & Facts Commuter Luncheon",
-      "source": "MU",
-      "date": "2026-11-18T17:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
-    "total": 452,
+    "total": 454,
     "reasons": {
-      "pm-sub-varsity": 311,
+      "pm-sub-varsity": 313,
       "mu-calendar-athletics": 72,
       "camps-skipped": 28,
       "intramural-dup": 1,

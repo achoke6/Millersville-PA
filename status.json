@@ -1,30 +1,30 @@
 {
-  "generatedAt": "2026-11-16T15:07:36.722Z",
-  "totalEvents": 2060,
-  "withDescription": 865,
-  "withImage": 235,
-  "familyFriendly": 60,
+  "generatedAt": "2026-11-18T13:11:42.457Z",
+  "totalEvents": 2040,
+  "withDescription": 846,
+  "withImage": 222,
+  "familyFriendly": 57,
   "interests": {
-    "arts": 100,
-    "greek": 23,
+    "arts": 96,
+    "greek": 25,
     "civic": 95,
-    "causes": 35,
+    "causes": 33,
     "learn": 65,
-    "food": 126,
-    "music": 88,
-    "crafts": 16,
+    "food": 125,
+    "music": 90,
+    "crafts": 17,
     "reshall": 2,
     "active": 4
   },
-  "eventsToday": 18,
+  "eventsToday": 26,
   "sources": {
     "muAthletics": 385,
-    "muCalendar": 196,
-    "artsmu": 49,
+    "muCalendar": 201,
+    "artsmu": 48,
     "eckert": 3,
     "campsAlumni": 11,
-    "muGetInvolved": 564,
-    "pennManor": 658,
+    "muGetInvolved": 541,
+    "pennManor": 657,
     "borough": 48,
     "vfw": 6,
     "phantomPower": 13,
@@ -60,7 +60,7 @@
       "latest": "2027-10-27T11:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-08-19T19:00:00.000Z",
+      "earliest": "2026-08-20T16:00:00.000Z",
       "latest": "2027-10-25T20:00:00.000Z"
     },
     "borough": {
@@ -72,7 +72,7 @@
       "latest": "2026-11-29T18:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-11-17T00:00:00.000Z",
+      "earliest": "2026-11-19T01:00:00.000Z",
       "latest": "2026-12-19T01:00:00.000Z"
     },
     "community": {
@@ -84,8 +84,8 @@
       "latest": "2027-11-03T23:00:00.000Z"
     },
     "raneyCellars": {
-      "earliest": "2026-11-07T00:00:00.000Z",
-      "latest": "2026-11-19T21:00:00.000Z"
+      "earliest": "2026-11-12T21:00:00.000Z",
+      "latest": "2026-11-20T21:00:00.000Z"
     },
     "theBackyard": {
       "earliest": "2026-08-24T12:30:00.000Z",
@@ -95,59 +95,59 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 76
+      "daysSinceMoved": 78
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 87
+      "daysSinceMoved": 89
     },
     "artsmu": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 89
+      "daysSinceMoved": 76
     },
     "eckert": {
       "newest": "2026-11-12",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 9
     },
     "campsAlumni": {
       "newest": "2027-08-20",
-      "daysSinceMoved": 28
+      "daysSinceMoved": 30
     },
     "muGetInvolved": {
       "newest": "2027-10-27",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 15
     },
     "pennManor": {
       "newest": "2027-10-25",
-      "daysSinceMoved": 22
+      "daysSinceMoved": 24
     },
     "borough": {
       "newest": "2027-10-31",
-      "daysSinceMoved": 16
+      "daysSinceMoved": 18
     },
     "vfw": {
       "newest": "2026-11-29",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 9
     },
     "phantomPower": {
       "newest": "2026-12-19",
-      "daysSinceMoved": 18
+      "daysSinceMoved": 20
     },
     "community": {
       "newest": "2027-05-16",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 8
     },
     "manor": {
       "newest": "2027-11-03",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 15
     },
     "raneyCellars": {
-      "newest": "2026-11-19",
-      "daysSinceMoved": 10
+      "newest": "2026-11-20",
+      "daysSinceMoved": 1
     },
     "theBackyard": {
       "newest": "2027-04-28",
-      "daysSinceMoved": 39
+      "daysSinceMoved": 41
     }
   },
   "sports": {
@@ -159,7 +159,7 @@
   },
   "registrations": {
     "open": 5,
-    "next2Weeks": 2,
+    "next2Weeks": 3,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
@@ -172,17 +172,17 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-16T15:04:44.265Z"
+    "lastSyncAt": "2026-11-18T13:05:24.223Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-16T15:07:28.171Z"
+    "checkedAt": "2026-11-18T13:11:34.439Z"
   },
   "artsmuMerge": {
-    "fetched": 49,
-    "merged": 47,
+    "fetched": 48,
+    "merged": 46,
     "standalone": 2
   },
   "sourceHealth": {
@@ -192,28 +192,28 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 343,
+        "value": 341,
         "min": 45,
         "skipped": false
       },
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 191,
+        "value": 189,
         "min": 60,
         "skipped": false
       },
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 200,
+        "value": 198,
         "min": 30,
         "skipped": false
       },
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 349,
+        "value": 347,
         "min": 21,
         "skipped": false
       },
@@ -234,7 +234,7 @@
       {
         "key": "pennManorGeneral.count",
         "ok": true,
-        "value": 104,
+        "value": 103,
         "min": 10,
         "skipped": false
       },
@@ -262,81 +262,81 @@
   },
   "recentlyAdded": [
     {
-      "key": "FALL ART SALES!|2026-11-16T10:00:00",
-      "firstSeenAt": "2026-11-16T15:07:36.719Z",
-      "title": "FALL ART SALES!",
+      "key": "Trivia Night|2026-12-09T01:00:00.000Z",
+      "firstSeenAt": "2026-11-18T02:04:01.996Z",
+      "title": "Trivia Night",
+      "source": "Jack's Tavern",
+      "date": "2026-12-09T01:00:00.000Z"
+    },
+    {
+      "key": "Rock of Ages: Millersville University Theatre|2026-11-05T19:00:00",
+      "firstSeenAt": "2026-11-18T00:16:08.196Z",
+      "title": "Rock of Ages: Millersville University Theatre",
       "source": "MU",
-      "date": "2026-11-16T10:00:00"
+      "date": "2026-11-05T19:00:00"
     },
     {
-      "key": "FALL ART SALES!|2026-11-17T10:00:00",
-      "firstSeenAt": "2026-11-16T15:07:36.719Z",
-      "title": "FALL ART SALES!",
+      "key": "Rock of Ages: Millersville University Theatre|2026-11-06T19:00:00",
+      "firstSeenAt": "2026-11-18T00:16:08.196Z",
+      "title": "Rock of Ages: Millersville University Theatre",
       "source": "MU",
-      "date": "2026-11-17T10:00:00"
+      "date": "2026-11-06T19:00:00"
     },
     {
-      "key": "FALL ART SALES!|2026-11-18T10:00:00",
-      "firstSeenAt": "2026-11-16T15:07:36.719Z",
-      "title": "FALL ART SALES!",
+      "key": "Rock of Ages: Millersville University Theatre|2026-11-07T14:00:00",
+      "firstSeenAt": "2026-11-18T00:16:08.196Z",
+      "title": "Rock of Ages: Millersville University Theatre",
       "source": "MU",
-      "date": "2026-11-18T10:00:00"
+      "date": "2026-11-07T14:00:00"
     },
     {
-      "key": "FALL ART SALES!|2026-11-19T10:00:00",
-      "firstSeenAt": "2026-11-16T15:07:36.719Z",
-      "title": "FALL ART SALES!",
+      "key": "Millersville University Football vs #3 Kutztown|2026-10-17T18:00:00.000Z",
+      "firstSeenAt": "2026-11-17T20:32:38.575Z",
+      "title": "Millersville University Football vs #3 Kutztown",
       "source": "MU",
-      "date": "2026-11-19T10:00:00"
+      "date": "2026-10-17T18:00:00.000Z"
     },
     {
-      "key": "Butter Ask First!|2026-11-23T16:30:00.000Z",
-      "firstSeenAt": "2026-11-16T15:07:36.719Z",
-      "title": "Butter Ask First!",
+      "key": "Kae Wagner Book Signing: Sponsored by Freshly Greek and WIXQ|2026-11-17T14:00:00.000Z",
+      "firstSeenAt": "2026-11-17T20:32:38.575Z",
+      "title": "Kae Wagner Book Signing: Sponsored by Freshly Greek and WIXQ",
       "source": "MU",
-      "date": "2026-11-23T16:30:00.000Z"
+      "date": "2026-11-17T14:00:00.000Z"
     },
     {
-      "key": "Millersville Area Historical Society presents \"Urban & the Chocolate King”|2026-12-05T09:00:00",
-      "firstSeenAt": "2026-11-16T15:07:36.719Z",
-      "title": "Millersville Area Historical Society presents \"Urban & the Chocolate King”",
+      "key": "Women's Rugby Club Practice|2026-11-17T22:00:00.000Z",
+      "firstSeenAt": "2026-11-17T20:32:38.575Z",
+      "title": "Women's Rugby Club Practice",
       "source": "MU",
-      "date": "2026-12-05T09:00:00"
+      "date": "2026-11-17T22:00:00.000Z"
     },
     {
-      "key": "Intramural Pickleball|2026-11-18T17:00:00.000Z",
-      "firstSeenAt": "2026-11-16T11:29:45.716Z",
-      "title": "Intramural Pickleball",
-      "source": "Other",
-      "date": "2026-11-18T17:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Field Hockey vs Parkland High School|2026-11-18T01:00:00.000Z",
-      "firstSeenAt": "2026-11-15T17:45:39.899Z",
-      "title": "Girls Varsity Field Hockey vs Parkland High School",
-      "source": "PM",
-      "date": "2026-11-18T01:00:00.000Z"
-    },
-    {
-      "key": "CREED FISHER w. Swim The Current & Cody Tyler|2026-12-06T01:00:00.000Z",
-      "firstSeenAt": "2026-11-15T11:10:11.952Z",
-      "title": "CREED FISHER w. Swim The Current & Cody Tyler",
-      "source": "Other",
-      "date": "2026-12-06T01:00:00.000Z"
-    },
-    {
-      "key": "Real Talk, Real Skills: Filter Your Feed|2026-11-05T12:00:00",
-      "firstSeenAt": "2026-11-15T01:09:27.218Z",
-      "title": "Real Talk, Real Skills: Filter Your Feed",
+      "key": "Music Productiom Club Waffle Sale|2026-11-18T13:00:00.000Z",
+      "firstSeenAt": "2026-11-17T20:32:38.575Z",
+      "title": "Music Productiom Club Waffle Sale",
       "source": "MU",
-      "date": "2026-11-05T12:00:00"
+      "date": "2026-11-18T13:00:00.000Z"
+    },
+    {
+      "key": "HCSA Craft Night|2026-11-19T23:00:00.000Z",
+      "firstSeenAt": "2026-11-17T20:32:38.575Z",
+      "title": "HCSA Craft Night",
+      "source": "MU",
+      "date": "2026-11-19T23:00:00.000Z"
+    },
+    {
+      "key": "Best Buddies Friendsgiving|2026-11-20T00:00:00.000Z",
+      "firstSeenAt": "2026-11-17T20:32:38.575Z",
+      "title": "Best Buddies Friendsgiving",
+      "source": "MU",
+      "date": "2026-11-20T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 6,
+  "addedLastRun": 0,
   "skippedByRule": {
-    "total": 438,
+    "total": 450,
     "reasons": {
-      "pm-sub-varsity": 297,
+      "pm-sub-varsity": 309,
       "mu-calendar-athletics": 72,
       "camps-skipped": 28,
       "intramural-dup": 1,

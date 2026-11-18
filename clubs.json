@@ -388,14 +388,14 @@
     "id": "millersvilleclubbaseball"
   },
   {
-    "name": "Club cheerleading",
-    "category": "Meeting",
+    "name": "Club Cheerleading",
+    "category": "Sports and Leisure",
     "categories": [
-      "Meeting",
-      "Fundraiser"
+      "Sports and Leisure",
+      "Meeting"
     ],
     "shortName": "Club Cheerleading",
-    "id": ""
+    "id": "na"
   },
   {
     "name": "Club Softball of Millersville University",
@@ -418,12 +418,13 @@
   },
   {
     "name": "Club Tennis",
-    "category": "Sporting",
+    "category": "Academic",
     "categories": [
-      "Sporting"
+      "Academic",
+      "Sports and Leisure"
     ],
-    "shortName": "",
-    "id": ""
+    "shortName": "MUCT",
+    "id": "muct"
   },
   {
     "name": "Coding Club",
@@ -597,9 +598,9 @@
   },
   {
     "name": "Delta Sigma Theta Sorority, Inc.",
-    "category": "Meeting",
+    "category": "Lecture or Speaker",
     "categories": [
-      "Meeting"
+      "Lecture or Speaker"
     ],
     "shortName": "",
     "id": ""
@@ -635,10 +636,8 @@
   },
   {
     "name": "Dr. Rita Smith-Wade-El Center for Intercultural Student Engagement",
-    "category": "Lecture or Speaker",
-    "categories": [
-      "Lecture or Speaker"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -655,9 +654,8 @@
   },
   {
     "name": "East Village Residence Hall",
-    "category": "Competition",
+    "category": "Social",
     "categories": [
-      "Competition",
       "Social"
     ],
     "shortName": "East Village",
@@ -787,9 +785,9 @@
   },
   {
     "name": "Fraternity & Sorority Life",
-    "category": "Educational Program",
+    "category": "Social",
     "categories": [
-      "Educational Program"
+      "Social"
     ],
     "shortName": "FSL",
     "id": ""
@@ -853,10 +851,8 @@
   },
   {
     "name": "Honors College Student Association",
-    "category": "Trip",
-    "categories": [
-      "Trip"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "HCSA",
     "id": ""
   },
@@ -879,10 +875,8 @@
   },
   {
     "name": "Ice Hockey Club (D3)",
-    "category": "Sporting",
-    "categories": [
-      "Sporting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -947,10 +941,10 @@
   },
   {
     "name": "Kappa Alpha Psi Fraternity Incorporated",
-    "category": "Social",
+    "category": "Educational Program",
     "categories": [
-      "Social",
-      "Tabling"
+      "Educational Program",
+      "Lecture or Speaker"
     ],
     "shortName": "Kappa Alpha Psi",
     "id": ""
@@ -1229,9 +1223,9 @@
   },
   {
     "name": "Music Production Club",
-    "category": "Meeting",
+    "category": "Fundraiser",
     "categories": [
-      "Meeting"
+      "Fundraiser"
     ],
     "shortName": "",
     "id": ""
@@ -1419,12 +1413,12 @@
   },
   {
     "name": "Pickleball Club",
-    "category": "Sports and Leisure",
+    "category": "Sporting",
     "categories": [
-      "Sports and Leisure"
+      "Sporting"
     ],
     "shortName": "",
-    "id": "pickleball"
+    "id": ""
   },
   {
     "name": "Pre-Health Club",
@@ -1587,6 +1581,15 @@
     "id": "studentaffairs"
   },
   {
+    "name": "Student Affiliates in School Psychology",
+    "category": "Academic",
+    "categories": [
+      "Academic"
+    ],
+    "shortName": "SASP MU",
+    "id": "sasp-mu"
+  },
+  {
     "name": "Student Business Association",
     "category": "",
     "categories": [],
@@ -1611,9 +1614,9 @@
   },
   {
     "name": "Student Government Association",
-    "category": "Social",
+    "category": "Tabling",
     "categories": [
-      "Social"
+      "Tabling"
     ],
     "shortName": "SGA",
     "id": ""
@@ -1820,12 +1823,12 @@
   },
   {
     "name": "University Theatre",
-    "category": "Performance",
+    "category": "University Departments ",
     "categories": [
-      "Performance"
+      "University Departments "
     ],
     "shortName": "",
-    "id": ""
+    "id": "universitytheatre"
   },
   {
     "name": "Veterans and Military Resource Center",
@@ -1866,9 +1869,9 @@
   },
   {
     "name": "WIXQ 91.7 FM",
-    "category": "Meeting",
+    "category": "Tabling",
     "categories": [
-      "Meeting"
+      "Tabling"
     ],
     "shortName": "",
     "id": ""
@@ -1914,12 +1917,10 @@
   },
   {
     "name": "Women's Rugby Club",
-    "category": "Sports and Leisure",
-    "categories": [
-      "Sports and Leisure"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
-    "id": "wrugby"
+    "id": ""
   },
   {
     "name": "Women's Soccer",

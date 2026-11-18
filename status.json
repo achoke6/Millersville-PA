@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-11-18T13:11:42.457Z",
-  "totalEvents": 2040,
-  "withDescription": 846,
-  "withImage": 222,
-  "familyFriendly": 57,
+  "generatedAt": "2026-11-18T14:47:55.333Z",
+  "totalEvents": 2039,
+  "withDescription": 845,
+  "withImage": 223,
+  "familyFriendly": 55,
   "interests": {
     "arts": 96,
     "greek": 25,
     "civic": 95,
     "causes": 33,
     "learn": 65,
-    "food": 125,
+    "food": 126,
     "music": 90,
     "crafts": 17,
     "reshall": 2,
     "active": 4
   },
-  "eventsToday": 26,
+  "eventsToday": 27,
   "sources": {
     "muAthletics": 385,
     "muCalendar": 201,
     "artsmu": 48,
     "eckert": 3,
-    "campsAlumni": 11,
-    "muGetInvolved": 541,
+    "campsAlumni": 9,
+    "muGetInvolved": 542,
     "pennManor": 657,
     "borough": 48,
     "vfw": 6,
@@ -152,9 +152,9 @@
   },
   "sports": {
     "total": 939,
-    "scored": 204,
+    "scored": 205,
     "wins": 98,
-    "losses": 93,
+    "losses": 94,
     "ties": 13
   },
   "registrations": {
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-18T13:05:24.223Z"
+    "lastSyncAt": "2026-11-18T14:45:24.513Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-18T13:11:34.439Z"
+    "checkedAt": "2026-11-18T14:47:46.360Z"
   },
   "artsmuMerge": {
     "fetched": 48,
@@ -186,8 +186,10 @@
     "standalone": 2
   },
   "sourceHealth": {
-    "ok": true,
-    "failing": [],
+    "ok": false,
+    "failing": [
+      "manor.count"
+    ],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -240,9 +242,10 @@
       },
       {
         "key": "manor.count",
-        "ok": true,
+        "ok": false,
         "value": 37,
-        "min": 10
+        "min": 10,
+        "carriedForward": 37
       },
       {
         "key": "muHudl.pairRatio",
@@ -261,6 +264,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Snacks & Facts Commuter Luncheon|2026-11-18T17:00:00.000Z",
+      "firstSeenAt": "2026-11-18T14:47:55.330Z",
+      "title": "Snacks & Facts Commuter Luncheon",
+      "source": "MU",
+      "date": "2026-11-18T17:00:00.000Z"
+    },
     {
       "key": "Trivia Night|2026-12-09T01:00:00.000Z",
       "firstSeenAt": "2026-11-18T02:04:01.996Z",
@@ -323,16 +333,9 @@
       "title": "HCSA Craft Night",
       "source": "MU",
       "date": "2026-11-19T23:00:00.000Z"
-    },
-    {
-      "key": "Best Buddies Friendsgiving|2026-11-20T00:00:00.000Z",
-      "firstSeenAt": "2026-11-17T20:32:38.575Z",
-      "title": "Best Buddies Friendsgiving",
-      "source": "MU",
-      "date": "2026-11-20T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 450,
     "reasons": {

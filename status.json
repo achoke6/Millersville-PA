@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-18T04:23:46.936Z",
+  "generatedAt": "2026-11-18T06:13:02.050Z",
   "totalEvents": 2040,
   "withDescription": 846,
   "withImage": 222,
@@ -20,7 +20,7 @@
   "sources": {
     "muAthletics": 385,
     "muCalendar": 201,
-    "artsmu": 49,
+    "artsmu": 48,
     "eckert": 3,
     "campsAlumni": 11,
     "muGetInvolved": 541,
@@ -95,59 +95,59 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 77
+      "daysSinceMoved": 78
     },
     "muCalendar": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 88
+      "daysSinceMoved": 89
     },
     "artsmu": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 89
+      "daysSinceMoved": 76
     },
     "eckert": {
       "newest": "2026-11-12",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 9
     },
     "campsAlumni": {
       "newest": "2027-08-20",
-      "daysSinceMoved": 29
+      "daysSinceMoved": 30
     },
     "muGetInvolved": {
       "newest": "2027-10-27",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 15
     },
     "pennManor": {
       "newest": "2027-10-25",
-      "daysSinceMoved": 23
+      "daysSinceMoved": 24
     },
     "borough": {
       "newest": "2027-10-31",
-      "daysSinceMoved": 17
+      "daysSinceMoved": 18
     },
     "vfw": {
       "newest": "2026-11-29",
-      "daysSinceMoved": 8
+      "daysSinceMoved": 9
     },
     "phantomPower": {
       "newest": "2026-12-19",
-      "daysSinceMoved": 19
+      "daysSinceMoved": 20
     },
     "community": {
       "newest": "2027-05-16",
-      "daysSinceMoved": 7
+      "daysSinceMoved": 8
     },
     "manor": {
       "newest": "2027-11-03",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 15
     },
     "raneyCellars": {
       "newest": "2026-11-20",
-      "daysSinceMoved": 0
+      "daysSinceMoved": 1
     },
     "theBackyard": {
       "newest": "2027-04-28",
-      "daysSinceMoved": 40
+      "daysSinceMoved": 41
     }
   },
   "sports": {
@@ -172,17 +172,17 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-18T04:15:52.743Z"
+    "lastSyncAt": "2026-11-18T06:09:08.917Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-18T04:23:37.125Z"
+    "checkedAt": "2026-11-18T06:12:50.244Z"
   },
   "artsmuMerge": {
-    "fetched": 49,
-    "merged": 47,
+    "fetched": 48,
+    "merged": 46,
     "standalone": 2
   },
   "sourceHealth": {

@@ -1,83 +1,86 @@
 {
-    "_comment": "Hand-maintained John Herr's Village Market weekly deals. Maintained weekly via Claude Cowork — circular runs Thursday-Wednesday. Transcribe ~15 top deals from the weekly circular. Update validThrough to one day past the last valid day so deals auto-disappear when the new week starts (Thursday morning).",
-    "_format": "dateRange: human-readable string shown in UI (e.g. 'Thursday, May 7 through Wednesday, May 13'). validThrough: ISO date (YYYY-MM-DD), exclusive end. deals: array of { item, salePrice, regularPrice (optional), savings (optional) }. salePrice can be flexible — '$2.99/lb', '2 for $5', 'BOGO Free', etc.",
+    "_comment": "Hand-maintained John Herr's Village Market weekly deals. Maintained weekly via Claude Cowork \u2014 circular runs Thursday-Wednesday. Transcribe ~15 top deals from the weekly circular. Update validThrough to one day past the last valid day so deals auto-disappear when the new week starts (Thursday morning).",
+    "_format": "dateRange: human-readable string shown in UI (e.g. 'Thursday, May 7 through Wednesday, May 13'). validThrough: ISO date (YYYY-MM-DD), exclusive end. deals: array of { item, salePrice, regularPrice (optional), savings (optional) }. salePrice can be flexible \u2014 '$2.99/lb', '2 for $5', 'BOGO Free', etc.",
     "_source": "Circular page typically at https://www.familyownedmarkets.com/print-weekly-specials/?circularstoreidentifier=54348 or via the store's main page.",
-    "dateRange": "Thursday, November 12 through Wednesday, November 18",
-    "validThrough": "2026-11-19",
+    "dateRange": "Thursday, November 19 through Wednesday, December 2 (two-week Thanksgiving circular \u2014 all stores closed Thanksgiving Day, Nov 26)",
+    "validThrough": "2026-12-03",
     "deals": [
         {
-            "item": "Boneless & Skinless Chicken Breasts (Fresh Grade A, All Natural — sold in 10-lb bag only, $19.90/bag)",
-            "salePrice": "$1.99/lb",
-            "regularPrice": "$2.99/lb (less amount)",
-            "savings": "$1.00/lb"
+            "item": "Family Owned Markets Large White Eggs (1 dozen)",
+            "salePrice": "$0.88"
         },
         {
-            "item": "Whole Boneless Pork Loin — cut into chops or roast at no extra cost",
+            "item": "Store Brand Frozen Self-Basting Whole Turkey (up to 20 lbs) or Grade A Whole Bone-In Turkey Breast \u2014 FREE with your Thanksgiving Reward",
+            "salePrice": "FREE with reward",
+            "regularPrice": "$1.88/lb without reward (whole turkey)"
+        },
+        {
+            "item": "Fresh Whole Bone-In Pork Butt",
             "salePrice": "$1.99/lb"
         },
         {
-            "item": "Store Brand Frozen Self-Basting Whole Turkey (up to 20 lbs) or Grade A Whole Bone-In Turkey Breast — FREE with your Thanksgiving Reward (earned with $500 spend Oct 8 - Nov 19)",
-            "salePrice": "FREE with reward"
+            "item": "Perdue Oven Stuffer Roaster",
+            "salePrice": "$1.88/lb"
         },
         {
-            "item": "Boneless New York Strip Steaks (Value Pack, Select Beef)",
-            "salePrice": "$11.99/lb",
-            "regularPrice": "$12.99/lb (less amount)",
+            "item": "Lay's Classic Potato Chips (5 to 9.625-oz, Selected)",
+            "salePrice": "Buy 1 Get 1 FREE"
+        },
+        {
+            "item": "Martin's Kettle Cooked or Tortilla Chips, Middleswarth, Tostitos Cantina or Dieffenbach's Kettle Chips (Selected)",
+            "salePrice": "Buy 1 Get 1 FREE"
+        },
+        {
+            "item": "Bone-In Chicken Thighs (Value Pack, Fresh Grade A)",
+            "salePrice": "$2.29/lb",
+            "regularPrice": "$2.99/lb (less amount)",
+            "savings": "$0.70/lb"
+        },
+        {
+            "item": "Fresh 80% Lean Ground Beef (Value Pack, Our Own Store Made)",
+            "salePrice": "$5.49/lb",
+            "regularPrice": "$6.49/lb (less amount)",
             "savings": "$1.00/lb"
         },
         {
-            "item": "Gibble's Homestyle Potato Chips (8-oz, Selected)",
-            "salePrice": "Buy 1 Get 1 FREE"
+            "item": "Boneless Shoulder London Broil (Certified Angus Beef)",
+            "salePrice": "$7.49/lb"
         },
         {
-            "item": "Fresh Ground Sirloin (Value Pack, Our Own Store Made, Certified Angus Beef)",
-            "salePrice": "$6.99/lb",
-            "regularPrice": "$7.99/lb (less amount)",
-            "savings": "$1.00/lb"
+            "item": "Orange Sweet Potatoes (Fresh)",
+            "salePrice": "$0.69/lb"
         },
         {
-            "item": "Martin's Popcorn (7 to 10.5-oz, Selected) — Weekly Door Buster (limit 4 per Rewards card)",
-            "salePrice": "Buy 1 Get 1 FREE"
+            "item": "Broccoli Crowns (Fresh)",
+            "salePrice": "$1.29/lb"
         },
         {
-            "item": "John F. Martin Original Sliced Bacon (16-oz) — Weekly Door Buster (limit 4 per Rewards card)",
-            "salePrice": "$3.69"
-        },
-        {
-            "item": "John F. Martin Deli Tavern Ham — Weekly Door Buster (limit 6 lbs per Rewards card)",
-            "salePrice": "$4.49/lb"
-        },
-        {
-            "item": "Food Club Frozen Vegetables (10 to 12-oz, Selected) — Weekly Door Buster (limit 10 per Rewards card)",
-            "salePrice": "5 for $5"
-        },
-        {
-            "item": "Canada Dry, 7UP, A&W Root Beer or Sunkist Orange (2-Liter, Selected)",
-            "salePrice": "Buy 1 Get 1 FREE"
-        },
-        {
-            "item": "Betty Crocker Super Moist Cake Mix (13.25 to 15.25-oz, Selected) — Throwback Thursday Digital Coupon (Thu 11/12 - Sun 11/15 only, limit 1 offer)",
-            "salePrice": "$0.98",
-            "regularPrice": "$1.48 (sale price before coupon)",
-            "savings": "$0.50"
-        },
-        {
-            "item": "Kellogg's Large Size Cereals (12 to 17.5-oz, Selected) — Throwback Thursday Digital Coupon (Thu 11/12 - Sun 11/15 only, limit 1 offer)",
-            "salePrice": "$2.48",
-            "regularPrice": "$3.98 (sale price before coupon)",
-            "savings": "$1.50"
+            "item": "Land O' Lakes Butter (16-oz, Half Sticks or Quarters)",
+            "salePrice": "$2.98"
         },
         {
             "item": "Campbell's Cream of Mushroom or Cream of Chicken Soup (10.5-oz)",
             "salePrice": "4 for $5"
         },
         {
-            "item": "Southern Seas 16/20 Ct. EZ Peel Raw Shrimp (1-lb bag)",
-            "salePrice": "$8.99"
+            "item": "Bob Evans Mashed Potatoes or Tasteful Sides (12 to 24-oz, Selected) \u2014 Weekly Door Buster (limit 6 per Rewards card)",
+            "salePrice": "3 for $10"
         },
         {
-            "item": "Green Cabbage (Fresh)",
-            "salePrice": "$0.69/lb"
+            "item": "Domino Pure Granulated Sugar (4-lb bag) \u2014 Weekly Door Buster (limit 4 per Rewards card)",
+            "salePrice": "$2.98"
+        },
+        {
+            "item": "Duncan Hines Perfectly Moist Cake Mix (15.25-oz) \u2014 Weekly Door Buster (limit 6 per Rewards card)",
+            "salePrice": "3 for $4"
+        },
+        {
+            "item": "Bakery Fresh Pumpkin Pie (10-inch)",
+            "salePrice": "$11.99"
+        },
+        {
+            "item": "Southern Seas 16/20 Ct. EZ Peel Raw Shrimp (1-lb bag)",
+            "salePrice": "$6.99"
         }
     ]
 }

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-19T07:00:34.974Z",
+  "generatedAt": "2026-11-19T07:03:55.959Z",
   "totalEvents": 2028,
   "withDescription": 834,
   "withImage": 215,
@@ -72,7 +72,7 @@
       "latest": "2026-11-29T18:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-11-20T00:00:00.000Z",
+      "earliest": "2026-11-19T01:00:00.000Z",
       "latest": "2026-12-19T01:00:00.000Z"
     },
     "community": {
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-19T06:58:29.834Z"
+    "lastSyncAt": "2026-11-19T07:02:09.345Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-19T07:00:28.297Z"
+    "checkedAt": "2026-11-19T07:03:52.129Z"
   },
   "artsmuMerge": {
     "fetched": 48,
@@ -186,8 +186,10 @@
     "standalone": 2
   },
   "sourceHealth": {
-    "ok": true,
-    "failing": [],
+    "ok": false,
+    "failing": [
+      "manor.count"
+    ],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -240,9 +242,10 @@
       },
       {
         "key": "manor.count",
-        "ok": true,
+        "ok": false,
         "value": 37,
-        "min": 10
+        "min": 10,
+        "carriedForward": 37
       },
       {
         "key": "muHudl.pairRatio",
@@ -262,11 +265,11 @@
   },
   "recentlyAdded": [
     {
-      "key": "The WARPED Band - WARPED TOUR Tribute|2026-12-12T01:00:00.000Z",
-      "firstSeenAt": "2026-11-19T07:00:34.971Z",
-      "title": "The WARPED Band - WARPED TOUR Tribute",
+      "key": "STINKING LIZAVETA w. Deathbird Earth, Oven|2026-11-19T01:00:00.000Z",
+      "firstSeenAt": "2026-11-19T07:03:55.956Z",
+      "title": "STINKING LIZAVETA w. Deathbird Earth, Oven",
       "source": "Other",
-      "date": "2026-12-12T01:00:00.000Z"
+      "date": "2026-11-19T01:00:00.000Z"
     },
     {
       "key": "Karaoke Night|2026-12-10T03:00:00.000Z",

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-19T21:31:13.247Z",
-  "totalEvents": 2036,
+  "generatedAt": "2026-11-19T23:19:02.516Z",
+  "totalEvents": 2038,
   "withDescription": 841,
   "withImage": 215,
   "familyFriendly": 55,
@@ -24,7 +24,7 @@
     "eckert": 3,
     "campsAlumni": 9,
     "muGetInvolved": 541,
-    "pennManor": 658,
+    "pennManor": 660,
     "borough": 48,
     "vfw": 6,
     "phantomPower": 13,
@@ -151,7 +151,7 @@
     }
   },
   "sports": {
-    "total": 941,
+    "total": 943,
     "scored": 206,
     "wins": 99,
     "losses": 94,
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-19T21:29:01.536Z"
+    "lastSyncAt": "2026-11-19T23:16:48.081Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-19T21:31:05.531Z"
+    "checkedAt": "2026-11-19T23:18:54.344Z"
   },
   "artsmuMerge": {
     "fetched": 48,
@@ -220,7 +220,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 556,
+        "value": 558,
         "min": 150,
         "skipped": false
       },
@@ -261,6 +261,20 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Girls JV Soccer @ Manheim Central High School|2027-10-12T21:00:00.000Z",
+      "firstSeenAt": "2026-11-19T23:19:02.513Z",
+      "title": "Girls JV Soccer @ Manheim Central High School",
+      "source": "PM",
+      "date": "2027-10-12T21:00:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Soccer @ Manheim Central High School|2027-10-12T22:30:00.000Z",
+      "firstSeenAt": "2026-11-19T23:19:02.513Z",
+      "title": "Girls Varsity Soccer @ Manheim Central High School",
+      "source": "PM",
+      "date": "2027-10-12T22:30:00.000Z"
+    },
     {
       "key": "Women's Rugby Club Practice|2026-11-19T22:00:00.000Z",
       "firstSeenAt": "2026-11-19T19:21:23.510Z",
@@ -316,23 +330,9 @@
       "title": "Golf Simulator",
       "source": "MU",
       "date": "2026-12-08T19:00:00.000Z"
-    },
-    {
-      "key": "Perler Bead Keychain Making|2026-12-08T23:00:00.000Z",
-      "firstSeenAt": "2026-11-19T15:38:51.369Z",
-      "title": "Perler Bead Keychain Making",
-      "source": "MU",
-      "date": "2026-12-08T23:00:00.000Z"
-    },
-    {
-      "key": "Frosty Friends: Stuff-A-Plush Giveaway|2026-12-09T14:00:00.000Z",
-      "firstSeenAt": "2026-11-19T15:38:51.369Z",
-      "title": "Frosty Friends: Stuff-A-Plush Giveaway",
-      "source": "MU",
-      "date": "2026-12-09T14:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 2,
   "skippedByRule": {
     "total": 456,
     "reasons": {

@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-19T15:38:51.372Z",
-  "totalEvents": 2034,
-  "withDescription": 840,
+  "generatedAt": "2026-11-19T15:44:20.409Z",
+  "totalEvents": 2035,
+  "withDescription": 841,
   "withImage": 215,
   "familyFriendly": 55,
   "interests": {
@@ -23,7 +23,7 @@
     "artsmu": 48,
     "eckert": 3,
     "campsAlumni": 9,
-    "muGetInvolved": 539,
+    "muGetInvolved": 540,
     "pennManor": 657,
     "borough": 48,
     "vfw": 6,
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-19T15:36:15.006Z"
+    "lastSyncAt": "2026-11-19T15:40:22.885Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-19T15:38:43.257Z"
+    "checkedAt": "2026-11-19T15:44:15.418Z"
   },
   "artsmuMerge": {
     "fetched": 48,
@@ -188,7 +188,8 @@
   "sourceHealth": {
     "ok": false,
     "failing": [
-      "manor.count"
+      "pennManorAthletics.count",
+      "pennManorGeneral.count"
     ],
     "checks": [
       {
@@ -221,10 +222,11 @@
       },
       {
         "key": "pennManorAthletics.count",
-        "ok": true,
+        "ok": false,
         "value": 555,
         "min": 150,
-        "skipped": false
+        "skipped": false,
+        "carriedForward": 555
       },
       {
         "key": "muAthletics.count",
@@ -235,17 +237,17 @@
       },
       {
         "key": "pennManorGeneral.count",
-        "ok": true,
+        "ok": false,
         "value": 102,
         "min": 10,
-        "skipped": false
+        "skipped": false,
+        "carriedForward": 102
       },
       {
         "key": "manor.count",
-        "ok": false,
+        "ok": true,
         "value": 37,
-        "min": 10,
-        "carriedForward": 37
+        "min": 10
       },
       {
         "key": "muHudl.pairRatio",
@@ -264,6 +266,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Cocoa Before Commencement|2026-12-09T19:00:00.000Z",
+      "firstSeenAt": "2026-11-19T15:44:20.405Z",
+      "title": "Cocoa Before Commencement",
+      "source": "MU",
+      "date": "2026-12-09T19:00:00.000Z"
+    },
     {
       "key": "Borough Council Meeting - Cancelled|2026-11-24T23:00:00.000Z",
       "firstSeenAt": "2026-11-19T15:38:51.369Z",
@@ -326,20 +335,12 @@
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2027-09-29T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-10-04T23:00:00.000Z",
-      "firstSeenAt": "2026-11-19T10:58:38.226Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-10-04T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 7,
+  "addedLastRun": 1,
   "skippedByRule": {
-    "total": 456,
+    "total": 141,
     "reasons": {
-      "pm-sub-varsity": 315,
       "mu-calendar-athletics": 72,
       "camps-skipped": 28,
       "intramural-dup": 1,

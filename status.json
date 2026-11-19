@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-19T13:01:46.786Z",
+  "generatedAt": "2026-11-19T13:46:33.519Z",
   "totalEvents": 2028,
   "withDescription": 834,
   "withImage": 215,
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-19T12:59:13.583Z"
+    "lastSyncAt": "2026-11-19T13:44:18.777Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-19T13:01:40.186Z"
+    "checkedAt": "2026-11-19T13:46:26.442Z"
   },
   "artsmuMerge": {
     "fetched": 48,
@@ -186,10 +186,8 @@
     "standalone": 2
   },
   "sourceHealth": {
-    "ok": false,
-    "failing": [
-      "manor.count"
-    ],
+    "ok": true,
+    "failing": [],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -242,10 +240,9 @@
       },
       {
         "key": "manor.count",
-        "ok": false,
+        "ok": true,
         "value": 37,
-        "min": 10,
-        "carriedForward": 37
+        "min": 10
       },
       {
         "key": "muHudl.pairRatio",
@@ -337,9 +334,9 @@
   ],
   "addedLastRun": 0,
   "skippedByRule": {
-    "total": 455,
+    "total": 456,
     "reasons": {
-      "pm-sub-varsity": 314,
+      "pm-sub-varsity": 315,
       "mu-calendar-athletics": 72,
       "camps-skipped": 28,
       "intramural-dup": 1,

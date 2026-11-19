@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-19T05:12:55.396Z",
+  "generatedAt": "2026-11-19T07:00:34.974Z",
   "totalEvents": 2028,
   "withDescription": 834,
   "withImage": 215,
@@ -72,7 +72,7 @@
       "latest": "2026-11-29T18:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-11-19T01:00:00.000Z",
+      "earliest": "2026-11-20T00:00:00.000Z",
       "latest": "2026-12-19T01:00:00.000Z"
     },
     "community": {
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-19T05:10:22.085Z"
+    "lastSyncAt": "2026-11-19T06:58:29.834Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-19T05:12:46.935Z"
+    "checkedAt": "2026-11-19T07:00:28.297Z"
   },
   "artsmuMerge": {
     "fetched": 48,
@@ -206,7 +206,7 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 198,
+        "value": 197,
         "min": 30,
         "skipped": false
       },
@@ -261,6 +261,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "The WARPED Band - WARPED TOUR Tribute|2026-12-12T01:00:00.000Z",
+      "firstSeenAt": "2026-11-19T07:00:34.971Z",
+      "title": "The WARPED Band - WARPED TOUR Tribute",
+      "source": "Other",
+      "date": "2026-12-12T01:00:00.000Z"
+    },
     {
       "key": "Karaoke Night|2026-12-10T03:00:00.000Z",
       "firstSeenAt": "2026-11-19T03:24:52.047Z",
@@ -323,16 +330,9 @@
       "title": "Weekly Practice",
       "source": "MU",
       "date": "2026-11-23T21:00:00.000Z"
-    },
-    {
-      "key": "Beat the Board|2026-11-20T23:00:00.000Z",
-      "firstSeenAt": "2026-11-18T20:53:37.172Z",
-      "title": "Beat the Board",
-      "source": "Community",
-      "date": "2026-11-20T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 455,
     "reasons": {

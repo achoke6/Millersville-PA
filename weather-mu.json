@@ -1,10 +1,10 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Thursday, November 19, 2026 at 07:55 AM (Kint, Smith, Zocco, Student Meteorologists)",
+    "issued": "Thursday, November 19, 2026 at 12:02 PM (Biondo and Cressley, Student Meteorologists)",
     "periods": [
       {
-        "period": "Today",
+        "period": "This afternoon",
         "text": "Sunny and beautiful. High: 64-68"
       },
       {
@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "12:00",
+      "temp": "60",
+      "dewpoint": "38",
+      "rh": "43",
+      "windDir": "WSW",
+      "windSpeed": "3",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "11:00",
+      "temp": "56",
+      "dewpoint": "35",
+      "rh": "45",
+      "windDir": "NNW",
+      "windSpeed": "1",
+      "precip": "0.00",
+      "visibility": "10.1",
+      "condition": "None"
+    },
+    {
       "time": "10:00",
       "temp": "49",
       "dewpoint": "36",
@@ -169,28 +191,6 @@
       "windSpeed": "1",
       "precip": "0.00",
       "visibility": "7.3",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "29",
-      "dewpoint": "28",
-      "rh": "94",
-      "windDir": "SSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "7.4",
-      "condition": "None"
-    },
-    {
-      "time": "05:00",
-      "temp": "30",
-      "dewpoint": "29",
-      "rh": "95",
-      "windDir": "NNE",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "7.7",
       "condition": "None"
     }
   ],
@@ -415,6 +415,13 @@
   },
   "videos": [
     {
+      "title": "Short Term Forecast 11/19/2026",
+      "videoId": "RoganuPxuo4",
+      "url": "https://www.youtube.com/watch?v=RoganuPxuo4",
+      "published": "2026-11-19T16:37:19+00:00",
+      "thumbnail": "https://i3.ytimg.com/vi/RoganuPxuo4/hqdefault.jpg"
+    },
+    {
       "title": "Medium Range Forecast 11/19/2026",
       "videoId": "kkHuz0CN_p8",
       "url": "https://www.youtube.com/watch?v=kkHuz0CN_p8",
@@ -434,15 +441,8 @@
       "url": "https://www.youtube.com/watch?v=MRQgNPWGSaM",
       "published": "2026-11-17T16:23:20+00:00",
       "thumbnail": "https://i2.ytimg.com/vi/MRQgNPWGSaM/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 11/16/2026",
-      "videoId": "saH4e4POfC8",
-      "url": "https://www.youtube.com/watch?v=saH4e4POfC8",
-      "published": "2026-11-16T15:54:30+00:00",
-      "thumbnail": "https://i4.ytimg.com/vi/saH4e4POfC8/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-19T15:40:34.209Z"
+  "updated": "2026-11-19T17:29:47.232Z"
 }

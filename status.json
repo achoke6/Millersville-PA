@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-19T02:56:49.867Z",
+  "generatedAt": "2026-11-19T03:24:52.052Z",
   "totalEvents": 2028,
   "withDescription": 834,
   "withImage": 215,
@@ -16,7 +16,7 @@
     "reshall": 3,
     "active": 4
   },
-  "eventsToday": 24,
+  "eventsToday": 23,
   "sources": {
     "muAthletics": 385,
     "muCalendar": 199,
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-19T02:53:31.862Z"
+    "lastSyncAt": "2026-11-19T03:22:34.739Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-19T02:56:41.999Z"
+    "checkedAt": "2026-11-19T03:24:43.472Z"
   },
   "artsmuMerge": {
     "fetched": 48,
@@ -262,6 +262,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Karaoke Night|2026-12-10T03:00:00.000Z",
+      "firstSeenAt": "2026-11-19T03:24:52.047Z",
+      "title": "Karaoke Night",
+      "source": "Jack's Tavern",
+      "date": "2026-12-10T03:00:00.000Z"
+    },
+    {
       "key": "MOOSE Ultimate Frisbee Alumni Game|2026-11-08T13:00:00",
       "firstSeenAt": "2026-11-19T01:08:04.612Z",
       "title": "MOOSE Ultimate Frisbee Alumni Game",
@@ -323,16 +330,9 @@
       "title": "Beat the Board",
       "source": "Community",
       "date": "2026-11-20T23:00:00.000Z"
-    },
-    {
-      "key": "SGA Last Stretch Event|2026-12-03T01:00:00.000Z",
-      "firstSeenAt": "2026-11-18T20:53:37.172Z",
-      "title": "SGA Last Stretch Event",
-      "source": "MU",
-      "date": "2026-12-03T01:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 455,
     "reasons": {

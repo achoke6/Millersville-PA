@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-19T13:50:39.174Z",
-  "totalEvents": 2028,
-  "withDescription": 834,
+  "generatedAt": "2026-11-19T15:38:51.372Z",
+  "totalEvents": 2034,
+  "withDescription": 840,
   "withImage": 215,
   "familyFriendly": 55,
   "interests": {
@@ -23,7 +23,7 @@
     "artsmu": 48,
     "eckert": 3,
     "campsAlumni": 9,
-    "muGetInvolved": 533,
+    "muGetInvolved": 539,
     "pennManor": 657,
     "borough": 48,
     "vfw": 6,
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-19T13:48:04.993Z"
+    "lastSyncAt": "2026-11-19T15:36:15.006Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-19T13:50:37.190Z"
+    "checkedAt": "2026-11-19T15:38:43.257Z"
   },
   "artsmuMerge": {
     "fetched": 48,
@@ -186,8 +186,10 @@
     "standalone": 2
   },
   "sourceHealth": {
-    "ok": true,
-    "failing": [],
+    "ok": false,
+    "failing": [
+      "manor.count"
+    ],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -240,9 +242,10 @@
       },
       {
         "key": "manor.count",
-        "ok": true,
+        "ok": false,
         "value": 37,
-        "min": 10
+        "min": 10,
+        "carriedForward": 37
       },
       {
         "key": "muHudl.pairRatio",
@@ -261,6 +264,55 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Borough Council Meeting - Cancelled|2026-11-24T23:00:00.000Z",
+      "firstSeenAt": "2026-11-19T15:38:51.369Z",
+      "title": "Borough Council Meeting - Cancelled",
+      "source": "Borough",
+      "date": "2026-11-24T23:00:00.000Z"
+    },
+    {
+      "key": "Campus Spa|2026-12-07T16:00:00.000Z",
+      "firstSeenAt": "2026-11-19T15:38:51.369Z",
+      "title": "Campus Spa",
+      "source": "MU",
+      "date": "2026-12-07T16:00:00.000Z"
+    },
+    {
+      "key": "Final Stretch Guided Painting with Happily Ever Crafter|2026-12-07T22:30:00.000Z",
+      "firstSeenAt": "2026-11-19T15:38:51.369Z",
+      "title": "Final Stretch Guided Painting with Happily Ever Crafter",
+      "source": "MU",
+      "date": "2026-12-07T22:30:00.000Z"
+    },
+    {
+      "key": "Mac'd Out Monday|2026-12-08T02:30:00.000Z",
+      "firstSeenAt": "2026-11-19T15:38:51.369Z",
+      "title": "Mac'd Out Monday",
+      "source": "MU",
+      "date": "2026-12-08T02:30:00.000Z"
+    },
+    {
+      "key": "Golf Simulator|2026-12-08T19:00:00.000Z",
+      "firstSeenAt": "2026-11-19T15:38:51.369Z",
+      "title": "Golf Simulator",
+      "source": "MU",
+      "date": "2026-12-08T19:00:00.000Z"
+    },
+    {
+      "key": "Perler Bead Keychain Making|2026-12-08T23:00:00.000Z",
+      "firstSeenAt": "2026-11-19T15:38:51.369Z",
+      "title": "Perler Bead Keychain Making",
+      "source": "MU",
+      "date": "2026-12-08T23:00:00.000Z"
+    },
+    {
+      "key": "Frosty Friends: Stuff-A-Plush Giveaway|2026-12-09T14:00:00.000Z",
+      "firstSeenAt": "2026-11-19T15:38:51.369Z",
+      "title": "Frosty Friends: Stuff-A-Plush Giveaway",
+      "source": "MU",
+      "date": "2026-12-09T14:00:00.000Z"
+    },
     {
       "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
       "firstSeenAt": "2026-11-19T10:58:38.226Z",
@@ -281,58 +333,9 @@
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2027-10-04T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-10-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-19T10:58:38.226Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-10-06T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2027-10-27T12:30:00.000Z",
-      "firstSeenAt": "2026-11-19T10:58:38.226Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-10-27T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-11-01T23:00:00.000Z",
-      "firstSeenAt": "2026-11-19T10:58:38.226Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-11-01T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-11-03T23:00:00.000Z",
-      "firstSeenAt": "2026-11-19T10:58:38.226Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-11-03T23:00:00.000Z"
-    },
-    {
-      "key": "The WARPED Band - WARPED TOUR Tribute|2026-12-12T01:00:00.000Z",
-      "firstSeenAt": "2026-11-19T08:56:37.298Z",
-      "title": "The WARPED Band - WARPED TOUR Tribute",
-      "source": "Other",
-      "date": "2026-12-12T01:00:00.000Z"
-    },
-    {
-      "key": "Karaoke Night|2026-12-10T03:00:00.000Z",
-      "firstSeenAt": "2026-11-19T03:24:52.047Z",
-      "title": "Karaoke Night",
-      "source": "Jack's Tavern",
-      "date": "2026-12-10T03:00:00.000Z"
-    },
-    {
-      "key": "MOOSE Ultimate Frisbee Alumni Game|2026-11-08T13:00:00",
-      "firstSeenAt": "2026-11-19T01:08:04.612Z",
-      "title": "MOOSE Ultimate Frisbee Alumni Game",
-      "source": "MU",
-      "date": "2026-11-08T13:00:00"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 7,
   "skippedByRule": {
     "total": 456,
     "reasons": {

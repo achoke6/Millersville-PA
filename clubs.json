@@ -305,8 +305,7 @@
     "name": "Center for Health Education and Promotion",
     "category": "Educational Program",
     "categories": [
-      "Educational Program",
-      "Tabling"
+      "Educational Program"
     ],
     "shortName": "CHEP",
     "id": ""
@@ -486,9 +485,9 @@
   },
   {
     "name": "Commuter Services",
-    "category": "Social",
+    "category": "Educational Program",
     "categories": [
-      "Social"
+      "Educational Program"
     ],
     "shortName": "",
     "id": ""
@@ -794,9 +793,9 @@
   },
   {
     "name": "Fraternity & Sorority Life",
-    "category": "Social",
+    "category": "Educational Program",
     "categories": [
-      "Social"
+      "Educational Program"
     ],
     "shortName": "FSL",
     "id": ""
@@ -1061,12 +1060,13 @@
   },
   {
     "name": "Mathematics Educators",
-    "category": "Social",
+    "category": "Academic",
     "categories": [
-      "Social"
+      "Academic",
+      "Service & Civic Engagement"
     ],
-    "shortName": "",
-    "id": ""
+    "shortName": "MEMU",
+    "id": "memu"
   },
   {
     "name": "McNairy Library",
@@ -1098,6 +1098,16 @@
     "category": "",
     "categories": [],
     "shortName": "",
+    "id": ""
+  },
+  {
+    "name": "Men's Club Soccer",
+    "category": "Competition",
+    "categories": [
+      "Competition",
+      "Sporting"
+    ],
+    "shortName": "Men's Club Soccer",
     "id": ""
   },
   {
@@ -1165,15 +1175,6 @@
     "id": ""
   },
   {
-    "name": "Millersville Men's Club Soccer",
-    "category": "Competition",
-    "categories": [
-      "Competition"
-    ],
-    "shortName": "Men's Club Soccer",
-    "id": ""
-  },
-  {
     "name": "Millersville Scholars Program",
     "category": "",
     "categories": [],
@@ -1225,8 +1226,10 @@
   },
   {
     "name": "Moose Ultimate",
-    "category": "",
-    "categories": [],
+    "category": "Sporting",
+    "categories": [
+      "Sporting"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1346,12 +1349,10 @@
   },
   {
     "name": "Orientation Programs",
-    "category": "University Departments ",
-    "categories": [
-      "University Departments "
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
-    "id": "transitionprograms"
+    "id": ""
   },
   {
     "name": "Panhellenic Council",
@@ -1460,8 +1461,11 @@
   },
   {
     "name": "Reformed University Fellowship",
-    "category": "",
-    "categories": [],
+    "category": "Meeting",
+    "categories": [
+      "Meeting",
+      "Social"
+    ],
     "shortName": "RUF",
     "id": ""
   },
@@ -1729,6 +1733,15 @@
     "id": ""
   },
   {
+    "name": "The Alternative Coalition of Millersville",
+    "category": "Arts & Culture",
+    "categories": [
+      "Arts & Culture"
+    ],
+    "shortName": "ACoM",
+    "id": "thealternativecoalitionofmillersville"
+  },
+  {
     "name": "The Career Center",
     "category": "Service",
     "categories": [
@@ -1813,9 +1826,10 @@
   },
   {
     "name": "University Activities Board",
-    "category": "Meeting",
+    "category": "Social",
     "categories": [
-      "Meeting"
+      "Social",
+      "Tabling"
     ],
     "shortName": "UAB",
     "id": ""
@@ -1831,12 +1845,12 @@
   },
   {
     "name": "University Theatre",
-    "category": "University Departments ",
+    "category": "Performance",
     "categories": [
-      "University Departments "
+      "Performance"
     ],
     "shortName": "",
-    "id": "universitytheatre"
+    "id": ""
   },
   {
     "name": "Veterans and Military Resource Center",

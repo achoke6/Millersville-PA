@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-11-19T23:19:02.516Z",
-  "totalEvents": 2038,
-  "withDescription": 841,
-  "withImage": 215,
+  "generatedAt": "2026-11-20T01:07:05.294Z",
+  "totalEvents": 2024,
+  "withDescription": 827,
+  "withImage": 203,
   "familyFriendly": 55,
   "interests": {
     "arts": 97,
-    "greek": 27,
+    "greek": 26,
     "civic": 95,
     "causes": 31,
-    "learn": 66,
-    "food": 125,
-    "music": 90,
+    "learn": 65,
+    "food": 124,
+    "music": 89,
     "crafts": 14,
     "reshall": 3,
     "active": 4
@@ -19,11 +19,11 @@
   "eventsToday": 21,
   "sources": {
     "muAthletics": 385,
-    "muCalendar": 199,
+    "muCalendar": 197,
     "artsmu": 48,
     "eckert": 3,
     "campsAlumni": 9,
-    "muGetInvolved": 541,
+    "muGetInvolved": 529,
     "pennManor": 660,
     "borough": 48,
     "vfw": 6,
@@ -40,7 +40,7 @@
       "latest": "2027-05-27T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-08-21T08:30:00.000Z",
+      "earliest": "2026-08-24T00:00:00.000Z",
       "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-19T23:16:48.081Z"
+    "lastSyncAt": "2026-11-20T01:04:28.659Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-19T23:18:54.344Z"
+    "checkedAt": "2026-11-20T01:06:53.890Z"
   },
   "artsmuMerge": {
     "fetched": 48,
@@ -262,6 +262,48 @@
   },
   "recentlyAdded": [
     {
+      "key": "Creative Writers Guild General Meeting|2026-11-10T18:00:00",
+      "firstSeenAt": "2026-11-20T01:07:05.289Z",
+      "title": "Creative Writers Guild General Meeting",
+      "source": "MU",
+      "date": "2026-11-10T18:00:00"
+    },
+    {
+      "key": "YDSA General Meeting|2026-11-10T18:30:00",
+      "firstSeenAt": "2026-11-20T01:07:05.289Z",
+      "title": "YDSA General Meeting",
+      "source": "MU",
+      "date": "2026-11-10T18:30:00"
+    },
+    {
+      "key": "RUF Bible Study|2026-11-10T19:00:00",
+      "firstSeenAt": "2026-11-20T01:07:05.289Z",
+      "title": "RUF Bible Study",
+      "source": "MU",
+      "date": "2026-11-10T19:00:00"
+    },
+    {
+      "key": "Cozy Craft Day|2026-11-11T11:00:00",
+      "firstSeenAt": "2026-11-20T01:07:05.289Z",
+      "title": "Cozy Craft Day",
+      "source": "MU",
+      "date": "2026-11-11T11:00:00"
+    },
+    {
+      "key": "Board Game Club Weekly Meeting|2026-11-19T01:00:00.000Z",
+      "firstSeenAt": "2026-11-20T01:07:05.289Z",
+      "title": "Board Game Club Weekly Meeting",
+      "source": "MU",
+      "date": "2026-11-19T01:00:00.000Z"
+    },
+    {
+      "key": "RYAN CABRERA w/ Brenden Starr, Lupe Dragon, Michael Wavves & Aly & Andrew|2026-12-05T00:00:00.000Z",
+      "firstSeenAt": "2026-11-20T01:07:05.289Z",
+      "title": "RYAN CABRERA w/ Brenden Starr, Lupe Dragon, Michael Wavves & Aly & Andrew",
+      "source": "Other",
+      "date": "2026-12-05T00:00:00.000Z"
+    },
+    {
       "key": "Girls JV Soccer @ Manheim Central High School|2027-10-12T21:00:00.000Z",
       "firstSeenAt": "2026-11-19T23:19:02.513Z",
       "title": "Girls JV Soccer @ Manheim Central High School",
@@ -288,51 +330,9 @@
       "title": "Girls Varsity Softball @ Boyertown Area Senior High School",
       "source": "PM",
       "date": "2027-05-12T23:00:00.000Z"
-    },
-    {
-      "key": "Cocoa Before Commencement|2026-12-09T19:00:00.000Z",
-      "firstSeenAt": "2026-11-19T15:44:20.405Z",
-      "title": "Cocoa Before Commencement",
-      "source": "MU",
-      "date": "2026-12-09T19:00:00.000Z"
-    },
-    {
-      "key": "Borough Council Meeting - Cancelled|2026-11-24T23:00:00.000Z",
-      "firstSeenAt": "2026-11-19T15:38:51.369Z",
-      "title": "Borough Council Meeting - Cancelled",
-      "source": "Borough",
-      "date": "2026-11-24T23:00:00.000Z"
-    },
-    {
-      "key": "Campus Spa|2026-12-07T16:00:00.000Z",
-      "firstSeenAt": "2026-11-19T15:38:51.369Z",
-      "title": "Campus Spa",
-      "source": "MU",
-      "date": "2026-12-07T16:00:00.000Z"
-    },
-    {
-      "key": "Final Stretch Guided Painting with Happily Ever Crafter|2026-12-07T22:30:00.000Z",
-      "firstSeenAt": "2026-11-19T15:38:51.369Z",
-      "title": "Final Stretch Guided Painting with Happily Ever Crafter",
-      "source": "MU",
-      "date": "2026-12-07T22:30:00.000Z"
-    },
-    {
-      "key": "Mac'd Out Monday|2026-12-08T02:30:00.000Z",
-      "firstSeenAt": "2026-11-19T15:38:51.369Z",
-      "title": "Mac'd Out Monday",
-      "source": "MU",
-      "date": "2026-12-08T02:30:00.000Z"
-    },
-    {
-      "key": "Golf Simulator|2026-12-08T19:00:00.000Z",
-      "firstSeenAt": "2026-11-19T15:38:51.369Z",
-      "title": "Golf Simulator",
-      "source": "MU",
-      "date": "2026-12-08T19:00:00.000Z"
     }
   ],
-  "addedLastRun": 2,
+  "addedLastRun": 6,
   "skippedByRule": {
     "total": 456,
     "reasons": {

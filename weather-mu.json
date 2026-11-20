@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "15:00",
+      "temp": "67",
+      "dewpoint": "42",
+      "rh": "40",
+      "windDir": "NW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "14:00",
+      "temp": "67",
+      "dewpoint": "40",
+      "rh": "38",
+      "windDir": "N",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "13:00",
       "temp": "67",
       "dewpoint": "40",
@@ -169,28 +191,6 @@
       "windSpeed": "1",
       "precip": "0.00",
       "visibility": "11.2",
-      "condition": "None"
-    },
-    {
-      "time": "09:00",
-      "temp": "43",
-      "dewpoint": "35",
-      "rh": "73",
-      "windDir": "SSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "9.6",
-      "condition": "None"
-    },
-    {
-      "time": "08:00",
-      "temp": "37",
-      "dewpoint": "31",
-      "rh": "81",
-      "windDir": "SSW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "7.6",
       "condition": "None"
     }
   ],
@@ -415,9 +415,9 @@
     "yearMinDate": "January 21"
   },
   "discussion": {
-    "headline": "nother week of sunny, dry and beautiful weather!",
-    "dateLine": "12:30 p.m. Tuesday, November 17, 2026",
-    "excerpt": "Last Friday, the high temperature failed to reach 60°F at Millersville University for the first time this fall. Previously, the latest date for the first sub-60°F high temperature since 1914 was November 1st. Ironically, the high temperature also failed to reach 50°F last Friday, and the feat was then repeated on Saturday. A deep trough, or dip in the Jet Stream, over the eastern U.S. …",
+    "headline": "beautiful through saturday, then watching coastal storm sunday",
+    "dateLine": "1:30 p.m. Friday, November 20, 2026, Update",
+    "excerpt": "The weather has been nothing short of spectacular across the mid-Atlantic States this week, and a sprawling high pressure system will promote a continuation of mostly sunny, tranquil and pleasantly warm conditions through the start of the weekend. Much like yesterday, temperatures have reached the mid-to-upper 60s across the Lower Susquehanna Valley this afternoon, and highs should top out around 15°F above average (mid 60s) again tomorrow (see below). …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -455,5 +455,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-20T18:16:07.946Z"
+  "updated": "2026-11-20T20:04:15.087Z"
 }

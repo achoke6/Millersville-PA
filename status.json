@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-11-20T18:18:33.489Z",
+  "generatedAt": "2026-11-20T20:06:08.948Z",
   "totalEvents": 2029,
   "withDescription": 828,
-  "withImage": 203,
+  "withImage": 204,
   "familyFriendly": 55,
   "interests": {
     "arts": 97,
     "greek": 26,
     "civic": 95,
-    "causes": 31,
+    "causes": 32,
     "learn": 65,
     "food": 124,
     "music": 90,
@@ -23,12 +23,12 @@
     "artsmu": 48,
     "eckert": 3,
     "campsAlumni": 9,
-    "muGetInvolved": 530,
+    "muGetInvolved": 531,
     "pennManor": 663,
     "borough": 48,
     "vfw": 6,
     "phantomPower": 13,
-    "community": 15,
+    "community": 14,
     "manor": 38,
     "raneyCellars": 4,
     "theBackyard": 29,
@@ -172,13 +172,13 @@
       "Campus Life": 3
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-20T18:16:05.905Z"
+    "lastSyncAt": "2026-11-20T20:04:13.063Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-20T18:18:24.252Z"
+    "checkedAt": "2026-11-20T20:06:03.379Z"
   },
   "artsmuMerge": {
     "fetched": 48,
@@ -262,6 +262,27 @@
   },
   "recentlyAdded": [
     {
+      "key": "Beat The Board, Music Matching Event|2026-11-20T23:00:00.000Z",
+      "firstSeenAt": "2026-11-20T20:06:08.944Z",
+      "title": "Beat The Board, Music Matching Event",
+      "source": "MU",
+      "date": "2026-11-20T23:00:00.000Z"
+    },
+    {
+      "key": "DARKEST HOUR w. JUDICIARY, NEHEMIAH, & JUSTIFICATIONS|2026-12-13T00:00:00.000Z",
+      "firstSeenAt": "2026-11-20T20:06:08.944Z",
+      "title": "DARKEST HOUR w. JUDICIARY, NEHEMIAH, & JUSTIFICATIONS",
+      "source": "Other",
+      "date": "2026-12-13T00:00:00.000Z"
+    },
+    {
+      "key": "\"The Black Swans of Millersville\" Documentary Screening and Discussion|2027-02-01T23:00:00.000Z",
+      "firstSeenAt": "2026-11-20T20:06:08.944Z",
+      "title": "\"The Black Swans of Millersville\" Documentary Screening and Discussion",
+      "source": "MU",
+      "date": "2027-02-01T23:00:00.000Z"
+    },
+    {
       "key": "Black Jack Friday|2026-11-20T16:00:00.000Z",
       "firstSeenAt": "2026-11-20T16:30:44.542Z",
       "title": "Black Jack Friday",
@@ -281,13 +302,6 @@
       "title": "SUPERSVISORS-SPECIAL MEETING",
       "source": "Manor",
       "date": "2026-11-25T13:00:00.000Z"
-    },
-    {
-      "key": "OBEY YOUR MASTER - Metallica Tribute|2026-11-29T00:00:00.000Z",
-      "firstSeenAt": "2026-11-20T16:30:44.542Z",
-      "title": "OBEY YOUR MASTER - Metallica Tribute",
-      "source": "Other",
-      "date": "2026-11-29T00:00:00.000Z"
     },
     {
       "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
@@ -316,23 +330,9 @@
       "title": "Zoning Hearing Board",
       "source": "Manor",
       "date": "2027-10-06T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2027-10-27T12:30:00.000Z",
-      "firstSeenAt": "2026-11-20T15:54:16.580Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-10-27T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-11-01T23:00:00.000Z",
-      "firstSeenAt": "2026-11-20T15:54:16.580Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-11-01T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 3,
   "skippedByRule": {
     "total": 456,
     "reasons": {

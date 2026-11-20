@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-20T22:08:33.663Z",
+  "generatedAt": "2026-11-20T23:56:01.304Z",
   "totalEvents": 2029,
   "withDescription": 828,
   "withImage": 204,
@@ -164,21 +164,20 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 5,
-    "pendingPast": 15,
+    "pendingFuture": 4,
+    "pendingPast": 16,
     "pendingBySource": {
       "Youth Sports": 1,
-      "PM Community": 1,
       "Campus Life": 3
     },
-    "stalePast": 33,
-    "lastSyncAt": "2026-11-20T22:06:28.336Z"
+    "stalePast": 34,
+    "lastSyncAt": "2026-11-20T23:53:56.861Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-20T22:08:31.412Z"
+    "checkedAt": "2026-11-20T23:55:53.404Z"
   },
   "artsmuMerge": {
     "fetched": 48,
@@ -332,7 +331,7 @@
       "date": "2027-10-06T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 1,
+  "addedLastRun": 0,
   "skippedByRule": {
     "total": 456,
     "reasons": {

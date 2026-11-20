@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-11-20T13:44:39.678Z",
-  "totalEvents": 2024,
+  "generatedAt": "2026-11-20T15:33:06.649Z",
+  "totalEvents": 2019,
   "withDescription": 826,
   "withImage": 203,
   "familyFriendly": 55,
   "interests": {
     "arts": 97,
     "greek": 26,
-    "civic": 95,
+    "civic": 90,
     "causes": 31,
     "learn": 65,
     "food": 123,
@@ -24,12 +24,12 @@
     "eckert": 3,
     "campsAlumni": 9,
     "muGetInvolved": 529,
-    "pennManor": 661,
+    "pennManor": 663,
     "borough": 48,
     "vfw": 6,
     "phantomPower": 13,
     "community": 15,
-    "manor": 37,
+    "manor": 30,
     "raneyCellars": 4,
     "theBackyard": 29,
     "muHudlBroadcasts": 62
@@ -81,7 +81,7 @@
     },
     "manor": {
       "earliest": "2026-11-25T13:30:00.000Z",
-      "latest": "2027-11-03T23:00:00.000Z"
+      "latest": "2027-09-01T23:00:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-11-12T21:00:00.000Z",
@@ -138,8 +138,8 @@
       "daysSinceMoved": 10
     },
     "manor": {
-      "newest": "2027-11-03",
-      "daysSinceMoved": 17
+      "newest": "2027-09-01",
+      "daysSinceMoved": 80
     },
     "raneyCellars": {
       "newest": "2026-11-20",
@@ -151,7 +151,7 @@
     }
   },
   "sports": {
-    "total": 944,
+    "total": 946,
     "scored": 206,
     "wins": 99,
     "losses": 94,
@@ -164,21 +164,21 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 3,
+    "pendingFuture": 5,
     "pendingPast": 15,
     "pendingBySource": {
       "Youth Sports": 1,
       "PM Community": 1,
-      "Campus Life": 1
+      "Campus Life": 3
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-20T13:40:19.637Z"
+    "lastSyncAt": "2026-11-20T15:30:14.654Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-20T13:44:34.218Z"
+    "checkedAt": "2026-11-20T15:32:56.396Z"
   },
   "artsmuMerge": {
     "fetched": 48,
@@ -220,7 +220,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 559,
+        "value": 561,
         "min": 150,
         "skipped": false
       },
@@ -241,7 +241,7 @@
       {
         "key": "manor.count",
         "ok": true,
-        "value": 37,
+        "value": 30,
         "min": 10
       },
       {
@@ -262,60 +262,25 @@
   },
   "recentlyAdded": [
     {
+      "key": "Girls JV Field Hockey @ Manheim Central High School|2027-08-31T21:00:00.000Z",
+      "firstSeenAt": "2026-11-20T15:33:06.646Z",
+      "title": "Girls JV Field Hockey @ Manheim Central High School",
+      "source": "PM",
+      "date": "2027-08-31T21:00:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Field Hockey @ Manheim Central High School|2027-08-31T22:30:00.000Z",
+      "firstSeenAt": "2026-11-20T15:33:06.646Z",
+      "title": "Girls Varsity Field Hockey @ Manheim Central High School",
+      "source": "PM",
+      "date": "2027-08-31T22:30:00.000Z"
+    },
+    {
       "key": "Girls Varsity Basketball vs Lancaster Catholic High School|2026-12-05T00:45:00.000Z",
       "firstSeenAt": "2026-11-20T13:44:39.673Z",
       "title": "Girls Varsity Basketball vs Lancaster Catholic High School",
       "source": "PM",
       "date": "2026-12-05T00:45:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-20T13:38:45.851Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-09-06T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2027-09-29T12:30:00.000Z",
-      "firstSeenAt": "2026-11-20T13:38:45.851Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-09-29T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-10-04T23:00:00.000Z",
-      "firstSeenAt": "2026-11-20T13:38:45.851Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-10-04T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-10-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-20T13:38:45.851Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-10-06T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2027-10-27T12:30:00.000Z",
-      "firstSeenAt": "2026-11-20T13:38:45.851Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-10-27T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-11-01T23:00:00.000Z",
-      "firstSeenAt": "2026-11-20T13:38:45.851Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-11-01T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-11-03T23:00:00.000Z",
-      "firstSeenAt": "2026-11-20T13:38:45.851Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-11-03T23:00:00.000Z"
     },
     {
       "key": "DARKEST HOUR w. JUDICIARY, NEHEMIAH, & JUSTIFICATIONS|2026-12-13T00:00:00.000Z",
@@ -330,9 +295,44 @@
       "title": "Creative Writers Guild General Meeting",
       "source": "MU",
       "date": "2026-11-10T18:00:00"
+    },
+    {
+      "key": "YDSA General Meeting|2026-11-10T18:30:00",
+      "firstSeenAt": "2026-11-20T01:07:05.289Z",
+      "title": "YDSA General Meeting",
+      "source": "MU",
+      "date": "2026-11-10T18:30:00"
+    },
+    {
+      "key": "RUF Bible Study|2026-11-10T19:00:00",
+      "firstSeenAt": "2026-11-20T01:07:05.289Z",
+      "title": "RUF Bible Study",
+      "source": "MU",
+      "date": "2026-11-10T19:00:00"
+    },
+    {
+      "key": "Cozy Craft Day|2026-11-11T11:00:00",
+      "firstSeenAt": "2026-11-20T01:07:05.289Z",
+      "title": "Cozy Craft Day",
+      "source": "MU",
+      "date": "2026-11-11T11:00:00"
+    },
+    {
+      "key": "Board Game Club Weekly Meeting|2026-11-19T01:00:00.000Z",
+      "firstSeenAt": "2026-11-20T01:07:05.289Z",
+      "title": "Board Game Club Weekly Meeting",
+      "source": "MU",
+      "date": "2026-11-19T01:00:00.000Z"
+    },
+    {
+      "key": "RYAN CABRERA w/ Brenden Starr, Lupe Dragon, Michael Wavves & Aly & Andrew|2026-12-05T00:00:00.000Z",
+      "firstSeenAt": "2026-11-20T01:07:05.289Z",
+      "title": "RYAN CABRERA w/ Brenden Starr, Lupe Dragon, Michael Wavves & Aly & Andrew",
+      "source": "Other",
+      "date": "2026-12-05T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 1,
+  "addedLastRun": 2,
   "skippedByRule": {
     "total": 456,
     "reasons": {

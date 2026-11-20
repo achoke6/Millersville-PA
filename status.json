@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-20T15:54:16.584Z",
-  "totalEvents": 2026,
-  "withDescription": 826,
+  "generatedAt": "2026-11-20T16:30:44.545Z",
+  "totalEvents": 2029,
+  "withDescription": 828,
   "withImage": 203,
   "familyFriendly": 55,
   "interests": {
@@ -10,26 +10,26 @@
     "civic": 95,
     "causes": 31,
     "learn": 65,
-    "food": 123,
+    "food": 124,
     "music": 90,
     "crafts": 14,
     "reshall": 3,
     "active": 4
   },
-  "eventsToday": 20,
+  "eventsToday": 21,
   "sources": {
     "muAthletics": 385,
     "muCalendar": 197,
     "artsmu": 48,
     "eckert": 3,
     "campsAlumni": 9,
-    "muGetInvolved": 529,
+    "muGetInvolved": 530,
     "pennManor": 663,
     "borough": 48,
     "vfw": 6,
     "phantomPower": 13,
     "community": 15,
-    "manor": 37,
+    "manor": 38,
     "raneyCellars": 4,
     "theBackyard": 29,
     "muHudlBroadcasts": 62
@@ -80,7 +80,7 @@
       "latest": "2027-05-16T03:59:00.000Z"
     },
     "manor": {
-      "earliest": "2026-11-25T13:30:00.000Z",
+      "earliest": "2026-11-25T13:00:00.000Z",
       "latest": "2027-11-03T23:00:00.000Z"
     },
     "raneyCellars": {
@@ -172,13 +172,13 @@
       "Campus Life": 3
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-20T15:52:11.193Z"
+    "lastSyncAt": "2026-11-20T16:28:10.352Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-20T15:54:13.263Z"
+    "checkedAt": "2026-11-20T16:30:35.965Z"
   },
   "artsmuMerge": {
     "fetched": 48,
@@ -241,7 +241,7 @@
       {
         "key": "manor.count",
         "ok": true,
-        "value": 37,
+        "value": 38,
         "min": 10
       },
       {
@@ -262,11 +262,32 @@
   },
   "recentlyAdded": [
     {
-      "key": "DARKEST HOUR w. JUDICIARY, NEHEMIAH, & JUSTIFICATIONS|2026-12-13T00:00:00.000Z",
-      "firstSeenAt": "2026-11-20T15:54:16.580Z",
-      "title": "DARKEST HOUR w. JUDICIARY, NEHEMIAH, & JUSTIFICATIONS",
+      "key": "Black Jack Friday|2026-11-20T16:00:00.000Z",
+      "firstSeenAt": "2026-11-20T16:30:44.542Z",
+      "title": "Black Jack Friday",
+      "source": "Jack's Tavern",
+      "date": "2026-11-20T16:00:00.000Z"
+    },
+    {
+      "key": "Lancaster Bible Tournament 11/22/2026|2026-11-22T14:00:00.000Z",
+      "firstSeenAt": "2026-11-20T16:30:44.542Z",
+      "title": "Lancaster Bible Tournament 11/22/2026",
+      "source": "MU",
+      "date": "2026-11-22T14:00:00.000Z"
+    },
+    {
+      "key": "SUPERSVISORS-SPECIAL MEETING|2026-11-25T13:00:00.000Z",
+      "firstSeenAt": "2026-11-20T16:30:44.542Z",
+      "title": "SUPERSVISORS-SPECIAL MEETING",
+      "source": "Manor",
+      "date": "2026-11-25T13:00:00.000Z"
+    },
+    {
+      "key": "OBEY YOUR MASTER - Metallica Tribute|2026-11-29T00:00:00.000Z",
+      "firstSeenAt": "2026-11-20T16:30:44.542Z",
+      "title": "OBEY YOUR MASTER - Metallica Tribute",
       "source": "Other",
-      "date": "2026-12-13T00:00:00.000Z"
+      "date": "2026-11-29T00:00:00.000Z"
     },
     {
       "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
@@ -309,30 +330,9 @@
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2027-11-01T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-11-03T23:00:00.000Z",
-      "firstSeenAt": "2026-11-20T15:54:16.580Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-11-03T23:00:00.000Z"
-    },
-    {
-      "key": "Girls JV Field Hockey @ Manheim Central High School|2027-08-31T21:00:00.000Z",
-      "firstSeenAt": "2026-11-20T15:33:06.646Z",
-      "title": "Girls JV Field Hockey @ Manheim Central High School",
-      "source": "PM",
-      "date": "2027-08-31T21:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Field Hockey @ Manheim Central High School|2027-08-31T22:30:00.000Z",
-      "firstSeenAt": "2026-11-20T15:33:06.646Z",
-      "title": "Girls Varsity Field Hockey @ Manheim Central High School",
-      "source": "PM",
-      "date": "2027-08-31T22:30:00.000Z"
     }
   ],
-  "addedLastRun": 8,
+  "addedLastRun": 4,
   "skippedByRule": {
     "total": 456,
     "reasons": {

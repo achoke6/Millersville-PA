@@ -1,27 +1,27 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Thursday, November 19, 2026 at 05:38 PM (Bliss, Meier, Rooney, Zwolinski, Student Meteorologists)",
+    "issued": "Friday, November 20, 2026 at 08:20 AM (Cokain and McCarthy, Student Meteorologists)",
     "periods": [
       {
+        "period": "Today",
+        "text": "Sunny and pleasantly warm. High: 66-70"
+      },
+      {
         "period": "Tonight",
-        "text": "Mainly clear and cold. Low: 30-34"
-      },
-      {
-        "period": "Tomorrow",
-        "text": "Sunny and pleasantly warm. High: 64-68"
-      },
-      {
-        "period": "Tomorrow Night",
-        "text": "Mainly clear. Low: 32-36"
+        "text": "Mainly clear. Low: 30-34"
       },
       {
         "period": "Saturday",
-        "text": "Mostly sunny and gorgeous. High: 62-66"
+        "text": "Gorgeous with sunshine filtered through high clouds. High: 64-68"
+      },
+      {
+        "period": "Saturday Night",
+        "text": "Mild with increasing clouds. Low: 40-44"
       },
       {
         "period": "Sunday",
-        "text": "Mostly cloudy and mild. High: 58-62"
+        "text": "Mostly cloudy and mild with a chance of rain. High: 58-62"
       }
     ]
   },
@@ -455,5 +455,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-20T13:30:52.300Z"
+  "updated": "2026-11-20T13:35:05.166Z"
 }

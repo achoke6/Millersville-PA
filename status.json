@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-20T15:42:14.055Z",
+  "generatedAt": "2026-11-20T15:47:07.125Z",
   "totalEvents": 2026,
   "withDescription": 826,
   "withImage": 203,
@@ -172,13 +172,13 @@
       "Campus Life": 3
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-20T15:34:59.559Z"
+    "lastSyncAt": "2026-11-20T15:43:22.226Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-20T15:42:10.208Z"
+    "checkedAt": "2026-11-20T15:46:59.186Z"
   },
   "artsmuMerge": {
     "fetched": 48,
@@ -262,6 +262,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "OBEY YOUR MASTER - Metallica Tribute|2026-11-29T00:00:00.000Z",
+      "firstSeenAt": "2026-11-20T15:47:07.122Z",
+      "title": "OBEY YOUR MASTER - Metallica Tribute",
+      "source": "Other",
+      "date": "2026-11-29T00:00:00.000Z"
+    },
+    {
       "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
       "firstSeenAt": "2026-11-20T15:42:14.052Z",
       "title": "Supervisors Meeting",
@@ -323,16 +330,9 @@
       "title": "Girls Varsity Field Hockey @ Manheim Central High School",
       "source": "PM",
       "date": "2027-08-31T22:30:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Basketball vs Lancaster Catholic High School|2026-12-05T00:45:00.000Z",
-      "firstSeenAt": "2026-11-20T13:44:39.673Z",
-      "title": "Girls Varsity Basketball vs Lancaster Catholic High School",
-      "source": "PM",
-      "date": "2026-12-05T00:45:00.000Z"
     }
   ],
-  "addedLastRun": 7,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 456,
     "reasons": {

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-20T13:38:45.854Z",
-  "totalEvents": 2023,
+  "generatedAt": "2026-11-20T13:44:39.678Z",
+  "totalEvents": 2024,
   "withDescription": 826,
   "withImage": 203,
   "familyFriendly": 55,
@@ -24,7 +24,7 @@
     "eckert": 3,
     "campsAlumni": 9,
     "muGetInvolved": 529,
-    "pennManor": 660,
+    "pennManor": 661,
     "borough": 48,
     "vfw": 6,
     "phantomPower": 13,
@@ -151,7 +151,7 @@
     }
   },
   "sports": {
-    "total": 943,
+    "total": 944,
     "scored": 206,
     "wins": 99,
     "losses": 94,
@@ -172,13 +172,13 @@
       "Campus Life": 1
     },
     "stalePast": 33,
-    "lastSyncAt": "2026-11-20T13:35:03.410Z"
+    "lastSyncAt": "2026-11-20T13:40:19.637Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-20T13:38:44.088Z"
+    "checkedAt": "2026-11-20T13:44:34.218Z"
   },
   "artsmuMerge": {
     "fetched": 48,
@@ -220,7 +220,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 558,
+        "value": 559,
         "min": 150,
         "skipped": false
       },
@@ -261,6 +261,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Girls Varsity Basketball vs Lancaster Catholic High School|2026-12-05T00:45:00.000Z",
+      "firstSeenAt": "2026-11-20T13:44:39.673Z",
+      "title": "Girls Varsity Basketball vs Lancaster Catholic High School",
+      "source": "PM",
+      "date": "2026-12-05T00:45:00.000Z"
+    },
     {
       "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
       "firstSeenAt": "2026-11-20T13:38:45.851Z",
@@ -323,16 +330,9 @@
       "title": "Creative Writers Guild General Meeting",
       "source": "MU",
       "date": "2026-11-10T18:00:00"
-    },
-    {
-      "key": "YDSA General Meeting|2026-11-10T18:30:00",
-      "firstSeenAt": "2026-11-20T01:07:05.289Z",
-      "title": "YDSA General Meeting",
-      "source": "MU",
-      "date": "2026-11-10T18:30:00"
     }
   ],
-  "addedLastRun": 7,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 456,
     "reasons": {

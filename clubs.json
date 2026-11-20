@@ -305,7 +305,8 @@
     "name": "Center for Health Education and Promotion",
     "category": "Educational Program",
     "categories": [
-      "Educational Program"
+      "Educational Program",
+      "Tabling"
     ],
     "shortName": "CHEP",
     "id": ""
@@ -476,12 +477,12 @@
   },
   {
     "name": "Collegiate Middle Level Association",
-    "category": "Lecture or Speaker",
+    "category": "Academic",
     "categories": [
-      "Lecture or Speaker"
+      "Academic"
     ],
-    "shortName": "",
-    "id": ""
+    "shortName": "CMLA",
+    "id": "mucmla"
   },
   {
     "name": "Commuter Services",
@@ -1226,10 +1227,8 @@
   },
   {
     "name": "Moose Ultimate",
-    "category": "Sporting",
-    "categories": [
-      "Sporting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1247,7 +1246,7 @@
     "category": "Social",
     "categories": [
       "Social",
-      "Tabling"
+      "Fundraiser"
     ],
     "shortName": "",
     "id": ""
@@ -1353,6 +1352,15 @@
     "categories": [],
     "shortName": "",
     "id": ""
+  },
+  {
+    "name": "Orthodox Christian Fellowship at MU",
+    "category": "Spirituality",
+    "categories": [
+      "Spirituality"
+    ],
+    "shortName": "OCF",
+    "id": "ocfclub"
   },
   {
     "name": "Panhellenic Council",
@@ -1461,11 +1469,8 @@
   },
   {
     "name": "Reformed University Fellowship",
-    "category": "Meeting",
-    "categories": [
-      "Meeting",
-      "Social"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "RUF",
     "id": ""
   },
@@ -1529,10 +1534,8 @@
   },
   {
     "name": "Slip n' Score Society",
-    "category": "Fundraiser",
-    "categories": [
-      "Fundraiser"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -1826,11 +1829,8 @@
   },
   {
     "name": "University Activities Board",
-    "category": "Social",
-    "categories": [
-      "Social",
-      "Tabling"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "UAB",
     "id": ""
   },

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-21T21:17:42.490Z",
+  "generatedAt": "2026-11-21T23:05:10.360Z",
   "totalEvents": 2007,
   "withDescription": 816,
   "withImage": 194,
@@ -171,13 +171,13 @@
       "Campus Life": 2
     },
     "stalePast": 36,
-    "lastSyncAt": "2026-11-21T21:15:30.923Z"
+    "lastSyncAt": "2026-11-21T23:03:11.671Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-21T21:17:33.070Z"
+    "checkedAt": "2026-11-21T23:05:01.596Z"
   },
   "artsmuMerge": {
     "fetched": 47,
@@ -261,6 +261,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Millersville University Field Hockey vs #4 Shippensburg|2026-10-21T22:00:00.000Z",
+      "firstSeenAt": "2026-11-21T23:05:10.357Z",
+      "title": "Millersville University Field Hockey vs #4 Shippensburg",
+      "source": "MU",
+      "date": "2026-10-21T22:00:00.000Z"
+    },
+    {
       "key": "Zoning Hearing Board|2027-09-01T23:00:00.000Z",
       "firstSeenAt": "2026-11-21T17:35:45.436Z",
       "title": "Zoning Hearing Board",
@@ -322,16 +329,9 @@
       "title": "DARKEST HOUR w. JUDICIARY, NEHEMIAH, & JUSTIFICATIONS",
       "source": "Other",
       "date": "2026-12-13T00:00:00.000Z"
-    },
-    {
-      "key": "UAB Connect: Gingerbread House Competition|2026-11-11T19:00:00",
-      "firstSeenAt": "2026-11-21T01:31:22.096Z",
-      "title": "UAB Connect: Gingerbread House Competition",
-      "source": "MU",
-      "date": "2026-11-11T19:00:00"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 456,
     "reasons": {

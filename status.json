@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-21T05:08:34.221Z",
+  "generatedAt": "2026-11-21T05:13:06.988Z",
   "totalEvents": 2008,
   "withDescription": 816,
   "withImage": 194,
@@ -72,7 +72,7 @@
       "latest": "2026-11-29T18:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-11-21T00:00:00.000Z",
+      "earliest": "2026-11-22T00:00:00.000Z",
       "latest": "2026-12-19T01:00:00.000Z"
     },
     "community": {
@@ -171,13 +171,13 @@
       "Campus Life": 3
     },
     "stalePast": 35,
-    "lastSyncAt": "2026-11-21T05:04:17.013Z"
+    "lastSyncAt": "2026-11-21T05:09:35.918Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-21T05:08:25.174Z"
+    "checkedAt": "2026-11-21T05:13:03.774Z"
   },
   "artsmuMerge": {
     "fetched": 47,
@@ -261,6 +261,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "DARKEST HOUR w. JUDICIARY, NEHEMIAH, & JUSTIFICATIONS|2026-12-13T00:00:00.000Z",
+      "firstSeenAt": "2026-11-21T05:13:06.985Z",
+      "title": "DARKEST HOUR w. JUDICIARY, NEHEMIAH, & JUSTIFICATIONS",
+      "source": "Other",
+      "date": "2026-12-13T00:00:00.000Z"
+    },
+    {
       "key": "UAB Connect: Gingerbread House Competition|2026-11-11T19:00:00",
       "firstSeenAt": "2026-11-21T01:31:22.096Z",
       "title": "UAB Connect: Gingerbread House Competition",
@@ -322,16 +329,9 @@
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2027-09-06T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2027-09-29T12:30:00.000Z",
-      "firstSeenAt": "2026-11-20T15:54:16.580Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-09-29T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 456,
     "reasons": {

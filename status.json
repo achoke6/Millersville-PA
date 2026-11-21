@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-11-20T23:56:01.304Z",
-  "totalEvents": 2029,
-  "withDescription": 828,
-  "withImage": 204,
+  "generatedAt": "2026-11-21T01:31:22.099Z",
+  "totalEvents": 2009,
+  "withDescription": 817,
+  "withImage": 194,
   "familyFriendly": 55,
   "interests": {
     "arts": 97,
@@ -13,18 +13,18 @@
     "food": 124,
     "music": 90,
     "crafts": 14,
-    "reshall": 3,
-    "active": 4
+    "active": 4,
+    "reshall": 2
   },
-  "eventsToday": 21,
+  "eventsToday": 20,
   "sources": {
     "muAthletics": 385,
-    "muCalendar": 197,
-    "artsmu": 48,
+    "muCalendar": 198,
+    "artsmu": 47,
     "eckert": 3,
     "campsAlumni": 9,
-    "muGetInvolved": 531,
-    "pennManor": 663,
+    "muGetInvolved": 519,
+    "pennManor": 654,
     "borough": 48,
     "vfw": 6,
     "phantomPower": 13,
@@ -60,7 +60,7 @@
       "latest": "2027-10-27T11:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-08-22T14:00:00.000Z",
+      "earliest": "2026-08-24T04:00:00.000Z",
       "latest": "2027-10-25T20:00:00.000Z"
     },
     "borough": {
@@ -151,11 +151,11 @@
     }
   },
   "sports": {
-    "total": 946,
-    "scored": 206,
+    "total": 937,
+    "scored": 205,
     "wins": 99,
     "losses": 94,
-    "ties": 13
+    "ties": 12
   },
   "registrations": {
     "open": 4,
@@ -170,18 +170,18 @@
       "Youth Sports": 1,
       "Campus Life": 3
     },
-    "stalePast": 34,
-    "lastSyncAt": "2026-11-20T23:53:56.861Z"
+    "stalePast": 35,
+    "lastSyncAt": "2026-11-21T01:29:18.121Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-20T23:55:53.404Z"
+    "checkedAt": "2026-11-21T01:31:13.844Z"
   },
   "artsmuMerge": {
-    "fetched": 48,
-    "merged": 46,
+    "fetched": 47,
+    "merged": 45,
     "standalone": 2
   },
   "sourceHealth": {
@@ -219,7 +219,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 561,
+        "value": 552,
         "min": 150,
         "skipped": false
       },
@@ -260,6 +260,20 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "UAB Connect: Gingerbread House Competition|2026-11-11T19:00:00",
+      "firstSeenAt": "2026-11-21T01:31:22.096Z",
+      "title": "UAB Connect: Gingerbread House Competition",
+      "source": "MU",
+      "date": "2026-11-11T19:00:00"
+    },
+    {
+      "key": "Fall into Wellness Fair|2026-11-12T10:00:00",
+      "firstSeenAt": "2026-11-21T01:31:22.096Z",
+      "title": "Fall into Wellness Fair",
+      "source": "MU",
+      "date": "2026-11-12T10:00:00"
+    },
     {
       "key": "OBEY YOUR MASTER - Metallica Tribute|2026-11-29T00:00:00.000Z",
       "firstSeenAt": "2026-11-20T22:08:33.640Z",
@@ -315,23 +329,9 @@
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2027-09-29T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-10-04T23:00:00.000Z",
-      "firstSeenAt": "2026-11-20T15:54:16.580Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-10-04T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-10-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-20T15:54:16.580Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-10-06T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 2,
   "skippedByRule": {
     "total": 456,
     "reasons": {

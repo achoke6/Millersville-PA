@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-11-21T15:40:47.684Z",
-  "totalEvents": 2008,
+  "generatedAt": "2026-11-21T17:28:56.012Z",
+  "totalEvents": 2000,
   "withDescription": 816,
   "withImage": 194,
   "familyFriendly": 55,
   "interests": {
     "arts": 97,
     "greek": 26,
-    "civic": 95,
+    "civic": 89,
     "causes": 32,
     "learn": 65,
     "food": 123,
@@ -29,7 +29,7 @@
     "vfw": 6,
     "phantomPower": 13,
     "community": 14,
-    "manor": 38,
+    "manor": 30,
     "raneyCellars": 4,
     "theBackyard": 29,
     "muHudlBroadcasts": 62
@@ -81,7 +81,7 @@
     },
     "manor": {
       "earliest": "2026-11-25T13:00:00.000Z",
-      "latest": "2027-11-03T23:00:00.000Z"
+      "latest": "2027-08-25T12:30:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-11-12T21:00:00.000Z",
@@ -138,8 +138,8 @@
       "daysSinceMoved": 11
     },
     "manor": {
-      "newest": "2027-11-03",
-      "daysSinceMoved": 18
+      "newest": "2027-08-25",
+      "daysSinceMoved": 88
     },
     "raneyCellars": {
       "newest": "2026-11-20",
@@ -171,13 +171,13 @@
       "Campus Life": 3
     },
     "stalePast": 35,
-    "lastSyncAt": "2026-11-21T15:38:19.697Z"
+    "lastSyncAt": "2026-11-21T17:26:17.296Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-21T15:40:44.523Z"
+    "checkedAt": "2026-11-21T17:28:48.263Z"
   },
   "artsmuMerge": {
     "fetched": 47,
@@ -240,7 +240,7 @@
       {
         "key": "manor.count",
         "ok": true,
-        "value": 38,
+        "value": 30,
         "min": 10
       },
       {
@@ -324,11 +324,11 @@
       "date": "2026-11-25T13:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-20T15:54:16.580Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-09-06T23:00:00.000Z"
+      "key": "Girls JV Field Hockey @ Manheim Central High School|2027-08-31T21:00:00.000Z",
+      "firstSeenAt": "2026-11-20T15:33:06.646Z",
+      "title": "Girls JV Field Hockey @ Manheim Central High School",
+      "source": "PM",
+      "date": "2027-08-31T21:00:00.000Z"
     }
   ],
   "addedLastRun": 0,

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-22T05:00:04.043Z",
-  "totalEvents": 2000,
+  "generatedAt": "2026-11-22T06:48:21.968Z",
+  "totalEvents": 1999,
   "withDescription": 809,
   "withImage": 192,
   "familyFriendly": 54,
@@ -11,7 +11,7 @@
     "causes": 32,
     "learn": 65,
     "food": 123,
-    "music": 90,
+    "music": 89,
     "crafts": 14,
     "active": 4,
     "reshall": 2
@@ -20,7 +20,7 @@
   "sources": {
     "muAthletics": 384,
     "muCalendar": 198,
-    "artsmu": 47,
+    "artsmu": 44,
     "eckert": 3,
     "campsAlumni": 9,
     "muGetInvolved": 513,
@@ -171,24 +171,22 @@
       "Campus Life": 2
     },
     "stalePast": 37,
-    "lastSyncAt": "2026-11-22T04:55:57.214Z"
+    "lastSyncAt": "2026-11-22T06:45:37.876Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-22T04:59:43.511Z"
+    "checkedAt": "2026-11-22T06:48:13.564Z"
   },
   "artsmuMerge": {
-    "fetched": 47,
-    "merged": 45,
-    "standalone": 2
+    "fetched": 44,
+    "merged": 43,
+    "standalone": 1
   },
   "sourceHealth": {
-    "ok": false,
-    "failing": [
-      "manor.count"
-    ],
+    "ok": true,
+    "failing": [],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -207,7 +205,7 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 195,
+        "value": 194,
         "min": 30,
         "skipped": false
       },
@@ -241,10 +239,9 @@
       },
       {
         "key": "manor.count",
-        "ok": false,
+        "ok": true,
         "value": 38,
-        "min": 10,
-        "carriedForward": 38
+        "min": 10
       },
       {
         "key": "muHudl.pairRatio",
@@ -263,6 +260,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Family Fun Fest: \"Layer The Walls: Turn of the Century\"|2026-11-21T14:00:00",
+      "firstSeenAt": "2026-11-22T06:48:21.964Z",
+      "title": "Family Fun Fest: \"Layer The Walls: Turn of the Century\"",
+      "source": "MU",
+      "date": "2026-11-21T14:00:00"
+    },
     {
       "key": "Millersville University Women's Soccer vs #4 Kutztown|2026-10-21T23:00:00.000Z",
       "firstSeenAt": "2026-11-22T01:00:54.909Z",
@@ -325,16 +329,9 @@
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2027-10-27T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-11-01T23:00:00.000Z",
-      "firstSeenAt": "2026-11-21T17:35:45.436Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-11-01T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 456,
     "reasons": {

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-22T06:48:21.968Z",
+  "generatedAt": "2026-11-22T06:51:45.967Z",
   "totalEvents": 1999,
   "withDescription": 809,
   "withImage": 192,
@@ -72,7 +72,7 @@
       "latest": "2026-11-29T18:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-11-22T00:00:00.000Z",
+      "earliest": "2026-11-23T00:00:00.000Z",
       "latest": "2026-12-19T01:00:00.000Z"
     },
     "community": {
@@ -171,13 +171,13 @@
       "Campus Life": 2
     },
     "stalePast": 37,
-    "lastSyncAt": "2026-11-22T06:45:37.876Z"
+    "lastSyncAt": "2026-11-22T06:49:50.104Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-22T06:48:13.564Z"
+    "checkedAt": "2026-11-22T06:51:44.302Z"
   },
   "artsmuMerge": {
     "fetched": 44,
@@ -261,6 +261,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "LIVES LOST w. Iara, Making A Mockery, Scarlet Meridian, neversleep.|2026-12-14T00:00:00.000Z",
+      "firstSeenAt": "2026-11-22T06:51:45.964Z",
+      "title": "LIVES LOST w. Iara, Making A Mockery, Scarlet Meridian, neversleep.",
+      "source": "Other",
+      "date": "2026-12-14T00:00:00.000Z"
+    },
+    {
       "key": "Family Fun Fest: \"Layer The Walls: Turn of the Century\"|2026-11-21T14:00:00",
       "firstSeenAt": "2026-11-22T06:48:21.964Z",
       "title": "Family Fun Fest: \"Layer The Walls: Turn of the Century\"",
@@ -322,13 +329,6 @@
       "title": "Zoning Hearing Board",
       "source": "Manor",
       "date": "2027-10-06T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2027-10-27T12:30:00.000Z",
-      "firstSeenAt": "2026-11-21T17:35:45.436Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-10-27T12:30:00.000Z"
     }
   ],
   "addedLastRun": 1,

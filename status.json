@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-21T23:13:36.360Z",
-  "totalEvents": 2007,
-  "withDescription": 816,
-  "withImage": 194,
-  "familyFriendly": 55,
+  "generatedAt": "2026-11-22T01:00:54.913Z",
+  "totalEvents": 2000,
+  "withDescription": 809,
+  "withImage": 192,
+  "familyFriendly": 54,
   "interests": {
-    "arts": 97,
+    "arts": 96,
     "greek": 26,
     "civic": 95,
     "causes": 32,
@@ -23,7 +23,7 @@
     "artsmu": 47,
     "eckert": 3,
     "campsAlumni": 9,
-    "muGetInvolved": 519,
+    "muGetInvolved": 513,
     "pennManor": 654,
     "borough": 48,
     "vfw": 6,
@@ -56,7 +56,7 @@
       "latest": "2027-08-20T23:30:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-08-23T11:30:00.000Z",
+      "earliest": "2026-08-24T07:30:00.000Z",
       "latest": "2027-10-27T11:00:00.000Z"
     },
     "pennManor": {
@@ -170,14 +170,14 @@
       "Youth Sports": 1,
       "Campus Life": 2
     },
-    "stalePast": 36,
-    "lastSyncAt": "2026-11-21T23:11:29.220Z"
+    "stalePast": 37,
+    "lastSyncAt": "2026-11-22T00:58:56.951Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-21T23:13:34.583Z"
+    "checkedAt": "2026-11-22T01:00:45.385Z"
   },
   "artsmuMerge": {
     "fetched": 47,
@@ -261,6 +261,20 @@
   },
   "recentlyAdded": [
     {
+      "key": "Millersville University Women's Soccer vs #4 Kutztown|2026-10-21T23:00:00.000Z",
+      "firstSeenAt": "2026-11-22T01:00:54.909Z",
+      "title": "Millersville University Women's Soccer vs #4 Kutztown",
+      "source": "MU",
+      "date": "2026-10-21T23:00:00.000Z"
+    },
+    {
+      "key": "The Millersville Smash Arcadian|2026-11-20T21:00:00.000Z",
+      "firstSeenAt": "2026-11-22T01:00:54.909Z",
+      "title": "The Millersville Smash Arcadian",
+      "source": "MU",
+      "date": "2026-11-20T21:00:00.000Z"
+    },
+    {
       "key": "Millersville University Field Hockey vs #4 Shippensburg|2026-10-21T22:00:00.000Z",
       "firstSeenAt": "2026-11-21T23:05:10.357Z",
       "title": "Millersville University Field Hockey vs #4 Shippensburg",
@@ -315,23 +329,9 @@
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2027-11-01T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-11-03T23:00:00.000Z",
-      "firstSeenAt": "2026-11-21T17:35:45.436Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-11-03T23:00:00.000Z"
-    },
-    {
-      "key": "DARKEST HOUR w. JUDICIARY, NEHEMIAH, & JUSTIFICATIONS|2026-12-13T00:00:00.000Z",
-      "firstSeenAt": "2026-11-21T08:53:42.271Z",
-      "title": "DARKEST HOUR w. JUDICIARY, NEHEMIAH, & JUSTIFICATIONS",
-      "source": "Other",
-      "date": "2026-12-13T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 2,
   "skippedByRule": {
     "total": 456,
     "reasons": {

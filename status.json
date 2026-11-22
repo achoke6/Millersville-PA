@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-11-22T18:34:38.088Z",
+  "generatedAt": "2026-11-22T18:41:19.477Z",
   "totalEvents": 1999,
   "withDescription": 809,
-  "withImage": 192,
+  "withImage": 191,
   "familyFriendly": 54,
   "interests": {
     "arts": 96,
@@ -171,13 +171,13 @@
       "Campus Life": 2
     },
     "stalePast": 37,
-    "lastSyncAt": "2026-11-22T18:32:25.536Z"
+    "lastSyncAt": "2026-11-22T18:35:42.074Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-22T18:34:28.574Z"
+    "checkedAt": "2026-11-22T18:41:15.860Z"
   },
   "artsmuMerge": {
     "fetched": 44,
@@ -261,6 +261,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Letters of Love|2026-12-01T19:00:00",
+      "firstSeenAt": "2026-11-22T18:41:19.474Z",
+      "title": "Letters of Love",
+      "source": "MU",
+      "date": "2026-12-01T19:00:00"
+    },
+    {
       "key": "LIVES LOST w. Iara, Making A Mockery, Scarlet Meridian, neversleep.|2026-12-14T00:00:00.000Z",
       "firstSeenAt": "2026-11-22T16:45:57.748Z",
       "title": "LIVES LOST w. Iara, Making A Mockery, Scarlet Meridian, neversleep.",
@@ -322,16 +329,9 @@
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2027-10-04T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-10-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-21T17:35:45.436Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-10-06T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 456,
     "reasons": {

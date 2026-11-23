@@ -10,9 +10,13 @@
   },
   {
     "name": "ADAPT",
-    "category": "Meeting",
+    "category": "Service",
     "categories": [
-      "Meeting"
+      "Service",
+      "Competition",
+      "Fundraiser",
+      "Social",
+      "Tabling"
     ],
     "shortName": "",
     "id": ""
@@ -27,19 +31,19 @@
     "id": ""
   },
   {
-    "name": "All Greek Council",
-    "category": "Social",
+    "name": "All Campus Musical Organization",
+    "category": "Performance",
     "categories": [
-      "Social"
+      "Performance"
     ],
     "shortName": "",
     "id": ""
   },
   {
-    "name": "All-Campus Musical Organization",
-    "category": "Performance",
+    "name": "All Greek Council",
+    "category": "Social",
     "categories": [
-      "Performance"
+      "Social"
     ],
     "shortName": "",
     "id": ""
@@ -306,6 +310,7 @@
     "category": "Educational Program",
     "categories": [
       "Educational Program",
+      "Social",
       "Tabling"
     ],
     "shortName": "CHEP",
@@ -327,12 +332,12 @@
   },
   {
     "name": "Chromatic",
-    "category": "Performance",
+    "category": "Arts & Culture",
     "categories": [
-      "Performance"
+      "Arts & Culture"
     ],
     "shortName": "",
-    "id": ""
+    "id": "chromatic"
   },
   {
     "name": "Citamard",
@@ -495,9 +500,9 @@
   },
   {
     "name": "Conestoga Outdoors Club",
-    "category": "Meeting",
+    "category": "Social",
     "categories": [
-      "Meeting"
+      "Social"
     ],
     "shortName": "Conestoga Outdoors",
     "id": ""
@@ -645,8 +650,10 @@
   },
   {
     "name": "Dr. Rita Smith-Wade-El Center for Intercultural Student Engagement",
-    "category": "",
-    "categories": [],
+    "category": "Movie or Film",
+    "categories": [
+      "Movie or Film"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -711,8 +718,11 @@
   },
   {
     "name": "Expressions Dance",
-    "category": "",
-    "categories": [],
+    "category": "Fundraiser",
+    "categories": [
+      "Fundraiser",
+      "Social"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -725,11 +735,8 @@
   },
   {
     "name": "Fencing Guild",
-    "category": "Social",
-    "categories": [
-      "Social",
-      "Sporting"
-    ],
+    "category": "",
+    "categories": [],
     "shortName": "",
     "id": ""
   },
@@ -950,10 +957,10 @@
   },
   {
     "name": "Kappa Alpha Psi Fraternity Incorporated",
-    "category": "Educational Program",
+    "category": "Movie or Film",
     "categories": [
-      "Educational Program",
-      "Lecture or Speaker"
+      "Movie or Film",
+      "Social"
     ],
     "shortName": "Kappa Alpha Psi",
     "id": ""
@@ -1113,8 +1120,10 @@
   },
   {
     "name": "Men's Club Volleyball",
-    "category": "",
-    "categories": [],
+    "category": "Competition",
+    "categories": [
+      "Competition"
+    ],
     "shortName": "",
     "id": ""
   },
@@ -1203,13 +1212,13 @@
   },
   {
     "name": "Millersville University Marauder Marching Band",
-    "category": "Academic",
+    "category": "Fundraiser",
     "categories": [
-      "Academic",
-      "Arts & Culture"
+      "Fundraiser",
+      "Social"
     ],
-    "shortName": "\"Marauder\" Marching Band",
-    "id": "mummb"
+    "shortName": "",
+    "id": ""
   },
   {
     "name": "Mixed Martial Arts Club",
@@ -1449,9 +1458,9 @@
   },
   {
     "name": "President's Commission on Gender and Sexual Diversity",
-    "category": "Sporting",
+    "category": "Educational Program",
     "categories": [
-      "Sporting"
+      "Educational Program"
     ],
     "shortName": "PCGSD",
     "id": ""
@@ -1676,7 +1685,8 @@
     "category": "Competition",
     "categories": [
       "Competition",
-      "Social"
+      "Social",
+      "Sporting"
     ],
     "shortName": "",
     "id": ""

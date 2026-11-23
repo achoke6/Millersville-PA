@@ -1,37 +1,37 @@
 {
-  "generatedAt": "2026-11-20T15:54:16.584Z",
-  "totalEvents": 2026,
-  "withDescription": 826,
-  "withImage": 203,
-  "familyFriendly": 55,
+  "generatedAt": "2026-11-23T11:23:05.494Z",
+  "totalEvents": 1980,
+  "withDescription": 796,
+  "withImage": 185,
+  "familyFriendly": 52,
   "interests": {
-    "arts": 97,
-    "greek": 26,
     "civic": 95,
-    "causes": 31,
+    "greek": 25,
+    "causes": 32,
     "learn": 65,
+    "arts": 94,
     "food": 123,
-    "music": 90,
+    "music": 89,
     "crafts": 14,
-    "reshall": 3,
-    "active": 4
+    "active": 4,
+    "reshall": 2
   },
-  "eventsToday": 20,
+  "eventsToday": 8,
   "sources": {
-    "muAthletics": 385,
-    "muCalendar": 197,
-    "artsmu": 48,
+    "muAthletics": 384,
+    "muCalendar": 196,
+    "artsmu": 43,
     "eckert": 3,
     "campsAlumni": 9,
-    "muGetInvolved": 529,
-    "pennManor": 663,
+    "muGetInvolved": 503,
+    "pennManor": 650,
     "borough": 48,
     "vfw": 6,
     "phantomPower": 13,
-    "community": 15,
-    "manor": 37,
+    "community": 14,
+    "manor": 38,
     "raneyCellars": 4,
-    "theBackyard": 29,
+    "theBackyard": 28,
     "muHudlBroadcasts": 62
   },
   "sourceDateRanges": {
@@ -40,7 +40,7 @@
       "latest": "2027-05-27T00:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-08-24T00:00:00.000Z",
+      "earliest": "2026-08-27T11:30:00.000Z",
       "latest": "2027-06-04T18:30:00.000Z"
     },
     "artsmu": {
@@ -56,11 +56,11 @@
       "latest": "2027-08-20T23:30:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-08-23T11:30:00.000Z",
+      "earliest": "2026-08-25T07:30:00.000Z",
       "latest": "2027-10-27T11:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-08-22T14:00:00.000Z",
+      "earliest": "2026-08-25T17:00:00.000Z",
       "latest": "2027-10-25T20:00:00.000Z"
     },
     "borough": {
@@ -72,7 +72,7 @@
       "latest": "2026-11-29T18:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-11-21T00:00:00.000Z",
+      "earliest": "2026-11-23T00:00:00.000Z",
       "latest": "2026-12-19T01:00:00.000Z"
     },
     "community": {
@@ -80,7 +80,7 @@
       "latest": "2027-05-16T03:59:00.000Z"
     },
     "manor": {
-      "earliest": "2026-11-25T13:30:00.000Z",
+      "earliest": "2026-11-25T13:00:00.000Z",
       "latest": "2027-11-03T23:00:00.000Z"
     },
     "raneyCellars": {
@@ -88,14 +88,14 @@
       "latest": "2026-11-20T21:00:00.000Z"
     },
     "theBackyard": {
-      "earliest": "2026-08-24T12:30:00.000Z",
+      "earliest": "2026-08-25T15:00:00.000Z",
       "latest": "2027-04-28T15:00:00.000Z"
     }
   },
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 80
+      "daysSinceMoved": 83
     },
     "muCalendar": {
       "newest": "2027-06-04",
@@ -103,87 +103,86 @@
     },
     "artsmu": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 78
+      "daysSinceMoved": 81
     },
     "eckert": {
       "newest": "2026-11-12",
-      "daysSinceMoved": 11
+      "daysSinceMoved": 14
     },
     "campsAlumni": {
       "newest": "2027-08-20",
-      "daysSinceMoved": 32
+      "daysSinceMoved": 35
     },
     "muGetInvolved": {
       "newest": "2027-10-27",
-      "daysSinceMoved": 17
+      "daysSinceMoved": 20
     },
     "pennManor": {
       "newest": "2027-10-25",
-      "daysSinceMoved": 26
+      "daysSinceMoved": 29
     },
     "borough": {
       "newest": "2027-10-31",
-      "daysSinceMoved": 20
+      "daysSinceMoved": 23
     },
     "vfw": {
       "newest": "2026-11-29",
-      "daysSinceMoved": 11
+      "daysSinceMoved": 14
     },
     "phantomPower": {
       "newest": "2026-12-19",
-      "daysSinceMoved": 22
+      "daysSinceMoved": 25
     },
     "community": {
       "newest": "2027-05-16",
-      "daysSinceMoved": 10
+      "daysSinceMoved": 13
     },
     "manor": {
       "newest": "2027-11-03",
-      "daysSinceMoved": 17
+      "daysSinceMoved": 20
     },
     "raneyCellars": {
       "newest": "2026-11-20",
-      "daysSinceMoved": 3
+      "daysSinceMoved": 6
     },
     "theBackyard": {
       "newest": "2027-04-28",
-      "daysSinceMoved": 43
+      "daysSinceMoved": 46
     }
   },
   "sports": {
-    "total": 946,
+    "total": 934,
     "scored": 206,
-    "wins": 99,
+    "wins": 100,
     "losses": 94,
-    "ties": 13
+    "ties": 12
   },
   "registrations": {
-    "open": 4,
-    "next2Weeks": 2,
+    "open": 3,
+    "next2Weeks": 1,
     "nextClose": "2026-09-13",
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 5,
-    "pendingPast": 15,
+    "pendingFuture": 2,
+    "pendingPast": 18,
     "pendingBySource": {
       "Youth Sports": 1,
-      "PM Community": 1,
-      "Campus Life": 3
+      "Campus Life": 1
     },
-    "stalePast": 33,
-    "lastSyncAt": "2026-11-20T15:52:11.193Z"
+    "stalePast": 39,
+    "lastSyncAt": "2026-11-23T11:21:00.108Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-20T15:54:13.263Z"
+    "checkedAt": "2026-11-23T11:22:55.839Z"
   },
   "artsmuMerge": {
-    "fetched": 48,
-    "merged": 46,
-    "standalone": 2
+    "fetched": 43,
+    "merged": 42,
+    "standalone": 1
   },
   "sourceHealth": {
     "ok": true,
@@ -192,56 +191,56 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 339,
+        "value": 336,
         "min": 45,
         "skipped": false
       },
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 187,
+        "value": 185,
         "min": 60,
         "skipped": false
       },
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 196,
+        "value": 193,
         "min": 30,
         "skipped": false
       },
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 345,
+        "value": 342,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 561,
+        "value": 550,
         "min": 150,
         "skipped": false
       },
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 385,
+        "value": 384,
         "min": 100,
         "skipped": false
       },
       {
         "key": "pennManorGeneral.count",
         "ok": true,
-        "value": 102,
+        "value": 100,
         "min": 10,
         "skipped": false
       },
       {
         "key": "manor.count",
         "ok": true,
-        "value": 37,
+        "value": 38,
         "min": 10
       },
       {
@@ -262,77 +261,77 @@
   },
   "recentlyAdded": [
     {
-      "key": "DARKEST HOUR w. JUDICIARY, NEHEMIAH, & JUSTIFICATIONS|2026-12-13T00:00:00.000Z",
-      "firstSeenAt": "2026-11-20T15:54:16.580Z",
-      "title": "DARKEST HOUR w. JUDICIARY, NEHEMIAH, & JUSTIFICATIONS",
+      "key": "ATLAS AT HOLD w. Major Moment, Who They Fear, Elsewhere|2026-11-23T00:00:00.000Z",
+      "firstSeenAt": "2026-11-23T11:23:05.490Z",
+      "title": "ATLAS AT HOLD w. Major Moment, Who They Fear, Elsewhere",
       "source": "Other",
-      "date": "2026-12-13T00:00:00.000Z"
+      "date": "2026-11-23T00:00:00.000Z"
+    },
+    {
+      "key": "Letters of Love|2026-12-01T19:00:00",
+      "firstSeenAt": "2026-11-22T18:44:23.469Z",
+      "title": "Letters of Love",
+      "source": "MU",
+      "date": "2026-12-01T19:00:00"
+    },
+    {
+      "key": "LIVES LOST w. Iara, Making A Mockery, Scarlet Meridian, neversleep.|2026-12-14T00:00:00.000Z",
+      "firstSeenAt": "2026-11-22T16:45:57.748Z",
+      "title": "LIVES LOST w. Iara, Making A Mockery, Scarlet Meridian, neversleep.",
+      "source": "Other",
+      "date": "2026-12-14T00:00:00.000Z"
+    },
+    {
+      "key": "Family Fun Fest: \"Layer The Walls: Turn of the Century\"|2026-11-21T14:00:00",
+      "firstSeenAt": "2026-11-22T06:48:21.964Z",
+      "title": "Family Fun Fest: \"Layer The Walls: Turn of the Century\"",
+      "source": "MU",
+      "date": "2026-11-21T14:00:00"
+    },
+    {
+      "key": "Millersville University Women's Soccer vs #4 Kutztown|2026-10-21T23:00:00.000Z",
+      "firstSeenAt": "2026-11-22T01:00:54.909Z",
+      "title": "Millersville University Women's Soccer vs #4 Kutztown",
+      "source": "MU",
+      "date": "2026-10-21T23:00:00.000Z"
+    },
+    {
+      "key": "The Millersville Smash Arcadian|2026-11-20T21:00:00.000Z",
+      "firstSeenAt": "2026-11-22T01:00:54.909Z",
+      "title": "The Millersville Smash Arcadian",
+      "source": "MU",
+      "date": "2026-11-20T21:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Field Hockey vs #4 Shippensburg|2026-10-21T22:00:00.000Z",
+      "firstSeenAt": "2026-11-21T23:05:10.357Z",
+      "title": "Millersville University Field Hockey vs #4 Shippensburg",
+      "source": "MU",
+      "date": "2026-10-21T22:00:00.000Z"
+    },
+    {
+      "key": "Zoning Hearing Board|2027-09-01T23:00:00.000Z",
+      "firstSeenAt": "2026-11-21T17:35:45.436Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2027-09-01T23:00:00.000Z"
     },
     {
       "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-20T15:54:16.580Z",
+      "firstSeenAt": "2026-11-21T17:35:45.436Z",
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2027-09-06T23:00:00.000Z"
     },
     {
       "key": "Traffic Commission Meeting|2027-09-29T12:30:00.000Z",
-      "firstSeenAt": "2026-11-20T15:54:16.580Z",
+      "firstSeenAt": "2026-11-21T17:35:45.436Z",
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2027-09-29T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-10-04T23:00:00.000Z",
-      "firstSeenAt": "2026-11-20T15:54:16.580Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-10-04T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-10-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-20T15:54:16.580Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-10-06T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2027-10-27T12:30:00.000Z",
-      "firstSeenAt": "2026-11-20T15:54:16.580Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-10-27T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-11-01T23:00:00.000Z",
-      "firstSeenAt": "2026-11-20T15:54:16.580Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-11-01T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-11-03T23:00:00.000Z",
-      "firstSeenAt": "2026-11-20T15:54:16.580Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-11-03T23:00:00.000Z"
-    },
-    {
-      "key": "Girls JV Field Hockey @ Manheim Central High School|2027-08-31T21:00:00.000Z",
-      "firstSeenAt": "2026-11-20T15:33:06.646Z",
-      "title": "Girls JV Field Hockey @ Manheim Central High School",
-      "source": "PM",
-      "date": "2027-08-31T21:00:00.000Z"
-    },
-    {
-      "key": "Girls Varsity Field Hockey @ Manheim Central High School|2027-08-31T22:30:00.000Z",
-      "firstSeenAt": "2026-11-20T15:33:06.646Z",
-      "title": "Girls Varsity Field Hockey @ Manheim Central High School",
-      "source": "PM",
-      "date": "2027-08-31T22:30:00.000Z"
     }
   ],
-  "addedLastRun": 8,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 456,
     "reasons": {

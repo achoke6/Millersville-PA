@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T19:32:35.717Z",
+  "generatedAt": "2026-11-23T19:35:24.437Z",
   "totalEvents": 1987,
   "withDescription": 803,
   "withImage": 186,
@@ -21,7 +21,7 @@
     "muAthletics": 384,
     "muCalendar": 197,
     "artsmu": 43,
-    "eckert": 3,
+    "eckert": 0,
     "campsAlumni": 9,
     "muGetInvolved": 509,
     "pennManor": 650,
@@ -47,10 +47,7 @@
       "earliest": "2026-11-06T21:00:00.000Z",
       "latest": "2027-06-04T22:30:00.000Z"
     },
-    "eckert": {
-      "earliest": "2026-09-09T21:00:00.000Z",
-      "latest": "2026-11-12T22:30:00.000Z"
-    },
+    "eckert": null,
     "campsAlumni": {
       "earliest": "2026-10-17T12:30:00.000Z",
       "latest": "2027-08-20T23:30:00.000Z"
@@ -105,10 +102,7 @@
       "newest": "2027-06-04",
       "daysSinceMoved": 81
     },
-    "eckert": {
-      "newest": "2026-11-12",
-      "daysSinceMoved": 14
-    },
+    "eckert": null,
     "campsAlumni": {
       "newest": "2027-08-20",
       "daysSinceMoved": 35
@@ -171,13 +165,13 @@
       "Campus Life": 1
     },
     "stalePast": 39,
-    "lastSyncAt": "2026-11-23T19:30:30.246Z"
+    "lastSyncAt": "2026-11-23T19:33:16.260Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-23T19:32:32.466Z"
+    "checkedAt": "2026-11-23T19:35:21.113Z"
   },
   "artsmuMerge": {
     "fetched": 43,

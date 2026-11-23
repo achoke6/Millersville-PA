@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T13:14:22.276Z",
+  "generatedAt": "2026-11-23T13:17:45.588Z",
   "totalEvents": 1980,
   "withDescription": 796,
   "withImage": 185,
@@ -171,13 +171,13 @@
       "Campus Life": 1
     },
     "stalePast": 39,
-    "lastSyncAt": "2026-11-23T13:08:37.517Z"
+    "lastSyncAt": "2026-11-23T13:15:58.661Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-23T13:14:14.670Z"
+    "checkedAt": "2026-11-23T13:17:43.816Z"
   },
   "artsmuMerge": {
     "fetched": 43,
@@ -185,8 +185,10 @@
     "standalone": 1
   },
   "sourceHealth": {
-    "ok": true,
-    "failing": [],
+    "ok": false,
+    "failing": [
+      "manor.count"
+    ],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -239,9 +241,10 @@
       },
       {
         "key": "manor.count",
-        "ok": true,
+        "ok": false,
         "value": 38,
-        "min": 10
+        "min": 10,
+        "carriedForward": 38
       },
       {
         "key": "muHudl.pairRatio",
@@ -262,7 +265,7 @@
   "recentlyAdded": [
     {
       "key": "THE CASUALTIES - People Over Power Tour|2026-12-18T00:30:00.000Z",
-      "firstSeenAt": "2026-11-23T13:14:22.273Z",
+      "firstSeenAt": "2026-11-23T13:17:45.585Z",
       "title": "THE CASUALTIES - People Over Power Tour",
       "source": "Other",
       "date": "2026-12-18T00:30:00.000Z"

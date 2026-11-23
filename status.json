@@ -1,29 +1,29 @@
 {
-  "generatedAt": "2026-11-23T11:23:05.494Z",
-  "totalEvents": 1980,
-  "withDescription": 796,
-  "withImage": 185,
+  "generatedAt": "2026-11-23T20:24:04.240Z",
+  "totalEvents": 1988,
+  "withDescription": 803,
+  "withImage": 186,
   "familyFriendly": 52,
   "interests": {
     "civic": 95,
     "greek": 25,
-    "causes": 32,
+    "causes": 33,
     "learn": 65,
     "arts": 94,
     "food": 123,
-    "music": 89,
+    "music": 90,
     "crafts": 14,
     "active": 4,
-    "reshall": 2
+    "reshall": 3
   },
-  "eventsToday": 8,
+  "eventsToday": 10,
   "sources": {
     "muAthletics": 384,
-    "muCalendar": 196,
+    "muCalendar": 197,
     "artsmu": 43,
     "eckert": 3,
     "campsAlumni": 9,
-    "muGetInvolved": 503,
+    "muGetInvolved": 509,
     "pennManor": 650,
     "borough": 48,
     "vfw": 6,
@@ -31,7 +31,7 @@
     "community": 14,
     "manor": 38,
     "raneyCellars": 4,
-    "theBackyard": 28,
+    "theBackyard": 29,
     "muHudlBroadcasts": 62
   },
   "sourceDateRanges": {
@@ -72,7 +72,7 @@
       "latest": "2026-11-29T18:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-11-23T00:00:00.000Z",
+      "earliest": "2026-11-26T01:00:00.000Z",
       "latest": "2026-12-19T01:00:00.000Z"
     },
     "community": {
@@ -171,13 +171,13 @@
       "Campus Life": 1
     },
     "stalePast": 39,
-    "lastSyncAt": "2026-11-23T11:21:00.108Z"
+    "lastSyncAt": "2026-11-23T20:21:24.056Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-23T11:22:55.839Z"
+    "checkedAt": "2026-11-23T20:24:00.702Z"
   },
   "artsmuMerge": {
     "fetched": 43,
@@ -198,7 +198,7 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 185,
+        "value": 184,
         "min": 60,
         "skipped": false
       },
@@ -261,77 +261,77 @@
   },
   "recentlyAdded": [
     {
-      "key": "ATLAS AT HOLD w. Major Moment, Who They Fear, Elsewhere|2026-11-23T00:00:00.000Z",
-      "firstSeenAt": "2026-11-23T11:23:05.490Z",
-      "title": "ATLAS AT HOLD w. Major Moment, Who They Fear, Elsewhere",
-      "source": "Other",
-      "date": "2026-11-23T00:00:00.000Z"
-    },
-    {
-      "key": "Letters of Love|2026-12-01T19:00:00",
-      "firstSeenAt": "2026-11-22T18:44:23.469Z",
-      "title": "Letters of Love",
+      "key": "Millersville University Women's Cross Country at Last Chance Run Fast Invitational|2026-10-23T19:00:00.000Z",
+      "firstSeenAt": "2026-11-23T20:20:21.153Z",
+      "title": "Millersville University Women's Cross Country at Last Chance Run Fast Invitational",
       "source": "MU",
-      "date": "2026-12-01T19:00:00"
-    },
-    {
-      "key": "LIVES LOST w. Iara, Making A Mockery, Scarlet Meridian, neversleep.|2026-12-14T00:00:00.000Z",
-      "firstSeenAt": "2026-11-22T16:45:57.748Z",
-      "title": "LIVES LOST w. Iara, Making A Mockery, Scarlet Meridian, neversleep.",
-      "source": "Other",
-      "date": "2026-12-14T00:00:00.000Z"
-    },
-    {
-      "key": "Family Fun Fest: \"Layer The Walls: Turn of the Century\"|2026-11-21T14:00:00",
-      "firstSeenAt": "2026-11-22T06:48:21.964Z",
-      "title": "Family Fun Fest: \"Layer The Walls: Turn of the Century\"",
-      "source": "MU",
-      "date": "2026-11-21T14:00:00"
-    },
-    {
-      "key": "Millersville University Women's Soccer vs #4 Kutztown|2026-10-21T23:00:00.000Z",
-      "firstSeenAt": "2026-11-22T01:00:54.909Z",
-      "title": "Millersville University Women's Soccer vs #4 Kutztown",
-      "source": "MU",
-      "date": "2026-10-21T23:00:00.000Z"
-    },
-    {
-      "key": "The Millersville Smash Arcadian|2026-11-20T21:00:00.000Z",
-      "firstSeenAt": "2026-11-22T01:00:54.909Z",
-      "title": "The Millersville Smash Arcadian",
-      "source": "MU",
-      "date": "2026-11-20T21:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Field Hockey vs #4 Shippensburg|2026-10-21T22:00:00.000Z",
-      "firstSeenAt": "2026-11-21T23:05:10.357Z",
-      "title": "Millersville University Field Hockey vs #4 Shippensburg",
-      "source": "MU",
-      "date": "2026-10-21T22:00:00.000Z"
+      "date": "2026-10-23T19:00:00.000Z"
     },
     {
       "key": "Zoning Hearing Board|2027-09-01T23:00:00.000Z",
-      "firstSeenAt": "2026-11-21T17:35:45.436Z",
+      "firstSeenAt": "2026-11-23T19:47:43.754Z",
       "title": "Zoning Hearing Board",
       "source": "Manor",
       "date": "2027-09-01T23:00:00.000Z"
     },
     {
       "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-21T17:35:45.436Z",
+      "firstSeenAt": "2026-11-23T19:47:43.754Z",
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2027-09-06T23:00:00.000Z"
     },
     {
       "key": "Traffic Commission Meeting|2027-09-29T12:30:00.000Z",
-      "firstSeenAt": "2026-11-21T17:35:45.436Z",
+      "firstSeenAt": "2026-11-23T19:47:43.754Z",
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2027-09-29T12:30:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2027-10-04T23:00:00.000Z",
+      "firstSeenAt": "2026-11-23T19:47:43.754Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2027-10-04T23:00:00.000Z"
+    },
+    {
+      "key": "Zoning Hearing Board|2027-10-06T23:00:00.000Z",
+      "firstSeenAt": "2026-11-23T19:47:43.754Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2027-10-06T23:00:00.000Z"
+    },
+    {
+      "key": "Traffic Commission Meeting|2027-10-27T12:30:00.000Z",
+      "firstSeenAt": "2026-11-23T19:47:43.754Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2027-10-27T12:30:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2027-11-01T23:00:00.000Z",
+      "firstSeenAt": "2026-11-23T19:47:43.754Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2027-11-01T23:00:00.000Z"
+    },
+    {
+      "key": "Zoning Hearing Board|2027-11-03T23:00:00.000Z",
+      "firstSeenAt": "2026-11-23T19:47:43.754Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2027-11-03T23:00:00.000Z"
+    },
+    {
+      "key": "SGA Spring Turnover Meeting|2027-04-22T12:00:00.000Z",
+      "firstSeenAt": "2026-11-23T19:42:43.986Z",
+      "title": "SGA Spring Turnover Meeting",
+      "source": "The Backyard",
+      "date": "2027-04-22T12:00:00.000Z"
     }
   ],
-  "addedLastRun": 1,
+  "addedLastRun": 0,
   "skippedByRule": {
     "total": 456,
     "reasons": {

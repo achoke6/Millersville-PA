@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-23T20:37:50.197Z",
-  "totalEvents": 1980,
+  "generatedAt": "2026-11-23T20:44:02.604Z",
+  "totalEvents": 1988,
   "withDescription": 803,
   "withImage": 186,
   "familyFriendly": 52,
   "interests": {
-    "civic": 90,
+    "civic": 96,
     "greek": 25,
     "causes": 33,
     "learn": 65,
@@ -29,7 +29,7 @@
     "vfw": 6,
     "phantomPower": 13,
     "community": 14,
-    "manor": 30,
+    "manor": 38,
     "raneyCellars": 4,
     "theBackyard": 29,
     "muHudlBroadcasts": 62
@@ -81,7 +81,7 @@
     },
     "manor": {
       "earliest": "2026-11-25T13:00:00.000Z",
-      "latest": "2027-08-25T12:30:00.000Z"
+      "latest": "2027-11-03T23:00:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-11-12T21:00:00.000Z",
@@ -138,8 +138,8 @@
       "daysSinceMoved": 13
     },
     "manor": {
-      "newest": "2027-08-25",
-      "daysSinceMoved": 88
+      "newest": "2027-11-03",
+      "daysSinceMoved": 20
     },
     "raneyCellars": {
       "newest": "2026-11-20",
@@ -171,13 +171,13 @@
       "Campus Life": 1
     },
     "stalePast": 39,
-    "lastSyncAt": "2026-11-23T20:34:41.847Z"
+    "lastSyncAt": "2026-11-23T20:39:18.536Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-23T20:37:47.631Z"
+    "checkedAt": "2026-11-23T20:43:52.596Z"
   },
   "artsmuMerge": {
     "fetched": 43,
@@ -240,7 +240,7 @@
       {
         "key": "manor.count",
         "ok": true,
-        "value": 30,
+        "value": 38,
         "min": 10
       },
       {
@@ -261,6 +261,62 @@
   },
   "recentlyAdded": [
     {
+      "key": "Zoning Hearing Board|2027-09-01T23:00:00.000Z",
+      "firstSeenAt": "2026-11-23T20:44:02.600Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2027-09-01T23:00:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
+      "firstSeenAt": "2026-11-23T20:44:02.600Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2027-09-06T23:00:00.000Z"
+    },
+    {
+      "key": "Traffic Commission Meeting|2027-09-29T12:30:00.000Z",
+      "firstSeenAt": "2026-11-23T20:44:02.600Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2027-09-29T12:30:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2027-10-04T23:00:00.000Z",
+      "firstSeenAt": "2026-11-23T20:44:02.600Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2027-10-04T23:00:00.000Z"
+    },
+    {
+      "key": "Zoning Hearing Board|2027-10-06T23:00:00.000Z",
+      "firstSeenAt": "2026-11-23T20:44:02.600Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2027-10-06T23:00:00.000Z"
+    },
+    {
+      "key": "Traffic Commission Meeting|2027-10-27T12:30:00.000Z",
+      "firstSeenAt": "2026-11-23T20:44:02.600Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2027-10-27T12:30:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2027-11-01T23:00:00.000Z",
+      "firstSeenAt": "2026-11-23T20:44:02.600Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2027-11-01T23:00:00.000Z"
+    },
+    {
+      "key": "Zoning Hearing Board|2027-11-03T23:00:00.000Z",
+      "firstSeenAt": "2026-11-23T20:44:02.600Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2027-11-03T23:00:00.000Z"
+    },
+    {
       "key": "SUPERVISORS-SPECIAL MEETING|2026-11-25T13:00:00.000Z",
       "firstSeenAt": "2026-11-23T20:26:51.974Z",
       "title": "SUPERVISORS-SPECIAL MEETING",
@@ -273,65 +329,9 @@
       "title": "Millersville University Women's Cross Country at Last Chance Run Fast Invitational",
       "source": "MU",
       "date": "2026-10-23T19:00:00.000Z"
-    },
-    {
-      "key": "SGA Spring Turnover Meeting|2027-04-22T12:00:00.000Z",
-      "firstSeenAt": "2026-11-23T19:42:43.986Z",
-      "title": "SGA Spring Turnover Meeting",
-      "source": "The Backyard",
-      "date": "2027-04-22T12:00:00.000Z"
-    },
-    {
-      "key": "Men's Club Lacrosse Game vs. Kutztown University|2026-11-07T14:00:00",
-      "firstSeenAt": "2026-11-23T17:05:22.468Z",
-      "title": "Men's Club Lacrosse Game vs. Kutztown University",
-      "source": "MU",
-      "date": "2026-11-07T14:00:00"
-    },
-    {
-      "key": "DC TRIP|2026-11-14T00:00:00",
-      "firstSeenAt": "2026-11-23T17:05:22.468Z",
-      "title": "DC TRIP",
-      "source": "MU",
-      "date": "2026-11-14T00:00:00"
-    },
-    {
-      "key": "Fundraiser - Pie a Player Mens Club Lacrosse|2026-11-20T15:00:00",
-      "firstSeenAt": "2026-11-23T17:05:22.468Z",
-      "title": "Fundraiser - Pie a Player Mens Club Lacrosse",
-      "source": "MU",
-      "date": "2026-11-20T15:00:00"
-    },
-    {
-      "key": "MUMMB Beat the Board|2026-11-20T18:00:00",
-      "firstSeenAt": "2026-11-23T17:05:22.468Z",
-      "title": "MUMMB Beat the Board",
-      "source": "MU",
-      "date": "2026-11-20T18:00:00"
-    },
-    {
-      "key": "NSTA Snow Globe Make & Take|2026-11-23T09:30:00",
-      "firstSeenAt": "2026-11-23T17:05:22.468Z",
-      "title": "NSTA Snow Globe Make & Take",
-      "source": "MU",
-      "date": "2026-11-23T09:30:00"
-    },
-    {
-      "key": "Cozy Up for Christmas|2026-12-03T18:30:00",
-      "firstSeenAt": "2026-11-23T17:05:22.468Z",
-      "title": "Cozy Up for Christmas",
-      "source": "MU",
-      "date": "2026-12-03T18:30:00"
-    },
-    {
-      "key": "Karaoke|2026-11-23T23:30:00.000Z",
-      "firstSeenAt": "2026-11-23T13:25:01.796Z",
-      "title": "Karaoke",
-      "source": "MU",
-      "date": "2026-11-23T23:30:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 8,
   "skippedByRule": {
     "total": 456,
     "reasons": {

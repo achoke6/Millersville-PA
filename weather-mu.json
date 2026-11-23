@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "12:00",
+      "temp": "62",
+      "dewpoint": "52",
+      "rh": "69",
+      "windDir": "NW",
+      "windSpeed": "8",
+      "precip": "0.00",
+      "visibility": "11.9",
+      "condition": "None"
+    },
+    {
+      "time": "11:00",
+      "temp": "64",
+      "dewpoint": "52",
+      "rh": "65",
+      "windDir": "NW",
+      "windSpeed": "6",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "10:00",
       "temp": "65",
       "dewpoint": "53",
@@ -169,28 +191,6 @@
       "windSpeed": "2",
       "precip": "0.00",
       "visibility": "1.2",
-      "condition": "Mist"
-    },
-    {
-      "time": "06:00",
-      "temp": "51",
-      "dewpoint": "50",
-      "rh": "98",
-      "windDir": "SW",
-      "windSpeed": "0",
-      "precip": "0.00",
-      "visibility": "1.6",
-      "condition": "Mist"
-    },
-    {
-      "time": "05:00",
-      "temp": "52",
-      "dewpoint": "51",
-      "rh": "96",
-      "windDir": "SSE",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "2.8",
       "condition": "Mist"
     }
   ],
@@ -459,11 +459,11 @@
   },
   "videos": [
     {
-      "title": "Short Term Forecast 11/23/2026",
-      "videoId": "uGtuAZQ3kwc",
-      "url": "https://www.youtube.com/watch?v=uGtuAZQ3kwc",
-      "published": "2026-11-23T14:31:51+00:00",
-      "thumbnail": "https://i2.ytimg.com/vi/uGtuAZQ3kwc/hqdefault.jpg"
+      "title": "Short Term Forecast 11/23/26",
+      "videoId": "xS2EwFV1D14",
+      "url": "https://www.youtube.com/watch?v=xS2EwFV1D14",
+      "published": "2026-11-23T16:02:46+00:00",
+      "thumbnail": "https://i1.ytimg.com/vi/xS2EwFV1D14/hqdefault.jpg"
     },
     {
       "title": "Short Term Forecast 11/20/26",
@@ -488,5 +488,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-23T15:13:44.710Z"
+  "updated": "2026-11-23T17:03:22.639Z"
 }

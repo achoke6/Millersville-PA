@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-11-23T13:21:04.676Z",
-  "totalEvents": 1980,
-  "withDescription": 796,
-  "withImage": 185,
+  "generatedAt": "2026-11-23T13:25:01.800Z",
+  "totalEvents": 1981,
+  "withDescription": 797,
+  "withImage": 186,
   "familyFriendly": 52,
   "interests": {
     "civic": 95,
@@ -11,19 +11,19 @@
     "learn": 65,
     "arts": 94,
     "food": 123,
-    "music": 89,
+    "music": 90,
     "crafts": 14,
     "active": 4,
-    "reshall": 2
+    "reshall": 3
   },
-  "eventsToday": 8,
+  "eventsToday": 9,
   "sources": {
     "muAthletics": 384,
     "muCalendar": 196,
     "artsmu": 43,
     "eckert": 3,
     "campsAlumni": 9,
-    "muGetInvolved": 503,
+    "muGetInvolved": 504,
     "pennManor": 650,
     "borough": 48,
     "vfw": 6,
@@ -171,13 +171,13 @@
       "Campus Life": 1
     },
     "stalePast": 39,
-    "lastSyncAt": "2026-11-23T13:19:11.344Z"
+    "lastSyncAt": "2026-11-23T13:21:58.632Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-23T13:21:01.440Z"
+    "checkedAt": "2026-11-23T13:24:53.264Z"
   },
   "artsmuMerge": {
     "fetched": 43,
@@ -185,10 +185,8 @@
     "standalone": 1
   },
   "sourceHealth": {
-    "ok": false,
-    "failing": [
-      "manor.count"
-    ],
+    "ok": true,
+    "failing": [],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -241,10 +239,9 @@
       },
       {
         "key": "manor.count",
-        "ok": false,
+        "ok": true,
         "value": 38,
-        "min": 10,
-        "carriedForward": 38
+        "min": 10
       },
       {
         "key": "muHudl.pairRatio",
@@ -263,6 +260,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Karaoke|2026-11-23T23:30:00.000Z",
+      "firstSeenAt": "2026-11-23T13:25:01.796Z",
+      "title": "Karaoke",
+      "source": "MU",
+      "date": "2026-11-23T23:30:00.000Z"
+    },
     {
       "key": "THE CASUALTIES - People Over Power Tour|2026-12-18T00:30:00.000Z",
       "firstSeenAt": "2026-11-23T13:17:45.585Z",
@@ -325,13 +329,6 @@
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2027-09-06T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2027-09-29T12:30:00.000Z",
-      "firstSeenAt": "2026-11-21T17:35:45.436Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-09-29T12:30:00.000Z"
     }
   ],
   "addedLastRun": 0,

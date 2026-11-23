@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-23T17:15:04.667Z",
-  "totalEvents": 1987,
+  "generatedAt": "2026-11-23T17:18:14.678Z",
+  "totalEvents": 1979,
   "withDescription": 803,
   "withImage": 186,
   "familyFriendly": 52,
   "interests": {
-    "civic": 95,
+    "civic": 89,
     "greek": 25,
     "causes": 33,
     "learn": 65,
@@ -29,7 +29,7 @@
     "vfw": 6,
     "phantomPower": 13,
     "community": 14,
-    "manor": 38,
+    "manor": 30,
     "raneyCellars": 4,
     "theBackyard": 28,
     "muHudlBroadcasts": 62
@@ -81,7 +81,7 @@
     },
     "manor": {
       "earliest": "2026-11-25T13:00:00.000Z",
-      "latest": "2027-11-03T23:00:00.000Z"
+      "latest": "2027-08-25T12:30:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-11-12T21:00:00.000Z",
@@ -138,8 +138,8 @@
       "daysSinceMoved": 13
     },
     "manor": {
-      "newest": "2027-11-03",
-      "daysSinceMoved": 20
+      "newest": "2027-08-25",
+      "daysSinceMoved": 88
     },
     "raneyCellars": {
       "newest": "2026-11-20",
@@ -171,13 +171,13 @@
       "Campus Life": 1
     },
     "stalePast": 39,
-    "lastSyncAt": "2026-11-23T17:13:07.047Z"
+    "lastSyncAt": "2026-11-23T17:15:48.803Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-23T17:15:02.026Z"
+    "checkedAt": "2026-11-23T17:18:08.621Z"
   },
   "artsmuMerge": {
     "fetched": 43,
@@ -240,7 +240,7 @@
       {
         "key": "manor.count",
         "ok": true,
-        "value": 38,
+        "value": 30,
         "min": 10
       },
       {
@@ -303,32 +303,32 @@
       "date": "2026-12-03T18:30:00"
     },
     {
-      "key": "Zoning Hearing Board|2027-09-01T23:00:00.000Z",
-      "firstSeenAt": "2026-11-23T15:17:49.650Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-09-01T23:00:00.000Z"
+      "key": "Karaoke|2026-11-23T23:30:00.000Z",
+      "firstSeenAt": "2026-11-23T13:25:01.796Z",
+      "title": "Karaoke",
+      "source": "MU",
+      "date": "2026-11-23T23:30:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-23T15:17:49.650Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-09-06T23:00:00.000Z"
+      "key": "THE CASUALTIES - People Over Power Tour|2026-12-18T00:30:00.000Z",
+      "firstSeenAt": "2026-11-23T13:17:45.585Z",
+      "title": "THE CASUALTIES - People Over Power Tour",
+      "source": "Other",
+      "date": "2026-12-18T00:30:00.000Z"
     },
     {
-      "key": "Traffic Commission Meeting|2027-09-29T12:30:00.000Z",
-      "firstSeenAt": "2026-11-23T15:17:49.650Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-09-29T12:30:00.000Z"
+      "key": "Letters of Love|2026-12-01T19:00:00",
+      "firstSeenAt": "2026-11-22T18:44:23.469Z",
+      "title": "Letters of Love",
+      "source": "MU",
+      "date": "2026-12-01T19:00:00"
     },
     {
-      "key": "Supervisors Meeting|2027-10-04T23:00:00.000Z",
-      "firstSeenAt": "2026-11-23T15:17:49.650Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-10-04T23:00:00.000Z"
+      "key": "LIVES LOST w. Iara, Making A Mockery, Scarlet Meridian, neversleep.|2026-12-14T00:00:00.000Z",
+      "firstSeenAt": "2026-11-22T16:45:57.748Z",
+      "title": "LIVES LOST w. Iara, Making A Mockery, Scarlet Meridian, neversleep.",
+      "source": "Other",
+      "date": "2026-12-14T00:00:00.000Z"
     }
   ],
   "addedLastRun": 0,

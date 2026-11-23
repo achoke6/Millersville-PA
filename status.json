@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T03:58:25.109Z",
+  "generatedAt": "2026-11-23T04:01:18.633Z",
   "totalEvents": 1981,
   "withDescription": 797,
   "withImage": 185,
@@ -16,7 +16,7 @@
     "active": 4,
     "reshall": 2
   },
-  "eventsToday": 9,
+  "eventsToday": 8,
   "sources": {
     "muAthletics": 384,
     "muCalendar": 196,
@@ -72,7 +72,7 @@
       "latest": "2026-11-29T18:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-11-23T00:00:00.000Z",
+      "earliest": "2026-11-26T01:00:00.000Z",
       "latest": "2026-12-19T01:00:00.000Z"
     },
     "community": {
@@ -171,13 +171,13 @@
       "Campus Life": 1
     },
     "stalePast": 38,
-    "lastSyncAt": "2026-11-23T03:56:32.187Z"
+    "lastSyncAt": "2026-11-23T03:59:30.269Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-23T03:58:16.258Z"
+    "checkedAt": "2026-11-23T04:01:16.099Z"
   },
   "artsmuMerge": {
     "fetched": 44,
@@ -261,6 +261,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "THE CASUALTIES - People Over Power Tour|2026-12-18T00:30:00.000Z",
+      "firstSeenAt": "2026-11-23T04:01:18.630Z",
+      "title": "THE CASUALTIES - People Over Power Tour",
+      "source": "Other",
+      "date": "2026-12-18T00:30:00.000Z"
+    },
+    {
       "key": "Letters of Love|2026-12-01T19:00:00",
       "firstSeenAt": "2026-11-22T18:44:23.469Z",
       "title": "Letters of Love",
@@ -322,16 +329,9 @@
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2027-09-29T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-10-04T23:00:00.000Z",
-      "firstSeenAt": "2026-11-21T17:35:45.436Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-10-04T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 456,
     "reasons": {

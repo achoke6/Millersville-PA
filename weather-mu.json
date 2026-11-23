@@ -126,74 +126,7 @@
       }
     ]
   },
-  "observations": [
-    {
-      "time": "23:00",
-      "temp": "56",
-      "dewpoint": "53",
-      "rh": "90",
-      "windDir": "NW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "5.4",
-      "condition": "None"
-    },
-    {
-      "time": "22:00",
-      "temp": "56",
-      "dewpoint": "54",
-      "rh": "90",
-      "windDir": "NW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "5.8",
-      "condition": "None"
-    },
-    {
-      "time": "21:00",
-      "temp": "56",
-      "dewpoint": "53",
-      "rh": "90",
-      "windDir": "SW",
-      "windSpeed": "1",
-      "precip": "0.00",
-      "visibility": "5.9",
-      "condition": "None"
-    },
-    {
-      "time": "20:00",
-      "temp": "59",
-      "dewpoint": "54",
-      "rh": "84",
-      "windDir": "N",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "7.7",
-      "condition": "None"
-    },
-    {
-      "time": "19:00",
-      "temp": "60",
-      "dewpoint": "54",
-      "rh": "82",
-      "windDir": "N",
-      "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "8.2",
-      "condition": "None"
-    },
-    {
-      "time": "18:00",
-      "temp": "60",
-      "dewpoint": "54",
-      "rh": "81",
-      "windDir": "N",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "8.7",
-      "condition": "None"
-    }
-  ],
+  "observations": [],
   "dailySummary": {
     "monthLabel": "November 2026",
     "days": [
@@ -427,6 +360,17 @@
         "windSpeed": "10",
         "windTime": "14:41",
         "rain": "0.00"
+      },
+      {
+        "date": "11/22",
+        "max": "66",
+        "maxTime": "14:06",
+        "min": "47",
+        "minTime": "06:02",
+        "windDir": "58",
+        "windSpeed": "11",
+        "windTime": "14:39",
+        "rain": "0.00"
       }
     ],
     "totalRain": "0.43",
@@ -477,5 +421,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-23T04:14:33.716Z"
+  "updated": "2026-11-23T06:01:27.653Z"
 }

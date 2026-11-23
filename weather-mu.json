@@ -26,24 +26,8 @@
     ]
   },
   "sevenDay": {
-    "issued": "Sunday, November 22, 2026 at 09:05 AM (Corman, Funk)",
+    "issued": "Monday, November 23, 2026 at 08:18 AM (Harris, Leopold, Muller)",
     "days": [
-      {
-        "period": "Sunday",
-        "sky": "Mostly Cloudy",
-        "weather": "Mild",
-        "pop": "20%",
-        "temp": "62",
-        "conf": "5"
-      },
-      {
-        "period": "Sunday night",
-        "sky": "Decreasing Clouds",
-        "weather": "Mild",
-        "pop": "20%",
-        "temp": "50",
-        "conf": "5"
-      },
       {
         "period": "Monday",
         "sky": "Partly Sunny",
@@ -57,12 +41,12 @@
         "sky": "Mainly Clear",
         "weather": "Fair",
         "pop": "<10%",
-        "temp": "34",
+        "temp": "36",
         "conf": "5"
       },
       {
         "period": "Tuesday",
-        "sky": "Mostly Sunny",
+        "sky": "Sunny",
         "weather": "Cooler",
         "pop": "<10%",
         "temp": "48",
@@ -78,42 +62,50 @@
       },
       {
         "period": "Wednesday",
-        "sky": "Clouds & Sun",
+        "sky": "Increasing Clouds",
         "weather": "Cool",
         "pop": "<10%",
-        "temp": "46",
-        "conf": "4"
+        "temp": "48",
+        "conf": "5"
       },
       {
         "period": "Wednesday night",
         "sky": "Mostly Cloudy",
         "weather": "Fair",
         "pop": "20%",
-        "temp": "34",
+        "temp": "38",
         "conf": "4"
       },
       {
         "period": "Thursday",
-        "sky": "Mostly Cloudy",
+        "sky": "Cloudy",
         "weather": "Periods of Rain",
-        "pop": "60%",
+        "pop": "90%",
         "temp": "50",
-        "conf": "3"
+        "conf": "4"
       },
       {
         "period": "Thursday night",
-        "sky": "Mostly Cloudy",
-        "weather": "Chance of Rain",
-        "pop": "40%",
-        "temp": "40",
-        "conf": "3"
+        "sky": "Cloudy",
+        "weather": "Periods of Rain",
+        "pop": "90%",
+        "temp": "44",
+        "conf": "4"
       },
       {
         "period": "Friday",
-        "sky": "Clouds & Sun",
-        "weather": "Seasonable",
-        "pop": "20%",
-        "temp": "upper 40s",
+        "sky": "Mostly Cloudy",
+        "weather": "Breezy",
+        "pop": "30%",
+        "temp": "52",
+        "conf": "3"
+      },
+      {
+        "period": "Friday night",
+        "sky": "Partly Cloudy",
+        "weather": "Breezy",
+        "pop": "<10%",
+        "temp": "42",
         "conf": "3"
       },
       {
@@ -122,6 +114,14 @@
         "weather": "Seasonable",
         "pop": "<10%",
         "temp": "low 50s",
+        "conf": "3"
+      },
+      {
+        "period": "Sunday",
+        "sky": "Clouds & Sun",
+        "weather": "Pleasant",
+        "pop": "<10%",
+        "temp": "mid 50s",
         "conf": "3"
       }
     ]
@@ -488,5 +488,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-23T13:16:00.522Z"
+  "updated": "2026-11-23T13:19:20.669Z"
 }

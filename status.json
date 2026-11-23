@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-23T13:25:01.800Z",
-  "totalEvents": 1981,
+  "generatedAt": "2026-11-23T15:12:32.601Z",
+  "totalEvents": 1973,
   "withDescription": 797,
   "withImage": 186,
   "familyFriendly": 52,
   "interests": {
-    "civic": 95,
+    "civic": 89,
     "greek": 25,
     "causes": 32,
     "learn": 65,
@@ -29,7 +29,7 @@
     "vfw": 6,
     "phantomPower": 13,
     "community": 14,
-    "manor": 38,
+    "manor": 30,
     "raneyCellars": 4,
     "theBackyard": 28,
     "muHudlBroadcasts": 62
@@ -81,7 +81,7 @@
     },
     "manor": {
       "earliest": "2026-11-25T13:00:00.000Z",
-      "latest": "2027-11-03T23:00:00.000Z"
+      "latest": "2027-08-25T12:30:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-11-12T21:00:00.000Z",
@@ -138,8 +138,8 @@
       "daysSinceMoved": 13
     },
     "manor": {
-      "newest": "2027-11-03",
-      "daysSinceMoved": 20
+      "newest": "2027-08-25",
+      "daysSinceMoved": 88
     },
     "raneyCellars": {
       "newest": "2026-11-20",
@@ -171,13 +171,13 @@
       "Campus Life": 1
     },
     "stalePast": 39,
-    "lastSyncAt": "2026-11-23T13:21:58.632Z"
+    "lastSyncAt": "2026-11-23T15:10:26.616Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-23T13:24:53.264Z"
+    "checkedAt": "2026-11-23T15:12:24.075Z"
   },
   "artsmuMerge": {
     "fetched": 43,
@@ -240,7 +240,7 @@
       {
         "key": "manor.count",
         "ok": true,
-        "value": 38,
+        "value": 30,
         "min": 10
       },
       {
@@ -317,18 +317,18 @@
       "date": "2026-10-21T22:00:00.000Z"
     },
     {
-      "key": "Zoning Hearing Board|2027-09-01T23:00:00.000Z",
-      "firstSeenAt": "2026-11-21T17:35:45.436Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-09-01T23:00:00.000Z"
+      "key": "DARKEST HOUR w. JUDICIARY, NEHEMIAH, & JUSTIFICATIONS|2026-12-13T00:00:00.000Z",
+      "firstSeenAt": "2026-11-21T08:53:42.271Z",
+      "title": "DARKEST HOUR w. JUDICIARY, NEHEMIAH, & JUSTIFICATIONS",
+      "source": "Other",
+      "date": "2026-12-13T00:00:00.000Z"
     },
     {
-      "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-21T17:35:45.436Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-09-06T23:00:00.000Z"
+      "key": "UAB Connect: Gingerbread House Competition|2026-11-11T19:00:00",
+      "firstSeenAt": "2026-11-21T01:31:22.096Z",
+      "title": "UAB Connect: Gingerbread House Competition",
+      "source": "MU",
+      "date": "2026-11-11T19:00:00"
     }
   ],
   "addedLastRun": 0,

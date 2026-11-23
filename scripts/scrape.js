@@ -7832,7 +7832,10 @@ async function runScraper() {
             // collapse whitespace. Decode-before-truncate also stops the 600
             // cut from splitting an entity mid-sequence.
             const plain = decodeEntities(e.description.replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
-            e.description = plain.length > 600 ? plain.slice(0, 600).trim() + '…' : plain;
+            // Surrogate-safe cut (2026-11-23): slice(0, 600) can land between the two
+            // halves of an emoji; the lone half makes events.json unreadable to jq
+            // (smoke test) and PHP json_decode (events.ics.php). Drop it.
+            e.description = plain.length > 600 ? plain.slice(0, 600).replace(/[\uD800-\uDBFF]$/, '').trim() + '…' : plain;
             if (!e.description) delete e.description;
         } else {
             delete e.description;
@@ -7887,7 +7890,11 @@ async function runScraper() {
     // the serialized file never saw the strip, so the documented
     // sanitization was a no-op on disk. Reordered + retargeted.)
     const CTRL = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F]/g;
-    for (const ev of deduped) for (const k in ev) if (typeof ev[k] === 'string') ev[k] = ev[k].replace(CTRL, ' ');
+    // Lone-surrogate backstop (2026-11-23): half an emoji anywhere in a string
+    // field serializes as a bare \ud83d escape -- valid for browsers, fatal for
+    // jq and PHP json_decode (the smoke test failed and every iCal feed 503'd).
+    const LONE_SURROGATE = /[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/g;
+    for (const ev of deduped) for (const k in ev) if (typeof ev[k] === 'string') ev[k] = ev[k].replace(CTRL, ' ').replace(LONE_SURROGATE, '');
     const slimJson = JSON.stringify(deduped);  // No pretty-print — wire format
     afterBytes = slimJson.length;
     fs.writeFileSync(path.join(__dirname, '../events.json'), slimJson);

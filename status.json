@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T09:35:34.176Z",
+  "generatedAt": "2026-11-23T11:23:05.494Z",
   "totalEvents": 1980,
   "withDescription": 796,
   "withImage": 185,
@@ -72,7 +72,7 @@
       "latest": "2026-11-29T18:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-11-26T01:00:00.000Z",
+      "earliest": "2026-11-23T00:00:00.000Z",
       "latest": "2026-12-19T01:00:00.000Z"
     },
     "community": {
@@ -171,13 +171,13 @@
       "Campus Life": 1
     },
     "stalePast": 39,
-    "lastSyncAt": "2026-11-23T09:33:30.364Z"
+    "lastSyncAt": "2026-11-23T11:21:00.108Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-23T09:35:23.522Z"
+    "checkedAt": "2026-11-23T11:22:55.839Z"
   },
   "artsmuMerge": {
     "fetched": 43,
@@ -212,7 +212,7 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 343,
+        "value": 342,
         "min": 21,
         "skipped": false
       },
@@ -261,11 +261,11 @@
   },
   "recentlyAdded": [
     {
-      "key": "THE CASUALTIES - People Over Power Tour|2026-12-18T00:30:00.000Z",
-      "firstSeenAt": "2026-11-23T04:16:07.870Z",
-      "title": "THE CASUALTIES - People Over Power Tour",
+      "key": "ATLAS AT HOLD w. Major Moment, Who They Fear, Elsewhere|2026-11-23T00:00:00.000Z",
+      "firstSeenAt": "2026-11-23T11:23:05.490Z",
+      "title": "ATLAS AT HOLD w. Major Moment, Who They Fear, Elsewhere",
       "source": "Other",
-      "date": "2026-12-18T00:30:00.000Z"
+      "date": "2026-11-23T00:00:00.000Z"
     },
     {
       "key": "Letters of Love|2026-12-01T19:00:00",
@@ -331,7 +331,7 @@
       "date": "2027-09-29T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 456,
     "reasons": {

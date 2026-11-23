@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-23T15:12:32.601Z",
-  "totalEvents": 1973,
+  "generatedAt": "2026-11-23T15:17:49.654Z",
+  "totalEvents": 1981,
   "withDescription": 797,
   "withImage": 186,
   "familyFriendly": 52,
   "interests": {
-    "civic": 89,
+    "civic": 95,
     "greek": 25,
     "causes": 32,
     "learn": 65,
@@ -29,7 +29,7 @@
     "vfw": 6,
     "phantomPower": 13,
     "community": 14,
-    "manor": 30,
+    "manor": 38,
     "raneyCellars": 4,
     "theBackyard": 28,
     "muHudlBroadcasts": 62
@@ -81,7 +81,7 @@
     },
     "manor": {
       "earliest": "2026-11-25T13:00:00.000Z",
-      "latest": "2027-08-25T12:30:00.000Z"
+      "latest": "2027-11-03T23:00:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-11-12T21:00:00.000Z",
@@ -138,8 +138,8 @@
       "daysSinceMoved": 13
     },
     "manor": {
-      "newest": "2027-08-25",
-      "daysSinceMoved": 88
+      "newest": "2027-11-03",
+      "daysSinceMoved": 20
     },
     "raneyCellars": {
       "newest": "2026-11-20",
@@ -171,13 +171,13 @@
       "Campus Life": 1
     },
     "stalePast": 39,
-    "lastSyncAt": "2026-11-23T15:10:26.616Z"
+    "lastSyncAt": "2026-11-23T15:13:42.297Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-23T15:12:24.075Z"
+    "checkedAt": "2026-11-23T15:17:47.274Z"
   },
   "artsmuMerge": {
     "fetched": 43,
@@ -240,7 +240,7 @@
       {
         "key": "manor.count",
         "ok": true,
-        "value": 30,
+        "value": 38,
         "min": 10
       },
       {
@@ -261,6 +261,62 @@
   },
   "recentlyAdded": [
     {
+      "key": "Zoning Hearing Board|2027-09-01T23:00:00.000Z",
+      "firstSeenAt": "2026-11-23T15:17:49.650Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2027-09-01T23:00:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
+      "firstSeenAt": "2026-11-23T15:17:49.650Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2027-09-06T23:00:00.000Z"
+    },
+    {
+      "key": "Traffic Commission Meeting|2027-09-29T12:30:00.000Z",
+      "firstSeenAt": "2026-11-23T15:17:49.650Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2027-09-29T12:30:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2027-10-04T23:00:00.000Z",
+      "firstSeenAt": "2026-11-23T15:17:49.650Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2027-10-04T23:00:00.000Z"
+    },
+    {
+      "key": "Zoning Hearing Board|2027-10-06T23:00:00.000Z",
+      "firstSeenAt": "2026-11-23T15:17:49.650Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2027-10-06T23:00:00.000Z"
+    },
+    {
+      "key": "Traffic Commission Meeting|2027-10-27T12:30:00.000Z",
+      "firstSeenAt": "2026-11-23T15:17:49.650Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2027-10-27T12:30:00.000Z"
+    },
+    {
+      "key": "Supervisors Meeting|2027-11-01T23:00:00.000Z",
+      "firstSeenAt": "2026-11-23T15:17:49.650Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2027-11-01T23:00:00.000Z"
+    },
+    {
+      "key": "Zoning Hearing Board|2027-11-03T23:00:00.000Z",
+      "firstSeenAt": "2026-11-23T15:17:49.650Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2027-11-03T23:00:00.000Z"
+    },
+    {
       "key": "Karaoke|2026-11-23T23:30:00.000Z",
       "firstSeenAt": "2026-11-23T13:25:01.796Z",
       "title": "Karaoke",
@@ -273,65 +329,9 @@
       "title": "THE CASUALTIES - People Over Power Tour",
       "source": "Other",
       "date": "2026-12-18T00:30:00.000Z"
-    },
-    {
-      "key": "Letters of Love|2026-12-01T19:00:00",
-      "firstSeenAt": "2026-11-22T18:44:23.469Z",
-      "title": "Letters of Love",
-      "source": "MU",
-      "date": "2026-12-01T19:00:00"
-    },
-    {
-      "key": "LIVES LOST w. Iara, Making A Mockery, Scarlet Meridian, neversleep.|2026-12-14T00:00:00.000Z",
-      "firstSeenAt": "2026-11-22T16:45:57.748Z",
-      "title": "LIVES LOST w. Iara, Making A Mockery, Scarlet Meridian, neversleep.",
-      "source": "Other",
-      "date": "2026-12-14T00:00:00.000Z"
-    },
-    {
-      "key": "Family Fun Fest: \"Layer The Walls: Turn of the Century\"|2026-11-21T14:00:00",
-      "firstSeenAt": "2026-11-22T06:48:21.964Z",
-      "title": "Family Fun Fest: \"Layer The Walls: Turn of the Century\"",
-      "source": "MU",
-      "date": "2026-11-21T14:00:00"
-    },
-    {
-      "key": "Millersville University Women's Soccer vs #4 Kutztown|2026-10-21T23:00:00.000Z",
-      "firstSeenAt": "2026-11-22T01:00:54.909Z",
-      "title": "Millersville University Women's Soccer vs #4 Kutztown",
-      "source": "MU",
-      "date": "2026-10-21T23:00:00.000Z"
-    },
-    {
-      "key": "The Millersville Smash Arcadian|2026-11-20T21:00:00.000Z",
-      "firstSeenAt": "2026-11-22T01:00:54.909Z",
-      "title": "The Millersville Smash Arcadian",
-      "source": "MU",
-      "date": "2026-11-20T21:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Field Hockey vs #4 Shippensburg|2026-10-21T22:00:00.000Z",
-      "firstSeenAt": "2026-11-21T23:05:10.357Z",
-      "title": "Millersville University Field Hockey vs #4 Shippensburg",
-      "source": "MU",
-      "date": "2026-10-21T22:00:00.000Z"
-    },
-    {
-      "key": "DARKEST HOUR w. JUDICIARY, NEHEMIAH, & JUSTIFICATIONS|2026-12-13T00:00:00.000Z",
-      "firstSeenAt": "2026-11-21T08:53:42.271Z",
-      "title": "DARKEST HOUR w. JUDICIARY, NEHEMIAH, & JUSTIFICATIONS",
-      "source": "Other",
-      "date": "2026-12-13T00:00:00.000Z"
-    },
-    {
-      "key": "UAB Connect: Gingerbread House Competition|2026-11-11T19:00:00",
-      "firstSeenAt": "2026-11-21T01:31:22.096Z",
-      "title": "UAB Connect: Gingerbread House Competition",
-      "source": "MU",
-      "date": "2026-11-11T19:00:00"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 8,
   "skippedByRule": {
     "total": 456,
     "reasons": {

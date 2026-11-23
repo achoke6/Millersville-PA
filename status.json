@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-23T20:09:04.210Z",
+  "generatedAt": "2026-11-23T20:13:57.526Z",
   "totalEvents": 1988,
   "withDescription": 803,
   "withImage": 186,
@@ -171,13 +171,13 @@
       "Campus Life": 1
     },
     "stalePast": 39,
-    "lastSyncAt": "2026-11-23T20:06:15.193Z"
+    "lastSyncAt": "2026-11-23T20:09:50.163Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-23T20:09:00.279Z"
+    "checkedAt": "2026-11-23T20:13:55.300Z"
   },
   "artsmuMerge": {
     "fetched": 43,
@@ -261,6 +261,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Millersville University Women's Cross Country at Last Chance Run Fast Invitational|2026-10-23T19:00:00.000Z",
+      "firstSeenAt": "2026-11-23T20:13:57.523Z",
+      "title": "Millersville University Women's Cross Country at Last Chance Run Fast Invitational",
+      "source": "MU",
+      "date": "2026-10-23T19:00:00.000Z"
+    },
+    {
       "key": "Zoning Hearing Board|2027-09-01T23:00:00.000Z",
       "firstSeenAt": "2026-11-23T19:47:43.754Z",
       "title": "Zoning Hearing Board",
@@ -322,16 +329,9 @@
       "title": "SGA Spring Turnover Meeting",
       "source": "The Backyard",
       "date": "2027-04-22T12:00:00.000Z"
-    },
-    {
-      "key": "Men's Club Lacrosse Game vs. Kutztown University|2026-11-07T14:00:00",
-      "firstSeenAt": "2026-11-23T17:05:22.468Z",
-      "title": "Men's Club Lacrosse Game vs. Kutztown University",
-      "source": "MU",
-      "date": "2026-11-07T14:00:00"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 456,
     "reasons": {

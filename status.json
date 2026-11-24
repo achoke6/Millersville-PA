@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-11-24T17:00:23.750Z",
-  "totalEvents": 1973,
-  "withDescription": 794,
+  "generatedAt": "2026-11-24T18:51:27.004Z",
+  "totalEvents": 1966,
+  "withDescription": 795,
   "withImage": 180,
   "familyFriendly": 51,
   "interests": {
-    "civic": 95,
+    "civic": 89,
     "greek": 24,
     "causes": 33,
     "learn": 65,
     "arts": 94,
     "food": 122,
-    "music": 89,
+    "music": 90,
     "crafts": 14,
     "active": 4,
     "reshall": 3
@@ -19,7 +19,7 @@
   "eventsToday": 14,
   "sources": {
     "muAthletics": 383,
-    "muCalendar": 199,
+    "muCalendar": 200,
     "artsmu": 43,
     "eckert": 3,
     "campsAlumni": 9,
@@ -29,7 +29,7 @@
     "vfw": 6,
     "phantomPower": 13,
     "community": 13,
-    "manor": 38,
+    "manor": 30,
     "raneyCellars": 4,
     "theBackyard": 28,
     "muHudlBroadcasts": 62
@@ -81,7 +81,7 @@
     },
     "manor": {
       "earliest": "2026-11-25T13:00:00.000Z",
-      "latest": "2027-11-03T23:00:00.000Z"
+      "latest": "2027-08-25T12:30:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-11-12T21:00:00.000Z",
@@ -138,8 +138,8 @@
       "daysSinceMoved": 14
     },
     "manor": {
-      "newest": "2027-11-03",
-      "daysSinceMoved": 21
+      "newest": "2027-08-25",
+      "daysSinceMoved": 89
     },
     "raneyCellars": {
       "newest": "2026-11-20",
@@ -168,13 +168,13 @@
     "pendingPast": 15,
     "pendingBySource": {},
     "stalePast": 35,
-    "lastSyncAt": "2026-11-24T16:56:49.509Z"
+    "lastSyncAt": "2026-11-24T18:46:03.958Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-24T17:00:15.877Z"
+    "checkedAt": "2026-11-24T18:51:19.373Z"
   },
   "artsmuMerge": {
     "fetched": 43,
@@ -237,7 +237,7 @@
       {
         "key": "manor.count",
         "ok": true,
-        "value": 38,
+        "value": 30,
         "min": 10
       },
       {
@@ -257,6 +257,27 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Millersville University Men's Soccer vs Lackawanna|2026-10-24T17:00:00.000Z",
+      "firstSeenAt": "2026-11-24T18:51:27.001Z",
+      "title": "Millersville University Men's Soccer vs Lackawanna",
+      "source": "MU",
+      "date": "2026-10-24T17:00:00.000Z"
+    },
+    {
+      "key": "TubaChristmas|2026-12-04T15:00:00",
+      "firstSeenAt": "2026-11-24T18:51:27.001Z",
+      "title": "TubaChristmas",
+      "source": "MU",
+      "date": "2026-12-04T15:00:00"
+    },
+    {
+      "key": "Boys Varsity Basketball @ Ephrata Area High School|2026-12-19T00:30:00.000Z",
+      "firstSeenAt": "2026-11-24T18:51:27.001Z",
+      "title": "Boys Varsity Basketball @ Ephrata Area High School",
+      "source": "PM",
+      "date": "2026-12-19T00:30:00.000Z"
+    },
     {
       "key": "Spring 2027 Involvement Fair|2027-01-27T16:30:00.000Z",
       "firstSeenAt": "2026-11-24T16:30:05.410Z",
@@ -305,30 +326,9 @@
       "title": "Annual Brossman Foundation Science Lectureship",
       "source": "MU",
       "date": "2027-11-11T18:00:00"
-    },
-    {
-      "key": "Men's Club Basketball vs. Rowan University – Doubleheader|2026-11-22T17:00:00",
-      "firstSeenAt": "2026-11-24T14:08:45.827Z",
-      "title": "Men's Club Basketball vs. Rowan University – Doubleheader",
-      "source": "MU",
-      "date": "2026-11-22T17:00:00"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-09-01T23:00:00.000Z",
-      "firstSeenAt": "2026-11-24T08:33:45.116Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-09-01T23:00:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-24T08:33:45.116Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-09-06T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 3,
   "skippedByRule": {
     "total": 478,
     "reasons": {

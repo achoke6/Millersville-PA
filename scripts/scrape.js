@@ -718,6 +718,12 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
     const publicNamedEventRegex = /\b(blood drive|food drive|clothing drive|toy drive|5k|10k|walkathon|run for|habitat for humanity|red cross|food pantry|soup kitchen)\b/i;
     if (publicNamedEventRegex.test(combinedText)) return 'public';
     if (publicOrgRegex.test(orgName)) return 'public';
+    // Commencement ceremonies are public (Adam, 2026-11-24, from the gated-rows card):
+    // Locals should see them coming for the traffic. The TITLE must be the ceremony
+    // itself -- "December Commencement", "Spring Commencement", "Commencement
+    // Ceremony" -- so "Cocoa Before Commencement" and the like stay student-only.
+    const COMMENCEMENT_TITLE_RE = /^\s*(?:(?:december|winter|spring|may|fall|summer|august)\s+)?commencement(?:\s+ceremon(?:y|ies))?\s*$/i;
+    if (COMMENCEMENT_TITLE_RE.test(titleText || '')) return 'public';
 
     // Explicit public marker -- hoisted here (2026-10-07) so the tabling guard
     // below can honor it; semantics unchanged for every later use.
@@ -752,7 +758,10 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
     // and the Wellness Fair - student-services events that only students
     // attend. A fair whose preceding word names a student service stays
     // mu-only; "Arts and Crafts Fair", "Mid-Autumn Festival" etc. still win.
-    const publicFundraisingKeywordRegex = /\b(fundraiser|bake sale|festival|(?<!\b(?:career|job|internship|major|graduate school|grad school|wellness|health|resource|involvement|activities|activity|club|org|study abroad|housing)s?\s)fair|charity|donation|donate|benefit (for|concert))\b/i;
+    // 2026-11-24: 'cookie sale' + 'raise/raising money|funds' added -- a sale that raises
+    // money is a fundraiser by another name ("Delta Zeta's Holiday Cookie Sale ... to raise
+    // money for their philanthropies" was gated by the Greek Life tag below).
+    const publicFundraisingKeywordRegex = /\b(fundraiser|bake sale|cookie sale|rais(?:e|es|ed|ing) (?:money|funds)|festival|(?<!\b(?:career|job|internship|major|graduate school|grad school|wellness|health|resource|involvement|activities|activity|club|org|study abroad|housing)s?\s)fair|charity|donation|donate|benefit (for|concert))\b/i;
     if (publicFundraisingKeywordRegex.test(combinedText)) return 'public';
 
     // ===== Academic-internal signals =====

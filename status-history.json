@@ -3231,11 +3231,11 @@
     },
     {
       "date": "2026-11-24",
-      "ts": "2026-11-24T16:30:05.413Z",
-      "totalEvents": 1973,
+      "ts": "2026-11-24T18:51:27.004Z",
+      "totalEvents": 1966,
       "sources": {
         "muAthletics": 383,
-        "muCalendar": 199,
+        "muCalendar": 200,
         "artsmu": 43,
         "eckert": 3,
         "campsAlumni": 9,
@@ -3245,7 +3245,7 @@
         "vfw": 6,
         "phantomPower": 13,
         "community": 13,
-        "manor": 38,
+        "manor": 30,
         "raneyCellars": 4,
         "theBackyard": 28,
         "muHudlBroadcasts": 62
@@ -3262,11 +3262,11 @@
         "vfw": "2026-11-29",
         "phantomPower": "2026-12-19",
         "community": "2027-05-16",
-        "manor": "2027-11-03",
+        "manor": "2027-08-25",
         "raneyCellars": "2026-11-20",
         "theBackyard": "2027-04-28"
       },
-      "runs": 2,
+      "runs": 4,
       "misses": {
         "weather": {
           "label": "Weather",
@@ -3274,9 +3274,16 @@
           "partial": 1,
           "lastTs": "2026-11-24T16:30:13.297Z",
           "lastError": "Open-Meteo: fetch failed"
+        },
+        "manor": {
+          "label": "Manor Township",
+          "count": 0,
+          "partial": 1,
+          "lastTs": "2026-11-24T18:51:40.016Z",
+          "lastError": "page 2: Request failed with status code 500"
         }
       }
     }
   ],
-  "lastUpdated": "2026-11-24T16:30:05.413Z"
+  "lastUpdated": "2026-11-24T18:51:27.004Z"
 }

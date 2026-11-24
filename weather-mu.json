@@ -1,10 +1,10 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Tuesday, November 24, 2026 at 08:13 AM (Guillaume, Lowell, Student Meteorologists)",
+    "issued": "Tuesday, November 24, 2026 at 12:07 PM (Longo and Rooney, Student Meteorologists)",
     "periods": [
       {
-        "period": "Today",
+        "period": "This afternoon",
         "text": "Sunny, breezy, and much cooler. High: 46-50"
       },
       {
@@ -128,6 +128,28 @@
   },
   "observations": [
     {
+      "time": "13:00",
+      "temp": "47",
+      "dewpoint": "21",
+      "rh": "35",
+      "windDir": "NE",
+      "windSpeed": "6",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "12:00",
+      "temp": "47",
+      "dewpoint": "24",
+      "rh": "40",
+      "windDir": "N",
+      "windSpeed": "8",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "11:00",
       "temp": "45",
       "dewpoint": "25",
@@ -169,28 +191,6 @@
       "windSpeed": "3",
       "precip": "0.00",
       "visibility": "6.9",
-      "condition": "None"
-    },
-    {
-      "time": "07:00",
-      "temp": "37",
-      "dewpoint": "27",
-      "rh": "66",
-      "windDir": "NNW",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "06:00",
-      "temp": "38",
-      "dewpoint": "26",
-      "rh": "62",
-      "windDir": "NW",
-      "windSpeed": "4",
-      "precip": "0.00",
-      "visibility": "12 +",
       "condition": "None"
     }
   ],
@@ -459,9 +459,9 @@
     "yearMinDate": "January 21"
   },
   "discussion": {
-    "headline": "beautiful through saturday, then watching coastal storm sunday",
-    "dateLine": "1:30 p.m. Friday, November 20, 2026, Update",
-    "excerpt": "The weather has been nothing short of spectacular across the mid-Atlantic States this week, and a sprawling high pressure system will promote a continuation of mostly sunny, tranquil and pleasantly warm conditions through the start of the weekend. Much like yesterday, temperatures have reached the mid-to-upper 60s across the Lower Susquehanna Valley this afternoon, and highs should top out around 15°F above average (mid 60s) again tomorrow (see below). …",
+    "headline": "Heavy Rain, wind to hamper thanksgiving day plans",
+    "dateLine": "2:00 p.m. Tuesday, November 24, 2026",
+    "excerpt": "Thanksgiving Week kicked off on a partly-to-mostly cloudy, breezy and mild note across northern MD and southeastern PA. A cold front swept through the Commonwealth on Monday and brought a few brief showers to the Lower Susquehanna Valley, but the majority of the day was dry with temperatures in the 60s. Behind the front, northerly winds of 10-20 mph have ushered a much cooler and drier air mass into the region this afternoon. …",
     "url": "https://www.millersville.edu/weathercenter/forecasts/weather-discussion.php"
   },
   "images": {
@@ -469,6 +469,13 @@
     "surfaceAnalysis": "https://www.wpc.ncep.noaa.gov/sfc/radsfcus_exp_new.gif"
   },
   "videos": [
+    {
+      "title": "Short Term Forecast 11/24/2026",
+      "videoId": "SSGsmqJ3wyc",
+      "url": "https://www.youtube.com/watch?v=SSGsmqJ3wyc",
+      "published": "2026-11-24T16:38:52+00:00",
+      "thumbnail": "https://i4.ytimg.com/vi/SSGsmqJ3wyc/hqdefault.jpg"
+    },
     {
       "title": "Short Term Forecast 11/23/26",
       "videoId": "xS2EwFV1D14",
@@ -489,15 +496,8 @@
       "url": "https://www.youtube.com/watch?v=GR7eIhiy8MU",
       "published": "2026-11-20T14:22:46+00:00",
       "thumbnail": "https://i4.ytimg.com/vi/GR7eIhiy8MU/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 11/19/2026",
-      "videoId": "RoganuPxuo4",
-      "url": "https://www.youtube.com/watch?v=RoganuPxuo4",
-      "published": "2026-11-19T16:37:19+00:00",
-      "thumbnail": "https://i3.ytimg.com/vi/RoganuPxuo4/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-24T16:21:55.804Z"
+  "updated": "2026-11-24T18:46:06.473Z"
 }

@@ -1,11 +1,11 @@
 {
-  "generatedAt": "2026-11-24T19:11:59.837Z",
-  "totalEvents": 1966,
+  "generatedAt": "2026-11-24T20:54:16.916Z",
+  "totalEvents": 1974,
   "withDescription": 795,
   "withImage": 180,
   "familyFriendly": 51,
   "interests": {
-    "civic": 89,
+    "civic": 95,
     "greek": 24,
     "causes": 33,
     "learn": 65,
@@ -29,7 +29,7 @@
     "vfw": 6,
     "phantomPower": 13,
     "community": 13,
-    "manor": 30,
+    "manor": 38,
     "raneyCellars": 4,
     "theBackyard": 28,
     "muHudlBroadcasts": 62
@@ -81,7 +81,7 @@
     },
     "manor": {
       "earliest": "2026-11-25T13:00:00.000Z",
-      "latest": "2027-08-25T12:30:00.000Z"
+      "latest": "2027-11-03T23:00:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-11-12T21:00:00.000Z",
@@ -138,8 +138,8 @@
       "daysSinceMoved": 14
     },
     "manor": {
-      "newest": "2027-08-25",
-      "daysSinceMoved": 89
+      "newest": "2027-11-03",
+      "daysSinceMoved": 21
     },
     "raneyCellars": {
       "newest": "2026-11-20",
@@ -152,8 +152,8 @@
   },
   "sports": {
     "total": 930,
-    "scored": 205,
-    "wins": 99,
+    "scored": 206,
+    "wins": 100,
     "losses": 94,
     "ties": 12
   },
@@ -168,13 +168,13 @@
     "pendingPast": 15,
     "pendingBySource": {},
     "stalePast": 35,
-    "lastSyncAt": "2026-11-24T19:07:37.213Z"
+    "lastSyncAt": "2026-11-24T20:50:49.396Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-24T19:11:50.554Z"
+    "checkedAt": "2026-11-24T20:54:08.504Z"
   },
   "artsmuMerge": {
     "fetched": 43,
@@ -182,10 +182,8 @@
     "standalone": 1
   },
   "sourceHealth": {
-    "ok": false,
-    "failing": [
-      "manor.count"
-    ],
+    "ok": true,
+    "failing": [],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -238,10 +236,9 @@
       },
       {
         "key": "manor.count",
-        "ok": false,
-        "value": 30,
-        "min": 10,
-        "carriedForward": 30
+        "ok": true,
+        "value": 38,
+        "min": 10
       },
       {
         "key": "muHudl.pairRatio",
@@ -261,77 +258,77 @@
   },
   "recentlyAdded": [
     {
-      "key": "Millersville University Men's Soccer vs Lackawanna|2026-10-24T17:00:00.000Z",
-      "firstSeenAt": "2026-11-24T18:51:27.001Z",
-      "title": "Millersville University Men's Soccer vs Lackawanna",
+      "key": "Millersville University Women's Basketball at California (PA)|2026-12-04T20:00:00.000Z",
+      "firstSeenAt": "2026-11-24T20:54:16.914Z",
+      "title": "Millersville University Women's Basketball at California (PA)",
       "source": "MU",
-      "date": "2026-10-24T17:00:00.000Z"
+      "date": "2026-12-04T20:00:00.000Z"
     },
     {
-      "key": "TubaChristmas|2026-12-04T15:00:00",
-      "firstSeenAt": "2026-11-24T18:51:27.001Z",
-      "title": "TubaChristmas",
+      "key": "Millersville University Women's Basketball at Slippery Rock|2026-12-05T18:00:00.000Z",
+      "firstSeenAt": "2026-11-24T20:54:16.914Z",
+      "title": "Millersville University Women's Basketball at Slippery Rock",
       "source": "MU",
-      "date": "2026-12-04T15:00:00"
+      "date": "2026-12-05T18:00:00.000Z"
     },
     {
-      "key": "Boys Varsity Basketball @ Ephrata Area High School|2026-12-19T00:30:00.000Z",
-      "firstSeenAt": "2026-11-24T18:51:27.001Z",
-      "title": "Boys Varsity Basketball @ Ephrata Area High School",
-      "source": "PM",
-      "date": "2026-12-19T00:30:00.000Z"
+      "key": "JIMMIE&#x27;S CHICKEN SHACK w/ Emily’s Toybox and The Kozaks|2026-12-19T01:00:00.000Z",
+      "firstSeenAt": "2026-11-24T20:54:16.914Z",
+      "title": "JIMMIE&#x27;S CHICKEN SHACK w/ Emily’s Toybox and The Kozaks",
+      "source": "Other",
+      "date": "2026-12-19T01:00:00.000Z"
     },
     {
-      "key": "Spring 2027 Involvement Fair|2027-01-27T16:30:00.000Z",
-      "firstSeenAt": "2026-11-24T16:30:05.410Z",
-      "title": "Spring 2027 Involvement Fair",
-      "source": "MU",
-      "date": "2027-01-27T16:30:00.000Z"
+      "key": "Zoning Hearing Board|2027-09-01T23:00:00.000Z",
+      "firstSeenAt": "2026-11-24T20:54:16.914Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2027-09-01T23:00:00.000Z"
     },
     {
-      "key": "Karaoke Night|2026-12-17T03:00:00.000Z",
-      "firstSeenAt": "2026-11-24T16:14:15.156Z",
-      "title": "Karaoke Night",
-      "source": "Jack's Tavern",
-      "date": "2026-12-17T03:00:00.000Z"
+      "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
+      "firstSeenAt": "2026-11-24T20:54:16.914Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2027-09-06T23:00:00.000Z"
     },
     {
-      "key": "Finish Strong!|2026-12-01T11:30:00",
-      "firstSeenAt": "2026-11-24T16:01:09.596Z",
-      "title": "Finish Strong!",
-      "source": "MU",
-      "date": "2026-12-01T11:30:00"
+      "key": "Traffic Commission Meeting|2027-09-29T12:30:00.000Z",
+      "firstSeenAt": "2026-11-24T20:54:16.914Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2027-09-29T12:30:00.000Z"
     },
     {
-      "key": "Fireside Reading at the Library|2026-12-01T18:00:00",
-      "firstSeenAt": "2026-11-24T16:01:09.596Z",
-      "title": "Fireside Reading at the Library",
-      "source": "MU",
-      "date": "2026-12-01T18:00:00"
+      "key": "Supervisors Meeting|2027-10-04T23:00:00.000Z",
+      "firstSeenAt": "2026-11-24T20:54:16.914Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2027-10-04T23:00:00.000Z"
     },
     {
-      "key": "Final Stretch: Perler Beads Keychain Making|2026-12-08T18:00:00",
-      "firstSeenAt": "2026-11-24T16:01:09.596Z",
-      "title": "Final Stretch: Perler Beads Keychain Making",
-      "source": "MU",
-      "date": "2026-12-08T18:00:00"
+      "key": "Zoning Hearing Board|2027-10-06T23:00:00.000Z",
+      "firstSeenAt": "2026-11-24T20:54:16.914Z",
+      "title": "Zoning Hearing Board",
+      "source": "Manor",
+      "date": "2027-10-06T23:00:00.000Z"
     },
     {
-      "key": "Annual Brossman Foundation Science Lectureship|2027-11-04T18:00:00",
-      "firstSeenAt": "2026-11-24T16:01:09.596Z",
-      "title": "Annual Brossman Foundation Science Lectureship",
-      "source": "MU",
-      "date": "2027-11-04T18:00:00"
+      "key": "Traffic Commission Meeting|2027-10-27T12:30:00.000Z",
+      "firstSeenAt": "2026-11-24T20:54:16.914Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2027-10-27T12:30:00.000Z"
     },
     {
-      "key": "Annual Brossman Foundation Science Lectureship|2027-11-11T18:00:00",
-      "firstSeenAt": "2026-11-24T16:01:09.596Z",
-      "title": "Annual Brossman Foundation Science Lectureship",
-      "source": "MU",
-      "date": "2027-11-11T18:00:00"
+      "key": "Supervisors Meeting|2027-11-01T23:00:00.000Z",
+      "firstSeenAt": "2026-11-24T20:54:16.914Z",
+      "title": "Supervisors Meeting",
+      "source": "Manor",
+      "date": "2027-11-01T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 11,
   "skippedByRule": {
     "total": 478,
     "reasons": {
@@ -345,15 +342,14 @@
     }
   },
   "gatedToStudents": {
-    "rows": 177,
-    "titles": 93,
+    "rows": 174,
+    "titles": 90,
     "rules": {
       "title-meeting-tabling": 29,
       "club-keyword": 9,
-      "default-closed": 85,
+      "default-closed": 83,
       "practice": 24,
       "academic-internal": 17,
-      "greek-reshall-tag": 1,
       "club-org": 7,
       "category": 2,
       "club-sports": 3

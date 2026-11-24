@@ -655,7 +655,57 @@ async function render() {
             (rows || '<div class="status-metric muted"><span class="status-metric-label">Nothing skipped by rule this run</span></div>')
         );
     }
-    document.getElementById('grid').innerHTML = sourcesCard + sportsCard + contentCard + interestsCard + registrationsCard + reviewQueueCard + notificationsCard + autoScraperCard + recentAddedCard + skippedCard;
+    // Source misses (2026-11-24): how often a source's fetch FAILED in past scrapes.
+    // scrape.js keeps, per ET day in status-history.json, `runs` (scrapes recorded)
+    // and `misses` { key: { label, count, partial, lastTs, lastError, lastCarried } }.
+    // Last 7 recorded days. Informational only: no status colors, no effect on the
+    // health banner (sourceHealth stays the alarm). Days from before the feature
+    // carry no `runs` and are left out. Not seen here: runs that died before the
+    // tally, and deploy / smoke-test failures (those live in the Actions history).
+    let missesCard = '';
+    if (history && Array.isArray(history.days)) {
+        const mDays = history.days.filter(d => d && d.runs).slice(-7);
+        if (mDays.length) {
+            const mToday = mDays.find(d => d.date === todayDate);
+            const runsAll = mDays.reduce((n, d) => n + d.runs, 0);
+            const agg = {};
+            for (const d of mDays) {
+                for (const [k, m] of Object.entries(d.misses || {})) {
+                    const a = (agg[k] = agg[k] || { label: m.label || k, full: 0, partial: 0, lastTs: '', lastError: '', lastCarried: 0, perDay: [] });
+                    if (m.label) a.label = m.label;
+                    a.full += m.count || 0;
+                    a.partial += m.partial || 0;
+                    if ((m.lastTs || '') >= a.lastTs) { a.lastTs = m.lastTs || ''; a.lastError = m.lastError || ''; a.lastCarried = m.lastCarried || 0; }
+                    a.perDay.push({ date: d.date, runs: d.runs, full: m.count || 0, partial: m.partial || 0 });
+                }
+            }
+            const fmtWhen = ts => {
+                const dt = new Date(ts);
+                return isNaN(dt.getTime()) ? '' : dt.toLocaleString('en-US', { timeZone: 'America/New_York', weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+            };
+            const fmtDay = ymd => {
+                const dt = new Date(ymd + 'T12:00:00');
+                return isNaN(dt.getTime()) ? ymd : dt.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+            };
+            const tally = (full, partial) => partial ? (full ? full + ' + ' + partial + ' partial' : partial + ' partial') : String(full);
+            const keys = Object.keys(agg).sort((x, y) => (agg[y].full - agg[x].full) || (agg[y].partial - agg[x].partial) || agg[x].label.localeCompare(agg[y].label));
+            const rows = keys.map(k => {
+                const a = agg[k];
+                const t = mToday && mToday.misses && mToday.misses[k];
+                const todayBit = mToday ? 'today ' + (t ? tally(t.count || 0, t.partial || 0) : '0') + ' of ' + mToday.runs : '';
+                const lis = a.perDay.slice().reverse().map(p => '<li>' + escH(fmtDay(p.date)) + ': ' + tally(p.full, p.partial) + ' of ' + p.runs + ' run' + (p.runs === 1 ? '' : 's') + '</li>').join('');
+                const last = [a.lastTs ? 'Last miss ' + escH(fmtWhen(a.lastTs)) + ' ET' : '', a.lastError ? escH(a.lastError) : '', a.lastCarried ? 'carried forward ' + a.lastCarried + ' row' + (a.lastCarried === 1 ? '' : 's') : ''].filter(Boolean).join(' · ');
+                return '<details class="status-metric" style="display:block"><summary style="cursor:pointer;display:flex;justify-content:space-between"><span class="status-metric-label">' + escH(a.label) + '</span><span class="status-metric-value">' + tally(a.full, a.partial) + ' of ' + runsAll + (todayBit ? '<span class="status-metric-hint">' + todayBit + '</span>' : '') + '</span></summary>' +
+                    (last ? '<div class="status-metric-hint" style="margin:6px 0 2px 18px">' + last + '</div>' : '') +
+                    '<ul style="margin:4px 0 4px 18px;padding:0;font-size:0.85em;line-height:1.5">' + lis + '</ul></details>';
+            }).join('');
+            missesCard = card('Source Misses (last ' + mDays.length + ' day' + (mDays.length === 1 ? '' : 's') + ')',
+                metric('Scrapes recorded', runsAll, { hint: (mToday ? 'today ' + mToday.runs + ' · ' : '') + 'misses shown as runs missed of runs recorded' }) +
+                (rows || '<div class="status-metric muted"><span class="status-metric-label">No source missed a scrape</span></div>')
+            );
+        }
+    }
+    document.getElementById('grid').innerHTML = sourcesCard + missesCard + sportsCard + contentCard + interestsCard + registrationsCard + reviewQueueCard + notificationsCard + autoScraperCard + recentAddedCard + skippedCard;
 }
 
 render();

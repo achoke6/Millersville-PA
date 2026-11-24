@@ -340,9 +340,24 @@ jobs:
           BASE="https://millersville.app"
           FAILED=0
 
+          # fetch <outfile> <url> (2026-11-24): 3 tries, 20 s apart. Prints the HTTP
+          # code; 000 = no response. One slow DreamHost answer used to exit curl 28
+          # and, under set -e, kill this step outright (run #4102) -- now a timeout
+          # is retried, and a URL that never answers fails its check like any other.
+          fetch() {
+            local out="$1" url="$2" code=000 try
+            for try in 1 2 3; do
+              code=$(curl -s -o "$out" -w "%{http_code}" --max-time 20 "$url" || true)
+              if [ "$code" = "200" ]; then break; fi
+              echo "  … HTTP ${code:-000} from $url (try $try of 3)" >&2
+              if [ "$try" -lt 3 ]; then sleep 20; fi
+            done
+            echo "${code:-000}"
+          }
+
           # 1. index.html
           echo "▸ Checking index.html..."
-          STATUS=$(curl -s -o /tmp/index.html -w "%{http_code}" --max-time 15 "$BASE/")
+          STATUS=$(fetch /tmp/index.html "$BASE/")
           if [ "$STATUS" != "200" ]; then
             echo "  ❌ HTTP $STATUS"
             FAILED=1
@@ -366,7 +381,7 @@ jobs:
           # URL filter state (?kid=1, ?src=Borough, etc.) — if /events serves
           # index.html, the rest of the SPA routes will too.
           echo "▸ Checking /events SPA route..."
-          STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 15 "$BASE/events")
+          STATUS=$(fetch /dev/null "$BASE/events")
           if [ "$STATUS" != "200" ]; then
             echo "  ❌ /events returned HTTP $STATUS — SPA rewrite broken (check .htaccess and that index.html is lowercase on the server)"
             FAILED=1
@@ -376,12 +391,17 @@ jobs:
 
           # 2. events.json
           echo "▸ Checking events.json..."
-          STATUS=$(curl -s -o /tmp/events.json -w "%{http_code}" --max-time 15 "$BASE/events.json")
+          STATUS=$(fetch /tmp/events.json "$BASE/events.json")
           if [ "$STATUS" != "200" ]; then
             echo "  ❌ HTTP $STATUS"
             FAILED=1
           else
-            COUNT=$(jq -r 'length // 0' /tmp/events.json 2>/dev/null || echo 0)
+            COUNT=$(jq -r 'length // 0' /tmp/events.json 2>/tmp/jq.err || echo 0)
+            # 2026-11-24: say WHY when jq cannot read the file (the 11-23 half-emoji
+            # outage read only "0 entries" for an hour).
+            if [ -s /tmp/jq.err ]; then
+              echo "  ❌ events.json is not valid JSON: $(head -c 300 /tmp/jq.err)"
+            fi
             if [ "$COUNT" -lt 100 ]; then
               echo "  ❌ events.json has only $COUNT entries (expected >100)"
               FAILED=1
@@ -392,7 +412,7 @@ jobs:
 
           # 3. status.json freshness
           echo "▸ Checking status.json freshness..."
-          STATUS=$(curl -s -o /tmp/status.json -w "%{http_code}" --max-time 15 "$BASE/status.json")
+          STATUS=$(fetch /tmp/status.json "$BASE/status.json")
           if [ "$STATUS" != "200" ]; then
             echo "  ❌ HTTP $STATUS"
             FAILED=1

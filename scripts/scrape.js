@@ -1439,6 +1439,57 @@ function parseEckertSeason(html, refDate = new Date()) {
 }
 // ---- /eckert parser -----------------------------------------------------------
 
+// ===== SOURCE-MISS REGISTER (2026-11-24) =====
+// "Did a past scrape miss a source, and how often?" Each source's existing error
+// handler calls recordMiss(); flushSourceMisses() runs once at the very end of the
+// run (after NEWS, so the feeds count too) and folds this run into TODAY's entry
+// in status-history.json:  runs (scrapes recorded that ET day) and
+// misses { key: { label, count, partial, lastTs, lastError, lastCarried? } }.
+// count = runs where the source failed outright; partial = runs where only part
+// failed (one Manor page, one weather sub-feed) -- a run counts once per source,
+// outright beating partial. status.html renders the last 7 days as the "Source
+// Misses" card. Informational ONLY: sourceHealth stays the alarm. Not seen: a run
+// that dies before this point, and deploy / smoke-test failures (Actions history).
+const sourceMisses = [];
+function recordMiss(key, label, err, opts = {}) {
+    try {
+        const msg = String((err && err.message) || err || 'unknown error').replace(/\s+/g, ' ').trim().slice(0, 160);
+        sourceMisses.push({ key, label, error: msg, partial: !!opts.partial });
+    } catch (_) { /* bookkeeping never breaks the scrape */ }
+}
+function flushSourceMisses(carried = {}) {
+    try {
+        const historyPath = path.join(__dirname, '../status-history.json');
+        const history = JSON.parse(fs.readFileSync(historyPath, 'utf-8'));
+        const todayET = deriveDayET(Date.now());
+        const day = history && Array.isArray(history.days) ? history.days.find(d => d.date === todayET) : null;
+        if (!day) { console.log('🩹 Source misses: no status-history entry for today -- tally skipped this run'); return; }
+        // One miss per source per run; an outright failure beats a partial one.
+        const perRun = {};
+        for (const m of sourceMisses) {
+            const cur = perRun[m.key];
+            if (!cur || (cur.partial && !m.partial)) perRun[m.key] = m;
+        }
+        const nowIso = new Date().toISOString();
+        day.runs = (day.runs || 0) + 1;
+        const misses = day.misses || {};
+        for (const m of Object.values(perRun)) {
+            const t = misses[m.key] || { label: m.label, count: 0, partial: 0 };
+            t.label = m.label;
+            if (m.partial) t.partial = (t.partial || 0) + 1; else t.count = (t.count || 0) + 1;
+            t.lastTs = nowIso;
+            t.lastError = m.error;
+            if (carried[m.key]) t.lastCarried = carried[m.key]; else delete t.lastCarried;
+            misses[m.key] = t;
+        }
+        if (Object.keys(misses).length) day.misses = misses;
+        fs.writeFileSync(historyPath, JSON.stringify(history, null, 2));
+        const list = Object.values(perRun).map(m => `${m.label}${m.partial ? ' (partial)' : ''}: ${m.error}${carried[m.key] ? ` [carried ${carried[m.key]}]` : ''}`);
+        const todayTotal = Object.values(misses).reduce((n, t) => n + (t.count || 0) + (t.partial || 0), 0);
+        console.log(`🩹 Source misses: ${list.length} this run${list.length ? ' — ' + list.join(' | ') : ''} · today ${todayTotal} across ${day.runs} run(s)`);
+    } catch (e) { console.log(`  ⚠️ Source-miss tally error: ${e.message}`); }
+}
+
 async function runScraper() {
     const PAST_DAYS = 90;
     const FUTURE_DAYS = 365;
@@ -1476,7 +1527,7 @@ async function runScraper() {
                 muUpdate = gx('update');
                 console.log(`  ✅ MU Station: ${muTemp}°F, Wind ${muWindSpeed ? `${muWindSpeed} mph ${muWindDir || ''}`.trim() : 'Calm'}, Humidity ${muHumidity}%`);
             }
-        } catch (e) { console.log(`  ⚠️ MU Station unavailable: ${e.message}`); }
+        } catch (e) { console.log(`  ⚠️ MU Station unavailable: ${e.message}`); recordMiss('weather', 'Weather', 'MU station: ' + e.message, { partial: true }); }
 
         // Source 2: Open-Meteo — condition text, icon, feels-like (free, no API key)
         let condition = 'Unknown', icon = '🌡️', feelsLike = null;
@@ -1512,7 +1563,7 @@ async function runScraper() {
                 }
                 console.log(`  ✅ Open-Meteo: ${condition} ${icon}, Feels like ${feelsLike}°F`);
             }
-        } catch (e) { console.log(`  ⚠️ Open-Meteo unavailable: ${e.message}`); }
+        } catch (e) { console.log(`  ⚠️ Open-Meteo unavailable: ${e.message}`); recordMiss('weather', 'Weather', 'Open-Meteo: ' + e.message, { partial: true }); }
 
         fs.writeFileSync(path.join(__dirname, '../weather.json'), JSON.stringify({
             temp: muTemp ? parseInt(muTemp) : '--',
@@ -1526,7 +1577,7 @@ async function runScraper() {
             source: muTemp ? 'MU Weather Station + Open-Meteo' : 'Open-Meteo'
         }, null, 2));
         console.log(`✅ Weather saved: ${muTemp || '--'}°F, ${condition}`);
-    } catch (e) { console.error("❌ Weather error:", e.message); }
+    } catch (e) { console.error("❌ Weather error:", e.message); recordMiss('weather', 'Weather', e); }
     // ===== MU WEATHER CENTER (forecast, 7-day, observations, discussion, images, videos) =====
     // Scrapes the Millersville University Weather Information Center — plain
     // server-rendered HTML with stable table IDs — and writes weather-mu.json
@@ -1587,7 +1638,7 @@ async function runScraper() {
                 if (ps.length) muWx.forecast.synopsis = wxClean(ps[ps.length - 1][1]);
                 console.log(`  ✅ MU forecast: ${muWx.forecast.periods.length} periods`);
             }
-        } catch (e) { console.log(`  ⚠️ MU forecast unavailable: ${e.message}`); }
+        } catch (e) { console.log(`  ⚠️ MU forecast unavailable: ${e.message}`); recordMiss('muWeatherCenter', 'MU Weather Center', 'forecast: ' + e.message, { partial: true }); }
 
         // --- 7-day outlook ---
         try {
@@ -1600,7 +1651,7 @@ async function runScraper() {
                 muWx.sevenDay.issued = wxIssued(html);
                 console.log(`  ✅ MU 7-day: ${muWx.sevenDay.days.length} rows`);
             }
-        } catch (e) { console.log(`  ⚠️ MU 7-day unavailable: ${e.message}`); }
+        } catch (e) { console.log(`  ⚠️ MU 7-day unavailable: ${e.message}`); recordMiss('muWeatherCenter', 'MU Weather Center', '7-day: ' + e.message, { partial: true }); }
 
         // --- Observations (past 6 hours) ---
         try {
@@ -1612,7 +1663,7 @@ async function runScraper() {
                     .map(c => Object.fromEntries(cols.map((k, i) => [k, c[i]])));
                 console.log(`  ✅ MU observations: ${muWx.observations.length} rows`);
             }
-        } catch (e) { console.log(`  ⚠️ MU observations unavailable: ${e.message}`); }
+        } catch (e) { console.log(`  ⚠️ MU observations unavailable: ${e.message}`); recordMiss('muWeatherCenter', 'MU Weather Center', 'observations: ' + e.message, { partial: true }); }
 
         // --- Daily climate summary (CWS month-to-date ledger) ---
         // Different HOST than the rest of this block: the Campus Weather
@@ -1631,7 +1682,7 @@ async function runScraper() {
                     console.log('  ⚠️ MU daily summary: page fetched but no day rows parsed — section omitted');
                 }
             }
-        } catch (e) { console.log(`  ⚠️ MU daily summary unavailable: ${e.message}`); }
+        } catch (e) { console.log(`  ⚠️ MU daily summary unavailable: ${e.message}`); recordMiss('muWeatherCenter', 'MU Weather Center', 'daily summary: ' + e.message, { partial: true }); }
 
         // --- Weather discussion (EXCERPT + link, tweets/scripts stripped) ---
         try {
@@ -1662,7 +1713,7 @@ async function runScraper() {
                 muWx.discussion.excerpt = ex;
                 console.log(`  ✅ MU discussion: "${muWx.discussion.headline.slice(0, 40)}..."`);
             }
-        } catch (e) { console.log(`  ⚠️ MU discussion unavailable: ${e.message}`); }
+        } catch (e) { console.log(`  ⚠️ MU discussion unavailable: ${e.message}`); recordMiss('muWeatherCenter', 'MU Weather Center', 'discussion: ' + e.message, { partial: true }); }
 
         // --- Latest videos via the channel's RSS feed (resolve channelId from the handle) ---
         try {
@@ -1691,11 +1742,11 @@ async function runScraper() {
                     }
                 }
             }
-        } catch (e) { console.log(`  ⚠️ MU videos unavailable: ${e.message}`); }
+        } catch (e) { console.log(`  ⚠️ MU videos unavailable: ${e.message}`); recordMiss('muWeatherCenter', 'MU Weather Center', 'videos: ' + e.message, { partial: true }); }
 
         fs.writeFileSync(path.join(__dirname, '../weather-mu.json'), JSON.stringify(muWx, null, 2));
         console.log(`✅ MU Weather Center saved (forecast ${muWx.forecast.periods.length}, 7-day ${muWx.sevenDay.days.length}, obs ${muWx.observations.length}, daily ${muWx.dailySummary ? muWx.dailySummary.days.length : 0}, videos ${muWx.videos.length})`);
-    } catch (e) { console.error('❌ MU Weather Center error:', e.message); }
+    } catch (e) { console.error('❌ MU Weather Center error:', e.message); recordMiss('muWeatherCenter', 'MU Weather Center', e); }
 
 
     let events = [];
@@ -2163,7 +2214,7 @@ async function runScraper() {
             if (recordMismatch.length) { console.log(`  ⚠️ MU record mismatch (rows vs Sidearm published — window-limited seasons are expected to differ early/late):`); recordMismatch.forEach(m => console.log(`     • ${m}`)); }
             else if (muScheduleCache.size) console.log(`  ✓ MU records match Sidearm for every decoded sport`);
         } catch (e) { console.log(`  ⚠️ Sidearm payload reconcile error: ${e.message}`); }
-    } catch (e) { console.error("❌ MU Athletics error:", e.message); }
+    } catch (e) { console.error("❌ MU Athletics error:", e.message); recordMiss('muAthletics', 'MU Athletics', e); }
 
     // ===== PENN MANOR — shared TEC REST fetcher (2026-09-17) =====
     // Both Penn Manor blocks (2: general calendar, 2a: athletics category) read the
@@ -2462,7 +2513,7 @@ async function runScraper() {
         }
         console.log(`✅ Penn Manor (general): ${pmGenCount} non-athletic events (${pmGenPrefixed} school-prefixed, ${pmGenMerged} multi-school merges; athletics come from the athletics-category feed below)`);
         pmCarry.ok.general = true;
-    } catch (e) { console.error("❌ Penn Manor error:", e.message); pmCarryApply('general', 'Penn Manor (general)'); }
+    } catch (e) { console.error("❌ Penn Manor error:", e.message); recordMiss('pennManorGeneral', 'Penn Manor calendar', e); pmCarryApply('general', 'Penn Manor (general)'); }
 
     // ===== 2a. PENN MANOR ATHLETICS (dedicated athletics-category iCal) =====
     // Penn Manor athletic SCHEDULES now come straight from the district's
@@ -2622,7 +2673,7 @@ async function runScraper() {
             pmAthSuspectDrops.slice(0, 20).forEach(t => console.log(`       - ${t}`));
             if (pmAthSuspectDrops.length > 20) console.log(`       ...and ${pmAthSuspectDrops.length - 20} more`);
         }
-    } catch (e) { console.error("❌ Penn Manor Athletics error:", e.message); pmCarryApply('athletics', 'Penn Manor Athletics'); }
+    } catch (e) { console.error("❌ Penn Manor Athletics error:", e.message); recordMiss('pennManorAthletics', 'Penn Manor Athletics', e); pmCarryApply('athletics', 'Penn Manor Athletics'); }
 
     // ===== 2a-post. PENN MANOR POSTSEASON — pm-postseason.json (hand-curated, 2026-11-04) =====
     // The district's TEC feed carries NO playoff marker (tonight's D3 semifinal looked like any
@@ -2889,7 +2940,7 @@ async function runScraper() {
         global._hudlScores = hudlScores;
         global._hudlSportToId = sportToHudlId;
 
-    } catch (e) { console.log(`  ⚠️ Hudl broadcast check error: ${e.message}`); }
+    } catch (e) { console.log(`  ⚠️ Hudl broadcast check error: ${e.message}`); recordMiss('pmHudl', 'Hudl broadcasts (Penn Manor)', e); }
 
     // ===== 2c. HUDL BROADCAST CHECK (Millersville University Athletics) =====
     //
@@ -3415,7 +3466,7 @@ async function runScraper() {
             unpairedTitles.forEach(t => console.log(`     • ${t}`));
         }
         console.log(`  📺 MU matched ${muHudlMatchCount} broadcasts to events (${muHudlOpponentMatches} via opponent+time, title had no sport word)`);
-    } catch (e) { console.log(`  ⚠️ MU Hudl broadcast check error: ${e.message}`); }
+    } catch (e) { console.log(`  ⚠️ MU Hudl broadcast check error: ${e.message}`); recordMiss('muHudlBroadcasts', 'Hudl broadcasts (MU)', e); }
 
     // ===== 3. MU CALENDAR (NON-SPORT EVENTS ONLY) =====
     try {
@@ -3811,7 +3862,7 @@ async function runScraper() {
         }
         console.log(`  🎫 MU Calendar rows with an etix /p/ link in any field: ${muCalEtixRows}`);
         checkAcademicMilestones(data.data);
-    } catch (e) { console.error("❌ MU Calendar error:", e.message); }
+    } catch (e) { console.error("❌ MU Calendar error:", e.message); recordMiss('muCalendar', 'MU Calendar', e); }
 
     // ===== 3b. ARTSMU.COM (WARE CENTER / WINTER CENTER — supplements MU Calendar) =====
     // Rows the feed DELIVERED this run (2026-11-05). The status dashboard used
@@ -3848,7 +3899,7 @@ async function runScraper() {
                 const pageLabel = listUrl.split('/').slice(-2,-1)[0];
                 console.log(`  🔗 ${pageLabel}: ${pageTotal} URLs found (${pageNew} unique new)`);
             } catch (e) {
-                console.log(`  ⚠️ ${listUrl} fetch failed: ${e.message}`);
+                console.log(`  ⚠️ ${listUrl} fetch failed: ${e.message}`); recordMiss('artsmu', 'MU Arts (artsmu.com)', 'listing page: ' + e.message, { partial: true });
             }
         }
         console.log(`  🔗 Total ${eventUrls.size} unique artsmu event URLs to check`);
@@ -3984,7 +4035,7 @@ async function runScraper() {
             }
         }
         console.log(`✅ artsmu.com: ${artsCount} new events (${artsSkipped} skipped, ${artsFailed} failed)`);
-    } catch (e) { console.error("❌ artsmu.com error:", e.message); }
+    } catch (e) { console.error("❌ artsmu.com error:", e.message); recordMiss('artsmu', 'MU Arts (artsmu.com)', e); }
     // ===== 3c. ECKERT ART GALLERY (current-season page — receptions + gallery talks) =====
     // The gallery in the Winter Center runs 3–4 exhibitions a year, each with a
     // reception (and usually a gallery talk) announced on its season page, often
@@ -4037,7 +4088,7 @@ async function runScraper() {
         console.log(`✅ Eckert Art Gallery: ${eckCount} reception(s) from ${parsed.exhibitions.length} exhibition block(s)${eckSkipped ? ` (${eckSkipped} outside window)` : ''}`);
         for (const rc of parsed.receptions) console.log(`  🖼 ${rc.date} ${rc.start}-${rc.end} ${rc.kind}: "${rc.show}"${rc.talkTime ? ` · talk ${rc.talkTime}` : ''}`);
     } catch (e) {
-        console.error("❌ Eckert Art Gallery error:", e.message);
+        console.error("❌ Eckert Art Gallery error:", e.message); recordMiss('eckert', 'Eckert Art Gallery', e);
         pmCarryApply('eckert', 'Eckert Art Gallery', 7 * 24 * 60 * 60 * 1000);
     }
     // ===== 3d. HAND-MAINTAINED CAMPS (camps.json) =====
@@ -4331,7 +4382,7 @@ async function runScraper() {
         const publicCount = giEvents.filter(e => e.audience === 'public').length;
         const muOnlyCount = giEvents.filter(e => e.audience === 'mu-only').length;
         console.log(`✅ Clubs/Orgs: ${clubCount} events (${publicCount} public, ${muOnlyCount} MU-only)`);
-    } catch (e) { console.error("❌ Clubs/Orgs error:", e.message); }
+    } catch (e) { console.error("❌ Clubs/Orgs error:", e.message); recordMiss('muGetInvolved', 'MU GetInvolved', e); }
 
     // ===== 5. PHANTOM POWER (JamBase primary + Eventbrite enrichment) =====
     //
@@ -4398,7 +4449,7 @@ async function runScraper() {
                 console.log(`   ⚠️  Eventbrite organizer page returned HTTP ${orgRes.status}`);
             }
         } catch (e) {
-            console.log(`   ⚠️  Eventbrite organizer fetch failed: ${e.message}`);
+            console.log(`   ⚠️  Eventbrite organizer fetch failed: ${e.message}`); recordMiss('phantomPower', 'Phantom Power', 'Eventbrite organizer page: ' + e.message, { partial: true });
         }
 
         // ---- SOURCE 2: phantompower.net homepage (SECONDARY) ----
@@ -4528,7 +4579,7 @@ async function runScraper() {
                 } catch (_) { /* never break the scrape on monitoring failure */ }
             }
         }
-    } catch (e) { console.error("❌ Phantom Power error:", e.message); }
+    } catch (e) { console.error("❌ Phantom Power error:", e.message); recordMiss('phantomPower', 'Phantom Power', e); }
 
     // ===== 6. MILLERSVILLE BOROUGH (Google Calendar iCal — with recurring event expansion) =====
     try {
@@ -4884,7 +4935,7 @@ async function runScraper() {
             boroughNoiseSkipped++;
         }
         if (boroughNoiseSkipped) console.log(`  ⏭️ dropped ${boroughNoiseSkipped} unenriched "Reserve Public Meeting Room" reservation(s) (room bookings, not public events)`);
-    } catch (e) { console.error("❌ Borough Calendar error:", e.message); }
+    } catch (e) { console.error("❌ Borough Calendar error:", e.message); recordMiss('borough', 'Borough', e); }
 
 
     // ===== 6d. MANOR TOWNSHIP (The Events Calendar iCal — municipal meetings) =====
@@ -4927,7 +4978,7 @@ async function runScraper() {
                 }
                 if (pageEvents.length < 30 || newCount === 0) break;  // partial/last page or all dupes
             } catch (err) {
-                console.log(`  → Manor page ${page} failed: ${err.message}`);
+                console.log(`  → Manor page ${page} failed: ${err.message}`); recordMiss('manor', 'Manor Township', 'page ' + page + ': ' + err.message, { partial: true });
                 if (!manorFirstErr) manorFirstErr = `page ${page}: ${err.message}`;
                 break;
             }
@@ -4957,7 +5008,7 @@ async function runScraper() {
         }
         console.log(`✅ Manor Township: ${manorCount} events`);
         pmCarry.ok.manor = true;
-    } catch (e) { console.error("❌ Manor Township error:", e.message); pmCarryApply('manor', 'Manor Township'); }
+    } catch (e) { console.error("❌ Manor Township error:", e.message); recordMiss('manor', 'Manor Township', e); pmCarryApply('manor', 'Manor Township'); }
 
     // ----- 6d-1. MANOR TOWNSHIP curated overrides (2026-10-20) -----
     // Runs AFTER the try/catch so it sees harvested rows AND carry-forward rows.
@@ -5068,7 +5119,7 @@ async function runScraper() {
                 }
                 if (pageEvents.length < 30 || newCount === 0) break;
             } catch (err) {
-                console.log(`  → Raney page ${page} failed: ${err.message}`);
+                console.log(`  → Raney page ${page} failed: ${err.message}`); recordMiss('raneyCellars', 'Raney Cellars', 'page ' + page + ': ' + err.message, { partial: true });
                 break;
             }
         }
@@ -5098,7 +5149,7 @@ async function runScraper() {
             raneyCount++;
         }
         console.log(`✅ Raney Cellars: ${raneyCount} events`);
-    } catch (e) { console.error("❌ Raney Cellars error:", e.message); }
+    } catch (e) { console.error("❌ Raney Cellars error:", e.message); recordMiss('raneyCellars', 'Raney Cellars', e); }
 
     // ===== 6f. THE BACKYARD (Google Calendar iCal — with recurring event expansion) =====
     // On-campus pop-up spot (directory row: audience Marauders) hosting free
@@ -5224,7 +5275,7 @@ async function runScraper() {
             }
         }
         console.log(`✅ The Backyard: ${backyardCount} events${backyardRecurring ? ` (${backyardRecurring} from recurring)` : ''}`);
-    } catch (e) { console.error("❌ The Backyard error:", e.message); }
+    } catch (e) { console.error("❌ The Backyard error:", e.message); recordMiss('theBackyard', 'The Backyard', e); }
 
 
 
@@ -5645,7 +5696,7 @@ async function runScraper() {
             added++;
         }
         console.log(`  ✅ Intramural signups (DSE): ${added} sport(s) open, ${closedSports} closed, ${divisionsSeen} division(s) seen`);
-    } catch (e) { console.log(`  ⚠️ Intramural signups (DSE Rec) error: ${e.message}`); }
+    } catch (e) { console.log(`  ⚠️ Intramural signups (DSE Rec) error: ${e.message}`); recordMiss('dseRec', 'Intramural signups (DSE Rec)', e); }
 
 
     // ===== 7. VFW POST 7294 — hand-maintained via vfw.json + Cowork =====
@@ -6012,7 +6063,7 @@ async function runScraper() {
         };
         fs.writeFileSync(path.join(__dirname, '../specials.json'), JSON.stringify(specials, null, 2));
         console.log(`✅ Specials saved (${Object.keys(specials).length} places · VFW: ${vfwWeeklySpecials.length}, Grocery: ${groceryDeals.length})`);
-    } catch (e) { console.error("❌ VFW/Specials error:", e.message); }
+    } catch (e) { console.error("❌ VFW/Specials error:", e.message); recordMiss('specials', 'Specials (VFW / grocery / places)', e); }
 
     // Form-submissions review backlog for the status dashboard (2026-09-03) — the
     // submissions sheet's twin of candidates-status. Set inside §8; null if it didn't run.
@@ -6391,9 +6442,9 @@ async function runScraper() {
                 checkedAt: new Date().toISOString()
             };
         } else {
-            console.log(`  ⚠️ Community sheet fetch failed: ${submitRes.status}`);
+            console.log(`  ⚠️ Community sheet fetch failed: ${submitRes.status}`); recordMiss('community', 'Community submissions sheet', 'HTTP ' + submitRes.status);
         }
-    } catch (e) { console.log(`  ⚠️ Community submissions error: ${e.message}`); }
+    } catch (e) { console.log(`  ⚠️ Community submissions error: ${e.message}`); recordMiss('community', 'Community submissions sheet', e); }
 
     // ===== FAMILY-FRIENDLY TAGGING =====
     const familyKeywords = /\bfamily\b|families|\bkids?\b|\bchild(ren)?\b|\byouth\b|\ball ages\b|\bopen house\b|\bparade\b|\bfestival\b|\bfun run\b|\begg hunt\b|\btrick.or.treat\b|\btrunk.or.treat\b|\bstory ?time\b|\bfun fest\b|\bdoodle\b|\bpuppet\b|\bmagic show\b|\barts smarts\b|\bsalsa\b.*\b5\+/i;
@@ -6661,7 +6712,7 @@ async function runScraper() {
             else if (d3Filled === 0) console.log(`  ⚠️ D3: 0 games parsed across all sports (challenge page or feed change?) — records check skipped; MaxPreps/Hudl fill scores this run`);   // 2026-10-07: the 17:45Z "One moment, please" wall printed a vacuous ✓
             else console.log(`  ✓ PM records match District 3 for every active sport`);
         }
-    } catch (e) { console.log(`  ⚠️ District 3 results error: ${e.message}`); }
+    } catch (e) { console.log(`  ⚠️ District 3 results error: ${e.message}`); recordMiss('district3', 'District 3 results', e); }
 
     // ===== PENN MANOR SCORES FROM MAXPREPS =====
     try {
@@ -6804,7 +6855,7 @@ async function runScraper() {
         } else {
             console.log(`  ⚠️ No MaxPreps results found`);
         }
-    } catch (e) { console.error("❌ MaxPreps scores error:", e.message); }
+    } catch (e) { console.error("❌ MaxPreps scores error:", e.message); recordMiss('maxPreps', 'MaxPreps scores', e); }
 
     // ===== HUDL SCORES (fill gaps not covered by MaxPreps) =====
     try {
@@ -7820,7 +7871,7 @@ async function runScraper() {
             if (!ev.freeTicket && (ev.price || '').trim() === 'Free' && !(c && c.ok && c.price === 'Free')) { ev.price = 'Ticket Required'; etixVetoed++; }
         }
         console.log(`🎫 Etix enrichment: ${etixPriced} priced, ${etixFlagged} MU-free flagged, ${etixVetoed} false-Free vetoed (cache ${etixFromCache}, fetched ${etixFetched}, failed ${etixFailed})`);
-    } catch (e) { console.error('❌ Etix enrichment error:', e.message); }
+    } catch (e) { console.error('❌ Etix enrichment error:', e.message); recordMiss('etix', 'Etix pricing', e); }
     // Preserve descriptions for the card-detail modal on home/search. Truncate aggressively
     // to keep events.json size manageable — 600 chars is enough for a useful preview.
     deduped.forEach(e => {
@@ -8471,6 +8522,14 @@ async function runScraper() {
                 newestDates
             };
             const idx = history.days.findIndex(d => d.date === todayET);
+            // Source-miss tally (2026-11-24): this hourly snapshot REPLACES today's
+            // entry, so carry the day's running totals across; flushSourceMisses()
+            // adds this run to them at the end of the scrape.
+            if (idx >= 0) {
+                const prevDay = history.days[idx];
+                if (prevDay.runs) snapshot.runs = prevDay.runs;
+                if (prevDay.misses) snapshot.misses = prevDay.misses;
+            }
             if (idx >= 0) history.days[idx] = snapshot;
             else history.days.push(snapshot);
             // Sort chronologically and keep only the last 90 days. Cap exists
@@ -8800,7 +8859,7 @@ async function runScraper() {
         const eventDerivedCount = orgs.length - apiCount - manualCount;
         console.log(`✅ Clubs directory: ${orgs.length} organizations saved (${apiCount} from API + ${eventDerivedCount} from events + ${manualCount} manual, ${dedupedCount} merged)`);
     } catch (e) {
-        console.error("❌ Clubs directory error:", e.message);
+        console.error("❌ Clubs directory error:", e.message); recordMiss('clubsDirectory', 'Clubs directory', e);
     }
 
     // ===== NEWS =====
@@ -8876,7 +8935,7 @@ async function runScraper() {
             const xml = await (await fetch('https://blogs.millersville.edu/news/feed/', { headers: baseHeaders })).text();
             news.push(...parseRSSItems(xml, "MU", "Millersville News", 15, { skipCategories: true }));
             console.log(`  ✅ MU News: ${Math.min(15, (xml.match(/<item>/g)||[]).length)} articles`);
-        } catch (e) { console.error("❌ MU News RSS error:", e.message); }
+        } catch (e) { console.error("❌ MU News RSS error:", e.message); recordMiss('newsMU', 'News: MU', e); }
 
         // The Snapper — scrape each section page for proper categorization
         try {
@@ -8957,35 +9016,35 @@ async function runScraper() {
             }
             console.log(`  ✅ The Snapper: ${snapperTotal} articles across ${snapperSections.length} sections`);
             console.log(`     Snapper teasers: ${snapperFetched} fetched, ${snapperCached} reused, ${snapperMissed} missing`);
-        } catch (e) { console.error("❌ Snapper scrape error:", e.message); }
+        } catch (e) { console.error("❌ Snapper scrape error:", e.message); recordMiss('newsSnapper', 'News: The Snapper', e); }
 
         // Millersville Borough News & Alerts
         try {
             const xml = await (await fetch('https://millersvilleborough.org/category/news-alerts/feed/', { headers: baseHeaders })).text();
             news.push(...parseRSSItems(xml, "Borough", "Millersville Borough", 10));
             console.log(`  ✅ Borough News: ${Math.min(10, (xml.match(/<item>/g)||[]).length)} articles`);
-        } catch (e) { console.error("❌ Borough News RSS error:", e.message); }
+        } catch (e) { console.error("❌ Borough News RSS error:", e.message); recordMiss('newsBorough', 'News: Borough', e); }
 
         // Penn Manor School District News
         try {
             const xml = await (await fetch('https://www.pennmanor.net/blog/feed/', { headers: baseHeaders })).text();
             news.push(...parseRSSItems(xml, "PM", "Penn Manor News", 10));
             console.log(`  ✅ PM News: ${Math.min(10, (xml.match(/<item>/g)||[]).length)} articles`);
-        } catch (e) { console.error("❌ PM News RSS error:", e.message); }
+        } catch (e) { console.error("❌ PM News RSS error:", e.message); recordMiss('newsPM', 'News: Penn Manor', e); }
 
         // MU Athletics News (Sidearm RSS)
         try {
             const xml = await (await fetch('https://millersvilleathletics.com/rss', { headers: baseHeaders })).text();
             news.push(...parseRSSItems(xml, "MU", "MU Athletics", 15));
             console.log(`  ✅ MU Athletics: ${Math.min(15, (xml.match(/<item>/g)||[]).length)} articles`);
-        } catch (e) { console.error("❌ MU Athletics News RSS error:", e.message); }
+        } catch (e) { console.error("❌ MU Athletics News RSS error:", e.message); recordMiss('newsMUAthletics', 'News: MU Athletics', e); }
 
         // MU The Review (magazine)
         try {
             const xml = await (await fetch('https://blogs.millersville.edu/news/category/the-review/feed/', { headers: baseHeaders })).text();
             news.push(...parseRSSItems(xml, "MU", "MU Review", 10, { skipCategories: true }));
             console.log(`  ✅ MU Review: ${Math.min(10, (xml.match(/<item>/g)||[]).length)} articles`);
-        } catch (e) { console.error("❌ The Review RSS error:", e.message); }
+        } catch (e) { console.error("❌ The Review RSS error:", e.message); recordMiss('newsReview', 'News: MU Review', e); }
 
         // Deduplicate news by link
         const seenLinks = new Set();
@@ -9000,7 +9059,7 @@ async function runScraper() {
 
         fs.writeFileSync(path.join(__dirname, '../news.json'), JSON.stringify(news, null, 2));
         console.log(`✅ News: ${news.length} total items (${news.filter(n=>n.image).length} with images)`);
-    } catch (e) { console.error("❌ News/specials error:", e.message); }
+    } catch (e) { console.error("❌ News/specials error:", e.message); recordMiss('news', 'News (whole block)', e); }
 
     // (Community Board generator REMOVED 2026-07-28 — the Board page was
     // replaced by the Food page (full excision, replacement precedent). The
@@ -9013,6 +9072,10 @@ async function runScraper() {
     // fetch + services.json write-back is gone. services.json is now written
     // ONLY by sync-directory.js — the sync→scrape order in main.yml is plain
     // convention, no longer load-bearing. Review Form/sheet can be closed.)
+
+    // Source-miss tally (2026-11-24): fold this run's recordMiss() calls into today's
+    // status-history.json entry. Last thing before the ping so the news feeds count.
+    flushSourceMisses({ pennManorGeneral: pmCarry.general, pennManorAthletics: pmCarry.athletics, manor: pmCarry.manor, eckert: pmCarry.eckert });
 
     // Dead-man switch ping. If the GitHub Action secret HEALTHCHECK_URL is set, ping it
     // when the scrape completes. If the scrape never finishes (hang, crash, GitHub Actions

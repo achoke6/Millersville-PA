@@ -3231,7 +3231,7 @@
     },
     {
       "date": "2026-11-24",
-      "ts": "2026-11-24T16:08:15.033Z",
+      "ts": "2026-11-24T16:30:05.413Z",
       "totalEvents": 1973,
       "sources": {
         "muAthletics": 383,
@@ -3239,12 +3239,12 @@
         "artsmu": 43,
         "eckert": 3,
         "campsAlumni": 9,
-        "muGetInvolved": 499,
+        "muGetInvolved": 500,
         "pennManor": 647,
         "borough": 47,
         "vfw": 6,
         "phantomPower": 13,
-        "community": 14,
+        "community": 13,
         "manor": 38,
         "raneyCellars": 4,
         "theBackyard": 28,
@@ -3265,8 +3265,18 @@
         "manor": "2027-11-03",
         "raneyCellars": "2026-11-20",
         "theBackyard": "2027-04-28"
+      },
+      "runs": 2,
+      "misses": {
+        "weather": {
+          "label": "Weather",
+          "count": 0,
+          "partial": 1,
+          "lastTs": "2026-11-24T16:30:13.297Z",
+          "lastError": "Open-Meteo: fetch failed"
+        }
       }
     }
   ],
-  "lastUpdated": "2026-11-24T16:08:15.033Z"
+  "lastUpdated": "2026-11-24T16:30:05.413Z"
 }

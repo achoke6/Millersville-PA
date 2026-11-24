@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-11-24T16:08:15.033Z",
+  "generatedAt": "2026-11-24T16:30:05.413Z",
   "totalEvents": 1973,
   "withDescription": 794,
   "withImage": 180,
-  "familyFriendly": 52,
+  "familyFriendly": 51,
   "interests": {
     "civic": 95,
     "greek": 24,
@@ -23,12 +23,12 @@
     "artsmu": 43,
     "eckert": 3,
     "campsAlumni": 9,
-    "muGetInvolved": 499,
+    "muGetInvolved": 500,
     "pennManor": 647,
     "borough": 47,
     "vfw": 6,
     "phantomPower": 13,
-    "community": 14,
+    "community": 13,
     "manor": 38,
     "raneyCellars": 4,
     "theBackyard": 28,
@@ -76,7 +76,7 @@
       "latest": "2026-12-19T01:00:00.000Z"
     },
     "community": {
-      "earliest": "2026-09-13T03:59:00.000Z",
+      "earliest": "2026-10-02T13:15:00.000Z",
       "latest": "2027-05-16T03:59:00.000Z"
     },
     "manor": {
@@ -158,26 +158,25 @@
     "ties": 12
   },
   "registrations": {
-    "open": 3,
+    "open": 2,
     "next2Weeks": 1,
-    "nextClose": "2026-09-13",
+    "nextClose": "2026-12-01",
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 2,
-    "pendingPast": 18,
+    "pendingFuture": 1,
+    "pendingPast": 14,
     "pendingBySource": {
-      "Youth Sports": 1,
-      "Campus Life": 1
+      "Youth Sports": 1
     },
-    "stalePast": 39,
-    "lastSyncAt": "2026-11-24T16:02:45.780Z"
+    "stalePast": 35,
+    "lastSyncAt": "2026-11-24T16:21:43.746Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
-    "approved": 5,
-    "checkedAt": "2026-11-24T16:08:09.077Z"
+    "approved": 4,
+    "checkedAt": "2026-11-24T16:29:53.556Z"
   },
   "artsmuMerge": {
     "fetched": 43,
@@ -261,6 +260,20 @@
   },
   "recentlyAdded": [
     {
+      "key": "Spring 2027 Involvement Fair|2027-01-27T16:30:00.000Z",
+      "firstSeenAt": "2026-11-24T16:30:05.410Z",
+      "title": "Spring 2027 Involvement Fair",
+      "source": "MU",
+      "date": "2027-01-27T16:30:00.000Z"
+    },
+    {
+      "key": "Karaoke Night|2026-12-17T03:00:00.000Z",
+      "firstSeenAt": "2026-11-24T16:14:15.156Z",
+      "title": "Karaoke Night",
+      "source": "Jack's Tavern",
+      "date": "2026-12-17T03:00:00.000Z"
+    },
+    {
       "key": "Finish Strong!|2026-12-01T11:30:00",
       "firstSeenAt": "2026-11-24T16:01:09.596Z",
       "title": "Finish Strong!",
@@ -315,25 +328,11 @@
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2027-09-06T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2027-09-29T12:30:00.000Z",
-      "firstSeenAt": "2026-11-24T08:33:45.116Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-09-29T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-10-04T23:00:00.000Z",
-      "firstSeenAt": "2026-11-24T08:33:45.116Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-10-04T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
-    "total": 487,
+    "total": 478,
     "reasons": {
       "pm-sub-varsity": 315,
       "mu-calendar-athletics": 103,
@@ -341,8 +340,7 @@
       "intramural-dup": 1,
       "borough-collection": 13,
       "borough-reservation": 17,
-      "submission-not-approved": 1,
-      "submission-out-of-range": 9
+      "submission-not-approved": 1
     }
   }
 }

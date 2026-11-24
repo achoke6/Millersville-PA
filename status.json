@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-24T04:49:19.954Z",
+  "generatedAt": "2026-11-24T06:37:28.180Z",
   "totalEvents": 1971,
   "withDescription": 792,
   "withImage": 181,
@@ -16,7 +16,7 @@
     "active": 4,
     "reshall": 3
   },
-  "eventsToday": 10,
+  "eventsToday": 15,
   "sources": {
     "muAthletics": 383,
     "muCalendar": 197,
@@ -95,7 +95,7 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 83
+      "daysSinceMoved": 84
     },
     "muCalendar": {
       "newest": "2027-06-04",
@@ -103,51 +103,51 @@
     },
     "artsmu": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 81
+      "daysSinceMoved": 82
     },
     "eckert": {
       "newest": "2026-11-12",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 15
     },
     "campsAlumni": {
       "newest": "2027-08-20",
-      "daysSinceMoved": 35
+      "daysSinceMoved": 36
     },
     "muGetInvolved": {
       "newest": "2027-10-27",
-      "daysSinceMoved": 20
+      "daysSinceMoved": 21
     },
     "pennManor": {
       "newest": "2027-10-25",
-      "daysSinceMoved": 29
+      "daysSinceMoved": 30
     },
     "borough": {
       "newest": "2027-10-31",
-      "daysSinceMoved": 23
+      "daysSinceMoved": 24
     },
     "vfw": {
       "newest": "2026-11-29",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 15
     },
     "phantomPower": {
       "newest": "2026-12-19",
-      "daysSinceMoved": 25
+      "daysSinceMoved": 26
     },
     "community": {
       "newest": "2027-05-16",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 14
     },
     "manor": {
       "newest": "2027-11-03",
-      "daysSinceMoved": 20
+      "daysSinceMoved": 21
     },
     "raneyCellars": {
       "newest": "2026-11-20",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     },
     "theBackyard": {
       "newest": "2027-04-28",
-      "daysSinceMoved": 46
+      "daysSinceMoved": 47
     }
   },
   "sports": {
@@ -171,13 +171,13 @@
       "Campus Life": 1
     },
     "stalePast": 39,
-    "lastSyncAt": "2026-11-24T04:46:04.339Z"
+    "lastSyncAt": "2026-11-24T06:34:52.487Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-24T04:49:09.644Z"
+    "checkedAt": "2026-11-24T06:37:20.873Z"
   },
   "artsmuMerge": {
     "fetched": 43,
@@ -205,7 +205,7 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 193,
+        "value": 192,
         "min": 30,
         "skipped": false
       },

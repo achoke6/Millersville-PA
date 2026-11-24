@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-24T18:51:27.004Z",
+  "generatedAt": "2026-11-24T19:11:59.837Z",
   "totalEvents": 1966,
   "withDescription": 795,
   "withImage": 180,
@@ -168,13 +168,13 @@
     "pendingPast": 15,
     "pendingBySource": {},
     "stalePast": 35,
-    "lastSyncAt": "2026-11-24T18:46:03.958Z"
+    "lastSyncAt": "2026-11-24T19:07:37.213Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-24T18:51:19.373Z"
+    "checkedAt": "2026-11-24T19:11:50.554Z"
   },
   "artsmuMerge": {
     "fetched": 43,
@@ -182,8 +182,10 @@
     "standalone": 1
   },
   "sourceHealth": {
-    "ok": true,
-    "failing": [],
+    "ok": false,
+    "failing": [
+      "manor.count"
+    ],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -236,9 +238,10 @@
       },
       {
         "key": "manor.count",
-        "ok": true,
+        "ok": false,
         "value": 30,
-        "min": 10
+        "min": 10,
+        "carriedForward": 30
       },
       {
         "key": "muHudl.pairRatio",
@@ -328,7 +331,7 @@
       "date": "2027-11-11T18:00:00"
     }
   ],
-  "addedLastRun": 3,
+  "addedLastRun": 0,
   "skippedByRule": {
     "total": 478,
     "reasons": {
@@ -340,5 +343,21 @@
       "borough-reservation": 17,
       "submission-not-approved": 1
     }
+  },
+  "gatedToStudents": {
+    "rows": 177,
+    "titles": 93,
+    "rules": {
+      "title-meeting-tabling": 29,
+      "club-keyword": 9,
+      "default-closed": 85,
+      "practice": 24,
+      "academic-internal": 17,
+      "greek-reshall-tag": 1,
+      "club-org": 7,
+      "category": 2,
+      "club-sports": 3
+    },
+    "other": 88
   }
 }

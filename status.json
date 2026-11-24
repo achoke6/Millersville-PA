@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-24T20:54:16.916Z",
-  "totalEvents": 1974,
+  "generatedAt": "2026-11-24T22:42:32.447Z",
+  "totalEvents": 1977,
   "withDescription": 795,
   "withImage": 180,
   "familyFriendly": 51,
@@ -10,7 +10,7 @@
     "causes": 33,
     "learn": 65,
     "arts": 94,
-    "food": 122,
+    "food": 123,
     "music": 90,
     "crafts": 14,
     "active": 4,
@@ -20,17 +20,17 @@
   "sources": {
     "muAthletics": 383,
     "muCalendar": 200,
-    "artsmu": 43,
+    "artsmu": 42,
     "eckert": 3,
     "campsAlumni": 9,
     "muGetInvolved": 500,
-    "pennManor": 647,
+    "pennManor": 649,
     "borough": 47,
     "vfw": 6,
     "phantomPower": 13,
     "community": 13,
     "manor": 38,
-    "raneyCellars": 4,
+    "raneyCellars": 5,
     "theBackyard": 28,
     "muHudlBroadcasts": 62
   },
@@ -44,7 +44,7 @@
       "latest": "2027-11-11T18:00:00.000Z"
     },
     "artsmu": {
-      "earliest": "2026-11-06T21:00:00.000Z",
+      "earliest": "2026-12-04T22:00:00.000Z",
       "latest": "2027-06-04T22:30:00.000Z"
     },
     "eckert": {
@@ -85,7 +85,7 @@
     },
     "raneyCellars": {
       "earliest": "2026-11-12T21:00:00.000Z",
-      "latest": "2026-11-20T21:00:00.000Z"
+      "latest": "2026-11-27T23:00:00.000Z"
     },
     "theBackyard": {
       "earliest": "2026-08-26T15:00:00.000Z",
@@ -142,8 +142,8 @@
       "daysSinceMoved": 21
     },
     "raneyCellars": {
-      "newest": "2026-11-20",
-      "daysSinceMoved": 7
+      "newest": "2026-11-27",
+      "daysSinceMoved": 0
     },
     "theBackyard": {
       "newest": "2027-04-28",
@@ -151,7 +151,7 @@
     }
   },
   "sports": {
-    "total": 930,
+    "total": 932,
     "scored": 206,
     "wins": 100,
     "losses": 94,
@@ -168,17 +168,17 @@
     "pendingPast": 15,
     "pendingBySource": {},
     "stalePast": 35,
-    "lastSyncAt": "2026-11-24T20:50:49.396Z"
+    "lastSyncAt": "2026-11-24T22:39:52.774Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-24T20:54:08.504Z"
+    "checkedAt": "2026-11-24T22:42:22.305Z"
   },
   "artsmuMerge": {
-    "fetched": 43,
-    "merged": 42,
+    "fetched": 42,
+    "merged": 41,
     "standalone": 1
   },
   "sourceHealth": {
@@ -216,7 +216,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 547,
+        "value": 549,
         "min": 150,
         "skipped": false
       },
@@ -258,6 +258,41 @@
   },
   "recentlyAdded": [
     {
+      "key": "Thanksgiving Day CLOSED|2026-11-26T00:00:00.000Z",
+      "firstSeenAt": "2026-11-24T22:42:32.445Z",
+      "title": "Thanksgiving Day CLOSED",
+      "source": "Raney Cellars",
+      "date": "2026-11-26T00:00:00.000Z"
+    },
+    {
+      "key": "Thurday Trivia 6PM|2026-11-27T23:00:00.000Z",
+      "firstSeenAt": "2026-11-24T22:42:32.445Z",
+      "title": "Thurday Trivia 6PM",
+      "source": "Raney Cellars",
+      "date": "2026-11-27T23:00:00.000Z"
+    },
+    {
+      "key": "JIMMIE&#x27;S CHICKEN SHACK|2026-12-19T01:00:00.000Z",
+      "firstSeenAt": "2026-11-24T22:42:32.445Z",
+      "title": "JIMMIE&#x27;S CHICKEN SHACK",
+      "source": "Other",
+      "date": "2026-12-19T01:00:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Wrestling vs Warwick High School|2026-12-23T00:00:00.000Z",
+      "firstSeenAt": "2026-11-24T22:42:32.445Z",
+      "title": "Girls Varsity Wrestling vs Warwick High School",
+      "source": "PM",
+      "date": "2026-12-23T00:00:00.000Z"
+    },
+    {
+      "key": "Girls Varsity Wrestling vs Governor Mifflin High School|2027-01-28T00:00:00.000Z",
+      "firstSeenAt": "2026-11-24T22:42:32.445Z",
+      "title": "Girls Varsity Wrestling vs Governor Mifflin High School",
+      "source": "PM",
+      "date": "2027-01-28T00:00:00.000Z"
+    },
+    {
       "key": "Millersville University Women's Basketball at California (PA)|2026-12-04T20:00:00.000Z",
       "firstSeenAt": "2026-11-24T20:54:16.914Z",
       "title": "Millersville University Women's Basketball at California (PA)",
@@ -270,13 +305,6 @@
       "title": "Millersville University Women's Basketball at Slippery Rock",
       "source": "MU",
       "date": "2026-12-05T18:00:00.000Z"
-    },
-    {
-      "key": "JIMMIE&#x27;S CHICKEN SHACK w/ Emily’s Toybox and The Kozaks|2026-12-19T01:00:00.000Z",
-      "firstSeenAt": "2026-11-24T20:54:16.914Z",
-      "title": "JIMMIE&#x27;S CHICKEN SHACK w/ Emily’s Toybox and The Kozaks",
-      "source": "Other",
-      "date": "2026-12-19T01:00:00.000Z"
     },
     {
       "key": "Zoning Hearing Board|2027-09-01T23:00:00.000Z",
@@ -298,37 +326,9 @@
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2027-09-29T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-10-04T23:00:00.000Z",
-      "firstSeenAt": "2026-11-24T20:54:16.914Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-10-04T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-10-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-24T20:54:16.914Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-10-06T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2027-10-27T12:30:00.000Z",
-      "firstSeenAt": "2026-11-24T20:54:16.914Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-10-27T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-11-01T23:00:00.000Z",
-      "firstSeenAt": "2026-11-24T20:54:16.914Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-11-01T23:00:00.000Z"
     }
   ],
-  "addedLastRun": 11,
+  "addedLastRun": 5,
   "skippedByRule": {
     "total": 478,
     "reasons": {

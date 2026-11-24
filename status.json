@@ -1,37 +1,37 @@
 {
-  "generatedAt": "2026-11-23T20:24:04.240Z",
-  "totalEvents": 1988,
-  "withDescription": 803,
-  "withImage": 186,
+  "generatedAt": "2026-11-24T12:19:49.738Z",
+  "totalEvents": 1971,
+  "withDescription": 792,
+  "withImage": 181,
   "familyFriendly": 52,
   "interests": {
     "civic": 95,
-    "greek": 25,
+    "greek": 24,
     "causes": 33,
     "learn": 65,
     "arts": 94,
     "food": 123,
-    "music": 90,
+    "music": 89,
     "crafts": 14,
     "active": 4,
     "reshall": 3
   },
-  "eventsToday": 10,
+  "eventsToday": 15,
   "sources": {
-    "muAthletics": 384,
+    "muAthletics": 383,
     "muCalendar": 197,
     "artsmu": 43,
     "eckert": 3,
     "campsAlumni": 9,
-    "muGetInvolved": 509,
-    "pennManor": 650,
-    "borough": 48,
+    "muGetInvolved": 498,
+    "pennManor": 647,
+    "borough": 47,
     "vfw": 6,
     "phantomPower": 13,
     "community": 14,
     "manor": 38,
     "raneyCellars": 4,
-    "theBackyard": 29,
+    "theBackyard": 28,
     "muHudlBroadcasts": 62
   },
   "sourceDateRanges": {
@@ -56,15 +56,15 @@
       "latest": "2027-08-20T23:30:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-08-25T07:30:00.000Z",
+      "earliest": "2026-08-26T11:00:00.000Z",
       "latest": "2027-10-27T11:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-08-25T17:00:00.000Z",
+      "earliest": "2026-08-26T20:00:00.000Z",
       "latest": "2027-10-25T20:00:00.000Z"
     },
     "borough": {
-      "earliest": "2026-08-25T23:00:00.000Z",
+      "earliest": "2026-08-27T22:30:00.000Z",
       "latest": "2027-10-31T22:00:00.000Z"
     },
     "vfw": {
@@ -88,14 +88,14 @@
       "latest": "2026-11-20T21:00:00.000Z"
     },
     "theBackyard": {
-      "earliest": "2026-08-25T15:00:00.000Z",
+      "earliest": "2026-08-26T15:00:00.000Z",
       "latest": "2027-04-28T15:00:00.000Z"
     }
   },
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 83
+      "daysSinceMoved": 84
     },
     "muCalendar": {
       "newest": "2027-06-04",
@@ -103,57 +103,57 @@
     },
     "artsmu": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 81
+      "daysSinceMoved": 82
     },
     "eckert": {
       "newest": "2026-11-12",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 15
     },
     "campsAlumni": {
       "newest": "2027-08-20",
-      "daysSinceMoved": 35
+      "daysSinceMoved": 36
     },
     "muGetInvolved": {
       "newest": "2027-10-27",
-      "daysSinceMoved": 20
+      "daysSinceMoved": 21
     },
     "pennManor": {
       "newest": "2027-10-25",
-      "daysSinceMoved": 29
+      "daysSinceMoved": 30
     },
     "borough": {
       "newest": "2027-10-31",
-      "daysSinceMoved": 23
+      "daysSinceMoved": 24
     },
     "vfw": {
       "newest": "2026-11-29",
-      "daysSinceMoved": 14
+      "daysSinceMoved": 15
     },
     "phantomPower": {
       "newest": "2026-12-19",
-      "daysSinceMoved": 25
+      "daysSinceMoved": 26
     },
     "community": {
       "newest": "2027-05-16",
-      "daysSinceMoved": 13
+      "daysSinceMoved": 14
     },
     "manor": {
       "newest": "2027-11-03",
-      "daysSinceMoved": 20
+      "daysSinceMoved": 21
     },
     "raneyCellars": {
       "newest": "2026-11-20",
-      "daysSinceMoved": 6
+      "daysSinceMoved": 7
     },
     "theBackyard": {
       "newest": "2027-04-28",
-      "daysSinceMoved": 46
+      "daysSinceMoved": 47
     }
   },
   "sports": {
-    "total": 934,
-    "scored": 206,
-    "wins": 100,
+    "total": 930,
+    "scored": 205,
+    "wins": 99,
     "losses": 94,
     "ties": 12
   },
@@ -171,13 +171,13 @@
       "Campus Life": 1
     },
     "stalePast": 39,
-    "lastSyncAt": "2026-11-23T20:21:24.056Z"
+    "lastSyncAt": "2026-11-24T12:16:23.681Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-23T20:24:00.702Z"
+    "checkedAt": "2026-11-24T12:19:47.948Z"
   },
   "artsmuMerge": {
     "fetched": 43,
@@ -191,42 +191,42 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 336,
+        "value": 335,
         "min": 45,
         "skipped": false
       },
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 184,
+        "value": 183,
         "min": 60,
         "skipped": false
       },
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 193,
+        "value": 192,
         "min": 30,
         "skipped": false
       },
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 342,
+        "value": 341,
         "min": 21,
         "skipped": false
       },
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 550,
+        "value": 547,
         "min": 150,
         "skipped": false
       },
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 384,
+        "value": 383,
         "min": 100,
         "skipped": false
       },
@@ -261,74 +261,74 @@
   },
   "recentlyAdded": [
     {
-      "key": "Millersville University Women's Cross Country at Last Chance Run Fast Invitational|2026-10-23T19:00:00.000Z",
-      "firstSeenAt": "2026-11-23T20:20:21.153Z",
-      "title": "Millersville University Women's Cross Country at Last Chance Run Fast Invitational",
-      "source": "MU",
-      "date": "2026-10-23T19:00:00.000Z"
-    },
-    {
       "key": "Zoning Hearing Board|2027-09-01T23:00:00.000Z",
-      "firstSeenAt": "2026-11-23T19:47:43.754Z",
+      "firstSeenAt": "2026-11-24T08:33:45.116Z",
       "title": "Zoning Hearing Board",
       "source": "Manor",
       "date": "2027-09-01T23:00:00.000Z"
     },
     {
       "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-23T19:47:43.754Z",
+      "firstSeenAt": "2026-11-24T08:33:45.116Z",
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2027-09-06T23:00:00.000Z"
     },
     {
       "key": "Traffic Commission Meeting|2027-09-29T12:30:00.000Z",
-      "firstSeenAt": "2026-11-23T19:47:43.754Z",
+      "firstSeenAt": "2026-11-24T08:33:45.116Z",
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2027-09-29T12:30:00.000Z"
     },
     {
       "key": "Supervisors Meeting|2027-10-04T23:00:00.000Z",
-      "firstSeenAt": "2026-11-23T19:47:43.754Z",
+      "firstSeenAt": "2026-11-24T08:33:45.116Z",
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2027-10-04T23:00:00.000Z"
     },
     {
       "key": "Zoning Hearing Board|2027-10-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-23T19:47:43.754Z",
+      "firstSeenAt": "2026-11-24T08:33:45.116Z",
       "title": "Zoning Hearing Board",
       "source": "Manor",
       "date": "2027-10-06T23:00:00.000Z"
     },
     {
       "key": "Traffic Commission Meeting|2027-10-27T12:30:00.000Z",
-      "firstSeenAt": "2026-11-23T19:47:43.754Z",
+      "firstSeenAt": "2026-11-24T08:33:45.116Z",
       "title": "Traffic Commission Meeting",
       "source": "Manor",
       "date": "2027-10-27T12:30:00.000Z"
     },
     {
       "key": "Supervisors Meeting|2027-11-01T23:00:00.000Z",
-      "firstSeenAt": "2026-11-23T19:47:43.754Z",
+      "firstSeenAt": "2026-11-24T08:33:45.116Z",
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2027-11-01T23:00:00.000Z"
     },
     {
       "key": "Zoning Hearing Board|2027-11-03T23:00:00.000Z",
-      "firstSeenAt": "2026-11-23T19:47:43.754Z",
+      "firstSeenAt": "2026-11-24T08:33:45.116Z",
       "title": "Zoning Hearing Board",
       "source": "Manor",
       "date": "2027-11-03T23:00:00.000Z"
     },
     {
-      "key": "SGA Spring Turnover Meeting|2027-04-22T12:00:00.000Z",
-      "firstSeenAt": "2026-11-23T19:42:43.986Z",
-      "title": "SGA Spring Turnover Meeting",
-      "source": "The Backyard",
-      "date": "2027-04-22T12:00:00.000Z"
+      "key": "SUPERVISORS-SPECIAL MEETING|2026-11-25T13:00:00.000Z",
+      "firstSeenAt": "2026-11-23T20:26:51.974Z",
+      "title": "SUPERVISORS-SPECIAL MEETING",
+      "source": "Manor",
+      "date": "2026-11-25T13:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Cross Country at Last Chance Run Fast Invitational|2026-10-23T19:00:00.000Z",
+      "firstSeenAt": "2026-11-23T20:20:21.153Z",
+      "title": "Millersville University Women's Cross Country at Last Chance Run Fast Invitational",
+      "source": "MU",
+      "date": "2026-10-23T19:00:00.000Z"
     }
   ],
   "addedLastRun": 0,

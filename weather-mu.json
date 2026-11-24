@@ -1,27 +1,27 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Monday, November 23, 2026 at 12:14 PM (Neidlinger, Nornhold, Student Meteorologists)",
+    "issued": "Monday, November 23, 2026 at 05:36 PM (McGrath, White, Student Meteorologists)",
     "periods": [
-      {
-        "period": "This afternoon",
-        "text": "Mostly cloudy and breezy with a passing shower or two. High: 62-66"
-      },
       {
         "period": "Tonight",
         "text": "Mainly clear. Low: 34-38"
       },
       {
-        "period": "Tuesday",
+        "period": "Tomorrow",
         "text": "Sunny and cooler with a morning breeze. High: 46-50"
       },
       {
-        "period": "Tuesday Night",
+        "period": "Tomorrow Night",
         "text": "Mainly clear and cold. Low: 22-26"
       },
       {
         "period": "Wednesday",
         "text": "Chilly with increasing clouds. High: 46-50"
+      },
+      {
+        "period": "Thursday",
+        "text": "Cloudy with periods of rain High: 48-52"
       }
     ]
   },
@@ -128,66 +128,66 @@
   },
   "observations": [
     {
-      "time": "15:00",
-      "temp": "62",
-      "dewpoint": "50",
-      "rh": "67",
+      "time": "07:00",
+      "temp": "37",
+      "dewpoint": "27",
+      "rh": "66",
       "windDir": "NNW",
-      "windSpeed": "6",
+      "windSpeed": "4",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
     },
     {
-      "time": "14:00",
-      "temp": "62",
-      "dewpoint": "51",
-      "rh": "67",
+      "time": "06:00",
+      "temp": "38",
+      "dewpoint": "26",
+      "rh": "62",
       "windDir": "NW",
       "windSpeed": "4",
-      "precip": "0.01",
+      "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
     },
     {
-      "time": "13:00",
-      "temp": "62",
-      "dewpoint": "52",
-      "rh": "70",
-      "windDir": "N",
-      "windSpeed": "10",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "Light Showers Rain"
-    },
-    {
-      "time": "12:00",
-      "temp": "62",
-      "dewpoint": "52",
-      "rh": "69",
+      "time": "05:00",
+      "temp": "39",
+      "dewpoint": "26",
+      "rh": "59",
       "windDir": "NW",
-      "windSpeed": "8",
-      "precip": "0.00",
-      "visibility": "11.9",
-      "condition": "None"
-    },
-    {
-      "time": "11:00",
-      "temp": "64",
-      "dewpoint": "52",
-      "rh": "65",
-      "windDir": "NW",
-      "windSpeed": "6",
+      "windSpeed": "1",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
     },
     {
-      "time": "10:00",
-      "temp": "65",
-      "dewpoint": "53",
-      "rh": "66",
-      "windDir": "W",
+      "time": "04:00",
+      "temp": "40",
+      "dewpoint": "26",
+      "rh": "57",
+      "windDir": "NNW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "03:00",
+      "temp": "40",
+      "dewpoint": "25",
+      "rh": "56",
+      "windDir": "NNW",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
+      "time": "02:00",
+      "temp": "42",
+      "dewpoint": "26",
+      "rh": "52",
+      "windDir": "NNW",
       "windSpeed": "4",
       "precip": "0.00",
       "visibility": "12 +",
@@ -438,10 +438,21 @@
         "windSpeed": "11",
         "windTime": "14:39",
         "rain": "0.00"
+      },
+      {
+        "date": "11/23",
+        "max": "65",
+        "maxTime": "10:00",
+        "min": "46",
+        "minTime": "23:34",
+        "windDir": "343",
+        "windSpeed": "20",
+        "windTime": "22:00",
+        "rain": "0.01"
       }
     ],
-    "totalRain": "0.43",
-    "ytdRain": "32.86",
+    "totalRain": "0.44",
+    "ytdRain": "32.87",
     "yearMax": "102",
     "yearMaxDate": "July 03",
     "yearMin": "1",
@@ -488,5 +499,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-23T20:21:25.739Z"
+  "updated": "2026-11-24T12:16:25.766Z"
 }

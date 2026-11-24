@@ -1,0 +1,934 @@
+{
+ "generatedAt": "2026-11-24T19:11:59.597Z",
+ "scope": "upcoming mu-only rows (hidden from Locals), grouped by the classifier rule that gated them; repeats collapsed per title; club sports listed by ruling; non-classifier mu-only rows counted under other",
+ "itemCap": 200,
+ "order": [
+  "default-closed",
+  "academic-internal",
+  "club-org",
+  "greek-reshall-tag",
+  "club-keyword",
+  "category",
+  "title-meeting-tabling",
+  "practice",
+  "credit",
+  "club-sports"
+ ],
+ "labels": {
+  "default-closed": "No public signal found (default closed)",
+  "academic-internal": "Department / office / year-end wording",
+  "club-org": "Greek, ministry or residence-hall org named",
+  "greek-reshall-tag": "Greek Life / Residence Hall category",
+  "club-keyword": "Club-business keyword (bible study, info session, ...)",
+  "category": "GetInvolved category: Tabling / Meeting / Group Business",
+  "title-meeting-tabling": "Title says meeting or tabling",
+  "practice": "Title says practice / scrimmage / tryout / open gym",
+  "credit": "Benefit: Credit",
+  "club-sports": "Club sports (MU-only by ruling)"
+ },
+ "counts": {
+  "title-meeting-tabling": {
+   "rows": 29,
+   "titles": 19
+  },
+  "club-keyword": {
+   "rows": 9,
+   "titles": 6
+  },
+  "default-closed": {
+   "rows": 85,
+   "titles": 51
+  },
+  "practice": {
+   "rows": 24,
+   "titles": 5
+  },
+  "academic-internal": {
+   "rows": 17,
+   "titles": 2
+  },
+  "greek-reshall-tag": {
+   "rows": 1,
+   "titles": 1
+  },
+  "club-org": {
+   "rows": 7,
+   "titles": 4
+  },
+  "category": {
+   "rows": 2,
+   "titles": 2
+  },
+  "club-sports": {
+   "rows": 3,
+   "titles": 3
+  }
+ },
+ "items": {
+  "title-meeting-tabling": [
+   {
+    "title": "Creative Writers Guild General Meeting",
+    "org": "Creative Writers Guild",
+    "source": "GetInvolved",
+    "next": "2026-11-24",
+    "count": 2,
+    "key": "Creative Writers Guild General Meeting|2026-11-24T23:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12746253"
+   },
+   {
+    "title": "IFC Meeting",
+    "org": "Inter-Fraternity Council",
+    "source": "GetInvolved",
+    "next": "2026-11-24",
+    "count": 1,
+    "key": "IFC Meeting|2026-11-25T01:30:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12745738"
+   },
+   {
+    "title": "SGA Advocacy Tabling",
+    "org": "Student Government Association",
+    "source": "MU Calendar",
+    "next": "2026-11-24",
+    "count": 2,
+    "key": "SGA Advocacy Tabling|2026-11-24T17:00:00",
+    "link": "https://www.millersville.edu/calendar/events/F0qeNakmQaYwEifHCaDn"
+   },
+   {
+    "title": "Tuesday Tabling",
+    "org": "University College",
+    "source": "MU Calendar",
+    "next": "2026-11-24",
+    "count": 1,
+    "key": "Tuesday Tabling|2026-11-24T11:30:00",
+    "link": "https://www.millersville.edu/calendar/events/jKjZ6kz0u5Ozchxz5qpV"
+   },
+   {
+    "title": "YDSA General Meeting",
+    "org": "Young Democratic Socialists of America",
+    "source": "MU Calendar",
+    "next": "2026-11-24",
+    "count": 2,
+    "key": "YDSA General Meeting|2026-11-24T18:30:00",
+    "link": "https://www.millersville.edu/calendar/events/TUDXGtGTjLwI2YFb0qTb"
+   },
+   {
+    "title": "YDSA Meeting",
+    "org": "Young Democratic Socialists of America",
+    "source": "GetInvolved",
+    "next": "2026-11-24",
+    "count": 2,
+    "key": "YDSA Meeting|2026-11-24T23:30:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12829136"
+   },
+   {
+    "title": "Mock Trial Club Meeting",
+    "org": "Mock Trial Club",
+    "source": "GetInvolved",
+    "next": "2026-11-25",
+    "count": 3,
+    "key": "Mock Trial Club Meeting|2026-11-25T22:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12832065"
+   },
+   {
+    "title": "AniMU Weekly Meeting",
+    "org": "AniMU: The Anime and Video Gaming Club",
+    "source": "GetInvolved",
+    "next": "2026-11-27",
+    "count": 2,
+    "key": "AniMU Weekly Meeting|2026-11-27T23:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12695972"
+   },
+   {
+    "title": "Books and Banter General Meeting (2nd 1/2 of November Book)",
+    "org": "Books & Banter",
+    "source": "MU Calendar",
+    "next": "2026-11-30",
+    "count": 1,
+    "key": "Books and Banter General Meeting (2nd 1/2 of November Book)|2026-11-30T19:00:00",
+    "link": "https://www.millersville.edu/calendar/events/Ps759atKcGaEpuf9gkM5"
+   },
+   {
+    "title": "FSL: New Member Meeting",
+    "org": "Campus Life",
+    "source": "MU Calendar",
+    "next": "2026-11-30",
+    "count": 4,
+    "key": "FSL: New Member Meeting|2026-11-30T17:00:00",
+    "link": "https://www.millersville.edu/calendar/events/BA2YxGDzXchro4uc4SvQ"
+   },
+   {
+    "title": "Math Club + MEMU: Final Meeting",
+    "org": "Math Club",
+    "source": "GetInvolved",
+    "next": "2026-11-30",
+    "count": 1,
+    "key": "Math Club + MEMU: Final Meeting|2026-11-30T23:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12843436"
+   },
+   {
+    "title": "Phi Alpha Theta Meeting",
+    "org": "Phi Alpha Theta",
+    "source": "GetInvolved",
+    "next": "2026-11-30",
+    "count": 1,
+    "key": "Phi Alpha Theta Meeting|2026-11-30T21:30:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12701761"
+   },
+   {
+    "title": "Reformed University Fellowship Prayer Meeting",
+    "org": "Reformed University Fellowship",
+    "source": "GetInvolved",
+    "next": "2026-11-30",
+    "count": 1,
+    "key": "Reformed University Fellowship Prayer Meeting|2026-11-30T22:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12701725"
+   },
+   {
+    "title": "DMAX General Meeting",
+    "org": "DMAX Club",
+    "source": "MU Calendar",
+    "next": "2026-12-01",
+    "count": 1,
+    "key": "DMAX General Meeting|2026-12-01T17:30:00",
+    "link": "https://www.millersville.edu/calendar/events/IJS3GVlJKsvpvzNXg7YB"
+   },
+   {
+    "title": "Equestrian Club Weekly Meeting",
+    "org": "Equestrian Club",
+    "source": "GetInvolved",
+    "next": "2026-12-01",
+    "count": 1,
+    "key": "Equestrian Club Weekly Meeting|2026-12-02T00:30:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12818669"
+   },
+   {
+    "title": "Board Game Club Weekly Meeting",
+    "org": "Board Game Club",
+    "source": "GetInvolved",
+    "next": "2026-12-02",
+    "count": 1,
+    "key": "Board Game Club Weekly Meeting|2026-12-02T23:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12985806"
+   },
+   {
+    "title": "Books and Banter General Meeting (Whole Book for November)",
+    "org": "Books & Banter",
+    "source": "MU Calendar",
+    "next": "2026-12-02",
+    "count": 1,
+    "key": "Books and Banter General Meeting (Whole Book for November)|2026-12-02T19:00:00",
+    "link": "https://www.millersville.edu/calendar/events/UJBchwYPeQGXJJxjbMiY"
+   },
+   {
+    "title": "SGA Weekly Meeting",
+    "org": "Student Government Association",
+    "source": "GetInvolved",
+    "next": "2026-12-03",
+    "count": 1,
+    "key": "SGA Weekly Meeting|2026-12-04T00:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12611283"
+   },
+   {
+    "title": "Slip n' Score Meeting",
+    "org": "Slip n' Score Society",
+    "source": "GetInvolved",
+    "next": "2026-12-03",
+    "count": 1,
+    "key": "Slip n' Score Meeting|2026-12-03T22:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12830993"
+   }
+  ],
+  "club-keyword": [
+   {
+    "title": "RUF Bible Study",
+    "org": "Reformed University Fellowship",
+    "source": "GetInvolved",
+    "next": "2026-11-24",
+    "count": 2,
+    "key": "RUF Bible Study|2026-11-25T00:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12633450"
+   },
+   {
+    "title": "BCM Men's Bible Study",
+    "org": "Bible Campus Ministries",
+    "source": "GetInvolved",
+    "next": "2026-11-30",
+    "count": 2,
+    "key": "BCM Men's Bible Study|2026-12-01T00:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12945269"
+   },
+   {
+    "title": "Women's Bible Study",
+    "org": "Bible Campus Ministries",
+    "source": "GetInvolved",
+    "next": "2026-11-30",
+    "count": 2,
+    "key": "Women's Bible Study|2026-12-01T00:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12945298"
+   },
+   {
+    "title": "Tuesday Night Bible Study",
+    "org": "College Bible Fellowship",
+    "source": "MU Calendar",
+    "next": "2026-12-01",
+    "count": 1,
+    "key": "Tuesday Night Bible Study|2026-12-01T18:30:00",
+    "link": "https://www.millersville.edu/calendar/events/vZgYUAi1jKvXraPjUo5d"
+   },
+   {
+    "title": "Grade A Practice Interviews",
+    "org": "The Career Center",
+    "source": "MU Calendar",
+    "next": "2027-02-16",
+    "count": 1,
+    "key": "Grade A Practice Interviews|2027-02-16T15:00:00",
+    "link": "https://www.millersville.edu/calendar/events/uuRCc3cBfJKFC28os4JV"
+   },
+   {
+    "title": "Mental Health Matters",
+    "org": "Center for Health Education & Promotion",
+    "source": "MU Calendar",
+    "next": "2027-02-24",
+    "count": 1,
+    "key": "Mental Health Matters|2027-02-24T11:30:00",
+    "link": "https://www.millersville.edu/calendar/events/QChSjAs0u6oYC7KbpOSD"
+   }
+  ],
+  "default-closed": [
+   {
+    "title": "Film Club",
+    "org": "English and World Languages",
+    "source": "MU Calendar",
+    "next": "2026-11-25",
+    "count": 2,
+    "key": "Film Club|2026-11-25T18:00:00",
+    "link": "https://www.millersville.edu/calendar/events/GNx5XiYLBbJOezMo7cph"
+   },
+   {
+    "title": "Wednesday Night Dinner",
+    "org": "John Newman Association",
+    "source": "GetInvolved",
+    "next": "2026-11-25",
+    "count": 18,
+    "key": "Wednesday Night Dinner|2026-11-25T23:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12398959"
+   },
+   {
+    "title": "UPENN IHSA SHOW",
+    "org": "Equestrian Club",
+    "source": "GetInvolved",
+    "next": "2026-11-29",
+    "count": 1,
+    "key": "UPENN IHSA SHOW|2026-11-29T12:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12984467"
+   },
+   {
+    "title": "MMA 101 Classes",
+    "org": "Mixed Martial Arts Club",
+    "source": "GetInvolved",
+    "next": "2026-11-30",
+    "count": 1,
+    "key": "MMA 101 Classes|2026-12-01T00:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12968017"
+   },
+   {
+    "title": "Thanksgiving Break Ends - Classes resume at 7:00AM",
+    "org": "Registrar's Office",
+    "source": "MU Calendar",
+    "next": "2026-11-30",
+    "count": 1,
+    "key": "Thanksgiving Break Ends - Classes resume at 7:00AM|2026-11-30T00:00:00",
+    "link": "https://www.millersville.edu/calendar/events/kCAJO8i189FaNSmSRACf"
+   },
+   {
+    "title": "Finish Strong!",
+    "org": "University College",
+    "source": "MU Calendar",
+    "next": "2026-12-01",
+    "count": 1,
+    "key": "Finish Strong!|2026-12-01T11:30:00",
+    "link": "https://www.millersville.edu/calendar/events/NSlowBiwABsrwgKcJp3r"
+   },
+   {
+    "title": "Fireside Reading at the Library",
+    "org": "Library",
+    "source": "MU Calendar",
+    "next": "2026-12-01",
+    "count": 1,
+    "key": "Fireside Reading at the Library|2026-12-01T18:00:00",
+    "link": "https://www.millersville.edu/calendar/events/uupeOpydQHtpdPPwv4oo"
+   },
+   {
+    "title": "Letters of Love",
+    "org": "Letters of Love",
+    "source": "MU Calendar",
+    "next": "2026-12-01",
+    "count": 1,
+    "key": "Letters of Love|2026-12-01T19:00:00",
+    "link": "https://www.millersville.edu/calendar/events/uhD0ynXW3N0I4IZaGev6"
+   },
+   {
+    "title": "SGA Last Stretch Event",
+    "org": "Student Government Association",
+    "source": "GetInvolved",
+    "next": "2026-12-02",
+    "count": 1,
+    "key": "SGA Last Stretch Event|2026-12-03T01:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12990462"
+   },
+   {
+    "title": "Best Buddies Vision Board Making",
+    "org": "Best Buddies",
+    "source": "MU Calendar",
+    "next": "2026-12-03",
+    "count": 1,
+    "key": "Best Buddies Vision Board Making|2026-12-03T19:00:00",
+    "link": "https://www.millersville.edu/calendar/events/z3wafpZl1KzDvLPNtwde"
+   },
+   {
+    "title": "Cozy Up for Christmas",
+    "org": "Campus Recreation",
+    "source": "MU Calendar",
+    "next": "2026-12-03",
+    "count": 1,
+    "key": "Cozy Up for Christmas|2026-12-03T18:30:00",
+    "link": "https://www.millersville.edu/calendar/events/gIsxPtrMXpUhXGVs6iDe"
+   },
+   {
+    "title": "Craft Clean Up",
+    "org": "Books & Banter",
+    "source": "MU Calendar",
+    "next": "2026-12-03",
+    "count": 1,
+    "key": "Craft Clean Up|2026-12-03T10:00:00",
+    "link": "https://www.millersville.edu/calendar/events/jDfUr29xlSKT01DVFCEq"
+   },
+   {
+    "title": "EPPIIC Journeys Celebration",
+    "org": "Advancement Department",
+    "source": "MU Calendar",
+    "next": "2026-12-03",
+    "count": 2,
+    "key": "EPPIIC Journeys Celebration|2026-12-03T17:00:00",
+    "link": "https://www.millersville.edu/calendar/events/qfvdPt88LMJRzwyKpi40"
+   },
+   {
+    "title": "Paws Before Finals",
+    "org": "Paws On Deck",
+    "source": "MU Calendar",
+    "next": "2026-12-03",
+    "count": 1,
+    "key": "Paws Before Finals|2026-12-03T16:30:00",
+    "link": "https://www.millersville.edu/calendar/events/xNScPb0yPVBQQOAhbZLg"
+   },
+   {
+    "title": "Jelly cat and Lego bingo",
+    "org": "University Activities Board",
+    "source": "GetInvolved",
+    "next": "2026-12-04",
+    "count": 1,
+    "key": "Jelly cat and Lego bingo|2026-12-05T02:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12991501"
+   },
+   {
+    "title": "Navidades con SOLA",
+    "org": "Society On Latino Affairs",
+    "source": "GetInvolved",
+    "next": "2026-12-04",
+    "count": 1,
+    "key": "Navidades con SOLA|2026-12-04T22:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12979352"
+   },
+   {
+    "title": "Weekly Run",
+    "org": "Running Club",
+    "source": "GetInvolved",
+    "next": "2026-12-04",
+    "count": 1,
+    "key": "Weekly Run|2026-12-04T21:30:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12817884"
+   },
+   {
+    "title": "Kutztown Versus Millersville -The Ville Vendetta",
+    "org": "Super Smash Club",
+    "source": "GetInvolved",
+    "next": "2026-12-05",
+    "count": 1,
+    "key": "Kutztown Versus Millersville -The Ville Vendetta|2026-12-05T17:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12989670"
+   },
+   {
+    "title": "Sunday Catholic Mass",
+    "org": "John Newman Association",
+    "source": "GetInvolved",
+    "next": "2026-12-06",
+    "count": 1,
+    "key": "Sunday Catholic Mass|2026-12-06T20:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12701700"
+   },
+   {
+    "title": "Campus Spa",
+    "org": "Campus Life",
+    "source": "GetInvolved",
+    "next": "2026-12-07",
+    "count": 1,
+    "key": "Campus Spa|2026-12-07T16:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12992261"
+   },
+   {
+    "title": "Final Stretch Guided Painting with Happily Ever Crafter",
+    "org": "Campus Life",
+    "source": "GetInvolved",
+    "next": "2026-12-07",
+    "count": 1,
+    "key": "Final Stretch Guided Painting with Happily Ever Crafter|2026-12-07T22:30:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12992205"
+   },
+   {
+    "title": "Last day of Fall Classes!",
+    "org": "Registrar's Office",
+    "source": "MU Calendar",
+    "next": "2026-12-07",
+    "count": 1,
+    "key": "Last day of Fall Classes!|2026-12-07T00:00:00",
+    "link": "https://www.millersville.edu/calendar/events/L8Oc7G1YRmkTK0ESUIX4"
+   },
+   {
+    "title": "Mac'd Out Monday",
+    "org": "Campus Life",
+    "source": "GetInvolved",
+    "next": "2026-12-07",
+    "count": 1,
+    "key": "Mac'd Out Monday|2026-12-08T02:30:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12992307"
+   },
+   {
+    "title": "STEM Ed Lab",
+    "org": "Educational Foundations",
+    "source": "MU Calendar",
+    "next": "2026-12-07",
+    "count": 1,
+    "key": "STEM Ed Lab|2026-12-07T15:00:00",
+    "link": "https://www.millersville.edu/calendar/events/jurTQb1D1ML1VAjsUuhT"
+   },
+   {
+    "title": "Final Stretch: Perler Beads Keychain Making",
+    "org": "Campus Life",
+    "source": "MU Calendar",
+    "next": "2026-12-08",
+    "count": 1,
+    "key": "Final Stretch: Perler Beads Keychain Making|2026-12-08T18:00:00",
+    "link": "https://www.millersville.edu/calendar/events/JtauPiEiqYvBDwVdBf4T"
+   },
+   {
+    "title": "Final Stretch: Teatime & Slime",
+    "org": "Center for Health Education & Promotion",
+    "source": "MU Calendar",
+    "next": "2026-12-08",
+    "count": 1,
+    "key": "Final Stretch: Teatime & Slime|2026-12-08T11:00:00",
+    "link": "https://www.millersville.edu/calendar/events/AYbIfwIwfeQbiz4fpUYW"
+   },
+   {
+    "title": "Finals Week and Evaluation Period (special class schedule)",
+    "org": "Registrar's Office",
+    "source": "MU Calendar",
+    "next": "2026-12-08",
+    "count": 2,
+    "key": "Finals Week and Evaluation Period (special class schedule)|2026-12-08T00:00:00",
+    "link": "https://www.millersville.edu/calendar/events/n4vqyUNBHAeFFiH6ABYG"
+   },
+   {
+    "title": "Golf Simulator",
+    "org": "Campus Life",
+    "source": "GetInvolved",
+    "next": "2026-12-08",
+    "count": 1,
+    "key": "Golf Simulator|2026-12-08T19:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12992327"
+   },
+   {
+    "title": "Perler Bead Keychain Making",
+    "org": "Campus Life",
+    "source": "GetInvolved",
+    "next": "2026-12-08",
+    "count": 1,
+    "key": "Perler Bead Keychain Making|2026-12-08T23:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12992373"
+   },
+   {
+    "title": "Cocoa Before Commencement",
+    "org": "Campus Life",
+    "source": "GetInvolved",
+    "next": "2026-12-09",
+    "count": 1,
+    "key": "Cocoa Before Commencement|2026-12-09T19:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12992429"
+   },
+   {
+    "title": "Frosty Friends: Stuff-A-Plush Giveaway",
+    "org": "Campus Life",
+    "source": "GetInvolved",
+    "next": "2026-12-09",
+    "count": 1,
+    "key": "Frosty Friends: Stuff-A-Plush Giveaway|2026-12-09T14:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12992386"
+   },
+   {
+    "title": "Hunt A Killer",
+    "org": "Horror Movies and Media",
+    "source": "GetInvolved",
+    "next": "2026-12-10",
+    "count": 1,
+    "key": "Hunt A Killer|2026-12-10T22:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12817086"
+   },
+   {
+    "title": "December Commencement",
+    "org": "University Events",
+    "source": "MU Calendar",
+    "next": "2026-12-12",
+    "count": 1,
+    "key": "December Commencement|2026-12-12T14:00:00",
+    "link": "https://www.millersville.edu/calendar/events/S9xJFbXUFSsvALHKAwTg"
+   },
+   {
+    "title": "Winter Term - Classes Begin",
+    "org": "Registrar's Office",
+    "source": "MU Calendar",
+    "next": "2026-12-14",
+    "count": 1,
+    "key": "Winter Term - Classes Begin|2026-12-14T00:00:00",
+    "link": "https://www.millersville.edu/calendar/events/VWKDj0i4mWnMkmMA3jMm"
+   },
+   {
+    "title": "Men's Ice Hockey Winter Training Camp (Ice Sessions)",
+    "org": "Men's Ice Hockey (D2)",
+    "source": "GetInvolved",
+    "next": "2027-01-11",
+    "count": 4,
+    "key": "Men's Ice Hockey Winter Training Camp (Ice Sessions)|2027-01-12T00:30:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12846242"
+   },
+   {
+    "title": "Winter Term - Classes End after last Final Exam",
+    "org": "Registrar's Office",
+    "source": "MU Calendar",
+    "next": "2027-01-17",
+    "count": 1,
+    "key": "Winter Term - Classes End after last Final Exam|2027-01-17T00:00:00",
+    "link": "https://www.millersville.edu/calendar/events/amj6xSV4Tk18IaeHso2i"
+   },
+   {
+    "title": "Martin Luther King, Jr. Day - No Classes, Limited Campus Operations",
+    "org": "Registrar's Office",
+    "source": "MU Calendar",
+    "next": "2027-01-18",
+    "count": 1,
+    "key": "Martin Luther King, Jr. Day - No Classes, Limited Campus Operations|2027-01-18T00:00:00",
+    "link": "https://www.millersville.edu/calendar/events/fsy07HDuw8cQsthn7hiN"
+   },
+   {
+    "title": "Spring Term - Classes Begin",
+    "org": "Registrar's Office",
+    "source": "MU Calendar",
+    "next": "2027-01-19",
+    "count": 1,
+    "key": "Spring Term - Classes Begin|2027-01-19T00:00:00",
+    "link": "https://www.millersville.edu/calendar/events/vF6J34AJQ9A4MtTHlMei"
+   },
+   {
+    "title": "LAST DAY to... Courses",
+    "org": "Registrar's Office",
+    "source": "MU Calendar",
+    "next": "2027-01-26",
+    "count": 1,
+    "key": "LAST DAY to... Courses|2027-01-26T00:00:00",
+    "link": "https://www.millersville.edu/calendar/events/f2QSup59L3Jl5yGKwU1D"
+   },
+   {
+    "title": "\"The Black Swans of Millersville\" Documentary Screening and Discussion",
+    "org": "Dr. Rita Smith-Wade-El Center for Intercultural Student Engagement",
+    "source": "GetInvolved",
+    "next": "2027-02-01",
+    "count": 1,
+    "key": "\"The Black Swans of Millersville\" Documentary Screening and Discussion|2027-02-01T23:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12920838"
+   },
+   {
+    "title": "Real Talk, Real Skills",
+    "org": "Dr. Rita Smith-Wade-El Center for Intercultural Student Engagement",
+    "source": "GetInvolved",
+    "next": "2027-02-04",
+    "count": 6,
+    "key": "Real Talk, Real Skills|2027-02-04T17:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12832494"
+   },
+   {
+    "title": "Spring Recess - Begins at 7:00am",
+    "org": "Registrar's Office",
+    "source": "MU Calendar",
+    "next": "2027-03-08",
+    "count": 1,
+    "key": "Spring Recess - Begins at 7:00am|2027-03-08T00:00:00",
+    "link": "https://www.millersville.edu/calendar/events/bk31L5jwyFCixYsE0t5n"
+   },
+   {
+    "title": "Spring Recess",
+    "org": "Registrar's Office",
+    "source": "MU Calendar",
+    "next": "2027-03-09",
+    "count": 6,
+    "key": "Spring Recess|2027-03-09T00:00:00",
+    "link": "https://www.millersville.edu/calendar/events/oscaTt9HkCQfHpRFrsJp"
+   },
+   {
+    "title": "Spring Recess - Ends at 7:00am",
+    "org": "Registrar's Office",
+    "source": "MU Calendar",
+    "next": "2027-03-15",
+    "count": 1,
+    "key": "Spring Recess - Ends at 7:00am|2027-03-15T00:00:00",
+    "link": "https://www.millersville.edu/calendar/events/hk3MQTNMAQifEpgTRbI0"
+   },
+   {
+    "title": "Accepted Student Day",
+    "org": "Admissions",
+    "source": "MU Calendar",
+    "next": "2027-03-20",
+    "count": 2,
+    "key": "Accepted Student Day|2027-03-20T08:00:00",
+    "link": "https://www.millersville.edu/calendar/events/jWvW00stUOx6FTBxPx3O"
+   },
+   {
+    "title": "Sharing Perspectives & Insights: Career Panel Discussion",
+    "org": "The Career Center",
+    "source": "MU Calendar",
+    "next": "2027-04-08",
+    "count": 1,
+    "key": "Sharing Perspectives & Insights: Career Panel Discussion|2027-04-08T16:30:00",
+    "link": "https://www.millersville.edu/calendar/events/ErRJPbFlAMhCtgRSZvQc"
+   },
+   {
+    "title": "Mentorship Recruitment & Recognition Day",
+    "org": "The Career Center",
+    "source": "MU Calendar",
+    "next": "2027-04-28",
+    "count": 1,
+    "key": "Mentorship Recruitment & Recognition Day|2027-04-28T11:30:00",
+    "link": "https://www.millersville.edu/calendar/events/ngEoudInQ3aJX3b7wHWo"
+   },
+   {
+    "title": "Mentorship Recognition and Recruitment Day",
+    "org": "The Career Center",
+    "source": "MU Calendar",
+    "next": "2027-04-29",
+    "count": 1,
+    "key": "Mentorship Recognition and Recruitment Day|2027-04-29T11:30:00",
+    "link": "https://www.millersville.edu/calendar/events/pb30zgLEazMpcawPSjsl"
+   },
+   {
+    "title": "Spring Term - Last Day of Classes!",
+    "org": "Registrar's Office",
+    "source": "MU Calendar",
+    "next": "2027-05-03",
+    "count": 1,
+    "key": "Spring Term - Last Day of Classes!|2027-05-03T00:00:00",
+    "link": "https://www.millersville.edu/calendar/events/m51OcBXimZBD1KQfrRbE"
+   },
+   {
+    "title": "Spring Commencement",
+    "org": "University Events",
+    "source": "MU Calendar",
+    "next": "2027-05-08",
+    "count": 1,
+    "key": "Spring Commencement|2027-05-08T00:00:00",
+    "link": "https://www.millersville.edu/calendar/events/CVd1JxobhqcNryUAGglV"
+   },
+   {
+    "title": "Graduate School Fair",
+    "org": "The Career Center",
+    "source": "MU Calendar",
+    "next": "2027-10-27",
+    "count": 1,
+    "key": "Graduate School Fair|2027-10-27T11:00:00",
+    "link": "https://www.millersville.edu/calendar/events/pcLxA33HGK8UY5qXf1La"
+   }
+  ],
+  "practice": [
+   {
+    "title": "Moose Ultimate Practice",
+    "org": "Moose Ultimate",
+    "source": "GetInvolved",
+    "next": "2026-11-25",
+    "count": 5,
+    "key": "Moose Ultimate Practice|2026-11-26T00:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12846114"
+   },
+   {
+    "title": "Weekly Practice",
+    "org": "Equestrian Club",
+    "source": "GetInvolved",
+    "next": "2026-11-30",
+    "count": 4,
+    "key": "Weekly Practice|2026-11-30T21:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12817992"
+   },
+   {
+    "title": "Men's Ice Hockey Practice (D2)",
+    "org": "Men's Ice Hockey (D2)",
+    "source": "GetInvolved",
+    "next": "2026-12-01",
+    "count": 12,
+    "key": "Men's Ice Hockey Practice (D2)|2026-12-01T11:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12843509"
+   },
+   {
+    "title": "Pickleball Practice",
+    "org": "Pickleball Club",
+    "source": "GetInvolved",
+    "next": "2026-12-01",
+    "count": 1,
+    "key": "Pickleball Practice|2026-12-01T23:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12986953"
+   },
+   {
+    "title": "Practices (after Nov 4th)",
+    "org": "Fencing Guild",
+    "source": "GetInvolved",
+    "next": "2026-12-02",
+    "count": 2,
+    "key": "Practices (after Nov 4th)|2026-12-02T22:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12745959"
+   }
+  ],
+  "academic-internal": [
+   {
+    "title": "President's Commissions: Fall Gathering 2026",
+    "org": "Office Of The President",
+    "source": "MU Calendar",
+    "next": "2026-11-30",
+    "count": 1,
+    "key": "President's Commissions: Fall Gathering 2026|2026-11-30T16:00:00",
+    "link": "https://www.millersville.edu/calendar/events/Th8z9aVr4IinPhahF19K"
+   },
+   {
+    "title": "Tell School of Music Recital Hour",
+    "org": "Visual & Performing Arts",
+    "source": "GetInvolved",
+    "next": "2026-12-02",
+    "count": 16,
+    "key": "Tell School of Music Recital Hour|2026-12-02T20:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12688493"
+   }
+  ],
+  "greek-reshall-tag": [
+   {
+    "title": "Delta Zeta's Holiday Cookie Sale",
+    "org": "Delta Zeta",
+    "source": "MU Calendar",
+    "next": "2026-12-01",
+    "count": 1,
+    "key": "Delta Zeta's Holiday Cookie Sale|2026-12-01T10:30:00",
+    "link": "https://www.millersville.edu/calendar/events/JK7hzotcaQTDeMcw1uDb"
+   }
+  ],
+  "club-org": [
+   {
+    "title": "Lavender Legacy Walk Fall 2026",
+    "org": "GSA",
+    "source": "GetInvolved",
+    "next": "2026-12-01",
+    "count": 1,
+    "key": "Lavender Legacy Walk Fall 2026|2026-12-01T22:30:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12873687"
+   },
+   {
+    "title": "Alpha Sigma Tau Philanthropy Gala",
+    "org": "Alpha Sigma Tau",
+    "source": "GetInvolved",
+    "next": "2026-12-05",
+    "count": 1,
+    "key": "Alpha Sigma Tau Philanthropy Gala|2026-12-05T14:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12702507"
+   },
+   {
+    "title": "FSL: AGC Carnival",
+    "org": "Campus Life",
+    "source": "MU Calendar",
+    "next": "2027-01-28",
+    "count": 1,
+    "key": "FSL: AGC Carnival|2027-01-28T17:00:00",
+    "link": "https://www.millersville.edu/calendar/events/eUVsSzcGUO2ZfloBSIs1"
+   },
+   {
+    "title": "Primary Recruitment",
+    "org": "Panhellenic Council",
+    "source": "MU Calendar",
+    "next": "2027-02-04",
+    "count": 4,
+    "key": "Primary Recruitment|2027-02-04T17:00:00",
+    "link": "https://www.millersville.edu/calendar/events/vcTS9QmeA6U4lSABDN8K"
+   }
+  ],
+  "category": [
+   {
+    "title": "Fellowship Night",
+    "org": "Reformed University Fellowship",
+    "source": "GetInvolved",
+    "next": "2026-12-03",
+    "count": 1,
+    "key": "Fellowship Night|2026-12-04T01:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12646743"
+   },
+   {
+    "title": "Holiday Maker's Market",
+    "org": "Alumni",
+    "source": "GetInvolved",
+    "next": "2026-12-05",
+    "count": 1,
+    "key": "Holiday Maker's Market|2026-12-05T20:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12973438"
+   }
+  ],
+  "club-sports": [
+   {
+    "title": "Men's Ice Hockey vs University of Pennsylvania",
+    "org": "Men's Ice Hockey (D2)",
+    "source": "GetInvolved",
+    "next": "2026-12-04",
+    "count": 1,
+    "key": "Men's Ice Hockey vs University of Pennsylvania|2026-12-05T00:15:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12987698"
+   },
+   {
+    "title": "Men's Ice Hockey vs Stockton University - Fan Appreciation Night - Black Out !",
+    "org": "Men's Ice Hockey (D2)",
+    "source": "GetInvolved",
+    "next": "2026-12-05",
+    "count": 1,
+    "key": "Men's Ice Hockey vs Stockton University - Fan Appreciation Night - Black Out !|2026-12-05T21:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12987689"
+   },
+   {
+    "title": "'Ville Women's Club Basketball vs. Bucknell University Doubleheader Games",
+    "org": "Women's Club Basketball",
+    "source": "MU Calendar",
+    "next": "2027-01-23",
+    "count": 1,
+    "key": "'Ville Women's Club Basketball vs. Bucknell University Doubleheader Games|2027-01-23T11:00:00",
+    "link": "https://www.millersville.edu/calendar/events/Ndq6lUj5qsaHsyFOCEQZ"
+   }
+  ]
+ },
+ "other": {
+  "total": 88,
+  "bySource": {
+   "HUB": 55,
+   "Jesus Dogs": 19,
+   "MU Calendar / sheet": 1,
+   "The Backyard": 12,
+   "Community": 1
+  }
+ }
+}

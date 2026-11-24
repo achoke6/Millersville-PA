@@ -1534,6 +1534,7 @@ async function runScraper() {
 
         // Source 2: Open-Meteo — condition text, icon, feels-like (free, no API key)
         let condition = 'Unknown', icon = '🌡️', feelsLike = null;
+        let omOk = false, conditionAt = null;   // 2026-11-24: condition carry-forward (below)
         try {
             const omUrl = 'https://api.open-meteo.com/v1/forecast?latitude=39.9982&longitude=-76.3541&current=weather_code,apparent_temperature,temperature_2m,wind_speed_10m,relative_humidity_2m&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America%2FNew_York';
             const omRes = await fetch(omUrl);
@@ -1555,6 +1556,7 @@ async function runScraper() {
                 condition = wmo.cond;
                 icon = wmo.icon;
                 feelsLike = Math.round(c.apparent_temperature);
+                omOk = true; conditionAt = new Date().toISOString();
                 // Use Open-Meteo as fallback if MU station is down
                 if (muTemp === null) {
                     muTemp = Math.round(c.temperature_2m);
@@ -1568,11 +1570,34 @@ async function runScraper() {
             }
         } catch (e) { console.log(`  ⚠️ Open-Meteo unavailable: ${e.message}`); recordMiss('weather', 'Weather', 'Open-Meteo: ' + e.message, { partial: true }); }
 
+        // Condition carry-forward (2026-11-24). Open-Meteo is the ONLY source of the
+        // condition text + icon; when it fails (throw or non-200) the file used to ship
+        // condition "Unknown" (16:21Z 11-24). Reuse the last good condition from the
+        // committed weather.json while it is at most WEATHER_CONDITION_CARRY_MIN old
+        // (conditionAt = when Open-Meteo last answered). Older than that, or no stamp
+        // yet: unchanged behavior. The source-miss record above is not affected.
+        const WEATHER_CONDITION_CARRY_MIN = 180;
+        if (!omOk) {
+            try {
+                const prevW = JSON.parse(fs.readFileSync(path.join(__dirname, '../weather.json'), 'utf8'));
+                const ageMin = prevW && prevW.conditionAt ? Math.round((Date.now() - Date.parse(prevW.conditionAt)) / 60000) : NaN;
+                if (prevW && prevW.condition && prevW.condition !== 'Unknown' && ageMin >= 0 && ageMin <= WEATHER_CONDITION_CARRY_MIN) {
+                    condition = prevW.condition;
+                    icon = prevW.icon || icon;
+                    conditionAt = prevW.conditionAt;
+                    console.log(`  ♻️ Open-Meteo down — carrying condition "${condition}" forward (${ageMin} min old, limit ${WEATHER_CONDITION_CARRY_MIN})`);
+                } else {
+                    console.log(`  ⚠️ Open-Meteo down — no recent condition to carry (${Number.isNaN(ageMin) ? 'no conditionAt stamp' : ageMin + ' min old'}); condition stays "Unknown"`);
+                }
+            } catch (_) { /* no previous weather.json — nothing to carry */ }
+        }
+
         fs.writeFileSync(path.join(__dirname, '../weather.json'), JSON.stringify({
             temp: muTemp ? parseInt(muTemp) : '--',
             feelsLike: feelsLike || (muTemp ? parseInt(muTemp) : '--'),
             condition,
             icon,
+            conditionAt,
             wind: muWindSpeed ? `${muWindSpeed} mph ${muWindDir || ''}`.trim() : 'Calm',
             humidity: muHumidity ? muHumidity + '%' : '--',
             stationUpdate: muUpdate || '',

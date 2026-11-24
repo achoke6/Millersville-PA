@@ -996,7 +996,7 @@ function cornWagonCarryForward(prevSpecials, nowMs) {
 // next-3-within-28-days window — a series that should list EVERY upcoming
 // date sets these high, e.g. 60/365, and the call-site activeRanges filter
 // then clips instances to the entry's windows; legacy items without the
-// fields are byte-identical to the old behavior) }.
+// fields are byte-identical to the old behavior), skipDates? (['YYYY-MM-DD', …] — one-off cancellations: an instance falling on a listed ET day is not emitted and does not count toward expandCount, so the series simply resumes the following week; added 2026-11-24 for Jack's "no karaoke this Wednesday") }.
 // benefits/perkFoodIcon pass through sanitized via eventPerkFields (below).
 // Calendar iteration is done in pure date arithmetic at UTC noon (DST-free),
 // then each instance's ET wall-clock is converted to a true instant via
@@ -1027,11 +1027,14 @@ function expandRecurringEvents(recArr, nowMs, count = 3) {
             ? Math.max(1, Math.min(60, Math.trunc(+rec.expandCount))) : count;
         const horizonN = (rec.expandDays != null && Number.isFinite(+rec.expandDays))
             ? Math.max(7, Math.min(366, Math.trunc(+rec.expandDays))) : 28;
+        const skipDates = new Set(Array.isArray(rec.skipDates)
+            ? rec.skipDates.filter(d => /^\d{4}-\d{2}-\d{2}$/.test(d || '')) : []);
         let found = 0;
         for (let i = 0; i < horizonN && found < capN; i++) {
             const dUtcNoon = new Date(Date.UTC(ty, tm - 1, td + i, 12));
             if (dUtcNoon.getUTCDay() !== wantDay) continue;
             const dayStr = dUtcNoon.toISOString().slice(0, 10);
+            if (skipDates.has(dayStr)) continue;               // one-off cancellation (skipDates)
             const instant = parseEventInstant(`${dayStr}T${rec.time}:00`);
             if (isNaN(instant) || instant <= nowMs) continue;  // today's already-passed slot rolls to next week
             out.push({

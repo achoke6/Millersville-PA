@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-11-24T12:19:49.738Z",
+  "generatedAt": "2026-11-24T14:08:45.830Z",
   "totalEvents": 1971,
   "withDescription": 792,
-  "withImage": 181,
+  "withImage": 180,
   "familyFriendly": 52,
   "interests": {
     "civic": 95,
@@ -171,13 +171,13 @@
       "Campus Life": 1
     },
     "stalePast": 39,
-    "lastSyncAt": "2026-11-24T12:16:23.681Z"
+    "lastSyncAt": "2026-11-24T14:05:24.829Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-24T12:19:47.948Z"
+    "checkedAt": "2026-11-24T14:08:35.907Z"
   },
   "artsmuMerge": {
     "fetched": 43,
@@ -261,6 +261,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Men's Club Basketball vs. Rowan University – Doubleheader|2026-11-22T17:00:00",
+      "firstSeenAt": "2026-11-24T14:08:45.827Z",
+      "title": "Men's Club Basketball vs. Rowan University – Doubleheader",
+      "source": "MU",
+      "date": "2026-11-22T17:00:00"
+    },
+    {
       "key": "Zoning Hearing Board|2027-09-01T23:00:00.000Z",
       "firstSeenAt": "2026-11-24T08:33:45.116Z",
       "title": "Zoning Hearing Board",
@@ -322,21 +329,14 @@
       "title": "SUPERVISORS-SPECIAL MEETING",
       "source": "Manor",
       "date": "2026-11-25T13:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Cross Country at Last Chance Run Fast Invitational|2026-10-23T19:00:00.000Z",
-      "firstSeenAt": "2026-11-23T20:20:21.153Z",
-      "title": "Millersville University Women's Cross Country at Last Chance Run Fast Invitational",
-      "source": "MU",
-      "date": "2026-10-23T19:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
-    "total": 456,
+    "total": 463,
     "reasons": {
       "pm-sub-varsity": 315,
-      "mu-calendar-athletics": 72,
+      "mu-calendar-athletics": 79,
       "camps-skipped": 28,
       "intramural-dup": 1,
       "borough-collection": 13,

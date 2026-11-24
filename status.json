@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-24T14:08:45.830Z",
-  "totalEvents": 1971,
-  "withDescription": 792,
+  "generatedAt": "2026-11-24T15:56:25.519Z",
+  "totalEvents": 1974,
+  "withDescription": 795,
   "withImage": 180,
   "familyFriendly": 52,
   "interests": {
@@ -19,11 +19,11 @@
   "eventsToday": 15,
   "sources": {
     "muAthletics": 383,
-    "muCalendar": 197,
+    "muCalendar": 199,
     "artsmu": 43,
     "eckert": 3,
     "campsAlumni": 9,
-    "muGetInvolved": 498,
+    "muGetInvolved": 499,
     "pennManor": 647,
     "borough": 47,
     "vfw": 6,
@@ -41,7 +41,7 @@
     },
     "muCalendar": {
       "earliest": "2026-08-27T11:30:00.000Z",
-      "latest": "2027-06-04T18:30:00.000Z"
+      "latest": "2027-11-11T18:00:00.000Z"
     },
     "artsmu": {
       "earliest": "2026-11-06T21:00:00.000Z",
@@ -98,8 +98,8 @@
       "daysSinceMoved": 84
     },
     "muCalendar": {
-      "newest": "2027-06-04",
-      "daysSinceMoved": 89
+      "newest": "2027-11-11",
+      "daysSinceMoved": 0
     },
     "artsmu": {
       "newest": "2027-06-04",
@@ -171,13 +171,13 @@
       "Campus Life": 1
     },
     "stalePast": 39,
-    "lastSyncAt": "2026-11-24T14:05:24.829Z"
+    "lastSyncAt": "2026-11-24T15:51:36.502Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-24T14:08:35.907Z"
+    "checkedAt": "2026-11-24T15:56:17.877Z"
   },
   "artsmuMerge": {
     "fetched": 43,
@@ -205,7 +205,7 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 192,
+        "value": 352,
         "min": 30,
         "skipped": false
       },
@@ -261,6 +261,41 @@
   },
   "recentlyAdded": [
     {
+      "key": "Finish Strong!|2026-12-01T11:30:00",
+      "firstSeenAt": "2026-11-24T15:56:25.516Z",
+      "title": "Finish Strong!",
+      "source": "MU",
+      "date": "2026-12-01T11:30:00"
+    },
+    {
+      "key": "Fireside Reading at the Library|2026-12-01T18:00:00",
+      "firstSeenAt": "2026-11-24T15:56:25.516Z",
+      "title": "Fireside Reading at the Library",
+      "source": "MU",
+      "date": "2026-12-01T18:00:00"
+    },
+    {
+      "key": "Final Stretch: Perler Beads Keychain Making|2026-12-08T18:00:00",
+      "firstSeenAt": "2026-11-24T15:56:25.516Z",
+      "title": "Final Stretch: Perler Beads Keychain Making",
+      "source": "MU",
+      "date": "2026-12-08T18:00:00"
+    },
+    {
+      "key": "Annual Brossman Foundation Science Lectureship|2027-11-04T18:00:00",
+      "firstSeenAt": "2026-11-24T15:56:25.516Z",
+      "title": "Annual Brossman Foundation Science Lectureship",
+      "source": "MU",
+      "date": "2027-11-04T18:00:00"
+    },
+    {
+      "key": "Annual Brossman Foundation Science Lectureship|2027-11-11T18:00:00",
+      "firstSeenAt": "2026-11-24T15:56:25.516Z",
+      "title": "Annual Brossman Foundation Science Lectureship",
+      "source": "MU",
+      "date": "2027-11-11T18:00:00"
+    },
+    {
       "key": "Men's Club Basketball vs. Rowan University – Doubleheader|2026-11-22T17:00:00",
       "firstSeenAt": "2026-11-24T14:08:45.827Z",
       "title": "Men's Club Basketball vs. Rowan University – Doubleheader",
@@ -294,49 +329,14 @@
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2027-10-04T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-10-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-24T08:33:45.116Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-10-06T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2027-10-27T12:30:00.000Z",
-      "firstSeenAt": "2026-11-24T08:33:45.116Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-10-27T12:30:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-11-01T23:00:00.000Z",
-      "firstSeenAt": "2026-11-24T08:33:45.116Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-11-01T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board|2027-11-03T23:00:00.000Z",
-      "firstSeenAt": "2026-11-24T08:33:45.116Z",
-      "title": "Zoning Hearing Board",
-      "source": "Manor",
-      "date": "2027-11-03T23:00:00.000Z"
-    },
-    {
-      "key": "SUPERVISORS-SPECIAL MEETING|2026-11-25T13:00:00.000Z",
-      "firstSeenAt": "2026-11-23T20:26:51.974Z",
-      "title": "SUPERVISORS-SPECIAL MEETING",
-      "source": "Manor",
-      "date": "2026-11-25T13:00:00.000Z"
     }
   ],
-  "addedLastRun": 1,
+  "addedLastRun": 5,
   "skippedByRule": {
-    "total": 463,
+    "total": 487,
     "reasons": {
       "pm-sub-varsity": 315,
-      "mu-calendar-athletics": 79,
+      "mu-calendar-athletics": 103,
       "camps-skipped": 28,
       "intramural-dup": 1,
       "borough-collection": 13,

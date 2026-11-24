@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-24T16:14:15.159Z",
-  "totalEvents": 1972,
-  "withDescription": 793,
+  "generatedAt": "2026-11-24T16:30:05.413Z",
+  "totalEvents": 1973,
+  "withDescription": 794,
   "withImage": 180,
   "familyFriendly": 51,
   "interests": {
@@ -23,7 +23,7 @@
     "artsmu": 43,
     "eckert": 3,
     "campsAlumni": 9,
-    "muGetInvolved": 499,
+    "muGetInvolved": 500,
     "pennManor": 647,
     "borough": 47,
     "vfw": 6,
@@ -164,20 +164,19 @@
     "openNoDeadline": 0
   },
   "reviewQueue": {
-    "pendingFuture": 2,
-    "pendingPast": 18,
+    "pendingFuture": 1,
+    "pendingPast": 14,
     "pendingBySource": {
-      "Youth Sports": 1,
-      "Campus Life": 1
+      "Youth Sports": 1
     },
-    "stalePast": 39,
-    "lastSyncAt": "2026-11-24T16:11:02.743Z"
+    "stalePast": 35,
+    "lastSyncAt": "2026-11-24T16:21:43.746Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-24T16:14:11.704Z"
+    "checkedAt": "2026-11-24T16:29:53.556Z"
   },
   "artsmuMerge": {
     "fetched": 43,
@@ -261,6 +260,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Spring 2027 Involvement Fair|2027-01-27T16:30:00.000Z",
+      "firstSeenAt": "2026-11-24T16:30:05.410Z",
+      "title": "Spring 2027 Involvement Fair",
+      "source": "MU",
+      "date": "2027-01-27T16:30:00.000Z"
+    },
+    {
       "key": "Karaoke Night|2026-12-17T03:00:00.000Z",
       "firstSeenAt": "2026-11-24T16:14:15.156Z",
       "title": "Karaoke Night",
@@ -322,13 +328,6 @@
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2027-09-06T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2027-09-29T12:30:00.000Z",
-      "firstSeenAt": "2026-11-24T08:33:45.116Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-09-29T12:30:00.000Z"
     }
   ],
   "addedLastRun": 1,

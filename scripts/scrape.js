@@ -694,8 +694,19 @@ function isIntramuralRegistration(title, desc, orgName) {
 // events.json files with cached values don't break — they just stop
 // being refreshed.
 
+// ---- Gate-rule recorder (2026-11-24, gated-rows status card) ----
+// classifyAudience() answers 'public' | 'mu-only'. For the status page's "Gated to
+// Students" review card we also want to know WHICH rule said mu-only. Every mu-only
+// return below goes through gatedBy(rule); the two call sites read lastGateRule
+// straight after the call and carry it on the row as a private `_gate` field, which
+// buildGatedRegister() reads and deletes before events.json is written. The audience
+// decisions themselves are unchanged.
+let lastGateRule = '';
+function gatedBy(rule) { lastGateRule = rule; return 'mu-only'; }
+
 function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tags = [], benefits = [] }) {
-    if (benefits.includes('Credit')) return 'mu-only';
+    lastGateRule = '';
+    if (benefits.includes('Credit')) return gatedBy('credit');
     const combinedText = ((titleText || '') + ' ' + (descText || '') + ' ' + (orgName || '')).toLowerCase();
 
     // ===== Highest-priority public signals =====
@@ -728,7 +739,7 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
     // after the fundraising gates, exactly as before this guard existed.
     // "meeting" added same evening (2026-10-07): "MEMU Meeting" leaked public via
     // "Math Fair" in its description -- a GI row TITLED ...Meeting is club business.
-    if (/\b(tabling|meetings?)\b/i.test(titleText || '') && !hasExplicitPublicMarker) return 'mu-only';
+    if (/\b(tabling|meetings?)\b/i.test(titleText || '') && !hasExplicitPublicMarker) return gatedBy('title-meeting-tabling');
 
     // Fundraising-tagged events. A frat bake sale or sorority charity event
     // is still a fundraiser open to the public — the tag is the signal.
@@ -757,7 +768,7 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
     // community is an invitation. The last soft return below uses this same
     // marker, so this list is the single gate for GetInvolved -> locals.
     const muOnlyAcademicRegex = /\b(college of |department of |school of |office of (?!sustainability)|honors college|honors program|year[- ]end|end of (the )?year|end of (the )?semester|faculty (mixer|concert|event)|senior (recognition|celebration|class)|graduating class|provost'?s|dean'?s (list|reception)|alumni (and student|student)|student[- ]faculty|capstone|thesis defense|comprehensive exam)\b/i;
-    if (muOnlyAcademicRegex.test(combinedText) && !hasExplicitPublicMarker) return 'mu-only';
+    if (muOnlyAcademicRegex.test(combinedText) && !hasExplicitPublicMarker) return gatedBy('academic-internal');
 
     // ===== GetInvolved CATEGORY signals (2026-09-05) =====
     // Engage's categoryNames carry the same club-business words the text
@@ -767,14 +778,14 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
     // category. Tabling / Meeting / GroupBusiness are student-facing by
     // construction; an explicit public marker in the text still wins.
     const muOnlyCategoryRegex = /^(tabling|meeting|group ?business)$/i;
-    if (rawTags.some(t => muOnlyCategoryRegex.test(String(t).trim())) && !hasExplicitPublicMarker) return 'mu-only';
+    if (rawTags.some(t => muOnlyCategoryRegex.test(String(t).trim())) && !hasExplicitPublicMarker) return gatedBy('category');
 
     // ===== Strong mu-only signals (club business) =====
     const muOnlyKeywordRegex = /\b(bible study|fellowship(?! hall)|chapter meeting|chapter business|weekly meeting|general body meeting|gbm|e-?board meeting|executive meeting|officer meeting|members only|tabling|orientation|info session|information session|club meeting|resume review|mock interview|study group|study session|homework help|office hours|interest meeting|rush|recruitment night|new member|initiation|brother hood|sister hood|sisterhood|brotherhood)\b/i;
     const muOnlyOrgRegex = /\b(fraternity|sorority|christian fellowship|campus ministry|cru |intervarsity|reformed university fellowship|ruf\b|gsa\b|gender and sexuality alliance|residence hall|housing community)\b/i;
-    if (muOnlyKeywordRegex.test(combinedText)) return 'mu-only';
-    if (muOnlyOrgRegex.test(orgName.toLowerCase() + ' ' + combinedText)) return 'mu-only';
-    if (rawTags.some(t => /greek life|residence hall/i.test(t))) return 'mu-only';
+    if (muOnlyKeywordRegex.test(combinedText)) return gatedBy('club-keyword');
+    if (muOnlyOrgRegex.test(orgName.toLowerCase() + ' ' + combinedText)) return gatedBy('club-org');
+    if (rawTags.some(t => /greek life|residence hall/i.test(t))) return gatedBy('greek-reshall-tag');
 
     // ===== Explicit public-language signals =====
     // STRICT POSTURE (Adam, 2026-09-16): GetInvolved reaches locals ONLY on a
@@ -791,7 +802,7 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
     // programming whatever the blurb says ("open to all" = all students) —
     // "Women's Rugby Club Practice" ×12 leaked to locals (2026-09-11).
     // Fundraiser / drive / Homecoming rules above still win first.
-    if (/\b(practices?|scrimmages?|try-?outs?|open gym)\b/i.test(titleText || '')) return 'mu-only';
+    if (/\b(practices?|scrimmages?|try-?outs?|open gym)\b/i.test(titleText || '')) return gatedBy('practice');
     if (hasExplicitPublicMarker) return 'public';
     // Club-sport HOME games are MU-only like every other club row (gate retired
     // 2026-10-01, Adam's call — it had made GetInvolved-sourced club games public
@@ -799,7 +810,7 @@ function classifyAudience({ titleText, descText, orgName = '', rawTags = [], tag
     // No category-only last resort (removed 2026-09-16): an Engage
     // "Service"/"Volunteer" category is a student-org activity type, not an
     // invitation to the community. Default closed.
-    return 'mu-only';
+    return gatedBy('default-closed');
 }
 
 // ---- Alumni-event audience routing (title-keyed; 2026-08-18) ----
@@ -1288,6 +1299,96 @@ const SKIP_REASON_LABELS = {
     'submission-out-of-range':   'Community submission: outside the 90d/365d window',
     'submission-no-deadline':    'Community submission: Signup row with no deadline'
 };
+
+// ---- Gated-rows register (2026-11-24; the follow-on Adam agreed on 2026-11-09) ----
+// The skip register above lists rows kept OFF the site. This one lists rows that are
+// ON the site but hidden from Locals: every UPCOMING row whose audience is mu-only,
+// grouped by the classifier rule that gated it (the row's private _gate field, set at
+// the two classifyAudience call sites). Adam's scope: list EVERY classifier-gated row,
+// and list club-sport rows too (MU-only by his 2026-10-01 ruling) in their own group.
+// Repeating titles collapse to one line (count + next date). mu-only rows that never
+// went through the classifier (The HUB, Jesus Dogs, The Backyard, sheet-stamped rows,
+// the alumni/twin splits) are by design: counted per source, not listed.
+// Written to gated.json (operator-only sidecar; the site never loads it).
+const GATE_ITEM_CAP = 200;   // distinct titles listed per rule
+const GATE_RULE_ORDER = ['default-closed', 'academic-internal', 'club-org', 'greek-reshall-tag', 'club-keyword', 'category', 'title-meeting-tabling', 'practice', 'credit', 'club-sports'];
+const GATE_RULE_LABELS = {
+    'default-closed':        'No public signal found (default closed)',
+    'academic-internal':     'Department / office / year-end wording',
+    'club-org':              'Greek, ministry or residence-hall org named',
+    'greek-reshall-tag':     'Greek Life / Residence Hall category',
+    'club-keyword':          'Club-business keyword (bible study, info session, ...)',
+    'category':              'GetInvolved category: Tabling / Meeting / Group Business',
+    'title-meeting-tabling': 'Title says meeting or tabling',
+    'practice':              'Title says practice / scrimmage / tryout / open gym',
+    'credit':                'Benefit: Credit',
+    'club-sports':           'Club sports (MU-only by ruling)'
+};
+let gatedSummary = { rows: 0, titles: 0, rules: {}, other: 0 };
+function buildGatedRegister(rows, nowMs = Date.now()) {
+    const today = deriveDayET(nowMs);
+    const groups = {};          // rule -> Map(lowercased title -> item)
+    const counts = {};          // rule -> { rows, titles }
+    const otherBySource = {};
+    let other = 0;
+    for (const e of rows) {
+        if (!e) continue;
+        const recorded = e._gate || '';
+        if ('_gate' in e) delete e._gate;                 // never ships in events.json
+        if (e.audience !== 'mu-only') continue;
+        const d = String(e.date || '');
+        const day = /(?:Z|[+-]\d\d:\d\d)$/.test(d) ? deriveDayET(Date.parse(d)) : d.slice(0, 10);
+        if (!day || day < today) continue;                // upcoming only (today counts)
+        const tags = e.tags || [];
+        const rule = tags.includes('Club Sports') ? 'club-sports' : recorded;
+        if (!rule) {
+            other++;
+            const src = tags[0] === 'MU' ? 'MU Calendar / sheet' : (tags[0] || 'Untagged');
+            otherBySource[src] = (otherBySource[src] || 0) + 1;
+            continue;
+        }
+        const c = (counts[rule] = counts[rule] || { rows: 0, titles: 0 });
+        c.rows++;
+        const g = (groups[rule] = groups[rule] || new Map());
+        const title = String(e.title || '').replace(/\s+/g, ' ').trim();
+        const k = title.toLowerCase();
+        const link = String(e.sourceLink || '');
+        const hit = g.get(k);
+        if (hit) {
+            hit.count++;
+            if (day < hit.next) { hit.next = day; hit.key = title + '|' + d; hit.link = link.slice(0, 300); }
+        } else {
+            c.titles++;
+            g.set(k, {
+                title: title.slice(0, 160),
+                org: String(e.orgName || '').slice(0, 80),
+                source: link.includes('getinvolved.millersville.edu') ? 'GetInvolved' : link.includes('millersville.edu/calendar') ? 'MU Calendar' : (tags[0] || ''),
+                next: day, count: 1,
+                key: title + '|' + d,                     // app.js getEventKey() -> /?e=<key>
+                link: link.slice(0, 300)
+            });
+        }
+    }
+    const items = {};
+    for (const rule of Object.keys(groups)) {
+        items[rule] = [...groups[rule].values()]
+            .sort((a, b) => (a.next < b.next ? -1 : a.next > b.next ? 1 : a.title.localeCompare(b.title)))
+            .slice(0, GATE_ITEM_CAP);
+    }
+    const ruleRows = {};
+    let totalRows = 0, totalTitles = 0;
+    for (const r of Object.keys(counts)) { ruleRows[r] = counts[r].rows; totalRows += counts[r].rows; totalTitles += counts[r].titles; }
+    gatedSummary = { rows: totalRows, titles: totalTitles, rules: ruleRows, other };
+    return {
+        generatedAt: new Date(nowMs).toISOString(),
+        scope: 'upcoming mu-only rows (hidden from Locals), grouped by the classifier rule that gated them; repeats collapsed per title; club sports listed by ruling; non-classifier mu-only rows counted under other',
+        itemCap: GATE_ITEM_CAP,
+        order: GATE_RULE_ORDER,
+        labels: GATE_RULE_LABELS,
+        counts, items,
+        other: { total: other, bySource: otherBySource }
+    };
+}
 
 // ---- Penn Manor fetch-failure carry-forward (2026-09-17) -------------------------
 // Pure and harness-testable. On a PM feed failure the run reuses that feed's rows
@@ -3770,6 +3871,7 @@ async function runScraper() {
             // being republished on the main calendar, creating duplicates. Treat these as
             // GetInvolved events so they filter/display/dedupe consistently.
             let audience;
+            let gateRule = '';   // classifier rule that gated this row (gated-rows card, 2026-11-24)
             // Category-outage twin (2026-09-25): no category, but the booking
             // customer is a GetInvolved org -> this is the calendar republish of
             // a student event, same as the old 'Student Event' category.
@@ -3825,6 +3927,7 @@ async function runScraper() {
                     tags,
                     benefits: []
                 });
+                gateRule = audience === 'mu-only' ? lastGateRule : '';
             }
 
             // Club sports are MU-only on every surface (Adam's call, 2026-10-01 --
@@ -3875,7 +3978,8 @@ async function runScraper() {
                 ...(pricing.ticketStatus ? { ticketStatus: pricing.ticketStatus } : {}),
                 description: descHtml,
                 ...(calCustomerName ? { orgName: calCustomerName, orgShortName: resolveOrgShortName(calCustomerName) } : {}),
-                ...(audience ? { audience } : {})
+                ...(audience ? { audience } : {}),
+                ...(gateRule && audience === 'mu-only' ? { _gate: gateRule } : {})
             });
             muCount++;
         });
@@ -4380,6 +4484,7 @@ async function runScraper() {
                 titleText: nameText, descText, orgName,
                 rawTags, tags, benefits
             });
+            const gateRule = audience === 'mu-only' ? lastGateRule : '';   // gated-rows card (2026-11-24)
 
             events.push({
                 title: decorateGenericTitle(item.name || "Student Event", orgDisplayName),
@@ -4402,6 +4507,7 @@ async function runScraper() {
                     : '',
                 benefits: benefits,
                 audience: audience,
+                ...(gateRule ? { _gate: gateRule } : {}),
                 ...(orgDisplayName ? { orgName: orgDisplayName, orgShortName: resolveOrgShortName(orgDisplayName) } : {})
             });
             clubCount++;
@@ -7928,6 +8034,13 @@ async function runScraper() {
         if (typeof e.title === 'string')    e.title    = decodeEntities(e.title).replace(/\s+/g, ' ').trim();
         if (typeof e.location === 'string') e.location = decodeEntities(e.location).replace(/\s+/g, ' ').trim();
     });
+    // Gated-rows register (2026-11-24): read each row's private _gate (the classifier
+    // rule that said mu-only) into the review register and DELETE it, before anything
+    // below serializes the rows. Placed after every audience-changing pass (club-sport
+    // override, alumni routing, calendar/GetInvolved twin split). See buildGatedRegister.
+    let gatedOut = null;
+    try { gatedOut = buildGatedRegister(deduped); }
+    catch (e) { console.log(`  ⚠️ gated register error: ${e.message}`); deduped.forEach(ev => { if (ev && '_gate' in ev) delete ev._gate; }); }
     // Slim pass before write: events.json gets fetched by every page load and
     // is the largest file the frontend downloads. Strip empty/redundant fields
     // and drop pretty-printing — the file is consumed by code, not humans, so
@@ -7997,6 +8110,15 @@ async function runScraper() {
             fs.writeFileSync(path.join(__dirname, '../skipped.json'), JSON.stringify(skippedOut, null, 1));
             console.log(`🗂 Skipped by rule: ${skipTotal} row(s) across ${Object.keys(skipRegister.counts).length} reason(s), ${skipListed} listed in skipped.json`);
         } catch (e) { console.log(`  ⚠️ skipped.json write error: ${e.message}`); }
+    }
+    // gated.json (2026-11-24): the gated-rows register for the status page's "Gated to
+    // Students" card. Operator-only; the site never fetches it. Written every run.
+    if (gatedOut) {
+        try {
+            fs.writeFileSync(path.join(__dirname, '../gated.json'), JSON.stringify(gatedOut, null, 1));
+            const perRule = GATE_RULE_ORDER.filter(r => gatedOut.counts[r]).map(r => `${r} ${gatedOut.counts[r].rows}/${gatedOut.counts[r].titles}`).join(' · ');
+            console.log(`🔒 Gated to students: ${gatedSummary.rows} upcoming row(s) / ${gatedSummary.titles} title(s) across ${Object.keys(gatedOut.counts).length} rule(s)${perRule ? ' — ' + perRule : ''}; ${gatedSummary.other} other mu-only row(s) not from the classifier${gatedSummary.other ? ' (' + Object.keys(gatedOut.other.bySource).map(k => k + ' ' + gatedOut.other.bySource[k]).join(' · ') + ')' : ''}`);
+        } catch (e) { console.log(`  ⚠️ gated.json write error: ${e.message}`); }
     }
 
     // --- schema.org Event JSON-LD for Google rich results -----------------
@@ -8500,7 +8622,10 @@ async function runScraper() {
             skippedByRule: {
                 total: Object.values(skipRegister.counts).reduce((a, b) => a + b, 0),
                 reasons: skipRegister.counts
-            }
+            },
+            // Gated-rows summary (2026-11-24): upcoming mu-only rows per classifier rule;
+            // the titles live in gated.json. `other` = mu-only rows not from the classifier.
+            gatedToStudents: gatedSummary
         };
         fs.writeFileSync(path.join(__dirname, '../status.json'), JSON.stringify(status, null, 2));
         if (status.sourceHealth.ok) {

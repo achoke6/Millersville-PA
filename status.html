@@ -230,7 +230,7 @@ function card(title, rows) {
 function escH(str) { return String(str == null ? '' : str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
 
 async function render() {
-    let status, history = null, notificationsStatus = null, autoEventsStatus = null, skippedData = null;
+    let status, history = null, notificationsStatus = null, autoEventsStatus = null, skippedData = null, gatedData = null;
     try {
         // Bust the cache explicitly — we want fresh numbers, not hourly CDN-
         // cached snapshots. The scraper writes these files as the last step
@@ -246,13 +246,21 @@ async function render() {
         // the corresponding card is omitted instead of showing an error.
         // skipped.json: the skipped-by-rule register (2026-11-09). Optional — 404 or
         // an old scrape.js just omits the card.
-        const [statusRes, historyRes, notifRes, autoRes, skippedRes] = await Promise.all([
+        // gated.json: the gated-rows register (2026-11-24). Optional, same as skipped.json.
+        const [statusRes, historyRes, notifRes, autoRes, skippedRes, gatedRes] = await Promise.all([
             fetch('status.json?' + Date.now(), { cache: 'no-store' }),
             fetch('status-history.json?' + Date.now(), { cache: 'no-store' }).catch(() => null),
             fetch('notifications-status.json?' + Date.now(), { cache: 'no-store' }).catch(() => null),
             fetch('auto-events-status.json?' + Date.now(), { cache: 'no-store' }).catch(() => null),
-            fetch('skipped.json?' + Date.now(), { cache: 'no-store' }).catch(() => null)
+            fetch('skipped.json?' + Date.now(), { cache: 'no-store' }).catch(() => null),
+            fetch('gated.json?' + Date.now(), { cache: 'no-store' }).catch(() => null)
         ]);
+        if (gatedRes && gatedRes.ok) {
+            try {
+                const text = await gatedRes.text();
+                if (text.trimStart().startsWith('{')) gatedData = JSON.parse(text);
+            } catch { /* malformed — ignore */ }
+        }
         if (skippedRes && skippedRes.ok) {
             try {
                 const text = await skippedRes.text();
@@ -655,6 +663,41 @@ async function render() {
             (rows || '<div class="status-metric muted"><span class="status-metric-label">Nothing skipped by rule this run</span></div>')
         );
     }
+    // Gated to students (2026-11-24): rows that ARE on the site but hidden from Locals
+    // (audience mu-only). Upcoming only, repeats collapsed per title, grouped by the
+    // classifier rule that gated them (gated.json, written by scrape.js). The point is
+    // "should a Local be seeing that?". Titles open the event popup on the site (needs a
+    // student/unset identity to show a mu-only row); "source" opens the upstream post.
+    // Informational only: no status colors, no effect on the health banner.
+    let gatedCard = '';
+    if (gatedData && gatedData.counts) {
+        const gLabels = gatedData.labels || {};
+        const gKnown = gatedData.order || [];
+        const gRules = gKnown.filter(r => gatedData.counts[r]).concat(Object.keys(gatedData.counts).filter(r => !gKnown.includes(r)));
+        let gRows = 0, gTitles = 0;
+        const gHtml = gRules.map(r => {
+            const c = gatedData.counts[r] || { rows: 0, titles: 0 };
+            gRows += c.rows; gTitles += c.titles;
+            const items = (gatedData.items && gatedData.items[r]) || [];
+            const lis = items.map(it => {
+                const t = it.key
+                    ? '<a href="https://millersville.app/?e=' + encodeURIComponent(it.key) + '" target="_blank" rel="noopener" title="Open on millersville.app">' + escH(it.title || '(untitled)') + '</a>'
+                    : escH(it.title || '(untitled)');
+                const src = it.link && /^https?:\/\//i.test(it.link) ? '<a href="' + escH(it.link) + '" target="_blank" rel="noopener">' + escH(it.source || 'source') + ' \u2197</a>' : escH(it.source || '');
+                const tail = [it.next ? escH(it.next) : '', it.count > 1 ? '\u00d7' + it.count : '', it.org ? escH(it.org) : '', src].filter(Boolean).join(' \u00b7 ');
+                return '<li>' + t + (tail ? ' <span class="status-metric-hint">' + tail + '</span>' : '') + '</li>';
+            }).join('');
+            const capNote = c.titles > items.length ? 'first ' + items.length + ' of ' + c.titles + ' titles' : '';
+            return '<details class="status-metric" style="display:block"><summary style="cursor:pointer;display:flex;justify-content:space-between"><span class="status-metric-label">' + escH(gLabels[r] || r) + '</span><span class="status-metric-value">' + c.rows + '<span class="status-metric-hint">' + c.titles + ' title' + (c.titles === 1 ? '' : 's') + '</span></span></summary><ul style="margin:6px 0 4px 18px;padding:0;font-size:0.85em;line-height:1.5">' + lis + '</ul>' + (capNote ? '<div class="status-metric-hint">' + capNote + '</div>' : '') + '</details>';
+        }).join('');
+        const gOther = gatedData.other || { total: 0, bySource: {} };
+        const gOtherHint = Object.keys(gOther.bySource || {}).sort((a, b) => gOther.bySource[b] - gOther.bySource[a]).map(s => escH(s) + ' ' + gOther.bySource[s]).join(' \u00b7 ');
+        gatedCard = card('Gated to Students (upcoming)',
+            metric('Rows the classifier hides from Locals', gRows, { hint: gTitles + ' distinct title' + (gTitles === 1 ? '' : 's') + ' \u00b7 repeats collapsed' }) +
+            (gHtml || '<div class="status-metric muted"><span class="status-metric-label">No classifier-gated rows upcoming</span></div>') +
+            metric('Other MU-only rows (by design or sheet)', gOther.total || 0, { hint: gOtherHint || 'count only' })
+        );
+    }
     // Source misses (2026-11-24): how often a source's fetch FAILED in past scrapes.
     // scrape.js keeps, per ET day in status-history.json, `runs` (scrapes recorded)
     // and `misses` { key: { label, count, partial, lastTs, lastError, lastCarried } }.
@@ -705,7 +748,7 @@ async function render() {
             );
         }
     }
-    document.getElementById('grid').innerHTML = sourcesCard + missesCard + sportsCard + contentCard + interestsCard + registrationsCard + reviewQueueCard + notificationsCard + autoScraperCard + recentAddedCard + skippedCard;
+    document.getElementById('grid').innerHTML = sourcesCard + missesCard + sportsCard + contentCard + interestsCard + registrationsCard + reviewQueueCard + notificationsCard + autoScraperCard + recentAddedCard + skippedCard + gatedCard;
 }
 
 render();

@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-11-23T22:34:31.821Z",
-  "totalEvents": 1987,
-  "withDescription": 803,
-  "withImage": 186,
+  "generatedAt": "2026-11-24T00:22:23.861Z",
+  "totalEvents": 1971,
+  "withDescription": 792,
+  "withImage": 181,
   "familyFriendly": 52,
   "interests": {
-    "civic": 96,
-    "greek": 25,
+    "civic": 95,
+    "greek": 24,
     "causes": 33,
     "learn": 65,
     "arts": 94,
     "food": 123,
-    "music": 90,
+    "music": 89,
     "crafts": 14,
     "active": 4,
     "reshall": 3
@@ -23,15 +23,15 @@
     "artsmu": 43,
     "eckert": 3,
     "campsAlumni": 9,
-    "muGetInvolved": 509,
-    "pennManor": 650,
-    "borough": 48,
+    "muGetInvolved": 498,
+    "pennManor": 647,
+    "borough": 47,
     "vfw": 6,
     "phantomPower": 13,
     "community": 14,
     "manor": 38,
     "raneyCellars": 4,
-    "theBackyard": 29,
+    "theBackyard": 28,
     "muHudlBroadcasts": 62
   },
   "sourceDateRanges": {
@@ -56,15 +56,15 @@
       "latest": "2027-08-20T23:30:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-08-25T07:30:00.000Z",
+      "earliest": "2026-08-26T11:00:00.000Z",
       "latest": "2027-10-27T11:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-08-25T17:00:00.000Z",
+      "earliest": "2026-08-26T20:00:00.000Z",
       "latest": "2027-10-25T20:00:00.000Z"
     },
     "borough": {
-      "earliest": "2026-08-25T23:00:00.000Z",
+      "earliest": "2026-08-27T22:30:00.000Z",
       "latest": "2027-10-31T22:00:00.000Z"
     },
     "vfw": {
@@ -88,7 +88,7 @@
       "latest": "2026-11-20T21:00:00.000Z"
     },
     "theBackyard": {
-      "earliest": "2026-08-25T15:00:00.000Z",
+      "earliest": "2026-08-26T15:00:00.000Z",
       "latest": "2027-04-28T15:00:00.000Z"
     }
   },
@@ -151,7 +151,7 @@
     }
   },
   "sports": {
-    "total": 933,
+    "total": 930,
     "scored": 205,
     "wins": 99,
     "losses": 94,
@@ -171,13 +171,13 @@
       "Campus Life": 1
     },
     "stalePast": 39,
-    "lastSyncAt": "2026-11-23T22:32:39.816Z"
+    "lastSyncAt": "2026-11-24T00:20:11.390Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 5,
-    "checkedAt": "2026-11-23T22:34:29.769Z"
+    "checkedAt": "2026-11-24T00:22:17.055Z"
   },
   "artsmuMerge": {
     "fetched": 43,
@@ -219,7 +219,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 550,
+        "value": 547,
         "min": 150,
         "skipped": false
       },

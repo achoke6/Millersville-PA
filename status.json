@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-25T16:34:09.597Z",
+  "generatedAt": "2026-11-25T18:22:38.608Z",
   "totalEvents": 1963,
   "withDescription": 789,
   "withImage": 179,
@@ -168,13 +168,13 @@
     "pendingPast": 15,
     "pendingBySource": {},
     "stalePast": 35,
-    "lastSyncAt": "2026-11-25T16:30:46.592Z"
+    "lastSyncAt": "2026-11-25T18:19:44.337Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-25T16:33:58.559Z"
+    "checkedAt": "2026-11-25T18:22:29.108Z"
   },
   "artsmuMerge": {
     "fetched": 42,
@@ -258,6 +258,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Zoning Hearing Board-CANCELED|2026-12-03T00:00:00.000Z",
+      "firstSeenAt": "2026-11-25T18:22:38.605Z",
+      "title": "Zoning Hearing Board-CANCELED",
+      "source": "Manor",
+      "date": "2026-12-03T00:00:00.000Z"
+    },
+    {
       "key": "Thanksgiving Day CLOSED|2026-11-26T12:00:00.000Z",
       "firstSeenAt": "2026-11-25T14:45:13.126Z",
       "title": "Thanksgiving Day CLOSED",
@@ -319,16 +326,9 @@
       "title": "Millersville University Women's Basketball vs PSAC Championship",
       "source": "MU",
       "date": "2027-03-07T17:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Men's Basketball vs Championship|2027-03-07T17:00:00.000Z",
-      "firstSeenAt": "2026-11-25T01:34:12.116Z",
-      "title": "Millersville University Men's Basketball vs Championship",
-      "source": "MU",
-      "date": "2027-03-07T17:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 480,
     "reasons": {
@@ -358,7 +358,7 @@
     "other": 88
   },
   "pmHudlCheck": {
-    "generatedAt": "2026-11-25T16:32:37.235Z",
+    "generatedAt": "2026-11-25T18:21:05.228Z",
     "toleranceMin": 15,
     "hudlEntries": 77,
     "teamsLeveled": 2,

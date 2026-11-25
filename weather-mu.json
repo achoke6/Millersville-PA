@@ -1,64 +1,48 @@
 {
   "forecast": {
     "synopsis": "",
-    "issued": "Tuesday, November 24, 2026 at 12:07 PM (Longo and Rooney, Student Meteorologists)",
+    "issued": "Wednesday, November 25, 2026 at 07:31 AM (Kyle Elliott, Meteorologist)",
     "periods": [
       {
-        "period": "This afternoon",
-        "text": "Sunny, breezy, and much cooler. High: 46-50"
+        "period": "Today",
+        "text": "Mostly cloudy and chilly. High: 44-48"
       },
       {
         "period": "Tonight",
-        "text": "Mainly clear and cold. Low: 22-26"
-      },
-      {
-        "period": "Wednesday",
-        "text": "Chilly with increasing clouds. High: 46-50"
-      },
-      {
-        "period": "Wednesday Night",
         "text": "Cloudy and turning breezy with rain developing after midnight. Low: 36-40"
       },
       {
         "period": "Thursday",
-        "text": "Cloudy and windy with periods of rain, some heavy at times. High: 48-52"
+        "text": "Cloudy and very windy with periods of rain, some heavy at times. High: 48-52"
+      },
+      {
+        "period": "Thursday Night",
+        "text": "Mainly cloudy, breezy and mild with scattered showers. Low: 44-48"
+      },
+      {
+        "period": "Friday",
+        "text": "Mostly cloudy and blustery with a few passing showers. High: 50-54"
       }
     ]
   },
   "sevenDay": {
-    "issued": "Tuesday, November 24, 2026 at 08:40 AM (Guillaume, Lowell)",
+    "issued": "Wednesday, November 25, 2026 at 08:11 AM (Kyle Elliott)",
     "days": [
       {
-        "period": "Tuesday",
-        "sky": "Sunny",
-        "weather": "Cooler",
-        "pop": "<10%",
-        "temp": "48",
-        "conf": "5"
-      },
-      {
-        "period": "Tuesday night",
-        "sky": "Mainly Clear",
-        "weather": "Cold",
-        "pop": "<10%",
-        "temp": "24",
-        "conf": "5"
-      },
-      {
         "period": "Wednesday",
-        "sky": "Increasing Clouds",
+        "sky": "Mostly Cloudy",
         "weather": "Cool",
         "pop": "<10%",
-        "temp": "48",
+        "temp": "46",
         "conf": "5"
       },
       {
         "period": "Wednesday night",
         "sky": "Cloudy",
         "weather": "Rain Developing",
-        "pop": "80%",
+        "pop": ">90%",
         "temp": "38",
-        "conf": "4"
+        "conf": "5"
       },
       {
         "period": "Thursday",
@@ -72,23 +56,23 @@
         "period": "Thursday night",
         "sky": "Mostly Cloudy",
         "weather": "Scattered Showers",
-        "pop": "70%",
-        "temp": "44",
+        "pop": "80%",
+        "temp": "46",
         "conf": "4"
       },
       {
         "period": "Friday",
         "sky": "Mostly Cloudy",
         "weather": "Passing Showers",
-        "pop": "40%",
+        "pop": "60%",
         "temp": "52",
         "conf": "4"
       },
       {
         "period": "Friday night",
-        "sky": "Partly Cloudy",
+        "sky": "Mostly Cloudy",
         "weather": "Breezy",
-        "pop": "<10%",
+        "pop": "20%",
         "temp": "42",
         "conf": "4"
       },
@@ -98,7 +82,7 @@
         "weather": "Breezy",
         "pop": "<10%",
         "temp": "52",
-        "conf": "3"
+        "conf": "4"
       },
       {
         "period": "Saturday night",
@@ -106,14 +90,22 @@
         "weather": "Fair",
         "pop": "<10%",
         "temp": "34",
-        "conf": "3"
+        "conf": "4"
       },
       {
         "period": "Sunday",
         "sky": "Clouds & Sun",
         "weather": "Pleasant",
         "pop": "<10%",
-        "temp": "mid 50s",
+        "temp": "56",
+        "conf": "3"
+      },
+      {
+        "period": "Sunday night",
+        "sky": "Mostly Cloudy",
+        "weather": "Chc. of Showers",
+        "pop": "40%",
+        "temp": "44",
         "conf": "3"
       },
       {
@@ -121,12 +113,42 @@
         "sky": "Mostly Cloudy",
         "weather": "Chc. of Showers",
         "pop": "30%",
-        "temp": "upper 50s",
+        "temp": "mid 50s",
+        "conf": "3"
+      },
+      {
+        "period": "Tuesday",
+        "sky": "Partly Sunny",
+        "weather": "Seasonable",
+        "pop": "<10%",
+        "temp": "upper 40s",
         "conf": "3"
       }
     ]
   },
   "observations": [
+    {
+      "time": "08:00",
+      "temp": "27",
+      "dewpoint": "24",
+      "rh": "90",
+      "windDir": "S",
+      "windSpeed": "0",
+      "precip": "0.00",
+      "visibility": "11.8",
+      "condition": "None"
+    },
+    {
+      "time": "07:00",
+      "temp": "25",
+      "dewpoint": "23",
+      "rh": "91",
+      "windDir": "SW",
+      "windSpeed": "2",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
     {
       "time": "06:00",
       "temp": "26",
@@ -166,28 +188,6 @@
       "dewpoint": "23",
       "rh": "79",
       "windDir": "NW",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "02:00",
-      "temp": "31",
-      "dewpoint": "22",
-      "rh": "71",
-      "windDir": "ESE",
-      "windSpeed": "2",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "01:00",
-      "temp": "31",
-      "dewpoint": "23",
-      "rh": "72",
-      "windDir": "ESE",
       "windSpeed": "2",
       "precip": "0.00",
       "visibility": "12 +",
@@ -510,5 +510,5 @@
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-25T11:38:06.332Z"
+  "updated": "2026-11-25T13:21:55.270Z"
 }

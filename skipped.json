@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-25T01:24:26.418Z",
+ "generatedAt": "2026-11-25T01:34:11.909Z",
  "scope": "content-rule skips only — no date-window drops, no duplicates; gated (mu-only/townie-only) rows are emitted, not listed here",
  "itemCap": 40,
  "labels": {
@@ -18,7 +18,8 @@
   "submission-not-approved": "Community submission: not approved (review queue)",
   "submission-bad-date": "Community submission: unparseable date",
   "submission-out-of-range": "Community submission: outside the 90d/365d window",
-  "submission-no-deadline": "Community submission: Signup row with no deadline"
+  "submission-no-deadline": "Community submission: Signup row with no deadline",
+  "pm-stale-twin": "Penn Manor: game listed twice, the copy with no location dropped"
  },
  "counts": {
   "pm-sub-varsity": 315,
@@ -27,7 +28,8 @@
   "intramural-dup": 1,
   "borough-collection": 13,
   "borough-reservation": 17,
-  "submission-not-approved": 1
+  "submission-not-approved": 1,
+  "pm-stale-twin": 1
  },
  "items": {
   "intramural-dup": [
@@ -186,6 +188,16 @@
     "location": "Here",
     "link": "",
     "note": "Status blank"
+   }
+  ],
+  "pm-stale-twin": [
+   {
+    "source": "Penn Manor Athletics",
+    "title": "Boys Varsity Basketball @ Chambersburg Area High School",
+    "date": "2026-12-05T00:00:00.000Z",
+    "location": "TBA",
+    "link": "https://www.pennmanor.net/event/boys-varsity-basketball-chambersburg-area-high-school/",
+    "note": "kept the GOV MIFFLIN GMACC copy"
    }
   ]
  }

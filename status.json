@@ -1,22 +1,22 @@
 {
-  "generatedAt": "2026-11-25T13:24:21.818Z",
-  "totalEvents": 1967,
-  "withDescription": 791,
+  "generatedAt": "2026-11-25T14:45:13.129Z",
+  "totalEvents": 1963,
+  "withDescription": 789,
   "withImage": 179,
   "familyFriendly": 51,
   "interests": {
-    "civic": 95,
+    "civic": 94,
     "greek": 23,
     "causes": 33,
     "learn": 65,
     "arts": 94,
-    "food": 123,
+    "food": 121,
     "music": 90,
     "crafts": 14,
     "active": 4,
     "reshall": 3
   },
-  "eventsToday": 10,
+  "eventsToday": 7,
   "sources": {
     "muAthletics": 383,
     "muCalendar": 200,
@@ -26,10 +26,10 @@
     "muGetInvolved": 496,
     "pennManor": 643,
     "borough": 47,
-    "vfw": 6,
+    "vfw": 5,
     "phantomPower": 13,
     "community": 13,
-    "manor": 39,
+    "manor": 37,
     "raneyCellars": 5,
     "theBackyard": 27,
     "muHudlBroadcasts": 62
@@ -68,7 +68,7 @@
       "latest": "2027-10-31T22:00:00.000Z"
     },
     "vfw": {
-      "earliest": "2026-11-11T20:30:00.000Z",
+      "earliest": "2026-11-18T23:00:00.000Z",
       "latest": "2026-11-29T18:00:00.000Z"
     },
     "phantomPower": {
@@ -80,7 +80,7 @@
       "latest": "2027-05-16T03:59:00.000Z"
     },
     "manor": {
-      "earliest": "2026-11-25T13:00:00.000Z",
+      "earliest": "2026-12-03T00:00:00.000Z",
       "latest": "2027-11-24T13:30:00.000Z"
     },
     "raneyCellars": {
@@ -168,13 +168,13 @@
     "pendingPast": 15,
     "pendingBySource": {},
     "stalePast": 35,
-    "lastSyncAt": "2026-11-25T13:21:53.865Z"
+    "lastSyncAt": "2026-11-25T14:41:53.643Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-25T13:24:12.343Z"
+    "checkedAt": "2026-11-25T14:45:04.582Z"
   },
   "artsmuMerge": {
     "fetched": 42,
@@ -237,7 +237,7 @@
       {
         "key": "manor.count",
         "ok": true,
-        "value": 39,
+        "value": 37,
         "min": 10
       },
       {
@@ -257,6 +257,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Thanksgiving Day CLOSED|2026-11-26T12:00:00.000Z",
+      "firstSeenAt": "2026-11-25T14:45:13.126Z",
+      "title": "Thanksgiving Day CLOSED",
+      "source": "Raney Cellars",
+      "date": "2026-11-26T12:00:00.000Z"
+    },
     {
       "key": "Millersville University Men's Basketball vs First Round|2027-03-01T17:00:00.000Z",
       "firstSeenAt": "2026-11-25T01:34:12.116Z",
@@ -319,16 +326,9 @@
       "title": "Millersville University Men's Basketball vs Championship",
       "source": "MU",
       "date": "2027-03-07T17:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Softball at Virginia Union University|2027-03-08T17:00:00.000Z",
-      "firstSeenAt": "2026-11-25T01:34:12.116Z",
-      "title": "Millersville University Softball at Virginia Union University",
-      "source": "MU",
-      "date": "2027-03-08T17:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 479,
     "reasons": {
@@ -358,7 +358,7 @@
     "other": 88
   },
   "pmHudlCheck": {
-    "generatedAt": "2026-11-25T13:22:58.251Z",
+    "generatedAt": "2026-11-25T14:43:37.363Z",
     "toleranceMin": 15,
     "hudlEntries": 77,
     "teamsLeveled": 2,

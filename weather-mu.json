@@ -128,6 +128,17 @@
   },
   "observations": [
     {
+      "time": "09:00",
+      "temp": "33",
+      "dewpoint": "25",
+      "rh": "75",
+      "windDir": "E",
+      "windSpeed": "4",
+      "precip": "0.00",
+      "visibility": "12 +",
+      "condition": "None"
+    },
+    {
       "time": "08:00",
       "temp": "27",
       "dewpoint": "24",
@@ -178,17 +189,6 @@
       "rh": "79",
       "windDir": "NNE",
       "windSpeed": "3",
-      "precip": "0.00",
-      "visibility": "12 +",
-      "condition": "None"
-    },
-    {
-      "time": "03:00",
-      "temp": "29",
-      "dewpoint": "23",
-      "rh": "79",
-      "windDir": "NW",
-      "windSpeed": "2",
       "precip": "0.00",
       "visibility": "12 +",
       "condition": "None"
@@ -481,6 +481,20 @@
   },
   "videos": [
     {
+      "title": "Short Term Forecast 11/25/2026",
+      "videoId": "3eM8cKgSjSI",
+      "url": "https://www.youtube.com/watch?v=3eM8cKgSjSI",
+      "published": "2026-11-25T14:38:55+00:00",
+      "thumbnail": "https://i4.ytimg.com/vi/3eM8cKgSjSI/hqdefault.jpg"
+    },
+    {
+      "title": "Medium Range Forecast 11/25/2026",
+      "videoId": "bCH79P0Buew",
+      "url": "https://www.youtube.com/watch?v=bCH79P0Buew",
+      "published": "2026-11-25T13:50:55+00:00",
+      "thumbnail": "https://i3.ytimg.com/vi/bCH79P0Buew/hqdefault.jpg"
+    },
+    {
       "title": "Short Term Forecast 11/24/2026",
       "videoId": "SSGsmqJ3wyc",
       "url": "https://www.youtube.com/watch?v=SSGsmqJ3wyc",
@@ -493,22 +507,8 @@
       "url": "https://www.youtube.com/watch?v=xS2EwFV1D14",
       "published": "2026-11-23T16:02:46+00:00",
       "thumbnail": "https://i1.ytimg.com/vi/xS2EwFV1D14/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 11/20/26",
-      "videoId": "9u1-vEz2SoM",
-      "url": "https://www.youtube.com/watch?v=9u1-vEz2SoM",
-      "published": "2026-11-20T17:43:07+00:00",
-      "thumbnail": "https://i2.ytimg.com/vi/9u1-vEz2SoM/hqdefault.jpg"
-    },
-    {
-      "title": "Short Term Forecast 11/20/2026",
-      "videoId": "GR7eIhiy8MU",
-      "url": "https://www.youtube.com/watch?v=GR7eIhiy8MU",
-      "published": "2026-11-20T14:22:46+00:00",
-      "thumbnail": "https://i4.ytimg.com/vi/GR7eIhiy8MU/hqdefault.jpg"
     }
   ],
   "sourceUrl": "https://www.millersville.edu/weathercenter/",
-  "updated": "2026-11-25T13:21:55.270Z"
+  "updated": "2026-11-25T14:41:55.852Z"
 }

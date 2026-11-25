@@ -1310,6 +1310,104 @@ const SKIP_REASON_LABELS = {
     'pm-stale-twin':             'Penn Manor: game listed twice, the copy with no location dropped'
 };
 
+// ---- Penn Manor vs Hudl schedule cross-check (2026-11-24) ----
+// LOG-ONLY second opinion on Penn Manor game dates/times. Adam's ruling: neither source
+// is the authority yet (Hudl lists ~77 of ~860 games and runs ~10 minutes ahead of
+// tip-off; Penn Manor's calendar has carried a stale duplicate), so this never edits a
+// row -- it lists the disagreements for a human. Flags: time (>15 min apart), day (same
+// opponent within 3 days, different day), opponent (same team + day, different opponent),
+// no-time (site row is a time-TBA placeholder, Hudl has a time). Silent when Hudl has a
+// game the site lacks, and when Hudl lacks a game. Hudl entries carry a teamId but no
+// Varsity/JV label: a team's level is LEARNED from its own entries that already line up
+// with a site row (2+ agreeing, 80%+), and unlearned teams are skipped.
+const PM_HUDL_TOLERANCE_MIN = 15;
+const PM_HUDL_FLAG_CAP = 40;
+const PM_OPP_STOP = new Set(['high', 'school', 'schools', 'sc', 'hs', 'sr', 'jr', 'senior', 'junior', 'area', 'the', 'of', 'and', 'county', 'district', 'academy', 'middle', 'ms']);
+const PM_OPP_ALIASES = [[/\belco\b/g, 'eastern lebanon county'], [/\be-?town\b/g, 'elizabethtown'], [/\bl-?s\b/g, 'lampeter strasburg'], [/\bcv\b/g, 'conestoga valley'], [/\blcd\b/g, 'lancaster country day']];
+function pmOppWords(name) {
+    let s = String(name || '').toLowerCase().replace(/[\u2018\u2019']/g, '');
+    PM_OPP_ALIASES.forEach(([re, to]) => { s = s.replace(re, to); });
+    return s.replace(/[^a-z0-9]+/g, ' ').trim().split(' ').filter(Boolean);
+}
+function pmOppSame(a, b) {
+    const wa = pmOppWords(a), wb = pmOppWords(b);
+    const ta = wa.filter(w => w.length >= 3 && !PM_OPP_STOP.has(w)), tb = wb.filter(w => w.length >= 3 && !PM_OPP_STOP.has(w));
+    if (!ta.length || !tb.length) return true;                       // nothing to compare: do not flag
+    if (ta.some(w => tb.includes(w))) return true;
+    const ia = wa.map(w => w[0]).join(''), ib = wb.map(w => w[0]).join('');
+    return (ia.length >= 3 && wb.includes(ia)) || (ib.length >= 3 && wa.includes(ib));   // "NYHS" = Northern York High School
+}
+function crossCheckPmHudl(hudlItems, rowsIn, hudlSportMap, nowMs = Date.now()) {
+    const fmt = ms => new Date(ms).toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', timeZone: 'America/New_York' });
+    const clock = ms => new Date(ms).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'America/New_York' });
+    const sportNames = new Set(Object.values(hudlSportMap));
+    const rows = [];
+    for (const e of rowsIn) {
+        const t = e && e.tags || [];
+        if (t[0] !== 'PM' || !t.includes('Athletics')) continue;
+        const level = t.includes('Varsity') ? 'Varsity' : t.includes('JV') ? 'JV' : '';
+        const gender = t.includes('Girls') ? 1 : t.includes('Boys') ? 0 : -1;
+        const sportTag = t.find(x => sportNames.has(String(x).toLowerCase()));
+        const m = String(e.title || '').match(/^(.*?)\s(?:vs\.?|@|at)\s+(.+)$/i);
+        const ms = parseEventInstant(e.date);
+        if (!level || gender < 0 || !sportTag || !m || isNaN(ms)) continue;
+        const hm = clock(ms);
+        rows.push({ e, ms, day: deriveDayET(ms), key: sportTag.toLowerCase() + '|' + gender, level, team: m[1].trim(), opp: m[2].trim(), tba: !!(e.timeTBA || e.allDay) || hm === '00:01' || hm === '00:00' });
+    }
+    const items = [];
+    for (const it of hudlItems || []) {
+        const ms = Date.parse(it.timeUtc), sport = hudlSportMap[it.sportId];
+        if (isNaN(ms) || !sport || !it.opp || it.teamId == null) continue;
+        items.push({ ms, day: deriveDayET(ms), key: sport + '|' + (it.genderId === 1 ? 1 : 0), teamId: String(it.teamId), opp: String(it.opp).trim() });
+    }
+    const nearest = (list, ms) => list.reduce((best, r) => (!best || Math.abs(r.ms - ms) < Math.abs(best.ms - ms)) ? r : best, null);
+    const tolMs = PM_HUDL_TOLERANCE_MIN * 60000;
+    // Pass 1: learn each Hudl team's level.
+    const votes = {};
+    for (const it of items) {
+        const r = nearest(rows.filter(x => x.key === it.key && x.day === it.day && !x.tba && pmOppSame(x.opp, it.opp)), it.ms);
+        if (r && Math.abs(r.ms - it.ms) <= tolMs) { const v = (votes[it.teamId] = votes[it.teamId] || {}); v[r.level] = (v[r.level] || 0) + 1; }
+    }
+    const levelOf = {};
+    for (const [team, v] of Object.entries(votes)) {
+        const total = Object.values(v).reduce((a, b) => a + b, 0);
+        const [lvl, n] = Object.entries(v).sort((a, b) => b[1] - a[1])[0];
+        if (n >= 2 && n / total >= 0.8) levelOf[team] = lvl;
+    }
+    // Pass 2: compare upcoming entries of learned teams.
+    let checked = 0, agree = 0, unlisted = 0, skippedTeams = 0;
+    const flags = [];
+    const flag = (kind, it, r) => flags.push({
+        kind, team: r.team, title: String(r.e.title || '').slice(0, 160), key: (r.e.title || '') + '|' + (r.e.date || ''), link: String(r.e.sourceLink || '').slice(0, 300),
+        sortMs: Math.min(it.ms, r.ms), site: (r.tba ? fmt(r.ms).replace(/,[^,]*$/, '') + ', time TBA' : fmt(r.ms)) + ' \u00b7 ' + r.opp, hudl: fmt(it.ms) + ' \u00b7 ' + it.opp
+    });
+    for (const it of items) {
+        if (it.ms < nowMs) continue;
+        const lvl = levelOf[it.teamId];
+        if (!lvl) { skippedTeams++; continue; }
+        const pool = rows.filter(x => x.key === it.key && x.level === lvl);
+        const sameDay = pool.filter(x => x.day === it.day);
+        const matched = sameDay.filter(x => pmOppSame(x.opp, it.opp));
+        if (matched.length) {
+            const r = nearest(matched, it.ms); checked++;
+            if (r.tba) flag('no-time', it, r);
+            else if (Math.abs(r.ms - it.ms) > tolMs) flag('time', it, r);
+            else agree++;
+        } else if (sameDay.length === 1) { checked++; flag('opponent', it, sameDay[0]); }
+        else if (sameDay.length === 0) {
+            const r = nearest(pool.filter(x => pmOppSame(x.opp, it.opp) && Math.abs(x.ms - it.ms) <= 3.5 * 86400000), it.ms);
+            if (r) { checked++; flag('day', it, r); } else unlisted++;
+        }
+    }
+    flags.sort((a, b) => a.sortMs - b.sortMs);
+    flags.forEach(f => { delete f.sortMs; });
+    return {
+        generatedAt: new Date(nowMs).toISOString(), toleranceMin: PM_HUDL_TOLERANCE_MIN,
+        hudlEntries: items.length, teamsLeveled: Object.keys(levelOf).length,
+        checked, agree, unlisted, skippedTeams, flagCount: flags.length, flags: flags.slice(0, PM_HUDL_FLAG_CAP)
+    };
+}
+
 // ---- Gated-rows register (2026-11-24; the follow-on Adam agreed on 2026-11-09) ----
 // The skip register above lists rows kept OFF the site. This one lists rows that are
 // ON the site but hidden from Locals: every UPCOMING row whose audience is mu-only,
@@ -2963,6 +3061,7 @@ async function runScraper() {
     // ===== 2b. HUDL BROADCAST CHECK (Penn Manor) =====
     // Hoisted for the sourceHealth invariants in status.json (see the status block).
     let pmHudlMatched = 0, pmHudlWithBroadcasts = 0;
+    let pmHudlCheck = null;   // 2026-11-24: PM-vs-Hudl schedule cross-check summary (status.json)
     try {
         console.log("📡 Checking Hudl broadcasts for PM games...");
         const hudlQuery = `query Web_Fan_GetScheduleEntrySummaries_r1($input: GetScheduleEntryPublicSummariesInput!) {
@@ -2981,6 +3080,7 @@ async function runScraper() {
         const hudlBroadcasts = new Map(); // key: YYYY-MM-DD|sportId|genderId -> broadcast info
         const hudlScores = new Map(); // key: YYYY-MM-DD|sportId|genderId -> score info
         const hudlAllEntries = new Map(); // key: YYYY-MM-DD|sportId|genderId -> all tracked games
+        const hudlItems = [];   // 2026-11-24: every entry (time, team, opponent) for the schedule cross-check
         let totalHudlEntries = 0, broadcastCount = 0, scoreCount = 0;
 
         // Query Hudl in chunks, handling pagination
@@ -3032,6 +3132,7 @@ async function runScraper() {
 
                     for (const item of items) {
                         sportIdsSeen.add(`${item.sportId}:g${item.genderId}`);
+                        hudlItems.push({ timeUtc: item.timeUtc, sportId: item.sportId, genderId: item.genderId, teamId: item.teamId, opp: (item.opponentDetails && (item.opponentDetails.name || item.opponentDetails.shortName)) || '' });
                         const gameDate = new Date(item.timeUtc).toISOString().split('T')[0];
                         const key = `${gameDate}|${item.sportId}|${item.genderId}`;
 
@@ -3135,6 +3236,13 @@ async function runScraper() {
         }
         console.log(`  📺 Matched ${matchCount} broadcasts, ${highlightCount} highlight links`);
         pmHudlMatched = matchCount; pmHudlWithBroadcasts = broadcastCount;
+        // Schedule cross-check (2026-11-24): Penn Manor calendar vs Hudl, log-only. Its own
+        // try/catch: a failure here must never disturb the broadcast/score matching above.
+        try {
+            pmHudlCheck = crossCheckPmHudl(hudlItems, events, hudlSportMap);
+            console.log(`  🧭 PM vs Hudl schedule check: ${pmHudlCheck.checked} upcoming game(s) compared, ${pmHudlCheck.agree} agree (within ${pmHudlCheck.toleranceMin} min), ${pmHudlCheck.flagCount} flagged; ${pmHudlCheck.unlisted} Hudl entr${pmHudlCheck.unlisted === 1 ? 'y' : 'ies'} with no site game, ${pmHudlCheck.teamsLeveled} Hudl team(s) recognized`);
+            pmHudlCheck.flags.forEach(f => console.log(`     • [${f.kind}] ${f.team} — site: ${f.site} | Hudl: ${f.hudl}`));
+        } catch (e) { console.log(`  ⚠️ PM vs Hudl schedule check error: ${e.message}`); }
         // Store for score matching after MaxPreps
         global._hudlScores = hudlScores;
         global._hudlSportToId = sportToHudlId;
@@ -8728,7 +8836,10 @@ async function runScraper() {
             },
             // Gated-rows summary (2026-11-24): upcoming mu-only rows per classifier rule;
             // the titles live in gated.json. `other` = mu-only rows not from the classifier.
-            gatedToStudents: gatedSummary
+            gatedToStudents: gatedSummary,
+            // PM-vs-Hudl schedule cross-check (2026-11-24): log-only disagreements; null when
+            // the Hudl fetch failed this run.
+            pmHudlCheck
         };
         fs.writeFileSync(path.join(__dirname, '../status.json'), JSON.stringify(status, null, 2));
         if (status.sourceHealth.ok) {

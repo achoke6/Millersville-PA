@@ -698,6 +698,28 @@ async function render() {
             metric('Other MU-only rows (by design or sheet)', gOther.total || 0, { hint: gOtherHint || 'count only' })
         );
     }
+    // Schedule cross-check (2026-11-24): Penn Manor's calendar vs Hudl's schedule for the
+    // same upcoming games (status.json.pmHudlCheck). Log-only: nothing on the site is
+    // changed by it and neither source is treated as the authority; it lists the games
+    // where the two disagree so a human can look. Informational, no status colors.
+    let pmCheckCard = '';
+    if (status.pmHudlCheck) {
+        const pc = status.pmHudlCheck;
+        const kindLabel = { time: 'Start time', day: 'Day', opponent: 'Opponent', 'no-time': 'Site has no time' };
+        const lis = (pc.flags || []).map(f => {
+            const t = f.key
+                ? '<a href="https://millersville.app/?e=' + encodeURIComponent(f.key) + '" target="_blank" rel="noopener">' + escH(f.title || f.team || '') + '</a>'
+                : escH(f.title || f.team || '');
+            const src = f.link && /^https?:\/\//i.test(f.link) ? ' \u00b7 <a href="' + escH(f.link) + '" target="_blank" rel="noopener">source \u2197</a>' : '';
+            return '<li><strong>' + escH(kindLabel[f.kind] || f.kind) + ':</strong> ' + t + '<br><span class="status-metric-hint">Site: ' + escH(f.site) + '<br>Hudl: ' + escH(f.hudl) + src + '</span></li>';
+        }).join('');
+        const more = (pc.flagCount || 0) > (pc.flags || []).length ? '<div class="status-metric-hint">first ' + pc.flags.length + ' of ' + pc.flagCount + '</div>' : '';
+        pmCheckCard = card('Schedule Cross-Check: Penn Manor vs Hudl',
+            metric('Upcoming games compared', pc.checked || 0, { hint: (pc.agree || 0) + ' agree within ' + (pc.toleranceMin || 15) + ' min \u00b7 Hudl lists only some games' }) +
+            metric('Disagreements', pc.flagCount || 0, { hint: 'log-only \u00b7 nothing is changed' }) +
+            (lis ? '<ul style="margin:6px 0 4px 18px;padding:0;font-size:0.85em;line-height:1.5">' + lis + '</ul>' + more : '')
+        );
+    }
     // Source misses (2026-11-24): how often a source's fetch FAILED in past scrapes.
     // scrape.js keeps, per ET day in status-history.json, `runs` (scrapes recorded)
     // and `misses` { key: { label, count, partial, lastTs, lastError, lastCarried } }.
@@ -748,7 +770,7 @@ async function render() {
             );
         }
     }
-    document.getElementById('grid').innerHTML = sourcesCard + missesCard + sportsCard + contentCard + interestsCard + registrationsCard + reviewQueueCard + notificationsCard + autoScraperCard + recentAddedCard + skippedCard + gatedCard;
+    document.getElementById('grid').innerHTML = sourcesCard + missesCard + sportsCard + contentCard + interestsCard + registrationsCard + reviewQueueCard + notificationsCard + autoScraperCard + recentAddedCard + skippedCard + gatedCard + pmCheckCard;
 }
 
 render();

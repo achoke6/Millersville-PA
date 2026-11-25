@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-24T23:26:05.365Z",
-  "totalEvents": 1977,
-  "withDescription": 795,
-  "withImage": 180,
+  "generatedAt": "2026-11-25T00:43:32.346Z",
+  "totalEvents": 1968,
+  "withDescription": 791,
+  "withImage": 179,
   "familyFriendly": 51,
   "interests": {
     "civic": 95,
-    "greek": 24,
+    "greek": 23,
     "causes": 33,
     "learn": 65,
     "arts": 94,
@@ -23,15 +23,15 @@
     "artsmu": 42,
     "eckert": 3,
     "campsAlumni": 9,
-    "muGetInvolved": 500,
-    "pennManor": 649,
+    "muGetInvolved": 496,
+    "pennManor": 644,
     "borough": 47,
     "vfw": 6,
     "phantomPower": 13,
     "community": 13,
-    "manor": 38,
+    "manor": 39,
     "raneyCellars": 5,
-    "theBackyard": 28,
+    "theBackyard": 27,
     "muHudlBroadcasts": 62
   },
   "sourceDateRanges": {
@@ -56,11 +56,11 @@
       "latest": "2027-08-20T23:30:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-08-26T11:00:00.000Z",
+      "earliest": "2026-08-28T12:00:00.000Z",
       "latest": "2027-10-27T11:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-08-26T20:00:00.000Z",
+      "earliest": "2026-08-27T22:00:00.000Z",
       "latest": "2027-10-25T20:00:00.000Z"
     },
     "borough": {
@@ -81,14 +81,14 @@
     },
     "manor": {
       "earliest": "2026-11-25T13:00:00.000Z",
-      "latest": "2027-11-03T23:00:00.000Z"
+      "latest": "2027-11-24T13:30:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-11-12T21:00:00.000Z",
       "latest": "2026-11-27T23:00:00.000Z"
     },
     "theBackyard": {
-      "earliest": "2026-08-26T15:00:00.000Z",
+      "earliest": "2026-08-27T13:00:00.000Z",
       "latest": "2027-04-28T15:00:00.000Z"
     }
   },
@@ -138,8 +138,8 @@
       "daysSinceMoved": 14
     },
     "manor": {
-      "newest": "2027-11-03",
-      "daysSinceMoved": 21
+      "newest": "2027-11-24",
+      "daysSinceMoved": 0
     },
     "raneyCellars": {
       "newest": "2026-11-27",
@@ -151,10 +151,10 @@
     }
   },
   "sports": {
-    "total": 932,
+    "total": 927,
     "scored": 206,
-    "wins": 100,
-    "losses": 94,
+    "wins": 99,
+    "losses": 95,
     "ties": 12
   },
   "registrations": {
@@ -168,13 +168,13 @@
     "pendingPast": 15,
     "pendingBySource": {},
     "stalePast": 35,
-    "lastSyncAt": "2026-11-24T23:23:42.683Z"
+    "lastSyncAt": "2026-11-25T00:40:57.823Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-24T23:26:01.077Z"
+    "checkedAt": "2026-11-25T00:43:21.846Z"
   },
   "artsmuMerge": {
     "fetched": 42,
@@ -216,7 +216,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 549,
+        "value": 544,
         "min": 150,
         "skipped": false
       },
@@ -237,7 +237,7 @@
       {
         "key": "manor.count",
         "ok": true,
-        "value": 38,
+        "value": 39,
         "min": 10
       },
       {
@@ -257,6 +257,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Traffic Commission Meeting|2027-11-24T13:30:00.000Z",
+      "firstSeenAt": "2026-11-25T00:43:32.343Z",
+      "title": "Traffic Commission Meeting",
+      "source": "Manor",
+      "date": "2027-11-24T13:30:00.000Z"
+    },
     {
       "key": "JIMMIE&#x27;S CHICKEN SHACK w/ Emily’s Toybox and The Kozaks|2026-12-19T01:00:00.000Z",
       "firstSeenAt": "2026-11-24T22:52:59.333Z",
@@ -319,16 +326,9 @@
       "title": "Supervisors Meeting",
       "source": "Manor",
       "date": "2027-09-06T23:00:00.000Z"
-    },
-    {
-      "key": "Traffic Commission Meeting|2027-09-29T12:30:00.000Z",
-      "firstSeenAt": "2026-11-24T20:54:16.914Z",
-      "title": "Traffic Commission Meeting",
-      "source": "Manor",
-      "date": "2027-09-29T12:30:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 478,
     "reasons": {

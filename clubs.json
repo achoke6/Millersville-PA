@@ -51,10 +51,12 @@
   },
   {
     "name": "Alliance for Social Change",
-    "category": "",
-    "categories": [],
-    "shortName": "",
-    "id": ""
+    "category": "Academic",
+    "categories": [
+      "Academic"
+    ],
+    "shortName": "ASC",
+    "id": "allianceforsocialchange"
   },
   {
     "name": "Alpha Sigma Alpha",
@@ -263,12 +265,13 @@
   },
   {
     "name": "Bowling Club",
-    "category": "Sports and Leisure",
+    "category": "Meeting",
     "categories": [
-      "Sports and Leisure"
+      "Meeting",
+      "Sporting"
     ],
     "shortName": "",
-    "id": "bowlingclub"
+    "id": ""
   },
   {
     "name": "Campus Life",
@@ -501,9 +504,9 @@
   },
   {
     "name": "Conestoga Outdoors Club",
-    "category": "Social",
+    "category": "Meeting",
     "categories": [
-      "Social"
+      "Meeting"
     ],
     "shortName": "Conestoga Outdoors",
     "id": ""
@@ -1515,8 +1518,10 @@
   },
   {
     "name": "Shenks Residence Hall",
-    "category": "",
-    "categories": [],
+    "category": "Educational Program",
+    "categories": [
+      "Educational Program"
+    ],
     "shortName": "",
     "id": ""
   },

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-25T05:43:13.411Z",
+  "generatedAt": "2026-11-25T07:32:05.997Z",
   "totalEvents": 1967,
   "withDescription": 791,
   "withImage": 179,
@@ -168,13 +168,13 @@
     "pendingPast": 15,
     "pendingBySource": {},
     "stalePast": 35,
-    "lastSyncAt": "2026-11-25T05:40:42.888Z"
+    "lastSyncAt": "2026-11-25T07:28:39.742Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-25T05:43:02.366Z"
+    "checkedAt": "2026-11-25T07:31:53.966Z"
   },
   "artsmuMerge": {
     "fetched": 42,
@@ -202,7 +202,7 @@
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 352,
+        "value": 351,
         "min": 30,
         "skipped": false
       },
@@ -358,7 +358,7 @@
     "other": 88
   },
   "pmHudlCheck": {
-    "generatedAt": "2026-11-25T05:41:43.813Z",
+    "generatedAt": "2026-11-25T07:30:32.930Z",
     "toleranceMin": 15,
     "hudlEntries": 77,
     "teamsLeveled": 2,

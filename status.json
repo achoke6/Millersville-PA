@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-25T01:34:12.118Z",
+  "generatedAt": "2026-11-25T01:46:53.900Z",
   "totalEvents": 1967,
   "withDescription": 791,
   "withImage": 179,
@@ -168,13 +168,13 @@
     "pendingPast": 15,
     "pendingBySource": {},
     "stalePast": 35,
-    "lastSyncAt": "2026-11-25T01:31:26.989Z"
+    "lastSyncAt": "2026-11-25T01:43:58.136Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-25T01:34:07.773Z"
+    "checkedAt": "2026-11-25T01:46:46.766Z"
   },
   "artsmuMerge": {
     "fetched": 42,
@@ -328,7 +328,7 @@
       "date": "2027-03-08T17:00:00.000Z"
     }
   ],
-  "addedLastRun": 30,
+  "addedLastRun": 0,
   "skippedByRule": {
     "total": 479,
     "reasons": {
@@ -356,5 +356,27 @@
       "club-sports": 3
     },
     "other": 88
+  },
+  "pmHudlCheck": {
+    "generatedAt": "2026-11-25T01:45:07.233Z",
+    "toleranceMin": 15,
+    "hudlEntries": 77,
+    "teamsLeveled": 2,
+    "checked": 8,
+    "agree": 7,
+    "unlisted": 1,
+    "skippedTeams": 0,
+    "flagCount": 1,
+    "flags": [
+      {
+        "kind": "opponent",
+        "team": "Boys Varsity Basketball",
+        "title": "Boys Varsity Basketball vs Northeastern High School",
+        "key": "Boys Varsity Basketball vs Northeastern High School|2027-01-16T17:30:00.000Z",
+        "link": "https://www.pennmanor.net/event/boys-varsity-basketball-vs-northeastern-high-school/",
+        "site": "Sat, Jan 16, 12:30 PM · Northeastern High School",
+        "hudl": "Sat, Jan 16, 12:30 PM · Northern York High School"
+      }
+    ]
   }
 }

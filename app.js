@@ -31,6 +31,7 @@ let allEvents=[], currentNews=[], allRestaurants=[];
 // today regardless of this value.
 let homeViewDate = null;
 let evOn = new Set();   // 2026-11-12: active Events-page chips — see EVENTS PAGE — ONE-ROW FILTER (replaces evActiveSources/evAllMode/evTags/evKidMode/evFreeFoodMode/evFreeStuffMode/evFavOnlyMode)
+let evPagePref = null;   // 2026-11-25: Events PAGE mode (/events?f=<pref id>) — see EVENTS: PAGES; null = the normal list
 
 // ==================== MY FEED SYSTEM ====================
 const FEED_KEY = 'mapp_feed_prefs';
@@ -2677,7 +2678,7 @@ window.feedRefreshFollowing = function() {
     const label = id => resolvePrefLabel(id).replace(/^\S+\s+/, m => /^[A-Za-z0-9]/.test(m) ? m : '');
     list.innerHTML = ids.length
         ? `<div style="display:flex;flex-wrap:wrap;gap:6px;">${ids.map(id => `<span class="feed-following-chip" data-pref="${id.replace(/"/g, '&quot;')}" style="display:inline-flex;align-items:center;gap:4px;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:3px 6px 3px 9px;font-size:0.78rem;font-weight:600;">★ ${label(id)}<button type="button" onclick="window.feedUnstage(this)" aria-label="Unfollow" style="border:0;background:transparent;color:var(--text-muted);font:inherit;font-size:0.7rem;padding:0 2px;cursor:pointer;">✕</button></span>`).join('')}</div>`
-        : `<div style="font-size:0.78rem;color:var(--text-muted);">Nothing yet — tap ☆ Follow on any event, or tick something below. 💾 Save keeps it.</div>`;
+        : `<div style="font-size:0.78rem;color:var(--text-muted);">Nothing yet — tick something below, or tap ☆ on a team, place or club page. 💾 Save keeps it.</div>`;
 };
 window.feedUnstage = function(btn) {
     const chip = btn && btn.closest('.feed-following-chip');
@@ -3423,6 +3424,11 @@ const pathToView=Object.fromEntries(Object.entries(viewPaths).map(([k,v])=>[v,k]
 //                       2026-11-12. Absent → the persisted set stands.
 //   src= tag= kid= food= stuff=   Legacy (pre-11-12) params, read as aliases into
 //                       chip keys so old shared links still land; never written.
+//   f=raney-cellars-all Page mode (2026-11-25): ONE pref id — a place, club:<name>, a feed or
+//                       interest:<key>. Owns the URL while open (i= is not written);
+//                       unknown ids are ignored. Never changes the persisted chip set.
+//                       (f for "feed id" — NOT p: ?p=/path is the 404.html redirect the
+//                       router consumes on load, and it would eat a pref id.)
 //
 // Sports (/sports?...):
 //   src=MU              Comma-separated subset of MU/PM/Clubs.
@@ -3470,6 +3476,10 @@ function applyURLStateToView(view) {
             evOn = new Set(keys.filter(k => EV_CHIP_BY[k] && EV_CHIP_BY[k].kind !== 'link' && evChipVisible(EV_CHIP_BY[k])));
             evSaveOn();
         }
+        // Page mode (2026-11-25): ?f=<pref id> — one place / club / feed / interest.
+        // Absent or unknown → the normal list. Never touches evOn.
+        const pParam = params.get('f');
+        evPagePref = (pParam && evPageValid(pParam)) ? pParam : null;
     } else if (view === 'sports') {
         const validSpSrc = ['PM', 'MU', 'Clubs'];
         const srcParam = params.get('src');
@@ -3504,7 +3514,8 @@ function writeURLStateForView(view) {
 
     if (view === 'events') {
         // Emit in EV_CHIPS order so the same chip combo always yields the same URL.
-        if (evOn.size) params.set('i', EV_CHIPS.filter(d => evOn.has(d.k)).map(d => d.k).join(','));
+        if (evPagePref) params.set('f', evPagePref);   // page mode (2026-11-25) owns the URL while it is open
+        else if (evOn.size) params.set('i', EV_CHIPS.filter(d => evOn.has(d.k)).map(d => d.k).join(','));
     } else if (view === 'sports') {
         const canonicalSpSrc = ['PM', 'MU', 'Clubs'];
         if (!spAllMode && spActiveSources.size > 0 && spActiveSources.size < canonicalSpSrc.length) {
@@ -3535,8 +3546,9 @@ function updatePageTitleForView(view) {
     let prefix = '';
 
     if (view === 'events') {
-        const parts = EV_CHIPS.filter(d => evOn.has(d.k)).map(d => d.l);
-        parts.push('Events');
+        const pageInfo = evPagePref ? evPageInfo(evPagePref) : null;   // page mode (2026-11-25)
+        const parts = pageInfo ? [pageInfo.name] : EV_CHIPS.filter(d => evOn.has(d.k)).map(d => d.l);
+        if (!pageInfo || !/events$/i.test(pageInfo.name)) parts.push('Events');
         prefix = parts.join(' ');
     } else if (view === 'sports') {
         const parts = [];
@@ -3860,6 +3872,9 @@ window.switchView=function(view,skipPush){
     if(!skipPush && window.location.pathname.replace(/\/$/,'')!==path){
         history.pushState({view},'',path);
     }
+    // Leaving an Events PAGE (2026-11-25): a nav tap to Events always lands on the full list.
+    // (evGoPage and the router/popstate pass skipPush, so they never trip this.)
+    if(view==='events' && !skipPush && evPagePref){ evPagePref=null; renderEvents(); writeURLStateForView('events'); }
     // Sync document.title with the new view (filter-aware for events/sports,
     // default site title elsewhere). Called after the pushState so the URL is
     // already correct when the title resolves.
@@ -4185,26 +4200,142 @@ window.evUnfollow = function(prefId) {
     renderEvents();
     writeURLStateForView('events');
 };
-// ☆ Follow on the event sheet. Reuses suggestFeedIdForEvent (best pref id for this event — a club,
-// a team, a place) and toggleCardFavorite (persist + surgical ★ refresh); re-syncs push prefs.
-function evFollowButtonHTML(e) {
-    if (typeof suggestFeedIdForEvent !== 'function') return '';
-    const prefId = suggestFeedIdForEvent(e, isSportEvent(e) || isPMSportByTitle(e));
-    if (!prefId) return '';
-    const on = !!(feedPrefs && feedPrefs.indexOf(prefId) !== -1);
-    const label = resolvePrefLabel(prefId).replace(/^\S+\s+/, m => /^[A-Za-z0-9]/.test(m) ? m : '');
-    return `<button type="button" class="btn btn-sm int-follow${on ? ' on' : ''}" data-pref="${escHtml(prefId)}" onclick="event.stopPropagation();evFollowFromSheet(this)">${on ? '★ Following' : '☆ Follow'} ${escHtml(label)}</button>`;
+// ☆ Follow on the event sheet RETIRED 2026-11-25 (Adam: ⚙️ and the ＋ sheet cover it) —
+// evFollowButtonHTML / evFollowFromSheet are gone (retire-don't-dorm). The sheet's bottom bar
+// opens the event's PAGE instead, and the page head carries the ☆ (team-page precedent).
+/* ==================== EVENTS: PAGES (/events?f=<pref id>) — 2026-11-25 ====================
+   A page is the Events list narrowed to ONE followable thing: a place (raney-cellars-all),
+   a club (club:<name>), a feed (mu-arts, pm-music …) or an interest (interest:music). Its
+   rows are whatever lib/eventMatch.js says belongs to that pref id — eventMatchesFeed(e,
+   [prefId]) — so a page always lists exactly what following it would star. That is a
+   READ-ONLY use of the matcher: no Hard Rule 7 exposure, nothing to mirror in PHP.
+   The param is f ("feed id"), not p — the router consumes ?p=/path (404.html redirect).
+
+   Transient, like the Sports team view: evOn / mapp_interests are never touched, the
+   sticky toolbar + chip row hide, and "‹ All events" (or a nav tap) exits. Sport pref ids
+   are NOT pages (teams have the Sports team view) — evPageInfo returns null for them.
+
+   Gates: the AUDIENCE gate (isHiddenForViewer) always applies. The hidden-source gate
+   does NOT (Adam, 2026-11-25: "if they can find it they should be able to visit the
+   page" — same as the team view's "a team implies its source").
+   ========================================================================================== */
+// Pref ids whose page borrows an Events-row chip's icon / name / hint.
+const EV_PAGE_CHIP = { 'raney-cellars-all': 'Raney', 'other-phantom': 'Phantom', 'other-vfw': 'VFW', 'jacks-tavern-all': 'Jacks', 'other-community': 'Community', 'borough-all': 'Borough', 'manor-all': 'Manor', 'family-events': 'family' };
+// Pref ids whose ⚙️ label needs its school / place spelled out to stand alone on a page.
+const EV_PAGE_NAMES = {
+    'pm-music': ['🎵', 'Penn Manor Music & Arts'], 'pm-board': ['📋', 'Penn Manor Board & PTO'],
+    'mu-arts': ['🎭', 'MU Arts & Performances'], 'mu-public': ['📢', 'MU Public Events'], 'mu-alumni': ['🎓', 'MU Alumni Events'],
+    'clubs-all': ['🎓', 'MU GetInvolved'], 'clubs-social': ['🎉', 'MU Social Clubs'], 'clubs-arts': ['🎭', 'MU Club Arts & Performance'], 'clubs-service': ['🤝', 'MU Service & Community'],
+    'hub-all': ['🥪', 'The HUB'], 'jesus-dogs-all': ['🌭', 'Free Hot Dog Thursdays'], 'backyard-all': ['😊', 'The Backyard']
+};
+// The tag pill a page's bar makes redundant on the event sheet (clubs: the org tag itself).
+const EV_PAGE_TAG = { 'raney-cellars-all': 'Raney Cellars', 'jacks-tavern-all': "Jack's Tavern", 'jesus-dogs-all': 'Jesus Dogs', 'backyard-all': 'The Backyard', 'hub-all': 'HUB', 'other-community': 'Community', 'mu-public': 'Public Event' };
+
+// prefId → { icon, name, hint } or null when the id is not a page (unknown ids, sport prefs).
+function evPageInfo(prefId) {
+    if (!prefId || typeof prefId !== 'string') return null;
+    if (prefId.indexOf('club:') === 0) return prefId.length > 5 ? { icon: '🎓', name: prefId.slice(5), hint: '' } : null;
+    // interest:<key> only for the registered interest feeds (eventFeedIds) — never a chip
+    // that merely shares a key (family-events is its own id; Free Food / Free Stuff have none).
+    const chipKey = EV_PAGE_CHIP[prefId] || (prefId.indexOf('interest:') === 0 && eventFeedIds.has(prefId) ? prefId.slice(9) : null);
+    const d = chipKey ? EV_CHIP_BY[chipKey] : null;
+    if (d && (d.kind === 'where' || d.kind === 'what')) return { icon: d.ic, name: d.l, hint: d.hint || '' };
+    if (EV_PAGE_NAMES[prefId]) return { icon: EV_PAGE_NAMES[prefId][0], name: EV_PAGE_NAMES[prefId][1], hint: '' };
+    if (!eventFeedIds.has(prefId)) return null;
+    for (const g of Object.values(feedSections.events.groups)) {
+        const s = (g.subs || []).find(x => x.id === prefId);
+        if (s) return { icon: s.icon || '📅', name: s.label, hint: '' };
+    }
+    return null;
 }
-window.evFollowFromSheet = function(btn) {
-    const prefId = btn && btn.getAttribute('data-pref');
-    if (!prefId) return;
-    toggleCardFavorite(prefId, null);
-    const on = !!(feedPrefs && feedPrefs.indexOf(prefId) !== -1);
-    btn.classList.toggle('on', on);
-    btn.textContent = (on ? '★ Following ' : '☆ Follow ') + resolvePrefLabel(prefId).replace(/^\S+\s+/, m => /^[A-Za-z0-9]/.test(m) ? m : '');
+function evPageMatches(e, prefId) { return !!(window.eventMatchModule && window.eventMatchModule.eventMatchesFeed(e, [prefId])); }
+// Club ids are free text, so a club page must be backed by at least one event in the feed —
+// a hand-typed ?f=club:anything cannot mint a page. (Before events.json lands the id is
+// accepted provisionally; renderEvents re-checks once the data is in.)
+function evPageValid(prefId) {
+    if (!evPageInfo(prefId)) return false;
+    if (prefId.indexOf('club:') !== 0 || !allEvents || !allEvents.length) return true;
+    return allEvents.some(e => evPageMatches(e, prefId));
+}
+// The page's rows: every event from today on that the matcher gives this pref id, minus
+// signup-only rows and anything the viewer's AUDIENCE may not see. Games included (a club's
+// page lists its games too). Deliberately NOT run through isEventFromHiddenSource.
+function evPageRows(prefId) {
+    const today = toDateStr(todayMidnight());
+    return (allEvents || []).filter(e => !isSignupOnly(e) && !isHiddenForViewer(e) && localDateStr(e.date) >= today && evPageMatches(e, prefId));
+}
+// Event sheet bottom bar for a non-team event → { html, tag } or null. Target = the same
+// "best pref id" the retired ☆ used (suggestFeedIdForEvent). Fail-closed: no target, no
+// page name, or an event its own page would not list ⇒ no bar.
+function evPageBarFor(e) {
+    if (typeof suggestFeedIdForEvent !== 'function') return null;
+    const prefId = suggestFeedIdForEvent(e, false);
+    const info = prefId ? evPageInfo(prefId) : null;
+    if (!info || !evPageMatches(e, prefId)) return null;
+    const n = evPageRows(prefId).length;
+    const html = `<a href="${viewPaths.events}?f=${encodeURIComponent(prefId)}" class="ev-team-bar" data-pref="${escHtml(prefId)}" aria-label="See all ${escHtml(info.name)} events" onclick="event.preventDefault();window.destroyEventDetailsMiniMap();this.closest('.event-details-overlay').remove();evGoPage(this.getAttribute('data-pref'))">`
+        + `<span class="ev-team-glyph" aria-hidden="true">${info.icon}</span>`
+        + `<span class="ev-team-txt"><span class="ev-team-name">${escHtml(info.name)}</span>`
+        + (info.hint ? `<span class="ev-team-sub">${escHtml(info.hint)}</span>` : '')
+        + `<span class="ev-team-sub">${n ? n + ' coming up' : 'Nothing coming up right now'}</span>`
+        + `</span><span class="ev-team-cta">All events ›</span></a>`;
+    return { html, tag: prefId.indexOf('club:') === 0 ? prefId.slice(5) : (EV_PAGE_TAG[prefId] || null) };
+}
+// Hide / show the list chrome (sticky toolbar, chip row, note) — a page has its own head.
+function evSetPageChrome(on) {
+    const sticky = document.querySelector('#view-events .sticky-nav-bar');
+    if (sticky) sticky.style.display = on ? 'none' : '';
+}
+function renderEvPage() {
+    const container = document.getElementById('ev-events-container');
+    if (!container) return;
+    if (!allEvents || allEvents.length === 0) { container.innerHTML = renderSkeletonRows(6); return; }
+    const prefId = evPagePref, info = evPageInfo(prefId);
+    if (!info) return;
+    const rows = evPageRows(prefId);
+    const isFav = !!(feedPrefs && feedPrefs.indexOf(prefId) !== -1);
+    const sub = [info.hint, rows.length ? rows.length + ' coming up' : ''].filter(Boolean).join(' · ');
+    // Head = the Sports team view's head (same classes): icon · name · sub-line · ☆.
+    let html = `<a href="${viewPaths.events}" class="ev-page-back" onclick="event.preventDefault();evExitPage()">‹ All events</a>`
+        + `<div class="sp-team-head"><div class="sp-team-title"><span class="sp-team-icon">${info.icon}</span>`
+        + `<span class="sp-team-name"><span>${escHtml(info.name)}</span>${sub ? `<span class="sp-team-sub">${escHtml(sub)}</span>` : ''}</span>`
+        + `<button type="button" class="sp-team-star${isFav ? ' active' : ''}" onclick="evPageStar(this)" title="${isFav ? 'Remove from favorites' : 'Add to favorites'}" aria-label="${isFav ? 'Remove from favorites' : 'Add to favorites'}">${isFav ? '★' : '☆'}</button>`
+        + `</div></div>`;
+    if (!rows.length) {
+        html += `<div class="empty-state"><p>Nothing scheduled for ${escHtml(info.name)} right now.</p><p style="font-size:0.82rem;color:var(--text-muted);margin-top:4px;">New events come in hourly. Tap ☆ to follow and they will show up starred when they do.</p></div>`;
+    } else {
+        const rowNow = new Date();
+        // isFirst=false on every group: the toolbar that names the first day is hidden here.
+        html += groupEventsByDay(rows).map(g => buildDayGroupHTML(g, e => buildTimelineItem(e, rowNow, { showLocation: true }), false, null, 'ev-day-sheet')).join('');
+        html += `<div class="load-more-note">That's everything scheduled for ${escHtml(info.name)}.</div>`;
+    }
+    container.innerHTML = html;
+    if (typeof refreshDayLabels === 'function') refreshDayLabels();
+}
+// Enter a page from anywhere (the event sheet's bottom bar). The page URL is PUSHED, so Back
+// returns the visitor to wherever they opened the event.
+window.evGoPage = function(prefId) {
+    if (!evPageValid(prefId)) return;
+    evPagePref = prefId;
+    switchView('events', true);   // skipPush — the push below carries ?f=
+    history.pushState({ view: 'events' }, '', viewPaths.events + '?f=' + encodeURIComponent(prefId));
+    renderEvents();
+    updatePageTitleForView('events');
+    window.scrollTo(0, 0);
+    try { if (typeof gtag === 'function') gtag('event', 'event_page', { pref: prefId, audience: evIdentity() === 'townie' ? 'townies' : 'marauders' }); } catch (err) {}
+};
+window.evExitPage = function() {
+    evPagePref = null;
+    renderEvents();
+    writeURLStateForView('events');
+    window.scrollTo(0, 0);
+};
+// ☆ in the page head — the one Follow control outside ⚙️ / the ＋ sheet for a place or club.
+window.evPageStar = function(btn) {
+    if (!evPagePref) return;
+    toggleCardFavorite(evPagePref, btn);
     if (typeof resendNotificationPrefs === 'function') resendNotificationPrefs();
-    if (!on && (!feedPrefs || !feedPrefs.length)) { evOn.delete('fav'); evSaveOn(); }
-    renderEvRow();
+    if ((!feedPrefs || !feedPrefs.length) && evOn.has('fav')) { evOn.delete('fav'); evSaveOn(); }   // last follow gone: retire the ⭐ lens with it
 };
 // Row glyphs (Events page only): up to two interest icons the viewer's row can act on.
 function evRowGlyphs(e) {
@@ -4426,6 +4557,10 @@ function renderSkeletonRows(n) {
 
 function updateEventsUI(){ renderEvRow(); }   // kept as the name older callers use; the row is the whole toolbar state now
 function renderEvents(){
+    // PAGE mode (2026-11-25): one place / club / feed / interest — see EVENTS: PAGES.
+    if (evPagePref && allEvents && allEvents.length && !evPageValid(evPagePref)) evPagePref = null;   // data is in and nothing backs the id
+    evSetPageChrome(!!evPagePref);
+    if (evPagePref) { renderEvPage(); return; }
     updateEventsUI();
     const container = document.getElementById('ev-events-container');
     // Loading state: events.json hasn't returned yet. Render 4 skeleton cards
@@ -4493,7 +4628,7 @@ function renderEvents(){
     // row (buildTimelineItem) with a venue line instead of the full .app-card,
     // so a week fits on one screen. Details live in the openEventDetails popup,
     // which every row opens. Favorites: a ★ before the title (.tl-fav-star);
-    // Follow lives on the event sheet (2026-11-12). buildEventCard stays — the
+    // Follow lives in ⚙️, the ＋ sheet and a page head (2026-11-25). buildEventCard stays — the
     // Sports page still renders it.
     const groups = groupEventsByDay(filtered);
     const rowNow = new Date();
@@ -6807,7 +6942,7 @@ window.openEventDetails = function(key) {
         dateStr = d.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
         if (isAllDay) {
             timeStr = e.timeTBA ? 'Time TBA' : 'All Day';
-        } else if (endD && endD.getTime() > d.getTime()) {
+        } else if (endD && endD.getTime() > d.getTime() && !isSport) {   // games show the start only (2026-11-25): their end time is an estimate
             timeStr = `${formatTime(d)} – ${formatTime(endD)}`;
         } else {
             timeStr = formatTime(d);
@@ -6833,7 +6968,7 @@ window.openEventDetails = function(key) {
     // block below (more readable: "Millersville 4, Holy Family 2 – Final (W)"
     // beats a plain "W 4-2" pill). Perks get their own high-visibility strip.
     let badges = '';
-    if (isSport && isHome) badges += '<span class="tl-badge tl-home">🏠 Home</span>';
+    // 🏠 Home moved onto the WHERE line 2026-11-25 (locText below); this row is Family-only now.
     if (e.kidFriendly) badges += '<span class="tl-badge tl-family">👨‍👩‍👧 Family</span>';
 
     // Perk badges — prominent colored pills, own row, bigger sizing via
@@ -6858,8 +6993,15 @@ window.openEventDetails = function(key) {
         : '';
 
     const location = (e.location || '').trim();
-    const locBlock = location
-        ? `<div style="margin-top:10px;font-size:0.88rem;color:var(--text-muted);">📍 ${escHtml(location)}</div>`
+    // WHERE line (2026-11-25): a home game reads "🏠 Home · <venue>" — the old bottom badge
+    // lives here — with Sidearm's redundant "Millersville, PA," prefix dropped; when the mini
+    // map renders, Directions joins this line as a link (hasVenueCoords block below). An
+    // event that is neither keeps the old 📍 line byte-for-byte.
+    const homeGame = isSport && isHome;
+    const locShown = homeGame ? (location.replace(/^Millersville,\s*PA\s*[,-]\s*/i, '') || location) : location;
+    const locText = (homeGame ? '🏠 Home' + (locShown ? ' · ' : '') : (locShown ? '📍 ' : '')) + escHtml(locShown);
+    let locBlock = locText
+        ? `<div style="margin-top:10px;font-size:0.88rem;color:var(--text-muted);">${locText}</div>`
         : '';
 
     // Ticket-info block (2026-08-23): the modal previously showed NO price at
@@ -6887,6 +7029,7 @@ window.openEventDetails = function(key) {
     // scores aren't in our data pipeline; the recap URL points at MaxPreps
     // (PM) or MU Athletics (MU) where the full box score is published.
     let scoreSummary = '';
+    let scoreBox = null;   // (url, cta) => html, set with a posted final; re-run WITH the recap url at the source-link site (2026-11-25)
     if (isSport && e.gameResult && e.gameScore) {
         const ourTeam = tags.includes('MU') ? 'Millersville' : tags.includes('PM') ? 'Penn Manor' : 'Home';
         // Extract opponent from title: "Softball vs Holy Family" → "Holy Family"
@@ -6903,13 +7046,27 @@ window.openEventDetails = function(key) {
         } else {
             ourScore = n1; theirScore = n2;
         }
-        const resultLabel = (e.gameResult === 'W' ? 'Final (W)' : e.gameResult === 'L' ? 'Final (L)' : 'Final')
+        const resultLabel = 'Final'
             + (e.scoreSource === 'fan' ? (e.fanStatus === 'verified' ? ' · verified' : ' · fan-reported') : '');   // fan scores (2026-11-11)
+        const resultWord = e.gameResult === 'W' ? 'Win' : e.gameResult === 'L' ? 'Loss' : e.gameResult === 'T' ? 'Tie' : '';
         const resultColor = e.gameResult === 'W' ? '#15803d' : e.gameResult === 'L' ? '#b91c1c' : '#6b7280';
-        scoreSummary = `<div style="margin-top:12px;padding:10px 12px;background:var(--bg);border-left:4px solid ${resultColor};border-radius:var(--radius-sm);">
-            <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:${resultColor};font-weight:700;">${resultLabel}</div>
-            <div style="font-size:1rem;font-weight:700;color:var(--text);margin-top:2px;">${ourTeam} ${ourScore}${opponent ? `, ${opponent} ${theirScore}` : ` – ${theirScore}`}</div>
-        </div>`;
+        // SCORE BLOCK (2026-11-25): a two-row scoreboard, the winner in bold. When the game has
+        // a recap / details link the WHOLE block is that link and says so ("Recap & box score ›")
+        // — the separate Game Recap button is gone. Built as a closure because the url is only
+        // known further down (infoUrl); the left-edge result stripe is retired with it.
+        const usTop = +ourScore >= +theirScore, themTop = +theirScore >= +ourScore;
+        const rowCss = top => 'display:flex;justify-content:space-between;gap:12px;font-size:1rem;' + (top ? 'font-weight:800;color:var(--text);' : 'font-weight:500;color:var(--text-muted);');
+        scoreBox = (url, cta) => {
+            const tag = url ? 'a' : 'div';
+            return `<${tag}${url ? ` href="${escHtml(url)}" target="_blank" rel="noopener"` : ''} class="ev-score-box" style="margin-top:12px;display:flex;flex-direction:column;gap:4px;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:10px;text-decoration:none;color:inherit;">`
+                + `<span style="display:flex;justify-content:space-between;align-items:center;gap:12px;"><span style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-muted);font-weight:700;">${resultLabel}</span>${resultWord ? `<span style="font-size:0.76rem;font-weight:800;color:${resultColor};">${resultWord}</span>` : ''}</span>`
+                + (opponent
+                    ? `<span style="${rowCss(usTop)}"><span>${ourTeam}</span><span>${escHtml(ourScore)}</span></span><span style="${rowCss(themTop)}"><span>${escHtml(opponent)}</span><span>${escHtml(theirScore)}</span></span>`
+                    : `<span style="${rowCss(true)}"><span>${ourTeam}</span><span>${escHtml(ourScore)} – ${escHtml(theirScore)}</span></span>`)
+                + (url ? `<span style="align-self:flex-end;margin-top:2px;font-size:0.8rem;font-weight:700;color:var(--navy);">${cta} ›</span>` : '')
+                + `</${tag}>`;
+        };
+        scoreSummary = scoreBox('', '');
     }
 
     // Inline linescore (box score). Rendered only when the scraper populated
@@ -6954,8 +7111,6 @@ window.openEventDetails = function(key) {
         </div>`;
     }
 
-    // ☆ Follow (2026-11-12): the best pref id for this event — a club, a team, a place.
-    const followBtn = (typeof evFollowButtonHTML === 'function') ? evFollowButtonHTML(e) : '';
     // Action buttons
     let actions = '';
     if ((isRegistrationEvent(e) || isProgramSignup(e)) && getRegisterUrl(e)) {
@@ -7003,13 +7158,15 @@ window.openEventDetails = function(key) {
         actions += `<a href="${e.streamLink}" target="_blank" class="btn btn-sm btn-outline" style="text-decoration:none;">${streamLabel}</a>`;
     }
     // Live scoreboard line (2026-09-20, Step 2): proxy snapshot, day-gated, MU games only.
-    // Prepended to the actions row so it reads first; the Live Stats button follows.
+    // 2026-11-25: rendered in the SCORE slot under the where line (was atop the action row),
+    // and dropped once the posted final (scoreSummary) is there to say it instead.
     const liveTxt = isSport && typeof spLiveScoreText === 'function' ? spLiveScoreText(e) : null;
-    if (liveTxt) {
+    let liveBlock = '';
+    if (liveTxt && !scoreSummary) {
         const s = liveTxt.s;
         const teamLine = `${escHtml(s.away.name.toUpperCase())} ${s.away.score} — ${escHtml(s.home.name.toUpperCase())} ${s.home.score}`;
         const stateTxt = liveTxt.live ? `🔴 LIVE · ${escHtml(liveTxt.status)}` : `Final${liveTxt.letter ? ' (' + liveTxt.letter + ')' : ''}`;
-        actions = `<div style="flex-basis:100%;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 10px;margin-bottom:4px;border:1px solid var(--border);border-radius:var(--radius-sm);background:var(--bg);font-size:0.85rem;font-weight:700;"><span>${teamLine}</span><span style="color:${liveTxt.live ? '#dc2626' : 'var(--text-muted)'};white-space:nowrap;">${stateTxt}</span></div>` + actions;
+        liveBlock = `<div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--border);border-radius:10px;background:var(--bg);font-size:0.85rem;font-weight:700;"><span>${teamLine}</span><span style="color:${liveTxt.live ? '#dc2626' : 'var(--text-muted)'};white-space:nowrap;">${stateTxt}</span></div>`;
     }
     // Sidearm Live Stats (2026-09-20, #3 step 1): liveStatsLink is a display field
     // stamped by scrape.js on unscored MU games; shown ONLY while the game is live.
@@ -7039,7 +7196,7 @@ window.openEventDetails = function(key) {
             const played = pool.filter(g => new Date(g.date).getTime() < nowMs && (spIsScored(g) || spGameEnded(g))).map(g => new Date(g.date).getTime());
             if (played.length && new Date(next.date).getTime() - Math.max(...played) > SP_SEASON_GAP_MS) next = null;
         }
-        const recTxt = hasRecord ? `${spFmtRec(rec.w, rec.l, rec.t)}${rec.streak ? ' · ' + rec.streak : ''} · Home ${spFmtRec(rec.hw, rec.hl)} · Away ${spFmtRec(rec.aw, rec.al)}` : '';
+        const recTxt = hasRecord ? `${spFmtRec(rec.w, rec.l, rec.t)}${rec.streak ? ' · ' + rec.streak : ''}` : '';   // 2026-11-25: the Home / Away split lives on the team page
         let nextTxt = '';
         if (next) {
             const m = spParseMatchup(next), d = new Date(next.date);
@@ -7050,8 +7207,17 @@ window.openEventDetails = function(key) {
             + `<span class="ev-team-txt"><span class="ev-team-name">${escHtml(school + ' ' + teamInfo.label)}</span>`
             + (recTxt ? `<span class="ev-team-sub">${escHtml(recTxt)}</span>` : '')
             + (nextTxt ? `<span class="ev-team-sub">${escHtml(nextTxt)}</span>` : '')
-            + `</span><span class="ev-team-chev" aria-hidden="true">›</span></a>`;
+            + `</span><span class="ev-team-cta">Team page ›</span></a>`;
     }
+    // 2026-11-25: the bar renders at the BOTTOM edge of the sheet (was under the location
+    // line) and says where it goes. Everything that is not a varsity game gets the same bar
+    // for its place / club / feed → /events?f=… (evPageBarFor; fail-closed). ctx.tag is the
+    // tag pill that bar makes redundant, dropped from the chips like the sport tag is.
+    const ctx = (!teamBar && typeof evPageBarFor === 'function') ? evPageBarFor(e) : null;
+    const bottomBar = teamBar || (ctx ? ctx.html : '');
+    const shownTags = teamBar ? displayTags.filter(t => t !== relabelForTownie(teamInfo.sportTag))
+        : (ctx && ctx.tag) ? displayTags.filter(t => t !== relabelForTownie(ctx.tag))
+        : displayTags;
     // Modal title: sport games use the row's short form ("Volleyball vs Felician") —
     // the team bar carries the school, so the long feed title is redundant.
     const modalTitle = teamBar
@@ -7082,12 +7248,13 @@ window.openEventDetails = function(key) {
         const isPastGame = isSport && e.gameResult && e.gameScore;
         const isMUSport = isSport && tags.includes('MU');
         let srcLabel;
-        if (isPastGame && /millersvilleathletics\.com\/news\//i.test(infoUrl)) srcLabel = '📊 Game Recap';   // Sidearm recap article only
-        else if (isPastGame) srcLabel = 'ℹ️ Game Details';   // PM event page / MU schedule page — not a recap (2026-09-18)
-        else if (eventIsFree(e) && !isSport) srcLabel = 'ℹ️ More Info';
+        // (Past-game labels moved onto the score block 2026-11-25 — scoreBox.)
+        if (eventIsFree(e) && !isSport) srcLabel = 'ℹ️ More Info';
 		else if (isMUSport && !e.ticketLink && /millersvilleathletics\.com/i.test(infoUrl)) srcLabel = '🎟️ View on MU Athletics';
         else srcLabel = '🔗 View Source';
-        actions += `<a href="${infoUrl}" target="_blank" class="btn btn-sm btn-outline" style="text-decoration:none;">${srcLabel}</a>`;
+        // Past game (2026-11-25): the score block IS the link — no second button.
+        if (isPastGame && scoreBox) scoreSummary = scoreBox(infoUrl, /millersvilleathletics\.com\/news\//i.test(infoUrl) ? 'Recap &amp; box score' : 'Game details');
+        else actions += `<a href="${infoUrl}" target="_blank" class="btn btn-sm btn-outline" style="text-decoration:none;">${srcLabel}</a>`;
     }
 
     // Mini locator map (the 2026-08-07 declutter's owed follow-up): the
@@ -7112,7 +7279,10 @@ window.openEventDetails = function(key) {
     // materialize the actions row for an otherwise-linkless event.
     if (hasVenueCoords){
         const destQ = encodeURIComponent(venuePlace.lat + ',' + venuePlace.lng);
-        actions += `<a href="https://www.google.com/maps/dir/?api=1&destination=${destQ}" target="_blank" rel="noopener" class="btn btn-sm btn-outline" style="text-decoration:none;">🧭 Directions</a>`;
+        // 2026-11-25: Directions rides the WHERE line (right end) instead of the action row —
+        // map, place and the way there read as one group. Still rendered ONLY with the map,
+        // still raw "lat,lng" (the comment above stands).
+        locBlock = `<div style="margin-top:10px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:0.88rem;color:var(--text-muted);"><span>${locText}</span><a href="https://www.google.com/maps/dir/?api=1&destination=${destQ}" target="_blank" rel="noopener" style="flex-shrink:0;padding:2px 0 2px 8px;font-weight:700;color:var(--navy);text-decoration:none;white-space:nowrap;">Directions ›</a></div>`;
     }
 
     // Slot bleeds edge-to-edge past the modal's 24px padding (negative
@@ -7144,16 +7314,15 @@ window.openEventDetails = function(key) {
         <div style="font-size:0.92rem;color:var(--text);font-weight:600;">📅 ${dateStr}${timeStr ? ' · ' + timeStr : ''}</div>
         ${roundBlock}
         ${locBlock}
-        ${teamBar}
         ${ticketInfoBlock}
-        ${scoreSummary}
+        ${scoreSummary || liveBlock}
         ${linescoreBlock}
         ${perks ? `<div class="modal-perks">${perks}</div>` : ''}
         ${badges ? `<div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:4px;">${badges}</div>` : ''}
-        ${(teamBar ? displayTags.filter(t => t !== relabelForTownie(teamInfo.sportTag)) : displayTags).length ? `<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:4px;">${(teamBar ? displayTags.filter(t => t !== relabelForTownie(teamInfo.sportTag)) : displayTags).map(t => `<span class="card-tag">${t}</span>`).join('')}</div>` : ''}
+        ${shownTags.length ? `<div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:4px;">${shownTags.map(t => `<span class="card-tag">${t}</span>`).join('')}</div>` : ''}
         ${descBlock}
         ${actions ? `<div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:8px;">${actions}</div>` : ''}
-        ${followBtn ? `<div style="margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;">${followBtn}</div>` : ''}
+        ${bottomBar}
     `;
     overlay.appendChild(modal);
     document.body.appendChild(overlay);

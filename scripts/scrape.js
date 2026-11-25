@@ -5437,9 +5437,22 @@ async function runScraper() {
         }
 
         let raneyCount = 0;
+        let raneyAllDayCount = 0;
         for (const ev of Object.values(allRaneyEvents)) {
-            const eventDate = new Date(ev.start);
+            let eventDate = new Date(ev.start);
             if (isNaN(eventDate.getTime()) || eventDate < pastDate || eventDate >= futureDate) continue;
+            // ALL-DAY entries (2026-11-25 — "Thanksgiving Day CLOSED" showed at 7 PM the night
+            // BEFORE): a VALUE=DATE start parses as midnight UTC, which is 7/8 PM the previous
+            // evening in Eastern. Flag the row allDay and park it at noon UTC so the calendar
+            // day holds in Eastern (the Borough parser's convention). Detection is the iCal
+            // DATE TYPE ONLY — never "starts at midnight UTC": a real 7 PM winter show is
+            // 00:00Z too and must stay timed. endTime needs no change: a 24h+ all-day span
+            // already fails the 12h cap below, so the row is a plain single-day All Day.
+            const raneyAllDay = ev.datetype === 'date' || !!(ev.start && ev.start.dateOnly);
+            if (raneyAllDay) {
+                eventDate = new Date(Date.UTC(eventDate.getUTCFullYear(), eventDate.getUTCMonth(), eventDate.getUTCDate(), 12, 0, 0));
+                raneyAllDayCount++;
+            }
             const title = (ev.summary || 'Raney Cellars Event').trim();
             events.push({
                 title,
@@ -5456,11 +5469,12 @@ async function runScraper() {
                 location: ev.location || 'Raney Cellars Brewing',
                 description: ev.description || '',
                 tags: ['Raney Cellars'], price: '', ticketLink: '',
-                sourceLink: ev.url || 'https://www.raneycellarsbrewing.com/events/'
+                sourceLink: ev.url || 'https://www.raneycellarsbrewing.com/events/',
+                ...(raneyAllDay ? { allDay: true } : {})
             });
             raneyCount++;
         }
-        console.log(`✅ Raney Cellars: ${raneyCount} events`);
+        console.log(`✅ Raney Cellars: ${raneyCount} events${raneyAllDayCount ? ` (${raneyAllDayCount} all-day)` : ''}`);
     } catch (e) { console.error("❌ Raney Cellars error:", e.message); recordMiss('raneyCellars', 'Raney Cellars', e); }
 
     // ===== 6f. THE BACKYARD (Google Calendar iCal — with recurring event expansion) =====

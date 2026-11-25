@@ -3231,23 +3231,23 @@
     },
     {
       "date": "2026-11-24",
-      "ts": "2026-11-24T19:11:59.837Z",
-      "totalEvents": 1966,
+      "ts": "2026-11-25T00:53:49.413Z",
+      "totalEvents": 1968,
       "sources": {
         "muAthletics": 383,
         "muCalendar": 200,
-        "artsmu": 43,
+        "artsmu": 42,
         "eckert": 3,
         "campsAlumni": 9,
-        "muGetInvolved": 500,
-        "pennManor": 647,
+        "muGetInvolved": 496,
+        "pennManor": 644,
         "borough": 47,
         "vfw": 6,
         "phantomPower": 13,
         "community": 13,
-        "manor": 30,
-        "raneyCellars": 4,
-        "theBackyard": 28,
+        "manor": 39,
+        "raneyCellars": 5,
+        "theBackyard": 27,
         "muHudlBroadcasts": 62
       },
       "newestDates": {
@@ -3262,29 +3262,28 @@
         "vfw": "2026-11-29",
         "phantomPower": "2026-12-19",
         "community": "2027-05-16",
-        "manor": "2027-08-25",
-        "raneyCellars": "2026-11-20",
+        "manor": "2027-11-24",
+        "raneyCellars": "2026-11-27",
         "theBackyard": "2027-04-28"
       },
-      "runs": 5,
+      "runs": 13,
       "misses": {
         "weather": {
           "label": "Weather",
           "count": 0,
-          "partial": 1,
-          "lastTs": "2026-11-24T16:30:13.297Z",
+          "partial": 2,
+          "lastTs": "2026-11-25T00:54:00.062Z",
           "lastError": "Open-Meteo: fetch failed"
         },
         "manor": {
           "label": "Manor Township",
           "count": 1,
-          "partial": 1,
-          "lastTs": "2026-11-24T19:12:09.791Z",
-          "lastError": "page 1: Request failed with status code 500",
-          "lastCarried": 30
+          "partial": 2,
+          "lastTs": "2026-11-24T23:16:19.148Z",
+          "lastError": "page 5: Request failed with status code 503"
         }
       }
     }
   ],
-  "lastUpdated": "2026-11-24T19:11:59.837Z"
+  "lastUpdated": "2026-11-25T00:53:49.413Z"
 }

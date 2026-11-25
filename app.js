@@ -3372,6 +3372,20 @@ function getEventEndTime(e) {
     return addHours(DEFAULT_DURATION_HOURS);
 }
 
+// True once an event is over (2026-11-25): a result is posted, or its end time has
+// passed (getEventEndTime -- so a multi-day event concludes at the end of its LAST
+// day, and a Time TBA row at the end of its day). Drives "no ticket link on a
+// concluded event" (Adam: a FINAL game was still offering Buy Tickets) on the popup,
+// the cards, the timeline icon and the sports schedule chips. Registration /
+// ticket-package buttons do NOT use it.
+function eventHasConcluded(e, nowMs) {
+    if (!e) return false;
+    if (e.gameResult) return true;
+    const end = getEventEndTime(e);
+    const endMs = end ? end.getTime() : NaN;
+    return !isNaN(endMs) && (nowMs || Date.now()) > endMs;
+}
+
 // True if event spans more than one daytime period — drives (a) date-range
 // display in the popup ("Apr 28 – Apr 30") and (b) the "never live" rule for
 // live badges. Uses a 12-hour duration threshold rather than "different
@@ -4892,7 +4906,7 @@ function spRowHints(e) {
     else if (e.streamLink && (spIsScored(e) || spGameEnded(e))) h.push('📺 Replay');
     else if (e.streamLink) h.push('📺 Stream');
     if (spIsScored(e) && /millersvilleathletics\.com\/news\//i.test(e.sourceLink || '')) h.push('📊 Recap');
-    if (e.ticketLink && !spIsScored(e)) h.push(e.ticketStatus ? '🎟 ' + e.ticketStatus : '🎟 Tickets');
+    if (e.ticketLink && !spIsScored(e) && !eventHasConcluded(e)) h.push(e.ticketStatus ? '🎟 ' + e.ticketStatus : '🎟 Tickets');
     return h;
 }
 
@@ -6078,6 +6092,9 @@ function buildEventCard(e,isSportsPage){
         // unchanged (getRegisterUrl falls back to sourceLink, the packages page).
         const regCtaLabel = isTicketPackage(e) ? '🎟 Buy Tickets' : '📝 Register Now';
         actionHtml=`<a href="${escHtml(getRegisterUrl(e))}" target="_blank" rel="noopener" class="btn btn-sm btn-ticket" onclick="event.stopPropagation();">${regCtaLabel}</a>`;
+    } else if(hasLink && eventHasConcluded(e)){
+        // Concluded (2026-11-25): no ticket chip, gate badge or price badge after the event.
+        actionHtml='';
     } else if(hasLink && !isFree && isStudentFreeGateGame(e)){
         // Confirmed Marauder + home varsity game → no purchase CTA; twin of the modal branch.
         actionHtml=`<span class="badge badge-door">🎓 Free w/ MU ID</span>`;
@@ -6695,10 +6712,11 @@ function buildTimelineItem(e, now, opts = {}) {
     // propagation so the card's modal doesn't also fire.
     const hasTicket = !!(e.ticketLink && e.ticketLink.trim());
     let ticketBtn = '';
-    if (hasTicket && !eventIsFree(e)) {
+    const tixOpen = hasTicket && !eventHasConcluded(e);   // 2026-11-25: no ticket icon once the event is over
+    if (tixOpen && !eventIsFree(e)) {
         const safeUrl = e.ticketLink.replace(/"/g, '&quot;');
         ticketBtn = `<a href="${safeUrl}" target="_blank" rel="noopener" class="tl-ticket" title="Buy tickets" onclick="event.stopPropagation();">🎟️</a>`;
-    } else if (hasTicket && e.freeTicket) {
+    } else if (tixOpen && e.freeTicket) {
         // Free-but-ticketed (2026-09-16): keep the icon, retitle it.
         const safeUrl = e.ticketLink.replace(/"/g, '&quot;');
         ticketBtn = `<a href="${safeUrl}" target="_blank" rel="noopener" class="tl-ticket" title="Free tickets" onclick="event.stopPropagation();">🎟️</a>`;
@@ -6856,7 +6874,7 @@ window.openEventDetails = function(key) {
     const realPrice = /^\$\d/.test((e.price || '').trim()) ? (e.price || '').trim() : '';
     // Postseason round (pm-postseason.json, 2026-11-04) — under the date line; District 3 /
     // PIAA tickets are online-only, so say so when a ticket link is present.
-    const roundBlock = e.round ? `<div style="margin-top:6px;font-size:0.88rem;font-weight:700;color:var(--navy);">🏆 ${escHtml(e.round)}${e.ticketLink && !spIsScored(e) ? ' <span style="font-weight:500;color:var(--text-muted);">· online tickets only</span>' : ''}</div>` : '';
+    const roundBlock = e.round ? `<div style="margin-top:6px;font-size:0.88rem;font-weight:700;color:var(--navy);">🏆 ${escHtml(e.round)}${e.ticketLink && !spIsScored(e) && !eventHasConcluded(e) ? ' <span style="font-weight:500;color:var(--text-muted);">· online tickets only</span>' : ''}</div>` : '';
     let ticketInfoBlock = '';
     if (e.ticketStatus) ticketInfoBlock += `<div style="margin-top:10px;font-size:0.88rem;font-weight:700;color:#b91c1c;">🎟 ${escHtml(e.ticketStatus)}${realPrice ? ` <span style="color:var(--text-muted);font-weight:500;text-decoration:line-through;">${escHtml(realPrice)}</span>` : ''}</div>`;   // sold out (2026-09-21)
     else if (realPrice) ticketInfoBlock += `<div style="margin-top:10px;font-size:0.88rem;font-weight:600;color:var(--text);">💵 ${escHtml(realPrice)}</div>`;
@@ -6945,6 +6963,10 @@ window.openEventDetails = function(key) {
         // — EXCEPT ticket packages (2026-08-06), where a purchase is exactly
         // what it is: the label flips to "🎟 Buy Tickets", link unchanged.
         actions += `<a href="${escHtml(getRegisterUrl(e))}" target="_blank" rel="noopener" class="btn btn-sm btn-ticket" style="text-decoration:none;">${isTicketPackage(e) ? '🎟 Buy Tickets' : '📝 Register Now'}</a>`;
+    } else if (e.ticketLink && eventHasConcluded(e)) {
+        // Concluded (2026-11-25, Adam): no Buy / Guest / Free Tickets or sold-out button
+        // on an event that is over. Replay, Recap, Directions and the source link below
+        // are unaffected.
     } else if (e.ticketLink && e.ticketStatus) {
         // Sold out / at capacity (2026-09-21): honest label, STILL LINKS — the etix
         // page is the proof and lists the venue's other events.

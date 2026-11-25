@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-25T00:53:49.413Z",
+  "generatedAt": "2026-11-25T01:24:26.597Z",
   "totalEvents": 1968,
   "withDescription": 791,
   "withImage": 179,
@@ -16,7 +16,7 @@
     "active": 4,
     "reshall": 3
   },
-  "eventsToday": 14,
+  "eventsToday": 13,
   "sources": {
     "muAthletics": 383,
     "muCalendar": 200,
@@ -168,13 +168,13 @@
     "pendingPast": 15,
     "pendingBySource": {},
     "stalePast": 35,
-    "lastSyncAt": "2026-11-25T00:51:06.239Z"
+    "lastSyncAt": "2026-11-25T01:21:42.375Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-25T00:53:43.163Z"
+    "checkedAt": "2026-11-25T01:24:19.718Z"
   },
   "artsmuMerge": {
     "fetched": 42,
@@ -258,6 +258,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "Trivia Night|2026-12-16T01:00:00.000Z",
+      "firstSeenAt": "2026-11-25T01:13:57.482Z",
+      "title": "Trivia Night",
+      "source": "Jack's Tavern",
+      "date": "2026-12-16T01:00:00.000Z"
+    },
+    {
       "key": "Traffic Commission Meeting|2027-11-24T13:30:00.000Z",
       "firstSeenAt": "2026-11-25T00:43:32.343Z",
       "title": "Traffic Commission Meeting",
@@ -319,13 +326,6 @@
       "title": "Zoning Hearing Board",
       "source": "Manor",
       "date": "2027-09-01T23:00:00.000Z"
-    },
-    {
-      "key": "Supervisors Meeting|2027-09-06T23:00:00.000Z",
-      "firstSeenAt": "2026-11-24T20:54:16.914Z",
-      "title": "Supervisors Meeting",
-      "source": "Manor",
-      "date": "2027-09-06T23:00:00.000Z"
     }
   ],
   "addedLastRun": 0,

@@ -1306,7 +1306,8 @@ const SKIP_REASON_LABELS = {
     'submission-not-approved':   'Community submission: not approved (review queue)',
     'submission-bad-date':       'Community submission: unparseable date',
     'submission-out-of-range':   'Community submission: outside the 90d/365d window',
-    'submission-no-deadline':    'Community submission: Signup row with no deadline'
+    'submission-no-deadline':    'Community submission: Signup row with no deadline',
+    'pm-stale-twin':             'Penn Manor: game listed twice, the copy with no location dropped'
 };
 
 // ---- Gated-rows register (2026-11-24; the follow-on Adam agreed on 2026-11-09) ----
@@ -2081,6 +2082,23 @@ async function runScraper() {
             const desc = ev.description || '';
             const loc = ev.location || '';
 
+            // All-day export = no time announced (2026-11-24). Sidearm publishes a game with
+            // no start time as an all-day VEVENT, which parses to midnight UTC -- 7 PM ET the
+            // evening BEFORE (8 PM in summer). ~30 upcoming rows sat on the wrong day that way
+            // ("Softball at Virginia Union" 3/8 showed 3/7 7:00 PM). Such a row now takes the
+            // pm-postseason Time TBA shape: anchored at noon ET (17:00Z) on its TRUE day,
+            // through the end of its last day, allDay; a single-day GAME (vs/at) is also
+            // timeTBA ("Time TBA"), a meet or multi-day entry just reads "All day". A real
+            // 7 PM game (midnight UTC, ends hours later) is NOT an all-day export. eventDate
+            // itself is left alone: the payload match below keys on it (dayUTC/allDayExport).
+            const muEndMs = ev.end ? new Date(ev.end).getTime() : NaN;
+            const muSpanMs = muEndMs - eventDate.getTime();
+            const muDateOnly = /T00:00:00\.000Z$/.test(eventDate.toISOString())
+                && (ev.datetype === 'date' || !!(ev.start && ev.start.dateOnly) || (muSpanMs >= 86400000 && muSpanMs % 86400000 === 0));
+            const muTrueDay = eventDate.toISOString().slice(0, 10);
+            const muLastDay = new Date((muSpanMs >= 86400000 ? muEndMs : eventDate.getTime() + 86400000) - 1).toISOString().slice(0, 10);
+            const muTbaGame = muDateOnly && muLastDay === muTrueDay && /\s(?:vs\.?|at)\s/i.test(summary);
+
             // Skip past-game results (have [W], [L], [N] prefix)
             // We still include them — they have scores which could be useful
             // But for upcoming games, no prefix exists
@@ -2244,8 +2262,10 @@ async function runScraper() {
             const neutralFallback = !isHome && !!homeLoc && homeLoc !== 'tbd' && /\bvs\b/i.test(summary);
             const muRow = {
                 title: cleanTitle,
-                date: eventDate.toISOString(),
-                endTime: resolveEndTime({ origStart: ev.start, origEnd: ev.end, instanceStart: eventDate }),
+                date: muDateOnly ? `${muTrueDay}T17:00:00.000Z` : eventDate.toISOString(),
+                endTime: muDateOnly ? new Date(Date.parse(`${muLastDay}T17:00:00.000Z`) + 10 * 3600e3 + 59 * 60e3).toISOString()   // 10:59 PM EST / 11:59 PM EDT: never spills into the next ET day
+                    : resolveEndTime({ origStart: ev.start, origEnd: ev.end, instanceStart: eventDate }),
+                ...(muDateOnly ? { allDay: true, ...(muTbaGame ? { timeTBA: true } : {}) } : {}),
                 location: loc || "TBD",
                 tags: [...new Set(tags)],
                 price: ticketLink ? "Ticket Required" : "Free",
@@ -2313,7 +2333,16 @@ async function runScraper() {
                         if (g.indicator !== 'N' && row.neutralSite) delete row.neutralSite;
                         // All-day iCal export but the payload has a real start time → use it (the row
                         // was rendering on the previous ET day at 8 PM).
-                        if (hit.allDayExport && !/T00:00(?::00)?$/.test(g.date) && inst.toISOString() !== row.date) { row.date = inst.toISOString(); timeFixed++; }
+                        if (hit.allDayExport && !/T00:00(?::00)?$/.test(g.date) && (row.allDay || inst.toISOString() !== row.date)) {
+                            // 2026-11-24: an all-day (Time TBA) row is upgraded in place -- flags off; a
+                            // single-day row drops its end-of-day end, a multi-day meet keeps its span.
+                            if (row.allDay) {
+                                const multiDay = !!row.endTime && deriveDayET(Date.parse(row.endTime)) !== deriveDayET(Date.parse(row.date));
+                                delete row.allDay; delete row.timeTBA;
+                                if (!multiDay) delete row.endTime;
+                            }
+                            row.date = inst.toISOString(); timeFixed++;
+                        }
                         // Start-time authority (2026-11-24). The iCal can keep a stale start after MU
                         // edits the schedule page (WBB at California (PA) 12-04 and at Slippery Rock
                         // 12-05 sat at 5:30 PM in the feed; the page said 3:00 PM / 1:00 PM). For an
@@ -7140,6 +7169,39 @@ async function runScraper() {
         seen.add(key);
         return true;
     });
+
+    // PM stale twin (2026-11-24). Penn Manor's calendar sometimes carries one game as two
+    // entries -- Boys Varsity Basketball @ Chambersburg 12-04: 6:00 PM at GOV MIFFLIN GMACC
+    // and 7:00 PM with location "TBA" (Hudl: 6:00 PM). When the SAME PM Athletics title
+    // appears twice on one ET day and one copy has no location while another does, the
+    // no-location copy is the stale one: drop it. Two located copies (a real doubleheader
+    // or tournament day) and two location-less copies are both left alone.
+    {
+        const noLoc = l => /^(?:tba|tbd)?$/i.test(String(l || '').trim());
+        const pmGroups = new Map();
+        pass1.forEach(e => {
+            const t = e.tags || [];
+            if (t[0] !== 'PM' || !t.includes('Athletics')) return;
+            const ms = parseEventInstant(e.date);
+            if (isNaN(ms)) return;
+            const k = (e.title || '').trim().toLowerCase() + '|' + deriveDayET(ms);
+            if (!pmGroups.has(k)) pmGroups.set(k, []);
+            pmGroups.get(k).push(e);
+        });
+        const staleTwins = new Set();
+        for (const g of pmGroups.values()) {
+            if (g.length < 2) continue;
+            const bare = g.filter(e => noLoc(e.location));
+            if (!bare.length || bare.length === g.length) continue;
+            const kept = g.find(e => !noLoc(e.location));
+            bare.forEach(e => { staleTwins.add(e); recordSkip('pm-stale-twin', { source: 'Penn Manor Athletics', title: e.title, date: e.date, location: e.location, link: e.sourceLink, note: `kept the ${kept.location} copy` }); });
+        }
+        if (staleTwins.size) {
+            pass1 = pass1.filter(e => !staleTwins.has(e));
+            console.log(`👯 PM stale twin: dropped ${staleTwins.size} no-location cop${staleTwins.size === 1 ? 'y' : 'ies'} of a game listed twice`);
+            staleTwins.forEach(e => console.log(`   ✕ ${e.title} (${deriveDayET(parseEventInstant(e.date))}, location "${e.location || ''}")`));
+        }
+    }
 
     // ===== MU-CALENDAR ROOM-BOOKING TWIN COLLAPSE (2026-08-24) =====
     // Coursedog now publishes one event as MULTIPLE room-booking rows (same

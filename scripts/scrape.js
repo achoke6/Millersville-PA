@@ -2275,6 +2275,11 @@ async function runScraper() {
         // window are ignored.
         try {
             let recFilled = 0, recCreated = 0, neutralStamped = 0, recapFilled = 0, timeFixed = 0, placeholdersSkipped = 0;
+            const timeCorrected = [];                              // 2026-11-24: start times taken from the schedule page
+            let watchSeen = 0, watchFilled = 0, watchGeneric = 0;   // 2026-11-24: schedule-page Watch links
+            const fmtET = t => new Date(t).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', timeZone: 'America/New_York' });
+            const isHttp = u => /^https?:\/\//i.test(String(u || ''));
+            const isGenericWatch = u => !/[?&][a-z_]+=\d{4,}/i.test(u) && !/\/\d{5,}(\?|\/|$)/.test(u);
             const missing = [];
             const recordMismatch = [];
             const oppKey = s => normSportTitle(s).replace(/\b(university|college|the|of|state|st)\b/g, ' ').replace(/\s+/g, ' ').trim();
@@ -2309,6 +2314,31 @@ async function runScraper() {
                         // All-day iCal export but the payload has a real start time → use it (the row
                         // was rendering on the previous ET day at 8 PM).
                         if (hit.allDayExport && !/T00:00(?::00)?$/.test(g.date) && inst.toISOString() !== row.date) { row.date = inst.toISOString(); timeFixed++; }
+                        // Start-time authority (2026-11-24). The iCal can keep a stale start after MU
+                        // edits the schedule page (WBB at California (PA) 12-04 and at Slippery Rock
+                        // 12-05 sat at 5:30 PM in the feed; the page said 3:00 PM / 1:00 PM). For an
+                        // UNPLAYED game with a real time on both sides, the page wins and the end time
+                        // shifts with it. Not for same-opponent doubleheaders (2+ rows that day): which
+                        // payload game belongs to which row is ambiguous there.
+                        else if (!hit.allDayExport && !res && !/T00:00(?::00)?$/.test(g.date)) {
+                            const rowMs = Date.parse(row.date);
+                            const sameOpp = rowsForSport.filter(r => { if (r.dayET !== dayET && r.dayUTC !== dayET) return false; const ro = oppKey(r.oppNorm); return !!(ro && gOpp && (ro === gOpp || ro.includes(gOpp) || gOpp.includes(ro))); });
+                            const off = Math.abs(rowMs - ms);
+                            if (!isNaN(rowMs) && off >= 60000 && off <= 12 * 3600000 && sameOpp.length <= 1) {
+                                const endMs = row.endTime ? Date.parse(row.endTime) : NaN;
+                                row.date = inst.toISOString();
+                                if (!isNaN(endMs)) row.endTime = new Date(endMs + (ms - rowMs)).toISOString();
+                                timeCorrected.push(`${sched.sportTitle} ${dayET} ${g.atVs || ''} ${g.opponent}: ${fmtET(rowMs)} → ${fmtET(ms)}`.replace(/\s+/g, ' '));
+                            }
+                        }
+                        // Watch link (2026-11-24, Adam: "show whatever MU links"). The iCal pass strips
+                        // generic channel/article URLs; an unplayed game left with no stream link takes
+                        // the schedule page's Watch link as published. The Hudl pass below still swaps
+                        // in the per-broadcast ?B= link for games it can pair.
+                        if (!res && isHttp(g.stream)) {
+                            watchSeen++;
+                            if (!row.streamLink && ms >= Date.now() - 4 * 3600000) { row.streamLink = String(g.stream).trim(); watchFilled++; if (isGenericWatch(row.streamLink)) watchGeneric++; }
+                        }
                         if (res && res.recap && /\/schedule(\/\d{4})?$/.test(row.sourceLink || '')) { row.sourceLink = 'https://millersvilleathletics.com' + res.recap; recapFilled++; }
                         continue;
                     }
@@ -2332,7 +2362,7 @@ async function runScraper() {
                     events.push({
                         title, date: inst.toISOString(), endTime: undefined, location,
                         tags: [...new Set(tags)], price: 'Free', ticketLink: '', sourceLink,
-                        gameResult: res ? res.status : '', gameScore: score, streamLink: '', isLive: false,
+                        gameResult: res ? res.status : '', gameScore: score, streamLink: (!res && isHttp(g.stream)) ? String(g.stream).trim() : '', isLive: false,
                         ...(g.indicator === 'N' ? { neutralSite: true } : {}),
                         _sidearmPayloadCreated: true
                     });
@@ -2348,6 +2378,8 @@ async function runScraper() {
                 }
             }
             console.log(`  🧾 Sidearm payload: ${muScheduleCache.size} sport(s) decoded — ${recFilled} result(s) set, ${neutralStamped} neutral-site stamp(s), ${recapFilled} recap link(s), ${timeFixed} all-day row(s) given real start times, ${placeholdersSkipped} bracket placeholder(s) skipped, ${recCreated} game(s) CREATED that the iCal lacks`);
+            if (timeCorrected.length) { console.log(`  ⏱ Sidearm start time(s) corrected from the schedule page: ${timeCorrected.length}`); timeCorrected.forEach(t => console.log(`     • ${t}`)); }
+            console.log(`  📺 Schedule-page Watch links: ${watchSeen} upcoming game(s) carry one, ${watchFilled} filled where the feed had none (${watchGeneric} generic channel/article page(s))`);
             if (missing.length) { console.log(`  ⚠️ Sidearm iCal is missing ${missing.length} game(s) the schedule payload has (created from the payload):`); missing.forEach(m => console.log(`     • ${m}`)); }
             if (recordMismatch.length) { console.log(`  ⚠️ MU record mismatch (rows vs Sidearm published — window-limited seasons are expected to differ early/late):`); recordMismatch.forEach(m => console.log(`     • ${m}`)); }
             else if (muScheduleCache.size) console.log(`  ✓ MU records match Sidearm for every decoded sport`);

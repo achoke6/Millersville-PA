@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-11-25T18:22:38.608Z",
-  "totalEvents": 1963,
+  "generatedAt": "2026-11-25T19:58:31.387Z",
+  "totalEvents": 1964,
   "withDescription": 789,
   "withImage": 179,
   "familyFriendly": 51,
@@ -24,7 +24,7 @@
     "eckert": 3,
     "campsAlumni": 9,
     "muGetInvolved": 496,
-    "pennManor": 643,
+    "pennManor": 644,
     "borough": 47,
     "vfw": 5,
     "phantomPower": 13,
@@ -151,7 +151,7 @@
     }
   },
   "sports": {
-    "total": 926,
+    "total": 927,
     "scored": 206,
     "wins": 99,
     "losses": 95,
@@ -168,13 +168,13 @@
     "pendingPast": 15,
     "pendingBySource": {},
     "stalePast": 35,
-    "lastSyncAt": "2026-11-25T18:19:44.337Z"
+    "lastSyncAt": "2026-11-25T19:55:42.051Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-25T18:22:29.108Z"
+    "checkedAt": "2026-11-25T19:58:23.018Z"
   },
   "artsmuMerge": {
     "fetched": 42,
@@ -216,7 +216,7 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 543,
+        "value": 544,
         "min": 150,
         "skipped": false
       },
@@ -257,6 +257,13 @@
     ]
   },
   "recentlyAdded": [
+    {
+      "key": "Girls Varsity Wrestling @ Manheim Township High School|2026-11-30T23:00:00.000Z",
+      "firstSeenAt": "2026-11-25T19:58:31.384Z",
+      "title": "Girls Varsity Wrestling @ Manheim Township High School",
+      "source": "PM",
+      "date": "2026-11-30T23:00:00.000Z"
+    },
     {
       "key": "Zoning Hearing Board-CANCELED|2026-12-03T00:00:00.000Z",
       "firstSeenAt": "2026-11-25T18:22:38.605Z",
@@ -319,13 +326,6 @@
       "title": "Millersville University Women's Lacrosse at Lander",
       "source": "MU",
       "date": "2027-03-06T17:00:00.000Z"
-    },
-    {
-      "key": "Millersville University Women's Basketball vs PSAC Championship|2027-03-07T17:00:00.000Z",
-      "firstSeenAt": "2026-11-25T01:34:12.116Z",
-      "title": "Millersville University Women's Basketball vs PSAC Championship",
-      "source": "MU",
-      "date": "2027-03-07T17:00:00.000Z"
     }
   ],
   "addedLastRun": 1,
@@ -358,7 +358,7 @@
     "other": 88
   },
   "pmHudlCheck": {
-    "generatedAt": "2026-11-25T18:21:05.228Z",
+    "generatedAt": "2026-11-25T19:56:56.122Z",
     "toleranceMin": 15,
     "hudlEntries": 77,
     "teamsLeveled": 2,

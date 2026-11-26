@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-11-26T06:28:17.085Z",
-  "totalEvents": 1952,
+  "generatedAt": "2026-11-26T08:15:53.449Z",
+  "totalEvents": 1951,
   "withDescription": 784,
-  "withImage": 177,
+  "withImage": 176,
   "familyFriendly": 51,
   "interests": {
     "greek": 23,
@@ -11,7 +11,7 @@
     "arts": 94,
     "civic": 93,
     "food": 121,
-    "music": 90,
+    "music": 89,
     "crafts": 14,
     "active": 4,
     "reshall": 3
@@ -27,7 +27,7 @@
     "pennManor": 642,
     "borough": 46,
     "vfw": 5,
-    "phantomPower": 13,
+    "phantomPower": 12,
     "community": 13,
     "manor": 37,
     "raneyCellars": 5,
@@ -72,7 +72,7 @@
       "latest": "2026-11-29T18:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-11-26T01:00:00.000Z",
+      "earliest": "2026-11-28T01:00:00.000Z",
       "latest": "2026-12-19T01:00:00.000Z"
     },
     "community": {
@@ -168,13 +168,13 @@
     "pendingPast": 15,
     "pendingBySource": {},
     "stalePast": 35,
-    "lastSyncAt": "2026-11-26T06:26:05.888Z"
+    "lastSyncAt": "2026-11-26T08:13:47.558Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-26T06:28:09.608Z"
+    "checkedAt": "2026-11-26T08:15:44.327Z"
   },
   "artsmuMerge": {
     "fetched": 42,
@@ -188,7 +188,7 @@
       {
         "key": "pennManorAthletics.horizonDays",
         "ok": true,
-        "value": 334,
+        "value": 333,
         "min": 45,
         "skipped": false
       },
@@ -358,7 +358,7 @@
     "other": 88
   },
   "pmHudlCheck": {
-    "generatedAt": "2026-11-26T06:27:22.543Z",
+    "generatedAt": "2026-11-26T08:14:55.997Z",
     "toleranceMin": 15,
     "hudlEntries": 76,
     "teamsLeveled": 2,

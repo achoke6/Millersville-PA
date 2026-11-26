@@ -3270,7 +3270,7 @@
     },
     {
       "date": "2026-11-26",
-      "ts": "2026-11-26T11:56:28.992Z",
+      "ts": "2026-11-26T12:26:45.184Z",
       "totalEvents": 1951,
       "sources": {
         "muAthletics": 380,
@@ -3305,17 +3305,18 @@
         "raneyCellars": "2026-11-27",
         "theBackyard": "2027-04-28"
       },
-      "runs": 4,
+      "runs": 5,
       "misses": {
         "manor": {
           "label": "Manor Township",
-          "count": 0,
+          "count": 1,
           "partial": 1,
-          "lastTs": "2026-11-26T10:08:40.727Z",
-          "lastError": "page 8: Request failed with status code 500"
+          "lastTs": "2026-11-26T12:26:48.504Z",
+          "lastError": "page 1: Request failed with status code 403",
+          "lastCarried": 37
         }
       }
     }
   ],
-  "lastUpdated": "2026-11-26T11:56:28.992Z"
+  "lastUpdated": "2026-11-26T12:26:45.184Z"
 }

@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-11-26T10:08:34.139Z",
-  "totalEvents": 1952,
+  "generatedAt": "2026-11-26T11:56:28.992Z",
+  "totalEvents": 1951,
   "withDescription": 784,
-  "withImage": 177,
+  "withImage": 176,
   "familyFriendly": 51,
   "interests": {
     "greek": 23,
@@ -11,7 +11,7 @@
     "arts": 94,
     "civic": 93,
     "food": 121,
-    "music": 90,
+    "music": 89,
     "crafts": 14,
     "active": 4,
     "reshall": 3
@@ -27,7 +27,7 @@
     "pennManor": 642,
     "borough": 46,
     "vfw": 5,
-    "phantomPower": 13,
+    "phantomPower": 12,
     "community": 13,
     "manor": 37,
     "raneyCellars": 5,
@@ -72,7 +72,7 @@
       "latest": "2026-11-29T18:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-11-26T01:00:00.000Z",
+      "earliest": "2026-11-28T01:00:00.000Z",
       "latest": "2026-12-19T01:00:00.000Z"
     },
     "community": {
@@ -168,13 +168,13 @@
     "pendingPast": 15,
     "pendingBySource": {},
     "stalePast": 35,
-    "lastSyncAt": "2026-11-26T10:01:33.605Z"
+    "lastSyncAt": "2026-11-26T11:54:08.195Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-26T10:08:25.869Z"
+    "checkedAt": "2026-11-26T11:56:21.329Z"
   },
   "artsmuMerge": {
     "fetched": 42,
@@ -258,13 +258,6 @@
   },
   "recentlyAdded": [
     {
-      "key": "20 WATT TOMBSTONE w. Burn The Martyr & MeanMan Of York|2026-11-26T01:00:00.000Z",
-      "firstSeenAt": "2026-11-26T10:08:34.136Z",
-      "title": "20 WATT TOMBSTONE w. Burn The Martyr & MeanMan Of York",
-      "source": "Other",
-      "date": "2026-11-26T01:00:00.000Z"
-    },
-    {
       "key": "Girls Varsity Wrestling @ Manheim Township High School|2026-11-30T23:00:00.000Z",
       "firstSeenAt": "2026-11-25T19:58:31.384Z",
       "title": "Girls Varsity Wrestling @ Manheim Township High School",
@@ -326,9 +319,16 @@
       "title": "Millersville University Women's Basketball vs PSAC Semifinals",
       "source": "MU",
       "date": "2027-03-06T17:00:00.000Z"
+    },
+    {
+      "key": "Millersville University Women's Lacrosse at Lander|2027-03-06T17:00:00.000Z",
+      "firstSeenAt": "2026-11-25T01:34:12.116Z",
+      "title": "Millersville University Women's Lacrosse at Lander",
+      "source": "MU",
+      "date": "2027-03-06T17:00:00.000Z"
     }
   ],
-  "addedLastRun": 1,
+  "addedLastRun": 0,
   "skippedByRule": {
     "total": 480,
     "reasons": {
@@ -358,7 +358,7 @@
     "other": 88
   },
   "pmHudlCheck": {
-    "generatedAt": "2026-11-26T10:02:48.056Z",
+    "generatedAt": "2026-11-26T11:55:33.690Z",
     "toleranceMin": 15,
     "hudlEntries": 76,
     "teamsLeveled": 2,

@@ -3250,7 +3250,7 @@
     },
     {
       "date": "2026-11-25",
-      "ts": "2026-11-26T02:52:31.369Z",
+      "ts": "2026-11-26T04:40:42.632Z",
       "totalEvents": 1952,
       "sources": {
         "muAthletics": 380,
@@ -3285,13 +3285,13 @@
         "raneyCellars": "2026-11-27",
         "theBackyard": "2027-04-28"
       },
-      "runs": 14,
+      "runs": 15,
       "misses": {
         "weather": {
           "label": "Weather",
           "count": 0,
-          "partial": 2,
-          "lastTs": "2026-11-26T01:23:00.562Z",
+          "partial": 3,
+          "lastTs": "2026-11-26T04:40:50.820Z",
           "lastError": "Open-Meteo: fetch failed"
         },
         "manor": {
@@ -3305,5 +3305,5 @@
       }
     }
   ],
-  "lastUpdated": "2026-11-26T02:52:31.369Z"
+  "lastUpdated": "2026-11-26T04:40:42.632Z"
 }

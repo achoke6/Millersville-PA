@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-26T04:40:42.632Z",
+  "generatedAt": "2026-11-26T06:28:17.085Z",
   "totalEvents": 1952,
   "withDescription": 784,
   "withImage": 177,
@@ -16,7 +16,7 @@
     "active": 4,
     "reshall": 3
   },
-  "eventsToday": 7,
+  "eventsToday": 6,
   "sources": {
     "muAthletics": 380,
     "muCalendar": 198,
@@ -95,59 +95,59 @@
   "staleness": {
     "muAthletics": {
       "newest": "2027-05-27",
-      "daysSinceMoved": 85
+      "daysSinceMoved": 86
     },
     "muCalendar": {
       "newest": "2027-11-11",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "artsmu": {
       "newest": "2027-06-04",
-      "daysSinceMoved": 83
+      "daysSinceMoved": 84
     },
     "eckert": {
       "newest": "2026-11-12",
-      "daysSinceMoved": 16
+      "daysSinceMoved": 17
     },
     "campsAlumni": {
       "newest": "2027-08-20",
-      "daysSinceMoved": 37
+      "daysSinceMoved": 38
     },
     "muGetInvolved": {
       "newest": "2027-10-27",
-      "daysSinceMoved": 22
+      "daysSinceMoved": 23
     },
     "pennManor": {
       "newest": "2027-10-25",
-      "daysSinceMoved": 31
+      "daysSinceMoved": 32
     },
     "borough": {
       "newest": "2027-10-31",
-      "daysSinceMoved": 25
+      "daysSinceMoved": 26
     },
     "vfw": {
       "newest": "2026-11-29",
-      "daysSinceMoved": 16
+      "daysSinceMoved": 17
     },
     "phantomPower": {
       "newest": "2026-12-19",
-      "daysSinceMoved": 27
+      "daysSinceMoved": 28
     },
     "community": {
       "newest": "2027-05-16",
-      "daysSinceMoved": 15
+      "daysSinceMoved": 16
     },
     "manor": {
       "newest": "2027-11-24",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "raneyCellars": {
       "newest": "2026-11-27",
-      "daysSinceMoved": 1
+      "daysSinceMoved": 2
     },
     "theBackyard": {
       "newest": "2027-04-28",
-      "daysSinceMoved": 48
+      "daysSinceMoved": 49
     }
   },
   "sports": {
@@ -168,13 +168,13 @@
     "pendingPast": 15,
     "pendingBySource": {},
     "stalePast": 35,
-    "lastSyncAt": "2026-11-26T04:38:06.649Z"
+    "lastSyncAt": "2026-11-26T06:26:05.888Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-26T04:40:33.576Z"
+    "checkedAt": "2026-11-26T06:28:09.608Z"
   },
   "artsmuMerge": {
     "fetched": 42,
@@ -195,14 +195,14 @@
       {
         "key": "muAthletics.horizonDays",
         "ok": true,
-        "value": 183,
+        "value": 182,
         "min": 60,
         "skipped": false
       },
       {
         "key": "muCalendar.horizonDays",
         "ok": true,
-        "value": 351,
+        "value": 350,
         "min": 30,
         "skipped": false
       },
@@ -343,12 +343,12 @@
     }
   },
   "gatedToStudents": {
-    "rows": 167,
+    "rows": 163,
     "titles": 88,
     "rules": {
-      "default-closed": 83,
-      "title-meeting-tabling": 23,
-      "practice": 24,
+      "practice": 23,
+      "title-meeting-tabling": 22,
+      "default-closed": 81,
       "academic-internal": 17,
       "club-keyword": 8,
       "club-org": 7,
@@ -358,7 +358,7 @@
     "other": 88
   },
   "pmHudlCheck": {
-    "generatedAt": "2026-11-26T04:39:41.510Z",
+    "generatedAt": "2026-11-26T06:27:22.543Z",
     "toleranceMin": 15,
     "hudlEntries": 76,
     "teamsLeveled": 2,

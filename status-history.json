@@ -1,42 +1,6 @@
 {
   "days": [
     {
-      "date": "2026-08-28",
-      "ts": "2026-08-29T03:33:18.175Z",
-      "totalEvents": 1135,
-      "sources": {
-        "muAthletics": 306,
-        "muCalendar": 158,
-        "artsmu": 21,
-        "campsAlumni": 39,
-        "muGetInvolved": 229,
-        "pennManor": 72,
-        "borough": 69,
-        "vfw": 7,
-        "phantomPower": 14,
-        "community": 22,
-        "manor": 41,
-        "raneyCellars": 5,
-        "theBackyard": 11,
-        "muHudlBroadcasts": 0
-      },
-      "newestDates": {
-        "muAthletics": "2027-05-08",
-        "muCalendar": "2027-06-04",
-        "artsmu": "2027-05-02",
-        "campsAlumni": "2027-04-03",
-        "muGetInvolved": "2027-05-05",
-        "pennManor": "2026-09-21",
-        "borough": "2026-12-25",
-        "vfw": "2026-10-15",
-        "phantomPower": "2026-10-04",
-        "community": "2027-04-16",
-        "manor": "2027-08-25",
-        "raneyCellars": "2026-09-10",
-        "theBackyard": "2026-09-30"
-      }
-    },
-    {
       "date": "2026-08-29",
       "ts": "2026-08-30T01:05:56.178Z",
       "totalEvents": 1131,
@@ -3303,7 +3267,46 @@
           "lastCarried": 37
         }
       }
+    },
+    {
+      "date": "2026-11-26",
+      "ts": "2026-11-26T06:28:17.085Z",
+      "totalEvents": 1952,
+      "sources": {
+        "muAthletics": 380,
+        "muCalendar": 198,
+        "artsmu": 42,
+        "eckert": 3,
+        "campsAlumni": 9,
+        "muGetInvolved": 493,
+        "pennManor": 642,
+        "borough": 46,
+        "vfw": 5,
+        "phantomPower": 13,
+        "community": 13,
+        "manor": 37,
+        "raneyCellars": 5,
+        "theBackyard": 26,
+        "muHudlBroadcasts": 60
+      },
+      "newestDates": {
+        "muAthletics": "2027-05-27",
+        "muCalendar": "2027-11-11",
+        "artsmu": "2027-06-04",
+        "eckert": "2026-11-12",
+        "campsAlumni": "2027-08-20",
+        "muGetInvolved": "2027-10-27",
+        "pennManor": "2027-10-25",
+        "borough": "2027-10-31",
+        "vfw": "2026-11-29",
+        "phantomPower": "2026-12-19",
+        "community": "2027-05-16",
+        "manor": "2027-11-24",
+        "raneyCellars": "2026-11-27",
+        "theBackyard": "2027-04-28"
+      },
+      "runs": 1
     }
   ],
-  "lastUpdated": "2026-11-26T04:40:42.632Z"
+  "lastUpdated": "2026-11-26T06:28:17.085Z"
 }

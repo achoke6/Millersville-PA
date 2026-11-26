@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-11-26T04:40:42.445Z",
+ "generatedAt": "2026-11-26T06:28:16.942Z",
  "scope": "upcoming mu-only rows (hidden from Locals), grouped by the classifier rule that gated them; repeats collapsed per title; club sports listed by ruling; non-classifier mu-only rows counted under other",
  "itemCap": 200,
  "order": [
@@ -27,17 +27,17 @@
   "club-sports": "Club sports (MU-only by ruling)"
  },
  "counts": {
-  "default-closed": {
-   "rows": 83,
-   "titles": 49
+  "practice": {
+   "rows": 23,
+   "titles": 5
   },
   "title-meeting-tabling": {
-   "rows": 23,
+   "rows": 22,
    "titles": 17
   },
-  "practice": {
-   "rows": 24,
-   "titles": 5
+  "default-closed": {
+   "rows": 81,
+   "titles": 49
   },
   "academic-internal": {
    "rows": 17,
@@ -61,25 +61,209 @@
   }
  },
  "items": {
-  "default-closed": [
+  "practice": [
    {
-    "title": "Film Club",
-    "org": "English and World Languages",
-    "source": "MU Calendar",
-    "next": "2026-11-25",
-    "count": 2,
-    "key": "Film Club|2026-11-25T18:00:00",
-    "link": "https://www.millersville.edu/calendar/events/GNx5XiYLBbJOezMo7cph"
-   },
-   {
-    "title": "Wednesday Night Dinner",
-    "org": "John Newman Association",
+    "title": "Moose Ultimate Practice",
+    "org": "Moose Ultimate",
     "source": "GetInvolved",
-    "next": "2026-11-25",
-    "count": 18,
-    "key": "Wednesday Night Dinner|2026-11-25T23:00:00.000Z",
-    "link": "https://getinvolved.millersville.edu/event/12398959"
+    "next": "2026-11-26",
+    "count": 4,
+    "key": "Moose Ultimate Practice|2026-11-27T00:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12929304"
    },
+   {
+    "title": "Weekly Practice",
+    "org": "Equestrian Club",
+    "source": "GetInvolved",
+    "next": "2026-11-30",
+    "count": 4,
+    "key": "Weekly Practice|2026-11-30T21:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12817992"
+   },
+   {
+    "title": "Men's Ice Hockey Practice (D2)",
+    "org": "Men's Ice Hockey (D2)",
+    "source": "GetInvolved",
+    "next": "2026-12-01",
+    "count": 12,
+    "key": "Men's Ice Hockey Practice (D2)|2026-12-01T11:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12843509"
+   },
+   {
+    "title": "Pickleball Practice",
+    "org": "Pickleball Club",
+    "source": "GetInvolved",
+    "next": "2026-12-01",
+    "count": 1,
+    "key": "Pickleball Practice|2026-12-01T23:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12986953"
+   },
+   {
+    "title": "Practices (after Nov 4th)",
+    "org": "Fencing Guild",
+    "source": "GetInvolved",
+    "next": "2026-12-02",
+    "count": 2,
+    "key": "Practices (after Nov 4th)|2026-12-02T22:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12745959"
+   }
+  ],
+  "title-meeting-tabling": [
+   {
+    "title": "AniMU Weekly Meeting",
+    "org": "AniMU: The Anime and Video Gaming Club",
+    "source": "GetInvolved",
+    "next": "2026-11-27",
+    "count": 2,
+    "key": "AniMU Weekly Meeting|2026-11-27T23:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12695972"
+   },
+   {
+    "title": "Books and Banter General Meeting (2nd 1/2 of November Book)",
+    "org": "Books & Banter",
+    "source": "MU Calendar",
+    "next": "2026-11-30",
+    "count": 1,
+    "key": "Books and Banter General Meeting (2nd 1/2 of November Book)|2026-11-30T19:00:00",
+    "link": "https://www.millersville.edu/calendar/events/Ps759atKcGaEpuf9gkM5"
+   },
+   {
+    "title": "FSL: New Member Meeting",
+    "org": "Campus Life",
+    "source": "MU Calendar",
+    "next": "2026-11-30",
+    "count": 4,
+    "key": "FSL: New Member Meeting|2026-11-30T17:00:00",
+    "link": "https://www.millersville.edu/calendar/events/BA2YxGDzXchro4uc4SvQ"
+   },
+   {
+    "title": "Math Club + MEMU: Final Meeting",
+    "org": "Math Club",
+    "source": "GetInvolved",
+    "next": "2026-11-30",
+    "count": 1,
+    "key": "Math Club + MEMU: Final Meeting|2026-11-30T23:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12843436"
+   },
+   {
+    "title": "Mock Trial Club Meeting",
+    "org": "Mock Trial Club",
+    "source": "GetInvolved",
+    "next": "2026-11-30",
+    "count": 2,
+    "key": "Mock Trial Club Meeting|2026-11-30T22:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12832066"
+   },
+   {
+    "title": "Phi Alpha Theta Meeting",
+    "org": "Phi Alpha Theta",
+    "source": "GetInvolved",
+    "next": "2026-11-30",
+    "count": 1,
+    "key": "Phi Alpha Theta Meeting|2026-11-30T21:30:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12701761"
+   },
+   {
+    "title": "Reformed University Fellowship Prayer Meeting",
+    "org": "Reformed University Fellowship",
+    "source": "GetInvolved",
+    "next": "2026-11-30",
+    "count": 1,
+    "key": "Reformed University Fellowship Prayer Meeting|2026-11-30T22:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12701725"
+   },
+   {
+    "title": "Creative Writers Guild General Meeting",
+    "org": "Creative Writers Guild",
+    "source": "GetInvolved",
+    "next": "2026-12-01",
+    "count": 1,
+    "key": "Creative Writers Guild General Meeting|2026-12-01T23:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12746254"
+   },
+   {
+    "title": "DMAX General Meeting",
+    "org": "DMAX Club",
+    "source": "MU Calendar",
+    "next": "2026-12-01",
+    "count": 1,
+    "key": "DMAX General Meeting|2026-12-01T17:30:00",
+    "link": "https://www.millersville.edu/calendar/events/IJS3GVlJKsvpvzNXg7YB"
+   },
+   {
+    "title": "Equestrian Club Weekly Meeting",
+    "org": "Equestrian Club",
+    "source": "GetInvolved",
+    "next": "2026-12-01",
+    "count": 1,
+    "key": "Equestrian Club Weekly Meeting|2026-12-02T00:30:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12818669"
+   },
+   {
+    "title": "SGA Advocacy Tabling",
+    "org": "Student Government Association",
+    "source": "GetInvolved",
+    "next": "2026-12-01",
+    "count": 1,
+    "key": "SGA Advocacy Tabling|2026-12-01T22:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12813719"
+   },
+   {
+    "title": "YDSA General Meeting",
+    "org": "Young Democratic Socialists of America",
+    "source": "MU Calendar",
+    "next": "2026-12-01",
+    "count": 1,
+    "key": "YDSA General Meeting|2026-12-01T18:30:00",
+    "link": "https://www.millersville.edu/calendar/events/zxJeo952a0qnbXzHtKDm"
+   },
+   {
+    "title": "YDSA Meeting",
+    "org": "Young Democratic Socialists of America",
+    "source": "GetInvolved",
+    "next": "2026-12-01",
+    "count": 1,
+    "key": "YDSA Meeting|2026-12-01T23:30:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12829120"
+   },
+   {
+    "title": "Board Game Club Weekly Meeting",
+    "org": "Board Game Club",
+    "source": "GetInvolved",
+    "next": "2026-12-02",
+    "count": 1,
+    "key": "Board Game Club Weekly Meeting|2026-12-02T23:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12985806"
+   },
+   {
+    "title": "Books and Banter General Meeting (Whole Book for November)",
+    "org": "Books & Banter",
+    "source": "MU Calendar",
+    "next": "2026-12-02",
+    "count": 1,
+    "key": "Books and Banter General Meeting (Whole Book for November)|2026-12-02T19:00:00",
+    "link": "https://www.millersville.edu/calendar/events/UJBchwYPeQGXJJxjbMiY"
+   },
+   {
+    "title": "SGA Weekly Meeting",
+    "org": "Student Government Association",
+    "source": "GetInvolved",
+    "next": "2026-12-03",
+    "count": 1,
+    "key": "SGA Weekly Meeting|2026-12-04T00:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12611283"
+   },
+   {
+    "title": "Slip n' Score Meeting",
+    "org": "Slip n' Score Society",
+    "source": "GetInvolved",
+    "next": "2026-12-03",
+    "count": 1,
+    "key": "Slip n' Score Meeting|2026-12-03T22:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12830993"
+   }
+  ],
+  "default-closed": [
    {
     "title": "UPENN IHSA SHOW",
     "org": "Equestrian Club",
@@ -135,6 +319,15 @@
     "link": "https://www.millersville.edu/calendar/events/uhD0ynXW3N0I4IZaGev6"
    },
    {
+    "title": "Film Club",
+    "org": "English and World Languages",
+    "source": "MU Calendar",
+    "next": "2026-12-02",
+    "count": 1,
+    "key": "Film Club|2026-12-02T18:00:00",
+    "link": "https://www.millersville.edu/calendar/events/GNx5XiYLBbJOezMo7cph"
+   },
+   {
     "title": "SGA Last Stretch Event",
     "org": "Student Government Association",
     "source": "GetInvolved",
@@ -142,6 +335,15 @@
     "count": 1,
     "key": "SGA Last Stretch Event|2026-12-03T01:00:00.000Z",
     "link": "https://getinvolved.millersville.edu/event/12990462"
+   },
+   {
+    "title": "Wednesday Night Dinner",
+    "org": "John Newman Association",
+    "source": "GetInvolved",
+    "next": "2026-12-02",
+    "count": 17,
+    "key": "Wednesday Night Dinner|2026-12-02T23:00:00.000Z",
+    "link": "https://getinvolved.millersville.edu/event/12398960"
    },
    {
     "title": "Best Buddies Vision Board Making",
@@ -502,208 +704,6 @@
     "count": 1,
     "key": "Graduate School Fair|2027-10-27T11:00:00",
     "link": "https://www.millersville.edu/calendar/events/pcLxA33HGK8UY5qXf1La"
-   }
-  ],
-  "title-meeting-tabling": [
-   {
-    "title": "Mock Trial Club Meeting",
-    "org": "Mock Trial Club",
-    "source": "GetInvolved",
-    "next": "2026-11-25",
-    "count": 3,
-    "key": "Mock Trial Club Meeting|2026-11-25T22:00:00.000Z",
-    "link": "https://getinvolved.millersville.edu/event/12832065"
-   },
-   {
-    "title": "AniMU Weekly Meeting",
-    "org": "AniMU: The Anime and Video Gaming Club",
-    "source": "GetInvolved",
-    "next": "2026-11-27",
-    "count": 2,
-    "key": "AniMU Weekly Meeting|2026-11-27T23:00:00.000Z",
-    "link": "https://getinvolved.millersville.edu/event/12695972"
-   },
-   {
-    "title": "Books and Banter General Meeting (2nd 1/2 of November Book)",
-    "org": "Books & Banter",
-    "source": "MU Calendar",
-    "next": "2026-11-30",
-    "count": 1,
-    "key": "Books and Banter General Meeting (2nd 1/2 of November Book)|2026-11-30T19:00:00",
-    "link": "https://www.millersville.edu/calendar/events/Ps759atKcGaEpuf9gkM5"
-   },
-   {
-    "title": "FSL: New Member Meeting",
-    "org": "Campus Life",
-    "source": "MU Calendar",
-    "next": "2026-11-30",
-    "count": 4,
-    "key": "FSL: New Member Meeting|2026-11-30T17:00:00",
-    "link": "https://www.millersville.edu/calendar/events/BA2YxGDzXchro4uc4SvQ"
-   },
-   {
-    "title": "Math Club + MEMU: Final Meeting",
-    "org": "Math Club",
-    "source": "GetInvolved",
-    "next": "2026-11-30",
-    "count": 1,
-    "key": "Math Club + MEMU: Final Meeting|2026-11-30T23:00:00.000Z",
-    "link": "https://getinvolved.millersville.edu/event/12843436"
-   },
-   {
-    "title": "Phi Alpha Theta Meeting",
-    "org": "Phi Alpha Theta",
-    "source": "GetInvolved",
-    "next": "2026-11-30",
-    "count": 1,
-    "key": "Phi Alpha Theta Meeting|2026-11-30T21:30:00.000Z",
-    "link": "https://getinvolved.millersville.edu/event/12701761"
-   },
-   {
-    "title": "Reformed University Fellowship Prayer Meeting",
-    "org": "Reformed University Fellowship",
-    "source": "GetInvolved",
-    "next": "2026-11-30",
-    "count": 1,
-    "key": "Reformed University Fellowship Prayer Meeting|2026-11-30T22:00:00.000Z",
-    "link": "https://getinvolved.millersville.edu/event/12701725"
-   },
-   {
-    "title": "Creative Writers Guild General Meeting",
-    "org": "Creative Writers Guild",
-    "source": "GetInvolved",
-    "next": "2026-12-01",
-    "count": 1,
-    "key": "Creative Writers Guild General Meeting|2026-12-01T23:00:00.000Z",
-    "link": "https://getinvolved.millersville.edu/event/12746254"
-   },
-   {
-    "title": "DMAX General Meeting",
-    "org": "DMAX Club",
-    "source": "MU Calendar",
-    "next": "2026-12-01",
-    "count": 1,
-    "key": "DMAX General Meeting|2026-12-01T17:30:00",
-    "link": "https://www.millersville.edu/calendar/events/IJS3GVlJKsvpvzNXg7YB"
-   },
-   {
-    "title": "Equestrian Club Weekly Meeting",
-    "org": "Equestrian Club",
-    "source": "GetInvolved",
-    "next": "2026-12-01",
-    "count": 1,
-    "key": "Equestrian Club Weekly Meeting|2026-12-02T00:30:00.000Z",
-    "link": "https://getinvolved.millersville.edu/event/12818669"
-   },
-   {
-    "title": "SGA Advocacy Tabling",
-    "org": "Student Government Association",
-    "source": "GetInvolved",
-    "next": "2026-12-01",
-    "count": 1,
-    "key": "SGA Advocacy Tabling|2026-12-01T22:00:00.000Z",
-    "link": "https://getinvolved.millersville.edu/event/12813719"
-   },
-   {
-    "title": "YDSA General Meeting",
-    "org": "Young Democratic Socialists of America",
-    "source": "MU Calendar",
-    "next": "2026-12-01",
-    "count": 1,
-    "key": "YDSA General Meeting|2026-12-01T18:30:00",
-    "link": "https://www.millersville.edu/calendar/events/zxJeo952a0qnbXzHtKDm"
-   },
-   {
-    "title": "YDSA Meeting",
-    "org": "Young Democratic Socialists of America",
-    "source": "GetInvolved",
-    "next": "2026-12-01",
-    "count": 1,
-    "key": "YDSA Meeting|2026-12-01T23:30:00.000Z",
-    "link": "https://getinvolved.millersville.edu/event/12829120"
-   },
-   {
-    "title": "Board Game Club Weekly Meeting",
-    "org": "Board Game Club",
-    "source": "GetInvolved",
-    "next": "2026-12-02",
-    "count": 1,
-    "key": "Board Game Club Weekly Meeting|2026-12-02T23:00:00.000Z",
-    "link": "https://getinvolved.millersville.edu/event/12985806"
-   },
-   {
-    "title": "Books and Banter General Meeting (Whole Book for November)",
-    "org": "Books & Banter",
-    "source": "MU Calendar",
-    "next": "2026-12-02",
-    "count": 1,
-    "key": "Books and Banter General Meeting (Whole Book for November)|2026-12-02T19:00:00",
-    "link": "https://www.millersville.edu/calendar/events/UJBchwYPeQGXJJxjbMiY"
-   },
-   {
-    "title": "SGA Weekly Meeting",
-    "org": "Student Government Association",
-    "source": "GetInvolved",
-    "next": "2026-12-03",
-    "count": 1,
-    "key": "SGA Weekly Meeting|2026-12-04T00:00:00.000Z",
-    "link": "https://getinvolved.millersville.edu/event/12611283"
-   },
-   {
-    "title": "Slip n' Score Meeting",
-    "org": "Slip n' Score Society",
-    "source": "GetInvolved",
-    "next": "2026-12-03",
-    "count": 1,
-    "key": "Slip n' Score Meeting|2026-12-03T22:00:00.000Z",
-    "link": "https://getinvolved.millersville.edu/event/12830993"
-   }
-  ],
-  "practice": [
-   {
-    "title": "Moose Ultimate Practice",
-    "org": "Moose Ultimate",
-    "source": "GetInvolved",
-    "next": "2026-11-25",
-    "count": 5,
-    "key": "Moose Ultimate Practice|2026-11-26T00:00:00.000Z",
-    "link": "https://getinvolved.millersville.edu/event/12846114"
-   },
-   {
-    "title": "Weekly Practice",
-    "org": "Equestrian Club",
-    "source": "GetInvolved",
-    "next": "2026-11-30",
-    "count": 4,
-    "key": "Weekly Practice|2026-11-30T21:00:00.000Z",
-    "link": "https://getinvolved.millersville.edu/event/12817992"
-   },
-   {
-    "title": "Men's Ice Hockey Practice (D2)",
-    "org": "Men's Ice Hockey (D2)",
-    "source": "GetInvolved",
-    "next": "2026-12-01",
-    "count": 12,
-    "key": "Men's Ice Hockey Practice (D2)|2026-12-01T11:00:00.000Z",
-    "link": "https://getinvolved.millersville.edu/event/12843509"
-   },
-   {
-    "title": "Pickleball Practice",
-    "org": "Pickleball Club",
-    "source": "GetInvolved",
-    "next": "2026-12-01",
-    "count": 1,
-    "key": "Pickleball Practice|2026-12-01T23:00:00.000Z",
-    "link": "https://getinvolved.millersville.edu/event/12986953"
-   },
-   {
-    "title": "Practices (after Nov 4th)",
-    "org": "Fencing Guild",
-    "source": "GetInvolved",
-    "next": "2026-12-02",
-    "count": 2,
-    "key": "Practices (after Nov 4th)|2026-12-02T22:00:00.000Z",
-    "link": "https://getinvolved.millersville.edu/event/12745959"
    }
   ],
   "academic-internal": [

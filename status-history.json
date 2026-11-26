@@ -3270,8 +3270,8 @@
     },
     {
       "date": "2026-11-26",
-      "ts": "2026-11-26T08:15:53.449Z",
-      "totalEvents": 1951,
+      "ts": "2026-11-26T10:08:34.139Z",
+      "totalEvents": 1952,
       "sources": {
         "muAthletics": 380,
         "muCalendar": 198,
@@ -3282,7 +3282,7 @@
         "pennManor": 642,
         "borough": 46,
         "vfw": 5,
-        "phantomPower": 12,
+        "phantomPower": 13,
         "community": 13,
         "manor": 37,
         "raneyCellars": 5,
@@ -3305,8 +3305,17 @@
         "raneyCellars": "2026-11-27",
         "theBackyard": "2027-04-28"
       },
-      "runs": 2
+      "runs": 3,
+      "misses": {
+        "manor": {
+          "label": "Manor Township",
+          "count": 0,
+          "partial": 1,
+          "lastTs": "2026-11-26T10:08:40.727Z",
+          "lastError": "page 8: Request failed with status code 500"
+        }
+      }
     }
   ],
-  "lastUpdated": "2026-11-26T08:15:53.449Z"
+  "lastUpdated": "2026-11-26T10:08:34.139Z"
 }

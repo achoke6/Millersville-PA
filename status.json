@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-11-25T23:34:39.960Z",
-  "totalEvents": 1964,
-  "withDescription": 789,
-  "withImage": 179,
+  "generatedAt": "2026-11-26T01:22:51.897Z",
+  "totalEvents": 1952,
+  "withDescription": 784,
+  "withImage": 177,
   "familyFriendly": 51,
   "interests": {
-    "civic": 94,
     "greek": 23,
     "causes": 33,
     "learn": 65,
     "arts": 94,
+    "civic": 93,
     "food": 121,
     "music": 90,
     "crafts": 14,
@@ -18,29 +18,29 @@
   },
   "eventsToday": 7,
   "sources": {
-    "muAthletics": 383,
-    "muCalendar": 200,
+    "muAthletics": 380,
+    "muCalendar": 198,
     "artsmu": 42,
     "eckert": 3,
     "campsAlumni": 9,
-    "muGetInvolved": 496,
-    "pennManor": 644,
-    "borough": 47,
+    "muGetInvolved": 493,
+    "pennManor": 642,
+    "borough": 46,
     "vfw": 5,
     "phantomPower": 13,
     "community": 13,
     "manor": 37,
     "raneyCellars": 5,
-    "theBackyard": 27,
-    "muHudlBroadcasts": 62
+    "theBackyard": 26,
+    "muHudlBroadcasts": 60
   },
   "sourceDateRanges": {
     "muAthletics": {
-      "earliest": "2026-08-27T20:00:00.000Z",
+      "earliest": "2026-08-28T17:00:00.000Z",
       "latest": "2027-05-27T17:00:00.000Z"
     },
     "muCalendar": {
-      "earliest": "2026-08-27T11:30:00.000Z",
+      "earliest": "2026-09-03T17:00:00.000Z",
       "latest": "2027-11-11T18:00:00.000Z"
     },
     "artsmu": {
@@ -60,11 +60,11 @@
       "latest": "2027-10-27T11:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-08-27T22:00:00.000Z",
+      "earliest": "2026-08-28T20:00:00.000Z",
       "latest": "2027-10-25T20:00:00.000Z"
     },
     "borough": {
-      "earliest": "2026-08-27T22:30:00.000Z",
+      "earliest": "2026-08-31T21:00:00.000Z",
       "latest": "2027-10-31T22:00:00.000Z"
     },
     "vfw": {
@@ -88,7 +88,7 @@
       "latest": "2026-11-27T23:00:00.000Z"
     },
     "theBackyard": {
-      "earliest": "2026-08-27T13:00:00.000Z",
+      "earliest": "2026-09-01T15:00:00.000Z",
       "latest": "2027-04-28T15:00:00.000Z"
     }
   },
@@ -151,10 +151,10 @@
     }
   },
   "sports": {
-    "total": 927,
-    "scored": 206,
-    "wins": 99,
-    "losses": 95,
+    "total": 922,
+    "scored": 203,
+    "wins": 97,
+    "losses": 94,
     "ties": 12
   },
   "registrations": {
@@ -168,13 +168,13 @@
     "pendingPast": 15,
     "pendingBySource": {},
     "stalePast": 35,
-    "lastSyncAt": "2026-11-25T23:32:00.109Z"
+    "lastSyncAt": "2026-11-26T01:20:12.239Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-25T23:34:26.352Z"
+    "checkedAt": "2026-11-26T01:22:44.016Z"
   },
   "artsmuMerge": {
     "fetched": 42,
@@ -182,8 +182,10 @@
     "standalone": 1
   },
   "sourceHealth": {
-    "ok": true,
-    "failing": [],
+    "ok": false,
+    "failing": [
+      "manor.count"
+    ],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -216,14 +218,14 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 544,
+        "value": 542,
         "min": 150,
         "skipped": false
       },
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 383,
+        "value": 380,
         "min": 100,
         "skipped": false
       },
@@ -236,16 +238,17 @@
       },
       {
         "key": "manor.count",
-        "ok": true,
+        "ok": false,
         "value": 37,
-        "min": 10
+        "min": 10,
+        "carriedForward": 37
       },
       {
         "key": "muHudl.pairRatio",
         "ok": true,
-        "matched": 62,
-        "inWindow": 67,
-        "value": 0.93,
+        "matched": 60,
+        "inWindow": 65,
+        "value": 0.92,
         "min": 0.5
       },
       {
@@ -358,9 +361,9 @@
     "other": 88
   },
   "pmHudlCheck": {
-    "generatedAt": "2026-11-25T23:33:05.631Z",
+    "generatedAt": "2026-11-26T01:21:41.160Z",
     "toleranceMin": 15,
-    "hudlEntries": 77,
+    "hudlEntries": 76,
     "teamsLeveled": 2,
     "checked": 8,
     "agree": 7,

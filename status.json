@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-26T12:26:45.184Z",
+  "generatedAt": "2026-11-26T14:14:34.928Z",
   "totalEvents": 1951,
   "withDescription": 784,
   "withImage": 176,
@@ -168,13 +168,13 @@
     "pendingPast": 15,
     "pendingBySource": {},
     "stalePast": 35,
-    "lastSyncAt": "2026-11-26T12:24:48.677Z"
+    "lastSyncAt": "2026-11-26T14:12:06.588Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-26T12:26:37.312Z"
+    "checkedAt": "2026-11-26T14:14:24.529Z"
   },
   "artsmuMerge": {
     "fetched": 42,
@@ -182,10 +182,8 @@
     "standalone": 1
   },
   "sourceHealth": {
-    "ok": false,
-    "failing": [
-      "manor.count"
-    ],
+    "ok": true,
+    "failing": [],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -238,10 +236,9 @@
       },
       {
         "key": "manor.count",
-        "ok": false,
+        "ok": true,
         "value": 37,
-        "min": 10,
-        "carriedForward": 37
+        "min": 10
       },
       {
         "key": "muHudl.pairRatio",
@@ -361,7 +358,7 @@
     "other": 88
   },
   "pmHudlCheck": {
-    "generatedAt": "2026-11-26T12:26:02.788Z",
+    "generatedAt": "2026-11-26T14:13:26.570Z",
     "toleranceMin": 15,
     "hudlEntries": 76,
     "teamsLeveled": 2,

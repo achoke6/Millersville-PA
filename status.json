@@ -1,13 +1,13 @@
 {
-  "generatedAt": "2026-11-27T20:30:04.985Z",
-  "totalEvents": 1947,
+  "generatedAt": "2026-11-27T22:18:30.788Z",
+  "totalEvents": 1940,
   "withDescription": 782,
   "withImage": 176,
   "familyFriendly": 51,
   "interests": {
     "learn": 65,
     "arts": 94,
-    "civic": 93,
+    "civic": 89,
     "food": 121,
     "greek": 22,
     "causes": 32,
@@ -29,7 +29,7 @@
     "vfw": 5,
     "phantomPower": 12,
     "community": 13,
-    "manor": 37,
+    "manor": 30,
     "raneyCellars": 5,
     "theBackyard": 26,
     "muHudlBroadcasts": 60
@@ -81,7 +81,7 @@
     },
     "manor": {
       "earliest": "2026-12-03T00:00:00.000Z",
-      "latest": "2027-11-24T13:30:00.000Z"
+      "latest": "2027-09-06T23:00:00.000Z"
     },
     "raneyCellars": {
       "earliest": "2026-11-12T21:00:00.000Z",
@@ -138,8 +138,8 @@
       "daysSinceMoved": 17
     },
     "manor": {
-      "newest": "2027-11-24",
-      "daysSinceMoved": 3
+      "newest": "2027-09-06",
+      "daysSinceMoved": 82
     },
     "raneyCellars": {
       "newest": "2026-11-27",
@@ -168,13 +168,13 @@
     "pendingPast": 15,
     "pendingBySource": {},
     "stalePast": 35,
-    "lastSyncAt": "2026-11-27T20:27:53.643Z"
+    "lastSyncAt": "2026-11-27T22:15:31.341Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-27T20:29:53.145Z"
+    "checkedAt": "2026-11-27T22:18:19.790Z"
   },
   "artsmuMerge": {
     "fetched": 42,
@@ -182,10 +182,8 @@
     "standalone": 1
   },
   "sourceHealth": {
-    "ok": false,
-    "failing": [
-      "manor.count"
-    ],
+    "ok": true,
+    "failing": [],
     "checks": [
       {
         "key": "pennManorAthletics.horizonDays",
@@ -238,10 +236,9 @@
       },
       {
         "key": "manor.count",
-        "ok": false,
-        "value": 37,
-        "min": 10,
-        "carriedForward": 37
+        "ok": true,
+        "value": 30,
+        "min": 10
       },
       {
         "key": "muHudl.pairRatio",
@@ -361,7 +358,7 @@
     "other": 88
   },
   "pmHudlCheck": {
-    "generatedAt": "2026-11-27T20:28:52.530Z",
+    "generatedAt": "2026-11-27T22:16:41.651Z",
     "toleranceMin": 15,
     "hudlEntries": 75,
     "teamsLeveled": 2,

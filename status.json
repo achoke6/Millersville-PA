@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-27T08:40:23.395Z",
+  "generatedAt": "2026-11-27T10:28:17.659Z",
   "totalEvents": 1946,
   "withDescription": 782,
   "withImage": 176,
@@ -168,13 +168,13 @@
     "pendingPast": 15,
     "pendingBySource": {},
     "stalePast": 35,
-    "lastSyncAt": "2026-11-27T08:37:40.923Z"
+    "lastSyncAt": "2026-11-27T10:25:48.964Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-27T08:40:14.625Z"
+    "checkedAt": "2026-11-27T10:28:07.894Z"
   },
   "artsmuMerge": {
     "fetched": 42,
@@ -211,7 +211,7 @@
       {
         "key": "borough.horizonDays",
         "ok": true,
-        "value": 339,
+        "value": 338,
         "min": 21,
         "skipped": false
       },
@@ -361,7 +361,7 @@
     "other": 88
   },
   "pmHudlCheck": {
-    "generatedAt": "2026-11-27T08:39:03.963Z",
+    "generatedAt": "2026-11-27T10:26:59.515Z",
     "toleranceMin": 15,
     "hudlEntries": 75,
     "teamsLeveled": 2,

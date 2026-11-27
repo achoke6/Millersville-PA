@@ -3283,8 +3283,8 @@
     },
     {
       "date": "2026-11-27",
-      "ts": "2026-11-27T16:54:12.120Z",
-      "totalEvents": 1946,
+      "ts": "2026-11-27T18:42:19.653Z",
+      "totalEvents": 1947,
       "sources": {
         "muAthletics": 379,
         "muCalendar": 198,
@@ -3292,7 +3292,7 @@
         "eckert": 3,
         "campsAlumni": 9,
         "muGetInvolved": 491,
-        "pennManor": 640,
+        "pennManor": 641,
         "borough": 46,
         "vfw": 5,
         "phantomPower": 12,
@@ -3318,14 +3318,14 @@
         "raneyCellars": "2026-11-27",
         "theBackyard": "2027-04-28"
       },
-      "runs": 8,
+      "runs": 9,
       "misses": {
         "manor": {
           "label": "Manor Township",
-          "count": 5,
+          "count": 6,
           "partial": 1,
-          "lastTs": "2026-11-27T16:54:21.379Z",
-          "lastError": "page 1: connect ETIMEDOUT 160.153.73.225:443",
+          "lastTs": "2026-11-27T18:42:28.521Z",
+          "lastError": "page 1: Request failed with status code 403",
           "lastCarried": 37
         },
         "weather": {
@@ -3338,5 +3338,5 @@
       }
     }
   ],
-  "lastUpdated": "2026-11-27T16:54:12.120Z"
+  "lastUpdated": "2026-11-27T18:42:19.653Z"
 }

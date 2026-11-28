@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-11-27T23:28:05.303Z",
-  "totalEvents": 1940,
-  "withDescription": 782,
-  "withImage": 176,
+  "generatedAt": "2026-11-28T01:15:56.703Z",
+  "totalEvents": 1928,
+  "withDescription": 779,
+  "withImage": 175,
   "familyFriendly": 51,
   "interests": {
     "learn": 65,
@@ -18,13 +18,13 @@
   },
   "eventsToday": 6,
   "sources": {
-    "muAthletics": 379,
+    "muAthletics": 376,
     "muCalendar": 198,
     "artsmu": 42,
     "eckert": 3,
     "campsAlumni": 9,
-    "muGetInvolved": 491,
-    "pennManor": 641,
+    "muGetInvolved": 488,
+    "pennManor": 635,
     "borough": 46,
     "vfw": 5,
     "phantomPower": 12,
@@ -36,7 +36,7 @@
   },
   "sourceDateRanges": {
     "muAthletics": {
-      "earliest": "2026-08-29T17:00:00.000Z",
+      "earliest": "2026-08-30T17:00:00.000Z",
       "latest": "2027-05-27T17:00:00.000Z"
     },
     "muCalendar": {
@@ -56,11 +56,11 @@
       "latest": "2027-08-20T23:30:00.000Z"
     },
     "muGetInvolved": {
-      "earliest": "2026-08-29T12:00:00.000Z",
+      "earliest": "2026-08-31T13:00:00.000Z",
       "latest": "2027-10-27T11:00:00.000Z"
     },
     "pennManor": {
-      "earliest": "2026-08-29T14:00:00.000Z",
+      "earliest": "2026-08-31T20:00:00.000Z",
       "latest": "2027-10-25T20:00:00.000Z"
     },
     "borough": {
@@ -151,10 +151,10 @@
     }
   },
   "sports": {
-    "total": 920,
-    "scored": 201,
-    "wins": 96,
-    "losses": 93,
+    "total": 911,
+    "scored": 196,
+    "wins": 94,
+    "losses": 90,
     "ties": 12
   },
   "registrations": {
@@ -168,13 +168,13 @@
     "pendingPast": 15,
     "pendingBySource": {},
     "stalePast": 35,
-    "lastSyncAt": "2026-11-27T23:25:49.694Z"
+    "lastSyncAt": "2026-11-28T01:13:42.488Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-27T23:27:52.669Z"
+    "checkedAt": "2026-11-28T01:15:48.577Z"
   },
   "artsmuMerge": {
     "fetched": 42,
@@ -218,14 +218,14 @@
       {
         "key": "pennManorAthletics.count",
         "ok": true,
-        "value": 541,
+        "value": 535,
         "min": 150,
         "skipped": false
       },
       {
         "key": "muAthletics.count",
         "ok": true,
-        "value": 379,
+        "value": 376,
         "min": 100,
         "skipped": false
       },
@@ -361,9 +361,9 @@
     "other": 88
   },
   "pmHudlCheck": {
-    "generatedAt": "2026-11-27T23:26:48.046Z",
+    "generatedAt": "2026-11-28T01:14:45.676Z",
     "toleranceMin": 15,
-    "hudlEntries": 75,
+    "hudlEntries": 72,
     "teamsLeveled": 2,
     "checked": 8,
     "agree": 7,

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-28T06:39:43.811Z",
+  "generatedAt": "2026-11-28T07:45:10.113Z",
   "totalEvents": 1935,
   "withDescription": 779,
   "withImage": 175,
@@ -72,8 +72,8 @@
       "latest": "2026-11-29T18:00:00.000Z"
     },
     "phantomPower": {
-      "earliest": "2026-11-28T01:00:00.000Z",
-      "latest": "2026-12-19T01:00:00.000Z"
+      "earliest": "2026-11-29T00:00:00.000Z",
+      "latest": "2026-12-20T01:00:00.000Z"
     },
     "community": {
       "earliest": "2026-10-02T13:15:00.000Z",
@@ -130,8 +130,8 @@
       "daysSinceMoved": 19
     },
     "phantomPower": {
-      "newest": "2026-12-19",
-      "daysSinceMoved": 30
+      "newest": "2026-12-20",
+      "daysSinceMoved": 0
     },
     "community": {
       "newest": "2027-05-16",
@@ -168,13 +168,13 @@
     "pendingPast": 15,
     "pendingBySource": {},
     "stalePast": 35,
-    "lastSyncAt": "2026-11-28T06:37:10.054Z"
+    "lastSyncAt": "2026-11-28T07:42:51.197Z"
   },
   "submissionsQueue": {
     "pendingFuture": 0,
     "pendingPast": 1,
     "approved": 4,
-    "checkedAt": "2026-11-28T06:39:34.774Z"
+    "checkedAt": "2026-11-28T07:45:02.814Z"
   },
   "artsmuMerge": {
     "fetched": 43,
@@ -261,6 +261,13 @@
   },
   "recentlyAdded": [
     {
+      "key": "APES OF THE STATE 10th Annual Holiday Spectacular - NIGHT ONE|2026-12-20T01:00:00.000Z",
+      "firstSeenAt": "2026-11-28T07:45:10.111Z",
+      "title": "APES OF THE STATE 10th Annual Holiday Spectacular - NIGHT ONE",
+      "source": "Other",
+      "date": "2026-12-20T01:00:00.000Z"
+    },
+    {
       "key": "Traffic Commission Meeting|2027-09-29T12:30:00.000Z",
       "firstSeenAt": "2026-11-28T03:04:05.879Z",
       "title": "Traffic Commission Meeting",
@@ -322,16 +329,9 @@
       "title": "Girls Varsity Wrestling @ Manheim Township High School",
       "source": "PM",
       "date": "2026-11-30T23:00:00.000Z"
-    },
-    {
-      "key": "Zoning Hearing Board-CANCELED|2026-12-03T00:00:00.000Z",
-      "firstSeenAt": "2026-11-25T18:22:38.605Z",
-      "title": "Zoning Hearing Board-CANCELED",
-      "source": "Manor",
-      "date": "2026-12-03T00:00:00.000Z"
     }
   ],
-  "addedLastRun": 0,
+  "addedLastRun": 1,
   "skippedByRule": {
     "total": 480,
     "reasons": {
@@ -361,7 +361,7 @@
     "other": 88
   },
   "pmHudlCheck": {
-    "generatedAt": "2026-11-28T06:38:26.531Z",
+    "generatedAt": "2026-11-28T07:43:58.106Z",
     "toleranceMin": 15,
     "hudlEntries": 72,
     "teamsLeveled": 2,
